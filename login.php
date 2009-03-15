@@ -1,0 +1,70 @@
+<?php
+/***************************************************************************
+ *   copyright				: (C) 2008 WeBid
+ *   site					: http://www.webidsupport.com/
+ ***************************************************************************/
+
+/***************************************************************************
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version. Although none of the code may be
+ *   sold. If you have been sold this script, get a refund.
+ ***************************************************************************/
+
+include "includes/config.inc.php";
+
+if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on') {
+    $sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
+	header('Location: ' . $sslurl . 'user_login.php');
+    exit;
+}
+
+$NOW = time();
+
+if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password'])) {
+    $query = "select id,name,email,accounttype from " . $DBPrefix . "users WHERE
+				nick='" . $system->cleanvars($_POST['username']) . "' and password='" . md5($MD5_PREFIX . $_POST['password']) . "' and suspended=0";
+    $res = mysql_query($query);
+    $system->check_mysql($res, $query, __LINE__, __FILE__);
+    if (mysql_num_rows($res) > 0) {
+        $_SESSION['WEBID_LOGGED_IN'] = mysql_result($res, 0, "id");
+        $_SESSION['WEBID_LOGGED_EMAIL'] = mysql_result($res, 0, "email");
+        $_SESSION['WEBID_LOGGED_NAME'] = mysql_result($res, 0, "name");
+        $_SESSION['WEBID_LOGGED_ACCOUNT'] = mysql_result($res, 0, "accounttype");
+        $_SESSION['WEBID_LOGGED_IN_USERNAME'] = $_POST['username'];
+        // // Update "last login" fields in users table
+        @mysql_query("UPDATE " . $DBPrefix . "users SET lastlogin='" . gmdate("Y-m-d H:i:s") . "',
+					reg_date = reg_date WHERE id=" . $_SESSION['WEBID_LOGGED_IN']);
+        // // Remember me option
+        if ($_POST['rememberme'] == 1) {
+            $remember_key = md5(time());
+            $query = "INSERT INTO " . $DBPrefix . "rememberme VALUES(" . intval(mysql_result($res, 0, "id")) . ",'" . addslashes($remember_key) . "')";
+            $res = mysql_query($query);
+            $system->check_mysql($res, $query, __LINE__, __FILE__);
+            setcookie("WEBID_RM_ID", $remember_key, time() + (3600 * 24 * 365));
+        }
+    } else {
+        $_SESSION['loginerror'] = $ERR_038;
+    }
+} else {
+    $_SESSION['loginerror'] = $ERR_038;
+}
+
+$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER='" . $_SESSION['WEBID_LOGGED_IN'] . "' AND ip='" . $_SERVER['REMOTE_ADDR'] . "'";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+if (mysql_num_rows($res) == 0) {
+    $query = "INSERT INTO " . $DBPrefix . "usersips VALUES(
+			  NULL,
+			  '" . $_SESSION['WEBID_LOGGED_IN'] . "',
+			  '" . $_SERVER['REMOTE_ADDR'] . "',
+			  'after','accept')";
+    $res = mysql_query($query);
+    $system->check_mysql($res, $query, __LINE__, __FILE__);
+}
+
+header("location: " . $system->SETTINGS['siteurl'] . "index.php");
+exit;
+
+?>

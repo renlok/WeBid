@@ -1,0 +1,735 @@
+<list>
+	<name>
+		base_colors
+	</name>
+	<value>
+		white
+		black
+		silver
+		gray
+		maroon
+		red
+		orange
+		yellow
+		olive
+		purple
+		fuchsia
+		lime
+		green
+		navy
+		blue
+		aqua
+		teal
+	</value>
+</list>
+
+<list>
+	<name>
+		system_colors
+	</name>
+	<value>
+		ActiveBorder
+		ActiveCaption
+		AppWorkspace
+		Background
+		ButtonFace
+		ButtonHighlight
+		ButtonShadow
+		ButtonText
+		CaptionText
+		GrayText
+		Highlight
+		HighlightText
+		InactiveBorder
+		InactiveCaption
+		InactiveCaptionText
+		InfoBackground
+		InfoText
+		Menu
+		MenuText
+		Scrollbar
+		ThreeDDarkShadow
+		ThreeDFace
+		ThreeDHighlight
+		ThreeDLightShadow
+		ThreeDShadow
+		Window
+		WindowFrame
+		WindowText
+	</value>
+</list>
+
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		margin
+	</name>
+	<value>
+		list	1	4
+	</value>
+	<valid>
+		[size]
+		[percent]
+		auto
+	</valid>
+	<default>
+		auto
+	</default>
+	<predef>
+		0
+		1em
+		1em auto
+		0 auto
+		0 auto 0 0
+		0 0 0 auto
+	</predef>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		padding
+	</name>
+	<value>
+		list	1	4
+	</value>
+	<valid>
+		[size]
+		[percent]
+	</valid>
+	<default>
+		0
+	</default>
+	<predef>
+		0
+		1em
+		1ex 1em
+		1ex 0 1ex 1em
+	</predef>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		width
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		[size]
+		[percent]
+		inherit
+		auto
+	</valid>
+	<default>
+		auto
+	</default>
+	<predef>
+		100%
+	</predef>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		height
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		[size]
+		[percent]
+		auto
+	</valid>
+	<default>
+		auto
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		float
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		left
+		right
+		none
+	</valid>
+	<default>
+		none
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		clear
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		left
+		right
+		both
+		none
+	</valid>
+	<default>
+		none
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		background-image
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		[url]
+		none
+	</valid>
+	<default>
+		none
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		background-repeat
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		repeat
+		repeat-x
+		repeat-y		
+		no-repeat
+	</valid>
+	<default>
+		repeat
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		vertical-align
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		baseline
+		sub
+		super
+		top
+		text-top
+		middle
+		bottom
+		text-bottom
+		[percentage]
+	</valid>
+	<default>
+		baseline
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		border-width
+	</name>
+	<value>
+		list 1 4
+	</value>
+	<valid>
+		[size]
+	</valid>
+	<default>
+		0
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		border-color
+	</name>
+	<value>
+		list 1 4
+	</value>
+	<valid>
+		[color]
+		@base_colors
+		transparent
+		@system_colors
+	</valid>
+	<default>
+		black
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Box properties
+	</group>
+	<name>
+		border-style
+	</name>
+	<value>
+		list 1 4
+	</value>
+	<valid>
+		none
+		dotted
+		dashed
+		solid
+		double
+		groove
+		ridge
+		inset
+		outset
+	</valid>
+	<default>
+		none
+	</default>
+</prop>
+
+<prop>
+	<group>
+		List properties
+	</group>
+	<name>
+		list-style-image
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		none
+		[url]
+	</valid>
+	<default>
+		none
+	</default>
+</prop>
+
+<prop>
+	<group>
+		List properties
+	</group>
+	<name>
+		list-style-position
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		inside
+		outside
+	</valid>
+	<default>
+		inside
+	</default>
+</prop>
+
+<prop>
+	<group>
+		List properties
+	</group>
+	<name>
+		list-style-type
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		none
+		disc
+		circle
+		square
+		decimal
+		decimal-leading-zero
+		lower-roman
+		upper-roman
+		lower-alpha
+		upper-alpha
+		lower-greek
+		lower-latin
+		upper-latin
+		hebrew
+		armenian
+		georgian
+		cjk-ideographic
+		hiragana
+		katakana
+		hiragana-iroha
+		katakana-iroha 
+	</valid>
+	<default>
+		none
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Classification properties
+	</group>
+	<name>
+		display
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		block
+		table
+		inline
+		list-item
+		run-in
+		compact
+		marker
+		inline-table
+		table-row-group
+		table-header-group
+		table-footer-group
+		table-row
+		table-column-group
+		table-column
+		table-cell
+		table-caption
+		none
+	</valid>
+	<default>
+		none
+	</default>
+</prop>
+
+
+<prop>
+	<group>
+		Font properties
+	</group>
+	<name>
+		font-family
+	</name>
+	<value>
+		list	1	*	,
+	</value>
+	<valid>
+		[keyword]
+		[string]
+		serif
+		sans-serif
+		monospace
+		cursive
+		fantasy
+	</valid>
+	<default>
+		inherited
+	</default>
+	<predef>
+		Arial CE, Helvetica CE, Arial, helvetica, sans-serif
+		Verdana CE, Arial CE, Lucida Grande CE, Helvetica CE, Verdana, Arial, lucida, sans-serif
+		Times New Roman CE, Times New CE, Times CE, Times New Roman, times, serif
+		Courier New CE, Courier CE, Courier New, courier, monospace
+	</predef>
+</prop>
+
+<prop>
+	<group>
+		Font properties
+	</group>
+	<name>
+		font-size
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		[size]
+		[percent]
+		smaller
+		larger
+		---
+		xx-small
+		x-small
+		small
+		medium
+		large
+		x-large
+		xx-large
+	</valid>
+	<default>
+		inherited computed value
+	</default>
+	<predef>
+		70%
+		80%
+		90%
+		100%
+		110%
+		120%
+		150%
+		200%
+		---
+		9pt
+		10pt
+		11pt
+		12pt
+		14pt
+		18pt
+		24pt
+		36pt
+		48pt
+	</predef>
+</prop>
+
+<prop>
+	<group>
+		Font properties
+	</group>
+	<name>
+		font-weight
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		normal
+		bold
+		---
+		lighter
+		bolder
+		---
+		100
+		200
+		300
+		400
+		500
+		600
+		700
+		800
+		900
+	</valid>
+	<default>
+		inherited
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Font properties
+	</group>
+	<name>
+		font-style
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		normal
+		italic
+		oblique
+	</valid>
+	<default>
+		inherited
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Font properties
+	</group>
+	<name>
+		font-variant
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		normal
+		small-caps
+	</valid>
+	<default>
+		normal
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Text properties
+	</group>
+	<name>
+		text-align
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		left
+		right
+		center
+		justify
+	</valid>
+	<default>
+		inherited
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Text properties
+	</group>
+	<name>
+		text-decoration
+	</name>
+	<value>
+		list	1	*
+	</value>
+	<valid>
+		none
+		underline
+		overline
+		line-through
+		blink
+	</valid>
+	<default>
+		none
+	</default>
+	<predef>
+		underline overline
+	</predef>
+</prop>
+
+<prop>
+	<group>
+		Text properties
+	</group>
+	<name>
+		line-height
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		normal
+		[length]
+		[percentage]
+	</valid>
+	<default>
+		normal
+	</default>
+	<predef>
+		underline overline
+	</predef>
+</prop>
+
+<prop>
+	<group>
+		Text properties
+	</group>
+	<name>
+		text-transform
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		none
+		uppercase
+		lowercase
+		capitalize
+	</valid>
+	<default>
+		none
+	</default>
+</prop>
+
+<prop>
+	<group>
+		Color properties
+	</group>
+	<name>
+		color
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		[color]
+		@base_colors
+		@system_colors
+	</valid>
+	<default>
+		browser dependent
+	</default>
+	<predef>
+		#fffff0
+		#336
+		rgb(255,128,0)
+		rgb(100%,50%,0)
+	</predef>
+</prop>
+
+<prop>
+	<group>
+		Color properties
+	</group>
+	<name>
+		background-color
+	</name>
+	<value>
+		single
+	</value>
+	<valid>
+		[color]
+		@base_colors
+		transparent
+		@system_colors
+	</valid>
+	<default>
+		browser dependent
+	</default>
+	<predef>
+		#fffff0
+		#336
+		rgb(255,128,0)
+		rgb(100%,50%,0)
+	</predef>
+</prop>
+

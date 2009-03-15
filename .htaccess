@@ -1,0 +1,18 @@
+# secure htaccess file
+<Files .htaccess>
+ order allow,deny
+ deny from all
+</Files>
+
+# disable directory browsing
+Options All -Indexes
+
+# disabel access to logs
+<files cron.log>
+ order allow,deny
+ deny from all
+</files>
+<files error.log>
+ order allow,deny
+ deny from all
+</files>

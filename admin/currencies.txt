@@ -1,0 +1,133 @@
+AFA Afghanistan, Afghanis
+ALL Albania, Leke
+DZD Algeria, Dinars
+USD United States of America, Dollars
+AOA Angola, Kwanza
+ARS Argentina, Pesos
+AMD Armenia, Drams
+AWG Aruba, Guilders
+AUD Australia, Dollars
+EUR Europe, Euro
+AZM Azerbaijan, Manats
+BBD Barbados, Dollars
+BOB Bolivia, Bolivianos
+BRL Brazil, Real
+GBP United Kingdom, Pounds
+BGL Bulgaria, Leva
+BIF Burundi, Francs
+CAD Canada, Dollars
+CVE Cape Verde, Escudos
+CLP Chile, Pesos
+CNY China, Yuan Renminbi
+COP Colombia, Pesos
+CRC Costa Rica, Colones
+HRK Croatia, Kuna
+CUP Cuba, Pesos
+CZK Czech Republic, Koruny
+DKK Denmark, Kroner
+DOP Dominican Republic, Pesos
+XCD East Caribbean Dollars
+EGP Egypt, Pounds
+SVC El Salvador, Colones
+FJD Fiji, Dollars
+GEL Georgia, Lari
+HKD Hong Kong, Dollars
+INR India, Rupees
+IDR Indonesia, Rupiahs
+IRR Iran, Rials
+IQD Iraq, Dinars
+ILS Israel, New Shekels
+JMD Jamaica, Dollars
+JPY Japan, Yen
+JOD Jordan, Dinars
+KPW Korea (North), Won
+KRW Korea (South), Won
+KWD Kuwait, Dinars
+LAK Laos, Kips
+LVL Latvia, Lati
+LYD Libya, Dinars
+CHF Liechtenstein, Switzerland Francs
+LTL Lithuania, Litai
+MKD Macedonia, Denars
+MGF Madagascar, Malagasy Francs
+MWK Malawi, Kwachas
+MYR Malaysia, Ringgits
+MTL Malta, Liri
+MUR Mauritius, Rupees
+MXN Mexico, Pesos
+MDL Moldova, Lei
+MNT Mongolia, Tugriks
+YUM Montenegro and Serbia, Yugoslavia New Dinars
+MAD Morocco, Dirhams
+MZM Mozambique, Meticais
+NAD Namibia, Dollars
+ZAR Namibia, South Africa Rand
+NPR Nepal, Rupees
+ANG Netherlands Antilles, Guilders
+XCD Nevis and Saint Kitts, East Caribbean Dollars
+NZD New Zealand, Dollars
+NIO Nicaragua, Gold Cordobas
+NGN Nigeria, Nairas
+NZD Niue, New Zealand Dollars
+NOK Norway, Kroner
+OMR Oman, Rials
+PKR Pakistan, Rupees
+XPD Palladium, Ounces
+PAB Panama, Balboa
+PGK Papua New Guinea, Kina
+PYG Paraguay, Guarani
+PEN Peru, Nuevos Soles
+PHP Philippines, Pesos
+XPT Platinum, Ounces
+PLN Poland, Zlotych
+QAR Qatar, Rials
+ROL Romania, Lei
+RUR Russia, Rubles
+WST Samoa, Tala
+SAR Saudi Arabia, Riyals
+SPL Seborga, Luigini
+SCR Seychelles, Rupees
+SLL Sierra Leone, Leones
+XAG Silver, Ounces
+SGD Singapore, Dollars
+SKK Slovakia, Koruny
+SIT Slovenia, Tolars
+SBD Solomon Islands, Dollars
+SOS Somalia, Shillings
+ZAR South Africa, Rand
+XDR Special Drawing Rights
+LKR Sri Lanka, Rupees
+SDD Sudan, Dinars
+SRG Suriname, Guilders
+SZL Swaziland, Emalangeni
+SEK Sweden, Kronor
+CHF Switzerland, Francs
+SYP Syria, Pounds
+TWD Taiwan, New Dollars
+RUR Tajikistan, Russia Rubles
+TJS Tajikistan, Somoni
+TZS Tanzania, Shillings
+THB Thailand, Baht
+IDR Timor (East), Indonesia Rupiahs
+TTD Tobago and Trinidad, Dollars
+TOP Tonga, Pa'anga
+TTD Trinidad and Tobago, Dollars
+TND Tunisia, Dinars
+TRL Turkey, Liras
+TMM Turkmenistan, Manats
+TVD Tuvalu, Tuvalu Dollars
+UGX Uganda, Shillings
+UAH Ukraine, Hryvnia
+AED United Arab Emirates, Dirhams
+GBP United Kingdom, Pounds
+UYU Uruguay, Pesos
+UZS Uzbekistan, Sums
+VUV Vanuatu, Vatu
+VEB Venezuela, Bolivares
+VND Viet Nam, Dong
+WST West Samoa (Samoa), Tala
+MAD Western Sahara, Morocco Dirhams
+YER Yemen, Rials
+YUM Yugoslavia, New Dinars
+ZMK Zambia, Kwacha
+ZWD Zimbabwe, Zimbabwe Dollars

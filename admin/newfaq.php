@@ -24,8 +24,8 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 		$ERR = $ERR_067;
 	} else {
 		$query = "INSERT INTO " . $DBPrefix . "faqs VALUES (NULL,
-			   '" . addslashes($_POST['question'][$system->SETTINGS['defaultlanguage']]) . "',
-			   '" . addslashes($_POST['answer'][$system->SETTINGS['defaultlanguage']]) . "',
+			   '" .  mysql_escape_string($_POST['question'][$system->SETTINGS['defaultlanguage']]) . "',
+			   '" . mysql_escape_string($_POST['answer'][$system->SETTINGS['defaultlanguage']]) . "',
 			   " . $_POST['category'] . ")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$id = mysql_insert_id();
@@ -33,7 +33,7 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 		reset($LANGUAGES);
 		while(list($k,$v) = each($LANGUAGES)){
 			$query = "INSERT INTO " . $DBPrefix . "faqs_translated VALUES
-			($id, '$k', '" . addslashes($_POST['question'][$k]) . "', '" . addslashes($_POST['answer'][$k]) . "')";
+			($id, '$k', '" .  mysql_escape_string($_POST['question'][$k]) . "', '" .  mysql_escape_string($_POST['answer'][$k]) . "')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		header("Location: faqs.php");
@@ -50,6 +50,9 @@ $faqcats = array();
 while($row = mysql_fetch_array($res_c)) {
 	$faqcats[$row['id']] = $row['category'];
 }
+
+$question = (isset($_POST['question'][$system->SETTINGS['defaultlanguage']])) ? $_POST['question'][$system->SETTINGS['defaultlanguage']] : '';
+$answer = (isset($_POST['answer'][$system->SETTINGS['defaultlanguage']])) ? $_POST['answer'][$system->SETTINGS['defaultlanguage']] : '';
 
 $flagurl = '<img src="../includes/flags/' . $system->SETTINGS['defaultlanguage'] . '.gif">';
 

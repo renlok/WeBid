@@ -164,9 +164,9 @@ function selectAll(formObj, isInverse)
                       while ($i < count($countries)) {
                       	$j = $i - 1;
                       	
-                      	#// Check if this country has been selected for an auction or
-                      	#// if some user has registered selecting it
-                      	#// If one of the above conditions is true the country cannot be deleted
+                      	// Check if this country has been selected for an auction or
+                      	// if some user has registered selecting it
+                      	// If one of the above conditions is true the country cannot be deleted
                       	$USEDINUSERS = mysql_num_rows(mysql_query("SELECT id FROM " . $DBPrefix . "users WHERE country='".mysql_real_escape_string($countries[$i])."'"));
                       	
                       	print "
@@ -177,7 +177,7 @@ function selectAll(formObj, isInverse)
 						 <INPUT TYPE=text NAME=new_countries[] VALUE=\"".$countries[$i]."\" SIZE=45>
 						 </TD>
 						 <TD align=center>";
-                      	if($USEDINAUCTIONS == 0 && $USEDINUSERS == 0) {
+                      	if(!isset($USEDINUSERS) || $USEDINUSERS == 0) {
                       		print "<INPUT TYPE=checkbox NAME=delete[] VALUE=\"$j\">";
                       	} else {
                       		print "<IMG SRC=\"../images/nodelete.gif\" ALT=\"You cannot delete this category\">";

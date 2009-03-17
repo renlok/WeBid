@@ -28,7 +28,7 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 				  SET name = '" . addslashes($_POST['name']) . "',
 				  msgstoshow = " . intval($_POST['msgstoshow']) . ",
 				  active = " . intval($_POST['active']) . "
-				  WHERE id = " . $_POST['id'];
+				  WHERE id = " . intval($_POST['id']);
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		header("Location: boards.php");
 		exit;
@@ -36,7 +36,7 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 }
 $id = intval($_GET['id']);
 // Retrieve board's data from the database
-$query = "SELECT * FROM " . $DBPrefix . "community WHERE id = ".$id;
+$query = "SELECT * FROM " . $DBPrefix . "community WHERE id = " . $id;
 $res_ = mysql_query($query);
 $system->check_mysql($res_, $query, __LINE__, __FILE__);
 $BOARD = mysql_fetch_array($res_);

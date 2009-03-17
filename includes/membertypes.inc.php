@@ -3,7 +3,7 @@ $membertypes = array(
 "24" => array(
 "id"=>"24","feedbacks"=>"9","membertype"=>"","icon"=>"transparent.gif"),
 "14" => array(
-"id"=>"14","feedbacks"=>"49","membertype"=>"","icon"=>"starY.gif"),
+"id"=>"14","feedbacks"=>"49","membertype"=>"10","icon"=>"starY.gif"),
 "15" => array(
 "id"=>"15","feedbacks"=>"99","membertype"=>"50","icon"=>"starB.gif"),
 "16" => array(
@@ -19,6 +19,6 @@ $membertypes = array(
 "21" => array(
 "id"=>"21","feedbacks"=>"99999","membertype"=>"50000","icon"=>"starFV.gif"),
 "22" => array(
-"id"=>"22","feedbacks"=>"999999","membertype"=>"","icon"=>"starFR.gif")
+"id"=>"22","feedbacks"=>"999999","membertype"=>"100000","icon"=>"starFR.gif")
 );
 ?>

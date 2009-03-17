@@ -24,7 +24,7 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 	} else {
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
-				  cron = " . $_POST['cron'] . ",
+				  cron = " . intval($_POST['cron']) . ",
 				  archiveafter = " . intval($_POST['archiveafter']);
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$system->SETTINGS['cron'] = $_POST['cron'];

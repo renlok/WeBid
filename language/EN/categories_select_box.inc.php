@@ -9,7 +9,6 @@
 	<option value="114">Comics, Cards &amp; Science Fiction</option>
 	<option value="123">Computers &amp; Software</option>
 	<option value="128">Electronics &amp; Photography</option>
-	<option value="134">Gemstones &amp; Jewelry</option>
 	<option value="149">Home &amp; Garden</option>
 	<option value="159">Movies &amp; Video</option>
 	<option value="164">Music</option>

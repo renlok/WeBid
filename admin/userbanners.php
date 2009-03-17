@@ -138,7 +138,7 @@ if(mysql_num_rows($res_) > 0)
 $TPL_categories_list= "<select name=\"category[]\" ROWS=12 MULTIPLE>\n";
 if(isset($category_plain) && count($category_plain) > 0) {
 	foreach($category_plain as $k => $v) {
-		if(is_array($_POST['categories']))
+		if(isset($_POST['categories']) && is_array($_POST['categories']))
 			$select = (in_array($k, $_POST['categories'])) ? " selected=true" : "";
 		else
 			$select = '';
@@ -180,7 +180,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
         <TR>
           <TD><CENTER>
             <BR>
-            <FORM NAME=conf ACTION=<?php echo basename($_SERVER[PHP_SELF]); ?> METHOD=POST ENCTYPE="multipart/form-data">
+            <FORM NAME=conf ACTION="" METHOD=POST ENCTYPE="multipart/form-data">
               <TABLE WIDTH="90%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
                 <TR>
                   <TD ALIGN=CENTER class=title><?php print $MSG['_0024']; ?></TD>

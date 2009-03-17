@@ -19,7 +19,7 @@ unset($ERR);
 
 if(isset($_POST['action']) && $_POST['action'] == "update") {
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			activationtype = " . $_POST['usersconf'];
+			activationtype = " . intval($_POST['usersconf']);
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['activationtype'] = $_POST['usersconf'];
 	$ERR = $MSG['25_0155'];

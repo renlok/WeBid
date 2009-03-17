@@ -77,11 +77,11 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
     unset($_SESSION['sendto']);
 }
 
-if (isset($_REQUEST['deleteid'])) {
+if (isset($_REQUEST['deleteid']) && is_array($_REQUEST['deleteid'])) {
     $temparr = $_REQUEST['deleteid'];
     $message_id = 0;
     for($i = 0; $i < count($temparr); $i++) {
-        $message_id .= ',' . $temparr[$i];
+        $message_id .= ',' . intval($temparr[$i]);
     }
     $sql = "DELETE FROM " . $DBPrefix . "messages WHERE id IN ($message_id)";
     $run = mysql_query($sql);

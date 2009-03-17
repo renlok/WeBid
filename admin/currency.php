@@ -23,7 +23,7 @@ $res_ = mysql_query($query);
 $system->check_mysql($res_, $query, __LINE__, __FILE__);
 if(mysql_num_rows($res_) > 0) {
 	while($row = mysql_fetch_array($res_)) {
-		$CURRENCIES[$row['id']] = $row[symbol] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
+		$CURRENCIES[$row['id']] = $row['symbol'] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
 		$CURRENCIES_SYMBOLS[$row['id']] = $row['symbol'];
 	}
 }
@@ -42,9 +42,9 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
 				currency = '" . addslashes($CURRENCIES_SYMBOLS[$_POST['currency']]) . "',
-				moneyformat = " . $_POST['moneyformat'] . ",
-				moneydecimals = " . intval($_POST['moneydecimals']).",
-				moneysymbol = " . $_POST['moneysymbol'];
+				moneyformat = " . intval($_POST['moneyformat']) . ",
+				moneydecimals = " . intval($_POST['moneydecimals']) . ",
+				moneysymbol = " . intval($_POST['moneysymbol']);
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$system->SETTINGS = $_POST;
 		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];

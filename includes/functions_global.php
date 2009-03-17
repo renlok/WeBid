@@ -67,10 +67,10 @@ class global_class
 		if (!get_magic_quotes_gpc())
 			$i = addslashes($i);
 		$i = rtrim($i);
-		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%'); 
-		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;'); 
-		$i = str_replace($look, $safe, $i); 
-		return $i; 
+		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
+		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;');
+		$i = str_replace($look, $safe, $i);
+		return $i;
 	}
 	
 	function uncleanvars($i) {

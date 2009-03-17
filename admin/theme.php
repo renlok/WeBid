@@ -16,29 +16,29 @@ require('../includes/config.inc.php');
 include "loggedin.inc.php";
 
 if(isset($_POST['action']) && $_POST['action'] == "update") {
-	if(empty($_POST['theme'])) {
-		$ERR = $ERR_707;
-	} else {
+	if(is_dir($main_path . 'themes/' . $_POST['theme'])) {
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
 				theme = '" . $_POST['theme'] . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$system->SETTINGS['theme'] = $_POST['theme'];
 		$ERR = $MSG['26_0005'];
+	} else {
+		$ERR = $ERR_068;
 	}
 }
 
 if ($dir = @opendir(realpath($main_path . 'themes'))) {
 	while (($atheme = readdir($dir)) !== false) {
 		if ($atheme != '.' && $atheme != '..' && $atheme != 'CVS' && is_dir(realpath($main_path . 'themes') . '/' . $atheme)) {
-			$THEMES[] = $atheme;
+			$THEMES[$atheme] = $atheme;
 		}
 	}
 	@closedir($dir);
 }
 
 $selectsetting = $system->SETTINGS['theme'];
-loadblock($MSG['26_0003'], $MSG['26_0004'], generateSelect('theme', $THEMES));
+loadblock($MSG['26_0003'], $MSG['26_0004'], generateSelect('theme', $THEMES)); 
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

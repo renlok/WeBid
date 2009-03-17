@@ -176,7 +176,6 @@ $template->assign_vars(array(
         'SELLER' => $TPL_vendetor_value,
         'SELLERNUMFBS' => $TPL_num_feedbacks,
         'FBICON' => $TPL_rate_radio,
-        'USERNAME' => (isset($_SESSION['WEBID_LOGGED_IN_USERNAME'])) ? $_SESSION['WEBID_LOGGED_IN_USERNAME'] : '',
 
         'B_NOTBOUGHT' => ($buy_done != 1),
         'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y')

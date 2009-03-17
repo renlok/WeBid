@@ -16,7 +16,7 @@ require('../includes/config.inc.php');
 include "loggedin.inc.php";
 include $include_path.'membertypes.inc.php';
 foreach($membertypes as $idm => $memtypearr) {
-	$memtypesarr[$memtypearr['feedbacks']]=$memtypearr;
+	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
 }
 ksort($memtypesarr,SORT_NUMERIC);
 
@@ -143,7 +143,6 @@ if (($_SERVER['REQUEST_METHOD']=="GET" || $TPL_err) ) {
 			} else {
 				$rate_ratio=0;
 			}
-			//$TPL_rate_ratio_value	="<IMG src=\"../images/estrella_".$rate_ratio.".gif\">";
 		} else {
 			$TPL_err=1;
 			$TPL_errmsg=$err_font."$ERR_105";

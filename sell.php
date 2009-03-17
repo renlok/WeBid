@@ -328,7 +328,6 @@ switch ($_SESSION['action']) {
                         'SHIPPING_TERMS' => nl2br(stripslashes($shipping_terms)),
                         'PAYMENTS_METHODS' => $TPL_payment_methods,
                         'CAT_LIST' => $TPL_categories_list,
-                        'USERNAME' => $_SESSION['WEBID_LOGGED_IN_USERNAME'],
 
                         'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y'),
                         'B_ADULTONLY' => ($system->SETTINGS['adultonly'] == 'y'),

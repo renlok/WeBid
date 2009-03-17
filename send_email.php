@@ -97,7 +97,6 @@ $template->assign_vars(array(
         'SELLER_EMAIL' => $TPL_seller_email_value,
         'SELLER_QUESTION' => $TPL_sender_question,
         'ITEM_TITLE' => $TPL_item_title,
-        'USERNAME' => (isset($_SESSION['WEBID_LOGGED_NAME'])) ? $_SESSION['WEBID_LOGGED_NAME'] : '',
         'EMAIL' => (isset($_SESSION['WEBID_LOGGED_EMAIL'])) ? $_SESSION['WEBID_LOGGED_EMAIL'] : ''
         ));
 

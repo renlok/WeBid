@@ -100,6 +100,7 @@ $ERR_064 = "You may not use the Buy Now feature in a Dutch Auction";
 $ERR_065 = "Error updating information";
 $ERR_066 = "Error deleting information";
 $ERR_067 = "Required fields missing (all fields are required).";
+$ERR_068 = "Chosen theme does not exist";
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
 $ERR_102 = "Username does not exist";
@@ -695,8 +696,6 @@ $MSG['640'] = "*Note* If Dutch Auction you may not set a reserve price, custom i
 $MSG['641'] = "Dutch auction";
 $MSG['642'] = "Standard auction";
 $MSG['643'] = "\n\nThe winning bid amount is:";
-$MSG['644'] = "To populate the categories tree from scratch, you must first edit the
-			<a HREF=categories.txt>categories.txt</a> you find in the \"admin\" directory following the instructions contained in <a HREF=\"../docs/CATEGORIES\">docs/CATEGORIES</a>.";
 $MSG['645'] = "Post question for Seller";
 $MSG['646'] = "You must be logged in to ask questions to the seller";
 $MSG['647'] = "Ask";

@@ -15,11 +15,9 @@
 require('../includes/config.inc.php');
 include "loggedin.inc.php";
 
+unset($ERR);
 
-//Default for error message (blank)
-$ERR = "";
-
-if(isset($_POST['InsertButton']) && strlen($_POST['cat_name']) > 0)
+if(isset($_POST['InsertButton']) && isset($_POST['cat_name']) && strlen($_POST['cat_name']) > 0)
 {
 	$query = "insert into " . $DBPrefix . "faqscategories values(NULL,
 		'".addslashes($_POST['cat_name'][$system->SETTINGS['defaultlanguage']])."')";
@@ -107,7 +105,7 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 										<?php
 											reset($LANGUAGES);
 											while(list($k,$v) = each($LANGUAGES)){
-												if($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=cat_name[$k] SIZE=25 MAXLENGTH=200>";
+												if($k!=$system->SETTINGS['defaultlanguage']) print '<BR><IMG SRC=../includes/flags/' . $k . '.gif>&nbsp;<INPUT TYPE=text name="' . cat_name[$k] . '" SIZE=25 MAXLENGTH=200>';
 											}
 										?>
 									</TD>
@@ -136,9 +134,9 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 					<?php
 					while($row = mysql_fetch_array($res__))
 					{
-						$row[category]=stripslashes($row[category]);
+						$row[category]=stripslashes($row['category']);
 						#// Are there FAQs for this category?
-						$query = "select id from " . $DBPrefix . "faqs WHERE category=$row[id]";
+						$query = "select id from " . $DBPrefix . "faqs WHERE category = " . $row['id'];
 						$re = mysql_query($query);
 						$system->check_mysql($re, $query, __LINE__, __FILE__);
 						if(mysql_num_rows($re) > 0)
@@ -154,7 +152,7 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 					<TR BGCOLOR="#eeeeee">
 						<TD WIDTH="7%" BGCOLOR="#FFFFFF">
 							
-							<?php echo $row[id]; ?>
+							<?php echo $row['id']; ?>
 							
 						</TD>
 						<TD WIDTH="79%" BGCOLOR="#FFFFFF">

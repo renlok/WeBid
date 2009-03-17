@@ -19,7 +19,7 @@ include "loggedin.inc.php";
 
 //-- Set offset and limit for pagination
 $limit = 20;
-if(!$offset) $offset = 0;
+if(!isset($offset)) $offset = 0;
 ?>
 <HTML>
 <HEAD>

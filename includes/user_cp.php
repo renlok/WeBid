@@ -18,7 +18,6 @@ $template->assign_vars(array(
 	'B_ISERROR' => (!empty($ERR) || !empty($TPL_errmsg)),
 	'B_MENUTITLE' => (!empty($TMP_usmenutitle)),
 	'UCP_ERROR' => $ERR.$TPL_errmsg,
-	'UCP_TITLE' => $TMP_usmenutitle,
-	'USERNAME' => $_SESSION['WEBID_LOGGED_IN_USERNAME']
+	'UCP_TITLE' => $TMP_usmenutitle
 ));
 ?>

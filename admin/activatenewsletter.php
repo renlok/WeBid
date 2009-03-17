@@ -28,7 +28,7 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 	}
 	
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			newsletter = " . $_POST['newsletter'];
+			newsletter = " . intval($_POST['newsletter']);
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['newsletter'] = $_POST['newsletter'];
 	$ERR = $MSG['30_0049'];

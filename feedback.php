@@ -20,6 +20,8 @@ foreach($membertypes as $idm => $memtypearr) {
 ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 
+$_REQUEST['auction_id'] = intval($_REQUEST['auction_id']);
+
 if (!isset($_POST['auction_id']) && !isset($_GET['auction_id'])) {
     $_REQUEST['auction_id'] = $_SESSION['CURRENT_ITEM'];
 } else {
@@ -36,7 +38,7 @@ if (isset($_POST['addfeedback'])) { // submit the feedback
     }
     if (((isset($_POST['TPL_password']) && $system->SETTINGS['usersauth'] == 'y') || $system->SETTINGS['usersauth'] == 'n') && isset($_POST['TPL_rate']) && isset($_POST['TPL_feedback']) && !empty($_POST['TPL_feedback'])) {
         $sql = "SELECT winner, seller, feedback_win, feedback_sel FROM " . $DBPrefix . "winners
-				WHERE auction = " . intval($_REQUEST['auction_id']) . "
+				WHERE auction = " . $_REQUEST['auction_id'] . "
 				AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']) . "
 				AND ((seller = " . $_SESSION['WEBID_LOGGED_IN'] . " AND feedback_win = 0)
 				OR (winner = " . $_SESSION['WEBID_LOGGED_IN'] . " AND feedback_sel = 0))";
@@ -64,7 +66,7 @@ if (isset($_POST['addfeedback'])) { // submit the feedback
 								" . intval($uid) . ",
 								'" . $system->cleanvars($secTPL_rater_nick) . "',
 								'" . $system->cleanvars($secTPL_feedback) . "',
-								" . intval($_POST['TPL_rate']) . ", '" . time() . "'," . intval($_REQUEST['auction_id']) . ")";
+								" . intval($_POST['TPL_rate']) . ", '" . time() . "'," . $_REQUEST['auction_id'] . ")";
                             $res = mysql_query($sql);
                             $system->check_mysql($res, $sql, __LINE__, __FILE__);
                             if ($ws == 's') {
@@ -74,7 +76,7 @@ if (isset($_POST['addfeedback'])) { // submit the feedback
                                 $sqlset = "feedback_win = 1";
                             }
                             $sql = "UPDATE " . $DBPrefix . "winners SET $sqlset
-									WHERE auction = " . intval($_REQUEST['auction_id']) . " AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']);
+									WHERE auction = " . $_REQUEST['auction_id'] . " AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']);
                             $res = mysql_query ($sql);
                             $system->check_mysql($res, $sql, __LINE__, __FILE__);
                             header ("location: feedback.php?faction=show&id=" . intval($uid));

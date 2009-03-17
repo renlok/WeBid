@@ -326,7 +326,6 @@ if (!isset($_POST['action']) || isset($errmsg)) {
             'NEXT_BID' => $system->print_money($next_bid),
             'QTY' => $qty,
             'TQTY' => $aquantity,
-            'USERNAME' => $_SESSION['WEBID_LOGGED_IN_USERNAME'],
             'AGREEMENT' => sprintf($MSG['25_0086'], $system->print_money($qty * $bid)),
             'CURRENCY' => $system->SETTINGS['currency'],
 

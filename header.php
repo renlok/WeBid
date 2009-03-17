@@ -86,7 +86,7 @@ $template->assign_vars(array(
 		'ASSLURL' => ($system->SETTINGS['https'] == 'y' && $system->SETTINGS['usersauth'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'],
         'Q' => (isset($q)) ? $q : '',
         'SELECTION_BOX' => file_get_contents($main_path . "language/" . $language . "/categories_select_box.inc.php"),
-		'USERNAME' => (isset($_SESSION['WEBID_LOGGED_IN_USERNAME'])) ? $_SESSION['WEBID_LOGGED_IN_USERNAME'] : '',
+		'YOURUSERNAME' => (isset($_SESSION['WEBID_LOGGED_IN_USERNAME'])) ? $_SESSION['WEBID_LOGGED_IN_USERNAME'] : '',
 
         'B_CAN_SELL' => (($system->SETTINGS['uniqueseller'] > 0 && $_SESSION['WEBID_LOGGED_IN'] == $system->SETTINGS['uniqueseller']) || $system->SETTINGS['uniqueseller'] == 0),
         'B_LOGGED_IN' => (isset($_SESSION['WEBID_LOGGED_IN'])),

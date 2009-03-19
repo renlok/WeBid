@@ -55,8 +55,8 @@
 	</tr>
 	<tr>
 		<td width="55%" rowspan="2" valign="top" style="font-size: 12px; line-height: 0.6cm;">
-		<b>Auction Title:</b> 	{TITLE} <br />
-	    	<b>Comments:</b> {S_COMMENT}<br />
+            <b>Auction Title:</b> 	{TITLE} <br />
+            <b>Comments:</b> {S_COMMENT}<br />
 		</td>
 		<td width="34%" style="font-size: 12px;">Check Out The Auction!</td>
 	</tr>

@@ -66,7 +66,6 @@ $message = ereg_replace("<#c_sitename#>",$system->SETTINGS['sitename'],$message)
 $message = ereg_replace("<#c_siteurl#>",$system->SETTINGS['siteurl'],$message);
 $message = ereg_replace("<#c_adminemail#>",$system->SETTINGS['adminmail'],$message);
 
-//$MSG['112']
-mail($Seller['email'],$system->SETTINGS['sitename'] . ' '.$MSG['112'].' '.$MSG['907'].' ' . $Auction['title'],stripslashes($message),"From:".$system->SETTINGS['sitename']." <".$system->SETTINGS['adminmail'].">\n"."Content-Type: text/html; charset=$CHARSET");
+mail($Seller['email'],$system->SETTINGS['sitename'] . ' '.$MSG['079'].' '.$MSG['907'].' ' . $Auction['title'],stripslashes($message),"From:".$system->SETTINGS['sitename']." <".$system->SETTINGS['adminmail'].">\n"."Content-Type: text/html; charset=$CHARSET");
 
 ?>

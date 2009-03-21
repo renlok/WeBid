@@ -282,11 +282,9 @@ $(document).ready(function(){
 <!-- ELSEIF PAGE eq 1 -->
             <form name="preview" action="{ASSLURL}sell.php" method="post">
             <table width="100%" border="0" cellpadding="4" align="center" cellspacing=0>
-    <!-- IF ERROR ne 0 -->
+    <!-- IF ERROR ne '' -->
             <tr>
-                <td colspan="2" class="errfont">
-                    {ERROR}
-                </td>
+                <td class="errfont" colspan="2" align="center">{ERROR}</td>
             </tr>
     <!-- ENDIF -->
             <tr>

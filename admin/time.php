@@ -21,7 +21,7 @@ unset($ERR);
 if(isset($_POST['action']) && $_POST['action'] == "update") {
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings set 
-			timecorrection = " . intval($_POST['correction']);
+			timecorrection = " . intval($_POST['timecorrection']);
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['timecorrection'] = $_POST['timecorrection'];	
 	$ERR = $MSG['347'];
@@ -79,7 +79,7 @@ $TIMECORRECTION = array(
 
 $selectsetting = $system->SETTINGS['timecorrection'];
 
-$html = generateSelect('correction', $TIMECORRECTION);
+$html = generateSelect('timecorrection', $TIMECORRECTION);
 
 loadblock($MSG['346'], $MSG['345'], 'dropdown', 'timecorrection', $system->SETTINGS['timecorrection']);
 

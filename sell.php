@@ -23,6 +23,7 @@ include $main_path . "fck/fckeditor.php";
 
 $_SESSION['action'] = (!isset($_SESSION['action'])) ? 1 : $_SESSION['action'];
 $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST['action'];
+$ERR = "ERR_";
 
 if (!isset($_SESSION['SELL_sellcat']) || !is_numeric($_SESSION['SELL_sellcat'])) {
     header("location: select_category.php");
@@ -52,7 +53,6 @@ switch ($_SESSION['action']) {
 			header('Location: ' . $sslurl . 'sell.php');
 			exit;
 		}
-		$ERR = 'ERR_';
         $query = "SELECT * FROM " . $DBPrefix . "payments";
         $res_payments = mysql_query($query);
         $system->check_mysql($res_payments, $query, __LINE__, __FILE__);
@@ -210,11 +210,13 @@ switch ($_SESSION['action']) {
             $TPL_description_shown_value = $description = $system->filter($description);
         }
         // check for errors
-        $ERR = "ERR_" . CheckSellData();
-        if ($ERR != "ERR_") {
-            $_SESSION['action'] = 1;
-            $noerror = false;
-        }
+		if($ERR == "ERR_") {
+			$ERR = "ERR_" . CheckSellData();
+			if ($ERR != "ERR_") {
+				$_SESSION['action'] = 1;
+				$noerror = false;
+			}
+		}
         if ($noerror) {
             $auction_id = generate_id();
             if ($imgtype == 1 && !empty($_FILES['userfile']['name']) && $_FILES['userfile']['name'] != "none") {
@@ -307,7 +309,7 @@ switch ($_SESSION['action']) {
 
                 $template->assign_vars(array(
                         'TITLE' => $title,
-                        'ERROR' => ($ERR == "ERR_") ? 0 : $$ERR,
+                        'ERROR' => ($ERR == "ERR_") ? '' : $$ERR,
                         'PAGE' => 1,
                         'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 

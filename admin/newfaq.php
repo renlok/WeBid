@@ -14,72 +14,134 @@
 
 require('../includes/config.inc.php');
 include "loggedin.inc.php";
-include $main_path . "fck/fckeditor.php";
 
-unset($ERR);
+#//Default for error message (blank)
+$ERR = "&nbsp;";
 
-// Insert new message
+#// Insert new message
 if(isset($_POST['action']) && $_POST['action'] == "update") {
-	if(strlen($_POST['question']) == 0 && strlen($_POST['answer']) == 0){
-		$ERR = $ERR_067;
-	} else {
-		$query = "INSERT INTO " . $DBPrefix . "faqs VALUES (NULL,
-			   '" .  mysql_escape_string($_POST['question'][$system->SETTINGS['defaultlanguage']]) . "',
-			   '" . mysql_escape_string($_POST['answer'][$system->SETTINGS['defaultlanguage']]) . "',
-			   " . $_POST['category'] . ")";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$id = mysql_insert_id();
-		// Insert into translation table.
+	if(strlen($_POST[question]) == 0 && strlen($_POST[answer]) == 0){
+		$ERR = "Required fields missing (all fields are required).";
+		$system->SETTINGS = $_POST;
+	}else{
+		$query = "INSERT into ".$DBPrefix."faqs values(NULL,
+			   '".addslashes($_POST['question'][$system->SETTINGS['defaultlanguage']])."',
+			   '".addslashes($_POST['answer'][$system->SETTINGS['defaultlanguage']])."',
+			   $_POST[category])";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$id=mysql_insert_id();
+		#// Insert into translation table.
 		reset($LANGUAGES);
 		while(list($k,$v) = each($LANGUAGES)){
-			$query = "INSERT INTO " . $DBPrefix . "faqs_translated VALUES
-			($id, '$k', '" .  mysql_escape_string($_POST['question'][$k]) . "', '" .  mysql_escape_string($_POST['answer'][$k]) . "')";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "INSERT INTO ".$DBPrefix."faqs_translated VALUES(
+					$id,
+					'$k',
+					'".addslashes($_POST['question'][$k])."',
+					'".addslashes($_POST['answer'][$k])."')";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
 		}
-		header("Location: faqs.php");
+		Header("Location: faqs.php");
 		exit;
 	}
+} else {
+	#// Get data from the database
+	$query = "select * from ".$DBPrefix."faqscategories";
+	$res_c = mysql_query($query);
+	$system->check_mysql($res_c, $query, __LINE__, __FILE__);
 }
 
-// Get data from the database
-$query = "SELECT * FROM " . $DBPrefix . "faqscategories";
-$res_c = mysql_query($query);
-$system->check_mysql($res_c, $query, __LINE__, __FILE__);
-
-$faqcats = array();
-while($row = mysql_fetch_array($res_c)) {
-	$faqcats[$row['id']] = $row['category'];
-}
-
-$question = (isset($_POST['question'][$system->SETTINGS['defaultlanguage']])) ? $_POST['question'][$system->SETTINGS['defaultlanguage']] : '';
-$answer = (isset($_POST['answer'][$system->SETTINGS['defaultlanguage']])) ? $_POST['answer'][$system->SETTINGS['defaultlanguage']] : '';
-
-$flagurl = '<img src="../includes/flags/' . $system->SETTINGS['defaultlanguage'] . '.gif">';
-
-$selectsetting = (isset($_POST['category'])) ? $_POST['category'] : '';
-
-loadblock($MSG['5238'], '', generateSelect('question', $faqcats));
-loadblock($MSG['5239'], $flagurl);
-loadblock('', '', 'text', 'question', $question, $MSG['030'], $MSG['029']);
-
-$oFCKeditor = new FCKeditor('answer');
-$oFCKeditor->BasePath = '../fck/';
-$oFCKeditor->Value = $answer;
-$oFCKeditor->Width  = '550';
-$oFCKeditor->Height = '400';
-
-loadblock($MSG['5240'], '', $oFCKeditor->CreateHtml());
-
-$template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'con',
-		'TYPENAME' => $MSG['25_0018'],
-		'PAGENAME' => $MSG['5231']
-		));
-
-$template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
-$template->display('body');
 ?>
+<HTML>
+<HEAD>
+<link rel='stylesheet' type='text/css' href='style.css' />
+</HEAD>
+<body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+        <tr> 
+          <td width="30"><img src="images/i_con.gif" ></td>
+          <td class=white><?=$MSG['25_0018']?>&nbsp;&gt;&gt;&nbsp;<?=$MSG['5231']?></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">&nbsp;</td>
+  </tr>
+    <tr> 
+    <td align="center" valign="middle"><FORM NAME="faq" METHOD="post" ACTION="<?=basename($_SERVER['PHP_SELF'])?>">
+	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" ALIGN="CENTER" BGCOLOR="#0083D7">
+		<TR align=center>
+			<TD BGCOLOR=#ffffff>&nbsp;</TD>
+		</TR>
+		<TR>
+			<TD>
+				<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="4" ALIGN="CENTER">
+					<TR>
+						<TD COLSPAN="2" BGCOLOR="#0083D7" align=center class=title>
+							<?=$MSG['5231']?>
+						</TD>
+					</TR>
+					<TR BGCOLOR="#FFFFFF">
+						<TD WIDTH="23%" CLASS=link HEIGHT="27" VALIGN="top">
+							<?=$MSG['5238']?> </TD>
+						<TD WIDTH="77%" CLASS=link HEIGHT="27">
+						<SELECT NAME="category">
+							<?php
+							while($row = mysql_fetch_array($res_c))
+							{
+								$row[category]=stripslashes($row[category]);
+								print '<OPTION VALUE="'.$row['id'].'"';
+								if($_POST[category] == $row[category]) print " SELECTED";
+								print '>'.$row['category'].'</OPTION>'."\n";
+							}
+						?>
+						</SELECT>
+						</TD>
+					</TR>
+					<TR BGCOLOR="#FFFFFF">
+						<TD WIDTH="23%" CLASS=link HEIGHT="27" VALIGN="top">
+						<?=$MSG['5239']?></TD>
+						<TD WIDTH="77%" CLASS=link HEIGHT="27">
+							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif">&nbsp;<INPUT TYPE="text" NAME="question[<?=$system->SETTINGS['defaultlanguage']?>]" SIZE="35" MAXLENGTH="200">
+							<?php
+								reset($LANGUAGES);
+								while(list($k,$v) = each($LANGUAGES)){
+									if($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=question[$k] SIZE=35 MAXLENGTH=200>";
+								}
+							?>
+						</TD>
+					</TR>
+					<TR BGCOLOR="#FFFFFF">
+						<TD WIDTH="23%" CLASS=link HEIGHT="27" VALIGN="top">
+						<?=$MSG['5240']?></TD>
+						<TD WIDTH="77%" CLASS=link HEIGHT="27">
+							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif"><br><TEXTAREA NAME="answer[<?=$system->SETTINGS['defaultlanguage']?>]" COLS="40" ROWS="15"></TEXTAREA>
+							<?php
+								reset($LANGUAGES);
+								while(list($k,$v) = each($LANGUAGES)){
+									if($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=answer[$k] COLS=40 ROWS=15></TEXTAREA>";
+								}
+							?>
+						</TD>
+					</TR>
+					<TR>
+						<TD WIDTH="23%" BGCOLOR="#FFFFFF">
+							<INPUT TYPE="hidden" NAME="action" VALUE="update">
+						</TD>
+						<TD WIDTH="77%" BGCOLOR="#FFFFFF">
+							<INPUT TYPE="submit" NAME="Submit" VALUE="INSERT FAQ">
+						</TD>
+					</TR>
+				</TABLE>
+			</TD>
+		</TR>
+	</TABLE>
+</FORM>
+</TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>

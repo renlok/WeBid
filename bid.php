@@ -240,12 +240,16 @@ if (isset($_POST['action']) && !isset($errmsg)) {
         $system->check_mysql($res, $query, __LINE__, __FILE__);
         if (mysql_num_rows($res) > 0) {
             $PREVIOUSBID = mysql_fetch_array($res);
-            if (($current_bid * $qty) <= ($PREVIOUSBID['bid'] * $PREVIOUSBID['quantity'])) {
+            if (($bid * $qty) <= ($PREVIOUSBID['bid'] * $PREVIOUSBID['quantity'])) {
                 $errmsg = $ERR_059;
             }
         }
-        $query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($next_bid) . ", '" . $NOW . "', " . $qty . ")";
-        $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		if(!isset($errmsg)) {
+			$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($bid) . ", '" . $NOW . "', " . $qty . ")";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($bid) . ", num_bids = num_bids + 1 WHERE id = " . $id;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
     }
     // send emails where needed
     $send_email = false;

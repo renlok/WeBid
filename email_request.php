@@ -43,6 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == "proceed") {
 		$result = mysql_query($query);
 		$system->check_mysql($result, $query, __LINE__, __FILE__);
 		$item_title = mysql_result($result, 0, "title");
+		$item_title = $system->uncleanvars($item_title);
         // -- Send e-mail message
         $subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
         $message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $_POST['TPL_sender_mail'] . "\n\n" . $_POST['TPL_text'];

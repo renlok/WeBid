@@ -19,25 +19,23 @@ include "loggedin.inc.php";
 
 $ABSOLUTEWIDTH = 650;
 
-#// Retrieve data
+// Retrieve data
 $query = "SELECT * FROM " . $DBPrefix . "currentaccesses ORDER BY day";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $MAX = 0;
-while($row = mysql_fetch_array($res))
-{
+while($row = mysql_fetch_array($res)) {
 	$PAGEVIEWS[$row['day']] = $row['pageviews'];
 	$UNIQUEVISITORS[$row['day']] = $row['uniquevisitors'];
 	$USERSESSIONS[$row['day']] = $row['usersessions'];
 	
-	if(max($PAGEVIEWS[$row['day']],$UNIQUEVISITORS[$row['day']],$USERSESSIONS[$row['day']]) > $MAX)
-	{
+	if(max($PAGEVIEWS[$row['day']],$UNIQUEVISITORS[$row['day']],$USERSESSIONS[$row['day']]) > $MAX) {
 		$MAX = max($PAGEVIEWS[$row['day']],$UNIQUEVISITORS[$row['day']],$USERSESSIONS[$row['day']]);
 	}
 }
-if(is_array($PAGEVIEWS))
-{
+
+if(is_array($PAGEVIEWS)) {
 	$TOTAL_PAGEVIEWS = array_sum($PAGEVIEWS);
 	$TOTAL_UNIQUEVISITORS = array_sum($UNIQUEVISITORS);
 	$TOTAL_USERSESSIONS = array_sum($USERSESSIONS);

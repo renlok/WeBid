@@ -19,7 +19,7 @@ include $include_path.'domains.inc.php';
 $ABSOLUTEWIDTH = 550;
 
 #// Retrieve data
-$query = "SELECT * FROM " . $DBPrefix . "currentdomains WHERE month='".date("m")."' AND year='".date("Y")."' ORDER BY domain";
+$query = "SELECT * FROM " . $DBPrefix . "currentdomains WHERE month = " . date('n') . " AND year = " . date('Y') . " ORDER BY domain";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

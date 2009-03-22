@@ -4,7 +4,7 @@ $Props = array();
 $PropGroups = array();
 $List = array();
 
-$propfile = 'data/properties.dta';
+$propfile = 'includes/properties.dta';
 $src = file($propfile) or die('CSS syntax definition cannot be read.');
 
 $openProp = false;

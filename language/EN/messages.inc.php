@@ -101,6 +101,7 @@ $ERR_065 = "Error updating information";
 $ERR_066 = "Error deleting information";
 $ERR_067 = "Required fields missing (all fields are required).";
 $ERR_068 = "Chosen theme does not exist";
+$ERR_069 = "Currency conversion failed";
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
 $ERR_102 = "Username does not exist";

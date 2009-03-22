@@ -186,6 +186,7 @@ foreach ($directories as $dir) {
 $directories = array(
 	'includes/data.inc.php',
 	'includes/countries.inc.php',
+	'includes/currencies.php',
 	'includes/membertypes.inc.php',
 	'language/EN/categories.inc.php',
 	'language/EN/categories_select_box.inc.php'

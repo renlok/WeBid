@@ -1,25 +1,38 @@
 <?php
+/***************************************************************************
+ *   copyright				: (C) 2008 WeBid
+ *   site					: http://www.webidsupport.com/
+ ***************************************************************************/
+
+/***************************************************************************
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version. Although none of the code may be
+ *   sold. If you have been sold this script, get a refund.
+ ***************************************************************************/
+ 
+if(!defined('InWeBid')) exit('Access denied');
 if (!$sel) die('Selector was not defined');
-// if (!$userID) die('User ID was not defined');
+
 $sel = trim(str_replace('..', '', $sel));
-if (!$thestyle) {
-    echo "style not defined.";
-    die();
-}
+if (!$thestyle) die('Style not defined.');
+
 $filename = str_replace('..', '', $thestyle);
 
 if (file_exists($filename)) $cssfile = file($filename);
+
 if ($cssfile) {
-    while (list (, $line) = each($cssfile)) {
+    while (list(, $line) = each($cssfile)) {
         $line = trim($line);
         if ($line) {
             eregi('([^\{]*)\{([^\}]*)\}', $line, $reg);
             $selector = trim($reg[1]);
             $rules = trim($reg[2]);
             if ($selector && $rules) {
-                $defs = explode(";", $rules);
+                $defs = explode(';', $rules);
                 while (list(, $rule) = each($defs)) {
-                    list($prop, $def) = explode(":", $rule);
+                    list($prop, $def) = explode(':', $rule);
                     $prop = trim($prop);
                     $def = trim($def);
                     if ($prop != '' && $def != '') $css[$selector][$prop] = $def;
@@ -29,7 +42,7 @@ if ($cssfile) {
     }
 }
 
-if ($css) uksort($css, "selectorsort");
+if ($css) uksort($css, 'selectorsort');
 
 if ($save) {
     if ($newruleslist) {
@@ -53,7 +66,6 @@ if ($save) {
             if ($rule) fwrite($fp, $s . "\t{ " . $rule . "}\n");
         }
         fclose($fp) or die("Cannot close the CSS file");
-        // cleanup();
     }
 } elseif ($delete) {
     if ($css) {
@@ -124,11 +136,15 @@ function selectorsort($a, $b)
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title>CSS Editor of <?php echo htmlspecialchars($sel) ?></title>
-	<meta name="copyright" content="pixy@pixy.cz" />
-	<script src="js/utils.js" type="text/javascript"></script>
+<title>CSS Editor of <?php echo htmlspecialchars($sel) ?></title>
+<script type="text/javascript">
+function objGet(o) {
+	if (typeof o != 'string') return o;
+	else return document.getElementById(o);
+}
+</script>
 
 <style type="text/css">
 	strong {

@@ -1,5 +1,4 @@
 <?php
-if(!defined('InWeBid')) exit();
 /*
 $Id: nusoap.php,v 1.1 2007/01/15 11:46:36 giancvs Exp $
 
@@ -32,23 +31,7 @@ http://www.nusphere.com
 
 */
 
-/* load classes
-
-// necessary classes
-require_once('class.soapclientt.php');
-require_once('class.soap_val.php');
-require_once('class.soap_parser.php');
-require_once('class.soap_fault.php');
-
-// transport classes
-require_once('class.soap_transport_http.php');
-
-// optional add-on classes
-require_once('class.xmlschema.php');
-require_once('class.wsdl.php');
-
-// server class
-require_once('class.soap_server.php');*/
+if(!defined('InWeBid')) exit();
 
 /**
 *
@@ -116,7 +99,7 @@ class nusoap_base {
 		'normalizedString'=>'string','token'=>'string','language'=>'','NMTOKEN'=>'','NMTOKENS'=>'','Name'=>'','NCName'=>'','ID'=>'',
 		'IDREF'=>'','IDREFS'=>'','ENTITY'=>'','ENTITIES'=>'','integer'=>'integer','nonPositiveInteger'=>'integer',
 		'negativeInteger'=>'integer','long'=>'integer','int'=>'integer','short'=>'integer','byte'=>'integer','nonNegativeInteger'=>'integer',
-		'unsignedLong'=>'','unsignedInt'=>'','unsignedShort'=>'','unsignedByte'=>'','positiveInteger'=>''),
+		'unsignedLong'=>'','unsignedInt'=>'','unsignedShort'=>'','unsignedByte' => '','positiveInteger'=>''),
 	'http://www.w3.org/1999/XMLSchema' => array(
 		'i4'=>'','int'=>'integer','boolean'=>'boolean','string'=>'string','double'=>'double',
 		'float'=>'double','dateTime'=>'string',
@@ -4902,7 +4885,7 @@ class soapclientt extends nusoap_base  {
 	* @param	integer $response_timeout set the response timeout
 	* @access   public
 	*/
-	function soapclientt($endpoint,$wsdl = false,$proxyhost = false,$proxyport = false,$proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30){
+	function soapclientt($endpoint, $wsdl = false,$proxyhost = false,$proxyport = false,$proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30){
 		$this->endpoint = $endpoint;
 		$this->proxyhost = $proxyhost;
 		$this->proxyport = $proxyport;
@@ -4933,7 +4916,7 @@ class soapclientt extends nusoap_base  {
 				$this->debug('got wsdl error: '.$errstr);
 				$this->setError('wsdl error: '.$errstr);
 			} elseif($this->operations = $this->wsdl->getOperations()){
-				$this->debug( 'got '.count($this->operations).' operations from wsdl '.$this->wsdlFile);
+				$this->debug( 'got ' . count($this->operations) . ' operations from wsdl ' . $this->wsdlFile);
 			} else {
 				$this->debug( 'getOperations returned false');
 				$this->setError('no operations defined in the WSDL document!');

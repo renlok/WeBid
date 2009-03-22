@@ -14,7 +14,8 @@
 
 if(!defined('InWeBid')) exit();
 
-include($include_path."nusoap.php");
+include($include_path . 'nusoap.php');
+include($include_path . 'currencies.php');
 
 function CurrenciesList() {
 	if(!isset($_SESSION['curlist'])) {
@@ -39,18 +40,84 @@ function CurrenciesList() {
 	return $CURRENCIES;
 }
 
-function ConvertCurrency($FROM,$INTO,$AMOUNT) {
-	global $include_path;
-	$params1 = array(
-	'FromCurrency' 		=> $FROM,
-	'ToCurrency' 		=> $INTO
-	);
-	if($FROM==$INTO) return $AMOUNT;
-	$sclient 		= new soapclientt($include_path . "CurrencyConverter.wdsl", "wsdl");
-	$p				= $sclient->getProxy();
-	$ratio			= $p->ConversionRate($params1);
+function ConvertCurrency($FROM, $INTO, $AMOUNT) {
+	global $include_path, $conversionarray;
 	
-	$VAL 	= floatval($AMOUNT);
-	return $VAL*$ratio;
+	$params1 = array(
+		'FromCurrency' 	=> $FROM,
+		'ToCurrency' 	=> $INTO
+	);
+	if($FROM == $INTO) return $AMOUNT;
+	
+	$rate = findconversionrate($FROM, $INTO);
+	if($rate == 0 || true) {
+		$sclient = new soapclientt($include_path . "CurrencyConverter.wdsl", "wsdl");
+		$p = $sclient->getProxy();
+		$ratio = $p->ConversionRate($params1);
+		if(is_array($ratio) || true) {
+			echo $ratio = googleconvert($AMOUNT, $FROM, $INTO);
+			if($ratio == false) {
+				return false;
+			}
+		}
+		$VAL = floatval($AMOUNT);
+		$conversionarray[1][] = array('from' => $FROM, 'to' => $INTO, 'rate' => $ratio);
+		buildcache($conversionarray[1]);
+		return $VAL * $ratio;
+	} else {
+		$VAL = floatval($AMOUNT);
+		return $VAL * $rate;
+	}
+}
+
+function buildcache($newaarray) {
+	global $include_path;
+	
+	$output_filename = $include_path . 'currencies.php';
+	$output = "<?\n";
+	$output.= "\$conversionarray[] = '" . time() . "';\n";
+	$output.= "\$conversionarray[] = array(\n";
+	
+	for($i = 0; $i < count($newaarray); $i++){
+		$output .= "\t" . "array('from' => '" . $newaarray[$i]['from'] . "', 'to' => '" . $newaarray[$i]['to'] . "', 'rate' => '" . $newaarray[$i]['rate'] . "')";
+		if ($i < (count($newaarray) - 1))
+			$output .= ",\n";
+		else
+			$output .= "\n";
+	}
+	
+	$output .= ");\n?>\n";
+	
+	$handle = fopen($output_filename, 'w');
+	fputs($handle, $output);
+	fclose($handle);
+}
+
+function findconversionrate($FROM, $INTO) {
+	global $conversionarray;
+	
+	if(time() - (3600 * 24) < $conversionarray[0]) {
+		for($i = 0; $i < count($conversionarray[1]); $i++){
+			if($conversionarray[1][$i]['from'] == $FROM && $conversionarray[1][$i]['to'] == $INTO)
+				return $conversionarray[1][$i]['rate'];
+		}
+	} else {
+		$conversionarray = array(0, array());
+	}
+	return 0;
+}
+
+//if everything else fails try this
+function googleconvert($amount, $fromCurrency , $toCurrency){
+	$url = 'http://www.google.com/finance/converter?a=%s&from=%s&to=%s';
+	$finalurl = sprintf($url, $amount, $fromCurrency, $toCurrency);
+	
+	// Renders the google page result
+	$htmlrender = file_get_contents($finalurl);       
+	if(!empty($htmlrender)) {
+		preg_match('([0-9.]*)&nbsp;([a-zA-Z\ ]*)&nbsp;=&nbsp;<span class=bld>([0-9.]*)&nbsp;([a-zA-Z\ ]*)<\/span>', $htmlrender, $matches);
+		return (!empty($matches[4][0])) ? ($matches[3][0] / $matches[1][0]) : false;
+	}
+	return false;
 }
 ?>

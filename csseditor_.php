@@ -161,10 +161,15 @@ function selectorsort($a, $b)
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title>CSS Editor of <?php echo htmlspecialchars($sel) ?></title>
-	<script src="js/utils.js" type="text/javascript"></script>
+<title>CSS Editor of <?php echo htmlspecialchars($sel) ?></title>
+<script type="text/javascript">
+function objGet(o) {
+	if (typeof o != 'string') return o;
+	else return document.getElementById(o);
+}
+</script>
 
 <style type="text/css">
 	strong {

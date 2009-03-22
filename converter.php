@@ -11,6 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
+ 
 include "includes/config.inc.php";
 include $include_path . "converter.inc.php";
 
@@ -19,11 +20,12 @@ $CURRENCIES = CurrenciesList();
 if (isset($_POST['action']) && $_POST['action'] == 'convert') {
     // Convert
     $CONVERTED = ConvertCurrency($_POST['from'], $_POST['to'], $_POST['amount']);
+	if($CONVERTED == false) {
+		$errormsg = $ERR_069;
+	}
 }
-foreach($_GET as $k => $v) {
-    $var = $k;
-    $$var = $v;
-}
+
+$AMOUNT = (isset($_POST['amount'])) ? $_POST['amount'] : ((isset($_GET['AMOUNT'])) ? $_GET['AMOUNT'] : 0);
 
 ?>
 <html>
@@ -54,7 +56,11 @@ if (isset($_POST['action']) && $_POST['action'] == "convert") {
                     <tr valign="TOP">
                         <th colspan="3">
 <?php
-echo number_format($_POST['amount'], 4, '.', ',') . ' ' . $_POST['from'] . ' = ' . number_format($CONVERTED, 4, '.', ',') . ' ' . $_POST['to'];
+if(!isset($errormsg)) {
+	echo number_format($_POST['amount'], 4, '.', ',') . ' ' . $_POST['from'] . ' = ' . number_format($CONVERTED, 4, '.', ',') . ' ' . $_POST['to'];
+} else {
+	echo $errormsg;
+}
 ?>
                         </th>
                     </tr>

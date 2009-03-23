@@ -136,7 +136,7 @@ else {
         $ended_auction_id = $row['id'];
         $title = $row['title'];
 
-        $resultUSERS = mysql_query("SELECT name, email, item_watch FROM " . $DBPrefix . "users");
+        $resultUSERS = mysql_query("SELECT name, email, item_watch, id FROM " . $DBPrefix . "users");
         while ($watchusers = mysql_fetch_array($resultUSERS)) {
             $usname = $watchusers['name'];
             $e_mail = $watchusers['email'];
@@ -153,6 +153,7 @@ else {
 						'TITLE' => $title,
 						'NAME' => $usname
 						));
+				$emailer->email_uid = $watchusers['id'];
 				$emailer->email_sender($e_mail, 'mail_auctionend_watchmail.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['471']);
             }
         }

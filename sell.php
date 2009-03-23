@@ -135,7 +135,7 @@ switch ($_SESSION['action']) {
             }
             if (!isset($_SESSION['SELL_action']) || empty($_SESSION['SELL_action'])) {
                 // Send notification if users keyword matches (Auction Watch)
-                $query = "SELECT auc_watch, email, nick, name FROM " . $DBPrefix . "users WHERE auc_watch != ''";
+                $query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != ''";
                 $result = mysql_query($query);
                 while ($row = mysql_fetch_assoc($result)) {
                     if (isset($match)) unset($match);
@@ -155,6 +155,7 @@ switch ($_SESSION['action']) {
 										'REALNAME' => $row['name'],
 										'KWORD' => $row['auc_watch']
 										));
+								$emailer->email_uid = $row['id'];
 								$emailer->email_sender($row['email'], 'mail_auction_watchmail.inc.php', $system->SETTINGS['sitename'] . '  ' . $MSG['471']);
                             }
                         }

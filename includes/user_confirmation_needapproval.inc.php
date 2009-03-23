@@ -33,6 +33,7 @@ $emailer->assign_vars(array(
 		'CONFIRMATION_PAGE' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($TPL_nick_hidden),
 		'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo']
 		));
+$emailer->email_uid = $TPL_id_hidden;
 $emailer->email_sender(array($TPL_email_hidden, $system->SETTINGS['adminmail']), 'mail_user_needapproval.inc.php', $system->SETTINGS['sitename']. ' '.$MSG['098']);
 
 ?>

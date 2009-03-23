@@ -34,6 +34,7 @@ if($emailmode == 'one') {
 			'A_PICURL' => ($_SESSION['SELL_pict_url'] != '') ? $system->SETTINGS['siteurl'] . $uploaded_path . $auction_id . '/' . $pict_url : $system->SETTINGS['siteurl'] . 'images/email_alerts/default_item_img.jpg',
 			'SITENAME' => $system->SETTINGS['sitename']
 			));
+	$emailer->email_uid = $Seller['id'];
 	$emailer->email_sender($Seller['email'], 'mail_endauction_nowinner.inc.php', $system->SETTINGS['sitename']. ' ' . $MSG['112']);
 }
 ?>

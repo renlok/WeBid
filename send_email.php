@@ -84,6 +84,7 @@ if (isset($_POST['action']) || !empty($_POST['action'])) {
 				));
 		$item_title = $system->uncleanvars($item_title);
 		$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
+		$emailer->email_uid = $userid;
 		$emailer->email_sender($seller_email, 'mail_send_email.inc.php', $subject);
         $sql = "INSERT INTO " . $DBPrefix . "messages (`sentto`, `from`, `when`, `message`, `subject`) VALUES ('$seller_id', '$userid', '" . time() . "', '" . mysql_escape_string($cleaned_question) . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "')";
         $system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);

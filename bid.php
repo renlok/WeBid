@@ -296,6 +296,7 @@ if (isset($_POST['action']) && !isset($errmsg)) {
 					'BID' => $system->print_money(mysql_result($res, 0, 'current_bid')),
 					'AUCTION_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $id
 					));
+			$emailer->email_uid = $bidder_id;
 			$emailer->email_sender($email, 'mail_item_watch.inc.php', $system->SETTINGS['sitename'].' - '.$MSG['472']);
         }
         $i++;

@@ -23,9 +23,9 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $STATSSETTINGS = mysql_fetch_array($res);
 
-$THISDAY     = date('j');
-$THISMONTH   = date('n');
-$THISYEAR    = date('Y');
+$THISDAY     = gmdate('j');
+$THISMONTH   = gmdate('n');
+$THISYEAR    = gmdate('Y');
 
 if($STATSSETTINGS['activate'] == 'y') {
     // -> Users accesses ################################################

@@ -16,9 +16,7 @@ require "includes/config.inc.php";
 include "admin/loggedin.inc.php";
 
 $thestyle = (isset($_REQUEST['thestyle'])) ? $system->cleanvars($_REQUEST['thestyle']) : '';
-if (strpos($thestyle, '.css') === false) {
-    die('invalid file');
-}
+if (strpos($thestyle, '.css') === false) die('invalid file');
 $sel = (isset($_GET['sel'])) ? $_GET['sel'] : '';
 $from = (isset($_GET['from'])) ? $_GET['from'] : '';
 $font = (isset($_GET['font'])) ? $system->cleanvars($_GET['font']) : '';

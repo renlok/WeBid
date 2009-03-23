@@ -48,6 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == "proceed") {
         $subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
         $message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $_POST['TPL_sender_mail'] . "\n\n" . $_POST['TPL_text'];
 		$emailer = new email_class();
+		$emailer->email_uid = $user_id;
 		$emailer->email_basic($subject, $email, nl2br($message), $_POST['TPL_sender_name']); //sent the email :D
         // send a copy to their mesasge box
         $nowmessage = nl2br($system->cleanvars($message));

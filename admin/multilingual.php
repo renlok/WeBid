@@ -17,26 +17,20 @@ include "loggedin.inc.php";
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == 'updatelanguage' && isset($_POST['deflang'])) {
-	$query = "UPDATE " . $DBPrefix . "settings SET defaultlanguage = '".$_POST['deflang']."'";
+if(isset($_POST['action']) && $_POST['action'] == 'updatelanguage' && isset($_POST['defaultlanguage'])) {
+	$query = "UPDATE " . $DBPrefix . "settings SET defaultlanguage = '" . $_POST['defaultlanguage'] . "'";
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
 	$system->SETTINGS['defaultlanguage'] = $_POST['defaultlanguage'];
 }
 
-// Retrieve default language
-$query = "SELECT defaultlanguage FROM " . $DBPrefix . "settings";
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$DEFAULTLANGUAGE = mysql_result($result,0,"defaultlanguage");
-
 $html = '';
 if(is_array($LANGUAGES)) {
 	reset($LANGUAGES);
 	while(list($k,$v) = each($LANGUAGES)) {
-		$html .= '<INPUT TYPE="radio" name="deflang" value="' . $k . '" ' . (($DEFAULTLANGUAGE == $k) ? " CHECKED" : '') . '>
-	<IMG SRC="../includes/flags/' . $k . '.gif" HSPACE=2>
-	' . $v . (($DEFAULTLANGUAGE == $k) ? '&nbsp;' . $MGS_2__0005 : '') . '<BR>';
+		$html .= '<input type="radio" name="defaultlanguage" value="' . $k . '" ' . (($system->SETTINGS['defaultlanguage'] == $k) ? ' checked="checked"' : '') . '>
+	<img src="../includes/flags/' . $k . '.gif" hspace="2">
+	' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MGS_2__0005 : '') . '<BR>';
 	}
 }
 

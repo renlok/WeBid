@@ -233,25 +233,25 @@ function window_open(pagina,titulo,ancho,largo,x,y){
                     <OPTION VALUE=all>
                     <?php echo $MSG['5296']; ?>
                     </OPTION>
-                    <OPTION VALUE=active <? if($_SESSION['usersfilter'] == 'active') print " selected"?>>
+                    <OPTION VALUE=active <?php if($_SESSION['usersfilter'] == 'active') print " selected"?>>
                     <?php echo $MSG['5291']; ?>
                     </OPTION>
-                    <OPTION VALUE=admin <? if($_SESSION['usersfilter'] == 'admin') print " selected"?>>
+                    <OPTION VALUE=admin <?php if($_SESSION['usersfilter'] == 'admin') print " selected"?>>
                     <?php echo $MSG['5294']; ?>
                     </OPTION>
-                    <OPTION VALUE=fee <? if($_SESSION['usersfilter'] == 'fee') print " selected"?>>
+                    <OPTION VALUE=fee <?php if($_SESSION['usersfilter'] == 'fee') print " selected"?>>
                     <?php echo $MSG['5293']; ?>
                     </OPTION>
-                    <OPTION VALUE=confirmed <? if($_SESSION['usersfilter'] == 'confirmed') print " selected"?>>
+                    <OPTION VALUE=confirmed <?php if($_SESSION['usersfilter'] == 'confirmed') print " selected"?>>
                     <?php echo $MSG['5292']; ?>
                     </OPTION>
                     <?php
                     if($system->SETTINGS['accounttype'] == 'sellerbuyer') {
                     ?>
-                    <OPTION VALUE=sellers <? if($_SESSION['usersfilter'] == 'sellers') print " selected"?>>
+                    <OPTION VALUE=sellers <?php if($_SESSION['usersfilter'] == 'sellers') print " selected"?>>
                     <?php echo $MSG['25_0138']; ?>
                     </OPTION>
-                    <OPTION VALUE=buyers <? if($_SESSION['usersfilter'] == 'buyers') print " selected"?>>
+                    <OPTION VALUE=buyers <?php if($_SESSION['usersfilter'] == 'buyers') print " selected"?>>
                     <?php echo $MSG['25_0139']; ?>
                     </OPTION>
                     <?php

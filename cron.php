@@ -249,28 +249,28 @@ else {
                 $report_text = $MSG['429'];
             }
         } else {
-            // //**************************************************
-            // //  		 Dutch Auction
-            // //***************************************************
+            //**************************************************
+            //  		 Dutch Auction
+            //**************************************************
             unset($WINNERS_NICK);
             unset($WINNERS_EMAIL);
             unset($WINNERS_NAME);
             unset($WINNERS_QUANT);
             unset($WINNERS_BIDQUANT);
-            $report_text = "";
+            $report_text = '';
             // find out winners sorted by bid
             $query = "SELECT *, MAX(bid) AS maxbid
 					FROM " . $DBPrefix . "bids WHERE auction = " . $Auction['id'] . " GROUP BY bidder
-					ORDER BY maxbid DESC , id DESC";
+					ORDER BY maxbid DESC, quantity DESC, id DESC";
             $res = mysql_query ($query);
             if ($res) {
                 $numDbids = mysql_num_rows($res);
                 $counterbid = mysql_query("UPDATE " . $DBPrefix . "counters SET bids = (bids - $numDbids)");
                 if ($numDbids == 0) {
-                    $report_text = "No bids";
+                    $report_text = 'No bids';
                 } else {
                     $WINNERS_ID = array();
-                    $report_text = "";
+                    $report_text = '';
                     $WINNING_BID = $WinnerBid['maxbid'];
                     $items_count = $Auction['quantity'];
                     $items_sold = 0;
@@ -291,7 +291,7 @@ else {
                             }
                             $items_sold += $items_got;
                             // // Retrieve winner nick from the database
-                            $query = "SELECT nick,email,name,address,city,zip,prov,country FROM " . $DBPrefix . "users WHERE id='" . $row['bidder'] . "'";
+                            $query = "SELECT nick, email, name, address, city, zip, prov, country FROM " . $DBPrefix . "users WHERE id='" . $row['bidder'] . "'";
                             $res_n = mysql_query($query);
                             $system->check_mysql($res_n, $query, __LINE__, __FILE__);
                             $NICK = @mysql_result($res_n, 0, "nick");
@@ -320,11 +320,11 @@ else {
                             $totalamount = $row['maxbid'];
                             // Add winner's data to "winners" table
                             $query = "INSERT INTO " . $DBPrefix . "winners VALUES
-									 (NULL,'$Auction[id]','$Seller[id]', '$row[bidder]', $row[maxbid], '$NOW', 0, 0, 0, $items_got)";
+									 (NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, 0, " . $items_got . ")";
                             $res_ = mysql_query($query);
                             $system->check_mysql($res_, $query, __LINE__, __FILE__);
                             // Update column transaction in table " . $DBPrefix . "counters
-                            $counterbid = mysql_query("UPDATE " . $DBPrefix . "counters SET transactions=(transactions+1)");
+                            $counterbid = mysql_query("UPDATE " . $DBPrefix . "counters SET transactions = (transactions + 1)");
                         }
                         if (!$row = mysql_fetch_array($res)) {
                             break;

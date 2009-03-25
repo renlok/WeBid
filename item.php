@@ -18,6 +18,7 @@ include $include_path . "countries.inc.php";
 include $include_path . 'dates.inc.php';
 include $include_path . "membertypes.inc.php";
 include $main_path . "language/" . $language . "/categories.inc.php";
+
 // Get parameters from the URL
 foreach($membertypes as $idm => $memtypearr) {
     $memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
@@ -66,7 +67,7 @@ if (empty($auction_data['counter'])) {
     $auction_data['counter'] = 1;
 } else {
     if (!in_array($id, $_SESSION['WEBID_VIEWED_AUCTIONS'])) {
-        mysql_query("UPDATE " . $DBPrefix . "auccounter set counter = counter + 1 WHERE auction_id=" . $id);
+        mysql_query("UPDATE " . $DBPrefix . "auccounter set counter = counter + 1 WHERE auction_id = " . $id);
         $_SESSION['WEBID_VIEWED_AUCTIONS'][] = $id;
     }
 }
@@ -160,7 +161,7 @@ for ($j = $i - 1; $j >= 0; $j--) {
 $query = "SELECT b.bid AS maxbid, b.bidder, u.nick, u.rate_sum FROM " . $DBPrefix . "bids b
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
 		WHERE b.auction = " . $id . "
-		ORDER BY b.bid DESC, b.id DESC LIMIT 1";
+		ORDER BY b.bid DESC, b.quantity DESC, b.id DESC LIMIT 1";
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 $hbidder_data = mysql_fetch_assoc($result);
@@ -295,7 +296,7 @@ if (file_exists($uploaded_path . $id)) {
 // history
 $query = "SELECT b.*, u.nick FROM " . $DBPrefix . "bids b
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-		WHERE b.auction = " . $id . " ORDER BY b.bid DESC, b.id DESC";
+		WHERE b.auction = " . $id . " ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
 $result_numbids = mysql_query ($query);
 $system->check_mysql($result_numbids, $query, __LINE__, __FILE__);
 $num_bids = mysql_num_rows($result_numbids);

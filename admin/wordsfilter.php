@@ -108,9 +108,9 @@ while($word = mysql_fetch_array($r_f)) {
 	  <?php print $MSG['5070']; ?>
 	  </TD>
 	<TD WIDTH="375" HEIGHT="22">
-	  <INPUT TYPE="radio" NAME="wordsfilter" VALUE="y" <? if($system->SETTINGS['wordsfilter'] == "y") print " CHECKED"?>>
+	  <INPUT TYPE="radio" NAME="wordsfilter" VALUE="y" <?php if($system->SETTINGS['wordsfilter'] == "y") print " CHECKED"?>>
 	  <?php print $MSG['030']; ?>
-	  <INPUT TYPE="radio" NAME="wordsfilter" VALUE="n" <? if($system->SETTINGS['wordsfilter'] == "n") print " CHECKED"?>>
+	  <INPUT TYPE="radio" NAME="wordsfilter" VALUE="n" <?php if($system->SETTINGS['wordsfilter'] == "n") print " CHECKED"?>>
 	  <?php print $MSG['029']; ?>
 	  </TD>
   </TR>

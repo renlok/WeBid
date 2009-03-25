@@ -14,6 +14,7 @@
 
 include "includes/config.inc.php";
 include $include_path . "auctionstoshow.inc.php";
+
 // // If user is not logged in redirect to login page
 if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
     header("Location: user_login.php");
@@ -23,15 +24,15 @@ if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
 $NOW = time();
 $NOWB = gmdate("Ymd");
 // DELETE OR CLOSE OPEN AUCTIONS
-if (isset($_POST['action']) && $_POST['action'] == "delopenauctions") {
+if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions') {
     if (is_array($_POST['O_delete'])) {
         while (list($k, $v) = each($_POST['O_delete'])) {
-            $v = str_replace('..', '', htmlspecialchars($v));
+			$v = intval($v);
             // // Pictures Gallery
             if (file_exists($upload_path . $v)) {
                 if ($dir = @opendir($upload_path . $v)) {
                     while ($file = readdir($dir)) {
-                        if ($file != "." && $file != "..") {
+                        if ($file != '.' && $file != '..') {
                             @unlink($upload_path . $v . '/' . $file);
                         }
                     }
@@ -41,39 +42,43 @@ if (isset($_POST['action']) && $_POST['action'] == "delopenauctions") {
                 }
             }
 
-            $query = "SELECT photo_uploaded,pict_url FROM " . $DBPrefix . "auctions WHERE id=" . intval($v);
+            $query = "SELECT photo_uploaded, pict_url FROM " . $DBPrefix . "auctions WHERE id = " . $v;
             $res_ = mysql_query($query);
             $system->check_mysql($res_, $query, __LINE__, __FILE__);
             if (mysql_num_rows($res_) > 0) {
-                $pict_url = mysql_result($res_, 0, "pict_url");
-                $photo_uploaded = mysql_result($res_, 0, "photo_uploaded");
+                $pict_url = mysql_result($res_, 0, 'pict_url');
+                $photo_uploaded = mysql_result($res_, 0, 'photo_uploaded');
                 if ($photo_uploaded) {
                     @unlink($upload_path . $pict_url);
                 }
             }
-            // // Delete Invited Users List and Black Lists associated with this auction ---------------------------
-            @mysql_query("DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id=" . intval($v));
-            // // Auction
-            $query = "DELETE FROM " . $DBPrefix . "auctions WHERE id=" . intval($v);
-            $res = mysql_query($query);
-            $system->check_mysql($res, $query, __LINE__, __FILE__);
-            // // Update counters
+            // Delete Invited Users List and Black Lists associated with this auction ---------------------------
+            $query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $v;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+            // Auction
+            $query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
+            $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+            // Update counters
             include $include_path . "updatecounters.inc.php";
         }
     }
 
     if (is_array($_POST['closenow'])) {
         while (list($k, $v) = each($_POST['closenow'])) {
-            // Update end time to "now"
-            @mysql_query("UPDATE " . $DBPrefix . "auctions SET ends = '" . $NOW . "', starts = starts, relist = relisted WHERE id = " . intval($v));
+			// Update end time to the current time
+			$query = "UPDATE " . $DBPrefix . "auctions SET ends = '" . $NOW . "', starts = starts, relist = relisted WHERE id = " . intval($v);
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
         }
         include "cron.php";
     }
 }
 // Retrieve active auctions from the database
-$TOTALAUCTIONS = mysql_result(mysql_query("SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user='" . $_SESSION['WEBID_LOGGED_IN'] . "' AND closed=0 AND starts<=" . $NOW . " AND suspended=0"), 0, "COUNT");
+$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = '" . $_SESSION['WEBID_LOGGED_IN'] . "' AND closed = 0 AND starts <= " . $NOW . " AND suspended = 0";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
 
-if (!isset($_GET['PAGE']) || $_GET['PAGE'] <= 1 || $_GET['PAGE'] == "") {
+if (!isset($_GET['PAGE']) || $_GET['PAGE'] <= 1 || $_GET['PAGE'] == '') {
     $OFFSET = 0;
     $PAGE = 1;
 } else {
@@ -93,15 +98,15 @@ if (!isset($_SESSION['oa_ord']) && empty($_GET['oa_ord'])) {
 } elseif (isset($_SESSION['oa_ord']) && empty($_GET['oa_ord'])) {
     $_SESSION['oa_nexttype'] = $_SESSION['oa_type'];
 }
-if ($_SESSION['oa_nexttype'] == "desc") {
-    $_SESSION['oa_nexttype'] = "asc";
+if ($_SESSION['oa_nexttype'] == 'desc') {
+    $_SESSION['oa_nexttype'] = 'asc';
 } else {
-    $_SESSION['oa_nexttype'] = "desc";
+    $_SESSION['oa_nexttype'] = 'desc';
 }
-if ($_SESSION['oa_type'] == "desc") {
-    $_SESSION['oa_type_img'] = "<img src=\"images/arrow_up.gif\" align=\"center\" hspace=\"2\" border=\"0\" />";
+if ($_SESSION['oa_type'] == 'desc') {
+    $_SESSION['oa_type_img'] = '<img src="images/arrow_up.gif" align="center" hspace="2" border="0" />';
 } else {
-    $_SESSION['oa_type_img'] = "<img src=\"images/arrow_down.gif\" align=\"center\" hspace=\"2\" border=\"0\" />";
+    $_SESSION['oa_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0" />';
 }
 
 $query = "SELECT DISTINCT id,title,current_bid,starts,ends,minimum_bid,duration,relist,relisted,num_bids,suspended
@@ -122,9 +127,9 @@ while ($item = mysql_fetch_array($res)) {
         $result_ = mysql_query ($query) ;
         $system->check_mysql($result_, $query, __LINE__, __FILE__);
         if (mysql_num_rows($result_) > 0) {
-            $high_bid = mysql_result ($result_, 0, "maxbid");
-            $bidderid = mysql_result ($result_, 0, "bidder");
-            $bidder = mysql_result ($result_, 0, "nick");
+            $high_bid = mysql_result ($result_, 0, 'maxbid');
+            $bidderid = mysql_result ($result_, 0, 'bidder');
+            $bidder = mysql_result ($result_, 0, 'nick');
         }
     } else {
         $bidder = '';

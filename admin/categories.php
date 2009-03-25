@@ -55,7 +55,7 @@ function rebuild_cat_file() {
 		$allcats[] = $catarr;
 	}
 	
-	$output = "<?\n";
+	$output = "<?php\n";
 	$output.= "$" . "category_names = array(\n";
 	
 	$num_rows = count($cats);
@@ -78,7 +78,7 @@ function rebuild_cat_file() {
 	
 	$output .= ");\n?>";
 	
-	$handle = fopen ($main_path."language/".$system->SETTINGS['defaultlanguage']."/categories.inc.php", "w");
+	$handle = fopen ($main_path . "language/" . $system->SETTINGS['defaultlanguage'] . "/categories.inc.php", "w");
 	fputs($handle, $output);
 }
 

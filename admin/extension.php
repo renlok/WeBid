@@ -109,11 +109,11 @@ if(mysql_num_rows($res) > 0)
 		  <?php echo $MSG['2_0034']; ?>
 		  </TD>
 		<TD HEIGHT="31" WIDTH="418">
-		  <input type="radio" name="status" value="enabled" <? if($system->SETTINGS['status'] == 'enabled') print " CHECKED";?>>
+		  <input type="radio" name="status" value="enabled" <?php if($system->SETTINGS['status'] == 'enabled') print " CHECKED";?>>
 		  
 		  <?php echo $MSG['030']; ?>
 		  
-		  <input type="radio" name="status" value="disabled" <? if($system->SETTINGS['status'] == 'disabled') print " CHECKED";?>>
+		  <input type="radio" name="status" value="disabled" <?php if($system->SETTINGS['status'] == 'disabled') print " CHECKED";?>>
 		  
 		  <?php echo $MSG['029']; ?>
 		   </TD>

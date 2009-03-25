@@ -42,9 +42,9 @@
                 <table bgcolor="#ffffff">
                   <tr>
                     <td align='center'>
-                      <img src='{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={PIC_URL}' border='0' align='center'><br>
+                      <img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={PIC_URL}" border="0" align="center"><br>
 	<!-- IF B_HASGALELRY -->
-                      <a href='#gallery'><img src="{SITEURL}images/gallery.gif" border=0 alt='gallery'> {L_694}</a>
+                      <a href="#gallery"><img src="{SITEURL}images/gallery.gif" border="0" alt="gallery"> {L_694}</a>
 	<!-- ENDIF -->
                     </td>
                   </tr>
@@ -67,20 +67,22 @@
                           <td align="left">{AUCTION_TYPE}</td>
                         </tr>
                         <!-- higher bidder -->
-<!-- IF BUYER_ID gt 0 -->
+<!-- IF B_HASBUYER -->
                         <tr>
                           <td width='50%' style="leftpan" valign="top">
                             {L_117}:
                           </td>
                           <td>
-    <!-- IF B_BIDDERPRIV -->
-							<b>{BUYER_NAME}</b>
-    <!-- ELSE -->
-                            <a href="{SITEURL}profile.php?user_id={BUYER_ID}&auction_id={ID}"><b>{BUYER_NAME}</b></a>
-                            <b>(<a href="{SITEURL}feedback.php?id={BUYER_ID}&faction=show">{BUYER_FB}</a>)</b> 
-    <!-- ENDIF -->
-                            {BUYER_FB_ICON}<br>
-                            <a href="{SITEURL}active_auctions.php?user_id={BUYER_ID}">{L_213}</a>
+	<!-- BEGIN high_bidders -->
+    						<p>
+        <!-- IF B_BIDDERPRIV -->
+							<b>{high_bidders.BUYER_NAME}</b>
+        <!-- ELSE -->
+                            <a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
+                            <b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b> 
+        <!-- ENDIF -->
+                            {high_bidders.BUYER_FB_ICON}</p>
+	<!-- END high_bidders -->
                           </td>
                          </tr>
 <!-- ENDIF -->

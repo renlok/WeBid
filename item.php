@@ -157,15 +157,70 @@ for ($j = $i - 1; $j >= 0; $j--) {
         $cat_value .= "<a href='" . $system->SETTINGS['siteurl'] . "browse.php?id=" . $c_id[$j] . "'>" . $c_name[$j] . "</a> / ";
     }
 }
-// get highest bid/bidder details
-$query = "SELECT b.bid AS maxbid, b.bidder, u.nick, u.rate_sum FROM " . $DBPrefix . "bids b
+
+// history
+$query = "SELECT b.*, u.nick, u.rate_sum FROM " . $DBPrefix . "bids b
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-		WHERE b.auction = " . $id . "
-		ORDER BY b.bid DESC, b.quantity DESC, b.id DESC LIMIT 1";
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$hbidder_data = mysql_fetch_assoc($result);
-$num_bids = mysql_num_rows($result);
+		WHERE b.auction = " . $id . " ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
+$result_numbids = mysql_query ($query);
+$system->check_mysql($result_numbids, $query, __LINE__, __FILE__);
+$num_bids = mysql_num_rows($result_numbids);
+$i = 0;
+$left = $auction_data['quantity'];
+$hbidder_data = array();
+while ($bidrec = mysql_fetch_assoc($result_numbids)) {
+	if(!isset($bidderarray[$bidrec['nick']])) {
+		if($system->SETTINGS['buyerprivacy'] == 'y' && $_SESSION['WEBID_LOGGED_IN'] != $auction_data['user'] && $_SESSION['WEBID_LOGGED_IN'] != $bidrec['bidder']) {
+			$bidderarray[$bidrec['nick']] = $MSG['176'] . ' ' . $bidderarraynum;
+			$bidderarraynum++;
+		} else {
+			$bidderarray[$bidrec['nick']] = $bidrec['nick'];
+		}
+	}
+	if($left > 0) { //store highest bidder details
+		$hbidder_data[] = $bidrec['bidder'];
+		$fb_pos = $fb_neg = 0;
+		// get seller feebacks
+		$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $bidrec['bidder'];
+		$result = mysql_query($query);
+		$system->check_mysql($result, $query, __LINE__, __FILE__);
+		$num_feedbacks = mysql_num_rows ($result);
+		// count numbers
+		$fb_pos = $fb_neg = 0;
+		while ($fb_arr = mysql_fetch_assoc($result)) {
+			if ($fb_arr['rate'] == 1) {
+				$fb_pos++;
+			} elseif ($fb_arr['rate'] == - 1) {
+				$fb_neg++;
+			}
+		}
+		  
+		$total_rate = $fb_pos - $fb_neg;
+
+		foreach ($memtypesarr as $k => $l) {
+			if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1)) {
+				$buyer_rate_icon = $l['icon'];
+				break;
+			}
+		}
+		$template->assign_block_vars('high_bidders', array(
+				'BUYER_ID' => $bidrec['bidder'],
+				'BUYER_NAME' => $bidderarray[$bidrec['nick']],
+				'BUYER_FB' => $bidrec['rate_sum'],
+				'BUYER_FB_ICON' => (!empty($buyer_rate_icon) && $buyer_rate_icon != 'transparent.gif') ? '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $buyer_rate_icon . '" alt="' . $buyer_rate_icon . '" class="fbstar">' : ''
+				));
+	}
+	$template->assign_block_vars('bidhistory', array(
+			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
+			'ID' => $bidrec['bidder'],
+			'NAME' => $bidderarray[$bidrec['nick']],
+			'BID' => $system->print_money($bidrec['bid']),
+			'WHEN' => ArrangeDateNoCorrection($bidrec['bidwhen'] + $system->tdiff) . ':' . gmdate('s', $bidrec['bidwhen']),
+			'QTY' => $bidrec['quantity']
+			));
+	$left -= $bidrec['quantity'];
+	$i++;
+}
 
 $userbid = false;
 if (isset($_SESSION['WEBID_LOGGED_IN']) && $num_bids > 0) {
@@ -174,7 +229,7 @@ if (isset($_SESSION['WEBID_LOGGED_IN']) && $num_bids > 0) {
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
     if (mysql_num_rows($result) > 0) {
-        if ($_SESSION['WEBID_LOGGED_IN'] == $hbidder_data['bidder']) {
+        if (in_array($_SESSION['WEBID_LOGGED_IN'], $hbidder_data)) {
             $yourbidmsg = $MSG['25_0088'];
             $yourbidclass = 'yourbidwin';
             if ($difference <= 0) {
@@ -231,17 +286,8 @@ if ($difference > 0) {
     $next_bid = '--';
 }
 
-if ($hbidder_data['rate_sum'] > 0) {
-    $i = 0;
-    foreach ($memtypesarr as $k => $l) {
-        if ($k >= $hbidder_data['total_rate'] || $i++ == (count($memtypesarr) - 1)) {
-            $buyer_rate_icon = $l['icon'];
-            break;
-        }
-    }
-}
 // get seller feebacks
-$query = "SELECT rated_user_id, rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user_id;
+$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user_id;
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 $num_feedbacks = mysql_num_rows ($result);
@@ -293,35 +339,6 @@ if (file_exists($uploaded_path . $id)) {
         }
     }
 }
-// history
-$query = "SELECT b.*, u.nick FROM " . $DBPrefix . "bids b
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-		WHERE b.auction = " . $id . " ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
-$result_numbids = mysql_query ($query);
-$system->check_mysql($result_numbids, $query, __LINE__, __FILE__);
-$num_bids = mysql_num_rows($result_numbids);
-$i = 0;
-while ($bidrec = mysql_fetch_assoc($result_numbids)) {
-	// -- Format bid date
-	$bidrec['bidwhen'] = ArrangeDateNoCorrection($bidrec['bidwhen'] + $system->tdiff) . ":" . gmdate('s', $bidrec['bidwhen']);
-	$BGCOLOR = (!($i % 2)) ? '' : 'class="alt-row"';
-	if(!isset($bidderarray[$bidrec['nick']])) {
-		if($system->SETTINGS['buyerprivacy'] == 'y' && $_SESSION['WEBID_LOGGED_IN'] != $auction_data['user'] && $_SESSION['WEBID_LOGGED_IN'] != $bidrec['bidder']) {
-			$bidderarray[$bidrec['nick']] = $MSG['176'] . ' ' . $bidderarraynum;
-			$bidderarraynum++;
-		} else {
-			$bidderarray[$bidrec['nick']] = $bidrec['nick'];
-		}
-	}
-	$template->assign_block_vars('bidhistory', array(
-			'BGCOLOUR' => $BGCOLOR,
-			'ID' => $bidrec['bidder'],
-			'NAME' => $bidderarray[$bidrec['nick']],
-			'BID' => $system->print_money($bidrec['bid']),
-			'WHEN' => $bidrec['bidwhen'],
-			'QTY' => $bidrec['quantity']
-			));
-}
 
 if (!$has_ended) {
     $bn_link = ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $id . '"><img border="0" align="absbottom" alt="' . $MSG['496'] . '" src="' . $system->SETTINGS['siteurl'] . 'images/buy_it_now.gif"></a>';
@@ -369,11 +386,6 @@ $template->assign_vars(array(
         'SELLER_FBPOS' => ($num_feedbacks > 0) ? "(" . ceil($fb_pos * 100 / $total_rate) . "%)" : '100%',
         'SELLER_FBNEG' => ($fb_neg > 0) ? $MSG['5507'] . " (" . ceil($fb_neg * 100 / $total_rate) . "%)" : '0',
 
-        'BUYER_ID' => $hbidder_data['bidder'],
-        'BUYER_NAME' => $bidderarray[$hbidder_data['nick']],
-        'BUYER_FB' => $hbidder_data['rate_sum'],
-        'BUYER_FB_ICON' => (!empty($buyer_rate_icon) && $buyer_rate_icon != 'transparent.gif') ? '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $buyer_rate_icon . '" alt="' . $buyer_rate_icon . '" class="fbstar">' : '',
-
         'WATCH_VAR' => $watch_var,
         'WATCH_STRING' => $watch_string,
 
@@ -393,7 +405,8 @@ $template->assign_vars(array(
         'B_BUY_NOW' => ($auction_data['buy_now'] > 0 && ($auction_data['bn_only'] == 'y' || $auction_data['bn_only'] == 'n' && ($auction_data['num_bids'] == 0 || ($auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])))),
         'B_BUY_NOW_ONLY' => ($auction_data['bn_only'] == 'y'),
         'B_USERBID' => $userbid,
-		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && $_SESSION['WEBID_LOGGED_IN'] != $auction_data['user'])
+		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && $_SESSION['WEBID_LOGGED_IN'] != $auction_data['user']),
+		'B_HASBUYER' => (count($hbidder_data) > 0)
         ));
 
 require("header.php");

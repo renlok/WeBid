@@ -30,7 +30,7 @@ if(is_array($LANGUAGES)) {
 	while(list($k,$v) = each($LANGUAGES)) {
 		$html .= '<input type="radio" name="defaultlanguage" value="' . $k . '" ' . (($system->SETTINGS['defaultlanguage'] == $k) ? ' checked="checked"' : '') . '>
 	<img src="../includes/flags/' . $k . '.gif" hspace="2">
-	' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MGS_2__0005 : '') . '<BR>';
+	' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MSG['2__0005'] : '') . '<BR>';
 	}
 }
 

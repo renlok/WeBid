@@ -1,4 +1,4 @@
-<?
+<?php
 $category_names = array(
 6 => '40s, 50s &amp; 60s',
 70 => 'Accessories',

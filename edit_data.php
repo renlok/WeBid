@@ -12,10 +12,10 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . "countries.inc.php";
 // // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
@@ -68,7 +68,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
                 $sql .= "', password='" . md5($MD5_PREFIX . addslashes($_POST['TPL_password']));
             }
 
-            $sql .= "' WHERE id = " . $_SESSION['WEBID_LOGGED_IN'];
+            $sql .= "' WHERE id = " . $user->user_data['id'];
             $res = mysql_query ($sql);
             $system->check_mysql($res, $sql, __LINE__, __FILE__);
             $TPL_errmsg = $MSG['183'];
@@ -78,7 +78,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
     }
 }
 // // Retrieve user's data
-$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $_SESSION['WEBID_LOGGED_IN'];
+$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 $USER = mysql_fetch_array($result);

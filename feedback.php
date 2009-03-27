@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . "membertypes.inc.php";
 foreach($membertypes as $idm => $memtypearr) {
     $memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
@@ -32,7 +32,7 @@ $pg = (empty($_REQUEST['pg'])) ? 1 : $_REQUEST['pg'];
 $ws = (isset($_GET['ws'])) ? $_GET['ws'] : 'w';
 
 if (isset($_POST['addfeedback'])) { // submit the feedback
-    if (!isset($_SESSION['WEBID_LOGGED_IN_USERNAME'])) {
+    if (!$user->logged_in) {
         header("Location: user_login.php");
         exit;
     }
@@ -40,20 +40,20 @@ if (isset($_POST['addfeedback'])) { // submit the feedback
         $sql = "SELECT winner, seller, feedback_win, feedback_sel FROM " . $DBPrefix . "winners
 				WHERE auction = " . $_REQUEST['auction_id'] . "
 				AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']) . "
-				AND ((seller = " . $_SESSION['WEBID_LOGGED_IN'] . " AND feedback_win = 0)
-				OR (winner = " . $_SESSION['WEBID_LOGGED_IN'] . " AND feedback_sel = 0))";
+				AND ((seller = " . $user->user_data['id'] . " AND feedback_win = 0)
+				OR (winner = " . $user->user_data['id'] . " AND feedback_sel = 0))";
         $resids = mysql_query($sql);
         $system->check_mysql($resids, $sql, __LINE__, __FILE__);
         if (mysql_num_rows($resids) > 0) {
-            if ($_SESSION['WEBID_LOGGED_IN_USERNAME'] != $_POST['TPL_nick_hidden']) {
-                $sql = "SELECT id, nick, password FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_SESSION['WEBID_LOGGED_IN_USERNAME']) . "'";
+            if ($user->user_data['nick'] != $_POST['TPL_nick_hidden']) {
+                $sql = "SELECT id, nick, password FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
                 $resrater = mysql_query($sql);
                 $system->check_mysql($resrater, $sql, __LINE__, __FILE__);
                 if (mysql_num_rows($resrater) > 0) {
                     $arr = mysql_fetch_array ($resrater);
                     if ((intval($_REQUEST['sid']) == $arr['id'] && $wsell['feedback_sel'] == 0) || (intval($_REQUEST['wid']) == $arr['id'] && $wsell['feedback_win'] == 0)) {
                         if ($system->SETTINGS['usersauth'] == 'n' || $arr['password'] == md5($MD5_PREFIX . $_POST['TPL_password'])) {
-                            $secTPL_rater_nick = $_SESSION['WEBID_LOGGED_IN_USERNAME'];
+                            $secTPL_rater_nick = $user->user_data['nick'];
                             $secTPL_feedback = ereg_replace("\n", "<br>", $_POST['TPL_feedback']);
                             $uid = ($ws == 's') ? $_REQUEST['sid'] : $_REQUEST['wid'];
                             $sql = "UPDATE " . $DBPrefix . "users SET rate_sum = rate_sum + " . $_POST['TPL_rate'] . ", rate_num = rate_num + 1, reg_date = reg_date WHERE id = " . intval($uid);
@@ -109,7 +109,7 @@ if (isset($_POST['addfeedback'])) { // submit the feedback
 
 if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) { // gets user details
     $secid = ($ws == 's') ? $_REQUEST['sid'] : $_REQUEST['wid'];
-    if ($_REQUEST['sid'] == $_SESSION['WEBID_LOGGED_IN']) {
+    if ($_REQUEST['sid'] == $user->user_data['id']) {
         $them = $_REQUEST['wid'];
         $sbmsg = $MSG['131'];
     } else {

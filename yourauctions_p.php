@@ -13,13 +13,13 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . "auctionstoshow.inc.php";
 
 $NOW = time();
 $NOWB = gmdate('Ymd');
 // // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
@@ -73,7 +73,7 @@ if (isset($_POST['action']) && $_POST['action'] == "delopenauctions") {
     }
 }
 // // Retrieve active auctions from the database
-$TOTALAUCTIONS = mysql_result(mysql_query("select count(id) as COUNT from " . $DBPrefix . "auctions WHERE user='" . $_SESSION['WEBID_LOGGED_IN'] . "' and starts>" . $NOW . " AND suspended=0"), 0, "COUNT");
+$TOTALAUCTIONS = mysql_result(mysql_query("SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . " and starts > " . $NOW . " AND suspended = 0"), 0, "COUNT");
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] < 0 || empty($_GET['PAGE'])) {
     $OFFSET = 0;
@@ -107,11 +107,10 @@ if ($_SESSION['pa_type'] == "desc") {
 } else {
     $_SESSION['pa_type_img'] = "<img src=\"images/arrow_down.gif\" align=\"center\" hspace=\"2\" border=\"0\" />";
 }
-$query = "SELECT DISTINCT id, title, current_bid, starts, ends, minimum_bid, duration, relist, relisted
-			FROM " . $DBPrefix . "auctions au
-			WHERE user='" . $_SESSION['WEBID_LOGGED_IN'] . "'
+$query = "SELECT * FROM " . $DBPrefix . "auctions au
+			WHERE user = " . $user->user_data['id'] . "
 				AND starts > '" . $NOW . "'
-				AND (suspended=0 OR suspended=-1)
+				AND (suspended = 0 OR suspended = -1)
 			ORDER BY " . $_SESSION['pa_ord'] . " " . $_SESSION['pa_type'] . " LIMIT $OFFSET,$LIMIT";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);

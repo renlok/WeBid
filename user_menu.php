@@ -12,10 +12,10 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 // Connect to sql server & inizialize configuration variables
-include 'includes/config.inc.php';
+include 'includes/common.inc.php';
 
 // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
@@ -26,17 +26,17 @@ $secid = intval($_SESSION['WEBID_LOGGED_IN']);
 if (isset($_POST['requesttoadmin'])) {
 	$emailer = new email_class();
 	$emailer->assign_vars(array(
-			'NAME' => $_SESSION['WEBID_LOGGED_NAME'],
-			'NICK' => $_SESSION['WEBID_LOGGED_IN_USERNAME'],
-			'EMAIL' => $_SESSION['WEBID_LOGGED_EMAIL'],
-			'ID' => $_SESSION['WEBID_LOGGED_IN']
+			'NAME' => $user->user_data['name'],
+			'NICK' => $user->user_data['nick'],
+			'EMAIL' => $user->user_data['email'],
+			'ID' => $user->user_data['id']
 			));
 	$emailer->email_sender($system->SETTINGS['adminmail'], 'mail_buyer_request.inc.php', 'Account change request');
     $request_sent = $MSG['25_0142'];
     // Update user's status
     $query = "UPDATE " . $DBPrefix . "users SET accounttype = 'buyertoseller' WHERE id = " . $secid;
     $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-    $_SESSION['WEBID_LOGGED_ACCOUNT'] = 'buyertoseller';
+    $user->user_data['accounttype'] = 'buyertoseller';
 }
 
 $cptab = (isset($_GET['cptab'])) ? $_GET['cptab'] : '';
@@ -79,9 +79,9 @@ switch ($_SESSION['cptab']) {
 $template->assign_vars(array(
         'B_REQUEST' => isset($request_sent),
         'B_TMPMSG' => isset($_SESSION['TMP_MSG']),
-        'B_CANSELL' => (($system->SETTINGS['accounttype'] == 'sellerbuyer' && $_SESSION['WEBID_LOGGED_ACCOUNT'] == 'seller') || ($system->SETTINGS['accounttype'] == 'unique')),
-        'B_ONLYBUYER' => ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $_SESSION['WEBID_LOGGED_ACCOUNT'] == 'buyer'),
-        'B_BUYTOSELL' => ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $_SESSION['WEBID_LOGGED_ACCOUNT'] == 'buyertoseller'),
+        'B_CANSELL' => (($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] == 'seller') || ($system->SETTINGS['accounttype'] == 'unique')),
+        'B_ONLYBUYER' => ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] == 'buyer'),
+        'B_BUYTOSELL' => ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] == 'buyertoseller'),
 
         'TMPMSG' => (isset($_SESSION['TMP_MSG'])) ? $_SESSION['TMP_MSG'] : '',
 		'NEWMESSAGES' => (isset($new_messages) && $new_messages > 0) ? '( ' . $new_messages . $MSG['047'] . ' )' : '',

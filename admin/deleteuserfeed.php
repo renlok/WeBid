@@ -12,13 +12,12 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('../includes/config.inc.php');
+require('../includes/common.inc.php');
 include "loggedin.inc.php";
 $id = $_GET['id'];
 if ($id > 0){
-	$user = @mysql_result(@mysql_query("SELECT rated_user_id FROM " . $DBPrefix . "feedbacks WHERE id='$id'"),0,"rated_user_id");
-	$sql="DELETE FROM " . $DBPrefix . "feedbacks WHERE id='".$id."'";
-	$res=mysql_query ($sql);
+	$sql = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id='".$id."'";
+	$res = mysql_query($sql);
 	if (!$res){
 ?>
 	<TABLE WIDTH="100%" BGCOLOR="#FFFFFF" BORDER=0 CELLPADDING="0" CELLSPACING="0">

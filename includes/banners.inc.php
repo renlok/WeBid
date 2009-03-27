@@ -28,7 +28,7 @@ if(!function_exists('view')) {
 
 		// First try to retrieve banners according the filters
 		// Categories filter
-		if(strstr($_SERVER['SCRIPT_FILENAME'], "browse.php")) {
+		if(strstr($_SERVER['SCRIPT_FILENAME'], 'browse.php')) {
 			$query = "SELECT * FROM " . $DBPrefix . "bannerscategories WHERE category = " . intval($GLOBALS['id']);
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -39,8 +39,7 @@ if(!function_exists('view')) {
 				}
 
 				// Pick a random element
-				srand ((float) microtime() * 10000000);
-				if(is_array($BANNERSARRAY)) {
+				if(count($BANNERSARRAY) > 0) {
 					$RAND_IDX = array_rand($BANNERSARRAY);
 					$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX]['banner'];
 				}
@@ -69,13 +68,11 @@ if(!function_exists('view')) {
 				}
 			}
 			// Pick a random element
-			srand ((float) microtime() * 10000000);
 			if(count($BANNERSARRAY) > 0) {
 				$RAND_IDX = array_rand($BANNERSARRAY);
 				$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX][banner];
 			}
 		}
-
 
 		// We cannot apply filters in this page - let's retrieve a random banner
 		if(empty($BANNERTOSHOW)) {
@@ -93,8 +90,14 @@ if(!function_exists('view')) {
 				$CC = $C = 0;
 
 				while($row = mysql_fetch_array($res)) {
-					$C = @mysql_num_rows(mysql_query("SELECT banner FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $row['id']));
-					$CC = @mysql_num_rows(mysql_query("SELECT banner FROM " . $DBPrefix . "bannerskeywords WHERE banner = " . $row['id']));
+					$query = "SELECT banner FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $row['id'];
+					$res = mysql_query($query);
+					$system->check_mysql($res, $query, __LINE__, __FILE__);
+					$C = mysql_num_rows($res);
+					$query = "SELECT banner FROM " . $DBPrefix . "bannerskeywords WHERE banner = " . $row['id'];
+					$res = mysql_query($query);
+					$system->check_mysql($res, $query, __LINE__, __FILE__);
+					$CC = mysql_num_rows($res);
 
 					if($C == 0 && $CC == 0) {
 						$BANNERSARRAY[] = $row;
@@ -103,7 +106,6 @@ if(!function_exists('view')) {
 			}
 
 			// Pick a random element
-			srand ((float) microtime() * 10000000);
 			if(count($BANNERSARRAY) > 0) {
 				$RAND_IDX = array_rand($BANNERSARRAY);
 				$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX]['id'];

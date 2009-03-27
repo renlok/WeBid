@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/config.inc.php';
+include 'includes/common.inc.php';
 include $include_path . 'auction_types.inc.php';
 include $include_path . "countries.inc.php";
 include $include_path . 'dates.inc.php';
@@ -75,9 +75,9 @@ if (empty($auction_data['counter'])) {
 $difference = $ends - time();
 
 // get watch item data
-if (isset($_SESSION['WEBID_LOGGED_IN'])) {
+if ($user->logged_in) {
     // Check if this item is not already added
-    $query = "SELECT item_watch from " . $DBPrefix . "users WHERE id = " . $_SESSION['WEBID_LOGGED_IN'];
+    $query = "SELECT item_watch from " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
 
@@ -170,7 +170,7 @@ $left = $auction_data['quantity'];
 $hbidder_data = array();
 while ($bidrec = mysql_fetch_assoc($result_numbids)) {
 	if(!isset($bidderarray[$bidrec['nick']])) {
-		if($system->SETTINGS['buyerprivacy'] == 'y' && $_SESSION['WEBID_LOGGED_IN'] != $auction_data['user'] && $_SESSION['WEBID_LOGGED_IN'] != $bidrec['bidder']) {
+		if($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user'] && $user->user_data['id'] != $bidrec['bidder']) {
 			$bidderarray[$bidrec['nick']] = $MSG['176'] . ' ' . $bidderarraynum;
 			$bidderarraynum++;
 		} else {
@@ -184,7 +184,6 @@ while ($bidrec = mysql_fetch_assoc($result_numbids)) {
 		$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $bidrec['bidder'];
 		$result = mysql_query($query);
 		$system->check_mysql($result, $query, __LINE__, __FILE__);
-		$num_feedbacks = mysql_num_rows ($result);
 		// count numbers
 		$fb_pos = $fb_neg = 0;
 		while ($fb_arr = mysql_fetch_assoc($result)) {
@@ -223,13 +222,13 @@ while ($bidrec = mysql_fetch_assoc($result_numbids)) {
 }
 
 $userbid = false;
-if (isset($_SESSION['WEBID_LOGGED_IN']) && $num_bids > 0) {
+if ($user->logged_in && $num_bids > 0) {
     // check if youve bid on this before
-    $query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . $id . " AND bidder = " . $_SESSION['WEBID_LOGGED_IN'] . " LIMIT 1";
+    $query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . $id . " AND bidder = " . $user->user_data['id'] . " LIMIT 1";
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
     if (mysql_num_rows($result) > 0) {
-        if (in_array($_SESSION['WEBID_LOGGED_IN'], $hbidder_data)) {
+        if (in_array($user->user_data['id'], $hbidder_data)) {
             $yourbidmsg = $MSG['25_0088'];
             $yourbidclass = 'yourbidwin';
             if ($difference <= 0) {
@@ -394,8 +393,8 @@ $template->assign_vars(array(
 		'BIDURL' => ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'],
 
         'B_HASENDED' => $has_ended,
-        'B_CANEDIT' => ($_SESSION['WEBID_LOGGED_IN'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
-        'B_CANCONTACTSELLER' => ($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && isset($_SESSION['WEBID_LOGGED_IN']))),
+        'B_CANEDIT' => ($user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
+        'B_CANCONTACTSELLER' => ($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)),
         'B_HASIMAGE' => (!empty($pict_url_plain)),
         'B_NOTBNONLY' => ($auction_data['bn_only'] == 'n'),
         'B_HASRESERVE' => ($auction_data['reserve_price'] > 0 && $auction_data['reserve_price'] > $auction_data['current_bid']),
@@ -405,7 +404,7 @@ $template->assign_vars(array(
         'B_BUY_NOW' => ($auction_data['buy_now'] > 0 && ($auction_data['bn_only'] == 'y' || $auction_data['bn_only'] == 'n' && ($auction_data['num_bids'] == 0 || ($auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])))),
         'B_BUY_NOW_ONLY' => ($auction_data['bn_only'] == 'y'),
         'B_USERBID' => $userbid,
-		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && $_SESSION['WEBID_LOGGED_IN'] != $auction_data['user']),
+		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user']),
 		'B_HASBUYER' => (count($hbidder_data) > 0)
         ));
 

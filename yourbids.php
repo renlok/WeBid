@@ -13,11 +13,11 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 
 /* get active bids for this user */
 $query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
-		WHERE a.id=b.auction AND a.closed='0' AND b.bidder='" . $_SESSION['WEBID_LOGGED_IN'] . "' ORDER BY a.ends ASC, b.bidwhen DESC";
+		WHERE a.id=b.auction AND a.closed='0' AND b.bidder = " . $user->user_data['id'] . " ORDER BY a.ends ASC, b.bidwhen DESC";
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 

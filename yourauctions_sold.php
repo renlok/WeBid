@@ -12,10 +12,10 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . "auctionstoshow.inc.php";
 // // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     Header("Location: user_login.php");
     exit;
 }
@@ -75,7 +75,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 
 // Retrieve closed auction data from the database
 $res = mysql_query("SELECT a.*  FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "winners w
-    WHERE a.user = '" . $_SESSION['WEBID_LOGGED_IN'] . "'
+    WHERE a.user = " . $user->user_data['id'] . "
     AND a.closed = 1
     AND a.suspended != 8
     AND a.id = w.auction
@@ -114,7 +114,7 @@ if ($_SESSION['solda_type'] == "desc") {
 }
 
 $query = "SELECT a.* FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "winners w
-    WHERE a.user = '" . $_SESSION['WEBID_LOGGED_IN'] . "'
+    WHERE a.user = " . $user->user_data['id'] . "
     AND a.closed = 1
     AND a.suspended != 8
     AND a.id = w.auction

@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 include $include_path . "auctionstoshow.inc.php";
 include $include_path . 'dates.inc.php';
 include $main_path . "language/" . $language . "/categories.inc.php";
@@ -148,7 +148,7 @@ if ($bool) {
 			AND closed = 0
 			AND private = 'n'
 			AND suspended = 0";
-    if ($system->SETTINGS['adultonly'] == 'y' && !isset($_SESSION['WEBID_LOGGED_IN'])) {
+    if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in) {
         $qs .= "AND adultonly = 'n'";
     }
 
@@ -177,7 +177,7 @@ if ($bool) {
 			AND closed = 0
 			AND private = 'n'
 			AND suspended = 0";
-    if ($system->SETTINGS['adultonly'] == 'y' && !isset($_SESSION['WEBID_LOGGED_IN'])) {
+    if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in) {
         $qs .= " AND adultonly='n'";
     }
     if (!empty($_POST['catkeyword'])) {

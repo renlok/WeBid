@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('../includes/config.inc.php');
+require('../includes/common.inc.php');
 include "loggedin.inc.php";
 if($_POST && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_SELF']))) {
     $sql="UPDATE " . $DBPrefix . "feedbacks SET 
@@ -48,7 +48,7 @@ while ($arrfeed=mysql_fetch_array($res)) {
     $feedback=substr($arrfeed[feedback], 0, 50);
     $feed_text=strip_tags($arrfeed[feedback]);
     $rate=$arrfeed[rate];
-    $user=$arrfeed[rated_user_id];
+    $user_id=$arrfeed[rated_user_id];
 }
 $sel="selected";
 for ($i = 1 ; $i <= 5 ; $i++){
@@ -57,7 +57,7 @@ for ($i = 1 ; $i <= 5 ; $i++){
         $$selected="checked";
     }
 }
-$sql="SELECT nick FROM " . $DBPrefix . "users WHERE id='$user'";
+$sql="SELECT nick FROM " . $DBPrefix . "users WHERE id='$user_id'";
 $res=mysql_query ($sql);
 $system->check_mysql($res, $sql, __LINE__, __FILE__);
 while ($usr=mysql_fetch_array($res)) {
@@ -127,13 +127,13 @@ function ResetForm(){
             </tr>
             <tr>
               <td COLSPAN=2 align="center">
-                <INPUT TYPE="hidden" NAME="user" VALUE=<?php echo $user; ?>>
+                <INPUT TYPE="hidden" NAME="user" VALUE=<?php echo $user_id; ?>>
                 <INPUT TYPE="submit" NAME="" value="<?php echo $MSG['530']; ?>">
                 <INPUT TYPE="reset" NAME="">
               </td>
             </tr>
             <tr>
-              <td colspan=2 align="center"> <A HREF="userfeedback.php?id=<?php echo $user; ?>">
+              <td colspan=2 align="center"> <A HREF="userfeedback.php?id=<?php echo $user_id; ?>">
                 <?php echo $MSG['222']; ?>
                 </A>  </td>
             </tr>

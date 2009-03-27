@@ -12,20 +12,20 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . "membertypes.inc.php";
 foreach($membertypes as $idm => $memtypearr) {
     $memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
 }
 ksort($memtypesarr, SORT_NUMERIC);
 
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
 
-$secid = $_SESSION['WEBID_LOGGED_IN'];
-$TPL_rater_nick = $_SESSION['WEBID_LOGGED_IN_USERNAME'];
+$secid = $user->user_data['id'];
+$TPL_rater_nick = $user->user_data['nick'];
 $sql = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id=" . intval($secid);
 $res = mysql_query ($sql);
 $system->check_mysql($res, $sql, __LINE__, __FILE__);

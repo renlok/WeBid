@@ -12,11 +12,11 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . "auctionstoshow.inc.php";
 
 // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
@@ -157,7 +157,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 
 // Retrieve closed auction data from the database
 $query = "SELECT COUNT(id) AS COUNT FROM " . $DBPrefix . "auctions
-		WHERE user = '" . $_SESSION['WEBID_LOGGED_IN'] . "'
+		WHERE user = " . $user->user_data['id'] . "
 		AND closed = 1 AND suspended != 8
 		AND (num_bids = 0 OR (num_bids > 0 AND current_bid < reserve_price AND sold = 'n'))";
 $res = mysql_query($query);
@@ -196,7 +196,7 @@ if ($_SESSION['ca_type'] == 'desc') {
 }
 
 $query = "SELECT *  FROM " . $DBPrefix . "auctions
-    WHERE user = '" . $_SESSION['WEBID_LOGGED_IN'] . "'
+    WHERE user = " . $user->user_data['id'] . "
     AND closed = 1 AND suspended != 8
 	AND (num_bids = 0 OR (num_bids > 0 AND reserve_price > 0 AND current_bid < reserve_price AND sold = 'n'))
     ORDER BY " . $_SESSION['ca_ord'] . " " . $_SESSION['ca_type'] . " LIMIT $OFFSET, $LIMIT";

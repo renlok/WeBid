@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 // // Handle banners clickthrough
 $URL = trim($_GET['url']);
 // // Update clickthrough counter in the database

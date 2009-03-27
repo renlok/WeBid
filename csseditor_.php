@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require "includes/config.inc.php";
+require "includes/common.inc.php";
 include "admin/loggedin.inc.php";
 
 $thestyle = (isset($_REQUEST['thestyle'])) ? $system->cleanvars($_REQUEST['thestyle']) : '';

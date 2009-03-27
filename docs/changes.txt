@@ -1,5 +1,8 @@
 0.7.4 - 23/03/09
 -----------------------------
 - Fixed the emailer so it sends the email in the users prefered language not the defult one
+- Reorganised the admin homepage so it shows more useful information
+- Renamed config.inc.php and data.inc.php to common.inc.php and config.inc.php
+- Made the user login much more secure
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

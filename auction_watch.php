@@ -12,9 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
@@ -22,7 +22,7 @@ if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
 if (isset($_GET['insert']) && $_GET['insert'] == "true" && !empty($_REQUEST['add'])) {
     $requestadd = $system->cleanvars($_REQUEST['add']);
     // Check if this keyword is not already added
-    $query = "SELECT auc_watch from " . $DBPrefix . "users WHERE nick='" . $_SESSION['WEBID_LOGGED_IN_USERNAME'] . "'";
+    $query = "SELECT auc_watch FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
     $auctions = trim(mysql_result($result, 0, 'auc_watch'));
@@ -36,14 +36,14 @@ if (isset($_GET['insert']) && $_GET['insert'] == "true" && !empty($_REQUEST['add
     if (!$match) {
         $auction_watch = trim($auctions . ' ' . $requestadd);
         $auction_watch_new = trim($auction_watch);
-        $query = "UPDATE " . $DBPrefix . "users SET auc_watch = '$auction_watch_new', reg_date = reg_date WHERE nick = '" . $_SESSION['WEBID_LOGGED_IN_USERNAME'] . "'";
+        $query = "UPDATE " . $DBPrefix . "users SET auc_watch = '$auction_watch_new' WHERE id = " . $user->user_data['id'];
         $result = mysql_query($query);
         $system->check_mysql($result, $query, __LINE__, __FILE__);
     }
 }
 // Delete auction from auction watch
 if (isset($_GET['delete'])) {
-    $query = "SELECT auc_watch FROM " . $DBPrefix . "users WHERE nick='" . $_SESSION['WEBID_LOGGED_IN_USERNAME'] . "'";
+    $query = "SELECT auc_watch FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
     $auctions = trim(mysql_result ($result, 0, "auc_watch"));
@@ -58,12 +58,12 @@ if (isset($_GET['delete'])) {
         }
     }
     $auction_watch_new = trim($auction_watch);
-    $query = "UPDATE " . $DBPrefix . "users SET auc_watch = '$auction_watch_new', reg_date = reg_date WHERE nick='" . $_SESSION['WEBID_LOGGED_IN_USERNAME'] . "'";
+    $query = "UPDATE " . $DBPrefix . "users SET auc_watch = '$auction_watch_new' WHERE id = " . $user->user_data['id'];
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
 }
 
-$query = "SELECT auc_watch from " . $DBPrefix . "users WHERE nick='" . $_SESSION['WEBID_LOGGED_IN_USERNAME'] . "'";
+$query = "SELECT auc_watch FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 $auctions = trim(mysql_result ($result, 0, 'auc_watch'));

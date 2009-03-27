@@ -13,14 +13,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . "messages.inc.php";
 
 if ($system->SETTINGS['boards'] == 'n') {
     header("Location: index.php");
 }
 // Is the seller logged in?
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     $_SESSION['REDIRECT_AFTER_LOGIN'] = "boards.php";
     header("Location: user_login.php");
     exit;
@@ -54,8 +54,8 @@ if (isset($_POST['action']) && $_POST['action'] == "insertmessage" && !empty($_P
         $message = strip_tags($_POST['newmessage']);
     }
     $query = "INSERT INTO " . $DBPrefix . "comm_messages VALUES
-			(NULL, " . intval($_POST['board_id']) . ", '$NOW', '" . intval($_SESSION['WEBID_LOGGED_IN']) . "',
-			'" . $system->cleanvars($_SESSION['WEBID_LOGGED_IN_USERNAME']) . "', '" . $system->cleanvars($message) . "')";
+			(NULL, " . intval($_POST['board_id']) . ", '$NOW', " . $user->user_data['id'] . ",
+			'" . $user->user_data['nick'] . "', '" . $system->cleanvars($message) . "')";
     $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
     // Update messages counter and lastmessage date
     $query = "UPDATE " . $DBPrefix . "community

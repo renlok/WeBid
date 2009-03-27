@@ -12,9 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/config.inc.php';
+include 'includes/common.inc.php';
 
-if (($system->SETTINGS['contactseller'] == 'logged' && !isset($_SESSION['WEBID_LOGGED_IN'])) || $system->SETTINGS['contactseller'] == 'never') {
+if (($system->SETTINGS['contactseller'] == 'logged' && !$user->logged_in) || $system->SETTINGS['contactseller'] == 'never') {
     if (isset($_SESSION['REDIRECT_AFTER_LOGIN'])) {
         header('location: ' . $_SESSION['REDIRECT_AFTER_LOGIN']);
     } else {
@@ -45,7 +45,7 @@ if (mysql_num_rows($result) == 0) {
 }
 
 $TPL_auction_id = $auction_id;
-$userid = $_SESSION['WEBID_LOGGED_IN'];
+$userid = $user->user_data['id'];
 $TPL_seller_nick_value = $seller_nick;
 $TPL_seller_email_value = $seller_email;
 $TPL_sender_name_value = $_POST['sender_name'];
@@ -99,7 +99,7 @@ $template->assign_vars(array(
         'SELLER_EMAIL' => $TPL_seller_email_value,
         'SELLER_QUESTION' => $TPL_sender_question,
         'ITEM_TITLE' => $TPL_item_title,
-        'EMAIL' => (isset($_SESSION['WEBID_LOGGED_EMAIL'])) ? $_SESSION['WEBID_LOGGED_EMAIL'] : ''
+        'EMAIL' => ($user->logged_in) ? $user->user_data['email'] : ''
         ));
 
 include "header.php";

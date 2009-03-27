@@ -1,5 +1,9 @@
 <?php
+//0.7.3 to 0.8.0
+$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `hash` VARCHAR(5) NOT NULL AFTER `password` ";
+
 //0.7.2 to 0.7.3
+/*
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `feetype`, DROP `sellersetupfee`, DROP `sellersetuptype`, DROP `sellerfinalfee`, DROP `sellerfinaltype`, DROP `sellersetupvalue`, DROP `sellerfinalvalue`, DROP `buyerfinalfee`, DROP `buyerfinaltype`, DROP `buyerfinalvalue`, DROP `paypaladdress`, DROP `picturesgalleryfee`, DROP `picturesgalleryvalue`, DROP `featureditemsnumber`, DROP `featuredcolumns`, DROP `thimbnailswidth`, DROP `catfeatureditemsnumber`, DROP `catthumbnailswidth`, DROP `reservefee`, DROP `reservetype`, DROP `reservevalue`, DROP `freecatstext`, DROP `sitemap`, DROP `wanted`";
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `https` enum('y','n') NOT NULL default 'n'";
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `bn_only_disable` enum('y','n') NOT NULL default 'n'";
@@ -47,6 +51,7 @@ while($a = mysql_fetch_assoc($q)){
 	$t = gmmktime(substr($a['new_date'], 8, 2), substr($a['new_date'], 10, 2), substr($a['new_date'], 12, 2), substr($a['new_date'], 4, 2), substr($a['new_date'], 6, 2), substr($a['new_date'], 0, 4));
 	mysql_query("UPDATE " . $DBPrefix . "news SET new_date = '" . $t . "' WHERE id = ".$a['id']);
 }
+*/
 
 //0.7.1 to 0.7.2
 //$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `qty` INT( 11 ) NOT NULL DEFAULT '0'";

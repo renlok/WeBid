@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
 // Run cron according to SETTINGS
@@ -74,10 +74,11 @@ while ($i < $num_cat && $i < $system->SETTINGS['catstoshow']) {
             ));
     $i++;
 }
+
 // get last created auctions
 $query = "SELECT id, title, starts from " . $DBPrefix . "auctions
          WHERE closed='0' AND suspended = 0 AND ";
-if ($system->SETTINGS['adultonly'] == 'y' && !isset($_SESSION['WEBID_LOGGED_IN'])) {
+if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in) {
     $query .= "adultonly='n' AND ";
 }
 $query .= "starts<=" . $NOW . "

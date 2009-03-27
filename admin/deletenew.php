@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include '../includes/config.inc.php';
+include '../includes/common.inc.php';
 $TIME = $system->ctime;
 
 if(isset($_POST['action']) && $_POST['action'] == $MSG['030']) {

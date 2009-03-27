@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 
 if (isset($_GET['id']) && !isset($_POST['action'])) {
     $query = "SELECT suspended, nick FROM " . $DBPrefix . "users WHERE id = " . intval($_GET['id']);

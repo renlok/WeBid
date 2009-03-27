@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 
 $id = (isset($_GET['id'])) ? intval($_GET['id']) : 0;
 

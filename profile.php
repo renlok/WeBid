@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . 'dates.inc.php';
 include $include_path . "membertypes.inc.php";
 foreach($membertypes as $idm => $memtypearr) {
@@ -103,7 +103,7 @@ if ($arr = mysql_fetch_array($res)) {
         'USER_ID' => $TPL_user_id,
         'B_VIEW' => true,
         'B_AUCID' => (isset($_GET['auction_id'])),
-        'B_CONTACT' => ($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && isset($_SESSION['WEBID_LOGGED_IN'])))
+        'B_CONTACT' => ($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in))
         );
 } else {
     $variables = array(

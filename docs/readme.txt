@@ -12,7 +12,7 @@ INSTALLATION
 --------------------------------------------------------
 1. Upload all the files except the docs directory
 2. CHMOD the uploaded directory to 0777
-3. CHMOD the includes/data.inc.php to 0777
+3. CHMOD the includes/config.inc.php to 0777
 4. CHMOD the includes/countries.inc.php to 0777
 5. CHMOD the includes/membertypes.inc.php to 0777
 6. CHMOD the language/EN/categories.inc.php to 0777
@@ -24,7 +24,7 @@ UPDATING WeBid
 --------------------------------------------------------
 1. Upload all the files except the docs directory
 2. CHMOD the uploaded directory to 0777
-3. CHMOD the includes/data.inc.php to 0777
+3. CHMOD the includes/config.inc.php to 0777
 4. CHMOD the includes/countries.inc.php to 0777
 5. CHMOD the includes/membertypes.inc.php to 0777
 6. CHMOD the language/EN/categories.inc.php to 0777

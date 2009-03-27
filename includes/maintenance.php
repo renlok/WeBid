@@ -21,7 +21,7 @@ if(basename($_SERVER['PHP_SELF']) != "user_login.php") {
 	
 	if(mysql_num_rows($res) > 0) {
 		$MAINTAINANCE = mysql_fetch_array($res);
-		if($MAINTAINANCE['active'] == 'y' && $_SESSION['WEBID_LOGGED_IN_USERNAME'] != $MAINTAINANCE['superuser']) {
+		if($MAINTAINANCE['active'] == 'y' && ($user->user_data['nick'] != $MAINTAINANCE['superuser'] && $user->user_data['id'] != $MAINTAINANCE['superuser'])) {
 			print $MAINTAINANCE['maintainancetext'];
 			exit;
 		}

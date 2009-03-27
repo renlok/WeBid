@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-require('../includes/config.inc.php');
+require('../includes/common.inc.php');
 
 if($_POST['act'] == "insert" && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF'])) {
 	#// Additional security check

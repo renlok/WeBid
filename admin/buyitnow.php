@@ -12,14 +12,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('../includes/config.inc.php');
+require('../includes/common.inc.php');
 include "loggedin.inc.php";
 
 unset($ERR);
 
 if(isset($_POST['action']) && $_POST['action'] == "update") {
 	$bn_only_percent = ($_POST['bn_only_percent'] > 100) ? 100 : ($_POST['bn_only_percent'] < 0) ? 0 : intval($_POST['bn_only_percent']);
-	$query = " UPDATE " . $DBPrefix . "settings SET
+	$query = "UPDATE " . $DBPrefix . "settings SET
 				buy_now = " . intval($_POST['buy_now']) . ",
 				bn_only = '" . $_POST['bn_only'] . "',
 				bn_only_disable = '" . $_POST['bn_only_disable'] . "',

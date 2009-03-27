@@ -12,16 +12,16 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
 // Get closed auctions with winners
 $query = "SELECT a.auction, b.title, b.ends
 		 FROM " . $DBPrefix . "winners a, " . $DBPrefix . "auctions b
-		 WHERE a.auction = b.id AND (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0 AND b.user = " . $_SESSION['WEBID_LOGGED_IN'] . "
+		 WHERE a.auction = b.id AND (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0 AND b.user = " . $user->user_data['id'] . "
 		 GROUP BY b.id ORDER BY a.closingdate DESC";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);

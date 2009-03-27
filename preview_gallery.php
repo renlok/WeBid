@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
  
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 
 $UPLOADED_PICTURES = $_SESSION['UPLOADED_PICTURES'];
 $img = $_GET['img'];

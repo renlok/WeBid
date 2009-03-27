@@ -13,7 +13,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 include $main_path . "language/" . $language . "/categories.inc.php";
 
 if (!ini_get('register_globals')) {
@@ -24,7 +24,7 @@ if (!ini_get('register_globals')) {
     }
 }
 // Is the seller logged in?
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     $_SESSION['REDIRECT_AFTER_LOGIN'] = "select_category.php";
     header("Location: user_login.php");
     exit;
@@ -33,7 +33,7 @@ if ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $_SESSION['PHPAUCTION_L
     header("Location: user_menu.php?cptab=selling");
     exit;
 }
-if ($system->SETTINGS['uniqueseller'] > 0 && $_SESSION['WEBID_LOGGED_IN'] != $system->SETTINGS['uniqueseller']) {
+if ($system->SETTINGS['uniqueseller'] > 0 && $user->user_data['id'] != $system->SETTINGS['uniqueseller']) {
     header("Location: index.php");
     exit;
 }

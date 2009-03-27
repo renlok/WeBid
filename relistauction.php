@@ -12,22 +12,21 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
-// // ################################################
-// // Is the seller logged in?
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+require('includes/common.inc.php');
+
+if (!$user->logged_in) {
     $_SESSION['REDIRECT_AFTER_LOGIN'] = "select_category.php";
     header("Location: user_login.php");
     exit;
 }
-// // ################################################
+
 if (!isset($_POST['action'])) { // already closed auctions
         // // Get Closed auctions data
         unset($_SESSION['RELISTEDAUCTION']);
     unset($_SESSION['UPLOADED_PICTURES']);
     unset($_SESSION['UPLOADED_PICTURES_SIZE']);
     unset($_SESSION['GALLERY_UPDATED']);
-    $query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id=" . intval($_GET['id']) . " AND user='" . $_SESSION['WEBID_LOGGED_IN'] . "'";
+    $query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . intval($_GET['id']) . " AND user = " . $user->user_data['id'];
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
     $RELISTEDAUCTION = mysql_fetch_array($result);

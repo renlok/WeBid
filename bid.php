@@ -12,12 +12,12 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/config.inc.php';
+include 'includes/common.inc.php';
 include $include_path . 'datacheck.inc.php';
 
 $NOW = time();
 
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header('location: user_login.php');
     exit;
 }
@@ -25,7 +25,7 @@ if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
 $id = intval($_REQUEST['id']);
 $bid = $_REQUEST['bid'];
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
-$bidder_id = $_SESSION['WEBID_LOGGED_IN'];
+$bidder_id = $user->user_data['id'];
 $bidding_ended = false;
 
 if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on') {
@@ -107,7 +107,7 @@ if (isset($_POST['action']) && !isset($errmsg)) {
     if ($system->SETTINGS['usersauth'] == 'y') {
         if (strlen($_POST['password']) == 0)
             $errmsg = $ERR_004;
-        $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $_SESSION['WEBID_LOGGED_IN'] . " AND password = '" . md5($MD5_PREFIX . $_POST['password']) . "'";
+        $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'] . " AND password = '" . md5($MD5_PREFIX . $_POST['password']) . "'";
         $res = mysql_query($query);
         $system->check_mysql($res, $query, __LINE__, __FILE__);
         if (mysql_num_rows($res) == 0) {
@@ -119,7 +119,7 @@ if (isset($_POST['action']) && !isset($errmsg)) {
         if ($WINNING_BIDDER == $bidder_id) {
             $query = "SELECT bid FROM " . $DBPrefix . "proxybid p
 					LEFT JOIN " . $DBPrefix . "users u ON (p.userid = u.id)
-					WHERE userid = " . $_SESSION['WEBID_LOGGED_IN'] . " AND itemid = " . $id . " ORDER BY bid DESC";
+					WHERE userid = " . $user->user_data['id'] . " AND itemid = " . $id . " ORDER BY bid DESC";
             $res = mysql_query($query);
             $system->check_mysql($res, $query, __LINE__, __FILE__);
             if (mysql_num_rows($res) > 0) {
@@ -129,7 +129,7 @@ if (isset($_POST['action']) && !isset($errmsg)) {
                 } else {
                     // Just update proxy_bid
                     $query = "UPDATE " . $DBPrefix . "proxybid SET bid = " . floatval($bid) . "
-							  WHERE userid = " . $_SESSION['WEBID_LOGGED_IN'] . " AND itemid = " . $id . " AND bid = " . $WINNER_PROXYBID;
+							  WHERE userid = " . $user->user_data['id'] . " AND itemid = " . $id . " AND bid = " . $WINNER_PROXYBID;
                     $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
                     if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve) {

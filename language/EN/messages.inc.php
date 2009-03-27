@@ -80,7 +80,7 @@ $ERR_046 = "No active auctions for this user.";
 $ERR_047 = "Required fields missing";
 $ERR_047_a = "Username is invalid can only contain letters and numbers";
 $ERR_048 = "Incorrect login";
-$ERR_049 = "Database connection failed. Please edit your includes/data.inc.php
+$ERR_049 = "Database connection failed. Please edit your includes/config.inc.php
             file to set your database parameters.";
 $ERR_050 = "Acceptance text missing";
 $ERR_051 = "Please, insert a valid number of digits";

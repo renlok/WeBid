@@ -12,11 +12,11 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . "auctionstoshow.inc.php";
 
 // // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
@@ -73,7 +73,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions') {
     }
 }
 // Retrieve active auctions from the database
-$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = '" . $_SESSION['WEBID_LOGGED_IN'] . "' AND closed = 0 AND starts <= " . $NOW . " AND suspended = 0";
+$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . " AND closed = 0 AND starts <= " . $NOW . " AND suspended = 0";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
@@ -109,13 +109,10 @@ if ($_SESSION['oa_type'] == 'desc') {
     $_SESSION['oa_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0" />';
 }
 
-$query = "SELECT DISTINCT id,title,current_bid,starts,ends,minimum_bid,duration,relist,relisted,num_bids,suspended
-			FROM " . $DBPrefix . "auctions
-			WHERE user = '" . $_SESSION['WEBID_LOGGED_IN'] . "'
-			AND closed = 0
-			AND starts <= '" . $NOW . "'
-			AND suspended = 0
-			ORDER BY " . $_SESSION['oa_ord'] . " " . $_SESSION['oa_type'] . " LIMIT " . intval($OFFSET) . "," . intval($LIMIT);
+$query = "SELECT * FROM " . $DBPrefix . "auctions
+		WHERE user = " . $user->user_data['id'] . " AND closed = 0
+		AND starts <= '" . $NOW . "' AND suspended = 0
+		ORDER BY " . $_SESSION['oa_ord'] . " " . $_SESSION['oa_type'] . " LIMIT " . intval($OFFSET) . "," . intval($LIMIT);
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

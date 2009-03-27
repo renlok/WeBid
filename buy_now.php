@@ -12,13 +12,13 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/config.inc.php';
+include 'includes/common.inc.php';
 include $include_path . "membertypes.inc.php";
 foreach($membertypes as $idm => $memtypearr) {
     $memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
 }
 
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("location: user_login.php");
     exit;
 }
@@ -39,7 +39,7 @@ if (mysql_result ($result, 0, "closed") == 1) {
     header("Location: item.php?id=" . $_REQUEST['id']);
     exit;
 }
-$user = mysql_result($result, 0, "user");
+$user_id = mysql_result($result, 0, "user");
 $title = mysql_result($result, 0, "title");
 $buy_now_only = mysql_result($result, 0, "bn_only");
 $buy_now_price = mysql_result($result, 0, "buy_now");
@@ -63,18 +63,17 @@ if ($buy_now_only == 'n') {
     }
 }
 
-$TPL_seller = $user;
+$TPL_seller = $user_id;
 $TPL_title_value = $MSG['2__0025'];
 $TPL_title = $title;
 $TPL_buy_now_price = $system->print_money($buy_now_price);
 
 // get user's nick
-$query = "select id, nick FROM " . $DBPrefix . "users WHERE id=" . intval($user);
+$query = "select id, nick FROM " . $DBPrefix . "users WHERE id = " . intval($user_id);
 $result_usr = mysql_query ($query);
 $system->check_mysql($result_usr, $query, __LINE__, __FILE__);
 
 $user_nick = mysql_result ($result_usr, 0, "nick");
-$user_id = mysql_result ($result_usr, 0, "id");
 $TPL_user_nick_value = $user_nick;
 
 // Get current number of feedbacks
@@ -102,14 +101,14 @@ foreach ($memtypesarr as $k => $l) {
 $TPL_num_feedbacks = "<b>($total_rate)</b>";
 
 if ($_GET['action'] == 'buy') {
-    $bidder_id = $_SESSION['WEBID_LOGGED_IN'];
+    $bidder_id = $user->user_data['id'];
     if ($system->SETTINGS['usersauth'] == 'y') {
         // check if nickname and password entered
         if (strlen($_POST['password']) == 0) {
             $ERR = "610";
         }
         // check if nick is valid
-        $query = "select * FROM " . $DBPrefix . "users WHERE id = " . $_SESSION['WEBID_LOGGED_IN'] . " LIMIT 1";
+        $query = "select * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'] . " LIMIT 1";
         $result = mysql_query($query);
         $system->check_mysql($result, $query, __LINE__, __FILE__);
 
@@ -154,7 +153,7 @@ if ($_GET['action'] == 'buy') {
             $query = "UPDATE " . $DBPrefix . "auctions SET quantity = quantity - 1 WHERE id=" . intval($_REQUEST['id']);
             $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
             // do stuff that is important
-            $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $_SESSION['WEBID_LOGGED_IN'];
+            $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
             $result = mysql_query($query);
             $system->check_mysql($result, $query, __LINE__, __FILE__);
             $Winner = mysql_fetch_array($result);

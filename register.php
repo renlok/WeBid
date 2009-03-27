@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 include $include_path . "countries.inc.php";
 include $include_path . "banemails.inc.php";
 
@@ -22,8 +22,7 @@ if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on') {
     exit;
 }
 
-function CheckAge($day, $month, $year) // check if the users > 18
-{
+function CheckAge($day, $month, $year) { // check if the users > 18
     $NOW_year = date('Y');
     $NOW_month = date('m');
     $NOW_day = date('d');
@@ -37,6 +36,17 @@ function CheckAge($day, $month, $year) // check if the users > 18
     } else {
         return 0;
     }
+}
+
+function get_hash() {
+	$string = '0123456789abcdefghijklmnopqrstuvyxz';
+	$hash = '';
+	for($i = 0; $i < 5; $i++) {
+		$rand = rand(0, 35);
+		$hash .= $string[$rand];
+		$string = str_replace($string[$rand], '', $string);
+	}
+	return $hash;
 }
 
 $NOWB = time();
@@ -149,10 +159,12 @@ if (isset($_POST['action']) && $_POST['action'] == "first") {
                 } else {
                     $selected_accounttype = 'unique';
                 }
+				$hash = get_hash();
                 $sql = "INSERT INTO " . $DBPrefix . "users
-				(nick, password, name, address, city, prov, country, zip, phone, nletter,email, reg_date, rate_sum,  rate_num, birthdate, suspended, accounttype)
+				(nick, password, hash, name, address, city, prov, country, zip, phone, nletter,email, reg_date, rate_sum,  rate_num, birthdate, suspended, accounttype)
                 VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
 						'" . md5($MD5_PREFIX . $TPL_password_hidden) . "',
+						'" . $hash . "',
 						'" . $system->cleanvars($TPL_name_hidden) . "',
 						'" . $system->cleanvars($_POST['TPL_address']) . "',
 						'" . $system->cleanvars($_POST['TPL_city']) . "',

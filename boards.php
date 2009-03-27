@@ -12,13 +12,13 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include("includes/config.inc.php");
+include("includes/common.inc.php");
 
 if ($system->SETTINGS['boards'] == 'n') {
     header("location: index.php");
 }
 
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     $_SESSION['REDIRECT_AFTER_LOGIN'] = "boards.php";
     header("location: user_login.php");
     exit;

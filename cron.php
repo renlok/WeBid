@@ -19,36 +19,27 @@ include $include_path . "converter.inc.php";
 
 function openLogFile ()
 {
-    global $logFileHandle, $logFileName, $logPath;
-    global $cronScriptHTMLOutput;
-
+    global $logFileHandle, $logPath;
+	
     $logFileHandle = fopen ($logPath . 'cron.log', "a");
-    if ($cronScriptHTMLOutput == true)
-        print "<pre>\n";
 }
 
 function closeLogFile ()
 {
     global $logFileHandle;
-    global $cronScriptHTMLOutput;
 
     if ($logFileHandle)
         fclose ($logFileHandle);
-    if ($cronScriptHTMLOutput)
-        print "</pre>\n";
 }
 
 function printLog ($str)
 {
     global $logFileHandle;
-    global $cronScriptHTMLOutput;
 
     if ($logFileHandle) {
         if (substr($str, strlen($str) - 1, 1) != "\n")
             $str .= "\n";
         fwrite ($logFileHandle, $str);
-        if ($cronScriptHTMLOutput)
-            print "" . $str;
     }
 }
 

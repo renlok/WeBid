@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require "includes/config.inc.php";
+require "includes/common.inc.php";
 // -- Get auction_id from sessions variables
 if (!isset($_POST['auction_id']) && !isset($_GET['auction_id'])) {
     $auction_id = $_SESSION['CURRENT_ITEM'];
@@ -20,7 +20,7 @@ if (!isset($_POST['auction_id']) && !isset($_GET['auction_id'])) {
     $auction_id = $_SESSION['CURRENT_ITEM'] = intval($_GET['auction_id']);
 }
 
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("location: user_login.php");
     exit;
 }
@@ -53,7 +53,7 @@ if (isset($_POST['action']) && $_POST['action'] == "proceed") {
         // send a copy to their mesasge box
         $nowmessage = nl2br($system->cleanvars($message));
         $sql = "INSERT INTO " . $DBPrefix . "messages (`sentto`, `from`, `when`, `message`, `subject`)
-				VALUES ($user_id, " . $_SESSION['WEBID_LOGGED_IN'] . ", '" . time() . "', '$nowmessage', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "')";
+				VALUES ($user_id, " . $user->user_data['id'] . ", '" . time() . "', '$nowmessage', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "')";
         $system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
         $sent = true;
     }

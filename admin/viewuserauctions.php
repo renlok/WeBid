@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('../includes/config.inc.php');
+require('../includes/common.inc.php');
 include "loggedin.inc.php";
 
 //-- Set offset and limit for pagination

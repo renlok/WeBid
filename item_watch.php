@@ -12,18 +12,18 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 include $include_path . "browseitems.inc.php";
 include $include_path . 'dates.inc.php';
 // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("location: user_login.php");
     exit;
 }
 // Auction id is present, now update table
 if (isset($_GET['add']) && !empty($_GET['add'])) {
     // Check if this item is not already added
-    $query = "SELECT item_watch from " . $DBPrefix . "users WHERE nick='" . $system->cleanvars($_SESSION['WEBID_LOGGED_IN_USERNAME']) . "'";
+    $query = "SELECT item_watch from " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
     $items = trim(mysql_result ($result, 0, "item_watch"));
@@ -32,14 +32,14 @@ if (isset($_GET['add']) && !empty($_GET['add'])) {
     if (!$match) {
         $item_watch = trim($items . ' ' . $_GET['add']);
         $item_watch_new = trim($item_watch);
-        $query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . addslashes($item_watch_new) . "', reg_date = reg_date WHERE nick = '" . $system->cleanvars($_SESSION['WEBID_LOGGED_IN_USERNAME']) . "' ";
+        $query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . addslashes($item_watch_new) . "' WHERE id = " . $user->user_data['id'];
         $result = mysql_query($query);
         $system->check_mysql($result, $query, __LINE__, __FILE__);
     }
 }
 // Delete item form item watch
 if (isset($_GET['delete']) && !empty($_GET['delete'])) {
-    $query = "SELECT item_watch FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_SESSION['WEBID_LOGGED_IN_USERNAME']) . "'";
+    $query = "SELECT item_watch FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
     $items = trim(mysql_result ($result, 0, 'item_watch'));
@@ -54,12 +54,12 @@ if (isset($_GET['delete']) && !empty($_GET['delete'])) {
         }
     }
     $item_watch_new = trim($item_watch);
-    $query = "UPDATE " . $DBPrefix . "users SET item_watch='$item_watch_new', reg_date=reg_date WHERE nick='" . $system->cleanvars($_SESSION['WEBID_LOGGED_IN_USERNAME']) . "' ";
+    $query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . $item_watch_new . "' WHERE id = " . $user->user_data['id'];
     $result = mysql_query($query);
     $system->check_mysql($result, $query, __LINE__, __FILE__);
 }
 // Show results
-$query = "SELECT item_watch from " . $DBPrefix . "users WHERE nick='" . $system->cleanvars($_SESSION['WEBID_LOGGED_IN_USERNAME']) . "' ";
+$query = "SELECT item_watch from " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 

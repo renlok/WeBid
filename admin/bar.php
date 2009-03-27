@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-include "../includes/config.inc.php";
+include "../includes/common.inc.php";
 
 $template->assign_vars(array(
 		'B_ADMINLOGIN' => (!empty($_SESSION['WEBID_ADMIN_LOGIN']))

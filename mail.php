@@ -12,9 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
@@ -26,7 +26,7 @@ $order = (isset($_GET['order']))? $_GET['order'] : '';
 $action = (isset($_GET['action']))? $_GET['action'] : '';
 $messageid = (isset($_GET['id']))? $_GET['id'] : '';
 $delete = (isset($_POST['delete']))? $_POST['delete'] : null;
-$userid = $_SESSION['WEBID_LOGGED_IN'];
+$userid = $user->user_data['id'];
 $TPL_error = '';
 
 if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message'])) {
@@ -59,7 +59,7 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
     }
     // send message
     $nowmessage = nl2br($message);
-    $userid = $_SESSION['WEBID_LOGGED_IN'];
+    $userid = $user->user_data['id'];
     $sql = "INSERT INTO " . $DBPrefix . "messages( `sentto` , `from` , `when` , `message` , `subject` )  VALUES ('$sendtoid', '$userid', '" . time() . "', '$nowmessage', '$subject')";
     $run = mysql_query($sql);
     $system->check_mysql($run, $sql, __LINE__, __FILE__);

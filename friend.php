@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 
 if (isset($_REQUEST['id'])) {
     $_SESSION['CURRENT_ITEM'] = $_REQUEST['id'];
@@ -67,8 +67,8 @@ $template->assign_vars(array(
         'TITLE' => $TPL_item_title,
         'FRIEND_NAME' => (isset($_POST['friend_name'])) ? $_POST['friend_name'] : '',
         'FRIEND_EMAIL' => (isset($_POST['friend_email'])) ? $_POST['friend_email'] : '',
-        'YOUR_NAME' => (isset($_SESSION['WEBID_LOGGED_NAME'])) ? $_SESSION['WEBID_LOGGED_NAME'] : '',
-        'YOUR_EMAIL' => (isset($_SESSION['WEBID_LOGGED_EMAIL'])) ? $_SESSION['WEBID_LOGGED_EMAIL'] : '',
+        'YOUR_NAME' => ($user->logged_in) ? $user->user_data['name'] : '',
+        'YOUR_EMAIL' => ($user->logged_in) ? $user->user_data['email'] : '',
         'COMMENT' => (isset($_POST['sender_comment'])) ? $_POST['sender_comment'] : '',
         'EMAILSENT' => $emailsent
         ));

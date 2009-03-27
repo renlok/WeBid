@@ -12,14 +12,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 include $include_path . 'auctionstoshow.inc.php';
 include $include_path . 'dates.inc.php';
 
 if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
     $user_id = intval($_GET['user_id']);
-} elseif (isset($_SESSION['WEBID_LOGGED_IN']) && !empty($_SESSION['WEBID_LOGGED_IN'])) {
-    $user_id = $_SESSION['WEBID_LOGGED_IN'];
+} elseif ($user->logged_in) {
+    $user_id = $user->user_data['id'];
 } else {
     header('location: user_login.php');
     exit;
@@ -32,7 +32,7 @@ $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
       WHERE user = " . $user_id . "
       AND closed = 0
       AND starts <= '" . $NOW . "' ";
-if ($system->SETTINGS['adultonly'] == 'y' && !isset($_SESSION['WEBID_LOGGED_IN'])) {
+if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in) {
     $query .= "AND adultonly = 'n'";
 }
 
@@ -55,7 +55,7 @@ $qs = "SELECT * FROM " . $DBPrefix . "auctions
 	WHERE user = " . $user_id . "
 	AND closed = 0
 	AND starts <= '" . $NOW . "' ";
-if ($system->SETTINGS['adultonly'] == 'y' && !isset($_SESSION['WEBID_LOGGED_IN'])) {
+if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in) {
     $qs .= "AND adultonly='n' ";
 }
 $qs .= "ORDER BY ends ASC LIMIT $OFFSET, $LIMIT";

@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "../includes/config.inc.php";
+include "../includes/common.inc.php";
 include "loggedin.inc.php";
 include $include_path."messages.inc.php";
 include $include_path."countries.inc.php";

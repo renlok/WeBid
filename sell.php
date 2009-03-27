@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/config.inc.php';
+include 'includes/common.inc.php';
 include $include_path . 'dates.inc.php';
 include $include_path . 'auction_types.inc.php';
 include $include_path . 'datacheck.inc.php';
@@ -30,13 +30,13 @@ if (!isset($_SESSION['SELL_sellcat']) || !is_numeric($_SESSION['SELL_sellcat']))
     exit;
 }
 
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     $_SESSION['REDIRECT_AFTER_LOGIN'] = "sell.php";
     header("location: user_login.php");
     exit;
 }
 
-if ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $_SESSION['WEBID_LOGGED_ACCOUNT'] != 'seller') {
+if ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] != 'seller') {
     header("location: user_menu.php?cptab=selling");
     exit;
 }
@@ -61,17 +61,17 @@ switch ($_SESSION['action']) {
             if (in_array($paym['description'], $payment))
                 $payment_text .= $paym['description'] . "\n";
         }
-        $query = "SELECT * FROM " . $DBPrefix . "users WHERE nick = '" . $_SESSION['WEBID_LOGGED_IN_USERNAME'] . "'";
+        $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
         $result = mysql_query($query);
         $system->check_mysql($result, $query, __LINE__, __FILE__);
         $userrec = mysql_fetch_assoc($result);
         if ((md5($MD5_PREFIX . $_POST['password']) != $userrec['password']) && $system->SETTINGS['usersauth'] == 'y')
-            $ERR = "ERR_026";
+            $ERR = 'ERR_026';
         else {
             if ($userrec['suspended'] > 0)
-                $ERR = "ERR_618";
+                $ERR = 'ERR_618';
         }
-        if ($ERR != "ERR_")
+        if ($ERR != 'ERR_')
             $_SESSION['action'] = 2;
         else {
             // set time back to GMT
@@ -79,9 +79,9 @@ switch ($_SESSION['action']) {
             $a_ends = $a_starts + ($duration * 24 * 60 * 60);
             // insert auction
             $query = addauction();
-            if ($_SESSION['SELL_action'] == "edit")
+            if ($_SESSION['SELL_action'] == 'edit')
                 $query = updateauction(1);
-            if ($_SESSION['SELL_action'] == "relist")
+            if ($_SESSION['SELL_action'] == 'relist')
                 $query = updateauction(2);
             $res = mysql_query($query);
             $system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -141,7 +141,7 @@ switch ($_SESSION['action']) {
                     if (isset($match)) unset($match);
                     $w_title = explode(" ", strtolower($_SESSION['SELL_title']));
                     $w_descr = explode(" ", strtolower(str_replace(array('<br>', "\n"), '', $_SESSION['SELL_description'])));
-                    $w_nick = strtolower($_SESSION['WEBID_LOGGED_IN_USERNAME']);
+                    $w_nick = strtolower($user->user_data['nick']);
                     $key = explode(" ", $row['auc_watch']);
                     if (is_array($key) && count($key) > 0) {
                         while (list($k, $v) = each($key)) {
@@ -161,33 +161,30 @@ switch ($_SESSION['action']) {
                         }
                     }
                 }
-                $query = "SELECT startemailmode, bn_only FROM " . $DBPrefix . "users WHERE id = " . intval($_SESSION['WEBID_LOGGED_IN']);
-                $result = mysql_query($query);
-                $system->check_mysql($result, $query, __LINE__, __FILE__);
-                $EMAILMODE = mysql_result($result, 0, 'startemailmode');
-				$ubn_only = mysql_result($result, 0, 'bn_only');
+                $EMAILMODE = $user->user_data['startemailmode'];
+				$ubn_only = $user->user_data['bn_only'];
                 if ($EMAILMODE == 'yes') {
                     include $include_path . 'auction_confirmation.inc.php';
                 }
 				if($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100) {
 					$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions
-						 WHERE closed = 0 AND suspended = 0 AND user = " . intval($_SESSION['WEBID_LOGGED_IN']);
+						 WHERE closed = 0 AND suspended = 0 AND user = " . $user->user_data['id'];
 					$result = mysql_query($query);
 					$system->check_mysql($result, $query, __LINE__, __FILE__);
 					$totalaucs = mysql_result($result, 0);
 					if($totalaucs > 0) {
 						$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions
-							 WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = " . intval($_SESSION['WEBID_LOGGED_IN']);
+							 WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = " . $user->user_data['id'];
 						$result = mysql_query($query);
 						$system->check_mysql($result, $query, __LINE__, __FILE__);
 						$totalbnaucs = mysql_result($result, 0);
 						$percent = ($totalbnaucs * 100) / $totalaucs;
 						if($ubn_only == 'y' && $system->SETTINGS['bn_only_percent'] <= $percent) {
-							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'n'";
+							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'n' WHERE id = " . $user->user_data['id'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						}
 						if($ubn_only == 'n' && $system->SETTINGS['bn_only_percent'] > $percent) {
-							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y'";
+							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE id = " . $user->user_data['id'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						}
 					}
@@ -403,7 +400,7 @@ switch ($_SESSION['action']) {
 			$TPL_start_date = gmdate('Y-m-d H:i:s', $a_starts);
         }
 		
-		$query = "SELECT bn_only FROM " . $DBPrefix . "users WHERE id = " . intval($_SESSION['WEBID_LOGGED_IN']);
+		$query = "SELECT bn_only FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 		$result = mysql_query($query);
 		$system->check_mysql($result, $query, __LINE__, __FILE__);
 

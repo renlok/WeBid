@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 
 $cat = (isset($_GET['cat'])) ? intval($_GET['cat']) : intval($_POST['cat']);
 if ($cat > 0) {

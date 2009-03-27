@@ -13,33 +13,26 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
 // // Create new list
 if (isset($_POST['action']) && $_POST['action'] == "update") {
     $query = "UPDATE " . $DBPrefix . "users SET endemailmode = '" . $system->cleanvars($_POST['endemailmod']) . "',
-			  startemailmode = '" . $system->cleanvars($_POST['startemailmod']) . "', reg_date = reg_date
-			  WHERE id = " . intval($_SESSION['WEBID_LOGGED_IN']);
-    $res = mysql_query($query);
-    $system->check_mysql($res, $query, __LINE__, __FILE__);
+			  startemailmode = '" . $system->cleanvars($_POST['startemailmod']) . "' WHERE id = " . $user->user_data['id'];
+    $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
     $ERR = $MSG['25_0192'];
 }
 
-$query = "SELECT startemailmode, endemailmode FROM " . $DBPrefix . "users WHERE id = " . intval($_SESSION['WEBID_LOGGED_IN']);
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$EMAILMODE = mysql_fetch_array($result);
-
 $template->assign_vars(array(
-        'B_AUCSETUPY' => ($EMAILMODE['startemailmode'] == 'yes') ? ' checked="checked"' : '',
-        'B_AUCSETUPN' => ($EMAILMODE['startemailmode'] == 'no') ? ' checked="checked"' : '',
-        'B_CLOSEONE' => ($EMAILMODE['endemailmode'] == 'one') ? ' checked="checked"' : '',
-        'B_CLOSEBULK' => ($EMAILMODE['endemailmode'] == 'cum') ? ' checked="checked"' : '',
-        'B_CLOSENONE' => ($EMAILMODE['endemailmode'] == 'none') ? ' checked="checked"' : ''
+        'B_AUCSETUPY' => ($user->user_data['startemailmode'] == 'yes') ? ' checked="checked"' : '',
+        'B_AUCSETUPN' => ($user->user_data['startemailmode'] == 'no') ? ' checked="checked"' : '',
+        'B_CLOSEONE' => ($user->user_data['endemailmode'] == 'one') ? ' checked="checked"' : '',
+        'B_CLOSEBULK' => ($user->user_data['endemailmode'] == 'cum') ? ' checked="checked"' : '',
+        'B_CLOSENONE' => ($user->user_data['endemailmode'] == 'none') ? ' checked="checked"' : ''
         ));
 
 require("header.php");

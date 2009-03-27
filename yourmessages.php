@@ -12,14 +12,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/config.inc.php";
+include "includes/common.inc.php";
 // // If user is not logged in redirect to login page
-if (!isset($_SESSION['WEBID_LOGGED_IN'])) {
+if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
 
-$sql = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $_SESSION['WEBID_LOGGED_IN'];
+$sql = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 $res = mysql_query($sql);
 $system->check_mysql($res, $sql, __LINE__, __FILE__);
 $uid = mysql_fetch_assoc($res);

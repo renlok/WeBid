@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include '../includes/config.inc.php';
+include '../includes/common.inc.php';
 include $include_path.'dates.inc.php';
 include $include_path.'auction_types.inc.php';
 include "loggedin.inc.php";

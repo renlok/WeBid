@@ -1,5 +1,5 @@
 <?php
-include "../includes/config.inc.php";
+include "../includes/common.inc.php";
 ?>
 <html>
 <head>

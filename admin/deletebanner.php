@@ -12,18 +12,18 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('../includes/config.inc.php');
+require('../includes/common.inc.php');
 include "loggedin.inc.php";
 
-$user = $_GET['user'];
+$banneruser = $_GET['user'];
 $banner = $_GET['banner'];
 $name = $_GET['name'];
 
 @mysql_query("DELETE FROM " . $DBPrefix . "banners WHERE id = $banner");
 @mysql_query("DELETE FROM " . $DBPrefix . "bannerscategories WHERE banner = $banner");
 @mysql_query("DELETE FROM " . $DBPrefix . "bannerskeywords WHERE banner = $banner");
-@unlink($upload_path.'banners/'.$user.'/'.$name);
+@unlink($upload_path . 'banners/' . $banneruser . '/' . $name);
 
 // Redirect
-header("Location: userbanners.php?id=$user");
+header('location: userbanners.php?id=' . $banneruser);
 ?>

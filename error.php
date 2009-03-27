@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 $error = true;
-require('includes/config.inc.php');
+require('includes/common.inc.php');
 
 $template->assign_vars(array(
         'ERROR' => print_r($_SESSION['SESSION_ERROR'], true),

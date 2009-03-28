@@ -274,7 +274,7 @@ $template->assign_vars(array(
 
         'V_SELSELCT' => (isset($_POST['accounttype']) && $_POST['accounttype'] == 'seller') ? 'checked=true' : '',
         'V_BUYSELCT' => (isset($_POST['accounttype']) && $_POST['accounttype'] == 'buyer') ? 'checked=true' : '',
-        'V_YNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) ? 'checked=true' : '',
+        'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
         'V_NNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 2) ? 'checked=true' : '',
         'V_YNAME' => (isset($_POST['TPL_name'])) ? $_POST['TPL_name'] : '',
         'V_UNAME' => (isset($_POST['TPL_nick'])) ? $_POST['TPL_nick'] : '',

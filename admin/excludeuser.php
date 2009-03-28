@@ -14,7 +14,8 @@
  ***************************************************************************/
 
 include "../includes/common.inc.php";
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 include $include_path."countries.inc.php";
 
 $username = $name;
@@ -25,27 +26,26 @@ if(!isset($_REQUEST['id'])) {
     exit;
 }
 
-if(isset($_POST['action']) && $_POST['action']=='Delete') {
+if(isset($_POST['action']) && $_POST['action'] == 'Delete') {
     if($_POST['mode'] == "activate") {
-        $sql = "UPDATE " . $DBPrefix . "users SET suspended=0, reg_date=reg_date WHERE id='".$_POST['idhidden']."'";
+        $sql = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = '".$_POST['idhidden']."'";
         $counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET inactiveusers=(inactiveusers-1), users=(users+1)");
 		$query = "SELECT name, email FROM " . $DBPrefix . "users WHERE id = '".$_POST['idhidden']."'";
 		$result = mysql_query($query);
 		$USER = mysql_fetch_assoc($result);
-		include $include_path."user_approved.inc.php";
+		include $include_path . "user_approved.inc.php";
     } else {
-        $sql = "UPDATE " . $DBPrefix . "users set suspended=1, reg_date=reg_date WHERE id='".$_POST['idhidden']."'";
-        $counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET inactiveusers=(inactiveusers+1), users=(users-1)");
+        $sql = "UPDATE " . $DBPrefix . "users SET suspended = 1 WHERE id = '".$_POST['idhidden']."'";
+        $counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1, users = users - 1");
     }
-    $res=mysql_query ($sql);
+    $res = mysql_query ($sql);
     
-    Header("Location: listusers.php");
+    header("Location: listusers.php");
     exit;
 }
 
-if(!$action || ($action && $updated)) {
-    
-    $query = "select * from " . $DBPrefix . "users WHERE id='".$_GET['id']."'";
+if(!isset($_POST['action']) && isset($_GET['id'])) {
+    $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . intval($_GET['id']);
     $result = mysql_query($query);
     if(!$result){
         print "Database access error: abnormal termination".mysql_error();
@@ -58,13 +58,13 @@ if(!$action || ($action && $updated)) {
     $email = mysql_result($result,0,"email");
     $address = mysql_result($result,0,"address");
     $country = mysql_result($result,0,"country");
-    $country_list="";
+    $country_list = '';
     while (list ($code, $descr) = each ($countries)) {
-        $country_list .= "<option value=\"$descr\"";
+        $country_list .= '<option value="' . $descr . '"';
         if ($descr == $country) {
-            $country_list .= " selected";
+            $country_list .= ' selected';
         }
-        $country_list .= ">$descr</option>\n";
+        $country_list .= '>' . $descr . '</option>'."\n";
     }
     
     $prov = mysql_result($result,0,"prov");

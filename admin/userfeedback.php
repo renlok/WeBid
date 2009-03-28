@@ -13,7 +13,8 @@
  ***************************************************************************/
 
 require('../includes/common.inc.php');
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 include $include_path.'membertypes.inc.php';
 foreach($membertypes as $idm => $memtypearr) {
 	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;

@@ -15,7 +15,8 @@
 include '../includes/common.inc.php';
 include $include_path.'dates.inc.php';
 include $include_path.'auction_types.inc.php';
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 
 
 #// If $id is not defined -> error

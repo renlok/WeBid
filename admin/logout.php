@@ -13,12 +13,11 @@
  ***************************************************************************/
 
 require('../includes/common.inc.php');
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 
-unset($_SESSION['WEBID_ADMIN_LOGIN']);
-unset($_SESSION['WEBID_ADMIN_USER']);
-//Header("Location: login.php");
+unset($_SESSION['WEBID_ADMIN_NUMBER'], $_SESSION['WEBID_ADMIN_PASS'], $_SESSION['WEBID_ADMIN_IN'], $_SESSION['WEBID_ADMIN_USER']);
 ?>
-<SCRIPT type="text/javascript">
-parent.location.href='index.php';
-</SCRIPT>
+<script type="text/javascript">
+parent.location.href = 'index.php';
+</script>

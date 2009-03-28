@@ -13,7 +13,8 @@
  ***************************************************************************/
 
 require('../includes/common.inc.php');
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 
 #// Delete users and banners if necessary
 if(isset($_POST['delete']) && is_array($_POST['delete']))

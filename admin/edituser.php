@@ -12,7 +12,8 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 include "../includes/common.inc.php";
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 include "../includes/countries.inc.php";
 
 $username = $_REQUEST['name'];

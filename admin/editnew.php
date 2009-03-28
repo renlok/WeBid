@@ -13,7 +13,8 @@
  ***************************************************************************/
 
 include "../includes/common.inc.php";
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 $TIME = $system->ctime;
 
 if(!isset($_POST['id']) && (!isset($_GET['id']) || empty($_GET['id']))) {

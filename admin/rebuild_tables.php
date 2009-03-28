@@ -12,7 +12,8 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 
 function rebuild_table_file($table)
 {

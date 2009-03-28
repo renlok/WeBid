@@ -13,6 +13,13 @@
  ***************************************************************************/
 
 require('includes/common.inc.php');
+
+if (!$user->logged_in) {
+	//if your not logged in you shouldn't be here
+    header("location: user_login.php");
+    exit;
+}
+
 $cropdefault = false;
 $width = $system->SETTINGS['thumb_show'];
 $height = $width / 1.2;
@@ -109,7 +116,7 @@ if ($_GET['action'] == 'crop' && !empty($_POST['w'])) {
 // close window
 if (!empty($_POST['creategallery'])) {
     $_SESSION['GALLERY_UPDATED'] = true;
-    print "<script type=\"text/javascript\">window.close()</script>";
+    print '<script type="text/javascript">window.close()</script>';
     exit;
 }
 
@@ -119,15 +126,16 @@ if ($_POST['uploadpicture'] == $MSG['681']) {
         if (!isset($_SESSION['UPLOADED_PICTURES']) || !is_array($_SESSION['UPLOADED_PICTURES'])) $_SESSION['UPLOADED_PICTURES'] = array();
         if (!isset($_SESSION['UPLOADED_PICTURES_SIZE']) || !is_array($_SESSION['UPLOADED_PICTURES_SIZE'])) $_SESSION['UPLOADED_PICTURES_SIZE'] = array();
         $filename = basename($_FILES['userfile']['name']);
-        $file_ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
+		$nameparts = explode('.', $filename);
+        $file_ext = strtolower($nameparts[count($nameparts) - 1]);
         $file_types = array('gif', 'jpg', 'jpeg', 'png');
 
         if ($_FILES['userfile']['size'] > $system->SETTINGS['maxuploadsize']) {
-            $ERR = $ERR_709 . "&nbsp;" . ($system->SETTINGS['maxuploadsize'] / 1024) . "&nbsp;Kbytes";
+            $ERR = $ERR_709 . '&nbsp;' . ($system->SETTINGS['maxuploadsize'] / 1024) . '&nbsp;Kbytes';
         } elseif (!in_array($file_ext, $file_types)) {
-            $ERR = $ERR_710 . " (" . $file_ext . ")";
+            $ERR = $ERR_710 . ' (' . $file_ext . ')';
         } elseif (in_array($_FILES['userfile']['name'], $_SESSION['UPLOADED_PICTURES'])) {
-            $ERR = $MGS_2__0054 . " (" . $_FILES['userfile']['name'] . ")";
+            $ERR = $MGS_2__0054 . ' (' . $_FILES['userfile']['name'] . ')';
         } else {
             // Create a TMP directory for this session (if not already created)
             if (!file_exists($upload_path . session_id())) {
@@ -135,15 +143,34 @@ if ($_POST['uploadpicture'] == $MSG['681']) {
                 mkdir($upload_path . session_id(), 0777);
 				chmod($upload_path . session_id(), 0777); //incase mkdir fails
             }
-            // Move uploaded file into TMP directory
-			if($system->move_file($_FILES['userfile']['tmp_name'], $upload_path . session_id() . '/' . $_FILES['userfile']['name'])) {
+            // Move uploaded file into TMP directory & rename
+			$replace = array('.', ' ', ',');
+			switch($file_ext) {
+				case 'gif':
+					$newname = str_replace('.gif', '', $_FILES['userfile']['name']);
+					$newname = str_replace($replace, '_', $newname) . '.gif';
+					break;
+				case 'jpg':
+					$newname = str_replace('.jpg', '', $_FILES['userfile']['name']);
+					$newname = str_replace($replace, '_', $newname) . '.jpg';
+					break;
+				case 'jpeg':
+					$newname = str_replace('.jpeg', '', $_FILES['userfile']['name']);
+					$newname = str_replace($replace, '_', $newname) . '.jpeg';
+					break;
+				case 'png':
+					$newname = str_replace('.png', '', $_FILES['userfile']['name']);
+					$newname = str_replace($replace, '_', $newname) . '.png';
+					break;
+			}
+			if($system->move_file($_FILES['userfile']['tmp_name'], $upload_path . session_id() . '/' . $newname)) {
 				// Populate arrays
-				array_push($_SESSION['UPLOADED_PICTURES'], $_FILES['userfile']['name']);
-				$fname = $upload_path . session_id() . '/' . $_FILES['userfile']['name'];
+				array_push($_SESSION['UPLOADED_PICTURES'], $newname);
+				$fname = $upload_path . session_id() . '/' . $newname;
 				array_push($_SESSION['UPLOADED_PICTURES_SIZE'], filesize($fname));
 				if (count($_SESSION['UPLOADED_PICTURES']) == 1) {
 					$cropdefault = true;
-					$image = $_FILES['userfile']['name'];
+					$image = $newname;
 				}
 			}
         }

@@ -11,7 +11,10 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
+
 include "../includes/common.inc.php";
+include $include_path . 'functions_admin.php';
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -35,7 +38,7 @@ include "../includes/common.inc.php";
     <td valign="top" align=right colspan="2">
 		<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
 		<?php
-		  if($_SESSION['WEBID_ADMIN_LOGIN']) {
+		  if(!checklogin()) {
 		?>
 		  <?php echo $MSG['592']; ?>
 		  <B>
@@ -45,7 +48,7 @@ include "../includes/common.inc.php";
 		  } else {
 			print "&nbsp;";
 		  }
-		  if($_SESSION['WEBID_ADMIN_LOGIN']) {
+		  if(!checklogin()) {
 		?>
 		 <font color="#FFFFFF" SIZE=1> | 
 		 </font> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="logout.php" TARGET=content>logout</a></FONT></font>

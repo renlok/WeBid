@@ -12,7 +12,8 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 require('../includes/common.inc.php');
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 //-- Set offset and limit for pagination
 $limit = 30;
 if(!isset($_GET['offset'])) {

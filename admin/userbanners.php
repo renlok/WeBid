@@ -14,7 +14,8 @@
  ***************************************************************************/
 
 require('../includes/common.inc.php');
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 include $main_path."language/".$language."/categories.inc.php";
 #//
 $id = (int)$_REQUEST['id'];

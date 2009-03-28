@@ -13,7 +13,8 @@
  ***************************************************************************/
 
 require('../includes/common.inc.php');
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 
 if(isset($_POST['action']) && $_POST['action'] == "purge") {
 	if(ereg("^[0-9]+$", $_POST['days'])) {

@@ -11,10 +11,12 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
+
 include "../includes/common.inc.php";
+include $include_path . 'functions_admin.php';
 
 $template->assign_vars(array(
-		'B_ADMINLOGIN' => (!empty($_SESSION['WEBID_ADMIN_LOGIN']))
+		'B_ADMINLOGIN' => (!checklogin())
 		));
 
 $template->set_filenames(array(

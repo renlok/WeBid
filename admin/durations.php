@@ -13,10 +13,13 @@
  ***************************************************************************/
 
 require('../includes/common.inc.php');
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 
-Function ToBeDeleted($index){
-	Global $delete;
+unset($ERR);
+
+function ToBeDeleted($index){
+	global $delete;
 	
 	$i = 0;
 	while($i < count($_POST['delete'])){

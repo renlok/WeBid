@@ -13,7 +13,8 @@
  ***************************************************************************/
 
 require('../includes/common.inc.php');
-include "loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
 $id = $_GET['id'];
 if ($id > 0){
 	$sql = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id='".$id."'";

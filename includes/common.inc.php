@@ -24,7 +24,6 @@ $logPath = $main_path . 'logs/';
 
 include $include_path . "fonts.inc.php"; //fonts data dump
 include $include_path . "errors.inc.php"; //error handler functions
-include $include_path . "messages.inc.php";
 include $include_path . "dates.inc.php";
 
 // classes
@@ -37,6 +36,8 @@ $system = new global_class();
 $template = new template();
 $user = new user();
 set_error_handler('WeBidErrorHandler');
+
+include $include_path . "messages.inc.php";
 
 // Atuomatically login user is necessary "Remember me" option
 if(!$user->logged_in && isset($_COOKIE['WEBID_RM_ID'])) {

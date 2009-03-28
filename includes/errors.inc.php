@@ -43,9 +43,12 @@ if(!function_exists('printeLog')) {
 	
 if(!function_exists('MySQLError')) {
 	function MySQLError($Q, $line = '', $page = '') {
-		global 	$SESSION_ERROR, $ERR_001, $system;
+		global 	$SESSION_ERROR, $ERR_001, $system, $_SESSION;
 		
 		$SESSION_ERROR = $ERR_001."\t".$Q."\n\t".mysql_error()."\n\tpage:".$page." line:".$line;
+		if(!isset($_SESSION['SESSION_ERROR']) || !is_array($_SESSION['SESSION_ERROR'])) {
+			$_SESSION['SESSION_ERROR'] = array();
+		}
 		$_SESSION['SESSION_ERROR'][] = $SESSION_ERROR;
 		openeLogFile();
 		printeLog(gmdate('d-m-Y, H:i:s', $system->ctime).':: '.$SESSION_ERROR);
@@ -55,7 +58,7 @@ if(!function_exists('MySQLError')) {
 
 if(!function_exists('WeBidErrorHandler')) {
 	function WeBidErrorHandler($errno, $errstr, $errfile, $errline) {
-		global $system;
+		global $system, $_SESSION;
 		switch ($errno) {
 			case E_USER_ERROR:
 				$error = "<b>My ERROR</b> [$errno] $errstr\n";
@@ -75,6 +78,9 @@ if(!function_exists('WeBidErrorHandler')) {
 			default:
 				$error = "Unknown error type: [$errno] $errstr on $errfile line $errline\n";
 				break;
+		}
+		if(!isset($_SESSION['SESSION_ERROR']) || !is_array($_SESSION['SESSION_ERROR'])) {
+			$_SESSION['SESSION_ERROR'] = array();
 		}
 		$_SESSION['SESSION_ERROR'][] = $error;
 		openeLogFile();

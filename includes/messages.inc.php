@@ -55,9 +55,9 @@ if(isset($_SESSION['WEBID_LOGGED_IN'])) {
 						 '".$_SESSION['WEBID_LOGGED_IN']."',
 						 '$language')");
 }
-if (!$language) $language = $system->SETTINGS['defaultlanguage'];
+if (!isset($language) || empty($language)) $language = $system->SETTINGS['defaultlanguage'];
 
-require($main_path.'language/'.$language.'/messages.inc.php');
+require($main_path . 'language/' . $language . '/messages.inc.php');
 /* **************************************************************/
 
 //find installed languages

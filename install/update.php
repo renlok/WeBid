@@ -20,7 +20,7 @@ switch($step){
 	case 2:
 		$siteURL = $_GET['URL'];
 		$siteEmail = $_GET['EMail'];
-		include('../includes/data.inc.php');
+		include('../includes/config.inc.php');
 		if(!mysql_connect($DbHost, $DbUser, $DbPassword)){
 			die('<p>Cannot connect to '.$DbHost.'</p>');
 		}
@@ -49,7 +49,7 @@ $main_path	= "'.$path.'";
 		if($output)
 			echo 'Complete, now to <b><a href="?step=2&URL='.$_POST['URL'].'&cats='.$cats.'&n=1">step 2</a></b>';
 		else {
-			echo 'WeBid could not automatically create the config file, please could you enter the following into data.inc.php (this file is located in the inclues directory)';
+			echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
 			echo '<p><textarea style="width:500px; height:500px;">
 '.$content.'
 			</textarea></p>';

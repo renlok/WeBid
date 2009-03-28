@@ -28,7 +28,7 @@ function getdomainpath(){
 
 function makeconfigfile($contents){
 	global $_POST;
-	$filename = $_POST['mainpath'] . "includes/data.inc.php";
+	$filename = $_POST['mainpath'] . "includes/config.inc.php";
     if (!file_exists($filename)) {
         touch($filename);
     }

@@ -61,14 +61,10 @@ switch ($_SESSION['action']) {
             if (in_array($paym['description'], $payment))
                 $payment_text .= $paym['description'] . "\n";
         }
-        $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
-        $result = mysql_query($query);
-        $system->check_mysql($result, $query, __LINE__, __FILE__);
-        $userrec = mysql_fetch_assoc($result);
-        if ((md5($MD5_PREFIX . $_POST['password']) != $userrec['password']) && $system->SETTINGS['usersauth'] == 'y')
+        if ((md5($MD5_PREFIX . $_POST['password']) != $user->user_data['password']) && $system->SETTINGS['usersauth'] == 'y')
             $ERR = 'ERR_026';
         else {
-            if ($userrec['suspended'] > 0)
+            if ($user->user_data['suspended'] > 0)
                 $ERR = 'ERR_618';
         }
         if ($ERR != 'ERR_')
@@ -85,7 +81,7 @@ switch ($_SESSION['action']) {
                 $query = updateauction(2);
             $res = mysql_query($query);
             $system->check_mysql($res, $query, __LINE__, __FILE__);
-            if ($_SESSION['SELL_action'] == "edit" || $_SESSION['SELL_action'] == "relist")
+            if ($_SESSION['SELL_action'] == 'edit' || $_SESSION['SELL_action'] == 'relist')
                 $auction_id = $TPL_auction_id = $_SESSION['SELL_auction_id'];
             else {
                 $sql = "SELECT LAST_INSERT_ID() as id";
@@ -399,10 +395,6 @@ switch ($_SESSION['action']) {
         } else {
 			$TPL_start_date = gmdate('Y-m-d H:i:s', $a_starts);
         }
-		
-		$query = "SELECT bn_only FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
-		$result = mysql_query($query);
-		$system->check_mysql($result, $query, __LINE__, __FILE__);
 
         $oFCKeditor = new FCKeditor('description') ;
         $oFCKeditor->BasePath = 'fck/';
@@ -451,7 +443,7 @@ switch ($_SESSION['action']) {
 
                 'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),
                 'B_ADULTONLY' => ($system->SETTINGS['adultonly'] == 'y'),
-                'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] == 'y' && (($system->SETTINGS['bn_only_disable'] == 'y' && mysql_result($result, 0, 'bn_only') == 'y') || $system->SETTINGS['bn_only_disable'] == 'n')),
+                'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] == 'y' && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only'] == 'y') || $system->SETTINGS['bn_only_disable'] == 'n')),
                 'B_BN' => ($system->SETTINGS['buy_now'] == 2),
                 'B_EDITING' => ($_SESSION['SELL_action'] == 'edit'),
 				'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1)

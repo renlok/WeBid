@@ -110,14 +110,14 @@ if ($auctions_count == 0) {
     $template->assign_block_vars('no_auctions', array());
 }
 
-/* get this user's nick */
-$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = $user_id";
+// get this user's nick
+$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user_id;
 $result = mysql_query ($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 if (mysql_num_rows($result) > 0)
     $TPL_user_nick = mysql_result($result, 0, 'nick');
 else
-    $TPL_user_nick = "";
+    $TPL_user_nick = '';
 
 $LOW = $PAGE - 5;
 if ($LOW <= 0) $LOW = 1;

@@ -65,9 +65,9 @@ if (!empty($_POST['seller'])) {
 
     if (mysql_num_rows($res) > 0) {
         $SELLER_ID = mysql_result($res, 0, 'id');
-        $wher .= "(au.user='" . $SELLER_ID . "') AND ";
+        $wher .= "(au.user = '" . $SELLER_ID . "') AND ";
     } else {
-        $wher .= "(au.user like '%-------------%') AND ";
+        $wher .= "(au.user LIKE '%-------------%') AND ";
     }
 }
 

@@ -16,7 +16,7 @@ if(!defined('InWeBid')) exit();
 
 include $include_path . "maintenance.php";
 include $include_path . "banners.inc.php";
-if (basename($_SERVER['PHP_SELF']) !== "error.php")
+if (basename($_SERVER['PHP_SELF']) != 'error.php')
     include $include_path . "stats.inc.php";
 
 $jsfiles = (basename($_SERVER['PHP_SELF']) == 'sell.php') ? '<script type="text/javascript" src="includes/calendar.js"></script>
@@ -30,39 +30,49 @@ $query = "SELECT * FROM " . $DBPrefix . "counters";
 $result_counters = mysql_query($query);
 $counters = '';
 if ($result_counters) {
-    if ($COUNTERSTOSHOW['auctions'] == 'y') $counters .= '<b>' . mysql_result($result_counters, 0, 'auctions') . '</b>&nbsp;' . strtoupper($MSG['232']);
-    if ($COUNTERSTOSHOW['users'] == 'y') $counters .= '|&nbsp;<b>' . mysql_result($result_counters, 0, 'users') . '</b>&nbsp;' . strtoupper($MSG['231']);
+    if ($COUNTERSTOSHOW['auctions'] == 'y') $counters .= '<b>' . mysql_result($result_counters, 0, 'auctions') . '</b>&nbsp;' . strtoupper($MSG['232']) . '|&nbsp;';
+    if ($COUNTERSTOSHOW['users'] == 'y') $counters .= '<b>' . mysql_result($result_counters, 0, 'users') . '</b>&nbsp;' . strtoupper($MSG['231']) . '&nbsp;|&nbsp;';
     if ($COUNTERSTOSHOW['online'] == 'y') {
-        $s = session_id();
+		if (!$user->logged_in) {
+			if(!isset($_COOKIE['WEBID_ONLINE'])) {
+				$s = md5(rand(0, 99) . session_id());
+				setcookie('WEBID_ONLINE', $s, time() + 900);
+			} else {
+				$s = $_COOKIE['WEBID_ONLINE'];
+				setcookie('WEBID_ONLINE', $s, time() + 900);
+			}
+		} else {
+			$s = 'uId-' . $user->user_data['id'];
+		}
         $uxtime = time();
-        $sqluni = "SELECT * FROM " . $DBPrefix . "online WHERE SESSION = '$s'";
-        $res = mysql_query($sqluni);
-        $system->check_mysql($res, $sqluni, __LINE__, __FILE__);
+        $query = "SELECT * FROM " . $DBPrefix . "online WHERE SESSION = '$s'";
+        $res = mysql_query($query);
+        $system->check_mysql($res, $query, __LINE__, __FILE__);
 
         if (mysql_num_rows($res) == 0) {
-            $insess = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES ('$s', '$uxtime')";
-            $system->check_mysql(mysql_query($insess), $insess, __LINE__, __FILE__);
+            $query = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES ('$s', '$uxtime')";
+            $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
         } else {
             $oID = mysql_result($res, 0, 'ID');
-            $updtime = "UPDATE " . $DBPrefix . "online SET time = '$uxtime' WHERE ID = '$oID'";
-            $system->check_mysql(mysql_query($updtime), $updtime, __LINE__, __FILE__);
+            $query = "UPDATE " . $DBPrefix . "online SET time = '$uxtime' WHERE ID = '$oID'";
+            $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
         }
         $deltime = $uxtime - 900;
-        $removeold = "DELETE from " . $DBPrefix . "online WHERE time < '$deltime'";
-        $system->check_mysql(mysql_query($removeold), $removeold, __LINE__, __FILE__);
-        $sql = "SELECT * FROM " . $DBPrefix . "online";
-        $res = mysql_query($sql);
-        $system->check_mysql($res, $sql, __LINE__, __FILE__);
+        $query = "DELETE from " . $DBPrefix . "online WHERE time < '$deltime'";
+        $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+        $query = "SELECT * FROM " . $DBPrefix . "online";
+        $res = mysql_query($query);
+        $system->check_mysql($res, $query, __LINE__, __FILE__);
 
         $count15min = mysql_num_rows($res);
 
-        $counters .= '&nbsp;|&nbsp;<B>' . $count15min . '</B>&nbsp;' . $MGS_2__0064 . '&nbsp;';
+        $counters .= '<b>' . $count15min . '</b>&nbsp;' . $MGS_2__0064 . '&nbsp;|&nbsp;';
     }
 }
 // -- Display current Date/Time
 $mth = "MON_0" . gmdate('m', $system->ctime);
 $date = $MSG[$mth] . gmdate(' j, Y', $system->ctime);
-$counters .= '|&nbsp;' . $date . ' <span id="servertime"></span>';
+$counters .= $date . ' <span id="servertime"></span>';
 
 include($include_path . "styles.inc.php");
 $page_title = (isset($page_title)) ? ' ' . $page_title : '';

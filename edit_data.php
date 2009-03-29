@@ -77,7 +77,8 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
         $TPL_errmsg = $ERR_112;
     }
 }
-// // Retrieve user's data
+
+// Retrieve user's data
 $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);

@@ -13,18 +13,16 @@
  ***************************************************************************/
 
 include "includes/common.inc.php";
-// // If user is not logged in redirect to login page
+
+// If user is not logged in redirect to login page
 if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
 
-$sql = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
-$res = mysql_query($sql);
-$system->check_mysql($res, $sql, __LINE__, __FILE__);
-$uid = mysql_fetch_assoc($res);
-$userid = $uid['id'];
+$userid = $user->user_data['id'];
 $messageid = $_GET['id'];
+
 // check message is to user
 $sql = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = '$userid' AND id = '$messageid'";
 $res = mysql_query($sql);

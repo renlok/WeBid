@@ -94,48 +94,42 @@ $TPL_vendetor_value = " <a href=\"profile.php?user_id=" . $user_id . "\"><b>" . 
 $i = 0;
 foreach ($memtypesarr as $k => $l) {
     if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1)) {
-        $TPL_rate_radio = '<img src="' . $system->SETTINGS['siteurl'] . "images/icons/" . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
+        $TPL_rate_radio = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
         break;
     }
 }
-$TPL_num_feedbacks = "<b>($total_rate)</b>";
+$TPL_num_feedbacks = '<b>(' . $total_rate . ')</b>';
 
 if ($_GET['action'] == 'buy') {
     $bidder_id = $user->user_data['id'];
     if ($system->SETTINGS['usersauth'] == 'y') {
         // check if nickname and password entered
         if (strlen($_POST['password']) == 0) {
-            $ERR = "610";
+            $ERR = '610';
         }
-        // check if nick is valid
-        $query = "select * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'] . " LIMIT 1";
-        $result = mysql_query($query);
-        $system->check_mysql($result, $query, __LINE__, __FILE__);
-
         $n = 0;
         if ($result) $n = mysql_num_rows($result);
-        else $ERR = "001";
+        else $ERR = '001';
 
-        if ($n == 0) $ERR = "609";
+        if ($n == 0) $ERR = '609';
         if ($n > 0) {
             // check if password is correct
-            $pwd = mysql_result($result, 0, "password");
-            if ($pwd != md5($MD5_PREFIX . $_POST['password'])) {
-                $ERR = "611";
+            if ($user->user_data['password'] != md5($MD5_PREFIX . $_POST['password'])) {
+                $ERR = '611';
             } else {
-                if (mysql_result($result, 0, "suspended") > 0) {
-                    $ERR = "618";
+                if ($user->user_data['suspended'] > 0) {
+                    $ERR = '618';
                 }
             }
         }
     }
     // check if buyer is not the seller
     if ($_POST['nick'] == $user_nick) {
-        $ERR = "711";
+        $ERR = '711';
     }
     // perform final actions
     if (isset($ERR)) {
-        $TPL_errmsg = ${"ERR_" . $ERR} ;
+        $TPL_errmsg = ${'ERR_' . $ERR} ;
     }
 
     if (empty($ERR)) {

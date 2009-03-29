@@ -15,14 +15,14 @@
 include "includes/common.inc.php";
 include $include_path . "auctionstoshow.inc.php";
 
-// // If user is not logged in redirect to login page
+// If user is not logged in redirect to login page
 if (!$user->logged_in) {
     header("Location: user_login.php");
     exit;
 }
 
 $NOW = time();
-$NOWB = gmdate("Ymd");
+$NOWB = gmdate('Ymd');
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions') {
     if (is_array($_POST['O_delete'])) {
@@ -52,7 +52,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions') {
                     @unlink($upload_path . $pict_url);
                 }
             }
-            // Delete Invited Users List and Black Lists associated with this auction ---------------------------
+            // Delete Invited Users List and Black Lists associated with this auction
             $query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
             // Auction

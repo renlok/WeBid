@@ -28,12 +28,14 @@ class global_class
 		$this->tdiff = ($this->SETTINGS['timecorrection'] + date('I')) * 3600;
 		if(is_dir($main_path.'install')){ echo 'please delete the install directory'; exit; }
 		//check ip
-		$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE ip='".$_SERVER['REMOTE_ADDR']."' AND action='deny'";
-		$result = mysql_query($query);
-		$this->check_mysql($result, $query, __LINE__, __FILE__);
-		if(mysql_num_rows($result) > 0) {
-			header('location: iperror.php');
-			exit;
+		if(!defined('IPBan')) {
+			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE ip='".$_SERVER['REMOTE_ADDR']."' AND action='deny'";
+			$result = mysql_query($query);
+			$this->check_mysql($result, $query, __LINE__, __FILE__);
+			if(mysql_num_rows($result) > 0) {
+				header('location: iperror.php');
+				exit;
+			}
 		}
 	}
 	

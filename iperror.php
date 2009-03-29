@@ -12,6 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
+define('IPBan', 1);
 require('includes/common.inc.php');
 
 ?>

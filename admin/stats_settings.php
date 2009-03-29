@@ -19,7 +19,7 @@ include 'loggedin.inc.php';
 unset($ERR);
 
 if(isset($_POST['action']) && $_POST['action'] == "update") {
-    if(!isset($_POST['accesses']) && !isset($_POST['browsers']) && !isset($_POST['domains'])) {
+    if(isset($_POST['activate']) && $_POST['activate'] == 'y' && (!isset($_POST['accesses']) && !isset($_POST['browsers']) && !isset($_POST['domains']))) {
         $ERR = $ERR_5002;
         $system->SETTINGS = $_POST;
     } else {

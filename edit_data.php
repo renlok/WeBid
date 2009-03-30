@@ -12,12 +12,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/common.inc.php";
-include $include_path . "countries.inc.php";
-// // If user is not logged in redirect to login page
-if (!$user->logged_in) {
-    header("Location: user_login.php");
-    exit;
+include 'includes/common.inc.php';
+include $include_path . 'countries.inc.php';
+
+// If user is not logged in redirect to login page
+if (!$user->logged_in)
+{
+	header('location: user_login.php');
+	exit;
 }
 
 // Retrieve users signup settings
@@ -27,34 +29,51 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $MANDATORY_FIELDS = unserialize(mysql_result($res, 0, 'mandatory_fields'));
 
 $TPL_errmsg = '';
-if (isset($_POST['action']) && $_POST['action'] == "update") {
-    // // Check data
-    if ($_POST['TPL_email']) {
-        if (strlen($_POST['TPL_password']) < 6 && strlen($_POST['TPL_password']) > 0) {
-            $TPL_err = 1;
-            $TPL_errmsg = $ERR_011;
-        } else if ($_POST['TPL_password'] != $_POST['TPL_repeat_password']) {
-            $TPL_err = 1;
-            $TPL_errmsg = $ERR_109;
-        } else if (strlen($_POST['TPL_email']) < 5) {
-            $TPL_err = 1;
-            $TPL_errmsg = $ERR_110;
-        } elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['TPL_email'])) {
-            $TPL_err = 1;
-            $TPL_errmsg = $ERR_008;
-        } elseif (strlen($_POST['TPL_zip']) < 4 && $MANDATORY_FIELDS['zip'] == 'y') {
-            $TPL_err = 1;
-            $TPL_errmsg = $ERR_616;
-        } elseif (strlen($_POST['TPL_phone']) < 3 && $MANDATORY_FIELDS['tel'] == 'y') {
-            $TPL_err = 1;
-            $TPL_errmsg = $ERR_617;
-        } elseif ((empty($_POST['TPL_day']) || empty($_POST['TPL_month']) || empty($_POST['TPL_year'])) && $MANDATORY_FIELDS['birthdate'] == 'y') {
-            $TPL_err = 1;
-            $TPL_errmsg = $ERR_5040;
-		} else {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	// Check data
+	if ($_POST['TPL_email'])
+	{
+		if (strlen($_POST['TPL_password']) < 6 && strlen($_POST['TPL_password']) > 0)
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $ERR_011;
+		}
+		else if ($_POST['TPL_password'] != $_POST['TPL_repeat_password'])
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $ERR_109;
+		}
+		else if (strlen($_POST['TPL_email']) < 5)
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $ERR_110;
+		}
+		elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['TPL_email']))
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $ERR_008;
+		}
+		elseif (strlen($_POST['TPL_zip']) < 4 && $MANDATORY_FIELDS['zip'] == 'y')
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $ERR_616;
+		}
+		elseif (strlen($_POST['TPL_phone']) < 3 && $MANDATORY_FIELDS['tel'] == 'y')
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $ERR_617;
+		}
+		elseif ((empty($_POST['TPL_day']) || empty($_POST['TPL_month']) || empty($_POST['TPL_year'])) && $MANDATORY_FIELDS['birthdate'] == 'y')
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $ERR_5040;
+		}
+		else
+		{
 			$TPL_birthdate = $_POST['TPL_year'] . $_POST['TPL_month'] . $_POST['TPL_day'];
 
-            $sql = "UPDATE " . $DBPrefix . "users SET email='" . $system->cleanvars($_POST['TPL_email']) . "',
+			$sql = "UPDATE " . $DBPrefix . "users SET email='" . $system->cleanvars($_POST['TPL_email']) . "',
 					birthdate = '" . $system->cleanvars($TPL_birthdate) . "',
 					address = '" . $system->cleanvars($_POST['TPL_address']) . "',
 					city = '" . $system->cleanvars($_POST['TPL_city']) . "',
@@ -64,18 +83,21 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 					phone = '" . $system->cleanvars($_POST['TPL_phone']) . "',
 					nletter = '" . $system->cleanvars($_POST['TPL_nletter']);
 
-            if (strlen($_POST['TPL_password']) > 0) {
-                $sql .= "', password='" . md5($MD5_PREFIX . addslashes($_POST['TPL_password']));
-            }
+			if (strlen($_POST['TPL_password']) > 0)
+			{
+				$sql .= "', password = '" . md5($MD5_PREFIX . addslashes($_POST['TPL_password']));
+			}
 
-            $sql .= "' WHERE id = " . $user->user_data['id'];
-            $res = mysql_query ($sql);
-            $system->check_mysql($res, $sql, __LINE__, __FILE__);
-            $TPL_errmsg = $MSG['183'];
-        }
-    } else {
-        $TPL_errmsg = $ERR_112;
-    }
+			$sql .= "' WHERE id = " . $user->user_data['id'];
+			$res = mysql_query($sql);
+			$system->check_mysql($res, $sql, __LINE__, __FILE__);
+			$TPL_errmsg = $MSG['183'];
+		}
+	}
+	else
+	{
+		$TPL_errmsg = $ERR_112;
+	}
 }
 
 // Retrieve user's data
@@ -88,12 +110,13 @@ $TPL_month = substr($USER['birthdate'], 4, 2);
 $TPL_year = substr($USER['birthdate'], 0, 4);
 
 $country = '';
-while (list($code, $name) = each($countries)) {
-    $country .= "<option value=\"$name\"";
-    if ($name == $USER['country']) {
-        $country .= " selected";
-    }
-    $country .= ">$name</option>\n";
+while (list($code, $name) = each($countries))
+{
+	$country .= '<option value="' . $name . '"';
+	if ($name == $USER['country']) {
+		$country .= ' selected';
+	}
+	$country .= '>' . $name . '</option>' . "\n";
 }
 $dobmonth = '<select name="TPL_month">
 		<option value=""></option>
@@ -112,39 +135,40 @@ $dobmonth = '<select name="TPL_month">
 	</select>';
 $dobday = '<select name="TPL_day">
 		<option value=""></option>';
-for($i = 1; $i <= 31; $i++) {
+for ($i = 1; $i <= 31; $i++)
+{
 	$j = (strlen($i) == 1) ? '0' . $i : $i;
 	$dobday .= '<option value="' . $j . '"' . (($TPL_day == $j) ? ' selected' : '') . '>' . $j . '</option>';
 }
 $dobday .= '</select>';
 
 $template->assign_vars(array(
-        'COUNTRYLIST' => $country,
-        'NAME' => $USER['name'],
-        'NICK' => $USER['nick'],
-        'EMAIL' => $USER['email'],
-        'YEAR' => $TPL_year,
-        'ADDRESS' => $USER['address'],
-        'CITY' => $USER['city'],
-        'PROV' => $USER['prov'],
-        'ZIP' => $USER['zip'],
-        'PHONE' => $USER['phone'],
+		'COUNTRYLIST' => $country,
+		'NAME' => $USER['name'],
+		'NICK' => $USER['nick'],
+		'EMAIL' => $USER['email'],
+		'YEAR' => $TPL_year,
+		'ADDRESS' => $USER['address'],
+		'CITY' => $USER['city'],
+		'PROV' => $USER['prov'],
+		'ZIP' => $USER['zip'],
+		'PHONE' => $USER['phone'],
 		'DATEFORMAT' => ($system->SETTINGS['datesformat'] == "USA") ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
-        'ERROR' => $TPL_errmsg,
+		'ERROR' => $TPL_errmsg,
 
-        'NLETTER1' => ($USER['nletter'] == 1) ? ' checked="checked"' : '',
-        'NLETTER2' => ($USER['nletter'] == 2) ? ' checked="checked"' : '',
+		'NLETTER1' => ($USER['nletter'] == 1) ? ' checked="checked"' : '',
+		'NLETTER2' => ($USER['nletter'] == 2) ? ' checked="checked"' : '',
 
-        'B_NEWLETTER' => ($system->SETTINGS['newsletter'] == 1)
-        ));
+		'B_NEWLETTER' => ($system->SETTINGS['newsletter'] == 1)
+		));
 
 $TMP_usmenutitle = $MSG['509'];
-include "header.php";
-include "includes/user_cp.php";
+include 'header.php';
+include 'includes/user_cp.php';
 $template->set_filenames(array(
-        'body' => 'edit_details.html'
-        ));
+		'body' => 'edit_details.html'
+		));
 $template->display('body');
-include "footer.php";
+include 'footer.php';
 
 ?>

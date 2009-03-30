@@ -12,13 +12,15 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/common.inc.php";
-// // Handle banners clickthrough
-$URL = trim($_GET['url']);
-// // Update clickthrough counter in the database
-mysql_query("UPDATE " . $DBPrefix . "banners set clicks = clicks + 1 WHERE id=" . intval($_GET['banner']));
-// // Redirect
-header("location: $URL");
-exit;
+include 'includes/common.inc.php';
 
+// Handle banners clickthrough
+$URL = trim($_GET['url']);
+
+// Update clickthrough counter in the database
+mysql_query("UPDATE " . $DBPrefix . "banners set clicks = clicks + 1 WHERE id=" . intval($_GET['banner']));
+
+// Redirect
+header('location: ' . $URL);
+exit;
 ?>

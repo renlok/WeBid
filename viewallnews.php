@@ -12,24 +12,24 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/common.inc.php');
+include 'includes/common.inc.php';
 
 $query = "SELECT id, title FROM " . $DBPrefix . "news WHERE suspended = 0 ORDER BY new_date";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 while ($new = mysql_fetch_array($res)) {
-    $template->assign_block_vars('news', array(
-            'TITLE' => stripslashes($new['title']),
-            'ID' => $new['id']
-            ));
+	$template->assign_block_vars('news', array(
+			'TITLE' => stripslashes($new['title']),
+			'ID' => $new['id']
+			));
 }
 
-require("header.php");
+include 'header.php';
 $template->set_filenames(array(
-        'body' => 'view_allnews.html'
-        ));
+		'body' => 'view_allnews.html'
+		));
 $template->display('body');
-require("footer.php");
+include 'footer.php';
 
 ?>

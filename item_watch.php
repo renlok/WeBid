@@ -12,45 +12,54 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/common.inc.php');
-include $include_path . "browseitems.inc.php";
+include 'includes/common.inc.php';
+include $include_path . 'browseitems.inc.php';
 include $include_path . 'dates.inc.php';
 
 // If user is not logged in redirect to login page
-if (!$user->logged_in) {
-    header("location: user_login.php");
-    exit;
+if (!$user->logged_in)
+{
+	header("location: user_login.php");
+	exit;
 }
 
 // Auction id is present, now update table
-if (isset($_GET['add']) && !empty($_GET['add'])) {
-    // Check if this item is not already added
-    $items = trim($user->user_data['item_watch']);
-    $match = strstr($items, $_GET['add']);
+if (isset($_GET['add']) && !empty($_GET['add']))
+{
+	// Check if this item is not already added
+	$items = trim($user->user_data['item_watch']);
+	$match = strstr($items, $_GET['add']);
 
-    if (!$match) {
-        $item_watch = trim($items . ' ' . $_GET['add']);
-        $item_watch_new = trim($item_watch);
-        $query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . addslashes($item_watch_new) . "' WHERE id = " . $user->user_data['id'];
-        $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	if (!$match)
+	{
+		$item_watch = trim($items . ' ' . $_GET['add']);
+		$item_watch_new = trim($item_watch);
+		$query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . addslashes($item_watch_new) . "' WHERE id = " . $user->user_data['id'];
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$user->user_data['item_watch'] = $item_watch_new;
-    }
+	}
 }
+
 // Delete item form item watch
-if (isset($_GET['delete']) && !empty($_GET['delete'])) {
-    $items = trim($user->user_data['item_watch']);
-    $auc_id = split(' ', $items);
-    for ($j = 0; $j < count($auc_id); $j++) {
-        $match = strstr($auc_id[$j], $_GET['delete']);
-        if ($match) {
-            $item_watch = $item_watch;
-        } else {
-            $item_watch = $auc_id[$j] . ' ' . $item_watch;
-        }
-    }
-    $item_watch_new = trim($item_watch);
-    $query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . $item_watch_new . "' WHERE id = " . $user->user_data['id'];
-    $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+if (isset($_GET['delete']) && !empty($_GET['delete']))
+{
+	$items = trim($user->user_data['item_watch']);
+	$auc_id = split(' ', $items);
+	for ($j = 0; $j < count($auc_id); $j++)
+	{
+		$match = strstr($auc_id[$j], $_GET['delete']);
+		if ($match)
+		{
+			$item_watch = $item_watch;
+		}
+		else
+		{
+			$item_watch = $auc_id[$j] . ' ' . $item_watch;
+		}
+	}
+	$item_watch_new = trim($item_watch);
+	$query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . $item_watch_new . "' WHERE id = " . $user->user_data['id'];
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$user->user_data['item_watch'] = $item_watch_new;
 }
 
@@ -58,27 +67,29 @@ if (isset($_GET['delete']) && !empty($_GET['delete'])) {
 $TPL_auctions_list_value = array();
 $items = trim($user->user_data['item_watch']);
 if (mysql_num_rows($result) > 0) $HasResults = true;
-if ($items != '' && $items != null) {
-    $item = split(' ', $items);
-    $itemids = '0';
-    for ($j = 0; $j < count($item); $j++) {
-        $itemids .= ',' . $item[$j];
-    }
-    $query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id IN ($itemids)";
-    $result = mysql_query($query);
-    $system->check_mysql($result, $query, __LINE__, __FILE__);
-    if (mysql_num_rows($result) > 0) {
-        browseItems($result, 'item_watch.php');
-    }
+if ($items != '' && $items != null)
+{
+	$item = split(' ', $items);
+	$itemids = '0';
+	for ($j = 0; $j < count($item); $j++)
+	{
+		$itemids .= ',' . $item[$j];
+	}
+	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id IN ($itemids)";
+	$result = mysql_query($query);
+	$system->check_mysql($result, $query, __LINE__, __FILE__);
+	if (mysql_num_rows($result) > 0)
+	{
+		browseItems($result, 'item_watch.php');
+	}
 }
 
-include "header.php";
+include 'header.php';
 $TMP_usmenutitle = $MSG['472'];
-include "includes/user_cp.php";
+include 'includes/user_cp.php';
 $template->set_filenames(array(
-        'body' => 'item_watch.html'
-        ));
+		'body' => 'item_watch.html'
+		));
 $template->display('body');
-include "footer.php";
-
+include 'footer.php';
 ?>

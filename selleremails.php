@@ -13,35 +13,36 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/common.inc.php');
+include 'includes/common.inc.php';
 
-if (!$user->logged_in) {
-    header("Location: user_login.php");
-    exit;
+if (!$user->logged_in)
+{
+	header('location: user_login.php');
+	exit;
 }
-// // Create new list
+// Create new list
 if (isset($_POST['action']) && $_POST['action'] == "update") {
-    $query = "UPDATE " . $DBPrefix . "users SET endemailmode = '" . $system->cleanvars($_POST['endemailmod']) . "',
+	$query = "UPDATE " . $DBPrefix . "users SET endemailmode = '" . $system->cleanvars($_POST['endemailmod']) . "',
 			  startemailmode = '" . $system->cleanvars($_POST['startemailmod']) . "' WHERE id = " . $user->user_data['id'];
-    $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-    $ERR = $MSG['25_0192'];
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$ERR = $MSG['25_0192'];
 }
 
 $template->assign_vars(array(
-        'B_AUCSETUPY' => ($user->user_data['startemailmode'] == 'yes') ? ' checked="checked"' : '',
-        'B_AUCSETUPN' => ($user->user_data['startemailmode'] == 'no') ? ' checked="checked"' : '',
-        'B_CLOSEONE' => ($user->user_data['endemailmode'] == 'one') ? ' checked="checked"' : '',
-        'B_CLOSEBULK' => ($user->user_data['endemailmode'] == 'cum') ? ' checked="checked"' : '',
-        'B_CLOSENONE' => ($user->user_data['endemailmode'] == 'none') ? ' checked="checked"' : ''
-        ));
+		'B_AUCSETUPY' => ($user->user_data['startemailmode'] == 'yes') ? ' checked="checked"' : '',
+		'B_AUCSETUPN' => ($user->user_data['startemailmode'] == 'no') ? ' checked="checked"' : '',
+		'B_CLOSEONE' => ($user->user_data['endemailmode'] == 'one') ? ' checked="checked"' : '',
+		'B_CLOSEBULK' => ($user->user_data['endemailmode'] == 'cum') ? ' checked="checked"' : '',
+		'B_CLOSENONE' => ($user->user_data['endemailmode'] == 'none') ? ' checked="checked"' : ''
+		));
 
-require("header.php");
+include 'header.php';
 $TMP_usmenutitle = $MSG['25_0188'];
-include "includes/user_cp.php";
+include 'includes/user_cp.php';
 $template->set_filenames(array(
-        'body' => 'sellermails.html'
-        ));
+		'body' => 'sellermails.html'
+		));
 $template->display('body');
-include "footer.php";
+include 'footer.php';
 
 ?>

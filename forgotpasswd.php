@@ -12,23 +12,26 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/common.inc.php";
-include $include_path . "countries.inc.php";
+include 'includes/common.inc.php';
+include $include_path . 'countries.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == "ok") {
-    if (isset($_POST['TPL_username'])) {
-        $username = $system->cleanvars($_POST['TPL_username']);
-        $query = "SELECT email, id, name FROM " . $DBPrefix . "users WHERE nick = '" . $username . "' OR email = '" . $username . "' LIMIT 1";
-        $res = mysql_query($query);
-        $system->check_mysql($res, $query, __LINE__, __FILE__);
+if (isset($_POST['action']) && $_POST['action'] == 'ok')
+{
+	if (isset($_POST['TPL_username']))
+	{
+		$username = $system->cleanvars($_POST['TPL_username']);
+		$query = "SELECT email, id, name FROM " . $DBPrefix . "users WHERE nick = '" . $username . "' OR email = '" . $username . "' LIMIT 1";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		
-        if (mysql_num_rows($res) > 0) {
-            // Generate a new random password and mail it to the user
-            $email = mysql_result($res, 0, 'email');
-            $id = mysql_result($res, 0, 'id');
+		if (mysql_num_rows($res) > 0)
+		{
+			// Generate a new random password and mail it to the user
+			$email = mysql_result($res, 0, 'email');
+			$id = mysql_result($res, 0, 'id');
 			$name = mysql_result($res, 0, 'name');
-            $newpass = substr(uniqid(md5(time())), 0, 6);
-            // send message
+			$newpass = substr(uniqid(md5(time())), 0, 6);
+			// send message
 			$emailer = new email_class();
 			$emailer->assign_vars(array(
 					'REALNAME' => $name,
@@ -37,17 +40,21 @@ if (isset($_POST['action']) && $_POST['action'] == "ok") {
 					));
 			$emailer->email_uid = $id;
 			$emailer->email_sender($email, 'mail_newpasswd.inc.php', $MSG['024']);
-            // Update database
-            $query = "UPDATE " . $DBPrefix . "users SET password = '" . md5($MD5_PREFIX . $newpass) . "' WHERE id = " . $id;
-            $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-        } else {
-            $TPL_err = 1;
-            $TPL_errmsg = $ERR_100;
-        }
-    } else {
-        $TPL_err = 1;
-        $TPL_errmsg = $ERR_112;
-    }
+			// Update database
+			$query = "UPDATE " . $DBPrefix . "users SET password = '" . md5($MD5_PREFIX . $newpass) . "' WHERE id = " . $id;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		else
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $ERR_100;
+		}
+	}
+	else
+	{
+		$TPL_err = 1;
+		$TPL_errmsg = $ERR_112;
+	}
 }
 
 $template->assign_vars(array(
@@ -60,11 +67,10 @@ $template->assign_vars(array(
 		'B_FIRST' => (!isset($_POST['action']) || (isset($_POST['action']) && isset($TPL_errmsg)))
 		));
 
-include "header.php";
+include 'header.php';
 $template->set_filenames(array(
-        'body' => 'forgotpasswd.html'
-        ));
+		'body' => 'forgotpasswd.html'
+		));
 $template->display('body');
-include "footer.php";
-
+include 'footer.php';
 ?>

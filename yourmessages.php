@@ -12,12 +12,13 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/common.inc.php";
+include 'includes/common.inc.php';
 
 // If user is not logged in redirect to login page
-if (!$user->logged_in) {
-    header("Location: user_login.php");
-    exit;
+if (!$user->logged_in)
+{
+	header('location: user_login.php');
+	exit;
 }
 
 $userid = $user->user_data['id'];
@@ -29,8 +30,8 @@ $res = mysql_query($sql);
 $system->check_mysql($res, $sql, __LINE__, __FILE__);
 $check = mysql_num_rows($res);
 if ($check == 0) {
-    $_SESSION['message'] = "This message doesn't exist";
-    header('location: mail.php');
+	$_SESSION['message'] = "This message doesn't exist";
+	header('location: mail.php');
 }
 // get message details
 $sql = "SELECT * FROM `" . $DBPrefix . "messages` WHERE `id`='$messageid'";
@@ -55,7 +56,7 @@ $sendusername = $uarray['nick'];
 $senderusername = '<a href="profile.php?user_id=1&auction_id=' . $from . '">' . $sendusername . '</a>';
 // if admin message
 if ($from == '0') {
-    $senderusername = "Admin";
+	$senderusername = "Admin";
 }
 // update message
 $sql = "UPDATE `" . $DBPrefix . "messages` SET `read` = 1 WHERE `id` = '$messageid'";
@@ -67,20 +68,20 @@ $_SESSION['sendto' . $hash] = $sendusername;
 $_SESSION['reply' . $hash] = $messageid;
 
 $template->assign_vars(array(
-        'SUBJECT' => $subject,
-        'SENDERNAME' => $senderusername,
-        'SENT' => $sent,
-        'MESSAGE' => $message,
-        'ID' => $messageid,
-        'HASH' => $hash
-        ));
+		'SUBJECT' => $subject,
+		'SENDERNAME' => $senderusername,
+		'SENT' => $sent,
+		'MESSAGE' => $message,
+		'ID' => $messageid,
+		'HASH' => $hash
+		));
 
-include "header.php";
-include "includes/user_cp.php";
+include 'header.php';
+include 'includes/user_cp.php';
 $template->set_filenames(array(
-        'body' => 'yourmessages.html'
-        ));
+		'body' => 'yourmessages.html'
+		));
 $template->display('body');
-include "footer.php";
+include 'footer.php';
 
 ?>

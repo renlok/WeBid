@@ -13,19 +13,18 @@
  ***************************************************************************/
 
 $error = true;
-require('includes/common.inc.php');
+include 'includes/common.inc.php';
 
 $template->assign_vars(array(
-        'ERROR' => print_r($_SESSION['SESSION_ERROR'], true),
-        'ERRORTXT' => $system->SETTINGS['errortext'],
-        'ERRORMAIL' => $system->SETTINGS['errormail']
-        ));
+		'ERROR' => print_r($_SESSION['SESSION_ERROR'], true),
+		'ERRORTXT' => $system->SETTINGS['errortext'],
+		'ERRORMAIL' => $system->SETTINGS['errormail']
+		));
 
-require("header.php");
+include 'header.php';
 $template->set_filenames(array(
-        'body' => 'error.html'
-        ));
+		'body' => 'error.html'
+		));
 $template->display('body');
-require("footer.php");
-
+include 'footer.php';
 ?>

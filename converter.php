@@ -12,111 +12,66 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
  
-include "includes/common.inc.php";
-include $include_path . "converter.inc.php";
+include 'includes/common.inc.php';
+include $include_path . 'converter.inc.php';
 
 $CURRENCIES = CurrenciesList();
+$conversion = '';
 
-if (isset($_POST['action']) && $_POST['action'] == 'convert') {
-    // Convert
-    $CONVERTED = ConvertCurrency($_POST['from'], $_POST['to'], $_POST['amount']);
-	if($CONVERTED == false) {
+if (isset($_POST['action']) && $_POST['action'] == 'convert')
+{
+	// Convert
+	$CONVERTED = ConvertCurrency($_POST['from'], $_POST['to'], $_POST['amount']);
+	if ($CONVERTED == false)
+	{
 		$errormsg = $ERR_069;
 	}
+	$conversion = number_format($_POST['amount'], 4, '.', ',') . ' ' . $_POST['from'] . ' = ' . number_format($CONVERTED, 4, '.', ',') . ' ' . $_POST['to'];
 }
 
-$AMOUNT = (isset($_POST['amount'])) ? $_POST['amount'] : ((isset($_GET['AMOUNT'])) ? $_GET['AMOUNT'] : 0);
+include $include_path . 'styles.inc.php';
 
-?>
-<html>
-<head>
-<title>
-<?php
-echo $system->SETTINGS['sitename'];
-?>
-</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<?php
-include $include_path . "styles.inc.php";
-echo '<link rel="stylesheet" type="text/css" href="themes/' . $system->SETTINGS['theme'] . '/style.css">';
-?>
-</head>
-<body>
-<div id="content">
-    <div class="container">
-        <div class="titTable2">
-            ::: CURRENCY CONVERTER :::
-        </div>
-        <div class="table3">
-            <form name="form1" method="post" action="">
-                <table width="100%" border="0" cellspacing="0" cellpadding="5">
-<?php
-if (isset($_POST['action']) && $_POST['action'] == "convert") {
-?>
-                    <tr valign="TOP">
-                        <th colspan="3">
-<?php
-if(!isset($errormsg)) {
-	echo number_format($_POST['amount'], 4, '.', ',') . ' ' . $_POST['from'] . ' = ' . number_format($CONVERTED, 4, '.', ',') . ' ' . $_POST['to'];
-} else {
-	echo $errormsg;
+foreach ($CURRENCIES as $k => $v)
+{
+	$fromselected = false;
+	$toselected = false;
+	if ($k == $system->SETTINGS['currency'])
+	{
+		$fromselected = true;
+	}
+	elseif (isset($_POST['from']) && $_POST['from'] == $k)
+	{
+		$fromselected = true;
+	}
+	if (isset($_POST['to']) && $_POST['to'] == $k)
+	{
+		$toselected = true;
+	}
+	$template->assign_block_vars('from', array(
+			'VALUE' => $k,
+			'NAME' => $v,
+			'B_SELECTED' => $fromselected
+			));
+	$template->assign_block_vars('to', array(
+			'VALUE' => $k,
+			'NAME' => $v,
+			'B_SELECTED' => $toselected
+			));
 }
+
+$template->assign_vars(array(
+		'SITENAME' => $system->SETTINGS['sitename'],
+		'STYLES' => $thisstyle,
+		'THEME' => $system->SETTINGS['theme'],
+		'ERROR' => (!isset($errormsg)) ? '' : $errormsg,
+		'CONVERSION' => $conversion,
+		'AMOUNT' => (isset($_POST['amount'])) ? $_POST['amount'] : ((isset($_GET['AMOUNT'])) ? $_GET['AMOUNT'] : 0),
+		
+		'B_CONVERSION' => (isset($_POST['action']) && $_POST['action'] == 'convert')
+		));
+
+$template->set_filenames(array(
+		'body' => 'converter.html'
+		));
+$template->display('body');
 ?>
-                        </th>
-                    </tr>
-<?php
-} else {
-?>
-                    <tr valign="TOP">
-                        <td colspan="3" align=CENTER>&nbsp;</td>
-                    </tr>
-<?php
-}
-?>
-                    <tr valign="TOP">
-                        <td width="22%">Convert<br>
-                            <input type="text" name="amount" size="5" value=<?php echo $AMOUNT; ?> />
-                        </td>
-                        <td width="39%">of this currency<br>
-                            <select name="from">
-<?php
-foreach($CURRENCIES as $k => $v) {
-    print '<option value="' . $k . '"';
-    if ($k == $system->SETTINGS['currency']) {
-        print ' selected="true"';
-    } elseif ($_POST['from'] == $k) {
-        print " selected=true";
-    }
-    print ">$k $v</option>\n";
-}
-?>
-                            </select>
-                        </td>
-                        <td width="39%">into this currency<br>
-                            <select name="to">
-<?php
-foreach($CURRENCIES as $k => $v) {
-    print "<option value=\"$k\"";
-    if ($_POST['to'] == $k)
-        print " selected=true";
-    print ">$k $v</option>\n";
-}
-?>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <div style="text-align:center">
-                    <input type="hidden" name="action" value="convert" />
-                    <input type="submit" name="Submit" value="<?php echo $MSG['25_0176']; ?>" />
-                </div>
-            </form>
-        </div>
-        <div style="text-align:center">
-            <input type="button" value="Close" onClick="javascript:window.close()" />
-        </div>
-		<br>
-    </div>
-</div>
-</body>
-</html>

@@ -15,17 +15,17 @@
 include 'includes/common.inc.php';
 
 if (($system->SETTINGS['contactseller'] == 'logged' && !$user->logged_in) || $system->SETTINGS['contactseller'] == 'never') {
-    if (isset($_SESSION['REDIRECT_AFTER_LOGIN'])) {
-        header('location: ' . $_SESSION['REDIRECT_AFTER_LOGIN']);
-    } else {
-        header('location: index.php');
-    }
+	if (isset($_SESSION['REDIRECT_AFTER_LOGIN'])) {
+		header('location: ' . $_SESSION['REDIRECT_AFTER_LOGIN']);
+	} else {
+		header('location: index.php');
+	}
 }
 
 if (!isset($_POST['auction_id']) && !isset($_GET['auction_id'])) {
-    $auction_id = $_SESSION['CURRENT_ITEM'];
+	$auction_id = $_SESSION['CURRENT_ITEM'];
 } else {
-    $auction_id = intval($_GET['auction_id']);
+	$auction_id = intval($_GET['auction_id']);
 }
 $_SESSION['CURRENT_ITEM'] = $auction_id;
 // --Get item description
@@ -36,12 +36,12 @@ $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 
 if (mysql_num_rows($result) == 0) {
-    $TPL_error_text = $ERR_605;
+	$TPL_error_text = $ERR_605;
 } else {
-    $seller_id = stripslashes(mysql_result($result, 0, 'user'));
-    $item_title = stripslashes(mysql_result($result, 0, 'title'));
-    $seller_nick = stripslashes(mysql_result($result, 0, 'nick'));
-    $seller_email = stripslashes(mysql_result($result, 0, 'email'));
+	$seller_id = stripslashes(mysql_result($result, 0, 'user'));
+	$item_title = stripslashes(mysql_result($result, 0, 'title'));
+	$seller_nick = stripslashes(mysql_result($result, 0, 'nick'));
+	$seller_email = stripslashes(mysql_result($result, 0, 'email'));
 }
 
 $TPL_auction_id = $auction_id;
@@ -54,23 +54,23 @@ $TPL_item_title = $item_title;
 $TPL_sender_question = $_POST['sender_question'];
 $cleaned_question = strip_tags($system->filter($_POST['sender_question']));
 if ($system->SETTINGS['wordsfilter'] == 'y') {
-    $cleaned_question = $system->filter($cleaned_question);
+	$cleaned_question = $system->filter($cleaned_question);
 }
 if (isset($_POST['action']) || !empty($_POST['action'])) {
-    // --Check errors
-    if (isset($_POST['action']) && (!isset($_POST['sender_name']) || !isset($_POST['sender_email']) || empty($seller_nick) || empty($seller_email))) {
-        $TPL_error_text = $ERR_032;
-    }
+	// --Check errors
+	if (isset($_POST['action']) && (!isset($_POST['sender_name']) || !isset($_POST['sender_email']) || empty($seller_nick) || empty($seller_email))) {
+		$TPL_error_text = $ERR_032;
+	}
 
-    if (empty($cleaned_question)) {
-        $TPL_error_text = $ERR_031;
-    }
+	if (empty($cleaned_question)) {
+		$TPL_error_text = $ERR_031;
+	}
 
-    if (isset($_POST['action']) && (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['sender_email']) || !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $seller_email))) {
-        $TPL_error_text = $ERR_008;
-    }
-    if (empty($TPL_error_text)) {
-        $mes = $MSG['337'] . ': <i>' . $seller_nick . '</i><br><br>';
+	if (isset($_POST['action']) && (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['sender_email']) || !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $seller_email))) {
+		$TPL_error_text = $ERR_008;
+	}
+	if (empty($TPL_error_text)) {
+		$mes = $MSG['337'] . ': <i>' . $seller_nick . '</i><br><br>';
 		$emailer = new email_class();
 		$emailer->assign_vars(array(
 				'SENDER_NAME' => $_POST['sender_name'],
@@ -86,27 +86,27 @@ if (isset($_POST['action']) || !empty($_POST['action'])) {
 		$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
 		$emailer->email_uid = $userid;
 		$emailer->email_sender($seller_email, 'mail_send_email.inc.php', $subject);
-        $sql = "INSERT INTO " . $DBPrefix . "messages (`sentto`, `from`, `when`, `message`, `subject`) VALUES ('$seller_id', '$userid', '" . time() . "', '" . mysql_escape_string($cleaned_question) . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "')";
-        $system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
-    }
+		$sql = "INSERT INTO " . $DBPrefix . "messages (`sentto`, `from`, `when`, `message`, `subject`) VALUES ('$seller_id', '$userid', '" . time() . "', '" . mysql_escape_string($cleaned_question) . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "')";
+		$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
+	}
 }
 
 $template->assign_vars(array(
-        'MESSAGE' => (isset($mes)) ? $mes : '',
-        'ERROR' => (isset($TPL_error_text)) ? $TPL_error_text : '',
-        'AUCT_ID' => $TPL_auction_id,
-        'SELLER_NICK' => $TPL_seller_nick_value,
-        'SELLER_EMAIL' => $TPL_seller_email_value,
-        'SELLER_QUESTION' => $TPL_sender_question,
-        'ITEM_TITLE' => $TPL_item_title,
-        'EMAIL' => ($user->logged_in) ? $user->user_data['email'] : ''
-        ));
+		'MESSAGE' => (isset($mes)) ? $mes : '',
+		'ERROR' => (isset($TPL_error_text)) ? $TPL_error_text : '',
+		'AUCT_ID' => $TPL_auction_id,
+		'SELLER_NICK' => $TPL_seller_nick_value,
+		'SELLER_EMAIL' => $TPL_seller_email_value,
+		'SELLER_QUESTION' => $TPL_sender_question,
+		'ITEM_TITLE' => $TPL_item_title,
+		'EMAIL' => ($user->logged_in) ? $user->user_data['email'] : ''
+		));
 
-include "header.php";
+include 'header.php';
 $template->set_filenames(array(
-        'body' => 'send_email.html'
-        ));
+		'body' => 'send_email.html'
+		));
 $template->display('body');
-include "footer.php";
+include 'footer.php';
 
 ?>

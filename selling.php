@@ -12,11 +12,12 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/common.inc.php');
+include 'includes/common.inc.php';
 // If user is not logged in redirect to login page
-if (!$user->logged_in) {
-    header("Location: user_login.php");
-    exit;
+if (!$user->logged_in)
+{
+	header('location: user_login.php');
+	exit;
 }
 // Get closed auctions with winners
 $query = "SELECT a.auction, b.title, b.ends
@@ -30,45 +31,45 @@ $sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] =
 $bgColor = "#EBEBEB";
 $i = 0;
 while ($row = mysql_fetch_array($res)) {
-    $template->assign_block_vars('a', array(
-            'TITLE' => $row['title'],
-            'ENDS' => FormatDate($row['ends']),
-            'AUCTIONID' => $row['auction']
-            ));
-    // Build winners array
-    $query = "SELECT w.*, u.nick, u.email FROM " . $DBPrefix . "winners w
+	$template->assign_block_vars('a', array(
+			'TITLE' => $row['title'],
+			'ENDS' => FormatDate($row['ends']),
+			'AUCTIONID' => $row['auction']
+			));
+	// Build winners array
+	$query = "SELECT w.*, u.nick, u.email FROM " . $DBPrefix . "winners w
 			LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
 			WHERE w.auction = " . $row['auction'];
-    $rr = mysql_query($query);
-    $system->check_mysql($rr, $query, __LINE__, __FILE__);
-    while ($winner = mysql_fetch_array($rr)) {
-        $bgColor = ($bgColor == "#EBEBEB") ? "#FFFFFF" : "#EBEBEB";
-        $fblink = ($winner['feedback_win'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $winner['winner'] . '&sid=' . $winner['seller'] . '&ws=w">' . $MSG['207'] . '</a>)' : '';
-        $template->assign_block_vars('a.w', array(
-                'BGCOLOUR' => $bgColor,
-                'BID' => $winner['bid'],
-                'BIDF' => $system->print_money($winner['bid']),
-                'QTY' => $winner['qty'],
-                'NICK' => $winner['nick'],
-                'WINNERID' => $winner['winner'],
-                'EMAIL' => $winner['email'],
-                'FB' => $fblink
-                ));
-        $i++;
-    }
+	$rr = mysql_query($query);
+	$system->check_mysql($rr, $query, __LINE__, __FILE__);
+	while ($winner = mysql_fetch_array($rr)) {
+		$bgColor = ($bgColor == "#EBEBEB") ? "#FFFFFF" : "#EBEBEB";
+		$fblink = ($winner['feedback_win'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $winner['winner'] . '&sid=' . $winner['seller'] . '&ws=w">' . $MSG['207'] . '</a>)' : '';
+		$template->assign_block_vars('a.w', array(
+				'BGCOLOUR' => $bgColor,
+				'BID' => $winner['bid'],
+				'BIDF' => $system->print_money($winner['bid']),
+				'QTY' => $winner['qty'],
+				'NICK' => $winner['nick'],
+				'WINNERID' => $winner['winner'],
+				'EMAIL' => $winner['email'],
+				'FB' => $fblink
+				));
+		$i++;
+	}
 }
 
 $template->assign_vars(array(
-        'NUM_WINNERS' => $i
-        ));
+		'NUM_WINNERS' => $i
+		));
 
-require("header.php");
+include 'header.php';
 $TMP_usmenutitle = $MSG['453'];
-include "includes/user_cp.php";
+include 'includes/user_cp.php';
 $template->set_filenames(array(
-        'body' => 'selling.html'
-        ));
+		'body' => 'selling.html'
+		));
 $template->display('body');
-include "footer.php";
+include 'footer.php';
 
 ?>

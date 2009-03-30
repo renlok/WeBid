@@ -13,16 +13,16 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/common.inc.php";
+include 'includes/common.inc.php';
 
 unset($_SESSION['WEBID_LOGGED_IN'], $_SESSION['WEBID_LOGGED_NUMBER'], $_SESSION['WEBID_LOGGED_PASS']);
-if (isset($_COOKIE['WEBID_RM_ID'])) {
+if (isset($_COOKIE['WEBID_RM_ID']))
+{
 	$query = "DELETE FROM " . $DBPrefix . "rememberme WHERE hashkey = '" . $_COOKIE['WEBID_RM_ID'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	setcookie('WEBID_RM_ID', '', time() - 3600);
 }
 
-header("location: " . $system->SETTINGS['siteurl'] . "index.php");
+header('location: index.php');
 exit;
-
 ?>

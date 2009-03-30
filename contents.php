@@ -12,28 +12,29 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require("includes/common.inc.php");
-switch ($_GET['show']) {
-    case "aboutus":
-        $TITLE = $MSG['5085'];
-        $CONTENT = stripslashes($system->SETTINGS['aboutustext']);
-        break;
-    case "terms":
-        $TITLE = $MSG['5086'];
-        $CONTENT = stripslashes($system->SETTINGS['termstext']);
-        break;
+include 'includes/common.inc.php';
+
+switch ($_GET['show'])
+{
+	case 'aboutus':
+		$TITLE = $MSG['5085'];
+		$CONTENT = stripslashes($system->SETTINGS['aboutustext']);
+		break;
+	case 'terms':
+		$TITLE = $MSG['5086'];
+		$CONTENT = stripslashes($system->SETTINGS['termstext']);
+		break;
 }
 
 $template->assign_vars(array(
-        'TITLE' => $TITLE,
-        'CONTENT' => $CONTENT
-        ));
+		'TITLE' => $TITLE,
+		'CONTENT' => $CONTENT
+		));
 
-include "header.php";
+include 'header.php';
 $template->set_filenames(array(
-        'body' => 'contents.html'
-        ));
+		'body' => 'contents.html'
+		));
 $template->display('body');
-include "footer.php";
-
+include 'footer.php';
 ?>

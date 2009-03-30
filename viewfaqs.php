@@ -12,64 +12,64 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/common.inc.php');
+include 'includes/common.inc.php';
 
 $cat = (isset($_GET['cat'])) ? intval($_GET['cat']) : intval($_POST['cat']);
 if ($cat > 0) {
-    // // Retrieve category's name
-    $query = "SELECT category FROM " . $DBPrefix . "faqscategories WHERE id = " . $cat;
-    $res = mysql_query($query);
-    $system->check_mysql($res, $query, __LINE__, __FILE__);
+	// Retrieve category's name
+	$query = "SELECT category FROM " . $DBPrefix . "faqscategories WHERE id = " . $cat;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-    $template->assign_vars(array(
-            'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl
-            'PAGE_TITLE' => $system->SETTINGS['sitename'] . " " . $system->SETTINGS['title'],
-            'CHARSET' => $CHARSET,
-            'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : "&nbsp;",
-            'SITEURL' => $system->SETTINGS['siteurl'],
+	$template->assign_vars(array(
+			'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl
+			'PAGE_TITLE' => $system->SETTINGS['sitename'] . " " . $system->SETTINGS['title'],
+			'CHARSET' => $CHARSET,
+			'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : "&nbsp;",
+			'SITEURL' => $system->SETTINGS['siteurl'],
 
-            'FNAME' => stripslashes(mysql_result($res, 0, "category"))
-            ));
-    // Retrieve FAQs categories from the database
-    $query = "SELECT * FROM " . $DBPrefix . "faqscategories ORDER BY category ASC";
-    $res = mysql_query($query);
-    $system->check_mysql($res, $query, __LINE__, __FILE__);
+			'FNAME' => stripslashes(mysql_result($res, 0, "category"))
+			));
+	// Retrieve FAQs categories from the database
+	$query = "SELECT * FROM " . $DBPrefix . "faqscategories ORDER BY category ASC";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-    while ($cats = mysql_fetch_array($res)) {
-        $template->assign_block_vars('cats', array(
-                'CAT' => stripslashes($cats['category']),
-                'ID' => $cats['id']
-                ));
-    }
-    // // Retrieve FAQs from the database
-    $query = "SELECT f.question As q, f.answer As a, t.* FROM " . $DBPrefix . "faqs f
+	while ($cats = mysql_fetch_array($res)) {
+		$template->assign_block_vars('cats', array(
+				'CAT' => stripslashes($cats['category']),
+				'ID' => $cats['id']
+				));
+	}
+	// Retrieve FAQs from the database
+	$query = "SELECT f.question As q, f.answer As a, t.* FROM " . $DBPrefix . "faqs f
 			LEFT JOIN " . $DBPrefix . "faqs_translated t ON (t.id = f.id)
 			WHERE f.category = " . $cat . " AND t.lang = '" . $language . "'";
-    $res = mysql_query($query);
-    $system->check_mysql($res, $query, __LINE__, __FILE__);
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-    while ($row = mysql_fetch_array($res)) {
-        if (!empty($row['question']) && !empty($row['answer'])) {
-            $question = stripslashes($row['question']);
-            $answer = stripslashes($row['answer']);
-        } else {
-            $question = stripslashes($row['q']);
-            $answer = stripslashes($row['a']);
-        }
+	while ($row = mysql_fetch_array($res)) {
+		if (!empty($row['question']) && !empty($row['answer'])) {
+			$question = stripslashes($row['question']);
+			$answer = stripslashes($row['answer']);
+		} else {
+			$question = stripslashes($row['q']);
+			$answer = stripslashes($row['a']);
+		}
 
-        $template->assign_block_vars('faqs', array(
-                'Q' => $question,
-                'A' => $answer,
-                'ID' => $row['id']
-                ));
-    }
+		$template->assign_block_vars('faqs', array(
+				'Q' => $question,
+				'A' => $answer,
+				'ID' => $row['id']
+				));
+	}
 
-    $template->set_filenames(array(
-            'body' => 'viewfaq.html'
-            ));
-    $template->display('body');
+	$template->set_filenames(array(
+			'body' => 'viewfaq.html'
+			));
+	$template->display('body');
 } else {
-    header('location: faqs.php');
+	header('location: faqs.php');
 }
 
 ?>

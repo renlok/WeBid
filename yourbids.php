@@ -13,7 +13,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require('includes/common.inc.php');
+include 'includes/common.inc.php';
 
 /* get active bids for this user */
 $query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
@@ -25,50 +25,50 @@ $idcheck = "";
 $auctions_count = 0;
 $bgColor = "#EBEBEB";
 while ($row = mysql_fetch_array($result)) {
-    $rowid = $row['id'];
-    if ($idcheck != $rowid) {
-        $bid = $row['bid'];
-        // prepare some data
-        if ($bgColor == "#EBEBEB") {
-            $bgColor = "#FFFFFF";
-        } else {
-            $bgColor = "#EBEBEB";
-        }
-        // // Outbidded or winning bid
-        if ($row['current_bid'] != $row['bid']) $bgColor = '#FFFF00';
-        // current bid of this auction
-        if ($bid == 0) {
-            $bid = $starting_price;
-        }
-        $bid = $system->print_money($bid);
-        // time left till the end of this auction
-        $difference = $row['ends'] - time();
+	$rowid = $row['id'];
+	if ($idcheck != $rowid) {
+		$bid = $row['bid'];
+		// prepare some data
+		if ($bgColor == "#EBEBEB") {
+			$bgColor = "#FFFFFF";
+		} else {
+			$bgColor = "#EBEBEB";
+		}
+		// Outbidded or winning bid
+		if ($row['current_bid'] != $row['bid']) $bgColor = '#FFFF00';
+		// current bid of this auction
+		if ($bid == 0) {
+			$bid = $starting_price;
+		}
+		$bid = $system->print_money($bid);
+		// time left till the end of this auction
+		$difference = $row['ends'] - time();
 
-        $auctions_count++;
+		$auctions_count++;
 
-        $idcheck = $rowid;
+		$idcheck = $rowid;
 
-        $template->assign_block_vars('bids', array(
-                'BGCOLOUR' => $bgColor,
-                'ID' => $rowid,
-                'TITLE' => $row['title'],
-                'BID' => $bid,
-                'TIMELEFT' => FormatTimeLeft($difference)
-                ));
-    }
+		$template->assign_block_vars('bids', array(
+				'BGCOLOUR' => $bgColor,
+				'ID' => $rowid,
+				'TITLE' => $row['title'],
+				'BID' => $bid,
+				'TIMELEFT' => FormatTimeLeft($difference)
+				));
+	}
 }
 
 $template->assign_vars(array(
-        'NUM_BIDS' => $auctions_count
-        ));
+		'NUM_BIDS' => $auctions_count
+		));
 
-include "header.php";
+include 'header.php';
 $TMP_usmenutitle = $MSG['620'];
-include "includes/user_cp.php";
+include 'includes/user_cp.php';
 $template->set_filenames(array(
-        'body' => 'yourbids.html'
-        ));
+		'body' => 'yourbids.html'
+		));
 $template->display('body');
-include "footer.php";
+include 'footer.php';
 
 ?>

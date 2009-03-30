@@ -12,15 +12,15 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
  
-include "includes/common.inc.php";
+include 'includes/common.inc.php';
 
 $UPLOADED_PICTURES = $_SESSION['UPLOADED_PICTURES'];
 $img = $_GET['img'];
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'IMG' => $uploaded_path . session_id() . '/' . $UPLOADED_PICTURES[$img]
-        ));
+		));
 $template->set_filenames(array(
 		'body' => 'preview_gallery.html'
 		));

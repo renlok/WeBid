@@ -12,63 +12,80 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/common.inc.php";
+include 'includes/common.inc.php';
 
-if (isset($_GET['id']) && !isset($_POST['action'])) {
-    $query = "SELECT suspended, nick FROM " . $DBPrefix . "users WHERE id = " . intval($_GET['id']);
-    $result = mysql_query($query);
-    $system->check_mysql($result, $query, __LINE__, __FILE__);
-    if (mysql_num_rows($result) == 0) {
-        $errmsg = $ERR_025;
-    } elseif (!isset($_GET['hash']) || md5(mysql_result($result, 0, 'nick')) != $_GET['hash']) {
-        $errmsg = $ERR_033;
-    } elseif (mysql_result($result, 0, 'suspended') == 0) {
-        $errmsg = $ERR_039;
-    } elseif (mysql_result($result, 0, 'suspended') == 2) {
-        $errmsg = $ERR_039;
-    }
+if (isset($_GET['id']) && !isset($_POST['action']))
+{
+	$query = "SELECT suspended, nick FROM " . $DBPrefix . "users WHERE id = " . intval($_GET['id']);
+	$result = mysql_query($query);
+	$system->check_mysql($result, $query, __LINE__, __FILE__);
+	if (mysql_num_rows($result) == 0)
+	{
+		$errmsg = $ERR_025;
+	}
+	elseif (!isset($_GET['hash']) || md5(mysql_result($result, 0, 'nick')) != $_GET['hash'])
+	{
+		$errmsg = $ERR_033;
+	}
+	elseif (mysql_result($result, 0, 'suspended') == 0)
+	{
+		$errmsg = $ERR_039;
+	}
+	elseif (mysql_result($result, 0, 'suspended') == 2)
+	{
+		$errmsg = $ERR_039;
+	}
 
-    if (isset($errmsg)) {
-        $page = 'error';
-    } else {
-        $page = 'confirm';
-    }
+	if (isset($errmsg))
+	{
+		$page = 'error';
+	}
+	else
+	{
+		$page = 'confirm';
+	}
 }
 
-if (!isset($_GET['id']) && !isset($_POST['action'])) {
-    $errmsg = $ERR_025;
-    $page = 'error';
+if (!isset($_GET['id']) && !isset($_POST['action']))
+{
+	$errmsg = $ERR_025;
+	$page = 'error';
 }
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['249']) {
-    // -- User wants to confirm his/her registration
-    $query = "UPDATE " . $DBPrefix . "users SET suspended = 0, reg_date = reg_date WHERE id = " . intval($_POST['id']) . " and suspended = 8";
-    $res = mysql_query($query);
-    $system->check_mysql($res, $query, __LINE__, __FILE__);
+if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
+{
+	// User wants to confirm his/her registration
+	$query = "UPDATE " . $DBPrefix . "users SET suspended = 0, reg_date = reg_date WHERE id = " . intval($_POST['id']) . " and suspended = 8";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-    $counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET users = users + 1, inactiveusers = inactiveusers - 1");
-    $page = 'confirmed';
+	$query = "UPDATE " . $DBPrefix . "counters SET users = users + 1, inactiveusers = inactiveusers - 1";
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$page = 'confirmed';
 }
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['250']) {
-    // -- User doesn't want to confirm hid/her registration
-    $query = "DELETE FROM " . $DBPrefix . "users WHERE id=" . intval($_POST['id']);
-    $res = mysql_query($query);
-    $system->check_mysql($res, $query, __LINE__, __FILE__);
-    $counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - 1");
-    $page = 'refused';
+if (isset($_POST['action']) && $_POST['action'] == $MSG['250'])
+{
+	// User doesn't want to confirm hid/her registration
+	$query = "DELETE FROM " . $DBPrefix . "users WHERE id=" . intval($_POST['id']);
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+	$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - 1";
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$page = 'refused';
 }
 
 $template->assign_vars(array(
-        'ERROR' => (isset($errmsg)) ? $errmsg : '',
-        'USERID' => (isset($_GET['id'])) ? $_GET['id'] : '',
-        'PAGE' => $page
-        ));
+		'ERROR' => (isset($errmsg)) ? $errmsg : '',
+		'USERID' => (isset($_GET['id'])) ? $_GET['id'] : '',
+		'PAGE' => $page
+		));
 
-include "header.php";
+include 'header.php';
 $template->set_filenames(array(
-        'body' => 'confirm_account.html'
-        ));
+		'body' => 'confirm_account.html'
+		));
 $template->display('body');
-include "footer.php";
+include 'footer.php';
 ?>

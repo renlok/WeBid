@@ -13,31 +13,35 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include "includes/common.inc.php";
-include $include_path . "messages.inc.php";
+include 'includes/common.inc.php';
+include $include_path . 'messages.inc.php';
 
-if ($system->SETTINGS['boards'] == 'n') {
-    header("Location: index.php");
+if ($system->SETTINGS['boards'] == 'n')
+{
+	header('location: index.php');
 }
+
 // Is the seller logged in?
-if (!$user->logged_in) {
-    $_SESSION['REDIRECT_AFTER_LOGIN'] = "boards.php";
-    header("Location: user_login.php");
-    exit;
+if (!$user->logged_in)
+{
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'boards.php';
+	header('location: user_login.php');
+	exit;
 }
 
-if (isset($_POST['board_id'])) {
-    $board_id = intval($_POST['board_id']);
-} elseif (isset($_GET['board_id'])) {
-    $board_id = intval($_GET['board_id']);
-} else {
-    header("Location: boards.php");
-    exit;
+if (isset($_POST['board_id']))
+{
+	$board_id = intval($_POST['board_id']);
+}
+elseif (isset($_GET['board_id']))
+{
+	$board_id = intval($_GET['board_id']);
 }
 
-if (is_array($board_id) || empty($board_id) || $board_id == 0) {
-    header("location: boards.php");
-    exit;
+if (!isset($board_id) || is_array($board_id) || empty($board_id) || $board_id == 0)
+{
+	header('location: boards.php');
+	exit;
 }
 
 $NOW = time();
@@ -45,81 +49,98 @@ $NOW = time();
 $query = "SELECT id FROM " . $DBPrefix . "comm_messages WHERE boardid = " . $board_id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
+
 $TOTALMSGS = mysql_num_rows($res);
 // Insert new message in the database
-if (isset($_POST['action']) && $_POST['action'] == "insertmessage" && !empty($_POST['newmessage'])) {
-    if ($system->SETTINGS['wordsfilter'] == 'y') {
-        $message = strip_tags($system->filter($_POST['newmessage']));
-    } else {
-        $message = strip_tags($_POST['newmessage']);
-    }
-    $query = "INSERT INTO " . $DBPrefix . "comm_messages VALUES
+if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_POST['newmessage'])) {
+	if ($system->SETTINGS['wordsfilter'] == 'y')
+	{
+		$message = strip_tags($system->filter($_POST['newmessage']));
+	}
+	else
+	{
+		$message = strip_tags($_POST['newmessage']);
+	}
+	$query = "INSERT INTO " . $DBPrefix . "comm_messages VALUES
 			(NULL, " . intval($_POST['board_id']) . ", '$NOW', " . $user->user_data['id'] . ",
 			'" . $user->user_data['nick'] . "', '" . $system->cleanvars($message) . "')";
-    $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-    // Update messages counter and lastmessage date
-    $query = "UPDATE " . $DBPrefix . "community
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	// Update messages counter and lastmessage date
+	$query = "UPDATE " . $DBPrefix . "community
 			SET messages = messages + 1, lastmessage = '$NOW' WHERE id = " . $board_id;
-    $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 }
+
 // retrieve message board title
 $query = "SELECT name, active, msgstoshow FROM " . $DBPrefix . "community WHERE id = " . $board_id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
+
 $BOARD_TITLE = mysql_result($res, 0, 'name');
 $BOARD_ACTIVE = mysql_result($res, 0, 'active');
 $BOARD_LIMIT = mysql_result($res, 0, 'msgstoshow');
 
-if (!isset($_GET['PAGE'])) {
-    $OFFSET = 0;
-    $PAGE = 1;
-} else {
-    $PAGE = $_GET['PAGE'];
-    $OFFSET = ($PAGE - 1) * $BOARD_LIMIT;
+if (!isset($_GET['PAGE']))
+{
+	$OFFSET = 0;
+	$PAGE = 1;
+}
+else
+{
+	$PAGE = $_GET['PAGE'];
+	$OFFSET = ($PAGE - 1) * $BOARD_LIMIT;
 }
 $PAGES = ceil($TOTALMSGS / $BOARD_LIMIT);
 if (!$PAGES) $PAGES = 1;
 
-if ($BOARD_ACTIVE == 2) {
-    header("Location: boards.php");
-    exit;
+if ($BOARD_ACTIVE == 2)
+{
+	header('location: boards.php');
+	exit;
 }
 
-if (isset($_GET['show']) && $_GET['show'] == "all") {
-    $SQL_LIMIT = '';
-} else {
-    $SQL_LIMIT = " LIMIT $OFFSET, $BOARD_LIMIT";
+if (isset($_GET['show']) && $_GET['show'] == 'all')
+{
+	$SQL_LIMIT = '';
+}
+else
+{
+	$SQL_LIMIT = " LIMIT $OFFSET, $BOARD_LIMIT";
 }
 // Retrieve messages for this message board
 $query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE boardid = " . $board_id . " ORDER BY msgdate DESC $SQL_LIMIT";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
-if (mysql_num_rows($res) > 0) {
-    $k = 0;
-    while ($messages = mysql_fetch_array($res)) {
-        $template->assign_block_vars('msgs', array(
-                'MSG' => nl2br(stripslashes($messages['message'])),
-                'USERNAME' => $messages['username'],
-                'POSTED' => FormatDate($messages['msgdate']),
-                'BGCOLOUR' => ($k % 2) ? '#EEEEEE' : '#FFFFFF'
-                ));
-        $k++;
-    }
+if (mysql_num_rows($res) > 0)
+{
+	$k = 0;
+	while ($messages = mysql_fetch_array($res))
+	{
+		$template->assign_block_vars('msgs', array(
+				'MSG' => nl2br(stripslashes($messages['message'])),
+				'USERNAME' => $messages['username'],
+				'POSTED' => FormatDate($messages['msgdate']),
+				'BGCOLOUR' => ($k % 2) ? '#EEEEEE' : '#FFFFFF'
+				));
+		$k++;
+	}
 }
 
 $PREV = intval($PAGE - 1);
 $NEXT = intval($PAGE + 1);
-if ($PAGES > 1) {
-    $LOW = $PAGE - 5;
-    if ($LOW <= 0) $LOW = 1;
-    $COUNTER = $LOW;
-    while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6)) {
-        $template->assign_block_vars('pages', array(
-                'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?PAGE=' . $COUNTER . '&board_id=' . $board_id . '"><u>' . $COUNTER . '</u></a>'
-                ));
-        $COUNTER++;
-    }
+if ($PAGES > 1)
+{
+	$LOW = $PAGE - 5;
+	if ($LOW <= 0) $LOW = 1;
+	$COUNTER = $LOW;
+	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
+	{
+		$template->assign_block_vars('pages', array(
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?PAGE=' . $COUNTER . '&board_id=' . $board_id . '"><u>' . $COUNTER . '</u></a>'
+				));
+		$COUNTER++;
+	}
 }
 // Count message
 $query = "SELECT id FROM " . $DBPrefix . "comm_messages";
@@ -128,27 +149,31 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $COUNT = mysql_num_rows($res);
 
 $template->assign_vars(array(
-        'BOARD_NAME' => $BOARD_TITLE,
-        'BOARD_ID' => $board_id,
-        'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?PAGE=' . $PREV . '&board_id=' . $board_id . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;' : '',
-        'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?PAGE=' . $NEXT . '&board_id=' . $board_id . '"><u>' . $MSG['5120'] . '</u></a>' : '',
-        'PAGE' => $PAGE,
-        'PAGES' => $PAGES
-        ));
+		'BOARD_NAME' => $BOARD_TITLE,
+		'BOARD_ID' => $board_id,
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?PAGE=' . $PREV . '&board_id=' . $board_id . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?PAGE=' . $NEXT . '&board_id=' . $board_id . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+		'PAGE' => $PAGE,
+		'PAGES' => $PAGES
+		));
 // Build the bottom navigation line for the template
-if ($COUNT > $BOARD_LIMIT && (!isset($_GET['show']) || $_GET['show'] != 'all')) {
-    $NAVIGATION = '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?show=all&offset=' . $_REQUEST['offset'] . '&board_id=' . $_REQUEST['board_id'] . '">' . $MSG['5062'] . '</a> (' . $COUNT . ')';
-} elseif ($_GET['show'] == 'all') {
-    $NAVIGATION = '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?board_id=' . $_REQUEST['board_id'] . '&offset=' . $_REQUEST['offset'] . '">&lt;&lt; ' . $MSG['270'] . '</a> ';
-} else {
-    $NAVIGATION = '';
+if ($COUNT > $BOARD_LIMIT && (!isset($_GET['show']) || $_GET['show'] != 'all'))
+{
+	$NAVIGATION = '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?show=all&offset=' . $_REQUEST['offset'] . '&board_id=' . $_REQUEST['board_id'] . '">' . $MSG['5062'] . '</a> (' . $COUNT . ')';
+}
+elseif ($_GET['show'] == 'all')
+{
+	$NAVIGATION = '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?board_id=' . $_REQUEST['board_id'] . '&offset=' . $_REQUEST['offset'] . '">&lt;&lt; ' . $MSG['270'] . '</a> ';
+}
+else
+{
+	$NAVIGATION = '';
 }
 
-include "header.php";
+include 'header.php';
 $template->set_filenames(array(
-        'body' => 'msgboard.html'
-        ));
+		'body' => 'msgboard.html'
+		));
 $template->display('body');
-include "footer.php";
-
+include 'footer.php';
 ?>

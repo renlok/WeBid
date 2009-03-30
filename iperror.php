@@ -13,10 +13,9 @@
  ***************************************************************************/
 
 define('IPBan', 1);
-require('includes/common.inc.php');
+include 'includes/common.inc.php';
 
 ?>
 <div style="margin-top:150px; text-align:center" align="center">
-<?php print $MSG['2_0026'];
-?>
+<?php print $MSG['2_0026']; ?>
 </div>

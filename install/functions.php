@@ -20,7 +20,7 @@ function getmainpath(){
 
 function getdomainpath(){
 	$path = 'http://' . dirname($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-	if(strlen($path) < 12)
+	if (strlen($path) < 12)
 		$path = 'http://' . dirname($_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 	$path = str_replace('install', '', $path);
 	return $path;
@@ -29,22 +29,22 @@ function getdomainpath(){
 function makeconfigfile($contents){
 	global $_POST;
 	$filename = $_POST['mainpath'] . "includes/config.inc.php";
-    if (!file_exists($filename)) {
-        touch($filename);
-    }
+	if (!file_exists($filename)) {
+		touch($filename);
+	}
 	
 	@chmod($filename,0777);
-    
-    if(is_writable($filename)){
+	
+	if (is_writable($filename)){
 		if (!$handle = fopen($filename, 'w')) 
 			$return = false;
 		else {
-            if (fwrite($handle, $contents) === false)
-                $return = false;
-            else
-                $return = true;
+			if (fwrite($handle, $contents) === false)
+				$return = false;
+			else
+				$return = true;
 		}
-        fclose($handle);
+		fclose($handle);
 	} else
 		$return = false;
 	return $return;

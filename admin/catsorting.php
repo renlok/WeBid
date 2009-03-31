@@ -18,7 +18,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$query = " UPDATE " . $DBPrefix . "settings SET
 			   catsorting = '" . $_POST['catsorting'] . "',
 			   catstoshow = '" . intval($_POST['catstoshow']) . "'";
@@ -32,15 +32,15 @@ loadblock('', $MSG['25_0147'], 'sortstacked', 'catsorting', $system->SETTINGS['c
 loadblock($MSG['30_0030'], $MSG['30_0029'], 'percent', 'catstoshow', $system->SETTINGS['catstoshow']);
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['25_0146']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

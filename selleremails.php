@@ -20,8 +20,10 @@ if (!$user->logged_in)
 	header('location: user_login.php');
 	exit;
 }
+
 // Create new list
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	$query = "UPDATE " . $DBPrefix . "users SET endemailmode = '" . $system->cleanvars($_POST['endemailmod']) . "',
 			  startemailmode = '" . $system->cleanvars($_POST['startemailmod']) . "' WHERE id = " . $user->user_data['id'];
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -44,5 +46,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-
 ?>

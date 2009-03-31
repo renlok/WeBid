@@ -19,12 +19,12 @@ include $main_path . "fck/fckeditor.php";
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	// Check if the specified user exists
 	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $_POST['superuser'] . "'";
 	$res_ = mysql_query($query);
 	$system->check_mysql($res_, $query, __LINE__, __FILE__);
-	if(mysql_num_rows($res_) == 0 && $_POST[active] == 'y') {
+	if (mysql_num_rows($res_) == 0 && $_POST[active] == 'y') {
 		$ERR = $ERR_025;
 	} else {
 		// Update database
@@ -68,7 +68,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

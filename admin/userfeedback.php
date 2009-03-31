@@ -16,7 +16,7 @@ require('../includes/common.inc.php');
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path.'membertypes.inc.php';
-foreach($membertypes as $idm => $memtypearr) {
+foreach ($membertypes as $idm => $memtypearr) {
 	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
 }
 ksort($memtypesarr,SORT_NUMERIC);
@@ -35,13 +35,13 @@ if (empty($_GET['pg'])) {
 if (($_SERVER['REQUEST_METHOD']=="GET" || $TPL_err) ) {
 	$secid = AddSlashes($_GET['id']);
 	$sql="SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id='$secid'";
-	$res=mysql_query ($sql);
+	$res=mysql_query($sql);
 	if ($res) {
 		if (mysql_num_rows($res)>0) {
 			$arr=mysql_fetch_array ($res);
 			$i=0;
 			foreach ($memtypesarr as $k=>$l) {
-				if($k >= $arr['rate_sum'] || $i++==(count($memtypesarr)-1)) {
+				if ($k >= $arr['rate_sum'] || $i++==(count($memtypesarr)-1)) {
 					$TPL_rate_ratio_value='<IMG src="../images/icons/'.$l['icon'].'" class="fbstar">';
 					break;
 				}
@@ -49,12 +49,12 @@ if (($_SERVER['REQUEST_METHOD']=="GET" || $TPL_err) ) {
 		}
 	}	
 	$sql="SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id='$secid'";
-	$res=mysql_query ($sql);
+	$res=mysql_query($sql);
 	if ($res) {
 		if (mysql_num_rows($res)>0) {
 			$arr=mysql_fetch_array ($res);
 			$sql="SELECT * FROM " . $DBPrefix . "feedbacks WHERE rated_user_id='$secid' ORDER by feedbackdate DESC";
-			$res=mysql_query ($sql);
+			$res=mysql_query($sql);
 			$i=0;
 			while ($arrfeed=mysql_fetch_array($res)) {
 				$arr_feedback[$i]['username']=$arrfeed['rater_user_nick'];
@@ -62,7 +62,7 @@ if (($_SERVER['REQUEST_METHOD']=="GET" || $TPL_err) ) {
 				$arr_feedback[$i]['rate']=$arrfeed['rate'];
 				$arr_feedback[$i]['id']=$arrfeed['id'];
 				
-				if($system->SETTINGS[datesformat] == "USA") {
+				if ($system->SETTINGS[datesformat] == "USA") {
 					$arr_feedback[$i]['feedbackdate'] = date('m/d/Y', $arrfeed['feedbackdate'] + $system->tdiff);
 				} else {
 					$arr_feedback[$i]['feedbackdate'] = date('d/m/Y', $arrfeed['feedbackdate'] + $system->tdiff);
@@ -73,7 +73,7 @@ if (($_SERVER['REQUEST_METHOD']=="GET" || $TPL_err) ) {
 			$echofeed="";
 			$bgcolor = "#FFFFFF";
 			for ($ind=($pg-1)*5; $ind+1<=$pg*5 && $ind<=$i-1; $ind++) {
-				if($bgcolor == "#FFFFFF") {
+				if ($bgcolor == "#FFFFFF") {
 					$bgcolor = "#EEEEEE";
 				} else {
 					$bgcolor = "#FFFFFF";
@@ -100,7 +100,7 @@ if (($_SERVER['REQUEST_METHOD']=="GET" || $TPL_err) ) {
 				</td></tr>";
 				
 				$echofeed .= "<TR";
-				if($bgcolor == "#FFFFFF"){
+				if ($bgcolor == "#FFFFFF"){
 					$echofeed .= "  BGCOLOR=#EEEEEE";
 				}else{
 					$echofeed .= "  BGCOLOR=#FFFFFF";
@@ -116,16 +116,16 @@ if (($_SERVER['REQUEST_METHOD']=="GET" || $TPL_err) ) {
 			for ($ind2=1; $ind2<=$num_pages+1; $ind2++) {
 				if ($pg!=$ind2) {
 					$echofeed .="<FONT FACE=\"Verdana,Arial,Helvetica\" SIZE=2>
-					             <a href=\"userfeedback.php?id=$id&pg=$ind2&faction=show\">
-					             $ind2</a>";
-					if($ind2 != $num_pages+1) {
+								 <a href=\"userfeedback.php?id=$id&pg=$ind2&faction=show\">
+								 $ind2</a>";
+					if ($ind2 != $num_pages+1) {
 						$echofeed .= " | ";
 					}
 					
 				} else {
 					$echofeed .="<FONT FACE=\"Verdana,Arial,Helvetica\" SIZE=2 COLOR=\"#777777\">
-					             $ind2";
-					if($ind2 != $num_pages+1){
+								 $ind2";
+					if ($ind2 != $num_pages+1){
 						$echofeed .= " | ";
 					}
 				}
@@ -158,7 +158,7 @@ if (($_SERVER['REQUEST_METHOD']=="GET" || $TPL_err) ) {
 if ($_SERVER['REQUEST_METHOD']=="GET" && $faction=="show") {
 	$secid = AddSlashes($id);
 	$sql="SELECT * FROM " . $DBPrefix . "feedbacks WHERE rated_user_id='$secid' ORDER by feedbackdate DESC";
-	$res=mysql_query ($sql);
+	$res=mysql_query($sql);
 	$i=0;
 	while ($arrfeed=mysql_fetch_array($res)) {
 		$arr_feedback[$i]['username']=$arrfeed['rater_user_nick'];
@@ -191,44 +191,44 @@ function ResetForm(){
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_use.gif" ></td>
-          <td class=white><?php echo $MSG['25_0010']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['045']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_use.gif" ></td>
+		  <td class=white><?php echo $MSG['25_0010']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['045']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 
 <TABLE WIDTH="95%" BORDER=0 CELLPADDING="1" CELLSPACING="1" BGCOLOR=#0083D7>
 <TR>
   <TD ALIGN=CENTER class=title><?php print $MSG['222']; ?></TD>
 </TR>
 <TR BGCOLOR=#FFFFFF>
-    <TD><BR>
-      <CENTER>
-      <FORM name=addfeedback action="userfeedback.php?id=<?php echo $id; ?>" method="POST">
-        <TABLE width="100%" CELLSPACING="0" CELLPADDING="0" BGCOLOR="#EEEEEE">
-          <TR>
-            <TD><TABLE width="100%" CELLSPACING="1" CELLPADDING="1">
-                <tr  BGCOLOR="#FFFFFF">
-                  <td ALIGN=right colspan="2"><B> <?php echo "<B>$TPL_nick</B>
-		           ($TPL_feedbacks_num)
-		           <BR>$TPL_rate_ratio_value
-		           <BR><BR>";
+	<TD><BR>
+	  <CENTER>
+	  <FORM name=addfeedback action="userfeedback.php?id=<?php echo $id; ?>" method="POST">
+		<TABLE width="100%" CELLSPACING="0" CELLPADDING="0" BGCOLOR="#EEEEEE">
+		  <TR>
+			<TD><TABLE width="100%" CELLSPACING="1" CELLPADDING="1">
+				<tr  BGCOLOR="#FFFFFF">
+				  <td ALIGN=right colspan="2"><B> <?php echo "<B>$TPL_nick</B>
+				   ($TPL_feedbacks_num)
+				   <BR>$TPL_rate_ratio_value
+				   <BR><BR>";
 		  ?> </B> </td>
-                </tr>
-                <?php echo stripslashes($echofeed); ?>
-              </TABLE></TD>
-          </TR>
-        </TABLE>
-        <INPUT type="hidden" name="TPL_nick_hidden" value="<?php echo $TPL_nick; ?>">
-      </FORM>
-    </TD>
+				</tr>
+				<?php echo stripslashes($echofeed); ?>
+			  </TABLE></TD>
+		  </TR>
+		</TABLE>
+		<INPUT type="hidden" name="TPL_nick_hidden" value="<?php echo $TPL_nick; ?>">
+	  </FORM>
+	</TD>
   </TR>
 </TABLE>
 </TD>

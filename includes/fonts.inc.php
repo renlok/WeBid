@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 $FONTS = array("1" => "Verdana, Arial, Helvetica",
 			   "2" => "Tahoma, Verdana, Arial",

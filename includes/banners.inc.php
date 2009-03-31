@@ -12,9 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
-if(!function_exists('view')) {
+if (!function_exists('view')) {
 	function view() {
 		global $system, $DBPrefix, $uploaded_path;
 		
@@ -28,56 +28,56 @@ if(!function_exists('view')) {
 
 		// First try to retrieve banners according the filters
 		// Categories filter
-		if(strstr($_SERVER['SCRIPT_FILENAME'], 'browse.php')) {
+		if (strstr($_SERVER['SCRIPT_FILENAME'], 'browse.php')) {
 			$query = "SELECT * FROM " . $DBPrefix . "bannerscategories WHERE category = " . intval($GLOBALS['id']);
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($res) > 0) {
+			if (mysql_num_rows($res) > 0) {
 				// We have at least one banners to show
-				while($row = mysql_fetch_array($res)) {
+				while ($row = mysql_fetch_array($res)) {
 					$BANNERSARRAY[] = $row;
 				}
 
 				// Pick a random element
-				if(count($BANNERSARRAY) > 0) {
+				if (count($BANNERSARRAY) > 0) {
 					$RAND_IDX = array_rand($BANNERSARRAY);
 					$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX]['banner'];
 				}
 			}
 		}
 		// Keywords filter
-		elseif(strstr($_SERVER['SCRIPT_FILENAME'], 'item.php')) {
+		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'item.php')) {
 			global $title, $description, $category;
 			$query = "SELECT * FROM " . $DBPrefix . "bannerskeywords
-			         WHERE keyword LIKE '%" . $title . "%' OR keyword LIKE '%" . $description . "%'";
+					 WHERE keyword LIKE '%" . $title . "%' OR keyword LIKE '%" . $description . "%'";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($res) > 0) {
+			if (mysql_num_rows($res) > 0) {
 				// We have at least one banners to show
-				while($row = mysql_fetch_array($res)) {
+				while ($row = mysql_fetch_array($res)) {
 					$BANNERSARRAY[] = $row;
 				}
 			}
 			$query = "SELECT * FROM " . $DBPrefix . "bannerscategories WHERE category = " . $category;
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($res) > 0) {
+			if (mysql_num_rows($res) > 0) {
 				// We have at least one banners to show
-				while($row = mysql_fetch_array($res)) {
+				while ($row = mysql_fetch_array($res)) {
 					$BANNERSARRAY[] = $row;
 				}
 			}
 			// Pick a random element
-			if(count($BANNERSARRAY) > 0) {
+			if (count($BANNERSARRAY) > 0) {
 				$RAND_IDX = array_rand($BANNERSARRAY);
 				$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX][banner];
 			}
 		}
 
 		// We cannot apply filters in this page - let's retrieve a random banner
-		if(empty($BANNERTOSHOW)) {
+		if (empty($BANNERTOSHOW)) {
 			$query = "SELECT * FROM " . $DBPrefix . "banners";
-			if($BANNERSETTINGS['sizetype'] == 'fix') {
+			if ($BANNERSETTINGS['sizetype'] == 'fix') {
 				$query .= " WHERE width = " . $BANNERSETTINGS['width'] . " AND height = " . $BANNERSETTINGS['height'];
 			} else {
 				$query .= " WHERE 1";
@@ -86,10 +86,10 @@ if(!function_exists('view')) {
 			$query .= " AND ((views < purchased AND purchased > 0) OR (purchased = 0))";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($res) > 0) {
+			if (mysql_num_rows($res) > 0) {
 				$CC = $C = 0;
 
-				while($row = mysql_fetch_array($res)) {
+				while ($row = mysql_fetch_array($res)) {
 					$query = "SELECT banner FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $row['id'];
 					$res = mysql_query($query);
 					$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -99,26 +99,26 @@ if(!function_exists('view')) {
 					$system->check_mysql($res, $query, __LINE__, __FILE__);
 					$CC = mysql_num_rows($res);
 
-					if($C == 0 && $CC == 0) {
+					if ($C == 0 && $CC == 0) {
 						$BANNERSARRAY[] = $row;
 					}
 				}
 			}
 
 			// Pick a random element
-			if(count($BANNERSARRAY) > 0) {
+			if (count($BANNERSARRAY) > 0) {
 				$RAND_IDX = array_rand($BANNERSARRAY);
 				$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX]['id'];
 			}
 		}
 
 		// Display banner
-		if(isset($BANNERTOSHOW)) {
+		if (isset($BANNERTOSHOW)) {
 			$query = "SELECT * FROM " . $DBPrefix . "banners WHERE id = " . $BANNERTOSHOW;
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$THISBANNER = mysql_fetch_array($res);
-			if($THISBANNER['type'] == 'swf') {
+			if ($THISBANNER['type'] == 'swf') {
 				$return .= '
 				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="468" height="60">
 				<param name=movie value="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" />
@@ -129,7 +129,7 @@ if(!function_exists('view')) {
 				$return .= '
 				<a href="' . $system->SETTINGS['siteurl'] . 'clickthrough.php?banner=' . $THISBANNER['id'] . '&url=' . $THISBANNER['url'] . '" target="_blank"> <img border=0 alt="' . $THISBANNER['alt'] . '" src="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" /></a>';
 			}
-			if(!empty($THISBANNER['sponsortext'])) {
+			if (!empty($THISBANNER['sponsortext'])) {
 				$return .= '<br><a href="' . $system->SETTINGS['siteurl'] . 'clickthrough.php?banner=' . $THISBANNER['id'] . '&url=' . $THISBANNER['url'] . '" target="_blank">' . $THISBANNER['sponsortext'] . '</a>';
 			}
 			// Update views

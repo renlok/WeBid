@@ -19,8 +19,8 @@ include $main_path . "fck/fckeditor.php";
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "newsletter") {
-	if(empty($_POST['subject']) || empty($_POST['content'])) {
+if (isset($_POST['action']) && $_POST['action'] == "newsletter") {
+	if (empty($_POST['subject']) || empty($_POST['content'])) {
 		$ERR = $ERR_5014;
 	} else {
 		$COUNTER = 0;
@@ -45,12 +45,12 @@ if(isset($_POST['action']) && $_POST['action'] == "newsletter") {
 		$content = stripslashes($_POST['content']);
 		$headers = 'From:'.$system->SETTINGS['sitename'].' <'.$system->SETTINGS['adminmail'].'>'."\n".'Content-Type: text/html; charset='.$CHARSET;
 		$result = mysql_query($query);
-		while($row = mysql_fetch_array($result)) {
-			if(mail($row['email'], $subject, $content, $headers)) {
+		while ($row = mysql_fetch_array($result)) {
+			if (mail($row['email'], $subject, $content, $headers)) {
 				$COUNTER++;
 			}
 		}
-		if(!$result) {
+		if (!$result) {
 			$ERR = $ERR_001;
 		} else {
 			$ERR = $COUNTER.$MSG['5300'];
@@ -85,7 +85,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

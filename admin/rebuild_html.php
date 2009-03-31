@@ -26,7 +26,7 @@ function rebuild_html_file($table)
 	}
 	
 	$sqlqry = "SELECT " . $field_name . " FROM " . $DBPrefix . "" . $table . " ORDER BY " . $field_name . ";";
-	$result = mysql_query ($sqlqry) or die(mysql_error());
+	$result = mysql_query($sqlqry) or die(mysql_error());
 	
 	$output = "<?\n";
 	$output.= "$" . $array_name . " = array(\"\", \n";
@@ -37,7 +37,7 @@ function rebuild_html_file($table)
 		$num_rows = 0;
 	
 	$i = 0;
-	while($i < $num_rows){
+	while ($i < $num_rows){
 		$value = mysql_result($result,$i, $field_name);
 		$output .= "\"" . $value . "\"";
 		$i++;

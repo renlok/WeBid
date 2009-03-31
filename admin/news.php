@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 
 //-- Set offset and limit for pagination
 $limit = 20;
-if(!isset($offset)) $offset = 0;
+if (!isset($offset)) $offset = 0;
 ?>
 <HTML>
 <HEAD>
@@ -29,18 +29,18 @@ if(!isset($offset)) $offset = 0;
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_con.gif" ></td>
-          <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['516']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_con.gif" ></td>
+		  <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['516']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
 	<TR>
 		<TD ALIGN=CENTER class=title>
@@ -60,7 +60,7 @@ if(!isset($offset)) $offset = 0;
 				<?php
 				$query = "select count(id) as news from " . $DBPrefix . "news";
 				$result = mysql_query($query);
-				if(!$result){
+				if (!$result){
 					print "$ERR_001<BR>$query<BR>".mysql_error();
 					exit;
 				}
@@ -85,16 +85,16 @@ if(!isset($offset)) $offset = 0;
 					<?php
 					$query = "select * from " . $DBPrefix . "news order by new_date limit $offset, $limit";
 					$result = mysql_query($query);
-					if(!$result){
+					if (!$result){
 						print "Database access error: abnormal termination<BR>$query<BR>".mysql_error();
 						exit;
 					}
 					$num_news2 = mysql_num_rows($result);
 					$i = 0;
 					$bgcolor = "#FFFFFF";
-					while($i < $num_news2){
+					while ($i < $num_news2){
 						
-						if($bgcolor == "#FFFFFF"){
+						if ($bgcolor == "#FFFFFF"){
 							$bgcolor = "#EEEEEE";
 						}else{
 							$bgcolor = "#FFFFFF";
@@ -108,7 +108,7 @@ if(!isset($offset)) $offset = 0;
 						print "<TR BGCOLOR=$bgcolor>
 					<TD>
 						";
-						if($system->SETTINGS['datesformat'] != 'USA')
+						if ($system->SETTINGS['datesformat'] != 'USA')
 						{
 							print gmdate('d/m/Y', $tmp_date);
 						}
@@ -121,7 +121,7 @@ if(!isset($offset)) $offset = 0;
 						</TD>
 						<TD>
 						";
-						if($suspended == 1)
+						if ($suspended == 1)
 						{
 							print "<FONT COLOR=red><B>$title</B>";
 						}
@@ -155,16 +155,16 @@ if(!isset($offset)) $offset = 0;
 					print "<SPAN CLASS=\"navigation\">";
 					$num_pages = ceil($num_news / $limit);
 					$i = 0;
-					while($i < $num_pages ){
+					while ($i < $num_pages ){
 						
 						$of = ($i * $limit);
 						
-						if($of != $offset){
+						if ($of != $offset){
 							print "<A HREF=\"news.php?offset=$of\" CLASS=\"navigation\">".($i + 1)."</A>";
-							if($i != $num_pages) print " | ";
+							if ($i != $num_pages) print " | ";
 						}else{
 							print $i + 1;
-							if($i != $num_pages) print " | ";
+							if ($i != $num_pages) print " | ";
 						}
 						
 						$i++;

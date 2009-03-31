@@ -13,7 +13,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 include $include_path . "browsers.inc.php";
 
 ?>
@@ -34,17 +34,17 @@ include $include_path . "browsers.inc.php";
   <?php echo $MSG['5155']; ?></FONT></B> </P>
    <P align="center"><A href="javascript:window.close()" class="bluelink">Close</A></P>
 	<TABLE width="352" border="0" cellspacing="0" cellpadding="0">
-    <TR>
-      <TD>
+	<TR>
+	  <TD>
 	  <FONT face="Verdana, Arial, Helvetica, sans-serif" size="2">
-      <?php
-	  	while(list($k,$v) = each($BROWSERS))
+	  <?php
+	  	while (list($k,$v) = each($BROWSERS))
 		{
 			print "$v<BR>";
 		}
 	   ?>
-      </TD>
-    </TR>
+	  </TD>
+	</TR>
   </TABLE>
   </CENTER>
  <P align="center"><A href="javascript:window.close()" class="bluelink">Close</A></P>

@@ -19,25 +19,25 @@ include $include_path."countries.inc.php";
 
 $username = $name;
 
-if(!isset($_GET['id']) && !isset($_POST['id'])) {
+if (!isset($_GET['id']) && !isset($_POST['id'])) {
 	$URL = $_SESSION['RETURN_LIST'];
 	unset($_SESSION['RETURN_LIST']);
 	header("Location: $URL");
 	exit;
 }
 
-foreach($_GET as $k=>$v){
+foreach ($_GET as $k=>$v){
   $var = $k;
   $$var = $v; 
 }
 
-foreach($_POST as $k=>$v){
+foreach ($_POST as $k=>$v){
   $var = $k;
   $$var = $v; 
 }
 
-if($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_SELF']))){
-	if($mode == "activate") {
+if ($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_SELF']))){
+	if ($mode == "activate") {
 		$sql="UPDATE " . $DBPrefix . "auctions set suspended=0 WHERE id='$id'";
 		if ($closed==1) {
 			$counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET suspendedauction=(suspendedauction-1),closedauctions=(closedauctions+1)");
@@ -45,7 +45,7 @@ if($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_S
 			$counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET suspendedauction=(suspendedauction-1),auctions=(auctions+1)");
 			$query = "select category from " . $DBPrefix . "auctions WHERE id='$id'";
 			$res__ = mysql_query($query);
-			if(!$res__) {
+			if (!$res__) {
 				print $ERR_001." $query<BR>".mysql_error();
 				exit;
 			} else {
@@ -58,7 +58,7 @@ if($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_S
 				$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id=\"$cat_id\"";
 				$result = mysql_query($query);
 				
-				if($result) {
+				if ($result) {
 					if (mysql_num_rows($result)>0) {
 						$R_parent_id = mysql_result($result,0,"parent_id");
 						$R_cat_id = mysql_result($result,0,"cat_id");
@@ -69,8 +69,8 @@ if($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_S
 						if ( $cat_id == $root_cat )
 						++$R_counter;
 						
-						if($R_counter < 0) $R_counter = 0;
-						if($R_sub_counter < 0) $R_sub_counter = 0;
+						if ($R_counter < 0) $R_counter = 0;
+						if ($R_sub_counter < 0) $R_sub_counter = 0;
 						
 						$query = "UPDATE " . $DBPrefix . "categories SET counter='$R_counter', sub_counter='$R_sub_counter' WHERE cat_id=\"$cat_id\"";
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -89,7 +89,7 @@ if($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_S
 			$counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET suspendedauction=(suspendedauction+1),auctions=(auctions-1)");
 			$query = "select category from " . $DBPrefix . "auctions WHERE id='$id'";
 			$res__ = mysql_query($query);
-			if(!$res__) {
+			if (!$res__) {
 				print $ERR_001." $query<BR>".mysql_error();
 				exit;
 			} else {
@@ -101,7 +101,7 @@ if($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_S
 				// update counter for this category
 				$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id=\"$cat_id\"";
 				$result = mysql_query($query);
-				if($result) {
+				if ($result) {
 					if (mysql_num_rows($result)>0) {
 						$R_parent_id = mysql_result($result,0,"parent_id");
 						$R_cat_id = mysql_result($result,0,"cat_id");
@@ -112,8 +112,8 @@ if($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_S
 						if ( $cat_id == $root_cat )
 						--$R_counter;
 						
-						if($R_counter < 0) $R_counter = 0;
-						if($R_sub_counter < 0) $R_sub_counter = 0;
+						if ($R_counter < 0) $R_counter = 0;
+						if ($R_sub_counter < 0) $R_sub_counter = 0;
 						
 						$query = "UPDATE " . $DBPrefix . "categories SET counter='$R_counter', sub_counter='$R_sub_counter' WHERE cat_id=\"$cat_id\"";
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -124,7 +124,7 @@ if($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_S
 			} while ($cat_id!=0);
 		}
 	}
-	$res=mysql_query ($sql);
+	$res=mysql_query($sql);
 	$URL = $_SESSION['RETURN_LIST']."?offset=".$_SESSION['RETURN_LIST_OFFSET'];
 	unset($_SESSION['RETURN_LIST']);
 	header("Location: $URL");
@@ -132,7 +132,7 @@ if($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_S
 }
 
 
-if(!$action || ($action && $updated)){
+if (!$action || ($action && $updated)){
 	
 	$query = "select a.id, u.nick, a.title, a.starts, a.description,
 		c.cat_name, d.description as duration, a.suspended, a.current_bid,
@@ -140,7 +140,7 @@ if(!$action || ($action && $updated)){
 		a, " . $DBPrefix . "users u, " . $DBPrefix . "categories c, " . $DBPrefix . "durations d WHERE u.id = a.user and
 		c.cat_id = a.category and d.days = a.duration and a.id=\"$id\"";
 	$result = mysql_query($query);
-	if(!$result) {
+	if (!$result) {
 		print "Database access error: abnormal termination".mysql_error();
 		exit;
 	}
@@ -184,124 +184,124 @@ scrollbar-arrow-color: #ffffff;
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr>
-          <td width="30"><img src="images/i_auc.gif" ></td>
-          <td class=white><?php echo $MSG['239']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5091']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr>
+		  <td width="30"><img src="images/i_auc.gif" ></td>
+		  <td class=white><?php echo $MSG['239']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5091']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
   <tr>
-    <td align="center" valign="middle"><TABLE WIDTH="95%" BORDER="0" CELLSPACING="1" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-        <TR>
-          <TD ALIGN=CENTER class=title>
-            <?php
-            if($suspended > 0) {
-            	print $MSG['322'];
-            } else {
-            	print $MSG['321'];
-            }
+	<td align="center" valign="middle"><TABLE WIDTH="95%" BORDER="0" CELLSPACING="1" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
+		<TR>
+		  <TD ALIGN=CENTER class=title>
+			<?php
+			if ($suspended > 0) {
+				print $MSG['322'];
+			} else {
+				print $MSG['321'];
+			}
 			?>
-            </B></TD>
-        </TR>
-        <TR>
-          <TD BGCOLOR="#FFFFFF">
+			</B></TD>
+		</TR>
+		<TR>
+		  <TD BGCOLOR="#FFFFFF">
 		  <TABLE WIDTH=100% CELPADDING=4 CELLSPACING=0 BORDER=0 BGCOLOR="#FFFFFF">
-                      <?php
-                      if($updated) {
+					  <?php
+					  if ($updated) {
 					  ?>
-                      <TR>
-                        <TD></TD>
-                        <TD WIDTH=486>Auctions data updated</TD>
-                      </TR>
-                      <?php
-                      }
+					  <TR>
+						<TD></TD>
+						<TD WIDTH=486>Auctions data updated</TD>
+					  </TR>
+					  <?php
+					  }
 					  ?>
-                      <TR>
-                        <TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['312']; ?> </TD>
-                        <TD WIDTH="486"><?print $title; ?></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['313']; ?> </TD>
-                        <TD WIDTH="486"><?php print $nick; ?></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['314']; ?> </TD>
-                        <TD WIDTH="486"><?php print $date; ?></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204"  VALIGN="top" ALIGN="right"><?php print $MSG['315']; ?> </TD>
-                        <TD WIDTH="486"><?php print $duration; ?></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204"  VALIGN="top" ALIGN="right"><?php print $MSG['316']; ?> </TD>
-                        <TD WIDTH="486"><?php print $category; ?></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204" VALIGN="top" ALIGN="right">
-                          <?php print $MSG['317']; ?> </TD>
-                        <TD WIDTH="486">
-                          <?php print $description; ?> </TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['318']; ?> </TD>
-                        <TD WIDTH="486"><?php print $current_bid; ?></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['327']; ?> </TD>
-                        <TD WIDTH="486"><?php print $min_bid; ?></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['319']; ?> </TD>
-                        <TD WIDTH="486"><?php print $quantity; ?></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['320']; ?> </TD>
-                        <TD WIDTH="486"><?php print $reserve_price; ?></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['300']; ?> </TD>
-                        <TD WIDTH="486">
-                        <?php
-                          if($suspended == 0)
-                          print $MSG['029'];
-                          else
-                          print $MSG['030'];                         
+					  <TR>
+						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['312']; ?> </TD>
+						<TD WIDTH="486"><?print $title; ?></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['313']; ?> </TD>
+						<TD WIDTH="486"><?php print $nick; ?></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['314']; ?> </TD>
+						<TD WIDTH="486"><?php print $date; ?></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204"  VALIGN="top" ALIGN="right"><?php print $MSG['315']; ?> </TD>
+						<TD WIDTH="486"><?php print $duration; ?></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204"  VALIGN="top" ALIGN="right"><?php print $MSG['316']; ?> </TD>
+						<TD WIDTH="486"><?php print $category; ?></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204" VALIGN="top" ALIGN="right">
+						  <?php print $MSG['317']; ?> </TD>
+						<TD WIDTH="486">
+						  <?php print $description; ?> </TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['318']; ?> </TD>
+						<TD WIDTH="486"><?php print $current_bid; ?></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['327']; ?> </TD>
+						<TD WIDTH="486"><?php print $min_bid; ?></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['319']; ?> </TD>
+						<TD WIDTH="486"><?php print $quantity; ?></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['320']; ?> </TD>
+						<TD WIDTH="486"><?php print $reserve_price; ?></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['300']; ?> </TD>
+						<TD WIDTH="486">
+						<?php
+						  if ($suspended == 0)
+						  print $MSG['029'];
+						  else
+						  print $MSG['030'];						 
 						?>
-                        </TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204">&nbsp;</TD>
-                        <TD WIDTH="486">
-                          <?php
-                          if($suspended > 0) {
-                          	print $MSG['324'];
-                          	$mode = "activate";
-                          } else {
-                          	print $MSG['323'];
-                          	$mode = "suspend";
-                          }
+						</TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204">&nbsp;</TD>
+						<TD WIDTH="486">
+						  <?php
+						  if ($suspended > 0) {
+						  	print $MSG['324'];
+						  	$mode = "activate";
+						  } else {
+						  	print $MSG['323'];
+						  	$mode = "suspend";
+						  }
 										?>
-                        </TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH="204">&nbsp;</TD>
-                        <TD WIDTH="486"><FORM NAME=details ACTION="excludeauction.php" METHOD="POST">
-                            <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
-                            <INPUT TYPE="hidden" NAME="offset" VALUE="<?php echo $offset; ?>">
-                            <INPUT TYPE="hidden" NAME="action" VALUE="Delete">
-                            <INPUT TYPE="hidden" NAME="mode" VALUE="<?php print $mode; ?>">
-                            <INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['030']; ?>">
-                          </FORM></TD>
-                      </TR>
-                    </TABLE>
-                 
+						</TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH="204">&nbsp;</TD>
+						<TD WIDTH="486"><FORM NAME=details ACTION="excludeauction.php" METHOD="POST">
+							<INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
+							<INPUT TYPE="hidden" NAME="offset" VALUE="<?php echo $offset; ?>">
+							<INPUT TYPE="hidden" NAME="action" VALUE="Delete">
+							<INPUT TYPE="hidden" NAME="mode" VALUE="<?php print $mode; ?>">
+							<INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['030']; ?>">
+						  </FORM></TD>
+					  </TR>
+					</TABLE>
+				 
 				 </TD>
-              </TR>
-            </TABLE>
+			  </TR>
+			</TABLE>
 			
 			</TD>
   </TR>

@@ -17,7 +17,7 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Insert new currency
-if(isset($_POST['action']) && $_POST['action'] == "delete") {
+if (isset($_POST['action']) && $_POST['action'] == "delete") {
 	$query = "DELETE FROM " . $DBPrefix . "comm_messages WHERE id = " . $_POST['msg'];
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	// Update messages counter
@@ -43,29 +43,29 @@ if(isset($_POST['action']) && $_POST['action'] == "delete") {
 <FORM NAME="newcurrency" METHOD="post" ACTION="">
   <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_con.gif" ></td>
-            <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5276']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_con.gif" ></td>
+			<td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5276']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
 		<TR>
 			<td align="center" valign="middle">
 
-        <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-        <tr><td align="center" valign="middle">
-        <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-          <TR>
-            <TD ALIGN=CENTER class=title colspan="2">
-                <?php echo $MSG['5276']; ?>
-            </TD>
-          </TR>
-          <tr><td>
-          <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+		<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
+		<tr><td align="center" valign="middle">
+		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
+		  <TR>
+			<TD ALIGN=CENTER class=title colspan="2">
+				<?php echo $MSG['5276']; ?>
+			</TD>
+		  </TR>
+		  <tr><td>
+		  <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
 					<TR BGCOLOR="#FFFFFF">
 						<TD WIDTH="24%" BGCOLOR="#FFFFFF" VALIGN="TOP">
 							<FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
@@ -80,7 +80,7 @@ if(isset($_POST['action']) && $_POST['action'] == "delete") {
 						<TD WIDTH="76%">
 						<FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
 							<?
-								if($msg['user'] > 0) {
+								if ($msg['user'] > 0) {
 									print $msg['username'];
 								}
 								else
@@ -103,13 +103,13 @@ if(isset($_POST['action']) && $_POST['action'] == "delete") {
 						</TD>
 					</TR>
 				</TABLE>
-        </td></tr>
-        </TABLE>
-        </td></tr>
+		</td></tr>
+		</TABLE>
+		</td></tr>
 			</TD>
 		</TR>
 	</TABLE>
-    <A HREF="boards.php"><?php echo $MSG['5032']; ?></A> | <A HREF=editmessages.php?id=<?php echo $id; ?>><?php echo $MSG['5277']; ?></A>
+	<A HREF="boards.php"><?php echo $MSG['5032']; ?></A> | <A HREF=editmessages.php?id=<?php echo $id; ?>><?php echo $MSG['5277']; ?></A>
 </FORM>
 </BODY>
 </HTML>

@@ -18,7 +18,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			activationtype = " . intval($_POST['usersconf']);
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -37,7 +37,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

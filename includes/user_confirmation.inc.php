@@ -12,9 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
-if(isset($_COOKIE['USERLANGUAGE'])) {
+if (isset($_COOKIE['USERLANGUAGE'])) {
 	$USERLANG = $_COOKIE['USERLANGUAGE'];
 } else {
 	$USERLANG = $language;
@@ -25,8 +25,8 @@ $buffer = file($main_path."language/".$USERLANG."/mail_usermail.inc.php");
 
 $i = 0;
 $j = 0;
-while($i < count($buffer)) {
-	if(!ereg("^#(.)*$",$buffer[$i])){
+while ($i < count($buffer)) {
+	if (!ereg("^#(.)*$",$buffer[$i])){
 		$skipped_buffer[$j] = $buffer[$i];
 		$j++;
 	}

@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 function CheckFirstRegData(){
 	/*
@@ -32,36 +32,36 @@ function CheckFirstRegData(){
 	011 = password too short
 	*/
 	global $name,$nick,$password,$repeat_password,$email;
-	if(!$name){
+	if (!$name){
 		return "002";
 	}
-	if(!$nick){
+	if (!$nick){
 		return "003";
 	}
-	if(!$password){
+	if (!$password){
 		return "004";
 	}
-	if(!$repeat_password){
+	if (!$repeat_password){
 		return "005";
 	}
-	if($password != $repeat_password){
+	if ($password != $repeat_password){
 		return "006";
 	}
-	if(!$email){
+	if (!$email){
 		return "007";
 	}
-	if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$",$email)){
+	if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$",$email)){
 		return "008";
 	}
-	if(strlen($nick) < 6){
+	if (strlen($nick) < 6){
 		return "010";
 	}
-	if(strlen($password) < 6){
+	if (strlen($password) < 6){
 		return "011";
 	}
 	$query = "select nick from " . $DBPrefix . "users where nick=\"$nick\"";
 	$result = mysql_query($query);
-	if(mysql_num_rows($result)){
+	if (mysql_num_rows($result)){
 		return "009";
 	}
 	return "000";
@@ -93,57 +93,57 @@ function CheckSellData(){
 	global $atype, $iquantity, $increments, $customincrement, $system;
 	global $payments, $auction_types, $private, $invitedlists, $num, $nnum;
 	
-	if(empty($title)) {
+	if (empty($title)) {
 		return "017";
 	}
 	
-	if(empty($description)) {
+	if (empty($description)) {
 		return "018";
 	}
 	
-	if(!$system->CheckMoney($minimum_bid) && $buy_now_only == 'n') {
+	if (!$system->CheckMoney($minimum_bid) && $buy_now_only == 'n') {
 		return "058";
 	} else {
 		$minimum_bid = $system->input_money($minimum_bid);
 	}
 	
-	if((empty($minimum_bid) || $minimum_bid < 0) && ($buy_now_only == 'n' || !$buy_now_only)) {
+	if ((empty($minimum_bid) || $minimum_bid < 0) && ($buy_now_only == 'n' || !$buy_now_only)) {
 		return "019";
 	}
 	
-	if(empty($reserve_price) && $with_reserve == 'yes') {
+	if (empty($reserve_price) && $with_reserve == 'yes') {
 		return "021";
 	}
 	
-	if($increments == 2 && (empty($customincrement) || floatval($system->input_money($customincrement)) == 0)) {
+	if ($increments == 2 && (empty($customincrement) || floatval($system->input_money($customincrement)) == 0)) {
 		return "056";
 	}
 	
-	if(!ereg("^([0-9])*|(\.[0-9]{1,2})?$",$customincrement)) {
+	if (!ereg("^([0-9])*|(\.[0-9]{1,2})?$",$customincrement)) {
 		return "057";
 	}
 	
-	if($with_reserve == 'yes' && !ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($reserve_price)) ){
+	if ($with_reserve == 'yes' && !ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($reserve_price)) ){
 		return "022";
 	} else {
 		$reserve_price = $system->input_money($reserve_price);
 	}
 	
-	if($buy_now_only == 'y') {
+	if ($buy_now_only == 'y') {
 		$buy_now = 'yes';
-		if(!ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0) {
+		if (!ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0) {
 			return "061";
 		}
 	}
 	
-	if($buy_now == 'yes' && (!ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0)){
+	if ($buy_now == 'yes' && (!ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0)){
 		return "061";
 	} else {
 		$buy_now_price = $system->input_money($buy_now_price);
 	}	
 	
 	$numpay = count($payment);
-	if($numpay == 0) {
+	if ($numpay == 0) {
 		return "024";
 	} else {
 		$payment_ok = 1;
@@ -157,41 +157,41 @@ function CheckSellData(){
 		return "601";
 	}
 	
-	if($atype == 2) {
-		if($with_reserve == 'yes') {
+	if ($atype == 2) {
+		if ($with_reserve == 'yes') {
 			$with_reserve = 'no';
 			$reserve_price = '';
 			return "062";
 		}
-		if($increments == 2) {
+		if ($increments == 2) {
 			$increments=1;
 			$customincrement='';
 			return "063";
 		}
-		if($buy_now == 'yes') {
+		if ($buy_now == 'yes') {
 			$buy_now='no';
 			$buy_now_price='';
 			return "064";
 		}
 	}
 	
-	if($private == 'y' && !is_array($invitedlists)) {
+	if ($private == 'y' && !is_array($invitedlists)) {
 		return "5007";
 	}
 
-	if($with_reserve == 'yes' && $reserve_price <= $minimum_bid) {
+	if ($with_reserve == 'yes' && $reserve_price <= $minimum_bid) {
 		return "5045";
 	}
 	
 	if ($buy_now == "yes" && $buy_now_only == 'n') {
-		if(($with_reserve == 'yes' && $buy_now_price <= $reserve_price) || $buy_now_price <= $minimum_bid) {
+		if (($with_reserve == 'yes' && $buy_now_price <= $reserve_price) || $buy_now_price <= $minimum_bid) {
 			return "5046";
 		}
 	}
 	
-	if(!empty($_POST['relist']) && !is_numeric($_POST['relist'])) {
+	if (!empty($_POST['relist']) && !is_numeric($_POST['relist'])) {
 		return "_0149";
-	} elseif($_POST['relist'] > $system->SETTINGS['relisting'] && !empty($_POST['relist'])) {
+	} elseif ($_POST['relist'] > $system->SETTINGS['relisting'] && !empty($_POST['relist'])) {
 		return "_0161";
 	}
 	
@@ -200,15 +200,15 @@ function CheckSellData(){
 function CheckBidData() {
 	global $bid, $next_bid, $atype, $qty, $Data, $bidder_id;
 	
-	if($Data['suspended'] > 0) {
+	if ($Data['suspended'] > 0) {
 		return "619";
 	}
 	
-	if($bidder_id == $Data['user']) {
+	if ($bidder_id == $Data['user']) {
 		return "612";
 	}
 	
-	if($atype == 1) { //normal auction
+	if ($atype == 1) { //normal auction
 		if ($bid < $next_bid) {
 			return "607";
 		}

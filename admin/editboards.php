@@ -17,12 +17,12 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Insert new currency
-if(isset($_POST['action']) && $_POST['action'] == "update") {
-	if(empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active'])) {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
+	if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active'])) {
 		$ERR = $ERR_047;
-	} elseif(!ereg("^[0-9]+$", $_POST['msgstoshow'])) {
+	} elseif (!ereg("^[0-9]+$", $_POST['msgstoshow'])) {
 		$ERR = $ERR_5000;
-	} elseif(intval($_POST['msgstoshow'] == 0)) {
+	} elseif (intval($_POST['msgstoshow'] == 0)) {
 		$ERR = $ERR_5001;
 	} else {
 		$query = "UPDATE " . $DBPrefix . "community
@@ -52,76 +52,76 @@ $BOARD = mysql_fetch_array($res_);
 
   <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_con.gif" ></td>
-            <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5052']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_con.gif" ></td>
+			<td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5052']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
 		<TR>
 			<td align="center" valign="middle">
 
-        <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-        <tr><td align="center" valign="middle">
-        <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-          <TR>
-            <TD ALIGN=CENTER class=title colspan="2">
-                <?php echo $MSG['5052']; ?>
-            </TD>
-          </TR>
-          <tr><td>
-          <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
-          <?
-			  if(!empty($ERR))
+		<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
+		<tr><td align="center" valign="middle">
+		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
+		  <TR>
+			<TD ALIGN=CENTER class=title colspan="2">
+				<?php echo $MSG['5052']; ?>
+			</TD>
+		  </TR>
+		  <tr><td>
+		  <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+		  <?
+			  if (!empty($ERR))
 			  {
 		  ?>
-          <TR BGCOLOR=yellow>
-            <TD COLSPAN="2" ALIGN=CENTER><B><FONT COLOR="#FF0000">
-              <? print $ERR; ?>
-              </FONT></B></TD>
-          </TR>
-          <?
+		  <TR BGCOLOR=yellow>
+			<TD COLSPAN="2" ALIGN=CENTER><B><FONT COLOR="#FF0000">
+			  <? print $ERR; ?>
+			  </FONT></B></TD>
+		  </TR>
+		  <?
 			}
 		  ?>
-          <TR>
-            <TD WIDTH="17%">
+		  <TR>
+			<TD WIDTH="17%">
 			  <?php echo $MSG['5034']; ?>
-            </TD>
-            <TD>
-              <INPUT TYPE="text" NAME="name" SIZE="25" MAXLENGTH="255" VALUE="<?php echo $BOARD[name]; ?>">
-            </TD>
-          </TR>
-          <TR>
-            <TD WIDTH="17%">
+			</TD>
+			<TD>
+			  <INPUT TYPE="text" NAME="name" SIZE="25" MAXLENGTH="255" VALUE="<?php echo $BOARD[name]; ?>">
+			</TD>
+		  </TR>
+		  <TR>
+			<TD WIDTH="17%">
 			  <?php echo $MSG['5043']; ?>
-            </TD>
-            <TD>
+			</TD>
+			<TD>
 				<B>
-              <?php echo $BOARD['messages']; ?>
-              </B> &nbsp;&nbsp;
-              <?
-				  if($BOARD['messages'] > 0)
+			  <?php echo $BOARD['messages']; ?>
+			  </B> &nbsp;&nbsp;
+			  <?
+				  if ($BOARD['messages'] > 0)
 				  {
 			  ?>
-              &nbsp;&nbsp;&nbsp;<img src="images/ball.gif" width="12" height="12"><img src="images/ball.gif" width="12" height="12">&nbsp;<a href="editmessages.php?id=<?php echo $id; ?>">
-              <?php echo $MSG['5063']; ?>
-              </a>
-              <?
+			  &nbsp;&nbsp;&nbsp;<img src="images/ball.gif" width="12" height="12"><img src="images/ball.gif" width="12" height="12">&nbsp;<a href="editmessages.php?id=<?php echo $id; ?>">
+			  <?php echo $MSG['5063']; ?>
+			  </a>
+			  <?
 				  }
 			  ?>
-            </TD>
-          </TR>
-          <TR>
-            <TD WIDTH="17%">
+			</TD>
+		  </TR>
+		  <TR>
+			<TD WIDTH="17%">
 			  <?php echo $MSG['5053']; ?>
-            </TD>
-            <TD>
-              <?
-				  if($BOARD['lastmessage'])
+			</TD>
+			<TD>
+			  <?
+				  if ($BOARD['lastmessage'])
 				  {
 					  print FormatDate($BOARD['lastmessage']);
 				  }
@@ -130,58 +130,58 @@ $BOARD = mysql_fetch_array($res_);
 					  print "--";
 				  }
 			  ?>
-            </TD>
-          </TR>
-          <TR>
-            <TD WIDTH="17%" VALIGN="TOP"><?php echo $MSG['5035']; ?></TD>
-            <TD>
+			</TD>
+		  </TR>
+		  <TR>
+			<TD WIDTH="17%" VALIGN="TOP"><?php echo $MSG['5035']; ?></TD>
+			<TD>
 			  <?php echo $MSG['5036']; ?>
-              <BR>
-              <INPUT TYPE="text" NAME="msgstoshow" SIZE="4" MAXLENGTH="4" VALUE="<?php echo $BOARD['msgstoshow']; ?>">
-            </TD>
-          </TR>
-          <TR>
-            <TD WIDTH="17%">
+			  <BR>
+			  <INPUT TYPE="text" NAME="msgstoshow" SIZE="4" MAXLENGTH="4" VALUE="<?php echo $BOARD['msgstoshow']; ?>">
+			</TD>
+		  </TR>
+		  <TR>
+			<TD WIDTH="17%">
 			  <?php echo $MSG['5054']; ?>
-            </TD>
-            <TD>
-              <INPUT TYPE="radio" NAME="active" VALUE="1"
+			</TD>
+			<TD>
+			  <INPUT TYPE="radio" NAME="active" VALUE="1"
 			  <?
-				  if($BOARD['active'] == 1)
+				  if ($BOARD['active'] == 1)
 				  {
 					  print " CHECKED";
 				  }
 			  ?>
 			  >
 			  <?php echo $MSG['5038']; ?>
-              <INPUT TYPE="radio" NAME="active" VALUE="2"
+			  <INPUT TYPE="radio" NAME="active" VALUE="2"
 			  <?
-				  if($BOARD['active'] == 2)
+				  if ($BOARD['active'] == 2)
 				  {
 					  print " CHECKED";
 				  }
 			  ?>
 			  >
 			  <?php echo $MSG['5039']; ?>
-            </TD>
-          </TR>
-          <TR>
-            <TD WIDTH="17%">
-              <INPUT TYPE="hidden" NAME="action" VALUE="update">
-              <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
-            </TD>
-            <TD>
-              <INPUT TYPE="submit" NAME="Submit" VALUE="<?php echo $MSG['5029']; ?>">
-            </TD>
-          </TR>
-        </TABLE>
-        </td></tr>
-        </TABLE>
-        </td></tr>
+			</TD>
+		  </TR>
+		  <TR>
+			<TD WIDTH="17%">
+			  <INPUT TYPE="hidden" NAME="action" VALUE="update">
+			  <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
+			</TD>
+			<TD>
+			  <INPUT TYPE="submit" NAME="Submit" VALUE="<?php echo $MSG['5029']; ?>">
+			</TD>
+		  </TR>
+		</TABLE>
+		</td></tr>
+		</TABLE>
+		</td></tr>
 			</TD>
 		</TR>
 	</TABLE>
-    <A HREF="boards.php"><?php echo strtoupper($MSG['5032']); ?></A>
+	<A HREF="boards.php"><?php echo strtoupper($MSG['5032']); ?></A>
 </FORM>
 </BODY>
 </HTML>

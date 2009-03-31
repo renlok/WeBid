@@ -19,12 +19,12 @@ include $main_path."fck/fckeditor.php";
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
-    // Update database
-    $query = "UPDATE " . $DBPrefix . "settings SET
+if (isset($_POST['action']) && $_POST['action'] == "update") {
+	// Update database
+	$query = "UPDATE " . $DBPrefix . "settings SET
 			  errortext = '" . addslashes($_POST['errortext']) . "',
 			  errormail = '" . $_POST['errormail'] . "'";
-    $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['errortext'] = $_POST['errortext'];
 	$system->SETTINGS['errormail'] = $_POST['errormail'];
 	$ERR = $MSG['413'];
@@ -48,7 +48,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

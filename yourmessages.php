@@ -21,49 +21,46 @@ if (!$user->logged_in)
 	exit;
 }
 
-$userid = $user->user_data['id'];
-$messageid = $_GET['id'];
-
+$messageid = intval($_GET['id']);
 // check message is to user
-$sql = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = '$userid' AND id = '$messageid'";
-$res = mysql_query($sql);
-$system->check_mysql($res, $sql, __LINE__, __FILE__);
+$query = "SELECT m.*, u.nick FROM " . $DBPrefix . "messages m
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = m.from)
+		WHERE m.sentto = " . $user->user_data['id'] . " AND m.id = " . $messageid;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
 $check = mysql_num_rows($res);
-if ($check == 0) {
-	$_SESSION['message'] = "This message doesn't exist";
+
+if ($check == 0)
+{
+	$_SESSION['message'] = $ERR_070;
 	header('location: mail.php');
 }
-// get message details
-$sql = "SELECT * FROM `" . $DBPrefix . "messages` WHERE `id`='$messageid'";
-$res = mysql_query($sql);
-$system->check_mysql($res, $sql, __LINE__, __FILE__);
+
 $array = mysql_fetch_array($res);
 $sent = gmdate('M d, Y H:ia', $array['when'] + $system->tdiff);
 $from = $array['from'];
+$sendusername = $array['nick'];
 $subject = $array['subject'];
 $replied = $array['replied'];
 $message = $array['message'];
 $hash = md5(rand(1, 9999));
-$array['message'] = str_replace("<br>", "", $array['message']);
+$array['message'] = str_replace('<br>', '', $array['message']);
 $_SESSION['msg' . $hash] = "\n\n-+-+-+-+-+-+-+-+-+\n\n" . $array['message'];
-// get username
-$usql = "SELECT * FROM `" . $DBPrefix . "users` WHERE `id`='$from'";
-$urun = mysql_query($usql);
-$system->check_mysql($urun, $sql, __LINE__, __FILE__);
-$uarray = mysql_fetch_array($urun);
-$sendusername = $uarray['nick'];
 
 $senderusername = '<a href="profile.php?user_id=1&auction_id=' . $from . '">' . $sendusername . '</a>';
+
 // if admin message
-if ($from == '0') {
-	$senderusername = "Admin";
+if ($from == 0)
+{
+	$senderusername = $MSG['110'];
 }
-// update message
-$sql = "UPDATE `" . $DBPrefix . "messages` SET `read` = 1 WHERE `id` = '$messageid'";
-$run = mysql_query($sql);
-$system->check_mysql($run, $sql, __LINE__, __FILE__);
+
+// Update message
+$query = "UPDATE " . $DBPrefix . "messages SET `read` = 1 WHERE id = " . $messageid;
+$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
 // set session for reply
-$_SESSION['subject' . $hash] = (substr($subject, 0, 3) == 'Re:') ? $subject : "Re: $subject";
+$_SESSION['subject' . $hash] = (substr($subject, 0, 3) == 'Re:') ? $subject : 'Re: ' . $subject;
 $_SESSION['sendto' . $hash] = $sendusername;
 $_SESSION['reply' . $hash] = $messageid;
 
@@ -83,5 +80,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-
 ?>

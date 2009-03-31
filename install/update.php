@@ -21,14 +21,14 @@ switch($step){
 		$siteURL = $_GET['URL'];
 		$siteEmail = $_GET['EMail'];
 		include('../includes/config.inc.php');
-		if(!mysql_connect($DbHost, $DbUser, $DbPassword)){
+		if (!mysql_connect($DbHost, $DbUser, $DbPassword)){
 			die('<p>Cannot connect to '.$DbHost.'</p>');
 		}
-		if(!mysql_select_db($DbDatabase)){
+		if (!mysql_select_db($DbDatabase)){
 			die('<p>Cannot select database</p>');
 		}
 		include('sql/updatedump.inc.php');
-		for($i = $from; $i < $to; $i++){
+		for ($i = $from; $i < $to; $i++){
 			mysql_query($query[$i]) or print(mysql_error() . '<br>' . $query[$i] . '<br>');
 		}
 		echo 'Update complete now remove the install folder from your server';
@@ -38,15 +38,15 @@ switch($step){
 		echo '<b>step 1:</b> writting config file...<br>';
 		$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
 		$content = '<?php
-$DbHost     = "'.$_POST['DBHost'].'";
+$DbHost	 = "'.$_POST['DBHost'].'";
 $DbDatabase = "'.$_POST['DBName'].'";
-$DbUser     = "'.$_POST['DBUser'].'";
+$DbUser	 = "'.$_POST['DBUser'].'";
 $DbPassword = "'.$_POST['DBPass'].'";
 $DBPrefix	= "'.$_POST['DBPrefix'].'";
 $main_path	= "'.$path.'";
 ?>';
 		$output = makeconfigfile($content);
-		if($output)
+		if ($output)
 			echo 'Complete, now to <b><a href="?step=2&URL='.$_POST['URL'].'&cats='.$cats.'&n=1">step 2</a></b>';
 		else {
 			echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
@@ -61,53 +61,53 @@ $main_path	= "'.$path.'";
 <form name="form1" method="post" action="?step=1">
 <table cellspacing="1" border="1" style="border-collapse:collapse;" cellpadding="6">
   <tr>
-    <td width="140">URL</td>
-    <td width="108">
-      <input type="text" name="URL" id="textfield" value="<?php echo getdomainpath(); ?>">
-    </td>
-    <td rowspan="2">
-      The url &amp; location of the webid installation on your server. It's usually best to leave these as they are.<br>
-      Also if your running on windows at the end of the <b>Doument Root</b> there should be a \\ (double backslash)
-    </td>
+	<td width="140">URL</td>
+	<td width="108">
+	  <input type="text" name="URL" id="textfield" value="<?php echo getdomainpath(); ?>">
+	</td>
+	<td rowspan="2">
+	  The url &amp; location of the webid installation on your server. It's usually best to leave these as they are.<br>
+	  Also if your running on windows at the end of the <b>Doument Root</b> there should be a \\ (double backslash)
+	</td>
   </tr>
   <tr>
-    <td>Doument Root</td>
-    <td>
-      <input type="text" name="mainpath" id="textfield" value="<?php echo getmainpath(); ?>">
-    </td>
+	<td>Doument Root</td>
+	<td>
+	  <input type="text" name="mainpath" id="textfield" value="<?php echo getmainpath(); ?>">
+	</td>
   </tr>
   <tr>
-    <td>Database Host</td>
-    <td>
-      <input type="text" name="DBHost" id="textfield" value="localhost">
-    </td>
-    <td>The location of your MySQL database in most cases its just localhost</td>
+	<td>Database Host</td>
+	<td>
+	  <input type="text" name="DBHost" id="textfield" value="localhost">
+	</td>
+	<td>The location of your MySQL database in most cases its just localhost</td>
   </tr>
   <tr>
-    <td>Database Username</td>
-    <td>
-      <input type="text" name="DBUser" id="textfield">
-    </td>
-    <td rowspan="3">The username, password and database name of the database your installing webid on</td>
+	<td>Database Username</td>
+	<td>
+	  <input type="text" name="DBUser" id="textfield">
+	</td>
+	<td rowspan="3">The username, password and database name of the database your installing webid on</td>
   </tr>
   <tr>
-    <td>Database Password</td>
-    <td>
-      <input type="text" name="DBPass" id="textfield">
-    </td>
+	<td>Database Password</td>
+	<td>
+	  <input type="text" name="DBPass" id="textfield">
+	</td>
   </tr>
   <tr>
-    <td>Database Name</td>
-    <td>
-      <input type="text" name="DBName" id="textfield">
-    </td>
+	<td>Database Name</td>
+	<td>
+	  <input type="text" name="DBName" id="textfield">
+	</td>
   </tr>
   <tr>
-    <td>Database Prefix</td>
-    <td>
-      <input type="text" name="DBPrefix" id="textfield" value="webid_">
-    </td>
-    <td>the prefix of the webid tables in the database, used so you can install multiple scripts in the same database without issues.</td>
+	<td>Database Prefix</td>
+	<td>
+	  <input type="text" name="DBPrefix" id="textfield" value="webid_">
+	</td>
+	<td>the prefix of the webid tables in the database, used so you can install multiple scripts in the same database without issues.</td>
   </tr>
 </table>
 <br>

@@ -16,8 +16,8 @@ require('../includes/common.inc.php');
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
-	if(is_dir($main_path . 'themes/' . $_POST['theme'])) {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
+	if (is_dir($main_path . 'themes/' . $_POST['theme'])) {
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
 				theme = '" . $_POST['theme'] . "'";
@@ -50,7 +50,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

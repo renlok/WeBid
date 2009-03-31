@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit('Access denied');
+if (!defined('InWeBid')) exit('Access denied');
 
 $auction_types = array (
 	1 => 'Standard auction',

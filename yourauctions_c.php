@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include $include_path . "auctionstoshow.inc.php";
+include $include_path . 'auctionstoshow.inc.php';
 
 // If user is not logged in redirect to login page
 if (!$user->logged_in)
@@ -27,16 +27,23 @@ $NOW = time();
 $NOWB = gmdate('Ymd');
 
 // Update
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	// Delete auction
-	if (is_array($_POST['delete'])) {
-		while (list($k, $v) = each($_POST['delete'])) {
+	if (is_array($_POST['delete']))
+	{
+		while (list($k, $v) = each($_POST['delete']))
+		{
 			$v = intval($v);
 			// Pictures Gallery
-			if (file_exists($upload_path . $v)) {
-				if ($dir = @opendir($upload_path . $v)) {
-					while ($file = readdir($dir)) {
-						if ($file != "." && $file != "..") {
+			if (file_exists($upload_path . $v))
+			{
+				if ($dir = @opendir($upload_path . $v))
+				{
+					while ($file = readdir($dir))
+					{
+						if ($file != '.' && $file != '..')
+						{
 							unlink($upload_path . $v . '/' . $file);
 						}
 					}
@@ -44,51 +51,38 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 					@rmdir($upload_path . $v);
 				}
 			}
-			$query = "SELECT photo_uploaded, pict_url FROM " . $DBPrefix . "auctions WHERE id = " . $v;
-			$res_ = mysql_query($query);
-			$system->check_mysql($res_, $query, __LINE__, __FILE__);
-
-			if (mysql_num_rows($res_) > 0) {
-				$pict_url = mysql_result($res_, 0, 'pict_url');
-				$photo_uploaded = mysql_result($res_, 0, 'photo_uploaded');
-				// Uploaded picture
-				if ($photo_uploaded) {
-					@unlink($upload_path . $pict_url);
-				}
-			}
-			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = (closedauctions - 1)";
+			
+			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = closedauctions - 1";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			$query = "DELETE FROM " . $DBPrefix . "auctioninvitedlists WHERE auction_id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			$query = "DELETE FROM " . $DBPrefix . "auctionblacklists WHERE auction_id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			
 			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id=" . $v;
+			
+			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			// Bids
-			$query = "SELECT * FROM " . $DBPrefix . "bids WHERE auction = " . $v;
-			$decremsql = mysql_query($query);
-			$system->check_mysql($decremsql, $query, __LINE__, __FILE__);
-			$decrem = mysql_num_rows($decremsql);
+			
 			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			// Proxy Bids
+			
 			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}
-	if (is_array($_POST['sell'])) {
-		while (list($k, $v) = each($sell)) {
+	if (is_array($_POST['sell']))
+	{
+		while (list($k, $v) = each($sell))
+		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET sold = 's' WHERE id = " . intval($k);
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
-		include('cron.php');
+		include 'cron.php';
 	}
 	// Re-list auctions
-	if (is_array($_POST['relist'])) {
+	if (is_array($_POST['relist']))
+	{
 		unset($RELISTED_TITLE);
-		while (list($k, $v) = each($_POST['relist'])) {
+		while (list($k, $v) = each($_POST['relist']))
+		{
 			$k = intval($k);
 			$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . $k;
 			$res = mysql_query($query);
@@ -124,27 +118,26 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			unset($_SESSION['EDITED_AUCTIONS']);
 			// Update COUNTERS table
-			$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions + 1)";
+			$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			// and increase category counters
-			$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . $AUCTION['category'];
-			$res = mysql_query($query);
-			 $system->check_mysql($res, $query, __LINE__, __FILE__);
-			$row = mysql_fetch_array($res);
-			$counter = $row['counter'] + 1;
-			$subcoun = $row['sub_counter'] + 1;
-			$parent_id = $row['parent_id'];
-			$query = "UPDATE " . $DBPrefix . "categories SET counter = " . $counter . ", sub_counter = " . $subcoun . " WHERE cat_id = " . $AUCTION['category'];
+			$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + 1, sub_counter = sub_counter + 1 WHERE cat_id = " . $AUCTION['category'];
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "SELECT parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $AUCTION['category'];
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$row = mysql_fetch_array($res);
+			$parent_id = $row['parent_id'];
 			// update recursive categories
-			while ($parent_id != 0) {
+			while ($parent_id != 0)
+			{
 				// update this parent's subcounter
-				$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent_id;
+				$query = "SELECT parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent_id;
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$rw = mysql_fetch_array($res);
 				$subcoun = $rw['sub_counter'] + 1;
-				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = " . $subcoun . " WHERE cat_id = " . $parent_id;
+				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $parent_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				// get next parent
 				$parent_id = intval($rw['parent_id']);
@@ -165,34 +158,51 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
 
-if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1) {
+if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)
+{
 	$OFFSET = 0;
 	$PAGE = 1;
-} else {
+}
+else
+{
 	$PAGE = $_GET['PAGE'];
 	$OFFSET = ($PAGE - 1) * $LIMIT;
 }
+
 $PAGES = ceil($TOTALAUCTIONS / $LIMIT);
 if (!$PAGES) $PAGES = 1;
 $_SESSION['backtolist_page'] = $PAGE;
 // Handle columns sorting variables
-if (!isset($_SESSION['ca_ord']) && empty($_GET['ca_ord'])) {
+if (!isset($_SESSION['ca_ord']) && empty($_GET['ca_ord']))
+{
 	$_SESSION['ca_ord'] = 'title';
 	$_SESSION['ca_type'] = 'asc';
-} elseif (!empty($_GET['ca_ord'])) {
-	$_SESSION['ca_ord'] = str_replace('..', '', addslashes(htmlspecialchars($_GET['ca_ord'])));
-	$_SESSION['ca_type'] = str_replace('..', '', addslashes(htmlspecialchars($_GET['ca_type'])));
-} elseif (isset($_SESSION['ca_ord']) && empty($_GET['ca_ord'])) {
+}
+elseif (!empty($_GET['ca_ord']))
+{
+	$_SESSION['ca_ord'] = mysql_escape_string($_GET['ca_ord']);
+	$_SESSION['ca_type'] = mysql_escape_string($_GET['ca_type']);
+}
+elseif (isset($_SESSION['ca_ord']) && empty($_GET['ca_ord']))
+{
 	$_SESSION['ca_nexttype'] = $_SESSION['ca_type'];
 }
-if ($_SESSION['ca_nexttype'] == 'desc') {
+
+if ($_SESSION['ca_nexttype'] == 'desc')
+{
 	$_SESSION['ca_nexttype'] = 'asc';
-} else {
+}
+else
+{
 	$_SESSION['ca_nexttype'] = 'desc';
 }
-if ($_SESSION['ca_type'] == 'desc') {
+
+if ($_SESSION['ca_type'] == 'desc')
+{
 	$_SESSION['ca_type_img'] = '<img src="images/arrow_up.gif" align="center" hspace="2" border="0">';
-} else {
+}
+else
+{
 	$_SESSION['ca_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0">';
 }
 
@@ -205,17 +215,28 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $i = 0;
-while ($item = mysql_fetch_array($res)) {
+while ($item = mysql_fetch_array($res))
+{
 	$canrelist = false;
-	if (($item['current_bid'] > $item['reserve_price'])) {
+	if (($item['current_bid'] > $item['reserve_price']))
+	{
 		$cansell = false;
-	} else {
-		if ($item['reserve_price'] > 0 || $item['num_bids'] == 0) {
+	}
+	else
+	{
+		if ($item['reserve_price'] > 0 || $item['num_bids'] == 0)
+		{
 			$canrelist = true;
 		}
-		if ($item['reserve_price'] > 0 || $item['num_bids'] > 0) {
+		
+		if ($item['reserve_price'] > 0 || $item['num_bids'] > 0)
+		{
 			$cansell = true;
-		} else $cansell = false;
+		}
+		else
+		{
+			$cansell = false;
+		}
 	}
 
 	$template->assign_block_vars('items', array(
@@ -238,11 +259,13 @@ while ($item = mysql_fetch_array($res)) {
 // get pagenation
 $PREV = intval($PAGE - 1);
 $NEXT = intval($PAGE + 1);
-if ($PAGES > 1) {
+if ($PAGES > 1)
+{
 	$LOW = $PAGE - 5;
 	if ($LOW <= 0) $LOW = 1;
 	$COUNTER = $LOW;
-	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6)) {
+	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
+	{
 		$template->assign_block_vars('pages', array(
 				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_c.php?PAGE=' . $COUNTER . '&id=' . $id . '"><u>' . $COUNTER . '</u></a>'
 				));
@@ -273,5 +296,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-
 ?>

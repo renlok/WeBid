@@ -20,8 +20,8 @@ include $include_path.'time.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
-	if(!is_numeric($_POST['archiveafter'])) {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
+	if (!is_numeric($_POST['archiveafter'])) {
 		$ERR = $ERR_043;
 	} else {
 		// Update database
@@ -39,15 +39,15 @@ loadblock($MSG['372'], $MSG['371'], 'batch', 'cron', $system->SETTINGS['cron'], 
 loadblock($MSG['376'], $MSG['375'], 'days', 'archiveafter', $system->SETTINGS['archiveafter'], $MSG['377']);
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'set',
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['348']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

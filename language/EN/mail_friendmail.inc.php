@@ -9,20 +9,20 @@
 #			Change the message below as needed considering the 
 #			following tags to reflect your customer's personal data:
 #
-#        --------------------------------------------------------
+#		--------------------------------------------------------
 #			TAG SYNTAX				EFFECT
-#        --------------------------------------------------------
+#		--------------------------------------------------------
 #
 #			{S_NAME}				sendername 
 #			{S_EMAIL}				sender email 
 #			{S_COMMENT}				sender comment 
 #			{F_NAME}				friend name
-#			{TITLE}             	auction item title 
-#			{URL}               	URL to view auction 
-#           {SITENAME}          	Auction Site Name
-#           {SITEURL}           	main URL of auction site
-#           {ADMINEMAIL}        	email address of Auction site webmaster
-#        --------------------------------------------------------
+#			{TITLE}			 	auction item title 
+#			{URL}			   	URL to view auction 
+#		   {SITENAME}		  	Auction Site Name
+#		   {SITEURL}		   	main URL of auction site
+#		   {ADMINEMAIL}			email address of Auction site webmaster
+#		--------------------------------------------------------
 #
 #			USAGE:
 #			Insert the above tags in the text of your message			
@@ -55,8 +55,8 @@
 	</tr>
 	<tr>
 		<td width="55%" rowspan="2" valign="top" style="font-size: 12px; line-height: 0.6cm;">
-            <b>Auction Title:</b> 	{TITLE} <br />
-            <b>Comments:</b> {S_COMMENT}<br />
+			<b>Auction Title:</b> 	{TITLE} <br />
+			<b>Comments:</b> {S_COMMENT}<br />
 		</td>
 		<td width="34%" style="font-size: 12px;">Check Out The Auction!</td>
 	</tr>

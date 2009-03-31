@@ -19,58 +19,74 @@ include $include_path . 'datacheck.inc.php';
 include $include_path . 'converter.inc.php';
 include $include_path . 'sellfunctions.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
-include $main_path . "fck/fckeditor.php";
+include $main_path . 'fck/fckeditor.php';
 
 $_SESSION['action'] = (!isset($_SESSION['action'])) ? 1 : $_SESSION['action'];
 $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST['action'];
-$ERR = "ERR_";
+$ERR = 'ERR_';
 
-if (!isset($_SESSION['SELL_sellcat']) || !is_numeric($_SESSION['SELL_sellcat'])) {
-	header("location: select_category.php");
+if (!isset($_SESSION['SELL_sellcat']) || !is_numeric($_SESSION['SELL_sellcat']))
+{
+	header('location: select_category.php');
 	exit;
 }
 
 if (!$user->logged_in)
 {
-	$_SESSION['REDIRECT_AFTER_LOGIN'] = "sell.php";
-	header("location: user_login.php");
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'sell.php';
+	header('location: user_login.php');
 	exit;
 }
 
-if ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] != 'seller') {
-	header("location: user_menu.php?cptab=selling");
+if ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] != 'seller')
+{
+	header('location: user_menu.php?cptab=selling');
 	exit;
 }
+
 // set variables
 setvars();
 
 if ($_GET['mode'] == 'recall')
 	$_SESSION['action'] = 1;
 
-switch ($_SESSION['action']) {
+switch ($_SESSION['action'])
+{
 	case 3:
-		if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on') {
+		if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
+		{
 			$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-			header('Location: ' . $sslurl . 'sell.php');
+			header('location: ' . $sslurl . 'sell.php');
 			exit;
 		}
 		$query = "SELECT * FROM " . $DBPrefix . "payments";
 		$res_payments = mysql_query($query);
 		$system->check_mysql($res_payments, $query, __LINE__, __FILE__);
 		$payment_text = '';
-		while ($paym = mysql_fetch_assoc($res_payments)) {
+		while ($paym = mysql_fetch_assoc($res_payments))
+		{
 			if (in_array($paym['description'], $payment))
+			{
 				$payment_text .= $paym['description'] . "\n";
+			}
 		}
 		if ((md5($MD5_PREFIX . $_POST['password']) != $user->user_data['password']) && $system->SETTINGS['usersauth'] == 'y')
+		{
 			$ERR = 'ERR_026';
-		else {
+		}
+		else
+		{
 			if ($user->user_data['suspended'] > 0)
+			{
 				$ERR = 'ERR_618';
+			}
 		}
 		if ($ERR != 'ERR_')
+		{
 			$_SESSION['action'] = 2;
-		else {
+		}
+		else
+		{
 			// set time back to GMT
 			$a_starts = $a_starts - $system->tdiff;
 			$a_ends = $a_starts + ($duration * 24 * 60 * 60);
@@ -83,8 +99,11 @@ switch ($_SESSION['action']) {
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if ($_SESSION['SELL_action'] == 'edit' || $_SESSION['SELL_action'] == 'relist')
+			{
 				$auction_id = $TPL_auction_id = $_SESSION['SELL_auction_id'];
-			else {
+			}
+			else
+			{
 				$sql = "SELECT LAST_INSERT_ID() as id";
 				$res_ = mysql_query($sql);
 				$system->check_mysql($res_, $sql, __LINE__, __FILE__);
@@ -93,9 +112,12 @@ switch ($_SESSION['action']) {
 			}
 			$UPLOADED_PICTURES = $_SESSION['UPLOADED_PICTURES'];
 			// remove old images if any
-			if (is_dir($upload_path . $auction_id)) {
-				if ($dir = opendir($upload_path . $auction_id)) {
-					while (($file = readdir($dir)) !== false) {
+			if (is_dir($upload_path . $auction_id))
+			{
+				if ($dir = opendir($upload_path . $auction_id))
+				{
+					while (($file = readdir($dir)) !== false)
+					{
 						if (is_file($upload_path . $auction_id . '/' . $file))
 							unlink($upload_path . $auction_id . '/' . $file);
 					}
@@ -103,47 +125,58 @@ switch ($_SESSION['action']) {
 				}
 			}
 			// Create pictures gallery if any
-			if ($system->SETTINGS['picturesgallery'] == 1 && count($UPLOADED_PICTURES) > 0) {
+			if ($system->SETTINGS['picturesgallery'] == 1 && count($UPLOADED_PICTURES) > 0)
+			{
 				// Create dirctory
 				umask();
-				if (!is_dir($upload_path . $auction_id)) {
+				if (!is_dir($upload_path . $auction_id))
+				{
 					mkdir($upload_path . $auction_id, 0777);
 				}
 				// Copy files
-				while (list($k, $v) = each($UPLOADED_PICTURES)) {
-					copy($upload_path . session_id() . "/" . $v, $upload_path . $auction_id . "/" . $v);
-					chmod($upload_path . $auction_id . "/" . $v, 0777);
-					unlink($upload_path . session_id() . "/" . $v);
+				while (list($k, $v) = each($UPLOADED_PICTURES))
+				{
+					copy($upload_path . session_id() . '/' . $v, $upload_path . $auction_id . '/' . $v);
+					chmod($upload_path . $auction_id . '/' . $v, 0777);
+					unlink($upload_path . session_id() . '/' . $v);
 				}
-				if (!empty($pict_url)) {
-					copy($upload_path . session_id() . "/" . $pict_url, $upload_path . $auction_id . "/" . $pict_url);
-					chmod($upload_path . $auction_id . "/" . $pict_url, 0777);
-					unlink($upload_path . session_id() . "/" . $pict_url);
+				if (!empty($pict_url))
+				{
+					copy($upload_path . session_id() . '/' . $pict_url, $upload_path . $auction_id . '/' . $pict_url);
+					chmod($upload_path . $auction_id . '/' . $pict_url, 0777);
+					unlink($upload_path . session_id() . '/' . $pict_url);
 				}
 				// Delete files, using dir (to eliminate eventual odd files)
-				if ($dir = opendir($upload_path . session_id())) {
-					while (($file = readdir($dir)) !== false) {
-						if (!is_dir($upload_path . session_id() . "/" . $file))
-							unlink($upload_path . session_id() . "/" . $file);
+				if ($dir = opendir($upload_path . session_id()))
+				{
+					while (($file = readdir($dir)) !== false)
+					{
+						if (!is_dir($upload_path . session_id() . '/' . $file))
+							unlink($upload_path . session_id() . '/' . $file);
 					}
 					closedir($dir);
 				}
 				rmdir($upload_path . session_id());
 			}
-			if (!isset($_SESSION['SELL_action']) || empty($_SESSION['SELL_action'])) {
+			if (!isset($_SESSION['SELL_action']) || empty($_SESSION['SELL_action']))
+			{
 				// Send notification if users keyword matches (Auction Watch)
 				$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != ''";
 				$result = mysql_query($query);
-				while ($row = mysql_fetch_assoc($result)) {
+				while ($row = mysql_fetch_assoc($result))
+				{
 					if (isset($match)) unset($match);
-					$w_title = explode(" ", strtolower($_SESSION['SELL_title']));
-					$w_descr = explode(" ", strtolower(str_replace(array('<br>', "\n"), '', $_SESSION['SELL_description'])));
+					$w_title = explode(' ', strtolower($_SESSION['SELL_title']));
+					$w_descr = explode(' ', strtolower(str_replace(array('<br>', "\n"), '', $_SESSION['SELL_description'])));
 					$w_nick = strtolower($user->user_data['nick']);
-					$key = explode(" ", $row['auc_watch']);
-					if (is_array($key) && count($key) > 0) {
-						while (list($k, $v) = each($key)) {
+					$key = explode(' ', $row['auc_watch']);
+					if (is_array($key) && count($key) > 0)
+					{
+						while (list($k, $v) = each($key))
+						{
 							$v = trim(strtolower($v));
-							if (in_array($v, $w_title) || in_array($v, $w_descr) || $v == $w_nick) {
+							if (in_array($v, $w_title) || in_array($v, $w_descr) || $v == $w_nick)
+							{
 								$emailer = new email_class();
 								$emailer->assign_vars(array(
 										'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $_SESSION['SELL_auction_id'],
@@ -160,27 +193,32 @@ switch ($_SESSION['action']) {
 				}
 				$EMAILMODE = $user->user_data['startemailmode'];
 				$ubn_only = $user->user_data['bn_only'];
-				if ($EMAILMODE == 'yes') {
+				if ($EMAILMODE == 'yes')
+				{
 					include $include_path . 'auction_confirmation.inc.php';
 				}
-				if ($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100) {
+				if ($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
+				{
 					$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions
 						 WHERE closed = 0 AND suspended = 0 AND user = " . $user->user_data['id'];
 					$result = mysql_query($query);
 					$system->check_mysql($result, $query, __LINE__, __FILE__);
 					$totalaucs = mysql_result($result, 0);
-					if ($totalaucs > 0) {
+					if ($totalaucs > 0)
+					{
 						$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions
 							 WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = " . $user->user_data['id'];
 						$result = mysql_query($query);
 						$system->check_mysql($result, $query, __LINE__, __FILE__);
 						$totalbnaucs = mysql_result($result, 0);
 						$percent = ($totalbnaucs * 100) / $totalaucs;
-						if ($ubn_only == 'y' && $system->SETTINGS['bn_only_percent'] <= $percent) {
+						if ($ubn_only == 'y' && $system->SETTINGS['bn_only_percent'] <= $percent)
+						{
 							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'n' WHERE id = " . $user->user_data['id'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						}
-						if ($ubn_only == 'n' && $system->SETTINGS['bn_only_percent'] > $percent) {
+						if ($ubn_only == 'n' && $system->SETTINGS['bn_only_percent'] > $percent)
+						{
 							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE id = " . $user->user_data['id'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						}
@@ -200,46 +238,59 @@ switch ($_SESSION['action']) {
 		if ($with_reserve == 'no') $reserve_price = 0;
 		if ($buy_now == 'no') $buy_now_price = 0;
 		// run the word filter
-		if ($system->SETTINGS['wordsfilter'] == 'y') {
+		if ($system->SETTINGS['wordsfilter'] == 'y')
+		{
 			$TPL_title_value = $title = $system->filter($title);
 			$TPL_description_shown_value = $description = $system->filter($description);
 		}
 		// check for errors
-		if ($ERR == "ERR_") {
-			$ERR = "ERR_" . CheckSellData();
-			if ($ERR != "ERR_") {
+		if ($ERR == 'ERR_')
+		{
+			$ERR = 'ERR_' . CheckSellData();
+			if ($ERR != 'ERR_')
+			{
 				$_SESSION['action'] = 1;
 				$noerror = false;
 			}
 		}
-		if ($noerror) {
+		if ($noerror)
+		{
 			$auction_id = generate_id();
-			if ($imgtype == 1 && !empty($_FILES['userfile']['name']) && $_FILES['userfile']['name'] != "none") {
+			if ($imgtype == 1 && !empty($_FILES['userfile']['name']) && $_FILES['userfile']['name'] != 'none')
+			{
 				$inf = getimagesize($_FILES['userfile']['tmp_name']);
 				$er = false;
-				if ($inf) {
+				if ($inf)
+				{
 					$inf[2] = intval($inf[2]);
-					if ($inf[2] < 1 || $inf[2] > 3) {
+					if ($inf[2] < 1 || $inf[2] > 3)
+					{
 						$er = true;
-						$ERR = "ERR_602";
-					} elseif (intval($userfile_size) > $system->SETTINGS['maxuploadsize']) {
+						$ERR = 'ERR_602';
+					}
+					elseif (intval($userfile_size) > $system->SETTINGS['maxuploadsize'])
+					{
 						$er = true;
-						$ERR = "ERR_603";
-					} else {
-						switch ($inf[2]) {
+						$ERR = 'ERR_603';
+					}
+					else
+					{
+						switch ($inf[2])
+						{
 							case 1:
-								$ext = ".gif";
+								$ext = '.gif';
 								break;
 							case 2:
-								$ext = ".jpg";
+								$ext = '.jpg';
 								break;
 							case 3:
-								$ext = ".png";
+								$ext = '.png';
 								break;
 						}
 						$uploaded_filename = $auction_id . $ext;
 						$fname = $upload_path . $uploaded_filename;
-						if (file_exists($fname)) {
+						if (file_exists($fname))
+						{
 							unlink($fname);
 						}
 						move_uploaded_file($_FILES['userfile']['tmp_name'], $fname);
@@ -247,43 +298,61 @@ switch ($_SESSION['action']) {
 						$pict_url = $uploaded_filename;
 						$_SESSION['SELL_file_uploaded'] = $imgtype;
 					}
-				} else {
+				}
+				else
+				{
 					$ERR = "ERR_602";
 					$er = true;
 				}
-			} elseif ($imgtype == 0 && !empty($pict_url)) {
-				if ($_SESSION['SELL_file_uploaded']) {
+			}
+			elseif ($imgtype == 0 && !empty($pict_url))
+			{
+				if ($_SESSION['SELL_file_uploaded'])
+				{
 					unlink($upload_path . $_SESSION['SELL_pict_url']);
 				}
 				$ext = strtolower(substr($pict_url, - 3));
-				if ($ext != "gif" && $ext != "jpg" && $ext != "png") {
-					$ERR = "ERR_602";
+				if ($ext != 'gif' && $ext != 'jpg' && $ext != 'png')
+				{
+					$ERR = 'ERR_602';
 				}
 			}
-			if (!$er) {
+			if (!$er)
+			{
 				// payment methods
 				$query = "SELECT * FROM " . $DBPrefix . "payments";
 				$res_payments = mysql_query($query);
 				$system->check_mysql($res_payments, $query, __LINE__, __FILE__);
-				while ($pay = mysql_fetch_array($res_payments)) {
-					if (in_array($pay['description'], $payment)) {
-						$TPL_payment_methods .= $pay['description'] . "<br>";
+				while ($pay = mysql_fetch_array($res_payments))
+				{
+					if (in_array($pay['description'], $payment))
+					{
+						$TPL_payment_methods .= $pay['description'] . '<br>';
 					}
 				}
 				// category name
-				$row = mysql_fetch_assoc(mysql_query("SELECT * FROM " . $DBPrefix . "categories WHERE cat_id=" . intval($sellcat)));
+				$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($sellcat);
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$row = mysql_fetch_assoc($res);
 				$TPL_categories_list = $row['cat_name'];
-				while ($row['parent_id'] != 0) {
-					$row = mysql_fetch_assoc(mysql_query("SELECT * FROM " . $DBPrefix . "categories WHERE cat_id=" . $row['parent_id']));
-					$TPL_categories_list = $row['cat_name'] . " &gt; " . $TPL_categories_list;
+				while ($row['parent_id'] != 0)
+				{
+					$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id=" . $row['parent_id'];
+					$res = mysql_query($query);
+					$system->check_mysql($res, $query, __LINE__, __FILE__);
+					$row = mysql_fetch_assoc($res);
+					$TPL_categories_list = $row['cat_name'] . ' &gt; ' . $TPL_categories_list;
 				}
 
 				$query = "SELECT description FROM " . $DBPrefix . "durations WHERE days = " . $duration;
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				// built gallery
-				if ($system->SETTINGS['picturesgallery'] == 1 && @count($_SESSION['UPLOADED_PICTURES']) > 0) {
-					while (list($k, $v) = each($_SESSION['UPLOADED_PICTURES'])) {
+				if ($system->SETTINGS['picturesgallery'] == 1 && @count($_SESSION['UPLOADED_PICTURES']) > 0)
+				{
+					while (list($k, $v) = each($_SESSION['UPLOADED_PICTURES']))
+					{
 						$template->assign_block_vars('gallery', array(
 								'K' => $k,
 								'IMAGE' => $uploaded_path . session_id() . '/' . $v
@@ -293,7 +362,8 @@ switch ($_SESSION['action']) {
 
 				$iquantity = ($atype == 2 || $buy_now_only == 'y') ? $iquantity : 1;
 				
-				if (!(strpos($a_starts, '-') === false)) {
+				if (!(strpos($a_starts, '-') === false))
+				{
 					$a_starts = gmmktime(substr($a_starts, 11, 2),
 						substr($a_starts, 14, 2),
 						substr($a_starts, 17, 2),
@@ -336,7 +406,8 @@ switch ($_SESSION['action']) {
 				break;
 			}
 		}
-		if (!(strpos($a_starts, '-') === false)) {
+		if (!(strpos($a_starts, '-') === false))
+		{
 			$a_starts = gmmktime(substr($a_starts, 11, 2),
 				substr($a_starts, 14, 2),
 				substr($a_starts, 17, 2),
@@ -345,55 +416,66 @@ switch ($_SESSION['action']) {
 				substr($a_starts, 0, 4), 0);
 		}
 	case 1:
-		$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id=" . intval($sellcat);
+		$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($sellcat);
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$row = mysql_fetch_assoc($res);
 		$TPL_categories_list = $category_names[$sellcat];
 
-		while ($row['parent_id'] != 0) {
+		while ($row['parent_id'] != 0)
+		{
 			$P = $row['parent_id'];
-			$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id=" . $row['parent_id'];
+			$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['parent_id'];
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$row = mysql_fetch_assoc($res);
 			$TPL_categories_list = $category_names[$P] . " &gt; " . $TPL_categories_list;
 		}
-		// ------------------------------------- auction types
-		$TPL_auction_type = "<select name=\"atype\" id=\"atype\">\n";
-		while (list($key, $val) = each($auction_types)) {
-			$TPL_auction_type .= "\t<option value=\"" . $key . "\" " . (($key == $atype)?"SELECTED":"") . ">" . $val . "</option>\n";
+		// auction types
+		$TPL_auction_type = '<select name="atype" id="atype">' . "\n";
+		while (list($key, $val) = each($auction_types))
+		{
+			$TPL_auction_type .= "\t" . '<option value="' . $key . '" ' . (($key == $atype) ? 'selected="true"' : '') . '>' . $val . '</option>' . "\n";
 		}
-		$TPL_auction_type .= "</select>\n";
-		// ------------------------------------- duration
+		$TPL_auction_type .= '</select>' . "\n";
+		// duration
 		$query = "select * from " . $DBPrefix . "durations order by days";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$TPL_durations_list = "<select name=\"duration\">\n";
-		while ($row = mysql_fetch_assoc($res)) {
-			$TPL_durations_list .= "\t<option value='" . $row['days'] . "' " . (($row['days'] == $duration)?"selected":"") . ">" . $row['description'] . "</option>\n";
+		$TPL_durations_list = '<select name="duration">' . "\n";
+		while ($row = mysql_fetch_assoc($res))
+		{
+			$TPL_durations_list .= "\t" . '<option value="' . $row['days'] . '" ' . (($row['days'] == $duration) ? 'selected="true"' : '') . '>' . $row['description'] . '</option>' . "\n";
 		}
-		$TPL_durations_list .= "</select>\n";
-		// -------------------------------------- payment
+		$TPL_durations_list .= '</select>' . "\n";
+		// payments
 		$query = "select * from " . $DBPrefix . "payments";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$TPL_payments_list = "";
-		while ($row = mysql_fetch_assoc($res)) {
+		$TPL_payments_list = '';
+		while ($row = mysql_fetch_assoc($res))
+		{
 			$checked = (in_array(trim($row['description']), $payment)) ? 'checked' : '';
 			$TPL_payments_list .= '<input type="checkbox" name="payment[]" value="' . $row['description'] . '" ' . $checked . '>' . $row['description'] . '<br>';
 		}
 		// make hour
-		if ($_SESSION['SELL_action'] != 'edit') {
-			if (empty($a_starts)) {
+		if ($_SESSION['SELL_action'] != 'edit')
+		{
+			if (empty($a_starts))
+			{
 				$TPL_start_date = gmdate('Y-m-d H:i:s', $system->ctime);
-			} else {
-				if (strpos($a_starts, '-') === false) {
+			}
+			else
+			{
+				if (strpos($a_starts, '-') === false)
+				{
 					$a_starts = gmdate('Y-m-d H:i:s', $a_starts);
 				}
 				$TPL_start_date = $a_starts;
 			}
-		} else {
+		}
+		else
+		{
 			$TPL_start_date = gmdate('Y-m-d H:i:s', $a_starts);
 		}
 

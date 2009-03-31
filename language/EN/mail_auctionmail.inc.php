@@ -10,9 +10,9 @@
 #			Change the message below as needed using the 
 #			following tags to reflect your customer's personal data:
 #
-#        --------------------------------------------------------
+#		--------------------------------------------------------
 #			TAG SYNTAX				EFFECT
-#        --------------------------------------------------------
+#		--------------------------------------------------------
 #
 #			<#c_name#>				customer name
 #			<#c_nick#>				nick
@@ -20,7 +20,7 @@
 #			<#c_address#> 			street address
 #			<#c_city#>   			city
 #			<#c_country#> 			country
-#			<#c_zip#> 			    zip
+#			<#c_zip#> 				zip
 #			<#a_title#>				auction title
 #			<#a_id#>				auction ID
 #			<#a_description#>		description
@@ -39,10 +39,10 @@
 #			<#a_payment#>			selected payment methods (one per line)
 #			<#a_ends#>				closing date and time
 #			<#a_url#>				the URL of the page
-#           <#c_sitename#>          site name
-#           <#c_siteurl#>           site URL
-#           <#c_adminemail#>        site administrator email address
-#        --------------------------------------------------------
+#		   <#c_sitename#>		  site name
+#		   <#c_siteurl#>		   site URL
+#		   <#c_adminemail#>		site administrator email address
+#		--------------------------------------------------------
 #
 #			USAGE:
 #			Insert the above tags in the text of your message			

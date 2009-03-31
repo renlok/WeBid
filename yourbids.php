@@ -15,29 +15,35 @@
 
 include 'includes/common.inc.php';
 
-/* get active bids for this user */
+// get active bids for this user
 $query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
-		WHERE a.id=b.auction AND a.closed='0' AND b.bidder = " . $user->user_data['id'] . " ORDER BY a.ends ASC, b.bidwhen DESC";
+		WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = " . $user->user_data['id'] . " ORDER BY a.ends ASC, b.bidwhen DESC";
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 
-$idcheck = "";
+$idcheck = '';
 $auctions_count = 0;
-$bgColor = "#EBEBEB";
-while ($row = mysql_fetch_array($result)) {
+$bgColor = '#EBEBEB';
+while ($row = mysql_fetch_array($result))
+{
 	$rowid = $row['id'];
-	if ($idcheck != $rowid) {
+	if ($idcheck != $rowid)
+	{
 		$bid = $row['bid'];
 		// prepare some data
-		if ($bgColor == "#EBEBEB") {
-			$bgColor = "#FFFFFF";
-		} else {
-			$bgColor = "#EBEBEB";
+		if ($bgColor == '#EBEBEB')
+		{
+			$bgColor = '#FFFFFF';
+		}
+		else
+		{
+			$bgColor = '#EBEBEB';
 		}
 		// Outbidded or winning bid
 		if ($row['current_bid'] != $row['bid']) $bgColor = '#FFFF00';
 		// current bid of this auction
-		if ($bid == 0) {
+		if ($bid == 0)
+		{
 			$bid = $starting_price;
 		}
 		$bid = $system->print_money($bid);
@@ -70,5 +76,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-
 ?>

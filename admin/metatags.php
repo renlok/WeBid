@@ -18,7 +18,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			 descriptiontag = '" . addslashes($_POST['descriptiontag']) . "',
 			 keywordstag = '" . addslashes($_POST['keywordstag']) . "'";
@@ -33,15 +33,15 @@ loadblock($MSG['25_0180'], $MSG['25_0182'], 'textarea', 'descriptiontag', strips
 loadblock($MSG['25_0181'], $MSG['25_0184'], 'textarea', 'keywordstag', stripslashes($system->SETTINGS['keywordstag']));
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['25_0178']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

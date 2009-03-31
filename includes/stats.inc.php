@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
  
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 include $include_path . "useragent.inc.php";
 include $include_path . "domains.inc.php";
@@ -23,72 +23,72 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $STATSSETTINGS = mysql_fetch_array($res);
 
-$THISDAY     = gmdate('j');
+$THISDAY	 = gmdate('j');
 $THISMONTH   = gmdate('n');
-$THISYEAR    = gmdate('Y');
+$THISYEAR	= gmdate('Y');
 
-if($STATSSETTINGS['activate'] == 'y') {
-    // -> Users accesses ################################################
-    if($STATSSETTINGS['accesses'] == 'y') {
-        // Did the month change? --
-        $query = "SELECT month from " . $DBPrefix . "currentaccesses LIMIT 1";
-        $res = mysql_query($query);
-        $system->check_mysql($res, $query, __LINE__, __FILE__);
-        if(mysql_num_rows($res) > 0 && mysql_result($res, 0, 'month') != $THISMONTH) {
-            // Archive current stats
-            $query = "SELECT month, year, SUM(pageviews) AS PG, SUM(uniquevisitors) as UN, SUM(usersessions) as SE FROM " . $DBPrefix . "currentaccesses GROUP BY month";
-            $res = mysql_query($query);
-            $system->check_mysql($res, $query, __LINE__, __FILE__);
-            $TMP = mysql_fetch_array($res);
-            $query = "INSERT INTO " . $DBPrefix . "accesseshistoric VALUES (
-                      '" . $TMP['month'] . "', '" . $TMP['year'] . "', " . $TMP['PG'] . ", " . $TMP['UN'] . ", " . $TMP['SE'] . ")";
-            $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-            $query = "DELETE FROM " . $DBPrefix . "currentaccesses";
-            $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-        }
-        
-        // check cookies and session vars --
-        if(isset($_SESSION['USER_STATS_SESSION'])) {
-            $UPDATESESSION = FALSE;
-        } else {
-            $USER_STATS_SESSION = time();
-            $_SESSION['USER_STATS_SESSION'] = $USER_STATS_SESSION;
-            $UPDATESESSION = TRUE;
-        }
-        
-        // check cookies and session vars --
-        $Cookie = $system->SETTINGS['cookiesprefix'] . "uniqueuser";
-        if(isset($HTTP_COOKIE_VARS[$Cookie])) {
-            $UPDATECOOKIE = FALSE;
-        } else {
-            // Get left seconds to the end of the month
-            $exp = GetLeftSeconds();
-            setcookie($Cookie, time(), time() + $exp);
-            $UPDATECOOKIE = TRUE;
-        }
-        
-        $query = "SELECT day, month FROM " . $DBPrefix . "currentaccesses WHERE day = " . $THISDAY . " AND month = " . $THISMONTH;
+if ($STATSSETTINGS['activate'] == 'y') {
+	// -> Users accesses ################################################
+	if ($STATSSETTINGS['accesses'] == 'y') {
+		// Did the month change? --
+		$query = "SELECT month from " . $DBPrefix . "currentaccesses LIMIT 1";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-        if(mysql_num_rows($res) == 0) {
-            $query = "INSERT INTO " . $DBPrefix . "currentaccesses VALUES (
-                      " . $THISDAY . ", " . $THISMONTH . ", " . $THISYEAR . ", 0, 0, 0)";
-            $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-        }
-        
-        $query = "UPDATE " . $DBPrefix . "currentaccesses SET pageviews = pageviews + 1";
-        if($UPDATESESSION) {
-            $query .= ", usersessions = usersessions + 1";
-        }
-        if($UPDATECOOKIE) {
-            $query .= ", uniquevisitors = uniquevisitors + 1";
-        }
-        $query .= " WHERE day = " . $THISDAY . " AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
-        $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-        // -- End users accesses
-    }
-    
-    // Get user's agent and platform
+		if (mysql_num_rows($res) > 0 && mysql_result($res, 0, 'month') != $THISMONTH) {
+			// Archive current stats
+			$query = "SELECT month, year, SUM(pageviews) AS PG, SUM(uniquevisitors) as UN, SUM(usersessions) as SE FROM " . $DBPrefix . "currentaccesses GROUP BY month";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$TMP = mysql_fetch_array($res);
+			$query = "INSERT INTO " . $DBPrefix . "accesseshistoric VALUES (
+					  '" . $TMP['month'] . "', '" . $TMP['year'] . "', " . $TMP['PG'] . ", " . $TMP['UN'] . ", " . $TMP['SE'] . ")";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "currentaccesses";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		
+		// check cookies and session vars --
+		if (isset($_SESSION['USER_STATS_SESSION'])) {
+			$UPDATESESSION = FALSE;
+		} else {
+			$USER_STATS_SESSION = time();
+			$_SESSION['USER_STATS_SESSION'] = $USER_STATS_SESSION;
+			$UPDATESESSION = TRUE;
+		}
+		
+		// check cookies and session vars --
+		$Cookie = $system->SETTINGS['cookiesprefix'] . "uniqueuser";
+		if (isset($HTTP_COOKIE_VARS[$Cookie])) {
+			$UPDATECOOKIE = FALSE;
+		} else {
+			// Get left seconds to the end of the month
+			$exp = GetLeftSeconds();
+			setcookie($Cookie, time(), time() + $exp);
+			$UPDATECOOKIE = TRUE;
+		}
+		
+		$query = "SELECT day, month FROM " . $DBPrefix . "currentaccesses WHERE day = " . $THISDAY . " AND month = " . $THISMONTH;
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		if (mysql_num_rows($res) == 0) {
+			$query = "INSERT INTO " . $DBPrefix . "currentaccesses VALUES (
+					  " . $THISDAY . ", " . $THISMONTH . ", " . $THISYEAR . ", 0, 0, 0)";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		
+		$query = "UPDATE " . $DBPrefix . "currentaccesses SET pageviews = pageviews + 1";
+		if ($UPDATESESSION) {
+			$query .= ", usersessions = usersessions + 1";
+		}
+		if ($UPDATECOOKIE) {
+			$query .= ", uniquevisitors = uniquevisitors + 1";
+		}
+		$query .= " WHERE day = " . $THISDAY . " AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		// -- End users accesses
+	}
+	
+	// Get user's agent and platform
 	$browser_info = browser_detection('full');
 	$browser_info[] = browser_detection('moz_version');
 	
@@ -155,43 +155,43 @@ if($STATSSETTINGS['activate'] == 'y') {
 		$browser .= ($browser_info[0] == 'ie') ? strtoupper($browser_info[7]) : ucwords($browser_info[7]);
 		$browser .= ' ' . $browser_info[1];
 	}
-    
-    if($STATSSETTINGS['browsers'] == 'y') {
-        // Update the browser stats
+	
+	if ($STATSSETTINGS['browsers'] == 'y') {
+		// Update the browser stats
 		$query = "SELECT month FROM " . $DBPrefix . "currentbrowsers WHERE month = " . $THISMONTH . " AND year = " . $THISYEAR . " AND browser = '" . $browser . "'";
-        $res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-        if(mysql_num_rows($res) == 0) {
-            $query = "INSERT INTO " . $DBPrefix . "currentbrowsers VALUES (" . $THISMONTH . ", " . $THISYEAR . ", '" . $browser . "', 0)";
-            $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-        }
-        
-        $query = "UPDATE " . $DBPrefix . "currentbrowsers SET
-				 counter = counter + 1
-				 WHERE browser = '" . $browser . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
-        $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		
-		// Update the platfom stats
-        $query = "SELECT month FROM " . $DBPrefix . "currentplatforms WHERE month =" . $THISMONTH . " AND year = " . $THISYEAR . " AND platform = '" . $os . "'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-        if(mysql_num_rows($res) == 0) {
-            $query = "INSERT INTO " . $DBPrefix . "currentplatforms VALUES (
+		if (mysql_num_rows($res) == 0) {
+			$query = "INSERT INTO " . $DBPrefix . "currentbrowsers VALUES (" . $THISMONTH . ", " . $THISYEAR . ", '" . $browser . "', 0)";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		
+		$query = "UPDATE " . $DBPrefix . "currentbrowsers SET
+				 counter = counter + 1
+				 WHERE browser = '" . $browser . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		
+		// Update the platfom stats
+		$query = "SELECT month FROM " . $DBPrefix . "currentplatforms WHERE month =" . $THISMONTH . " AND year = " . $THISYEAR . " AND platform = '" . $os . "'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		if (mysql_num_rows($res) == 0) {
+			$query = "INSERT INTO " . $DBPrefix . "currentplatforms VALUES (
 					" . $THISMONTH . ",  " . $THISYEAR . ", '" . $os . "', 0)";
-            $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-        }
-        
-        $query = "UPDATE " . $DBPrefix . "currentplatforms SET
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		
+		$query = "UPDATE " . $DBPrefix . "currentplatforms SET
 				counter = counter + 1
 				WHERE platform = '" . $os . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
-        $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-    }
-    
-    // Domains -----
-	if($STATSSETTINGS['domains'] == 'y') {
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	}
+	
+	// Domains -----
+	if ($STATSSETTINGS['domains'] == 'y') {
 		// Resolve domain
-		if((isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])) || (isset($_ENV['REMOTE_ADDR']) && !empty($_ENV['REMOTE_ADDR']))) {
-			if(isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])){
+		if ((isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])) || (isset($_ENV['REMOTE_ADDR']) && !empty($_ENV['REMOTE_ADDR']))) {
+			if (isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])){
 				$T = explode('.', gethostbyaddr($_SERVER['REMOTE_ADDR']));
 			} else {
 				$T = explode('.', gethostbyaddr($_ENV['REMOTE_ADDR']));
@@ -203,7 +203,7 @@ if($STATSSETTINGS['activate'] == 'y') {
 			$T = explode(".", gethostbyaddr($_SERVER['REMOTE_ADDR']));
 		}
 		$DOMAIN = $T[count($T) - 1];
-		if(!isset($DOMAINS[$DOMAIN]))
+		if (!isset($DOMAINS[$DOMAIN]))
 			$RESOLVEDDOMAIN = "?";
 		else
 			$RESOLVEDDOMAIN = $DOMAIN;
@@ -211,7 +211,7 @@ if($STATSSETTINGS['activate'] == 'y') {
 		$query = "SELECT month FROM " . $DBPrefix . "currentdomains WHERE month = " . $THISMONTH . " AND year = " . $THISYEAR . " AND domain = '" . $RESOLVEDDOMAIN . "'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if(mysql_num_rows($R) == 0) {
+		if (mysql_num_rows($R) == 0) {
 			$query = "INSERT INTO " . $DBPrefix . "currentdomains VALUES (
 					" . $THISMONTH . ", " . $THISYEAR . ", '" . $RESOLVEDDOMAIN . "', 0)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

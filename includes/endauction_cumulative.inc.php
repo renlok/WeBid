@@ -12,18 +12,18 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 // Retrieve user's prefered language
 $USERLANG = @mysql_result(@mysql_query("SELECT language FROM " . $DBPrefix . "userslanguage WHERE user='".$row['id']."'"),0,"language");
-if(!isset($USERLANG)) $USERLANG = $language;
+if (!isset($USERLANG)) $USERLANG = $language;
 
 $buffer = file($main_path."language/".$USERLANG."/mail_endauction_cumulative.inc.php");
 $i = 0;
 $j = 0;
-while($i < count($buffer))
+while ($i < count($buffer))
 {
-	if(!ereg("^#(.)*$",$buffer[$i])){
+	if (!ereg("^#(.)*$",$buffer[$i])){
 		$skipped_buffer[$j] = $buffer[$i];
 		$j++;
 	}

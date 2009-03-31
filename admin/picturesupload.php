@@ -18,11 +18,11 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
-    if($_POST['maxpicturesize'] == 0) {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
+	if ($_POST['maxpicturesize'] == 0) {
 		$ERR = $ERR_707;
 		$system->SETTINGS['maxuploadsize'] = $_POST['maxpicturesize'];
-	} elseif(!empty($_POST['maxpicturesize']) && !ereg("^[0-9]+$",$_POST['maxpicturesize'])) {
+	} elseif (!empty($_POST['maxpicturesize']) && !ereg("^[0-9]+$",$_POST['maxpicturesize'])) {
 		$ERR = $ERR_708;
 		$system->SETTINGS = $_POST;
 	} else {

@@ -1,4 +1,4 @@
 <?php
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 	$LIMIT = 30;
 ?>

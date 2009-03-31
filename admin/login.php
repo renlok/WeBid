@@ -15,10 +15,10 @@
 require('../includes/common.inc.php');
 include $include_path . 'functions_admin.php';
 
-if($_POST['act'] == "insert" && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF'])) {
+if ($_POST['act'] == "insert" && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF'])) {
 	#// Additional security check
 	$RR = mysql_query("SELECT id FROM " . $DBPrefix . "adminusers");
-	if(mysql_num_rows($RR) > 0)	{
+	if (mysql_num_rows($RR) > 0)	{
 		print "Fatal error: user cannot be inserted - one or more administrators are already present in the database.<BR><A HREF=login.php>login page</A>";
 		exit;
 	}
@@ -32,7 +32,7 @@ if($_POST['act'] == "insert" && basename($_SERVER['HTTP_REFERER']) == basename($
 $query = "SELECT MAX(id) FROM " . $DBPrefix . "adminusers";
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
-while($row = mysql_fetch_row($result)) {
+while ($row = mysql_fetch_row($result)) {
 	$id = $row[0] + 1;
 }
 ?>
@@ -42,7 +42,7 @@ while($row = mysql_fetch_row($result)) {
 </HEAD>
 <BODY>
 <?php
-if($id==1) {
+if ($id==1) {
 	$id=0;
 ?>
 <TABLE BORDER=0 WIDTH=650 CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF" ALIGN="CENTER">
@@ -98,17 +98,17 @@ if($id==1) {
 <?php
 
 } else {
-	if(isset($_POST['action']) && $_POST['action'] == "login") {
-		if(strlen($_POST['username']) == 0 || strlen($_POST['password']) == 0) {
+	if (isset($_POST['action']) && $_POST['action'] == "login") {
+		if (strlen($_POST['username']) == 0 || strlen($_POST['password']) == 0) {
 			$ERR = $ERR_047;
-		} elseif(!preg_match('([a-zA-Z0-9]*)', $_POST['username'])) {
+		} elseif (!preg_match('([a-zA-Z0-9]*)', $_POST['username'])) {
 			$ERR = $ERR_047_a;
 		} else {
 			$password = md5($MD5_PREFIX.$_POST['password']);
 			$query = "SELECT id, hash FROM " . $DBPrefix . "adminusers WHERE username = '" . $_POST['username'] . "' and password = '" . $password . "'";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($res) == 0) {
+			if (mysql_num_rows($res) == 0) {
 				$ERR = $ERR_048;
 			} else {
 				$admin = mysql_fetch_array($res);
@@ -133,7 +133,7 @@ if($id==1) {
 	<TD>
 		<CENTER>
 		<BR><BR>
-<?php if(!$act || ($act && $ERR)) { ?>
+<?php if (!$act || ($act && $ERR)) { ?>
 		<FORM NAME=login ACTION=login.php METHOD=POST>
 		<TABLE WIDTH="415" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#336699">
 		<TR>

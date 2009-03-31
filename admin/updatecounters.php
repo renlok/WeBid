@@ -21,7 +21,7 @@ include 'loggedin.inc.php';
 $query = "SELECT * FROM " . $DBPrefix . "counters";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-if(mysql_num_rows($res) > 0)
+if (mysql_num_rows($res) > 0)
 {
 	$COUNTERS = mysql_fetch_array($res);
 }
@@ -156,7 +156,7 @@ require("./header.php");
 										  b.closed=0 AND b.suspended=0 AND private='n'";
 							$res = mysql_query($query);
 							$system->check_mysql($res, $query, __LINE__, __FILE__);
-							while($row = mysql_fetch_array($res))
+							while ($row = mysql_fetch_array($res))
 							{
 								
 								
@@ -169,7 +169,7 @@ require("./header.php");
 									$result = mysql_query($query);
 									$system->check_mysql($result, $query, __LINE__, __FILE__);
 									$CAT = mysql_fetch_array($result);
-									if($result)
+									if ($result)
 									{
 										if (mysql_num_rows($result) > 0)
 										{
@@ -183,8 +183,8 @@ require("./header.php");
 											if ( $cat_id == $root_cat )
 											++$R_counter;
 											
-											if($R_counter < 0) $R_counter = 0;
-											if($R_sub_counter < 0) $R_sub_counter = 0;
+											if ($R_counter < 0) $R_counter = 0;
+											if ($R_sub_counter < 0) $R_sub_counter = 0;
 											
 											$query = "UPDATE " . $DBPrefix . "categories SET counter='$R_counter', sub_counter='$R_sub_counter' WHERE cat_id=\"$cat_id\"";
 											$res = mysql_query($query);

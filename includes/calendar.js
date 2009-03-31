@@ -4,11 +4,11 @@
 // Date: 10/14/2002 (mm/dd/yyyy)
 // Feedback: feedback@softcomplex.com (specify product title in the subject)
 // Note: Permission given to use this script in ANY kind of applications if
-//    header lines are left unchanged.
+//	header lines are left unchanged.
 // Note: Script consists of two files: calendar?.js and calendar.html
 // About us: Our company provides offshore IT consulting services.
-//    Contact us at sales@softcomplex.com if you have any programming task you
-//    want to be handled by professionals. Our typical hourly rate is $20.
+//	Contact us at sales@softcomplex.com if you have any programming task you
+//	want to be handled by professionals. Our typical hourly rate is $20.
 
 // Adaptations by mikespub for Xaraya :
 // - rename functions to avoid potential conflicts with other javascripts
@@ -38,7 +38,7 @@ function xar_base_calendar(obj_target, base_url) {
 	this.prs_date = xar_base_calendar_prs_date;
 	this.prs_time = xar_base_calendar_prs_time;
 	this.prs_tsmp = xar_base_calendar_prs_tsmp;
-	this.popup    = xar_base_calendar_popup;
+	this.popup	= xar_base_calendar_popup;
 
 	// validate input parameters
 	if (!obj_target)

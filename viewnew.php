@@ -16,7 +16,8 @@ include 'includes/common.inc.php';
 
 $id = (isset($_GET['id'])) ? intval($_GET['id']) : 0;
 
-if ($id > 0) {
+if ($id > 0)
+{
 	$query = "SELECT n.title As t, n.content As c, n.new_date, t.* FROM " . $DBPrefix . "news n
 			LEFT JOIN " . $DBPrefix . "news_translated t ON (t.id = n.id)
 			WHERE n.id = " . $id . " AND t.lang = '" . $language . "' AND n.suspended != 1";
@@ -24,28 +25,37 @@ if ($id > 0) {
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 	$new = mysql_fetch_array($res);
-	if (!empty($new['title']) && !empty($new['content'])) {
+	if (!empty($new['title']) && !empty($new['content']))
+	{
 		$title = stripslashes($new['title']);
 		$content = stripslashes($new['content']);
-	} else {
+	}
+	else
+	{
 		$title = stripslashes($new['t']);
 		$content = stripslashes($new['c']);
 	}
 	$template->assign_block_vars('news', array(
 			'CONT' => nl2br($content)
 			));
-} else {
+}
+else
+{
 	// Build news index
 	$query = "SELECT n.title As t, n.new_date, t.* FROM " . $DBPrefix . "news n
 			LEFT JOIN " . $DBPrefix . "news_translated t ON (t.id = n.id)
 			WHERE t.lang = '" . $language . "' AND n.suspended != 1 ORDER BY n.new_date DESC, n.id DESC";
-	$res_ = mysql_query($query);
-	$system->check_mysql($res_, $query, __LINE__, __FILE__);
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-	while ($row = mysql_fetch_array($res_)) {
-		if (!empty($row['title'])) {
+	while ($row = mysql_fetch_array($res))
+	{
+		if (!empty($row['title']))
+		{
 			$title = stripslashes($row['title']);
-		} else {
+		}
+		else
+		{
 			$title = stripslashes($row['t']);
 		}
 		$template->assign_block_vars('list', array(
@@ -57,7 +67,7 @@ if ($id > 0) {
 }
 
 $template->assign_vars(array(
-		'TITLE' => ($id > 0) ? stripslashes($new['title']) . " " . FormatDate($new['new_date']) : $MSG['282']
+		'TITLE' => ($id > 0) ? stripslashes($new['title']) . ' ' . FormatDate($new['new_date']) : $MSG['282']
 		));
 
 include 'header.php';
@@ -66,5 +76,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-
 ?>

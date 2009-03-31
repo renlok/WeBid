@@ -22,8 +22,8 @@ function ToBeDeleted($index){
 	global $delete;
 	
 	$i = 0;
-	while($i < count($_POST['delete'])){
-		if($_POST['delete'][$i] == $index) return true;
+	while ($i < count($_POST['delete'])){
+		if ($_POST['delete'][$i] == $index) return true;
 		
 		$i++;
 	}
@@ -31,13 +31,13 @@ function ToBeDeleted($index){
 }
 
 
-if($_POST['act'] && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF'])){
+if ($_POST['act'] && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF'])){
 	//-- Built new payments array
 	
 	$rebuilt_array = array();
 	$i = 0;
-	while($i < count($_POST['new_payments'])){
-		if(!ToBeDeleted($i) && strlen($_POST['new_payments'][$i]) != 0){
+	while ($i < count($_POST['new_payments'])){
+		if (!ToBeDeleted($i) && strlen($_POST['new_payments'][$i]) != 0){
 			$rebuilt_array[] = $_POST['new_payments'][$i];
 		}
 		$i++;
@@ -46,7 +46,7 @@ if($_POST['act'] && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP
 	//--
 	$query = "delete from " . $DBPrefix . "payments";
 	$result = mysql_query($query);
-	if(!$result) {
+	if (!$result) {
 		print $ERR_001." - ".mysql_error();
 		exit;
 	}
@@ -54,10 +54,10 @@ if($_POST['act'] && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP
 	//--
 	$i = 0;
 	$counter = 1;
-	while($i < count($rebuilt_array)){
+	while ($i < count($rebuilt_array)){
 		$query = "insert into " . $DBPrefix . "payments values($counter,\"$rebuilt_array[$i]\")";
 		$result = mysql_query($query);
-		if(!$result) {
+		if (!$result) {
 			print $ERR_001." - ".mysql_error();
 			exit;
 		}
@@ -77,13 +77,13 @@ function selectAll(formObj, isInverse)
 {
    for (var i=0;i < formObj.length;i++) 
    {
-      fldObj = formObj.elements[i];
-      if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
-      { 
-         if(isInverse)
-            fldObj.checked = (fldObj.checked) ? false : true;
-         else fldObj.checked = true; 
-       }
+	  fldObj = formObj.elements[i];
+	  if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
+	  { 
+		 if (isInverse)
+			fldObj.checked = (fldObj.checked) ? false : true;
+		 else fldObj.checked = true; 
+	   }
    }
 }
 </SCRIPT>
@@ -91,18 +91,18 @@ function selectAll(formObj, isInverse)
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
-          <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['075']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
+		  <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['075']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
 <TR>
 <TD align="center">
@@ -118,27 +118,27 @@ function selectAll(formObj, isInverse)
 			<TD>
 				<TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
 					<?php
-					if(isset($ERR))
+					if (isset($ERR))
 					{
 					?>
 						<TR BGCOLOR=yellow>
 						<TD COLSPAN="3" ALIGN=CENTER><B>
-                        <?php
-						  if($$ERR) {
+						<?php
+						  if ($$ERR) {
 								print $$ERR;
 							}else{
-								if($msg) {
+								if ($msg) {
 									print $MSG[$msg];
 								}
 							}
-                            ?>
+							?>
 						  </B></TD>
 					  </TR>
 					 <?php
 					}
 					 ?>
-                    <TR>                    
-                    <TR>
+					<TR>					
+					<TR>
 						<TD WIDTH=50></TD>
 						<TD> 
 							<?php
@@ -162,7 +162,7 @@ function selectAll(formObj, isInverse)
 					//--
 					$query = "select * from " . $DBPrefix . "payments order by description";
 					$result = mysql_query($query);
-					if(!$result)
+					if (!$result)
 					{
 						print $ERR_001." - ".mysql_error();
 						exit;
@@ -170,7 +170,7 @@ function selectAll(formObj, isInverse)
 					$num = mysql_num_rows($result);
 					
 					$i = 0;
-					while($i < $num){
+					while ($i < $num){
 						
 						$description 	= mysql_result($result,$i,"description");
 						

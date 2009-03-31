@@ -19,7 +19,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$query = "update ".$DBPrefix."settings set banners = '" . $system->cleanvars($_POST['banners']) . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$ERR = $MSG['600'];
@@ -29,15 +29,15 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 loadblock($MSG['597'], $MSG['_0009'], 'batch', 'banners', $system->SETTINGS['banners'], $MSG['030'], $MSG['029']);
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'ban',
 		'TYPENAME' => $MSG['25_0011'],
 		'PAGENAME' => $MSG['5205']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

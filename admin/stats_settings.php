@@ -18,24 +18,24 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
-    if(isset($_POST['activate']) && $_POST['activate'] == 'y' && (!isset($_POST['accesses']) && !isset($_POST['browsers']) && !isset($_POST['domains']))) {
-        $ERR = $ERR_5002;
-        $system->SETTINGS = $_POST;
-    } else {
-        if(!isset($_POST['accesses'])) $_POST['accesses'] = 'n';
-        if(!isset($_POST['browsers'])) $_POST['browsers'] = 'n';
-        if(!isset($_POST['domains'])) $_POST['domains'] = 'n';
-        // Update database
-        $query = "UPDATE " . $DBPrefix . "statssettings SET
+if (isset($_POST['action']) && $_POST['action'] == "update") {
+	if (isset($_POST['activate']) && $_POST['activate'] == 'y' && (!isset($_POST['accesses']) && !isset($_POST['browsers']) && !isset($_POST['domains']))) {
+		$ERR = $ERR_5002;
+		$system->SETTINGS = $_POST;
+	} else {
+		if (!isset($_POST['accesses'])) $_POST['accesses'] = 'n';
+		if (!isset($_POST['browsers'])) $_POST['browsers'] = 'n';
+		if (!isset($_POST['domains'])) $_POST['domains'] = 'n';
+		// Update database
+		$query = "UPDATE " . $DBPrefix . "statssettings SET
 					activate = '" . $_POST['activate'] . "',
 					accesses = '" . $_POST['accesses'] . "',
 					browsers = '" . $_POST['browsers'] . "',
 					domains = '" . $_POST['domains'] . "'";
-        $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['5148'];
 		$system->SETTINGS = $_POST;
-    }
+	}
 } else {
 	$query = "SELECT * FROM " . $DBPrefix . "statssettings";
 	$res = mysql_query($query);
@@ -62,7 +62,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

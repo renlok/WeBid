@@ -32,7 +32,7 @@ function rebuild_table_file($table)
 	}
 	
 	$sqlqry = "SELECT " . join(",",$field_name) . " FROM " . $DBPrefix . "" . $table . " ORDER BY " .$field_name[$sort_field] . ";";
-	$result = mysql_query ($sqlqry);
+	$result = mysql_query($sqlqry);
 	
 	if ($result)
 	$num_rows = mysql_num_rows($result);
@@ -42,9 +42,9 @@ function rebuild_table_file($table)
 	}
 	
 	$i = 0;
-	while($i < $num_rows) {
+	while ($i < $num_rows) {
 		reset($field_name);
-		if(count($field_name) > 1) {
+		if (count($field_name) > 1) {
 			$fldn=each($field_name);
 			$output.="\"" . mysql_result($result,$i, $fldn['value']) . "\" => array(\n";
 			$j=1;

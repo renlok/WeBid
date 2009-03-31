@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 $template->assign_vars(array(
 	'B_ISERROR' => (!empty($ERR) || !empty($TPL_errmsg)),

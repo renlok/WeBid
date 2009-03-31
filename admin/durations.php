@@ -22,45 +22,45 @@ function ToBeDeleted($index){
 	global $delete;
 	
 	$i = 0;
-	while($i < count($_POST['delete'])){
-		if($_POST['delete'][$i] == $index) return true;
+	while ($i < count($_POST['delete'])){
+		if ($_POST['delete'][$i] == $index) return true;
 		
 		$i++;
 	}
 	return false;
 }
 
-if($_POST['act'] && !$$ERR && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF'])){
+if ($_POST['act'] && !$$ERR && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF'])){
 	
 	//-- Update DURATIONS table
 	
 	$rebuilt_durations = array();
-	$rebuilt_days      = array();
+	$rebuilt_days	  = array();
 	$i = 0;
-	while($i < count($_POST['new_durations']) && strlen($_POST['new_durations'][$i]) != 0){
-		if(!ToBeDeleted($_POST['new_days'][$i]) && strlen($_POST['new_durations']) != 0){
+	while ($i < count($_POST['new_durations']) && strlen($_POST['new_durations'][$i]) != 0){
+		if (!ToBeDeleted($_POST['new_days'][$i]) && strlen($_POST['new_durations']) != 0){
 			
-			$rebuilt_durations[]         = $_POST['new_durations'][$i];
-			$rebuilt_days[]              = $_POST['new_days'][$i];
+			$rebuilt_durations[]		 = $_POST['new_durations'][$i];
+			$rebuilt_days[]			  = $_POST['new_days'][$i];
 		}
 		$i++;
 	}
 	
 	$query = "delete from " . $DBPrefix . "durations";
 	$result = mysql_query($query);
-	if(!$result) {
+	if (!$result) {
 		print $ERR_001." - ".mysql_error();
 	}
 	
 	$i = 0;
-	while($i < count($rebuilt_durations)){
+	while ($i < count($rebuilt_durations)){
 		$query = "insert into
-                        		  " . $DBPrefix . "durations
-                        		  values($rebuilt_days[$i],
-                        		  \"$rebuilt_durations[$i]\")";
+								  " . $DBPrefix . "durations
+								  values($rebuilt_days[$i],
+								  \"$rebuilt_durations[$i]\")";
 		$result = mysql_query($query);
 		// print $query;
-		if(!$result) {
+		if (!$result) {
 			print $ERR_001." - ".mysql_error();
 		}
 		$i++;
@@ -76,12 +76,12 @@ if($_POST['act'] && !$$ERR && basename($_SERVER['HTTP_REFERER']) == basename($_S
 <SCRIPT type="text/javascript">
 function selectAll(formObj, isInverse)  {
    for (var i=0;i < formObj.length;i++)  {
-      fldObj = formObj.elements[i];
-      if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete') { 
-         if(isInverse)
-            fldObj.checked = (fldObj.checked) ? false : true;
-         else fldObj.checked = true; 
-       }
+	  fldObj = formObj.elements[i];
+	  if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete') { 
+		 if (isInverse)
+			fldObj.checked = (fldObj.checked) ? false : true;
+		 else fldObj.checked = true; 
+	   }
    }
 }
 </SCRIPT>
@@ -100,18 +100,18 @@ scrollbar-arrow-color: #ffffff;
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
-          <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['069']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
+		  <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['069']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
 <TR>
 <TD COLSPAN=3>
@@ -127,26 +127,26 @@ scrollbar-arrow-color: #ffffff;
 			<TD>
 				<TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
 					<?php
-					if(isset($ERR))
+					if (isset($ERR))
 					{
 					?>
 						<TR BGCOLOR=yellow>
 						<TD COLSPAN="4" ALIGN=CENTER><B>
-                        <?php
-						  if($$ERR) {
+						<?php
+						  if ($$ERR) {
 								print $$ERR;
 							}else{
-								if($msg) {
+								if ($msg) {
 									print $MSG[$msg];
 								}
 							}
-                            ?>
+							?>
 						  </B></TD>
 					  </TR>
 					 <?php
 					}
 					 ?>
-                    <TR>
+					<TR>
 						<TD WIDTH=50></TD>
 						<TD COLSPAN=2> 
 							<?php
@@ -173,15 +173,15 @@ scrollbar-arrow-color: #ffffff;
 					//--
 					$query = "select * from " . $DBPrefix . "durations order by days";
 					$result = mysql_query($query);
-					if(!$result) {
+					if (!$result) {
 						print $ERR_001." - ".mysql_error();
 						exit;
 					}
 					$num = mysql_num_rows($result);
 					$i = 0;
 
-					while($i < $num){
-						$days                  = mysql_result($result,$i,"days");
+					while ($i < $num){
+						$days				  = mysql_result($result,$i,"days");
 						$description = mysql_result($result,$i,"description");
 						print "<TR>
 							 <TD WIDTH=50></TD>

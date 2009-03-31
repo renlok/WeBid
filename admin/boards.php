@@ -22,9 +22,9 @@ include $include_path.'dates.inc.php';
 unset($ERR);
 
 #// Delete boards
-if(isset($_POST['delete']) && is_array($_POST['delete']))
+if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
-	while(list($k,$v) = each($_POST['delete']))
+	while (list($k,$v) = each($_POST['delete']))
 	{
 		$query = "DELETE FROM " . $DBPrefix . "community WHERE id='$v'";
 		$r = mysql_query($query);
@@ -49,13 +49,13 @@ function selectDelete(formObj, isInverse)
 {
    for (var i=0;i < formObj.length;i++) 
    {
-      fldObj = formObj.elements[i];
-      if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
-      { 
-         if(isInverse)
-            fldObj.checked = (fldObj.checked) ? false : true;
-         else fldObj.checked = true; 
-       }
+	  fldObj = formObj.elements[i];
+	  if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
+	  { 
+		 if (isInverse)
+			fldObj.checked = (fldObj.checked) ? false : true;
+		 else fldObj.checked = true; 
+	   }
    }
 }
 </SCRIPT>
@@ -64,39 +64,39 @@ function selectDelete(formObj, isInverse)
 <FORM NAME="boards" METHOD="post" ACTION="">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif">
+	<td background="images/bac_barint.gif">
 	
 		<table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_con.gif" ></td>
-          <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5032']; ?></td>
-        </tr>
-      	</table>
+		<tr> 
+		  <td width="30"><img src="images/i_con.gif" ></td>
+		  <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5032']; ?></td>
+		</tr>
+	  	</table>
 	</td>
-    </tr>
-    <tr>
-    <td align="center" valign="middle">&nbsp;</td>
-    </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	</tr>
+	<tr>
+	<td align="center" valign="middle">&nbsp;</td>
+	</tr>
+	<tr> 
+	<td align="center" valign="middle">
   		<TABLE WIDTH="600" BORDER="0" CELLSPACING="0" CELLPADDING="1" ALIGN="CENTER" BGCOLOR="#0083D7">
 		<TR>
 			<TD>
 				<TABLE WIDTH="100%" BORDER="0" CELLSPACING="1" CELLPADDING="4" ALIGN="CENTER">
-        		  <TR BGCOLOR="#0083D7">
-            		<TD COLSPAN="6" clign=center class=title>
+				  <TR BGCOLOR="#0083D7">
+					<TD COLSPAN="6" clign=center class=title>
 				<?php echo $MSG['5032']; ?>
 			</TD>
 					</TR>
 					<?php
-					if(isset($ERR))
+					if (isset($ERR))
 					{
 					?>
-        			<TR BGCOLOR="yellow">
-            		  <TD COLSPAN="6" class=error>
-            			<?php echo $ERR; ?>
-            			</TD>
-        			</TR>
+					<TR BGCOLOR="yellow">
+					  <TD COLSPAN="6" class=error>
+						<?php echo $ERR; ?>
+						</TD>
+					</TR>
 					<?php
 					}
 					?>
@@ -115,9 +115,9 @@ function selectDelete(formObj, isInverse)
 						</TD>
 					</TR>
 					<?php
-					while($row = mysql_fetch_array($res__))
+					while ($row = mysql_fetch_array($res__))
 					{
-						if($row['active'] == 1) {
+						if ($row['active'] == 1) {
 							$BG = "#FFFFFF";
 						} else {
 							$BG = "#CCCCFF";
@@ -131,7 +131,7 @@ function selectDelete(formObj, isInverse)
 							<?php echo $row['name']; ?>
 							</A>
 							<?php
-							if($row['active'] == 2)
+							if ($row['active'] == 2)
 							{
 								print "&nbsp;&nbsp;&nbsp;<B>[INACTIVE]</B>";
 							}
@@ -142,7 +142,7 @@ function selectDelete(formObj, isInverse)
 						</TD>
 						<TD WIDTH="16%" ALIGN=CENTER>
 							<?php
-							if($row['lastmessage'] == 0) {
+							if ($row['lastmessage'] == 0) {
 								print "--";
 							} else {
 								print FormatDate($row['lastmessage']);

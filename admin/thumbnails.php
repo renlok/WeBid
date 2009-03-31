@@ -18,9 +18,9 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	// Data check
-	if(empty($_POST['thumb_show'])) {
+	if (empty($_POST['thumb_show'])) {
 		$ERR = $ERR_047;
 	} else {
 		$query = "UPDATE " . $DBPrefix . "settings SET
@@ -35,15 +35,15 @@ loadblock('', $MGS_2__0043);
 loadblock($MSG['25_0107'], '', 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], $MGS_2__0045);
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'gra',
 		'TYPENAME' => $MSG['25_0009'],
 		'PAGENAME' => $MSG['2__0042']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

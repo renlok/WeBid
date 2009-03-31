@@ -19,19 +19,19 @@ include 'loggedin.inc.php';
 unset($ERR);
 
 #//
-if($_POST[action] == "update" && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF']))
+if ($_POST[action] == "update" && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF']))
 {
-	if(!empty($_POST[maxpictures]) && !ereg("^[0-9]+$",$_POST[maxpictures]))
+	if (!empty($_POST[maxpictures]) && !ereg("^[0-9]+$",$_POST[maxpictures]))
 	{
 		$ERR = $ERR_706;
 		$system->SETTINGS = $_POST;
 	}
-	elseif($_POST[maxpicturesize] == 0)
+	elseif ($_POST[maxpicturesize] == 0)
 	{
 		$ERR = $ERR_707;
 		$system->SETTINGS = $_POST;
 	}
-	elseif(!empty($_POST[maxpicturesize]) && !ereg("^[0-9]+$",$_POST[maxpicturesize]))
+	elseif (!empty($_POST[maxpicturesize]) && !ereg("^[0-9]+$",$_POST[maxpicturesize]))
 	{
 		$ERR = $ERR_708;
 		$system->SETTINGS = $_POST;
@@ -40,10 +40,10 @@ if($_POST[action] == "update" && basename($_SERVER['HTTP_REFERER']) == basename(
 	{
 		#// Update database
 		$query = "UPDATE " . $DBPrefix . "settings set
-                    picturesgallery=$_POST[picturesgallery],
-                    maxpictures=$_POST[maxpictures],
-                    maxpicturesize=$_POST[maxpicturesize]
-                    ";
+					picturesgallery=$_POST[picturesgallery],
+					maxpictures=$_POST[maxpictures],
+					maxpicturesize=$_POST[maxpicturesize]
+					";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$ERR = $MSG['5006'];
@@ -56,7 +56,7 @@ else
 	$query = "SELECT * FROM " . $DBPrefix . "settings";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if(mysql_num_rows($res) > 0)
+	if (mysql_num_rows($res) > 0)
 	{
 		$system->SETTINGS = mysql_fetch_array($res);
 	}
@@ -69,18 +69,18 @@ else
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
-          <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['663']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
+		  <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['663']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
 <TR>
@@ -97,7 +97,7 @@ else
 			<TD>
 			<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
 				<?php
-				if(isset($ERR))
+				if (isset($ERR))
 				{
 				?>
 					<TR BGCOLOR=yellow>
@@ -119,9 +119,9 @@ else
 						<?php print $MSG['665']; ?>
 						</TD>
 					<TD WIDTH="350" HEIGHT="22">
-						<INPUT TYPE="radio" NAME="picturesgallery" VALUE="1" <?if($system->SETTINGS[picturesgallery] == "1") print " CHECKED"?>>
+						<INPUT TYPE="radio" NAME="picturesgallery" VALUE="1" <?if ($system->SETTINGS[picturesgallery] == "1") print " CHECKED"?>>
 						<?php print $MSG['030']; ?>
-						<INPUT TYPE="radio" NAME="picturesgallery" VALUE="2" <?if($system->SETTINGS[picturesgallery] == "2") print " CHECKED"?>>
+						<INPUT TYPE="radio" NAME="picturesgallery" VALUE="2" <?if ($system->SETTINGS[picturesgallery] == "2") print " CHECKED"?>>
 						<?php print $MSG['029']; ?>
 						</TD>
 				</TR>

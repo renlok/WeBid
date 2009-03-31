@@ -1,6 +1,6 @@
 <?php
 function generate_id() {
-	if(!isset($_SESSION['SELL_auction_id'])) {
+	if (!isset($_SESSION['SELL_auction_id'])) {
 		$auction_id = md5(uniqid(rand()));
 		$_SESSION['SELL_auction_id'] = $auction_id;
 	} else {
@@ -42,7 +42,7 @@ function setvars(){
 	$international = (!empty($international)) ? true : false;
 	$sellcat = $_SESSION['SELL_sellcat'];
 	$private = (isset($_POST['private'])) ? $_POST['private'] : $_SESSION['SELL_private'];
-	if($private != 'y') $private = 'n';
+	if ($private != 'y') $private = 'n';
 	$sendemail = (isset($_POST['sendemail'])) ? $_POST['sendemail'] : $_SESSION['SELL_sendemail'];
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
 	$buy_now_only = (empty($buy_now_only)) ? 'n' : $buy_now_only;

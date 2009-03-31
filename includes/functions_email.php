@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit('Access denied');
+if (!defined('InWeBid')) exit('Access denied');
 
 class email_class
 {
@@ -23,7 +23,7 @@ class email_class
 
 		$headers = array();
 		
-		if(!isset($this->from) || empty($this->from)) {
+		if (!isset($this->from) || empty($this->from)) {
 			$this->from = $system->SETTINGS['adminmail'];
 		}
 
@@ -46,8 +46,8 @@ class email_class
 		$buffer = file($main_path . 'language/' . $this->getuserlang() . '/' . $file);
 		$i = 0;
 		$j = 0;
-		while($i < count($buffer)) {
-			if(!ereg("^#(.)*$", $buffer[$i])) {
+		while ($i < count($buffer)) {
+			if (!ereg("^#(.)*$", $buffer[$i])) {
 				$skipped_buffer[$j] = $buffer[$i];
 				$j++;
 			}
@@ -68,7 +68,7 @@ class email_class
 
 			switch ($block_val[1]) {
 				case 'IF':
-					$compile_blocks[] = "'; " . $this->compile_tag_if(str_replace("\'", "'", $block_val[2]), false) . " \$this->message .= '";
+					$compile_blocks[] = "'; " . $this->compile_tag_if (str_replace("\'", "'", $block_val[2]), false) . " \$this->message .= '";
 				break;
 
 				case 'ELSE':
@@ -76,7 +76,7 @@ class email_class
 				break;
 
 				case 'ELSEIF':
-					$compile_blocks[] = "'; " . $this->compile_tag_if(str_replace("\'", "'", $block_val[2]), true) . " \$this->message .= '";
+					$compile_blocks[] = "'; " . $this->compile_tag_if (str_replace("\'", "'", $block_val[2]), true) . " \$this->message .= '";
 				break;
 
 				case 'ENDIF':
@@ -94,12 +94,12 @@ class email_class
 		eval("\$this->message = '$template_php';");
 	}
 	
-	function compile_tag_if($tag_args, $elseif) {
+	function compile_tag_if ($tag_args, $elseif) {
 		// Tokenize args for 'if' tag.
 		preg_match_all('/(?:
-			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"         |
-			\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'     |
-			[(),]                                  |
+			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"		 |
+			\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'	 |
+			[(),]								  |
 			[^\s(),]+)/x', $tag_args, $match);
 
 		$tokens = $match[0];
@@ -269,14 +269,14 @@ class email_class
 	function getuserlang() {
 		global $system, $DBPrefix, $language;
 		
-		if(isset($this->email_uid) && $this->email_uid > 0) {
+		if (isset($this->email_uid) && $this->email_uid > 0) {
 			// Retrieve user's prefered language
 			$query = "SELECT language FROM " . $DBPrefix . "userslanguage WHERE user = " . intval($this->email_uid);
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($res) > 0) {
+			if (mysql_num_rows($res) > 0) {
 				$USERLANG = mysql_result($res, 0);
-				if(isset($USERLANG) && !empty($USERLANG)) return $USERLANG;
+				if (isset($USERLANG) && !empty($USERLANG)) return $USERLANG;
 			}
 		}
 		
@@ -284,8 +284,8 @@ class email_class
 	}
 	
 	function sendmail() {
-		if(is_array($this->to)) {
-			for($i = 0; $i < count($this->to); $i++) {
+		if (is_array($this->to)) {
+			for ($i = 0; $i < count($this->to); $i++) {
 				mail($this->to[$i], $this->subject, $this->message, $this->headers);
 			}
 		} else {

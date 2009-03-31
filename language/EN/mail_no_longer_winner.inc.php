@@ -4,23 +4,23 @@
 #			Change the message below as needed considering the 
 #			following tags to reflect your customer's personal data:
 #
-#        --------------------------------------------------------
+#		--------------------------------------------------------
 #			TAG SYNTAX				EFFECT
-#        --------------------------------------------------------
+#		--------------------------------------------------------
 #
-#			<#o_name#>              Old Winner Name (email goes to this person) 
-#			<#o_nick#>              Old Winner Nickname
-#			<#o_email#>             Old Winner email
-#			<#o_bid#>               Old Winner bid
-#			<#n_bid#>               New Winning Bid
-#			<#i_title#>             auction item title 
-#			<#i_description#>       auction item description 
-#			<#i_url#>               URL to view auction 
-#			<#i_ends#>              Auction End date/time
-#           <#c_sitename#>          Auction Site Name
-#           <#c_siteurl#>           main URL of auction site
-#           <#c_adminemail#>        email address of Auction site webmaster
-#        --------------------------------------------------------
+#			<#o_name#>			  Old Winner Name (email goes to this person) 
+#			<#o_nick#>			  Old Winner Nickname
+#			<#o_email#>			 Old Winner email
+#			<#o_bid#>			   Old Winner bid
+#			<#n_bid#>			   New Winning Bid
+#			<#i_title#>			 auction item title 
+#			<#i_description#>	   auction item description 
+#			<#i_url#>			   URL to view auction 
+#			<#i_ends#>			  Auction End date/time
+#		   <#c_sitename#>		  Auction Site Name
+#		   <#c_siteurl#>		   main URL of auction site
+#		   <#c_adminemail#>		email address of Auction site webmaster
+#		--------------------------------------------------------
 #
 #			USAGE:
 #			Insert the above tags in the text of your message			

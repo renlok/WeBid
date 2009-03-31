@@ -15,7 +15,8 @@
 include 'includes/common.inc.php';
 
 $cat = (isset($_GET['cat'])) ? intval($_GET['cat']) : intval($_POST['cat']);
-if ($cat > 0) {
+if ($cat > 0)
+{
 	// Retrieve category's name
 	$query = "SELECT category FROM " . $DBPrefix . "faqscategories WHERE id = " . $cat;
 	$res = mysql_query($query);
@@ -35,7 +36,8 @@ if ($cat > 0) {
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-	while ($cats = mysql_fetch_array($res)) {
+	while ($cats = mysql_fetch_array($res))
+	{
 		$template->assign_block_vars('cats', array(
 				'CAT' => stripslashes($cats['category']),
 				'ID' => $cats['id']
@@ -48,11 +50,15 @@ if ($cat > 0) {
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-	while ($row = mysql_fetch_array($res)) {
-		if (!empty($row['question']) && !empty($row['answer'])) {
+	while ($row = mysql_fetch_array($res))
+	{
+		if (!empty($row['question']) && !empty($row['answer']))
+		{
 			$question = stripslashes($row['question']);
 			$answer = stripslashes($row['answer']);
-		} else {
+		}
+		else
+		{
 			$question = stripslashes($row['q']);
 			$answer = stripslashes($row['a']);
 		}
@@ -68,8 +74,9 @@ if ($cat > 0) {
 			'body' => 'viewfaq.html'
 			));
 	$template->display('body');
-} else {
+}
+else
+{
 	header('location: faqs.php');
 }
-
 ?>

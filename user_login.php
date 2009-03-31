@@ -13,23 +13,29 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include $include_path . "countries.inc.php";
+include $include_path . 'countries.inc.php';
 
-if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on') {
+if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
+{
 	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	header('Location: ' . $sslurl . 'user_login.php');
+	header('location: ' . $sslurl . 'user_login.php');
 	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == "login") {
+if (isset($_POST['action']) && $_POST['action'] == 'login')
+{
 	$password = md5($MD5_PREFIX . $_POST['password']);
-	$query = "SELECT id, hash, suspended FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_POST['username']) . "' AND password = '" . $password . "' AND suspended = 0";
+	$query = "SELECT id, hash, suspended FROM " . $DBPrefix . "users
+			WHERE nick = '" . $system->cleanvars($_POST['username']) . "' AND password = '" . $password . "' AND suspended = 0";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-	if (mysql_num_rows($res) == 0) {
+	if (mysql_num_rows($res) == 0)
+	{
 		$errmsg = $ERR_038;
-	} else {
+	}
+	else
+	{
 		$user_id = mysql_result($res, 0, 'id');
 		$_SESSION['WEBID_LOGGED_IN'] 		= $user_id;
 		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, mysql_result($res, 0, 'hash'));
@@ -38,7 +44,8 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
 		$query = "UPDATE " . $DBPrefix . "users SET lastlogin = '" . gmdate('Y-m-d H:i:s') . "' WHERE id = " . $user_id;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
-		if (isset($_POST['rememberme'])) {
+		if (isset($_POST['rememberme']))
+		{
 			$remember_key = md5(time());
 			$query = "INSERT INTO " . $DBPrefix . "rememberme VALUES(" . $user_id . ", '" . $remember_key . "')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -48,23 +55,29 @@ if (isset($_POST['action']) && $_POST['action'] == "login") {
 		$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = " . $user_id . " AND ip = '" . $_SERVER['REMOTE_ADDR'] . "'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0) {
+		if (mysql_num_rows($res) == 0)
+		{
 			$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
 					(NULL, " . $user_id . ", '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		} else {
+		}
+		else
+		{
 			$query = "UPDATE " . $DBPrefix . "usersips SET ip = '" . $_SERVER['REMOTE_ADDR'] . "' WHERE id = " . mysql_result($res, 0, 'id');
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 
-		if (isset($_SESSION['REDIRECT_AFTER_LOGIN'])) {
+		if (isset($_SESSION['REDIRECT_AFTER_LOGIN']))
+		{
 			$URL = str_replace('\r', '', str_replace('\n', '', $_SESSION['REDIRECT_AFTER_LOGIN']));
 			unset($_SESSION['REDIRECT_AFTER_LOGIN']);
-		} else {
+		}
+		else
+		{
 			$URL = 'user_menu.php';
 		}
 
-		header("Location: $URL");
+		header('location: ' . $URL);
 		exit;
 	}
 }
@@ -80,5 +93,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-
 ?>

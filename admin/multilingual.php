@@ -18,7 +18,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == 'updatelanguage' && isset($_POST['defaultlanguage'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'updatelanguage' && isset($_POST['defaultlanguage'])) {
 	$query = "UPDATE " . $DBPrefix . "settings SET defaultlanguage = '" . $_POST['defaultlanguage'] . "'";
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
@@ -26,9 +26,9 @@ if(isset($_POST['action']) && $_POST['action'] == 'updatelanguage' && isset($_PO
 }
 
 $html = '';
-if(is_array($LANGUAGES)) {
+if (is_array($LANGUAGES)) {
 	reset($LANGUAGES);
-	while(list($k,$v) = each($LANGUAGES)) {
+	while (list($k,$v) = each($LANGUAGES)) {
 		$html .= '<input type="radio" name="defaultlanguage" value="' . $k . '" ' . (($system->SETTINGS['defaultlanguage'] == $k) ? ' checked="checked"' : '') . '>
 	<img src="../includes/flags/' . $k . '.gif" hspace="2">
 	' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MSG['2__0005'] : '') . '<BR>';
@@ -38,15 +38,15 @@ if(is_array($LANGUAGES)) {
 loadblock($MGS_2__0004, $MGS_2__0003, $html);
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['2__0002']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

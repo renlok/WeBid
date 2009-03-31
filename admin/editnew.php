@@ -17,25 +17,25 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 $TIME = $system->ctime;
 
-if(!isset($_POST['id']) && (!isset($_GET['id']) || empty($_GET['id']))) {
+if (!isset($_POST['id']) && (!isset($_GET['id']) || empty($_GET['id']))) {
 	header('location: news.php');
 	exit;
 }
 
-if(isset($_POST['action'])) {
+if (isset($_POST['action'])) {
 	//-- Data check
-	if(!$_POST['title'] || !$_POST['content']) {
+	if (!$_POST['title'] || !$_POST['content']) {
 		$ERR = "ERR_112";
 	} else {		
 		$query = "UPDATE " . $DBPrefix . "news SET title='".addslashes($_POST['title'][$system->SETTINGS['defaultlanguage']])."',content='".addslashes($_POST['content'][$system->SETTINGS['defaultlanguage']])."',suspended=".intval($_POST['suspended'])." WHERE id='".$_POST['id']."'";
 		$res = mysql_query($query);
-		if(!$res) {
+		if (!$res) {
 			$ERR = "ERR_001";
 		}
 		reset($LANGUAGES);
-		while(list($k,$v) = each($LANGUAGES)){
+		while (list($k,$v) = each($LANGUAGES)){
 			$TR = @mysql_result(@mysql_query("SELECT title FROM " . $DBPrefix . "news_translated WHERE lang='".$k."' AND id = ".$_POST['id']), 0, "title"); 
-			if(!empty($TR)) {
+			if (!empty($TR)) {
 				$query = "UPDATE " . $DBPrefix . "news_translated SET 
 						title = '".addslashes($_POST['title'][$k])."',
 						content = '".addslashes($_POST['content'][$k])."'
@@ -55,7 +55,7 @@ if(isset($_POST['action'])) {
 	$query = "SELECT t.*, n.suspended FROM " . $DBPrefix . "news_translated t
 			LEFT JOIN " . $DBPrefix . "news n ON (n.id = t.id) WHERE t.id = '".$_GET['id']."'";
 	$res = mysql_query($query);
-	if(!$res)
+	if (!$res)
 	{
 		print $ERR_001;
 		exit;
@@ -64,7 +64,7 @@ if(isset($_POST['action'])) {
 	{
 		$CONT_TR = array();
 		$TIT_TR = array();
-		while($arr = mysql_fetch_assoc($res)) {
+		while ($arr = mysql_fetch_assoc($res)) {
 			$CONT_TR[$arr['lang']] = $arr['content'];
 			$TIT_TR[$arr['lang']] = $arr['title'];
 			$suspended = $arr['suspended'];
@@ -90,19 +90,19 @@ scrollbar-arrow-color: #ffffff;
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_con.gif" ></td>
-          <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['516']; ?></td>
-        </tr>
-      </table>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_con.gif" ></td>
+		  <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['516']; ?></td>
+		</tr>
+	  </table>
 	 </td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
   <tr> 
-    <td align="center" valign="middle">
+	<td align="center" valign="middle">
 	
 	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
 	<TR>
@@ -114,10 +114,10 @@ scrollbar-arrow-color: #ffffff;
 		<TABLE WIDTH="100%" BORDER="0" CELLPADDING="5" CELLSPACING=1 bgcolor="#FFFFFF">
 
 		<?php
-		if($ERR || $updated){
+		if ($ERR || $updated){
 		print "<TR><TD></TD><TD WIDTH=486>";
-		if($$ERR) print $$ERR;
-		if($updated) print "Auction data updated";
+		if ($$ERR) print $$ERR;
+		if ($updated) print "Auction data updated";
 		print "</TD>
 						</TR>";
 		}
@@ -130,8 +130,8 @@ scrollbar-arrow-color: #ffffff;
 		<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<INPUT TYPE=text NAME=title[<?php echo $system->SETTINGS['defaultlanguage']; ?>] SIZE=40 MAXLENGTH=255 VALUE="<?php echo stripslashes($TIT_TR[$system->SETTINGS['defaultlanguage']]); ?>">
 		<?php
 			reset($LANGUAGES);
-			while(list($k,$v) = each($LANGUAGES)){
-				if($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=\"".stripslashes($TIT_TR[$k])."\">";
+			while (list($k,$v) = each($LANGUAGES)){
+				if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=\"".stripslashes($TIT_TR[$k])."\">";
 			}
 		?>
 	  	</TD>
@@ -146,8 +146,8 @@ scrollbar-arrow-color: #ffffff;
 		<TEXTAREA NAME=content[<?php echo $system->SETTINGS['defaultlanguage']; ?>] COLS=45 ROWS=20><?php echo stripslashes($CONT_TR[$system->SETTINGS['defaultlanguage']]); ?></TEXTAREA>
 		<?php
 			reset($LANGUAGES);
-			while(list($k,$v) = each($LANGUAGES)){
-				if($k!=$system->SETTINGS['defaultlanguage']) print "<br><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=content[$k] COLS=45 ROWS=20>".stripslashes($CONT_TR[$k])."</TEXTAREA>";
+			while (list($k,$v) = each($LANGUAGES)){
+				if ($k!=$system->SETTINGS['defaultlanguage']) print "<br><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=content[$k] COLS=45 ROWS=20>".stripslashes($CONT_TR[$k])."</TEXTAREA>";
 			}
 		?>
 	  	</TD>
@@ -160,13 +160,13 @@ scrollbar-arrow-color: #ffffff;
 	  	<TD WIDTH="486">
 		<INPUT TYPE=radio NAME=suspended value=0
 		<?php
-		if($suspended == 0) print " CHECKED";
+		if ($suspended == 0) print " CHECKED";
 		?>
 		>
 		<?php print $MSG['030']; ?>
 		<INPUT TYPE=radio NAME=suspended value=1
 		<?php
-		if($suspended == 1) print " CHECKED";
+		if ($suspended == 1) print " CHECKED";
 		?>
 		> <?php print $MSG['029']; ?>
 	  	</TD>

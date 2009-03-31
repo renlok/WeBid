@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(checklogin()) {
+if (checklogin()) {
 	header("location: login.php");
 	exit;
 }

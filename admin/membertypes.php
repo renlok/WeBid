@@ -45,7 +45,7 @@ if (isset($_POST['act'])) {
 	*/
 	// if this is the first country being deleted it don't
 	// precede it with an " or " in the SQL string
-	if(is_array($delete)) {
+	if (is_array($delete)) {
 		$idslist=join(",",$delete);
 		$sqlstr.=$idslist.")";
 		$DBGSTR=$sqlstr;
@@ -65,8 +65,8 @@ if (isset($_POST['act'])) {
 	* isn't the same as new_countries (saving ourselves a
 	* lot of queries.
 	*/
-	if(is_array($old_membertypes)) {
-		foreach($old_membertypes as $id => $val) {
+	if (is_array($old_membertypes)) {
+		foreach ($old_membertypes as $id => $val) {
 			if ( $val != $new_membertypes[$id]) {
 				$sqlstr = "UPDATE " . $DBPrefix . "membertypes SET
 							feedbacks = '" . $new_membertypes[$id]['feedbacks'] . "', 
@@ -117,13 +117,13 @@ function selectAll(formObj, isInverse)
 {
    for (var i=0;i < formObj.length;i++) 
    {
-      fldObj = formObj.elements[i];
-      if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
-      { 
-         if(isInverse)
-            fldObj.checked = (fldObj.checked) ? false : true;
-         else fldObj.checked = true; 
-       }
+	  fldObj = formObj.elements[i];
+	  if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
+	  { 
+		 if (isInverse)
+			fldObj.checked = (fldObj.checked) ? false : true;
+		 else fldObj.checked = true; 
+	   }
    }
 }
 </SCRIPT>
@@ -132,85 +132,85 @@ function selectAll(formObj, isInverse)
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr>
-          <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
-          <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['25_0169']; ?>
-            </td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr>
+		  <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
+		  <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['25_0169']; ?>
+			</td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
   <tr>
-    <td align="center" valign="middle"><?php print $TPL_info_err . ""?>
-      <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-        <TR>
-          <TD>
-              <BR>
-            <FORM NAME=conf ACTION=membertypes.php METHOD=POST>
-              <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="0083D7" ALIGN="CENTER">
-                <TR>
-                  <TD ALIGN=CENTER class=title><?php print $MSG['25_0169']; ?></TD>
-                </TR>
-                <TR>
-                  <TD><TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
-                      <TR>
-                        <TD WIDTH=20></TD>
-                        <TD colspan="4">
-                          <?php 
-                          print $MSG['25_0170'];
-                          if($$ERR) {
-                          	print "<FONT COLOR=red><BR><BR>".$$ERR;
-                          }
+	<td align="center" valign="middle"><?php print $TPL_info_err . ""?>
+	  <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
+		<TR>
+		  <TD>
+			  <BR>
+			<FORM NAME=conf ACTION=membertypes.php METHOD=POST>
+			  <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="0083D7" ALIGN="CENTER">
+				<TR>
+				  <TD ALIGN=CENTER class=title><?php print $MSG['25_0169']; ?></TD>
+				</TR>
+				<TR>
+				  <TD><TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
+					  <TR>
+						<TD WIDTH=20></TD>
+						<TD colspan="4">
+						  <?php 
+						  print $MSG['25_0170'];
+						  if ($$ERR) {
+						  	print "<FONT COLOR=red><BR><BR>".$$ERR;
+						  }
 						  ?>
-                           </TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH=20></TD>
-                        <TD BGCOLOR="#EEEEEE"> <B> <?php print $MSG['25_0171']; ?> </B> </TD>
-                        <TD BGCOLOR="#EEEEEE"> <B> <?php print $MSG['25_0167']; ?> </B> </TD>
-                        <TD BGCOLOR="#EEEEEE" WIDTH=20></TD>
-                        <TD BGCOLOR="#EEEEEE"> <B> <?php print $MSG['25_0168']; ?> </B> </TD>
-                      </TR>
-                      <?php
-                      foreach ($membertypes as $id => $quest) {
+						   </TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH=20></TD>
+						<TD BGCOLOR="#EEEEEE"> <B> <?php print $MSG['25_0171']; ?> </B> </TD>
+						<TD BGCOLOR="#EEEEEE"> <B> <?php print $MSG['25_0167']; ?> </B> </TD>
+						<TD BGCOLOR="#EEEEEE" WIDTH=20></TD>
+						<TD BGCOLOR="#EEEEEE"> <B> <?php print $MSG['25_0168']; ?> </B> </TD>
+					  </TR>
+					  <?php
+					  foreach ($membertypes as $id => $quest) {
 					  ?>
-                      <TR>
-                        <TD WIDTH=20></TD>
-                        <TD><INPUT TYPE=hidden NAME=old_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>'>
-                          <INPUT TYPE=text NAME=new_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>' SIZE=5>
-                        </TD>
-                        <TD><INPUT TYPE=hidden NAME=old_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>'>
-                          <INPUT TYPE=text NAME=new_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>' SIZE=30></TD>
-                        <TD><IMG SRC='../images/icons/<?php echo $quest['icon']; ?>' align='middle'> </TD>
-                        <TD><INPUT TYPE=checkbox NAME=delete[] VALUE='<?php echo $id; ?>'>
-                        </TD>
-                      </TR>
-                      <?php
-                      }
+					  <TR>
+						<TD WIDTH=20></TD>
+						<TD><INPUT TYPE=hidden NAME=old_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>'>
+						  <INPUT TYPE=text NAME=new_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>' SIZE=5>
+						</TD>
+						<TD><INPUT TYPE=hidden NAME=old_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>'>
+						  <INPUT TYPE=text NAME=new_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>' SIZE=30></TD>
+						<TD><IMG SRC='../images/icons/<?php echo $quest['icon']; ?>' align='middle'> </TD>
+						<TD><INPUT TYPE=checkbox NAME=delete[] VALUE='<?php echo $id; ?>'>
+						</TD>
+					  </TR>
+					  <?php
+					  }
 					  ?>
-                      <TR>
-                        <TD WIDTH=20>
-                          Add</TD>
-                        <TD><INPUT TYPE='text' NAME='new_membertype[feedbacks]' SIZE='5'></TD>
-                        <TD><INPUT TYPE='text' NAME='new_membertype[icon]' SIZE='30'></TD>
-                        <TD colspan=2 align=right>
+					  <TR>
+						<TD WIDTH=20>
+						  Add</TD>
+						<TD><INPUT TYPE='text' NAME='new_membertype[feedbacks]' SIZE='5'></TD>
+						<TD><INPUT TYPE='text' NAME='new_membertype[icon]' SIZE='30'></TD>
+						<TD colspan=2 align=right>
 						<a href="javascript: void(0)" onClick="selectAll(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A></TD>
-                      </TR>
-                      <TR>
-                        <TD WIDTH=20></TD>
-                        <TD colspan="6" align="center"><INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
-                        </TD>
-                      </TR>
-                    </TABLE>
-                    <input type=hidden name=new_membertypes[<?php echo $id; ?>][membertype] value='<?php echo $quest['membertype']; ?>' size=30></TD>
-                </TR>
-              </TABLE>
-            </FORM></TD>
-        </TR>
-      </TABLE></TD>
+					  </TR>
+					  <TR>
+						<TD WIDTH=20></TD>
+						<TD colspan="6" align="center"><INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
+						</TD>
+					  </TR>
+					</TABLE>
+					<input type=hidden name=new_membertypes[<?php echo $id; ?>][membertype] value='<?php echo $quest['membertype']; ?>' size=30></TD>
+				</TR>
+			  </TABLE>
+			</FORM></TD>
+		</TR>
+	  </TABLE></TD>
   </TR>
 </TABLE>
 </BODY>

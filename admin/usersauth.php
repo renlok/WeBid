@@ -18,7 +18,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			usersauth = '" . addslashes($_POST['usersauth']) . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -29,15 +29,15 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 loadblock('', $MSG['25_0152'], 'yesnostacked', 'usersauth', $system->SETTINGS['usersauth'], $MSG['25_0153'], $MSG['25_0154']);
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['25_0151']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

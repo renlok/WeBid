@@ -20,8 +20,8 @@ include 'loggedin.inc.php';
 $ERR = "&nbsp;";
 
 #// Insert new message
-if(isset($_POST['action']) && $_POST['action'] == "update") {
-	if(strlen($_POST[question]) == 0 && strlen($_POST[answer]) == 0){
+if (isset($_POST['action']) && $_POST['action'] == "update") {
+	if (strlen($_POST[question]) == 0 && strlen($_POST[answer]) == 0){
 		$ERR = "Required fields missing (all fields are required).";
 		$system->SETTINGS = $_POST;
 	}else{
@@ -34,7 +34,7 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 		$id=mysql_insert_id();
 		#// Insert into translation table.
 		reset($LANGUAGES);
-		while(list($k,$v) = each($LANGUAGES)){
+		while (list($k,$v) = each($LANGUAGES)){
 			$query = "INSERT INTO ".$DBPrefix."faqs_translated VALUES(
 					$id,
 					'$k',
@@ -61,18 +61,18 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_con.gif" ></td>
-          <td class=white><?=$MSG['25_0018']?>&nbsp;&gt;&gt;&nbsp;<?=$MSG['5231']?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_con.gif" ></td>
+		  <td class=white><?=$MSG['25_0018']?>&nbsp;&gt;&gt;&nbsp;<?=$MSG['5231']?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle"><FORM NAME="faq" METHOD="post" ACTION="<?=basename($_SERVER['PHP_SELF'])?>">
+	<tr> 
+	<td align="center" valign="middle"><FORM NAME="faq" METHOD="post" ACTION="<?=basename($_SERVER['PHP_SELF'])?>">
 	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" ALIGN="CENTER" BGCOLOR="#0083D7">
 		<TR align=center>
 			<TD BGCOLOR=#ffffff>&nbsp;</TD>
@@ -91,11 +91,11 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 						<TD WIDTH="77%" CLASS=link HEIGHT="27">
 						<SELECT NAME="category">
 							<?php
-							while($row = mysql_fetch_array($res_c))
+							while ($row = mysql_fetch_array($res_c))
 							{
 								$row[category]=stripslashes($row[category]);
 								print '<OPTION VALUE="'.$row['id'].'"';
-								if($_POST[category] == $row[category]) print " SELECTED";
+								if ($_POST[category] == $row[category]) print " SELECTED";
 								print '>'.$row['category'].'</OPTION>'."\n";
 							}
 						?>
@@ -109,8 +109,8 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif">&nbsp;<INPUT TYPE="text" NAME="question[<?=$system->SETTINGS['defaultlanguage']?>]" SIZE="35" MAXLENGTH="200">
 							<?php
 								reset($LANGUAGES);
-								while(list($k,$v) = each($LANGUAGES)){
-									if($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=question[$k] SIZE=35 MAXLENGTH=200>";
+								while (list($k,$v) = each($LANGUAGES)){
+									if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=question[$k] SIZE=35 MAXLENGTH=200>";
 								}
 							?>
 						</TD>
@@ -122,8 +122,8 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif"><br><TEXTAREA NAME="answer[<?=$system->SETTINGS['defaultlanguage']?>]" COLS="40" ROWS="15"></TEXTAREA>
 							<?php
 								reset($LANGUAGES);
-								while(list($k,$v) = each($LANGUAGES)){
-									if($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=answer[$k] COLS=40 ROWS=15></TEXTAREA>";
+								while (list($k,$v) = each($LANGUAGES)){
+									if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=answer[$k] COLS=40 ROWS=15></TEXTAREA>";
 								}
 							?>
 						</TD>

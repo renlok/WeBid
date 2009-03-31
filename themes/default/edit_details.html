@@ -1,99 +1,99 @@
 <!-- INCLUDE user_menu_header.html -->
 
 <form name="details" action="edit_data.php" method="POST">
-    <table width="100%" border="0" cellpadding="4" align="center">
-        <tr>
-            <td align="right"><b>{L_002}</b></td>
-            <td><b>{NAME}</b></td>
-        </tr>
-        <tr>
-            <td width="30%" align="right" valign="top"><b>{L_003}</b> </td>
-            <td width="70%" valign="top"><b>{NICK}</b></td>
-        </tr>
-        <tr>
-            <th colspan="2" valign="top" align="center">{L_617}</td>
-        </tr>
-        <tr>
-            <td valign="top" align="right" class=errfont>{L_004}</td>
-            <td align="left"><input type="password" name="TPL_password" size=20 maxlength="20" />{L_050}</td>
-        </tr>
-        <tr>
-            <td valign="top" align="right" class=errfont>{L_005}</td>
-            <td align="left">
-                <input type="password" name="TPL_repeat_password" size=20 maxlength=20 />
-            </td>
-        </tr>
-        <tr>
-            <td valign="top" align="right"><b>{L_006}</b> </td>
-            <td>
-                <input type="text" name="TPL_email" size=50 maxlength=50 value="{EMAIL}" />
-            </td>
-        </tr>
-        <tr>
-            <td  valign="top" align="right"> <b>{L_252}</b> </td>
-            <td>
-                {DATEFORMAT} <input type="text" name="TPL_year" size="4" maxlength="4" value="{YEAR}">
-            </td>
-        </tr>
-        <tr>
-            <td  valign="top" align="right"><b>{L_009}</b> </td>
-            <td>
-                <input type="text" name="TPL_address" size=40 maxlength=255 value="{ADDRESS}" />
-            </td>
-        </tr>
-        <tr>
-            <td  valign="top" align="right"><b>{L_010}</b> </td>
-            <td>
-                <input type="text" name="TPL_city" size=25 maxlength=25 value="{CITY}" />
-            </td>
-        </tr>
-        <tr>
-            <td  valign="top" align="right"><b>{L_011}</b> </td>
-            <td>
-                <input type="text" name="TPL_prov" size=10 maxlength=10 value="{PROV}" />
-            </td>
-        </tr>
-        <tr>
-            <td  valign="top" align="right"><b>{L_014}</b> </td>
-            <td>
-                <select name="TPL_country">
-                    {COUNTRYLIST}
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td  valign="top" align="right"><b>{L_012}</b> </td>
-            <td>
-                <input type="text" name="TPL_zip" size=8 value="{ZIP}" />
-            </td>
-        </tr>
-        <tr>
-            <td  valign="top" align="right"><b>{L_013}</b> </td>
-            <td>
-                <input type="text" name="TPL_phone" size=40 maxlength=40 value="{PHONE}" />
-            </td>
-        </tr>
-        <tr>
+	<table width="100%" border="0" cellpadding="4" align="center">
+		<tr>
+			<td align="right"><b>{L_002}</b></td>
+			<td><b>{NAME}</b></td>
+		</tr>
+		<tr>
+			<td width="30%" align="right" valign="top"><b>{L_003}</b> </td>
+			<td width="70%" valign="top"><b>{NICK}</b></td>
+		</tr>
+		<tr>
+			<th colspan="2" valign="top" align="center">{L_617}</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" class=errfont>{L_004}</td>
+			<td align="left"><input type="password" name="TPL_password" size=20 maxlength="20" />{L_050}</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" class=errfont>{L_005}</td>
+			<td align="left">
+				<input type="password" name="TPL_repeat_password" size=20 maxlength=20 />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right"><b>{L_006}</b> </td>
+			<td>
+				<input type="text" name="TPL_email" size=50 maxlength=50 value="{EMAIL}" />
+			</td>
+		</tr>
+		<tr>
+			<td  valign="top" align="right"> <b>{L_252}</b> </td>
+			<td>
+				{DATEFORMAT} <input type="text" name="TPL_year" size="4" maxlength="4" value="{YEAR}">
+			</td>
+		</tr>
+		<tr>
+			<td  valign="top" align="right"><b>{L_009}</b> </td>
+			<td>
+				<input type="text" name="TPL_address" size=40 maxlength=255 value="{ADDRESS}" />
+			</td>
+		</tr>
+		<tr>
+			<td  valign="top" align="right"><b>{L_010}</b> </td>
+			<td>
+				<input type="text" name="TPL_city" size=25 maxlength=25 value="{CITY}" />
+			</td>
+		</tr>
+		<tr>
+			<td  valign="top" align="right"><b>{L_011}</b> </td>
+			<td>
+				<input type="text" name="TPL_prov" size=10 maxlength=10 value="{PROV}" />
+			</td>
+		</tr>
+		<tr>
+			<td  valign="top" align="right"><b>{L_014}</b> </td>
+			<td>
+				<select name="TPL_country">
+					{COUNTRYLIST}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td  valign="top" align="right"><b>{L_012}</b> </td>
+			<td>
+				<input type="text" name="TPL_zip" size=8 value="{ZIP}" />
+			</td>
+		</tr>
+		<tr>
+			<td  valign="top" align="right"><b>{L_013}</b> </td>
+			<td>
+				<input type="text" name="TPL_phone" size=40 maxlength=40 value="{PHONE}" />
+			</td>
+		</tr>
+		<tr>
 <!-- IF B_NEWLETTER -->
-            <td  align="right" height="2">
-                <p><b><i>{L_603}</i></b><br></p>
-            <td>
-                <input type="radio" name="TPL_nletter" value="1" {NLETTER1} />
-                {L_030}
-                <input type="radio" name="TPL_nletter" value="2" {NLETTER2} />
-                {L_029} &nbsp
-                <b>{L_609}</b>
-            </td>
-        </tr>
+			<td  align="right" height="2">
+				<p><b><i>{L_603}</i></b><br></p>
+			<td>
+				<input type="radio" name="TPL_nletter" value="1" {NLETTER1} />
+				{L_030}
+				<input type="radio" name="TPL_nletter" value="2" {NLETTER2} />
+				{L_029} &nbsp
+				<b>{L_609}</b>
+			</td>
+		</tr>
 <!-- ENDIF -->
-        <tr>
-            <td colspan=2 align="center">
-                <input type="submit" name="Input" value="{L_530}" class="button" />
-                <input type="reset" name="Input" class="button" />
-            </td>
-        </tr>
-    </table>
-    <input type="hidden" name="action" value="update" />
+		<tr>
+			<td colspan=2 align="center">
+				<input type="submit" name="Input" value="{L_530}" class="button" />
+				<input type="reset" name="Input" class="button" />
+			</td>
+		</tr>
+	</table>
+	<input type="hidden" name="action" value="update" />
 </form>
 
 <!-- INCLUDE user_menu_footer.html -->

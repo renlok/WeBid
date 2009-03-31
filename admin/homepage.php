@@ -18,16 +18,16 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
-	if(isset($_FILES['logo']['tmp_name'])) {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
+	if (isset($_FILES['logo']['tmp_name'])) {
 		// Handle logo upload
 		$inf = GetImageSize ($_FILES['logo']['tmp_name']);
 		if ($inf[2] < 1 || $inf[2] > 3) {
 			print $ERR_602;
 			exit;
 		}
-		if(!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none") {
-			if($system->move_file($_FILES['logo']['tmp_name'], $main_path . 'themes/' . $system->SETTINGS['theme'] . '/' . $_FILES['logo']['name'])) {
+		if (!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none") {
+			if ($system->move_file($_FILES['logo']['tmp_name'], $main_path . 'themes/' . $system->SETTINGS['theme'] . '/' . $_FILES['logo']['name'])) {
 				$LOGOUPLOADED = true;
 			} else {
 				$LOGOUPLOADED = false;
@@ -40,7 +40,7 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 			   newsbox = " . $_POST['newsbox'] . ",
 			   newstoshow = " . $_POST['newstoshow'] . ",
 			   cust_increment = " . $_POST['cust_increment'] . ", ";
-	if($LOGOUPLOADED) {
+	if ($LOGOUPLOADED) {
 		$query .= "logo = '" . $_FILES['logo']['name'] . "', ";
 		$system->SETTINGS['logo'] = $_FILES['logo']['name'];
 	}
@@ -101,7 +101,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

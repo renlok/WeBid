@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 // Check if the e-mail has to be sent or not
 $query = "SELECT endemailmode FROM " . $DBPrefix . "users WHERE id = " . $Seller['id'];
@@ -20,7 +20,7 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $emailmode = mysql_result($res, 0, 'endemailmode');
 
-if($emailmode == 'one') {
+if ($emailmode == 'one') {
 	$emailer = new email_class();
 	$emailer->assign_vars(array(
 			'S_NAME' => $Seller['name'],

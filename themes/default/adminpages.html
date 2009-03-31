@@ -21,39 +21,39 @@
 <body>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
-    <td background="images/bac_barint.gif">
-        <table width="100%" border="0" cellspacing="5" cellpadding="0">
-            <tr>
-                <td width="30"><img src="images/i_{TYPE}.gif" ></td>
-                <td class="white">{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</td>
-            </tr>
-        </table>
-    </td>
+	<td background="images/bac_barint.gif">
+		<table width="100%" border="0" cellspacing="5" cellpadding="0">
+			<tr>
+				<td width="30"><img src="images/i_{TYPE}.gif" ></td>
+				<td class="white">{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</td>
+			</tr>
+		</table>
+	</td>
 </tr>
 <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
 </tr>
 <tr>
-    <td align="center" valign="middle">
-        <br>
-        <form name="conf" action="" method="post" enctype="multipart/form-data">
-        <table width="95%" border="0" cellpadding="1" bgcolor="#0083D7">
-        <tr>
-            <td align="center" class="title">{TITLEBARNAME}{PAGENAME}</td>
-        </tr>
-        <tr>
-            <td>
-                <table width="100%" cellpadding="2" align="center" bgcolor="#FFFFFF">
+	<td align="center" valign="middle">
+		<br>
+		<form name="conf" action="" method="post" enctype="multipart/form-data">
+		<table width="95%" border="0" cellpadding="1" bgcolor="#0083D7">
+		<tr>
+			<td align="center" class="title">{TITLEBARNAME}{PAGENAME}</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" cellpadding="2" align="center" bgcolor="#FFFFFF">
 <!-- IF ERROR ne '' -->
-                    <tr bgcolor="yellow">
-                        <td class="error" colspan="2" align="center">{ERROR}</td>
-                    </tr>
+					<tr bgcolor="yellow">
+						<td class="error" colspan="2" align="center">{ERROR}</td>
+					</tr>
 <!-- ENDIF -->
 <!-- BEGIN block -->
-                    <tr valign="top">
-                        <td width="109" height="22">{block.TITLE}</td>
-                        <td width="375" height="22">
-                            {block.DESCRIPTION}
+					<tr valign="top">
+						<td width="109" height="22">{block.TITLE}</td>
+						<td width="375" height="22">
+							{block.DESCRIPTION}
 	<!-- IF block.TYPE eq 'yesno' -->
 				<input type="radio" name="{block.NAME}" value="y"<!-- IF block.DEFAULT eq 'y' --> checked<!-- ENDIF -->> {block.TAGLINE1}
 				<input type="radio" name="{block.NAME}" value="n"<!-- IF block.DEFAULT eq 'n' --> checked<!-- ENDIF -->> {block.TAGLINE2}
@@ -98,7 +98,7 @@
 				<input type="checkbox" name="{block.NAME}" id="{block.DEFAULT}" value="y"<!-- IF block.DEFAULT eq 'y' --> checked<!-- ENDIF -->> {block.TAGLINE1}
 	<!-- ELSEIF block.TYPE eq 'dropdown' -->
 				<form name="{block.NAME}" action="" method="GET"<!-- IF block.DEFAULT eq 'always' --> selected<!-- ENDIF -->>
-          			<div class="Browse">
+		  			<div class="Browse">
 				{DROPDOWN}
 	<!-- ELSEIF block.TYPE eq 'upload' -->
 				<input type="file" name="{block.NAME}" size="25" maxlength="100">
@@ -109,28 +109,28 @@
 				<a href="{LINKURL}">{block.TAGLINE1}</a>
 	<!-- ELSE -->					
 				{block.TYPE}
-    <!-- ENDIF -->
-                        </td>
-                    </tr>
+	<!-- ENDIF -->
+						</td>
+					</tr>
 <!-- END block -->
-                    <tr valign="top">
-                        <td height="22">&nbsp;</td>
-                        <td height="22">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td><input type="hidden" name="action" value="update"></td>
-                        <td><input type="submit" name="act" value="{L_530}"></td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        </table>
-        </form>
-    </td>
+					<tr valign="top">
+						<td height="22">&nbsp;</td>
+						<td height="22">&nbsp;</td>
+					</tr>
+					<tr>
+						<td><input type="hidden" name="action" value="update"></td>
+						<td><input type="submit" name="act" value="{L_530}"></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+		</form>
+	</td>
 </tr>
 </table>
 </body>

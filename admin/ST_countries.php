@@ -13,7 +13,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 include $include_path . "domains.inc.php";
 
 ?>
@@ -35,12 +35,12 @@ include $include_path . "domains.inc.php";
    <P align="center"><A href="javascript:window.close()" class="bluelink">Close</A></P>
 
   <TABLE width="352" border="0" cellspacing="0" cellpadding="0">
-      <?php
-	  	while(list($k,$v) = each($DOMAINS))
+	  <?php
+	  	while (list($k,$v) = each($DOMAINS))
 		{
 	  ?>
-    	<TR>
-    	  <TD WIDTH=10%>
+		<TR>
+		  <TD WIDTH=10%>
 		  <FONT face="Verdana, Arial, Helvetica, sans-serif" size="2">
 		  <?php echo $k; ?>
 		  </TD>
@@ -51,8 +51,8 @@ include $include_path . "domains.inc.php";
 		<?php
 		}
 	   ?>
-      </TD>
-    </TR>
+	  </TD>
+	</TR>
   </TABLE>
   </CENTER>
  <P align="center"><A href="javascript:window.close()" class="bluelink">Close</A></P>

@@ -21,13 +21,13 @@ include $include_path.'status.inc.php';
 
 $ERR = "&nbsp;";
 
-if(is_array($_POST['delete']))
+if (is_array($_POST['delete']))
 {
 	$delete = '';
 	$i = 0;
-	while(list($k,$v) = each($_POST['delete']))
+	while (list($k,$v) = each($_POST['delete']))
 	{
-		if($i != 0) $delete = ', ';
+		if ($i != 0) $delete = ', ';
 		$delete = $k;
 		$i++;
 	}
@@ -53,18 +53,18 @@ $STATUS = array(
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_use.gif" ></td>
-          <td class=white><?php echo $MSG['25_0010']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['525']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_use.gif" ></td>
+		  <td class=white><?php echo $MSG['25_0010']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['525']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
 <TR>
 <TD>
@@ -125,12 +125,12 @@ $STATUS = array(
 		</TD>
 </TR>
 <?php
-while($USER = mysql_fetch_array($res))
+while ($USER = mysql_fetch_array($res))
 {
 	$CREATED = substr($USER['created'],4,2)."/".
 	substr($USER['created'],6,2)."/".
 	substr($USER['created'],0,4);
-	if($USER['lastlogin'] == 0)
+	if ($USER['lastlogin'] == 0)
 	{
 		$LASTLOGIN = $MSG['570'];
 	}

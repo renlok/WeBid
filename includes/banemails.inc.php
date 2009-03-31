@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 // Retrieve banned free mail domains
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 $query = "SELECT banemail FROM " . $DBPrefix . "usersettings";
 $res = mysql_query($query);
@@ -21,9 +21,9 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $DOMAINS = mysql_result($res, 0);
 
 $BANNEDDOMAINS = array_filter(explode("\n",$DOMAINS),'chop');
-if(count($BANNEDDOMAINS) > 0) {
+if (count($BANNEDDOMAINS) > 0) {
 	$TPL_domains_alert=$MSG['30_0053']."<UL>";
-	while(list($k,$v) = each($BANNEDDOMAINS)) {
+	while (list($k,$v) = each($BANNEDDOMAINS)) {
 		$TPL_domains_alert.="<LI><B>".$v."</B>";
 	}
 	$TPL_domains_alert.="</UL>";
@@ -34,7 +34,7 @@ if(count($BANNEDDOMAINS) > 0) {
 function BannedEmail($email,$domains){
 	$dom = explode('@',$email);
 	$domains = array_map('chop',$domains);
-	if(in_array($dom[1],$domains)){
+	if (in_array($dom[1],$domains)){
 		return true;
 	} else {
 		return false;

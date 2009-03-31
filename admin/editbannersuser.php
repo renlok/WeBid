@@ -19,14 +19,14 @@ include 'loggedin.inc.php';
 $id = $_REQUEST[id];
 
 #//
-if($_POST[action] == "update")
+if ($_POST[action] == "update")
 {
-	if(empty($_POST[name]) || empty($_POST[company]) || empty($_POST[email]))
+	if (empty($_POST[name]) || empty($_POST[company]) || empty($_POST[email]))
 	{
 		$ERR = $ERR_047;
 		$USER = $_POST;
 	}
-	elseif(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$",$_POST[email]))
+	elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$",$_POST[email]))
 	{
 		$ERR = $ERR_008;
 		$USER = $_POST;
@@ -53,7 +53,7 @@ else
 	$query = "SELECT * FROM " . $DBPrefix . "bannersusers WHERE id=$id";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if(mysql_num_rows($res) > 0) {
+	if (mysql_num_rows($res) > 0) {
 		$USER = mysql_fetch_array($res);
 	}
 }
@@ -66,18 +66,18 @@ else
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_ban.gif" ></td>
-          <td class=white><?php echo $MSG['25_0011']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['_0008']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_ban.gif" ></td>
+		  <td class=white><?php echo $MSG['25_0011']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['_0008']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
 <TR>
@@ -93,60 +93,60 @@ else
 			<TR>
 				<TD>
 
-                <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
-                  <?php
-                  if(!empty($ERR))
-                  {
+				<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+				  <?php
+				  if (!empty($ERR))
+				  {
 						?>
-                  <TR>
-                    <TD COLSPAN="2" ALIGN=CENTER BGCOLOR=yellow> <B>
-                      <?php echo $ERR; ?>
-                       </B></TD>
-                  </TR>
-                  <?php
-                  }
+				  <TR>
+					<TD COLSPAN="2" ALIGN=CENTER BGCOLOR=yellow> <B>
+					  <?php echo $ERR; ?>
+					   </B></TD>
+				  </TR>
+				  <?php
+				  }
 						?>
-                  <TR VALIGN="TOP">
-                    <TD COLSPAN="2" ALIGN=CENTER>
-                      <A HREF=managebanners.php><?php echo $MSG['270']; ?></A>
-                      </TD>
-                  </TR>
-                  <TR VALIGN="TOP">
-                    <TD WIDTH="101" HEIGHT="22">
-                      <?php echo $MSG['302']; ?>
-                      </TD>
-                    <TD HEIGHT="22" WIDTH="531">
-                      <INPUT TYPE=text NAME=name SIZE=40 VALUE="<?php echo $USER['name']; ?>">
-                      </TD>
-                  </TR>
-                  <TR VALIGN="TOP">
-                    <TD WIDTH="101" HEIGHT="22">
-                      <?php echo $MSG['_0022']; ?>
-                      </TD>
-                    <TD HEIGHT="22" WIDTH="531">
-                      <INPUT TYPE=text NAME=company SIZE=40 VALUE="<?php echo $USER[company]; ?>">
-                      </TD>
-                  </TR>
-                  <TR VALIGN="TOP">
-                    <TD WIDTH="101" HEIGHT="22">
-                      <?php echo $MSG['107']; ?>
-                      </TD>
-                    <TD HEIGHT="22" WIDTH="531">
-                      <INPUT TYPE=text NAME=email SIZE=40 VALUE="<?php echo $USER[email]; ?>">
-                      </TD>
-                  </TR>
-                  <TR>
-                    <TD WIDTH="101">&nbsp; </TD>
-                    <TD WIDTH="531">
-                      <INPUT TYPE="hidden" NAME="action" VALUE="update">
-                      <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
-                      <INPUT TYPE="submit" NAME="submit" VALUE="<?php echo $MSG['530']; ?>">
-                    </TD>
-                  </TR>
-                  <TR>
-                    <TD COLSPAN="2"> </TD>
-                  </TR>
-                </TABLE>
+				  <TR VALIGN="TOP">
+					<TD COLSPAN="2" ALIGN=CENTER>
+					  <A HREF=managebanners.php><?php echo $MSG['270']; ?></A>
+					  </TD>
+				  </TR>
+				  <TR VALIGN="TOP">
+					<TD WIDTH="101" HEIGHT="22">
+					  <?php echo $MSG['302']; ?>
+					  </TD>
+					<TD HEIGHT="22" WIDTH="531">
+					  <INPUT TYPE=text NAME=name SIZE=40 VALUE="<?php echo $USER['name']; ?>">
+					  </TD>
+				  </TR>
+				  <TR VALIGN="TOP">
+					<TD WIDTH="101" HEIGHT="22">
+					  <?php echo $MSG['_0022']; ?>
+					  </TD>
+					<TD HEIGHT="22" WIDTH="531">
+					  <INPUT TYPE=text NAME=company SIZE=40 VALUE="<?php echo $USER[company]; ?>">
+					  </TD>
+				  </TR>
+				  <TR VALIGN="TOP">
+					<TD WIDTH="101" HEIGHT="22">
+					  <?php echo $MSG['107']; ?>
+					  </TD>
+					<TD HEIGHT="22" WIDTH="531">
+					  <INPUT TYPE=text NAME=email SIZE=40 VALUE="<?php echo $USER[email]; ?>">
+					  </TD>
+				  </TR>
+				  <TR>
+					<TD WIDTH="101">&nbsp; </TD>
+					<TD WIDTH="531">
+					  <INPUT TYPE="hidden" NAME="action" VALUE="update">
+					  <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
+					  <INPUT TYPE="submit" NAME="submit" VALUE="<?php echo $MSG['530']; ?>">
+					</TD>
+				  </TR>
+				  <TR>
+					<TD COLSPAN="2"> </TD>
+				  </TR>
+				</TABLE>
 				</TD>
 			</TR>
 		</TABLE>

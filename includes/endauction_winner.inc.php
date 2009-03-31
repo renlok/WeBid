@@ -12,21 +12,21 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 // Check if the e-mail has to be sent or not
 $emailmode = @mysql_result(@mysql_query("SELECT endemailmode FROM " . $DBPrefix . "users WHERE id='".$Seller['id']."'"),0,"endemailmode");
-if($emailmode != 'one') return;
+if ($emailmode != 'one') return;
 
 // Retrieve user's prefered language
 $USERLANG = @mysql_result(@mysql_query("SELECT language FROM " . $DBPrefix . "userslanguage WHERE user='".$Seller['id']."'"),0,"language");
-if(!isset($USERLANG)) $USERLANG = $language;
+if (!isset($USERLANG)) $USERLANG = $language;
 
 $buffer = file($main_path."language/".$USERLANG."/mail_endauction_winner.inc.php");
 $i = 0;
 $j = 0;
-while($i < count($buffer)) {
-	if(!ereg("^#(.)*$",$buffer[$i])) {
+while ($i < count($buffer)) {
+	if (!ereg("^#(.)*$",$buffer[$i])) {
 		$skipped_buffer[$j] = $buffer[$i];
 		$j++;
 	}

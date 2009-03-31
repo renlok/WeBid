@@ -12,23 +12,23 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 include $include_path . "messages.inc.php";
 
 // Check if the e-mail has to be sent or not
 $emailmode = @mysql_result(@mysql_query("SELECT startemailmode FROM " . $DBPrefix . "users WHERE id = '" . $_SESSION['WEBID_LOGGED_IN'] . "'"),0,"startemailmode");
-if($emailmode != 'yes') return;
+if ($emailmode != 'yes') return;
 
 // Retrieve user's prefered language
 $USERLANG = @mysql_result(@mysql_query("SELECT language FROM " . $DBPrefix . "userslanguage WHERE user = '" . $_SESSION['WEBID_LOGGED_IN'] . "'"),0,"language");
-if(!isset($USERLANG)) $USERLANG = $language;
+if (!isset($USERLANG)) $USERLANG = $language;
 
 $buffer = file($main_path . "language/" . $USERLANG . "/mail_auctionmail.inc.php");
 $i = 0;
 $j = 0;
-while($i < count($buffer)) {
-	if(!ereg("^#(.)*$", $buffer[$i])){
+while ($i < count($buffer)) {
+	if (!ereg("^#(.)*$", $buffer[$i])){
 		$skipped_buffer[$j] = $buffer[$i];
 		$j++;
 	}
@@ -50,7 +50,7 @@ $message = ereg_replace("<#c_city#>", $userrec['city'], $message);
 $message = ereg_replace("<#c_country#>", $userrec['country'], $message);
 $message = ereg_replace("<#c_zip#>", $userrec['zip'], $message);
 $message = ereg_replace("<#c_email#>", $userrec['email'], $message);
-if($_SESSION['SELL_atype'] == 1) {
+if ($_SESSION['SELL_atype'] == 1) {
 	$message = ereg_replace("<#a_type#>", $MSG['642'], $message);
 } else {
 	$message = ereg_replace("<#a_type#>", $MSG['641'], $message);
@@ -79,20 +79,20 @@ $message = ereg_replace("<#c_siteurl#>", $system->SETTINGS['siteurl'],$message);
 $message = ereg_replace("<#c_adminemail#>", $system->SETTINGS['adminmail'],  $message);
 
 
-if($customincrement > 0) {
+if ($customincrement > 0) {
 	$message = ereg_replace("<#a_customincrement#>", $system->print_money($_SESSION['SELL_customincrement']), $message);
 } else {
 	$message = ereg_replace("<#a_customincrement#>", $MSG['614'], $message);
 }
 
-if($shipping == '1'){
+if ($shipping == '1'){
 	$shipping_string = $MSG['031'];
 } else {
 	$shipping_string = $MSG['032'];
 }
 $message = ereg_replace("<#a_shipping#>", $shipping_string, $message);
 
-if($international) {
+if ($international) {
 	$int_string = $MSG['033'];
 } else {
 	$int_string = $MSG['043'];

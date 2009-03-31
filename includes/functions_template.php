@@ -61,7 +61,14 @@ class template_compile
 		// Try and open template for read
 		if (!file_exists($this->template->files[$handle]))
 		{
-			trigger_error("template->_tpl_load_file(): File {$this->template->files[$handle]} does not exist or is empty", E_USER_ERROR);
+			if (!file_exists($this->template['default'])) //try the old theme
+			{
+				trigger_error("template->_tpl_load_file(): File {$this->template->files[$handle]} does not exist or is empty", E_USER_ERROR);
+			}
+			else
+			{
+				$handle = 'default';
+			}
 		}
 
 		$this->template->compiled_code[$handle] = $this->compile(trim(@file_get_contents($this->template->files[$handle])));
@@ -150,7 +157,7 @@ class template_compile
 				break;
 
 				case 'IF':
-					$compile_blocks[] = '<?php ' . $this->compile_tag_if($block_val[2], false) . ' ?>';
+					$compile_blocks[] = '<?php ' . $this->compile_tag_if ($block_val[2], false) . ' ?>';
 				break;
 
 				case 'ELSE':
@@ -158,7 +165,7 @@ class template_compile
 				break;
 
 				case 'ELSEIF':
-					$compile_blocks[] = '<?php ' . $this->compile_tag_if($block_val[2], true) . ' ?>';
+					$compile_blocks[] = '<?php ' . $this->compile_tag_if ($block_val[2], true) . ' ?>';
 				break;
 
 				case 'ENDIF':
@@ -260,7 +267,7 @@ class template_compile
 		}
 
 		// Allow for control of looping (indexes start from zero):
-		// foo(2)    : Will start the loop on the 3rd entry
+		// foo(2)	: Will start the loop on the 3rd entry
 		// foo(-2)   : Will start the loop two entries from the end
 		// foo(3,4)  : Will start the loop on the fourth entry and end it on the fifth
 		// foo(3,-4) : Will start the loop on the fourth entry and end it four from last
@@ -352,13 +359,13 @@ class template_compile
 	* some adaptions for our block level methods
 	* @access private
 	*/
-	function compile_tag_if($tag_args, $elseif)
+	function compile_tag_if ($tag_args, $elseif)
 	{
 		// Tokenize args for 'if' tag.
 		preg_match_all('/(?:
-			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"         |
-			\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'     |
-			[(),]                                  |
+			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"		 |
+			\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'	 |
+			[(),]								  |
 			[^\s(),]+)/x', $tag_args, $match);
 
 		$tokens = $match[0];

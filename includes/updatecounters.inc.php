@@ -12,14 +12,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 $NOW = time();
 
 #// Retrieve current counters
 $query = "SELECT * FROM " . $DBPrefix . "counters";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-if(mysql_num_rows($res) > 0)
+if (mysql_num_rows($res) > 0)
 {
 	$COUNTERS = mysql_fetch_array($res);
 }
@@ -99,7 +99,7 @@ while ($row = mysql_fetch_array($res)) {
 $query = "SELECT category FROM " . $DBPrefix . "auctions WHERE closed=0 AND suspended=0 AND starts<=".$NOW." AND private='n'";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-while($row = mysql_fetch_array($res))
+while ($row = mysql_fetch_array($res))
 {
 	$cat_id = $row['category'];
 	$root_cat = $cat_id;
@@ -112,9 +112,9 @@ while($row = mysql_fetch_array($res))
 		$cat_id = $categories[$cat_id]['parent_id'];
 	} while ($cat_id != 0 && isset($categories[$cat_id]));
 }
-if(count($categories) > 0){
-	foreach($categories as $cat_id=>$category) {
-		if($category['updated']) {
+if (count($categories) > 0){
+	foreach ($categories as $cat_id=>$category) {
+		if ($category['updated']) {
 			$query = "UPDATE " . $DBPrefix . "categories SET
 							counter=$category[counter],
 							sub_counter=$category[sub_counter]
@@ -144,8 +144,8 @@ while ($row = mysql_fetch_array($res)) {
 $query = "SELECT category FROM " . $DBPrefix . "auctions WHERE closed=0 AND suspended=0 AND starts<=".$NOW." AND private='n'";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-if(mysql_num_rows($res) > 0){
-	while($row = mysql_fetch_array($res))
+if (mysql_num_rows($res) > 0){
+	while ($row = mysql_fetch_array($res))
 	{
 		$cat_id = $row['category'];
 		$root_cat = $cat_id;
@@ -158,8 +158,8 @@ if(mysql_num_rows($res) > 0){
 			$cat_id = $categories[$cat_id]['parent_id'];
 		} while ($cat_id != 0 && isset($categories[$cat_id]));
 	}
-	foreach($categories as $cat_id=>$category) {
-		if($category['updated']) {
+	foreach ($categories as $cat_id=>$category) {
+		if ($category['updated']) {
 			$query = "UPDATE " . $DBPrefix . "categories SET
 							counter=$category[counter],
 							sub_counter=$category[sub_counter]

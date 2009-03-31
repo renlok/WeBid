@@ -1,6 +1,7 @@
 <?php
 //0.7.3 to 0.8.0
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `hash` VARCHAR(5) NOT NULL AFTER `password` ";
+$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD `hash` VARCHAR(5) NOT NULL AFTER `password` ";
 
 //0.7.2 to 0.7.3
 /*
@@ -20,34 +21,34 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "winners` CHANGE `closingdate` `closing
 
 //update times
 $q = mysql_query("SELECT id, created, lastlogin FROM " . $DBPrefix . "adminusers") or die(mysql_error());
-while($a = mysql_fetch_assoc($q)){
+while ($a = mysql_fetch_assoc($q)){
 	$t = gmmktime(0, 0, 0, substr($a['created'], 4, 2), substr($a['created'], 6, 2), substr($a['created'], 0, 4));
 	$t2 = gmmktime(substr($a['lastlogin'], 8, 2), substr($a['lastlogin'], 10, 2), substr($a['lastlogin'], 12, 2), substr($a['lastlogin'], 4, 2), substr($a['lastlogin'], 6, 2), substr($a['lastlogin'], 0, 4));
 	mysql_query("UPDATE " . $DBPrefix . "adminusers SET created = '" . $t . "', lastlogin = '" . $t2 . "' WHERE id = ".$a['id']);
 }
 $q = mysql_query("SELECT id, starts, ends FROM " . $DBPrefix . "auctions") or die(mysql_error());
-while($a = mysql_fetch_assoc($q)){
+while ($a = mysql_fetch_assoc($q)){
 	$t = gmmktime(substr($a['starts'], 8, 2), substr($a['starts'], 10, 2), substr($a['starts'], 12, 2), substr($a['starts'], 4, 2), substr($a['starts'], 6, 2), substr($a['starts'], 0, 4));
 	$t2 = gmmktime(substr($a['ends'], 8, 2), substr($a['ends'], 10, 2), substr($a['ends'], 12, 2), substr($a['ends'], 4, 2), substr($a['ends'], 6, 2), substr($a['ends'], 0, 4));
 	mysql_query("UPDATE " . $DBPrefix . "auctions SET starts = '" . $t . "', ends  = '" . $t2 . "' WHERE id = ".$a['id']);
 }
 $q = mysql_query("SELECT id, bidwhen FROM " . $DBPrefix . "bids") or die(mysql_error());
-while($a = mysql_fetch_assoc($q)){
+while ($a = mysql_fetch_assoc($q)){
 	$t = gmmktime(substr($a['bidwhen'], 8, 2), substr($a['bidwhen'], 10, 2), substr($a['bidwhen'], 12, 2), substr($a['bidwhen'], 4, 2), substr($a['bidwhen'], 6, 2), substr($a['bidwhen'], 0, 4));
 	mysql_query("UPDATE " . $DBPrefix . "bids SET bidwhen = '" . $t . "' WHERE id = ".$a['id']);
 }
 $q = mysql_query("SELECT id, lastmessage FROM " . $DBPrefix . "community") or die(mysql_error());
-while($a = mysql_fetch_assoc($q)){
+while ($a = mysql_fetch_assoc($q)){
 	$t = gmmktime(substr($a['lastmessage'], 8, 2), substr($a['lastmessage'], 10, 2), substr($a['lastmessage'], 12, 2), substr($a['lastmessage'], 4, 2), substr($a['lastmessage'], 6, 2), substr($a['lastmessage'], 0, 4));
 	mysql_query("UPDATE " . $DBPrefix . "community SET lastmessage = '" . $t . "' WHERE id = ".$a['id']);
 }
 $q = mysql_query("SELECT id, msgdate FROM " . $DBPrefix . "comm_messages") or die(mysql_error());
-while($a = mysql_fetch_assoc($q)){
+while ($a = mysql_fetch_assoc($q)){
 	$t = gmmktime(substr($a['msgdate'], 8, 2), substr($a['msgdate'], 10, 2), substr($a['msgdate'], 12, 2), substr($a['msgdate'], 4, 2), substr($a['msgdate'], 6, 2), substr($a['msgdate'], 0, 4));
 	mysql_query("UPDATE " . $DBPrefix . "comm_messages SET msgdate = '" . $t . "' WHERE id = ".$a['id']);
 }
 $q = mysql_query("SELECT id, new_date FROM " . $DBPrefix . "news") or die(mysql_error());
-while($a = mysql_fetch_assoc($q)){
+while ($a = mysql_fetch_assoc($q)){
 	$t = gmmktime(substr($a['new_date'], 8, 2), substr($a['new_date'], 10, 2), substr($a['new_date'], 12, 2), substr($a['new_date'], 4, 2), substr($a['new_date'], 6, 2), substr($a['new_date'], 0, 4));
 	mysql_query("UPDATE " . $DBPrefix . "news SET new_date = '" . $t . "' WHERE id = ".$a['id']);
 }

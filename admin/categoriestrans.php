@@ -28,13 +28,13 @@ function search_cats($parent_id, $level){
 	$cats = array();
 	$catstr = '';
 	$stringstart = '';
-	if($level > 0) {
-		for($i = 0; $i < $level; $i++){
+	if ($level > 0) {
+		for ($i = 0; $i < $level; $i++){
 			$stringstart .= '|___';
 		}		
 	}
 		
-	while($cats = mysql_fetch_array($result)){
+	while ($cats = mysql_fetch_array($result)){
 		$catstr .= ",\n{$cats['cat_id']} => '$stringstart{$cats['cat_name']}'";
 		$catstr .= search_cats($cats['cat_id'], $level+1);
 	}
@@ -51,7 +51,7 @@ function rebuild_cat_file($cats)
 	$num_rows = count($cats);
 	
 	$i = 0;
-	foreach($cats as $k => $v) {
+	foreach ($cats as $k => $v) {
 		$output .= "$k => '$v'";
 		$i++;
 		if ($i < $num_rows)
@@ -73,7 +73,7 @@ function rebuild_cat_file($cats)
 	fclose($handle);
 }
 
-if(isset($_POST['categories'])){
+if (isset($_POST['categories'])){
 	rebuild_cat_file($_POST['categories']);
 	include "util_cc1.php";
 }
@@ -94,15 +94,15 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
-          <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['078']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
+		  <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['078']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
 <TR>
 <TD ALIGN=CENTER><BR>
@@ -121,17 +121,17 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 						<?php 
 						print $MSG['161'];
 						echo '<p>';
-						if(count($LANGUAGES) > 1){
-							foreach($LANGUAGES as $lang => $value)
+						if (count($LANGUAGES) > 1){
+							foreach ($LANGUAGES as $lang => $value)
 							{
 								print "<a href='categoriestrans.php?lang=$lang'><img align='middle' vspace=2 hspace=2 src='".$system->SETTINGS['siteurl']."includes/flags/".$lang.".gif' border='0'></a>";
 							}
 						}
 						echo '</p>';
-						if($$ERR) {
+						if ($$ERR) {
 							print "<FONT COLOR=red><BR><BR>".$$ERR;
 						} else {
-							if($$MSG) {
+							if ($$MSG) {
 								print "<FONT COLOR=red><BR><BR>".$$MSG;
 							} else {
 								print "<BR><BR>";
@@ -141,9 +141,9 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 						</P></TD>
 					</TR>
 				</table>
-                <TABLE WIDTH=100% CELLPADDING=4 cellspacing="4" BGCOLOR="#FFFFFF">
+				<TABLE WIDTH=100% CELLPADDING=4 cellspacing="4" BGCOLOR="#FFFFFF">
 					<TR style="background-color: #eee;">
-                    	<TD WIDTH="72"> 
+						<TD WIDTH="72"> 
 							<B> 
 							Default Name
 							</B> </TD>
@@ -151,19 +151,19 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 							<B> 
 							Translation
 							</B> </TD>
-                        <td>&nbsp;</td>
+						<td>&nbsp;</td>
 					</TR>
 					<?php
 					$query = "select * from " . $DBPrefix . "categories WHERE deleted=0 order by cat_name";
 					$result = mysql_query($query);
-					if(!$result) {
+					if (!$result) {
 						print "Database access error - abnormal termination".mysql_error();
 						exit;
 					}
 					$num_cats = mysql_num_rows($result);
 					$i = 0;
 					$z = 0;
-					while($i < $num_cats ) {
+					while ($i < $num_cats ) {
 						//-- Get category's data
 						$cat_id = mysql_result($result,$i,"cat_id");
 						$cat_name = stripslashes(mysql_result($result,$i,"cat_name"));
@@ -183,7 +183,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 					}
 			?>
 					<TR> </TR>
-				</TABLE>    
+				</TABLE>	
 				<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#FFFFFF">
 					<TR>
 						<TD> 

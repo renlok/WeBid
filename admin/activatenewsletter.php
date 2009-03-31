@@ -20,8 +20,8 @@ include $include_path . 'fonts.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
-	if(!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
+	if (!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none") {
 		$TARGET = $upload_path.$_FILES['logo']['name'];
 		move_uploaded_file($_FILES['logo']['tmp_name'],$TARGET);
 		chmod($TARGET,0666);
@@ -39,15 +39,15 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 loadblock($MSG['603'], $MSG['604'], 'batch', 'newsletter', $system->SETTINGS['newsletter'], $MSG['030'], $MSG['029']);
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'use',
 		'TYPENAME' => $MSG['25_0010'],
 		'PAGENAME' => $MSG['25_0079']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

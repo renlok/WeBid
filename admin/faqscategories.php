@@ -18,7 +18,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['InsertButton']) && isset($_POST['cat_name']) && strlen($_POST['cat_name']) > 0)
+if (isset($_POST['InsertButton']) && isset($_POST['cat_name']) && strlen($_POST['cat_name']) > 0)
 {
 	$query = "insert into " . $DBPrefix . "faqscategories values(NULL,
 		'".addslashes($_POST['cat_name'][$system->SETTINGS['defaultlanguage']])."')";
@@ -26,15 +26,15 @@ if(isset($_POST['InsertButton']) && isset($_POST['cat_name']) && strlen($_POST['
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$id = mysql_insert_id();
 	reset($LANGUAGES);
-	while(list($k,$v) = each($LANGUAGES)){
+	while (list($k,$v) = each($LANGUAGES)){
 		@mysql_query("INSERT INTO " . $DBPrefix . "faqscat_translated VALUES($id,'$k','".$system->cleanvars($_POST['cat_name'][$k])."')");
 	}
 }
 
 #// Delete categories
-if(isset($_POST['delete']) && is_array($_POST['delete']))
+if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
-	while(list($k,$v) = each($_POST['delete']))
+	while (list($k,$v) = each($_POST['delete']))
 	{
 		$query = "delete from " . $DBPrefix . "faqscategories WHERE id=$v";
 		$r = mysql_query($query);
@@ -58,18 +58,18 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 <FORM NAME="categories" METHOD="post" ACTION="">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_con.gif" ></td>
-          <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5230']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_con.gif" ></td>
+		  <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5230']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" ALIGN="CENTER" BGCOLOR="#0083D7">
 		<TR align=center>
 			<TD BGCOLOR="#ffffff">&nbsp;</TD>
@@ -82,15 +82,15 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 								<?php echo $MSG['5230']; ?>
 						</TD>
 					</TR>
-                    <?php
-					if(!empty($ERR)){
+					<?php
+					if (!empty($ERR)){
 					?>
 					<TR BGCOLOR="#FFFF00">
 						<TD COLSPAN="3"> <B>
 							<?php echo $ERR; ?>
 							</B></TD>
 					</TR>
-                    <?php } ?>
+					<?php } ?>
 					<TR BGCOLOR="#EEEEEE">
 						<TD COLSPAN="3">
 						<?php echo $MSG['5234']; ?>
@@ -105,8 +105,8 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 										<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<INPUT TYPE="text" NAME="cat_name[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" SIZE="25" MAXLENGTH="200">
 										<?php
 											reset($LANGUAGES);
-											while(list($k,$v) = each($LANGUAGES)){
-												if($k!=$system->SETTINGS['defaultlanguage']) print '<BR><IMG SRC=../includes/flags/' . $k . '.gif>&nbsp;<INPUT TYPE=text name="' . cat_name[$k] . '" SIZE=25 MAXLENGTH=200>';
+											while (list($k,$v) = each($LANGUAGES)){
+												if ($k!=$system->SETTINGS['defaultlanguage']) print '<BR><IMG SRC=../includes/flags/' . $k . '.gif>&nbsp;<INPUT TYPE=text name="' . cat_name[$k] . '" SIZE=25 MAXLENGTH=200>';
 											}
 										?>
 									</TD>
@@ -133,14 +133,14 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 						</TD>
 					</TR>
 					<?php
-					while($row = mysql_fetch_array($res__))
+					while ($row = mysql_fetch_array($res__))
 					{
 						$row[category]=stripslashes($row['category']);
 						#// Are there FAQs for this category?
 						$query = "select id from " . $DBPrefix . "faqs WHERE category = " . $row['id'];
 						$re = mysql_query($query);
 						$system->check_mysql($re, $query, __LINE__, __FILE__);
-						if(mysql_num_rows($re) > 0)
+						if (mysql_num_rows($re) > 0)
 						{
 							$HAVEFAQS = TRUE;
 						}
@@ -165,15 +165,15 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 							</TD>
 						<TD WIDTH="14%" BGCOLOR="#FFFFFF" ALIGN=CENTER>
 						<?php
-						if(!$HAVEFAQS)
+						if (!$HAVEFAQS)
 						{
 						?>
 							<INPUT TYPE="checkbox" NAME="delete[<?php echo $row['id']; ?>]" VALUE="<?php echo $row['id']; ?>">
 						<?php
 						} else {
 						?>
-                        <IMG SRC="../images/nodelete.gif" ALT="You cannot delete this category">
-                        <?php
+						<IMG SRC="../images/nodelete.gif" ALT="You cannot delete this category">
+						<?php
 						}
 						?>
 						</TD>

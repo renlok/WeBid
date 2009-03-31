@@ -34,42 +34,46 @@ function resizeThumbnailImage($thumb_image_name, $image, $width, $height, $start
 	$start_height = ($start_height < 0) ? 0 : $start_height;
 	$width = ($imagewidth < $width) ? $imagewidth : $width;
 	$height = ($imageheight < $height) ? $imageheight : $height;
-	if (($width + $start_width) > $imagewidth) {
+	if (($width + $start_width) > $imagewidth)
+	{
 		$start_width = $imagewidth - $width;
 	}
-	if (($height + $start_height) > $imageheight) {
+	if (($height + $start_height) > $imageheight)
+	{
 		$start_height = $imageheight - $height;
 	}
 
 	$newImageWidth = ceil($width * $scale);
 	$newImageHeight = ceil($height * $scale);
 	$newImage = imagecreatetruecolor($newImageWidth, $newImageHeight);
-	switch ($imageType) {
-		case "image/gif":
+	switch ($imageType)
+	{
+		case 'image/gif':
 			$source = imagecreatefromgif ($image);
 			break;
-		case "image/pjpeg":
-		case "image/jpeg":
-		case "image/jpg":
+		case 'image/pjpeg':
+		case 'image/jpeg':
+		case 'image/jpg':
 			$source = imagecreatefromjpeg($image);
 			break;
-		case "image/png":
-		case "image/x-png":
+		case 'image/png':
+		case 'image/x-png':
 			$source = imagecreatefrompng($image);
 			break;
 	}
 	imagecopyresampled($newImage, $source, 0, 0, $start_width, $start_height, $newImageWidth, $newImageHeight, $width, $height);
-	switch ($imageType) {
-		case "image/gif":
+	switch ($imageType)
+	{
+		case 'image/gif':
 			imagegif ($newImage, $thumb_image_name);
 			break;
-		case "image/pjpeg":
-		case "image/jpeg":
-		case "image/jpg":
+		case 'image/pjpeg':
+		case 'image/jpeg':
+		case 'image/jpg':
 			imagejpeg($newImage, $thumb_image_name, 90);
 			break;
-		case "image/png":
-		case "image/x-png":
+		case 'image/png':
+		case 'image/x-png':
 			imagepng($newImage, $thumb_image_name);
 			break;
 	}
@@ -78,23 +82,28 @@ function resizeThumbnailImage($thumb_image_name, $image, $width, $height, $start
 }
 
 // Process delete
-if ($_GET['action'] == 'delete' && isset($_GET['img'])) {
-	if ($_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) {
-		unlink($upload_path . session_id() . "/" . $_SESSION['SELL_pict_url']);
+if ($_GET['action'] == 'delete' && isset($_GET['img']))
+{
+	if ($_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])])
+	{
+		unlink($upload_path . session_id() . '/' . $_SESSION['SELL_pict_url']);
 		unset($_SESSION['SELL_pict_url']);
 	}
-	unlink($upload_path . session_id() . "/" . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
+	unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
 	unset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE'][intval($_GET['img'])]);
 }
 
-if ($_GET['action'] == 'makedefault') {
+if ($_GET['action'] == 'makedefault')
+{
 	$cropdefault = true;
 	$image = $_GET['img'];
 }
 
-if ($_GET['action'] == 'crop' && !empty($_POST['w'])) {
-	if ($_POST['upload_thumbnail'] == $MSG['616']) {
+if ($_GET['action'] == 'crop' && !empty($_POST['w']))
+{
+	if ($_POST['upload_thumbnail'] == $MSG['616'])
+	{
 		// Get the new coordinates to crop the image.
 		$x1 = intval($_POST['x1']);
 		$y1 = intval($_POST['y1']);
@@ -109,21 +118,26 @@ if ($_GET['action'] == 'crop' && !empty($_POST['w'])) {
 		$cropped = resizeThumbnailImage($thumb_image_location, $large_image_location, $w, $h, $x1, $y1, $scale);
 		$_SESSION['SELL_pict_url'] = 'thumb-' . $_GET['img'];
 		$_SESSION['SELL_pict_url_temp'] = $_GET['img'];
-	} else {
+	}
+	else
+	{
 		$_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $_GET['img'];
 	}
 }
 
 // close window
-if (!empty($_POST['creategallery'])) {
+if (!empty($_POST['creategallery']))
+{
 	$_SESSION['GALLERY_UPDATED'] = true;
 	print '<script type="text/javascript">window.close()</script>';
 	exit;
 }
 
 // PROCESS UPLOADED FILE
-if ($_POST['uploadpicture'] == $MSG['681']) {
-	if (!empty($_FILES['userfile']['tmp_name']) && $_FILES['userfile']['tmp_name'] != "none") {
+if ($_POST['uploadpicture'] == $MSG['681'])
+{
+	if (!empty($_FILES['userfile']['tmp_name']) && $_FILES['userfile']['tmp_name'] != 'none')
+	{
 		if (!isset($_SESSION['UPLOADED_PICTURES']) || !is_array($_SESSION['UPLOADED_PICTURES'])) $_SESSION['UPLOADED_PICTURES'] = array();
 		if (!isset($_SESSION['UPLOADED_PICTURES_SIZE']) || !is_array($_SESSION['UPLOADED_PICTURES_SIZE'])) $_SESSION['UPLOADED_PICTURES_SIZE'] = array();
 		$filename = basename($_FILES['userfile']['name']);
@@ -131,22 +145,31 @@ if ($_POST['uploadpicture'] == $MSG['681']) {
 		$file_ext = strtolower($nameparts[count($nameparts) - 1]);
 		$file_types = array('gif', 'jpg', 'jpeg', 'png');
 
-		if ($_FILES['userfile']['size'] > $system->SETTINGS['maxuploadsize']) {
+		if ($_FILES['userfile']['size'] > $system->SETTINGS['maxuploadsize'])
+		{
 			$ERR = $ERR_709 . '&nbsp;' . ($system->SETTINGS['maxuploadsize'] / 1024) . '&nbsp;Kbytes';
-		} elseif (!in_array($file_ext, $file_types)) {
+		}
+		elseif (!in_array($file_ext, $file_types))
+		{
 			$ERR = $ERR_710 . ' (' . $file_ext . ')';
-		} elseif (in_array($_FILES['userfile']['name'], $_SESSION['UPLOADED_PICTURES'])) {
+		}
+		elseif (in_array($_FILES['userfile']['name'], $_SESSION['UPLOADED_PICTURES']))
+		{
 			$ERR = $MGS_2__0054 . ' (' . $_FILES['userfile']['name'] . ')';
-		} else {
+		}
+		else
+		{
 			// Create a TMP directory for this session (if not already created)
-			if (!file_exists($upload_path . session_id())) {
+			if (!file_exists($upload_path . session_id()))
+			{
 				umask(0);
 				mkdir($upload_path . session_id(), 0777);
 				chmod($upload_path . session_id(), 0777); //incase mkdir fails
 			}
 			// Move uploaded file into TMP directory & rename
 			$replace = array('.', ' ', ',');
-			switch($file_ext) {
+			switch($file_ext)
+			{
 				case 'gif':
 					$newname = str_replace('.gif', '', $_FILES['userfile']['name']);
 					$newname = str_replace($replace, '_', $newname) . '.gif';
@@ -164,12 +187,14 @@ if ($_POST['uploadpicture'] == $MSG['681']) {
 					$newname = str_replace($replace, '_', $newname) . '.png';
 					break;
 			}
-			if ($system->move_file($_FILES['userfile']['tmp_name'], $upload_path . session_id() . '/' . $newname)) {
+			if ($system->move_file($_FILES['userfile']['tmp_name'], $upload_path . session_id() . '/' . $newname))
+			{
 				// Populate arrays
 				array_push($_SESSION['UPLOADED_PICTURES'], $newname);
 				$fname = $upload_path . session_id() . '/' . $newname;
 				array_push($_SESSION['UPLOADED_PICTURES_SIZE'], filesize($fname));
-				if (count($_SESSION['UPLOADED_PICTURES']) == 1) {
+				if (count($_SESSION['UPLOADED_PICTURES']) == 1)
+				{
 					$cropdefault = true;
 					$image = $newname;
 				}
@@ -178,16 +203,20 @@ if ($_POST['uploadpicture'] == $MSG['681']) {
 	}
 }
 
-if ($cropdefault) {
+if ($cropdefault)
+{
 	list($imgwidth, $imgheight) = getimagesize($upload_path . session_id() . '/' . $image);
 	$swidth = ($imgwidth < 380) ? '' : ' width: 380px;';
 	$imgratio = ($imgwidth > 380) ? $imgwidth / 380 : 1;
-	if ($imgwidth > $imgheight) {
+	if ($imgwidth > $imgheight)
+	{
 		$ratio = '1.2:1';
 		$thumbwh = 'width:' . $width . '; height:' . $height . ';';
 		$scaleX = 120;
 		$scaleY = 100;
-	} else {
+	}
+	else
+	{
 		$ratio = '1:1.2';
 		$thumbwh = 'height:' . $width . '; width:' . $height . ';';
 		$scaleX = 100;
@@ -206,7 +235,9 @@ if ($cropdefault) {
 			'IMGPATH' => $uploaded_path . session_id() . '/' . $image,
 			'IMAGE' => $image
 			));
-} else {
+}
+else
+{
 	$template->assign_vars(array(
 			'MAXIMAGES' => $system->SETTINGS['maxpictures'],
 			'ERROR' => (isset($ERR)) ? $ERR : '',
@@ -215,7 +246,8 @@ if ($cropdefault) {
 			));
 }
 
-foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v) {
+foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
+{
 	$template->assign_block_vars('images', array(
 			'IMGNAME' => $v,
 			'IMGSIZE' => $_SESSION['UPLOADED_PICTURES_SIZE'][$k],

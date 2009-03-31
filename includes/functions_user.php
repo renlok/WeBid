@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit('Access denied');
+if (!defined('InWeBid')) exit('Access denied');
 
 class user
 {
@@ -25,15 +25,15 @@ class user
 		$this->logged_in = false;
 		$this->user_data = array();
 		
-		if(isset($_SESSION['WEBID_LOGGED_NUMBER']) && isset($_SESSION['WEBID_LOGGED_IN']) && isset($_SESSION['WEBID_LOGGED_PASS'])) {
+		if (isset($_SESSION['WEBID_LOGGED_NUMBER']) && isset($_SESSION['WEBID_LOGGED_IN']) && isset($_SESSION['WEBID_LOGGED_PASS'])) {
 			$query = "SELECT * FROM " . $DBPrefix . "users WHERE password = '" . $_SESSION['WEBID_LOGGED_PASS'] . "' AND id = " . $_SESSION['WEBID_LOGGED_IN'];
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			
-			if(mysql_num_rows($res) > 0) {	
+			if (mysql_num_rows($res) > 0) {	
 				$user_data = mysql_fetch_array($res);
 				
-				if(strspn($user_data['password'], $user_data['hash']) == $_SESSION['WEBID_LOGGED_NUMBER']) {
+				if (strspn($user_data['password'], $user_data['hash']) == $_SESSION['WEBID_LOGGED_NUMBER']) {
 					$this->logged_in = true;
 					$this->user_data = $user_data;
 				}

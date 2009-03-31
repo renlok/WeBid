@@ -28,6 +28,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `id` int(11) NOT NULL auto_increment,
   `username` varchar(32) NOT NULL default '',
   `password` varchar(32) NOT NULL default '',
+  `hash` varchar(5) NOT NULL default '',
   `created` varchar(8) NOT NULL default '',
   `lastlogin` varchar(14) NOT NULL default '',
   `status` int(2) NOT NULL default '0',
@@ -331,7 +332,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
 # Dumping data for table `" . $DBPrefix . "categories`
 # 
 
-if($_GET['cats'] == 1){
+if ($_GET['cats'] == 1){
 $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES (1, 0, 'Art &amp; Antiques', 0, 0, 0, '', '');";
 $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES (2, 1, 'Ancient World', 0, 0, 0, '', '');";
 $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES (3, 1, 'Amateur Art', 0, 0, 0, '', '');";
@@ -1345,7 +1346,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "news_translated` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "online`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "online` (
   `ID` bigint(21) NOT NULL auto_increment,
-  `SESSION` varchar(255) NOT NULL default '',
+  `SESSION` varchar(32) NOT NULL default '',
   `time` bigint(21) NOT NULL default '0',
   PRIMARY KEY  (`ID`)
 ) ;";
@@ -1662,6 +1663,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `id` int(32) NOT NULL auto_increment,
   `nick` varchar(20) default NULL,
   `password` varchar(32) default NULL,
+  `hash` varchar(5) default NULL,
   `name` tinytext,
   `address` tinytext,
   `city` varchar(25) default NULL,

@@ -19,7 +19,7 @@ include $include_path.'time.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings set 
 			timecorrection = " . intval($_POST['timecorrection']);
@@ -95,8 +95,8 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>
 

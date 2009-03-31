@@ -19,7 +19,7 @@ include $include_path . 'countries.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET defaultcountry = '" . $_POST['country'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -30,8 +30,8 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 function generateSelect($name = '', $countries = array()) {
 	global $system;
 	$html = '<select name="' . $name . '">';
-	foreach($countries as $k => $v) {
-		if($v == $system->SETTINGS['defaultcountry']){
+	foreach ($countries as $k => $v) {
+		if ($v == $system->SETTINGS['defaultcountry']){
 			$html .= '<option value="' . $v . '" selected>' . $v . '</option>';
 		} else {
 			$html .= '<option value="' . $v . '">' . $v . '</option>';
@@ -44,16 +44,16 @@ function generateSelect($name = '', $countries = array()) {
 loadblock($MSG['5322'], $MSG['5321'], generateSelect('country', $countries));
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['5322'],
 		'DROPDOWN' => $html
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

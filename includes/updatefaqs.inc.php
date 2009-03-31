@@ -12,17 +12,17 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 $NOW = time();
 $query = "SELECT * FROM " . $DBPrefix . "faqs";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-while($row = mysql_fetch_array($res)) {
+while ($row = mysql_fetch_array($res)) {
 	reset($LANGUAGES);
-	while(list($k,$v) = each($LANGUAGES)){
+	while (list($k,$v) = each($LANGUAGES)){
 		$TR=@mysql_fetch_array(@mysql_query("SELECT * FROM " . $DBPrefix . "faqs_translated WHERE lang='".$k."' AND id=".$row['id']));
-		if(!$TR){
+		if (!$TR){
 			$query = "INSERT INTO " . $DBPrefix . "faqs_translated  VALUES
 					(".$row['id'].", '$k', '".addslashes($row['question'])."', '".addslashes($row['answer'])."')";
 		}

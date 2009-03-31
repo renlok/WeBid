@@ -12,21 +12,21 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
-if(!defined('AdminFuncCall')) {
+if (!defined('AdminFuncCall')) {
 	function checklogin() {
 		global $_SESSION, $system, $DBPrefix;
 		
-		if(isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS'])) {
+		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS'])) {
 			$query = "SELECT hash, password FROM " . $DBPrefix . "adminusers WHERE password = '" . $_SESSION['WEBID_ADMIN_PASS'] . "' AND id = " . $_SESSION['WEBID_ADMIN_IN'];
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			
-			if(mysql_num_rows($res) > 0) {	
+			if (mysql_num_rows($res) > 0) {	
 				$user_data = mysql_fetch_array($res);
 				
-				if(strspn($user_data['password'], $user_data['hash']) == $_SESSION['WEBID_LOGGED_NUMBER']) {
+				if (strspn($user_data['password'], $user_data['hash']) == $_SESSION['WEBID_LOGGED_NUMBER']) {
 					return false;
 				}
 			}
@@ -53,7 +53,7 @@ if(!defined('AdminFuncCall')) {
 		global $selectsetting;
 		$html = '<select name="' . $name . '">';
 		foreach ($options as $option => $value ) {
-			if($selectsetting == $option){
+			if ($selectsetting == $option){
 				$html .= '<option value=' . $option . ' selected>' . $value . '</option>';
 			} else {
 				$html .= '<option value=' . $option . '>' . $value . '</option>';
@@ -66,7 +66,7 @@ if(!defined('AdminFuncCall')) {
 	function get_hash() {
 		$string = '0123456789abcdefghijklmnopqrstuvyxz';
 		$hash = '';
-		for($i = 0; $i < 5; $i++) {
+		for ($i = 0; $i < 5; $i++) {
 			$rand = rand(0, 35);
 			$hash .= $string[$rand];
 			$string = str_replace($string[$rand], '', $string);

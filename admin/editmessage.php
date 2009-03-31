@@ -17,7 +17,7 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Insert new currency
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$query = "UPDATE " . $DBPrefix . "comm_messages SET message='".addslashes($_POST['message'])."' WHERE id = " . $_POST['msg'];
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	header("Location: editmessages.php?id=" . $_POST['id']);
@@ -40,57 +40,57 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 <FORM NAME="newcurrency" METHOD="post" ACTION="">
   <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_con.gif" ></td>
-            <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5278']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_con.gif" ></td>
+			<td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5278']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
 		<TR>
 			<td align="center" valign="middle">
 
-        <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-        <tr><td align="center" valign="middle">
-        <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-          <TR>
-            <TD ALIGN=CENTER class=title colspan="2">
-                <?php echo $MSG['5278']; ?>
-            </TD>
-          </TR>
-          <tr><td>
-          <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
-          
-          <?php
-		  if(!empty($ERR)){
+		<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
+		<tr><td align="center" valign="middle">
+		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
+		  <TR>
+			<TD ALIGN=CENTER class=title colspan="2">
+				<?php echo $MSG['5278']; ?>
+			</TD>
+		  </TR>
+		  <tr><td>
+		  <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+		  
+		  <?php
+		  if (!empty($ERR)){
 		  ?>
-          <TR BGCOLOR="yellow">
-            <TD COLSPAN="2"> <FONT FACE=Verdana,Arial SIZE=2 COLOR=red><B>
-              <?php echo $ERR; ?>
-              </B></FONT></TD>
-          </TR>
-          <?php } ?>
-          <TR BGCOLOR="#FFFFFF">
-            <TD COLSPAN="2" ALIGN=center><FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
+		  <TR BGCOLOR="yellow">
+			<TD COLSPAN="2"> <FONT FACE=Verdana,Arial SIZE=2 COLOR=red><B>
+			  <?php echo $ERR; ?>
+			  </B></FONT></TD>
+		  </TR>
+		  <?php } ?>
+		  <TR BGCOLOR="#FFFFFF">
+			<TD COLSPAN="2" ALIGN=center><FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
 			<A HREF=editmessages.php?id=<?php echo $id; ?>><?php echo $MSG['5279']; ?></A> </TD>
-          </TR>
-          <TR BGCOLOR="#FFFFFF">
-            <TD WIDTH="24%" BGCOLOR="#FFFFFF" VALIGN="TOP">
+		  </TR>
+		  <TR BGCOLOR="#FFFFFF">
+			<TD WIDTH="24%" BGCOLOR="#FFFFFF" VALIGN="TOP">
 				<FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
 				<?php echo $MSG['5059']; ?>
 			</TD>
-            <TD WIDTH="76%">
-              <TEXTAREA ROWS=8 COLS=40 NAME="message"><?php echo stripslashes(htmlentities($msg['message'])); ?></TEXTAREA>
-            </TD>
-          </TR>
-          <TR BGCOLOR="#FFFFFF">
-            <TD WIDTH="24%"><FONT FACE="Verdana,Helvetica,Arial" SIZE="2"><?php echo $MSG['5060']; ?></TD>
-            <TD WIDTH="76%"> <FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
-              <?
-				  if($msg['user'] > 0)
+			<TD WIDTH="76%">
+			  <TEXTAREA ROWS=8 COLS=40 NAME="message"><?php echo stripslashes(htmlentities($msg['message'])); ?></TEXTAREA>
+			</TD>
+		  </TR>
+		  <TR BGCOLOR="#FFFFFF">
+			<TD WIDTH="24%"><FONT FACE="Verdana,Helvetica,Arial" SIZE="2"><?php echo $MSG['5060']; ?></TD>
+			<TD WIDTH="76%"> <FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
+			  <?
+				  if ($msg['user'] > 0)
 				  {
 					  print $msg['username'];
 				  }
@@ -99,28 +99,28 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 					  print "Uknown user";
 				  }
 			  ?>
-              -
-              <?php echo FormatDate($msg['msgdate']); ?>
-            </TD>
-          </TR>
-          <TR BGCOLOR="#FFFFFF">
-            <TD WIDTH="24%">
-              <INPUT TYPE="hidden" NAME="action" VALUE="update">
-              <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
-              <INPUT TYPE="hidden" NAME="msg" VALUE="<?php echo $msg; ?>">
-            </TD>
-            <TD WIDTH="76%">
-              <INPUT TYPE="submit" NAME="Submit" VALUE="UPDATE CHANGES">
-            </TD>
-          </TR>
-       </TABLE>
-        </td></tr>
-        </TABLE>
-        </td></tr>
+			  -
+			  <?php echo FormatDate($msg['msgdate']); ?>
+			</TD>
+		  </TR>
+		  <TR BGCOLOR="#FFFFFF">
+			<TD WIDTH="24%">
+			  <INPUT TYPE="hidden" NAME="action" VALUE="update">
+			  <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
+			  <INPUT TYPE="hidden" NAME="msg" VALUE="<?php echo $msg; ?>">
+			</TD>
+			<TD WIDTH="76%">
+			  <INPUT TYPE="submit" NAME="Submit" VALUE="UPDATE CHANGES">
+			</TD>
+		  </TR>
+	   </TABLE>
+		</td></tr>
+		</TABLE>
+		</td></tr>
 			</TD>
 		</TR>
 	</TABLE>
-    <A HREF="boards.php"><?php echo strtoupper($MSG['5032']); ?></A>
+	<A HREF="boards.php"><?php echo strtoupper($MSG['5032']); ?></A>
 </FORM>
 </BODY>
 </HTML>

@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 function browseItems($result, $current_page) {
 	global $system, $uploaded_path, $DBPrefix, $MSG, $ERR_114;
@@ -34,15 +34,15 @@ function browseItems($result, $current_page) {
 			
 			/* this subastas title and link to details */
 			$tplv['id'] = $row['id'];
-            $tplv['title'] = '<a href="'.$system->SETTINGS['siteurl'].'item.php?id='.$row['id'].'">'.$row['title'].'</a>';
+			$tplv['title'] = '<a href="'.$system->SETTINGS['siteurl'].'item.php?id='.$row['id'].'">'.$row['title'].'</a>';
 			
-			if($row['current_bid'] == 0) {
+			if ($row['current_bid'] == 0) {
 				$row['current_bid'] = $row['minimum_bid'];
 			}
 			
-			if($row['buy_now'] > 0 && $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price']))) {
+			if ($row['buy_now'] > 0 && $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price']))) {
 				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="'.$system->SETTINGS['siteurl'].'buy_now.php?id='.$row['id'].'"><img src="'.$system->SETTINGS['siteurl'].'images/buy_it_now.gif" border=0 class="buynow"></a> '.$system->print_money($row['buy_now']).')';
-			} elseif($row['buy_now'] > 0 && $row['bn_only'] == 'y') {
+			} elseif ($row['buy_now'] > 0 && $row['bn_only'] == 'y') {
 				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="'.$system->SETTINGS['siteurl'].'buy_now.php?id='.$row['id'].'"><img src="'.$system->SETTINGS['siteurl'].'images/buy_it_now.gif" border=0></a> '.$system->print_money($row['buy_now']).') <img src="'.$system->SETTINGS['siteurl'].'images/bn_only.png" border=0>';
 				$row['current_bid'] = $row['buy_now'];
 			} else {
@@ -64,7 +64,7 @@ function browseItems($result, $current_page) {
 			$tplv['rpr'] = $reserved_price.$num_bids;
 			
 			// time left till the end of this auction 
-            $s_difference = time() - $row['starts'];
+			$s_difference = time() - $row['starts'];
 			$difference = $row['ends'] - time();
 			
 			$template->assign_block_vars('items', array(
@@ -83,11 +83,11 @@ function browseItems($result, $current_page) {
 		}
 		$PREV = intval($PAGE - 1);
 		$NEXT = intval($PAGE + 1);
-		if($PAGES > 1) {
+		if ($PAGES > 1) {
 			$LOW = $PAGE - 5;
-			if($LOW <= 0) $LOW = 1;
+			if ($LOW <= 0) $LOW = 1;
 			$COUNTER = $LOW;
-			while($COUNTER <= $PAGES && $COUNTER < ($PAGE+6)) {
+			while ($COUNTER <= $PAGES && $COUNTER < ($PAGE+6)) {
 				$template->assign_block_vars('pages', array(
 					'PAGE' => ($PAGE == $COUNTER) ? '<b>'.$COUNTER.'</b>' : '<a href="'.$system->SETTINGS['siteurl'].$current_page.'?PAGE='.$COUNTER.'&id='.$id.'"><u>'.$COUNTER.'</u></a>'
 				));

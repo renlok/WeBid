@@ -23,13 +23,13 @@ include 'loggedin.inc.php';
 <TABLE WIDTH=100% CELLPADDING=2 CELLSPACING="0" BORDER="0">
 	<TR BGCOLOR=#eeeeee>
 		<td background="images/bac_barint.gif" colspan="2">
-            <table width="100%" border="0" cellspacing="5" cellpadding="0">
-            <tr> 
-            <td width="30"><img src="images/i_con.gif" ></td>
-            <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5030']; ?></td>
-            </tr>
-            </table>
-        </td>
+			<table width="100%" border="0" cellspacing="5" cellpadding="0">
+			<tr> 
+			<td width="30"><img src="images/i_con.gif" ></td>
+			<td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5030']; ?></td>
+			</tr>
+			</table>
+		</td>
 	</TR>
 	<TR>
 		<TD WIDTH="3%">&nbsp;</TD>

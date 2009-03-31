@@ -13,12 +13,14 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
+
 // If user is not logged in redirect to login page
 if (!$user->logged_in)
 {
 	header('location: user_login.php');
 	exit;
 }
+
 // Get closed auctions with winners
 $query = "SELECT a.auction, b.title, b.ends
 		 FROM " . $DBPrefix . "winners a, " . $DBPrefix . "auctions b
@@ -28,9 +30,10 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
-$bgColor = "#EBEBEB";
+$bgColor = '#EBEBEB';
 $i = 0;
-while ($row = mysql_fetch_array($res)) {
+while ($row = mysql_fetch_array($res))
+{
 	$template->assign_block_vars('a', array(
 			'TITLE' => $row['title'],
 			'ENDS' => FormatDate($row['ends']),
@@ -42,8 +45,9 @@ while ($row = mysql_fetch_array($res)) {
 			WHERE w.auction = " . $row['auction'];
 	$rr = mysql_query($query);
 	$system->check_mysql($rr, $query, __LINE__, __FILE__);
-	while ($winner = mysql_fetch_array($rr)) {
-		$bgColor = ($bgColor == "#EBEBEB") ? "#FFFFFF" : "#EBEBEB";
+	while ($winner = mysql_fetch_array($rr))
+	{
+		$bgColor = ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB';
 		$fblink = ($winner['feedback_win'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $winner['winner'] . '&sid=' . $winner['seller'] . '&ws=w">' . $MSG['207'] . '</a>)' : '';
 		$template->assign_block_vars('a.w', array(
 				'BGCOLOUR' => $bgColor,
@@ -71,5 +75,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-
 ?>

@@ -1,5 +1,5 @@
 <?php
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 $DOMAINS = array(
 "ad" => "Andorra",
 "ae" => "United Arab Emirates",

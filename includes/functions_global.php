@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-if(!defined('InWeBid')) exit('Access denied');
+if (!defined('InWeBid')) exit('Access denied');
 
 class global_class
 {
@@ -20,19 +20,19 @@ class global_class
 	function global_class() {
 		global $DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $main_path;
 		//-- Database connection
-		if(!mysql_connect($DbHost,$DbUser,$DbPassword)) die();
-		if(!mysql_select_db($DbDatabase)) die();
+		if (!mysql_connect($DbHost,$DbUser,$DbPassword)) die();
+		if (!mysql_select_db($DbDatabase)) die();
 		//-- Load settings
 		$this->loadsettings();
 		$this->ctime = time() + (($this->SETTINGS['timecorrection'] + date('I')) * 3600);
 		$this->tdiff = ($this->SETTINGS['timecorrection'] + date('I')) * 3600;
-		if(is_dir($main_path.'install')){ echo 'please delete the install directory'; exit; }
+		if (is_dir($main_path.'install')){ echo 'please delete the install directory'; exit; }
 		//check ip
-		if(!defined('IPBan')) {
+		if (!defined('IPBan')) {
 			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE ip='".$_SERVER['REMOTE_ADDR']."' AND action='deny'";
 			$result = mysql_query($query);
 			$this->check_mysql($result, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($result) > 0) {
+			if (mysql_num_rows($result) > 0) {
 				header('location: iperror.php');
 				exit;
 			}
@@ -50,13 +50,13 @@ class global_class
 		$result = mysql_query($query);
 		$this->check_mysql($result, $query, __LINE__, __FILE__);
 		$FONTSANDCOLORS = mysql_fetch_array($result);
-		while(list($k,$v) = each($FONTSANDCOLORS)) {
+		while (list($k,$v) = each($FONTSANDCOLORS)) {
 			$this->SETTINGS[$k] = $v;
 		}
 	}
 	
 	function check_mysql($result, $query, $line, $page) {
-		if(!$result) {
+		if (!$result) {
 			MySQLError($query, $line, $page);
 			header('location: '.$this->SETTINGS['siteurl'].'error.php');
 			exit;
@@ -64,7 +64,7 @@ class global_class
 	}
 	
 	function cleanvars($i, $trim = false) { 
-		if($trim)
+		if ($trim)
 			$i = trim($i);
 		if (!get_magic_quotes_gpc())
 			$i = addslashes($i);
@@ -87,7 +87,7 @@ class global_class
 		$query = "SELECT * FROM " . $DBPrefix . "filterwords";
 		$res = mysql_query($query);
 		$this->check_mysql($res, $query, __LINE__, __FILE__);
-		while($word = mysql_fetch_array($res)) {
+		while ($word = mysql_fetch_array($res)) {
 			$txt = preg_replace('('.$word['word'].')', '', $txt); //best to use str_ireplace but not avalible for PHP4
 		}
 		return $txt;
@@ -97,8 +97,8 @@ class global_class
 		$upload_mode = (@ini_get('open_basedir') || @ini_get('safe_mode') || strtolower(@ini_get('safe_mode')) == 'on') ? 'move' : 'copy';
 		switch ($upload_mode) {
 			case 'copy':
-				if(!@copy($from, $to)) {
-					if(!@move_uploaded_file($from, $to)) {
+				if (!@copy($from, $to)) {
+					if (!@move_uploaded_file($from, $to)) {
 						return false;
 					}
 				}
@@ -106,8 +106,8 @@ class global_class
 				break;
 			
 			case 'move':
-				if(!@move_uploaded_file($from, $to)) {
-					if(!@copy($from, $to)) {
+				if (!@move_uploaded_file($from, $to)) {
+					if (!@copy($from, $to)) {
 						return false;
 					}
 				}
@@ -120,10 +120,10 @@ class global_class
 	
 	//CURRENCY FUNCTIONS
 	function input_money($str) {
-		if($this->SETTINGS['moneyformat'] == 1) {
+		if ($this->SETTINGS['moneyformat'] == 1) {
 			// Drop thousands separator
 			$str = ereg_replace(',','',$str);
-		} elseif($this->SETTINGS['moneyformat'] == 2) {
+		} elseif ($this->SETTINGS['moneyformat'] == 2) {
 			// Drop thousands separator
 			$str = ereg_replace('\.','',$str);
 			
@@ -135,11 +135,11 @@ class global_class
 	}
 	
 	function CheckMoney($amount) {
-		if($this->SETTINGS['moneyformat'] == 1) {
-			if(!ereg('^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{0,3})?$',$amount))
+		if ($this->SETTINGS['moneyformat'] == 1) {
+			if (!ereg('^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{0,3})?$',$amount))
 				return false;
-		} elseif($this->SETTINGS['moneyformat'] == 2) {
-			if(!ereg('^([0-9]+|[0-9]{1,3}(\.[0-9]{3})*)(,[0-9]{0,3})?$',$amount))
+		} elseif ($this->SETTINGS['moneyformat'] == 2) {
+			if (!ereg('^([0-9]+|[0-9]{1,3}(\.[0-9]{3})*)(,[0-9]{0,3})?$',$amount))
 				return false;
 		}
 		return true;
@@ -148,15 +148,15 @@ class global_class
 	function print_money($str, $link = true) {
 		$a = ($this->SETTINGS['moneyformat'] == 1) ? '.' : ',';
 		$b = ($this->SETTINGS['moneyformat'] == 1) ? ',' : '.';
-		if($link) {
+		if ($link) {
 			$currency = '<a href="'.$this->SETTINGS['siteurl'].'converter.php?AMOUNT='.$str.'" alt="converter" class="new-window">'.$this->SETTINGS['currency'].'</a>';
 		} else {
 			$currency = $this->SETTINGS['currency'];
 		}
 		
-		if($this->SETTINGS['moneysymbol'] == 2) { // Symbol on the right
+		if ($this->SETTINGS['moneysymbol'] == 2) { // Symbol on the right
 			return '<b>' . number_format($str,$this->SETTINGS['moneydecimals'],$a,$b) . '</b> ' . $currency;
-		} elseif($this->SETTINGS['moneysymbol'] == 1) { // Symbol on the left
+		} elseif ($this->SETTINGS['moneysymbol'] == 1) { // Symbol on the left
 			return $currency . ' ' . '<b>' . number_format($str,$this->SETTINGS['moneydecimals'],$a,$b) . '</b>';
 		}
 	}

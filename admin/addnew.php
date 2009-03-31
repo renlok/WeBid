@@ -20,10 +20,10 @@ include $include_path."messages.inc.php";
 include $include_path."countries.inc.php";
 $TIME = $system->ctime;
 
-if(isset($_POST['action']))
+if (isset($_POST['action']))
 {
 	//-- Data check
-	if(!isset($_POST['title']) || !isset($_POST['content'])) {
+	if (!isset($_POST['title']) || !isset($_POST['content'])) {
 		$ERR = "ERR_112";
 	} else {		
 		$query = "INSERT INTO " . $DBPrefix . "news VALUES (NULL, '".$system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']])."','".$system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']])."',".time().",".intval($_POST['suspended']).")";
@@ -31,7 +31,7 @@ if(isset($_POST['action']))
 		$_POST['id'] = mysql_insert_id();
 		#// Insert into translation table.
 		reset($LANGUAGES);
-		while(list($k,$v) = each($LANGUAGES)){
+		while (list($k,$v) = each($LANGUAGES)){
 			$query = "INSERT INTO " . $DBPrefix . "news_translated VALUES (
 					".$_POST['id'].", '$k', '".$system->cleanvars($_POST['title'][$k])."', '".$system->cleanvars($_POST['content'][$k])."')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -49,20 +49,20 @@ if(isset($_POST['action']))
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif">
+	<td background="images/bac_barint.gif">
 		<table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_con.gif" ></td>
-          <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['516']; ?></td>
-        </tr>
-      	</table>
+		<tr> 
+		  <td width="30"><img src="images/i_con.gif" ></td>
+		  <td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['516']; ?></td>
+		</tr>
+	  	</table>
 	</td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 		<FORM NAME=addnew ACTION="" METHOD="POST">
 		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
 		<TR>
@@ -75,10 +75,10 @@ if(isset($_POST['action']))
 	 		</TD>
 			</TR>
 			<?php
-			if($ERR || $updated){
+			if ($ERR || $updated){
 			print "<TR><TD>&nbsp;</TD><TD WIDTH=486>";
-			if($$ERR) print $$ERR;
-			if($updated) print "Auction data updated";
+			if ($$ERR) print $$ERR;
+			if ($updated) print "Auction data updated";
 			print "</TD></TR>";
 			}
 			?>
@@ -90,8 +90,8 @@ if(isset($_POST['action']))
 			<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<INPUT TYPE=text NAME=title[<?php echo $system->SETTINGS['defaultlanguage']; ?>] SIZE=40 MAXLENGTH=255 VALUE="<?php print $_POST['title']; ?>">
 			<?php
 				reset($LANGUAGES);
-				while(list($k,$v) = each($LANGUAGES)){
-					if($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=>";
+				while (list($k,$v) = each($LANGUAGES)){
+					if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=>";
 				}
 			?>
 	  		</TD>
@@ -106,8 +106,8 @@ if(isset($_POST['action']))
 			<TEXTAREA NAME=content[<?php echo $system->SETTINGS['defaultlanguage']; ?>] COLS=45 ROWS=20></TEXTAREA>
 			<?php
 				reset($LANGUAGES);
-				while(list($k,$v) = each($LANGUAGES)){
-					if($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=content[$k] COLS=45 ROWS=20></TEXTAREA>";
+				while (list($k,$v) = each($LANGUAGES)){
+					if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=content[$k] COLS=45 ROWS=20></TEXTAREA>";
 				}
 			?>
 	  		</TD>
@@ -120,13 +120,13 @@ if(isset($_POST['action']))
 	  		<TD WIDTH="486">
 			<INPUT TYPE=radio NAME=suspended value=0
 			<?php
-			if($_POST['suspended'] == 0) print " CHECKED";
+			if ($_POST['suspended'] == 0) print " CHECKED";
 			?>
 			>
 			<?php print $MSG['030']; ?>
 			<INPUT TYPE=radio NAME=suspended value=1
 			<?php
-			if($_POST['suspended'] == 1) print " CHECKED";
+			if ($_POST['suspended'] == 1) print " CHECKED";
 			?>
 			> <?php print $MSG['029']; ?>
 	  		</TD>

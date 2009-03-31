@@ -17,11 +17,12 @@ include $include_path . 'functions_admin.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path . 'time.inc.php';
-include $main_path . "fck/fckeditor.php";
+include $main_path . 'fck/fckeditor.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
 			  aboutus = '" . $_POST['aboutus'] . "',
@@ -43,15 +44,15 @@ $oFCKeditor->Height = '400';
 loadblock($MSG['5078'], $MSG['5080'], $oFCKeditor->CreateHtml());
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'con',
 		'TYPENAME' => $MSG['25_0018'],
 		'PAGENAME' => $MSG['5074']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

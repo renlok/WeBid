@@ -27,18 +27,18 @@ include $include_path . 'functions_admin.php';
 <body bgcolor="0083D7" background="images/bac_hea.gif" text="#FFFFFF" link="#FFFFFF" vlink="#CCCCCC" alink="#666666" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="54" border="0" cellpadding="2" cellspacing="2" background="images/bac_hea.gif">
   <tr> 
-    <td width="285" rowspan="2" valign="top">
+	<td width="285" rowspan="2" valign="top">
 		<A HREF=index.php TARGET=_top><img src="images/logo.gif" hspace="5" vspace="2" BORDER=0></A>
 	</td>
-    <td height="20">
+	<td height="20">
 		<img src="images/t_adm_be.gif" width="192" height="16" hspace="5">
 	</td>
   </tr>
   <tr>
-    <td valign="top" align=right colspan="2">
+	<td valign="top" align=right colspan="2">
 		<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
 		<?php
-		  if(!checklogin()) {
+		  if (!checklogin()) {
 		?>
 		  <?php echo $MSG['592']; ?>
 		  <B>
@@ -48,13 +48,13 @@ include $include_path . 'functions_admin.php';
 		  } else {
 			print "&nbsp;";
 		  }
-		  if(!checklogin()) {
+		  if (!checklogin()) {
 		?>
 		 <font color="#FFFFFF" SIZE=1> | 
 		 </font> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="logout.php" TARGET=content>logout</a></FONT></font>
 		 <?php
-		 	if(count($LANGUAGES) > 1){
-				foreach($LANGUAGES as $lang => $value)
+		 	if (count($LANGUAGES) > 1){
+				foreach ($LANGUAGES as $lang => $value)
 				{
 					print "<a target='_top' href='index.php?lan=$lang'><img align='middle' vspace=2 hspace=2 src='".$system->SETTINGS['siteurl']."includes/flags/".$lang.".gif' border='0'></a>";
 				}

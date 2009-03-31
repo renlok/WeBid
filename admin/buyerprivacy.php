@@ -18,7 +18,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == 'update') {
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
 			  buyerprivacy = '" . $_POST['buyerprivacy'] . "'";
@@ -36,10 +36,10 @@ $template->assign_vars(array(
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['236'],
 		'B_TITLES' => true
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

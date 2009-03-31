@@ -17,7 +17,7 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$query = "UPDATE " . $DBPrefix . "settings SET winner_address = '" . $_POST['winner_address'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$ERR = $MSG['30_0060'];
@@ -27,15 +27,15 @@ if(isset($_POST['action']) && $_POST['action'] == "update") {
 loadblock($MSG['30_0085'], $MSG['30_0084'], 'yesno', 'winner_address', $system->SETTINGS['winner_address'], $MSG['030'], $MSG['029']);
 
 $template->assign_vars(array(
-        'ERROR' => (isset($ERR)) ? $ERR : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'use',
 		'TYPENAME' => $MSG['25_0010'],
 		'PAGENAME' => $MSG['30_0083']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

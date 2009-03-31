@@ -16,13 +16,13 @@ include "../includes/common.inc.php";
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if(isset($_GET['action'])) {
+if (isset($_GET['action'])) {
 	switch($_GET['action']) {
 		case 'clearcache':
-			if(is_dir($main_path.'cache')) {
+			if (is_dir($main_path.'cache')) {
 				$dir = opendir($main_path.'cache');
-				while(($myfile = readdir($dir)) !== false){
-					if($myfile != '.' && $myfile != '..' && $myfile != 'index.php'){
+				while (($myfile = readdir($dir)) !== false){
+					if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php'){
 						unlink($main_path.'cache/'.$myfile);
 					}
 				}
@@ -33,7 +33,7 @@ if(isset($_GET['action'])) {
 	}
 }
 
-while(list($k,$v) = each($LANGUAGES)) {
+while (list($k,$v) = each($LANGUAGES)) {
 	$template->assign_block_vars('langs', array(
 			'LANG' => $v,
 			'B_DEFAULT' => ($k == $system->SETTINGS['defaultlanguage'])
@@ -54,8 +54,8 @@ $ACCESS['uniquevisitors'] = (!isset($ACCESS['uniquevisitors']) || empty($ACCESS[
 $ACCESS['usersessions'] = (!isset($ACCESS['usersessions']) || empty($ACCESS['usersessions'])) ? 0 : $ACCESS['usersessions'];
 
 $template->assign_vars(array(
-        'ERROR' => (isset($errmsg)) ? $errmsg : '',
-        'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($errmsg)) ? $errmsg : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'SITENAME' => stripslashes($system->SETTINGS['sitename']),
 		'ADMINMAIL' => $system->SETTINGS['adminmail'],
 		'CRON' => ($system->SETTINGS['cron'] == 1) ? '<b>' . $MSG['373'] . '</b><br>' . $MSG['25_0027'] : '<b>' . $MSG['374'] . '</b>',
@@ -76,10 +76,10 @@ $template->assign_vars(array(
 		'A_PAGEVIEWS' => $ACCESS['pageviews'],
 		'A_UVISITS' => $ACCESS['uniquevisitors'],
 		'A_USESSIONS' => $ACCESS['usersessions']
-        ));
+		));
 
 $template->set_filenames(array(
-        'body' => 'adminhome.html'
-        ));
+		'body' => 'adminhome.html'
+		));
 $template->display('body');
 ?>

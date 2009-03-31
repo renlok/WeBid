@@ -17,9 +17,9 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 #// Delete users and banners if necessary
-if(isset($_POST['delete']) && is_array($_POST['delete']))
+if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
-	while(list($k,$v) = each($_POST['delete']))
+	while (list($k,$v) = each($_POST['delete']))
 	{
 		@mysql_query("DELETE FROM " . $DBPrefix . "banners WHERE user=$v");
 		@mysql_query("DELETE FROM " . $DBPrefix . "bannersusers WHERE id=$v");
@@ -29,7 +29,7 @@ if(isset($_POST['delete']) && is_array($_POST['delete']))
 #// Retrieve users from the database
 $query = "SELECT * FROM " . $DBPrefix . "bannersusers ORDER BY name";
 $res_ = @mysql_query($query);
-if(!$res_)
+if (!$res_)
 {
 	print "$query<BR>".mysql_error();
 	exit;
@@ -42,18 +42,18 @@ if(!$res_)
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_ban.gif" ></td>
-          <td class=white><?php echo $MSG['25_0011']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['_0008']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_ban.gif" ></td>
+		  <td class=white><?php echo $MSG['25_0011']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['_0008']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
 <TR>
 <TD align="center">
@@ -94,12 +94,12 @@ if(!$res_)
 				</TD>
 			</TR>
 			<?php
-			while($row = mysql_fetch_array($res_))
+			while ($row = mysql_fetch_array($res_))
 			{
 				#// Retriee the number of banners for this user
 				$query = "SELECT id FROM " . $DBPrefix . "banners WHERE user=$row[id]";
 				$r = @mysql_query($query);
-				if(!$r)
+				if (!$r)
 				{
 					print "$query<BR>".mysql_error();
 					exit;

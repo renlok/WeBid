@@ -18,10 +18,10 @@ include 'loggedin.inc.php';
 unset($ERR);
 
 #//
-if(isset($_POST['action']) && $_POST['action'] == "update")
+if (isset($_POST['action']) && $_POST['action'] == "update")
 {
 	#// Data check
-	if($_POST['status'] == 'enabled' && (!is_numeric($_POST['timebefore']) || !is_numeric($_POST['extend'])))
+	if ($_POST['status'] == 'enabled' && (!is_numeric($_POST['timebefore']) || !is_numeric($_POST['extend'])))
 	{
 		$ERR = $MSG['2_0038'];
 		$system->SETTINGS = $_POST;
@@ -42,7 +42,7 @@ if(isset($_POST['action']) && $_POST['action'] == "update")
 $query = "SELECT * FROM " . $DBPrefix . "auctionextension";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-if(mysql_num_rows($res) > 0)
+if (mysql_num_rows($res) > 0)
 {
 	$system->SETTINGS = mysql_fetch_array($res);
 }
@@ -55,18 +55,18 @@ if(mysql_num_rows($res) > 0)
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_auc.gif" ></td>
-          <td class=white><?php echo $MSG['239']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['2_0032']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_auc.gif" ></td>
+		  <td class=white><?php echo $MSG['239']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['2_0032']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
 <TR>
@@ -84,7 +84,7 @@ if(mysql_num_rows($res) > 0)
 
 	<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
 	  <?php
-		if($ERR != "")
+		if ($ERR != "")
 		{
 		 ?>
 	  <TR BGCOLOR=yellow>
@@ -110,11 +110,11 @@ if(mysql_num_rows($res) > 0)
 		  <?php echo $MSG['2_0034']; ?>
 		  </TD>
 		<TD HEIGHT="31" WIDTH="418">
-		  <input type="radio" name="status" value="enabled" <?php if($system->SETTINGS['status'] == 'enabled') print " CHECKED";?>>
+		  <input type="radio" name="status" value="enabled" <?php if ($system->SETTINGS['status'] == 'enabled') print " CHECKED";?>>
 		  
 		  <?php echo $MSG['030']; ?>
 		  
-		  <input type="radio" name="status" value="disabled" <?php if($system->SETTINGS['status'] == 'disabled') print " CHECKED";?>>
+		  <input type="radio" name="status" value="disabled" <?php if ($system->SETTINGS['status'] == 'disabled') print " CHECKED";?>>
 		  
 		  <?php echo $MSG['029']; ?>
 		   </TD>

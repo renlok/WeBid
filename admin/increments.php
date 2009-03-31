@@ -19,8 +19,8 @@ include 'loggedin.inc.php';
 function ToBeDeleted($index){
 	global $delete;
 	$i = 0;
-	while($i < count($delete)){
-		if($delete[$i] == $index) return true;
+	while ($i < count($delete)){
+		if ($delete[$i] == $index) return true;
 		$i++;
 	}
 	return false;
@@ -32,34 +32,34 @@ $lows = $_POST['lows'];
 $highs = $_POST['highs'];
 $delete = $_POST['delete'];
 
-if(isset($_POST['act'])) {
+if (isset($_POST['act'])) {
 	//-- Al fields must be numeric with
 	
 	$i = 0;
-	while($i < count($increments) - 1){
+	while ($i < count($increments) - 1){
 		/*$lows[$i] = $system->input_money($lows[$i]);
 		$highs[$i] = $system->input_money($highs[$i]);
 		$increments[$i] = $system->input_money($increments[$i]);
 		*/
 		//print "$lows[$i] - $highs[$i] - $increments[$i]<BR>";
-		if(!$system->CheckMoney($lows[$i])){
+		if (!$system->CheckMoney($lows[$i])){
 			$ERR = "ERR_030";
 		}
-		if(!$system->CheckMoney($highs[$i])){
+		if (!$system->CheckMoney($highs[$i])){
 			$ERR = "ERR_030";
 		}
-		if(!$system->CheckMoney($increments[$i])){
+		if (!$system->CheckMoney($increments[$i])){
 			$ERR = "ERR_030";
 		}
 		
 		/*
-		if(!ereg("^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{1,2})$",$lows[$i])){
+		if (!ereg("^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{1,2})$",$lows[$i])){
 		$ERR = "ERR_030";
 		}
-		if(!ereg("^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{1,2})$",$highs[$i])){
+		if (!ereg("^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{1,2})$",$highs[$i])){
 		$ERR = "ERR_030";
 		}
-		if(!ereg("^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{1,2})$",$increments[$i])){
+		if (!ereg("^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{1,2})$",$increments[$i])){
 		$ERR = "ERR_030";
 		}
 		*/
@@ -67,7 +67,7 @@ if(isset($_POST['act'])) {
 	}
 }
 
-if(isset($_POST['act']) && !isset($ERR)){
+if (isset($_POST['act']) && !isset($ERR)){
 	
 	//-- Build new increments array
 	$rebuilt_increments = array();
@@ -75,8 +75,8 @@ if(isset($_POST['act']) && !isset($ERR)){
 	$rebuilt_highs = array();
 
 	$i = 0;
-	while($i < count($increments)){
-		if(!ToBeDeleted($i) && strlen($increments[$i]) != 0){
+	while ($i < count($increments)){
+		if (!ToBeDeleted($i) && strlen($increments[$i]) != 0){
 			$rebuilt_increments[] 	= $increments[$i];
 			$rebuilt_lows[] 		= $lows[$i];
 			$rebuilt_highs[] 		= $highs[$i];
@@ -86,14 +86,14 @@ if(isset($_POST['act']) && !isset($ERR)){
 	
 	$query = "DELETE FROM " . $DBPrefix . "increments";
 	$result = mysql_query($query);
-	if(!$result){
+	if (!$result){
 		print "Database access error - abnormal termination".mysql_error();
 		exit;
 	}
 	
 	$i = 0;
 	$counter = 1;
-	while($i < count($rebuilt_increments)){
+	while ($i < count($rebuilt_increments)){
 		$query = "INSERT INTO " . $DBPrefix . "increments VALUES ('$counter', ".
 		$system->input_money($rebuilt_lows[$i]).", ".
 		$system->input_money($rebuilt_highs[$i]).", ".
@@ -118,31 +118,31 @@ function selectAll(formObj, isInverse)
 {
    for (var i=0;i < formObj.length;i++) 
    {
-      fldObj = formObj.elements[i];
-      if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
-      { 
-         if(isInverse)
-            fldObj.checked = (fldObj.checked) ? false : true;
-         else fldObj.checked = true; 
-       }
+	  fldObj = formObj.elements[i];
+	  if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
+	  { 
+		 if (isInverse)
+			fldObj.checked = (fldObj.checked) ? false : true;
+		 else fldObj.checked = true; 
+	   }
    }
 }
 </SCRIPT>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
-    <td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-        <tr> 
-          <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
-          <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['128']; ?></td>
-        </tr>
-      </table></td>
+	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
+		<tr> 
+		  <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
+		  <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['128']; ?></td>
+		</tr>
+	  </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-    <tr> 
-    <td align="center" valign="middle">
+	<tr> 
+	<td align="center" valign="middle">
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
 <TR>
 <TD align="center">
@@ -158,26 +158,26 @@ function selectAll(formObj, isInverse)
 			<TD>
 				<TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
 					<?php
-					if(isset($ERR) || isset($msg))
+					if (isset($ERR) || isset($msg))
 					{
 					?>
 						<TR BGCOLOR=yellow>
 						<TD COLSPAN="5" ALIGN=CENTER><B>
-                        <?php
-						  if($$ERR) {
+						<?php
+						  if ($$ERR) {
 								print $$ERR;
 							}else{
-								if($msg) {
+								if ($msg) {
 									print $MSG[$msg];
 								}
 							}
-                            ?>
+							?>
 						  </B></TD>
 					  </TR>
 					 <?php
 					}
 					 ?>
-                    <TR>
+					<TR>
 						<TD WIDTH=50></TD>
 						<TD COLSPAN=4> 
 							<?php
@@ -209,13 +209,13 @@ function selectAll(formObj, isInverse)
 					<?php
 					$query = "select * from " . $DBPrefix . "increments order by low";
 					$result = mysql_query($query);
-					if(!$result){
+					if (!$result){
 						print "Database access error: contact the site adminitrator".mysql_error();
 						exit;
 					}
 					$num_increments = mysql_num_rows($result);
 					$i = 0;
-					while($i < $num_increments)
+					while ($i < $num_increments)
 					{
 						$low = $system->print_money_nosymbol(mysql_result($result,$i,"low"));
 						$high = $system->print_money_nosymbol(mysql_result($result,$i,"high"));
@@ -257,7 +257,7 @@ function selectAll(formObj, isInverse)
 					<TR>
 						<TD WIDTH=50></TD>
 						<TD>
-                        <input type="hidden" name="action" value="go">
+						<input type="hidden" name="action" value="go">
 							<INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
 						</TD>
 					</TR>

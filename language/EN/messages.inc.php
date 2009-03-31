@@ -12,23 +12,23 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if(!defined('InWeBid')) exit();
+if (!defined('InWeBid')) exit();
 
 $MSG['COPYRIGHT'] = ""; //your copyright message
-// // CHARSET ENCODING
-// // Change the charset according to the language used in this file.
-// // UTF-8 should work with almost any language
+// CHARSET ENCODING
+// Change the charset according to the language used in this file.
+// UTF-8 should work with almost any language
 $CHARSET = "UTF-8";
-// // DOCUMENT DIRECTION
-// // Change the $DOCDIR variable below according to the document direction neeeded
-// // by the language you are using.
-// // Possible values are:
-// // - ltr (default) - means left-to-right document (almost any language)
-// // - rtl - means right-to-left document (i.e. arabic, hebrew, ect).
+// DOCUMENT DIRECTION
+// Change the $DOCDIR variable below according to the document direction neeeded
+// by the language you are using.
+// Possible values are:
+// - ltr (default) - means left-to-right document (almost any language)
+// - rtl - means right-to-left document (i.e. arabic, hebrew, ect).
 $DOCDIR = "ltr";
-// // Error messages and user interface messages are below. Translate them taking care of leaving
-// // The PHP and HTML tags unchanged.
-// // Error messages =============================================================
+// Error messages and user interface messages are below. Translate them taking care of leaving
+// The PHP and HTML tags unchanged.
+// Error messages =============================================================
 $ERR = ""; // leave this line as is
 $ERR_000 = ""; // leave this line as is
 $ERR_001 = "Database access error. Please contact the site administrator.";
@@ -81,7 +81,7 @@ $ERR_047 = "Required fields missing";
 $ERR_047_a = "Username is invalid can only contain letters and numbers";
 $ERR_048 = "Incorrect login";
 $ERR_049 = "Database connection failed. Please edit your includes/config.inc.php
-            file to set your database parameters.";
+			file to set your database parameters.";
 $ERR_050 = "Acceptance text missing";
 $ERR_051 = "Please, insert a valid number of digits";
 $ERR_052 = "Please, insert the number of news to show in the news box";
@@ -102,6 +102,8 @@ $ERR_066 = "Error deleting information";
 $ERR_067 = "Required fields missing (all fields are required).";
 $ERR_068 = "Chosen theme does not exist";
 $ERR_069 = "Currency conversion failed";
+$ERR_070 = "This message doesn't exist";
+
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
 $ERR_102 = "Username does not exist";
@@ -180,7 +182,7 @@ $ERR_5046 = "The buy now price cannot be less than the minimum bid and/or the re
 $ERR_25_0001 = "Please choose a sub-category";
 $ERR_25_0002 = "<p>URL file-access is disabled on your server so WeBid is unable to run the version check</p>";
 
-// // UI Messages =============================================================
+// UI Messages =============================================================
 $MSG['001'] = "New user registration";
 $MSG['002'] = "Your name";
 $MSG['003'] = "Username";
@@ -264,9 +266,13 @@ $MSG['078'] = "Categories Table";
 $MSG['079'] = "Your Auction Has Closed";
 $MSG['080'] = "Resyncronise or Reset Caches";
 $MSG['081'] = "Countries Table";
+$MSG['082'] = "Convert";
+$MSG['083'] = "of this currency";
 $MSG['084'] = "Message posted";
+$MSG['085'] = "::: CURRENCY CONVERTER :::";
 $MSG['086'] = "Categories table updated";
 $MSG['087'] = "Description";
+$MSG['088'] = "into this currency";
 $MSG['089'] = "Process changes";
 $MSG['090'] = "Countries table updated";
 $MSG['091'] = "Change language";
@@ -288,6 +294,7 @@ $MSG['106'] = "Send to a friend";
 $MSG['107'] = "User's e-mail";
 $MSG['108'] = "View picture";
 $MSG['109'] = "Day";
+$MSG['110'] = "Admin";
 $MSG['111'] = "Auction started";
 $MSG['112'] = "Auction ends";
 $MSG['113'] = "Auction ID";
@@ -314,9 +321,9 @@ $MSG['131'] = "Buyer";
 $MSG['133'] = "Bid increments table";
 $MSG['134'] = "Current bid";
 $MSG['135'] = "Edit, delete or add increments using the form below.<br>
-            Be careful, there's no control over the table's values congruence.
-            You must take care to check it yourself. The only data check performed is over the fields content (must be numeric) but the relation between them is not checked.<br>
-            [<a href=\"javascript:window_open('incrementshelp.php','incre',400,500,30,30)\" CLASS=\"links\">Read more</a>]";
+			Be careful, there's no control over the table's values congruence.
+			You must take care to check it yourself. The only data check performed is over the fields content (must be numeric) but the relation between them is not checked.<br>
+			[<a href=\"javascript:window_open('incrementshelp.php','incre',400,500,30,30)\" CLASS=\"links\">Read more</a>]";
 $MSG['136'] = "and";
 $MSG['137'] = "Increment";
 $MSG['138'] = "Back to the auction";
@@ -659,8 +666,8 @@ $MSG['588'] = "Navigation font";
 $MSG['589'] = "This is the font format of the navigation links in the header of the pages";
 $MSG['592'] = "Logged in as: ";
 $MSG['594'] = "<br>
-                        <FONTs COLOR=RED><b>Note:</b> for this utility to work, the number format MUST follow the USA style notation.<br>
-                    Your <a HREF=currency.php>currency settings</a> will be ignored here.";
+						<FONTs COLOR=RED><b>Note:</b> for this utility to work, the number format MUST follow the USA style notation.<br>
+					Your <a HREF=currency.php>currency settings</a> will be ignored here.";
 $MSG['595'] = "Links Colour";
 $MSG['596'] = "Visited Links Colour";
 $MSG['597'] = "Activate banners support?";
@@ -668,7 +675,7 @@ $MSG['600'] = "Banners settings updated";
 $MSG['602'] = "Upload a new logo (max. 50 KB)";
 $MSG['603'] = "Activate Newsletter?";
 $MSG['604'] = "If you activate this option, users will be able to subscribe to your newsletter from the registration page.<br>
-                        The \"Newsletter management\" will let you send e-mail messages to the subscribed users";
+						The \"Newsletter management\" will let you send e-mail messages to the subscribed users";
 $MSG['605'] = "Message Body";
 $MSG['607'] = "Newsletter Submission";
 $MSG['608'] = "Would you like to receive our Newsletter?";
@@ -709,7 +716,7 @@ $MSG['651'] = "Question about your auction: %s";
 $MSG['662'] = "<h2>Create thumbnail</h2>";
 $MSG['663'] = "Picture Gallery";
 $MSG['664'] = "If you activate this option, sellers will be able to upload additional pictures
-            up to the maximum you specify (see below).";
+			up to the maximum you specify (see below).";
 $MSG['665'] = "Activate Picture Gallery?";
 $MSG['666'] = "Max. Number of pictures";
 $MSG['670'] = "Activate Picture Gallery fee?";
@@ -792,7 +799,7 @@ $MSG['1021'] = "Standard Auction";
 $MSG['1022'] = "SSL Support";
 $MSG['1023'] = "Activate SSL support?";
 $MSG['1024'] = "If you have SSL support on the server where you are running WeBid, you may want to give your customers a safer enviroment to operate.</p>
-        <p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.</p>";
+		<p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.</p>";
 $MSG['1025'] = "SSL settings updated";
 $MSG['1030'] = "Update Counters Utility";
 $MSG['1031'] = "Starting counters update...";

@@ -18,9 +18,9 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if(isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == "update") {
 	// Data check
-	if(empty($_POST['sitename']) || empty($_POST['siteurl']) || empty($_POST['adminmail'])) {
+	if (empty($_POST['sitename']) || empty($_POST['siteurl']) || empty($_POST['adminmail'])) {
 		$ERR = $ERR_047;
 		$system->SETTINGS = $_POST;
 	} else {
@@ -50,7 +50,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-        'body' => 'adminpages.html'
-        ));
+		'body' => 'adminpages.html'
+		));
 $template->display('body');
 ?>

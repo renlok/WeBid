@@ -4,5 +4,11 @@
 - Reorganised the admin homepage so it shows more useful information
 - Renamed config.inc.php and data.inc.php to common.inc.php and config.inc.php
 - Made the user login much more secure
+- Fixed the suspent/activate user admin page
+- Made some security fixes on the image upload page
+- Fixed the admin stats page so when you set to not tracking stats you dont have to have any stats selected
+- Fixed the ip bans so it no longer loops infinatly when your banned
+- Fixed the counters in the header so it looks normal still when some of the counters are disabled
+- Fixed the users online counter so its more accurate
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

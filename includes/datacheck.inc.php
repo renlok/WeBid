@@ -14,7 +14,8 @@
 
 if (!defined('InWeBid')) exit();
 
-function CheckFirstRegData(){
+function CheckFirstRegData()
+{
 	/*
 	Checks the first data posted by the user
 	in the registration process
@@ -31,41 +32,50 @@ function CheckFirstRegData(){
 	010 = nick too short
 	011 = password too short
 	*/
-	global $name,$nick,$password,$repeat_password,$email;
-	if (!$name){
-		return "002";
+	global $name, $nick, $password, $repeat_password, $email;
+	if (!isset($name) || empty($name))
+	{
+		return '002';
 	}
-	if (!$nick){
-		return "003";
+	if (!isset($nick) || empty($nick))
+	{
+		return '003';
 	}
-	if (!$password){
-		return "004";
+	if (!isset($password) || empty($password))
+	{
+		return '004';
 	}
-	if (!$repeat_password){
-		return "005";
+	if (!isset($repeat_password) || empty($repeat_password))
+	{
+		return '005';
 	}
-	if ($password != $repeat_password){
-		return "006";
+	if ($password != $repeat_password)
+	{
+		return '006';
 	}
-	if (!$email){
-		return "007";
+	if (!isset($email) || empty($email))
+	{
+		return '007';
 	}
-	if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$",$email)){
-		return "008";
+	if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $email))
+	{
+		return '008';
 	}
-	if (strlen($nick) < 6){
-		return "010";
+	if (strlen($nick) < 6)
+	{
+		return '010';
 	}
-	if (strlen($password) < 6){
-		return "011";
+	if (strlen($password) < 6)
+	{
+		return '011';
 	}
-	$query = "select nick from " . $DBPrefix . "users where nick=\"$nick\"";
+	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = '" . $nick . "'";
 	$result = mysql_query($query);
-	if (mysql_num_rows($result)){
-		return "009";
+	if (mysql_num_rows($result))
+	{
+		return '009';
 	}
-	return "000";
-	
+	return '000';
 } //CheckFirstRegData()
 
 function CheckSellData(){
@@ -93,131 +103,173 @@ function CheckSellData(){
 	global $atype, $iquantity, $increments, $customincrement, $system;
 	global $payments, $auction_types, $private, $invitedlists, $num, $nnum;
 	
-	if (empty($title)) {
-		return "017";
+	if (empty($title))
+	{
+		return '017';
 	}
 	
-	if (empty($description)) {
-		return "018";
+	if (empty($description))
+	{
+		return '018';
 	}
 	
-	if (!$system->CheckMoney($minimum_bid) && $buy_now_only == 'n') {
-		return "058";
-	} else {
+	if (!$system->CheckMoney($minimum_bid) && $buy_now_only == 'n')
+	{
+		return '058';
+	}
+	else
+	{
 		$minimum_bid = $system->input_money($minimum_bid);
 	}
 	
-	if ((empty($minimum_bid) || $minimum_bid < 0) && ($buy_now_only == 'n' || !$buy_now_only)) {
-		return "019";
+	if ((empty($minimum_bid) || $minimum_bid < 0) && ($buy_now_only == 'n' || !$buy_now_only))
+	{
+		return '019';
 	}
 	
-	if (empty($reserve_price) && $with_reserve == 'yes') {
-		return "021";
+	if (empty($reserve_price) && $with_reserve == 'yes')
+	{
+		return '021';
 	}
 	
-	if ($increments == 2 && (empty($customincrement) || floatval($system->input_money($customincrement)) == 0)) {
-		return "056";
+	if ($increments == 2 && (empty($customincrement) || floatval($system->input_money($customincrement)) == 0))
+	{
+		return '056';
 	}
 	
-	if (!ereg("^([0-9])*|(\.[0-9]{1,2})?$",$customincrement)) {
-		return "057";
+	if (!ereg("^([0-9])*|(\.[0-9]{1,2})?$", $customincrement))
+	{
+		return '057';
 	}
 	
-	if ($with_reserve == 'yes' && !ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($reserve_price)) ){
-		return "022";
-	} else {
+	if ($with_reserve == 'yes' && !ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($reserve_price)))
+	{
+		return '022';
+	}
+	else
+	{
 		$reserve_price = $system->input_money($reserve_price);
 	}
 	
-	if ($buy_now_only == 'y') {
+	if ($buy_now_only == 'y')
+	{
 		$buy_now = 'yes';
-		if (!ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0) {
-			return "061";
+		if (!ereg("^([0-9])*|(\.[0-9]{1,2})?$", $system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0)
+		{
+			return '061';
 		}
 	}
 	
-	if ($buy_now == 'yes' && (!ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0)){
-		return "061";
-	} else {
+	if ($buy_now == 'yes' && (!ereg("^([0-9])*|(\.[0-9]{1,2})?$", $system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0))
+	{
+		return '061';
+	}
+	else
+	{
 		$buy_now_price = $system->input_money($buy_now_price);
 	}	
 	
 	$numpay = count($payment);
-	if ($numpay == 0) {
-		return "024";
-	} else {
+	if ($numpay == 0)
+	{
+		return '024';
+	}
+	else
+	{
 		$payment_ok = 1;
 	}
 	
-	if ( !isset($auction_types[intval($atype)]) ) {
-		return "600";
+	if (!isset($auction_types[intval($atype)]))
+	{
+		return '600';
 	}
 	
-	if (intval($iquantity) < 1) {
-		return "601";
+	if (intval($iquantity) < 1)
+	{
+		return '601';
 	}
 	
-	if ($atype == 2) {
-		if ($with_reserve == 'yes') {
+	if ($atype == 2)
+	{
+		if ($with_reserve == 'yes')
+		{
 			$with_reserve = 'no';
 			$reserve_price = '';
-			return "062";
+			return '062';
 		}
-		if ($increments == 2) {
+		if ($increments == 2)
+		{
 			$increments=1;
 			$customincrement='';
-			return "063";
+			return '063';
 		}
-		if ($buy_now == 'yes') {
+		if ($buy_now == 'yes')
+		{
 			$buy_now='no';
 			$buy_now_price='';
-			return "064";
+			return '064';
 		}
 	}
 	
-	if ($private == 'y' && !is_array($invitedlists)) {
-		return "5007";
+	if ($private == 'y' && !is_array($invitedlists))
+	{
+		return '5007';
 	}
 
-	if ($with_reserve == 'yes' && $reserve_price <= $minimum_bid) {
-		return "5045";
+	if ($with_reserve == 'yes' && $reserve_price <= $minimum_bid)
+	{
+		return '5045';
 	}
 	
-	if ($buy_now == "yes" && $buy_now_only == 'n') {
-		if (($with_reserve == 'yes' && $buy_now_price <= $reserve_price) || $buy_now_price <= $minimum_bid) {
-			return "5046";
+	if ($buy_now == 'yes' && $buy_now_only == 'n')
+	{
+		if (($with_reserve == 'yes' && $buy_now_price <= $reserve_price) || $buy_now_price <= $minimum_bid)
+		{
+			return '5046';
 		}
 	}
 	
-	if (!empty($_POST['relist']) && !is_numeric($_POST['relist'])) {
-		return "_0149";
-	} elseif ($_POST['relist'] > $system->SETTINGS['relisting'] && !empty($_POST['relist'])) {
-		return "_0161";
+	if (!empty($_POST['relist']) && !is_numeric($_POST['relist']))
+	{
+		return '_0149';
+	}
+	elseif ($_POST['relist'] > $system->SETTINGS['relisting'] && !empty($_POST['relist']))
+	{
+		return '_0161';
 	}
 	
 }//--CheckSellData
 
-function CheckBidData() {
+function CheckBidData()
+{
 	global $bid, $next_bid, $atype, $qty, $Data, $bidder_id;
 	
-	if ($Data['suspended'] > 0) {
-		return "619";
+	if ($Data['suspended'] > 0)
+	{
+		return '619';
 	}
 	
-	if ($bidder_id == $Data['user']) {
-		return "612";
+	if ($bidder_id == $Data['user'])
+	{
+		return '612';
 	}
 	
-	if ($atype == 1) { //normal auction
-		if ($bid < $next_bid) {
-			return "607";
+	if ($atype == 1) //normal auction
+	{
+		if ($bid < $next_bid)
+		{
+			return '607';
 		}
-		if ($qty > $Data['quantity']) {
-			return "608";
+		if ($qty > $Data['quantity'])
+		{
+			return '608';
 		}
-	} else { //dutch auction
-		if (($qty == 0) || ($qty > $Data['quantity'])) {
-			return "608";
+	}
+	else //dutch auction
+	{
+		if (($qty == 0) || ($qty > $Data['quantity']))
+		{
+			return '608';
 		}
 	}
 	

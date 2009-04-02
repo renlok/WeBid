@@ -489,6 +489,32 @@ if ($result) {
 	errorLogSQL();
 }
 
+//send emails
+$query = "SELECT id FROM PHPAUCTIONXL_users WHERE endemailmode='cum'";
+$res = mysql_query($query);
+if($res){
+	while($row = mysql_fetch_array($res)){
+		$query = "SELECT * FROM PHPAUCTIONXL_pendingnotif WHERE thisdate<'".date("Ymd")."' AND seller_id=".$row['id'];
+		$res_ = @mysql_query($query);
+		while($pending = mysql_fetch_array($res_)){
+			$Auction = unserialize($pending['auction']);
+			$Seller = unserialize($pending['seller']);
+			$report .= "-------------------------------------------------------------------------\n".
+						$Auction['title']."\n".
+						"-------------------------------------------------------------------------\n";
+			if(strlen($pending['winners']) > 0){
+				$report .= $MSG_453.":\n".$pending['winners']."\n\n";
+			}else{
+				$report .= $MSG_30_0103."\n\n";
+			}
+			@mysql_query("DELETE FROM PHPAUCTIONXL_pendingnotif WHERE id=".$pending['id']);
+		}
+		include $include_path . "endauction_cumulative.inc.php";
+	}
+} else {
+	errorLogSQL();
+}
+
 // Purging thumbnails cache and not more used images
 if (!file_exists($upload_path . "cache"))
 	mkdir($upload_path . "cache", 0777);

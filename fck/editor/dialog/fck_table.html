@@ -9,13 +9,13 @@
  * choice:
  *
  *  - GNU General Public License Version 2 or later (the "GPL")
- *    http://www.gnu.org/licenses/gpl.html
+ *	http://www.gnu.org/licenses/gpl.html
  *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
- *    http://www.gnu.org/licenses/lgpl.html
+ *	http://www.gnu.org/licenses/lgpl.html
  *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
- *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *	http://www.mozilla.org/MPL/MPL-1.1.html
  *
  * == END LICENSE ==
  *
@@ -55,7 +55,7 @@ window.onload = function()
 
 	if (table)
 	{
-		document.getElementById('txtRows').value    = table.rows.length ;
+		document.getElementById('txtRows').value	= table.rows.length ;
 		document.getElementById('txtColumns').value = table.rows[0].cells.length ;
 
 		// Gets the value from the Width or the Style attribute
@@ -82,13 +82,13 @@ window.onload = function()
 		document.getElementById('selAlignment').value	= GetAttribute( table, 'align', '' ) ;
 		document.getElementById('txtCellPadding').value	= GetAttribute( table, 'cellPadding', '' ) ;
 		document.getElementById('txtCellSpacing').value	= GetAttribute( table, 'cellSpacing', '' ) ;
-		document.getElementById('txtSummary').value     = GetAttribute( table, 'summary', '' ) ;
+		document.getElementById('txtSummary').value	 = GetAttribute( table, 'summary', '' ) ;
 //		document.getElementById('cmbFontStyle').value	= table.className ;
 
 		var eCaption = oEditor.FCKDomTools.GetFirstChild( table, 'CAPTION' ) ;
 		if ( eCaption ) document.getElementById('txtCaption').value = eCaption.innerHTML ;
 
-		document.getElementById('txtRows').disabled    = true ;
+		document.getElementById('txtRows').disabled	= true ;
 		document.getElementById('txtColumns').disabled = true ;
 		SelectField( 'txtWidth' ) ;
 	}

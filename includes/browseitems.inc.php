@@ -14,38 +14,51 @@
 
 if (!defined('InWeBid')) exit();
 
-function browseItems($result, $current_page) {
+function browseItems($result, $current_page)
+{
 	global $system, $uploaded_path, $DBPrefix, $MSG, $ERR_114;
 	global $id, $template, $PAGES, $PAGE;
 	
 	$k = 0;
-	if ($result && mysql_num_rows($result)) {
-		while ($row = mysql_fetch_array($result)) {
-			/* prepare some data */
+	if ($result && mysql_num_rows($result))
+	{
+		while ($row = mysql_fetch_array($result))
+		{
+			// prepare some data
 			$is_dutch = (intval($row['auction_type']) == 2) ? true : false;
 			
-			/* image icon */
-			if (strlen($row['pict_url']) > 0) {
-				$row['pict_url'] = $system->SETTINGS['siteurl'].'getthumb.php?w='.$system->SETTINGS['thumb_show'].'&fromfile='.$uploaded_path.$row['id'].'/'.$row['pict_url'];
-			} else {
-				$row['pict_url'] = $system->SETTINGS['siteurl'].'images/nopicture.gif';
+			// image icon
+			if (strlen($row['pict_url']) > 0)
+			{
+				$row['pict_url'] = 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
 			}
-			$tplv['img'] = '<a href="'.$system->SETTINGS['siteurl'].'item.php?id='.$row['id'].'"><img src="'.$row['pict_url'].'" width="'.$system->SETTINGS['thumb_show'].'" border=0 /></a>';
+			else
+			{
+				$row['pict_url'] = 'images/nopicture.gif';
+			}
 			
-			/* this subastas title and link to details */
+			$tplv['img'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . $row['pict_url'] . '" width="' . $system->SETTINGS['thumb_show'] . '" border=0 /></a>';
+			
+			// this subastas title and link to details
 			$tplv['id'] = $row['id'];
-			$tplv['title'] = '<a href="'.$system->SETTINGS['siteurl'].'item.php?id='.$row['id'].'">'.$row['title'].'</a>';
+			$tplv['title'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '">' . $row['title'] . '</a>';
 			
-			if ($row['current_bid'] == 0) {
+			if ($row['current_bid'] == 0)
+			{
 				$row['current_bid'] = $row['minimum_bid'];
 			}
 			
-			if ($row['buy_now'] > 0 && $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price']))) {
+			if ($row['buy_now'] > 0 && $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
+			{
 				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="'.$system->SETTINGS['siteurl'].'buy_now.php?id='.$row['id'].'"><img src="'.$system->SETTINGS['siteurl'].'images/buy_it_now.gif" border=0 class="buynow"></a> '.$system->print_money($row['buy_now']).')';
-			} elseif ($row['buy_now'] > 0 && $row['bn_only'] == 'y') {
+			}
+			elseif ($row['buy_now'] > 0 && $row['bn_only'] == 'y')
+			{
 				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="'.$system->SETTINGS['siteurl'].'buy_now.php?id='.$row['id'].'"><img src="'.$system->SETTINGS['siteurl'].'images/buy_it_now.gif" border=0></a> '.$system->print_money($row['buy_now']).') <img src="'.$system->SETTINGS['siteurl'].'images/bn_only.png" border=0>';
 				$row['current_bid'] = $row['buy_now'];
-			} else {
+			}
+			else
+			{
 				$tplv['buy_now'] = '';
 			}
 			
@@ -57,11 +70,9 @@ function browseItems($result, $current_page) {
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$num_bids = mysql_num_rows($res);
 			$rpr = (int)$row['reserved_price'];
-			if ($rpr != 0)
-				$reserved_price = ' <img src="images/r.gif">';
-			else
-				$reserved_price = '';
-			$tplv['rpr'] = $reserved_price.$num_bids;
+			$reserved_price = ($rpr != 0) ? ' <img src="images/r.gif">' : '';
+			
+			$tplv['rpr'] = $reserved_price . $num_bids;
 			
 			// time left till the end of this auction 
 			$s_difference = time() - $row['starts'];
@@ -83,11 +94,13 @@ function browseItems($result, $current_page) {
 		}
 		$PREV = intval($PAGE - 1);
 		$NEXT = intval($PAGE + 1);
-		if ($PAGES > 1) {
+		if ($PAGES > 1)
+		{
 			$LOW = $PAGE - 5;
 			if ($LOW <= 0) $LOW = 1;
 			$COUNTER = $LOW;
-			while ($COUNTER <= $PAGES && $COUNTER < ($PAGE+6)) {
+			while ($COUNTER <= $PAGES && $COUNTER < ($PAGE+6))
+			{
 				$template->assign_block_vars('pages', array(
 					'PAGE' => ($PAGE == $COUNTER) ? '<b>'.$COUNTER.'</b>' : '<a href="'.$system->SETTINGS['siteurl'].$current_page.'?PAGE='.$COUNTER.'&id='.$id.'"><u>'.$COUNTER.'</u></a>'
 				));

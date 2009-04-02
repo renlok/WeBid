@@ -8,13 +8,13 @@
  * choice:
  *
  *  - GNU General Public License Version 2 or later (the "GPL")
- *    http://www.gnu.org/licenses/gpl.html
+ *	http://www.gnu.org/licenses/gpl.html
  *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
- *    http://www.gnu.org/licenses/lgpl.html
+ *	http://www.gnu.org/licenses/lgpl.html
  *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
- *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *	http://www.mozilla.org/MPL/MPL-1.1.html
  *
  * == END LICENSE ==
  *
@@ -472,11 +472,11 @@ FCKStyle.prototype =
 					var attValue = attribs[i][1] ;
 
 					// Remove the attribute if:
-					//    - The override definition value is null ;
-					//    - The override definition valie is a string that
-					//      matches the attribute value exactly.
-					//    - The override definition value is a regex that
-					//      has matches in the attribute value.
+					//	- The override definition value is null ;
+					//	- The override definition valie is a string that
+					//	  matches the attribute value exactly.
+					//	- The override definition value is a regex that
+					//	  has matches in the attribute value.
 					if ( attValue == null ||
 							( typeof attValue == 'string' && FCKDomTools.GetAttributeValue( element, attName ) == attValue ) ||
 							attValue.test( FCKDomTools.GetAttributeValue( element, attName ) ) )
@@ -624,11 +624,11 @@ FCKStyle.prototype =
 					var attValue	= attributes[i][1] ;
 
 					// Remove the attribute if:
-					//    - The override definition value is null ;
-					//    - The override definition valie is a string that
-					//      matches the attribute value exactly.
-					//    - The override definition value is a regex that
-					//      has matches in the attribute value.
+					//	- The override definition value is null ;
+					//	- The override definition valie is a string that
+					//	  matches the attribute value exactly.
+					//	- The override definition value is a regex that
+					//	  has matches in the attribute value.
 					if ( attValue == null ||
 							( attValue.test && attValue.test( FCKDomTools.GetAttributeValue( element, attName ) ) ) ||
 							( typeof attValue == 'string' && FCKDomTools.GetAttributeValue( element, attName ) == attValue ) )
@@ -809,16 +809,16 @@ FCKStyle.prototype =
 		var innerHTML = block.innerHTML.Trim() ;
 
 		// 1. Delete ANSI whitespaces immediately before and after <BR> because
-		//    they are not visible.
+		//	they are not visible.
 		// 2. Mark down any <BR /> nodes here so they can be turned into \n in
-		//    the next step and avoid being compressed.
+		//	the next step and avoid being compressed.
 		innerHTML = innerHTML.replace( /[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '<br />' ) ;
 
 		// 3. Compress other ANSI whitespaces since they're only visible as one
-		//    single space previously.
+		//	single space previously.
 		// 4. Convert &nbsp; to spaces since &nbsp; is no longer needed in <PRE>.
 		// 5. Convert any <BR /> to \n. This must not be done earlier because
-		//    the \n would then get compressed.
+		//	the \n would then get compressed.
 		var htmlIterator = new FCKHtmlIterator( innerHTML ) ;
 		var results = [] ;
 		htmlIterator.Each( function( isTag, value )
@@ -998,10 +998,10 @@ FCKStyle.prototype =
 	 *
 	 * TODO
 	 *	- Merge elements, when applying styles to similar elements that enclose
-	 *    the entire selection, outputing:
-	 *        <span style="color: #ff0000; background-color: #ffffff">XYZ</span>
-	 *    instead of:
-	 *        <span style="color: #ff0000;"><span style="background-color: #ffffff">XYZ</span></span>
+	 *	the entire selection, outputing:
+	 *		<span style="color: #ff0000; background-color: #ffffff">XYZ</span>
+	 *	instead of:
+	 *		<span style="color: #ff0000;"><span style="background-color: #ffffff">XYZ</span></span>
 	 */
 	_ApplyInlineStyle : function( range, selectIt, updateRange )
 	{

@@ -19,7 +19,7 @@ include 'loggedin.inc.php';
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == "update") {
-	if (isset($_FILES['logo']['tmp_name'])) {
+	if (isset($_FILES['logo']['tmp_name']) && !empty($_FILES['logo']['tmp_name'])) {
 		// Handle logo upload
 		$inf = GetImageSize ($_FILES['logo']['tmp_name']);
 		if ($inf[2] < 1 || $inf[2] > 3) {

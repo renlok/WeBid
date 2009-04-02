@@ -8,13 +8,13 @@
  * choice:
  *
  *  - GNU General Public License Version 2 or later (the "GPL")
- *    http://www.gnu.org/licenses/gpl.html
+ *	http://www.gnu.org/licenses/gpl.html
  *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
- *    http://www.gnu.org/licenses/lgpl.html
+ *	http://www.gnu.org/licenses/lgpl.html
  *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
- *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *	http://www.mozilla.org/MPL/MPL-1.1.html
  *
  * == END LICENSE ==
  *
@@ -70,7 +70,7 @@ FCKEditingArea.prototype.Start = function( html, secondCall )
 			if ( oMatchBefore && oMatchAfter )
 			{
 				var sBody = html.substr( oMatchBefore[1].length,
-					       html.length - oMatchBefore[1].length - oMatchAfter[1].length ) ;	// This is the BODY tag contents.
+						   html.length - oMatchBefore[1].length - oMatchAfter[1].length ) ;	// This is the BODY tag contents.
 
 				html =
 					oMatchBefore[1] +			// This is the HTML until the <body...> tag, inclusive.
@@ -339,7 +339,7 @@ FCKEditingArea.prototype._FocusIE = function()
 	// Only apply the fix when in a block, and the block is empty.
 	if ( parentNode.childNodes.length > 0 ||
 		 !( FCKListsLib.BlockElements[parentTag] ||
-		    FCKListsLib.NonEmptyBlockElements[parentTag] ) )
+			FCKListsLib.NonEmptyBlockElements[parentTag] ) )
 	{
 		return ;
 	}

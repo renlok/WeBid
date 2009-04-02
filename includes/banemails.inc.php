@@ -21,22 +21,30 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $DOMAINS = mysql_result($res, 0);
 
 $BANNEDDOMAINS = array_filter(explode("\n",$DOMAINS),'chop');
-if (count($BANNEDDOMAINS) > 0) {
-	$TPL_domains_alert=$MSG['30_0053']."<UL>";
-	while (list($k,$v) = each($BANNEDDOMAINS)) {
-		$TPL_domains_alert.="<LI><B>".$v."</B>";
+if (count($BANNEDDOMAINS) > 0)
+{
+	$TPL_domains_alert = $MSG['30_0053'] . '<ul>';
+	while (list($k,$v) = each($BANNEDDOMAINS))
+	{
+		$TPL_domains_alert .= '<li><b>' . $v . '</b></li>';
 	}
-	$TPL_domains_alert.="</UL>";
-} else {
-	$TPL_domains_alert='';
+	$TPL_domains_alert .= '</ul>';
+}
+else
+{
+	$TPL_domains_alert = '';
 }
 
-function BannedEmail($email,$domains){
-	$dom = explode('@',$email);
-	$domains = array_map('chop',$domains);
-	if (in_array($dom[1],$domains)){
+function BannedEmail($email, $domains)
+{
+	$dom = explode('@', $email);
+	$domains = array_map('chop', $domains);
+	if (in_array($dom[1],$domains))
+	{
 		return true;
-	} else {
+	}
+	else
+	{
 		return false;
 	}
 }

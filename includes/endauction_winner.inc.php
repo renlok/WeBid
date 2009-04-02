@@ -15,57 +15,30 @@
 if (!defined('InWeBid')) exit();
 
 // Check if the e-mail has to be sent or not
-$emailmode = @mysql_result(@mysql_query("SELECT endemailmode FROM " . $DBPrefix . "users WHERE id='".$Seller['id']."'"),0,"endemailmode");
-if ($emailmode != 'one') return;
+$query = "SELECT endemailmode FROM " . $DBPrefix . "users WHERE id = " . $Seller['id'];
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$emailmode = mysql_result($res, 0, 'endemailmode');
 
-// Retrieve user's prefered language
-$USERLANG = @mysql_result(@mysql_query("SELECT language FROM " . $DBPrefix . "userslanguage WHERE user='".$Seller['id']."'"),0,"language");
-if (!isset($USERLANG)) $USERLANG = $language;
-
-$buffer = file($main_path."language/".$USERLANG."/mail_endauction_winner.inc.php");
-$i = 0;
-$j = 0;
-while ($i < count($buffer)) {
-	if (!ereg("^#(.)*$",$buffer[$i])) {
-		$skipped_buffer[$j] = $buffer[$i];
-		$j++;
-	}
-	$i++;
+if ($emailmode == 'one') {
+	$emailer = new email_class();
+	$emailer->assign_vars(array(
+			'S_NAME' => $Seller['name'],
+			
+			'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
+			'A_PICURL' => ($Auction['pict_url'] != '') ? $uploaded_path . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'A_TITLE' => $Auction['title'],
+			'A_CURRENTBID' => $system->print_money($Auction['current_bid']),
+			'A_QTY' => $Auction['quantity'],
+			'A_ENDS' => $ends_string,
+			
+			'B_REPORT' => $report_text,
+			
+			'SITE_URL' => $system->SETTINGS['siteurl'],
+			'SITENAME' => $system->SETTINGS['sitename']
+			));
+	$emailer->email_uid = $Seller['id'];
+	$subject = $system->SETTINGS['sitename'] . ' ' . $MSG['079'] . ' ' . $MSG['907'] . ' ' . $Auction['title'];
+	$emailer->email_sender($Seller['email'], 'mail_endauction_winner.inc.php', $subject);
 }
-
-//--Retrieve message
-$message = implode($skipped_buffer,"");
-
-//--Change TAGS with variables content
-
-$message = ereg_replace("<#s_name#>",$Seller['name'],$message);
-$message = ereg_replace("<#s_nick#>",$Seller['nick'],$message);
-$message = ereg_replace("<#s_email#>",$Seller['email'],$message);
-$message = ereg_replace("<#s_address#>",$Seller['address'],$message);
-$message = ereg_replace("<#s_city#>",$Seller['city'],$message);
-$message = ereg_replace("<#s_prov#>",$Seller['prov'],$message);
-$message = ereg_replace("<#s_country#>",$Seller['country'],$message);
-$message = ereg_replace("<#s_zip#>",$Seller['zip'],$message);
-$message = ereg_replace("<#s_phone#>",$Seller['phone'],$message);
-$message = ereg_replace("<#w_report#>",$report_text,$message);
-if ($Auction['pict_url'] != '') {
-	$Auction['pict_url'] = $system->SETTINGS['siteurl'] . $uploaded_path . $Auction['id'] . '/' . $Auction['pict_url'];
-} else {
-	$Auction['pict_url'] = $system->SETTINGS['siteurl'] . 'images/email_alerts/default_item_img.jpg';
-}
-$message = ereg_replace("<#a_picturl#>", $Auction['pict_url'], $message);
-$message = ereg_replace("<#i_title#>",$Auction['title'],$message);
-$message = ereg_replace("<#i_currentbid#>",$system->print_money($Auction['current_bid']),$message);
-$message = ereg_replace("<#i_description#>",substr(strip_tags($Auction['description']),0,50)."...",$message);
-$message = ereg_replace("<#i_qty#>",$Auction['quantity'],$message);
-$auction_url = $SITE_URL."item.php?id=".$Auction['id'];
-$message = ereg_replace("<#i_url#>",$auction_url,$message);
-$message = ereg_replace("<#i_ends#>",$ends_string,$message);
-
-$message = ereg_replace("<#c_sitename#>",$system->SETTINGS['sitename'],$message);
-$message = ereg_replace("<#c_siteurl#>",$system->SETTINGS['siteurl'],$message);
-$message = ereg_replace("<#c_adminemail#>",$system->SETTINGS['adminmail'],$message);
-
-mail($Seller['email'],$system->SETTINGS['sitename'] . ' '.$MSG['079'].' '.$MSG['907'].' ' . $Auction['title'],stripslashes($message),"From:".$system->SETTINGS['sitename']." <".$system->SETTINGS['adminmail'].">\n"."Content-Type: text/html; charset=$CHARSET");
-
 ?>

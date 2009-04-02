@@ -8,13 +8,13 @@
  * choice:
  *
  *  - GNU General Public License Version 2 or later (the "GPL")
- *    http://www.gnu.org/licenses/gpl.html
+ *	http://www.gnu.org/licenses/gpl.html
  *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
- *    http://www.gnu.org/licenses/lgpl.html
+ *	http://www.gnu.org/licenses/lgpl.html
  *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
- *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *	http://www.mozilla.org/MPL/MPL-1.1.html
  *
  * == END LICENSE ==
  *
@@ -115,7 +115,7 @@ var FCKPreviewCommand = function()
 
 FCKPreviewCommand.prototype.Execute = function()
 {
-     FCK.Preview() ;
+	 FCK.Preview() ;
 }
 
 FCKPreviewCommand.prototype.GetState = function()
@@ -189,7 +189,7 @@ FCKSourceCommand.prototype.Execute = function()
 		FCKDialog.OpenDialog( 'FCKDialog_Source', FCKLang.Source, 'dialog/fck_source.html', iWidth, iHeight, null, null, true ) ;
 	}
 	else
-	    FCK.SwitchEditMode() ;
+		FCK.SwitchEditMode() ;
 }
 
 FCKSourceCommand.prototype.GetState = function()

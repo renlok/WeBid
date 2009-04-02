@@ -8,13 +8,13 @@
  * choice:
  *
  *  - GNU General Public License Version 2 or later (the "GPL")
- *    http://www.gnu.org/licenses/gpl.html
+ *	http://www.gnu.org/licenses/gpl.html
  *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
- *    http://www.gnu.org/licenses/lgpl.html
+ *	http://www.gnu.org/licenses/lgpl.html
  *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
- *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *	http://www.mozilla.org/MPL/MPL-1.1.html
  *
  * == END LICENSE ==
  *
@@ -66,7 +66,7 @@ FCKW3CRange.prototype =
 
 	_UpdateCollapsed : function()
 	{
-      this.collapsed = ( this.startContainer == this.endContainer && this.startOffset == this.endOffset ) ;
+	  this.collapsed = ( this.startContainer == this.endContainer && this.startOffset == this.endOffset ) ;
 	},
 
 	// W3C requires a check for the new position. If it is after the end

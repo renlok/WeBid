@@ -14,31 +14,16 @@
 
 if (!defined('InWeBid')) exit();
 
-// Retrieve user's prefered language
-$USERLANG = @mysql_result(@mysql_query("SELECT language FROM " . $DBPrefix . "userslanguage WHERE user='".$row['id']."'"),0,"language");
-if (!isset($USERLANG)) $USERLANG = $language;
-
-$buffer = file($main_path."language/".$USERLANG."/mail_endauction_cumulative.inc.php");
-$i = 0;
-$j = 0;
-while ($i < count($buffer))
-{
-	if (!ereg("^#(.)*$",$buffer[$i])){
-		$skipped_buffer[$j] = $buffer[$i];
-		$j++;
-	}
-	$i++;
-}
-//--Reteve message
-$message = implode($skipped_buffer,"");
-
-//--Change TAGS with variables content
-$message = ereg_replace("<#s_name#>",$Seller['name'],$message);
-$message = ereg_replace("<#i_report#>",$report,$message);
-$message = ereg_replace("<#c_sitename#>",$system->SETTINGS['sitename'],$message);
-$message = ereg_replace("<#c_siteurl#>",$system->SETTINGS['siteurl'],$message);
-$message = ereg_replace("<#c_adminemail#>",$system->SETTINGS['adminmail'],$message);
-
-mail($Seller['email'],$MSG['25_0199'],stripslashes($message),"From:".$system->SETTINGS['sitename']." <".$system->SETTINGS['adminmail'].">\n"."Content-Type: text/html; charset=$CHARSET");
-
+$emailer = new email_class();
+$emailer->assign_vars(array(
+		'SITE_URL' => $system->SETTINGS['siteurl'],
+		'SITENAME' => $system->SETTINGS['sitename'],
+		'ADMINMAIL' => $system->SETTINGS['adminmail'],
+		
+		'REPORT' => $report,
+		
+		'S_NAME' => $Seller['name']
+		));
+$emailer->email_uid = $row['id'];
+$emailer->email_sender($Seller['email'], 'mail_endauction_cumulative.inc.php', $MSG['25_0199']);
 ?>

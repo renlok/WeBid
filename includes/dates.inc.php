@@ -14,15 +14,18 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-if (!function_exists('GetLeftSeconds')) {
-	function GetLeftSeconds() {
+if (!function_exists('GetLeftSeconds'))
+{
+	function GetLeftSeconds()
+	{
 		$today = getdate();
 		$month = $today['mon'];
 		$mday = $today['mday'];
 		$year = $today['year'];
 		$lday = 31;
 		// Calculate last day
-		while (!checkdate($month, $lday, $year)) {
+		while (!checkdate($month, $lday, $year))
+		{
 			$lday--;
 		}
 		// Days left t the end of the month
@@ -36,38 +39,46 @@ if (!function_exists('GetLeftSeconds')) {
 	}
 }
 
-if (!function_exists('FormatDate')) {
-	function FormatDate($DATE) {
+if (!function_exists('FormatDate'))
+{
+	function FormatDate($DATE)
+	{
 		global $system;
 		
-		if ($system->SETTINGS['datesformat'] == 'USA') {
+		if ($system->SETTINGS['datesformat'] == 'USA')
+		{
 			$F_date = gmdate('m/d/Y', $DATE);
-		} else {
+		}
+		else
+		{
 			$F_date = gmdate('d/m/Y', $DATE);
 		}
 		return $F_date;
 	}
 }
 
-if (!function_exists('FormatTimeStamp')) {
-	function FormatTimeStamp($DATE) {
+if (!function_exists('FormatTimeStamp'))
+{
+	function FormatTimeStamp($DATE)
+	{
 		global $system;
 
-		if ($system->SETTINGS['datesformat'] == 'USA') {
-			$F_date = substr($DATE,5,2).'/'.
-					  substr($DATE,8,2).'/'.
-					  substr($DATE,0,4);
-		} else {
-			$F_date = substr($DATE,8,2).'/'.
-					  substr($DATE,5,2).'/'.
-					  substr($DATE,0,4);
+		if ($system->SETTINGS['datesformat'] == 'USA')
+		{
+			$F_date = substr($DATE,5,2) . '/' . substr($DATE,8,2) . '/' . substr($DATE,0,4);
+		}
+		else
+		{
+			$F_date = substr($DATE,8,2) . '/' . substr($DATE,5,2) . '/' . substr($DATE,0,4);
 		}
 		return $F_date;
 	}
 }
 
-if (!function_exists('FormatTimeLeft')) {
-	function FormatTimeLeft($diff) {
+if (!function_exists('FormatTimeLeft'))
+{
+	function FormatTimeLeft($diff)
+	{
 		global $MSG;
 		
 		$days_difference = floor($diff / 86400);
@@ -78,27 +89,37 @@ if (!function_exists('FormatTimeLeft')) {
 		$seconds_difference = $difference % 60;
 		$secshow = false;
 		
-		if ($days_difference > 0) {
-			$timeleft = $days_difference.'d ';
+		if ($days_difference > 0)
+		{
+			$timeleft = $days_difference . 'd ';
 		}
-		if ($hours_difference > 0) {
-			$timeleft .= $hours_difference.'h ';
-		} else {
+		if ($hours_difference > 0)
+		{
+			$timeleft .= $hours_difference . 'h ';
+		}
+		else
+		{
 			$secshow = true;
 		}
-		if ($diff > 60) {
-			$timeleft .= $minutes_difference.'m ';
-		} elseif ($diff > 60 && !$seconds) {
+		if ($diff > 60)
+		{
+			$timeleft .= $minutes_difference . 'm ';
+		}
+		elseif ($diff > 60 && !$seconds)
+		{
 			$timeleft = '<1m';
 		}
-		if ($secshow) {
-			$timeleft .= $seconds_difference.'s ';
+		if ($secshow)
+		{
+			$timeleft .= $seconds_difference . 's ';
 		}
-		if ($diff < 0) {
+		if ($diff < 0)
+		{
 			$timeleft = $MSG['911'];
 		}
-		if (($diff * 60) < 15) {
-			$timeleft = '<span style="color:#FF0000;">'.$timeleft.'</span>';
+		if (($diff * 60) < 15)
+		{
+			$timeleft = '<span style="color:#FF0000;">' . $timeleft . '</span>';
 		}
 		
 		return $timeleft;
@@ -106,28 +127,34 @@ if (!function_exists('FormatTimeLeft')) {
 }
 
 //-- Date and time hanling functions
-if (!function_exists('ActualDate')) {
-	function ActualDate() {
+if (!function_exists('ActualDate'))
+{
+	function ActualDate()
+	{
 		global $system;
 		return gmdate('M d, Y H:i:s', $system->ctime);
 	}
 }
 
-if (!function_exists('ArrangeDateNoCorrection')) {
-	function ArrangeDateNoCorrection($DATE) {
+if (!function_exists('ArrangeDateNoCorrection'))
+{
+	function ArrangeDateNoCorrection($DATE)
+	{
 		global $MSG;
-		$mth = 'MON_0'.gmdate('m', $DATE);
-		$return = $MSG[$mth].' '.gmdate('d, Y - H:i', $DATE);
+		$mth = 'MON_0' . gmdate('m', $DATE);
+		$return = $MSG[$mth] . ' ' . gmdate('d, Y - H:i', $DATE);
 		return $return;
 	}
 }
 
-if (!function_exists('ArrangeDateNoCorrMesCompleto')) {
-	function ArrangeDateNoCorrMesCompleto($day, $month, $year, $hours, $minutes) {
+if (!function_exists('ArrangeDateNoCorrMesCompleto'))
+{
+	function ArrangeDateNoCorrMesCompleto($day, $month, $year, $hours, $minutes)
+	{
 		global $MSG;
 		$DATE = gmmktime($hours, $minutes, 0, $month, $day, $year);
-		$mth = 'MON_0'.gmdate('m', $DATE).'E';
-		$return = $MSG[$mth].' '.gmdate('d, Y - H:i', $DATE);
+		$mth = 'MON_0' . gmdate('m', $DATE) . 'E';
+		$return = $MSG[$mth] . ' ' . gmdate('d, Y - H:i', $DATE);
 		return $return;
 	}
 }

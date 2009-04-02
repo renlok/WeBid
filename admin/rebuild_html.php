@@ -28,7 +28,7 @@ function rebuild_html_file($table)
 	$sqlqry = "SELECT " . $field_name . " FROM " . $DBPrefix . "" . $table . " ORDER BY " . $field_name . ";";
 	$result = mysql_query($sqlqry) or die(mysql_error());
 	
-	$output = "<?\n";
+	$output = "<?php\n";
 	$output.= "$" . $array_name . " = array(\"\", \n";
 	
 	if ($result)

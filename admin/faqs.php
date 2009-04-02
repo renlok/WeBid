@@ -41,7 +41,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$MSG = "Database updated";
 		$_SESSION['MSG']=$MSG;
-		header("Location: index.php");
+		header('location: index.php');
 		exit;
 	}
 }

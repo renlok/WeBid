@@ -14,52 +14,35 @@
 
 if (!defined('InWeBid')) exit();
 
-// Retrieve user's prefered language
-$USERLANG = @mysql_result(@mysql_query("SELECT language FROM " . $DBPrefix . "userslanguage WHERE user='".$Winner['id']."'"),0,"language");
-if (!isset($USERLANG)) $USERLANG = $language;
-
-$buffer = file($main_path.'language/'.$USERLANG.'/mail_endauction_youwin.inc.php');
-$i = 0;
-$j = 0;
-
-while ($i < count($buffer)) {
-	if (!ereg("^#(.)*$",$buffer[$i])){
-		$skipped_buffer[$j] = $buffer[$i];
-		$j++;
-	}
-	$i++;
+if(strlen(strip_tags($Auction['description'])) > 60)
+{
+	$description = substr(strip_tags($Auction['description']), 0, 50) . '...';
+}
+else
+{
+	$description = $Auction['description'];
 }
 
-//--Retrieve message
-
-$message = implode($skipped_buffer,'');
-
-//--Change TAGS with variables content
-$message = ereg_replace("<#s_name#>",$Seller['name'],$message);
-$message = ereg_replace("<#s_nick#>",$Seller['nick'],$message);
-$message = ereg_replace("<#s_email#>",$Seller['email'],$message);
-$message = ereg_replace("<#s_payment#>",$Seller['payment_details'],$message);
-$message = ereg_replace("<#s_address#>",$Seller['address'],$message);
-$message = ereg_replace("<#s_city#>",$Seller['city'],$message);
-$message = ereg_replace("<#s_prov#>",$Seller['prov'],$message);
-$message = ereg_replace("<#s_country#>",$Seller['country'],$message);
-$message = ereg_replace("<#s_zip#>",$Seller['zip'],$message);
-$message = ereg_replace("<#s_phone#>",$Seller['phone'],$message);
-$message = ereg_replace("<#w_name#>",$Winner['name'],$message);
-$message = ereg_replace("<#w_nick#>",$Winner['nick'],$message);
-$message = ereg_replace("<#i_title#>",$Auction['title'],$message);
-$message = ereg_replace("<#i_qty#>",$qty,$message);
-$message = ereg_replace("<#i_currentbid#>",$system->print_money($WINNERS_BID[$Winner['current_bid']]),$message);
-$message = ereg_replace("<#i_winningbid#>",$system->print_money($WINNING_BID),$message);
-$message = ereg_replace("<#i_description#>",substr(strip_tags($Auction['description']),0,50)."...",$message);
-$auction_url = $SITE_URL."item.php?id=".$Auction['id'];
-$message = ereg_replace("<#i_url#>",$auction_url,$message);
-$message = ereg_replace("<#i_ends#>",$ends_string,$message);
-$message = ereg_replace("<#i_wanted>",$Winner['wanted'],$message);
-$message = str_replace("<#i_got>",$Winner['quantity'],$message);
-$message = ereg_replace("<#c_sitename#>",$system->SETTINGS['sitename'],$message);
-$message = ereg_replace("<#c_siteurl#>",$system->SETTINGS['siteurl'],$message);
-$message = ereg_replace("<#c_adminemail#>",$system->SETTINGS['adminmail'],$message);
-
-mail($Winner['email'], $MSG['909'], stripslashes($message), 'From:'.$system->SETTINGS['sitename'].' <'.$system->SETTINGS['adminmail'].'>'."\n".'Content-Type: text/html; charset='.$CHARSET);
+$emailer = new email_class();
+$emailer->assign_vars(array(
+		'W_NAME' => $Winner['name'],
+		'W_WANTED' => $Winner['wanted'],
+		'W_GOT' => $Winner['quantity'],
+		
+		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
+		'A_TITLE' => $Auction['title'],
+		'A_DESCRIPTION' => $description,
+		'A_CURRENTBID' => $system->print_money($WINNERS_BID[$Winner['current_bid']]),
+		'A_ENDS' => $ends_string,
+		
+		'S_NICK' => $Seller['nick'],
+		'S_EMAIL' => $Seller['email'],
+		'S_PAYMENT' => $Seller['payment_details'],
+		
+		'SITE_URL' => $system->SETTINGS['siteurl'],
+		'SITENAME' => $system->SETTINGS['sitename'],
+		'ADMINEMAIL' => $system->SETTINGS['adminmail']
+		));
+$emailer->email_uid = $Winner['id'];
+$emailer->email_sender($Winner['email'], 'mail_endauction_youwin.inc.php', $MSG['909']);
 ?>

@@ -97,7 +97,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
 		<tr> 
 		  <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
-		  <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['078']; ?></td>
+		  <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['132']; ?></td>
 		</tr>
 	  </table></td>
   </tr>

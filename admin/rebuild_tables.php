@@ -24,7 +24,7 @@ function rebuild_table_file($table)
 			$field_name = array("id","feedbacks","membertype","icon");
 			$sort_field = 1;
 			$array_name = "membertypes";
-			$output = "<?\n";
+			$output = "<?php\n";
 			$output.= "$" . $array_name . " = array(\n";
 			break;
 		default :

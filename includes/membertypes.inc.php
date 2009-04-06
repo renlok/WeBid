@@ -1,4 +1,4 @@
-<?
+<?php
 $membertypes = array(
 "24" => array(
 "id"=>"24","feedbacks"=>"9","membertype"=>"","icon"=>"transparent.gif"),

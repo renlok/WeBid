@@ -11,17 +11,21 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
+
 if (!defined('InWeBid')) exit('Access denied');
+
 // UNDER CONSTRUCTION XD
 class fees
 {
 	var $ASCII_RANGE;
 	
-	function fees() {
+	function fees()
+	{
 		$this->ASCII_RANGE = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	}
 	
-	function paypal_validate() {
+	function paypal_validate()
+	{
 		global $system, $_POST;
 
 		$confirmed = false;	// used to check if the payment is confirmed
@@ -32,14 +36,16 @@ class fees
 		$pos = strspn($_POST['txn_id'], $this->ASCII_RANGE);
 		$len = strlen($_POST['txn_id']);
 
-		if ($pos != $len) {
+		if ($pos != $len)
+		{
 			return;
 		}
 		
 		//validate payment
 		$req = 'cmd=_notify-validate';
 
-		foreach ($this->data as $key => $value) {
+		foreach ($this->data as $key => $value)
+		{
 			$value = urlencode(stripslashes($value));
 			$req .= '&' . $key . '=' . $value;
 		}
@@ -57,25 +63,27 @@ class fees
 		
 		list($custom, $fee_table) = explode('TBL',$_POST['custom']);
 		
-		if (!$fp) {
+		if (!$fp)
+		{
 			$error_output = $errstr . ' (' . $errno . ')';
-		} else {
+		}
+		else
+		{
 			fputs ($fp, $header . $req);
 		
-			while (!feof($fp)) {
+			while (!feof($fp))
+			{
 				$res = fgets ($fp, 1024);
 		
-				if (strcmp ($res, "VERIFIED") == 0) {
-					/* PROCESSED
-					$process_fee = new fees();
-					$process_fee->setts = &$setts;
-		
-					$process_fee->callback_process($custom, $fee_table, $active_pg, $payment_gross, $txn_id, $payment_currency);
-					*/
+				if (strcmp ($res, 'VERIFIED') == 0)
+				{
+					// do something
 				}
 			}
 			fclose ($fp);
 		}
 	}
+	
+	
 }
 ?>

@@ -147,7 +147,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 					WHERE userid = " . $user->user_data['id'] . " AND itemid = " . $id . " ORDER BY bid DESC";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0) {
+			if (mysql_num_rows($res) > 0)
+			{
 				$WINNER_PROXYBID = mysql_result($res, 0, 'bid');
 				if ($WINNER_PROXYBID >= $bid)
 				{

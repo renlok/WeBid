@@ -16,14 +16,16 @@ if (!defined('InWeBid')) exit('Access denied');
 
 class email_class
 {
-	var $from, $message, $subject, $headers, $email_uid;
+	var $from, $message, $subject, $headers, $email_uid, $userlang;
 	
-	function build_header() {
+	function build_header()
+	{
 		global $system, $CHARSET;
 
 		$headers = array();
 		
-		if (!isset($this->from) || empty($this->from)) {
+		if (!isset($this->from) || empty($this->from))
+		{
 			$this->from = $system->SETTINGS['adminmail'];
 		}
 
@@ -40,18 +42,21 @@ class email_class
 		$this->headers = implode("\n", $headers);
 	}
 	
-	function buildmessage($file) {
+	function buildmessage($file)
+	{
 		global $main_path, $include_path;
 
 		$buffer = file($main_path . 'language/' . $this->getuserlang() . '/' . $file);
 		$i = 0;
 		$j = 0;
-		while ($i < count($buffer)) {
-			if (!ereg("^#(.)*$", $buffer[$i])) {
+		while ($i < count($buffer))
+		{
+			if (!ereg("^#(.)*$", $buffer[$i]))
+			{
 				$skipped_buffer[$j] = $buffer[$i];
 				$j++;
 			}
-		$i++;
+			$i++;
 		}
 		$this->message = implode($skipped_buffer, '');
 		$this->message = str_replace("'", "\'", $this->message);
@@ -63,10 +68,12 @@ class email_class
 		$text_blocks = preg_split('#<!-- [^<].*? (?:.*?)? ?-->#', $this->message);
 		
 		$compile_blocks = array();
-		for ($curr_tb = 0, $tb_size = sizeof($blocks); $curr_tb < $tb_size; $curr_tb++) {
+		for ($curr_tb = 0, $tb_size = sizeof($blocks); $curr_tb < $tb_size; $curr_tb++)
+		{
 			$block_val = &$blocks[$curr_tb];
 
-			switch ($block_val[1]) {
+			switch ($block_val[1])
+			{
 				case 'IF':
 					$compile_blocks[] = "'; " . $this->compile_tag_if (str_replace("\'", "'", $block_val[2]), false) . " \$this->message .= '";
 				break;
@@ -86,7 +93,8 @@ class email_class
 		}
 		
 		$template_php = '';
-		for ($i = 0, $size = sizeof($text_blocks); $i < $size; $i++) {
+		for ($i = 0, $size = sizeof($text_blocks); $i < $size; $i++)
+		{
 			$trim_check_text = trim($text_blocks[$i]);
 			$template_php .= (($trim_check_text != '') ? $text_blocks[$i] : '') . ((isset($compile_blocks[$i])) ? $compile_blocks[$i] : '');
 		}
@@ -94,7 +102,8 @@ class email_class
 		eval("\$this->message = '$template_php';");
 	}
 	
-	function compile_tag_if ($tag_args, $elseif) {
+	function compile_tag_if ($tag_args, $elseif)
+	{
 		// Tokenize args for 'if' tag.
 		preg_match_all('/(?:
 			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"		 |
@@ -105,10 +114,12 @@ class email_class
 		$tokens = $match[0];
 		$is_arg_stack = array();
 
-		for ($i = 0, $size = sizeof($tokens); $i < $size; $i++) {
+		for ($i = 0, $size = sizeof($tokens); $i < $size; $i++)
+		{
 			$token = &$tokens[$i];
 
-			switch ($token) {
+			switch ($token)
+			{
 				case '!==':
 				case '===':
 				case '<<':
@@ -197,30 +208,38 @@ class email_class
 				// no break
 
 				default:
-					if (preg_match('#^((?:[a-z0-9\-_]+\.)+)?(\$)?(?=[A-Z])([A-Z0-9\-_]+)#s', $token, $varrefs)) {
+					if (preg_match('#^((?:[a-z0-9\-_]+\.)+)?(\$)?(?=[A-Z])([A-Z0-9\-_]+)#s', $token, $varrefs))
+					{
 						$token = (!empty($varrefs[1])) ? $this->generate_block_data_ref(substr($varrefs[1], 0, -1), true, $varrefs[2]) . '[\'' . $varrefs[3] . '\']' : (($varrefs[2]) ? '$this->vars[\'DEFINE\'][\'.\'][\'' . $varrefs[3] . '\']' : '$this->vars[\'' . $varrefs[3] . '\']');
-					} else if (preg_match('#^\.((?:[a-z0-9\-_]+\.?)+)$#s', $token, $varrefs)) {
+					}
+					else if (preg_match('#^\.((?:[a-z0-9\-_]+\.?)+)$#s', $token, $varrefs))
+					{
 						// Allow checking if loops are set with .loopname
 						// It is also possible to check the loop count by doing <!-- IF .loopname > 1 --> for example
 						$blocks = explode('.', $varrefs[1]);
 
 						// If the block is nested, we have a reference that we can grab.
 						// If the block is not nested, we just go and grab the block from _tpldata
-						if (sizeof($blocks) > 1) {
+						if (sizeof($blocks) > 1)
+						{
 							$block = array_pop($blocks);
 							$namespace = implode('.', $blocks);
 							$varref = $this->generate_block_data_ref($namespace, true);
 
 							// Add the block reference for the last child.
 							$varref .= "['" . $block . "']";
-						} else {
+						}
+						else
+						{
 							$varref = '$this->_tpldata';
 
 							// Add the block reference for the last child.
 							$varref .= "['" . $blocks[0] . "']";
 						}
 						$token = "sizeof($varref)";
-					} else if (!empty($token)) {
+					}
+					else if (!empty($token))
+					{
 						$token = '(' . $token . ')';
 					}
 
@@ -229,22 +248,26 @@ class email_class
 		}
 
 		// If there are no valid tokens left or only control/compare characters left, we do skip this statement
-		if (!sizeof($tokens) || str_replace(array(' ', '=', '!', '<', '>', '&', '|', '%', '(', ')'), '', implode('', $tokens)) == '') {
+		if (!sizeof($tokens) || str_replace(array(' ', '=', '!', '<', '>', '&', '|', '%', '(', ')'), '', implode('', $tokens)) == '')
+		{
 			$tokens = array('false');
 		}
 		return (($elseif) ? '} else if (' : 'if (') . (implode(' ', $tokens) . ') { ');
 	}
 	
-	function generate_block_data_ref($blockname, $include_last_iterator, $defop = false) {
+	function generate_block_data_ref($blockname, $include_last_iterator, $defop = false)
+	{
 		// Get an array of the blocks involved.
 		$blocks = explode('.', $blockname);
 		$blockcount = sizeof($blocks) - 1;
 
 		// DEFINE is not an element of any referenced variable, we must use _tpldata to access it
-		if ($defop) {
+		if ($defop)
+		{
 			$varref = '$this->_tpldata[\'DEFINE\']';
 			// Build up the string with everything but the last child.
-			for ($i = 0; $i < $blockcount; $i++) {
+			for ($i = 0; $i < $blockcount; $i++)
+			{
 				$varref .= "['" . $blocks[$i] . "'][\$_" . $blocks[$i] . '_i]';
 			}
 			// Add the block reference for the last child.
@@ -255,46 +278,63 @@ class email_class
 				$varref .= '[$_' . $blocks[$blockcount] . '_i]';
 			}
 			return $varref;
-		} else if ($include_last_iterator) {
+		}
+		else if ($include_last_iterator)
+		{
 			return '$_'. $blocks[$blockcount] . '_val';
-		} else {
+		}
+		else
+		{
 			return '$_'. $blocks[$blockcount - 1] . '_val[\''. $blocks[$blockcount]. '\']';
 		}
 	}
 	
-	function assign_vars($vars) {
+	function assign_vars($vars)
+	{
 		$this->vars = (empty($this->vars)) ? $vars : $this->vars + $vars;
 	}
 	
-	function getuserlang() {
+	function getuserlang()
+	{
 		global $system, $DBPrefix, $language;
 		
-		if (isset($this->email_uid) && $this->email_uid > 0) {
+		if (isset($this->email_uid) && $this->email_uid > 0)
+		{
 			// Retrieve user's prefered language
 			$query = "SELECT language FROM " . $DBPrefix . "userslanguage WHERE user = " . intval($this->email_uid);
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0) {
+			if (mysql_num_rows($res) > 0)
+			{
 				$USERLANG = mysql_result($res, 0);
 				if (isset($USERLANG) && !empty($USERLANG)) return $USERLANG;
 			}
+		}
+		elseif(isset($this->userlang))
+		{
+			$language = $this->userlang;
 		}
 		
 		return $language;
 	}
 	
-	function sendmail() {
-		if (is_array($this->to)) {
-			for ($i = 0; $i < count($this->to); $i++) {
+	function sendmail()
+	{
+		if (is_array($this->to))
+		{
+			for ($i = 0; $i < count($this->to); $i++)
+			{
 				mail($this->to[$i], $this->subject, $this->message, $this->headers);
 			}
-		} else {
+		}
+		else
+		{
 			mail($this->to, $this->subject, $this->message, $this->headers);
 		}
 	}
 	
-	// ALL THE INDIVIDUAL EMAILS
-	function email_basic($subject, $to, $message, $from = '') {
+	function email_basic($subject, $to, $message, $from = '')
+	{
 		$this->to = $to;
 		$this->subject = $subject;
 		$this->from = $from;
@@ -303,7 +343,8 @@ class email_class
 		$this->sendmail();
 	}
 	
-	function email_sender($to, $file, $subject) {
+	function email_sender($to, $file, $subject)
+	{
 		$this->to = $to;
 		$this->subject = $subject;
 		$this->build_header();

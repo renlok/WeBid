@@ -490,11 +490,11 @@ if ($result) {
 }
 
 //send emails
-$query = "SELECT id FROM PHPAUCTIONXL_users WHERE endemailmode='cum'";
+$query = "SELECT id FROM " . $DBPrefix . "users WHERE endemailmode = 'cum'";
 $res = mysql_query($query);
 if($res){
 	while($row = mysql_fetch_array($res)){
-		$query = "SELECT * FROM PHPAUCTIONXL_pendingnotif WHERE thisdate<'".date("Ymd")."' AND seller_id=".$row['id'];
+		$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < '".date("Ymd")."' AND seller_id = ".$row['id'];
 		$res_ = @mysql_query($query);
 		while($pending = mysql_fetch_array($res_)){
 			$Auction = unserialize($pending['auction']);
@@ -502,12 +502,12 @@ if($res){
 			$report .= "-------------------------------------------------------------------------\n".
 						$Auction['title']."\n".
 						"-------------------------------------------------------------------------\n";
-			if(strlen($pending['winners']) > 0){
-				$report .= $MSG_453.":\n".$pending['winners']."\n\n";
-			}else{
-				$report .= $MSG_30_0103."\n\n";
+			if(strlen($pending['winners']) > 0) {
+				$report .= $MSG['453'] . ':' . "\n" . $pending['winners'] . "\n\n";
+			} else {
+				$report .= $MSG['1032']."\n\n";
 			}
-			@mysql_query("DELETE FROM PHPAUCTIONXL_pendingnotif WHERE id=".$pending['id']);
+			@mysql_query("DELETE FROM " . $DBPrefix . "pendingnotif WHERE id = " . $pending['id']);
 		}
 		include $include_path . "endauction_cumulative.inc.php";
 	}
@@ -533,7 +533,7 @@ if ((time() - $purgecachetime) > 86400) {
 	// starting all site images purge
 	$imgarray[] = $system->SETTINGS['logo'];
 	$imgarray[] = $system->SETTINGS['background'];
-	$result = mysql_query("SELECT pict_url from " . $DBPrefix . "auctions WHERE photo_uploaded='1'");
+	$result = mysql_query("SELECT pict_url FROM " . $DBPrefix . "auctions WHERE photo_uploaded='1'");
 	while ($row = mysql_fetch_array($result, MYSQL_NUM))
 	$imgarray[] = $row[0];
 	$result = mysql_query("SELECT id from " . $DBPrefix . "auctions");

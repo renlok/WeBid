@@ -194,9 +194,6 @@ function selectAllDelete(formObj, isInverse)
 		</tr>
 	  </table></td>
   </tr>
-  <tr>
-	<td align="center" valign="middle">At the moment if you change the catorgories here you must also changes the tranlations <a href="categoriestrans.php">here</a></td>
-  </tr>
 	<tr> 
 	<td align="center" valign="middle">
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">

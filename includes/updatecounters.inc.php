@@ -15,7 +15,7 @@
 if (!defined('InWeBid')) exit();
 $NOW = time();
 
-#// Retrieve current counters
+// Retrieve current counters
 $query = "SELECT * FROM " . $DBPrefix . "counters";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -24,7 +24,7 @@ if (mysql_num_rows($res) > 0)
 	$COUNTERS = mysql_fetch_array($res);
 }
 
-$query = "SELECT count(id) as COUNTER from " . $DBPrefix . "users WHERE suspended=0";
+$query = "SELECT count(id) as COUNTER from " . $DBPrefix . "users WHERE suspended = 0";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $USERS = mysql_result($res,0,"COUNTER");
@@ -34,17 +34,16 @@ $query = "UPDATE " . $DBPrefix . "counters set users=$USERS";
 $res_ = mysql_query($query);
 $system->check_mysql($res_, $query, __LINE__, __FILE__);
 
-$query = "SELECT count(id) as COUNTER from " . $DBPrefix . "users WHERE suspended<>0";
+$query = "SELECT count(id) as COUNTER from " . $DBPrefix . "users WHERE suspended <> 0";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $USERS = mysql_result($res,0,"COUNTER");
 
 #// Update counters table
-$query = "UPDATE " . $DBPrefix . "counters set inactiveusers=$USERS";
-$res_ = mysql_query($query);
-$system->check_mysql($res_, $query, __LINE__, __FILE__);
+$query = "UPDATE " . $DBPrefix . "counters set inactiveusers = " . $USERS;
+$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
-$query = "SELECT count(id) as COUNTER from " . $DBPrefix . "auctions WHERE closed=0 and suspended=0 AND private='n' AND starts<=".$NOW;
+$query = "SELECT count(id) as COUNTER from " . $DBPrefix . "auctions WHERE closed = 0 and suspended = 0 AND private = 'n' AND starts <= ".$NOW;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

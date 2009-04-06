@@ -27,14 +27,17 @@ $THISDAY	 = gmdate('j');
 $THISMONTH   = gmdate('n');
 $THISYEAR	= gmdate('Y');
 
-if ($STATSSETTINGS['activate'] == 'y') {
-	// -> Users accesses ################################################
-	if ($STATSSETTINGS['accesses'] == 'y') {
+if ($STATSSETTINGS['activate'] == 'y')
+{
+	// Users accesses
+	if ($STATSSETTINGS['accesses'] == 'y')
+	{
 		// Did the month change? --
 		$query = "SELECT month from " . $DBPrefix . "currentaccesses LIMIT 1";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) > 0 && mysql_result($res, 0, 'month') != $THISMONTH) {
+		if (mysql_num_rows($res) > 0 && mysql_result($res, 0, 'month') != $THISMONTH)
+		{
 			// Archive current stats
 			$query = "SELECT month, year, SUM(pageviews) AS PG, SUM(uniquevisitors) as UN, SUM(usersessions) as SE FROM " . $DBPrefix . "currentaccesses GROUP BY month";
 			$res = mysql_query($query);
@@ -47,10 +50,13 @@ if ($STATSSETTINGS['activate'] == 'y') {
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		
-		// check cookies and session vars --
-		if (isset($_SESSION['USER_STATS_SESSION'])) {
+		// check cookies and session vars
+		if (isset($_SESSION['USER_STATS_SESSION']))
+		{
 			$UPDATESESSION = FALSE;
-		} else {
+		}
+		else
+		{
 			$USER_STATS_SESSION = time();
 			$_SESSION['USER_STATS_SESSION'] = $USER_STATS_SESSION;
 			$UPDATESESSION = TRUE;
@@ -58,9 +64,12 @@ if ($STATSSETTINGS['activate'] == 'y') {
 		
 		// check cookies and session vars --
 		$Cookie = $system->SETTINGS['cookiesprefix'] . "uniqueuser";
-		if (isset($HTTP_COOKIE_VARS[$Cookie])) {
+		if (isset($HTTP_COOKIE_VARS[$Cookie]))
+		{
 			$UPDATECOOKIE = FALSE;
-		} else {
+		}
+		else
+		{
 			// Get left seconds to the end of the month
 			$exp = GetLeftSeconds();
 			setcookie($Cookie, time(), time() + $exp);
@@ -70,22 +79,25 @@ if ($STATSSETTINGS['activate'] == 'y') {
 		$query = "SELECT day, month FROM " . $DBPrefix . "currentaccesses WHERE day = " . $THISDAY . " AND month = " . $THISMONTH;
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0) {
+		if (mysql_num_rows($res) == 0)
+		{
 			$query = "INSERT INTO " . $DBPrefix . "currentaccesses VALUES (
 					  " . $THISDAY . ", " . $THISMONTH . ", " . $THISYEAR . ", 0, 0, 0)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		
 		$query = "UPDATE " . $DBPrefix . "currentaccesses SET pageviews = pageviews + 1";
-		if ($UPDATESESSION) {
+		if ($UPDATESESSION)
+		{
 			$query .= ", usersessions = usersessions + 1";
 		}
-		if ($UPDATECOOKIE) {
+		if ($UPDATECOOKIE)
+		{
 			$query .= ", uniquevisitors = uniquevisitors + 1";
 		}
 		$query .= " WHERE day = " . $THISDAY . " AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		// -- End users accesses
+		// End users accesses
 	}
 	
 	// Get user's agent and platform
@@ -93,7 +105,8 @@ if ($STATSSETTINGS['activate'] == 'y') {
 	$browser_info[] = browser_detection('moz_version');
 	
 	$os = '';
-	switch ($browser_info[5]) {
+	switch ($browser_info[5])
+	{
 		case 'win':
 			$os .= 'Windows ';
 			break;
@@ -113,55 +126,82 @@ if ($STATSSETTINGS['activate'] == 'y') {
 			$os .= $browser_info[5];
 	}
 	
-	if ($browser_info[5] == 'nt') {
-		if ($browser_info[6] == 5) {
+	if ($browser_info[5] == 'nt')
+	{
+		if ($browser_info[6] == 5)
+		{
 			$os .= '5.0 (Windows 2000)';
-		} elseif ($browser_info[6] == 5.1) {
+		}
+		elseif ($browser_info[6] == 5.1)
+		{
 			$os .= '5.1 (Windows XP)';
-		} elseif ($browser_info[6] == 5.2) {
+		}
+		elseif ($browser_info[6] == 5.2)
+		{
 			$os .= '5.2 (Windows XP x64 Edition or Windows Server 2003)';
-		} elseif ($browser_info[6] == 6.0) {
+		}
+		elseif ($browser_info[6] == 6.0)
+		{
 			$os .= '6.0 (Windows Vista)';
-		} elseif ($browser_info[6] == 6.1) {
+		}
+		elseif ($browser_info[6] == 6.1)
+		{
 			$os .= '6.1 (Windows 7)';
 		}
-	} elseif (($browser_info[5] == 'mac') && ($browser_info[6] >= 10)) {
+	}
+	elseif (($browser_info[5] == 'mac') && ($browser_info[6] >= 10))
+	{
 		$os .=  'OS X';
-	} elseif ($browser_info[5] == 'lin') {
+	}
+	elseif ($browser_info[5] == 'lin')
+	{
 		$os .= ( $browser_info[6] != '' ) ? 'Distro: ' . ucfirst ($browser_info[6] ) : 'Smart Move!!!';
-	} elseif ($browser_info[6] == '') {
+	}
+	elseif ($browser_info[6] == '')
+	{
 		$os .=  ' (version unknown)';
-	} else {
+	}
+	else
+	{
 		$os .=  strtoupper( $browser_info[6] );
 	}
 	
 	$browser = '';
-	if ($browser_info[0] == 'moz') {
-		$a_temp = $browser_info[count($browser_info) - 1];// use the last item in array, the moz array
+	if ($browser_info[0] == 'moz')
+	{
+		$a_temp = $browser_info[count($browser_info) - 1]; // use the last item in array, the moz array
 		$browser .= ($a_temp[0] != 'mozilla') ? 'Mozilla/ ' . ucfirst($a_temp[0]) . ' ' : ucfirst($a_temp[0]) . ' ';
 		$browser .= $a_temp[1];
 		/* not really needed in this much detail
 		$browser .= 'ProductSub: ';
 		$browser .= ($a_temp[4] != '') ? $a_temp[4] . '<br />' : 'Not Available<br />';
 		$browser .= ($a_temp[0] != 'galeon') ? 'Engine: Gecko RV: ' . $a_temp[3] : ''; */
-	} elseif ($browser_info[0] == 'ns') {
+	}
+	elseif ($browser_info[0] == 'ns')
+	{
 		$browser .= 'Netscape ' . $browser_info[1];
-	} elseif ($browser_info[0] == 'webkit') {
+	}
+	elseif ($browser_info[0] == 'webkit')
+	{
 		$browser .= 'User Agent: ';
 		$browser .= ucwords($browser_info[7]);
 		$browser .= '<br />Engine: AppleWebKit ';
 		$browser .= ($browser_info[1]) ? $browser_info[1] : 'Not Available';
-	} else {
+	}
+	else
+	{
 		$browser .= ($browser_info[0] == 'ie') ? strtoupper($browser_info[7]) : ucwords($browser_info[7]);
 		$browser .= ' ' . $browser_info[1];
 	}
 	
-	if ($STATSSETTINGS['browsers'] == 'y') {
+	if ($STATSSETTINGS['browsers'] == 'y')
+	{
 		// Update the browser stats
 		$query = "SELECT month FROM " . $DBPrefix . "currentbrowsers WHERE month = " . $THISMONTH . " AND year = " . $THISYEAR . " AND browser = '" . $browser . "'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0) {
+		if (mysql_num_rows($res) == 0)
+		{
 			$query = "INSERT INTO " . $DBPrefix . "currentbrowsers VALUES (" . $THISMONTH . ", " . $THISYEAR . ", '" . $browser . "', 0)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
@@ -175,7 +215,8 @@ if ($STATSSETTINGS['activate'] == 'y') {
 		$query = "SELECT month FROM " . $DBPrefix . "currentplatforms WHERE month =" . $THISMONTH . " AND year = " . $THISYEAR . " AND platform = '" . $os . "'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0) {
+		if (mysql_num_rows($res) == 0)
+		{
 			$query = "INSERT INTO " . $DBPrefix . "currentplatforms VALUES (
 					" . $THISMONTH . ",  " . $THISYEAR . ", '" . $os . "', 0)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -187,31 +228,44 @@ if ($STATSSETTINGS['activate'] == 'y') {
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 	
-	// Domains -----
-	if ($STATSSETTINGS['domains'] == 'y') {
+	// Domains
+	if ($STATSSETTINGS['domains'] == 'y')
+	{
 		// Resolve domain
-		if ((isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])) || (isset($_ENV['REMOTE_ADDR']) && !empty($_ENV['REMOTE_ADDR']))) {
-			if (isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])){
+		if ((isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])) || (isset($_ENV['REMOTE_ADDR']) && !empty($_ENV['REMOTE_ADDR'])))
+		{
+			if (isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR']))
+			{
 				$T = explode('.', gethostbyaddr($_SERVER['REMOTE_ADDR']));
-			} else {
+			}
+			else
+			{
 				$T = explode('.', gethostbyaddr($_ENV['REMOTE_ADDR']));
 			}
-		} else {
+		}
+		else
+		{
 			//Creates a fake variable if REMOTE_ADDR variable is unreadable
 			//cause some it is unavailable in some servers
 			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 			$T = explode(".", gethostbyaddr($_SERVER['REMOTE_ADDR']));
 		}
+		
 		$DOMAIN = $T[count($T) - 1];
 		if (!isset($DOMAINS[$DOMAIN]))
-			$RESOLVEDDOMAIN = "?";
+		{
+			$RESOLVEDDOMAIN = '?';
+		}
 		else
+		{
 			$RESOLVEDDOMAIN = $DOMAIN;
+		}
 		
 		$query = "SELECT month FROM " . $DBPrefix . "currentdomains WHERE month = " . $THISMONTH . " AND year = " . $THISYEAR . " AND domain = '" . $RESOLVEDDOMAIN . "'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($R) == 0) {
+		if (mysql_num_rows($res) == 0)
+		{
 			$query = "INSERT INTO " . $DBPrefix . "currentdomains VALUES (
 					" . $THISMONTH . ", " . $THISYEAR . ", '" . $RESOLVEDDOMAIN . "', 0)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

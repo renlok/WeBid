@@ -29,7 +29,7 @@ if (!function_exists('GetLeftSeconds'))
 			$lday--;
 		}
 		// Days left t the end of the month
-		$daysleft = intval($lday - date('d'));
+		$daysleft = intval($lday - gmdate('d'));
 		$hoursleft = 24 - $today['hours'];
 		$minsleft = 60 - $today['minutes'];
 		$secsleft = 60 - $today['seconds'];

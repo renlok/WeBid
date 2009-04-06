@@ -188,11 +188,11 @@ if ($_POST['box'] > 0)
 	while ($I <= $_POST['box'])
 	{
 		$IDX = $I - 1;
-		$NAME = "cat" . $IDX;
+		$NAME = 'cat' . $IDX;
 
 		if ($$NAME != '')
 		{
-			$query = "SELECT cat_id,cat_name FROM " . $DBPrefix . "categories WHERE parent_id = " . $$NAME . " ORDER BY cat_name";
+			$query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories WHERE parent_id = " . $$NAME . " ORDER BY cat_name";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if (mysql_num_rows($res) > 0)

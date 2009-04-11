@@ -267,7 +267,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 					}
 					if ($bid + $increment - $proxy_max_bid >= 0)
 					{
-						$next_bid = $proxy_max_bid;
+						$next_bid = $proxy_max_bid + $increment;
 					}
 					else
 					{
@@ -366,7 +366,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$month = gmdate('m', $c + $system->tdiff);
 		$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $c + $system->tdiff);
 		$new_bid = $system->print_money($next_bid);
-		// -- Send e-mail message
+		// Send e-mail message
 		include($include_path . 'no_longer_winner.inc.php');
 	}
 	$template->assign_vars(array(

@@ -14,7 +14,6 @@
 
 require('../includes/common.inc.php');
 include $include_path . 'functions_admin.php';
-include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);

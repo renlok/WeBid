@@ -107,6 +107,7 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_pict_url']		 = $RELISTEDAUCTION['pict_url'];
 		$_SESSION['SELL_pict_url_temp']	 = str_replace('thumb-', '', $RELISTEDAUCTION['pict_url']);
 		$_SESSION['SELL_sendemail']		 = $RELISTEDAUCTION['sendemail'];
+		
 		// get gallery images
 		$UPLOADED_PICTURES = array();
 		$file_types = array('gif', 'jpg', 'jpeg', 'png');
@@ -118,7 +119,7 @@ if (!isset($_POST['action'])) // already closed auctions
 				if ($myfile != '.' && $myfile != '..' && !is_file($myfile))
 				{
 					$file_ext = strtolower(substr($myfile, strrpos($myfile, '.') + 1));
-					if (in_array($file_ext, $file_types) && $RELISTEDAUCTION['pict_url'] != $myfile)
+					if (in_array($file_ext, $file_types) && (strstr($RELISTEDAUCTION['pict_url'], 'thumb-') === false || $RELISTEDAUCTION['pict_url'] != $myfile))
 					{
 						$UPLOADED_PICTURES[] = $myfile;
 					}

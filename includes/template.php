@@ -50,6 +50,8 @@ class template
 	function set_template()
 	{
 		global $main_path, $system;
+		
+		$admindir = (!defined('InAdmin')) ? '' : '/admin';
 
 		if (file_exists($main_path . 'themes/' . $system->SETTINGS['theme']))
 		{

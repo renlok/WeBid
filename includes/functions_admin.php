@@ -88,5 +88,6 @@ if (!defined('AdminFuncCall'))
 	}
 	
 	define('AdminFuncCall', 1);
+	define('InAdmin', 1);
 }
 ?>

@@ -106,7 +106,7 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 										<?php
 											reset($LANGUAGES);
 											while (list($k,$v) = each($LANGUAGES)){
-												if ($k!=$system->SETTINGS['defaultlanguage']) print '<BR><IMG SRC=../includes/flags/' . $k . '.gif>&nbsp;<INPUT TYPE=text name="' . cat_name[$k] . '" SIZE=25 MAXLENGTH=200>';
+												if ($k!=$system->SETTINGS['defaultlanguage']) print '<BR><IMG SRC=../includes/flags/' . $k . '.gif>&nbsp;<INPUT TYPE=text name="' . $cat_name[$k] . '" SIZE=25 MAXLENGTH=200>';
 											}
 										?>
 									</TD>

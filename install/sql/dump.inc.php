@@ -1124,6 +1124,36 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
 # ############################
 
 # 
+# Table structure for table `" . $DBPrefix . "fees`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fees`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
+  `id` INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `fee_from` double(16,4) NOT NULL ,
+  `fee_to` double( 6,4) NOT NULL ,
+  `value` double(8,4) NOT NULL ,
+  `type` varchar(15) NOT NULL
+) ;";
+
+# 
+# Dumping data for table `" . $DBPrefix . "fees`
+# 
+
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'signup_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'setup');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'endauction');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hpfeat_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'bolditem_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hlitem_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'rp_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'picture_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'relist_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyout_fee');";
+
+# ############################
+
+# 
 # Table structure for table `" . $DBPrefix . "filterwords`
 # 
 

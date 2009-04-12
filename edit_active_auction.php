@@ -102,11 +102,9 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_shipping_terms'] = $RELISTEDAUCTION['shipping_terms'];
 		$_SESSION['SELL_payment']		 = explode("\n", $RELISTEDAUCTION['payment']);
 		$_SESSION['SELL_international']	 = $RELISTEDAUCTION['international'];
-		$_SESSION['SELL_imgtype']		 = $RELISTEDAUCTION['imgtype'];
 		$_SESSION['SELL_file_uploaded']	 = $RELISTEDAUCTION['photo_uploaded'];
 		$_SESSION['SELL_pict_url']		 = $RELISTEDAUCTION['pict_url'];
 		$_SESSION['SELL_pict_url_temp']	 = str_replace('thumb-', '', $RELISTEDAUCTION['pict_url']);
-		$_SESSION['SELL_sendemail']		 = $RELISTEDAUCTION['sendemail'];
 		
 		// get gallery images
 		$UPLOADED_PICTURES = array();

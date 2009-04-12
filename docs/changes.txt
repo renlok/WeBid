@@ -13,5 +13,6 @@
 - Fixed the proxy bidding so after making a proxy bid it displays the correct minimum bid
 - Fixed the stats by replacing $HTTP_COOKIE_VARS with $_COOKIE
 - Fixed the gallery when no thumbnail is made (#3)
+- Moved the admin theme files into thier own folder
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -185,7 +185,7 @@ class global_class
 		
 		if ($this->SETTINGS['moneysymbol'] == 2) // Symbol on the right
 		{
-			return '<b>' . number_format($str,$this->SETTINGS['moneydecimals'], $a, $b) . '</b> ' . $currency;
+			return '<b>' . number_format($str, $this->SETTINGS['moneydecimals'], $a, $b) . '</b> ' . $currency;
 		}
 		elseif ($this->SETTINGS['moneysymbol'] == 1) // Symbol on the left
 		{

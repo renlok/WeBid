@@ -29,39 +29,78 @@
 			<td>
 				<table width="100%" cellpadding="2" align="center" bgcolor="#FFFFFF">
 					<tr class="c3">
-						<td colspan="2">{L_417}</td>
+						<td colspan="2" bgcolor="#CCCCCC"><b>{L_417}</b></td>
 					</tr>
 					<tr class="c1">
-						<td width="50%"><a href="{SITEURL}admin/fees.php?fee_column=signup_fee">{L_430}</a></td>
+						<td width="50%"><a href="{SITEURL}admin/fees.php?type=signup_fee">{L_430}</a></td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr class="c3">
-						<td colspan="2">{L_431}</td>
+						<td colspan="2" bgcolor="#CCCCCC"><b>{L_431}</b></td>
 					</tr>
 					<tr class="c1">
-						<td width="50%"><a href="{SITEURL}admin/fees.php?fee_column=setup&tiers=1">{L_432}</a> </td>
-						<td><a href="{SITEURL}admin/fees.php?fee_column=endauction&tiers=1">{L_438}</a> </td>
+						<td width="50%"><a href="{SITEURL}admin/fees.php?type=setup">{L_432}</a> </td>
+						<td><a href="{SITEURL}admin/fees.php?type=endauction">{L_438}</a> </td>
 					</tr>
 					<tr class="c2">
-						<td width="50%"><a href="{SITEURL}admin/fees.php?fee_column=hpfeat_fee">{L_433}</a> </td>
-						<td><a href="{SITEURL}admin/fees.php?fee_column=bolditem_fee">{L_439}</a> </td>
+						<td width="50%"><a href="{SITEURL}admin/fees.php?type=hpfeat_fee">{L_433}</a> </td>
+						<td><a href="{SITEURL}admin/fees.php?type=bolditem_fee">{L_439}</a> </td>
 					</tr>
 					<tr class="c1">
-						<td width="50%"><a href="{SITEURL}admin/fees.php?fee_column=hlitem_fee">{L_434}</a> </td>
-						<td><a href="{SITEURL}admin/fees.php?fee_column=rp_fee">{L_440}</a> </td>
+						<td width="50%"><a href="{SITEURL}admin/fees.php?type=hlitem_fee">{L_434}</a> </td>
+						<td><a href="{SITEURL}admin/fees.php?type=rp_fee">{L_440}</a> </td>
 					</tr>
 					<tr class="c2">
-						<td width="50%"><a href="{SITEURL}admin/fees.php?fee_column=picture_fee">{L_435}</a> </td>
-						<td><a href="{SITEURL}admin/fees.php?fee_column=relist_fee_reduction">{L_437}</a> </td>
+						<td width="50%"><a href="{SITEURL}admin/fees.php?type=picture_fee">{L_435}</a> </td>
+						<td><a href="{SITEURL}admin/fees.php?type=relist_fee">{L_437}</a> </td>
 					</tr>
 					<tr class="c2">
-						<td width="50%"><a href="{SITEURL}admin/fees.php?fee_column=buyout_fee">{L_436}</a> </td>
+						<td width="50%"><a href="{SITEURL}admin/fees.php?type=buyout_fee">{L_436}</a> </td>
 						<td>&nbsp; </td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 		</table>
+		<br>
+<!-- IF FEETYPE ne '' -->
+		<table width="95%" border="0" cellpadding="1" bgcolor="#0083D7">
+		<tr>
+			<td align="center" class="title">{FEETYPE}</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" cellpadding="2" align="center" bgcolor="#FFFFFF">
+	<!-- IF ERROR ne '' -->
+					<tr bgcolor="yellow">
+						<td class="error" colspan="2" align="center">{ERROR}</td>
+					</tr>
+	<!-- ENDIF -->
+	<!-- IF B_SINGLE -->
+					<tr valign="top">
+						<td width="109" height="22">{L_263}</td>
+						<td width="375" height="22">
+							<input type="text" size="12" name="value" value="{VALUE}"> {CURRENCY}
+						</td>
+					</tr>
+	<!-- ENDIF -->
+					<tr valign="top">
+						<td height="22">&nbsp;</td>
+						<td height="22">&nbsp;</td>
+					</tr>
+					<tr>
+						<td><input type="hidden" name="action" value="update"></td>
+						<td><input type="submit" name="act" value="{L_530}"></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+<!-- ENDIF -->
 		</form>
 	</td>
 </tr>

@@ -16,6 +16,10 @@ require('../includes/common.inc.php');
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+$template->assign_vars(array(
+		'SITEURL' => $system->SETTINGS['siteurl']
+		));
+
 $template->set_filenames(array(
 		'body' => 'adminfees.html'
 		));

@@ -16,6 +16,7 @@ include "../includes/common.inc.php";
 include $include_path . 'functions_admin.php';
 
 $template->assign_vars(array(
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'B_ADMINLOGIN' => (!checklogin())
 		));
 

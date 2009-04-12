@@ -39,6 +39,7 @@ class template
 	var $files_inherit = array();
 	var $files_template = array();
 	var $inherit_root = '';
+	var $InAdmin = false;
 
 	// this will hash handle names to the compiled/uncompiled code for that handle.
 	var $compiled_code = array();
@@ -50,17 +51,18 @@ class template
 	function set_template()
 	{
 		global $main_path, $system;
-		
-		$admindir = (!defined('InAdmin')) ? '' : '/admin';
 
-		if (file_exists($main_path . 'themes/' . $system->SETTINGS['theme']))
+		$admindir = ($this->InAdmin) ? '' : '/admin';
+		$admincache = ($this->InAdmin) ? '' : 'admin';
+
+		if (file_exists($main_path . 'themes/' . $system->SETTINGS['theme'] . $admindir))
 		{
-			$this->root = $main_path . 'themes/' . $system->SETTINGS['theme'];
-			$this->cachepath = $main_path . 'cache/tpl_' . str_replace('_', '-', $system->SETTINGS['theme']) . '_';
+			$this->root = $main_path . 'themes/' . $system->SETTINGS['theme'] . $admindir;
+			$this->cachepath = $main_path . 'cache/tpl_' . str_replace('_', '-', $system->SETTINGS['theme']) . $admincache . '_';
 		}
 		else
 		{
-			trigger_error('Template path could not be found: themes/' . $system->SETTINGS['theme'], E_USER_ERROR);
+			trigger_error('Template path could not be found: themes/' . $system->SETTINGS['theme'] . $admindir, E_USER_ERROR);
 		}
 
 		$this->_rootref = &$this->_tpldata['.'][0];
@@ -195,7 +197,7 @@ class template
 
 		$filename = $this->cachepath . str_replace('/', '.', $this->filename[$handle]) . '.php';
 		$this->files_template[$handle] = $system->SETTINGS['theme'];
-		
+
 		$recompile = false;
 		if (!file_exists($filename) || @filesize($filename) === 0)
 		{
@@ -205,7 +207,7 @@ class template
 		{
 			$recompile = false;
 		}
-		
+
 		// Recompile page if the original template is newer, otherwise load the compiled version
 		if (!$recompile)
 		{
@@ -219,13 +221,13 @@ class template
 			include($main_path . 'includes/functions_template.php');
 		}
 		$compile = new template_compile($this);
-		
+
 		// If we don't have a file assigned to this handle, die.
 		if (!isset($this->files[$handle]))
 		{
 			trigger_error("template->_tpl_load(): No file specified for handle $handle", E_USER_ERROR);
 		}
-		
+
 		$compile->_tpl_load_file($handle);
 		return false;
 	}

@@ -58,17 +58,11 @@ class template_compile
 	function _tpl_load_file($handle, $store_in_db = false)
 	{
 		global $_SESSION;
+
 		// Try and open template for read
 		if (!file_exists($this->template->files[$handle]))
 		{
-			if (!file_exists($this->template['default'])) //try the old theme
-			{
-				trigger_error("template->_tpl_load_file(): File {$this->template->files[$handle]} does not exist or is empty", E_USER_ERROR);
-			}
-			else
-			{
-				$handle = 'default';
-			}
+			trigger_error("template->_tpl_load_file(): File {$this->template->files[$handle]} does not exist or is empty", E_USER_ERROR);
 		}
 
 		$this->template->compiled_code[$handle] = $this->compile(trim(@file_get_contents($this->template->files[$handle])));

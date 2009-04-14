@@ -20,6 +20,8 @@ $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'rp_fee')
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'picture_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'relist_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyout_fee');";
+$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `timecorrection` int(3) NOT NULL default '0';";
+$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `emailtype` enum('html','text') NOT NULL default 'text';";
 
 //0.7.2 to 0.7.3
 /*

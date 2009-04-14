@@ -1581,7 +1581,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `banners` int(1) NOT NULL default '0',
   `newsletter` int(1) NOT NULL default '0',
   `logo` varchar(255) NOT NULL default '',
-  `timecorrection` int(11) NOT NULL default '0',
+  `timecorrection` int(3) NOT NULL default '0',
   `cron` int(1) NOT NULL default '0',
   `archiveafter` int(11) NOT NULL default '0',
   `datesformat` enum('USA','EUR') NOT NULL default 'EUR',
@@ -1714,9 +1714,11 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `accounttype` enum('seller','buyer','buyertoseller','unique') NOT NULL default 'unique',
   `endemailmode` enum('one','cum','none') NOT NULL default 'one',
   `startemailmode` enum('yes','no') NOT NULL default 'yes',
+  `emailtype` enum('html','text') NOT NULL default 'text',
   `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
   `payment_details` text,
   `bn_only` enum('y','n') NOT NULL default 'y',
+  `timecorrection` int(3) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 );";
 

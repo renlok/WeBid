@@ -52,8 +52,8 @@ class template
 	{
 		global $main_path, $system;
 
-		$admindir = ($this->InAdmin) ? '' : '/admin';
-		$admincache = ($this->InAdmin) ? '' : 'admin';
+		$admindir = (!defined('InAdmin')) ? '' : '/admin';
+		$admincache = (!defined('InAdmin')) ? '' : 'admin';
 
 		if (file_exists($main_path . 'themes/' . $system->SETTINGS['theme'] . $admindir))
 		{

@@ -12,6 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
+define('InAdmin', 1);
 include "../includes/common.inc.php";
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';

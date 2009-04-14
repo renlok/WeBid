@@ -34,7 +34,7 @@ if (isset($_POST['requesttoadmin']))
 			'EMAIL' => $user->user_data['email'],
 			'ID' => $user->user_data['id']
 			));
-	$emailer->email_sender($system->SETTINGS['adminmail'], 'mail_buyer_request.inc.php', 'Account change request');
+	$emailer->email_sender($system->SETTINGS['adminmail'], 'buyer_request.inc.php', 'Account change request');
 	$request_sent = $MSG['25_0142'];
 	// Update user's status
 	$query = "UPDATE " . $DBPrefix . "users SET accounttype = 'buyertoseller' WHERE id = " . $secid;

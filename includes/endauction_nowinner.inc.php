@@ -35,6 +35,6 @@ if ($emailmode == 'one') {
 			'SITENAME' => $system->SETTINGS['sitename']
 			));
 	$emailer->email_uid = $Seller['id'];
-	$emailer->email_sender($Seller['email'], 'mail_endauction_nowinner.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['112']);
+	$emailer->email_sender($Seller['email'], 'endauction_nowinner.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['112']);
 }
 ?>

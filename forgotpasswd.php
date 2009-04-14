@@ -39,7 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'ok')
 					'SITENAME' => $system->SETTINGS['sitename']
 					));
 			$emailer->email_uid = $id;
-			$emailer->email_sender($email, 'mail_newpasswd.inc.php', $MSG['024']);
+			$emailer->email_sender($email, 'newpasswd.inc.php', $MSG['024']);
 			// Update database
 			$query = "UPDATE " . $DBPrefix . "users SET password = '" . md5($MD5_PREFIX . $newpass) . "' WHERE id = " . $id;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

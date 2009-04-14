@@ -44,5 +44,5 @@ $emailer->assign_vars(array(
 		'ADMINEMAIL' => $system->SETTINGS['adminmail']
 		));
 $emailer->email_uid = $Winner['id'];
-$emailer->email_sender($Winner['email'], 'mail_endauction_youwin.inc.php', $MSG['909']);
+$emailer->email_sender($Winner['email'], 'endauction_youwin.inc.php', $MSG['909']);
 ?>

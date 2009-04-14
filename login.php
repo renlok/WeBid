@@ -45,7 +45,7 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 			$remember_key = md5(time());
 			$query = "INSERT INTO " . $DBPrefix . "rememberme VALUES (" . mysql_result($res, 0, 'id') . ", '" . addslashes($remember_key) . "')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			setcookie("WEBID_RM_ID", $remember_key, time() + (3600 * 24 * 365));
+			setcookie('WEBID_RM_ID', $remember_key, time() + (3600 * 24 * 365));
 		}
 		$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = " . $_SESSION['WEBID_LOGGED_IN'] . " AND ip = '" . $_SERVER['REMOTE_ADDR'] . "'";
 		$res = mysql_query($query);

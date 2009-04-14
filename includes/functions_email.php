@@ -46,7 +46,7 @@ class email_class
 	{
 		global $main_path, $include_path;
 
-		$buffer = file($main_path . 'language/' . $this->getuserlang() . '/' . $file);
+		$buffer = file($main_path . 'language/' . $this->getuserlang() . '/emails/' . $this->getusermailtype() . '/' . $file);
 		$i = 0;
 		$j = 0;
 		while ($i < count($buffer))
@@ -254,7 +254,7 @@ class email_class
 		}
 		return (($elseif) ? '} else if (' : 'if (') . (implode(' ', $tokens) . ') { ');
 	}
-	
+
 	function generate_block_data_ref($blockname, $include_last_iterator, $defop = false)
 	{
 		// Get an array of the blocks involved.
@@ -288,16 +288,16 @@ class email_class
 			return '$_'. $blocks[$blockcount - 1] . '_val[\''. $blocks[$blockcount]. '\']';
 		}
 	}
-	
+
 	function assign_vars($vars)
 	{
 		$this->vars = (empty($this->vars)) ? $vars : $this->vars + $vars;
 	}
-	
+
 	function getuserlang()
 	{
 		global $system, $DBPrefix, $language;
-		
+
 		if (isset($this->email_uid) && $this->email_uid > 0)
 		{
 			// Retrieve user's prefered language
@@ -314,8 +314,28 @@ class email_class
 		{
 			$language = $this->userlang;
 		}
-		
+
 		return $language;
+	}
+	
+	function getusermailtype()
+	{
+		global $system, $DBPrefix;
+
+		if (isset($this->email_uid) && $this->email_uid > 0)
+		{
+			// Retrieve user's prefered language
+			$query = "SELECT emailtype FROM " . $DBPrefix . "users WHERE id = " . intval($this->email_uid);
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			if (mysql_num_rows($res) > 0)
+			{
+				$emailtype = mysql_result($res, 0);
+				if (isset($emailtype) && !empty($emailtype)) return $emailtype;
+			}
+		}
+
+		return 'text';
 	}
 	
 	function sendmail()

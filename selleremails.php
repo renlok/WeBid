@@ -25,9 +25,11 @@ if (!$user->logged_in)
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$query = "UPDATE " . $DBPrefix . "users SET endemailmode = '" . $system->cleanvars($_POST['endemailmod']) . "',
-			  startemailmode = '" . $system->cleanvars($_POST['startemailmod']) . "' WHERE id = " . $user->user_data['id'];
+			  startemailmode = '" . $system->cleanvars($_POST['startemailmod']) . "',
+			  emailtype = '" . $system->cleanvars($_POST['emailtype']) . "'  WHERE id = " . $user->user_data['id'];
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$ERR = $MSG['25_0192'];
+	$user->user_data = array_merge($user->user_data, $_POST); //update the array
 }
 
 $template->assign_vars(array(
@@ -35,7 +37,9 @@ $template->assign_vars(array(
 		'B_AUCSETUPN' => ($user->user_data['startemailmode'] == 'no') ? ' checked="checked"' : '',
 		'B_CLOSEONE' => ($user->user_data['endemailmode'] == 'one') ? ' checked="checked"' : '',
 		'B_CLOSEBULK' => ($user->user_data['endemailmode'] == 'cum') ? ' checked="checked"' : '',
-		'B_CLOSENONE' => ($user->user_data['endemailmode'] == 'none') ? ' checked="checked"' : ''
+		'B_CLOSENONE' => ($user->user_data['endemailmode'] == 'none') ? ' checked="checked"' : '',
+		'B_EMAILTYPET' => ($user->user_data['emailtype'] == 'text') ? ' checked="checked"' : '',
+		'B_EMAILTYPEH' => ($user->user_data['emailtype'] == 'html') ? ' checked="checked"' : ''
 		));
 
 include 'header.php';

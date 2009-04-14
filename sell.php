@@ -186,7 +186,7 @@ switch ($_SESSION['action'])
 										'KWORD' => $row['auc_watch']
 										));
 								$emailer->email_uid = $row['id'];
-								$emailer->email_sender($row['email'], 'mail_auction_watchmail.inc.php', $system->SETTINGS['sitename'] . '  ' . $MSG['471']);
+								$emailer->email_sender($row['email'], 'auction_watchmail.inc.php', $system->SETTINGS['sitename'] . '  ' . $MSG['471']);
 							}
 						}
 					}

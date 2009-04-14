@@ -88,6 +88,5 @@ if (!defined('AdminFuncCall'))
 	}
 	
 	define('AdminFuncCall', 1);
-	$template->InAdmin = true;
 }
 ?>

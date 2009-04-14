@@ -356,7 +356,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 					'AUCTION_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $id
 					));
 			$emailer->email_uid = $bidder_id;
-			$emailer->email_sender($email, 'mail_item_watch.inc.php', $system->SETTINGS['sitename'].' - '.$MSG['472']);
+			$emailer->email_sender($email, 'item_watch.inc.php', $system->SETTINGS['sitename'].' - '.$MSG['472']);
 		}
 		$i++;
 	}

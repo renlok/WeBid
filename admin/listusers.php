@@ -11,6 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
+define('InAdmin', 1);
 require('../includes/common.inc.php');
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -24,50 +25,16 @@ if (isset($_GET['resend']) && isset($_REQUEST['id']) && is_numeric($_REQUEST['id
 	if (mysql_num_rows($res) > 0) {
 		$USER = mysql_fetch_array($res);
 		
-		//Retrieve e-mail messages
-		$query = "SELECT language FROM " . $DBPrefix . "userslanguage WHERE user = " . $_REQUEST['id'];
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) > 0) {
-			$userlanguage = mysql_result($res,0,'language');
-		} else {
-			$userlanguage = $system->SETTINGS['defaultlanguage'];
-		}
-		include $include_path . "messages.inc.php";
-		$buffer = file($main_path . "language/" . $userlanguage . "/mail_usermail.inc.php");
-		
-		$i = 0;
-		$j = 0;
-		while ($i < count($buffer)) {
-			if (!ereg("^#(.)*$",$buffer[$i])){
-				$skipped_buffer[$j] = $buffer[$i];
-				$j++;
-			}
-			$i++;
-		}
-			
-		//--Retrieve message
-		$CONFIRMATIONPAGE = $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $USER['id'] . '&hash=' . md5($USER['nick']);
-		$message = implode($skipped_buffer, '');
-		$message = ereg_replace("<#c_id#>",$USER['id'],$message);
-		$message = ereg_replace("<#c_name#>",$USER['name'],$message);
-		$message = ereg_replace("<#c_nick#>",$USER['nick'],$message);
-		$message = ereg_replace("<#c_address#>",$USER['address'],$message);
-		$message = ereg_replace("<#c_city#>",$USER['city'],$message);
-		$message = ereg_replace("<#c_prov#>",$USER['prov'],$message);
-		$message = ereg_replace("<#c_zip#>",$USER['zip'],$message);
-		$message = ereg_replace("<#c_logo#>",$system->SETTINGS['siteurl'].'themes/'.$system->SETTINGS['theme'].'/'.$system->SETTINGS['logo'],$message);
-		$message = ereg_replace("<#c_password#>",'******',$message);
-		$message = ereg_replace("<#c_country#>",$countries[$USER['country']],$message);
-		$message = ereg_replace("<#c_phone#>",$USER['phone'],$message);
-		$message = ereg_replace("<#c_email#>",$USER['email'],$message);
-		$message = ereg_replace("<#c_sitename#>",$system->SETTINGS['sitename'],$message);
-		$message = ereg_replace("<#c_siteurl#>",$system->SETTINGS['siteurl'],$message);
-		$message = ereg_replace("<#c_adminemail#>",$system->SETTINGS['adminmail'],$message);
-		$message = ereg_replace("<#c_confirmation_page#>",$CONFIRMATIONPAGE,$message);
-		$useremail = $USER['email']; 
-		$addheaders = "From:".$system->SETTINGS['sitename']." <".$system->SETTINGS['adminmail'] . ">\n" . "Content-Type: text/html; charset=$CHARSET";
-		mail($useremail, $system->SETTINGS['sitename']. ' ' . $MSG['098'], $message, $addheaders);
+		$emailer = new email_class();
+		$emailer->assign_vars(array(
+				'SITENAME' => $system->SETTINGS['sitename'],
+				'SITEURL' => $system->SETTINGS['siteurl'],
+				'ADMINMAIL' => $system->SETTINGS['adminmail'],
+				'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $USER['id'] . '&hash=' . md5($USER['nick']),
+				'C_NAME' => $USER['name']
+				));
+		$emailer->email_uid = $USER['id'];
+		$emailer->email_sender($useremail, 'usermail.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['098']);
 		$ERR = $MSG['059'];
 	}
 }

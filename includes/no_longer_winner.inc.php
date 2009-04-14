@@ -32,5 +32,5 @@ $emailer->assign_vars(array(
 		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $item_id
 		));
 $emailer->email_uid = $OldWinner_id;
-$emailer->email_sender($OldWinner_email, 'mail_no_longer_winner.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['906'] . ': ' . $item_title);
+$emailer->email_sender($OldWinner_email, 'no_longer_winner.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['906'] . ': ' . $item_title);
 ?>

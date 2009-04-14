@@ -13,8 +13,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-	require('../includes/common.inc.php');
-	include $include_path . 'functions_admin.php';
+	define('InAdmin', 1);
+require('../includes/common.inc.php');
+include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 	$ABSOLUTEWIDTH = 650;

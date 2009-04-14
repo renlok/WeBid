@@ -39,6 +39,6 @@ if ($emailmode == 'one') {
 			));
 	$emailer->email_uid = $Seller['id'];
 	$subject = $system->SETTINGS['sitename'] . ' ' . $MSG['079'] . ' ' . $MSG['907'] . ' ' . $Auction['title'];
-	$emailer->email_sender($Seller['email'], 'mail_endauction_winner.inc.php', $subject);
+	$emailer->email_sender($Seller['email'], 'endauction_winner.inc.php', $subject);
 }
 ?>

@@ -65,7 +65,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 				'SITEURL' => $system->SETTINGS['siteurl'],
 				'ADMINEMAIL' => $system->SETTINGS['adminmail']
 				));
-		$emailer->email_sender($_POST['friend_email'], 'mail_friendmail.inc.php', $MSG['905']);
+		$emailer->email_sender($_POST['friend_email'], 'friendmail.inc.php', $MSG['905']);
 	}
 }
 

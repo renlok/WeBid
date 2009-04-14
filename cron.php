@@ -146,7 +146,7 @@ else {
 						'NAME' => $usname
 						));
 				$emailer->email_uid = $watchusers['id'];
-				$emailer->email_sender($e_mail, 'mail_auctionend_watchmail.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['471']);
+				$emailer->email_sender($e_mail, 'auctionend_watchmail.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['471']);
 			}
 		}
 		// ======================================================
@@ -588,7 +588,7 @@ if ((time() - $purgecachetime) > 86400) {
 // Update counters
 include $include_path . "updatecounters.inc.php";
 // finish cron script
-printLog ("=========================== ENDING CRON: " . date("F d, Y H:i:s") . "\n");
+printLog ("=========================== ENDING CRON: " . gmdate("F d, Y H:i:s") . "\n");
 closeLogFile();
 
 ?>

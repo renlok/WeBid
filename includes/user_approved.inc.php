@@ -31,5 +31,5 @@ $emailer->assign_vars(array(
 		'C_NAME' => $USER['name']
 		));
 $emailer->userlang = $USERLANG;
-$emailer->email_sender(array($USER['email'], $system->SETTINGS['adminmail']), 'mail_user_approved.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['095']);
+$emailer->email_sender(array($USER['email'], $system->SETTINGS['adminmail']), 'user_approved.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['095']);
 ?>

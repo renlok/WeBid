@@ -42,6 +42,19 @@ if ($id == 0)
 	exit;
 }
 
+function get_increment($bid)
+{
+	global $system, $DBPrefix;
+	
+	$query = "SELECT increment FROM " . $DBPrefix . "increments 
+			WHERE ((low <= " . $bid . " AND high >= " . $bid . ")
+			OR (low < " . $bid . " AND high < " . $bid . ")) ORDER BY increment DESC";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$increment = mysql_result($res, 0, 'increment');
+	return $increment;
+}
+
 // first check if valid auction ID passed
 $query = "SELECT a.*, u.nick, u.email, u.id AS uId FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (a.user = u.id)
@@ -98,12 +111,7 @@ if ($customincrement > 0)
 }
 else
 {
-	$query = "SELECT increment FROM " . $DBPrefix . "increments
-			WHERE ((low <= " . $high_bid . " AND high >= " . $high_bid . ")
-			OR (low < " . $high_bid . " AND high < " . $high_bid . ")) ORDER BY increment DESC";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$increment = mysql_result($res, 0, 'increment');
+	$increment = get_increment($high_bid);
 }
 
 if ($high_bid == 0 || $atype == 2)
@@ -238,17 +246,27 @@ if (isset($_POST['action']) && !isset($errmsg))
 
 				if ($proxy_max_bid == $bid)
 				{
-					$next_bid = $proxy_max_bid;
+					$cbid = $proxy_max_bid;
 					$errmsg = $MSG['701'];
 					// Update bids table
 					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($bid) . ", '" . $NOW . "', " . $qty . ")";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $proxy_bidder_id . ", " . floatval($next_bid) . ", '" . $NOW . "', " . $qty . ")";
+					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $proxy_bidder_id . ", " . floatval($cbid) . ", '" . $NOW . "', " . $qty . ")";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 2)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($next_bid) . ", num_bids = num_bids + 1 WHERE id = " . $id;
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($cbid) . ", num_bids = num_bids + 1 WHERE id = " . $id;
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					if ($customincrement == 0)
+					{
+						// get new increment
+						$increment = get_increment($cbid);
+					}
+					else
+					{
+						$increment = $customincrement;
+					}
+					$next_bid = $cbid + $increment;
 				}
 				if ($proxy_max_bid > $bid)
 				{
@@ -258,29 +276,38 @@ if (isset($_POST['action']) && !isset($errmsg))
 					if ($customincrement == 0)
 					{
 						// get new increment
-						$query = "SELECT increment FROM " . $DBPrefix . "increments 
-								WHERE ((low <= " . $bid . " AND high >= " . $bid . ")
-								OR (low < " . $bid . " AND high < " . $bid . ")) ORDER BY increment DESC";
-						$res = mysql_query($query);
-						$system->check_mysql($res, $query, __LINE__, __FILE__);
-						$increment = mysql_result($res, 0, 'increment');
-					}
-					if ($bid + $increment - $proxy_max_bid >= 0)
-					{
-						$next_bid = $proxy_max_bid + $increment;
+						$increment = get_increment($bid);
 					}
 					else
 					{
-						$next_bid = $bid + $increment;
+						$increment = $customincrement;
+					}
+					if ($bid + $increment - $proxy_max_bid >= 0)
+					{
+						$cbid = $proxy_max_bid;
+					}
+					else
+					{
+						$cbid = $bid + $increment;
 					}
 					$errmsg = $MSG['701'];
 					// Update bids table
-					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL," . $id . "," . $proxy_bidder_id . "," . floatval($next_bid) . ",'" . $NOW . "'," . $qty . ")";
+					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $proxy_bidder_id . ", " . floatval($cbid) . ", '" . $NOW . "', " . $qty . ")";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 2)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($next_bid) . ", num_bids = num_bids + 1 WHERE id = " . $id;
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($cbid) . ", num_bids = num_bids + 1 WHERE id = " . $id;
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					if ($customincrement == 0)
+					{
+						// get new increment
+						$increment = get_increment($cbid);
+					}
+					else
+					{
+						$increment = $customincrement;
+					}
+					$next_bid = $cbid + $increment;
 				}
 			}
 		}

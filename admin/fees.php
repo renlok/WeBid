@@ -29,7 +29,7 @@ $fees = array( //0 = single value, 1 = staged fees
 	'relist_fee' => 0,
 	'buyout_fee' => 0
 	);
-	
+
 $feenames = array(
 	'signup_fee' => $MSG['430'],
 	'setup' => $MSG['432'],
@@ -42,7 +42,7 @@ $feenames = array(
 	'relist_fee' => $MSG['437'],
 	'buyout_fee' => $MSG['436']
 	);
-	
+
 if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 {
 	if($fees[$_GET['type']] == 0)
@@ -64,9 +64,55 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$value = mysql_result($res, 0);
-		
+
 		$template->assign_vars(array(
 				'VALUE' => $system->print_money_nosymbol($value),
+				'CURRENCY' => $system->SETTINGS['currency']
+				));
+	}
+	elseif($fees[$_GET['type']] == 1)
+	{
+		if(isset($_POST['action']) && $_POST['action'] == 'update')
+		{
+			for($i = 0; $i < count($_POST['tier_id']); $i++)
+			{
+				$query = "UPDATE " . $DBPrefix . "fees SET
+						fee_from = '" . $_POST['fee_from'][$i] . "',
+						fee_to = '" . $_POST['fee_to'][$i] . "',
+						value = '" . $_POST['value'][$i] . "',
+						fee_type = '" . $_POST['type'][$i] . "'
+						WHERE id = " . $_POST['tier_id'][$i];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$errmsg = $feenames[$_GET['type']] . $MSG['359'];
+			}
+			for($i = 0; $i < count($_POST['fee_delete']); $i++)
+			{
+				$query = "DELETE FROM " . $DBPrefix . "fees WHERE id = " . $_POST['fee_delete'][$i];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
+			if(!empty($_POST['new_fee_from']) && !empty($_POST['new_fee_to']) && !empty($_POST['new_value']))
+			{
+				$query = "INSERT INTO " . $DBPrefix . "fees VALUES
+						(NULL, '" . $_POST['new_fee_from'] . "', '" . $_POST['new_fee_to'] . "', '" . $_POST['new_type'] . "', '" . $_POST['new_value'] . "', '" . $_GET['type'] . "')";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
+		}
+		$query = "SELECT * FROM " . $DBPrefix . "fees WHERE type = '" . $_GET['type'] . "'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		while($row = mysql_fetch_assoc($res))
+		{
+			$template->assign_block_vars('fees', array(
+					'ID' => $row['id'],
+					'FROM' => $system->print_money_nosymbol($row['fee_from']),
+					'TO' => $system->print_money_nosymbol($row['fee_to']),
+					'VALUE' => $row['value'],
+					'FLATTYPE' => ($row['fee_type'] == 'flat') ? ' selected="selected"' : '',
+					'PERCTYPE' => ($row['fee_type'] == 'perc') ? ' selected="selected"' : ''
+					));
+		}
+
+		$template->assign_vars(array(
 				'CURRENCY' => $system->SETTINGS['currency']
 				));
 	}

@@ -1130,10 +1130,12 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fees`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
   `id` INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `fee_from` double(16,4) NOT NULL ,
-  `fee_to` double( 6,4) NOT NULL ,
+  `fee_from` double(16, 4) NOT NULL ,
+  `fee_to` double(6, 4) NOT NULL ,
+  `fee_type` enum('flat', 'perc') NOT NULL,
   `value` double(8,4) NOT NULL ,
-  `type` varchar(15) NOT NULL
+  `type` varchar(15) NOT NULL,
+  PRIMARY KEY  (`id`)
 ) ;";
 
 # 

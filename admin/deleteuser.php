@@ -127,7 +127,7 @@ if (isset($_POST['action']) && $_POST['action'] && strstr(basename($_SERVER['HTT
 		//-- Update counters
 		if ($suspended == 0) {
 			$query = mysql_query("UPDATE " . $DBPrefix . "counters set users=(users-1), bids=(bids-$bid_decrem), auctions=(auctions-$auction_decrem)");
-		} else if ($suspended == 1) {
+		} elseif ($suspended == 1) {
 			$query = mysql_query("UPDATE " . $DBPrefix . "counters set users=(users-1), inactiveusers=(inactiveusers-1), bids=(bids-$bid_decrem), auctions=(auctions-$auction_decrem)");
 		}
 		$URL = $_SESSION['RETURN_LIST']."?PAGE=".$_SESSION['RETURN_LIST_PAGE'];
@@ -135,7 +135,7 @@ if (isset($_POST['action']) && $_POST['action'] && strstr(basename($_SERVER['HTT
 		header("Location: $URL");
 		exit;
 	}
-	if ($ERR_CODE==2) {
+	if ($ERR_CODE == 2) {
 		//-- delete user
 		$sql="delete from " . $DBPrefix . "users WHERE id='$id'";
 		$res=mysql_query($sql);
@@ -144,9 +144,9 @@ if (isset($_POST['action']) && $_POST['action'] && strstr(basename($_SERVER['HTT
 		$sql="delete from " . $DBPrefix . "auctions WHERE user='$id'";
 		$res=mysql_query($sql);
 		//-- Update counters
-		if ($suspended==0){
+		if ($suspended == 0){
 			$query = mysql_query("UPDATE " . $DBPrefix . "counters set users=(users-1)");
-		} else if ($suspended==1) {
+		} elseif ($suspended==1) {
 			$query = mysql_query("UPDATE " . $DBPrefix . "counters set inactiveusers=(inactiveusers-1)");
 		}
 		$URL = $_SESSION['RETURN_LIST']."?PAGE=".$_SESSION['RETURN_LIST_PAGE'];

@@ -14,7 +14,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -66,10 +66,10 @@ if (mysql_num_rows($res) > 0)
 	}
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -87,18 +87,18 @@ if (mysql_num_rows($res) > 0)
   </tr>
   <tr> 
   <td align="center" valign="middle">
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-	<TR>
-		<TD ALIGN=CENTER class=title>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+	<tr>
+		<td align="center" class=title>
 			<?php print $MSG['2_0020']; ?>
-		</TD>
-	</TR>
-	<TR>
-	<TD>
-	<FORM NAME=banform ACTION="" METHOD=POST>
-	  <TABLE WIDTH=100% CELPADDING=0 CELLSPACING=1 BORDER=0 ALIGN="CENTER" CELLPADDING="3">
-		<TR BGCOLOR=#FFFFFF ALIGN=CENTER>
-		  <TD>
+		</td>
+	</tr>
+	<tr>
+	<td>
+	<form NAME=banform ACTION="" METHOD=POST>
+	  <table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3">
+		<tr bgcolor=#FFFFFF align="center">
+		  <td>
 		  
 			  <table width="100%" border="0" cellspacing="0" cellpadding="4" bgcolor="#CCCCCC">
 				<tr>
@@ -195,15 +195,15 @@ if (mysql_num_rows($res) > 0)
 			  <p>&nbsp;</p>
 			  <p>
 				<input type="submit" name="Submit" value="<?php echo $MSG['2_0015']; ?>">
-				<INPUT TYPE=hidden NAME=action VALUE=update>
-				<INPUT TYPE=hidden NAME=id VALUE=<?php echo $id; ?>>
+				<input type=hidden NAME=action VALUE=update>
+				<input type=hidden NAME=id VALUE=<?php echo $id; ?>>
 			  </p>
-			  </TD>
-			</TR>
+			  </td>
+			</tr>
 			</table>
-			</FORM>
-		  </TD>
-		</TR></table>
-</TD></TR></TABLE>
-</BODY>
-</HTML>
+			</form>
+		  </td>
+		</tr></table>
+</td></tr></table>
+</body>
+</html>

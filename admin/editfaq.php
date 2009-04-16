@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -34,8 +34,8 @@ if ($_POST[action] == "update" && strstr(basename($_SERVER['HTTP_REFERER']),base
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	  reset($LANGUAGES);
 	  while (list($k,$v) = each($LANGUAGES)){
-		$TR=@mysql_result(@mysql_query("SELECT question FROM " . $DBPrefix . "faqs_translated WHERE lang='".$k."' AND id=".$_POST['id']),0,"question"); 
-		if ($TR){
+		$tr=@mysql_result(@mysql_query("SELECT question FROM " . $DBPrefix . "faqs_translated WHERE lang='".$k."' AND id=".$_POST['id']),0,"question"); 
+		if ($tr){
 		  $query = "UPDATE " . $DBPrefix . "faqs_translated SET 
 			  question='".addslashes($_POST['question'][$k])."',
 			  answer='".addslashes($_POST['answer'][$k])."'
@@ -49,7 +49,7 @@ if ($_POST[action] == "update" && strstr(basename($_SERVER['HTTP_REFERER']),base
 			  '".addslashes($_POST['answer'][$k])."')";
 		}
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		unset($TR);
+		unset($tr);
 	  }  
 	  header("Location: faqs.php");
 	  exit;
@@ -70,12 +70,12 @@ if ($_POST[action] != "update")
   $system->check_mysql($res_c, $query, __LINE__, __FILE__);
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<FORM NAME="faq" METHOD="post" ACTION="">
+<form name="faq" METHOD="post" ACTION="">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
@@ -90,26 +90,26 @@ if ($_POST[action] != "update")
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-  <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" ALIGN="CENTER" BGCOLOR="#0083D7">
-	<TR align=center>
-	  <TD BGCOLOR="#ffffff">&nbsp;
+  <table width="95%" border="0" cellspacing="0" cellpadding="1" align="center" bgcolor="#0083D7">
+	<tr align=center>
+	  <td bgcolor="#ffffff">&nbsp;
 	  
-	  </TD>
-	</TR>
-	<TR>
-	  <TD>
-		<TABLE WIDTH="100%" BORDER="0" CELLSPACING="1" CELLPADDING="4" ALIGN="CENTER">
-		  <TR>
-			<TD COLSPAN="2" BGCOLOR="#0083D7" align=center class=title>
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+		<table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
+		  <tr>
+			<td colspan="2" bgcolor="#0083D7" align=center class=title>
 				<?php echo $MSG['5241']; ?>
-			</TD>
-		  </TR>
-		  <TR BGCOLOR="#FFFFFF">
-			<TD WIDTH="23%" CLASS=link HEIGHT="27" VALIGN="top">
+			</td>
+		  </tr>
+		  <tr bgcolor="#FFFFFF">
+			<td width="23%" CLASS=link height="27" VALIGN="top">
 			  <?php echo $MSG['5238']; ?>
-			  </TD>
-			<TD WIDTH="77%" CLASS=link HEIGHT="27">
-			  <SELECT NAME="category">
+			  </td>
+			<td width="77%" CLASS=link height="27">
+			  <SELECT name="category">
 				<?php
 				while ($row = mysql_fetch_array($res_c))
 				{
@@ -120,53 +120,53 @@ if ($_POST[action] != "update")
 				}
 				$res_tr = @mysql_query("SELECT * FROM " . $DBPrefix . "faqs_translated WHERE id='".$_GET['id']."'");
 				while ($tr=mysql_fetch_array($res_tr)){
-				  $QUESTION_TR[$tr['lang']] = $tr['question'];
-				  $ANSWER_TR[$tr['lang']] = $tr['answer'];
+				  $QUESTION_tr[$tr['lang']] = $tr['question'];
+				  $ANSWER_tr[$tr['lang']] = $tr['answer'];
 				}
 			  ?>
 			  </SELECT>
-			  </TD>
-		  </TR>
-		  <TR BGCOLOR="#FFFFFF" valign=top>
-			<TD WIDTH="23%" CLASS=link HEIGHT="27" VALIGN="top"><?php echo $MSG['5239']; ?></TD>
-			<TD WIDTH="77%" CLASS=link HEIGHT="27">
-			  <IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<INPUT TYPE="text" NAME="question[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" SIZE="35" MAXLENGTH="200" VALUE="<?php echo stripslashes($QUESTION_TR[$system->SETTINGS['defaultlanguage']]); ?>">
+			  </td>
+		  </tr>
+		  <tr bgcolor="#FFFFFF" valign=top>
+			<td width="23%" CLASS=link height="27" VALIGN="top"><?php echo $MSG['5239']; ?></td>
+			<td width="77%" CLASS=link height="27">
+			  <IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<input type="text" name="question[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" SIZE="35" MAXLENGTH="200" value="<?php echo stripslashes($QUESTION_tr[$system->SETTINGS['defaultlanguage']]); ?>">
 			  <?php
 				reset($LANGUAGES);
 				while (list($k,$v) = each($LANGUAGES)){
-				  if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=question[$k] SIZE=35 MAXLENGTH=200 VALUE=\"".stripslashes($QUESTION_TR[$k])."\">";
+				  if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<input type=text NAME=question[$k] SIZE=35 MAXLENGTH=200 VALUE=\"".stripslashes($QUESTION_tr[$k])."\">";
 				}
 			  ?>
-			</TD>
-		  </TR>
-		  <TR BGCOLOR="#FFFFFF">
-			<TD WIDTH="23%" CLASS=link HEIGHT="27" VALIGN="top"><?php echo $MSG['5240']; ?></TD>
-			<TD WIDTH="77%" CLASS=link HEIGHT="27">
-			  <IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif"><br><TEXTAREA NAME="answer[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" COLS="40" ROWS="15"><?php echo stripslashes($ANSWER_TR[$system->SETTINGS['defaultlanguage']]); ?></TEXTAREA>
+			</td>
+		  </tr>
+		  <tr bgcolor="#FFFFFF">
+			<td width="23%" CLASS=link height="27" VALIGN="top"><?php echo $MSG['5240']; ?></td>
+			<td width="77%" CLASS=link height="27">
+			  <IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif"><br><TEXTAREA name="answer[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" COLS="40" ROWS="15"><?php echo stripslashes($ANSWER_tr[$system->SETTINGS['defaultlanguage']]); ?></TEXTAREA>
 			  <?php
 				reset($LANGUAGES);
 				while (list($k,$v) = each($LANGUAGES)){
-				  if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=answer[$k] COLS=40 ROWS=15>".stripslashes($ANSWER_TR[$k])."</TEXTAREA>";
+				  if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=answer[$k] COLS=40 ROWS=15>".stripslashes($ANSWER_tr[$k])."</TEXTAREA>";
 				}
 			  ?>
-			</TD>
-		  </TR>
-		  <TR>
-			<TD WIDTH="23%" BGCOLOR="#FFFFFF">
-			  <INPUT TYPE="hidden" NAME="action" VALUE="update">
-			  <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $_GET['id']; ?>">
-			</TD>
-			<TD WIDTH="77%" BGCOLOR="#FFFFFF">
-			  <INPUT TYPE="submit" NAME="Submit" VALUE="SAVE CHANGES">
-			</TD>
-		  </TR>
-		</TABLE>
-	  </TD>
-	</TR>
-  </TABLE>
-</TD>
-</TR>
-</TABLE>
-</FORM>
-</BODY>
-</HTML>
+			</td>
+		  </tr>
+		  <tr>
+			<td width="23%" bgcolor="#FFFFFF">
+			  <input type="hidden" name="action" value="update">
+			  <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+			</td>
+			<td width="77%" bgcolor="#FFFFFF">
+			  <input type="submit" name="Submit" value="SAVE CHANGES">
+			</td>
+		  </tr>
+		</table>
+	  </td>
+	</tr>
+  </table>
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>

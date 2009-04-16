@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -37,13 +37,13 @@ $query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE boardid = " . $id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<FORM NAME="purge" METHOD="post" ACTION="">
-  <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<form name="purge" METHOD="post" ACTION="">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr> 
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
 		<tr> 
@@ -55,39 +55,39 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
   <tr>
 	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-		<TR>
+		<tr>
 			<td align="center" valign="middle">
 
-		<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
+		<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
 		<tr><td align="center" valign="middle">
-		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-		  <TR>
-			<TD ALIGN=CENTER class=title colspan="2">
+		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+		  <tr>
+			<td align="center" class=title colspan="2">
 				<?php echo $MSG['5063']; ?>
-			</TD>
-		  </TR>
+			</td>
+		  </tr>
 		  <tr><td>
-		  <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+		  <table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
 
-		  <TR BGCOLOR="#FFFFFF">
-			<TD COLSPAN="2" bgcolor="#33CC66"> <FONT FACE=Verdana,Arial SIZE=2 COLOR=red><B>
+		  <tr bgcolor="#FFFFFF">
+			<td colspan="2" bgcolor="#33CC66"> <FONT FACE=Verdana,Arial SIZE=2 COLOR=red><B>
 			  <font color="#FFFFFF"><?php echo $MSG['5065']; ?>
 			  <input type="text" name="days" size="5">
 			   <?php echo $MSG['5115']; ?>
 			  <input type="hidden" name="action" VALUE=purge>
 			  <input type="hidden" name="id" VALUE=<?php echo $id; ?>>
 			  <input type="submit" name="Submit" value="<?php echo $MSG['5029']; ?>">
-			  </font></B></FONT></TD>
-		  </TR>
-		  <TR BGCOLOR="#FFFFFF">
-			<TD COLSPAN="2" align=center> <FONT FACE="Verdana,Helvetica,Arial" SIZE="2"><A HREF=editboards.php?id=<?php echo $id; ?>><?php echo $MSG['5064']; ?></A> </TD>
-		  </TR>
+			  </font></B></FONT></td>
+		  </tr>
+		  <tr bgcolor="#FFFFFF">
+			<td colspan="2" align=center> <FONT FACE="Verdana,Helvetica,Arial" SIZE="2"><A HREF=editboards.php?id=<?php echo $id; ?>><?php echo $MSG['5064']; ?></A> </td>
+		  </tr>
 		  <?
 			  while ($msg = mysql_fetch_array($res))
 			  {
 		  ?>
-		  <TR BGCOLOR="#FFFFFF">
-			<TD COLSPAN="2">
+		  <tr bgcolor="#FFFFFF">
+			<td colspan="2">
 			  <FONT FACE="Verdana,Helvetica,Arial" SIZE="2"><?php echo nl2br($msg[message]); ?>
 			  <BR>
 			  <FONT SIZE=-2><?php echo $MSG['5060']; ?> <B>
@@ -99,19 +99,19 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 				<A HREF="editmessage.php?id=<?php echo $id; ?>&msg=<?php echo $msg['id']; ?>"><?php echo $MSG['298']; ?></A>&nbsp;|&nbsp;<A
 				HREF="deletemessage.php?id=<?php echo $id; ?>&msg=<?php echo $msg['id']; ?>"><?php echo $MSG['008']; ?></A>
 			  </CENTER>
-			</TD>
-		  </TR>
+			</td>
+		  </tr>
 		  <?
 						}
 					?>
-		</TABLE>
+		</table>
 		</td></tr>
-		</TABLE>
+		</table>
 		</td></tr>
-			</TD>
-		</TR>
-	</TABLE>
+			</td>
+		</tr>
+	</table>
 	<A HREF="boards.php"><?php echo strtoupper($MSG['5032']); ?></A>
-</FORM>
-</BODY>
-</HTML>
+</form>
+</body>
+</html>

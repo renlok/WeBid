@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 unset($ERR);
@@ -49,10 +49,10 @@ if (mysql_num_rows($res) > 0)
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -69,48 +69,48 @@ if (mysql_num_rows($res) > 0)
 	<tr> 
 	<td align="center" valign="middle">
 
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD align="center">
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td align="center">
 	<BR>
 	<form name="conf" action="" method="post">
-		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-			<TR>
-				<TD ALIGN=CENTER class=title>
+		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+			<tr>
+				<td align="center" class=title>
 					<?php print $MSG['2_0032']; ?>
-				</TD>
-			</TR>
-			<TR>
-				<TD>
+				</td>
+			</tr>
+			<tr>
+				<td>
 
-	<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+	<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
 	  <?php
 		if ($ERR != "")
 		{
 		 ?>
-	  <TR BGCOLOR=yellow>
-		<TD COLSPAN="2" ALIGN=CENTER><B>
+	  <tr bgcolor=yellow>
+		<td colspan="2" align="center"><B>
 		  <?php print $ERR; ?>
-		  </B></TD>
-	  </TR>
+		  </B></td>
+	  </tr>
 	  <?php
 			}
 		?>
-	  <TR VALIGN="TOP">
-		<TD HEIGHT="7">&nbsp;</TD>
-		<TD HEIGHT="7">
+	  <tr valign="top">
+		<td height="7">&nbsp;</td>
+		<td height="7">
 		  <?php echo $_CUSTOM_0032; ?>
-		  </TD>
-	  </TR>
+		  </td>
+	  </tr>
 
-	  <TR VALIGN="TOP">
-		<TD COLSPAN="2" HEIGHT="7"><IMG SRC="../images/transparent.gif" WIDTH="1" HEIGHT="5"></TD>
-	  </TR>
-	  <TR VALIGN="TOP">
-		<TD WIDTH=214 HEIGHT="31">
+	  <tr valign="top">
+		<td colspan="2" height="7"><IMG SRC="../images/transparent.gif" width="1" height="5"></td>
+	  </tr>
+	  <tr valign="top">
+		<td width=214 height="31">
 		  <?php echo $MSG['2_0034']; ?>
-		  </TD>
-		<TD HEIGHT="31" WIDTH="418">
+		  </td>
+		<td height="31" width="418">
 		  <input type="radio" name="status" value="enabled" <?php if ($system->SETTINGS['status'] == 'enabled') print " CHECKED";?>>
 		  
 		  <?php echo $MSG['030']; ?>
@@ -118,15 +118,15 @@ if (mysql_num_rows($res) > 0)
 		  <input type="radio" name="status" value="disabled" <?php if ($system->SETTINGS['status'] == 'disabled') print " CHECKED";?>>
 		  
 		  <?php echo $MSG['029']; ?>
-		   </TD>
-	  </TR>
-	  <TR VALIGN="TOP">
-		<TD COLSPAN="2" HEIGHT="4"><IMG SRC="../images/transparent.gif" WIDTH="1" HEIGHT="5"></TD>
-	  </TR>
-	  <TR VALIGN="TOP">
-		<TD WIDTH=214 HEIGHT="31">&nbsp;
-		  </TD>
-		<TD HEIGHT="31" WIDTH="418">
+		   </td>
+	  </tr>
+	  <tr valign="top">
+		<td colspan="2" height="4"><IMG SRC="../images/transparent.gif" width="1" height="5"></td>
+	  </tr>
+	  <tr valign="top">
+		<td width=214 height="31">&nbsp;
+		  </td>
+		<td height="31" width="418">
 		  <?php echo $MSG['2_0035']; ?>
 		   &nbsp;
 		  <input type=text name=extend value="<?php echo $system->SETTINGS['extend']; ?>" size=5>
@@ -138,38 +138,38 @@ if (mysql_num_rows($res) > 0)
 		  &nbsp; &nbsp;
 		   
 		  <?php echo $MSG['2_0037']; ?>
-		   </TD>
-	  </TR>
-	  <TR VALIGN="TOP">
-		<TD COLSPAN="2" HEIGHT="6"><IMG SRC="../images/transparent.gif" WIDTH="1" HEIGHT="5"></TD>
-	  </TR>
-	  <TR>
-		<TD WIDTH=214>
-		  <INPUT TYPE="hidden" NAME="action" VALUE="update">
-		  <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
-		</TD>
-		<TD WIDTH="418">
-		  <INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['530']; ?>">
-		</TD>
-	  </TR>
-	  <TR>
-		<TD WIDTH=214></TD>
-		<TD WIDTH="418"> </TD>
-	  </TR>
-	</TABLE>
-				</TD>
-			</TR>
-		</TABLE>
-		</FORM>
+		   </td>
+	  </tr>
+	  <tr valign="top">
+		<td colspan="2" height="6"><IMG SRC="../images/transparent.gif" width="1" height="5"></td>
+	  </tr>
+	  <tr>
+		<td width=214>
+		  <input type="hidden" name="action" value="update">
+		  <input type="hidden" name="id" value="<?php echo $id; ?>">
+		</td>
+		<td width="418">
+		  <input type="submit" name="act" value="<?php print $MSG['530']; ?>">
+		</td>
+	  </tr>
+	  <tr>
+		<td width=214></td>
+		<td width="418"> </td>
+	  </tr>
+	</table>
+				</td>
+			</tr>
+		</table>
+		</form>
 
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

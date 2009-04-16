@@ -14,7 +14,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -23,10 +23,10 @@ include 'loggedin.inc.php';
 $limit = 20;
 if (!isset($offset)) $offset = 0;
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -42,22 +42,22 @@ if (!isset($offset)) $offset = 0;
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-	<TR>
-		<TD ALIGN=CENTER class=title>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+	<tr>
+		<td align="center" class=title>
 			<?php print $MSG['516']; ?>
-		</TD>
-	</TR>
-	<TR>
-		<TD>
-			<TABLE WIDTH=100% CELPADDING=0 CELLSPACING=1 BORDER=0 ALIGN="CENTER" CELLPADDING="3">
-				<TR>
-					<TD ALIGN=center COLSPAN=5 BGCOLOR=#EEEEEE>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3">
+				<tr>
+					<td ALIGN=center COLSPAN=5 bgcolor=#EEEEEE>
 						<B><A HREF="addnew.php">
 						<?php print $MSG['518']; ?>
 						</A></B>
-					</TD>
-				</TR>
+					</td>
+				</tr>
 				<?php
 				$query = "select count(id) as news from " . $DBPrefix . "news";
 				$result = mysql_query($query);
@@ -66,23 +66,23 @@ if (!isset($offset)) $offset = 0;
 					exit;
 				}
 				$num_news = mysql_result($result,0,"news");
-				print '<TR BGCOLOR=#FFFFFF><TD COLSPAN=5><B>
-				'.$num_news.' '.$MSG['517'].'</B></TD></TR>';
+				print '<tr bgcolor=#FFFFFF><td COLSPAN=5><B>
+				'.$num_news.' '.$MSG['517'].'</B></td></tr>';
 	?>
-				<TR BGCOLOR="#dddddd">
-					<TD ALIGN=CENTER WIDTH=20%> 
+				<tr bgcolor="#dddddd">
+					<td align="center" width=20%> 
 						<B>
 						<?php print $MSG['314']; ?>
-						</B>  </TD>
-					<TD ALIGN=center WIDTH=60%> 
+						</B>  </td>
+					<td ALIGN=center width=60%> 
 						<B>
 						<?php print $MSG['312']; ?>
-						</B>  </TD>
-					<TD ALIGN=center> 
+						</B>  </td>
+					<td ALIGN=center> 
 						<B>
 						<?php print $MSG['297']; ?>
-						</B>  </TD>
-				<TR>
+						</B>  </td>
+				<tr>
 					<?php
 					$query = "select * from " . $DBPrefix . "news order by new_date limit $offset, $limit";
 					$result = mysql_query($query);
@@ -106,8 +106,8 @@ if (!isset($offset)) $offset = 0;
 						$tmp_date = mysql_result($result,$i,"new_date") + $system->tdiff;
 						$suspended = mysql_result($result,$i,"suspended");
 						
-						print "<TR BGCOLOR=$bgcolor>
-					<TD>
+						print "<tr bgcolor=$bgcolor>
+					<td>
 						";
 						if ($system->SETTINGS['datesformat'] != 'USA')
 						{
@@ -119,8 +119,8 @@ if (!isset($offset)) $offset = 0;
 						}
 						
 						print " 
-						</TD>
-						<TD>
+						</td>
+						<td>
 						";
 						if ($suspended == 1)
 						{
@@ -131,27 +131,27 @@ if (!isset($offset)) $offset = 0;
 							print $title;
 						}
 						print "
-						</TD>
+						</td>
 
-						<TD ALIGN=LEFT>
+						<td ALIGN=LEFT>
 						<A HREF=\"editnew.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['298']."</A><BR>
 						<A HREF=\"deletenew.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['008']."</A>
 						<BR>
-						</TD>
-						<TR>";
+						</td>
+						<tr>";
 						
 						$i++;
 					}
 					
-					print "</TABLE>
-			   </TD></TR></TABLE>";
+					print "</table>
+			   </td></tr></table>";
 					
 					
 					
 					//-- Build navigation line
-					print "<TABLE WIDTH=600 BORDER=0 CELLPADDING=4 CELLSPACING=0 ALIGN=CENTER>
-			   <TR ALIGN=CENTER BGCOLOR=#FFFFFF>
-			   <TD COLSPAN=2>";
+					print "<table width=600 border=0 cellpadding=4 cellspacing=0 align="center">
+			   <tr align="center" bgcolor=#FFFFFF>
+			   <td COLSPAN=2>";
 					
 					print "<SPAN CLASS=\"navigation\">";
 					$num_pages = ceil($num_news / $limit);
@@ -170,14 +170,14 @@ if (!isset($offset)) $offset = 0;
 						
 						$i++;
 					}
-					print "</SPAN></TD></TR>";
+					print "</SPAN></td></tr>";
 	  ?>
-		</TABLE>
-		</TD>
-		</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+		</table>
+		</td>
+		</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

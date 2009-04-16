@@ -14,7 +14,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path.'platforms.inc.php';
@@ -42,10 +42,10 @@ while ($year = mysql_fetch_array($res))
 	}
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -61,9 +61,9 @@ while ($year = mysql_fetch_array($res))
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-  <TABLE WIDTH=95% CELLPADDING=2 CELLSPACING=1 BORDER=0 ALIGN="CENTER">
-	<TR BGCOLOR="#FFCC00">
-	  <TD ALIGN=CENTER colspan="2" bgcolor="#eeeeee">
+  <table width=95% cellpadding=2 cellspacing=1 border=0 align="center">
+	<tr bgcolor="#FFCC00">
+	  <td align="center" colspan="2" bgcolor="#eeeeee">
 		<p class="title" style="color:#000000">
 		  <?php echo $MSG['5438'].'<I>'.$system->SETTINGS['sitename'].'</I>'?>
 		  <BR>
@@ -74,12 +74,12 @@ while ($year = mysql_fetch_array($res))
 			<A HREF=viewbrowserstats.php?><?php echo $MSG['5165']; ?></A> |
 			<A HREF=viewdomainstats.php?><?php echo $MSG['5166']; ?></A>
 			</p>
-	  </TD>
-	</TR>
-	<TR BGCOLOR=#FFFFFF>
-	  <TD width="146">&nbsp;</TD>
-	  <TD width="626">&nbsp;</TD>
-	</TR>
+	  </td>
+	</tr>
+	<tr bgcolor=#FFFFFF>
+	  <td width="146">&nbsp;</td>
+	  <td width="626">&nbsp;</td>
+	</tr>
 	<tr bgcolor="#CCCCCC">
 	  <td width="146" height="21"> 
 		<b>
@@ -95,23 +95,23 @@ while ($year = mysql_fetch_array($res))
 	  	while (list($k,$v) = each($YEARS))
 	  	{
 		?>
-			<TR BGCOLOR=yellow>
-				<TD COLSPAN=2 >
+			<tr bgcolor=yellow>
+				<td COLSPAN=2 >
 					<B><?php echo $k; ?></B>
-				</TD>
-			</TR>
+				</td>
+			</tr>
 			<?php
 			while (list($t,$z) = each($v))
 			{
 			?>
-			<TR BGCOLOR=#eeeeee>
+			<tr bgcolor=#eeeeee>
 
-	  <TD>
+	  <td>
 	  	<b>
 		<?php echo $t; ?>
-		</b> </TD>
+		</b> </td>
 
-	  <TD width="626">
+	  <td width="626">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 			<td width="600"> 
@@ -157,16 +157,16 @@ while ($year = mysql_fetch_array($res))
 			</td>
 		  </tr>
 		</table>
-			  </TD>
-			</TR>
+			  </td>
+			</tr>
 			<?php
 			}
 	  	}
 	  }
 		?>
-  </TABLE><br>
-  </TD>
-  </TR>
-  </TABLE>
-  </BODY>
-  </HTML>
+  </table><br>
+  </td>
+  </tr>
+  </table>
+  </body>
+  </html>

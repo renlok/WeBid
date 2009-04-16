@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -36,13 +36,13 @@ if (isset($_POST['action']) && $_POST['action'] == "delete") {
 	$msg = mysql_fetch_array($res);
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<FORM NAME="newcurrency" METHOD="post" ACTION="">
-  <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<form name="newcurrency" METHOD="post" ACTION="">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr> 
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
 		<tr> 
@@ -54,31 +54,31 @@ if (isset($_POST['action']) && $_POST['action'] == "delete") {
   <tr>
 	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-		<TR>
+		<tr>
 			<td align="center" valign="middle">
 
-		<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
+		<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
 		<tr><td align="center" valign="middle">
-		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-		  <TR>
-			<TD ALIGN=CENTER class=title colspan="2">
+		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+		  <tr>
+			<td align="center" class=title colspan="2">
 				<?php echo $MSG['5276']; ?>
-			</TD>
-		  </TR>
+			</td>
+		  </tr>
 		  <tr><td>
-		  <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
-					<TR BGCOLOR="#FFFFFF">
-						<TD WIDTH="24%" BGCOLOR="#FFFFFF" VALIGN="TOP">
+		  <table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
+					<tr bgcolor="#FFFFFF">
+						<td width="24%" bgcolor="#FFFFFF" valign="top">
 							<FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
 							<?php echo $MSG['333']; ?>
-						</TD>
-						<TD WIDTH="76%" VALIGN="TOP">
+						</td>
+						<td width="76%" valign="top">
 						<FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
-						<?php echo nl2br($msg['message']); ?></TD>
-					</TR>
-					<TR BGCOLOR="#FFFFFF">
-						<TD WIDTH="24%"><FONT FACE="Verdana,Helvetica,Arial" SIZE="2"><?php echo $MSG['5060']; ?></TD>
-						<TD WIDTH="76%">
+						<?php echo nl2br($msg['message']); ?></td>
+					</tr>
+					<tr bgcolor="#FFFFFF">
+						<td width="24%"><FONT FACE="Verdana,Helvetica,Arial" SIZE="2"><?php echo $MSG['5060']; ?></td>
+						<td width="76%">
 						<FONT FACE="Verdana,Helvetica,Arial" SIZE="2">
 							<?
 								if ($msg['user'] > 0) {
@@ -91,26 +91,26 @@ if (isset($_POST['action']) && $_POST['action'] == "delete") {
 							?>
 							-
 							<?php echo FormatDate($msg['msgdate']); ?>
-						</TD>
-					</TR>
-					<TR BGCOLOR="#FFFFFF">
-						<TD WIDTH="24%">
-							<INPUT TYPE="hidden" NAME="action" VALUE="delete">
-							<INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
-							<INPUT TYPE="hidden" NAME="msg" VALUE="<?php echo $msg_id; ?>">
-						</TD>
-						<TD WIDTH="76%">
-							<INPUT TYPE="submit" NAME="Submit" VALUE="<?php echo $MSG['5276']; ?>">
-						</TD>
-					</TR>
-				</TABLE>
+						</td>
+					</tr>
+					<tr bgcolor="#FFFFFF">
+						<td width="24%">
+							<input type="hidden" name="action" value="delete">
+							<input type="hidden" name="id" value="<?php echo $id; ?>">
+							<input type="hidden" name="msg" value="<?php echo $msg_id; ?>">
+						</td>
+						<td width="76%">
+							<input type="submit" name="Submit" value="<?php echo $MSG['5276']; ?>">
+						</td>
+					</tr>
+				</table>
 		</td></tr>
-		</TABLE>
+		</table>
 		</td></tr>
-			</TD>
-		</TR>
-	</TABLE>
+			</td>
+		</tr>
+	</table>
 	<A HREF="boards.php"><?php echo $MSG['5032']; ?></A> | <A HREF=editmessages.php?id=<?php echo $id; ?>><?php echo $MSG['5277']; ?></A>
-</FORM>
-</BODY>
-</HTML>
+</form>
+</body>
+</html>

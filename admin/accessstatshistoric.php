@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -51,10 +51,10 @@ while ($year = mysql_fetch_array($res))
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -70,9 +70,9 @@ while ($year = mysql_fetch_array($res))
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE WIDTH=95% CELLPADDING=2 CELLSPACING=1 BORDER=0 ALIGN="CENTER">
-	<TR BGCOLOR="#FFCC00">
-	  <TD ALIGN=CENTER colspan="2" bgcolor="#eeeeee">
+<table width=95% cellpadding=2 cellspacing=1 border=0 align="center">
+	<tr bgcolor="#FFCC00">
+	  <td align="center" colspan="2" bgcolor="#eeeeee">
 		<p class="title" style="color:#000000">
 		  <?php echo $MSG['5158'] . '<I>' . $system->SETTINGS['sitename'] . '</I>'; ?>
 		  </b> <BR>
@@ -82,10 +82,10 @@ while ($year = mysql_fetch_array($res))
 			<A HREF=viewdomainstats.php?><?php echo $MSG['5166']; ?></A> |
 			<A HREF=viewplatformstats.php?><?php echo $MSG['5318']; ?></A>
 			</p>
-	  </TD>
-	</TR>
-	<TR>
-	  <TD colspan="2">
+	  </td>
+	</tr>
+	<tr>
+	  <td colspan="2">
 		<table width="100%" border="0" cellspacing="1" cellpadding="0" bgcolor="#FFFFFF">
 		  <tr>
 			<td><b>
@@ -134,12 +134,12 @@ while ($year = mysql_fetch_array($res))
 			  &nbsp;&nbsp;&nbsp;</td>
 		  </tr>
 		</table>
-	  </TD>
-	</TR>
-	<TR BGCOLOR=#FFFFFF>
-	  <TD width="80">&nbsp;</TD>
-	  <TD width="692">&nbsp;</TD>
-	</TR>
+	  </td>
+	</tr>
+	<tr bgcolor=#FFFFFF>
+	  <td width="80">&nbsp;</td>
+	  <td width="692">&nbsp;</td>
+	</tr>
 	<tr bgcolor="#CCCCCC">
 	  <td align=CENTER width="80" height="21">
 		<b>
@@ -155,69 +155,69 @@ while ($year = mysql_fetch_array($res))
 	  	while (list($k,$v) = each($PAGEVIEWS))
 	  	{
 		?>
-			<TR BGCOLOR=yellow >
-				<TD COLSPAN=2><B><?php echo $k; ?></B></TD>
-			</TR>
+			<tr bgcolor=yellow >
+				<td COLSPAN=2><B><?php echo $k; ?></B></td>
+			</tr>
 			<?php
 			while (list($t,$y) = each($v))
 			{
 			?>
-			<TR BGCOLOR=#eeeeee>
-			  <TD width="80" ALIGN=CENTER><b>
+			<tr bgcolor=#eeeeee>
+			  <td width="80" align="center"><b>
 				<?php echo $t; ?>
-				</b> </TD>
-			  <TD width="692">
+				</b> </td>
+			  <td width="692">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				  <tr>
 					<td width="89%">
 					  <?php $WIDTH = ( $PAGEVIEWS[$k][$t] * $ABSOLUTEWIDTH ) / $MAX; ?>
 					  
-					  <TABLE BORDER=0 CALLPADDING=0 CELLSPACING=0 WIDTH=<?php echo intval($WIDTH); ?> BGCOLOR=#006699>
-						<TR>
-						  <TD><B><FONT COLOR=white>
+					  <table border=0 CALLPADDING=0 cellspacing=0 width=<?php echo intval($WIDTH); ?> bgcolor=#006699>
+						<tr>
+						  <td><B><FONT COLOR=white>
 							<?php echo $PAGEVIEWS[$k][$t]; ?>
-							</B></TD>
-						</TR>
-					  </TABLE>
+							</B></td>
+						</tr>
+					  </table>
 					</td>
 				  </tr>
 				  <tr>
 					<td width="89%">
 					  <?php $WIDTH = ( $UNIQUEVISITORS[$k][$t] * $ABSOLUTEWIDTH ) / $MAX; ?>
 					  
-					  <TABLE BORDER=0 CALLPADDING=0 CELLSPACING=0 WIDTH=<?php echo intval($WIDTH); ?> BGCOLOR=#66CC00>
-						<TR>
-						  <TD><B><FONT COLOR=white>
+					  <table border=0 CALLPADDING=0 cellspacing=0 width=<?php echo intval($WIDTH); ?> bgcolor=#66CC00>
+						<tr>
+						  <td><B><FONT COLOR=white>
 							<?php echo $UNIQUEVISITORS[$k][$t]; ?>
-							</B></TD>
-						</TR>
-					  </TABLE>
+							</B></td>
+						</tr>
+					  </table>
 					</td>
 				  </tr>
 				  <tr>
 					<td width="89%">
 					  <?php $WIDTH = ( $USERSESSIONS[$k][$t] * $ABSOLUTEWIDTH ) / $MAX;?>
 					  
-					  <TABLE BORDER=0 CALLPADDING=0 CELLSPACING=0 WIDTH=<?php echo intval($WIDTH); ?> BGCOLOR=#FFFF33>
-						<TR>
-						  <TD><B>
+					  <table border=0 CALLPADDING=0 cellspacing=0 width=<?php echo intval($WIDTH); ?> bgcolor=#FFFF33>
+						<tr>
+						  <td><B>
 							<?php echo $USERSESSIONS[$k][$t]; ?>
-							</B></TD>
-						</TR>
-					  </TABLE>
+							</B></td>
+						</tr>
+					  </table>
 					</td>
 				  </tr>
 				</table>
-			  </TD>
-			</TR>
+			  </td>
+			</tr>
 	<?php
 			}
 	  	}
 	  }
 		?>
-  </TABLE>
-  </TD>
-  </TR>
-  </TABLE>
-  </BODY>
-  </HTML>
+  </table>
+  </td>
+  </tr>
+  </table>
+  </body>
+  </html>

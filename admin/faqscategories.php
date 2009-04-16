@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -51,12 +51,12 @@ $res__ = mysql_query($query);
 $system->check_mysql($res__, $query, __LINE__, __FILE__);
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<FORM NAME="categories" METHOD="post" ACTION="">
+<form name="categories" METHOD="post" ACTION="">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
@@ -71,68 +71,68 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" ALIGN="CENTER" BGCOLOR="#0083D7">
-		<TR align=center>
-			<TD BGCOLOR="#ffffff">&nbsp;</TD>
-		</TR>
-		<TR>
-			<TD>
-				<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="4" ALIGN="CENTER">
-					<TR BGCOLOR="#0083D7">
-						<TD COLSPAN="3" class=title align=center>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" align="center" bgcolor="#0083D7">
+		<tr align=center>
+			<td bgcolor="#ffffff">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="4" align="center">
+					<tr bgcolor="#0083D7">
+						<td colspan="3" class=title align=center>
 								<?php echo $MSG['5230']; ?>
-						</TD>
-					</TR>
+						</td>
+					</tr>
 					<?php
 					if (!empty($ERR)){
 					?>
-					<TR BGCOLOR="#FFFF00">
-						<TD COLSPAN="3"> <B>
+					<tr bgcolor="#FFFF00">
+						<td colspan="3"> <B>
 							<?php echo $ERR; ?>
-							</B></TD>
-					</TR>
+							</B></td>
+					</tr>
 					<?php } ?>
-					<TR BGCOLOR="#EEEEEE">
-						<TD COLSPAN="3">
+					<tr bgcolor="#EEEEEE">
+						<td colspan="3">
 						<?php echo $MSG['5234']; ?>
-						</TD>
-					</TR>
-					<TR BGCOLOR="#FFFFFF">
-						<TD COLSPAN="3">
-							<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="1">
-								<TR>
-									<TD WIDTH="21%"><?php echo $MSG['165']; ?></TD>
-									<TD WIDTH="79%">
-										<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<INPUT TYPE="text" NAME="cat_name[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" SIZE="25" MAXLENGTH="200">
+						</td>
+					</tr>
+					<tr bgcolor="#FFFFFF">
+						<td colspan="3">
+							<table width="100%" border="0" cellspacing="0" cellpadding="1">
+								<tr>
+									<td width="21%"><?php echo $MSG['165']; ?></td>
+									<td width="79%">
+										<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<input type="text" name="cat_name[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" SIZE="25" MAXLENGTH="200">
 										<?php
 											reset($LANGUAGES);
 											while (list($k,$v) = each($LANGUAGES)){
-												if ($k!=$system->SETTINGS['defaultlanguage']) print '<BR><IMG SRC=../includes/flags/' . $k . '.gif>&nbsp;<INPUT TYPE=text name="' . $cat_name[$k] . '" SIZE=25 MAXLENGTH=200>';
+												if ($k!=$system->SETTINGS['defaultlanguage']) print '<BR><IMG SRC=../includes/flags/' . $k . '.gif>&nbsp;<input type=text name="' . $cat_name[$k] . '" SIZE=25 MAXLENGTH=200>';
 											}
 										?>
-									</TD>
-								</TR>
-								<TR>
-									<TD WIDTH="21%">
-										<INPUT TYPE="hidden" NAME="action" VALUE="insert">
-									</TD>
-									<TD WIDTH="79%">
-										<INPUT TYPE="submit" NAME="InsertButton" VALUE="INSERT CATEGORY">
-									</TD>
-								</TR>
-							</TABLE>
-						</TD>
-					</TR>
-					<TR BGCOLOR="#FFFFFF">
-						<TD COLSPAN="3"><?php echo $MSG['5235']; ?></TD>
-					</TR>
-					<TR BGCOLOR="#eeeeee">
-						<TD WIDTH="14%"><?php echo $MSG['5237']; ?></TD>
-						<TD WIDTH="72%"><?php echo $MSG['316']; ?></TD>
-						<TD WIDTH="14%" ALIGN=CENTER>
-							<INPUT TYPE="submit" NAME="Submit" VALUE="Delete">
-						</TD>
-					</TR>
+									</td>
+								</tr>
+								<tr>
+									<td width="21%">
+										<input type="hidden" name="action" value="insert">
+									</td>
+									<td width="79%">
+										<input type="submit" name="InsertButton" value="INSERT CATEGORY">
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr bgcolor="#FFFFFF">
+						<td colspan="3"><?php echo $MSG['5235']; ?></td>
+					</tr>
+					<tr bgcolor="#eeeeee">
+						<td width="14%"><?php echo $MSG['5237']; ?></td>
+						<td width="72%"><?php echo $MSG['316']; ?></td>
+						<td width="14%" align="center">
+							<input type="submit" name="Submit" value="Delete">
+						</td>
+					</tr>
 					<?php
 					while ($row = mysql_fetch_array($res__))
 					{
@@ -143,7 +143,7 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 						$system->check_mysql($re, $query, __LINE__, __FILE__);
 						if (mysql_num_rows($re) > 0)
 						{
-							$HAVEFAQS = TRUE;
+							$HAVEFAQS = trUE;
 						}
 						else
 						{
@@ -151,25 +151,25 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 						}
 						
 					?>
-					<TR BGCOLOR="#eeeeee">
-						<TD WIDTH="7%" BGCOLOR="#FFFFFF">
+					<tr bgcolor="#eeeeee">
+						<td width="7%" bgcolor="#FFFFFF">
 							
 							<?php echo $row['id']; ?>
 							
-						</TD>
-						<TD WIDTH="79%" BGCOLOR="#FFFFFF">
+						</td>
+						<td width="79%" bgcolor="#FFFFFF">
 							
 							<A HREF=editfaqscategory.php?id=<?php echo $row['id']; ?>>
 							<?php echo $row['category']; ?>
 							</A>
 							
-							</TD>
-						<TD WIDTH="14%" BGCOLOR="#FFFFFF" ALIGN=CENTER>
+							</td>
+						<td width="14%" bgcolor="#FFFFFF" align="center">
 						<?php
 						if (!$HAVEFAQS)
 						{
 						?>
-							<INPUT TYPE="checkbox" NAME="delete[<?php echo $row['id']; ?>]" VALUE="<?php echo $row['id']; ?>">
+							<input type="checkbox" name="delete[<?php echo $row['id']; ?>]" value="<?php echo $row['id']; ?>">
 						<?php
 						} else {
 						?>
@@ -177,25 +177,25 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 						<?php
 						}
 						?>
-						</TD>
-					</TR>
+						</td>
+					</tr>
 					<?php
 					}
 					?>
-					<TR BGCOLOR="#eeeeee">
-						<TD WIDTH="7%" BGCOLOR="#FFFFFF">&nbsp;</TD>
-						<TD WIDTH="79%" BGCOLOR="#FFFFFF">&nbsp;</TD>
-						<TD WIDTH="14%" BGCOLOR="#FFFFFF" ALIGN=CENTER>
-							<INPUT TYPE="submit" NAME="Submit" VALUE="Delete">
-						</TD>
-					</TR>
-				</TABLE>
-			</TD>
-		</TR>
-	</TABLE>
-</TD>
-</TR>
-</TABLE>
+					<tr bgcolor="#eeeeee">
+						<td width="7%" bgcolor="#FFFFFF">&nbsp;</td>
+						<td width="79%" bgcolor="#FFFFFF">&nbsp;</td>
+						<td width="14%" bgcolor="#FFFFFF" align="center">
+							<input type="submit" name="Submit" value="Delete">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</td>
+</tr>
+</table>
 </FOrM>
-</BODY>
-</HTML>
+</body>
+</html>

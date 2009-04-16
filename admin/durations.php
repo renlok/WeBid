@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -71,9 +71,9 @@ if ($_POST['act'] && !$$ERR && basename($_SERVER['HTTP_REFERER']) == basename($_
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 function selectAll(formObj, isInverse)  {
    for (var i=0;i < formObj.length;i++)  {
@@ -97,7 +97,7 @@ scrollbar-darkshadow-color: #444444;
 scrollbar-track-color: #cccccc;
 scrollbar-arrow-color: #ffffff;
 }</STYLE>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -113,26 +113,26 @@ scrollbar-arrow-color: #ffffff;
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD COLSPAN=3>
-<FORM NAME=conf ACTION=durations.php METHOD=POST>
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td COLSPAN=3>
+<form NAME=conf ACTION=durations.php METHOD=POST>
 <BR>
-<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-		<TR>
-				<TD ALIGN=CENTER class=title>
+<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+		<tr>
+				<td align="center" class=title>
 						<?php print $MSG['069']; ?>
-				</TD>
-		</TR>
-		<TR>
-			<TD>
-				<TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
+				</td>
+		</tr>
+		<tr>
+			<td>
+				<table width=100% cellpadding=2 bgcolor="#FFFFFF">
 					<?php
 					if (isset($ERR))
 					{
 					?>
-						<TR BGCOLOR=yellow>
-						<TD COLSPAN="4" ALIGN=CENTER><B>
+						<tr bgcolor=yellow>
+						<td colspan="4" align="center"><B>
 						<?php
 						  if ($$ERR) {
 								print $$ERR;
@@ -142,34 +142,34 @@ scrollbar-arrow-color: #ffffff;
 								}
 							}
 							?>
-						  </B></TD>
-					  </TR>
+						  </B></td>
+					  </tr>
 					 <?php
 					}
 					 ?>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD COLSPAN=2> 
+					<tr>
+						<td width=50></td>
+						<td COLSPAN=2> 
 							<?php
 								print $MSG['122'];
 							?>
-						</TD>
-					</TR>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD BGCOLOR="#EEEEEE">
+						</td>
+					</tr>
+					<tr>
+						<td width=50></td>
+						<td bgcolor="#EEEEEE">
 							<B>
 							<?php print $MSG['097']; ?>
-							</B> </TD>
-						<TD BGCOLOR="#EEEEEE">
+							</B> </td>
+						<td bgcolor="#EEEEEE">
 							<B>
 							<?php print $MSG['087']; ?>
-							</B> </TD>
-						<TD BGCOLOR="#EEEEEE">
+							</B> </td>
+						<td bgcolor="#EEEEEE">
 							<B>
 							<?php print $MSG['008']; ?>
-							</B> </TD>
-					</TR>
+							</B> </td>
+					</tr>
 					<?php
 					//--
 					$query = "select * from " . $DBPrefix . "durations order by days";
@@ -184,55 +184,55 @@ scrollbar-arrow-color: #ffffff;
 					while ($i < $num){
 						$days				  = mysql_result($result,$i,"days");
 						$description = mysql_result($result,$i,"description");
-						print "<TR>
-							 <TD WIDTH=50></TD>
-							 <TD>
-							 <INPUT TYPE=text NAME=new_days[] VALUE=\"$days\" SIZE=5>
-							 </TD>
-							 <TD>
-							 <INPUT TYPE=text NAME=new_durations[] VALUE=\"$description\" SIZE=25>
-							 </TD>
-							 <TD align=center>
-							 <INPUT TYPE=checkbox NAME=delete[] VALUE=\"$days\">
-							 </TD>
-							 </TR>";
+						print "<tr>
+							 <td width=50></td>
+							 <td>
+							 <input type=text NAME=new_days[] VALUE=\"$days\" SIZE=5>
+							 </td>
+							 <td>
+							 <input type=text NAME=new_durations[] VALUE=\"$description\" SIZE=25>
+							 </td>
+							 <td align=center>
+							 <input type=checkbox NAME=delete[] VALUE=\"$days\">
+							 </td>
+							 </tr>";
 								$i++;
 							}
-							print '<TR>
-									 <TD WIDTH=50>
+							print '<tr>
+									 <td width=50>
 									  Add
-									 </TD>
-									 <TD>
-									  Days <INPUT TYPE="text" NAME="new_days[]" SIZE="5" maxlength="5" value="0">
-									 </TD>
-									 <TD>
-									 <INPUT TYPE=text NAME="new_durations[]" SIZE=25>
-									 </TD>
-									 <TD align=center>
+									 </td>
+									 <td>
+									  Days <input type="text" name="new_days[]" SIZE="5" maxlength="5" value="0">
+									 </td>
+									 <td>
+									 <input type=text name="new_durations[]" SIZE=25>
+									 </td>
+									 <td align=center>
 									 <a href="javascript: void(0)" onclick="selectAll(document.forms[0],1)">'.$MSG['30_0102'].'</A>
-									 </TD>
-									 </TR>';
+									 </td>
+									 </tr>';
 							?>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD>
-							<INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
-						</TD>
-					</TR>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD> </TD>
-					</TR>
-				</TABLE>
-			</TD>
-		</TR>
-</TABLE>
-</FORM>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+					<tr>
+						<td width=50></td>
+						<td>
+							<input type="submit" name="act" value="<?php print $MSG['089']; ?>">
+						</td>
+					</tr>
+					<tr>
+						<td width=50></td>
+						<td> </td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

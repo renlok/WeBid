@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path.'membertypes.inc.php';
@@ -100,13 +100,13 @@ if (($_SERVER['REQUEST_METHOD']=="GET" || $TPL_err) ) {
 				 | <a href=\"deleteuserfeed.php?id=".$arr_feedback[$ind]['id']."&user=".$secid."\"><FONT FACE=\"Verdana,Arial,Helvetica\" SIZE=2>".$MSG['008']."</a>
 				</td></tr>";
 				
-				$echofeed .= "<TR";
+				$echofeed .= "<tr";
 				if ($bgcolor == "#FFFFFF"){
-					$echofeed .= "  BGCOLOR=#EEEEEE";
+					$echofeed .= "  bgcolor=#EEEEEE";
 				}else{
-					$echofeed .= "  BGCOLOR=#FFFFFF";
+					$echofeed .= "  bgcolor=#FFFFFF";
 				}
-				$echofeed .= "><TD ALIGN=right colspan=\"2\">";
+				$echofeed .= "><td ALIGN=right colspan=\"2\">";
 			}
 			if (round(($i/5-floor($i/5))*10)) {
 				$num_pages=floor($i/5);
@@ -176,9 +176,9 @@ if ($_SERVER['REQUEST_METHOD']=="GET" && $faction=="show") {
 
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 function SubmitForm(){
 	document.addfeedback.submit();
@@ -188,7 +188,7 @@ function ResetForm(){
 }
 //-->
 </script>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -205,18 +205,18 @@ function ResetForm(){
 	<tr> 
 	<td align="center" valign="middle">
 
-<TABLE WIDTH="95%" BORDER=0 CELLPADDING="1" CELLSPACING="1" BGCOLOR=#0083D7>
-<TR>
-  <TD ALIGN=CENTER class=title><?php print $MSG['222']; ?></TD>
-</TR>
-<TR BGCOLOR=#FFFFFF>
-	<TD><BR>
+<table width="95%" border=0 cellpadding="1" cellspacing="1" bgcolor=#0083D7>
+<tr>
+  <td align="center" class=title><?php print $MSG['222']; ?></td>
+</tr>
+<tr bgcolor=#FFFFFF>
+	<td><BR>
 	  <CENTER>
-	  <FORM name=addfeedback action="userfeedback.php?id=<?php echo $id; ?>" method="POST">
-		<TABLE width="100%" CELLSPACING="0" CELLPADDING="0" BGCOLOR="#EEEEEE">
-		  <TR>
-			<TD><TABLE width="100%" CELLSPACING="1" CELLPADDING="1">
-				<tr  BGCOLOR="#FFFFFF">
+	  <form name=addfeedback action="userfeedback.php?id=<?php echo $id; ?>" method="POST">
+		<table width="100%" cellspacing="0" cellpadding="0" bgcolor="#EEEEEE">
+		  <tr>
+			<td><table width="100%" cellspacing="1" cellpadding="1">
+				<tr  bgcolor="#FFFFFF">
 				  <td ALIGN=right colspan="2"><B> <?php echo "<B>$TPL_nick</B>
 				   ($TPL_feedbacks_num)
 				   <BR>$TPL_rate_ratio_value
@@ -224,16 +224,16 @@ function ResetForm(){
 		  ?> </B> </td>
 				</tr>
 				<?php echo stripslashes($echofeed); ?>
-			  </TABLE></TD>
-		  </TR>
-		</TABLE>
+			  </table></td>
+		  </tr>
+		</table>
 		<INPUT type="hidden" name="TPL_nick_hidden" value="<?php echo $TPL_nick; ?>">
-	  </FORM>
-	</TD>
-  </TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+	  </form>
+	</td>
+  </tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

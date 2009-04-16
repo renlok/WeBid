@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -46,10 +46,10 @@ $STATUS = array(
 );
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -65,65 +65,65 @@ $STATUS = array(
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD>
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td>
 <CENTER>
 <BR>
-<FORM NAME=conf ACTION="" METHOD=POST>
-<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-<TR>
-<TD ALIGN=CENTER class=title>
+<form NAME=conf ACTION="" METHOD=POST>
+<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+<tr>
+<td align="center" class=title>
 <?php print $MSG['525']; ?>
-</TD>
-</TR>
-<TR>
-<TD>
-<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
-<TR>
-<TD COLSPAN="2"><A HREF="./increments.php">
+</td>
+</tr>
+<tr>
+<td>
+<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
+<tr>
+<td colspan="2"><A HREF="./increments.php">
 </A>
-<TABLE WIDTH="100%" BORDER="0" CELLSPACING="1" CELLPADDING="2">
-<TR BGCOLOR="#EEEEEE">
-		<TD COLSPAN="5" ALIGN=CENTER><A HREF=newadminuser.php><?php echo $MSG['367']; ?></A></TD>
-</TR>
-<TR BGCOLOR="#999999">
-		<TD WIDTH="30%">
+<table width="100%" border="0" cellspacing="1" cellpadding="2">
+<tr bgcolor="#EEEEEE">
+		<td colspan="5" align="center"><A HREF=newadminuser.php><?php echo $MSG['367']; ?></A></td>
+</tr>
+<tr bgcolor="#999999">
+		<td width="30%">
 				<CENTER>
 					<B>
 					<?php print $MSG['003']; ?>
 					</B>
 				</CENTER>
-		</TD>
-		<TD WIDTH="16%">
+		</td>
+		<td width="16%">
 				<CENTER>
 					<B>
 					<?php print $MSG['558']; ?>
 					</B>
 				</CENTER>
-		</TD>
-		<TD WIDTH="19%">
+		</td>
+		<td width="19%">
 				<CENTER>
 					<B>
 					<?php print $MSG['559']; ?>
 					</B>
 				</CENTER>
-		</TD>
-		<TD WIDTH="12%">
+		</td>
+		<td width="12%">
 				<CENTER>
 					<B>
 					<?php print $MSG['560']; ?>
 					</B>
 				</CENTER>
-		</TD>
-		<TD WIDTH="23%">
+		</td>
+		<td width="23%">
 				<CENTER>
 					<B>
-					<INPUT TYPE="submit" NAME="Submit" VALUE="<?php echo $MSG['561']; ?>">
+					<input type="submit" name="Submit" value="<?php echo $MSG['561']; ?>">
 					</B>
 				</CENTER>
-		</TD>
-</TR>
+		</td>
+</tr>
 <?php
 while ($USER = mysql_fetch_array($res))
 {
@@ -140,53 +140,53 @@ while ($USER = mysql_fetch_array($res))
 	}
 	
 ?>
-<TR BGCOLOR="#EEEEEE">
-		<TD WIDTH="30%">
+<tr bgcolor="#EEEEEE">
+		<td width="30%">
 				<A HREF=editadminuser.php?id=<?php echo $USER['id']; ?>>
 				<?php echo $USER['username']; ?>
-				</A></TD>
-		<TD WIDTH="16%" ALIGN=CENTER>
+				</A></td>
+		<td width="16%" align="center">
 				<?php echo $CREATED; ?>
-				</TD>
-		<TD WIDTH="19%" ALIGN=CENTER>
+				</td>
+		<td width="19%" align="center">
 				<?php echo $LASTLOGIN; ?>
-				</TD>
-		<TD WIDTH="12%" ALIGN=CENTER>
+				</td>
+		<td width="12%" align="center">
 				<?php echo $STATUS[$USER['status']]; ?>
-				</TD>
-		<TD WIDTH="23%">
+				</td>
+		<td width="23%">
 				<CENTER>
-				<INPUT TYPE="checkbox" NAME="delete[<?php echo $USER['id']; ?>]" VALUE="<?php echo $USER['id']; ?>">
+				<input type="checkbox" name="delete[<?php echo $USER['id']; ?>]" value="<?php echo $USER['id']; ?>">
 				</CENTER>
-		</TD>
-</TR>
+		</td>
+</tr>
 <?php
 }
 ?>
-</TABLE>
+</table>
 <A HREF="./increments.php" CLASS="links">
-</A></TD>
-</TR>
-<TR>
-<TD WIDTH=169>
-<INPUT TYPE="hidden" NAME="action" VALUE="update">
-</TD>
-<TD WIDTH="365">&nbsp; </TD>
-</TR>
-<TR>
-<TD WIDTH=169></TD>
-<TD WIDTH="365"> </TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</FORM>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</A></td>
+</tr>
+<tr>
+<td width=169>
+<input type="hidden" name="action" value="update">
+</td>
+<td width="365">&nbsp; </td>
+</tr>
+<tr>
+<td width=169></td>
+<td width="365"> </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

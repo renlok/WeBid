@@ -14,7 +14,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 //-- Set offset and limit for pagination
@@ -24,12 +24,12 @@ $_SESSION['RETURN_LIST'] = 'listsuspendedauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = intval($_GET['offset']);
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <?php	require('../includes/styles.inc.php'); ?>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -45,12 +45,12 @@ $_SESSION['RETURN_LIST_OFFSET'] = intval($_GET['offset']);
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-<TR>
-  <TD ALIGN=CENTER class=title><?php print $MSG['5227']; ?></TD>
-</TR>
-<TR>
-  <TD><TABLE WIDTH=100% CELPADDING=0 CELLSPACING=1 BORDER=0 ALIGN="CENTER" CELLPADDING="3">
+<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+<tr>
+  <td align="center" class=title><?php print $MSG['5227']; ?></td>
+</tr>
+<tr>
+  <td><table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3">
 	  <?php
 	  $query = "select count(id) as auctions from " . $DBPrefix . "auctions WHERE suspended<>0 ";
 	  $result = mysql_query($query);
@@ -59,17 +59,17 @@ $_SESSION['RETURN_LIST_OFFSET'] = intval($_GET['offset']);
 	  	exit;
 	  }
 	  $num_auctions = mysql_result($result,0,"auctions");
-	  print "<TR BGCOLOR=#FFFFFF><TD COLSPAN=7><B>
-				$num_auctions ".$MSG['311']."</B></TD></TR>";
+	  print "<tr bgcolor=#FFFFFF><td COLSPAN=7><B>
+				$num_auctions ".$MSG['311']."</B></td></tr>";
 	?>
-	  <TR BGCOLOR="#FFCC00">
-		<TD ALIGN=CENTER> <B> <?php print $MSG['312']; ?> </B>  </TD>
-		<TD ALIGN=CENTER> <B> <?php print $MSG['313']; ?> </B>  </TD>
-		<TD ALIGN=CENTER> <B> <?php print $MSG['314']; ?> </B>  </TD>
-		<TD ALIGN=CENTER> <B> <?php print $MSG['315']; ?> </B>  </TD>
-		<TD ALIGN=LEFT> <B> <?php print $MSG['316']; ?> </B>  </TD>
-		<TD ALIGN=LEFT> <B> <?php print $MSG['317']; ?> </B>  </TD>
-		<TD ALIGN=LEFT> <B> <?php print $MSG['297']; ?> </B>  </TD>
+	  <tr bgcolor="#FFCC00">
+		<td align="center"> <B> <?php print $MSG['312']; ?> </B>  </td>
+		<td align="center"> <B> <?php print $MSG['313']; ?> </B>  </td>
+		<td align="center"> <B> <?php print $MSG['314']; ?> </B>  </td>
+		<td align="center"> <B> <?php print $MSG['315']; ?> </B>  </td>
+		<td ALIGN=LEFT> <B> <?php print $MSG['316']; ?> </B>  </td>
+		<td ALIGN=LEFT> <B> <?php print $MSG['317']; ?> </B>  </td>
+		<td ALIGN=LEFT> <B> <?php print $MSG['297']; ?> </B>  </td>
 	</tr>	
 		<?php
 		$query = "SELECT a.*,u.*,c.*,d.description as duration
@@ -111,36 +111,36 @@ $_SESSION['RETURN_LIST_OFFSET'] = intval($_GET['offset']);
 				$date = gmdate('d/m/Y', $tmp_date);
 			}
 			
-			print "<TR BGCOLOR=$bgcolor>
-					<TD>";
+			print "<tr bgcolor=$bgcolor>
+					<td>";
 			if ($suspended == 1) {
 				print "<FONT COLOR=red><B>$title</B>";
 			} else {
 				print $title;
 			}
 			print "
-						</TD>
-						<TD>
+						</td>
+						<td>
 						".$nick."
 						
-						</TD>
-						<TD>
+						</td>
+						<td>
 						".$date."
 						
-						</TD>
-						<TD>
+						</td>
+						<td>
 						$duration
 						
-						</TD>
-						<TD>
+						</td>
+						<td>
 						$category
 						
-						</TD>
-						<TD>
+						</td>
+						<td>
 						$description
 						
-						</TD>
-						<TD ALIGN=LEFT>
+						</td>
+						<td ALIGN=LEFT>
 						<A HREF=\"editauction.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['298']."</A><BR>
 						<A HREF=\"deleteauction.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['008']."</A><BR>
 						<A HREF=\"excludeauction.php?id=$id&offset=$offset\" class=\"nounderlined\">";
@@ -150,18 +150,18 @@ $_SESSION['RETURN_LIST_OFFSET'] = intval($_GET['offset']);
 				print $MSG['310'];
 			}
 			print "</A><BR>
-						</TD>
-						<TR>";
+						</td>
+						<tr>";
 			
 			$i++;
 		}
 		?>
-		</TABLE>
+		</table>
 		<?php
 		//-- Build navigation line
-		print "<TABLE WIDTH=100% BORDER=0 CELLPADDING=4 CELLSPACING=0 ALIGN=CENTER>
-			   <TR ALIGN=CENTER BGCOLOR=#FFFFFF>
-			   <TD COLSPAN=2>";
+		print "<table width=100% border=0 cellpadding=4 cellspacing=0 align="center">
+			   <tr align="center" bgcolor=#FFFFFF>
+			   <td COLSPAN=2>";
 		print "<SPAN CLASS=\"navigation\">";
 		$num_pages = ceil($num_auctions / $limit);
 		$i = 0;
@@ -176,13 +176,13 @@ $_SESSION['RETURN_LIST_OFFSET'] = intval($_GET['offset']);
 			}
 			$i++;
 		}
-		print "</SPAN></TR></TD></TABLE>";
+		print "</SPAN></tr></td></table>";
 	  ?>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

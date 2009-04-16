@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -55,10 +55,10 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -73,77 +73,77 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	<td align="center" valign="middle">&nbsp;</td>
   </tr>
 	<tr> 
-	<td align="center" valign="middle"><FORM NAME="faq" METHOD="post" ACTION="<?=basename($_SERVER['PHP_SELF'])?>">
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" ALIGN="CENTER" BGCOLOR="#0083D7">
-		<TR align=center>
-			<TD BGCOLOR=#ffffff>&nbsp;</TD>
-		</TR>
-		<TR>
-			<TD>
-				<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="4" ALIGN="CENTER">
-					<TR>
-						<TD COLSPAN="2" BGCOLOR="#0083D7" align=center class=title>
+	<td align="center" valign="middle"><form name="faq" METHOD="post" ACTION="<?=basename($_SERVER['PHP_SELF'])?>">
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" align="center" bgcolor="#0083D7">
+		<tr align=center>
+			<td bgcolor=#ffffff>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="4" align="center">
+					<tr>
+						<td colspan="2" bgcolor="#0083D7" align=center class=title>
 							<?=$MSG['5231']?>
-						</TD>
-					</TR>
-					<TR BGCOLOR="#FFFFFF">
-						<TD WIDTH="23%" CLASS=link HEIGHT="27" VALIGN="top">
-							<?=$MSG['5238']?> </TD>
-						<TD WIDTH="77%" CLASS=link HEIGHT="27">
-						<SELECT NAME="category">
+						</td>
+					</tr>
+					<tr bgcolor="#FFFFFF">
+						<td width="23%" CLASS=link height="27" VALIGN="top">
+							<?=$MSG['5238']?> </td>
+						<td width="77%" CLASS=link height="27">
+						<SELECT name="category">
 							<?php
 							while ($row = mysql_fetch_array($res_c))
 							{
 								$row[category]=stripslashes($row[category]);
-								print '<OPTION VALUE="'.$row['id'].'"';
+								print '<OPTION value="'.$row['id'].'"';
 								if ($_POST[category] == $row[category]) print " SELECTED";
 								print '>'.$row['category'].'</OPTION>'."\n";
 							}
 						?>
 						</SELECT>
-						</TD>
-					</TR>
-					<TR BGCOLOR="#FFFFFF">
-						<TD WIDTH="23%" CLASS=link HEIGHT="27" VALIGN="top">
-						<?=$MSG['5239']?></TD>
-						<TD WIDTH="77%" CLASS=link HEIGHT="27">
-							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif">&nbsp;<INPUT TYPE="text" NAME="question[<?=$system->SETTINGS['defaultlanguage']?>]" SIZE="35" MAXLENGTH="200">
+						</td>
+					</tr>
+					<tr bgcolor="#FFFFFF">
+						<td width="23%" CLASS=link height="27" VALIGN="top">
+						<?=$MSG['5239']?></td>
+						<td width="77%" CLASS=link height="27">
+							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif">&nbsp;<input type="text" name="question[<?=$system->SETTINGS['defaultlanguage']?>]" SIZE="35" MAXLENGTH="200">
 							<?php
 								reset($LANGUAGES);
 								while (list($k,$v) = each($LANGUAGES)){
-									if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=question[$k] SIZE=35 MAXLENGTH=200>";
+									if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<input type=text NAME=question[$k] SIZE=35 MAXLENGTH=200>";
 								}
 							?>
-						</TD>
-					</TR>
-					<TR BGCOLOR="#FFFFFF">
-						<TD WIDTH="23%" CLASS=link HEIGHT="27" VALIGN="top">
-						<?=$MSG['5240']?></TD>
-						<TD WIDTH="77%" CLASS=link HEIGHT="27">
-							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif"><br><TEXTAREA NAME="answer[<?=$system->SETTINGS['defaultlanguage']?>]" COLS="40" ROWS="15"></TEXTAREA>
+						</td>
+					</tr>
+					<tr bgcolor="#FFFFFF">
+						<td width="23%" CLASS=link height="27" VALIGN="top">
+						<?=$MSG['5240']?></td>
+						<td width="77%" CLASS=link height="27">
+							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif"><br><TEXTAREA name="answer[<?=$system->SETTINGS['defaultlanguage']?>]" COLS="40" ROWS="15"></TEXTAREA>
 							<?php
 								reset($LANGUAGES);
 								while (list($k,$v) = each($LANGUAGES)){
 									if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=answer[$k] COLS=40 ROWS=15></TEXTAREA>";
 								}
 							?>
-						</TD>
-					</TR>
-					<TR>
-						<TD WIDTH="23%" BGCOLOR="#FFFFFF">
-							<INPUT TYPE="hidden" NAME="action" VALUE="update">
-						</TD>
-						<TD WIDTH="77%" BGCOLOR="#FFFFFF">
-							<INPUT TYPE="submit" NAME="Submit" VALUE="INSERT FAQ">
-						</TD>
-					</TR>
-				</TABLE>
-			</TD>
-		</TR>
-	</TABLE>
-</FORM>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+						</td>
+					</tr>
+					<tr>
+						<td width="23%" bgcolor="#FFFFFF">
+							<input type="hidden" name="action" value="update">
+						</td>
+						<td width="77%" bgcolor="#FFFFFF">
+							<input type="submit" name="Submit" value="INSERT FAQ">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</form>
+</td>
+</tr>
+</table>
+</body>
+</html>

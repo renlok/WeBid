@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -29,29 +29,29 @@ if (mysql_num_rows($res) > 0)
 
 require("./header.php");
 ?>
-<link rel='stylesheet' type='text/css' href='style.css' />
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td>
 <CENTER>
 <BR>
-<FORM NAME=conf ACTION=checkupdates.php METHOD=POST>
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#296FAB">
-		<TR>
-			<TD ALIGN=CENTER class=title>
+<form NAME=conf ACTION=checkupdates.php METHOD=POST>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#296FAB">
+		<tr>
+			<td align="center" class=title>
 				<?php print $MSG['1030']; ?>
-			</TD>
-		</TR>
-		<TR>
-			<TD>
-				<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
-					<TR VALIGN="TOP">
-						<TD COLSPAN=3>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
+					<tr valign="top">
+						<td COLSPAN=3>
 							<?php echo $MSG['1031'];?>
-							</TD>
-					</TR>
-					<TR VALIGN="TOP">
-						<TD COLSPAN=3>
+							</td>
+					</tr>
+					<tr valign="top">
+						<td COLSPAN=3>
 							
 							<BR><BR>
 							USERS<BR>
@@ -200,13 +200,13 @@ require("./header.php");
 							}
 							
 	?>
-							</TD>
-					</TR>
-				</TABLE>
-			</TD>
-		</TR>
-	</TABLE>
-	</FORM>
+							</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</form>
 	<BR><BR>
 
 	
@@ -215,15 +215,15 @@ require("./header.php");
 	</CENTER>
 	<BR><BR>
 
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 
 <!-- Closing external table (header.php) -->
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 
 <?php require("./footer.php"); ?>
-</BODY>
-</HTML>
+</body>
+</html>

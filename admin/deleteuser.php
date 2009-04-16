@@ -203,9 +203,9 @@ if (!$_POST['action'] || ($_POST['action'] && $ERR)) {
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <STYLE TYPE="text/css">
 body {
 scrollbar-face-color: #aaaaaa;
@@ -216,7 +216,7 @@ scrollbar-darkshadow-color: #444444;
 scrollbar-track-color: #cccccc;
 scrollbar-arrow-color: #ffffff;
 }</STYLE>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -319,14 +319,14 @@ scrollbar-arrow-color: #ffffff;
 							<input type="hidden" name="id" value="<?php echo $id; ?>">
 							<input type="hidden" name="offset" value="<?php echo $_GET['offset']; ?>">
 							<input type="hidden" name="action" value="Delete">
-							<input TYPE="submit" NAME="act" value="<?php print $MSG['008']; ?>">
+							<input TYPE="submit" name="act" value="<?php print $MSG['008']; ?>">
 						  </form></td>
 					</table>
 				  </table></td>
 		</tr>
 	  </table>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -67,10 +67,10 @@ if (mysql_num_rows($res) > 0)
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -86,19 +86,19 @@ if (mysql_num_rows($res) > 0)
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-	<TR>
-		<TD ALIGN=CENTER class=title>
+<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+	<tr>
+		<td align="center" class=title>
 			<?php print $MSG['2_0004']; ?>
-		</TD>
-	</TR>
-	<TR>
-		<TD>
+		</td>
+	</tr>
+	<tr>
+		<td>
 
-	  <TABLE WIDTH=100% CELPADDING=0 CELLSPACING=1 BORDER=0 ALIGN="CENTER" CELLPADDING="3">
-		<TR BGCOLOR=#FFFFFF ALIGN=CENTER>
-		  <TD colspan=7>
-		  <FORM NAME=banform ACTION="" METHOD=POST>
+	  <table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3">
+		<tr bgcolor=#FFFFFF align="center">
+		  <td colspan=7>
+		  <form NAME=banform ACTION="" METHOD=POST>
 			  <table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#FFFFFF">
 				<tr>
 				  <td bgcolor="#ffffff">
@@ -107,7 +107,7 @@ if (mysql_num_rows($res) > 0)
 					  <?php echo $USER['nick']; ?>
 					  (<A HREF=<?php echo $USER['email']; ?>><?php echo $USER['email']; ?></A>)
 					</td>
-					<TD ALIGN="right">
+					<td ALIGN="right">
 					<?php
 						$lastlogin = strtotime($USER['lastlogin']);
 					?>
@@ -229,18 +229,18 @@ if (mysql_num_rows($res) > 0)
 			  <p>&nbsp;</p>
 			  <p>
 				<input type="submit" name="Submit" value="<?php echo $MSG['2_0015']; ?>">
-				<INPUT TYPE=hidden NAME=action VALUE=update>
-				<INPUT TYPE=hidden NAME=id VALUE=<?php echo $id; ?>>
+				<input type=hidden NAME=action VALUE=update>
+				<input type=hidden NAME=id VALUE=<?php echo $id; ?>>
 			  </p>
-			</FORM>
-		  </TD>
-		</TR>
+			</form>
+		  </td>
+		</tr>
 
-	  </TABLE>
-</TD></TR></TABLE>
+	  </table>
+</td></tr></table>
 
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -42,10 +42,10 @@ if (isset($_POST['action']))
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -63,45 +63,45 @@ if (isset($_POST['action']))
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-		<FORM NAME=addnew ACTION="" METHOD="POST">
-		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-		<TR>
-		<TD>
-			<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0 BORDER=0>
-			<TR>
-	 		<TD ALIGN=CENTER COLSPAN=2 class=title>
+		<form NAME=addnew ACTION="" METHOD="POST">
+		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+		<tr>
+		<td>
+			<table width=100% cellpadding=4 cellspacing=0 border=0>
+			<tr>
+	 		<td align="center" COLSPAN=2 class=title>
 				<B><?php print $MSG['518']; ?></B>
 				<BR>
-	 		</TD>
-			</TR>
+	 		</td>
+			</tr>
 			<?php
 			if ($ERR || $updated){
-			print "<TR><TD>&nbsp;</TD><TD WIDTH=486>";
+			print "<tr><td>&nbsp;</td><td width=486>";
 			if ($$ERR) print $$ERR;
 			if ($updated) print "Auction data updated";
-			print "</TD></TR>";
+			print "</td></tr>";
 			}
 			?>
-			<TR BGCOLOR=#FFFFFF valign=top>
-	  		<TD WIDTH="204" VALIGN="top" ALIGN="right">
+			<tr bgcolor=#FFFFFF valign=top>
+	  		<td width="204" VALIGN="top" ALIGN="right">
 			<?php print $MSG['519'].' *'; ?>
-	  		</TD>
-	  		<TD WIDTH="486">
-			<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<INPUT TYPE=text NAME=title[<?php echo $system->SETTINGS['defaultlanguage']; ?>] SIZE=40 MAXLENGTH=255 VALUE="<?php print $_POST['title']; ?>">
+	  		</td>
+	  		<td width="486">
+			<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<input type=text NAME=title[<?php echo $system->SETTINGS['defaultlanguage']; ?>] SIZE=40 MAXLENGTH=255 value="<?php print $_POST['title']; ?>">
 			<?php
 				reset($LANGUAGES);
 				while (list($k,$v) = each($LANGUAGES)){
-					if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=>";
+					if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<input type=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=>";
 				}
 			?>
-	  		</TD>
-			</TR>
+	  		</td>
+			</tr>
 
-			<TR BGCOLOR=#FFFFFF>
-	  		<TD WIDTH="204" VALIGN="top" ALIGN="right">
+			<tr bgcolor=#FFFFFF>
+	  		<td width="204" VALIGN="top" ALIGN="right">
 			<?php print $MSG['520'].' *'; ?>
-	  		</TD>
-	  		<TD WIDTH="486">
+	  		</td>
+	  		<td width="486">
 			<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif"><br>
 			<TEXTAREA NAME=content[<?php echo $system->SETTINGS['defaultlanguage']; ?>] COLS=45 ROWS=20></TEXTAREA>
 			<?php
@@ -110,47 +110,47 @@ if (isset($_POST['action']))
 					if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=content[$k] COLS=45 ROWS=20></TEXTAREA>";
 				}
 			?>
-	  		</TD>
-			</TR>
+	  		</td>
+			</tr>
 
-			<TR BGCOLOR=#FFFFFF>
-	  		<TD WIDTH="204" VALIGN="top" ALIGN="right">
+			<tr bgcolor=#FFFFFF>
+	  		<td width="204" VALIGN="top" ALIGN="right">
 			<?php print $MSG['521'].' *'; ?>
-	  		</TD>
-	  		<TD WIDTH="486">
-			<INPUT TYPE=radio NAME=suspended value=0
+	  		</td>
+	  		<td width="486">
+			<input type=radio NAME=suspended value=0
 			<?php
 			if ($_POST['suspended'] == 0) print " CHECKED";
 			?>
 			>
 			<?php print $MSG['030']; ?>
-			<INPUT TYPE=radio NAME=suspended value=1
+			<input type=radio NAME=suspended value=1
 			<?php
 			if ($_POST['suspended'] == 1) print " CHECKED";
 			?>
 			> <?php print $MSG['029']; ?>
-	  		</TD>
-			</TR>
+	  		</td>
+			</tr>
 
-			<TR BGCOLOR=#FFFFFF>
-	  		<TD WIDTH="204" VALIGN="top" ALIGN="right">&nbsp;
+			<tr bgcolor=#FFFFFF>
+	  		<td width="204" VALIGN="top" ALIGN="right">&nbsp;
 		
-			  </TD>
-	  		<TD WIDTH="486">
-			<INPUT TYPE="submit" VALUE="<?php echo $MSG['518']; ?>">
-	  		</TD>
-			</TR>
-		</TABLE>
-		<INPUT type="hidden" NAME="id" VALUE="<?php echo $_GET['id']; ?>">
-		<INPUT type="hidden" NAME="offset" VALUE="<?php echo $_GET['offset']; ?>">
-		<INPUT type="hidden" NAME="action" VALUE="addnew">
+			  </td>
+	  		<td width="486">
+			<input type="submit" value="<?php echo $MSG['518']; ?>">
+	  		</td>
+			</tr>
+		</table>
+		<INPUT type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+		<INPUT type="hidden" name="offset" value="<?php echo $_GET['offset']; ?>">
+		<INPUT type="hidden" name="action" value="addnew">
 
-		</TD>
-		</TR>
-		</TABLE>	
-		</FORM>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+		</td>
+		</tr>
+		</table>	
+		</form>
+</td>
+</tr>
+</table>
+</body>
+</html>

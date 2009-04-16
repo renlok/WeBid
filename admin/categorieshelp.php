@@ -13,23 +13,23 @@
  ***************************************************************************/
 ?>
 
-<HTML>
-<HEAD>
+<html>
+<head>
 <TITLE>Untitled Document</TITLE>
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <STYLE type="text/css">
 <!--
 .bluelink {  font: 10pt Verdana, Arial, Helvetica, sans-serif; color: 000066; text-decoration: none}
 -->
-</STYLE></HEAD>
+</STYLE></head>
 
-<BODY bgcolor="#FFFFFF">
+<body bgcolor="#FFFFFF">
 <CENTER>
   <P><B><FONT face="Verdana, Arial, Helvetica, sans-serif" size="4" color="#000066">Categories
 	table</FONT></B> </P>
-  <TABLE width="352" border="0" cellspacing="0" cellpadding="0">
-	<TR>
-	  <TD>
+  <table width="352" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	  <td>
 		<P><FONT face="Verdana, Arial, Helvetica, sans-serif" size="2">To edit
 		  the categories table you have to navigate the categories hierarchy.<BR>
 		  Use the <IMG src="../images/plus.gif" width="11" height="11"> symbol
@@ -47,9 +47,9 @@
 		<P align="center"><A href="javascript:window.close()" class="bluelink">Close</A></P>
 		<CENTER>
 		</CENTER>
-		</TD>
-	</TR>
-  </TABLE>
+		</td>
+	</tr>
+  </table>
   </CENTER>
-</BODY>
-</HTML>
+</body>
+</html>

@@ -61,11 +61,11 @@ if (mysql_num_rows($res) > 0)
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
-<BODY>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
@@ -81,115 +81,115 @@ if (mysql_num_rows($res) > 0)
 	<tr> 
 	<td align="center" valign="middle">
 
-<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-	<TR>
-		<TD ALIGN=CENTER class=title>
+<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+	<tr>
+		<td align="center" class=title>
 			<?php print $MSG['30_0176']; ?>
-		</TD>
-	</TR>
-	<TR>
-		<TD>
+		</td>
+	</tr>
+	<tr>
+		<td>
 
-	<TABLE WIDTH=100% CELPADDING=4 CELLSPACING=0 BORDER=0 ALIGN="CENTER" CELLPADDING="3">
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left><B><?php echo $MSG['113']; ?>: </B> <?php echo intval($_GET['id']); ?></TD>
-	  </TR>
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left><B><?php echo $MSG['197']; ?>: </B> <?php echo stripslashes($AUCTION['title']); ?></TD>
-	  </TR>
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left>
+	<table width=100% CELPADDING=4 cellspacing=0 border=0 align="center" cellpadding="3">
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left><B><?php echo $MSG['113']; ?>: </B> <?php echo intval($_GET['id']); ?></td>
+	  </tr>
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left><B><?php echo $MSG['197']; ?>: </B> <?php echo stripslashes($AUCTION['title']); ?></td>
+	  </tr>
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left>
 			<? $SELLER = @mysql_fetch_array(@mysql_query("SELECT name,nick FROM " . $DBPrefix . "users WHERE id=".$AUCTION['user']));?>
-			<B><?php echo $MSG['125']; ?>: </B> <?php echo stripslashes($SELLER['nick'])." (".$SELLER['name'].")";?></TD>
-	  </TR>
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left><B><?php echo $MSG['127']; ?>: </B> <?php echo $system->print_money($AUCTION['minimum_bid']); ?></TD>
-	  </TR>
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left><B><?php echo $MSG['111']; ?>: </B> <?php echo FormatDate($AUCTION['starts']); ?></TD>
-	  </TR>
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left><B><?php echo $MSG['30_0177']; ?>: </B> <?php echo FormatDate($AUCTION['ends']); ?></TD>
-	  </TR>
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left><B><?php echo $MSG['257']; ?>: </B> <?php echo $auction_types[$AUCTION['auction_type']]; ?></TD>
-	  </TR>
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left>&nbsp;</TD>
-	  </TR>
-	  <TR BGCOLOR="#FFCC00">
-		<TD ALIGN=left><B><?php echo $MSG['453']; ?></B></TD>
-	  </TR>
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left>
+			<B><?php echo $MSG['125']; ?>: </B> <?php echo stripslashes($SELLER['nick'])." (".$SELLER['name'].")";?></td>
+	  </tr>
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left><B><?php echo $MSG['127']; ?>: </B> <?php echo $system->print_money($AUCTION['minimum_bid']); ?></td>
+	  </tr>
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left><B><?php echo $MSG['111']; ?>: </B> <?php echo FormatDate($AUCTION['starts']); ?></td>
+	  </tr>
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left><B><?php echo $MSG['30_0177']; ?>: </B> <?php echo FormatDate($AUCTION['ends']); ?></td>
+	  </tr>
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left><B><?php echo $MSG['257']; ?>: </B> <?php echo $auction_types[$AUCTION['auction_type']]; ?></td>
+	  </tr>
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left>&nbsp;</td>
+	  </tr>
+	  <tr bgcolor="#FFCC00">
+		<td ALIGN=left><B><?php echo $MSG['453']; ?></B></td>
+	  </tr>
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left>
 		<?php
 		if (is_array($WINNERS)){
 		?>
-				<TABLE WIDTH=65% ALIGN=CENTER CELLPADDING=4 CELLSPACING=1 BORDER=0 BGCOLOR=#FFFFFF>
-				<TR BGCOLOR=#DDDDDD align=center>
-					<TD><B><?php echo $MSG['176']; ?></B></TD>
-					<TD><B><?php echo $MSG['30_0179']; ?></B></TD>
-					<TD><B><?php echo $MSG['284']; ?></B></TD>
-				</TR>
+				<table width=65% align="center" cellpadding=4 cellspacing=1 border=0 bgcolor=#FFFFFF>
+				<tr bgcolor=#DDDDDD align=center>
+					<td><B><?php echo $MSG['176']; ?></B></td>
+					<td><B><?php echo $MSG['30_0179']; ?></B></td>
+					<td><B><?php echo $MSG['284']; ?></B></td>
+				</tr>
 			<?php
 				while (list($k,$v) = each($WINNERS)){
 					$qty = @mysql_result(@mysql_query("SELECT quantity FROM " . $DBPrefix . "bids WHERE bidder=".$v['winner']." AND auction=".intval($_GET['id'])),0,"quantity");
 					$BIDDER = @mysql_fetch_array(@mysql_query("SELECT name,nick FROM " . $DBPrefix . "users WHERE id=".$v['winner']));
 			?>
-				<TR>
-					<TD><?php echo stripslashes($BIDDER['nick'])." (".stripslashes($BIDDER['name']).")"; ?></TD>
-					<TD align=right><?php echo $system->print_money($v['bid']); ?>&nbsp;</TD>
-					<TD align=center><?php if ($qty==0) print "--"; else print $qty; ?></TD>
-				</TR>
+				<tr>
+					<td><?php echo stripslashes($BIDDER['nick'])." (".stripslashes($BIDDER['name']).")"; ?></td>
+					<td align=right><?php echo $system->print_money($v['bid']); ?>&nbsp;</td>
+					<td align=center><?php if ($qty==0) print "--"; else print $qty; ?></td>
+				</tr>
 			<?php
 				}
 			?>
-				</TABLE>
+				</table>
 			<?php
 		}else{
 			print $MSG['30_0178'];
 		}
 		?>
-		</TD>
-	  </TR>
-	  <TR BGCOLOR="#FFCC00">
-		<TD ALIGN=left><B><?php echo $MSG['30_0180']; ?></B></TD>
-	  </TR>
-	  <TR BGCOLOR="#FFFFFF">
-		<TD ALIGN=left>
+		</td>
+	  </tr>
+	  <tr bgcolor="#FFCC00">
+		<td ALIGN=left><B><?php echo $MSG['30_0180']; ?></B></td>
+	  </tr>
+	  <tr bgcolor="#FFFFFF">
+		<td ALIGN=left>
 		<?php
 		if (is_array($BIDS)){
 		?>
-				<TABLE WIDTH=65% ALIGN=CENTER CELLPADDING=4 CELLSPACING=1 BORDER=0 BGCOLOR=#FFFFFF>
-				<TR BGCOLOR=#DDDDDD align=center>
-					<TD><B><?php echo $MSG['176']; ?></B></TD>
-					<TD><B><?php echo $MSG['30_0179']; ?></B></TD>
-					<TD><B><?php echo $MSG['284']; ?></B></TD>
-				</TR>
+				<table width=65% align="center" cellpadding=4 cellspacing=1 border=0 bgcolor=#FFFFFF>
+				<tr bgcolor=#DDDDDD align=center>
+					<td><B><?php echo $MSG['176']; ?></B></td>
+					<td><B><?php echo $MSG['30_0179']; ?></B></td>
+					<td><B><?php echo $MSG['284']; ?></B></td>
+				</tr>
 			<?php
 				while (list($k,$v) = each($BIDS)){
 					$qty = @mysql_result(@mysql_query("SELECT quantity FROM " . $DBPrefix . "bids WHERE bidder=".$v['bidder']." AND auction=".intval($_GET['id'])),0,"quantity");
 					$BIDDER = @mysql_fetch_array(@mysql_query("SELECT name,nick FROM " . $DBPrefix . "users WHERE id=".$v['bidder']));
 			?>
-				<TR>
-					<TD><?php echo stripslashes($BIDDER['nick'])." (".stripslashes($BIDDER['name']).")"; ?></TD>
-					<TD align=right><?php echo $system->print_money($v['bid']); ?>&nbsp;</TD>
-					<TD align=center><?php if ($qty==0) print "--"; else print $qty;?></TD>
-				</TR>
+				<tr>
+					<td><?php echo stripslashes($BIDDER['nick'])." (".stripslashes($BIDDER['name']).")"; ?></td>
+					<td align=right><?php echo $system->print_money($v['bid']); ?>&nbsp;</td>
+					<td align=center><?php if ($qty==0) print "--"; else print $qty;?></td>
+				</tr>
 			<?php
 				}
 			?>
-				</TABLE>
+				</table>
 			<?php
 		}else{
 			print $MSG['30_0178'];
 		}
 		?>
-		</TD>
-	  </TR>
+		</td>
+	  </tr>
 	  
-	</TABLE>
-</TR>
-</TABLE>
-</BODY>
-<HTML>
+	</table>
+</tr>
+</table>
+</body>
+<html>

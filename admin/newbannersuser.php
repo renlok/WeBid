@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -47,10 +47,10 @@ if ($_POST[action] == "insert" && basename($_SERVER['HTTP_REFERER']) == basename
 
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -65,75 +65,75 @@ if ($_POST[action] == "insert" && basename($_SERVER['HTTP_REFERER']) == basename
 	<td align="center" valign="middle">
 	<BR>
 	<form name="conf" action="" method="post">
-		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-			<TR>
-				<TD ALIGN=CENTER><B>
+		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+			<tr>
+				<td align="center"><B>
 					<?php print $MSG['_0026']; ?>
-					</B></TD>
-			</TR>
-			<TR>
-				<TD>
+					</B></td>
+			</tr>
+			<tr>
+				<td>
 
-				<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+				<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
 				  <?php
 				  if (!empty($ERR))
 				  {
 						?>
-				  <TR>
-					<TD COLSPAN="2" ALIGN=CENTER BGCOLOR=yellow> <B>
+				  <tr>
+					<td colspan="2" align="center" bgcolor=yellow> <B>
 					  <?php echo $ERR; ?>
-					   </B></TD>
-				  </TR>
+					   </B></td>
+				  </tr>
 				  <?php
 				  }
 						?>
-				  <TR VALIGN="TOP">
-					<TD COLSPAN="2" ALIGN=CENTER>
+				  <tr valign="top">
+					<td colspan="2" align="center">
 					  <A HREF=managebanners.php><?php echo $MSG['270']; ?></A>
-					  </TD>
-				  </TR>
-				  <TR VALIGN="TOP">
-					<TD WIDTH="101" HEIGHT="22">
+					  </td>
+				  </tr>
+				  <tr valign="top">
+					<td width="101" height="22">
 					  <?php echo $MSG['302']; ?>
-					  </TD>
-					<TD HEIGHT="22" WIDTH="531">
-					  <INPUT TYPE=text NAME=name SIZE=40 VALUE=<?php echo $_POST[name]; ?>>
-					  </TD>
-				  </TR>
-				  <TR VALIGN="TOP">
-					<TD WIDTH="101" HEIGHT="22">
+					  </td>
+					<td height="22" width="531">
+					  <input type=text NAME=name SIZE=40 VALUE=<?php echo $_POST[name]; ?>>
+					  </td>
+				  </tr>
+				  <tr valign="top">
+					<td width="101" height="22">
 					  <?php echo $MSG['_0022']; ?>
-					  </TD>
-					<TD HEIGHT="22" WIDTH="531">
-					  <INPUT TYPE=text NAME=company SIZE=40 VALUE=<?php echo $_POST[company]; ?>>
-					  </TD>
-				  </TR>
-				  <TR VALIGN="TOP">
-					<TD WIDTH="101" HEIGHT="22">
+					  </td>
+					<td height="22" width="531">
+					  <input type=text NAME=company SIZE=40 VALUE=<?php echo $_POST[company]; ?>>
+					  </td>
+				  </tr>
+				  <tr valign="top">
+					<td width="101" height="22">
 					  <?php echo $MSG['107']; ?>
-					  </TD>
-					<TD HEIGHT="22" WIDTH="531">
-					  <INPUT TYPE=text NAME=email SIZE=40 VALUE=<?php echo $_POST[email]; ?>>
-					  </TD>
-				  </TR>
-				  <TR>
-					<TD WIDTH="101">&nbsp; </TD>
-					<TD WIDTH="531">
-					  <INPUT TYPE="hidden" NAME="action" VALUE="insert">
-					  <INPUT TYPE="submit" NAME="submit" VALUE="<?php echo $MSG['569']; ?>">
-					</TD>
-				  </TR>
-				  <TR>
-					<TD COLSPAN="2"> </TD>
-				  </TR>
-				</TABLE>
-				</TD>
-			</TR>
-		</TABLE>
-		</FORM>
+					  </td>
+					<td height="22" width="531">
+					  <input type=text NAME=email SIZE=40 VALUE=<?php echo $_POST[email]; ?>>
+					  </td>
+				  </tr>
+				  <tr>
+					<td width="101">&nbsp; </td>
+					<td width="531">
+					  <input type="hidden" name="action" value="insert">
+					  <input type="submit" name="submit" value="<?php echo $MSG['569']; ?>">
+					</td>
+				  </tr>
+				  <tr>
+					<td colspan="2"> </td>
+				  </tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</form>
 	<BR>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</body>
+</html>

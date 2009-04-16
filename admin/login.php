@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 
 if ($_POST['act'] == "insert" && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF'])) {
@@ -37,65 +37,65 @@ while ($row = mysql_fetch_row($result)) {
 	$id = $row[0] + 1;
 }
 ?>
-<HTML>
-<HEAD>
+<html>
+<head>
 <link rel="stylesheet" type="text/css" href="style.css" />
-</HEAD>
-<BODY>
+</head>
+<body>
 <?php
 if ($id==1) {
 	$id=0;
 ?>
-<TABLE BORDER=0 WIDTH=650 CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF" ALIGN="CENTER">
-	<TR>
-		<TD><CENTER><BR><BR>
-			<FORM NAME=login ACTION=login.php METHOD=POST>
-			<TABLE WIDTH="410" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#336699">
-			<TR>
-				<TD>
-					<TABLE WIDTH=100% CELLPADDING=3 ALIGN="CENTER" CELLSPACING="0" BORDER="0" BGCOLOR="#FFFFFF">
-					<TR BGCOLOR="#336699">
-						<TD COLSPAN="2" ALIGN=CENTER>
+<table border=0 width=650 cellpadding=0 cellspacing=0 bgcolor="#FFFFFF" align="center">
+	<tr>
+		<td><CENTER><BR><BR>
+			<form NAME=login ACTION=login.php METHOD=POST>
+			<table width="410" border="0" cellspacing="0" cellpadding="1" bgcolor="#336699">
+			<tr>
+				<td>
+					<table width=100% cellpadding=3 align="center" cellspacing="0" border="0" bgcolor="#FFFFFF">
+					<tr bgcolor="#336699">
+						<td colspan="2" align="center">
 							<FONT COLOR=white><B>:: Please create your username and password ::</B></FONT>
-						</TD>
-					</TR>
-					<TR>
-						<TD></TD>
-						<TD> <FONT COLOR=red>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td> <FONT COLOR=red>
 						<?php print $ERR; ?>
-						</TD>
-					</TR>
-					<TR>
-						<TD ALIGN=right> 
+						</td>
+					</tr>
+					<tr>
+						<td ALIGN=right> 
 							<?php print $MSG['003']; ?>
-						</TD>
-						<TD>
-							<INPUT TYPE=TEXT NAME=username SIZE=20 >
-						</TD>
-					</TR>
-					<TR>
-						<TD ALIGN=right> 
+						</td>
+						<td>
+							<input type=TEXT NAME=username SIZE=20 >
+						</td>
+					</tr>
+					<tr>
+						<td ALIGN=right> 
 							<?php print $MSG['004']; ?>
-						</TD>
-						<TD>
-							<INPUT TYPE=password NAME=password SIZE=20 >
-						</TD>
-					</TR>
-					<TR>
-						<TD></TD>
-						<TD>
-							<INPUT TYPE="submit" NAME="act"ion VALUE="insert">
-						</TD>
-					</TR>
-					</TABLE>
-				</TD>
-			</TR>
-			</TABLE>
-			</FORM>
+						</td>
+						<td>
+							<input type=password NAME=password SIZE=20 >
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<input type="submit" name="act"ion value="insert">
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			</table>
+			</form>
 			</CENTER>
-		</TD>
-	</TR>
-	</TABLE>
+		</td>
+	</tr>
+	</table>
 <?php
 
 } else {
@@ -129,61 +129,61 @@ if ($id==1) {
 	}
 	
 ?>
-<TABLE BORDER=0 WIDTH=650 CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF" ALIGN="CENTER">
-<TR>
-	<TD>
+<table border=0 width=650 cellpadding=0 cellspacing=0 bgcolor="#FFFFFF" align="center">
+<tr>
+	<td>
 		<CENTER>
 		<BR><BR>
 <?php if (!$act || ($act && $ERR)) { ?>
-		<FORM NAME=login ACTION=login.php METHOD=POST>
-		<TABLE WIDTH="415" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#336699">
-		<TR>
-			<TD>
-				<TABLE WIDTH=100% CELLPADDING=4 ALIGN="CENTER" CELLSPACING="0" BORDER="0" BGCOLOR="#FFFFFF">
-				<TR BGCOLOR="#33CC33">
-					<TD COLSPAN="2" ALIGN=CENTER>
+		<form NAME=login ACTION=login.php METHOD=POST>
+		<table width="415" border="0" cellspacing="0" cellpadding="1" bgcolor="#336699">
+		<tr>
+			<td>
+				<table width=100% cellpadding=4 align="center" cellspacing="0" border="0" bgcolor="#FFFFFF">
+				<tr bgcolor="#33CC33">
+					<td colspan="2" align="center">
 						<B>:: PLEASE LOG IN WITH THE USERNAME & PASSWORD YOU CREATED ::</B>
-					</TD>
-				</TR>
-				<TR>
-					<TD></TD>
-					<TD>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
 						<FONT COLOR=red><?php print $ERR; ?>
-					</TD>
-				</TR>
-				<TR>
-					<TD ALIGN=right> 
+					</td>
+				</tr>
+				<tr>
+					<td ALIGN=right> 
 						<?php print $MSG['003']; ?>
-					</TD>
-					<TD>
-						<INPUT TYPE=TEXT NAME=username SIZE=20 >
-					</TD>
-				</TR>
-				<TR>
-					<TD ALIGN=right>
+					</td>
+					<td>
+						<input type=TEXT NAME=username SIZE=20 >
+					</td>
+				</tr>
+				<tr>
+					<td ALIGN=right>
 						<?php print $MSG['004']; ?>
-					</TD>
-					<TD>
-						<INPUT TYPE=password NAME=password SIZE=20 >
-					</TD>
-				</TR>
-				<TR>
-					<TD></TD>
-					<TD>
-						<INPUT TYPE="submit" NAME="action" VALUE="login">
-					</TD>
-				</TR>
-				</TABLE>
-			</TD>
-		</TR>
-		</TABLE>
-		</FORM>
+					</td>
+					<td>
+						<input type=password NAME=password SIZE=20 >
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<input type="submit" name="action" value="login">
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+		</form>
 <?php  }  ?>
 		
 		</CENTER>
-	</TD>
-</TR>
-</TABLE>
+	</td>
+</tr>
+</table>
 <?php  } 
 require("./footer.php");  
 ?>

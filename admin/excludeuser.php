@@ -86,9 +86,9 @@ if (!isset($_POST['action']) && isset($_GET['id'])) {
 	}
 }
 ?>
-<HTML> 
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html> 
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <STYLE TYPE="text/css">
 body {
 scrollbar-face-color: #aaaaaa;
@@ -99,7 +99,7 @@ scrollbar-darkshadow-color: #444444;
 scrollbar-track-color: #cccccc;
 scrollbar-arrow-color: #ffffff;
 }</STYLE>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -134,10 +134,10 @@ scrollbar-arrow-color: #ffffff;
 					
 					  <?php
 					  if ($updated){
-						  print "<TR><TD></TD><TD WIDTH=486>";
+						  print "<tr><td></td><td width=486>";
 						  if ($updated) print "Users data updated";
-						  print "</TD>
-					</TR>";
+						  print "</td>
+					</tr>";
 					  }
 ?>
 					  <tr>
@@ -222,7 +222,7 @@ scrollbar-arrow-color: #ffffff;
 							<input type="hidden" name="action" value="Delete">
 							<input type="hidden" name="idhidden" value="<?php echo $_GET['id']; ?>">
 							<input type="hidden" name="mode" value="<?php print $mode; ?>">
-							<input TYPE="submit" NAME="act" value="<?php print $MSG['030']; ?>">
+							<input TYPE="submit" name="act" value="<?php print $MSG['030']; ?>">
 						  </form></td>
 					  </tr>
 					</table>
@@ -231,8 +231,8 @@ scrollbar-arrow-color: #ffffff;
 		</td>
 		</tr>
 	  </table>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -168,9 +168,9 @@ if (!$action || ($action && $updated)){
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <STYLE TYPE="text/css">
 body {
 scrollbar-face-color: #aaaaaa;
@@ -181,7 +181,7 @@ scrollbar-darkshadow-color: #444444;
 scrollbar-track-color: #cccccc;
 scrollbar-arrow-color: #ffffff;
 }</STYLE>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -196,9 +196,9 @@ scrollbar-arrow-color: #ffffff;
 	<td align="center" valign="middle">&nbsp;</td>
   </tr>
   <tr>
-	<td align="center" valign="middle"><TABLE WIDTH="95%" BORDER="0" CELLSPACING="1" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-		<TR>
-		  <TD ALIGN=CENTER class=title>
+	<td align="center" valign="middle"><table width="95%" border="0" cellspacing="1" cellpadding="1" bgcolor="#0083D7" align="center">
+		<tr>
+		  <td align="center" class=title>
 			<?php
 			if ($suspended > 0) {
 				print $MSG['322'];
@@ -206,77 +206,77 @@ scrollbar-arrow-color: #ffffff;
 				print $MSG['321'];
 			}
 			?>
-			</B></TD>
-		</TR>
-		<TR>
-		  <TD BGCOLOR="#FFFFFF">
-		  <TABLE WIDTH=100% CELPADDING=4 CELLSPACING=0 BORDER=0 BGCOLOR="#FFFFFF">
+			</B></td>
+		</tr>
+		<tr>
+		  <td bgcolor="#FFFFFF">
+		  <table width=100% CELPADDING=4 cellspacing=0 border=0 bgcolor="#FFFFFF">
 					  <?php
 					  if ($updated) {
 					  ?>
-					  <TR>
-						<TD></TD>
-						<TD WIDTH=486>Auctions data updated</TD>
-					  </TR>
+					  <tr>
+						<td></td>
+						<td width=486>Auctions data updated</td>
+					  </tr>
 					  <?php
 					  }
 					  ?>
-					  <TR>
-						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['312']; ?> </TD>
-						<TD WIDTH="486"><?print $title; ?></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['313']; ?> </TD>
-						<TD WIDTH="486"><?php print $nick; ?></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['314']; ?> </TD>
-						<TD WIDTH="486"><?php print $date; ?></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204"  VALIGN="top" ALIGN="right"><?php print $MSG['315']; ?> </TD>
-						<TD WIDTH="486"><?php print $duration; ?></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204"  VALIGN="top" ALIGN="right"><?php print $MSG['316']; ?> </TD>
-						<TD WIDTH="486"><?php print $category; ?></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204" VALIGN="top" ALIGN="right">
-						  <?php print $MSG['317']; ?> </TD>
-						<TD WIDTH="486">
-						  <?php print $description; ?> </TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['318']; ?> </TD>
-						<TD WIDTH="486"><?php print $current_bid; ?></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['327']; ?> </TD>
-						<TD WIDTH="486"><?php print $min_bid; ?></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['319']; ?> </TD>
-						<TD WIDTH="486"><?php print $quantity; ?></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['320']; ?> </TD>
-						<TD WIDTH="486"><?php print $reserve_price; ?></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204" VALIGN="top" ALIGN="right"><?php print $MSG['300']; ?> </TD>
-						<TD WIDTH="486">
+					  <tr>
+						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['312']; ?> </td>
+						<td width="486"><?print $title; ?></td>
+					  </tr>
+					  <tr>
+						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['313']; ?> </td>
+						<td width="486"><?php print $nick; ?></td>
+					  </tr>
+					  <tr>
+						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['314']; ?> </td>
+						<td width="486"><?php print $date; ?></td>
+					  </tr>
+					  <tr>
+						<td width="204"  VALIGN="top" ALIGN="right"><?php print $MSG['315']; ?> </td>
+						<td width="486"><?php print $duration; ?></td>
+					  </tr>
+					  <tr>
+						<td width="204"  VALIGN="top" ALIGN="right"><?php print $MSG['316']; ?> </td>
+						<td width="486"><?php print $category; ?></td>
+					  </tr>
+					  <tr>
+						<td width="204" VALIGN="top" ALIGN="right">
+						  <?php print $MSG['317']; ?> </td>
+						<td width="486">
+						  <?php print $description; ?> </td>
+					  </tr>
+					  <tr>
+						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['318']; ?> </td>
+						<td width="486"><?php print $current_bid; ?></td>
+					  </tr>
+					  <tr>
+						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['327']; ?> </td>
+						<td width="486"><?php print $min_bid; ?></td>
+					  </tr>
+					  <tr>
+						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['319']; ?> </td>
+						<td width="486"><?php print $quantity; ?></td>
+					  </tr>
+					  <tr>
+						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['320']; ?> </td>
+						<td width="486"><?php print $reserve_price; ?></td>
+					  </tr>
+					  <tr>
+						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['300']; ?> </td>
+						<td width="486">
 						<?php
 						  if ($suspended == 0)
 						  print $MSG['029'];
 						  else
 						  print $MSG['030'];						 
 						?>
-						</TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204">&nbsp;</TD>
-						<TD WIDTH="486">
+						</td>
+					  </tr>
+					  <tr>
+						<td width="204">&nbsp;</td>
+						<td width="486">
 						  <?php
 						  if ($suspended > 0) {
 						  	print $MSG['324'];
@@ -286,26 +286,26 @@ scrollbar-arrow-color: #ffffff;
 						  	$mode = "suspend";
 						  }
 										?>
-						</TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH="204">&nbsp;</TD>
-						<TD WIDTH="486"><FORM NAME=details ACTION="excludeauction.php" METHOD="POST">
-							<INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
-							<INPUT TYPE="hidden" NAME="offset" VALUE="<?php echo $offset; ?>">
-							<INPUT TYPE="hidden" NAME="action" VALUE="Delete">
-							<INPUT TYPE="hidden" NAME="mode" VALUE="<?php print $mode; ?>">
-							<INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['030']; ?>">
-						  </FORM></TD>
-					  </TR>
-					</TABLE>
+						</td>
+					  </tr>
+					  <tr>
+						<td width="204">&nbsp;</td>
+						<td width="486"><form NAME=details ACTION="excludeauction.php" METHOD="POST">
+							<input type="hidden" name="id" value="<?php echo $id; ?>">
+							<input type="hidden" name="offset" value="<?php echo $offset; ?>">
+							<input type="hidden" name="action" value="Delete">
+							<input type="hidden" name="mode" value="<?php print $mode; ?>">
+							<input type="submit" name="act" value="<?php print $MSG['030']; ?>">
+						  </form></td>
+					  </tr>
+					</table>
 				 
-				 </TD>
-			  </TR>
-			</TABLE>
+				 </td>
+			  </tr>
+			</table>
 			
-			</TD>
-  </TR>
-</TABLE>
-</BODY>
-</HTML>
+			</td>
+  </tr>
+</table>
+</body>
+</html>

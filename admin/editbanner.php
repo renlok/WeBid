@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $main_path."language/".$language."/categories.inc.php";
@@ -188,9 +188,9 @@ if (isset($category_plain) && count($category_plain) > 0) {
 $TPL_categories_list .= "</select>\n";
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 function window_open(pagina,titulo,ancho,largo,x,y){
 	
@@ -199,7 +199,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 	
 }
 </SCRIPT>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -216,94 +216,94 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 	<tr> 
 	<td align="center" valign="middle">
 
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD align="center">
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td align="center">
 	<BR>
-	<FORM NAME=conf ACTION="" METHOD=POST ENCTYPE="multipart/form-data">
-		  <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-			<TR>
-			  <TD ALIGN=CENTER class=title>
+	<form NAME=conf ACTION="" METHOD=POST ENCTYPE="multipart/form-data">
+		  <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+			<tr>
+			  <td align="center" class=title>
 				<?php print $MSG['_0024']; ?>
-				</TD>
-			</TR>
-			<TR>
-			  <TD>
-				<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+				</td>
+			</tr>
+			<tr>
+			  <td>
+				<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
 				  <?php
 				  if (!empty($ERR))
 				  {
 						?>
-				  <TR>
-					<TD COLSPAN="4" ALIGN=CENTER BGCOLOR=yellow> <B>
+				  <tr>
+					<td colspan="4" align="center" bgcolor=yellow> <B>
 					  <?php echo $ERR; ?>
-					   </B></TD>
-				  </TR>
+					   </B></td>
+				  </tr>
 				  <?php
 				  }
 						?>
-				  <TR VALIGN="TOP">
-					<TD COLSPAN="4" ALIGN=CENTER>
+				  <tr valign="top">
+					<td colspan="4" align="center">
 					  <A HREF=userbanners.php?id=<?php echo $USER['id']; ?>>
 					  <?php echo $MSG['270']; ?>
-					  </A> </TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#FFFFFF">
-					<TD COLSPAN="4" HEIGHT="22">
-					  <TABLE WIDTH="90%" BORDER="0" CELLSPACING="1" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#999900">
-						<TR BGCOLOR="#FFFF33">
-						  <TD WIDTH="6%" BGCOLOR="#EEEECC"> 
+					  </A> </td>
+				  </tr>
+				  <tr valign="top" bgcolor="#FFFFFF">
+					<td colspan="4" height="22">
+					  <table width="90%" border="0" cellspacing="1" cellpadding="4" align="center" bgcolor="#999900">
+						<tr bgcolor="#FFFF33">
+						  <td width="6%" bgcolor="#EEEECC"> 
 							<?php echo $MSG['5180']; ?>
-							 </TD>
-						  <TD WIDTH="90%" BGCOLOR="#EEEECC"> 
+							 </td>
+						  <td width="90%" bgcolor="#EEEECC"> 
 							<B>
 							<?php echo $USER['name']; ?>
-							</B>  </TD>
-						</TR>
-						<TR BGCOLOR="#FFFF33">
-						  <TD WIDTH="6%" BGCOLOR="#EEEECC"> 
+							</B>  </td>
+						</tr>
+						<tr bgcolor="#FFFF33">
+						  <td width="6%" bgcolor="#EEEECC"> 
 							<?php echo $MSG['_0022']; ?>
-							 </TD>
-						  <TD WIDTH="90%" BGCOLOR="#EEEECC"> 
+							 </td>
+						  <td width="90%" bgcolor="#EEEECC"> 
 							<B>
 							<?php echo $USER['company']; ?>
-							</B>  </TD>
-						</TR>
-						<TR BGCOLOR="#FFFF33">
-						  <TD WIDTH="6%" BGCOLOR="#EEEECC"> 
+							</B>  </td>
+						</tr>
+						<tr bgcolor="#FFFF33">
+						  <td width="6%" bgcolor="#EEEECC"> 
 							<?php echo $MSG['303']; ?>
-							 </TD>
-						  <TD WIDTH="90%" BGCOLOR="#EEEECC"> 
+							 </td>
+						  <td width="90%" bgcolor="#EEEECC"> 
 							<B><A HREF="<?php echo $USER['email']; ?>">
 							<?php echo $USER['email']; ?>
-							</A></B>  </TD>
-						</TR>
-					  </TABLE>
-					</TD>
-				  </TR>
-				  <TR VALIGN="TOP">
-					<TD COLSPAN="4" HEIGHT="22">&nbsp;</TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#999999">
-					<TD COLSPAN="4" HEIGHT="22" class=title>
-					  <?php echo $MSG['_0055']; ?></TD>
-				  </TR>
-				  <TR>
-					<TD colspan=4>
-					  <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#aaaaaa">
-						<TR>
-						  <TD>
-							<TABLE BORDER=0 CELLPADDING=4 CELLSPACING=1 ALIGN=CENTER WIDTH=100% BGCOLOR=<?php echo $BG; ?>>
-							  <TR VALIGN="TOP" BGCOLOR="#FFFFFF">
-								<TD HEIGHT="22" COLSPAN="6" ALIGN=CENTER>
+							</A></B>  </td>
+						</tr>
+					  </table>
+					</td>
+				  </tr>
+				  <tr valign="top">
+					<td colspan="4" height="22">&nbsp;</td>
+				  </tr>
+				  <tr valign="top" bgcolor="#999999">
+					<td colspan="4" height="22" class=title>
+					  <?php echo $MSG['_0055']; ?></td>
+				  </tr>
+				  <tr>
+					<td colspan=4>
+					  <table width="100%" border="0" cellspacing="0" cellpadding="1" bgcolor="#aaaaaa">
+						<tr>
+						  <td>
+							<table border=0 cellpadding=4 cellspacing=1 align="center" width=100% bgcolor=<?php echo $BG; ?>>
+							  <tr valign="top" bgcolor="#FFFFFF">
+								<td height="22" colspan="6" align="center">
 								  <?php
 								  if ($BANNER[type] == 'swf')
 								  {
 									?>
-								  <OBJECT CLASSID="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" CODEBASE="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0" WIDTH="468" HEIGHT="60">
-									<PARAM NAME=movie VALUE="<?php echo '../'.$uploaded_path.'banners/'.$USER['id'].'/'.$BANNER['name']; ?>">
+								  <OBJECT CLASSID="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" CODEBASE="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0" width="468" height="60">
+									<PARAM NAME=movie value="<?php echo '../'.$uploaded_path.'banners/'.$USER['id'].'/'.$BANNER['name']; ?>">
 									<PARAM NAME=quality VALUE=high>
-									<EMBED SRC="<?php echo '../'.$uploaded_path.'banners/'.$USER['id'].'/'.$BANNER['name']; ?>" QUALITY=high PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" TYPE="application/x-shockwave-flash" WIDTH="468" HEIGHT="60">
+									<EMBED SRC="<?php echo '../'.$uploaded_path.'banners/'.$USER['id'].'/'.$BANNER['name']; ?>" QUALITY=high PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" TYPE="application/x-shockwave-flash" width="468" height="60">
 									</EMBED>
 								  </OBJECT>
 								  <?php
@@ -311,160 +311,160 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 								  else
 								  {
 									?>
-								  <A TARGET=_blank HREF=<?php echo $BANNER['url']; ?>><IMG BORDER=0 ALT="<?php echo $BANNER['alt']; ?>" SRC="<?php echo '../'.$uploaded_path.'banners/'.$USER['id'].'/'.$BANNER['name']; ?>"></A>
+								  <A TARGET=_blank HREF=<?php echo $BANNER['url']; ?>><IMG border=0 ALT="<?php echo $BANNER['alt']; ?>" SRC="<?php echo '../'.$uploaded_path.'banners/'.$USER['id'].'/'.$BANNER['name']; ?>"></A>
 								  <?php
 								  }
 									?>
 								  <BR>
 								  <A TARGET=_blank HREF=<?php echo $BANNER['url']; ?>>
 								  <?php echo $BANNER['sponsortext']; ?>
-								  </A> </TD>
-							  </TR>
-							  <TR VALIGN="TOP" BGCOLOR="#eeeeee">
-								<TD WIDTH="33%" HEIGHT="22"> 
+								  </A> </td>
+							  </tr>
+							  <tr valign="top" bgcolor="#eeeeee">
+								<td width="33%" height="22"> 
 								  <?php echo $MSG['_0050']; ?>
 								  &nbsp;<B><A HREF=<?php echo $BANNER['url']; ?> target=_BLANK>
 								  <?php echo $BANNER['url']; ?>
-								  </a></B>  </TD>
-								<TD HEIGHT="22" WIDTH="16%"> 
+								  </a></B>  </td>
+								<td height="22" width="16%"> 
 								  <?php echo $MSG['_0049']; ?>
 								  &nbsp;<B>
 								  <?php echo $BANNER[views]; ?>
-								  </B>  </TD>
-								<TD HEIGHT="22" WIDTH="17%"> 
+								  </B>  </td>
+								<td height="22" width="17%"> 
 								  <?php echo $MSG['_0051']; ?>
 								  &nbsp;<B>
 								  <?php echo $BANNER['clicks']; ?>
-								  </B>  </TD>
-								<TD HEIGHT="22" WIDTH="13%"> 
+								  </B>  </td>
+								<td height="22" width="13%"> 
 								  <?php echo $MSG['_0045']; ?>
 								  &nbsp;<B>
 								  <?php echo $BANNER['purchased']; ?>
-								  </B>  </TD>
-								<TD HEIGHT="22" WIDTH="16%"> 
+								  </B>  </td>
+								<td height="22" width="16%"> 
 								  <A HREF="javascript:window_open('viewfilters.php?banner=<?php echo $BANNER['id']; ?>','Viewfilters',400,500,30,30)">
 								  <?php echo $MSG['_0052']; ?>
-								 </a>  </TD>
-							  </TR>
-							</TABLE>
-						  </TD>
-						</TR>
-					  </TABLE>
+								 </a>  </td>
+							  </tr>
+							</table>
+						  </td>
+						</tr>
+					  </table>
 					  <BR>
-					</TD>
-				  </TR>
-				  <TR>
-					<TD COLSPAN="4"> </TD>
-				  </TR>
-				</TABLE>
-			  </TD>
-			</TR>
-		  </TABLE>
+					</td>
+				  </tr>
+				  <tr>
+					<td colspan="4"> </td>
+				  </tr>
+				</table>
+			  </td>
+			</tr>
+		  </table>
 
-		 <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#296FAB">
-			<TR>
-			  <TD>
-				<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#CED6E1">
-				  <TR VALIGN="TOP" BGCOLOR="#A8C8E2">
-					<TD COLSPAN="2" HEIGHT="22">
+		 <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#296FAB">
+			<tr>
+			  <td>
+				<table width=100% cellpadding=2 align="center" bgcolor="#CED6E1">
+				  <tr valign="top" bgcolor="#A8C8E2">
+					<td colspan="2" height="22">
 					  <?php echo $MSG['_0041']; ?>
-					   </TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#DEE9EB">
-					<TD WIDTH="140"> 
+					   </td>
+				  </tr>
+				  <tr valign="top" bgcolor="#DEE9EB">
+					<td width="140"> 
 					  <?php echo $MSG['_0056']; ?>
-					   </TD>
-					<TD WIDTH="492">
-					  <INPUT TYPE="file" NAME="bannerfile" SIZE=40>
+					   </td>
+					<td width="492">
+					  <input type="file" name="bannerfile" SIZE=40>
 					  <BR>
 					  <?php echo $MSG['_0036']; ?>
-					   </TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#DEE9EB">
-					<TD WIDTH="140"> 
+					   </td>
+				  </tr>
+				  <tr valign="top" bgcolor="#DEE9EB">
+					<td width="140"> 
 					  <?php echo $MSG['_0030']; ?>
-					   </TD>
-					<TD WIDTH="492">
-					  <INPUT TYPE="text" NAME="url" SIZE="45" VALUE="<?php echo $BANNER['url']; ?>">
+					   </td>
+					<td width="492">
+					  <input type="text" name="url" SIZE="45" value="<?php echo $BANNER['url']; ?>">
 						<BR>
 					  <?php echo $MSG['_0037']; ?>
-					   </TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#DEE9EB">
-					<TD WIDTH="140"> 
+					   </td>
+				  </tr>
+				  <tr valign="top" bgcolor="#DEE9EB">
+					<td width="140"> 
 					  <?php echo $MSG['_0031']; ?>
-					   </TD>
-					<TD WIDTH="492">
-					  <INPUT TYPE="text" NAME="sponsortext" SIZE="45" VALUE="<?php echo $BANNER['sponsortext']; ?>">
+					   </td>
+					<td width="492">
+					  <input type="text" name="sponsortext" SIZE="45" value="<?php echo $BANNER['sponsortext']; ?>">
 					  <BR>
 					  <?php echo $MSG['_0038']; ?>
-					   </TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#DEE9EB">
-					<TD WIDTH="140"> 
+					   </td>
+				  </tr>
+				  <tr valign="top" bgcolor="#DEE9EB">
+					<td width="140"> 
 					  <?php echo $MSG['_0032']; ?>
-					   </TD>
-					<TD WIDTH="492">
-					  <INPUT TYPE="text" NAME="alt" SIZE="45" VALUE="<?php echo $BANNER['alt']; ?>">
+					   </td>
+					<td width="492">
+					  <input type="text" name="alt" SIZE="45" value="<?php echo $BANNER['alt']; ?>">
 					  <BR>
 					  <?php echo $MSG['_0038']; ?>
-					   </TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#DEE9EB">
-					<TD WIDTH="140"> 
+					   </td>
+				  </tr>
+				  <tr valign="top" bgcolor="#DEE9EB">
+					<td width="140"> 
 					  <?php echo $MSG['_0045']; ?>
-					   </TD>
-					<TD WIDTH="492">
-					  <INPUT TYPE="text" NAME="purchased" SIZE="8" VALUE="<?php echo $_POST['purchased']; ?>">
+					   </td>
+					<td width="492">
+					  <input type="text" name="purchased" SIZE="8" value="<?php echo $_POST['purchased']; ?>">
 					  <BR>
 					  <?php echo $MSG['_0046']; ?>
-					   </TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#CADCDF">
-					<TD COLSPAN="2"> 
+					   </td>
+				  </tr>
+				  <tr valign="top" bgcolor="#CADCDF">
+					<td colspan="2"> 
 					  <?php echo $MSG['_0033']; ?>
 					  <BR>
 					  <?php echo $MSG['_0039']; ?>
-					   </TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#DEE9EB">
-					<TD WIDTH="140"> 
+					   </td>
+				  </tr>
+				  <tr valign="top" bgcolor="#DEE9EB">
+					<td width="140"> 
 					  <?php echo $MSG['276']; ?>
-					   </TD>
-					<TD WIDTH="492">
+					   </td>
+					<td width="492">
 					  <?php echo $TPL_categories_list; ?>
-					</TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#DEE9EB">
-					<TD WIDTH="140"> 
+					</td>
+				  </tr>
+				  <tr valign="top" bgcolor="#DEE9EB">
+					<td width="140"> 
 					  <?php echo $MSG['_0035']; ?>
-					   </TD>
-					<TD WIDTH="492">
-					  <TEXTAREA NAME="keywords" COLS="45" ROWS="8"><?php echo $KEYWORDS; ?></TEXTAREA>
-					</TD>
-				  </TR>
-				  <TR VALIGN="TOP" BGCOLOR="#DEE9EB">
-					<TD WIDTH="140">&nbsp;</TD>
-					<TD WIDTH="492">
-					  <INPUT TYPE="hidden" NAME="action" VALUE="update">
-					  <INPUT TYPE="hidden" NAME="banner" VALUE="<?php echo $banner; ?>">
-					  <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $USER['id']; ?>">
-					  <INPUT TYPE="submit" NAME="Submit2" VALUE="<?php echo $MSG['_0040']; ?>">
-					</TD>
-				  </TR>
-				  <TR>
-					<TD COLSPAN="2"> </TD>
-				  </TR>
-				</TABLE>
-			  </TD>
-			</TR>
-		  </TABLE>
-		</FORM>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+					   </td>
+					<td width="492">
+					  <TEXTAREA name="keywords" COLS="45" ROWS="8"><?php echo $KEYWORDS; ?></TEXTAREA>
+					</td>
+				  </tr>
+				  <tr valign="top" bgcolor="#DEE9EB">
+					<td width="140">&nbsp;</td>
+					<td width="492">
+					  <input type="hidden" name="action" value="update">
+					  <input type="hidden" name="banner" value="<?php echo $banner; ?>">
+					  <input type="hidden" name="id" value="<?php echo $USER['id']; ?>">
+					  <input type="submit" name="Submit2" value="<?php echo $MSG['_0040']; ?>">
+					</td>
+				  </tr>
+				  <tr>
+					<td colspan="2"> </td>
+				  </tr>
+				</table>
+			  </td>
+			</tr>
+		  </table>
+		</form>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

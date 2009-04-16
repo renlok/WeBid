@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path.'status.inc.php';
@@ -78,9 +78,9 @@ else
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <STYLE TYPE="text/css">
 body {
 scrollbar-face-color: #aaaaaa;
@@ -91,7 +91,7 @@ scrollbar-darkshadow-color: #444444;
 scrollbar-track-color: #cccccc;
 scrollbar-arrow-color: #ffffff;
 }</STYLE>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -108,137 +108,137 @@ scrollbar-arrow-color: #ffffff;
 	<tr> 
 	<td align="center" valign="middle">
 
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD align="center">
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td align="center">
 <BR>
 <form name="conf" action="" method="post">
-<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-  <TR>
-	<TD ALIGN=CENTER class=title>
+<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+  <tr>
+	<td align="center" class=title>
 	  <?php print $MSG['562']; ?>
-	</TD>
-  </TR>
-  <TR>
-	<TD>
-	  <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
-		<TR>
-		  <TD COLSPAN="2"><A HREF="./increments.php" CLASS="links">
+	</td>
+  </tr>
+  <tr>
+	<td>
+	  <table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
+		<tr>
+		  <td colspan="2"><A HREF="./increments.php" CLASS="links">
 			</A>
-			<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
-			  <TR>
-				<TD COLSPAN="2" ALIGN=CENTER><B>
+			<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
+			  <tr>
+				<td colspan="2" align="center"><B>
 				  <?php print $ERR; ?>
-				  </B></TD>
-			  </TR>
-			  <TR>
-				<TD WIDTH="123"> 
+				  </B></td>
+			  </tr>
+			  <tr>
+				<td width="123"> 
 				  <?php print $MSG['003']; ?>
-				  </TD>
-				<TD WIDTH="411">
+				  </td>
+				<td width="411">
 				  <B>
 				  <?php print $USER[username]; ?>
-				  </B> </TD>
-			  </TR>
-			  <TR>
-				<TD WIDTH="123"> 
+				  </B> </td>
+			  </tr>
+			  <tr>
+				<td width="123"> 
 				  <?php print $MSG['558']; ?>
-				  </TD>
-				<TD WIDTH="411">
+				  </td>
+				<td width="411">
 				  <?php print $CREATED;?>
-				  </TD>
-			  </TR>
-			  <TR>
-				<TD WIDTH="123"> 
+				  </td>
+			  </tr>
+			  <tr>
+				<td width="123"> 
 				  <?php print $MSG['559']; ?>
-				  </TD>
-				<TD WIDTH="411">
+				  </td>
+				<td width="411">
 				  <?php print $LASTLOGIN; ?>
-				  </TD>
-			  </TR>
-			  <TR>
-				<TD COLSPAN="2" BGCOLOR="#EEEEEE">
+				  </td>
+			  </tr>
+			  <tr>
+				<td colspan="2" bgcolor="#EEEEEE">
 				  <?php print $MSG['563']; ?>
-				  </TD>
-			  </TR>
-			  <TR>
-				<TD WIDTH="123" BGCOLOR="#EEEEEE">
+				  </td>
+			  </tr>
+			  <tr>
+				<td width="123" bgcolor="#EEEEEE">
 				  <?php print $MSG['004']; ?>
-				  </TD>
-				<TD WIDTH="411" BGCOLOR="#EEEEEE">
-				  <INPUT TYPE="PASSWORD" NAME="password" SIZE="25">
-				</TD>
-			  </TR>
-			  <TR>
-				<TD WIDTH="123" BGCOLOR="#EEEEEE">
+				  </td>
+				<td width="411" bgcolor="#EEEEEE">
+				  <input type="PASSWORD" name="password" SIZE="25">
+				</td>
+			  </tr>
+			  <tr>
+				<td width="123" bgcolor="#EEEEEE">
 				  <?php print $MSG['564']; ?>
-				  </TD>
-				<TD WIDTH="411" BGCOLOR="#EEEEEE">
-				  <INPUT TYPE="PASSWORD" NAME="repeatpassword" SIZE="25">
-				</TD>
-			  </TR>
-			  <TR>
-				<TD WIDTH="123">
+				  </td>
+				<td width="411" bgcolor="#EEEEEE">
+				  <input type="PASSWORD" name="repeatpassword" SIZE="25">
+				</td>
+			  </tr>
+			  <tr>
+				<td width="123">
 				  <?php print $MSG['565']; ?>
-				  </TD>
-				<TD WIDTH="411">
-				  <INPUT TYPE="radio" NAME="status" VALUE="1"
+				  </td>
+				<td width="411">
+				  <input type="radio" name="status" value="1"
 	  <?php if ($USER[status] == 1) print " CHECKED";?>
 	  >
 				  
 				  <?php print $MSG['566']; ?>
 				  
-				  <INPUT TYPE="radio" NAME="status" VALUE="2"
+				  <input type="radio" name="status" value="2"
 	  <?php if ($USER[status] == 2) print " CHECKED";?>
 	  >
 				  
 				  <?php print $MSG['567']; ?>
-				   </TD>
-			  </TR>
-			  <TR>
-				<TD WIDTH=123>&nbsp;</TD>
-				<TD WIDTH="411">&nbsp;</TD>
-			  </TR>
-			  <TR>
-				<TD WIDTH=123>
-				  <INPUT TYPE="hidden" NAME="action" VALUE="update">
-				  <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
-				</TD>
-				<TD WIDTH="411">
-				  <INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['530']; ?>">
-				</TD>
-			  </TR>
-			  <TR>
-				<TD WIDTH=123></TD>
-				<TD WIDTH="411"> </TD>
-			  </TR>
-			</TABLE>
-			</TD>
-		</TR>
-		<TR>
-		  <TD WIDTH=169>
-			<INPUT TYPE="hidden" NAME="action" VALUE="update">
-		  </TD>
-		  <TD WIDTH="365">&nbsp; </TD>
-		</TR>
-		<TR>
-		  <TD WIDTH=169></TD>
-		  <TD WIDTH="365"> </TD>
-		</TR>
-	  </TABLE>
-	</TD>
-  </TR>
-</TABLE>
-</FORM>
-</TD>
-</TR>
-</TABLE>
+				   </td>
+			  </tr>
+			  <tr>
+				<td width=123>&nbsp;</td>
+				<td width="411">&nbsp;</td>
+			  </tr>
+			  <tr>
+				<td width=123>
+				  <input type="hidden" name="action" value="update">
+				  <input type="hidden" name="id" value="<?php echo $id; ?>">
+				</td>
+				<td width="411">
+				  <input type="submit" name="act" value="<?php print $MSG['530']; ?>">
+				</td>
+			  </tr>
+			  <tr>
+				<td width=123></td>
+				<td width="411"> </td>
+			  </tr>
+			</table>
+			</td>
+		</tr>
+		<tr>
+		  <td width=169>
+			<input type="hidden" name="action" value="update">
+		  </td>
+		  <td width="365">&nbsp; </td>
+		</tr>
+		<tr>
+		  <td width=169></td>
+		  <td width="365"> </td>
+		</tr>
+	  </table>
+	</td>
+  </tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
 
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

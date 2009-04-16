@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 if ($_POST && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_SELF']))) {
@@ -67,9 +67,9 @@ while ($usr=mysql_fetch_array($res)) {
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 
 function SubmitForm(){
@@ -81,8 +81,8 @@ function ResetForm(){
 }
 //-->
 </script>
-</HEAD>
-<BODY>
+</head>
+<body>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
@@ -97,17 +97,17 @@ function ResetForm(){
   </tr>
 	<tr> 
 	<td align="center" valign="middle"> 
-<TABLE WIDTH="100%" BGCOLOR="#FFFFFF" BORDER=0 CELLPADDING="0" CELLSPACING="0">
-  <TR>
-	<TD class=title align=center><BR>
+<table width="100%" bgcolor="#FFFFFF" border=0 cellpadding="0" cellspacing="0">
+  <tr>
+	<td class=title align=center><BR>
 		<BR>
 		<?php print $MSG['222']; ?><BR>
 		<?php
 			echo $TPL_errmsg;
 		?>
 		 <BR>
-		<FORM name=addfeedback action="edituserfeed.php?id=<?php echo $_GET['id']; ?>" method="POST">
-		  <TABLE width="80%" CELLSPACING="0" CELLPADDING="4" BORDER="0">
+		<form name=addfeedback action="edituserfeed.php?id=<?php echo $_GET['id']; ?>" method="POST">
+		  <table width="80%" cellspacing="0" cellpadding="4" border="0">
 			<tr>
 			  <td COLSPAN=2>
 			  <?php echo "<B>$rater ".$MSG['_0167']." $rated</B>"; ?>
@@ -116,22 +116,22 @@ function ResetForm(){
 			<tr>
 			  <td ALIGN=RIGHT> <B><?php print $MSG['503']; ?>:</B> </td>
 			  <td><INPUT type=radio name=aTPL_rate value=1 <?php echo $selected1; ?>>
-				<IMG SRC="../images/positive.gif" BORDER=0 ALT="Positive">
+				<IMG SRC="../images/positive.gif" border=0 ALT="Positive">
 				<INPUT type=radio name=aTPL_rate value=0 <?php echo $selected2; ?>>
-				<IMG SRC="../images/neutral.gif" BORDER=0 ALT="Neutral">
+				<IMG SRC="../images/neutral.gif" border=0 ALT="Neutral">
 				<INPUT type=radio name=aTPL_rate value=-1 <?php echo $selected3; ?>>
 				<IMG SRC="../images/negative.gif" ALT="Negative">
 			  </td>
 			</tr>
 			<tr>
 			  <td ALIGN=RIGHT valign="top"> <B>Comment:</B> </td>
-			  <td><TEXTAREA NAME="TPL_feedback" ROWS="10" COLS="50"><?php echo $feed_text; ?></TEXTAREA></td>
+			  <td><TEXTAREA name="TPL_feedback" ROWS="10" COLS="50"><?php echo $feed_text; ?></TEXTAREA></td>
 			</tr>
 			<tr>
 			  <td COLSPAN=2 align="center">
-				<INPUT TYPE="hidden" NAME="user" VALUE=<?php echo $user_id; ?>>
-				<INPUT TYPE="submit" NAME="" value="<?php echo $MSG['530']; ?>">
-				<INPUT TYPE="reset" NAME="">
+				<input type="hidden" name="user" VALUE=<?php echo $user_id; ?>>
+				<input type="submit" name="" value="<?php echo $MSG['530']; ?>">
+				<input type="reset" name="">
 			  </td>
 			</tr>
 			<tr>
@@ -139,11 +139,11 @@ function ResetForm(){
 				<?php echo $MSG['222']; ?>
 				</A>  </td>
 			</tr>
-		  </TABLE>
+		  </table>
 		  <INPUT type="hidden" name="send" value="1">
-		</FORM>
-	</TD>
-  </TR>
-</TABLE>
-</BODY>
-</HTML>
+		</form>
+	</td>
+  </tr>
+</table>
+</body>
+</html>

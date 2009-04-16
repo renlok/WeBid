@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -53,9 +53,9 @@ $res_c = mysql_query($query);
 $system->check_mysql($res_c, $query, __LINE__, __FILE__);
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 function selectDelete(formObj, isInverse)  {
    for (var i=0;i < formObj.length;i++)  {
@@ -68,9 +68,9 @@ function selectDelete(formObj, isInverse)  {
    }
 }
 </SCRIPT>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<FORM NAME="faq" METHOD="post" ACTION="">
+<form name="faq" METHOD="post" ACTION="">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
@@ -85,31 +85,31 @@ function selectDelete(formObj, isInverse)  {
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-  <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" ALIGN="CENTER" BGCOLOR="#0083D7">
-	<TR align=center>
-	  <TD BGCOLOR="#ffffff">&nbsp;</TD>
-	</TR>
-	<TR>
-	  <TD><TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="4" ALIGN="CENTER">
-		  <TR>
-			<TD COLSPAN="2" BGCOLOR="#0083D7" align=center class=title>
+  <table width="95%" border="0" cellspacing="0" cellpadding="1" align="center" bgcolor="#0083D7">
+	<tr align=center>
+	  <td bgcolor="#ffffff">&nbsp;</td>
+	</tr>
+	<tr>
+	  <td><table width="100%" border="0" cellspacing="0" cellpadding="4" align="center">
+		  <tr>
+			<td colspan="2" bgcolor="#0083D7" align=center class=title>
 				<?php echo $MSG['5229']; ?>
-			 </TD>
-		  </TR>
-		  <TR BGCOLOR="#FFFFFF">
-			<TD WIDTH="86%">&nbsp;</TD>
-			<TD align=center WIDTH="14%"><INPUT TYPE="submit" NAME="Submit2" VALUE="Delete">
-			</TD>
-		  </TR>
+			 </td>
+		  </tr>
+		  <tr bgcolor="#FFFFFF">
+			<td width="86%">&nbsp;</td>
+			<td align=center width="14%"><input type="submit" name="Submit2" value="Delete">
+			</td>
+		  </tr>
 		  <?php
 		  while ($cat = mysql_fetch_array($res_c)) {
 		  	$cat['category']	=	stripslashes($cat['category']);
 					?>
-		  <TR BGCOLOR="#eeeeee">
-			<TD COLSPAN="2"><B> 
+		  <tr bgcolor="#eeeeee">
+			<td colspan="2"><B> 
 			  <?php echo $cat['category']; ?>
-			  </B> </B> </TD>
-		  </TR>
+			  </B> </B> </td>
+		  </tr>
 		  <?php
 		  $query = "select * from " . $DBPrefix . "faqs WHERE category=".$cat['id'];
 		  $res = mysql_query($query);
@@ -118,31 +118,31 @@ function selectDelete(formObj, isInverse)  {
 		  while ($faq = mysql_fetch_array($res)) {
 		  	$faq['question']=	stripslashes($faq['question']);
 							?>
-		  <TR BGCOLOR="#eeeeee">
-			<TD WIDTH="86%" BGCOLOR="#FFFFFF"><A HREF=editfaq.php?id=<?php echo $faq['id']; ?>> 
+		  <tr bgcolor="#eeeeee">
+			<td width="86%" bgcolor="#FFFFFF"><A HREF=editfaq.php?id=<?php echo $faq['id']; ?>> 
 			  <?php echo $faq['question']; ?>
-			   </A> </TD>
-			<TD WIDTH="14%" BGCOLOR="#FFFFFF" ALIGN=CENTER><INPUT TYPE="checkbox" NAME="delete[<?php echo $faq['id']; ?>]" VALUE="<?php echo $faq['id']; ?>">
-			</TD>
-		  </TR>
+			   </A> </td>
+			<td width="14%" bgcolor="#FFFFFF" align="center"><input type="checkbox" name="delete[<?php echo $faq['id']; ?>]" value="<?php echo $faq['id']; ?>">
+			</td>
+		  </tr>
 		  <?php
 		  }
 		  }
 		?>
-		<TR bgcolor=#FFFFFF>
-			<TD colspan=1>&nbsp;</TD>
-			<TD align=center><a href="javascript: void(0)" onClick="selectDelete(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A></TD>
-		</TR>
-		  <TR BGCOLOR="#eeeeee">
-			<TD BGCOLOR="#FFFFFF" WIDTH="86%">&nbsp;</TD>
-			<TD WIDTH="14%" BGCOLOR="#FFFFFF" ALIGN=CENTER><INPUT TYPE="submit" NAME="Submit" VALUE="Delete">
-			</TD>
-		  </TR>
-		</TABLE></TD>
-	</TR>
-  </TABLE>
-</TD>
-</TR>
-</TABLE>
-</FORM>
+		<tr bgcolor=#FFFFFF>
+			<td colspan=1>&nbsp;</td>
+			<td align=center><a href="javascript: void(0)" onClick="selectDelete(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A></td>
+		</tr>
+		  <tr bgcolor="#eeeeee">
+			<td bgcolor="#FFFFFF" width="86%">&nbsp;</td>
+			<td width="14%" bgcolor="#FFFFFF" align="center"><input type="submit" name="Submit" value="Delete">
+			</td>
+		  </tr>
+		</table></td>
+	</tr>
+  </table>
+</td>
+</tr>
+</table>
+</form>
 </body>

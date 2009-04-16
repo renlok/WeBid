@@ -12,11 +12,11 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$DBGSTR = "DBGSTR: ". count($delete). "-" .
+$DBGStr = "DBGStr: ". count($delete). "-" .
 count($old_membertypes) . " <br><br>\n";
 
 include "./rebuild_tables.php";
@@ -49,12 +49,12 @@ if (isset($_POST['act'])) {
 	if (is_array($delete)) {
 		$idslist=join(",",$delete);
 		$sqlstr.=$idslist.")";
-		$DBGSTR=$sqlstr;
+		$DBGStr=$sqlstr;
 		// If the delete array is > 0 in size
 		if (count($delete)) {
 			$result = mysql_query($sqlstr);
 			if ( !$result ) {
-				echo "$DBGSTR";
+				echo "$DBGStr";
 				$TPL_info_err = $ERR_001;
 			} else {
 				$TPL_info_err = "";
@@ -94,7 +94,7 @@ if (isset($_POST['act'])) {
 		$result = mysql_query($sqlstr);
 		if (!$result) {
 			$TPL_info_err = $ERR_001;
-			echo "$DBGSTR";
+			echo "$DBGStr";
 		}
 	}
 	
@@ -110,9 +110,9 @@ else {
 rebuild_table_file("membertypes");
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 function selectAll(formObj, isInverse) 
 {
@@ -129,7 +129,7 @@ function selectAll(formObj, isInverse)
 }
 </SCRIPT>
 
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -146,74 +146,74 @@ function selectAll(formObj, isInverse)
   </tr>
   <tr>
 	<td align="center" valign="middle"><?php print $TPL_info_err . ""?>
-	  <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-		<TR>
-		  <TD>
+	  <table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+		<tr>
+		  <td>
 			  <BR>
-			<FORM NAME=conf ACTION=membertypes.php METHOD=POST>
-			  <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="0083D7" ALIGN="CENTER">
-				<TR>
-				  <TD ALIGN=CENTER class=title><?php print $MSG['25_0169']; ?></TD>
-				</TR>
-				<TR>
-				  <TD><TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
-					  <TR>
-						<TD WIDTH=20></TD>
-						<TD colspan="4">
+			<form NAME=conf ACTION=membertypes.php METHOD=POST>
+			  <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="0083D7" align="center">
+				<tr>
+				  <td align="center" class=title><?php print $MSG['25_0169']; ?></td>
+				</tr>
+				<tr>
+				  <td><table width=100% cellpadding=2 bgcolor="#FFFFFF">
+					  <tr>
+						<td width=20></td>
+						<td colspan="4">
 						  <?php 
 						  print $MSG['25_0170'];
 						  if ($$ERR) {
 						  	print "<FONT COLOR=red><BR><BR>".$$ERR;
 						  }
 						  ?>
-						   </TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH=20></TD>
-						<TD BGCOLOR="#EEEEEE"> <B> <?php print $MSG['25_0171']; ?> </B> </TD>
-						<TD BGCOLOR="#EEEEEE"> <B> <?php print $MSG['25_0167']; ?> </B> </TD>
-						<TD BGCOLOR="#EEEEEE" WIDTH=20></TD>
-						<TD BGCOLOR="#EEEEEE"> <B> <?php print $MSG['25_0168']; ?> </B> </TD>
-					  </TR>
+						   </td>
+					  </tr>
+					  <tr>
+						<td width=20></td>
+						<td bgcolor="#EEEEEE"> <B> <?php print $MSG['25_0171']; ?> </B> </td>
+						<td bgcolor="#EEEEEE"> <B> <?php print $MSG['25_0167']; ?> </B> </td>
+						<td bgcolor="#EEEEEE" width=20></td>
+						<td bgcolor="#EEEEEE"> <B> <?php print $MSG['25_0168']; ?> </B> </td>
+					  </tr>
 					  <?php
 					  foreach ($membertypes as $id => $quest) {
 					  ?>
-					  <TR>
-						<TD WIDTH=20></TD>
-						<TD><INPUT TYPE=hidden NAME=old_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>'>
-						  <INPUT TYPE=text NAME=new_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>' SIZE=5>
-						</TD>
-						<TD><INPUT TYPE=hidden NAME=old_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>'>
-						  <INPUT TYPE=text NAME=new_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>' SIZE=30></TD>
-						<TD><IMG SRC='../images/icons/<?php echo $quest['icon']; ?>' align='middle'> </TD>
-						<TD><INPUT TYPE=checkbox NAME=delete[] VALUE='<?php echo $id; ?>'>
-						</TD>
-					  </TR>
+					  <tr>
+						<td width=20></td>
+						<td><input type=hidden NAME=old_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>'>
+						  <input type=text NAME=new_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>' SIZE=5>
+						</td>
+						<td><input type=hidden NAME=old_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>'>
+						  <input type=text NAME=new_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>' SIZE=30></td>
+						<td><IMG SRC='../images/icons/<?php echo $quest['icon']; ?>' align='middle'> </td>
+						<td><input type=checkbox NAME=delete[] VALUE='<?php echo $id; ?>'>
+						</td>
+					  </tr>
 					  <?php
 					  }
 					  ?>
-					  <TR>
-						<TD WIDTH=20>
-						  Add</TD>
-						<TD><INPUT TYPE='text' NAME='new_membertype[feedbacks]' SIZE='5'></TD>
-						<TD><INPUT TYPE='text' NAME='new_membertype[icon]' SIZE='30'></TD>
-						<TD colspan=2 align=right>
-						<a href="javascript: void(0)" onClick="selectAll(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH=20></TD>
-						<TD colspan="6" align="center"><INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
-						</TD>
-					  </TR>
-					</TABLE>
-					<input type=hidden name=new_membertypes[<?php echo $id; ?>][membertype] value='<?php echo $quest['membertype']; ?>' size=30></TD>
-				</TR>
-			  </TABLE>
-			</FORM></TD>
-		</TR>
-	  </TABLE></TD>
-  </TR>
-</TABLE>
-</BODY>
-</HTML>
+					  <tr>
+						<td width=20>
+						  Add</td>
+						<td><input type='text' NAME='new_membertype[feedbacks]' SIZE='5'></td>
+						<td><input type='text' NAME='new_membertype[icon]' SIZE='30'></td>
+						<td colspan=2 align=right>
+						<a href="javascript: void(0)" onClick="selectAll(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A></td>
+					  </tr>
+					  <tr>
+						<td width=20></td>
+						<td colspan="6" align="center"><input type="submit" name="act" value="<?php print $MSG['089']; ?>">
+						</td>
+					  </tr>
+					</table>
+					<input type=hidden name=new_membertypes[<?php echo $id; ?>][membertype] value='<?php echo $quest['membertype']; ?>' size=30></td>
+				</tr>
+			  </table>
+			</form></td>
+		</tr>
+	  </table></td>
+  </tr>
+</table>
+</body>
+</html>
 

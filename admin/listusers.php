@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -117,15 +117,15 @@ $_SESSION['RETURN_LIST'] = 'listusers.php';
 $_SESSION['RETURN_LIST_PAGE'] = intval($PAGE);
 
 ?>
-<HTML>
-<HEAD>
+<html>
+<head>
 <SCRIPT type="text/javascript">
 function SubmitFilter()
 {
 	document.filter.submit();
 }
 </SCRIPT>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 function window_open(pagina,titulo,ancho,largo,x,y){
 	
@@ -134,7 +134,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 	
 }
 </SCRIPT>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -151,51 +151,51 @@ function window_open(pagina,titulo,ancho,largo,x,y){
   </tr>
   <tr> 
 	<td align="center" valign="middle">
-			<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-			<TR>
-			<TD ALIGN=CENTER class=title><?php print $MSG['045']; ?></TD>
-			</TR>
-			<TR>
-			<TD>
-				<TABLE WIDTH=100% CELPADDING=0 CELLSPACING=1 BORDER=0 ALIGN="CENTER" CELLPADDING="3" BGCOLOR=#ffffff>
+			<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+			<tr>
+			<td align="center" class=title><?php print $MSG['045']; ?></td>
+			</tr>
+			<tr>
+			<td>
+				<table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3" bgcolor=#ffffff>
 				<?php
 				if (isset($ERR))
 				{
 				?>
-				<TR BGCOLOR="yellow">
-				  <TD COLSPAN=8 align="center">
+				<tr bgcolor="yellow">
+				  <td COLSPAN=8 align="center">
 					<b><?php echo $ERR; ?></b>
-					</TD>
-				</TR>
+					</td>
+				</tr>
 				<?php
 				}
 				?>
-				<TR>
-				<TD COLSPAN=8>
+				<tr>
+				<td COLSPAN=8>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" align="right">
-					<FORM NAME=search ACTION=userssearch.php METHOD=POST>
+					<form NAME=search ACTION=userssearch.php METHOD=POST>
 					<tr>
 					<td bgcolor="#eeeeee"> 
 					<BR>
-					<?php echo $MSG['5022']; ?> <INPUT TYPE=text NAME=keyword SIZE=25>
+					<?php echo $MSG['5022']; ?> <input type=text NAME=keyword SIZE=25>
 					<input type=SUBMIT name=SUBMIT value="<?php echo $MSG['5023']; ?>">
 					<?php echo $MSG['5024']; ?>
 					</td>
 					</tr>
-					</FORM>
+					</form>
 					</table>
-				</TD>
-				</TR>
-				<TR BGCOLOR=#FFFFFF>
-				<TD COLSPAN=8>
-				<TABLE WIDTH=100% CELLPADDING=1 CELLSPACING=0 BORDER=0>
-					<FORM NAME="filter" ACTION="<?php echo basename($_SERVER['PHP_SELF']); ?>">
-				  <TR>
-					<TD WIDTH=30%> <B>
+				</td>
+				</tr>
+				<tr bgcolor=#FFFFFF>
+				<td COLSPAN=8>
+				<table width=100% cellpadding=1 cellspacing=0 border=0>
+					<form name="filter" ACTION="<?php echo basename($_SERVER['PHP_SELF']); ?>">
+				  <tr>
+					<td width=30%> <B>
 					<?php echo $TOTALUSERS." ".$MSG['301']; ?>
-					</B> </TD>
-					<TD WIDTH=20% valign="center">
-					<TD WIDTH=50% align=right>
+					</B> </td>
+					<td width=20% valign="center">
+					<td width=50% align=right>
 					<?php echo $MSG['5295']; ?>
 					<SELECT NAME=usersfilter onChange="SubmitFilter()">
 					<OPTION VALUE=all>
@@ -226,20 +226,20 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 					}
 					?>
 					</SELECT>
-					</TD>
-				  </TR>
-				  </FORM>
-				  </TABLE>
-				</TD>
-				</TR>
-				<TR BGCOLOR="#FFCC00">
-					<TD ALIGN=LEFT width="20%"> <B> <?php print $MSG['293']; ?> </B>  </TD>
-					<TD ALIGN=LEFT width="30%"> <B> <?php print $MSG['294']; ?> </B>  </TD>
-					<TD ALIGN=LEFT width="10%"> <B> <?php print $MSG['295']; ?> </B>  </TD>
-					<TD ALIGN=LEFT width="10%"> <B> <?php print $MSG['296']; ?> </B>  </TD>
-					<TD ALIGN=LEFT width="10%"> <B> <?php print strtoupper($MSG['25_0079']); ?> </B>  </TD>
-					<TD ALIGN=LEFT width="10%"> <B> <?php print strtoupper($MSG['560']); ?> </B>  </TD>
-					<TD ALIGN=LEFT width="10%"> <B> <?php print $MSG['297']; ?> </B>  </TD>
+					</td>
+				  </tr>
+				  </form>
+				  </table>
+				</td>
+				</tr>
+				<tr bgcolor="#FFCC00">
+					<td ALIGN=LEFT width="20%"> <B> <?php print $MSG['293']; ?> </B>  </td>
+					<td ALIGN=LEFT width="30%"> <B> <?php print $MSG['294']; ?> </B>  </td>
+					<td ALIGN=LEFT width="10%"> <B> <?php print $MSG['295']; ?> </B>  </td>
+					<td ALIGN=LEFT width="10%"> <B> <?php print $MSG['296']; ?> </B>  </td>
+					<td ALIGN=LEFT width="10%"> <B> <?php print strtoupper($MSG['25_0079']); ?> </B>  </td>
+					<td ALIGN=LEFT width="10%"> <B> <?php print strtoupper($MSG['560']); ?> </B>  </td>
+					<td ALIGN=LEFT width="10%"> <B> <?php print $MSG['297']; ?> </B>  </td>
 				</tr>
 				<?php
 				if (isset($Q)) {
@@ -271,19 +271,19 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 					$suspended = mysql_result($result,$i,"suspended");
 					$newsletter = mysql_result($result,$i,"nletter");
 
-					print "<TR BGCOLOR=$bgcolor>
-					<TD>$nick</TD>
-					<TD>$name</TD>
-					<TD>$country</TD>
-					<TD><A HREF=\"mailto:$email\">$email</A></TD>
-					<TD align=center>";
+					print "<tr bgcolor=$bgcolor>
+					<td>$nick</td>
+					<td>$name</td>
+					<td>$country</td>
+					<td><A HREF=\"mailto:$email\">$email</A></td>
+					<td align=center>";
 					if ($newsletter == 1) {
 						print $MSG['030'];
 					}
 					if ($newsletter == 2) {
 						print $MSG['029'];
 					}
-					print "</TD><TD>";
+					print "</td><td>";
 					if ($suspended == 0) {
 						print "<B><FONT COLOR=green>".$MSG['5291']."</B>";
 					}
@@ -300,8 +300,8 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 						print '<B><FONT COLOR=orange>'.$MSG['5292'].'</B>
 							   <BR><a href="listusers.php?resend=1&id=' . $id . '">' . $MSG['25_0074'] . '</a>';
 					}
-					print "</TD>";
-					print "<TD ALIGN=LEFT>
+					print "</td>";
+					print "<td ALIGN=LEFT>
 					<A HREF=\"edituser.php?userid=$id&offset=$offset\" class=\"nounderlined\">".$MSG['298']."</A><BR>
 					<A HREF=\"deleteuser.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['008']."</A><BR>
 					<A HREF=\"excludeuser.php?id=$id&offset=$offset\" class=\"nounderlined\">";
@@ -314,12 +314,12 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 					<A HREF=\"viewuserauctions.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['5094']."</A><BR>
 					<A HREF=\"userfeedback.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['503']."</A><BR>
 					<A HREF=\"viewuserips.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['2_0004']."</A>
-					</TD>
-					</TR>";
+					</td>
+					</tr>";
 					$i++;
 				}
 				?>
-				</TABLE>
+				</table>
 				<center class=white><?php echo $MSG['5117']; ?>&nbsp;<?php echo $PAGE; ?>&nbsp;<?php echo $MSG['5118']; ?>&nbsp;<?php echo $PAGES; ?>
 				<BR>
 				<?php
@@ -361,15 +361,15 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 				}
 				?>
 				</center>
-				</TD>
-			  </TR>
-			</TABLE>
+				</td>
+			  </tr>
+			</table>
 			<BR>
-		  </TD>
-		</TR>
-	  </TABLE>
+		  </td>
+		</tr>
+	  </table>
 	</td>
   </tr>
 </table>
-</BODY>
-</HTML>
+</body>
+</html>

@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -53,7 +53,7 @@ if (mysql_num_rows($rr) > 0)
 <html><head>
 
 <title>Untitled Document</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel='stylesheet' type='text/css' href='style.css' />
+<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body bgcolor="#ffffff">
 <center>
@@ -63,7 +63,7 @@ if (mysql_num_rows($rr) > 0)
 
   <table width="352" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	  <td BGCOLOR="#eeeeee">
+	  <td bgcolor="#eeeeee">
 	  
 	  <?php echo $MSG['_0053']; ?>
 	  
@@ -75,12 +75,12 @@ if (mysql_num_rows($rr) > 0)
 	  <?php echo $CATEGORIES; ?></td>
 	</tr>
 	<tr>
-	  <td BGCOLOR="#ffffff">&nbsp;
+	  <td bgcolor="#ffffff">&nbsp;
 	  
 	  </td>
 	</tr>
 	<tr>
-	  <td BGCOLOR="#eeeeee">
+	  <td bgcolor="#eeeeee">
 	  
 	  <?php echo $MSG['_0054']; ?>
 	  

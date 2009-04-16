@@ -13,7 +13,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
  
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path.'domains.inc.php';
 
 $ABSOLUTEWIDTH = 550;
@@ -37,10 +37,10 @@ while ($row = mysql_fetch_array($res))
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -56,9 +56,9 @@ while ($row = mysql_fetch_array($res))
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-  <TABLE WIDTH=95% CELLPADDING=2 CELLSPACING=1 BORDER=0 ALIGN="CENTER" BGCOLOR=white>
-	<TR BGCOLOR="#FFCC00">
-	  <TD ALIGN=CENTER colspan="2" bgcolor="#eeeeee">
+  <table width=95% cellpadding=2 cellspacing=1 border=0 align="center" bgcolor=white>
+	<tr bgcolor="#FFCC00">
+	  <td align="center" colspan="2" bgcolor="#eeeeee">
 		<p class="title" style="color:#000000">
 		  <?php echo $MSG['5168']." <I>".$system->SETTINGS['sitename']."</I>"?>
 		  <BR>
@@ -69,12 +69,12 @@ while ($row = mysql_fetch_array($res))
 			<A HREF=viewbrowserstats.php?><?php echo $MSG['5165']; ?></A> |
 			<A HREF=viewplatformstats.php?><?php echo $MSG['5318']; ?></A>
 			</p>
-	  </TD>
-	</TR>
-	<TR BGCOLOR=#FFFFFF>
-	  <TD width="146">&nbsp;</TD>
-	  <TD width="626">&nbsp;</TD>
-	</TR>
+	  </td>
+	</tr>
+	<tr bgcolor=#FFFFFF>
+	  <td width="146">&nbsp;</td>
+	  <td width="626">&nbsp;</td>
+	</tr>
 	<tr bgcolor="#CCCCCC">
 	  <td width="146" height="21"> 
 		<b>
@@ -88,13 +88,13 @@ while ($row = mysql_fetch_array($res))
 			while (list($k,$vv) = @each($DOM))
 			{
 		?>
-			<TR BGCOLOR=#eeeeee>
+			<tr bgcolor=#eeeeee>
 
-	  <TD> <b>
+	  <td> <b>
 		<?php echo $k;  ?></B> <?php echo ($DOMAINS[$k]); ?>
-		</b> </TD>
+		</b> </td>
 
-	  <TD width="626">
+	  <td width="626">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 			<td width="600"> 
@@ -120,14 +120,14 @@ while ($row = mysql_fetch_array($res))
 			</td>
 		  </tr>
 		</table>
-			  </TD>
-			</TR>
+			  </td>
+			</tr>
 			<?php
 		 	}
 		?>
-  </TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+  </table>
+</td>
+</tr>
+</table>
+</body>
+</html>

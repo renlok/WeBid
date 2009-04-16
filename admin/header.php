@@ -29,7 +29,7 @@ include $include_path . 'functions_admin.php';
 <table width="100%" height="54" border="0" cellpadding="2" cellspacing="2" background="images/bac_hea.gif">
   <tr> 
 	<td width="285" rowspan="2" valign="top">
-		<A HREF=index.php TARGET=_top><img src="images/logo.gif" hspace="5" vspace="2" BORDER=0></A>
+		<A HREF=index.php TARGET=_top><img src="images/logo.gif" hspace="5" vspace="2" border=0></A>
 	</td>
 	<td height="20">
 		<img src="images/t_adm_be.gif" width="192" height="16" hspace="5">

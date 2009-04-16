@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -108,7 +108,7 @@ if (isset($_POST['act']) && !isset($ERR)){
 }
 
 ?>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 function window_open(pagina,titulo,ancho,largo,x,y){
 	
@@ -144,26 +144,26 @@ function selectAll(formObj, isInverse)
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD align="center">
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td align="center">
 <BR>
 <form name="conf" action="increments.php" method="post">
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-		<TR>
-			<TD ALIGN=CENTER class=title>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+		<tr>
+			<td align="center" class=title>
 				<?php print $MSG['128']; ?>
-			</TD>
-		</TR>
-		<TR>
-			<TD>
-				<TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table width=100% cellpadding=2 bgcolor="#FFFFFF">
 					<?php
 					if (isset($ERR) || isset($msg))
 					{
 					?>
-						<TR BGCOLOR=yellow>
-						<TD COLSPAN="5" ALIGN=CENTER><B>
+						<tr bgcolor=yellow>
+						<td colspan="5" align="center"><B>
 						<?php
 						  if ($$ERR) {
 								print $$ERR;
@@ -173,40 +173,40 @@ function selectAll(formObj, isInverse)
 								}
 							}
 							?>
-						  </B></TD>
-					  </TR>
+						  </B></td>
+					  </tr>
 					 <?php
 					}
 					 ?>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD COLSPAN=4> 
+					<tr>
+						<td width=50></td>
+						<td COLSPAN=4> 
 							<?php
 							print $MSG['135'];
 							?>
 							<BR><BR>
 							[&nbsp;<A HREF=javascript:window_open('converter.php','incre',650,200,30,30)><?php echo $MSG['5010']; ?></A>&nbsp;]
-							 </TD>
-					</TR>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD BGCOLOR="#EEEEEE">
+							 </td>
+					</tr>
+					<tr>
+						<td width=50></td>
+						<td bgcolor="#EEEEEE">
 							<B>
 							<?php print $MSG['240']; ?>
-							</B> </TD>
-						<TD BGCOLOR="#EEEEEE">
+							</B> </td>
+						<td bgcolor="#EEEEEE">
 							<B>
 							<?php print $MSG['241']; ?>
-							</B> </TD>
-						<TD BGCOLOR="#EEEEEE">
+							</B> </td>
+						<td bgcolor="#EEEEEE">
 							<B>
 							<?php print $MSG['137']; ?>
-							</B> </TD>
-						<TD BGCOLOR="#EEEEEE">
+							</B> </td>
+						<td bgcolor="#EEEEEE">
 							<B>
 							<?php print $MSG['008']; ?>
-							</B> </TD>
-					</TR>
+							</B> </td>
+					</tr>
 					<?php
 					$query = "select * from " . $DBPrefix . "increments order by low";
 					$result = mysql_query($query);
@@ -227,55 +227,55 @@ function selectAll(formObj, isInverse)
 						$high = number_format(mysql_result($result,$i,"high"),2,'.',',');
 						$increment = number_format(mysql_result($result,$i,"increment"),2,'.',',');
 						*/
-						print "<TR>
-										 <TD WIDTH=50></TD>
-										 <TD><INPUT TYPE=text NAME=lows[] VALUE=\"".chop($low)."\" SIZE=10></TD>
-										 <TD><INPUT TYPE=text NAME=highs[] VALUE=\"".chop($high)."\" SIZE=10></TD>
-										 <TD><INPUT TYPE=text NAME=increments[] VALUE=\"".chop($increment)."\" SIZE=10></TD>
-										 <TD align=center><INPUT TYPE=checkbox NAME=delete[] VALUE=\"$i\"></TD>
-										 </TR>";
+						print "<tr>
+										 <td width=50></td>
+										 <td><input type=text NAME=lows[] VALUE=\"".chop($low)."\" SIZE=10></td>
+										 <td><input type=text NAME=highs[] VALUE=\"".chop($high)."\" SIZE=10></td>
+										 <td><input type=text NAME=increments[] VALUE=\"".chop($increment)."\" SIZE=10></td>
+										 <td align=center><input type=checkbox NAME=delete[] VALUE=\"$i\"></td>
+										 </tr>";
 						$i++;
 					}
-					print "<TR>
-	 <TD WIDTH=50>
+					print "<tr>
+	 <td width=50>
 	  Add
-	 </TD>
-	 <TD>
-	 <INPUT TYPE=text NAME=lows[] SIZE=10>
-	 </TD>
-	 <TD>
-	 <INPUT TYPE=text NAME=highs[] SIZE=10>
-	 </TD>
-	 <TD>
-	 <INPUT TYPE=text NAME=increments[] SIZE=10>
-	 </TD>
-	 <TD align=center>
+	 </td>
+	 <td>
+	 <input type=text NAME=lows[] SIZE=10>
+	 </td>
+	 <td>
+	 <input type=text NAME=highs[] SIZE=10>
+	 </td>
+	 <td>
+	 <input type=text NAME=increments[] SIZE=10>
+	 </td>
+	 <td align=center>
 	 <a href=\"javascript: void(0)\" onclick=\"selectAll(document.forms[0],1)\">".$MSG['30_0102']."</A>
-	 </TD>
-	 </TR>";
+	 </td>
+	 </tr>";
 					
 ?>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD>
+					<tr>
+						<td width=50></td>
+						<td>
 						<input type="hidden" name="action" value="go">
-							<INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
-						</TD>
-					</TR>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD> </TD>
-					</TR>
-				</TABLE>
-			</TD>
-		</TR>
-	</TABLE>
-	</FORM>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+							<input type="submit" name="act" value="<?php print $MSG['089']; ?>">
+						</td>
+					</tr>
+					<tr>
+						<td width=50></td>
+						<td> </td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</form>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

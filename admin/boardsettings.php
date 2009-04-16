@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -38,12 +38,12 @@ if (mysql_num_rows($res) > 0)
 	$SETTINGS = mysql_fetch_array($res);
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
 <tr>
 	<td background="images/bac_barint.gif" colspan="2">
 		<table width="100%" border="0" cellspacing="5" cellpadding="0">
@@ -57,91 +57,91 @@ if (mysql_num_rows($res) > 0)
 <tr>
 	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-<TR>
-<TD>
+<tr>
+<td>
 <CENTER>
 				<BR>
-				<FORM NAME=conf ACTION="" METHOD=POST>
-					<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-						<TR>
-							<TD ALIGN=CENTER><FONT COLOR=#FFFFFF FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="4"><B>
+				<form NAME=conf ACTION="" METHOD=POST>
+					<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+						<tr>
+							<td align="center"><FONT COLOR=#FFFFFF FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="4"><B>
 								<?php print $MSG['5047']; ?>
-								</B></FONT></TD>
-						</TR>
-						<TR>
-							<TD>
+								</B></FONT></td>
+						</tr>
+						<tr>
+							<td>
 
-				<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+				<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
 				  <?php
 					  if (!empty($ERR))
 					  {
 				  ?>
-				  <TR BGCOLOR=yellow>
-					<TD COLSPAN="2" ALIGN=CENTER><B><FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="2" COLOR="#FF0000">
+				  <tr bgcolor=yellow>
+					<td colspan="2" align="center"><B><FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="2" COLOR="#FF0000">
 					  <?php print $ERR; ?>
-					  </FONT></B></TD>
-				  </TR>
+					  </FONT></B></td>
+				  </tr>
 				  <?php
 					  }
 				   ?>
-				  <TR VALIGN="TOP">
-					<TD WIDTH=195 HEIGHT="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
+				  <tr valign="top">
+					<td width=195 height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
 					  <?php echo $MSG['5048']; ?>
-					  </FONT></TD>
-					<TD WIDTH="437" HEIGHT="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  <INPUT TYPE="radio" NAME="boards" VALUE="y" <?if ($SETTINGS[boards] == "y") print " CHECKED"?>>
+					  </FONT></td>
+					<td width="437" height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
+					  <input type="radio" name="boards" value="y" <?if ($SETTINGS[boards] == "y") print " CHECKED"?>>
 					  <?php print $MSG['030']; ?>
-					  <INPUT TYPE="radio" NAME="boards" VALUE="n" <?if ($SETTINGS[boards] == "n") print " CHECKED"?>>
+					  <input type="radio" name="boards" value="n" <?if ($SETTINGS[boards] == "n") print " CHECKED"?>>
 					  <?php print $MSG['029']; ?>
-					  </FONT></TD>
-				  </TR>
-				  <TR VALIGN="TOP">
-					<TD WIDTH=195>&nbsp;</TD>
-					<TD WIDTH="437"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  </FONT></TD>
-				  </TR>
-				  <TR VALIGN="TOP">
-					<TD WIDTH=195 HEIGHT="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
+					  </FONT></td>
+				  </tr>
+				  <tr valign="top">
+					<td width=195>&nbsp;</td>
+					<td width="437"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
+					  </FONT></td>
+				  </tr>
+				  <tr valign="top">
+					<td width=195 height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
 					  <?php echo $MSG['5049']; ?>
-					  </FONT></TD>
-					<TD WIDTH="437" HEIGHT="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  <INPUT TYPE="radio" NAME="boardslink" VALUE="y" <?if ($SETTINGS[boardslink] == "y") print " CHECKED"?>>
+					  </FONT></td>
+					<td width="437" height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
+					  <input type="radio" name="boardslink" value="y" <?if ($SETTINGS[boardslink] == "y") print " CHECKED"?>>
 					  <?php print $MSG['030']; ?>
-					  <INPUT TYPE="radio" NAME="boardslink" VALUE="n" <?if ($SETTINGS[boardslink] == "n") print " CHECKED"?>>
+					  <input type="radio" name="boardslink" value="n" <?if ($SETTINGS[boardslink] == "n") print " CHECKED"?>>
 					  <?php print $MSG['029']; ?>
 					  <BR><?php echo $MSG['5050']; ?>
-					  </FONT></TD>
-				  </TR>
-				  <TR VALIGN="TOP">
-					<TD WIDTH=195>&nbsp;</TD>
-					<TD WIDTH="437"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  </FONT></TD>
-				  </TR>
-				  <TR VALIGN="TOP">
-					<TD WIDTH=195 HEIGHT="22">&nbsp;</TD>
-					<TD WIDTH="437" HEIGHT="22">&nbsp;</TD>
-				  </TR>
-				  <TR>
-					<TD WIDTH=195>
-					  <INPUT TYPE="hidden" NAME="action" VALUE="update">
-					</TD>
-					<TD WIDTH="437">
-					  <INPUT TYPE=submit NAME=act VALUE="<?php print $MSG['530']; ?>">
-					</TD>
-				  </TR>
-				  <TR>
-					<TD WIDTH=195></TD>
-					<TD WIDTH="437"> </TD>
-				  </TR>
-				</TABLE>
-							</TD>
-						</TR>
-					</TABLE>
-					</FORM>
+					  </FONT></td>
+				  </tr>
+				  <tr valign="top">
+					<td width=195>&nbsp;</td>
+					<td width="437"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
+					  </FONT></td>
+				  </tr>
+				  <tr valign="top">
+					<td width=195 height="22">&nbsp;</td>
+					<td width="437" height="22">&nbsp;</td>
+				  </tr>
+				  <tr>
+					<td width=195>
+					  <input type="hidden" name="action" value="update">
+					</td>
+					<td width="437">
+					  <input type=submit NAME=act value="<?php print $MSG['530']; ?>">
+					</td>
+				  </tr>
+				  <tr>
+					<td width=195></td>
+					<td width="437"> </td>
+				  </tr>
+				</table>
+							</td>
+						</tr>
+					</table>
+					</form>
 	</CENTER>
 
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</body>
+</html>

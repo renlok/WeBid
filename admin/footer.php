@@ -13,11 +13,11 @@
  ***************************************************************************/
 ?>
 
-<TABLE WIDTH="740" BORDER="0" ALIGN="center">
-	<TR>
-		<TD><CENTER><FONT FACE=Verdana,Arial SIZE=1 COLOR="#000000"> Copyright &copy; 2008, <a href="http://www.webidsupport.com//" target="_blank">WeBid</a></FONT></CENTER>
-		</TD>
-	</TR>
-</TABLE>
-</BODY>
-</HTML>
+<table width="740" border="0" ALIGN="center">
+	<tr>
+		<td><CENTER><FONT FACE=Verdana,Arial SIZE=1 COLOR="#000000"> Copyright &copy; 2008, <a href="http://www.webidsupport.com//" target="_blank">WeBid</a></FONT></CENTER>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

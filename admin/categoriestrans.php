@@ -13,7 +13,7 @@
  ***************************************************************************/
  
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 $language = (isset($_GET['lang'])) ? $_GET['lang'] : 'EN';
@@ -84,7 +84,7 @@ include $main_path."language/".$language."/categories.inc.php";
 ?>
 <html>
 <head>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript">
 function window_open(pagina,titulo,ancho,largo,x,y){
 	var Ventana= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+ancho+',height='+largo;
@@ -104,21 +104,21 @@ function window_open(pagina,titulo,ancho,largo,x,y){
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD ALIGN=CENTER><BR>
-<FORM NAME=conf ACTION="" METHOD=POST>
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-		<TR> 
-			<TD ALIGN=CENTER class=title>
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td align="center"><BR>
+<form NAME=conf ACTION="" METHOD=POST>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+		<tr> 
+			<td align="center" class=title>
 				<?php	print $MSG['078']; ?>
-				</B></TD>
-		</TR>
-		<TR> 
-			<TD> 
-				<TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
-					<TR> 
-						<TD COLSPAN=3> <P> 
+				</B></td>
+		</tr>
+		<tr> 
+			<td> 
+				<table width=100% cellpadding=2 bgcolor="#FFFFFF">
+					<tr> 
+						<td COLSPAN=3> <P> 
 						<?php 
 						print $MSG['161'];
 						echo '<p>';
@@ -139,21 +139,21 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 							}
 						}
 							?>
-						</P></TD>
-					</TR>
+						</P></td>
+					</tr>
 				</table>
-				<TABLE WIDTH=100% CELLPADDING=4 cellspacing="4" BGCOLOR="#FFFFFF">
-					<TR style="background-color: #eee;">
-						<TD WIDTH="72"> 
+				<table width=100% cellpadding=4 cellspacing="4" bgcolor="#FFFFFF">
+					<tr style="background-color: #eee;">
+						<td width="72"> 
 							<B> 
 							Default Name
-							</B> </TD>
-						<TD WIDTH="72">
+							</B> </td>
+						<td width="72">
 							<B> 
 							Translation
-							</B> </TD>
+							</B> </td>
 						<td>&nbsp;</td>
-					</TR>
+					</tr>
 					<?php
 					$query = "select * from " . $DBPrefix . "categories WHERE deleted=0 order by cat_name";
 					$result = mysql_query($query);
@@ -172,38 +172,38 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 						$sub_counter = mysql_result($result,$i,"sub_counter");
 						$cat_colour = mysql_result($result, $i, "cat_colour");
 						$cat_image = mysql_result($result, $i, "cat_image");
-						print "<TR valign=top style=\"background-color: $colourrow[$z];\">
-							 <TD VALIGN=top>
-							 <INPUT TYPE=hidden NAME=categories_id[$i] VALUE=\"$cat_id\">
-							 <INPUT TYPE=text NAME=categories_o[$cat_id] VALUE=\"$cat_name\" SIZE=45 disabled></TD>
-							 <td><INPUT TYPE=text NAME=categories[$cat_id] VALUE=\"$category_names[$cat_id]\" SIZE=40></td>
+						print "<tr valign=top style=\"background-color: $colourrow[$z];\">
+							 <td VALIGN=top>
+							 <input type=hidden NAME=categories_id[$i] VALUE=\"$cat_id\">
+							 <input type=text NAME=categories_o[$cat_id] VALUE=\"$cat_name\" SIZE=45 disabled></td>
+							 <td><input type=text NAME=categories[$cat_id] VALUE=\"$category_names[$cat_id]\" SIZE=40></td>
 							 <td>&nbsp;</td>
-							 </TR>";
+							 </tr>";
 						$i++;
 						$z = ($z == 1) ? 0 : 1;
 					}
 			?>
-					<TR> </TR>
-				</TABLE>	
-				<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#FFFFFF">
-					<TR>
-						<TD> 
+					<tr> </tr>
+				</table>	
+				<table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+					<tr>
+						<td> 
 							<CENTER>
-								<INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
+								<input type="submit" name="act" value="<?php print $MSG['089']; ?>">
 							</CENTER>
-						</TD>
-					</TR>
-				</TABLE>
+						</td>
+					</tr>
+				</table>
 				
-			</TD>
-		</TR>
-	</TABLE>
-	</FORM>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
+			</td>
+		</tr>
+	</table>
+	</form>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
 </body>
 </html>

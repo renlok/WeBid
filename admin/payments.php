@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -70,9 +70,9 @@ if ($_POST['act'] && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PH
 }
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 function selectAll(formObj, isInverse) 
 {
@@ -88,7 +88,7 @@ function selectAll(formObj, isInverse)
    }
 }
 </SCRIPT>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -104,26 +104,26 @@ function selectAll(formObj, isInverse)
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD align="center">
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td align="center">
 <BR>
-<FORM NAME=conf ACTION=payments.php METHOD=POST>
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-		<TR>
-			<TD ALIGN=CENTER class=title>
+<form NAME=conf ACTION=payments.php METHOD=POST>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+		<tr>
+			<td align="center" class=title>
 				<?php print $MSG['075']; ?>
-				</B></TD>
-		</TR>
-		<TR>
-			<TD>
-				<TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
+				</B></td>
+		</tr>
+		<tr>
+			<td>
+				<table width=100% cellpadding=2 bgcolor="#FFFFFF">
 					<?php
 					if (isset($ERR))
 					{
 					?>
-						<TR BGCOLOR=yellow>
-						<TD COLSPAN="3" ALIGN=CENTER><B>
+						<tr bgcolor=yellow>
+						<td colspan="3" align="center"><B>
 						<?php
 						  if ($$ERR) {
 								print $$ERR;
@@ -133,31 +133,31 @@ function selectAll(formObj, isInverse)
 								}
 							}
 							?>
-						  </B></TD>
-					  </TR>
+						  </B></td>
+					  </tr>
 					 <?php
 					}
 					 ?>
-					<TR>					
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD> 
+					<tr>					
+					<tr>
+						<td width=50></td>
+						<td> 
 							<?php
 							print $MSG['092'];
 							?>
-							</TD>
-					</TR>
-					<TR>
-						<TD WIDTH=3></TD>
-						<TD BGCOLOR="#EEEEEE">
+							</td>
+					</tr>
+					<tr>
+						<td width=3></td>
+						<td bgcolor="#EEEEEE">
 							<B>
 							<?php print $MSG['087']; ?>
-							</B> </TD>
-						<TD BGCOLOR="#EEEEEE">
+							</B> </td>
+						<td bgcolor="#EEEEEE">
 							<B>
 							<?php print $MSG['008']; ?>
-							</B> </TD>
-					</TR>
+							</B> </td>
+					</tr>
 					<?php
 					
 					//--
@@ -175,49 +175,49 @@ function selectAll(formObj, isInverse)
 						
 						$description 	= mysql_result($result,$i,"description");
 						
-						print "<TR>
-		 <TD WIDTH=50></TD>
-		 <TD>
-		 <INPUT TYPE=text NAME=new_payments[] VALUE=\"$description\" SIZE=25>
-		 </TD>
-		 <TD align=center>
-		 <INPUT TYPE=checkbox NAME=delete[] VALUE=$i>
-		 </TD>
-		 </TR>";
+						print "<tr>
+		 <td width=50></td>
+		 <td>
+		 <input type=text NAME=new_payments[] VALUE=\"$description\" SIZE=25>
+		 </td>
+		 <td align=center>
+		 <input type=checkbox NAME=delete[] VALUE=$i>
+		 </td>
+		 </tr>";
 						$i++;
 					}
 		?>
-		<TR>
-		 <TD WIDTH=50>
+		<tr>
+		 <td width=50>
 		  Add
-		 </TD>
-		 <TD>
-		 <INPUT TYPE=text NAME=new_payments[] SIZE=25>
-		 </TD>
-		 <TD align=center>
+		 </td>
+		 <td>
+		 <input type=text NAME=new_payments[] SIZE=25>
+		 </td>
+		 <td align=center>
 		 <a href="javascript: void(0)" onClick="selectAll(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A>
-		 </TD>
-		 </TR>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD>
-							<INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
-						</TD>
-					</TR>
-					<TR>
-						<TD WIDTH=50></TD>
-						<TD> </TD>
-					</TR>
-				</TABLE>
-			</TD>
-		</TR>
-	</TABLE>
-	</FORM>
-	</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+		 </td>
+		 </tr>
+					<tr>
+						<td width=50></td>
+						<td>
+							<input type="submit" name="act" value="<?php print $MSG['089']; ?>">
+						</td>
+					</tr>
+					<tr>
+						<td width=50></td>
+						<td> </td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</form>
+	</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

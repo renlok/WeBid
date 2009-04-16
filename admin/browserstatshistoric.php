@@ -14,7 +14,7 @@
  ***************************************************************************/
 
 	define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -38,10 +38,10 @@ include 'loggedin.inc.php';
 		}
 	}
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -57,9 +57,9 @@ include 'loggedin.inc.php';
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-  <TABLE WIDTH=780 CELLPADDING=2 CELLSPACING=1 BORDER=0 ALIGN="CENTER">
-	<TR BGCOLOR="#FFCC00">
-	  <TD ALIGN=CENTER colspan="2" bgcolor="#eeeeee">
+  <table width=780 cellpadding=2 cellspacing=1 border=0 align="center">
+	<tr bgcolor="#FFCC00">
+	  <td align="center" colspan="2" bgcolor="#eeeeee">
 		<p class="title" style="color:#000000">
 		  <?php echo $MSG['5167']."<I>".$system->SETTINGS['sitename']."</I>"; ?>
 		  </b> <BR>
@@ -71,12 +71,12 @@ include 'loggedin.inc.php';
 			<A HREF="viewdomainstats.php"><?php echo $MSG['5166']; ?></A> |
 			<A HREF="viewplatformstats.php"><?php echo $MSG['5318']; ?></A>
 			</p>
-	  </TD>
-	</TR>
-	<TR BGCOLOR=#FFFFFF>
-	  <TD width="80">&nbsp;</TD>
-	  <TD width="692">&nbsp;</TD>
-	</TR>
+	  </td>
+	</tr>
+	<tr bgcolor=#FFFFFF>
+	  <td width="80">&nbsp;</td>
+	  <td width="692">&nbsp;</td>
+	</tr>
 	<tr bgcolor="#CCCCCC">
 	  <td width="80" height="21">
 		<b>
@@ -92,20 +92,20 @@ include 'loggedin.inc.php';
 			while (list($k,$v) = each($YEARS))
 			{
 		?>
-			<TR BGCOLOR=yellow>
-				<TD COLSPAN=2 >
+			<tr bgcolor=yellow>
+				<td COLSPAN=2 >
 				<B><?php echo $k; ?></B>
-				</TD>
-			</TR>
+				</td>
+			</tr>
 			<?php
 				while (list($t,$z) = each($v))
 				{
 			?>
-			<TR BGCOLOR=#eeeeee>
-			  <TD width="80"><b>
+			<tr bgcolor=#eeeeee>
+			  <td width="80"><b>
 				<?php echo $t; ?>
-				</b> </TD>
-			  <TD width="692">
+				</b> </td>
+			  <td width="692">
 
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		  <tr>
@@ -150,16 +150,16 @@ include 'loggedin.inc.php';
 			</td>
 		  </tr>
 		</table>
-			  </TD>
-			</TR>
+			  </td>
+			</tr>
 			<?php
 				}
 		 	}
 		}
 	?>
-  </TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+  </table>
+</td>
+</tr>
+</table>
+</body>
+</html>

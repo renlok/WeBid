@@ -13,7 +13,7 @@
  ***************************************************************************/
  
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -92,7 +92,7 @@ if (!ini_get('register_globals')) {
 	   array_unshift($superglobales, $_SESSION);
    }
    foreach ($superglobales as $superglobal) {
-	   extract($superglobal, EXTR_SKIP);
+	   extract($superglobal, EXtr_SKIP);
    }
 }
 
@@ -122,7 +122,7 @@ if ($_POST['act'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER
 					print "Database access error - abnormal termination ".mysql_error();
 					exit;
 				}
-				$updated = TRUE;
+				$updated = trUE;
 			}
 			$i++;
 		}
@@ -138,7 +138,7 @@ if ($_POST['act'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER
 				print "Database access error - abnormal termination ".mysql_error();
 				exit;
 			}
-			$updated = TRUE;
+			$updated = trUE;
 		}
 	}
 	
@@ -151,7 +151,7 @@ if ($_POST['act'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER
 			print "Database access error - abnormal termination ".mysql_error();
 			exit;
 		}
-		$updated = TRUE;
+		$updated = trUE;
 	}
 
 	//-- If something has been modified or deleted
@@ -164,7 +164,7 @@ if ($_POST['act'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER
 ?>
 <html>
 <head>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript">
 function window_open(pagina,titulo,ancho,largo,x,y){
 	var Ventana= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+ancho+',height='+largo;
@@ -197,22 +197,22 @@ function selectAllDelete(formObj, isInverse)
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD ALIGN=CENTER><BR>
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td align="center"><BR>
 <form name="conf" action="" method="post">
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-		<TR> 
-			<TD ALIGN=CENTER class=title>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+		<tr> 
+			<td align="center" class=title>
 				<?php print $MSG['078']; ?>
-				</B></TD>
-		</TR>
-		<TR> 
-			<TD> 
-				<TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
-					<TR> 
-						<TD WIDTH=10></TD>
-						<TD COLSPAN=4> <P> 
+				</B></td>
+		</tr>
+		<tr> 
+			<td> 
+				<table width=100% cellpadding=2 bgcolor="#FFFFFF">
+					<tr> 
+						<td width=10></td>
+						<td COLSPAN=4> <P> 
 						<?php 
 						print $MSG['161'];
 						if ($$ERR) {
@@ -228,11 +228,11 @@ function selectAllDelete(formObj, isInverse)
 						</P>
 						  <P><img src="../images/nodelete.gif" width="20" height="21"> 
 						  <?php echo $MGS_2__0030; ?>
-							</P></TD>
-					</TR>
-					<TR> 
-						<TD WIDTH=10 HEIGHT="21"></TD>
-						<TD COLSPAN=4 HEIGHT="21"> 
+							</P></td>
+					</tr>
+					<tr> 
+						<td width=10 height="21"></td>
+						<td COLSPAN=4 height="21"> 
 						<?php 
 						if ($parent > 0) {
 							$father = $parent;
@@ -262,29 +262,29 @@ function selectAllDelete(formObj, isInverse)
 							print $navigation;
 						}
 						?>
-						</TD>
-					</TR>
-					<TR> 
-						<TD WIDTH=10></TD>
-						<TD BGCOLOR="#EEEEEE" WIDTH="40%"> 
+						</td>
+					</tr>
+					<tr> 
+						<td width=10></td>
+						<td bgcolor="#EEEEEE" width="40%"> 
 							<B> 
 							<?php print $MSG['087']; ?>
-							</B> </TD>
-						<TD BGCOLOR="#EEEEEE" WIDTH="20%"> 
+							</B> </td>
+						<td bgcolor="#EEEEEE" width="20%"> 
 							<!-- Category colour -->
 							<B> 
 							<?php print $MSG['328']; ?>
-							</B> </TD>
-						<TD BGCOLOR="#EEEEEE" WIDTH="20%"> 
+							</B> </td>
+						<td bgcolor="#EEEEEE" width="20%"> 
 							<!-- Image location -->
 							<B> 
 							<?php print $MSG['329']; ?>
-							</B> </TD>
-						<TD BGCOLOR="#EEEEEE" WIDTH="20%"> 
+							</B> </td>
+						<td bgcolor="#EEEEEE" width="20%"> 
 							<B> 
 							<?php print $MSG['008']; ?>
-							</B> </TD>
-					</TR>
+							</B> </td>
+					</tr>
 					<?php
 					
 					//-- Get first level categories
@@ -318,85 +318,85 @@ function selectAllDelete(formObj, isInverse)
 						} else {
 							$hassubs = 0;
 						}
-						print "<TR valign=top style=\"background-color: $colourrow[$z];\">
-							 <TD WIDTH=10 ALIGN=RIGHT VALIGN=TOP>
+						print "<tr valign=top style=\"background-color: $colourrow[$z];\">
+							 <td width=10 ALIGN=RIGHT VALIGN=TOP>
 							 <A HREF=\"categories.php?parent=$cat_id&name=".urlencode($cat_name)."\">
-							 <IMG SRC=\"../images/plus.gif\" BORDER=0 ALT=\"Browse Subcategories\">
+							 <IMG SRC=\"../images/plus.gif\" border=0 ALT=\"Browse Subcategories\">
 							 </A>
-							 </TD>
-							 <TD VALIGN=top>
-							 <INPUT TYPE=hidden NAME=categories_id[$i] VALUE=\"$cat_id\">
-							 <INPUT TYPE=hidden NAME=old_categories[$i] VALUE=\"$cat_name\">
+							 </td>
+							 <td VALIGN=top>
+							 <input type=hidden NAME=categories_id[$i] VALUE=\"$cat_id\">
+							 <input type=hidden NAME=old_categories[$i] VALUE=\"$cat_name\">
 							 <table width=100% boder=0 cellpadding=1 cellspacing=0>
-							 <TR>
-							 <TD><INPUT TYPE=text NAME=categories[$cat_id] VALUE=\"$cat_name\" SIZE=50></TD></TR>
-							 </table></TD>
-							 <TD>
-							 <INPUT TYPE=hidden NAME=old_colour[$cat_id] VALUE=\"$cat_colour\">
-							 <INPUT TYPE=text NAME=colour[$cat_id] VALUE=\"$cat_colour\" SIZE=25>
-							 </TD>
-							 <TD>
-							 <INPUT TYPE=hidden NAME=old_image[$cat_id] VALUE=\"$cat_image\">
-							 <INPUT TYPE=text NAME=image[$cat_id] VALUE=\"$cat_image\" SIZE=25>
-							 </TD>
-							 <TD align=center>";
+							 <tr>
+							 <td><input type=text NAME=categories[$cat_id] VALUE=\"$cat_name\" SIZE=50></td></tr>
+							 </table></td>
+							 <td>
+							 <input type=hidden NAME=old_colour[$cat_id] VALUE=\"$cat_colour\">
+							 <input type=text NAME=colour[$cat_id] VALUE=\"$cat_colour\" SIZE=25>
+							 </td>
+							 <td>
+							 <input type=hidden NAME=old_image[$cat_id] VALUE=\"$cat_image\">
+							 <input type=text NAME=image[$cat_id] VALUE=\"$cat_image\" SIZE=25>
+							 </td>
+							 <td align=center>";
 						
 						if ($counter == 0 && $sub_counter == 0 && $hassubs == 0) {
-							print "<INPUT TYPE=checkbox NAME=delete[$cat_id] VALUE=$cat_id>";
+							print "<input type=checkbox NAME=delete[$cat_id] VALUE=$cat_id>";
 						} else {
 							print "<IMG SRC=\"../images/nodelete.gif\" ALT=\"You cannot delete this category\">";
 						}
-						print "</TD>
-									 </TR>";
+						print "</td>
+									 </tr>";
 						$i++;
 						$z = ($z == 1) ? 0 : 1;
 					}
 			?>
-			<TR>
-			<TD colspan=4>&nbsp;</TD>
-			<TD align=center><a href="javascript: void(0)" onClick="selectAllDelete(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A></TD>
-			</TR>
-		<TR>
-		 <TD WIDTH=50>
+			<tr>
+			<td colspan=4>&nbsp;</td>
+			<td align=center><a href="javascript: void(0)" onClick="selectAllDelete(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A></td>
+			</tr>
+		<tr>
+		 <td width=50>
 		  Add
-		 </TD>
-		 <TD>
-		 <INPUT TYPE=hidden NAME=parent VALUE="<?php echo $parent; ?>">
-		 <INPUT TYPE=hidden NAME=name VALUE="<?php echo $name; ?>">
-		 <INPUT TYPE=text NAME=new_category SIZE=25>
-		 </TD>
-		 <TD>
-		 <INPUT TYPE=text NAME=cat_colour SIZE=25>
-		 </TD>
-		 <TD>
-		 <INPUT TYPE=text NAME=cat_image SIZE=25>
-		 </TD>
-		 <TD align=center>
-		 </TD>
-		 <TD>
-		 </TD>
-		 </TR>
-					<TR> </TR>
-				</TABLE>	
-				<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#FFFFFF">
-					<TR>
-						<TD> 
+		 </td>
+		 <td>
+		 <input type=hidden NAME=parent value="<?php echo $parent; ?>">
+		 <input type=hidden NAME=name value="<?php echo $name; ?>">
+		 <input type=text NAME=new_category SIZE=25>
+		 </td>
+		 <td>
+		 <input type=text NAME=cat_colour SIZE=25>
+		 </td>
+		 <td>
+		 <input type=text NAME=cat_image SIZE=25>
+		 </td>
+		 <td align=center>
+		 </td>
+		 <td>
+		 </td>
+		 </tr>
+					<tr> </tr>
+				</table>	
+				<table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#FFFFFF">
+					<tr>
+						<td> 
 							<CENTER>
-								<INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
+								<input type="submit" name="act" value="<?php print $MSG['089']; ?>">
 							</CENTER>
-						</TD>
-					</TR>
-				</TABLE>
+						</td>
+					</tr>
+				</table>
 				
-			</TD>
-		</TR>
-	</TABLE>
-	</FORM>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
+			</td>
+		</tr>
+	</table>
+	</form>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
 </body>
 </html>

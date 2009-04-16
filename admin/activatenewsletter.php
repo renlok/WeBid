@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path . 'fonts.inc.php';
@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 		move_uploaded_file($_FILES['logo']['tmp_name'],$TARGET);
 		chmod($TARGET,0666);
 		
-		$LOGOUPLOADED = TRUE;
+		$LOGOUPLOADED = trUE;
 	}
 	
 	$query = "UPDATE " . $DBPrefix . "settings SET

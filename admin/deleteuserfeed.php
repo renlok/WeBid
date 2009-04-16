@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 $id = $_GET['id'];
@@ -22,9 +22,9 @@ if ($id > 0){
 	$res = mysql_query($sql);
 	if (!$res){
 ?>
-	<TABLE WIDTH="100%" BGCOLOR="#FFFFFF" BORDER=0 CELLPADDING="0" CELLSPACING="0">
-	<TR>
-	<TD>
+	<table width="100%" bgcolor="#FFFFFF" border=0 cellpadding="0" cellspacing="0">
+	<tr>
+	<td>
 	<BR>
 	<CENTER>
 	<BR>

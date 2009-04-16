@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -33,14 +33,14 @@ if (isset($_POST['action']) && $_POST['action'] == "insert") {
 	}
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<FORM NAME="newcurrency" METHOD="post" ACTION="">
+<form name="newcurrency" METHOD="post" ACTION="">
 
-<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="1" ALIGN="CENTER">
+<table width="100%" border="0" cellspacing="0" cellpadding="1" align="center">
 <tr> 
 	<td background="images/bac_barint.gif">
 		<table width="100%" border="0" cellspacing="5" cellpadding="0">
@@ -54,45 +54,45 @@ if (isset($_POST['action']) && $_POST['action'] == "insert") {
 <tr>
 	<td align="center" valign="middle">&nbsp;</td>
 </tr>
-<TR>
-	<TD>
-		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-		<TR>
-			<TD ALIGN=CENTER class=title>
+<tr>
+	<td>
+		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+		<tr>
+			<td align="center" class=title>
 				<?php echo $MSG['5031']; ?>
-			</TD>
-		</TR>
+			</td>
+		</tr>
 		<tr>
 		<td>
-			<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+			<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
 			<?
 			if (!empty($ERR))
 			{
 			?>
-			<TR BGCOLOR="yellow">
-				<TD COLSPAN="2"> <FONT SIZE=2 COLOR=red><B>
+			<tr bgcolor="yellow">
+				<td colspan="2"> <FONT SIZE=2 COLOR=red><B>
 				<?php echo $ERR; ?>
-				</B></FONT></TD>
-			</TR>
+				</B></FONT></td>
+			</tr>
 			<?
 			}
 			?>
-			<TR BGCOLOR="#FFFFFF">
-				<TD WIDTH="24%"><?php echo $MSG['5034']; ?></TD>
-				<TD WIDTH="76%">
-				<INPUT TYPE="text" NAME="name" SIZE="25" MAXLENGTH="255" VALUE="<?php echo $_POST['name']; ?>">
-			</TD>
-			</TR>
-			<TR BGCOLOR="#FFFFFF">
-				<TD WIDTH="24%" VALIGN="TOP"><?php echo $MSG['5035']; ?></TD>
-				<TD WIDTH="76%"><FONT FACE="Verdana,Helvetica,Arial" SIZE="2"><?php echo $MSG['5036']; ?><BR>
-				<INPUT TYPE="text" NAME="msgstoshow" SIZE="4" MAXLENGTH="4" VALUE="<?php echo $_POST['msgstoshow']; ?>">
-				</TD>
-			</TR>
-			<TR BGCOLOR="#FFFFFF">
-				<TD WIDTH="24%"><?php echo $MSG['5037']; ?></TD>
-				<TD WIDTH="76%">
-				<INPUT TYPE="radio" NAME="active" VALUE="1"
+			<tr bgcolor="#FFFFFF">
+				<td width="24%"><?php echo $MSG['5034']; ?></td>
+				<td width="76%">
+				<input type="text" name="name" SIZE="25" MAXLENGTH="255" value="<?php echo $_POST['name']; ?>">
+			</td>
+			</tr>
+			<tr bgcolor="#FFFFFF">
+				<td width="24%" valign="top"><?php echo $MSG['5035']; ?></td>
+				<td width="76%"><FONT FACE="Verdana,Helvetica,Arial" SIZE="2"><?php echo $MSG['5036']; ?><BR>
+				<input type="text" name="msgstoshow" SIZE="4" MAXLENGTH="4" value="<?php echo $_POST['msgstoshow']; ?>">
+				</td>
+			</tr>
+			<tr bgcolor="#FFFFFF">
+				<td width="24%"><?php echo $MSG['5037']; ?></td>
+				<td width="76%">
+				<input type="radio" name="active" value="1"
 				<?
 				if ($_POST['active'] == 1 || !isset($_POST['active']))
 				{
@@ -101,7 +101,7 @@ if (isset($_POST['action']) && $_POST['action'] == "insert") {
 				?>
 				>
 				<?php echo $MSG['5038']; ?>
-				<INPUT TYPE="radio" NAME="active" VALUE="2"
+				<input type="radio" name="active" value="2"
 				<?
 				if ($_POST['active'] == 2)
 				{
@@ -109,26 +109,26 @@ if (isset($_POST['action']) && $_POST['action'] == "insert") {
 				}
 				?>
 				>
-				<?php echo $MSG['5039']; ?></TD>
-			</TR>
-			<TR BGCOLOR="#FFFFFF">
-				<TD WIDTH="24%">
-				<INPUT TYPE="hidden" NAME="action" VALUE="insert">
-				</TD>
-				<TD WIDTH="76%">
-				<INPUT TYPE="submit" NAME="Submit" VALUE="<?php echo $MSG['5029']; ?>">
-				</TD>
-			</TR>
-			</TABLE>
+				<?php echo $MSG['5039']; ?></td>
+			</tr>
+			<tr bgcolor="#FFFFFF">
+				<td width="24%">
+				<input type="hidden" name="action" value="insert">
+				</td>
+				<td width="76%">
+				<input type="submit" name="Submit" value="<?php echo $MSG['5029']; ?>">
+				</td>
+			</tr>
+			</table>
 		</td>
 		</tr>
 		</table>
-	</TD>
-</TR>
-<TR align=center>
-	<TD BGCOLOR="#EEEEEE"><A HREF="boards.php"><?php echo $MSG['5033']; ?></A></TD>
-</TR>
-</TABLE>
-</FORM>
-</BODY>
-</HTML>
+	</td>
+</tr>
+<tr align=center>
+	<td bgcolor="#EEEEEE"><A HREF="boards.php"><?php echo $MSG['5033']; ?></A></td>
+</tr>
+</table>
+</form>
+</body>
+</html>

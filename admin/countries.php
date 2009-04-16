@@ -13,11 +13,11 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$DBGSTR = "DBGSTR: ". count($delete). "-" .
+$DBGStr = "DBGStr: ". count($delete). "-" .
 count($old_countries) . " <br><br>\n";
 include "./rebuild_html.php";
 
@@ -47,7 +47,7 @@ if (isset($_POST['act'])) {
   // precede it with an " or " in the SQL string
   $first = 1;
   for ($i = 0; $i < count($delete); $i++) {
-	$DBGSTR .= 'Deleting[' . $i .'] ' . $delete[$i] . '<br>' . "\n";
+	$DBGStr .= 'Deleting[' . $i .'] ' . $delete[$i] . '<br>' . "\n";
 	if (!$first) {
 		$sqlstr .= " or ";
 	} else {
@@ -55,7 +55,7 @@ if (isset($_POST['act'])) {
 	}
 	$sqlstr .= "country = '" . $system->cleanvars($old_countries[$delete[$i]]) . "'";
   }
-  $DBGSTR .= $sqlstr;
+  $DBGStr .= $sqlstr;
   
   // If the delete array is > 0 in size
   if ( count($delete) ) {
@@ -73,12 +73,12 @@ if (isset($_POST['act'])) {
   */
   for ( $i = 0; $i < count($_POST['old_countries']); $i++) {
 	if ( "hey" != "hey")
-	$DBGSTR .= "hey != hey";
+	$DBGStr .= "hey != hey";
 	if ( $old_countries[$i] != $new_countries[$i]) {
 	  $sqlstr = "UPDATE " . $DBPrefix . "countries SET
 	  country = '" .  $system->cleanvars($new_countries[$i]) . "'
 	  WHERE country = '" . $system->cleanvars($old_countries[$i]) . "'";
-	  $DBGSTR .= "<br>" . $sqlstr;
+	  $DBGStr .= "<br>" . $sqlstr;
 	  $result = mysql_query($sqlstr);
 	}
   }
@@ -98,9 +98,9 @@ if (isset($_POST['act'])) {
 include $include_path . "countries.inc.php";
 
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <SCRIPT type="text/javascript">
 function selectAll(formObj, isInverse) 
 {
@@ -116,7 +116,7 @@ function selectAll(formObj, isInverse)
    }
 }
 </SCRIPT>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <?php print $TPL_info_err . ""?>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -132,34 +132,34 @@ function selectAll(formObj, isInverse)
 	<td align="center" valign="middle">&nbsp;</td>
   </tr>
   <tr>
-	<td align="center" valign="middle"><TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-		<TR>
-		  <TD><CENTER>
+	<td align="center" valign="middle"><table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+		<tr>
+		  <td><CENTER>
 			  <BR>
 			</CENTER>
-			<FORM NAME=conf action="<?php echo basename($_SERVER['PHP_SELF']); ?>" METHOD=POST>
-			  <TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-				<TR>
-				  <TD ALIGN=CENTER class=title><?php print $MSG['081']; ?></TD>
-				</TR>
-				<TR>
-				  <TD><TABLE WIDTH=100% CELLPADDING=2 BGCOLOR="#FFFFFF">
-					  <TR>
-						<TD WIDTH=50></TD>
-						<TD><p>
+			<form NAME=conf action="<?php echo basename($_SERVER['PHP_SELF']); ?>" METHOD=POST>
+			  <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+				<tr>
+				  <td align="center" class=title><?php print $MSG['081']; ?></td>
+				</tr>
+				<tr>
+				  <td><table width=100% cellpadding=2 bgcolor="#FFFFFF">
+					  <tr>
+						<td width=50></td>
+						<td><p>
 							<?php 
 							print $MSG['094'];
 							?>
 							</p>
 						  <p><img src="../images/nodelete.gif" width="20" height="21"> 
 							<?php echo $MGS_2__0030; ?>
-							 </p></TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH=50></TD>
-						<TD BGCOLOR="#EEEEEE"><B> <?php print $MSG['087']; ?> </B> </TD>
-						<TD BGCOLOR="#EEEEEE" align=center><B> <?php print $MSG['008']; ?> </B> </TD>
-					  </TR>
+							 </p></td>
+					  </tr>
+					  <tr>
+						<td width=50></td>
+						<td bgcolor="#EEEEEE"><B> <?php print $MSG['087']; ?> </B> </td>
+						<td bgcolor="#EEEEEE" align=center><B> <?php print $MSG['008']; ?> </B> </td>
+					  </tr>
 					  <?php
 					  
 					  $i = 1;
@@ -172,49 +172,49 @@ function selectAll(formObj, isInverse)
 					  	$USEDINUSERS = mysql_num_rows(mysql_query("SELECT id FROM " . $DBPrefix . "users WHERE country='".mysql_real_escape_string($countries[$i])."'"));
 					  	
 					  	print "
-					  <TR>
-						 <TD WIDTH=50></TD>
-						 <TD>
-						 <INPUT TYPE=hidden NAME=old_countries[] VALUE=\"".$countries[$i]."\" SIZE=25>
-						 <INPUT TYPE=text NAME=new_countries[] VALUE=\"".$countries[$i]."\" SIZE=45>
-						 </TD>
-						 <TD align=center>";
+					  <tr>
+						 <td width=50></td>
+						 <td>
+						 <input type=hidden NAME=old_countries[] VALUE=\"".$countries[$i]."\" SIZE=25>
+						 <input type=text NAME=new_countries[] VALUE=\"".$countries[$i]."\" SIZE=45>
+						 </td>
+						 <td align=center>";
 					  	if (!isset($USEDINUSERS) || $USEDINUSERS == 0) {
-					  		print "<INPUT TYPE=checkbox NAME=delete[] VALUE=\"$j\">";
+					  		print "<input type=checkbox NAME=delete[] VALUE=\"$j\">";
 					  	} else {
 					  		print "<IMG SRC=\"../images/nodelete.gif\" ALT=\"You cannot delete this category\">";
 					  	}
 					  	print "
-					  	</TD>
-					</TR>";
+					  	</td>
+					</tr>";
 					  	$i++;
 					  }
 					  ?>
-					<TR>
-						<TD WIDTH=50> Add</TD>
-						<TD>
-						<INPUT TYPE=text NAME=new_countries[] SIZE=25>
-						</TD>
-						 <TD align=center>
+					<tr>
+						<td width=50> Add</td>
+						<td>
+						<input type=text NAME=new_countries[] SIZE=25>
+						</td>
+						 <td align=center>
 						 <a href="javascript: void(0)" onClick="selectAll(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A>
-						 </TD>
-					</TR>				  
-					  <TR>
-						<TD WIDTH=50></TD>
-						<TD><INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['089']; ?>">
-						</TD>
-					  </TR>
-					  <TR>
-						<TD WIDTH=50></TD>
-						<TD></TD>
-					  </TR>
-					</TABLE></TD>
-				</TR>
-			  </TABLE>
-			</FORM></TD>
-		</TR>
-	  </TABLE></TD>
-  </TR>
-</TABLE>
-</BODY>
-</HTML>
+						 </td>
+					</tr>				  
+					  <tr>
+						<td width=50></td>
+						<td><input type="submit" name="act" value="<?php print $MSG['089']; ?>">
+						</td>
+					  </tr>
+					  <tr>
+						<td width=50></td>
+						<td></td>
+					  </tr>
+					</table></td>
+				</tr>
+			  </table>
+			</form></td>
+		</tr>
+	  </table></td>
+  </tr>
+</table>
+</body>
+</html>

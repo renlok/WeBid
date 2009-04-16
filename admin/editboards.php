@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -44,14 +44,14 @@ $system->check_mysql($res_, $query, __LINE__, __FILE__);
 $BOARD = mysql_fetch_array($res_);
 ?>
 
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<FORM NAME="newcurrency" METHOD="post" ACTION="">
+<form name="newcurrency" METHOD="post" ACTION="">
 
-  <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr> 
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
 		<tr> 
@@ -63,44 +63,44 @@ $BOARD = mysql_fetch_array($res_);
   <tr>
 	<td align="center" valign="middle">&nbsp;</td>
   </tr>
-		<TR>
+		<tr>
 			<td align="center" valign="middle">
 
-		<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
+		<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
 		<tr><td align="center" valign="middle">
-		<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-		  <TR>
-			<TD ALIGN=CENTER class=title colspan="2">
+		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+		  <tr>
+			<td align="center" class=title colspan="2">
 				<?php echo $MSG['5052']; ?>
-			</TD>
-		  </TR>
+			</td>
+		  </tr>
 		  <tr><td>
-		  <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+		  <table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
 		  <?
 			  if (!empty($ERR))
 			  {
 		  ?>
-		  <TR BGCOLOR=yellow>
-			<TD COLSPAN="2" ALIGN=CENTER><B><FONT COLOR="#FF0000">
+		  <tr bgcolor=yellow>
+			<td colspan="2" align="center"><B><FONT COLOR="#FF0000">
 			  <? print $ERR; ?>
-			  </FONT></B></TD>
-		  </TR>
+			  </FONT></B></td>
+		  </tr>
 		  <?
 			}
 		  ?>
-		  <TR>
-			<TD WIDTH="17%">
+		  <tr>
+			<td width="17%">
 			  <?php echo $MSG['5034']; ?>
-			</TD>
-			<TD>
-			  <INPUT TYPE="text" NAME="name" SIZE="25" MAXLENGTH="255" VALUE="<?php echo $BOARD[name]; ?>">
-			</TD>
-		  </TR>
-		  <TR>
-			<TD WIDTH="17%">
+			</td>
+			<td>
+			  <input type="text" name="name" SIZE="25" MAXLENGTH="255" value="<?php echo $BOARD[name]; ?>">
+			</td>
+		  </tr>
+		  <tr>
+			<td width="17%">
 			  <?php echo $MSG['5043']; ?>
-			</TD>
-			<TD>
+			</td>
+			<td>
 				<B>
 			  <?php echo $BOARD['messages']; ?>
 			  </B> &nbsp;&nbsp;
@@ -114,13 +114,13 @@ $BOARD = mysql_fetch_array($res_);
 			  <?
 				  }
 			  ?>
-			</TD>
-		  </TR>
-		  <TR>
-			<TD WIDTH="17%">
+			</td>
+		  </tr>
+		  <tr>
+			<td width="17%">
 			  <?php echo $MSG['5053']; ?>
-			</TD>
-			<TD>
+			</td>
+			<td>
 			  <?
 				  if ($BOARD['lastmessage'])
 				  {
@@ -131,22 +131,22 @@ $BOARD = mysql_fetch_array($res_);
 					  print "--";
 				  }
 			  ?>
-			</TD>
-		  </TR>
-		  <TR>
-			<TD WIDTH="17%" VALIGN="TOP"><?php echo $MSG['5035']; ?></TD>
-			<TD>
+			</td>
+		  </tr>
+		  <tr>
+			<td width="17%" valign="top"><?php echo $MSG['5035']; ?></td>
+			<td>
 			  <?php echo $MSG['5036']; ?>
 			  <BR>
-			  <INPUT TYPE="text" NAME="msgstoshow" SIZE="4" MAXLENGTH="4" VALUE="<?php echo $BOARD['msgstoshow']; ?>">
-			</TD>
-		  </TR>
-		  <TR>
-			<TD WIDTH="17%">
+			  <input type="text" name="msgstoshow" SIZE="4" MAXLENGTH="4" value="<?php echo $BOARD['msgstoshow']; ?>">
+			</td>
+		  </tr>
+		  <tr>
+			<td width="17%">
 			  <?php echo $MSG['5054']; ?>
-			</TD>
-			<TD>
-			  <INPUT TYPE="radio" NAME="active" VALUE="1"
+			</td>
+			<td>
+			  <input type="radio" name="active" value="1"
 			  <?
 				  if ($BOARD['active'] == 1)
 				  {
@@ -155,7 +155,7 @@ $BOARD = mysql_fetch_array($res_);
 			  ?>
 			  >
 			  <?php echo $MSG['5038']; ?>
-			  <INPUT TYPE="radio" NAME="active" VALUE="2"
+			  <input type="radio" name="active" value="2"
 			  <?
 				  if ($BOARD['active'] == 2)
 				  {
@@ -164,25 +164,25 @@ $BOARD = mysql_fetch_array($res_);
 			  ?>
 			  >
 			  <?php echo $MSG['5039']; ?>
-			</TD>
-		  </TR>
-		  <TR>
-			<TD WIDTH="17%">
-			  <INPUT TYPE="hidden" NAME="action" VALUE="update">
-			  <INPUT TYPE="hidden" NAME="id" VALUE="<?php echo $id; ?>">
-			</TD>
-			<TD>
-			  <INPUT TYPE="submit" NAME="Submit" VALUE="<?php echo $MSG['5029']; ?>">
-			</TD>
-		  </TR>
-		</TABLE>
+			</td>
+		  </tr>
+		  <tr>
+			<td width="17%">
+			  <input type="hidden" name="action" value="update">
+			  <input type="hidden" name="id" value="<?php echo $id; ?>">
+			</td>
+			<td>
+			  <input type="submit" name="Submit" value="<?php echo $MSG['5029']; ?>">
+			</td>
+		  </tr>
+		</table>
 		</td></tr>
-		</TABLE>
+		</table>
 		</td></tr>
-			</TD>
-		</TR>
-	</TABLE>
+			</td>
+		</tr>
+	</table>
 	<A HREF="boards.php"><?php echo strtoupper($MSG['5032']); ?></A>
-</FORM>
-</BODY>
-</HTML>
+</form>
+</body>
+</html>

@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -36,10 +36,10 @@ if (!$res_)
 	exit;
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -55,45 +55,45 @@ if (!$res_)
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD align="center">
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td align="center">
 	<BR>
-	<FORM NAME=this ACTION="<?php echo basename($_SERVER['PHP_SELF']); ?>" METHOD=POST>
-	<TABLE WIDTH="80%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7">
-	  <TR>
-		<TD ALIGN=CENTER class=title>
+	<form NAME=this ACTION="<?php echo basename($_SERVER['PHP_SELF']); ?>" METHOD=POST>
+	<table width="80%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
+	  <tr>
+		<td align="center" class=title>
 		  <?php print $MSG['_0008']; ?>
-		  </TD>
-	  </TR>
-	  <TR>
-		<TD>
-		  <TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#dddddd">
-			<TR VALIGN="TOP" BGCOLOR=white>
-			  <TD COLSPAN="6" ALIGN=CENTER> 
+		  </td>
+	  </tr>
+	  <tr>
+		<td>
+		  <table width=100% cellpadding=2 align="center" bgcolor="#dddddd">
+			<tr valign="top" bgcolor=white>
+			  <td colspan="6" align="center"> 
 				<A HREF="newbannersuser.php">
 				<?php echo $MSG['_0026']; ?>
-				</A></TD>
-			</TR>
-			<TR VALIGN="TOP" BGCOLOR="#eeeeee">
-			  <TD WIDTH="15%">
+				</A></td>
+			</tr>
+			<tr valign="top" bgcolor="#eeeeee">
+			  <td width="15%">
 				<?php echo $MSG['5180']; ?>
-				</TD>
-			  <TD WIDTH="25%">
+				</td>
+			  <td width="25%">
 				<?php echo $MSG['_0022']; ?>
-				</TD>
-			  <TD WIDTH="28%">
+				</td>
+			  <td width="28%">
 				<?php echo $MSG['303']; ?>
-				</TD>
-			  <TD WIDTH="11%" ALIGN=CENTER>
+				</td>
+			  <td width="11%" align="center">
 				<?php echo $MSG['_0025']; ?>
-				 </TD>
-			  <TD WIDTH="10%" ALIGN=CENTER>
+				 </td>
+			  <td width="10%" align="center">
 				<?php echo $MSG['_0024']; ?>
-				</TD>
-			  <TD WIDTH="11%" ALIGN=CENTER><?php echo $MSG['008']; ?>
-				</TD>
-			</TR>
+				</td>
+			  <td width="11%" align="center"><?php echo $MSG['008']; ?>
+				</td>
+			</tr>
 			<?php
 			while ($row = mysql_fetch_array($res_))
 			{
@@ -107,43 +107,43 @@ if (!$res_)
 				}
 				$COUNTER = mysql_num_rows($r);
 			?>
-			<TR VALIGN="TOP" BGCOLOR="#ffffff">
-			  <TD WIDTH="15%"> 
+			<tr valign="top" bgcolor="#ffffff">
+			  <td width="15%"> 
 				<A HREF="editbannersuser.php?id=<?php echo $row[id]; ?>"><?php echo $row[name]; ?></A>
-				 </TD>
-			  <TD WIDTH="25%"> 
+				 </td>
+			  <td width="25%"> 
 				<?php echo $row[company]; ?>
-				 </TD>
-			  <TD WIDTH="28%"> 
+				 </td>
+			  <td width="28%"> 
 				<A HREF="mailto:<?php echo $row[email]; ?>">
 				<?php echo $row[email]; ?>
-				</A>  </TD>
-			  <TD WIDTH="11%" ALIGN=CENTER>
+				</A>  </td>
+			  <td width="11%" align="center">
 				<?php echo $COUNTER; ?>
-				</TD>
-			  <TD WIDTH="10%" ALIGN=CENTER><A HREF="userbanners.php?id=<?php echo $row[id]; ?>"><IMG BORDER=0 SRC="./images/tool.gif"></A></TD>
-			  <TD WIDTH="11%" ALIGN=CENTER> &nbsp;
-				<INPUT TYPE="checkbox" NAME="delete[]" VALUE="<?php echo $row[id]; ?>">
-			  </TD>
-			</TR>
+				</td>
+			  <td width="10%" align="center"><A HREF="userbanners.php?id=<?php echo $row[id]; ?>"><IMG border=0 SRC="./images/tool.gif"></A></td>
+			  <td width="11%" align="center"> &nbsp;
+				<input type="checkbox" name="delete[]" value="<?php echo $row[id]; ?>">
+			  </td>
+			</tr>
 			<?php
 			}
 			?>
-			<TR VALIGN="TOP" ALIGN=CENTER BGCOLOR="#ffffff">
-			  <TD COLSPAN="6">
-				<INPUT TYPE="submit" NAME="Submit" VALUE="<?php echo $MSG['_0028']; ?>">
-			  </TD>
-			</TR>
-		  </TABLE>
-		</TD>
-	  </TR>
-	</TABLE>
-	</FORM>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+			<tr valign="top" align="center" bgcolor="#ffffff">
+			  <td colspan="6">
+				<input type="submit" name="Submit" value="<?php echo $MSG['_0028']; ?>">
+			  </td>
+			</tr>
+		  </table>
+		</td>
+	  </tr>
+	</table>
+	</form>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

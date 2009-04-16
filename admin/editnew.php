@@ -35,8 +35,8 @@ if (isset($_POST['action'])) {
 		}
 		reset($LANGUAGES);
 		while (list($k,$v) = each($LANGUAGES)){
-			$TR = @mysql_result(@mysql_query("SELECT title FROM " . $DBPrefix . "news_translated WHERE lang='".$k."' AND id = ".$_POST['id']), 0, "title"); 
-			if (!empty($TR)) {
+			$tr = @mysql_result(@mysql_query("SELECT title FROM " . $DBPrefix . "news_translated WHERE lang='".$k."' AND id = ".$_POST['id']), 0, "title"); 
+			if (!empty($tr)) {
 				$query = "UPDATE " . $DBPrefix . "news_translated SET 
 						title = '".addslashes($_POST['title'][$k])."',
 						content = '".addslashes($_POST['content'][$k])."'
@@ -46,7 +46,7 @@ if (isset($_POST['action'])) {
 						".$_POST['id'].", '$k', '".addslashes($_POST['title'][$k])."', '".addslashes($_POST['content'][$k])."')";
 			}
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			unset($TR);
+			unset($tr);
 		}	
 		header("Location: news.php");
 		exit;
@@ -63,19 +63,19 @@ if (isset($_POST['action'])) {
 	}
 	else
 	{
-		$CONT_TR = array();
-		$TIT_TR = array();
+		$CONT_tr = array();
+		$TIT_tr = array();
 		while ($arr = mysql_fetch_assoc($res)) {
-			$CONT_TR[$arr['lang']] = $arr['content'];
-			$TIT_TR[$arr['lang']] = $arr['title'];
+			$CONT_tr[$arr['lang']] = $arr['content'];
+			$TIT_tr[$arr['lang']] = $arr['title'];
 			$suspended = $arr['suspended'];
 		}
 	}
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <STYLE TYPE="text/css">
 body {
 scrollbar-face-color: #aaaaaa;
@@ -87,7 +87,7 @@ scrollbar-track-color: #cccccc;
 scrollbar-arrow-color: #ffffff;
 }</STYLE>
 <TITLE></TITLE>
-</HEAD>
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -105,93 +105,93 @@ scrollbar-arrow-color: #ffffff;
   <tr> 
 	<td align="center" valign="middle">
 	
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-	<TR>
-	 <TD ALIGN=CENTER class=title><?php print $MSG['343']; ?>
-	 </TD>
-	</TR>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
 	<tr>
-	<td><FORM NAME=addnew ACTION="<?php print basename($_SERVER['PHP_SELF']); ?>" METHOD="POST">
-		<TABLE WIDTH="100%" BORDER="0" CELLPADDING="5" CELLSPACING=1 bgcolor="#FFFFFF">
+	 <td align="center" class=title><?php print $MSG['343']; ?>
+	 </td>
+	</tr>
+	<tr>
+	<td><form NAME=addnew ACTION="<?php print basename($_SERVER['PHP_SELF']); ?>" METHOD="POST">
+		<table width="100%" border="0" cellpadding="5" cellspacing=1 bgcolor="#FFFFFF">
 
 		<?php
 		if ($ERR || $updated){
-		print "<TR><TD></TD><TD WIDTH=486>";
+		print "<tr><td></td><td width=486>";
 		if ($$ERR) print $$ERR;
 		if ($updated) print "Auction data updated";
-		print "</TD>
-						</TR>";
+		print "</td>
+						</tr>";
 		}
 		?>
-		<TR>
-	  	<TD WIDTH="204" VALIGN="top" ALIGN="right">
+		<tr>
+	  	<td width="204" VALIGN="top" ALIGN="right">
 		<?php print $MSG['519'].' *'; ?>
-	  	</TD>
-	  	<TD WIDTH="486">
-		<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<INPUT TYPE=text NAME=title[<?php echo $system->SETTINGS['defaultlanguage']; ?>] SIZE=40 MAXLENGTH=255 VALUE="<?php echo stripslashes($TIT_TR[$system->SETTINGS['defaultlanguage']]); ?>">
+	  	</td>
+	  	<td width="486">
+		<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<input type=text NAME=title[<?php echo $system->SETTINGS['defaultlanguage']; ?>] SIZE=40 MAXLENGTH=255 value="<?php echo stripslashes($TIT_tr[$system->SETTINGS['defaultlanguage']]); ?>">
 		<?php
 			reset($LANGUAGES);
 			while (list($k,$v) = each($LANGUAGES)){
-				if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<INPUT TYPE=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=\"".stripslashes($TIT_TR[$k])."\">";
+				if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<input type=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=\"".stripslashes($TIT_tr[$k])."\">";
 			}
 		?>
-	  	</TD>
-		</TR>
+	  	</td>
+		</tr>
 
-		<TR>
-	  	<TD WIDTH="204" VALIGN="top" ALIGN="right">
+		<tr>
+	  	<td width="204" VALIGN="top" ALIGN="right">
 		<?php print $MSG['520'].' *'; ?>
-		  </TD>
-	  	<TD WIDTH="486">
+		  </td>
+	  	<td width="486">
 		<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif"><br>
-		<TEXTAREA NAME=content[<?php echo $system->SETTINGS['defaultlanguage']; ?>] COLS=45 ROWS=20><?php echo stripslashes($CONT_TR[$system->SETTINGS['defaultlanguage']]); ?></TEXTAREA>
+		<TEXTAREA NAME=content[<?php echo $system->SETTINGS['defaultlanguage']; ?>] COLS=45 ROWS=20><?php echo stripslashes($CONT_tr[$system->SETTINGS['defaultlanguage']]); ?></TEXTAREA>
 		<?php
 			reset($LANGUAGES);
 			while (list($k,$v) = each($LANGUAGES)){
-				if ($k!=$system->SETTINGS['defaultlanguage']) print "<br><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=content[$k] COLS=45 ROWS=20>".stripslashes($CONT_TR[$k])."</TEXTAREA>";
+				if ($k!=$system->SETTINGS['defaultlanguage']) print "<br><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=content[$k] COLS=45 ROWS=20>".stripslashes($CONT_tr[$k])."</TEXTAREA>";
 			}
 		?>
-	  	</TD>
-		</TR>
+	  	</td>
+		</tr>
 
-		<TR>
-	  	<TD WIDTH="204" VALIGN="top" ALIGN="right">
+		<tr>
+	  	<td width="204" VALIGN="top" ALIGN="right">
 		<?php print $MSG['521'].' *'; ?>
-	  	</TD>
-	  	<TD WIDTH="486">
-		<INPUT TYPE=radio NAME=suspended value=0
+	  	</td>
+	  	<td width="486">
+		<input type=radio NAME=suspended value=0
 		<?php
 		if ($suspended == 0) print " CHECKED";
 		?>
 		>
 		<?php print $MSG['030']; ?>
-		<INPUT TYPE=radio NAME=suspended value=1
+		<input type=radio NAME=suspended value=1
 		<?php
 		if ($suspended == 1) print " CHECKED";
 		?>
 		> <?php print $MSG['029']; ?>
-	  	</TD>
-		</TR>
+	  	</td>
+		</tr>
 
-		<TR>
-	  	<TD WIDTH="204" VALIGt">&nbsp;
-		</TD>
-	  	<TD WIDTH="486">
-		<INPUT TYPE=submit VALUE="<?php echo $MSG['530']; ?>">
-	  	</TD>
+		<tr>
+	  	<td width="204" VALIGt">&nbsp;
+		</td>
+	  	<td width="486">
+		<input type=submit value="<?php echo $MSG['530']; ?>">
+	  	</td>
 		<tr>
 		<td colspan="2">
-		<INPUT type="hidden" NAME="id" VALUE="<?php echo $_GET['id']; ?>">
-		<INPUT type="hidden" NAME="offset" VALUE="<?php echo $_GET['offset']; ?>">
-		<INPUT type="hidden" NAME="action" VALUE="addnew"></td></TR>
-		</TABLE>
-		</FORM>
-		</TD>
-		</TR>
-		</TABLE>
+		<INPUT type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+		<INPUT type="hidden" name="offset" value="<?php echo $_GET['offset']; ?>">
+		<INPUT type="hidden" name="action" value="addnew"></td></tr>
+		</table>
+		</form>
+		</td>
+		</tr>
+		</table>
 		
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</body>
+</html>

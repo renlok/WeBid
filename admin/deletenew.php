@@ -47,10 +47,10 @@ if (!isset($_POST['action'])) {
 	}
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -67,29 +67,29 @@ if (!isset($_POST['action'])) {
 	<td align="center" valign="middle">&nbsp;</td>
   </tr>
   <tr>
-	<td align="center" valign="middle"><FORM NAME=addnew ACTION="<?php print basename($_SERVER['PHP_SELF']); ?>" METHOD="POST">
-<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-<TR>
-<TD>
-	<TABLE WIDTH=100% CELPADDING=4 CELLSPACING=0 BORDER=0 >
-	<TR>
-	 <TD ALIGN=CENTER COLSPAN=2 class=title><?php print $MSG['338']; ?></TD>
-	</TR>
+	<td align="center" valign="middle"><form NAME=addnew ACTION="<?php print basename($_SERVER['PHP_SELF']); ?>" METHOD="POST">
+<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+<tr>
+<td>
+	<table width=100% CELPADDING=4 cellspacing=0 border=0 >
+	<tr>
+	 <td align="center" COLSPAN=2 class=title><?php print $MSG['338']; ?></td>
+	</tr>
 
 	<?php
 	if ($ERR || $updated) {
-		print "<TR><TD></TD><TD WIDTH=486>";
+		print "<tr><td></td><td width=486>";
 		if ($$ERR) print $$ERR;
 		if ($updated) print "Data updated";
-		print "</TD>
-		</TR>";
+		print "</td>
+		</tr>";
 	}
 	?>
-	<TR bgcolor=#FFFFFF>
-	  <TD WIDTH="204" VALIGN="top" ALIGN="right">
+	<tr bgcolor=#FFFFFF>
+	  <td width="204" VALIGN="top" ALIGN="right">
 		<?php print $MSG['432'].' *'; ?>
-	  </TD>
-	  <TD WIDTH="486">
+	  </td>
+	  <td width="486">
 		<?php
 		if ($system->SETTINGS['datesformat'] == "USA") {
 			print Date("m/d/Y",$TIME). " (mm/dd/yyyy)";
@@ -97,58 +97,58 @@ if (!isset($_POST['action'])) {
 			print Date("d/m/Y",$TIME). " (dd/mm/yyyy)";
 		}
 		?>
-	  </TD>
-	</TR>
-	<TR bgcolor=#FFFFFF>
-	  <TD WIDTH="204" VALIGN="top" ALIGN="right">
+	  </td>
+	</tr>
+	<tr bgcolor=#FFFFFF>
+	  <td width="204" VALIGN="top" ALIGN="right">
 		<?php print $MSG['519'].' *'; ?>
-	  </TD>
-	  <TD WIDTH="486">
+	  </td>
+	  <td width="486">
 		<?php print $title; ?>
-	  </TD>
-	</TR>
+	  </td>
+	</tr>
 
-	<TR bgcolor=#FFFFFF>
-	  <TD WIDTH="204" VALIGN="top" ALIGN="right">
+	<tr bgcolor=#FFFFFF>
+	  <td width="204" VALIGN="top" ALIGN="right">
 		<?php print $MSG['520'].' *'; ?>
-	  </TD>
-	  <TD WIDTH="486">
+	  </td>
+	  <td width="486">
 	  <?php print nl2br($content); ?>
-	  </TD>
-	</TR>
+	  </td>
+	</tr>
 
-	<TR bgcolor=#FFFFFF>
-	  <TD WIDTH="204" VALIGN="top" ALIGN="right">
+	<tr bgcolor=#FFFFFF>
+	  <td width="204" VALIGN="top" ALIGN="right">
 		<?php print $MSG['521'].' *'; ?>
-	  </TD>
-	  <TD WIDTH="486">
+	  </td>
+	  <td width="486">
 	  <?php
 	  if ($suspended == 0) print $MSG['030'];
 	  if ($suspended == 1) print $MSG['029'];
 	  ?>
-	  </TD>
-	</TR>
+	  </td>
+	</tr>
 
-	<TR bgcolor=#FFFFFF>
-	  <TD WIDTH="204" VALIGN="top" ALIGN="right">&nbsp;
+	<tr bgcolor=#FFFFFF>
+	  <td width="204" VALIGN="top" ALIGN="right">&nbsp;
 		
-	  </TD>
-	  <TD WIDTH="486">
+	  </td>
+	  <td width="486">
 	  <BR><BR>
 	  <?php print $MSG['339']; ?>
 	  <BR><BR>
-		<INPUT TYPE="submit" NAME="action" VALUE=<?php print $MSG['030']; ?>>&nbsp;&nbsp;&nbsp;
-		<INPUT TYPE="submit" NAME="action" VALUE=<?php print $MSG['029']; ?>>
-		<INPUT type="hidden" NAME="id" VALUE="<?php echo $_GET['id']; ?>">
-		<INPUT type="hidden" NAME="offset" VALUE="<?php echo $_GET['offset']; ?>">
-	  </TD>
-	</TR>
-	</TABLE>
-	</TD>
-	</TR>
-	</TABLE></FORM>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+		<input type="submit" name="action" VALUE=<?php print $MSG['030']; ?>>&nbsp;&nbsp;&nbsp;
+		<input type="submit" name="action" VALUE=<?php print $MSG['029']; ?>>
+		<INPUT type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+		<INPUT type="hidden" name="offset" value="<?php echo $_GET['offset']; ?>">
+	  </td>
+	</tr>
+	</table>
+	</td>
+	</tr>
+	</table></form>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -63,10 +63,10 @@ else
 	}
 }
 ?>
-<HTML>
-<HEAD>
-<link rel='stylesheet' type='text/css' href='style.css' />
-</HEAD>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -83,92 +83,92 @@ else
 	<tr> 
 	<td align="center" valign="middle">
 
-<TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0 BGCOLOR="#FFFFFF">
-<TR>
-<TD align="center">
+<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
+<tr>
+<td align="center">
 <BR>
 <form name="conf" action="" method="post">
-	<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-		<TR>
-			<TD ALIGN=CENTER class=title>
+	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+		<tr>
+			<td align="center" class=title>
 				<?php print $MSG['663']; ?>
-			</TD>
-		</TR>
-		<TR>
-			<TD>
-			<TABLE WIDTH=100% CELLPADDING=2 ALIGN="CENTER" BGCOLOR="#FFFFFF">
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
 				<?php
 				if (isset($ERR))
 				{
 				?>
-					<TR BGCOLOR=yellow>
-					<TD COLSPAN="2" ALIGN=CENTER><B>
+					<tr bgcolor=yellow>
+					<td colspan="2" align="center"><B>
 					  <?php print $ERR; ?>
-					  </B></TD>
-				  </TR>
+					  </B></td>
+				  </tr>
 				 <?php
 				}
 				 ?>
-				<TR VALIGN="TOP">
-					<TD WIDTH=134>&nbsp;</TD>
-					<TD WIDTH="350">
+				<tr valign="top">
+					<td width=134>&nbsp;</td>
+					<td width="350">
 						<?php print $MSG['664']; ?>
-						</TD>
-				</TR>
-				<TR VALIGN="TOP">
-					<TD WIDTH=134 HEIGHT="22">
+						</td>
+				</tr>
+				<tr valign="top">
+					<td width=134 height="22">
 						<?php print $MSG['665']; ?>
-						</TD>
-					<TD WIDTH="350" HEIGHT="22">
-						<INPUT TYPE="radio" NAME="picturesgallery" VALUE="1" <?if ($system->SETTINGS[picturesgallery] == "1") print " CHECKED"?>>
+						</td>
+					<td width="350" height="22">
+						<input type="radio" name="picturesgallery" value="1" <?if ($system->SETTINGS[picturesgallery] == "1") print " CHECKED"?>>
 						<?php print $MSG['030']; ?>
-						<INPUT TYPE="radio" NAME="picturesgallery" VALUE="2" <?if ($system->SETTINGS[picturesgallery] == "2") print " CHECKED"?>>
+						<input type="radio" name="picturesgallery" value="2" <?if ($system->SETTINGS[picturesgallery] == "2") print " CHECKED"?>>
 						<?php print $MSG['029']; ?>
-						</TD>
-				</TR>
-				<TR VALIGN="TOP">
-					<TD WIDTH=134 HEIGHT="22">
+						</td>
+				</tr>
+				<tr valign="top">
+					<td width=134 height="22">
 						<?php print $MSG['666']; ?>
-						</TD>
-					<TD WIDTH="350" HEIGHT="22">
-						<INPUT TYPE="text" NAME="maxpictures" SIZE="5" VALUE="<?php echo $system->SETTINGS[maxpictures];?>">
-						</TD>
-				</TR>
-				<TR VALIGN="TOP">
-					<TD WIDTH=134 HEIGHT="22">
+						</td>
+					<td width="350" height="22">
+						<input type="text" name="maxpictures" SIZE="5" value="<?php echo $system->SETTINGS[maxpictures];?>">
+						</td>
+				</tr>
+				<tr valign="top">
+					<td width=134 height="22">
 						<?php print $MSG['671']; ?>
-						</TD>
-					<TD WIDTH="350" HEIGHT="22">
-						<INPUT TYPE="text" NAME="maxpicturesize" SIZE="5" VALUE="<?php echo $system->SETTINGS[maxpicturesize];?>">
-						&nbsp;<?php print $MSG['672']; ?></TD>
-				</TR>
-				<TR VALIGN="TOP">
-					<TD WIDTH=134 HEIGHT="22">&nbsp;</TD>
-					<TD WIDTH="350" HEIGHT="22">&nbsp;</TD>
-				</TR>
-				<TR>
-					<TD WIDTH=134>
-						<INPUT TYPE="hidden" NAME="action" VALUE="update">
-					</TD>
-					<TD WIDTH="350">
-						<INPUT TYPE="submit" NAME="act" VALUE="<?php print $MSG['530']; ?>">
-					</TD>
-				</TR>
-				<TR>
-					<TD WIDTH=134></TD>
-					<TD WIDTH="350"> </TD>
-				</TR>
-			</TABLE>
-			</TD>
-		</TR>
-	</TABLE>
-	</FORM>
+						</td>
+					<td width="350" height="22">
+						<input type="text" name="maxpicturesize" SIZE="5" value="<?php echo $system->SETTINGS[maxpicturesize];?>">
+						&nbsp;<?php print $MSG['672']; ?></td>
+				</tr>
+				<tr valign="top">
+					<td width=134 height="22">&nbsp;</td>
+					<td width="350" height="22">&nbsp;</td>
+				</tr>
+				<tr>
+					<td width=134>
+						<input type="hidden" name="action" value="update">
+					</td>
+					<td width="350">
+						<input type="submit" name="act" value="<?php print $MSG['530']; ?>">
+					</td>
+				</tr>
+				<tr>
+					<td width=134></td>
+					<td width="350"> </td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+	</form>
 <br>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -17,25 +17,25 @@ if (!defined('InWeBid')) exit();
 include $include_path . "browsers.inc.php";
 
 ?>
-<HTML>
-<HEAD>
+<html>
+<head>
 <TITLE>Untitled Document</TITLE>
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <STYLE type="text/css">
 <!--
 .bluelink {  font: 10pt Verdana, Arial, Helvetica, sans-serif; color: 000066; text-decoration: none}
 -->
-</STYLE></HEAD>
+</STYLE></head>
 
-<BODY bgcolor="#FFFFFF">
+<body bgcolor="#FFFFFF">
 <CENTER>
   <P><B>
   <FONT face="Verdana, Arial, Helvetica, sans-serif" size="4" color="#000066">
   <?php echo $MSG['5155']; ?></FONT></B> </P>
    <P align="center"><A href="javascript:window.close()" class="bluelink">Close</A></P>
-	<TABLE width="352" border="0" cellspacing="0" cellpadding="0">
-	<TR>
-	  <TD>
+	<table width="352" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	  <td>
 	  <FONT face="Verdana, Arial, Helvetica, sans-serif" size="2">
 	  <?php
 	  	while (list($k,$v) = each($BROWSERS))
@@ -43,11 +43,11 @@ include $include_path . "browsers.inc.php";
 			print "$v<BR>";
 		}
 	   ?>
-	  </TD>
-	</TR>
-  </TABLE>
+	  </td>
+	</tr>
+  </table>
   </CENTER>
  <P align="center"><A href="javascript:window.close()" class="bluelink">Close</A></P>
 
-</BODY>
-</HTML>
+</body>
+</html>

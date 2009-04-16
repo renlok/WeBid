@@ -13,13 +13,13 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 ?>
 <html>
 <head>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript">
 function ChooseColor(val,what,T)
 {
@@ -55,12 +55,12 @@ function ChooseColor(val,what,T)
 								<tr>
 									<td>
 										<table width=100% cellspacing=1 cellpadding=2 align="CENTER" bgcolor="#ffffff">
-											<TR>
-											<TD COLSPAN=2>
+											<tr>
+											<td COLSPAN=2>
 												<?php echo $MSG['30_0009']; ?><BR>
 												<B><?php echo $MSG['30_0010']; ?></B>(<CODE><?php echo "themes/".$system->SETTINGS['theme']."/style.css"; ?></CODE>)
-											</TD>
-											</TR>
+											</td>
+											</tr>
 											<tr valign="TOP">
 												<td bgcolor="#eeeeee">
 													<H3><?php echo $MSG['571'] ?></H3>

@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 define('InAdmin', 1);
-require('../includes/common.inc.php');
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -22,7 +22,7 @@ if ($_POST['keyword'] == '') {
 	exit;
 }
 ?>
-<link rel='stylesheet' type='text/css' href='style.css' />
+<link rel="stylesheet" type="text/css" href="style.css" />
 <body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
@@ -39,29 +39,29 @@ if ($_POST['keyword'] == '') {
 	<tr> 
 	<td align="center" valign="middle">
 
-<TABLE WIDTH="95%" BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#0083D7" ALIGN="CENTER">
-<TR>
-  <TD ALIGN=CENTER class=title><?php print $MSG['045']; ?></TD>
-</TR>
-<TR>
-<TD>
+<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
+<tr>
+  <td align="center" class=title><?php print $MSG['045']; ?></td>
+</tr>
+<tr>
+<td>
   <table width="100%" border="0" cellspacing="0" cellpadding="0" align="right">
-	<FORM NAME=search ACTION=userssearch.php METHOD=POST>
+	<form NAME=search ACTION=userssearch.php METHOD=POST>
 	<tr>
 	  <td bgcolor="#eeeeee"> 
 		<BR>
-		<?php echo $MSG['5022']; ?> <INPUT TYPE=text NAME=keyword SIZE=25>
+		<?php echo $MSG['5022']; ?> <input type=text NAME=keyword SIZE=25>
 		<input type=SUBMIT name=SUBMIT value="<?php echo $MSG['5023']; ?>">
 		<?php echo $MSG['5024']; ?>
 		<BR><BR>
 	  </td>
 	</tr>
-	</FORM>
+	</form>
   </table>
-  </TD>
-</TR>
-<TR>
-  <TD><TABLE WIDTH=100% CELPADDING=0 CELLSPACING=1 BORDER=0 ALIGN="CENTER" CELLPADDING="3">
+  </td>
+</tr>
+<tr>
+  <td><table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3">
 	  <?php
 		$query = "select count(id) as users from " . $DBPrefix . "users
 						WHERE name like '%$_POST[keyword]%' OR nick like '%$_POST[keyword]%' OR email like '%$_POST[keyword]%'";
@@ -71,18 +71,18 @@ if ($_POST['keyword'] == '') {
 			exit;
 		}
 		$num_usrs = mysql_result($result,0,"users");
-		print "<TR BGCOLOR=#FFFFFF><TD COLSPAN=7><B>
-				$num_usrs ".$MSG['301']."</B></TD></TR>";
+		print "<tr bgcolor=#FFFFFF><td COLSPAN=7><B>
+				$num_usrs ".$MSG['301']."</B></td></tr>";
 		?>
-	  <TR BGCOLOR="#FFCC00">
-		<TD ALIGN=CENTER> <B> <?php print $MSG['293']; ?> </B>  </TD>
-		<TD ALIGN=CENTER> <B> <?php print $MSG['294']; ?> </B>  </TD>
-		<TD ALIGN=CENTER> <B> <?php print $MSG['295']; ?> </B>  </TD>
-		<TD ALIGN=CENTER> <B> <?php print $MSG['296']; ?> </B>  </TD>
-		<TD ALIGN=LEFT width="10%"> <B> <?php print strtoupper($MSG['25_0079']); ?> </B>  </TD>
-		<TD ALIGN=LEFT width="10%"> <B> <?php print strtoupper($MSG['560']); ?> </B>  </TD>
-		<TD ALIGN=LEFT> <B> <?php print $MSG['297']; ?> </B>  </TD>
-	  </TR>
+	  <tr bgcolor="#FFCC00">
+		<td align="center"> <B> <?php print $MSG['293']; ?> </B>  </td>
+		<td align="center"> <B> <?php print $MSG['294']; ?> </B>  </td>
+		<td align="center"> <B> <?php print $MSG['295']; ?> </B>  </td>
+		<td align="center"> <B> <?php print $MSG['296']; ?> </B>  </td>
+		<td ALIGN=LEFT width="10%"> <B> <?php print strtoupper($MSG['25_0079']); ?> </B>  </td>
+		<td ALIGN=LEFT width="10%"> <B> <?php print strtoupper($MSG['560']); ?> </B>  </td>
+		<td ALIGN=LEFT> <B> <?php print $MSG['297']; ?> </B>  </td>
+	  </tr>
 		<?php
 		$query = "SELECT * FROM " . $DBPrefix . "users
 				WHERE name LIKE '%".$_POST['keyword']."%' || nick LIKE '%".$_POST['keyword']."%' || email LIKE '%".$_POST['keyword']."%'
@@ -109,25 +109,25 @@ if ($_POST['keyword'] == '') {
 			$email = mysql_result($result,$i,"email");
 			$suspended = mysql_result($result,$i,"suspended");
 			$newsletter = mysql_result($result,$i,"nletter");
-			print "		<TR BGCOLOR=$bgcolor>
-			<TD>$nick</TD>
-			<TD>";
+			print "		<tr bgcolor=$bgcolor>
+			<td>$nick</td>
+			<td>";
 			if ($suspended > 0) {
 				print "<FONT COLOR=red><B>$name</B>";
 			} else {
 				print $name;
 			}
-			print "</TD>
-			<TD>$country</TD>
-			<TD><A HREF=\"mailto:$email\">$email</A></TD>
-			<TD align=center>";
+			print "</td>
+			<td>$country</td>
+			<td><A HREF=\"mailto:$email\">$email</A></td>
+			<td align=center>";
 			if ($newsletter == 1) {
 				print $MSG['030'];
 			}
 			if ($newsletter == 2) {
 				print $MSG['029'];
 			}
-			print "</TD><TD>";
+			print "</td><td>";
 			if ($suspended == 0) {
 				print "<B><FONT COLOR=green>".$MSG['5291']."</B>";
 			}
@@ -145,8 +145,8 @@ if ($_POST['keyword'] == '') {
 			if ($suspended == 10) {
 				print "<B><FONT COLOR=violet>".$MSG['25_0136']."</B>";
 			}
-			print "		</TD>";
-			print "<TD ALIGN=LEFT>
+			print "		</td>";
+			print "<td ALIGN=LEFT>
 				<A HREF=\"edituser.php?userid=$id&offset=$offset\" class=\"nounderlined\">".$MSG['298']."</A><BR>
 				<A HREF=\"deleteuser.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['008']."</A><BR>
 				<A HREF=\"excludeuser.php?id=$id&offset=$offset\" class=\"nounderlined\">";
@@ -159,19 +159,19 @@ if ($_POST['keyword'] == '') {
 				<A HREF=\"viewuserauctions.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['5094']."</A><BR>
 				<A HREF=\"userfeedback.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['503']."</A><BR>
 				<A HREF=\"viewuserips.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['2_0004']."</A>
-			</TD>
-		</TR>";
+			</td>
+		</tr>";
 			$i++;
 		}		
-		print "</TABLE>";
-		print "</TD></TR></TABLE>";
+		print "</table>";
+		print "</td></tr></table>";
 	  ?>
-	</TABLE>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</BODY>
-</HTML>
+	</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

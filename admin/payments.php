@@ -108,7 +108,7 @@ function selectAll(formObj, isInverse)
 <tr>
 <td align="center">
 <BR>
-<form NAME=conf ACTION=payments.php METHOD=POST>
+<form NAME=conf ACTION=payments.php method="post">
 	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
 		<tr>
 			<td align="center" class=title>

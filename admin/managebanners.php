@@ -59,7 +59,7 @@ if (!$res_)
 <tr>
 <td align="center">
 	<BR>
-	<form NAME=this ACTION="<?php echo basename($_SERVER['PHP_SELF']); ?>" METHOD=POST>
+	<form NAME=this ACTION="<?php echo basename($_SERVER['PHP_SELF']); ?>" method="post">
 	<table width="80%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
 	  <tr>
 		<td align="center" class=title>

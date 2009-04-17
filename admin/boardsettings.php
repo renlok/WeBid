@@ -61,7 +61,7 @@ if (mysql_num_rows($res) > 0)
 <td>
 <CENTER>
 				<BR>
-				<form NAME=conf ACTION="" METHOD=POST>
+				<form NAME=conf action="" method="post">
 					<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
 						<tr>
 							<td align="center"><FONT COLOR=#FFFFFF FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="4"><B>

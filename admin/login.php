@@ -49,7 +49,7 @@ if ($id==1) {
 <table border=0 width=650 cellpadding=0 cellspacing=0 bgcolor="#FFFFFF" align="center">
 	<tr>
 		<td><CENTER><BR><BR>
-			<form NAME=login ACTION=login.php METHOD=POST>
+			<form NAME=login ACTION=login.php method="post">
 			<table width="410" border="0" cellspacing="0" cellpadding="1" bgcolor="#336699">
 			<tr>
 				<td>
@@ -135,7 +135,7 @@ if ($id==1) {
 		<CENTER>
 		<BR><BR>
 <?php if (!$act || ($act && $ERR)) { ?>
-		<form NAME=login ACTION=login.php METHOD=POST>
+		<form NAME=login ACTION=login.php method="post">
 		<table width="415" border="0" cellspacing="0" cellpadding="1" bgcolor="#336699">
 		<tr>
 			<td>

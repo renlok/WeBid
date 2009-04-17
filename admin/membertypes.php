@@ -150,7 +150,7 @@ function selectAll(formObj, isInverse)
 		<tr>
 		  <td>
 			  <BR>
-			<form NAME=conf ACTION=membertypes.php METHOD=POST>
+			<form NAME=conf ACTION=membertypes.php method="post">
 			  <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="0083D7" align="center">
 				<tr>
 				  <td align="center" class=title><?php print $MSG['25_0169']; ?></td>

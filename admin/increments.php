@@ -185,7 +185,7 @@ function selectAll(formObj, isInverse)
 							print $MSG['135'];
 							?>
 							<BR><BR>
-							[&nbsp;<A HREF=javascript:window_open('converter.php','incre',650,200,30,30)><?php echo $MSG['5010']; ?></A>&nbsp;]
+							[&nbsp;<A HREF=javascript:window_open('<?php echo $system->SETTINGS['siteurl']; ?>converter.php','incre',650,250,30,30)><?php echo $MSG['5010']; ?></A>&nbsp;]
 							 </td>
 					</tr>
 					<tr>

@@ -35,7 +35,7 @@ require("./header.php");
 <td>
 <CENTER>
 <BR>
-<form NAME=conf ACTION=checkupdates.php METHOD=POST>
+<form NAME=conf ACTION=checkupdates.php method="post">
 	<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#296FAB">
 		<tr>
 			<td align="center" class=title>

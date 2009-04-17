@@ -63,7 +63,7 @@ if (isset($_POST['action']))
   </tr>
 	<tr> 
 	<td align="center" valign="middle">
-		<form NAME=addnew ACTION="" METHOD="POST">
+		<form NAME=addnew action="" METHOD="POST">
 		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
 		<tr>
 		<td>

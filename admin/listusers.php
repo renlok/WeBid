@@ -173,7 +173,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 				<tr>
 				<td COLSPAN=8>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" align="right">
-					<form NAME=search ACTION=userssearch.php METHOD=POST>
+					<form NAME=search ACTION=userssearch.php method="post">
 					<tr>
 					<td bgcolor="#eeeeee"> 
 					<BR>

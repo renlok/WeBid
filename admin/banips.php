@@ -95,7 +95,7 @@ if (mysql_num_rows($res) > 0)
 	</tr>
 	<tr>
 	<td>
-	<form NAME=banform ACTION="" METHOD=POST>
+	<form NAME=banform action="" method="post">
 	  <table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3">
 		<tr bgcolor=#FFFFFF align="center">
 		  <td>

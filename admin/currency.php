@@ -64,7 +64,7 @@ if (mysql_num_rows($res) > 0) {
 	}
 }
 
-$link = "javascript:window_open('converter.php','incre',650,200,30,30)";
+$link = "javascript:window_open('" . $system->SETTINGS['siteurl'] . "converter.php','incre',650,250,30,30)";
 
 foreach ($CURRENCIES_SYMBOLS as $k => $v) {
 	if ($v == $system->SETTINGS['currency'])

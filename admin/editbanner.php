@@ -220,7 +220,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 <tr>
 <td align="center">
 	<BR>
-	<form NAME=conf ACTION="" METHOD=POST ENCTYPE="multipart/form-data">
+	<form NAME=conf action="" method="post" ENCTYPE="multipart/form-data">
 		  <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
 			<tr>
 			  <td align="center" class=title>

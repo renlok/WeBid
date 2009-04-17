@@ -182,7 +182,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 		<tr>
 		  <td><CENTER>
 			<BR>
-			<form NAME=conf ACTION="" METHOD=POST ENCTYPE="multipart/form-data">
+			<form NAME=conf action="" method="post" ENCTYPE="multipart/form-data">
 			  <table width="90%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
 				<tr>
 				  <td align="center" class=title><?php print $MSG['_0024']; ?></td>

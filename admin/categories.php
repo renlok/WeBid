@@ -227,7 +227,7 @@ function selectAllDelete(formObj, isInverse)
 							?>
 						</P>
 						  <P><img src="../images/nodelete.gif" width="20" height="21"> 
-						  <?php echo $MGS_2__0030; ?>
+						  <?php echo $MSG['2__0030']; ?>
 							</P></td>
 					</tr>
 					<tr> 

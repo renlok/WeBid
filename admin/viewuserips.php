@@ -98,7 +98,7 @@ if (mysql_num_rows($res) > 0)
 	  <table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3">
 		<tr bgcolor=#FFFFFF align="center">
 		  <td colspan=7>
-		  <form NAME=banform ACTION="" METHOD=POST>
+		  <form NAME=banform action="" method="post">
 			  <table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#FFFFFF">
 				<tr>
 				  <td bgcolor="#ffffff">

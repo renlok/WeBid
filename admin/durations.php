@@ -116,7 +116,7 @@ scrollbar-arrow-color: #ffffff;
 <table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
 <tr>
 <td COLSPAN=3>
-<form NAME=conf ACTION=durations.php METHOD=POST>
+<form NAME=conf ACTION=durations.php method="post">
 <BR>
 <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
 		<tr>

@@ -35,8 +35,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		foreach ($TMP as $k => $v)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "filterwords VALUES ('" . chop($v) . "')";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$v = trim($v);
+			if (!empty($v))
+			{
+				$query = "INSERT INTO " . $DBPrefix . "filterwords VALUES ('" . $v . "')";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
 		}
 	}
 	$ERR = $MSG['5073'];

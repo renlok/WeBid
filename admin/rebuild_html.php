@@ -25,7 +25,7 @@ function rebuild_html_file($table)
 			break;
 	}
 	
-	$sqlqry = "SELECT " . $field_name . " FROM " . $DBPrefix . "" . $table . " ORDER BY " . $field_name . ";";
+	$sqlqry = "SELECT " . $field_name . " FROM " . $DBPrefix . $table . " ORDER BY " . $field_name . ";";
 	$result = mysql_query($sqlqry) or die(mysql_error());
 	
 	$output = "<?php\n";

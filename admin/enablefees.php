@@ -16,29 +16,28 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path . 'countries.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET defaultcountry = '" . $_POST['country'] . "'";
+	$query = "UPDATE ". $DBPrefix . "settings SET
+			  fees = '" . $_POST['fees'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['defaultcountry'] = $_POST['country'];
-	$ERR = $MSG['5323'];
+	$system->SETTINGS['fees'] = $_POST['fees'];
+	$ERR = $MSG['247'];
 }
 
-$selectsetting = $system->SETTINGS['defaultcountry'];
-loadblock($MSG['5322'], $MSG['5321'], generateSelect('country', $countries));
+loadblock($MSG['237'], $MSG['238'], 'yesno', 'fees', $system->SETTINGS['fees'], $MSG['030'], $MSG['029']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'pre',
-		'TYPENAME' => $MSG['25_0008'],
-		'PAGENAME' => $MSG['5322'],
-		'DROPDOWN' => $html
+		'TYPE' => 'fee',
+		'TYPENAME' => $MSG['25_0012'],
+		'PAGENAME' => $MSG['395'],
+		'B_TITLES' => true
 		));
 
 $template->set_filenames(array(

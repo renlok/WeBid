@@ -39,12 +39,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_011;
 		}
-		else if ($_POST['TPL_password'] != $_POST['TPL_repeat_password'])
+		elseif ($_POST['TPL_password'] != $_POST['TPL_repeat_password'])
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_109;
 		}
-		else if (strlen($_POST['TPL_email']) < 5)
+		elseif (strlen($_POST['TPL_email']) < 5)
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_110;

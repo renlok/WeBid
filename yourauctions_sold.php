@@ -68,7 +68,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 // Retrieve closed auction data from the database
 $query = "SELECT a.*  FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "winners w
-		WHERE a.user = " . $user->user_data['id'] . " AND a.closed = 1 AND a.suspended != 8 AND a.id = w.auction GROUP BY w.auction"
+		WHERE a.user = " . $user->user_data['id'] . " AND a.closed = 1 AND a.suspended = 0 AND a.id = w.auction GROUP BY w.auction"
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
@@ -125,7 +125,7 @@ else
 $query = "SELECT a.* FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "winners w
 		WHERE a.user = " . $user->user_data['id'] . "
 		AND a.closed = 1
-		AND a.suspended != 8
+		AND a.suspended = 0
 		AND a.id = w.auction
 		GROUP BY w.auction
 		ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT $OFFSET,$LIMIT";

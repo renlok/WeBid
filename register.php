@@ -33,11 +33,11 @@ function CheckAge($day, $month, $year) // check if the users > 18
 	{
 		return 1;
 	}
-	else if ((($NOW_year - $year) == 18) && ($NOW_month > $month))
+	elseif ((($NOW_year - $year) == 18) && ($NOW_month > $month))
 	{
 		return 1;
 	}
-	else if ((($NOW_year - $year) == 18) && ($NOW_month == $month) && ($NOW_day >= $day))
+	elseif ((($NOW_year - $year) == 18) && ($NOW_month == $month) && ($NOW_day >= $day))
 	{
 		return 1;
 	}
@@ -154,17 +154,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_107;
 		}
-		else if (strlen ($_POST['TPL_password']) < 6)
+		elseif (strlen ($_POST['TPL_password']) < 6)
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_108;
 		}
-		else if ($_POST['TPL_password'] != $_POST['TPL_repeat_password'])
+		elseif ($_POST['TPL_password'] != $_POST['TPL_repeat_password'])
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_109;
 		}
-		else if (strlen($_POST['TPL_email']) < 5)
+		elseif (strlen($_POST['TPL_email']) < 5)
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_110;
@@ -174,7 +174,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_008;
 		}
-		else if (!CheckAge($birth_day, $birth_month, $birth_year) && $MANDATORY_FIELDS['birthdate'] == 'y')
+		elseif (!CheckAge($birth_day, $birth_month, $birth_year) && $MANDATORY_FIELDS['birthdate'] == 'y')
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_113;

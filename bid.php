@@ -212,9 +212,22 @@ if (isset($_POST['action']) && !isset($errmsg))
 				$proxy_bidder_id = mysql_result($result, 0, 'userid');
 				$proxy_max_bid = mysql_result($result, 0, 'bid');
 
-				if (($proxy_max_bid + $increment) <= $bid)
+				if (($proxy_max_bid + $increment) > $bid && $proxy_max_bid < $bid)
 				{
-					$next_bid = $bid;
+					$cbid = $proxy_max_bid;
+					// Update bids table
+					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $proxy_bidder_id . ", " . floatval($next_bid) . ", '" . $NOW . "', " . $qty . ")";
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 1)";
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . $next_bid . ", num_bids = (num_bids + 1) WHERE id = " . $id;
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$errmsg = $ERR_607;
+					$next_bid = $cbid + $increment;
+				}
+				if ($proxy_max_bid < $bid && !isset($errmsg))
+				{
+					$next_bid = $proxy_max_bid + $increment;
 
 					$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (" . $id . ", " . $bidder_id . ", " . floatval($next_bid) . ")";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -266,7 +279,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 					}
 					$next_bid = $cbid + $increment;
 				}
-				if (($proxy_max_bid + $increment) > $bid)
+				if ($proxy_max_bid > $bid)
 				{
 					// Update bids table
 					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($bid) . ", '" . $NOW . "', " . $qty . ")";

@@ -12,13 +12,15 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-require("../includes/common.inc.php");
+define('InAdmin', 1);
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
 			  buyerprivacy = '" . $_POST['buyerprivacy'] . "'";

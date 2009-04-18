@@ -66,7 +66,7 @@ $template->assign_vars(array(
 		'TIMEZONE' => ($system->SETTINGS['timecorrection'] == 0) ? $MSG['25_0036'] : $system->SETTINGS['timecorrection'] . $MSG['25_0037'],
 		'DATEFORMAT' => $system->SETTINGS['datesformat'],
 		'DATEEXAMPLE' => ($system->SETTINGS['datesformat'] == 'USA') ? $MSG['382'] : $MSG['383'],
-		'DEFULTCONtrY' => $system->SETTINGS['defaultcountry'],
+		'DEFULTCONTRY' => $system->SETTINGS['defaultcountry'],
 		
 		'C_USERS' => $COUNTERS['users'],
 		'C_IUSERS' => $COUNTERS['inactiveusers'],

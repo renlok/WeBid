@@ -130,9 +130,7 @@ else
 	$_SESSION['pa_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0" />';
 }
 $query = "SELECT * FROM " . $DBPrefix . "auctions au
-			WHERE user = " . $user->user_data['id'] . "
-				AND starts > '" . $NOW . "'
-				AND (suspended = 0 OR suspended = -1)
+			WHERE user = " . $user->user_data['id'] . " AND starts > '" . $NOW . "' AND suspended = 0
 			ORDER BY " . $_SESSION['pa_ord'] . " " . $_SESSION['pa_type'] . " LIMIT $OFFSET,$LIMIT";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);

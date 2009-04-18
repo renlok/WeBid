@@ -131,27 +131,27 @@ if ($order == '1')
 	$orderby = "ORDER BY `id` DESC";
 	$whensent = '<a href="mail.php?order=2">' . $MSG['242'] . ' <img src="images/arrow_down.gif"></a>';
 }
-else if ($order == '2')
+elseif ($order == '2')
 {
 	$orderby = "ORDER BY `id` ASC";
 	$whensent = '<a href="mail.php?order=1">' . $MSG['242'] . ' <img src="images/arrow_up.gif"></a>';
 }
-else if ($order == '3')
+elseif ($order == '3')
 {
 	$orderby = "ORDER BY `from` DESC";
 	$sentfrom = '<a href="mail.php?order=4">' . $MSG['240'] . ' <img src="images/arrow_down.gif"></a>';
 }
-else if ($order == '4')
+elseif ($order == '4')
 {
 	$orderby = "ORDER BY `from` ASC";
 	$sentfrom = '<a href="mail.php?order=3">' . $MSG['240'] . ' <img src="images/arrow_up.gif"></a>';
 }
-else if ($order == '5')
+elseif ($order == '5')
 {
 	$orderby = "ORDER BY `subject` DESC";
 	$title = '<a href="mail.php?order=6">' . $MSG['519'] . ' <img src="images/arrow_down.gif"></a>';
 }
-else if ($order == '6')
+elseif ($order == '6')
 {
 	$orderby = "ORDER BY `subject` ASC";
 	$title = '<a href="mail.php?order=5">' . $MSG['519'] . ' <img src="images/arrow_up.gif"></a>';

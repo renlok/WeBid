@@ -109,7 +109,7 @@ td.title {
 		<td colspan="2" align="center" class="title">{L_080}</td>
 	</tr>
 	<tr>
-<!-- IF L_ERROR ne '' -->
+<!-- IF ERROR ne '' -->
 	<tr bgcolor="yellow">
 		<td colspan="2" align="center"><b>{ERROR}</b></td>
 	</tr>
@@ -117,13 +117,21 @@ td.title {
 	<tr>
 		<td width="70%">{L_30_0032}</td>
 		<td width="30%">
-			<form action="{SITEURL}admin/?action=clearcache" method="post">
+			<form action="?action=clearcache" method="post">
 				<input type="submit" name="submit" value="{L_30_0031}">
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td width="70%">{L_1030}</td>
+		<td width="30%">
+			<form action="?action=updatecounters" method="post">
+				<input type="submit" name="submit" value="{L_1031}">
 			</form>
 		</td>
 	</tr>
 	</table>
 </div>
 </div>
-</body>
-</html>
+
+<!-- INCLUDE footer.html -->

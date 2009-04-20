@@ -78,7 +78,6 @@ $ERR_044 = "Cookies must be enabled to login.";
 $ERR_045 = "No closed auctions for this user.";
 $ERR_046 = "No active auctions for this user.";
 $ERR_047 = "Required fields missing";
-$ERR_047_a = "Username is invalid can only contain letters and numbers";
 $ERR_048 = "Incorrect login";
 $ERR_049 = "Database connection failed. Please edit your includes/config.inc.php
 			file to set your database parameters.";
@@ -103,6 +102,7 @@ $ERR_067 = "Required fields missing (all fields are required).";
 $ERR_068 = "Chosen theme does not exist";
 $ERR_069 = "Currency conversion failed";
 $ERR_070 = "This message doesn't exist";
+$ERR_071 = "Username is invalid can only contain letters and numbers";
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
@@ -596,6 +596,9 @@ $MSG['437'] = "Relisting Fee";
 $MSG['438'] = "End of Auction Fee";
 $MSG['439'] = "Bold Item Fee";
 $MSG['440'] = "Reserve Price Fee";
+$MSG['441'] = "Please create your username and password";
+$MSG['442'] = "Please enter your username and password";
+
 $MSG['453'] = "Winners details";
 $MSG['454'] = "Auctions you won";
 $MSG['455'] = "Winner";
@@ -825,8 +828,9 @@ $MSG['1023'] = "Activate SSL support?";
 $MSG['1024'] = "If you have SSL support on the server where you are running WeBid, you may want to give your customers a safer enviroment to operate.</p>
 		<p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.</p>";
 $MSG['1025'] = "SSL settings updated";
-$MSG['1030'] = "Update Counters Utility";
-$MSG['1031'] = "Starting counters update...";
+$MSG['1029'] = "Counters updated";
+$MSG['1030'] = "Resync the user, auction and bid counters";
+$MSG['1031'] = "Resync Counters";
 $MSG['1032'] = "no winner";
 $MSG['1056'] = "Alignment";
 $MSG['1057'] = "This is the alignment of WeBid pages in your browser window.";

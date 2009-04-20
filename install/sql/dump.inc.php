@@ -604,22 +604,18 @@ $query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (2, 'Buying', 0, '20
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "counters`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
   `users` int(11) default '0',
+  `inactiveusers` int(11) NOT NULL default '0',
   `auctions` int(11) default '0',
   `closedauctions` int(11) NOT NULL default '0',
-  `inactiveusers` int(11) NOT NULL default '0',
   `bids` int(11) NOT NULL default '0',
-  `transactions` int(11) NOT NULL default '0',
-  `totalamount` double NOT NULL default '0',
-  `resetdate` varchar(8) NOT NULL default '',
-  `fees` double NOT NULL default '0',
-  `suspendedauction` int(11) NOT NULL default '0'
+  `suspendedauctions` int(11) NOT NULL default '0'
 ) ;";
 
 # 
 # Dumping data for table `" . $DBPrefix . "counters`
 # 
 
-$query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0, 0, '20070101', 0, 0);";
+$query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0);";
 
 # ############################
 
@@ -1631,7 +1627,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `bn_only_disable` enum('y','n') NOT NULL default 'n',
   `bn_only_percent` int(3) NOT NULL default '50',
   `buyerprivacy` ENUM('y','n') NOT NULL default 'n',
-  `cust_increment` INT(1) NOT NULL DEFAULT '0'
+  `cust_increment` INT(1) NOT NULL DEFAULT '0',
+  `fees` ENUM('y','n') NOT NULL default 'n'
 );";
 
 # 
@@ -1639,7 +1636,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '".$siteURL."', 'WEBID', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', 'y', 'y', 'n', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1);";
+('WeBid', '".$siteURL."', 'WEBID', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', 'y', 'y', 'n', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n');";
 
 
 # ############################

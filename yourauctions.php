@@ -27,8 +27,9 @@ $NOWB = gmdate('Ymd');
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 {
-	if (is_array($_POST['O_delete']))
+	if (is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
 	{
+		$removed = 0;
 		while (list($k, $v) = each($_POST['O_delete']))
 		{
 			$v = intval($v);
@@ -55,10 +56,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 			// Auction
 			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
-			// Update counters
-			include $include_path . 'updatecounters.inc.php';
+			$removed++;
 		}
+		
+		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - " . $removed . ")";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 
 	if (is_array($_POST['closenow']))

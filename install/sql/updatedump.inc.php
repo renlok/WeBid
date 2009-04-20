@@ -25,6 +25,17 @@ $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'relist_f
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyout_fee');";
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `timecorrection` int(3) NOT NULL default '0';";
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `emailtype` enum('html','text') NOT NULL default 'text';";
+$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `fees` enum('y','n') NOT NULL default 'n';";
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "counters`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
+  `users` int(11) default '0',
+  `inactiveusers` int(11) NOT NULL default '0',
+  `auctions` int(11) default '0',
+  `closedauctions` int(11) NOT NULL default '0',
+  `bids` int(11) NOT NULL default '0',
+  `suspendedauctions` int(11) NOT NULL default '0'
+) ;";
+$query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0);";
 
 //0.7.2 to 0.7.3
 /*

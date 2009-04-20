@@ -585,8 +585,7 @@ if ((time() - $purgecachetime) > 86400) {
 	}
 	touch($upload_path . "cache/purge");
 }
-// Update counters
-include $include_path . "updatecounters.inc.php";
+
 // finish cron script
 printLog ("=========================== ENDING CRON: " . gmdate("F d, Y H:i:s") . "\n");
 closeLogFile();

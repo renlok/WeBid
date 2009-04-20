@@ -212,7 +212,7 @@ class email_class
 					{
 						$token = (!empty($varrefs[1])) ? $this->generate_block_data_ref(substr($varrefs[1], 0, -1), true, $varrefs[2]) . '[\'' . $varrefs[3] . '\']' : (($varrefs[2]) ? '$this->vars[\'DEFINE\'][\'.\'][\'' . $varrefs[3] . '\']' : '$this->vars[\'' . $varrefs[3] . '\']');
 					}
-					else if (preg_match('#^\.((?:[a-z0-9\-_]+\.?)+)$#s', $token, $varrefs))
+					elseif (preg_match('#^\.((?:[a-z0-9\-_]+\.?)+)$#s', $token, $varrefs))
 					{
 						// Allow checking if loops are set with .loopname
 						// It is also possible to check the loop count by doing <!-- IF .loopname > 1 --> for example
@@ -238,7 +238,7 @@ class email_class
 						}
 						$token = "sizeof($varref)";
 					}
-					else if (!empty($token))
+					elseif (!empty($token))
 					{
 						$token = '(' . $token . ')';
 					}

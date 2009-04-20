@@ -17,24 +17,83 @@ include "../includes/common.inc.php";
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_GET['action'])) {
-	switch($_GET['action']) {
+if (isset($_GET['action']))
+{
+	switch($_GET['action'])
+	{
 		case 'clearcache':
-			if (is_dir($main_path.'cache')) {
+			if (is_dir($main_path.'cache'))
+			{
 				$dir = opendir($main_path.'cache');
-				while (($myfile = readdir($dir)) !== false){
-					if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php'){
+				while (($myfile = readdir($dir)) !== false)
+				{
+					if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php')
+					{
 						unlink($main_path.'cache/'.$myfile);
 					}
 				}
 				closedir($dir);
 			}
 			$errmsg = $MSG['30_0033'];
-			break;
+		break;
+		
+		case 'updatecounters':
+			//update users counter
+			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "users WHERE suspended = 0";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$USERS = mysql_result($res, 0);
+			$query = "UPDATE " . $DBPrefix . "counters SET users = " . $USERS;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			
+			//update suspended users counter
+			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "users WHERE suspended != 0";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$USERS = mysql_result($res, 0);
+			$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = " . $USERS;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			
+			//update auction counter
+			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed = 0 AND suspended = 0";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$AUCTIONS = mysql_result($res, 0);
+			$query = "UPDATE " . $DBPrefix . "counters SET auctions = " . $AUCTIONS;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			
+			//update closed auction counter
+			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed != 0";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$AUCTIONS = mysql_result($res, 0);
+			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = " . $AUCTIONS;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			
+			//update suspended auctions counter
+			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed = 0 and suspended != 0";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$AUCTIONS = mysql_result($res, 0);
+			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = " . $AUCTIONS;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			
+			//update bids
+			$query = "SELECT COUNT(b.id) FROM " . $DBPrefix . "bids b, " . $DBPrefix . "auctions a
+					WHERE b.auction=a.id AND a.closed = 0 AND a.suspended = 0";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$BIDS = mysql_num_rows($res);
+			$query = "UPDATE " . $DBPrefix . "counters set bids = " . $BIDS;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			
+			$errmsg = $MSG['1029'];
+		break;
 	}
 }
 
-while (list($k,$v) = each($LANGUAGES)) {
+while (list($k,$v) = each($LANGUAGES))
+{
 	$template->assign_block_vars('langs', array(
 			'LANG' => $v,
 			'B_DEFAULT' => ($k == $system->SETTINGS['defaultlanguage'])

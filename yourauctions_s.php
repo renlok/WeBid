@@ -31,10 +31,11 @@ if (!$user->logged_in)
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 {
-	if (is_array($_POST['O_delete']))
+	if (is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
 	{
 		while (list($k, $v) = each($_POST['O_delete']))
 		{
+			$removed = 0;
 			$v = intval($v);
 			// Pictures Gallery
 			if (file_exists($upload_path . '/' . $v))
@@ -56,9 +57,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 			// Auction
 			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			// Update counters
-			include $include_path . 'updatecounters.inc.php';
+			$removed++;
 		}
+		
+		$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions - " . $removed . ")";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 }
 

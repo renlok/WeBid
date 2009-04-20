@@ -19,7 +19,8 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			 descriptiontag = '" . addslashes($_POST['descriptiontag']) . "',
 			 keywordstag = '" . addslashes($_POST['keywordstag']) . "'";

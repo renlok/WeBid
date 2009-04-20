@@ -20,26 +20,37 @@ include $include_path . 'status.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
-	if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['repeatpassword'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['repeatpassword']))
+	{
 		$ERR = $ERR_047;
-	} elseif ((!empty($_POST['password']) && empty($_POST['repeatpassword'])) || empty($_POST['password']) && !empty($_POST['repeatpassword'])) {
+	}
+	elseif ((!empty($_POST['password']) && empty($_POST['repeatpassword'])) || empty($_POST['password']) && !empty($_POST['repeatpassword']))
+	{
 		$ERR = $ERR_054;
-	} elseif ($_POST['password'] != $_POST['repeatpassword']) {
+	}
+	elseif ($_POST['password'] != $_POST['repeatpassword'])
+	{
 		$ERR = $ERR_006;
-	} else {
+	}
+	else
+	{
 		// Check if "username" already exists in the database
 		$query = "SELECT id FROM " . $DBPrefix . "adminusers WHERE username = '" . $_POST['username'] . "'";
-		$r = mysql_query($query);
-		$system->check_mysql($r, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($r) > 0) {
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		if (mysql_num_rows($res) > 0)
+		{
 			$ERR = sprintf($ERR_055, $_POST['username']);
-		} else {
-			$PASS = md5($MD5_PREFIX.$_POST['password']);
+		}
+		else
+		{
+			$PASS = md5($MD5_PREFIX . $_POST['password']);
 			$query = "INSERT INTO " . $DBPrefix . "adminusers VALUES
-			(NULL, '" . addslashes($_POST['username']) . "', '" . $PASS . "', '" . get_hash() . "', '" . gmdate('Ymd') . "', '0', " . intval($_POST['status']) . ")";
+					(NULL, '" . addslashes($_POST['username']) . "', '" . $PASS . "', '" . get_hash() . "', '" . gmdate('Ymd') . "', '0', " . intval($_POST['status']) . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			header("Location: adminusers.php");
+			header('location: adminusers.php');
 			exit;
 		}
 	}

@@ -37,7 +37,7 @@ function search_cats($parent_id, $level) {
 	if ($level > 0) {
 		for ($i = 0; $i < $level; $i++) {
 			$stringstart .= '|___';
-		}		
+		}
 	}
 	while ($cats = mysql_fetch_assoc($result)) {
 		$catstr .= ",\n{$cats['cat_id']} => '$stringstart{$cats['cat_name']}'";

@@ -15,5 +15,11 @@
 - Fixed the gallery when no thumbnail is made (#3)
 - Moved the admin theme files into thier own folder
 - Added the option for users to choose thier email format type
+- Fixed the bidding when a bid is made which is lower than the last proxy bid (#5)
+- Fixed the bidding when you make a bid when isnt 1 increment higher than the hishest proxy it no longer places the bid (#9)
+- Added resync counters option to admin CP
+- Removed updatedcounters.inc.php to dramatically speed up cron execution time
+- Added a standardised footer to all admin pages
+- Removed updatefaqs.inc.php as its unneeded
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

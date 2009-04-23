@@ -1,0 +1,321 @@
+// Project File Name: install.txt | "DRAFT" - Version 0.7 March 25, 2009
+//
+// Audience: Advance User.
+//
+// Author: WeBid Development Team | http://www.webidsupport.com | Copyrighted 2009. | 
+//
+
+For recent updates, etc. visit. http://sourceforge.net/projects/simpleauction
+
+WeBid is an Advanced Interactive PHP & MySQL Database Driven auction script. Our automated site-specific Install Script allows most installations to be done in as little 1-2 hours.
+
+It is recommended that you review all information contained in this manual prior to installing WeBid.
+
+----------------
+----------------
+
+Terms and Symbols as used in this manual:
+
+     	        >  = Continue to the Next Procedural Step;
+
+	       ->  = Make a Menu Selection and subsequent Sub-Menu selection in the WeBid Admin Control Panel.
+	
+	    Folder = Refers to a folder on your computer hard drive regardless of operating system.
+	
+         Directory = Refers to a directory on your hosted internet domain web server.
+
+           AdminCP = Abbreviation for the WeBid Administration Control Panel. 
+
+     Relative Path  = The Server Path to your WeBid program. Usually detected properly by the WeBid Install Script. 
+
+           "data"  = The "" Quotes are not used when you enter data as the "" only contain the data you need to use. 
+
+WeBid Program URL  = http://www.mydomain.com/webid-directory/index.php (To execute WeBid Program)
+
+      AdminCP URL  = http://www.mydomain.com/webid-directory/admn/index.php (To execute WeBid Admin Control Panel)
+ 
+-----------------
+-----------------
+
+Minimum Web Server requirements for proper operation of the WeBid Auction Script
+
+- Apache web server 
+
+- PHP 4.0.X (safe_mode=OFF) or PHP 5.X (Recommended) with either having the following configuration:
+		
+	> no open_basedir restriction 
+
+	> dl() must be enabled 
+
+	> if uses GD Libraries support, the GD Libraries version is 2.0 or greater. 
+
+
+- MySQL Database 4.1 or higher 
+
+------------------
+------------------
+
+Below we have provided Instructions to allow an advanced internet user/webmaster to:
+
+  - Download the WeBid FREE Auction Script;
+
+  - Unzip, Upload and properly set WeBid's File and Directory Permissions; and
+
+  - Configure initial WeBid Administration Options.
+
+The Install.php script included with WeBid will:
+
+  - Automatically create and populate the required MySQL Database Tables;
+
+  - Auto-Detect the Relative Server Path (in most cases);
+
+  - Provide a form for entering Database connection information; and
+
+  - Test Critical File and Directory Permission settings.
+  
+
+1. Download WeBid Auction Script:
+
+  - Download the latest full (or required update) version of WeBid GNU/GPL FREE auction script.
+
+  - WeBid script is available FREE from the Official WeBid online website at http://www.Webidsupport.com
+
+
+2. Unzip the compressed WeBid Package file:
+
+  - Unzip WeBid to a folder on your computer hard drive.
+
+
+3. Create a MySql database or have your Hosting Company create one for you (Php and MySQL Specifications are listed Above).
+ 
+  - We Suggest creating the MySQL database first then upload the WeBid files as it usually takes time to create a database.
+
+  - During the the WeBid install script process, you will need available to you the following Information:
+
+	> Database Name;
+
+	> Database Host Location address; (Sometimes "LOCALHOST"  but, not always. Check with your host company.)
+
+	> Database Username; 
+
+	> Database Password; and
+
+	> Correct server relative path to your WeBid directory (For example /home/html/webid-directory/ ); and
+
+	  Note: Relative Path must include ending / (for linux server) and  \\ (for Windows server) 
+
+	> Your WeBid Auction site Administrator email address.
+
+
+4. Upload all Webid files and folders (except for docs folder) to your hosted domain using a FTP program.
+
+  - You can upload WeBid to the root directory or a sub-directory on your hosted domain.
+
+  Note: If you are going to run multiple WeBid scripts on your server, you will need to install WeBid in sub-directories.
+
+
+5. Modify WeBid directories and files permissions on your host domain. (CHMOD) 
+
+  - Note: Where possible use 755 instead of 777 .
+
+  - Check to verify your FTP Program set image files to CHOD  644 .
+
+  - CHMOD File Permissions that are necessary to allow for the proper operation of the WeBid Auction Script are as follows: 
+
+	> /includes/data.inc.php 777 
+
+ 	  NOTE: After install is complete, change data.inc.php to CHMOD 705 .
+
+	> /themes/default/settings.ini 777
+
+	> /includes/countries.inc.php  777
+
+	> /includes/membertypes.inc.php 777
+
+	> /language/EN/categories.inc.php 777
+
+	> /language/EN/categories_select_box.inc.php 777
+		
+  - CHMOD Directory Permissions necessary are as follows:
+
+	> /uploaded/ 777
+
+	> /uploaded/cache 777
+
+
+6. Executing the WeBid Installation script using your internet browser: 
+
+  - http://www.mydomain.com/webid-directory/install/install.php (this is just an example, your URL will differ).
+
+  - On the first page select either Install or Upgrade as required.
+
+  - Enter your server path; MySQL Database information; admin email address and verify writable files and directories.
+
+	> Verify that the auto-detected document root path is correct including the trailing / on a Linux/Unix web server. 
+
+	  Note: On a Windows server the document root path will have a double backslash \\ at the end of this path;
+
+	> Enter the email address used to contact your auction administrator and referenced in outgoing WeBid site email;
+
+	> Enter the Database Host address (Sometimes this address is LOCALHOST but, not always)
+
+	> Enter the Database username;
+
+	> Enter the Database password;
+
+	> You can change/delete Database Prefex. (Using a DBPrefix allows you to have multiple scripts in same database);
+	
+	> Make sure that "Import Default Categories" is selected.
+
+	> If all listed files and directories are writable, you will see an Install Button at the bottom of the page.
+
+	> Click the Install Button to finish install configuration process; and to create and populate database tables.
+
+	NOTE: If you receive an ERROR here, the ERROR will usually be related to incorrect Database Information.
+              Please verify entered information is correct. You may have to contact your hosting company to verify.
+
+	> Upon successful install completion, you'll be asked to delete Install directory prior to accessing AdminCP.
+
+	> Delete the WeBid Install directory on your hosted domain using your FTP program. 
+
+	> Now, click the link on the finished installing WeBid Landing Page to access the AdminCP for your WeBid site.
+
+	  Note: AdminCP is located at http://www.yourdomain.com/webid-directory/admin/index.php (Your URL will differ).
+
+
+7. Creating Administrator Account: Admin Username and Password.
+
+  - The first time you are presented with the AdminCP Login page you will be asked to "Create" an admin user account.
+
+  - Simply enter "CORRECTLY" the admin username and password of your choice and click OK. 
+
+  - The Admin User Account is created immediately and stored in the MySQL Database adminusers table. 
+
+  - Login to the AdminCP using the Admin Username and Password you just created.
+			
+  NOTE: If your attempt to log in to the AdminCP fails use the following procedure to clear the username and password.
+
+
+  - Deleting Admin Usernames and associated passwords will allow you to recreate them again on next Admin login attempt.
+
+ 	> Login to your MySql database myphpadmin console at your hosting company website Cpanel / User Console.
+
+	> Once logged in to myphpadmin verify correct database name is listed.
+
+	> Click on this database name in the Tree List on left upper part of the page. (location in most cases)
+
+	> The database tables should now appear in the center of the page.
+
+	> Scroll down the page until you locate the adminusers table (In center of the page, not in the tree to left).
+
+	> Select the box left of the adminusers table.
+
+	> Move to the right along adminusers table listing and locate the "EMPTY" Icon.
+
+	> Clicking the Empty Icon will remove all adminusers and passwords from the adminusers table.
+
+  Note:  For Security Reasons =  "Immediately" access your AdminCP Login page again and create your new Adminuser account.
+
+	> Login to your WeBid AdminCP and configure the below settings.
+
+
+8. Configuring site specific settings located using the AdminCP Menu:
+
+  -> Settings -> General Settings: Site Name = Enter your Auction Site Name.
+
+  -> Settings -> General Settings: Site URL = http://mydomain.com/webid-directory/ (Must have "http://" & ending "/") 
+
+  -> Settings -> General Settings: Admin eMail = Enter the email address of your auction site administrator.
+
+
+9. Using your Internet Browser go to your WeBid Auction site to make sure it is working properly. 
+
+  (For Example: URL Address to WeBid Auction Program: http://www.mydomain.com/webid-directory/index.php)
+
+  - Register at least two accounts.
+
+  - Create an auction; include pictures using the gallery upload; set one at "Buy Now" configuration; etc.
+
+  - Buy the item with a second user account.
+
+  - Test Feedback. and 
+
+  - Test Message Boards
+
+  - Test Winner system emails such as Winner eMail, etc.
+
+
+11. Additional Admin Control Panel settings that should be changed prior to registering auction users:
+
+  - Adding additional languages to WeBid (Optional):
+
+    NOTE !!!:	This requires code change in PHP files to enable additional language(s). 
+		It is recommended that only users with prior experience modifying PHP code files should 
+                atempt to add additional language files to WeBid.
+
+	> English is the default language for WeBid using the language files **.EN.**.php
+
+	> Review additional information in the AdminCP -> Preferences -> Multilingual support. 
+
+	> Also, review information available at http://www.webidsupport.com concerning Multilingual Support.
+
+	> If you are in USA, you will need to replace the UK Flag file /inclues/flags/EN.gif with a US Flag.
+
+  - Adding or modifying Auction Categories using the AdminCP Categories Table Tree Update Page.
+
+	-> AdminCP -> Settings ->Categories-Categories Table:
+
+	> To edit categories navigate the categories hierarchy. Click on the "+ symbol" left of a particular category or
+
+	  sub-category to browse the subcategories tree under that specific category. 
+
+	> In each level you'll be able to add a new category, edit the categories description and delete as necessary.
+
+    Note: Only a category under which (or under its subcategories) there are no active auctions can that particular
+	  category be deleted.  An "empty" DELETE checkbox only appears for categories which can be deleted.
+	  Deleting a category will automatically delete all the subcategories.
+	  Where required, deleted categories will only be "marked" as deleted but, still visible for closed auction.
+			
+		
+  - Select the Correct Country Currency for your auction site:
+
+	-> Preferences > Currencies Settings: Pick your Country's Currency from list.
+
+
+  - Set the correct time zone for your auction site (if applicable):
+
+ 	-> Preferences -> Time Settings: Pick correct number + / - hours from GMT Time for your location.
+
+
+  - Set the correct Date format for your auction site:
+
+ 	-> Preferences -> Date Format:  mm/dd/yyyy "or" dd/mm/yyyy
+
+
+  - Creating the About Us Page: 
+
+	-> Contents -> About Us Page: Enter information about your Auction Site.
+
+
+  - Creating the Terms & Condition Page: 
+
+	-> Contents -> Terms & Conditions Page: Enter the terms and use restrictions for your auction site.
+
+
+  - Enabling, Creating and Deleting Messages Boards (WeBid Internal Simple Message Boards):
+
+    	> Enable Message Board System  -> Contents -> Message Boards -> Message Board Settings: Enable "OR" Disable.
+
+	> Create New Message Board  -> Contents -> Message Boards -> New Message Board.  
+
+ 	> Delete Message Board  -> Contents -> Message Boards -> Message Boards Management. 
+
+------------
+------------
+
+
+Remember to visit WeBid Community online at http://www.webidsupport.com and support WeBid any way you can because, it is support from our users that makes it possible for us to provide the World's Best User Friendly FREE GNU/GPL Auction Script.
+
+"Your WeBid Development Team"
+
+(c) 2009

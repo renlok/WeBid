@@ -18,7 +18,7 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 #//Default for error message (blank)
-$ERR = "&nbsp;";
+unset($ERR);
 
 #// Insert new message
 if (isset($_POST['action']) && $_POST['action'] == "update") {
@@ -44,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 		}
-		Header("Location: faqs.php");
+		header("Location: faqs.php");
 		exit;
 	}
 } else {

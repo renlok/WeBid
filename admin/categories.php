@@ -104,7 +104,7 @@ if ($_POST['act'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER
 	$categories_id = $_POST['categories_id'];
 	$new_category = $_POST['new_category'];
 	
-	//-- Parse the categories array to update
+	// Parse the categories array to update
 	$i = 0;
 	if (is_array($_POST['categories'])){
 		reset($_POST['categories']);
@@ -122,13 +122,13 @@ if ($_POST['act'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER
 					print "Database access error - abnormal termination ".mysql_error();
 					exit;
 				}
-				$updated = trUE;
+				$updated = true;
 			}
 			$i++;
 		}
 	}
 	
-	//-- Parse the categories array to delete
+	// Parse the categories array to delete
 	if (is_array($delete)) {
 		reset($delete);
 		while (list($k,$v) = each($delete)) {
@@ -138,11 +138,11 @@ if ($_POST['act'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER
 				print "Database access error - abnormal termination ".mysql_error();
 				exit;
 			}
-			$updated = trUE;
+			$updated = true;
 		}
 	}
 	
-	//-- Add new category (if present)
+	// Add new category (if present)
 	if ($new_category) {
 		if (!$parent) $parent = 0;
 		$query = "INSERT INTO " . $DBPrefix . "categories (parent_id, cat_name, deleted, sub_counter, counter, cat_colour, cat_image) VALUES ($parent,'".$system->cleanvars($new_category)."', 0,0,0, '$cat_colour', '$cat_image')";
@@ -151,11 +151,11 @@ if ($_POST['act'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER
 			print "Database access error - abnormal termination ".mysql_error();
 			exit;
 		}
-		$updated = trUE;
+		$updated = true;
 	}
 
-	//-- If something has been modified or deleted
-	//-- some HTML code pieces must be rebuilt.
+	// If something has been modified or deleted
+	// some HTML code pieces must be rebuilt.
 	if ($updated) {
 		rebuild_cat_file();
 		include "util_cc1.php";

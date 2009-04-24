@@ -36,6 +36,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
   `suspendedauctions` int(11) NOT NULL default '0'
 ) ;";
 $query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0);";
+$query[] = "ALTER TABLE  `" . $DBPrefix . "counters` DROP `deleted`;";
 
 //0.7.2 to 0.7.3
 /*

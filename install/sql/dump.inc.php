@@ -320,7 +320,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
   `cat_id` int(4) NOT NULL auto_increment,
   `parent_id` int(4) default NULL,
   `cat_name` tinytext,
-  `deleted` int(1) default NULL,
   `sub_counter` int(11) default NULL,
   `counter` int(11) default NULL,
   `cat_colour` tinytext NOT NULL,

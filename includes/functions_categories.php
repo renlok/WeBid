@@ -14,7 +14,7 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-class categories
+class MPTTcategories
 {
 	// Add an element to the tree as a child of $parent and as $child_num'th child. If $data is not supplied the insert id will be returned.
 	function add($parent, $child_num = 0, $misc_data = false)
@@ -403,7 +403,7 @@ class categories
 			if (count($right) > 0)
 			{
 				// check if we should remove a node from the stack
-				while ($right[count($right) - 1] < $row['right_id'])
+				while (isset($right[count($right) - 1]) && $right[count($right) - 1] < $row['right_id'])
 				{
 					array_pop($right);
 				}
@@ -411,7 +411,7 @@ class categories
 			// display indented node title
 			$return[] = str_repeat($indent, count($right)) . $row['cat_name'];
 			// add this node to the stack
-			$right[] = $row['right'];
+			$right[] = $row['right_id'];
 		}
 		return $return;
 	}

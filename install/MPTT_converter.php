@@ -14,6 +14,7 @@
 
 session_start();
 error_reporting(E_ALL);
+define('InWeBid', 1);
 $step = (!isset($_GET['step'])) ? 1 : $_GET['step'];
 
 include('../includes/config.inc.php');
@@ -47,19 +48,43 @@ function search($id, $tmp, $tid, $searching)
 	return '';
 }
 
+function getids($count, $searching)
+{
+	$tmp = array();
+	foreach ($searching as $k => $v)
+	{
+		$t = array();
+		$count++;
+		$t['left'] = $count;
+		if (is_array($searching[$k]) && count($searching[$k]) > 0)
+		{
+			$ra = getids($count, $searching[$k]);
+			$tmp = array_merge($tmp, $ra[0]);
+			$count = $ra[1];
+		}	
+		$count++;
+		$t['right'] = $count;
+		$t['id'] = $k;
+		$tmp[] = $t;
+	}
+	return array($tmp, $count);
+}
+
 switch($step)
 {
 	case 1:
 		unset($_SESSION['ordered_cats']);
 		unset($_SESSION['import_cats']);
-		$query = "SELECT cat_id, parent_id, cat_name FROM `" . $DBPrefix . "categories` ORDER BY parent_id ASC, cat_name ASC";
+		unset($_SESSION['cats_lftrgt']);
+		$query = "SELECT cat_id, parent_id, cat_name FROM `" . $DBPrefix . "categories` WHERE parent_id != -1 ORDER BY parent_id ASC, cat_name ASC";
 		$res = mysql_query($query) or die(mysql_error());
 		$_SESSION['import_cats'] = array();
+		$count = mysql_num_rows($res);
 		while ($row = mysql_fetch_assoc($res))
 		{
 			$_SESSION['import_cats'][] = $row;
 		}
-		echo '<script type="text/javascript">window.location = "MPTT_converter.php?step=2";</script>';
+		echo '<script type="text/javascript">window.location = "MPTT_converter.php?step=2&count=' . $count . '";</script>';
 	break;
 	case 2: //order everything
 		if (!isset($_SESSION['ordered_cats']))
@@ -80,26 +105,29 @@ switch($step)
 				if ($parent_id != $v['parent_id'] && count($group) > 0)
 				{
 					$a = search($parent_id, array(), 0, $_SESSION['ordered_cats']);
-					switch (count($a))
+					if(is_array($a))
 					{
-						case 1:
-							$_SESSION['ordered_cats'][$a[0]] = $group;
-						break;
-						case 2:
-							$_SESSION['ordered_cats'][$a[0]][$a[1]] = $group;
-						break;
-						case 3:
-							$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]] = $group;
-						break;
-						case 4:
-							$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]] = $group;
-						break;
-						case 5:
-							$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]][$a[4]] = $group;
-						break;
-						case 6:
-							$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]][$a[4]][$a[5]] = $group;
-						break;
+						switch (count($a))
+						{
+							case 1:
+								$_SESSION['ordered_cats'][$a[0]] = $group;
+							break;
+							case 2:
+								$_SESSION['ordered_cats'][$a[0]][$a[1]] = $group;
+							break;
+							case 3:
+								$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]] = $group;
+							break;
+							case 4:
+								$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]] = $group;
+							break;
+							case 5:
+								$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]][$a[4]] = $group;
+							break;
+							case 6:
+								$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]][$a[4]][$a[5]] = $group;
+							break;
+						}
 					}
 					$group = array();
 				}
@@ -107,27 +135,96 @@ switch($step)
 			}
 			$parent_id = $v['parent_id'];
 		}
-		$a = search($parent_id, array(), 0, $_SESSION['ordered_cats']);
-		switch (count($a))
+		if(is_array($a))
 		{
-			case 1:
-				$_SESSION['ordered_cats'][$a[0]] = $group;
-			break;
-			case 2:
-				$_SESSION['ordered_cats'][$a[0]][$a[1]] = $group;
-			break;
-			case 3:
-				$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]] = $group;
-			break;
-			case 4:
-				$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]] = $group;
-			break;
-			case 5:
-				$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]][$a[4]] = $group;
-			break;
-			case 6:
-				$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]][$a[4]][$a[5]] = $group;
-			break;
+			switch (count($a))
+			{
+				case 1:
+					$_SESSION['ordered_cats'][$a[0]] = $group;
+				break;
+				case 2:
+					$_SESSION['ordered_cats'][$a[0]][$a[1]] = $group;
+				break;
+				case 3:
+					$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]] = $group;
+				break;
+				case 4:
+					$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]] = $group;
+				break;
+				case 5:
+					$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]][$a[4]] = $group;
+				break;
+				case 6:
+					$_SESSION['ordered_cats'][$a[0]][$a[1]][$a[2]][$a[3]][$a[4]][$a[5]] = $group;
+				break;
+			}
+		}
+		echo '<script type="text/javascript">window.location = "MPTT_converter.php?step=3&count=' . $_GET['count'] . '";</script>';
+	break;
+	case 3: //get left/right values
+		unset($_SESSION['import_cats']);
+		if (!isset($_SESSION['cats_lftrgt']))
+		{
+			$_SESSION['cats_lftrgt'] = array();
+		}
+		
+		$cats = array();
+		$count = 1;
+		$cats[0] = array('left' => $count);
+		foreach ($_SESSION['ordered_cats'] as $k => $v)
+		{
+			$t = array();
+			$count++;
+			$t['left'] = $count;
+			if (is_array($_SESSION['ordered_cats'][$k]) && count($_SESSION['ordered_cats'][$k]) > 0)
+			{
+				$ra = getids($count, $_SESSION['ordered_cats'][$k]);
+				$cats = array_merge($cats, $ra[0]);
+				$count = $ra[1];
+			}
+			$count++;
+			$t['right'] = $count;
+			$t['id'] = $k;
+			$cats[] = $t;
+		}
+		$count++;
+		$cats[0]['right'] = $count;
+		$_SESSION['cats_lftrgt'] = $cats;
+		echo '<script type="text/javascript">window.location = "MPTT_converter.php?step=4&count=' . count($cats) . '";</script>';
+	break;
+	case 4:
+		unset($_SESSION['ordered_cats']);
+		if (!isset($_GET['from']))
+		{
+			$query = "INSERT INTO `" . $DBPrefix . "categories` (left_id, right_id, cat_name, parent_id) VALUES
+			(" . $_SESSION['cats_lftrgt'][0]['left'] . ", " . $_SESSION['cats_lftrgt'][0]['right'] . ", 'All', -1)";
+			$res = mysql_query($query) or die(mysql_error());
+			$newfrom = $from = 1;
+		}
+		else
+		{
+			$newfrom = $from = $_GET['from'];
+		}
+
+		for ($i = $from; $i < ($from + 750); $i++)
+		{
+			$newfrom++;
+			if ($i == $_GET['count'])
+			{
+				break;
+			}
+			$query = "UPDATE `" . $DBPrefix . "categories` SET
+					left_id = " . $_SESSION['cats_lftrgt'][$i]['left'] . ", right_id = " . $_SESSION['cats_lftrgt'][$i]['right'] . "
+					WHERE cat_id = " . $_SESSION['cats_lftrgt'][$i]['id'];
+			$res = mysql_query($query) or die(mysql_error());
+		}
+		if ($newfrom >= $_GET['count'])
+		{
+			echo '<script type="text/javascript">window.location = "../test.php?right=' . $_SESSION['cats_lftrgt'][0]['right'] . '";</script>';
+		}
+		else
+		{
+			echo '<script type="text/javascript">window.location = "MPTT_converter.php?step=4&count=' . $_GET['count'] . '&from=' . $newfrom . '";</script>';
 		}
 	break;
 }

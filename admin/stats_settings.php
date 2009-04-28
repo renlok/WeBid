@@ -19,11 +19,15 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
-	if (isset($_POST['activate']) && $_POST['activate'] == 'y' && (!isset($_POST['accesses']) && !isset($_POST['browsers']) && !isset($_POST['domains']))) {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	if (isset($_POST['activate']) && $_POST['activate'] == 'y' && (!isset($_POST['accesses']) && !isset($_POST['browsers']) && !isset($_POST['domains'])))
+	{
 		$ERR = $ERR_5002;
 		$system->SETTINGS = $_POST;
-	} else {
+	}
+	else
+	{
 		if (!isset($_POST['accesses'])) $_POST['accesses'] = 'n';
 		if (!isset($_POST['browsers'])) $_POST['browsers'] = 'n';
 		if (!isset($_POST['domains'])) $_POST['domains'] = 'n';
@@ -35,23 +39,25 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 					domains = '" . $_POST['domains'] . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['5148'];
-		$system->SETTINGS = $_POST;
+		$statssettings = $_POST;
 	}
-} else {
+}
+else
+{
 	$query = "SELECT * FROM " . $DBPrefix . "statssettings";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$system->SETTINGS = mysql_fetch_assoc($res);
+	$statssettings = mysql_fetch_assoc($res);
 }
 
 loadblock('', $MSG['5144']);
-loadblock($MSG['5149'], '', 'yesno', 'activate', $system->SETTINGS['activate'], $MSG['030'], $MSG['029']);
+loadblock($MSG['5149'], '', 'yesno', 'activate', $statssettings['activate'], $MSG['030'], $MSG['029']);
 loadblock('', $MSG['5150']);
-loadblock('' , '', 'checkbox', 'accesses', $system->SETTINGS['accesses'], $MSG['5145']);
-loadblock('' , '', 'checkbox', 'browsers', $system->SETTINGS['browsers'], $MSG['5146']);
-loadblock('' , '', 'checkbox', 'domains', $system->SETTINGS['domains'], $MSG['5147']);
+loadblock('' , '', 'checkbox', 'accesses', $statssettings['accesses'], $MSG['5145']);
+loadblock('' , '', 'checkbox', 'browsers', $statssettings['browsers'], $MSG['5146']);
+loadblock('' , '', 'checkbox', 'domains', $statssettings['domains'], $MSG['5147']);
 loadblock('', $MSG['5151']);
-loadblock('', $MSG['5152'].' | '.$MSG['5153'].' | '.$MSG['5154']);
+loadblock('', $MSG['5152'] . ' | ' . $MSG['5153'] . ' | ' . $MSG['5154']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

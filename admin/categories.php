@@ -29,7 +29,7 @@ function ToBeDeleted($index) {
 function search_cats($parent_id, $level) {
 	global $DBPrefix;
 	$query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories
-			WHERE deleted = 0 AND parent_id = $parent_id ORDER BY cat_name";
+			WHERE parent_id = $parent_id ORDER BY cat_name";
 	$result = mysql_query($query);
 	$cats = array();
 	$catstr = '';
@@ -49,7 +49,7 @@ function search_cats($parent_id, $level) {
 
 function rebuild_cat_file() {
 	global $system, $main_path, $DBPrefix;
-	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories WHERE deleted = 0 order by cat_name";
+	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
 	$result = mysql_query($query);
 	$cats = array();
 	while ($catarr = mysql_fetch_array($result)){
@@ -145,7 +145,7 @@ if ($_POST['act'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER
 	// Add new category (if present)
 	if ($new_category) {
 		if (!$parent) $parent = 0;
-		$query = "INSERT INTO " . $DBPrefix . "categories (parent_id, cat_name, deleted, sub_counter, counter, cat_colour, cat_image) VALUES ($parent,'".$system->cleanvars($new_category)."', 0,0,0, '$cat_colour', '$cat_image')";
+		$query = "INSERT INTO " . $DBPrefix . "categories (parent_id, cat_name, sub_counter, counter, cat_colour, cat_image) VALUES ($parent, '".$system->cleanvars($new_category)."', 0, 0, '$cat_colour', '$cat_image')";
 		$result = mysql_query($query);
 		if (!$result) {
 			print "Database access error - abnormal termination ".mysql_error();
@@ -289,7 +289,7 @@ function selectAllDelete(formObj, isInverse)
 					
 					//-- Get first level categories
 					
-					$query = "select * from " . $DBPrefix . "categories WHERE parent_id=".intval($parent)." and deleted=0 order by cat_name";
+					$query = "select * from " . $DBPrefix . "categories WHERE parent_id=".intval($parent)." order by cat_name";
 					$result = mysql_query($query);
 					if (!$result) {
 						print "Database access error - abnormal termination".mysql_error();
@@ -307,7 +307,7 @@ function selectAllDelete(formObj, isInverse)
 						$cat_colour = mysql_result($result, $i, "cat_colour");
 						$cat_image = mysql_result($result, $i, "cat_image");
 						//-- Check if this category has sub_categories
-						$query = "select count(cat_id) as subcats from " . $DBPrefix . "categories WHERE parent_id=$cat_id and deleted=0";
+						$query = "select count(cat_id) as subcats from " . $DBPrefix . "categories WHERE parent_id=$cat_id";
 						$resultsub = mysql_query($query);
 						if (!$resultsub) {
 							print "Database access error - abnormal termination ".mysql_error();

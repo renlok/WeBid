@@ -14,7 +14,6 @@
 
 if (!defined('InWeBid')) exit();
 
-$MSG['COPYRIGHT'] = ""; //your copyright message
 // CHARSET ENCODING
 // Change the charset according to the language used in this file.
 // UTF-8 should work with almost any language
@@ -573,7 +572,13 @@ $MSG['394'] = "Add";
 $MSG['395'] = "Enable/Disable Fees";
 $MSG['396'] = "Fee Settings Updated";
 $MSG['397'] = "Do you want your auction site to be completly free or do you want to change for it";
-$MSG['400'] = "E-mail&nbsp;address";
+$MSG['400'] = "E-mail address";
+$MSG['401'] = "Privacy Policy";
+$MSG['402'] = "Privacy Policy Page";
+$MSG['403'] = "Activate Privacy Policy Page?";
+$MSG['404'] = "Privacy Policy content<br>(HTML allowed)";
+$MSG['405'] = "Activate this option if you want a Privacy Policy link to appear in the footer of your pages.";
+$MSG['406'] = "Privacy Policy Settings Updated";
 $MSG['409'] = "Error Handling";
 $MSG['410'] = "Fatal errors that occur during WeBid's execution (typically MySQL errors) will redirect users to an error page.
 			You can customise the error message you want to appear in the error page below.<br>

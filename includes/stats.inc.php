@@ -62,8 +62,8 @@ if ($STATSSETTINGS['activate'] == 'y')
 			$UPDATESESSION = TRUE;
 		}
 		
-		// check cookies and session vars --
-		$Cookie = $system->SETTINGS['cookiesprefix'] . "uniqueuser";
+		// check cookies and session vars
+		$Cookie = 'uniqueuser';
 		if (isset($_COOKIE[$Cookie]))
 		{
 			$UPDATECOOKIE = FALSE;

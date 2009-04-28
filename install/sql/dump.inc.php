@@ -1564,7 +1564,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `sitename` varchar(255) NOT NULL default '',
   `siteurl` varchar(255) NOT NULL default '',
-  `cookiesprefix` varchar(100) NOT NULL default '',
+  `copyright` varchar(255) NOT NULL default '',
   `loginbox` int(1) NOT NULL default '0',
   `newsbox` int(1) NOT NULL default '0',
   `newstoshow` int(11) NOT NULL default '0',
@@ -1600,6 +1600,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `aboutustext` text NOT NULL,
   `terms` enum('y','n') NOT NULL default 'y',
   `termstext` text NOT NULL,
+  `privacypolicy` enum('y','n') NOT NULL default 'y',
+  `privacypolicytext` text NOT NULL,
   `defaultcountry` varchar(30) NOT NULL default '0',
   `relisting` int(11) NOT NULL default '0',
   `defaultlanguage` char(2) NOT NULL default 'EN',
@@ -1635,7 +1637,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '".$siteURL."', 'WEBID', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', 'y', 'y', 'n', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n');";
+('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n');";
 
 
 # ############################

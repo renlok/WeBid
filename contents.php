@@ -24,6 +24,10 @@ switch ($_GET['show'])
 		$TITLE = $MSG['5086'];
 		$CONTENT = stripslashes($system->SETTINGS['termstext']);
 		break;
+	case 'priv':
+		$TITLE = $MSG['401'];
+		$CONTENT = stripslashes($system->SETTINGS['privacypolicytext']);
+		break;
 }
 
 $template->assign_vars(array(

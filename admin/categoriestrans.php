@@ -24,7 +24,7 @@ $colourrow[1] = '#EEEEEE';
 function search_cats($parent_id, $level){
 	global $DBPrefix;
 	$query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories
-			WHERE deleted = 0 AND parent_id = $parent_id ORDER BY cat_name";
+			WHERE parent_id = $parent_id ORDER BY cat_name";
 	$result = mysql_query($query);
 	$cats = array();
 	$catstr = '';
@@ -155,7 +155,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 						<td>&nbsp;</td>
 					</tr>
 					<?php
-					$query = "select * from " . $DBPrefix . "categories WHERE deleted=0 order by cat_name";
+					$query = "select * from " . $DBPrefix . "categories order by cat_name";
 					$result = mysql_query($query);
 					if (!$result) {
 						print "Database access error - abnormal termination".mysql_error();

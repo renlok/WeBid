@@ -16,7 +16,7 @@
 			<form name="messageboard" action="" method="post">
 				<input type="hidden" name="action" value="insertmessage" />
 				<input type="hidden" name="board_id" value="{BOARD_ID}" />
-<!-- IF !B_LOGGED_IN -->
+<!-- IF B_LOGGED_IN eq false -->
 				<p class="errfont">{L_5056}</p>
 <!-- ENDIF -->
 				<textarea name="newmessage" cols="60" rows="5"></textarea>

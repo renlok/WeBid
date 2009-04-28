@@ -83,6 +83,7 @@ $minimum_bid = $Data['minimum_bid'];
 $customincrement = $Data['increment'];
 $current_bid = $Data['current_bid'];
 $pict_url_plain = $Data['pict_url'];
+$reserve = $Data['reserve_price'];
 $c = $Data['ends'];
 $cbid = ($current_bid == 0) ? $minimum_bid : $current_bid;
 

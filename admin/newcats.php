@@ -41,7 +41,7 @@ function search_cats($parent_id, $level)
 	$diff = $limiter - $done;
 	$catlist[$level] = (!isset($catlist[$level])) ? 0 : $catlist[$level];
 	$query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories
-			WHERE deleted = 0 AND parent_id = " . $parent_id . " ORDER BY cat_name
+			WHERE parent_id = " . $parent_id . " ORDER BY cat_name
 			LIMIT " . $catlist[$level] . ", 2";
 	$result = mysql_query($query);
 	$cats = array();
@@ -158,6 +158,6 @@ switch ($part)
 		}
 	break;
 }
-echo '<script type="text/javascript">window.location = "categories.php";</script>';
+//echo '<script type="text/javascript">window.location = "categories.php";</script>';
 exit;
 ?>

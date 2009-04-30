@@ -16,32 +16,26 @@ include 'includes/common.inc.php';
 include $include_path . 'auctionstoshow.inc.php';
 include $include_path . 'dates.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
+$catscontrol = new MPTTcategories();
 
 // Get parameters from the URL
 $params['id'] = (isset($_GET['id'])) ? $_GET['id'] : 0;
 $id = intval($params['id']);
 
-function getsubtree($catsubtree, $i)
-{
-	global $catlist, $DBPrefix, $system;
-	$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE parent_id = " . $catsubtree[$i];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	while ($row = mysql_fetch_assoc($res))
-	{
-		$catlist[] = $row['cat_id'];
-		$catsubtree[$i + 1] = $row['cat_id'];
-		getsubtree($catsubtree, $i + 1);
-	}
-}
-
 if ($id != 0)
 {
-	$catsubtree[0] = $id;
-	$catlist[] = $catsubtree[0];
-	getsubtree($catsubtree, 0);
+	$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$parent_node = mysql_fetch_assoc($res);
+	$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);
+	$childarray = array($id);
+	foreach ($children as $k => $v)
+	{
+		$childarray[] = $v['cat_id'];
+	}
 	$catalist = '(';
-	$catalist .= join(',', $catlist);
+	$catalist .= implode(',', $childarray);
 	$catalist .= ')';
 }
 $NOW = time();

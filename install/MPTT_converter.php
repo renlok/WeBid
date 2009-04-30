@@ -48,7 +48,7 @@ function search($id, $tmp, $tid, $searching)
 	return '';
 }
 
-function getids($count, $searching)
+function getids($count, $searching, $level)
 {
 	$tmp = array();
 	foreach ($searching as $k => $v)
@@ -58,13 +58,14 @@ function getids($count, $searching)
 		$t['left'] = $count;
 		if (is_array($searching[$k]) && count($searching[$k]) > 0)
 		{
-			$ra = getids($count, $searching[$k]);
+			$ra = getids($count, $searching[$k], ($level + 1));
 			$tmp = array_merge($tmp, $ra[0]);
 			$count = $ra[1];
 		}	
 		$count++;
 		$t['right'] = $count;
 		$t['id'] = $k;
+		$t['level'] = $level;
 		$tmp[] = $t;
 	}
 	return array($tmp, $count);
@@ -135,6 +136,7 @@ switch($step)
 			}
 			$parent_id = $v['parent_id'];
 		}
+		$a = search($parent_id, array(), 0, $_SESSION['ordered_cats']);
 		if(is_array($a))
 		{
 			switch (count($a))
@@ -178,13 +180,14 @@ switch($step)
 			$t['left'] = $count;
 			if (is_array($_SESSION['ordered_cats'][$k]) && count($_SESSION['ordered_cats'][$k]) > 0)
 			{
-				$ra = getids($count, $_SESSION['ordered_cats'][$k]);
+				$ra = getids($count, $_SESSION['ordered_cats'][$k], 1);
 				$cats = array_merge($cats, $ra[0]);
 				$count = $ra[1];
 			}
 			$count++;
 			$t['right'] = $count;
 			$t['id'] = $k;
+			$t['level'] = 0;
 			$cats[] = $t;
 		}
 		$count++;
@@ -196,8 +199,8 @@ switch($step)
 		unset($_SESSION['ordered_cats']);
 		if (!isset($_GET['from']))
 		{
-			$query = "INSERT INTO `" . $DBPrefix . "categories` (left_id, right_id, cat_name, parent_id) VALUES
-			(" . $_SESSION['cats_lftrgt'][0]['left'] . ", " . $_SESSION['cats_lftrgt'][0]['right'] . ", 'All', -1)";
+			$query = "INSERT INTO `" . $DBPrefix . "categories` (cat_id, left_id, right_id, level, cat_name, parent_id) VALUES
+			(0, " . $_SESSION['cats_lftrgt'][0]['left'] . ", " . $_SESSION['cats_lftrgt'][0]['right'] . ", -1, 'All', -1)";
 			$res = mysql_query($query) or die(mysql_error());
 			$newfrom = $from = 1;
 		}
@@ -214,7 +217,8 @@ switch($step)
 				break;
 			}
 			$query = "UPDATE `" . $DBPrefix . "categories` SET
-					left_id = " . $_SESSION['cats_lftrgt'][$i]['left'] . ", right_id = " . $_SESSION['cats_lftrgt'][$i]['right'] . "
+					left_id = " . $_SESSION['cats_lftrgt'][$i]['left'] . ", right_id = " . $_SESSION['cats_lftrgt'][$i]['right'] . ",
+					level = " . $_SESSION['cats_lftrgt'][$i]['level'] . "
 					WHERE cat_id = " . $_SESSION['cats_lftrgt'][$i]['id'];
 			$res = mysql_query($query) or die(mysql_error());
 		}

@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 WeBid
- *   site					: http://www.webidsupport.com/
+ *   copyright              : (C) 2008 WeBid
+ *   site                   : http://www.webidsupport.com/
  ***************************************************************************/
 
 /***************************************************************************
@@ -14,6 +14,7 @@
 
 $w = $_GET['w'];
 $fromfile = $_GET['fromfile'];
+$nomanage = false;
 
 function ErrorPNG($err)
 {

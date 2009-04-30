@@ -16,7 +16,7 @@ include 'includes/common.inc.php';
 include $include_path . 'countries.inc.php';
 include $include_path . 'dates.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
-
+$catscontrol = new MPTTcategories();
 $NOW = time();
 
 if (isset($_POST['PAGE']))
@@ -26,25 +26,6 @@ if (isset($_POST['PAGE']))
 else
 {
 	$page = 1;
-}
-
-/*
-* Recursive categories tree visit;
-* It returns a list of all not-labeled subcategories
-*/
-function getsubtree($catsubtree, $i)
-{
-	global $catlist, $DBPrefix, $system;
-	$query = "SELECT * FROM " . $DBPrefix . "categories WHERE parent_id = " . intval($catsubtree[$i]);
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	while ($row = mysql_fetch_assoc($res))
-	{
-		// get info about this parent
-		$catlist[] = $row['cat_id'];
-		$catsubtree[$i + 1] = $row['cat_id'];
-		getsubtree($catsubtree, $i + 1);
-	}
 }
 
 if (empty($_POST))
@@ -105,13 +86,19 @@ if (!isset($_POST['closed']))
 
 if (!empty($_POST['category']))
 {
-	$catlist = array();
-	$catsubtree[0] = $_POST['category'];
-	$catlist[] = $catsubtree[0];
-	getsubtree($catsubtree, 0);
-	$catalist = "(";
-	$catalist .= implode(',', $catlist);
-	$catalist .= ")";
+	$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $_POST['category'];
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$parent_node = mysql_fetch_assoc($res);
+	$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);
+	$childarray = array($_POST['category']);
+	foreach ($children as $k => $v)
+	{
+		$childarray[] = $v['cat_id'];
+	}
+	$catalist = '(';
+	$catalist .= implode(',', $childarray);
+	$catalist .= ')';
 	$wher .= "(au.category IN " . $catalist . ") AND ";
 }
 

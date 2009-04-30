@@ -28,6 +28,75 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $MANDATORY_FIELDS = unserialize(mysql_result($res, 0, 'mandatory_fields'));
 
+function generateSelect($name = '', $options = array())
+{
+	global $selectsetting;
+	$html = '<select name="' . $name . '">';
+	foreach ($options as $option => $value )
+	{
+		if ($selectsetting == $option)
+		{
+			$html .= '<option value=' . $option . ' selected>' . $value . '</option>';
+		}
+		else
+		{
+			$html .= '<option value=' . $option . '>' . $value . '</option>';
+		}
+	}
+	$html .= '</select>';
+	return $html;
+}
+
+$TIMECORRECTION = array(
+	'-23' => '-23 h',
+	'-22' => '-22 h',
+	'-21' => '-21 h',
+	'-20' => '-20 h',
+	'-19' => '-19 h',
+	'-18' => '-18 h',
+	'-17' => '-17 h',
+	'-16' => '-16 h',
+	'-15' => '-15 h',
+	'-14' => '-14 h',
+	'-13' => '-13 h',
+	'-12' => '-12 h',
+	'-11' => '-11 h',
+	'-10' => '-10 h',
+	'-9' => '-9 h',
+	'-8' => '-8 h',
+	'-7' => '-7 h',
+	'-6' => '-6 h',
+	'-5' => '-5 h',
+	'-4' => '-4 h',
+	'-3' => '-3 h',
+	'-2' => '-2 h',
+	'-1' => '-1 h',
+	'0' => 'GMT',
+	'+1' => '+1 h',
+	'+2' => '+2 h',
+	'+3' => '+3 h',
+	'+4' => '+4 h',
+	'+5' => '+5 h',
+	'+6' => '+6 h',
+	'+7' => '+7 h',
+	'+8' => '+8 h',
+	'+9' => '+9 h',
+	'+10' => '+10 h',
+	'+11' => '+11 h',
+	'+12' => '+12 h',
+	'+13' => '+13 h',
+	'+14' => '+14 h',
+	'+15' => '+15 h',
+	'+16' => '+16 h',
+	'+17' => '+17 h',
+	'+18' => '+18 h',
+	'+19' => '+19 h',
+	'+20' => '+20 h',
+	'+21' => '+21 h',
+	'+22' => '+22 h',
+	'+23' => '+23 h'
+);
+
 $TPL_errmsg = '';
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -81,6 +150,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					country = '" . $system->cleanvars($_POST['TPL_country']) . "',
 					zip = '" . $system->cleanvars($_POST['TPL_zip']) . "',
 					phone = '" . $system->cleanvars($_POST['TPL_phone']) . "',
+					timecorrection = '" . $system->cleanvars($_POST['TPL_timezone']) . "',
 					nletter = '" . $system->cleanvars($_POST['TPL_nletter']);
 
 			if (strlen($_POST['TPL_password']) > 0)
@@ -142,6 +212,9 @@ for ($i = 1; $i <= 31; $i++)
 }
 $dobday .= '</select>';
 
+$selectsetting = $user->user_data['timecorrection'];
+$time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
+
 $template->assign_vars(array(
 		'COUNTRYLIST' => $country,
 		'NAME' => $USER['name'],
@@ -154,6 +227,7 @@ $template->assign_vars(array(
 		'ZIP' => $USER['zip'],
 		'PHONE' => $USER['phone'],
 		'DATEFORMAT' => ($system->SETTINGS['datesformat'] == "USA") ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
+		'TOMEZONE' => $time_correction,
 		'ERROR' => $TPL_errmsg,
 
 		'NLETTER1' => ($USER['nletter'] == 1) ? ' checked="checked"' : '',

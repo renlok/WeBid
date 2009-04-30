@@ -59,5 +59,11 @@ if (!$user->logged_in && isset($_COOKIE['WEBID_RM_ID']))
 	}
 }
 
+if($user->logged_in)
+{
+	$system->ctime = time() + (($user->user_data['timecorrection'] + gmdate('I')) * 3600);
+	$system->tdiff = ($user->user_data['timecorrection'] + gmdate('I')) * 3600;
+}
+
 $template->set_template();
 ?>

@@ -5,7 +5,7 @@
 <title>{PAGE_TITLE}</title>
 <meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
 {STYLES}
-<link rel='stylesheet' type='text/css' href='{SITEURL}themes/default/style.css'>
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/default/style.css">
 <link rel="stylesheet" type="text/css" href="{SITEURL}themes/default/jquery.lightbox.css" media="screen">
 
 <link rel="alternate" type="application/rss+xml" title="{L_924}" href="{SITEURL}rss.php?feed=1" />
@@ -23,11 +23,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	function window_open(pagina,titulo,ancho,largo,x,y){
-		alert(0);
-		var Ventana= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+ancho+',height='+largo;
-		open(pagina,titulo,Ventana);
-	}
 	$('a.new-window').click(function(){
 		var posY = ($(window).height()-550)/2;
 		var posX = ($(window).width())/2;
@@ -54,7 +49,7 @@ $(document).ready(function() {
 {EXTRAINC}
 <meta name="description" content="{DESCRIPTION}">
 <meta name="keywords" content="{KEYWORDS}">
-
+<meta name="generator" content="WeBid">
 </head>
 <body>
 <div align="{PAGEALIGN}">

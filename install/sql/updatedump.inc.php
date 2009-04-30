@@ -38,7 +38,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
 $query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0);";
 $query[] = "ALTER TABLE `" . $DBPrefix . "counters` DROP `deleted`;";
 $query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD `left_id` INT(8) NOT NULL AFTER  `parent_id`,
-			ADD `right_id` INT(8) NOT NULL AFTER `left_id`";
+			ADD `right_id` INT(8) NOT NULL AFTER `left_id`
+			ADD `level` INT(1) NOT NULL AFTER `right_id`";
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `cookiesprefix`, ADD `copyright` varchar(255) NOT NULL default '' AFTER `siteurl`,
 			ADD `privacypolicy` enum('y','n') NOT NULL default 'y' AFTER `termstext`, ADD `privacypolicytext` text NOT NULL AFTER `privacypolicy`";
 

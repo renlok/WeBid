@@ -25,8 +25,8 @@ class global_class
 		if (!mysql_select_db($DbDatabase)) die();
 		// Load settings
 		$this->loadsettings();
-		$this->ctime = time() + (($this->SETTINGS['timecorrection'] + date('I')) * 3600);
-		$this->tdiff = ($this->SETTINGS['timecorrection'] + date('I')) * 3600;
+		$this->ctime = time() + (($this->SETTINGS['timecorrection'] + gmdate('I')) * 3600);
+		$this->tdiff = ($this->SETTINGS['timecorrection'] + gmdate('I')) * 3600;
 		if (is_dir($main_path . 'install')){ echo 'please delete the install directory'; exit; }
 		// Check ip
 		if (!defined('IPBan'))

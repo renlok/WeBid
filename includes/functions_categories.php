@@ -78,13 +78,14 @@ class MPTTcategories
 		$data = array(
 			'left_id' => $boundry[2] + 1,
 			'right_id' => $boundry[2] + 2,
-			'level' => $parent['level'] + 1
+			'level' => $parent['level'] + 1,
+			'parent_id' => $parent
 		);
 		if($misc_data && is_array($misc_data))
 		{
 			$data = array_merge($misc_data, $data);
-			$data = $this->build_sql($data);
 		}
+		$data = $this->build_sql($data);
 		$query = "INSERT INTO " . $DBPrefix . "categories SET " . $data;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
@@ -355,7 +356,7 @@ class MPTTcategories
 	function get_children($left_id, $right_id, $level)
 	{
 		global $system, $DBPrefix;
-		$query = "SELECT left_id, right_id FROM " . $DBPrefix . "categories WHERE left_id > " . $left_id . " AND right_id < " . $right_id . " AND level = " . ($level + 1);
+		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id > " . $left_id . " AND right_id < " . $right_id . " AND level = " . ($level + 1) . " ORDER BY cat_name";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$children = array();
@@ -409,7 +410,7 @@ class MPTTcategories
 				}
 			}
 			// display indented node title
-			$return[] = str_repeat($indent, count($right)) . $row['cat_name'];
+			$return[$row['cat_id']] = str_repeat($indent, count($right)) . $row['cat_name'];
 			// add this node to the stack
 			$right[] = $row['right_id'];
 		}
@@ -424,10 +425,24 @@ class MPTTcategories
 		$query = "SELECT right_id FROM " . $DBPrefix . "categories ORDER BY right_id DESC LIMIT 1";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-
-		$root = array('left_id' => 0, 'right_id' => mysql_fetch_assoc($res), 'level' => 0);
-		$root['right_id'] = $root['right_id']['right_id'] + 1;
+		$row = mysql_fetch_assoc($res);
+		$root = array('left_id' => 1, 'right_id' => $row['right_id'], 'level' => -1);
 		return $root;
+	}
+	
+	function get_bread_crumbs($left_id, $right_id)
+	{
+		global $system, $DBPrefix;
+		// return an array of all parent nodes
+		$query = "SELECT cat_name, cat_id FROM " . $DBPrefix . "categories WHERE left_id <= " . $left_id . " AND right_id >= " . $right_id . " ORDER BY left_id ASC";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$array = array();
+		while ($row = mysql_fetch_assoc($res))
+		{
+			$array[] = $row;
+		}
+		return $array;
 	}
 
 	// Build INSERT statement

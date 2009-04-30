@@ -376,6 +376,8 @@ $MSG['187'] = "Your username";
 $MSG['188'] = "Your password";
 $MSG['189'] = "Total Due";
 $MSG['190'] = "Your item's category";
+$MSG['191'] = "Your copyright message";
+$MSG['192'] = "This is a message that is added to the bottom of every page";
 $MSG['193'] = "Auction's duration";
 $MSG['195'] = "Picture's URL";
 $MSG['196'] = "Item's description";
@@ -524,7 +526,7 @@ $MSG['343'] = "Edit news";
 $MSG['344'] = "Time Settings";
 $MSG['345'] = "If you want to adjust your server time to accurately show your local time, choose the correction (+ or -) amount from your server time that you want to apply.<br>
 			All the time functions in the program will apply the chosen adjustment.";
-$MSG['346'] = "Time Adjustment";
+$MSG['346'] = "Time Zone";
 $MSG['347'] = "Time settings updated";
 $MSG['348'] = "Batch Procedures Settings";
 $MSG['349'] = "Reply";

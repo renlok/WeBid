@@ -23,5 +23,8 @@
 - Removed updatefaqs.inc.php as its unneeded
 - Fixed the bidding so the auctions reserve price is taken into account when making proxy bids
 - Added option to have privacy policy
+- Added option to add copyright message
+- Updated jQuery to v1.3.2
+- Updated jQuery Image Area Select plugin to v0.8
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

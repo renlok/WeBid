@@ -19,28 +19,35 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	// Data check
-	if (empty($_POST['sitename']) || empty($_POST['siteurl']) || empty($_POST['adminmail'])) {
+	if (empty($_POST['sitename']) || empty($_POST['siteurl']) || empty($_POST['adminmail']))
+	{
 		$ERR = $ERR_047;
-		$system->SETTINGS = $_POST;
-	} else {
+	}
+	else
+	{
 		// Update data
 		$query = "UPDATE " . $DBPrefix . "settings set
 				sitename = '" . addslashes($_POST['sitename']) . "',
 				adminmail = '" . addslashes($_POST['adminmail']) . "',
-				siteurl = '" . addslashes($_POST['siteurl']) . "'";
+				siteurl = '" . addslashes($_POST['siteurl']) . "',
+				copyright = '" . addslashes($_POST['copyright']) . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$system->SETTINGS['sitename'] = $_POST['sitename'];
-		$system->SETTINGS['adminmail'] = $_POST['adminmail'];
-		$system->SETTINGS['siteurl'] = $_POST['siteurl'];
 		$ERR = $MSG['542'];
 	}
+
+	$system->SETTINGS['sitename'] = $_POST['sitename'];
+	$system->SETTINGS['adminmail'] = $_POST['adminmail'];
+	$system->SETTINGS['siteurl'] = $_POST['siteurl'];
+	$system->SETTINGS['copyright'] = $_POST['copyright'];
 }
 
 loadblock($MSG['527'], $MSG['535'], 'text', 'sitename', $system->SETTINGS['sitename']);
 loadblock($MSG['528'], $MSG['536'], 'text', 'siteurl', $system->SETTINGS['siteurl']);
 loadblock($MSG['540'], $MSG['541'], 'text', 'adminmail', $system->SETTINGS['adminmail']);
+loadblock($MSG['191'], $MSG['192'], 'text', 'copyright', $system->SETTINGS['copyright']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

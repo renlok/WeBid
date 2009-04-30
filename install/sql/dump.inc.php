@@ -319,6 +319,9 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
   `cat_id` int(4) NOT NULL auto_increment,
   `parent_id` int(4) default NULL,
+  `left_id` INT(8) NOT NULL,
+  `right_id` INT(8) NOT NULL,
+  `level` INT(1) NOT NULL,
   `cat_name` tinytext,
   `sub_counter` int(11) default NULL,
   `counter` int(11) default NULL,

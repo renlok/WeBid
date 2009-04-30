@@ -14,7 +14,6 @@
 
 include 'includes/common.inc.php';
 include $include_path . 'auction_types.inc.php';
-include $include_path . "countries.inc.php";
 include $include_path . 'dates.inc.php';
 include $include_path . 'membertypes.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
@@ -32,6 +31,7 @@ $id = (isset($_POST['id'])) ? intval($_POST['id']) : $id;
 if (!is_numeric($id)) $id = 0;
 $bidderarray = array();
 $bidderarraynum = 1;
+$catscontrol = new MPTTcategories();
 
 $_SESSION['CURRENT_ITEM'] = $id;
 $_SESSION['REDIRECT_AFTER_LOGIN'] = $system->SETTINGS['siteurl'] . 'item.php?id=' . $id;
@@ -143,44 +143,26 @@ else
 	$ending_time = '<span class="errfont">' . $MSG['911'] . '</span>';
 	$has_ended = true;
 }
-// categories list
-$c_name = array();
-$c_id = array();
+
+// build bread crumbs
+$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['category'];
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$parent_node = mysql_fetch_assoc($res);
+
 $cat_value = '';
-
-$query = "SELECT cat_id, parent_id, cat_name FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['category'];
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-
-$result = mysql_fetch_array ($result);
-$parent_id = $result['parent_id'];
-$cat_id = $categories;
-
-$j = $auction_data['category'];
-$i = 0;
-do
+$j = 0;
+$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+for ($i = 0; $i < count($crumbs); $i++)
 {
-	$query = "SELECT cat_id, parent_id, cat_name FROM " . $DBPrefix . "categories WHERE cat_id = '$j'";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-
-	$catarr = mysql_fetch_array ($result);
-	$parent_id = $catarr['parent_id'];
-	$c_name[$i] = $category_names[$catarr['cat_id']];
-	$c_id[$i] = $catarr['cat_id'];
-	$i++;
-	$j = $parent_id;
-} while ($parent_id != 0);
-
-for ($j = $i - 1; $j >= 0; $j--)
-{
-	if ($j == 0)
+	if ($crumbs[$i]['cat_id'] > 0)
 	{
-		$cat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $c_id[$j] . '">' . $c_name[$j] . '</a>';
-	}
-	else
-	{
-		$cat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $c_id[$j] . '">' . $c_name[$j] . '</a> / ';
+		if ($j > 0)
+		{
+			$cat_value .= ' > ';
+		}
+		$cat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $crumbs[$i]['cat_name'] . '</a>';
+		$j++;
 	}
 }
 

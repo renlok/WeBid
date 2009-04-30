@@ -17,29 +17,19 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 $language = (isset($_GET['lang'])) ? $_GET['lang'] : 'EN';
+$catscontrol = new MPTTcategories();
 
 $colourrow[0] = '#FFFFFF';
 $colourrow[1] = '#EEEEEE';
 
 function search_cats($parent_id, $level){
-	global $DBPrefix;
-	$query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories
-			WHERE parent_id = $parent_id ORDER BY cat_name";
-	$result = mysql_query($query);
-	$cats = array();
-	$catstr = '';
-	$stringstart = '';
-	if ($level > 0) {
-		for ($i = 0; $i < $level; $i++){
-			$stringstart .= '|___';
-		}		
+	global $DBPrefix, $catscontrol;
+	$root = $catscontrol->get_virtual_root();
+	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
+	foreach ($tree as $k => $v)
+	{
+		$catstr .= ",\n" . $k . " => '" . $v . "'";
 	}
-		
-	while ($cats = mysql_fetch_array($result)){
-		$catstr .= ",\n{$cats['cat_id']} => '$stringstart{$cats['cat_name']}'";
-		$catstr .= search_cats($cats['cat_id'], $level+1);
-	}
-	unset($cats);
 	return $catstr;
 }
 
@@ -155,7 +145,7 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 						<td>&nbsp;</td>
 					</tr>
 					<?php
-					$query = "select * from " . $DBPrefix . "categories order by cat_name";
+					$query = "SELECT * FROM " . $DBPrefix . "categories WHERE parent_id != -1 ORDER BY cat_name";
 					$result = mysql_query($query);
 					if (!$result) {
 						print "Database access error - abnormal termination".mysql_error();

@@ -83,7 +83,7 @@ if ($result_counters)
 // Display current Date/Time
 $mth = "MON_0" . gmdate('m', $system->ctime);
 $date = $MSG[$mth] . gmdate(' j, Y', $system->ctime);
-$counters .= $date . ' <span id="servertime"></span>';
+$counters .= $date . ' <span id="servertime">' . gmdate('H:i:s', $system->ctime) . '</span>';
 
 include $include_path . 'styles.inc.php';
 $page_title = (isset($page_title)) ? ' ' . $page_title : '';

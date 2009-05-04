@@ -64,6 +64,7 @@ dl.phpa-tabs dd.active a:hover	{ text-decoration: underline; color: #660000; }
 .footer a:hover , .footer a:active	{ color: #6DC0FC; }
 .table-bar a:active	{ color: #BA1D1D; }
 a:active	{ color: #BA1D1D; }
+.padding { padding: 15px; }
 .copyright { font-size:10px; text-align:center; margin:1px 0 5px 0; color:#555555; }
 .smallspan { font-size:12px; }
 .yourbidloss { color:#9F0000; background:#FFD5D5; padding:15px 0 15px 40px; font-weight: bold; }

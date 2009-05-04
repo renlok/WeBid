@@ -1,12 +1,3 @@
-<html>
- <head>
- 	<style type="text/css">
- 		body {
- 		font-family: Verdana;
- 		}
- 	</style>
- </head>
- <body>
 <table border="0" width="100%">
 	<tr>
 		<td colspan="3" height="35"><div style="font-size: 14px; font-weight: bold;">You have been outbid! Bid again now!</div></td>
@@ -47,6 +38,4 @@
 	<tr>
 		<td width="34%" height="110" valign="top"></td>
 	</tr>
- </table>
-</body>
-</html>
+</table>

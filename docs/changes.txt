@@ -16,7 +16,7 @@
 - Moved the admin theme files into thier own folder
 - Added the option for users to choose thier email format type
 - Fixed the bidding when a bid is made which is lower than the last proxy bid (Bug #5)
-- Fixed the bidding when you make a bid when isnt 1 increment higher than the highest proxy it no longer places the bid (Bug #9)
+- Fixed the proxy bidding (Bug #9)
 - Added resync counters option to admin CP
 - Removed updatedcounters.inc.php to dramatically speed up cron execution time
 - Added a standardised footer to all admin pages
@@ -26,5 +26,6 @@
 - Added option to add copyright message
 - Updated jQuery to v1.3.2
 - Updated jQuery Image Area Select plugin to v0.8
+- Added a GD support check in the installer
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

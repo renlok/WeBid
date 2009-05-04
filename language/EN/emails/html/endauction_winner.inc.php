@@ -1,12 +1,3 @@
-<html>
- <head>
- 	<style type="text/css">
- 		body {
- 		font-family: Verdana;
- 		}
- 	</style>
- </head>
- <body>
 <table border="0" width="100%">
 	<tr>
 		<td colspan="3" height="35"><div style="font-size: 14px; font-weight: bold;">Congratulations, your item has sold!</div></td>
@@ -66,5 +57,3 @@
 	</tr>
 </table><br />
 <div style="font-size: 12px;"><i>An email has been sent to the winner(s) with your email address.</i></div>
-</body>
-</html>

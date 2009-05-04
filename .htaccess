@@ -7,12 +7,8 @@
 # disable directory browsing
 Options All -Indexes
 
-# disabel access to logs
-<files cron.log>
- order allow,deny
- deny from all
-</files>
-<files error.log>
+# disabel access to logs/template files
+<Files ~ "\.(log|tpl)$">
  order allow,deny
  deny from all
 </files>

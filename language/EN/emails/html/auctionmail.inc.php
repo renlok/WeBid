@@ -1,12 +1,3 @@
-<html>
- <head>
- 	<style type="text/css">
- 		body {
- 		font-family: Verdana;
- 		}
- 	</style>
- </head>
- <body>
 <table border="0" width="100%">
 	<tr>
 		<td colspan="3" height="35"><div style="font-size: 14px; font-weight: bold;">Your item has been listed on {SITENAME}!</div></td>
@@ -64,6 +55,4 @@
 			</a>
 		</td>
 	</tr>
- </table>
-</body>
-</html>
+</table>

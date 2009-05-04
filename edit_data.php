@@ -151,6 +151,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					zip = '" . $system->cleanvars($_POST['TPL_zip']) . "',
 					phone = '" . $system->cleanvars($_POST['TPL_phone']) . "',
 					timecorrection = '" . $system->cleanvars($_POST['TPL_timezone']) . "',
+					emailtype = '" . $system->cleanvars($_POST['TPL_emailtype']) . "',
+					paypal_email = '" . $system->cleanvars($_POST['TPL_pp_email']) . "',
 					nletter = '" . $system->cleanvars($_POST['TPL_nletter']);
 
 			if (strlen($_POST['TPL_password']) > 0)
@@ -228,10 +230,16 @@ $template->assign_vars(array(
 		'PHONE' => $USER['phone'],
 		'DATEFORMAT' => ($system->SETTINGS['datesformat'] == "USA") ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'TOMEZONE' => $time_correction,
+		
+		//payment stuff
+		'PP_EMAIL' => $USER['paypal_email'],
+		
 		'ERROR' => $TPL_errmsg,
 
 		'NLETTER1' => ($USER['nletter'] == 1) ? ' checked="checked"' : '',
 		'NLETTER2' => ($USER['nletter'] == 2) ? ' checked="checked"' : '',
+		'EMAILTYPE1' => ($USER['emailtype'] == 'html') ? ' checked="checked"' : '',
+		'EMAILTYPE2' => ($USER['emailtype'] == 'text') ? ' checked="checked"' : '',
 
 		'B_NEWLETTER' => ($system->SETTINGS['newsletter'] == 1)
 		));

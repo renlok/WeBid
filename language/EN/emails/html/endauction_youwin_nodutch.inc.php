@@ -1,12 +1,3 @@
-<html>
- <head>
- 	<style type="text/css">
- 		body {
- 		font-family: Verdana;
- 		}
- 	</style>
- </head>
- <body>
 <table border="0" width="100%">
 	<tr>
 		<td colspan="3" height="35"><div style="font-size: 14px; font-weight: bold;">Congratulations, you won the item!</div></td>
@@ -56,5 +47,3 @@
 		<td style="font-size: 12px;">{S_NICK} - <a href="mailto:{S_EMAIL}">{S_EMAIL}</a></td>
 	</tr>
 </table>
-</body>
-</html>

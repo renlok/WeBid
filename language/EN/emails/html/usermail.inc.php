@@ -1,12 +1,3 @@
-<html>
- <head>
- 	<style type="text/css">
- 		body {
- 		font-family: Verdana;
- 		}
- 	</style>
- </head>
- <body>
 <table border="0" width="100%">
 	<tr>
 		<td colspan="2" height="35"><div style="font-size: 14px; font-weight: bold;">Complete Your {SITENAME} Registration!</div></td>
@@ -39,6 +30,4 @@
 		<a href="{CONFIRMURL}">
 		<img border="0" src="{SITEURL}images/email_alerts/Active_Acct_Btn.jpg" width="120" height="32"></a></td>
 	</tr>
- </table>
-</body>
-</html>
+</table>

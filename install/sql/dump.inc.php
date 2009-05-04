@@ -910,9 +910,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currencies` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentaccesses`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "currentaccesses` (
-  `day` char(2) NOT NULL default '',
-  `month` char(2) NOT NULL default '',
-  `year` char(4) NOT NULL default '',
+  `day` char(2) NOT NULL default '0',
+  `month` char(2) NOT NULL default '0',
+  `year` char(4) NOT NULL default '0',
   `pageviews` int(11) NOT NULL default '0',
   `uniquevisitors` int(11) NOT NULL default '0',
   `usersessions` int(11) NOT NULL default '0'
@@ -931,8 +931,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currentaccesses` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentbrowsers`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "currentbrowsers` (
-  `month` char(2) NOT NULL default '',
-  `year` varchar(4) NOT NULL default '',
+  `month` char(2) NOT NULL default '0',
+  `year` varchar(4) NOT NULL default '0',
   `browser` varchar(50) NOT NULL default '0',
   `counter` int(11) NOT NULL default '0'
 ) ;";
@@ -950,8 +950,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currentbrowsers` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentdomains`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "currentdomains` (
-  `month` char(2) NOT NULL default '',
-  `year` varchar(4) NOT NULL default '',
+  `month` char(2) NOT NULL default '0',
+  `year` varchar(4) NOT NULL default '0',
   `domain` varchar(100) NOT NULL default '0',
   `counter` int(11) NOT NULL default '0'
 ) ;";
@@ -969,8 +969,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currentdomains` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentplatforms`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "currentplatforms` (
-  `month` char(2) NOT NULL default '',
-  `year` varchar(4) NOT NULL default '',
+  `month` char(2) NOT NULL default '0',
+  `year` varchar(4) NOT NULL default '0',
   `platform` varchar(50) NOT NULL default '0',
   `counter` int(11) NOT NULL default '0'
 ) ;";
@@ -1722,6 +1722,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `payment_details` text,
   `bn_only` enum('y','n') NOT NULL default 'y',
   `timecorrection` int(3) NOT NULL default '0',
+  `paypal_email` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
 );";
 
@@ -1784,8 +1785,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "userslanguage` (
 # 
 # Dumping data for table `" . $DBPrefix . "userslanguage`
 # 
-
-$query[] = "INSERT INTO `" . $DBPrefix . "userslanguage` VALUES (1, 'EN');";
 
 # ############################
 

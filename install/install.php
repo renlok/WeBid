@@ -13,7 +13,7 @@
  ***************************************************************************/
 include('functions.php');
 ?>
-<h1>WeBid Installer v0.7.3</h1>
+<h1>WeBid Installer v0.8.0</h1>
 <?php
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
 switch($step){
@@ -22,23 +22,29 @@ switch($step){
 		$siteEmail = $_GET['EMail'];
 		include('../includes/config.inc.php');
 		include('sql/dump.inc.php');
-		if (!mysql_connect($DbHost, $DbUser, $DbPassword)){
+		if (!mysql_connect($DbHost, $DbUser, $DbPassword))
+		{
 			die('<p>Cannot connect to '.$DbHost.'</p>');
 		}
-		if (!mysql_select_db($DbDatabase)){
+		if (!mysql_select_db($DbDatabase))
+		{
 			die('<p>Cannot select database</p>');
 		}
 		echo ($_GET['n']*25) . '% Complete<br>';
 		$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
 		$fourth = floor(count($query)/4);
 		$to = ($_GET['n'] == 4) ? count($query) : $fourth*$_GET['n'];
-		for ($i = $from; $i < $to; $i++){
+		for ($i = $from; $i < $to; $i++)
+		{
 			mysql_query($query[$i]) or die(mysql_error()."\n".$query[$i]);
 		}
 		flush();
 		if ($i < count($query))
+		{
 			echo '<script type="text/javascript">window.location = "install.php?step=2&URL='.$_GET['URL'].'&EMail='.$_GET['EMail'].'&cats='.$_GET['cats'].'&n='.($_GET['n']+1).'&from='.($i+1).'";</script>';
-		else {
+		}
+		else
+		{
 			echo 'Installation complete now set-up your admin account <a href="'.$_GET['URL'].'admin">here</a> and remove the install folder from your server';
 		}
 		break;
@@ -56,8 +62,11 @@ $main_path	= "'.$path.'";
 ?>';
 		$output = makeconfigfile($content);
 		if ($output)
+		{
 			echo 'Complete, now to <b><a href="?step=2&URL='.$_POST['URL'].'&EMail='.$_POST['EMail'].'&cats='.$cats.'&n=1">step 2</a></b>';
-		else {
+		}
+		else
+		{
 			echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
 			echo '<p><textarea style="width:500px; height:500px;">
 '.$content.'
@@ -150,33 +159,38 @@ umask(0);
 
 $passed = true;
 $main_path = getmainpath();
-foreach ($directories as $dir) {
+foreach ($directories as $dir)
+{
 	$exists = $write = false;
 
 	// Try to create the directory if it does not exist
-	if (!file_exists($main_path . $dir)) {
+	if (!file_exists($main_path . $dir))
+	{
 		@mkdir($main_path . $dir, 0777);
 		@chmod($main_path . $dir, 0777);
 	}
 
 	// Now really check
-	if (file_exists($main_path . $dir) && is_dir($main_path . $dir)) {
+	if (file_exists($main_path . $dir) && is_dir($main_path . $dir))
+	{
 		$exists = true;
 	}
 
 	// Now check if it is writable by storing a simple file
 	$fp = @fopen($main_path . $dir . 'test_lock', 'wb');
-	if ($fp !== false) {
+	if ($fp !== false)
+	{
 		$write = true;
 	}
 	@fclose($fp);
 
 	@unlink($main_path . $dir . 'test_lock');
-	
-	if (!$exists || !$write) {
+
+	if (!$exists || !$write)
+	{
 		$passed = false;
 	}
-	
+
 	echo '<tr><td>' . $dir . ':</td><td>';
 	echo ($exists) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 	echo ($write) ? ', <strong style="color:green">Writable</strong>' : (($exists) ? ', <strong style="color:red">Unwritable</strong>' : '');
@@ -192,17 +206,23 @@ $directories = array(
 	'language/EN/categories_select_box.inc.php'
 	);
 
-foreach ($directories as $dir) {
+foreach ($directories as $dir)
+{
 	$write = $exists = true;
-	if (file_exists($main_path . $dir)) {
-		if (!@is_writable($main_path . $dir)) {
+	if (file_exists($main_path . $dir))
+	{
+		if (!@is_writable($main_path . $dir))
+		{
 			$write = false;
 		}
-	} else {
+	}
+	else
+	{
 		$write = $exists = false;
 	}
-	
-	if (!$exists || !$write) {
+
+	if (!$exists || !$write)
+	{
 		$passed = false;
 	}
 
@@ -212,9 +232,34 @@ foreach ($directories as $dir) {
 	echo '</tr>';
 }
 
+$functions = array(
+	'imagecreate',
+	'imagecreatetruecolor',
+	'imagecolorallocate',
+	'imagefilledrectangle',
+	'imagestring',
+	'imagepng',
+	'imagealphablending',
+	'imagecopyresampled'
+	);
+
+$gd_pass = true;
+foreach ($functions as $func)
+{
+	if (function_exists($func))
+	{
+		$gd_pass = false;
+	}
+}
+
+echo '<tr><td>GD Support:</td><td>';
+echo ($gd_pass) ? '<strong style="color:green">Enabled</strong>' : '<strong style="color:red">Not Found</strong>';
+echo '</tr>';
+
 echo '</table>';
 
-if ($passed) {
+if ($passed)
+{
 	echo '<br><input type="submit" value="install">';
 }
 ?>

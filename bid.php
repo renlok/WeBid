@@ -216,6 +216,10 @@ if (isset($_POST['action']) && !isset($errmsg))
 				if ($proxy_max_bid < $bid)
 				{
 					$next_bid = $proxy_max_bid + $increment;
+					if (($proxy_max_bid + $increment) > $bid)
+					{
+						$next_bid = $bid;
+					}
 
 					$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (" . $id . ", " . $bidder_id . ", " . floatval($next_bid) . ")";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

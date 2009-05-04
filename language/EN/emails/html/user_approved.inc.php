@@ -1,12 +1,3 @@
-<html>
- <head>
- 	<style type="text/css">
- 		body {
- 		font-family: Verdana;
- 		}
- 	</style>
- </head>
- <body>
 <table border="0" width="100%">
 	<tr>
 		<td colspan="2" height="35"><div style="font-size: 14px; font-weight: bold;">Congratulations, Your now a member of {SITENAME}!</div></td>
@@ -30,6 +21,4 @@
 		<td width="34%" height="176" valign="top">&nbsp;
 		</td>
 	</tr>
- </table>
-</body>
-</html>
+</table>

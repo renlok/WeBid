@@ -1,8 +1,7 @@
 <?php
-//0.7.3 to 0.8.0
+//0.7.3/4 to 0.8.0
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `hash` VARCHAR(5) NOT NULL AFTER `password` ";
 $query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD `hash` VARCHAR(5) NOT NULL AFTER `password` ";
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fees`;";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fees`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
   `id` INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -25,6 +24,7 @@ $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'relist_f
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyout_fee');";
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `timecorrection` int(3) NOT NULL default '0';";
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `emailtype` enum('html','text') NOT NULL default 'text';";
+$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `paypal_email` varchar(255) default NULL";
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `fees` enum('y','n') NOT NULL default 'n';";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "counters`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
@@ -36,7 +36,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
   `suspendedauctions` int(11) NOT NULL default '0'
 ) ;";
 $query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0);";
-$query[] = "ALTER TABLE `" . $DBPrefix . "counters` DROP `deleted`;";
 $query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD `left_id` INT(8) NOT NULL AFTER  `parent_id`,
 			ADD `right_id` INT(8) NOT NULL AFTER `left_id`
 			ADD `level` INT(1) NOT NULL AFTER `right_id`";

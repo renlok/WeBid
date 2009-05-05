@@ -41,7 +41,7 @@ switch($step){
 		flush();
 		if ($i < count($query))
 		{
-			echo '<script type="text/javascript">window.location = "install.php?step=2&URL='.$_GET['URL'].'&EMail='.$_GET['EMail'].'&cats='.$_GET['cats'].'&n='.($_GET['n']+1).'&from='.($i+1).'";</script>';
+			echo '<script type="text/javascript">window.location = "install.php?step=2&URL='.$_GET['URL'].'&EMail='.$_GET['EMail'].'&cats='.$_GET['cats'].'&n='.($_GET['n']+1).'&from=' . $i . '";</script>';
 		}
 		else
 		{
@@ -246,14 +246,15 @@ $functions = array(
 $gd_pass = true;
 foreach ($functions as $func)
 {
-	if (function_exists($func))
+	if (!function_exists($func))
 	{
+		echo $func;
 		$gd_pass = false;
 	}
 }
 
 echo '<tr><td>GD Support:</td><td>';
-echo ($gd_pass) ? '<strong style="color:green">Enabled</strong>' : '<strong style="color:red">Not Found</strong>';
+echo ($gd_pass) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 echo '</tr>';
 
 echo '</table>';

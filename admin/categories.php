@@ -90,7 +90,6 @@ if (isset($_POST['action']))
 		//never delete categories without using this function it will mess up your database big time
 		$catscontrol->delete(intval($k));
 	}
-	print_r($_POST);
 	//add category if need be
 	if (!empty($_POST['new_category']) && isset($_POST['parent']))
 	{

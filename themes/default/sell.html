@@ -20,7 +20,7 @@ $(document).ready(function(){
 	$("#bn").focus(function(){
 		$("#bn_yes").attr("checked", "checked");
 	});
-	$("#bn_no").focus(function(){
+	$("#bn_no").click(function(){
 		$("#bn").attr("disabled","disabled");
 		$("#bn_only_no").attr("checked", "checked");
 		$("#min_bid").removeAttr("disabled");
@@ -28,7 +28,7 @@ $(document).ready(function(){
 		$("#iqty").attr("disabled","disabled");
 		$("#iqty").val("1");
 	});
-	$("#bn_yes").focus(function(){
+	$("#bn_yes").click(function(){
 		$("#bn").removeAttr("disabled");
 	});
 	$("#custominc").focus(function(){

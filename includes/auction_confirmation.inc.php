@@ -27,9 +27,9 @@ if ($user->user_data['startemailmode'] == 'yes')
 			'A_TITLE' => $_SESSION['SELL_title'],
 			'A_TYPE' => ($_SESSION['SELL_atype'] == 1) ? $MSG['642'] : $MSG['641'],
 			'A_PICURL' => ($_SESSION['SELL_pict_url'] != '') ? $uploaded_path . $auction_id . '/' . $pict_url : 'images/email_alerts/default_item_img.jpg',
-			'A_MINBID' => $system->print_money($_SESSION['SELL_minimum_bid']),
-			'A_RESERVE' => $system->print_money($_SESSION['SELL_reserve_price']),
-			'A_BNPRICE' => $system->print_money($_SESSION['SELL_buy_now_price']),
+			'A_MINBID' => $system->print_money($_SESSION['SELL_minimum_bid'], false),
+			'A_RESERVE' => $system->print_money($_SESSION['SELL_reserve_price'], false),
+			'A_BNPRICE' => $system->print_money($_SESSION['SELL_buy_now_price'], false),
 			'A_ENDS' => ArrangeDateNoCorrection($a_ends + $system->tdiff),
 			
 			'C_NAME' => $user->user_data['name']

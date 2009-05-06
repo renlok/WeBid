@@ -544,12 +544,7 @@ $MSG['364'] = "Date";
 $MSG['365'] = "Admin Users";
 $MSG['367'] = "New admin user";
 $MSG['368'] = "Mass category add<br><span class=\"smallspan\">Just enter category names and put each category on a new line</span>";
-$MSG['371'] = "WeBid needs to periodically run <CODE>cron.php</CODE> to close expired auctions and
-			send notification e-mails to the seller and/or the winner.
-			The recommended way to run <CODE>cron.php</CODE> is to set up a <a href=\"http://www.aota.net/Script_Installation_Tips/cronhelp.php4\" target=_blank>cronjob</a> if you
-			run a Unix/Linux server.<br>
-			If for any reason you can't run a cronjob on your server, you can choose the <b>Non-batch</b> option below
-			to have <CODE>cron.php</CODE> run by WeBid itself: in this case <CODE>cron.php</CODE> will be run each time someone access your home page.";
+$MSG['371'] = "WeBid needs to periodically run <CODE>batch.php</CODE> to close expired auctions and send notification e-mails to the seller and/or the winner. The recommended way to run <CODE>batch.php</CODE> is to set up a <a href=\"http://www.aota.net/Script_Installation_Tips/cronhelp.php4\" target=\"_blank\">cronjob</a> if you run a Unix/Linux server.<br>If for any reason you can't run a cronjob on your server, you can choose the <b>Non-batch</b> option below to have <CODE>batch.php</CODE> run by WeBid itself: in this case <CODE>cron.php</CODE> will be run each time someone access your home page.";
 $MSG['372'] = "Run cron";
 $MSG['373'] = "Batch";
 $MSG['374'] = "Non-batch";

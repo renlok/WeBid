@@ -543,6 +543,7 @@ $MSG['363'] = "Dates Format";
 $MSG['364'] = "Date";
 $MSG['365'] = "Admin Users";
 $MSG['367'] = "New admin user";
+$MSG['368'] = "Mass category add<br><span class=\"smallspan\">Just enter category names and put each category on a new line</span>";
 $MSG['371'] = "WeBid needs to periodically run <CODE>cron.php</CODE> to close expired auctions and
 			send notification e-mails to the seller and/or the winner.
 			The recommended way to run <CODE>cron.php</CODE> is to set up a <a href=\"http://www.aota.net/Script_Installation_Tips/cronhelp.php4\" target=_blank>cronjob</a> if you

@@ -100,6 +100,18 @@ if (isset($_POST['action']))
 			);
 		$catscontrol->add($_POST['parent'], 0, $add_data);
 	}
+	if (!empty($_POST['mass_add']) && isset($_POST['parent']))
+	{
+		$add = explode("\n", $_POST['mass_add']);
+		if (is_array($add))
+		{
+			foreach ($add as $v)
+			{
+				$add_data = array('cat_name' => $system->cleanvars($v));
+				$catscontrol->add($_POST['parent'], 0, $add_data);
+			}
+		}
+	}
 	rebuild_cat_file();
 	include 'util_cc1.php';
 }

@@ -98,9 +98,8 @@ function selectAllDelete(formObj, isInverse)
 					<td align="center"><a href="javascript: void(0)" onClick="selectAllDelete(document.forms[0],1)">{L_30_0102}</a></td>
 				</tr>
 				<tr>
-					<td width="50">{L_394}</td>
+					<td>{L_394}</td>
 					<td>
-						<input type="hidden" name="parent" value="{PARENT}">
 						<input type="text" name="new_category" size="25">
 					</td>
 					<td>
@@ -112,7 +111,18 @@ function selectAllDelete(formObj, isInverse)
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
+					<td colspan="5" height="22">&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td width="50">{L_368}</td>
+					<td colspan="3">
+						<textarea name="mass_add" cols="35" rows="6"></textarea>
+					</td>
+				</tr>
+				<tr>
 					<td align="center" colspan="5">
+						<input type="hidden" name="parent" value="{PARENT}">
 						<input type="submit" name="action" value="{L_089}">
 					</td>
 				</tr>

@@ -17,16 +17,16 @@ if (!defined('InWeBid')) exit('Access denied');
 class MPTTcategories
 {
 	// Add an element to the tree as a child of $parent and as $child_num'th child. If $data is not supplied the insert id will be returned.
-	function add($parent, $child_num = 0, $misc_data = false)
+	function add($parent_id, $child_num = 0, $misc_data = false)
 	{
 		global $system, $DBPrefix;
-		if(!is_numeric($parent) || $parent < 0)
+		if(!is_numeric($parent_id) || $parent_id < 0)
 		{
 			return false;
 		}
-		if($parent != 0)
+		if($parent_id != 0)
 		{
-			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent;
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent_id;
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if(mysql_num_rows($res) != 1)
@@ -79,7 +79,7 @@ class MPTTcategories
 			'left_id' => $boundry[2] + 1,
 			'right_id' => $boundry[2] + 2,
 			'level' => $parent['level'] + 1,
-			'parent_id' => $parent
+			'parent_id' => $parent_id
 		);
 		if($misc_data && is_array($misc_data))
 		{
@@ -393,7 +393,7 @@ class MPTTcategories
 		$return = array();
 
 		// now, retrieve all descendants of the $root node
-		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id > " . $left_id . " AND right_id < " . $right_id . " ORDER BY left_id ASC";
+		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id > " . $left_id . " AND right_id < " . $right_id . " ORDER BY left_id DESC";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 

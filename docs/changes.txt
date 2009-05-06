@@ -27,5 +27,6 @@
 - Updated jQuery to v1.3.2
 - Updated jQuery Image Area Select plugin to v0.8
 - Added a GD support check in the installer
+- Added a mass add option in the categories admin page make it quicker to add multiple categories
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

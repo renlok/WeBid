@@ -14,31 +14,32 @@
 
 reset($LANGUAGES);
 while (list($k,$v) = each($LANGUAGES)){
-	include $main_path."language/".$k."/messages.inc.php";
-	include $main_path."language/".$k."/categories.inc.php";
-	$result = mysql_query( "SELECT distinct c.cat_id FROM " . $DBPrefix . "categories c WHERE c.parent_id='0' AND c.deleted=0 ORDER BY cat_name" );
-	$output = '<select name="id">'."\n";
-	$output.= "\t".'<option value="">'.$MSG['2__0038'].'</option>'."\n";
-	$output.= "\t".'<option value=""></option>'."\n";
+	include $main_path . 'language/' . $k . '/messages.inc.php';
+	include $main_path . 'language/' . $k . '/categories.inc.php';
+	
+	$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE parent_id = 0 ORDER BY cat_name";
+	$res = mysql_query($qyery);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$output = '<select name="id">' . "\n";
+	$output.= "\t" . '<option value="">' . $MSG['2__0038'] . '</option>' . "\n";
+	$output.= "\t" . '<option value=""></option>' . "\n";
 
-	if ($result)
-		$num_rows = mysql_num_rows($result);
-	else
-		$num_rows = 0;
+	$num_rows = mysql_num_rows($res);
 
 	$i = 0;
-	while ($i < $num_rows){
-		$category_id = mysql_result($result,$i,"cat_id");
+	while ($row = mysql_fetch_assoc($res))
+	{
+		$category_id = $row['cat_id'];
 		$cat_name = $category_names[$category_id];
-		$output .= "\t".'<option value="'.$category_id.'">'.$cat_name.'</option>'."\n";
+		$output .= "\t" . '<option value="' . $category_id . '">' . $cat_name . '</option>' . "\n";
 		$i++;
 	}
 
-	$output.= "\t".'<option value=""></option>'."\n";
-	$output.= "\t".'<option value="0">'.$MSG['277'].'</option>'."\n";
+	$output.= "\t" . '<option value=""></option>' . "\n";
+	$output.= "\t" . '<option value="0">' . $MSG['277'] . '</option>' . "\n";
 	$output.= '</select>'."\n";
 
-	$handle = fopen ( "../language/".$k."/categories_select_box.inc.php" , "w" );
+	$handle = fopen ($main_path . 'language/' . $k . '/categories_select_box.inc.php', 'w');
 	fputs($handle, $output);
 	fclose($handle);
 }

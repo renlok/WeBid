@@ -55,19 +55,45 @@ if (!isset($_GET['id']) && !isset($_POST['action']))
 if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 {
 	// User wants to confirm his/her registration
-	$query = "UPDATE " . $DBPrefix . "users SET suspended = 0, reg_date = reg_date WHERE id = " . intval($_POST['id']) . " and suspended = 8";
+	$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . intval($_POST['id']) . " and suspended = 8";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 	$query = "UPDATE " . $DBPrefix . "counters SET users = users + 1, inactiveusers = inactiveusers - 1";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+	// login user
+	$query = "SELECT id, hash, password FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']);
+	$res = mysql_query($query);
+	$system->check_mysql($result, $query, __LINE__, __FILE__);
+	if (mysql_num_rows($res) > 0)
+	{
+		$password = mysql_result($res, 0, 'password');
+		$_SESSION['WEBID_LOGGED_IN'] 		= mysql_result($res, 0, 'id');
+		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, mysql_result($res, 0, 'hash'));
+		$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
+		// Update "last login" fields in users table
+		$query = "UPDATE " . $DBPrefix . "users SET lastlogin = '" . gmdate("Y-m-d H:i:s") . "' WHERE id = " . $_SESSION['WEBID_LOGGED_IN'];
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+		$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = " . $_SESSION['WEBID_LOGGED_IN'] . " AND ip = '" . $_SERVER['REMOTE_ADDR'] . "'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		if (mysql_num_rows($res) == 0)
+		{
+			$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
+					(NULL, '" . $_SESSION['WEBID_LOGGED_IN'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+	}
+
 	$page = 'confirmed';
 }
 
 if (isset($_POST['action']) && $_POST['action'] == $MSG['250'])
 {
 	// User doesn't want to confirm hid/her registration
-	$query = "DELETE FROM " . $DBPrefix . "users WHERE id=" . intval($_POST['id']);
+	$query = "DELETE FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']);
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 

@@ -18,7 +18,7 @@ while (list($k,$v) = each($LANGUAGES)){
 	include $main_path . 'language/' . $k . '/categories.inc.php';
 	
 	$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE parent_id = 0 ORDER BY cat_name";
-	$res = mysql_query($qyery);
+	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$output = '<select name="id">' . "\n";
 	$output.= "\t" . '<option value="">' . $MSG['2__0038'] . '</option>' . "\n";

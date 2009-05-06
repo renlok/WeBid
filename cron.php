@@ -15,7 +15,6 @@
 if (!defined('InWeBid')) exit();
 
 if (!isset($_SERVER['SCRIPT_NAME'])) $_SERVER['SCRIPT_NAME'] = 'cron.php';
-include $include_path . "converter.inc.php";
 
 function openLogFile()
 {

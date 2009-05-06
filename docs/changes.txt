@@ -29,5 +29,6 @@
 - Added a GD support check in the installer
 - Added a mass add option in the categories admin page make it quicker to add multiple categories
 - Added batch.php so running cronjobs will actually work
+- Changed the confirmation page so it automatically logs the user in after activating their account
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

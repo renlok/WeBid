@@ -55,12 +55,16 @@ if (!defined('AdminFuncCall'))
 				));
 	}
 	
-	function generateSelect($name = '', $options = array())
+	function generateSelect($name = '', $options = array(), $usekey = true)
 	{
 		global $selectsetting;
 		$html = '<select name="' . $name . '">';
-		foreach ($options as $option => $value )
+		foreach ($options as $option => $value)
 		{
+			if (!$usekey)
+			{
+				$option = $value;
+			}
 			if ($selectsetting == $option)
 			{
 				$html .= '<option value=' . $option . ' selected>' . $value . '</option>';

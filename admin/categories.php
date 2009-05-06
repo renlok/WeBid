@@ -74,21 +74,27 @@ function rebuild_cat_file()
 if (isset($_POST['action']))
 {
 	//update all categories that arnt being deleted
-	foreach ($_POST['categories'] as $k => $v)
+	if (isset($_POST['categories']) && is_array($_POST['categories']))
 	{
-		if (!isset($_POST['delete'][$k]))
+		foreach ($_POST['categories'] as $k => $v)
 		{
-			$query = "UPDATE " . $DBPrefix . "categories SET cat_name = '" . $system->cleanvars($_POST['categories'][$k]) . "',
-					cat_colour = '" . mysql_escape_string($_POST['colour'][$k]) . "', cat_image = '" . mysql_escape_string($_POST['image'][$k]) . "'
-					WHERE cat_id = " . intval($k);
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			if (!isset($_POST['delete'][$k]))
+			{
+				$query = "UPDATE " . $DBPrefix . "categories SET cat_name = '" . $system->cleanvars($_POST['categories'][$k]) . "',
+						cat_colour = '" . mysql_escape_string($_POST['colour'][$k]) . "', cat_image = '" . mysql_escape_string($_POST['image'][$k]) . "'
+						WHERE cat_id = " . intval($k);
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
 		}
 	}
 	//delete categories that are
-	foreach ($_POST['delete'] as $k => $v)
+	if (isset($_POST['delete']) && is_array($_POST['delete']))
 	{
-		//never delete categories without using this function it will mess up your database big time
-		$catscontrol->delete(intval($k));
+		foreach ($_POST['delete'] as $k => $v)
+		{
+			//never delete categories without using this function it will mess up your database big time
+			$catscontrol->delete(intval($k));
+		}
 	}
 	//add category if need be
 	if (!empty($_POST['new_category']) && isset($_POST['parent']))

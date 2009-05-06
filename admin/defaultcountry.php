@@ -30,15 +30,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 
 $selectsetting = $system->SETTINGS['defaultcountry'];
-loadblock($MSG['5322'], $MSG['5321'], generateSelect('country', $countries));
+loadblock($MSG['5322'], $MSG['5321'], generateSelect('country', $countries, false));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
-		'PAGENAME' => $MSG['5322'],
-		'DROPDOWN' => $html
+		'PAGENAME' => $MSG['5322']
 		));
 
 $template->set_filenames(array(

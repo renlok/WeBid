@@ -25,9 +25,9 @@ if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 
 function CheckAge($day, $month, $year) // check if the users > 18
 {
-	$NOW_year = date('Y');
-	$NOW_month = date('m');
-	$NOW_day = date('d');
+	$NOW_year = gmdate('Y');
+	$NOW_month = gmdate('m');
+	$NOW_day = gmdate('d');
 
 	if (($NOW_year - $year) > 18)
 	{

@@ -208,12 +208,15 @@ if ($cropdefault)
 	list($imgwidth, $imgheight) = getimagesize($upload_path . session_id() . '/' . $image);
 	$swidth = ($imgwidth < 380) ? '' : ' width: 380px;';
 	$imgratio = ($imgwidth > 380) ? $imgwidth / 380 : 1;
+	$startX = $imgwidth;
+	$startY = $imgheight;
 	if ($imgwidth > $imgheight)
 	{
 		$ratio = '1.2:1';
 		$thumbwh = 'width:' . $width . '; height:' . $height . ';';
 		$scaleX = 120;
 		$scaleY = 100;
+		$startX = $startY * 1.2;
 	}
 	else
 	{
@@ -221,6 +224,7 @@ if ($cropdefault)
 		$thumbwh = 'height:' . $width . '; width:' . $height . ';';
 		$scaleX = 100;
 		$scaleY = 120;
+		$startY = $startX * 1.2;
 	}
 	
 	$template->assign_vars(array(
@@ -233,7 +237,9 @@ if ($cropdefault)
 			'IMGWIDTH' => $imgwidth,
 			'IMGHEIGHT' => $imgheight,
 			'IMGPATH' => $uploaded_path . session_id() . '/' . $image,
-			'IMAGE' => $image
+			'IMAGE' => $image,
+			'STARTX' => $startX,
+			'STARTY' => $startY
 			));
 }
 else

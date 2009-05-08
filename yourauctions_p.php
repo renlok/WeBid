@@ -113,7 +113,7 @@ elseif (isset($_SESSION['pa_ord']) && empty($_GET['pa_ord']))
 	$_SESSION['pa_nexttype'] = $_SESSION['pa_type'];
 }
 
-if ($_SESSION['pa_nexttype'] == 'desc')
+if (!isset($_SESSION['pa_nexttype']) || $_SESSION['pa_nexttype'] == 'desc')
 {
 	$_SESSION['pa_nexttype'] = 'asc';
 }
@@ -122,7 +122,7 @@ else
 	$_SESSION['pa_nexttype'] = 'desc';
 }
 
-if ($_SESSION['pa_type'] == 'desc')
+if (!isset($_SESSION['pa_type']) || $_SESSION['pa_type'] == 'desc')
 {
 	$_SESSION['pa_type_img'] = '<img src="images/arrow_up.gif" align="center" hspace="2" border="0" />';
 }

@@ -25,6 +25,7 @@ if (!$user->logged_in)
 // DELETE OPEN AUCTIONS
 $NOW = time();
 $NOWB = gmdate('Ymd');
+$catscontrol = new MPTTcategories();
 
 // Update
 if (isset($_POST['action']) && $_POST['action'] == 'update')
@@ -127,20 +128,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$row = mysql_fetch_array($res);
-			$parent_id = $row['parent_id'];
+
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['parent_id'];
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$parent_node = mysql_fetch_assoc($res);
+			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 			// update recursive categories
-			while ($parent_id != 0)
+			for ($i = 0; $i < count($crumbs); $i++)
 			{
-				// update this parent's subcounter
-				$query = "SELECT parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent_id;
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$rw = mysql_fetch_array($res);
-				$subcoun = $rw['sub_counter'] + 1;
-				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $parent_id;
+				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				// get next parent
-				$parent_id = intval($rw['parent_id']);
 			}
 
 			$RELISTED_TITLE[$AUCTION['id']] = $AUCTION['title'];
@@ -188,7 +186,7 @@ elseif (isset($_SESSION['ca_ord']) && empty($_GET['ca_ord']))
 	$_SESSION['ca_nexttype'] = $_SESSION['ca_type'];
 }
 
-if ($_SESSION['ca_nexttype'] == 'desc')
+if (!isset($_SESSION['ca_nexttype']) || $_SESSION['ca_nexttype'] == 'desc')
 {
 	$_SESSION['ca_nexttype'] = 'asc';
 }
@@ -197,7 +195,7 @@ else
 	$_SESSION['ca_nexttype'] = 'desc';
 }
 
-if ($_SESSION['ca_type'] == 'desc')
+if (!isset($_SESSION['ca_type']) || $_SESSION['ca_type'] == 'desc')
 {
 	$_SESSION['ca_type_img'] = '<img src="images/arrow_up.gif" align="center" hspace="2" border="0">';
 }

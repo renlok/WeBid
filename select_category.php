@@ -70,9 +70,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'process' && isset($_POST['su
     }
 }
 
-/**
- * NOTE: Process change mode
- */
+// Process change mode
 if (isset($_GET['change']) && $_GET['change'] == 'yes') {
     for($i = 0; $i < 8; $i++) {
         $IDX = 'cat' . $i;
@@ -127,9 +125,7 @@ $_SESSION['cat5'] = (isset($_POST['cat5'])) ? $_POST['cat5'] : '';
 $_SESSION['cat6'] = (isset($_POST['cat6'])) ? $_POST['cat6'] : '';
 $_SESSION['cat7'] = (isset($_POST['cat7'])) ? $_POST['cat7'] : '';
 
-/**
- * NOTE: Build the categories arrays
- */
+// Build the categories arrays
 $query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories WHERE parent_id = 0 ORDER BY cat_name";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -141,9 +137,8 @@ if (mysql_num_rows($res) > 0) {
         $row['cat_name'] = stripslashes($category_names[$row['cat_id']]);
 
         $CATS0[$row['cat_id']] = stripslashes($row['cat_name']);
-        if (strlen($row['cat_name']) > $MAXLENGTH) $MAXLENGTH = strlen($row['cat_name']);
         if ($CHILDRENS > 0) {
-            $CATS0[$row['cat_id']] .= "&nbsp;->";
+            $CATS0[$row['cat_id']] .= '&nbsp;->';
             $DONTSUBMIT[$row['cat_id']] = 0;
         } else {
             $DONTSUBMIT[$row['cat_id']] = 1;
@@ -151,18 +146,16 @@ if (mysql_num_rows($res) > 0) {
     }
 }
 
-/**
- * NOTE: Build sub-boxes
- */
+// Build sub-boxes
 $TMP = "cat" . ($_POST['box'] - 1);
 $YY = "S" . $$TMP;
 $SHOWBUTTON = $$YY;
-if ($_GET['change'] == 'yes') $SHOWBUTTON = 1;
+if (isset($_GET['change']) && $_GET['change'] == 'yes') $SHOWBUTTON = 1;
 if ($_POST['box'] > 0) {
     $I = 1;
     while ($I <= $_POST['box']) {
         $IDX = $I - 1;
-        $NAME = "cat" . $IDX;
+        $NAME = 'cat' . $IDX;
 
         if ($$NAME != '') {
             $query = "SELECT cat_id,cat_name FROM " . $DBPrefix . "categories WHERE parent_id=" . $$NAME . " ORDER BY cat_name";
@@ -179,11 +172,8 @@ if ($_POST['box'] > 0) {
                     $ {
                         $ARRAYNAME}
                     [$row['cat_id']] = stripslashes($row['cat_name']);
-                    if (strlen($row['cat_name']) > $MAXLENGTH) $MAXLENGTH = strlen($row['cat_name']);
                     if ($CHILDRENS > 0) {
-                        $ {
-                            $ARRAYNAME}
-                        [$row['cat_id']] .= "&nbsp;->";
+                        ${$ARRAYNAME}[$row['cat_id']] .= "&nbsp;->";
                         $DONTSUBMIT[$row['cat_id']] = 0;
                     } else {
                         $DONTSUBMIT[$row['cat_id']] = 1;

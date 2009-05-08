@@ -149,8 +149,8 @@ if (!isset($offset)) $offset = 0;
 					
 					
 					//-- Build navigation line
-					print "<table width=600 border=0 cellpadding=4 cellspacing=0 align="center">
-			   <tr align="center" bgcolor=#FFFFFF>
+					print "<table width=600 border=0 cellpadding=4 cellspacing=0 align=\"center\">
+			   <tr align=\"center\" bgcolor=#FFFFFF>
 			   <td COLSPAN=2>";
 					
 					print "<SPAN CLASS=\"navigation\">";

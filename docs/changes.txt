@@ -30,5 +30,6 @@
 - Added a mass add option in the categories admin page make it quicker to add multiple categories
 - Added batch.php so running cronjobs will actually work
 - Changed the confirmation page so it automatically logs the user in after activating their account
+- Added an automatic thumbnail selection to uplaoded images (selects as much the image as possible)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

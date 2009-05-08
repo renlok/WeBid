@@ -23,15 +23,13 @@ foreach ($membertypes as $idm => $memtypearr)
 ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 
-$_REQUEST['auction_id'] = intval($_REQUEST['auction_id']);
-
 if (!isset($_POST['auction_id']) && !isset($_GET['auction_id']))
 {
 	$_REQUEST['auction_id'] = $_SESSION['CURRENT_ITEM'];
 }
-else
+elseif (isset($_REQUEST['auction_id']))
 {
-	$_SESSION['CURRENT_ITEM'] = $_REQUEST['auction_id'];
+	$_SESSION['CURRENT_ITEM'] = intval($_REQUEST['auction_id']);
 }
 
 $pg = (empty($_REQUEST['pg'])) ? 1 : $_REQUEST['pg'];
@@ -58,6 +56,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 		{
 			if ($user->user_data['nick'] != $_POST['TPL_nick_hidden'])
 			{
+				$wsell = mysql_fetch_assoc($resids);
 				$sql = "SELECT id, nick, password FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 				$resrater = mysql_query($sql);
 				$system->check_mysql($resrater, $sql, __LINE__, __FILE__);
@@ -156,7 +155,7 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 
 	$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = " . $_REQUEST['auction_id'] . " LIMIT 1";
 	$res = mysql_query($query);
-	$system->check_mysql($res, $sql, __LINE__, __FILE__);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$item_title = mysql_result($res, 0, 'title');
 	$sql = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = " . intval($secid);
 	$res = mysql_query($sql);
@@ -184,13 +183,12 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 	}
 }
 
-if ($_GET['faction'] == 'show')
+if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 {
 	// determine limits for SQL query
 	$secid = $_GET['id'];
 	if ($pg == 0) $pg = 1;
-	$lines = (int)$lines;
-	if ($lines == 0) $lines = 5;
+	$lines = (isset($lines)) ? intval($lines) : 5;
 	$left_limit = ($pg - 1) * $lines;
 
 	$query = "SELECT rate_sum, nick FROM " . $DBPrefix . "users WHERE id = " . intval($secid);
@@ -273,7 +271,7 @@ if ($_GET['faction'] == 'show')
 	$echofeed .= ($thispage == $pages || $pages == 0) ? '' : ' <a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $nextpage . '&faction=show">></a> <a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $pages . '&faction=show">&raquo;</a>';
 }
 // Calls the appropriate templates/templates
-if ($TPL_err || !isset($_GET['faction']))
+if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 {
 	$template->assign_vars(array(
 			'ERROR' => (isset($TPL_errmsg)) ? $TPL_errmsg : '',
@@ -287,8 +285,8 @@ if ($TPL_err || !isset($_GET['faction']))
 			'WS' => $ws,
 			'FEEDBACK' => $TPL_feedback,
 			'RATE1' => (!isset($_POST['TPL_rate']) || $_POST['TPL_rate'] == 1) ? ' checked="true"' : '',
-			'RATE2' => ($_POST['TPL_rate'] == 0) ? ' checked="true"' : '',
-			'RATE3' => ($_POST['TPL_rate'] == - 1) ? ' checked="true"' : '',
+			'RATE2' => (isset($_POST['TPL_rate'] && $_POST['TPL_rate'] == 0) ? ' checked="true"' : '',
+			'RATE3' => (isset($_POST['TPL_rate'] && $_POST['TPL_rate'] == -1) ? ' checked="true"' : '',
 			'SBMSG' => $sbmsg,
 			'THEM' => $them,
 

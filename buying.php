@@ -22,7 +22,7 @@ if (!$user->logged_in)
 }
 
 // Get closed auctions with winners
-$query = "SELECT a.auction, a.seller, a.winner, a.feedback_sel, a.bid, b.id, b.current_bid, b.title, b.ends, a.qty, u.nick, u.email, b.shipping_cost
+$query = "SELECT a.auction, a.seller, a.winner, a.feedback_sel, a.bid, b.id, b.current_bid, b.title, b.ends, a.qty, u.nick, u.email, b.shipping_cost, b.num_bids
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.seller)

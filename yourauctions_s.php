@@ -101,7 +101,7 @@ elseif (isset($_SESSION['sa_ord']) && empty($_GET['sa_ord']))
 	$_SESSION['sa_nexttype'] = $_SESSION['sa_type'];
 }
 
-if ($_SESSION['sa_nexttype'] == 'desc')
+if (!isset($_SESSION['sa_nexttype']) || $_SESSION['sa_nexttype'] == 'desc')
 {
 	$_SESSION['sa_nexttype'] = 'asc';
 }
@@ -110,7 +110,7 @@ else
 	$_SESSION['sa_nexttype'] = 'desc';
 }
 
-if ($_SESSION['sa_type'] == 'desc')
+if (!isset($_SESSION['sa_type']) || $_SESSION['sa_type'] == 'desc')
 {
 	$_SESSION['sa_type_img'] = '<img src="images/arrow_up.gif" align="center" hspace="2" border="0" />';
 }

@@ -37,9 +37,8 @@ foreach ($memtypesarr as $k => $l)
 	}
 }
 
-if ($_GET['pg'] == 0) $_GET['pg'] = 1;
-$lines = (int)$lines;
-if ($lines == 0) $lines = 5;
+if (!isset($_GET['pg']) || $_GET['pg'] == 0) $_GET['pg'] = 1;
+$lines = (isset($lines)) ? $lines : 5;
 $left_limit = ($_GET['pg'] - 1) * $lines;
 
 $query = "SELECT count(*) FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user->user_data['id'];

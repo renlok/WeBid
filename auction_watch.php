@@ -27,6 +27,7 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 	$requestadd = $system->cleanvars($_REQUEST['add']);
 	// Check if this keyword is not already added
 	$auctions = trim($user->user_data['auc_watch']);
+	unset($match); // just incase
 	if (!empty($auctions))
 	{
 		$match = strstr($auctions, $requestadd);
@@ -37,7 +38,7 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 		$auctions = '';
 	}
 
-	if (!$match)
+	if (!isset($match))
 	{
 		$auction_watch = trim($auctions . ' ' . $requestadd);
 		$auction_watch_new = trim($auction_watch);
@@ -52,6 +53,7 @@ if (isset($_GET['delete']))
 {
 	$auctions = trim($user->user_data['auc_watch']);
 	$auc_id = split(' ', $auctions);
+	$auction_watch = '';
 	for ($j = 0; $j < count($auc_id); $j++)
 	{
 		$match = strstr($auc_id[$j], $_GET['delete']);

@@ -104,7 +104,7 @@ elseif (isset($_SESSION['solda_ord']) && empty($_GET['solda_ord']))
 	$_SESSION['solda_nexttype'] = $_SESSION['solda_type'];
 }
 
-if ($_SESSION['solda_nexttype'] == 'desc')
+if (!isset($_SESSION['solda_nexttype']) || $_SESSION['solda_nexttype'] == 'desc')
 {
 	$_SESSION['solda_nexttype'] = 'asc';
 }
@@ -113,7 +113,7 @@ else
 	$_SESSION['solda_nexttype'] = 'desc';
 }
 
-if ($_SESSION['solda_type'] == 'desc')
+if (!isset($_SESSION['solda_type']) || $_SESSION['solda_type'] == 'desc')
 {
 	$_SESSION['solda_type_img'] = '<img src="images/arrow_up.gif" align="center" hspace="2" border="0" alt="up"/>';
 }

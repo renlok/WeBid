@@ -59,6 +59,7 @@ $start = $auction_data['starts'];
 $user_id = $auction_data['user'];
 $minimum_bid = $auction_data['minimum_bid'];
 $high_bid = $auction_data['current_bid'];
+$customincrement = $auction_data['increment'];
 if ($system->SETTINGS['datesformat'] == 'USA')
 {
 	$seller_reg = gmdate('m/d/Y', $auction_data['reg_date'] + $system->tdiff);
@@ -75,6 +76,10 @@ if (empty($auction_data['counter']))
 }
 else
 {
+	if (!isset($_SESSION['WEBID_VIEWED_AUCTIONS']))
+	{
+		$_SESSION['WEBID_VIEWED_AUCTIONS'] = array();
+	}
 	if (!in_array($id, $_SESSION['WEBID_VIEWED_AUCTIONS']))
 	{
 		mysql_query("UPDATE " . $DBPrefix . "auccounter set counter = counter + 1 WHERE auction_id = " . $id);
@@ -269,7 +274,7 @@ if ($user->logged_in && $num_bids > 0)
 
 $high_bid = ($num_bids == 0) ? $minimum_bid : $high_bid;
 
-if ($auction_data['increment'] == 0)
+if ($customincrement == 0)
 {
 	// Get bid increment for current bid and calculate minimum bid
 	$query = "SELECT increment FROM " . $DBPrefix . "increments WHERE
@@ -284,10 +289,10 @@ if ($auction_data['increment'] == 0)
 }
 else
 {
-	$increment = $auction_data['increment'];
+	$increment = $customincrement;
 }
 
-if ($atype == 2)
+if ($auction_type == 2)
 {
 	$increment = 0;
 }
@@ -297,7 +302,7 @@ if ($customincrement > 0)
 	$increment = $customincrement;
 }
 
-if ($num_bids == 0 || $atype == 2)
+if ($num_bids == 0 || $auction_type == 2)
 {
 	$next_bidp = $minimum_bid;
 }
@@ -361,6 +366,7 @@ if ($total_rate > 0)
 
 // Pictures Gellery
 $K = 0;
+$UPLOADED_PICTURES = array();
 if (file_exists($uploaded_path . $id))
 {
 	$dir = @opendir($uploaded_path . $id);

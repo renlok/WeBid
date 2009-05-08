@@ -108,7 +108,7 @@ elseif (isset($_SESSION['oa_ord']) && empty($_GET['oa_ord']))
 {
 	$_SESSION['oa_nexttype'] = $_SESSION['oa_type'];
 }
-if ($_SESSION['oa_nexttype'] == 'desc')
+if (!isset($_SESSION['oa_nexttype']) || $_SESSION['oa_nexttype'] == 'desc')
 {
 	$_SESSION['oa_nexttype'] = 'asc';
 }
@@ -116,7 +116,7 @@ else
 {
 	$_SESSION['oa_nexttype'] = 'desc';
 }
-if ($_SESSION['oa_type'] == 'desc') {
+if (!isset($_SESSION['oa_type']) || $_SESSION['oa_type'] == 'desc') {
 	$_SESSION['oa_type_img'] = '<img src="images/arrow_up.gif" align="center" hspace="2" border="0" />';
 }
 else

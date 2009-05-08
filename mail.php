@@ -29,7 +29,7 @@ $action = (isset($_GET['action']))? $_GET['action'] : '';
 $messageid = (isset($_GET['id']))? $_GET['id'] : '';
 $delete = (isset($_POST['delete']))? $_POST['delete'] : null;
 $userid = $user->user_data['id'];
-$TPL_error = '';
+$ERR = '';
 
 if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message']))
 {
@@ -94,7 +94,7 @@ if (isset($_REQUEST['deleteid']) && is_array($_REQUEST['deleteid']))
 	$sql = "DELETE FROM " . $DBPrefix . "messages WHERE id IN ($message_id)";
 	$run = mysql_query($sql);
 	$system->check_mysql($run, $sql, __LINE__, __FILE__);
-	$TPL_error = "Messages removed";
+	$ERR = "Messages removed";
 }
 // if sending a message
 if ($x == 1)
@@ -173,11 +173,10 @@ $messagespaceused = ($messages * 4) + 1;
 $messagespaceleft = (30 - $messages) * 4;
 $messagesleft = 30 - $messages;
 
-$TPL_error = (isset($_SESSION['message'])) ? $_SESSION['message'] : $TPL_error;
+$ERR = (isset($_SESSION['message'])) ? $_SESSION['message'] : $ERR;
 unset($_SESSION['message']);
 
 $template->assign_vars(array(
-		'ERROR' => $TPL_error,
 		'WHENSENT' => $whensent,
 		'TITLE' => $title,
 		'SENTFROM' => $sentfrom,

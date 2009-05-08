@@ -97,7 +97,7 @@ $TIMECORRECTION = array(
 	'+23' => '+23 h'
 );
 
-$TPL_errmsg = '';
+$ERR = '';
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Check data
@@ -106,37 +106,37 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		if (strlen($_POST['TPL_password']) < 6 && strlen($_POST['TPL_password']) > 0)
 		{
 			$TPL_err = 1;
-			$TPL_errmsg = $ERR_011;
+			$ERR = $ERR_011;
 		}
 		elseif ($_POST['TPL_password'] != $_POST['TPL_repeat_password'])
 		{
 			$TPL_err = 1;
-			$TPL_errmsg = $ERR_109;
+			$ERR = $ERR_109;
 		}
 		elseif (strlen($_POST['TPL_email']) < 5)
 		{
 			$TPL_err = 1;
-			$TPL_errmsg = $ERR_110;
+			$ERR = $ERR_110;
 		}
 		elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['TPL_email']))
 		{
 			$TPL_err = 1;
-			$TPL_errmsg = $ERR_008;
+			$ERR = $ERR_008;
 		}
 		elseif (strlen($_POST['TPL_zip']) < 4 && $MANDATORY_FIELDS['zip'] == 'y')
 		{
 			$TPL_err = 1;
-			$TPL_errmsg = $ERR_616;
+			$ERR = $ERR_616;
 		}
 		elseif (strlen($_POST['TPL_phone']) < 3 && $MANDATORY_FIELDS['tel'] == 'y')
 		{
 			$TPL_err = 1;
-			$TPL_errmsg = $ERR_617;
+			$ERR = $ERR_617;
 		}
 		elseif ((empty($_POST['TPL_day']) || empty($_POST['TPL_month']) || empty($_POST['TPL_year'])) && $MANDATORY_FIELDS['birthdate'] == 'y')
 		{
 			$TPL_err = 1;
-			$TPL_errmsg = $ERR_5040;
+			$ERR = $ERR_5040;
 		}
 		else
 		{
@@ -163,12 +163,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$sql .= "' WHERE id = " . $user->user_data['id'];
 			$res = mysql_query($sql);
 			$system->check_mysql($res, $sql, __LINE__, __FILE__);
-			$TPL_errmsg = $MSG['183'];
+			$ERR = $MSG['183'];
 		}
 	}
 	else
 	{
-		$TPL_errmsg = $ERR_112;
+		$ERR = $ERR_112;
 	}
 }
 
@@ -233,8 +233,6 @@ $template->assign_vars(array(
 		
 		//payment stuff
 		'PP_EMAIL' => $USER['paypal_email'],
-		
-		'ERROR' => $TPL_errmsg,
 
 		'NLETTER1' => ($USER['nletter'] == 1) ? ' checked="checked"' : '',
 		'NLETTER2' => ($USER['nletter'] == 2) ? ' checked="checked"' : '',

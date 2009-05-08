@@ -42,7 +42,7 @@ $(document).ready(function () {
 });
 
 $(window).load(function () {
-	$('#thumbnail').imgAreaSelect({ aspectRatio: '{RATIO}', onSelectChange: preview });
+	$('#thumbnail').imgAreaSelect({ aspectRatio: '{RATIO}', onSelectChange: preview, x1: 0, y1: 0, x2: {STARTX}, y2: {STARTY} });
 });
 
 </script>
@@ -62,8 +62,8 @@ $(window).load(function () {
 	<form name="thumbnail" action="?action=crop&img={IMAGE}" method="post">
 		<input type="hidden" name="x1" value="0" id="x1">
 		<input type="hidden" name="y1" value="0" id="y1">
-		<input type="hidden" name="x2" value="50" id="x2">
-		<input type="hidden" name="y2" value="50" id="y2">
+		<input type="hidden" name="x2" value="{STARTX}" id="x2">
+		<input type="hidden" name="y2" value="{STARTY}" id="y2">
 		<input type="hidden" name="w" value="50" id="w">
 		<input type="hidden" name="h" value="50" id="h">
 		<input type="submit" class="button" name="upload_thumbnail" value="{L_616}" id="save_thumb"><input type="submit" class="button" name="upload_thumbnail" value="{L_618}" >

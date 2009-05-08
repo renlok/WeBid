@@ -382,7 +382,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 			$emailer->assign_vars(array(
 					'REALNAME' => $username,
 					'TITLE' => mysql_result($res, 0, 'title'),
-					'BID' => $system->print_money(mysql_result($res, 0, 'current_bid')),
+					'BID' => $system->print_money(mysql_result($res, 0, 'current_bid'), false),
 					'AUCTION_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $id
 					));
 			$emailer->email_uid = $bidder_id;

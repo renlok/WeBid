@@ -38,6 +38,21 @@
 	<!-- ELSEIF B_BUYTOSELL -->
 	<p>{L_25_0143}</p>
 	<!-- ENDIF -->
+<!-- ELSEIF THISPAGE eq 'summary' -->
+	<div class="padding">
+		<table width="100%" border="0" cellspacing="2" cellpadding="3">
+		<tr>
+			<td class="titTable2">{L_593}</td>
+		</tr>
+		<tr>
+			<td>
+				{FBTOLEAVE}
+				{NEWMESSAGES}
+				{NO_REMINDERS}
+			</td>
+		</tr>
+		</table>
+	</div>
 <!-- ELSE -->
 	<ul>
 		<li><a href="auction_watch.php">{L_471}</a></li>

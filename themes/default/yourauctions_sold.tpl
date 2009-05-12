@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
@@ -100,4 +100,4 @@
 	</tr>
 </table>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

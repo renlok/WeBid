@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <div align="center">
 	<table width="98%" cellpadding=1 cellspacing=0 border=0>
@@ -47,4 +47,4 @@
 	</table>
 </div>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

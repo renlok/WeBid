@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -12,7 +12,7 @@ $(document).ready(function() {
 </script>
 <div align="center">{ERROR}</div>
 <!-- IF REPLY_X eq 1 -->
-	<!-- INCLUDE mail-send.html -->
+	<!-- INCLUDE mail-send.tpl -->
 <!-- ENDIF -->
 <form action="mail.php" method="post" name="deletemessages">
 <table style="text-align: center; width: 90%; border-collapse: collapse; margin: 0 auto;" border="1" cellpadding="2" cellspacing="2">
@@ -46,4 +46,4 @@ $(document).ready(function() {
 </div>
 </form>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

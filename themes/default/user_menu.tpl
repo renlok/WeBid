@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <!-- IF B_REQUEST or B_TMPMSG -->
 	<p style="background-color;#FF9933;display:block" >
@@ -62,4 +62,4 @@
 	</ul>
 <!-- ENDIF -->
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

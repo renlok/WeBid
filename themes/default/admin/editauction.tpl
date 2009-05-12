@@ -111,4 +111,4 @@
 </tr>
 </table>
 
-<!-- INCLUDE footer.html -->
+<!-- INCLUDE footer.tpl -->

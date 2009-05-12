@@ -55,4 +55,4 @@
 	</form>
 </div>
 
-<!-- INCLUDE footer.html -->
+<!-- INCLUDE footer.tpl -->

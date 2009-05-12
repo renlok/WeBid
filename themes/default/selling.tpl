@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <table width="100%" border="0" cellspacing="1" cellpadding="4">
 	<tr>
@@ -49,4 +49,4 @@
 <!-- ENDIF -->
 </table>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

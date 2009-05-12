@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <form name="details" action="" method="POST">
 <table width="100%" border="0" cellpadding="4" align="center">
@@ -124,4 +124,4 @@
 <input type="hidden" name="action" value="update" />
 </form>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

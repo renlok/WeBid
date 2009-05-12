@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 <table width="100%" border=0 cellpadding=4 cellspacing=1 align="center">
 	<TR>
 	<TD colspan=3>
@@ -40,4 +40,4 @@
 <!-- ENDIF -->
 </table>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

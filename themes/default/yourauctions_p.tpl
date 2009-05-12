@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -131,4 +131,4 @@ $(document).ready(function() {
 	</tr>
 </table>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <div align="center" class="padding">
 	<table style="text-align: left; width: 90%; border-collapse: collapse;" border="1" cellpadding="2" cellspacing="2">
@@ -25,4 +25,4 @@
 	</p>
 </div>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

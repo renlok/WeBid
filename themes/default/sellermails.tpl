@@ -1,4 +1,4 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <form action="" method="post" name="thisform" id="thisform">
 <table width="100%" cellspacing="0" cellpadding="4" border="0" >
@@ -69,4 +69,4 @@
 </table>
 </form>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

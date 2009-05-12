@@ -20,7 +20,7 @@
 		</table>
 		</form>
 	<!-- ENDIF -->
-	<!-- INCLUDE browse.html -->
+	<!-- INCLUDE browse.tpl -->
 <!-- ELSE -->
 		<div class="padding" align="center">
 			{L_198}

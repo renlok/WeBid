@@ -9,7 +9,7 @@
 		</div>
 <!-- ELSE -->
 	<!-- IF NUM_AUCTIONS gt 0 -->
-		<!-- INCLUDE browse.html -->
+		<!-- INCLUDE browse.tpl -->
 	<!-- ELSE -->
 		<div class="padding" align="center">
 			{L_198}

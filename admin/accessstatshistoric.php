@@ -54,7 +54,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'accessstatshistoric.html'
+		'body' => 'accessstatshistoric.tpl'
 		));
 $template->display('body');
 ?>

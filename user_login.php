@@ -89,7 +89,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'user_login.html'
+		'body' => 'user_login.tpl'
 		));
 $template->display('body');
 include 'footer.php';

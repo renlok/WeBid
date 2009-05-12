@@ -18,7 +18,7 @@ function browseItems($result, $current_page)
 {
 	global $system, $uploaded_path, $DBPrefix, $MSG, $ERR_114;
 	global $id, $template, $PAGES, $PAGE;
-	
+
 	$k = 0;
 	if ($result && mysql_num_rows($result))
 	{
@@ -26,7 +26,7 @@ function browseItems($result, $current_page)
 		{
 			// prepare some data
 			$is_dutch = (intval($row['auction_type']) == 2) ? true : false;
-			
+
 			// image icon
 			if (strlen($row['pict_url']) > 0)
 			{
@@ -36,48 +36,48 @@ function browseItems($result, $current_page)
 			{
 				$row['pict_url'] = 'images/nopicture.gif';
 			}
-			
-			$tplv['img'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . $row['pict_url'] . '" width="' . $system->SETTINGS['thumb_show'] . '" border=0 /></a>';
-			
+
+			$tplv['img'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . $row['pict_url'] . '" border=0 /></a>';
+
 			// this subastas title and link to details
 			$tplv['id'] = $row['id'];
 			$tplv['title'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '">' . $row['title'] . '</a>';
-			
+
 			if ($row['current_bid'] == 0)
 			{
 				$row['current_bid'] = $row['minimum_bid'];
 			}
-			
+
 			if ($row['buy_now'] > 0 && $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
 			{
-				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="'.$system->SETTINGS['siteurl'].'buy_now.php?id='.$row['id'].'"><img src="'.$system->SETTINGS['siteurl'].'images/buy_it_now.gif" border=0 class="buynow"></a> '.$system->print_money($row['buy_now']).')';
+				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . 'images/buy_it_now.gif" border=0 class="buynow"></a> ' . $system->print_money($row['buy_now']) . ')';
 			}
 			elseif ($row['buy_now'] > 0 && $row['bn_only'] == 'y')
 			{
-				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="'.$system->SETTINGS['siteurl'].'buy_now.php?id='.$row['id'].'"><img src="'.$system->SETTINGS['siteurl'].'images/buy_it_now.gif" border=0></a> '.$system->print_money($row['buy_now']).') <img src="'.$system->SETTINGS['siteurl'].'images/bn_only.png" border=0>';
+				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . 'images/buy_it_now.gif" border=0></a> ' . $system->print_money($row['buy_now']) . ') <img src="' . $system->SETTINGS['siteurl'] . 'images/bn_only.png" border="0">';
 				$row['current_bid'] = $row['buy_now'];
 			}
 			else
 			{
 				$tplv['buy_now'] = '';
 			}
-			
+
 			$tplv['bid'] = $row['current_bid'];
-			
+
 			// number of bids for this auction
-			$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = ".$row['id'];
+			$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . $row['id'];
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$num_bids = mysql_num_rows($res);
-			$rpr = (int)$row['reserved_price'];
+			$rpr = intval($row['reserved_price']);
 			$reserved_price = ($rpr != 0) ? ' <img src="images/r.gif">' : '';
-			
+
 			$tplv['rpr'] = $reserved_price . $num_bids;
-			
+
 			// time left till the end of this auction 
 			$s_difference = time() - $row['starts'];
 			$difference = $row['ends'] - time();
-			
+
 			$template->assign_block_vars('items', array(
 				'ID' => $tplv['id'],
 				'ROWCOLOUR' => ($k % 2) ? 'bgcolor="#FFFEEE"' : '',
@@ -102,7 +102,7 @@ function browseItems($result, $current_page)
 			while ($COUNTER <= $PAGES && $COUNTER < ($PAGE+6))
 			{
 				$template->assign_block_vars('pages', array(
-					'PAGE' => ($PAGE == $COUNTER) ? '<b>'.$COUNTER.'</b>' : '<a href="'.$system->SETTINGS['siteurl'].$current_page.'?PAGE='.$COUNTER.'&id='.$id.'"><u>'.$COUNTER.'</u></a>'
+					'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $COUNTER . '&id=' . $id . '"><u>' . $COUNTER . '</u></a>'
 				));
 				$COUNTER++;
 			}
@@ -111,8 +111,8 @@ function browseItems($result, $current_page)
 	$template->assign_vars(array(
 		'NUM_AUCTIONS' => ($k == 0) ? $ERR_114 : $k,
 		'ID' => $id,
-		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="'.$system->SETTINGS['siteurl'].$current_page.'?PAGE='.$PREV.'&id='.$id.'"><u>'.$MSG['5119'].'</u></a>&nbsp;&nbsp;' : '',
-		'NEXT' => ($PAGE < $PAGES) ? '<a href="'.$system->SETTINGS['siteurl'].$current_page.'?PAGE='.$NEXT.'&id='.$id.'"><u>'.$MSG['5120'].'</u></a>' : '',
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $PREV . '&id=' . $id . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $NEXT . '&id=' . $id . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES
 	));

@@ -120,7 +120,7 @@ $template->assign_vars(array(
 include 'header.php';
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'user_menu.html'
+		'body' => 'user_menu.tpl'
 		));
 $template->display('body');
 include 'footer.php';

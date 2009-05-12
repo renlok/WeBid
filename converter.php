@@ -71,7 +71,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'converter.html'
+		'body' => 'converter.tpl'
 		));
 $template->display('body');
 ?>

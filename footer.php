@@ -21,7 +21,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'footer' => 'global_footer.html'
+		'footer' => 'global_footer.tpl'
 		));
 $template->display('footer');
 ?>

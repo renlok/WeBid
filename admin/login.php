@@ -89,7 +89,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'login.html'
+		'body' => 'login.tpl'
 		));
 $template->display('body'); 
 ?>

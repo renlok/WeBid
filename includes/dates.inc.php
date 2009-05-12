@@ -88,6 +88,7 @@ if (!function_exists('FormatTimeLeft'))
 		$minutes_difference = floor($difference / 60);
 		$seconds_difference = $difference % 60;
 		$secshow = false;
+		$timeleft = '';
 		
 		if ($days_difference > 0)
 		{

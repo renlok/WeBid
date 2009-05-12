@@ -172,7 +172,7 @@ else
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'msgboard.html'
+		'body' => 'msgboard.tpl'
 		));
 $template->display('body');
 include 'footer.php';

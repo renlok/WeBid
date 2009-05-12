@@ -431,7 +431,7 @@ if (!isset($_POST['action']) || isset($errmsg))
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'bid.html'
+		'body' => 'bid.tpl'
 		));
 $template->display('body');
 include 'footer.php';

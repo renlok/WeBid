@@ -294,7 +294,7 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 			));
 	include 'header.php';
 	$template->set_filenames(array(
-			'body' => 'feedback.html'
+			'body' => 'feedback.tpl'
 			));
 	$template->display('body');
 	include 'footer.php';
@@ -327,7 +327,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			));
 	include 'header.php';
 	$template->set_filenames(array(
-			'body' => 'show_feedback.html'
+			'body' => 'show_feedback.tpl'
 			));
 	$template->display('body');
 	include 'footer.php';

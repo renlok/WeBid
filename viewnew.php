@@ -72,7 +72,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'view_new.html'
+		'body' => 'view_new.tpl'
 		));
 $template->display('body');
 include 'footer.php';

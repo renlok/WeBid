@@ -186,7 +186,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['25_0119'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'yourauctions_sold.html'
+		'body' => 'yourauctions_sold.tpl'
 		));
 $template->display('body');
 include 'footer.php';

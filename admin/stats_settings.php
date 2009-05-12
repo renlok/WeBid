@@ -69,7 +69,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'adminpages.html'
+		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
 ?>

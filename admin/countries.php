@@ -80,7 +80,7 @@ while ($i < count($countries))
 }
 
 $template->set_filenames(array(
-		'body' => 'countries.html'
+		'body' => 'countries.tpl'
 		));
 $template->display('body');
 

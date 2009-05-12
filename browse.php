@@ -229,7 +229,7 @@ else
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'browsecats.html'
+		'body' => 'browsecats.tpl'
 		));
 $template->display('body');
 include 'footer.php';

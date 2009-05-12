@@ -53,7 +53,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['454'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'buying.html'
+		'body' => 'buying.tpl'
 		));
 $template->display('body');
 include 'footer.php';

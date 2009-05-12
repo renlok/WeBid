@@ -83,7 +83,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'email_request_form.html'
+		'body' => 'email_request_form.tpl'
 		));
 $template->display('body');
 include 'footer.php';

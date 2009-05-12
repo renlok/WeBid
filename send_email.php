@@ -120,7 +120,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'send_email.html'
+		'body' => 'send_email.tpl'
 		));
 $template->display('body');
 include 'footer.php';

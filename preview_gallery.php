@@ -22,7 +22,7 @@ $template->assign_vars(array(
 		'IMG' => $uploaded_path . session_id() . '/' . $UPLOADED_PICTURES[$img]
 		));
 $template->set_filenames(array(
-		'body' => 'preview_gallery.html'
+		'body' => 'preview_gallery.tpl'
 		));
 $template->display('body');
 ?>

@@ -65,7 +65,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'wordfilter.html'
+		'body' => 'wordfilter.tpl'
 		));
 $template->display('body');
 ?>

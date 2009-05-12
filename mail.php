@@ -200,7 +200,7 @@ while ($array = mysql_fetch_array($run))
 include 'header.php';
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'mail.html'
+		'body' => 'mail.tpl'
 		));
 $template->display('body');
 include 'footer.php';

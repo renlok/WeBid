@@ -43,7 +43,7 @@ while ($board = mysql_fetch_array($res))
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'boards.html'
+		'body' => 'boards.tpl'
 		));
 $template->display('body');
 include 'footer.php';

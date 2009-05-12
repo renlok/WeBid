@@ -23,7 +23,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'error.html'
+		'body' => 'error.tpl'
 		));
 $template->display('body');
 include 'footer.php';

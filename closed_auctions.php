@@ -175,7 +175,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'auctions_closed.html'
+		'body' => 'auctions_closed.tpl'
 		));
 $template->display('body');
 include 'footer.php';

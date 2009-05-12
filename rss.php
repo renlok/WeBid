@@ -165,7 +165,7 @@ while ($auction_data = mysql_fetch_array($res))
 }
 
 $template->set_filenames(array(
-		'body' => 'rss.html'
+		'body' => 'rss.tpl'
 		));
 $template->display('body');
 ?>

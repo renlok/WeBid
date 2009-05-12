@@ -198,7 +198,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'buy_now.html'
+		'body' => 'buy_now.tpl'
 		));
 $template->display('body');
 require('footer.php');

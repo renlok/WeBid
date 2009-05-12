@@ -219,7 +219,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['619'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'yourauctions.html'
+		'body' => 'yourauctions.tpl'
 		));
 $template->display('body');
 include 'footer.php';

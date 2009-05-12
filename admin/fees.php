@@ -126,7 +126,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'adminfees.html'
+		'body' => 'adminfees.tpl'
 		));
 $template->display('body');
 ?>

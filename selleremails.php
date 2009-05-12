@@ -46,7 +46,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['25_0188'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'sellermails.html'
+		'body' => 'sellermails.tpl'
 		));
 $template->display('body');
 include 'footer.php';

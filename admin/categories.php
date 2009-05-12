@@ -171,7 +171,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'categories.html'
+		'body' => 'categories.tpl'
 		));
 $template->display('body');
 ?>

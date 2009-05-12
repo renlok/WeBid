@@ -246,7 +246,7 @@ $TMP_usmenutitle = $MSG['509'];
 include 'header.php';
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'edit_details.html'
+		'body' => 'edit_details.tpl'
 		));
 $template->display('body');
 include 'footer.php';

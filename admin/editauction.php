@@ -267,7 +267,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'editauction.html'
+		'body' => 'editauction.tpl'
 		));
 $template->display('body');
 ?>

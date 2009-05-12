@@ -135,7 +135,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['25_0223'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'yourfeedback.html'
+		'body' => 'yourfeedback.tpl'
 		));
 $template->display('body');
 include 'footer.php';

@@ -76,7 +76,7 @@ $template->assign_vars(array(
 include 'header.php';
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'yourmessages.html'
+		'body' => 'yourmessages.tpl'
 		));
 $template->display('body');
 include 'footer.php';

@@ -143,7 +143,7 @@ $template->assign_vars($variables);
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'profile.html'
+		'body' => 'profile.tpl'
 		));
 $template->display('body');
 include 'footer.php';

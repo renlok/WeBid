@@ -205,7 +205,7 @@ if ((!empty($wher) || !isset($ora)) && isset($_POST['go']))
 
 		include 'header.php';
 		$template->set_filenames(array(
-				'body' => 'asearch_result.html'
+				'body' => 'asearch_result.tpl'
 				));
 		$template->display('body');
 		include 'footer.php';
@@ -266,7 +266,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'advanced_search.html'
+		'body' => 'advanced_search.tpl'
 		));
 $template->display('body');
 include 'footer.php';

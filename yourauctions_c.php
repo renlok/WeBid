@@ -290,7 +290,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['354'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'yourauctions_c.html'
+		'body' => 'yourauctions_c.tpl'
 		));
 $template->display('body');
 include 'footer.php';

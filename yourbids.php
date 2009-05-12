@@ -72,7 +72,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['620'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'yourbids.html'
+		'body' => 'yourbids.tpl'
 		));
 $template->display('body');
 include 'footer.php';

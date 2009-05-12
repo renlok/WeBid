@@ -22,7 +22,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'adminbar.html'
+		'body' => 'adminbar.tpl'
 		));
 $template->display('body');
 ?>

@@ -471,7 +471,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'item.html'
+		'body' => 'item.tpl'
 		));
 $template->display('body');
 include 'footer.php';

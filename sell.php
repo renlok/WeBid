@@ -536,7 +536,7 @@ switch ($_SESSION['action'])
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'sell.html'
+		'body' => 'sell.tpl'
 		));
 $template->display('body');
 include 'footer.php';

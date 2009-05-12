@@ -83,7 +83,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'friend.html'
+		'body' => 'friend.tpl'
 		));
 $template->display('body');
 include 'footer.php';

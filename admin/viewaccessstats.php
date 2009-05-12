@@ -56,7 +56,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'viewaccessstats.html'
+		'body' => 'viewaccessstats.tpl'
 		));
 $template->display('body');
 ?>

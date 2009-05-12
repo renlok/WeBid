@@ -263,7 +263,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'home.html'
+		'body' => 'home.tpl'
 		));
 $template->display('body');
 include 'footer.php';

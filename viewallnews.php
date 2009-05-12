@@ -28,7 +28,7 @@ while ($new = mysql_fetch_assoc($res))
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'view_allnews.html'
+		'body' => 'view_allnews.tpl'
 		));
 $template->display('body');
 include 'footer.php';

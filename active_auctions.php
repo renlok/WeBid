@@ -177,7 +177,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'auctions_active.html'
+		'body' => 'auctions_active.tpl'
 		));
 $template->display('body');
 include 'footer.php';

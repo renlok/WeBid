@@ -71,7 +71,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['453'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'selling.html'
+		'body' => 'selling.tpl'
 		));
 $template->display('body');
 include 'footer.php';

@@ -115,7 +115,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'header' => 'global_header.html'
+		'header' => 'global_header.tpl'
 		));
 $template->display('header');
 ?>

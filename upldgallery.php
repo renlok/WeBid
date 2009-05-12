@@ -270,7 +270,7 @@ $template->assign_vars(array(
 		'B_CROPSCREEN' => $cropdefault
 		));
 $template->set_filenames(array(
-		'body' => 'upldgallery.html'
+		'body' => 'upldgallery.tpl'
 		));
 $template->display('body');
 ?>

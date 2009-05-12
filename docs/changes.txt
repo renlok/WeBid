@@ -31,5 +31,7 @@
 - Added batch.php so running cronjobs will actually work
 - Changed the confirmation page so it automatically logs the user in after activating their account
 - Added an automatic thumbnail selection to uplaoded images (selects as much the image as possible)
+- Added an orientation check on the thumbnail generator
+- Changed the thumb generator so the thumb caches are actually sued
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

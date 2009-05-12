@@ -88,7 +88,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['472'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'item_watch.html'
+		'body' => 'item_watch.tpl'
 		));
 $template->display('body');
 include 'footer.php';

@@ -221,7 +221,7 @@ $template->assign_vars(array(
 
 include "header.php";
 $template->set_filenames(array(
-        'body' => 'select_category.html'
+        'body' => 'select_category.tpl'
         ));
 $template->display('body');
 include "footer.php";

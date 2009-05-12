@@ -169,7 +169,7 @@ else
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'search.html'
+		'body' => 'search.tpl'
 		));
 $template->display('body');
 include 'footer.php';

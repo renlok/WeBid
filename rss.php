@@ -118,38 +118,22 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 while ($auction_data = mysql_fetch_array($res))
 {
-	$query = "SELECT cat_id, parent_id, cat_name FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['category'];
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	
-	$result = mysql_fetch_array ($result);
-	$parent_id = $result['parent_id'];
-	$cat_id = $categories;
-	
-	$j = $auction_data['category'];
-	$i = 0;
-	do
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['category'];
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$parent_node = mysql_fetch_assoc($res);
+
+	$cat_value = '';
+	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+	for ($i = 0; $i < count($crumbs); $i++)
 	{
-		$query = "SELECT cat_id, parent_id, cat_name FROM " . $DBPrefix . "categories WHERE cat_id = '$j'";
-		$result = mysql_query($query);
-		$system->check_mysql($result, $query, __LINE__, __FILE__);
-		$catarr = mysql_fetch_array ($result);
-		$parent_id = $catarr['parent_id'];
-		$c_name[$i] = $category_names[$catarr['cat_id']];
-		$c_id[$i] = $catarr['cat_id'];
-		$i++;
-		$j = $parent_id;
-	} while ($parent_id != 0);
-	
-	for ($j = $i - 1; $j >= 0; $j--)
-	{
-		if ($j == 0)
+		if ($crumbs[$i]['cat_id'] > 0)
 		{
-			$cat_value .= "<a href='" . $system->SETTINGS['siteurl'] . "browse.php?id=" . $c_id[$j] . "'>" . $c_name[$j] . "</a>";
-		}
-		else
-		{
-			$cat_value .= "<a href='" . $system->SETTINGS['siteurl'] . "browse.php?id=" . $c_id[$j] . "'>" . $c_name[$j] . "</a> / ";
+			if ($i > 1)
+			{
+				$cat_value .= ' / ';
+			}
+			$cat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $category_names[$crumbs[$i]['cat_id']] . '</a>';
 		}
 	}
 	

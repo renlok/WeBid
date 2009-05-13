@@ -71,7 +71,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 		while (list($k, $v) = each($_POST['startnow']))
 		{
 			// Update end time to "now"
-			$query = "UPDATE " . $DBPrefix . "auctions SET starts='" . $NOW . "' WHERE id = " . intval($v);
+			$query = "UPDATE " . $DBPrefix . "auctions SET starts = '" . $NOW . "' WHERE id = " . intval($v);
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}

@@ -19,10 +19,14 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
-	if (!is_numeric($_POST['archiveafter'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	if (!is_numeric($_POST['archiveafter']))
+	{
 		$ERR = $ERR_043;
-	} else {
+	}
+	else
+	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
 				  cron = " . intval($_POST['cron']) . ",

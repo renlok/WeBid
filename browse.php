@@ -70,22 +70,20 @@ else
 	}
 	else
 	{
-		$TPL_categories_string = $category_names[$id];
-		$par_id = (int)$category['parent_id'];
-	}
-	
-	while ($par_id != 0)
-	{
-		// get next parent
-		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($par_id);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-
-		$rw = mysql_fetch_array($res);
-		$par_id = $rw['parent_id'];
-		// Retrieve the translated category name
-		$rw['cat_name'] = $category_names[$rw['cat_id']];
-		$TPL_categories_string = '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $rw['cat_id'] . '">' . $rw['cat_name'] . '</a> &gt; ' . $TPL_categories_string;
+		$par_id = $category['parent_id'];
+		$TPL_categories_string = '';
+		$crumbs = $catscontrol->get_bread_crumbs($category['left_id'], $category['right_id']);
+		for ($i = 0; $i < count($crumbs); $i++)
+		{
+			if ($crumbs[$i]['cat_id'] > 0)
+			{
+				if ($i > 1)
+				{
+					$TPL_categories_string .= ' &gt; ';
+				}
+				$TPL_categories_string .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $category_names[$crumbs[$i]['cat_id']] . '</a>';
+			}
+		}
 	}
 
 	// get list of subcategories of this category

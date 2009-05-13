@@ -121,15 +121,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			// Update COUNTERS table
 			$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			// and increase category counters
-			$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + 1, sub_counter = sub_counter + 1 WHERE cat_id = " . $AUCTION['category'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			$query = "SELECT parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $AUCTION['category'];
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$row = mysql_fetch_array($res);
 
-			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['parent_id'];
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $AUCTION['category'];
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$parent_node = mysql_fetch_assoc($res);

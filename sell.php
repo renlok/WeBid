@@ -24,6 +24,7 @@ include $main_path . 'fck/fckeditor.php';
 $_SESSION['action'] = (!isset($_SESSION['action'])) ? 1 : $_SESSION['action'];
 $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST['action'];
 $ERR = 'ERR_';
+$catscontrol = new MPTTcategories();
 
 if (!isset($_SESSION['SELL_sellcat']) || !is_numeric($_SESSION['SELL_sellcat']))
 {
@@ -95,7 +96,10 @@ switch ($_SESSION['action'])
 			if ($_SESSION['SELL_action'] == 'edit')
 				$query = updateauction(1);
 			if ($_SESSION['SELL_action'] == 'relist')
+			{
+				remove_bids($_SESSION['SELL_auction_id']); // incase they've not already been removed
 				$query = updateauction(2);
+			}
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if ($_SESSION['SELL_action'] == 'edit' || $_SESSION['SELL_action'] == 'relist')
@@ -109,6 +113,19 @@ switch ($_SESSION['action'])
 				$system->check_mysql($res_, $sql, __LINE__, __FILE__);
 				$auction_id = mysql_result($res_, 0, 'id');
 				$TPL_auction_id = $_SESSION['SELL_auction_id'] = $auction_id;
+
+				// update recursive categories
+				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['SELL_sellcat'];
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$parent_node = mysql_fetch_assoc($res);
+				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+				for ($i = 0; $i < count($crumbs); $i++)
+				{
+					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
 			}
 			$UPLOADED_PICTURES = $_SESSION['UPLOADED_PICTURES'];
 			// remove old images if any
@@ -163,6 +180,7 @@ switch ($_SESSION['action'])
 				// Send notification if users keyword matches (Auction Watch)
 				$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != ''";
 				$result = mysql_query($query);
+				$system->check_mysql($result, $query, __LINE__, __FILE__);
 				while ($row = mysql_fetch_assoc($result))
 				{
 					if (isset($match)) unset($match);
@@ -331,18 +349,23 @@ switch ($_SESSION['action'])
 					}
 				}
 				// category name
-				$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($sellcat);
+				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($sellcat);
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$row = mysql_fetch_assoc($res);
-				$TPL_categories_list = $row['cat_name'];
-				while ($row['parent_id'] != 0)
+				$parent_node = mysql_fetch_assoc($res);
+
+				$TPL_categories_list = '';
+				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+				for ($i = 0; $i < count($crumbs); $i++)
 				{
-					$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id=" . $row['parent_id'];
-					$res = mysql_query($query);
-					$system->check_mysql($res, $query, __LINE__, __FILE__);
-					$row = mysql_fetch_assoc($res);
-					$TPL_categories_list = $row['cat_name'] . ' &gt; ' . $TPL_categories_list;
+					if ($crumbs[$i]['cat_id'] > 0)
+					{
+						if ($i > 1)
+						{
+							$TPL_categories_list .= ' &gt; ';
+						}
+						$TPL_categories_list .= $category_names[$crumbs[$i]['cat_id']];
+					}
 				}
 
 				$query = "SELECT description FROM " . $DBPrefix . "durations WHERE days = " . $duration;
@@ -416,21 +439,25 @@ switch ($_SESSION['action'])
 				substr($a_starts, 0, 4), 0);
 		}
 	case 1:
-		$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($sellcat);
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($sellcat);
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$row = mysql_fetch_assoc($res);
-		$TPL_categories_list = $category_names[$sellcat];
+		$parent_node = mysql_fetch_assoc($res);
 
-		while ($row['parent_id'] != 0)
+		$TPL_categories_list = '';
+		$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+		for ($i = 0; $i < count($crumbs); $i++)
 		{
-			$P = $row['parent_id'];
-			$query = "SELECT cat_name, parent_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['parent_id'];
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$row = mysql_fetch_assoc($res);
-			$TPL_categories_list = $category_names[$P] . " &gt; " . $TPL_categories_list;
+			if ($crumbs[$i]['cat_id'] > 0)
+			{
+				if ($i > 1)
+				{
+					$TPL_categories_list .= ' &gt; ';
+				}
+				$TPL_categories_list .= $category_names[$crumbs[$i]['cat_id']];
+			}
 		}
+
 		// auction types
 		$TPL_auction_type = '<select name="atype" id="atype">' . "\n";
 		while (list($key, $val) = each($auction_types))

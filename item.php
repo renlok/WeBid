@@ -156,18 +156,16 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $parent_node = mysql_fetch_assoc($res);
 
 $cat_value = '';
-$j = 0;
 $crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 for ($i = 0; $i < count($crumbs); $i++)
 {
 	if ($crumbs[$i]['cat_id'] > 0)
 	{
-		if ($j > 0)
+		if ($i > 1)
 		{
 			$cat_value .= ' > ';
 		}
 		$cat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $crumbs[$i]['cat_name'] . '</a>';
-		$j++;
 	}
 }
 

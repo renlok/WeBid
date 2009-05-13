@@ -32,6 +32,10 @@
 - Changed the confirmation page so it automatically logs the user in after activating their account
 - Added an automatic thumbnail selection to uplaoded images (selects as much the image as possible)
 - Added an orientation check on the thumbnail generator
-- Changed the thumb generator so the thumb caches are actually sued
+- Changed the thumb generator so the thumb caches are actually used
+- Fixed the category counters when you add a new auction
+- Fixed auction relist so all old bids are always removed when you relist an auction
+- Did a complete clean up of the cron.php file so it runs much faster
+- Fixed the cumulative emails
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

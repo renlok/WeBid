@@ -506,7 +506,7 @@ if ((time() - $purgecachetime) > 86400)
 		}
 		closedir($dh);
 	}
-	touch($upload_path . "cache/purge");
+	touch($upload_path . 'cache/purge');
 }
 
 // finish cron script

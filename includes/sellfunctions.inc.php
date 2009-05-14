@@ -123,11 +123,11 @@ function updateauction($type)
 	$extraquery = ($type == 2) ? 
 		",relisted = relisted + 1,
 		current_bid = 0,
+		starts = '" . $a_starts . "',
 		num_bids = 0" : '';
 	$query =
 		"UPDATE " . $DBPrefix . "auctions set
 		title = '" . $system->cleanvars($_SESSION['SELL_title']) . "',
-		starts = '" . $a_starts . "',
 		description = '" . addslashes($_SESSION['SELL_description']) . "',
 		pict_url = '" . $system->cleanvars($_SESSION['SELL_pict_url']) . "',
 		category = " . $_SESSION['SELL_sellcat'] . ",

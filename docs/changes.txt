@@ -37,5 +37,6 @@
 - Fixed auction relist so all old bids are always removed when you relist an auction
 - Did a complete clean up of the cron.php file so it runs much faster
 - Fixed the cumulative emails
+- Fixed the edit page so you can no loner make auctions end in the past
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

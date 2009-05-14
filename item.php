@@ -309,6 +309,7 @@ else
 	$next_bidp = $high_bid + $increment;
 }
 
+$view_history = '';
 if ($num_bids > 0 && !isset($_GET['history']))
 {
 	$view_history = "(<a href='" . $system->SETTINGS['siteurl'] . "item.php?id=$id&history=view#history'>" . $MSG['105'] . "</a>)";

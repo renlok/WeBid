@@ -71,7 +71,7 @@ switch ($_SESSION['action'])
 				$payment_text .= $paym['description'] . "\n";
 			}
 		}
-		if ((md5($MD5_PREFIX . $_POST['password']) != $user->user_data['password']) && $system->SETTINGS['usersauth'] == 'y')
+		if ($system->SETTINGS['usersauth'] == 'y' && (md5($MD5_PREFIX . $_POST['password']) != $user->user_data['password']))
 		{
 			$ERR = 'ERR_026';
 		}
@@ -127,7 +127,7 @@ switch ($_SESSION['action'])
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 			}
-			$UPLOADED_PICTURES = $_SESSION['UPLOADED_PICTURES'];
+			$UPLOADED_PICTURES = (isset($_SESSION['UPLOADED_PICTURES'])) ? $_SESSION['UPLOADED_PICTURES'] : array();
 			// remove old images if any
 			if (is_dir($upload_path . $auction_id))
 			{
@@ -253,6 +253,7 @@ switch ($_SESSION['action'])
 		}
 	case 2:
 		$noerror = true;
+		$er = false;
 		if ($with_reserve == 'no') $reserve_price = 0;
 		if ($buy_now == 'no') $buy_now_price = 0;
 		// run the word filter
@@ -341,6 +342,7 @@ switch ($_SESSION['action'])
 				$query = "SELECT * FROM " . $DBPrefix . "payments";
 				$res_payments = mysql_query($query);
 				$system->check_mysql($res_payments, $query, __LINE__, __FILE__);
+				$TPL_payment_methods = '';
 				while ($pay = mysql_fetch_array($res_payments))
 				{
 					if (in_array($pay['description'], $payment))
@@ -372,7 +374,7 @@ switch ($_SESSION['action'])
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				// built gallery
-				if ($system->SETTINGS['picturesgallery'] == 1 && @count($_SESSION['UPLOADED_PICTURES']) > 0)
+				if ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0)
 				{
 					while (list($k, $v) = each($_SESSION['UPLOADED_PICTURES']))
 					{
@@ -423,7 +425,7 @@ switch ($_SESSION['action'])
 						'B_ADULTONLY' => ($system->SETTINGS['adultonly'] == 'y'),
 						'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only == 'y')),
 						'B_BN' => ($system->SETTINGS['buy_now'] == 2),
-						'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && @count($_SESSION['UPLOADED_PICTURES']) > 0),
+						'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
 						'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1)
 						));
 				break;
@@ -465,18 +467,22 @@ switch ($_SESSION['action'])
 			$TPL_auction_type .= "\t" . '<option value="' . $key . '" ' . (($key == $atype) ? 'selected="true"' : '') . '>' . $val . '</option>' . "\n";
 		}
 		$TPL_auction_type .= '</select>' . "\n";
+
 		// duration
-		$query = "select * from " . $DBPrefix . "durations order by days";
+		$time_passed = (time() - $a_starts) / (3600 * 24); // get time passed in days
+		$query = "SELECT * FROM " . $DBPrefix . "durations WHERE days > " . floor($time_passed) . " ORDER BY days";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$TPL_durations_list = '<select name="duration">' . "\n";
 		while ($row = mysql_fetch_assoc($res))
 		{
-			$TPL_durations_list .= "\t" . '<option value="' . $row['days'] . '" ' . (($row['days'] == $duration) ? 'selected="true"' : '') . '>' . $row['description'] . '</option>' . "\n";
+			$selected = ($row['days'] == $duration) ? 'selected="true"' : '';
+			$TPL_durations_list .= "\t" . '<option value="' . $row['days'] . '" ' . $selected . '>' . $row['description'] . '</option>' . "\n";
 		}
 		$TPL_durations_list .= '</select>' . "\n";
+
 		// payments
-		$query = "select * from " . $DBPrefix . "payments";
+		$query = "SELECT * FROM " . $DBPrefix . "payments";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$TPL_payments_list = '';
@@ -485,6 +491,7 @@ switch ($_SESSION['action'])
 			$checked = (in_array(trim($row['description']), $payment)) ? 'checked' : '';
 			$TPL_payments_list .= '<input type="checkbox" name="payment[]" value="' . $row['description'] . '" ' . $checked . '>' . $row['description'] . '<br>';
 		}
+
 		// make hour
 		if ($_SESSION['SELL_action'] != 'edit')
 		{

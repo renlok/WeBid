@@ -98,7 +98,7 @@ printLog($num . " auctions to close");
 
 $count_auctions = 0;
 $n = 1;
-while ($row = mysql_fetch_array($result_auction)) // loop auctions
+while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 {
 	$n++;
 	$Auction['description'] = strip_tags($Auction['description']);

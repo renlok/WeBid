@@ -39,8 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$query = " UPDATE " . $DBPrefix . "settings SET
 			   loginbox = " . $_POST['loginbox'] . ",
 			   newsbox = " . $_POST['newsbox'] . ",
-			   newstoshow = " . $_POST['newstoshow'] . ",
-			   cust_increment = " . $_POST['cust_increment'] . ", ";
+			   newstoshow = " . $_POST['newstoshow'] . ",";
 	if ($LOGOUPLOADED) {
 		$query .= "logo = '" . $_FILES['logo']['name'] . "', ";
 		$system->SETTINGS['logo'] = $_FILES['logo']['name'];
@@ -89,7 +88,6 @@ loadblock($MSG['5017'], $MSG['5018'], 'decimals', 'endingsoonnumber', $system->S
 loadblock($MSG['532'], $MSG['537'], 'batch', 'loginbox', $system->SETTINGS['loginbox'], $MSG['030'], $MSG['029']);
 loadblock($MSG['533'], $MSG['538'], 'batch', 'newsbox', $system->SETTINGS['newsbox'], $MSG['030'], $MSG['029']);
 loadblock('', $MSG['554'], 'decimals', 'newstoshow', $system->SETTINGS['newstoshow']);
-loadblock($MSG['068'], $MSG['070'], 'batch', 'cust_increment', $system->SETTINGS['cust_increment'], $MSG['030'], $MSG['029']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

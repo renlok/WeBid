@@ -132,6 +132,7 @@ function SwitchMenu(obj){
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/metatags.php" target="content" class="submenulink">{L_25_0178}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/contactseller.php" target="content" class="submenulink">{L_25_0216}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/buyerprivacy.php" target="content" class="submenulink">{L_236}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/auctions.php" target="content" class="submenulink">{L_5087}</a><br>
 			</span>
 		  </TD>
 		</tr>

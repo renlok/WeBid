@@ -76,16 +76,16 @@ $BOARD = mysql_fetch_array($res_);
 		  </tr>
 		  <tr><td>
 		  <table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
-		  <?
+		  <?php
 			  if (!empty($ERR))
 			  {
 		  ?>
 		  <tr bgcolor=yellow>
 			<td colspan="2" align="center"><B><FONT COLOR="#FF0000">
-			  <? print $ERR; ?>
+			  <?php print $ERR; ?>
 			  </FONT></B></td>
 		  </tr>
-		  <?
+		  <?php
 			}
 		  ?>
 		  <tr>

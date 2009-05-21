@@ -39,5 +39,6 @@
 - Fixed the cumulative emails
 - Fixed the edit page so you can no loner make auctions end in the past
 - Added a robot.txt file
+- Fixed gallery upload when the extionsions are in uppercase (Bug #18)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

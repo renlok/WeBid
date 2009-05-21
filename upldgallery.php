@@ -140,9 +140,9 @@ if ($_POST['uploadpicture'] == $MSG['681'])
 	{
 		if (!isset($_SESSION['UPLOADED_PICTURES']) || !is_array($_SESSION['UPLOADED_PICTURES'])) $_SESSION['UPLOADED_PICTURES'] = array();
 		if (!isset($_SESSION['UPLOADED_PICTURES_SIZE']) || !is_array($_SESSION['UPLOADED_PICTURES_SIZE'])) $_SESSION['UPLOADED_PICTURES_SIZE'] = array();
-		$filename = basename($_FILES['userfile']['name']);
+		$filename = strtolower($_FILES['userfile']['name']);
 		$nameparts = explode('.', $filename);
-		$file_ext = strtolower($nameparts[count($nameparts) - 1]);
+		$file_ext = $nameparts[count($nameparts) - 1];
 		$file_types = array('gif', 'jpg', 'jpeg', 'png');
 
 		if ($_FILES['userfile']['size'] > $system->SETTINGS['maxuploadsize'])
@@ -171,19 +171,19 @@ if ($_POST['uploadpicture'] == $MSG['681'])
 			switch($file_ext)
 			{
 				case 'gif':
-					$newname = str_replace('.gif', '', $_FILES['userfile']['name']);
+					$newname = str_replace('.gif', '', $filename);
 					$newname = str_replace($replace, '_', $newname) . '.gif';
 					break;
 				case 'jpg':
-					$newname = str_replace('.jpg', '', $_FILES['userfile']['name']);
+					$newname = str_replace('.jpg', '', $filename);
 					$newname = str_replace($replace, '_', $newname) . '.jpg';
 					break;
 				case 'jpeg':
-					$newname = str_replace('.jpeg', '', $_FILES['userfile']['name']);
+					$newname = str_replace('.jpeg', '', $filename);
 					$newname = str_replace($replace, '_', $newname) . '.jpeg';
 					break;
 				case 'png':
-					$newname = str_replace('.png', '', $_FILES['userfile']['name']);
+					$newname = str_replace('.png', '', $filename);
 					$newname = str_replace($replace, '_', $newname) . '.png';
 					break;
 			}
@@ -208,15 +208,12 @@ if ($cropdefault)
 	list($imgwidth, $imgheight) = getimagesize($upload_path . session_id() . '/' . $image);
 	$swidth = ($imgwidth < 380) ? '' : ' width: 380px;';
 	$imgratio = ($imgwidth > 380) ? $imgwidth / 380 : 1;
-	$startX = $imgwidth;
-	$startY = $imgheight;
 	if ($imgwidth > $imgheight)
 	{
 		$ratio = '1.2:1';
 		$thumbwh = 'width:' . $width . '; height:' . $height . ';';
 		$scaleX = 120;
 		$scaleY = 100;
-		$startX = $startY * 1.2;
 	}
 	else
 	{
@@ -224,7 +221,6 @@ if ($cropdefault)
 		$thumbwh = 'height:' . $width . '; width:' . $height . ';';
 		$scaleX = 100;
 		$scaleY = 120;
-		$startY = $startX * 1.2;
 	}
 	
 	$template->assign_vars(array(
@@ -237,9 +233,7 @@ if ($cropdefault)
 			'IMGWIDTH' => $imgwidth,
 			'IMGHEIGHT' => $imgheight,
 			'IMGPATH' => $uploaded_path . session_id() . '/' . $image,
-			'IMAGE' => $image,
-			'STARTX' => $startX,
-			'STARTY' => $startY
+			'IMAGE' => $image
 			));
 }
 else
@@ -270,7 +264,7 @@ $template->assign_vars(array(
 		'B_CROPSCREEN' => $cropdefault
 		));
 $template->set_filenames(array(
-		'body' => 'upldgallery.tpl'
+		'body' => 'upldgallery.html'
 		));
 $template->display('body');
 ?>

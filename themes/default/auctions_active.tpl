@@ -14,7 +14,7 @@
 				</tr>
 <!-- BEGIN auctions -->
 				<tr style="text-align:center; background-color:{auctions.BGCOLOUR};">
-					<td width="10%"><a href="{SITEURL}item.php?id={auctions.ID}"><img src="{SITEURL}{auctions.PIC_URL}" width="{THUMBWIDTH}" border='0' alt="image"></a></td>
+					<td width="10%"><a href="{SITEURL}item.php?id={auctions.ID}"><img src="{SITEURL}{auctions.PIC_URL}" border="0" alt="image"></a></td>
 					<td width="45%">
 						<a href="{SITEURL}item.php?id={auctions.ID}">{auctions.TITLE}</a>
 						<!-- IF B_BUY_NOW -->

@@ -25,27 +25,20 @@ if (isset($_POST['action']) && $_POST['action'] == "update")
 	if ($_POST['status'] == 'enabled' && (!is_numeric($_POST['timebefore']) || !is_numeric($_POST['extend'])))
 	{
 		$ERR = $MSG['2_0038'];
-		$system->SETTINGS = $_POST;
 	}
 	else
 	{
-		$query = "UPDATE " . $DBPrefix . "auctionextension SET
-				  status='".$_POST['status']."',
-				  timebefore=".intval($_POST['timebefore']).",
-				  extend=".intval($_POST['extend']);
+		$query = "UPDATE " . $DBPrefix . "settings SET
+				  ae_status = '" . $_POST['status']."',
+				  ae_timebefore = ".intval($_POST['timebefore']).",
+				  ae_extend = ".intval($_POST['extend']);
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$ERR = $MSG['2_0039'];
-		$system->SETTINGS = $_POST;
 	}
-}
-
-$query = "SELECT * FROM " . $DBPrefix . "auctionextension";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0)
-{
-	$system->SETTINGS = mysql_fetch_array($res);
+	$system->SETTINGS['ae_status'] = $_POST['status'];
+	$system->SETTINGS['ae_timebefore'] = $_POST['timebefore'];
+	$system->SETTINGS['ae_extend'] = $_POST['extend'];
 }
 
 ?>

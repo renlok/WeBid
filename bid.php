@@ -55,6 +55,18 @@ function get_increment($bid)
 	return $increment;
 }
 
+function extend_auction($id, $ends)
+{
+	global $system, $DBPrefix;
+	
+	if ($system->SETTINGS['ae_status'] == 'enabled' && ($ends - $system->SETTINGS['ae_timebefore']) < time())
+	{
+		$query = "UPDATE FROM " . $DBPrefix . "auctions SET ends = ends + " . $system->SETTINGS['ae_extend'] . " WHERE id = " . $id;
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+	}
+}
+
 // first check if valid auction ID passed
 $query = "SELECT a.*, u.nick, u.email, u.id AS uId FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (a.user = u.id)
@@ -179,6 +191,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 						$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($reserve) . ", '" . $NOW . "', " . $qty . ")";
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					}
+					extend_auction($item_id, $c);
 					$bidding_ended = true;
 				}
 			}
@@ -313,6 +326,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$next_bid = $cbid + $increment;
 				}
 			}
+			extend_auction($item_id, $c);
 		}
 	}
 	elseif ($atype == 2 && !isset($errmsg)) // dutch auction

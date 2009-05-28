@@ -40,7 +40,8 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD `left_id` INT(8) NOT N
 			ADD `right_id` INT(8) NOT NULL AFTER `left_id`
 			ADD `level` INT(1) NOT NULL AFTER `right_id`";
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `cookiesprefix`, ADD `copyright` varchar(255) NOT NULL default '' AFTER `siteurl`,
-			ADD `privacypolicy` enum('y','n') NOT NULL default 'y' AFTER `termstext`, ADD `privacypolicytext` text NOT NULL AFTER `privacypolicy`";
+			ADD `privacypolicy` enum('y','n') NOT NULL default 'y' AFTER `termstext`, ADD `privacypolicytext` text NOT NULL AFTER `privacypolicy`,
+			ADD `ae_status` enum('enabled','disabled') NOT NULL default 'disabled', ADD `ae_timebefore` int(11) NOT NULL default '120', ADD `ae_extend` int(11) NOT NULL default '300'";
 
 //0.7.2 to 0.7.3
 /*

@@ -81,25 +81,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auccounter` (
 # ############################
 
 # 
-# Table structure for table `" . $DBPrefix . "auctionextension`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auctionextension`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "auctionextension` (
-  `status` enum('enabled','disabled') NOT NULL default 'enabled',
-  `timebefore` int(11) NOT NULL default '0',
-  `extend` int(11) NOT NULL default '0'
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "auctionextension`
-# 
-
-$query[] = "INSERT INTO `" . $DBPrefix . "auctionextension` VALUES ('disabled', 120, 300);";
-
-# ############################
-
-# 
 # Table structure for table `" . $DBPrefix . "auctions`
 # 
 
@@ -287,25 +268,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bids` (
 
 # 
 # Dumping data for table `" . $DBPrefix . "bids`
-# 
-
-
-# ############################
-
-# 
-# Table structure for table `" . $DBPrefix . "browsers`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "browsers`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "browsers` (
-  `month` char(2) NOT NULL default '',
-  `year` varchar(4) NOT NULL default '',
-  `browser` varchar(50) NOT NULL default '0',
-  `counter` int(11) NOT NULL default '0'
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "browsers`
 # 
 
 
@@ -1213,19 +1175,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "fontsandcolors` VALUES (1, 3, '#FF9900
 
 # ############################
 
-# 
-# Table structure for table `" . $DBPrefix . "freecategories`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "freecategories`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "freecategories` (
-  `category` int(11) NOT NULL default '0'
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "freecategories`
-# 
-
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
 `id` int( 50 ) NOT NULL AUTO_INCREMENT ,
@@ -1422,25 +1371,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "pendingnotif` (
 # ############################
 
 # 
-# Table structure for table `" . $DBPrefix . "platforms`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "platforms`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "platforms` (
-  `month` char(2) NOT NULL default '',
-  `year` varchar(4) NOT NULL default '',
-  `browser` varchar(50) NOT NULL default '0',
-  `counter` int(11) NOT NULL default '0'
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "platforms`
-# 
-
-
-# ############################
-
-# 
 # Table structure for table `" . $DBPrefix . "proxybid`
 # 
 
@@ -1623,7 +1553,10 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `bn_only_percent` int(3) NOT NULL default '50',
   `buyerprivacy` ENUM('y','n') NOT NULL default 'n',
   `cust_increment` INT(1) NOT NULL DEFAULT '0',
-  `fees` ENUM('y','n') NOT NULL default 'n'
+  `fees` ENUM('y','n') NOT NULL default 'n',
+  `ae_status` enum('enabled','disabled') NOT NULL default 'disabled',
+  `ae_timebefore` int(11) NOT NULL default '120',
+  `ae_extend` int(11) NOT NULL default '300'
 );";
 
 # 
@@ -1631,7 +1564,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n');";
+('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', 'disabled', 120, 300);";
 
 
 # ############################
@@ -1653,28 +1586,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "statssettings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('n', 'y', 'y', 'y');";
-
-# ############################
-
-# 
-# Table structure for table `" . $DBPrefix . "tmp_closed_edited`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "tmp_closed_edited`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "tmp_closed_edited` (
-  `session` varchar(100) NOT NULL default '',
-  `auction` int(32) NOT NULL default '0',
-  `editdate` varchar(8) NOT NULL default '',
-  `seller` int(32) NOT NULL default '0',
-  `fee` enum('homefeatured','catfeatured','bold','highlighted','reserve') NOT NULL default 'homefeatured',
-  `amount` double NOT NULL default '0',
-  KEY `session` (`session`)
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "tmp_closed_edited`
-# 
-
 
 # ############################
 

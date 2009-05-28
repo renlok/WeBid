@@ -75,18 +75,6 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $bgColor = '#EBEBEB';
 while ($row = mysql_fetch_array($res))
 {
-	$bid = $row['current_bid'];
-	$starting_price = $row['current_bid'];
-
-	if ($bgColor == '#EBEBEB')
-	{
-		$bgColor = '#FFFFFF';
-	}
-	else
-	{
-		$bgColor = '#EBEBEB';
-	}
-
 	if (strlen($row['pict_url']) > 0)
 	{
 		$row['pict_url'] = 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
@@ -105,7 +93,7 @@ while ($row = mysql_fetch_array($res))
 	$difference = $row['ends'] - time();
 
 	$template->assign_block_vars('auctions', array(
-			'BGCOLOUR' => $bgColor,
+			'BGCOLOUR' => ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB',
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
 			'TITLE' => $row['title'],
@@ -118,7 +106,7 @@ while ($row = mysql_fetch_array($res))
 			'NUM_BIDS' => $num_bids,
 			'TIMELEFT' => FormatTimeLeft($difference),
 
-			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['current_bid'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
+			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] == 'y' || $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price']))))
 			));
 
 	$auctions_count++;

@@ -322,8 +322,7 @@ $MSG['133'] = "Bid increments table";
 $MSG['134'] = "Current bid";
 $MSG['135'] = "Edit, delete or add increments using the form below.<br>
 			Be careful, there's no control over the table's values congruence.
-			You must take care to check it yourself. The only data check performed is over the fields content (must be numeric) but the relation between them is not checked.<br>
-			[<a href=\"javascript:window_open('incrementshelp.php','incre',400,500,30,30)\" CLASS=\"links\">Read more</a>]";
+			You must take care to check it yourself. The only data check performed is over the fields content (must be numeric) but the relation between them is not checked.";
 $MSG['136'] = "and";
 $MSG['137'] = "Increment";
 $MSG['138'] = "Back to the auction";
@@ -348,7 +347,7 @@ $MSG['158'] = "Submit my bid";
 $MSG['159'] = "Your bid has been registered";
 $MSG['159'] = "Bidder:";
 $MSG['160'] = "Increments table updated";
-$MSG['161'] = "Edit, delete or add categories using the form below.<br>[<a HREF=\"javascript:window_open('categorieshelp.php','incre',400,300,30,30)\" CLASS=\"links\">Read more</a>]";
+$MSG['161'] = "Edit, delete or add categories using the form below.";
 $MSG['163'] = "Register!";
 $MSG['165'] = "Category: ";
 $MSG['166'] = "Home";

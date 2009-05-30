@@ -23,24 +23,28 @@ unset($ERR);
 $query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY ime";
 $res_ = mysql_query($query);
 $system->check_mysql($res_, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res_) > 0) {
-	while ($row = mysql_fetch_array($res_)) {
+if (mysql_num_rows($res_) > 0)
+{
+	while ($row = mysql_fetch_array($res_))
+	{
 		$CURRENCIES[$row['id']] = $row['symbol'] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
 		$CURRENCIES_SYMBOLS[$row['id']] = $row['symbol'];
 	}
 }
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	// Data check
-	if (empty($_POST['currency']) || empty($_POST['moneydecimals'])) {
+	if (empty($_POST['currency']))
+	{
 		$ERR = $ERR_047;
-		$system->SETTINGS = $_POST;
-		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
-	} elseif (!empty($_POST['moneydecimals']) && !ereg("^[0-9]+$", $_POST['moneydecimals'])) {
+	}
+	elseif (!empty($_POST['moneydecimals']) && !ereg("^[0-9]+$", $_POST['moneydecimals']))
+	{
 		$ERR = $ERR_051;
-		$system->SETTINGS = $_POST;
-		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
-	} else {
+	}
+	else
+	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
 				currency = '" . addslashes($CURRENCIES_SYMBOLS[$_POST['currency']]) . "',
@@ -48,25 +52,28 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 				moneydecimals = " . intval($_POST['moneydecimals']) . ",
 				moneysymbol = " . intval($_POST['moneysymbol']);
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$system->SETTINGS = $_POST;
-		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
 		$ERR = $MSG['553'];
 	}
+	$system->SETTINGS = $_POST;
+	$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
 }
 
 $OTHERCURRENCIES = array();
 $query = "SELECT * FROM " . $DBPrefix . "currencies";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0) {
-	while ($row = mysql_fetch_array($res)) {
+if (mysql_num_rows($res) > 0)
+{
+	while ($row = mysql_fetch_array($res))
+	{
 		$OTHERCURRENCIES[$row['id']] = $row['currency'];
 	}
 }
 
 $link = "javascript:window_open('" . $system->SETTINGS['siteurl'] . "converter.php','incre',650,250,30,30)";
 
-foreach ($CURRENCIES_SYMBOLS as $k => $v) {
+foreach ($CURRENCIES_SYMBOLS as $k => $v)
+{
 	if ($v == $system->SETTINGS['currency'])
 		$selectsetting = $k;
 }

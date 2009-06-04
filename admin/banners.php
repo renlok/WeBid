@@ -19,11 +19,12 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
-	$query = "update ".$DBPrefix."settings set banners = '" . $system->cleanvars($_POST['banners']) . "'";
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	$query = "UPDATE ".$DBPrefix."settings SET banners = '" . $system->cleanvars($_POST['banners']) . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$ERR = $MSG['600'];
 	$system->SETTINGS['banners'] = $_POST['banners'];
+	$ERR = $MSG['600'];
 }
 
 loadblock($MSG['597'], $MSG['_0009'], 'batch', 'banners', $system->SETTINGS['banners'], $MSG['030'], $MSG['029']);

@@ -17,7 +17,6 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path.'platforms.inc.php';
 
 $ABSOLUTEWIDTH = 550;
 
@@ -92,7 +91,7 @@ while ($year = mysql_fetch_array($res))
 	  <?php
 	  if (is_array($YEARS))
 	  {
-	  	while (list($k,$v) = each($YEARS))
+		foreach ($YEARS as $k => $v)
 	  	{
 		?>
 			<tr bgcolor=yellow>
@@ -101,7 +100,7 @@ while ($year = mysql_fetch_array($res))
 				</td>
 			</tr>
 			<?php
-			while (list($t,$z) = each($v))
+			foreach ($v as $t => $z)
 			{
 			?>
 			<tr bgcolor=#eeeeee>

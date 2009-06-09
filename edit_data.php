@@ -182,10 +182,11 @@ $TPL_month = substr($USER['birthdate'], 4, 2);
 $TPL_year = substr($USER['birthdate'], 0, 4);
 
 $country = '';
-while (list($code, $name) = each($countries))
+foreach ($countries as $code => $name)
 {
 	$country .= '<option value="' . $name . '"';
-	if ($name == $USER['country']) {
+	if ($name == $USER['country'])
+	{
 		$country .= ' selected';
 	}
 	$country .= '>' . $name . '</option>' . "\n";

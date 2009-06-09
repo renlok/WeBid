@@ -23,14 +23,14 @@ if ($_POST[action] == "update")
 {
 	if (is_array($_POST['accept']))
 	{
-		while (list($k,$v) = each($_POST['accept']))
+		foreach ($_POST['accept'] as $k => $v)
 		{
 			@mysql_query("UPDATE " . $DBPrefix . "usersips SET action='accept' WHERE id=$k");
 		}
 	}
 	if (is_array($_POST['deny']))
 	{
-		while (list($k,$v) = each($_POST['deny']))
+		foreach ($_POST['deny'] as $k => $v)
 		{
 			@mysql_query("UPDATE " . $DBPrefix . "usersips SET action='deny' WHERE id=$k");
 		}
@@ -180,7 +180,7 @@ if (mysql_num_rows($res) > 0)
 				<?php
 				if (is_array($NEXT))
 				{
-					while (list($k,$v) = each($NEXT))
+					foreach ($NEXT as $k => $v)
 					{
 				?>
 				<tr bgcolor="#FFFFFF">

@@ -136,7 +136,7 @@ while ($row = mysql_fetch_array($res))
 				<?php
 				if (is_array($NEXT))
 				{
-					while (list($k,$v) = each($NEXT))
+					foreach ($NEXT as $k => $v)
 					{
 				?>
 				<tr bgcolor="#FFFFFF">

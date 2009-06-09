@@ -108,7 +108,7 @@ if ($_POST['action'] == 'update')
 		// Handle filters
 		if (is_array($_POST['category']))
 		{
-			while (list($k,$v) = each($_POST['category']))
+			foreach ($_POST['category'] as $k => $v)
 			{
 				$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES ($ID,$v)";
 				$res = mysql_query($query);
@@ -118,8 +118,7 @@ if ($_POST['action'] == 'update')
 		if (!empty($_POST['keywords']))
 		{
 			$KEYWORDS = explode("\n",$_POST['keywords']);
-			
-			while (list($k,$v) = each($KEYWORDS))
+			foreach ($KEYWORDS as $k => $v)
 			{
 				if (!empty($v))
 				{

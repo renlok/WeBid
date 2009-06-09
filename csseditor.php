@@ -24,7 +24,7 @@ if (file_exists($filename)) $cssfile = file($filename);
 
 if ($cssfile)
 {
-	while (list(, $line) = each($cssfile))
+	foreach ($cssfile as $line)
 	{
 		$line = trim($line);
 		if ($line)
@@ -34,7 +34,7 @@ if ($cssfile)
 			$rules = trim($reg[2]);
 			if ($selector && $rules) {
 				$defs = explode(';', $rules);
-				while (list(, $rule) = each($defs))
+				foreach ($defs as $rule)
 				{
 					list($prop, $def) = explode(':', $rule);
 					$prop = trim($prop);
@@ -52,29 +52,29 @@ if ($save)
 {
 	if ($newruleslist)
 	{
-		while (list($p, $d) = each($newruleslist))
-		$css[$sel][$p] = trim($d);
+		foreach ($newruleslist as $p => $d)
+			$css[$sel][$p] = trim($d);
 	}
 
 	if ($newrules)
 	{
-		while (list($p, $d) = each($newrules))
-		if ($css[$sel][$p] == ':other:') $css[$sel][$p] = trim($d);
+		foreach ($newrules as $p => $d)
+			if ($css[$sel][$p] == ':other:') $css[$sel][$p] = trim($d);
 	}
 
 	if ($css)
 	{
 		@touch($filename);
 		@chmod($filename, 0666);
-		$fp = fopen($filename, "w") or die("Cannot write to CSS file");
-		while (list($s, $r) = each ($css))
+		$fp = fopen($filename, 'w') or die('Cannot write to CSS file');
+		foreach ($css as $s => $r)
 		{
 			$rule = '';
-			while (list($p, $d) = each($r))
-			if ($d != '') $rule .= $p . ": " . $d . "; ";
-			if ($rule) fwrite($fp, $s . "\t{ " . $rule . "}\n");
+			foreach ($r as $p => $d)
+				if ($d != '') $rule .= $p . ': ' . $d . '; ';
+			if ($rule) fwrite($fp, $s . "\t" . '{ ' . $rule . '}' . "\n");
 		}
-		fclose($fp) or die("Cannot close the CSS file");
+		fclose($fp) or die('Cannot close the CSS file');
 	}
 }
 elseif ($delete)
@@ -84,38 +84,38 @@ elseif ($delete)
 		unset($css[$sel]);
 		touch($filename);
 		chmod($filename, 0666);
-		$fp = fopen($filename, "w") or die("Cannot write to CSS file");
-		while (list($s, $r) = each ($css))
+		$fp = fopen($filename, 'w') or die('Cannot write to CSS file');
+		foreach ($css as $s => $r)
 		{
 			$rule = '';
-			while (list($p, $d) = each($r))
-			if ($d != '') $rule .= $p . ": " . $d . "; ";
-			if ($rule) fwrite($fp, $s . "\t{ " . $rule . "}\n");
+			foreach ($r as $p => $d)
+				if ($d != '') $rule .= $p . ': ' . $d . '; ';
+			if ($rule) fwrite($fp, $s . "\t" . '{ ' . $rule . '}' . "\n");
 		}
-		fclose($fp) or die("Cannot close the CSS file");
+		fclose($fp) or die('Cannot close the CSS file');
 	}
 }
 
 if ($delete)
 {
-	header("Location: editstylesheet.php?thepage=" . rawurlencode($thepage) . "&thestyle=" . rawurlencode($thestyle));
+	header('location: editstylesheet.php?thepage=' . rawurlencode($thepage) . '&thestyle=' . rawurlencode($thestyle));
 	die();
 }
 if ($save || $cancel)
 {
-	header("Location: test.php?thepage=" . rawurlencode($thepage) . "&thestyle=" . rawurlencode($thestyle) . "&editOn=yes");
+	header('location: test.php?thepage=' . rawurlencode($thepage) . '&thestyle=' . rawurlencode($thestyle) . '&editOn=yes');
 	die();
 }
 
 function cleanup()
 {
 	$dp = opendir('./css');
-	$old = strtotime("-3 days");
+	$old = strtotime('-3 days');
 	while (($file = readdir($dp)) !== false)
 	{
-		if ($file != "." && $file != "..")
+		if ($file != '.' && $file != '..')
 		{
-			$file = "./css/$file";
+			$file = './css/$file';
 			if (filemtime($file) < $old) unlink($file);
 		}
 	}
@@ -124,7 +124,7 @@ function cleanup()
 
 function selectorsort($a, $b)
 {
-	$pseudoVal = array(":link" => 10, ":visited" => 9, ":hover" => 8, ":active" => 7);
+	$pseudoVal = array(':link' => 10, ':visited' => 9, ':hover' => 8, ':active' => 7);
 	// -1 = $a<$b 	=>	-1 $a comes first
 	// +1 = $a>$b	=>	+1 $b comes first
 	if ($a == $b) return 0;
@@ -136,7 +136,8 @@ function selectorsort($a, $b)
 	$psb = @eregi(':', $b);
 	if ($psa && !$psb) return + 1;
 	elseif (!$psa && $psb) return - 1;
-	elseif ($psa && $psb) {
+	elseif ($psa && $psb)
+	{
 		$psa = @eregi('.*(:[^ ]*).*', $a, $ra);
 		$psb = @eregi('.*(:[^ ]*).*', $b, $rb);
 		$psa = $pseudoVal[$ra[1]];
@@ -144,7 +145,8 @@ function selectorsort($a, $b)
 		if ($psa > $psb) return - 1;
 		elseif ($psa < $psb) return + 1;
 		else return ($a > $b) ? + 1: - 1;
-	} elseif (@eregi($a, $b)) return - 1;
+	}
+	elseif (@eregi($a, $b)) return - 1;
 	elseif (@eregi($b, $a)) return + 1;
 	else return ($a > $b) ? + 1: - 1;
 }
@@ -190,12 +192,12 @@ echo "<hr />\n";
 include('csssyntax.inc');
 
 $pn = 0;
-while (list($grp, $propgrp) = each($PropGroups))
+foreach ($PropGroups as $grp => $propgrp)
 {
 	echo "<h3>$grp:</h3>\n";
 	echo "<p style='white-space:nowrap'>";
 
-	while (list(, $prop) = each($propgrp))
+	foreach ($propgrp as $prop)
 	{
 		echo "<strong>$prop->name: </strong>";
 		$pn++;
@@ -205,22 +207,23 @@ while (list($grp, $propgrp) = each($PropGroups))
 
 		echo "<select name='newruleslist[$prop->name]' onchange='objGet(\"proptext$pn\").style.display=(this.value==\":other:\")?\"inline\":\"none\";'>\n";
 		$vals = $prop->getValueList();
-		while (list(, $pd) = each($vals))
+		foreach ($vals as $pd)
 		{
-			echo "<option";
+			echo '<option';
 			if ($css[$sel][$prop->name] == $pd)
 			{
-				echo " selected='selected'";
+				echo ' selected="selected"';
 				$found = true;
 			}
-			if ($pd == '---') echo " value=''></option>";
-			else echo " value='$pd'>$pd</option>\n";
+			if ($pd == '---') echo ' value=""></option>';
+			else echo ' value="' . $pd . '">' . $pd . '</option>' . "\n";
 		}
 		echo "<option value=''";
 		if (!$found && !$isDefined) echo " selected='selected'";
 		echo ">* default (" . $prop->getDefValue() . ") </option>\n";
 		echo "<option value=':other:'";
-		if (!$found && $isDefined) {
+		if (!$found && $isDefined)
+		{
 			echo " selected='selected'";
 			$hideInput = false;
 		}

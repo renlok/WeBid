@@ -34,7 +34,7 @@ if (isset($_POST['action'])) {
 			$ERR = "ERR_001";
 		}
 		reset($LANGUAGES);
-		while (list($k,$v) = each($LANGUAGES)){
+		foreach ($LANGUAGES as $k => $v){
 			$tr = @mysql_result(@mysql_query("SELECT title FROM " . $DBPrefix . "news_translated WHERE lang='".$k."' AND id = ".$_POST['id']), 0, "title"); 
 			if (!empty($tr)) {
 				$query = "UPDATE " . $DBPrefix . "news_translated SET 
@@ -131,7 +131,7 @@ scrollbar-arrow-color: #ffffff;
 		<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<input type=text NAME=title[<?php echo $system->SETTINGS['defaultlanguage']; ?>] SIZE=40 MAXLENGTH=255 value="<?php echo stripslashes($TIT_tr[$system->SETTINGS['defaultlanguage']]); ?>">
 		<?php
 			reset($LANGUAGES);
-			while (list($k,$v) = each($LANGUAGES)){
+			foreach ($LANGUAGES as $k => $v){
 				if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<input type=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=\"".stripslashes($TIT_tr[$k])."\">";
 			}
 		?>
@@ -147,7 +147,7 @@ scrollbar-arrow-color: #ffffff;
 		<TEXTAREA NAME=content[<?php echo $system->SETTINGS['defaultlanguage']; ?>] COLS=45 ROWS=20><?php echo stripslashes($CONT_tr[$system->SETTINGS['defaultlanguage']]); ?></TEXTAREA>
 		<?php
 			reset($LANGUAGES);
-			while (list($k,$v) = each($LANGUAGES)){
+			foreach ($LANGUAGES as $k => $v){
 				if ($k!=$system->SETTINGS['defaultlanguage']) print "<br><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=content[$k] COLS=45 ROWS=20>".stripslashes($CONT_tr[$k])."</TEXTAREA>";
 			}
 		?>

@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 #// Delete users and banners if necessary
 if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
-	while (list($k,$v) = each($_POST['delete']))
+	foreach ($_POST['delete'] as $k => $v)
 	{
 		@mysql_query("DELETE FROM " . $DBPrefix . "banners WHERE user=$v");
 		@mysql_query("DELETE FROM " . $DBPrefix . "bannersusers WHERE id=$v");

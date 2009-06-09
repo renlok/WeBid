@@ -27,7 +27,7 @@ if (isset($_POST['InsertButton']) && isset($_POST['cat_name']) && strlen($_POST[
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$id = mysql_insert_id();
 	reset($LANGUAGES);
-	while (list($k,$v) = each($LANGUAGES)){
+	foreach ($LANGUAGES as $k => $v){
 		@mysql_query("INSERT INTO " . $DBPrefix . "faqscat_translated VALUES($id,'$k','".$system->cleanvars($_POST['cat_name'][$k])."')");
 	}
 }
@@ -35,7 +35,7 @@ if (isset($_POST['InsertButton']) && isset($_POST['cat_name']) && strlen($_POST[
 #// Delete categories
 if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
-	while (list($k,$v) = each($_POST['delete']))
+	foreach ($_POST['delete'] as $k => $v)
 	{
 		$query = "delete from " . $DBPrefix . "faqscategories WHERE id=$v";
 		$r = mysql_query($query);
@@ -106,7 +106,7 @@ $system->check_mysql($res__, $query, __LINE__, __FILE__);
 										<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<input type="text" name="cat_name[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" SIZE="25" MAXLENGTH="200">
 										<?php
 											reset($LANGUAGES);
-											while (list($k,$v) = each($LANGUAGES)){
+											foreach ($LANGUAGES as $k => $v){
 												if ($k!=$system->SETTINGS['defaultlanguage']) print '<BR><IMG SRC=../includes/flags/' . $k . '.gif>&nbsp;<input type=text name="' . $cat_name[$k] . '" SIZE=25 MAXLENGTH=200>';
 											}
 										?>

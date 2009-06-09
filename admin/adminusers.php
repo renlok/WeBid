@@ -25,7 +25,7 @@ if (is_array($_POST['delete']))
 {
 	$delete = '';
 	$i = 0;
-	while (list($k,$v) = each($_POST['delete']))
+	foreach ($_POST['delete'] as $k => $v)
 	{
 		if ($i != 0) $delete = ', ';
 		$delete = $k;

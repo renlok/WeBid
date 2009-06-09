@@ -60,7 +60,7 @@ if (!isset($_POST['action']) && isset($_GET['id'])) {
 	$address = mysql_result($result,0,"address");
 	$country = mysql_result($result,0,"country");
 	$country_list = '';
-	while (list ($code, $descr) = each ($countries)) {
+	foreach ($countries as $code => $descr) {
 		$country_list .= '<option value="' . $descr . '"';
 		if ($descr == $country) {
 			$country_list .= ' selected';

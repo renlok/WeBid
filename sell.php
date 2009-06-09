@@ -151,7 +151,7 @@ switch ($_SESSION['action'])
 					mkdir($upload_path . $auction_id, 0777);
 				}
 				// Copy files
-				while (list($k, $v) = each($UPLOADED_PICTURES))
+				foreach ($UPLOADED_PICTURES as $k => $v)
 				{
 					copy($upload_path . session_id() . '/' . $v, $upload_path . $auction_id . '/' . $v);
 					chmod($upload_path . $auction_id . '/' . $v, 0777);
@@ -190,7 +190,7 @@ switch ($_SESSION['action'])
 					$key = explode(' ', $row['auc_watch']);
 					if (is_array($key) && count($key) > 0)
 					{
-						while (list($k, $v) = each($key))
+						foreach ($key as $k => $v)
 						{
 							$v = trim(strtolower($v));
 							if (in_array($v, $w_title) || in_array($v, $w_descr) || $v == $w_nick)
@@ -376,7 +376,7 @@ switch ($_SESSION['action'])
 				// built gallery
 				if ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0)
 				{
-					while (list($k, $v) = each($_SESSION['UPLOADED_PICTURES']))
+					foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
 					{
 						$template->assign_block_vars('gallery', array(
 								'K' => $k,
@@ -462,7 +462,7 @@ switch ($_SESSION['action'])
 
 		// auction types
 		$TPL_auction_type = '<select name="atype" id="atype">' . "\n";
-		while (list($key, $val) = each($auction_types))
+		foreach ($auction_types as $key => $val)
 		{
 			$TPL_auction_type .= "\t" . '<option value="' . $key . '" ' . (($key == $atype) ? 'selected="true"' : '') . '>' . $val . '</option>' . "\n";
 		}

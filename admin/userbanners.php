@@ -88,9 +88,11 @@ if (isset($_POST['action']) && $_POST['action'] == "insert") {
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$ID = mysql_insert_id();
 				
-				#// Handle filters
-				if (is_array($_POST['categories'])) {
-					while (list($k,$v) = each($_POST['categories'])) {
+				// Handle filters
+				if (is_array($_POST['categories']))
+				{
+					foreach ($_POST['categories'] as $k => $v)
+					{
 						$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES ($ID," . $system->cleanvars($v) . ")";
 						$res = mysql_query($query);
 						$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -99,7 +101,8 @@ if (isset($_POST['action']) && $_POST['action'] == "insert") {
 				if (!empty($_POST['keywords'])) {
 					$KEYWORDS = explode("\n", $_POST['keywords']);
 					
-					while (list($k,$v) = each($KEYWORDS)) {
+					foreach ($KEYWORDS as $k => $v)
+					{
 						if (!empty($v)) {
 							$query = "INSERT INTO " . $DBPrefix . "bannerskeywords VALUES ($ID,'".$system->cleanvars(chop($v))."')";
 							$res = mysql_query($query);
@@ -247,7 +250,8 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 						<?php
 						if (is_array($BANNERS)) {
 							$BG = "#eeeeee";
-							while (list($k,$v) = each($BANNERS)) {
+							foreach ($BANNERS as $k => $v)
+							{
 								if ($BG == "#eeeeee")
 								$BG = "#dddddd";
 								else

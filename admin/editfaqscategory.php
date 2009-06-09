@@ -31,7 +31,8 @@ if ($_POST[action] == "update" && strstr(basename($_SERVER['HTTP_REFERER']),base
   }
 
   reset($LANGUAGES);
-  while (list($k,$v) = each($LANGUAGES)) {
+  foreach ($LANGUAGES as $k => $v)
+  {
 	$tr=@mysql_result(@mysql_query("SELECT category FROM " . $DBPrefix . "faqscat_translated WHERE lang='".$k."' AND id=".$id),0,"category"); 
 	if ($tr) {
 	  $query = "UPDATE " . $DBPrefix . "faqscat_translated SET 
@@ -120,7 +121,7 @@ scrollbar-arrow-color: #ffffff;
 			  <IMG SRC=../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif>&nbsp;<input type="text" name="category[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" SIZE="50" MAXLENGTH="150" value="<?php echo $tr[$system->SETTINGS['defaultlanguage']]; ?>">
 			  <?php
 				reset($LANGUAGES);
-				while (list($k,$v) = each($LANGUAGES)){
+				foreach ($LANGUAGES as $k => $v){
 				  if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<input type=text NAME=category[$k] SIZE=50 MAXLENGTH=150 VALUE=\"$tr[$k]\">";
 				}
 			  ?>

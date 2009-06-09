@@ -21,7 +21,7 @@ include 'loggedin.inc.php';
 $ERR = "&nbsp;";
 
 if (is_array($_POST['delete']) && basename($_SERVER['HTTP_REFERER']) == basename($_SERVER['PHP_SELF'])) {
-	while (list($k,$v) = each($_POST['delete'])) {
+	foreach ($_POST['delete'] as $k => $v) {
 		#//
 		$query = "delete from " . $DBPrefix . "faqs WHERE id=$k";
 		$res = mysql_query($query);

@@ -121,7 +121,7 @@ if (!isset($_POST['action']))
 			umask();
 			mkdir($upload_path . session_id(), 0777);
 		}
-		while (list($k, $v) = each($UPLOADED_PICTURES))
+		foreach ($UPLOADED_PICTURES as $k => $v)
 		{
 			copy($uploaded_path . intval($_GET['id']) . '/' . $v, $uploaded_path . session_id() . '/' . $v);
 		}

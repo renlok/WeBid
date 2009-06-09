@@ -85,7 +85,7 @@ while ($row = mysql_fetch_array($res))
 		<?php echo $MSG['5160']; ?>
 		</a>  </td>
 	  <?php
-			while (list($k,$vv) = @each($DOM))
+			foreach ($DOM as $k => $v)
 			{
 		?>
 			<tr bgcolor=#eeeeee>

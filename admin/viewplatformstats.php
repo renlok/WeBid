@@ -87,7 +87,7 @@ while ($row = mysql_fetch_array($res)) {
 	  <?php
 	  	if (is_array($PLATFORMS))
 		{
-			while (list($k,$vv) = each($PLATFORMS))
+			foreach ($PLATFORMS as $k => $v)
 			{
 		?>
 			<tr bgcolor=#eeeeee>

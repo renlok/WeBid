@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 {
 	if (is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
 	{
-		while (list($k, $v) = each($_POST['O_delete']))
+		foreach ($_POST['O_delete'] as $k => $v)
 		{
 			$removed = 0;
 			$v = intval($v);

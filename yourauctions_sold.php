@@ -31,7 +31,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Delete auction
 	if (is_array($_POST['delete']))
 	{
-		while (list($k, $v) = each($_POST['delete']))
+		foreach ($_POST['delete'] as $k => $v)
 		{
 			$v = intval($v);
 			// Pictures Gallery

@@ -35,7 +35,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 		$id=mysql_insert_id();
 		#// Insert into translation table.
 		reset($LANGUAGES);
-		while (list($k,$v) = each($LANGUAGES)){
+		foreach ($LANGUAGES as $k => $v){
 			$query = "INSERT INTO ".$DBPrefix."faqs_translated VALUES(
 					$id,
 					'$k',
@@ -110,7 +110,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif">&nbsp;<input type="text" name="question[<?=$system->SETTINGS['defaultlanguage']?>]" SIZE="35" MAXLENGTH="200">
 							<?php
 								reset($LANGUAGES);
-								while (list($k,$v) = each($LANGUAGES)){
+								foreach ($LANGUAGES as $k => $v){
 									if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<input type=text NAME=question[$k] SIZE=35 MAXLENGTH=200>";
 								}
 							?>
@@ -123,7 +123,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 							<IMG SRC="../includes/flags/<?=$system->SETTINGS['defaultlanguage']?>.gif"><br><TEXTAREA name="answer[<?=$system->SETTINGS['defaultlanguage']?>]" COLS="40" ROWS="15"></TEXTAREA>
 							<?php
 								reset($LANGUAGES);
-								while (list($k,$v) = each($LANGUAGES)){
+								foreach ($LANGUAGES as $k => $v){
 									if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=answer[$k] COLS=40 ROWS=15></TEXTAREA>";
 								}
 							?>

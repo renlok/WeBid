@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 reset($LANGUAGES);
-while (list($k,$v) = each($LANGUAGES)){
+foreach ($LANGUAGES as $k => $v){
 	include $main_path . 'language/' . $k . '/messages.inc.php';
 	include $main_path . 'language/' . $k . '/categories.inc.php';
 	

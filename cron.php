@@ -340,7 +340,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 		include $include_path . 'endauction_winner.inc.php';
 		if (isset($WINNERS_NICK) && is_array($WINNERS_NICK) && count($WINNERS_NICK) > 0)
 		{
-			while (list($k, $v) = each($WINNERS_NICK))
+			foreach ($WINNERS_NICK as $k => $v)
 			{
 				$Winner['name'] = $WINNERS_NAME[$k];
 				$Winner['email'] = $WINNERS_EMAIL[$k];

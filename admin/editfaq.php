@@ -33,7 +33,8 @@ if ($_POST[action] == "update" && strstr(basename($_SERVER['HTTP_REFERER']),base
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	  reset($LANGUAGES);
-	  while (list($k,$v) = each($LANGUAGES)){
+	  foreach ($LANGUAGES as $k => $v)
+	  {
 		$tr=@mysql_result(@mysql_query("SELECT question FROM " . $DBPrefix . "faqs_translated WHERE lang='".$k."' AND id=".$_POST['id']),0,"question"); 
 		if ($tr){
 		  $query = "UPDATE " . $DBPrefix . "faqs_translated SET 
@@ -133,7 +134,7 @@ if ($_POST[action] != "update")
 			  <IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<input type="text" name="question[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" SIZE="35" MAXLENGTH="200" value="<?php echo stripslashes($QUESTION_tr[$system->SETTINGS['defaultlanguage']]); ?>">
 			  <?php
 				reset($LANGUAGES);
-				while (list($k,$v) = each($LANGUAGES)){
+				foreach ($LANGUAGES as $k => $v){
 				  if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<input type=text NAME=question[$k] SIZE=35 MAXLENGTH=200 VALUE=\"".stripslashes($QUESTION_tr[$k])."\">";
 				}
 			  ?>
@@ -145,7 +146,7 @@ if ($_POST[action] != "update")
 			  <IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif"><br><TEXTAREA name="answer[<?php echo $system->SETTINGS['defaultlanguage']; ?>]" COLS="40" ROWS="15"><?php echo stripslashes($ANSWER_tr[$system->SETTINGS['defaultlanguage']]); ?></TEXTAREA>
 			  <?php
 				reset($LANGUAGES);
-				while (list($k,$v) = each($LANGUAGES)){
+				foreach ($LANGUAGES as $k => $v){
 				  if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=answer[$k] COLS=40 ROWS=15>".stripslashes($ANSWER_tr[$k])."</TEXTAREA>";
 				}
 			  ?>

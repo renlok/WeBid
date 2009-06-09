@@ -22,16 +22,20 @@ $TIME = $system->ctime;
 
 if (isset($_POST['action']))
 {
-	//-- Data check
-	if (!isset($_POST['title']) || !isset($_POST['content'])) {
+	// Data check
+	if (!isset($_POST['title']) || !isset($_POST['content']))
+	{
 		$ERR = "ERR_112";
-	} else {		
+	}
+	else
+	{		
 		$query = "INSERT INTO " . $DBPrefix . "news VALUES (NULL, '".$system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']])."','".$system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']])."',".time().",".intval($_POST['suspended']).")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$_POST['id'] = mysql_insert_id();
-		#// Insert into translation table.
+		// Insert into translation table.
 		reset($LANGUAGES);
-		while (list($k,$v) = each($LANGUAGES)){
+		foreach ($LANGUAGES as $k => $v)
+		{
 			$query = "INSERT INTO " . $DBPrefix . "news_translated VALUES (
 					".$_POST['id'].", '$k', '".$system->cleanvars($_POST['title'][$k])."', '".$system->cleanvars($_POST['content'][$k])."')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -90,7 +94,8 @@ if (isset($_POST['action']))
 			<IMG SRC="../includes/flags/<?php echo $system->SETTINGS['defaultlanguage']; ?>.gif">&nbsp;<input type=text NAME=title[<?php echo $system->SETTINGS['defaultlanguage']; ?>] SIZE=40 MAXLENGTH=255 value="<?php print $_POST['title']; ?>">
 			<?php
 				reset($LANGUAGES);
-				while (list($k,$v) = each($LANGUAGES)){
+				foreach ($LANGUAGES as $k => $v)
+				{
 					if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif>&nbsp;<input type=text NAME=title[$k] SIZE=40 MAXLENGTH=255 VALUE=>";
 				}
 			?>
@@ -106,7 +111,8 @@ if (isset($_POST['action']))
 			<TEXTAREA NAME=content[<?php echo $system->SETTINGS['defaultlanguage']; ?>] COLS=45 ROWS=20></TEXTAREA>
 			<?php
 				reset($LANGUAGES);
-				while (list($k,$v) = each($LANGUAGES)){
+				foreach ($LANGUAGES as $k => $v)
+				{
 					if ($k!=$system->SETTINGS['defaultlanguage']) print "<BR><IMG SRC=../includes/flags/".$k.".gif><br><TEXTAREA NAME=content[$k] COLS=45 ROWS=20></TEXTAREA>";
 				}
 			?>

@@ -89,7 +89,7 @@ while ($row = mysql_fetch_array($res))
 	  <?php
 	  if (is_array($BROWSERS))
 	  {
-	  	while (list($k,$vv) = each($BROWSERS))
+		foreach ($BROWSERS as $k => $v)
 	  	{
 		?>
 			<tr bgcolor=#eeeeee>

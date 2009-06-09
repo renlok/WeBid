@@ -56,8 +56,6 @@ loadblock('', $MSG['5150']);
 loadblock('' , '', 'checkbox', 'accesses', $statssettings['accesses'], $MSG['5145']);
 loadblock('' , '', 'checkbox', 'browsers', $statssettings['browsers'], $MSG['5146']);
 loadblock('' , '', 'checkbox', 'domains', $statssettings['domains'], $MSG['5147']);
-loadblock('', $MSG['5151']);
-loadblock('', $MSG['5152'] . ' | ' . $MSG['5153'] . ' | ' . $MSG['5154']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

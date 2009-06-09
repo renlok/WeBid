@@ -13,7 +13,8 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include "admin/loggedin.inc.php";
+include $include_path . 'functions_admin.php';
+include 'admin/loggedin.inc.php';
 
 $thestyle = (isset($_REQUEST['thestyle'])) ? $system->cleanvars($_REQUEST['thestyle']) : '';
 if (strpos($thestyle, '.css') === false) die('invalid file');
@@ -23,7 +24,8 @@ $font = (isset($_GET['font'])) ? $system->cleanvars($_GET['font']) : '';
 $color = (isset($_GET['color'])) ? $system->cleanvars($_GET['color']) : '';
 $thepage = (isset($_POST['thepage'])) ? $_POST['thepage'] : '';
 
-if (!empty($_POST)) {
+if (!empty($_POST))
+{
 	$newruleslist = $_POST['newruleslist'];
 	$newrules = $_POST['newrules'];
 	$from = $_POST['from'];
@@ -43,17 +45,22 @@ if (!$thestyle) {
 $filename = $thestyle;
 
 if (file_exists($filename)) $cssfile = file($filename);
-if (isset($cssfile)) {
-	while (list (, $line) = each($cssfile)) {
+if (isset($cssfile))
+{
+	foreach ($cssfile as $line)
+	{
 		$line = trim($line);
-		if ($line) {
+		if ($line)
+		{
 			eregi('([^\{]*)\{([^\}]*)\}', $line, $reg);
 			$selector = trim($reg[1]);
 			$rules = trim($reg[2]);
-			if ($selector && $rules) {
-				$defs = explode(";", $rules);
-				while (list(, $rule) = each($defs)) {
-					list($prop, $def) = explode(":", $rule);
+			if ($selector && $rules)
+			{
+				$defs = explode(';', $rules);
+				foreach ($defs as $rule)
+				{
+					list($prop, $def) = explode(':', $rule);
 					$prop = trim($prop);
 					$def = trim($def);
 					if ($prop != '' && $def != '') $css[$selector][$prop] = $def;
@@ -63,54 +70,66 @@ if (isset($cssfile)) {
 	}
 }
 
-if (isset($css)) uksort($css, "selectorsort");
+if (isset($css)) uksort($css, 'selectorsort');
 
-if (isset($save)) {
-	if (isset($newruleslist)) {
-		while (list($p, $d) = each($newruleslist))
-		$css[$sel][$p] = trim($d);
+if (isset($save))
+{
+	if (isset($newruleslist))
+	{
+		foreach ($newruleslist as $p => $d)
+			$css[$sel][$p] = trim($d);
 	}
 
-	if (isset($newrules)) {
-		if (array_key_exists("background-image", $newrules) && !ereg("..\/..\/", $newrules['background-image'], $regs)) {
+	if (isset($newrules))
+	{
+		if (array_key_exists('background-image', $newrules) && !ereg("..\/..\/", $newrules['background-image'], $regs))
+		{
 			$newrules['background-image'] = ereg_replace("\((.*)\)", "(../../\\1)", $newrules['background-image']);
-		} while (list($p, $d) = each($newrules))
-		if ($css[$sel][$p] == ':other:') $css[$sel][$p] = trim($d);
+		}
+		foreach ($newrules as $p => $d)
+			if ($css[$sel][$p] == ':other:') $css[$sel][$p] = trim($d);
 	}
 
-	if (isset($css)) {
+	if (isset($css))
+	{
 		@touch($filename);
 		@chmod($filename, 0666);
-		$fp = fopen($filename, "w") or die("Cannot write to CSS file");
-		while (list($s, $r) = each ($css)) {
+		$fp = fopen($filename, 'w') or die("Cannot write to CSS file");
+		foreach ($css as $s => $r)
+		{
 			$rule = '';
-			while (list($p, $d) = each($r))
-			if ($d != '') $rule .= $p . ": " . $d . "; ";
+			foreach ($r as $p => $d)
+				if ($d != '') $rule .= $p . ": " . $d . "; ";
 			if ($rule) fwrite($fp, $s . "\t{ " . $rule . "}\n");
 		}
 		fclose($fp) or die("Cannot close the CSS file");
 	}
-} elseif (isset($delete)) {
-	if (isset($css)) {
+} elseif (isset($delete))
+{
+	if (isset($css))
+	{
 		unset($css[$sel]);
 		touch($filename);
 		chmod($filename, 0666);
-		$fp = fopen($filename, "w") or die("Cannot write to CSS file");
-		while (list($s, $r) = each ($css)) {
+		$fp = fopen($filename, 'w') or die("Cannot write to CSS file");
+		foreach ($css as $s => $r)
+		{
 			$rule = '';
-			while (list($p, $d) = each($r))
-			if ($d != '') $rule .= $p . ": " . $d . "; ";
+			foreach ($r as $p => $d)
+				if ($d != '') $rule .= $p . ": " . $d . "; ";
 			if ($rule) fwrite($fp, $s . "\t{ " . $rule . "}\n");
 		}
 		fclose($fp) or die("Cannot close the CSS file");
 	}
 }
 
-if (isset($delete)) {
+if (isset($delete))
+{
 	header("Location: editstylesheet.php?thepage=" . rawurlencode($thepage) . "&thestyle=" . rawurlencode($thestyle));
 	die();
 }
-if (isset($save) || isset($cancel)) {
+if (isset($save) || isset($cancel))
+{
 	header("Location: admin/$from");
 	exit;
 }
@@ -119,8 +138,10 @@ function cleanup()
 {
 	$dp = opendir('./css');
 	$old = strtotime("-3 days");
-	while (($file = readdir($dp)) !== false) {
-		if ($file != "." && $file != "..") {
+	while (($file = readdir($dp)) !== false)
+	{
+		if ($file != "." && $file != "..")
+		{
 			$file = "./css/$file";
 			if (filemtime($file) < $old) unlink($file);
 		}
@@ -142,7 +163,8 @@ function selectorsort($a, $b)
 	$psb = @eregi(':', $b);
 	if ($psa && !$psb) return + 1;
 	elseif (!$psa && $psb) return - 1;
-	elseif ($psa && $psb) {
+	elseif ($psa && $psb)
+	{
 		$psa = @eregi('.*(:[^ ]*).*', $a, $ra);
 		$psb = @eregi('.*(:[^ ]*).*', $b, $rb);
 		$psa = $pseudoVal[$ra[1]];
@@ -150,7 +172,8 @@ function selectorsort($a, $b)
 		if ($psa > $psb) return - 1;
 		elseif ($psa < $psb) return + 1;
 		else return ($a > $b) ? + 1: - 1;
-	}elseif (@eregi($a, $b)) return - 1;
+	}
+	elseif (@eregi($a, $b)) return - 1;
 	elseif (@eregi($b, $a)) return + 1;
 	else return ($a > $b) ? + 1: - 1;
 }
@@ -205,8 +228,10 @@ function objGet(o) {
 	</tr>
 </TABLE>
 <?php
-if (!empty($font)) {
-	switch ($font) {
+if (!empty($font))
+{
+	switch ($font)
+	{
 		case 'standard': $TLT = 'Edit Font Properties: Standard Font';
 			break;
 		case 'error': $TLT = 'Edit Font Properties: Error Font';
@@ -220,8 +245,11 @@ if (!empty($font)) {
 		case 'footer': $TLT = 'Edit Font Properties: Footer Font';
 			break;
 	}
-} elseif (!empty($color)) {
-	switch ($color) {
+}
+elseif (!empty($color))
+{
+	switch ($color)
+	{
 		case 'border': $TLT = 'Edit Color Properties: Border Color';
 			break;
 		case 'tittable': $TLT = 'Edit Color Properties: Table Header';
@@ -237,8 +265,11 @@ if (!empty($font)) {
 		case 'container': $TLT = 'Edit Color Properties: Container Background';
 			break;
 	}
-} elseif (!empty($image)) {
-	switch ($image) {
+}
+elseif (!empty($image))
+{
+	switch ($image)
+	{
 		case 'background': $TLT = 'Edit Background Image Properties';
 			break;
 	}
@@ -254,28 +285,32 @@ echo "<hr />\n";
 include('csssyntax.inc');
 
 $pn = 0;
-while (list($grp, $propgrp) = each($PropGroups)) {
+foreach ($PropGroups as $grp => $propgrp)
+{
 	if (($from == 'fonts.php' && ($grp == 'Font properties' || $grp == 'Color properties')) ||
-			($from == 'colors.php' && $grp == 'Box properties' && ($color == 'border')) ||
-			($from == 'homepage.php' && $grp == 'Box properties' && ($image == 'background')) ||
-			($from == 'colors.php' && $grp == 'Color properties' && ($color == 'tittable' || $color == 'hg' || $color == 'a:link' || $color == 'a:visited' || $color == 'body' || $color == 'container'))) {
+		($from == 'colors.php' && $grp == 'Box properties' && ($color == 'border')) ||
+		($from == 'homepage.php' && $grp == 'Box properties' && ($image == 'background')) ||
+		($from == 'colors.php' && $grp == 'Color properties' && ($color == 'tittable' || $color == 'hg' || $color == 'a:link' || $color == 'a:visited' || $color == 'body' || $color == 'container')))
+	{
 		echo "<h3>$grp:</h3>\n";
 		echo "<p style='white-space:nowrap'>";
 
-		while (list(, $prop) = each($propgrp)) {
+		foreach ($propgrp as $prop)
+		{
 			if (($color == 'border' && $grp == 'Box properties' && $prop->name == 'border-color') ||
-					($color == 'tittable' && $grp == 'Color properties' && $prop->name == 'background-color') ||
-					($color == 'hg' && $grp == 'Color properties' && $prop->name == 'background-color') ||
-					($color == 'a:link' && $grp == 'Color properties' && $prop->name == 'color') ||
-					($color == 'a:visited' && $grp == 'Color properties' && $prop->name == 'color') ||
-					($color == 'body' && $grp == 'Color properties' && $prop->name == 'background-color') ||
-					($color == 'container' && $grp == 'Color properties' && $prop->name == 'background-color') ||
-					($font == 'standard' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
-					($font == 'error' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
-					($font == 'title' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
-					($font == 'navigation' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
-					($font == 'footer' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
-					($image == 'background' && $grp == 'Box properties' && ($prop->name == 'background-image' || $prop->name == 'background-repeat'))) {
+				($color == 'tittable' && $grp == 'Color properties' && $prop->name == 'background-color') ||
+				($color == 'hg' && $grp == 'Color properties' && $prop->name == 'background-color') ||
+				($color == 'a:link' && $grp == 'Color properties' && $prop->name == 'color') ||
+				($color == 'a:visited' && $grp == 'Color properties' && $prop->name == 'color') ||
+				($color == 'body' && $grp == 'Color properties' && $prop->name == 'background-color') ||
+				($color == 'container' && $grp == 'Color properties' && $prop->name == 'background-color') ||
+				($font == 'standard' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
+				($font == 'error' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
+				($font == 'title' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
+				($font == 'navigation' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
+				($font == 'footer' && ($grp == 'Color properties' || $grp == 'Font properties')) ||
+				($image == 'background' && $grp == 'Box properties' && ($prop->name == 'background-image' || $prop->name == 'background-repeat')))
+			{
 				echo "<strong>$prop->name: </strong>";
 				$pn++;
 				$found = false;
@@ -284,9 +319,11 @@ while (list($grp, $propgrp) = each($PropGroups)) {
 
 				echo "<select name='newruleslist[$prop->name]' onchange='objGet(\"proptext$pn\").style.display=(this.value==\":other:\")?\"inline\":\"none\";'>\n";
 				$vals = $prop->getValueList();
-				while (list(, $pd) = each($vals)) {
+				foreach ($vals as $pd)
+				{
 					echo "<option";
-					if ($css[$sel][$prop->name] == $pd) {
+					if ($css[$sel][$prop->name] == $pd)
+					{
 						echo " selected='selected'";
 						$found = true;
 					}
@@ -297,7 +334,8 @@ while (list($grp, $propgrp) = each($PropGroups)) {
 				if (!$found && !$isDefined) echo " selected='selected'";
 				echo ">* default (" . $prop->getDefValue() . ") </option>\n";
 				echo "<option value=':other:'";
-				if (!$found && $isDefined) {
+				if (!$found && $isDefined)
+				{
 					echo " selected='selected'";
 					$hideInput = false;
 				}

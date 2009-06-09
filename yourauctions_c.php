@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Delete auction
 	if (is_array($_POST['delete']))
 	{
-		while (list($k, $v) = each($_POST['delete']))
+		foreach ($_POST['delete'] as $k => $v)
 		{
 			$v = intval($v);
 			// Pictures Gallery
@@ -71,7 +71,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	if (is_array($_POST['sell']))
 	{
-		while (list($k, $v) = each($sell))
+		foreach ($sell as $k => $v)
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET sold = 's' WHERE id = " . intval($k);
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -82,7 +82,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if (is_array($_POST['relist']))
 	{
 		unset($RELISTED_TITLE);
-		while (list($k, $v) = each($_POST['relist']))
+		foreach ($_POST['relist'] as $k => $v)
 		{
 			$k = intval($k);
 			$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . $k;

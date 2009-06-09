@@ -96,7 +96,7 @@ while ($year = mysql_fetch_array($res))
 	  <?php
 	  if (is_array($YEARS))
 	  {
-	  	while (list($k,$v) = each($YEARS))
+		foreach ($YEARS as $k => $v)
 	  	{
 		?>
 			<tr bgcolor=yellow>
@@ -105,7 +105,7 @@ while ($year = mysql_fetch_array($res))
 				</td>
 			</tr>
 			<?php
-			while (list($t,$z) = each($v))
+			foreach ($v as $t => $z)
 			{
 			?>
 			<tr bgcolor=#eeeeee>

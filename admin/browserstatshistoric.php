@@ -89,7 +89,7 @@ include 'loggedin.inc.php';
 	  <?php
 	  	if (is_array($YEARS))
 		{
-			while (list($k,$v) = each($YEARS))
+			foreach ($YEARS as $k => $v)
 			{
 		?>
 			<tr bgcolor=yellow>
@@ -98,7 +98,7 @@ include 'loggedin.inc.php';
 				</td>
 			</tr>
 			<?php
-				while (list($t,$z) = each($v))
+				foreach ($v as $t => $z)
 				{
 			?>
 			<tr bgcolor=#eeeeee>

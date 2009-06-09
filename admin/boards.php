@@ -25,7 +25,7 @@ unset($ERR);
 #// Delete boards
 if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
-	while (list($k,$v) = each($_POST['delete']))
+	foreach ($_POST['delete'] as $k => $v)
 	{
 		$query = "DELETE FROM " . $DBPrefix . "community WHERE id='$v'";
 		$r = mysql_query($query);

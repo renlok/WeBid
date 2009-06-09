@@ -49,7 +49,7 @@ else
 	$qp = " (cat_name LIKE '%" . addslashes($qquery) . "%') ";
 
 	$addOR = true;
-	while (list(, $val) = each($search_words))
+	foreach ($search_words as $val)
 	{
 		$val = ereg_replace("%", "\\%", $val);
 		$val = ereg_replace("_", "\\_", $val);

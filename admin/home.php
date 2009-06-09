@@ -92,8 +92,7 @@ if (isset($_GET['action']))
 	}
 }
 
-while (list($k,$v) = each($LANGUAGES))
-{
+foreach ($LANGUAGES as $k => $v){
 	$template->assign_block_vars('langs', array(
 			'LANG' => $v,
 			'B_DEFAULT' => ($k == $system->SETTINGS['defaultlanguage'])

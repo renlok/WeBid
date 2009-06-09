@@ -32,7 +32,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 	if (is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
 	{
 		$removed = 0;
-		while (list($k, $v) = each($_POST['O_delete']))
+		foreach ($_POST['O_delete'] as $k => $v)
 		{
 			$v = intval($v);
 			// Pictures Gallery
@@ -68,7 +68,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 
 	if (is_array($_POST['startnow']))
 	{
-		while (list($k, $v) = each($_POST['startnow']))
+		foreach ($_POST['startnow'] as $k => $v)
 		{
 			// Update end time to "now"
 			$query = "UPDATE " . $DBPrefix . "auctions SET starts = '" . $NOW . "' WHERE id = " . intval($v);

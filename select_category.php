@@ -185,8 +185,10 @@ if ($_POST['box'] > 0) {
     }
 }
 
-if (is_array($DONTSUBMIT)) {
-    while (list($k, $v) = each($DONTSUBMIT)) {
+if (is_array($DONTSUBMIT))
+{
+	foreach ($DONTSUBMIT as $k => $v)
+	{
         $template->assign_block_vars('dontsubmit', array(
                 'V' => $v,
                 'K' => $k
@@ -203,7 +205,8 @@ for ($i = 0; $i < 8; $i++) {
                 'I' => $i,
                 'I2' => $i + 1
                 ));
-        while (list($k, $v) = each($$catto)) {
+		foreach ($$catto as $k => $v)
+		{
             $template->assign_block_vars('boxes.cats', array(
                     'K' => $k,
                     'CATNAME' => $v,

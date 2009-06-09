@@ -947,10 +947,6 @@ $MSG['5147'] = "Generate domain name access statistics<br>
 $MSG['5148'] = "Statistics Settings Updated.";
 $MSG['5149'] = "Activate Statistics?";
 $MSG['5150'] = "Select which type of statistics you want to generate";
-$MSG['5151'] = "WeBid recognises the following:&nbsp;&nbsp;";
-$MSG['5152'] = '<a href="ST_browsers.html" alt="ST_browsers" class="new-window">Browsers</a>';
-$MSG['5153'] = '<a href="ST_platforms.html" alt="ST_platforms" class="new-window">Platforms</a>';
-$MSG['5154'] = '<a href="ST_countries.php" alt="ST_domains" class="new-window">Domains</a>';
 $MSG['5155'] = "Browsers";
 $MSG['5156'] = "Platforms";
 $MSG['5157'] = "Domains";

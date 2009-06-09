@@ -46,9 +46,10 @@ function get_increment($bid)
 {
 	global $system, $DBPrefix;
 	
+	$val = $system->input_money($bid);
 	$query = "SELECT increment FROM " . $DBPrefix . "increments 
-			WHERE ((low <= " . $bid . " AND high >= " . $bid . ")
-			OR (low < " . $bid . " AND high < " . $bid . ")) ORDER BY increment DESC";
+			WHERE ((low <= " . $val . " AND high >= " . $val . ")
+			OR (low < " . $val . " AND high < " . $val . ")) ORDER BY increment DESC";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$increment = mysql_result($res, 0, 'increment');
@@ -58,7 +59,7 @@ function get_increment($bid)
 function extend_auction($id, $ends)
 {
 	global $system, $DBPrefix;
-	
+
 	if ($system->SETTINGS['ae_status'] == 'enabled' && ($ends - $system->SETTINGS['ae_timebefore']) < time())
 	{
 		$query = "UPDATE FROM " . $DBPrefix . "auctions SET ends = ends + " . $system->SETTINGS['ae_extend'] . " WHERE id = " . $id;

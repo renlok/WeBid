@@ -146,15 +146,15 @@ class global_class
 		elseif ($this->SETTINGS['moneyformat'] == 2)
 		{
 			// Drop thousands separator
-			$str = ereg_replace('\.', '', $str);
-			
+			$str = str_replace('\.', '', $str);
+
 			// Change decimals separator
-			$str = ereg_replace(',', '.', $str);
+			$str = str_replace(',', '.', $str);
 		}
 		
 		return $str;
 	}
-	
+
 	function CheckMoney($amount)
 	{
 		if ($this->SETTINGS['moneyformat'] == 1)
@@ -169,7 +169,7 @@ class global_class
 		}
 		return true;
 	}
-	
+
 	function print_money($str, $link = true)
 	{
 		$a = ($this->SETTINGS['moneyformat'] == 1) ? '.' : ',';
@@ -182,7 +182,7 @@ class global_class
 		{
 			$currency = $this->SETTINGS['currency'];
 		}
-		
+
 		if ($this->SETTINGS['moneysymbol'] == 2) // Symbol on the right
 		{
 			return '<b>' . number_format($str, $this->SETTINGS['moneydecimals'], $a, $b) . '</b> ' . $currency;
@@ -192,7 +192,7 @@ class global_class
 			return $currency . ' ' . '<b>' . number_format($str,$this->SETTINGS['moneydecimals'], $a, $b) . '</b>';
 		}
 	}
-	
+
 	function print_money_nosymbol($str)
 	{
 		$a = ($this->SETTINGS['moneyformat'] == 1) ? '.' : ',';

@@ -54,8 +54,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['553'];
 	}
-	$system->SETTINGS = $_POST;
 	$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
+	$system->SETTINGS = $_POST;
 }
 
 $OTHERCURRENCIES = array();

@@ -78,8 +78,8 @@ if (isset($_POST['action']) && $_POST['action'] == "insert") {
 						  0,
 						  0,
 						  '".$_POST['url']."',
-						  '".$_POST['sponsortext']."',
-						  '".$_POST['alt']."',
+						  '".mysql_real_escape_string($_POST['sponsortext'])."',
+						  '".mysql_real_escape_string($_POST['alt'])."',
 						  ".intval($_POST['purchased']).",
 						  $imagewidth,
 						  $imageheight,
@@ -91,17 +91,17 @@ if (isset($_POST['action']) && $_POST['action'] == "insert") {
 				#// Handle filters
 				if (is_array($_POST['categories'])) {
 					while (list($k,$v) = each($_POST['categories'])) {
-						$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES ($ID,$v)";
+						$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES ($ID," . $system->cleanvars($v) . ")";
 						$res = mysql_query($query);
 						$system->check_mysql($res, $query, __LINE__, __FILE__);
 					}
 				}
 				if (!empty($_POST['keywords'])) {
-					$KEYWORDS = explode("\n",$_POST['keywords']);
+					$KEYWORDS = explode("\n", $_POST['keywords']);
 					
 					while (list($k,$v) = each($KEYWORDS)) {
 						if (!empty($v)) {
-							$query = "INSERT INTO " . $DBPrefix . "bannerskeywords VALUES ($ID,'".chop($v)."')";
+							$query = "INSERT INTO " . $DBPrefix . "bannerskeywords VALUES ($ID,'".$system->cleanvars(chop($v))."')";
 							$res = mysql_query($query);
 							$system->check_mysql($res, $query, __LINE__, __FILE__);
 						}

@@ -18,52 +18,47 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == "update")
+if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (!empty($_POST['ip']))
 	{
-		$query = "INSERT INTO " . $DBPrefix . "usersips VALUES(
-					  NULL,
-					  'NOUSER',
-					  '".$_POST['ip']."',
-					  'next',
-					  'deny')";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
+				(NULL, 'NOUSER',  '" . $_POST['ip'] . "', 'next',  'deny')";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
-	
 	if (is_array($_POST['delete']))
 	{
-		while (list($k,$v) = each($_POST['delete']))
+		foreach ($_POST['delete'] as $k => $v)
 		{
-			@mysql_query("DELETE FROM " . $DBPrefix . "usersips WHERE id=$k");
+			$query = "DELETE FROM " . $DBPrefix . "usersips WHERE id = " . intval($k);
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}
 	if (is_array($_POST['accept']))
 	{
-		while (list($k,$v) = each($_POST['accept']))
+		foreach ($_POST['accept'] as $k => $v)
 		{
-			@mysql_query("UPDATE " . $DBPrefix . "usersips SET action='accept' WHERE id=$k");
+			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'accept' WHERE id = " . intval($k);
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}
 	if (is_array($_POST['deny']))
 	{
-		while (list($k,$v) = each($_POST['deny']))
+		foreach ($_POST['deny'] as $k => $v)
 		{
-			@mysql_query("UPDATE " . $DBPrefix . "usersips SET action='deny' WHERE id=$k");
+			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'deny' WHER id = " . intval($k);
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "usersips WHERE user='NOUSER'";
+$query = "SELECT * FROM " . $DBPrefix . "usersips WHERE user = 'NOUSER'";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0)
+$NEXT = array();
+while ($row = mysql_fetch_array($res))
 {
-	while ($row = mysql_fetch_array($res))
-	{
-		$NEXT[$row['id']] = $row;
-	}
+	$NEXT[$row['id']] = $row;
 }
 ?>
 <html>

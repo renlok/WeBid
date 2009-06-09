@@ -17,36 +17,33 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == "update")
+if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (empty($_POST['sizetype']))
 	{
 		$ERR = $ERR_047;
-		$system->SETTINGS = $_POST;
 	}
 	elseif ($_POST['sizetype'] == 'fix' && (empty($_POST['width'] ) || empty($_POST['height'])))
 	{
 		$ERR = $ERR_047;
-		$system->SETTINGS = $_POST;
 	}
 	elseif ($_POST['sizetype'] == 'fix' && (!ereg("^[0-9]+$",$_POST['width']) || !ereg("^[0-9]+$",$_POST['height'])))
 	{
 		$ERR = $MSG['_0020'];
-		$system->SETTINGS = $_POST;
 	}
 	else
 	{
-		#// Update database
-		$query = "UPDATE " . $DBPrefix . "bannerssettings
-					  SET
-					  sizetype='$_POST[sizetype]',
-					  width=".intval($_POST['width']).",
-					  height=".intval($_POST['height']);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		// Update database
+		$query = "UPDATE " . $DBPrefix . "bannerssettings SET
+				sizetype = '" . $_POST['sizetype'] . "',
+				width = " . intval($_POST['width']) . ",
+				height = " . intval($_POST['height']);
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['600'];
-		$system->SETTINGS = $_POST;
 	}
+	$system->SETTINGS['sizetype'] = $_POST['sizetype'];
+	$system->SETTINGS['width'] = $_POST['width'];
+	$system->SETTINGS['height'] = $_POST['height'];
 }
 else
 {

@@ -17,12 +17,16 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
-	if (is_dir($main_path.'cache')){
-		$dir = opendir($main_path.'cache');
-		while (($myfile = readdir($dir)) !== false){
-			if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php'){
-				unlink($main_path.'cache/'.$myfile);
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	if (is_dir($main_path . 'cache'))
+	{
+		$dir = opendir($main_path . 'cache');
+		while (($myfile = readdir($dir)) !== false)
+		{
+			if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php')
+			{
+				unlink($main_path . 'cache/' . $myfile);
 			}
 		}
 		closedir($dir);

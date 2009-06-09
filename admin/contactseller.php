@@ -19,7 +19,8 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	$query = "UPDATE " . $DBPrefix . "settings SET contactseller = '" . $_POST['contactseller'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['contactseller'] = $_POST['contactseller'];

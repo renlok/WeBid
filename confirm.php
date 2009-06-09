@@ -82,7 +82,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 		if (mysql_num_rows($res) == 0)
 		{
 			$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-					(NULL, '" . $_SESSION['WEBID_LOGGED_IN'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
+					(NULL, '" . $_SESSION['WEBID_LOGGED_IN'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after', 'accept')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}

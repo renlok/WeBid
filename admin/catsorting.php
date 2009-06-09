@@ -19,7 +19,8 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	$query = " UPDATE " . $DBPrefix . "settings SET
 			   catsorting = '" . $_POST['catsorting'] . "',
 			   catstoshow = '" . intval($_POST['catstoshow']) . "'";

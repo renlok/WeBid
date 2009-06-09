@@ -20,15 +20,8 @@ include $include_path . 'fonts.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
-	if (!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none") {
-		$TARGET = $upload_path.$_FILES['logo']['name'];
-		move_uploaded_file($_FILES['logo']['tmp_name'],$TARGET);
-		chmod($TARGET,0666);
-		
-		$LOGOUPLOADED = trUE;
-	}
-	
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			newsletter = " . intval($_POST['newsletter']);
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

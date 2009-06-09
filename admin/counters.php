@@ -19,7 +19,8 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	if ($_POST['auctions'] != 'y') $_POST['auctions'] = 'n';
 	if ($_POST['users'] != 'y') $_POST['users'] = 'n';
 	if ($_POST['online'] != 'y') $_POST['online'] = 'n';

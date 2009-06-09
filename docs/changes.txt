@@ -4,7 +4,7 @@
 - Reorganised the admin homepage so it shows more useful information
 - Renamed config.inc.php and data.inc.php to common.inc.php and config.inc.php
 - Made the user login much more secure
-- Fixed the suspent/activate user admin page
+- Fixed the suspend/activate user admin page
 - Made some security fixes on the image upload page
 - Fixed the admin stats page so when you set to not tracking stats you dont have to have any stats selected
 - Fixed the ip bans so it no longer loops infinatly when your banned
@@ -40,5 +40,7 @@
 - Fixed the edit page so you can no loner make auctions end in the past
 - Added a robot.txt file
 - Fixed gallery upload when the extionsions are in uppercase (Bug #18)
+- Fixed the bug where an error is displayed if you input a number with a comma decimal seperator
+- Fixed a bug in auctions_active.tpl where buy it now is not displayed
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -17,25 +17,16 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if ($_POST['action'] == "update")
+if ($_POST['action'] == 'update')
 {
-	#// Update database
+	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings set
-			  boards='$_POST[boards]',
-			  boardslink='$_POST[boardslink]'";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+			boards = '" . $_POST['boards'] . "',
+			boardslink = '" . $_POST['boardslink'] . "'";
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$ERR = $MSG['5051'];
-	$SETTINGS = $_POST;
-}
-
-#//
-$query = "SELECT boards,boardslink FROM " . $DBPrefix . "settings";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0)
-{
-	$SETTINGS = mysql_fetch_array($res);
+	$system->SETTINGS['boards'] = $_POST['boards'];
+	$system->SETTINGS['boardslink'] = $_POST['boardslink'];
 }
 ?>
 <html>
@@ -89,9 +80,9 @@ if (mysql_num_rows($res) > 0)
 					  <?php echo $MSG['5048']; ?>
 					  </FONT></td>
 					<td width="437" height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  <input type="radio" name="boards" value="y" <?if ($SETTINGS[boards] == "y") print " CHECKED"?>>
+					  <input type="radio" name="boards" value="y" <?if ($system->SETTINGS[boards] == "y") print " CHECKED"?>>
 					  <?php print $MSG['030']; ?>
-					  <input type="radio" name="boards" value="n" <?if ($SETTINGS[boards] == "n") print " CHECKED"?>>
+					  <input type="radio" name="boards" value="n" <?if ($system->SETTINGS[boards] == "n") print " CHECKED"?>>
 					  <?php print $MSG['029']; ?>
 					  </FONT></td>
 				  </tr>
@@ -105,9 +96,9 @@ if (mysql_num_rows($res) > 0)
 					  <?php echo $MSG['5049']; ?>
 					  </FONT></td>
 					<td width="437" height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  <input type="radio" name="boardslink" value="y" <?if ($SETTINGS[boardslink] == "y") print " CHECKED"?>>
+					  <input type="radio" name="boardslink" value="y" <?if ($system->SETTINGS[boardslink] == "y") print " CHECKED"?>>
 					  <?php print $MSG['030']; ?>
-					  <input type="radio" name="boardslink" value="n" <?if ($SETTINGS[boardslink] == "n") print " CHECKED"?>>
+					  <input type="radio" name="boardslink" value="n" <?if ($system->SETTINGS[boardslink] == "n") print " CHECKED"?>>
 					  <?php print $MSG['029']; ?>
 					  <BR><?php echo $MSG['5050']; ?>
 					  </FONT></td>

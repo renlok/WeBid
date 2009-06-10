@@ -25,6 +25,7 @@ $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyout_f
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `timecorrection` int(3) NOT NULL default '0';";
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `emailtype` enum('html','text') NOT NULL default 'text';";
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `paypal_email` varchar(255) default NULL";
+$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `language` char(2) NOT NULL default ''";
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `fees` enum('y','n') NOT NULL default 'n';";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "counters`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
@@ -42,6 +43,7 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD `left_id` INT(8) NOT N
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `cookiesprefix`, ADD `copyright` varchar(255) NOT NULL default '' AFTER `siteurl`,
 			ADD `privacypolicy` enum('y','n') NOT NULL default 'y' AFTER `termstext`, ADD `privacypolicytext` text NOT NULL AFTER `privacypolicy`,
 			ADD `ae_status` enum('enabled','disabled') NOT NULL default 'disabled', ADD `ae_timebefore` int(11) NOT NULL default '120', ADD `ae_extend` int(11) NOT NULL default '300'";
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userslanguage`;";
 
 //0.7.2 to 0.7.3
 /*

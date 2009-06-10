@@ -222,7 +222,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				}
 				$hash = get_hash();
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter,email, reg_date, rate_sum,  rate_num, birthdate, suspended, accounttype)
+						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter,email, reg_date, rate_sum,  rate_num, birthdate, suspended, accounttype, language)
 						VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
 						'" . md5($MD5_PREFIX . $TPL_password_hidden) . "',
 						'" . $hash . "',
@@ -238,7 +238,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $TODAY . "', 0, 0,
 						'" . $DATE . "',
 						'" . $SUSPENDED . "',
-						'" . $selected_accounttype . "')";
+						'" . $selected_accounttype . "',
+						'" . $language . "')";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$TPL_id_hidden = mysql_insert_id();
 				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES(
@@ -249,8 +250,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				$_SESSION['language'] = $language;
-				$query = "INSERT INTO " . $DBPrefix . "userslanguage VALUES ('" . $TPL_id_hidden . "', '$language')";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			}
 		}
 	}

@@ -54,7 +54,7 @@ class global_class
 		$result = mysql_query($query);
 		$this->check_mysql($result, $query, __LINE__, __FILE__);
 		$FONTSANDCOLORS = mysql_fetch_array($result);
-		while (list($k,$v) = each($FONTSANDCOLORS))
+		foreach ($FONTSANDCOLORS as $k => $v)
 		{
 			$this->SETTINGS[$k] = $v;
 		}

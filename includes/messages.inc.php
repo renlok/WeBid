@@ -15,61 +15,30 @@
 if (!defined('InWeBid')) exit();
 
 // Language management
-
-$lan = (isset($_GET['lan'])) ? $_GET['lan'] : '';
-if (!empty($_GET['lan']))
+if (isset($_GET['lan']) && !empty($_GET['lan']))
 {
-	$language = $lan;
-	$_SESSION['language'] = $language;
-	
-	// Set language cookie
-	setcookie('USERLANGUAGE', '');
-	setcookie('USERLANGUAGE', $_GET['lan'], time() + 31536000, '/');
-}
-elseif (isset($_SESSION['language']))
-{
-	$language = $_SESSION['language'];
-}
-elseif (empty($_SESSION['language']) && !isset($_COOKIE['USERLANGUAGE']))
-{
-	$language = $system->SETTINGS['defaultlanguage'];
-	$_SESSION['language'] = $language;
-	
-	// Set language cookie
-	setcookie('USERLANGUAGE', '');
-	setcookie('USERLANGUAGE', $language, time() + 31536000);
-}
-elseif (empty($lan))
-{
-	if (isset($_COOKIE['USERLANGUAGE']))
+	if ($user->logged_in)
 	{
-		$language = $_COOKIE['USERLANGUAGE'];
+		$query = "UPDATE " . $DBPrefix . "users SET language = '" . $_GET['lan'] . "' WHERE id = " . $user->user_data['id'];
 	}
 	else
 	{
-		$language = $system->SETTINGS['defaultlanguage'];
+		// Set language cookie
+		setcookie('USERLANGUAGE', $_GET['lan'], time() + 31536000, '/');
 	}
+	$language = $_GET['lan'];
+}
+elseif ($user->logged_in)
+{
+	$language = $user->user_data['language'];
 }
 elseif (isset($_COOKIE['USERLANGUAGE']))
 {
 	$language = $_COOKIE['USERLANGUAGE'];
 }
-elseif (strlen($lan) > 2)
-{
-	$language = $system->SETTINGS['defaultlanguage'];
-}
 else
 {
 	$language = $system->SETTINGS['defaultlanguage'];
-} 
-
-$language = str_replace('..','',addslashes(htmlspecialchars($language)));
-// If the user is logged in, update the user's record
-// This is used to send the e-mails in the user's language
-if (isset($_SESSION['WEBID_LOGGED_IN']))
-{
-	mysql_query("DELETE FROM " . $DBPrefix . "userslanguage WHERE user='".$_SESSION['WEBID_LOGGED_IN']."'");
-	mysql_query("INSERT INTO " . $DBPrefix . "userslanguage VALUES('".$_SESSION['WEBID_LOGGED_IN']."', '$language')");
 }
 
 if (!isset($language) || empty($language)) $language = $system->SETTINGS['defaultlanguage'];

@@ -14,7 +14,6 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include $include_path . 'messages.inc.php';
 
 if ($system->SETTINGS['boards'] == 'n')
 {

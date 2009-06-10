@@ -132,7 +132,8 @@ if (mysql_num_rows($res) > 0)
 					<td><B><?php echo $MSG['284']; ?></B></td>
 				</tr>
 			<?php
-				while (list($k,$v) = each($WINNERS)){
+				foreach ($WINNERS as $k => $v)
+				{
 					$qty = @mysql_result(@mysql_query("SELECT quantity FROM " . $DBPrefix . "bids WHERE bidder=".$v['winner']." AND auction=".intval($_GET['id'])),0,"quantity");
 					$BIDDER = @mysql_fetch_array(@mysql_query("SELECT name,nick FROM " . $DBPrefix . "users WHERE id=".$v['winner']));
 			?>
@@ -167,7 +168,8 @@ if (mysql_num_rows($res) > 0)
 					<td><B><?php echo $MSG['284']; ?></B></td>
 				</tr>
 			<?php
-				while (list($k,$v) = each($BIDS)){
+				foreach ($BIDS as $k => $v)
+				{
 					$qty = @mysql_result(@mysql_query("SELECT quantity FROM " . $DBPrefix . "bids WHERE bidder=".$v['bidder']." AND auction=".intval($_GET['id'])),0,"quantity");
 					$BIDDER = @mysql_fetch_array(@mysql_query("SELECT name,nick FROM " . $DBPrefix . "users WHERE id=".$v['bidder']));
 			?>

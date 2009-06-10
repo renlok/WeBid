@@ -1625,6 +1625,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `bn_only` enum('y','n') NOT NULL default 'y',
   `timecorrection` int(3) NOT NULL default '0',
   `paypal_email` varchar(255) default NULL,
+  `language` char(2) NOT NULL default '',
   PRIMARY KEY  (`id`)
 );";
 
@@ -1670,22 +1671,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "usersips` (
 
 # 
 # Dumping data for table `" . $DBPrefix . "usersips`
-# 
-
-# ############################
-
-# 
-# Table structure for table `" . $DBPrefix . "userslanguage`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userslanguage`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "userslanguage` (
-  `user` int(32) NOT NULL default '0',
-  `language` char(2) NOT NULL default ''
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "userslanguage`
 # 
 
 # ############################

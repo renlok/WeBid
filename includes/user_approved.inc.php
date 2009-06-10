@@ -14,15 +14,6 @@
 
 if (!defined('InWeBid')) exit();
 
-if (isset($_COOKIE['USERLANGUAGE']))
-{
-	$USERLANG = $_COOKIE['USERLANGUAGE'];
-}
-else
-{
-	$USERLANG = $language;
-}
-
 $emailer = new email_class();
 $emailer->assign_vars(array(
 		'SITE_URL' => $system->SETTINGS['siteurl'],
@@ -30,6 +21,6 @@ $emailer->assign_vars(array(
 		
 		'C_NAME' => $USER['name']
 		));
-$emailer->userlang = $USERLANG;
+$emailer->userlang = $language;
 $emailer->email_sender(array($USER['email'], $system->SETTINGS['adminmail']), 'user_approved.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['095']);
 ?>

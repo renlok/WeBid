@@ -43,27 +43,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
 # ############################
 
 # 
-# Table structure for table `" . $DBPrefix . "altpayments`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "altpayments`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "altpayments` (
-  `id` int(11) NOT NULL auto_increment,
-  `title` varchar(255) NOT NULL default '',
-  `description` text NOT NULL,
-  PRIMARY KEY  (`id`)
-) AUTO_INCREMENT=4 ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "altpayments`
-# 
-
-$query[] = "INSERT INTO `" . $DBPrefix . "altpayments` VALUES (2, 'Bank Transfer', 'Test Bank\r<BR>123 Worthwood Road\r<BR>Miami USA');";
-$query[] = "INSERT INTO `" . $DBPrefix . "altpayments` VALUES (3, 'Money Order', 'TEst text for\r\nMoney order');";
-
-# ############################
-
-# 
 # Table structure for table `" . $DBPrefix . "auccounter`
 # 
 

@@ -1,3 +1,25 @@
+<!-- IF B_COUNTDOWN -->
+<script type="text/javascript">
+$(document).ready(function() {
+	var currenttime = '{ENDS_IN}';
+	function padlength(what)
+	{
+		var output=(what.toString().length == 1)? '0' + what : what;
+		return output;
+	}
+	function displaytime()
+	{
+		currenttime -= 1;
+		var hours = currenttime / 3600;
+		var mins = (currenttime - (hours * 3600)) / 60;
+		var secs = currenttime - (hours * 3600) - (mins * 60);
+		var timestring = padlength(Math.Round(hours)) + ':' + padlength(Math.Round(mins)) + ':' + padlength(Math.Round(secs));
+		$("#ending_counter").html(timestring);
+	}
+	setInterval(displaytime, 1000);
+});
+</script>
+<!-- ENDIF -->
 <div class="content">
 	<div class="tableContent2">
 	 <br><b>{L_041}:</b> {CATSPATH}<br><br>
@@ -98,7 +120,13 @@
 						</tr>
 						<tr>
 						  <td width="50%" align="left">{L_118}: </td>
-						  <td align="left" style="height: 45px;" valign="top">{ENDS}<br><span class="smallspan">({ENDTIME})</span></td>
+						  <td align="left" style="height: 45px;" valign="top">
+<!-- IF B_COUNTDOWN -->
+                          	<span id="ending_counter">{ENDS}</span>
+<!-- ELSE -->
+                          	{ENDS}<br><span class="smallspan">({ENDTIME})</span>
+<!-- ENDIF -->
+                          </td>
 						</tr>
 <!-- IF B_NOTBNONLY -->
 						<tr>

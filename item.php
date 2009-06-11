@@ -407,12 +407,13 @@ $template->assign_vars(array(
 		'ID' => $auction_data['id'],
 		'TITLE' => $auction_data['title'],
 		'AUCTION_DESCRIPTION' => stripslashes($auction_data['description']),
-		'PIC_URL' => $uploaded_path . $id . "/" . $pict_url_plain,
+		'PIC_URL' => $uploaded_path . $id . '/' . $pict_url_plain,
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $system->print_money($auction_data['shipping_cost']),
 		'COUNTRY' => $auction_data['country'],
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
 		'ENDS' => $ending_time,
+		'ENDS_IN' => ($start - $ends),
 		'STARTTIME' => ArrangeDateNoCorrection($start + $system->tdiff),
 		'ENDTIME' => ArrangeDateNoCorrection($ends + $system->tdiff),
 		'BUYNOW1' => $auction_data['buy_now'],
@@ -423,7 +424,7 @@ $template->assign_vars(array(
 		'NEXTBID' => $next_bid,
 		'PNEXTBID' => $next_bidp,
 		'INTERNATIONAL' => ($auction_data['international'] == 1) ? $MSG['033'] : $MSG['043'],
-		'SHIPPING' => ($auction_data['shipping'] == '1') ? $MSG['031'] : $MSG['032'],
+		'SHIPPING' => ($auction_data['shipping'] == 1) ? $MSG['031'] : $MSG['032'],
 		'SHIPPINGTERMS' => nl2br($auction_data['shipping_terms']),
 		'PAYMENTS' => str_replace("\n", ', ', $auction_data['payment']),
 		'AUCTION_VIEWS' => $auction_data['counter'],
@@ -442,8 +443,8 @@ $template->assign_vars(array(
 		'SELLER_TOTALFB' => $total_rate,
 		'SELLER_FBICON' => (!empty($seller_rate_icon) && $seller_rate_icon != 'transparent.gif') ? '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $seller_rate_icon . '" alt="' . $seller_rate_icon . '" class="fbstar">' : '',
 		'SELLER_NUMFB' => $num_feedbacks,
-		'SELLER_FBPOS' => ($num_feedbacks > 0) ? "(" . ceil($fb_pos * 100 / $total_rate) . "%)" : '100%',
-		'SELLER_FBNEG' => ($fb_neg > 0) ? $MSG['5507'] . " (" . ceil($fb_neg * 100 / $total_rate) . "%)" : '0',
+		'SELLER_FBPOS' => ($num_feedbacks > 0) ? '(' . ceil($fb_pos * 100 / $total_rate) . '%)' : '100%',
+		'SELLER_FBNEG' => ($fb_neg > 0) ? $MSG['5507'] . ' (' . ceil($fb_neg * 100 / $total_rate) . '%)' : '0',
 
 		'WATCH_VAR' => $watch_var,
 		'WATCH_STRING' => $watch_string,
@@ -465,7 +466,8 @@ $template->assign_vars(array(
 		'B_BUY_NOW_ONLY' => ($auction_data['bn_only'] == 'y'),
 		'B_USERBID' => $userbid,
 		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user']),
-		'B_HASBUYER' => (count($hbidder_data) > 0)
+		'B_HASBUYER' => (count($hbidder_data) > 0),
+		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($start - $ends) / 3600))
 		));
 
 include 'header.php';

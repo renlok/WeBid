@@ -1535,7 +1535,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `fees` ENUM('y','n') NOT NULL default 'n',
   `ae_status` enum('enabled','disabled') NOT NULL default 'disabled',
   `ae_timebefore` int(11) NOT NULL default '120',
-  `ae_extend` int(11) NOT NULL default '300'
+  `ae_extend` int(11) NOT NULL default '300',
+  `cache_theme` ENUM('y','n') NOT NULL default 'y',
+  `hours_countdown` int(5) NOT NULL default '24'
 );";
 
 # 
@@ -1543,7 +1545,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', 'disabled', 120, 300);";
+('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', 'disabled', 120, 300, 'y', 24);";
 
 
 # ############################

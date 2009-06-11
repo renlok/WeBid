@@ -23,20 +23,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  https = '" . $_POST['https'] . "'";
+			  cache_theme = '" . $_POST['cache_theme'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['https'] = $_POST['https'];
-	$ERR = $MSG['1025'];
+	$system->SETTINGS['cache_theme'] = $_POST['cache_theme'];
+	$ERR = $MSG['728'];
 }
 
-loadblock($MSG['1023'], $MSG['1024'], 'yesno', 'https', $system->SETTINGS['https'], $MSG['030'], $MSG['029']);
+loadblock($MSG['726'], $MSG['727'], 'yesno', 'cache_theme', $system->SETTINGS['cache_theme'], $MSG['030'], $MSG['029']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => 'set',
 		'TYPENAME' => $MSG['5142'],
-		'PAGENAME' => $MSG['1022']	
+		'PAGENAME' => $MSG['725']
 		));
 
 $template->set_filenames(array(

@@ -105,6 +105,7 @@ function SwitchMenu(obj){
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/increments.php" target="content" class="submenulink">{L_128}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/membertypes.php" target="content" class="submenulink">{L_25_0169}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/https.php" target="content" class="submenulink">{L_1022}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/optimisation.php" target="content" class="submenulink">{L_725}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/checkversion.php" target="content" class="submenulink">{L_25_0169a}</a><br><br>
 			<b><FONT COLOR=#666666>{L_276}</FONT></b><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/categories.php" target="content" class="submenulink">{L_078}</a><br>

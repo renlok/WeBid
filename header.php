@@ -98,7 +98,7 @@ $template->assign_vars(array(
 		'EXTRAINC' => $jsfiles,
 		'ACTUALDATE' => ActualDate(),
 		'PAGEALIGN' => $system->SETTINGS['alignment'],
-		'PAGEWIDTH' => $system->SETTINGS['pagewidth'] . (($system->SETTINGS['pagewidthtype'] == 'perc') ? "%" : ''),
+		'PAGEWIDTH' => $system->SETTINGS['pagewidth'] . (($system->SETTINGS['pagewidthtype'] == 'perc') ? '%' : ''),
 		'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : "&nbsp;",
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',
 		'HEADERCOUNTER' => $counters,
@@ -110,7 +110,7 @@ $template->assign_vars(array(
 		'YOURUSERNAME' => ($user->logged_in) ? $user->user_data['nick'] : '',
 
 		'B_CAN_SELL' => (($system->SETTINGS['uniqueseller'] > 0 && $user->user_data['id'] == $system->SETTINGS['uniqueseller']) || $system->SETTINGS['uniqueseller'] == 0),
-		'B_LOGGED_IN' => ($user->logged_in),
+		'B_LOGGED_IN' => $user->logged_in,
 		'B_BOARDS' => ($system->SETTINGS['boards'] == 'y' && $system->SETTINGS['boardslink'] == 'y')
 		));
 

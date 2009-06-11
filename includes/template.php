@@ -199,13 +199,9 @@ class template
 		$this->files_template[$handle] = $system->SETTINGS['theme'];
 
 		$recompile = false;
-		if (!file_exists($filename) || @filesize($filename) === 0)
+		if (!file_exists($filename) || @filesize($filename) === 0 || $system->SETTINGS['cache_theme'] == 'n')
 		{
 			$recompile = true;
-		}
-		else
-		{
-			$recompile = false;
 		}
 
 		// Recompile page if the original template is newer, otherwise load the compiled version

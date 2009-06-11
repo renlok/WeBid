@@ -42,7 +42,8 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD `left_id` INT(8) NOT N
 			ADD `level` INT(1) NOT NULL AFTER `right_id`";
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `cookiesprefix`, ADD `copyright` varchar(255) NOT NULL default '' AFTER `siteurl`,
 			ADD `privacypolicy` enum('y','n') NOT NULL default 'y' AFTER `termstext`, ADD `privacypolicytext` text NOT NULL AFTER `privacypolicy`,
-			ADD `ae_status` enum('enabled','disabled') NOT NULL default 'disabled', ADD `ae_timebefore` int(11) NOT NULL default '120', ADD `ae_extend` int(11) NOT NULL default '300'";
+			ADD `ae_status` enum('enabled','disabled') NOT NULL default 'disabled', ADD `ae_timebefore` int(11) NOT NULL default '120', ADD `ae_extend` int(11) NOT NULL default '300',
+			ADD `cache_theme` enum('y','n') NOT NULL default 'y', ADD `hours_countdown` int(5) NOT NULL default '24'";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userslanguage`;";
 
 //0.7.2 to 0.7.3

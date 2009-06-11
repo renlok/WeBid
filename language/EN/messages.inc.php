@@ -19,7 +19,7 @@ if (!defined('InWeBid')) exit();
 // UTF-8 should work with almost any language
 $CHARSET = "UTF-8";
 // DOCUMENT DIRECTION
-// Change the $DOCDIR variable below according to the document direction neeeded
+// Change the $DOCDIR variable below according to the document direction needed
 // by the language you are using.
 // Possible values are:
 // - ltr (default) - means left-to-right document (almost any language)
@@ -72,7 +72,7 @@ $ERR_039 = "You have already confirmed your registration.";
 $ERR_040 = "You are the winning bidder and cannot place a bid lower than your previous maximum bid.";
 $ERR_041 = "Please, choose a rate between 1 and 5";
 $ERR_042 = "You comment is missing";
-$ERR_043 = "Incorect field format: must be numeric"; //HERE
+$ERR_043 = "Incorrect field format: must be numeric"; //HERE
 $ERR_044 = "Cookies must be enabled to login.";
 $ERR_045 = "No closed auctions for this user.";
 $ERR_046 = "No active auctions for this user.";
@@ -158,7 +158,7 @@ $ERR_710 = "Wrong file type. Allowed types are: GIF, PNG and JPEG";
 $ERR_711 = "You cannot buy, you are the seller!";
 $ERR_712 = "<b>Buy It Now</b> is not available for this auction";
 $ERR_713 = "Sorry, you are suspended by the administrator.";
-$ERR_714 = "You have not accivated your account yet";
+$ERR_714 = "You have not activated your account yet";
 $ERR_5000 = "Messages to show must be numeric";
 $ERR_5001 = "Messages to show cannot be zero";
 $ERR_5002 = "You must select at least one statistic type (accesses, browsers & platforms, by country)";
@@ -167,7 +167,7 @@ $ERR_5014 = "Subject or message missing";
 $ERR_5029 = "Name missing";
 $ERR_5030 = "Username missing";
 $ERR_5031 = "Password missing";
-$ERR_5032 = "Please enter you password twice";
+$ERR_5032 = "Please enter your password twice";
 $ERR_5033 = "E-mail address missing";
 $ERR_5034 = "Address missing";
 $ERR_5035 = "City missing";
@@ -263,7 +263,7 @@ $MSG['076'] = "Currency Symbol";
 $MSG['077'] = "Edit admin e-mail address";
 $MSG['078'] = "Categories Table";
 $MSG['079'] = "Your Auction Has Closed";
-$MSG['080'] = "Resyncronise or Reset Caches";
+$MSG['080'] = "Resynchronise or Reset Caches";
 $MSG['081'] = "Countries Table";
 $MSG['082'] = "Convert";
 $MSG['083'] = "of this currency";
@@ -569,7 +569,7 @@ $MSG['393'] = "flat";
 $MSG['394'] = "Add";
 $MSG['395'] = "Enable/Disable Fees";
 $MSG['396'] = "Fee Settings Updated";
-$MSG['397'] = "Do you want your auction site to be completly free or do you want to change for it";
+$MSG['397'] = "Do you want your auction site to be completely free or do you want to change for it";
 $MSG['400'] = "E-mail address";
 $MSG['401'] = "Privacy Policy";
 $MSG['402'] = "Privacy Policy Page";
@@ -616,9 +616,9 @@ $MSG['472'] = "Item Watch";
 $MSG['496'] = "Buy Now";
 $MSG['497'] = "Buy Now Price";
 $MSG['498'] = "Item purchased successfully<br>";
-$MSG['499'] = "Total netural feedback received: ";
+$MSG['499'] = "Total neutral feedback received: ";
 $MSG['500'] = "Total positive feedback received: ";
-$MSG['501'] = "Total negitive feedback received: ";
+$MSG['501'] = "Total negative feedback received: ";
 $MSG['502'] = "Total feedback received: ";
 $MSG['503'] = "Feedback";
 $MSG['504'] = "COMMENT";
@@ -714,7 +714,7 @@ $MSG['613'] = "Thumbnail preview";
 $MSG['614'] = "Use the built-in proportional increments table";
 $MSG['615'] = "Use your custom fixed increment";
 $MSG['616'] = "Save Thumbnail";
-$MSG['617'] = "*NOTE*  If you want to change you password use the two fields below.<br>Otherwise leave them blank.";
+$MSG['617'] = "*NOTE*  If you want to change your password use the two fields below.<br>Otherwise leave them blank.";
 $MSG['618'] = "Cancel";
 $MSG['619'] = "Open Auctions";
 $MSG['620'] = "Your bids";
@@ -773,9 +773,13 @@ $MSG['718'] = "Auction Type";
 $MSG['719'] = "Payment Details";
 $MSG['720'] = "PayPal Email Address";
 $MSG['724'] = "Additional Information";
+$MSG['725'] = "Optimisation";
+$MSG['726'] = "Enable/ Disable template cache";
+$MSG['727'] = "This will massively increase the speed of your site. It is recommended this is only disabled when making updates to your template";
+$MSG['728'] = "Optimisation settings updated";
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";
-$MSG['903'] = "In which format do you want to recive your emails";
+$MSG['903'] = "In which format do you want to receive your emails";
 $MSG['904'] = "This auction is closed";
 $MSG['905'] = "Someone Wants You To Check Out An Auction";
 $MSG['906'] = "Your Bid Is No Longer The Winner";
@@ -827,7 +831,7 @@ $MSG['1020'] = "Dutch Auction";
 $MSG['1021'] = "Standard Auction";
 $MSG['1022'] = "SSL Support";
 $MSG['1023'] = "Activate SSL support?";
-$MSG['1024'] = "If you have SSL support on the server where you are running WeBid, you may want to give your customers a safer enviroment to operate.</p><p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.</p>";
+$MSG['1024'] = "If you have SSL support on the server where you are running WeBid, you may want to give your customers a safer environment to operate.</p><p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.</p>";
 $MSG['1025'] = "SSL settings updated";
 $MSG['1029'] = "Counters updated";
 $MSG['1030'] = "Resync the user, auction and bid counters";
@@ -922,7 +926,7 @@ $MSG['5091'] = "Hours until auction ends count-down";
 $MSG['5092'] = "Auction Search";
 $MSG['5093'] = "Title, Description";
 $MSG['5094'] = "View&nbsp;auctions";
-$MSG['5095'] = "Hours remaining on an auction until the time remaining becomes an automatic count down timer";
+$MSG['5095'] = "Hours remaining on an auction until the time remaining becomes an automatic countdown timer";
 $MSG['5110'] = "Highlighted Items Option is: ";
 $MSG['5111'] = "ON";
 $MSG['5112'] = "OFF";
@@ -934,7 +938,7 @@ $MSG['5118'] = "of";
 $MSG['5119'] = "&lt;&lt;Prev";
 $MSG['5120'] = "Next&gt;&gt;";
 $MSG['5138'] = "Note: you can use the currency of your choice throughout the site.<br>
-All the amounts users will have to pay at Paypal will be automatically converted to USD using today's rate of exchange before being sent to the Paypal server.";
+All the amounts users will have to pay at PayPal will be automatically converted to USD using today's rate of exchange before being sent to the PayPal server.";
 $MSG['5140'] = "Account Management";
 $MSG['5141'] = "Access Statistics";
 $MSG['5142'] = "Settings";
@@ -1146,21 +1150,21 @@ $MSG['2_0026'] = "We're sorry but, for one or more reasons, you have been denied
 				Thank you";
 $MSG['2_0032'] = "Auction Extension Settings";
 $MSG['2_0033'] = "AUCTIONS EXTENSION";
-$MSG['2_0034'] = "Enable Auctions Autoextension?";
-$_CUSTOM_0032 = "Auctions Autoextension gives you the ability to automatically extend by <b>X</b> seconds the auctions end time,
+$MSG['2_0034'] = "Enable Auctions Auto extension?";
+$_CUSTOM_0032 = "Auctions Auto extension gives you the ability to automatically extend by <b>X</b> seconds the auctions end time,
 				if someone bids in the last <b>Y</b> seconds of the auction lifetime.<br>";
 $MSG['2_0035'] = "Extend auction by ";
 $MSG['2_0036'] = " seconds if someone bid during the last ";
 $MSG['2_0037'] = " seconds";
 $MSG['2_0038'] = "Please enter valid numeric values";
-$MSG['2_0039'] = "Auction Autoextension Settings Updated";
+$MSG['2_0039'] = "Auction Auto extension Settings Updated";
 $MSG['2__0001'] = "Choose language";
 $MSG['2__0002'] = "Multilingual support";
 $MGS_2__0003 = "<br>The default language is English.<br>
 				If you want to enable multilingual support or change the default language you must follow the steps below:
 				<UL>
 				<LI>If you want to add a new language make a duplicate of language/EN and name it with the
-				appropriate name: i.e. if you are translating to french you will need to name the directory FR
+				appropriate name: i.e. if you are translating to French you will need to name the directory FR
 				<br>
 				The first thing is to define the characters encoding your language requires at the top of the messages file.
 				The variable you must edit is <FONT FACE=courier>\$CHARSET</FONT>. UTF-8 encoding should work with almost all the languages.<br>

@@ -59,7 +59,7 @@ class global_class
 			$this->SETTINGS[$k] = $v;
 		}
 	}
-	
+
 	function check_mysql($result, $query, $line, $page)
 	{
 		if (!$result)
@@ -69,7 +69,7 @@ class global_class
 			exit;
 		}
 	}
-	
+
 	function cleanvars($i, $trim = false)
 	{ 
 		if ($trim)
@@ -82,7 +82,7 @@ class global_class
 		$i = str_replace($look, $safe, $i);
 		return $i;
 	}
-	
+
 	function uncleanvars($i)
 	{
 		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
@@ -90,7 +90,7 @@ class global_class
 		$i = str_replace($safe, $look, $i);
 		return $i;
 	}
-	
+
 	function filter($txt)
 	{
 		global $DBPrefix;
@@ -103,7 +103,7 @@ class global_class
 		}
 		return $txt;
 	}
-	
+
 	function move_file($from, $to)
 	{
 		$upload_mode = (@ini_get('open_basedir') || @ini_get('safe_mode') || strtolower(@ini_get('safe_mode')) == 'on') ? 'move' : 'copy';
@@ -134,7 +134,7 @@ class global_class
 		@chmod($to, 0666);
 		return true;
 	}
-	
+
 	//CURRENCY FUNCTIONS
 	function input_money($str)
 	{

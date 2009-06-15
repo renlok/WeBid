@@ -52,19 +52,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					@rmdir($upload_path . $v);
 				}
 			}
-			
+
 			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = closedauctions - 1";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
@@ -219,7 +219,7 @@ while ($item = mysql_fetch_array($res))
 		{
 			$canrelist = true;
 		}
-		
+
 		if ($item['reserve_price'] > 0 || $item['num_bids'] > 0)
 		{
 			$cansell = true;

@@ -43,7 +43,7 @@ if (!isset($_POST['action'])) // already closed auctions
 	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . intval($_GET['id']) . " AND user = " . $user->user_data['id'];
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	
+
 	$RELISTEDAUCTION = mysql_fetch_array($result);
 	$difference = $RELISTEDAUCTION['ends'] - time();
 
@@ -105,7 +105,7 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_file_uploaded']	 = $RELISTEDAUCTION['photo_uploaded'];
 		$_SESSION['SELL_pict_url']		 = $RELISTEDAUCTION['pict_url'];
 		$_SESSION['SELL_pict_url_temp']	 = str_replace('thumb-', '', $RELISTEDAUCTION['pict_url']);
-		
+
 		// get gallery images
 		$UPLOADED_PICTURES = array();
 		$file_types = array('gif', 'jpg', 'jpeg', 'png');

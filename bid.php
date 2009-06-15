@@ -45,7 +45,7 @@ if ($id == 0)
 function get_increment($bid)
 {
 	global $system, $DBPrefix;
-	
+
 	$val = $system->input_money($bid);
 	$query = "SELECT increment FROM " . $DBPrefix . "increments 
 			WHERE ((low <= " . $val . " AND high >= " . $val . ")

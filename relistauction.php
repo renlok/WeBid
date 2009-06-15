@@ -43,7 +43,7 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_iquantity']		= $RELISTEDAUCTION['quantity'];
 	$_SESSION['SELL_shipping_cost']	= $RELISTEDAUCTION['shipping_cost'];
 	$_SESSION['SELL_minimum_bid']	= $RELISTEDAUCTION['minimum_bid'];
-	
+
 	if (floatval($RELISTEDAUCTION['reserve_price']) > 0)
 	{
 		$_SESSION['SELL_reserve_price'] = $RELISTEDAUCTION['reserve_price'];
@@ -69,7 +69,7 @@ if (!isset($_POST['action']))
 	}
 	$_SESSION['SELL_duration']	= $RELISTEDAUCTION['duration'];
 	$_SESSION['SELL_relist']	= $RELISTEDAUCTION['relist'];
-	
+
 	if (floatval($RELISTEDAUCTION['increment']) > 0)
 	{
 		$_SESSION['SELL_increment'] = 2;

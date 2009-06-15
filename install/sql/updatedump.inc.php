@@ -43,7 +43,11 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD `left_id` INT(8) NOT N
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `cookiesprefix`, ADD `copyright` varchar(255) NOT NULL default '' AFTER `siteurl`,
 			ADD `privacypolicy` enum('y','n') NOT NULL default 'y' AFTER `termstext`, ADD `privacypolicytext` text NOT NULL AFTER `privacypolicy`,
 			ADD `ae_status` enum('enabled','disabled') NOT NULL default 'disabled', ADD `ae_timebefore` int(11) NOT NULL default '120', ADD `ae_extend` int(11) NOT NULL default '300',
-			ADD `cache_theme` enum('y','n') NOT NULL default 'y', ADD `hours_countdown` int(5) NOT NULL default '24', ADD `edit_starttime` int(1) NOT NULL default '1'";
+			ADD `cache_theme` enum('y','n') NOT NULL default 'y', ADD `hours_countdown` int(5) NOT NULL default '24', ADD `edit_starttime` int(1) NOT NULL default '1',
+			ADD `banner_sizetype` enum('fix','any') NOT NULL default 'any', ADD `banner_width` int(11) NOT NULL default '468', ADD `banner_height` int(11) NOT NULL default '60',
+			ADD `counter_auctions` enum('y','n') NOT NULL default 'y', ADD `counter_users` enum('y','n') NOT NULL default 'y', ADD `counter_online` enum('y','n') NOT NULL default 'y',
+			ADD `banemail` text NOT NULL, ADD `mandatory_fields` varchar(255) NOT NULL default 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}',
+			ADD `displayed_feilds` VARCHAR(255) NOT NULL default 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}'";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userslanguage`;";
 
 //0.7.2 to 0.7.3

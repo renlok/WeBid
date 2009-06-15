@@ -222,7 +222,7 @@ if ($cropdefault)
 		$scaleX = 100;
 		$scaleY = 120;
 	}
-	
+
 	$template->assign_vars(array(
 			'RATIO' => $ratio,
 			'THUMBWH' => $thumbwh,
@@ -241,7 +241,7 @@ else
 	$template->assign_vars(array(
 			'MAXIMAGES' => $system->SETTINGS['maxpictures'],
 			'ERROR' => (isset($ERR)) ? $ERR : '',
-			
+
 			'B_CANUPLOAD' => (!isset($_SESSION['UPLOADED_PICTURES']) || count($_SESSION['UPLOADED_PICTURES']) < $system->SETTINGS['maxpictures'])
 			));
 }
@@ -260,7 +260,7 @@ $template->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'THEME' => $system->SETTINGS['theme'],
 		'HEADERCOLOUR' => $system->SETTINGS['headercolor'],
-		
+
 		'B_CROPSCREEN' => $cropdefault
 		));
 $template->set_filenames(array(

@@ -96,7 +96,7 @@ if ($arr = mysql_fetch_array($res))
 
 	$DATE = $arr['reg_date'] + $system->tdiff;
 	$mth = 'MON_0'.gmdate('m', $DATE);
-		
+
 	$feedback_rate = ($arr['rate_sum'] == 0) ? 1 : $arr['rate_sum'];
 	$feedback_rate = ($feedback_rate < 0) ? $feedback_rate * - 1 : $feedback_rate;
 	$variables = array(

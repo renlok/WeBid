@@ -69,11 +69,8 @@ if (empty($_POST['action']))
 	$action = "first";
 }
 // Retrieve users signup settings
-$query = "SELECT * FROM " . $DBPrefix . "usersettings";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$MANDATORY_FIELDS = unserialize(mysql_result($res, 0, 'mandatory_fields'));
-$DISPLAYED_FIELDS = unserialize(mysql_result($res, 0, 'displayed_feilds'));
+$MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
+$DISPLAYED_FIELDS = unserialize($system->SETTINGS['displayed_feilds']);
 
 if (isset($_POST['action']) && $_POST['action'] == 'first')
 {
@@ -332,7 +329,7 @@ $template->assign_vars(array(
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_SHOWACCEPTANCE' => ($system->SETTINGS['showacceptancetext'] == 1),
 		'B_FIRST' => $first,
-		
+
 		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 1),
 		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 1),
 		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 1),

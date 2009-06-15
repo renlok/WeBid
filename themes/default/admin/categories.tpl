@@ -115,7 +115,7 @@ function selectAllDelete(formObj, isInverse)
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
-					<td width="50">{L_368}</td>
+					<td>{L_368}</td>
 					<td colspan="3">
 						<textarea name="mass_add" cols="35" rows="6"></textarea>
 					</td>

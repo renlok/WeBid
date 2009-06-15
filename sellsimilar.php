@@ -53,7 +53,7 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_pict_url']		= '';
 	$_SESSION['SELL_sendemail']		= $RELISTEDAUCTION['sendemail'];
 	$_SESSION['SELL_shipping_terms'] = $RELISTEDAUCTION['shipping_terms'];
-	
+
 	if (floatval($RELISTEDAUCTION['reserve_price']) > 0)
 	{
 		$_SESSION['SELL_reserve_price'] = $RELISTEDAUCTION['reserve_price'];
@@ -75,7 +75,7 @@ if (!isset($_POST['action']))
 		$_SESSION['SELL_buy_now_price'] = '';
 		$_SESSION['SELL_with_buy_now']  = 'no';
 	}
-	
+
 	if (floatval($RELISTEDAUCTION['increment']) > 0)
 	{
 		$_SESSION['SELL_increment']			= 2;

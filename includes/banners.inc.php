@@ -21,11 +21,6 @@ if (!function_exists('view'))
 		global $system, $DBPrefix, $uploaded_path;
 		
 		$return = '';
-		$query = "SELECT * FROM " . $DBPrefix . "bannerssettings LIMIT 1";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		
-		$BANNERSETTINGS = mysql_fetch_array($res);
 		$BANNERSARRAY = array();
 
 		// First try to retrieve banners according the filters
@@ -89,10 +84,10 @@ if (!function_exists('view'))
 		// We cannot apply filters in this page - let's retrieve a random banner
 		if (empty($BANNERTOSHOW))
 		{
-			$query = "SELECT * FROM " . $DBPrefix . "banners WHERE ((views < purchased AND purchased > 0) OR (purchased = 0))";
-			if ($BANNERSETTINGS['sizetype'] == 'fix')
+			$query = "SELECT * FROM " . $DBPrefix . "banners WHERE (views < purchased AND purchased > 0) OR purchased = 0";
+			if ($system->SETTINGS['banner_sizetype'] == 'fix')
 			{
-				$query .= " AND width = " . $BANNERSETTINGS['width'] . " AND height = " . $BANNERSETTINGS['height'];
+				$query .= " AND width = " . $system->SETTINGS['banner_width'] . " AND height = " . $system->SETTINGS['banner_height'];
 			}
 			
 			$res = mysql_query($query);

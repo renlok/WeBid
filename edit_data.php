@@ -23,16 +23,13 @@ if (!$user->logged_in)
 }
 
 // Retrieve users signup settings
-$query = "SELECT * FROM " . $DBPrefix . "usersettings";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$MANDATORY_FIELDS = unserialize(mysql_result($res, 0, 'mandatory_fields'));
+$MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 
 function generateSelect($name = '', $options = array())
 {
 	global $selectsetting;
 	$html = '<select name="' . $name . '">';
-	foreach ($options as $option => $value )
+	foreach ($options as $option => $value)
 	{
 		if ($selectsetting == $option)
 		{
@@ -231,7 +228,7 @@ $template->assign_vars(array(
 		'PHONE' => $USER['phone'],
 		'DATEFORMAT' => ($system->SETTINGS['datesformat'] == "USA") ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'TOMEZONE' => $time_correction,
-		
+
 		//payment stuff
 		'PP_EMAIL' => $USER['paypal_email'],
 

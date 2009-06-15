@@ -25,7 +25,7 @@
 		</tr>
 <!-- ENDIF -->
 		<tr>
-			<td align="right" width="170px;"> 
+			<td align="right" stype="width:170px;"> 
 				{L_003}
 			</td>
 			<td style="padding:10px;">

@@ -52,7 +52,7 @@
 <!-- BEGIN block -->
 					<tr valign="top">
 						<td width="109">{block.TITLE}</td>
-						<td width="375" style="padding:3px;">
+						<td style="padding:3px;">
 							{block.DESCRIPTION}
 	<!-- IF block.TYPE eq 'yesno' -->
 				<input type="radio" name="{block.NAME}" value="y"<!-- IF block.DEFAULT eq 'y' --> checked<!-- ENDIF -->> {block.TAGLINE1}

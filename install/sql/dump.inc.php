@@ -170,27 +170,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannerskeywords` (
 # ############################
 
 # 
-# Table structure for table `" . $DBPrefix . "bannerssettings`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "bannerssettings`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "bannerssettings` (
-  `id` int(11) NOT NULL auto_increment,
-  `sizetype` enum('fix','any') default NULL,
-  `width` int(11) default NULL,
-  `height` int(11) default NULL,
-  KEY `id` (`id`)
-) AUTO_INCREMENT=2 ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "bannerssettings`
-# 
-
-$query[] = "INSERT INTO `" . $DBPrefix . "bannerssettings` VALUES (1, 'any', 468, 60);";
-
-# ############################
-
-# 
 # Table structure for table `" . $DBPrefix . "bannersstats`
 # 
 
@@ -550,25 +529,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0);";
-
-# ############################
-
-# 
-# Table structure for table `" . $DBPrefix . "counterstoshow`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "counterstoshow`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "counterstoshow` (
-  `auctions` enum('y','n') NOT NULL default 'y',
-  `users` enum('y','n') NOT NULL default 'y',
-  `online` enum('y','n') NOT NULL default 'y'
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "counterstoshow`
-# 
-
-$query[] = "INSERT INTO `" . $DBPrefix . "counterstoshow` VALUES ('y', 'y', 'y');";
 
 # ############################
 
@@ -1538,7 +1498,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `ae_extend` int(11) NOT NULL default '300',
   `cache_theme` ENUM('y','n') NOT NULL default 'y',
   `hours_countdown` int(5) NOT NULL default '24',
-  `edit_starttime` int(1) NOT NULL default '1'
+  `edit_starttime` int(1) NOT NULL default '1',
+  `banner_sizetype` enum('fix','any') NOT NULL default 'any',
+  `banner_width` int(11) NOT NULL default '468',
+  `banner_height` int(11) NOT NULL default '60',
+  `counter_auctions` enum('y','n') NOT NULL default 'y',
+  `counter_users` enum('y','n') NOT NULL default 'y',
+  `counter_online` enum('y','n') NOT NULL default 'y',
+  `banemail` text NOT NULL,
+  `mandatory_fields` varchar(255) NOT NULL default '',
+  `displayed_feilds` VARCHAR(255) NOT NULL default ''
 );";
 
 # 
@@ -1546,7 +1515,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', 'disabled', 120, 300, 'y', 24, 1);";
+('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}');";
 
 
 # ############################
@@ -1614,26 +1583,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
 # 
 # Dumping data for table `" . $DBPrefix . "users`
 # 
-
-# ############################
-
-# 
-# Table structure for table `" . $DBPrefix . "usersettings`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "usersettings`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "usersettings` (
-	`discount` double NOT NULL default '0',
-	`banemail` text NOT NULL,
-	`mandatory_fields` varchar(255) NOT NULL default '',
-	`displayed_feilds` VARCHAR(255) NOT NULL default ''
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "usersettings`
-# 
-
-$query[] = "INSERT INTO " . $DBPrefix . "usersettings VALUES (0, '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}')";
 
 # ############################
 

@@ -20,17 +20,15 @@ include "../includes/countries.inc.php";
 $username = $_REQUEST['name'];
 $userid = $_REQUEST['userid'];
 
-//-- Data check
-if (empty($userid)) {
+// Data check
+if (empty($userid))
+{
   header("Location: listusers.php");
   exit;
 }
 
-#// Retrieve users signup settings
-$query = "SELECT * FROM " . $DBPrefix . "usersettings";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$MANDATORY_FIELDS = unserialize(mysql_result($res,0,"mandatory_fields"));
+// Retrieve users signup settings
+$MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 
 if (isset($_POST['action']) && $_POST['action'] == "update") {
 	if ($_POST['name'] && $_POST['email']) {

@@ -15,10 +15,7 @@
 // Retrieve banned free mail domains
 if (!defined('InWeBid')) exit();
 
-$query = "SELECT banemail FROM " . $DBPrefix . "usersettings";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$DOMAINS = mysql_result($res, 0);
+$DOMAINS = $system->SETTINGS['banemail'];
 
 $BANNEDDOMAINS = array_filter(explode("\n", $DOMAINS), 'chop');
 if (count($BANNEDDOMAINS) > 0)

@@ -168,4 +168,18 @@ function remove_bids($auction_id)
 	$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $auction_id;
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 }
+
+function _gmmktime($hr, $min, $sec, $mon, $day, $year, $null = NULL)
+{
+	$gmmktime = gmmktime($hr, $min, $sec, $mon, $day, $year);
+	$testtime = gmmktime(0,0,0,6,1,2008);
+	if ($testtime == 1212278400)
+	{
+		return $gmmktime;
+	}
+	else
+	{
+		return $gmmktime - ($testtime - 1212278400);
+	}
+}
 ?>

@@ -123,9 +123,16 @@ if (isset($_POST['action']))
 }
 
 //show the page... 
-$parent = (!isset($_GET['parent'])) ? 0 : intval($_GET['parent']);
-
-$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent;
+if (!isset($_GET['parent']))
+{
+	$parent = 0;
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE parent_id = -1";
+}
+else
+{
+	$parent = intval($_GET['parent']);
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_GET['parent']);
+}
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $parent_node = mysql_fetch_assoc($res);

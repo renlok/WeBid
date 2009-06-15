@@ -59,7 +59,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$removed++;
 		}
-		
+
 		$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions - " . $removed . ")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}

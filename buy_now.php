@@ -123,7 +123,7 @@ if ($_GET['action'] == 'buy')
 		{
 			$ERR = '610';
 		}
-		
+
 		// check if password is correct
 		if ($user->user_data['password'] != md5($MD5_PREFIX . $_POST['password']))
 		{

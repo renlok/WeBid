@@ -19,7 +19,7 @@ if (!isset($_SERVER['SCRIPT_NAME'])) $_SERVER['SCRIPT_NAME'] = 'cron.php';
 function openLogFile()
 {
 	global $logFileHandle, $logPath;
-	
+
 	$logFileHandle = fopen($logPath . 'cron.log', "a");
 }
 
@@ -149,7 +149,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 		$categories[$cat_id]['updated'] = true;
 		$cat_id = $R_parent_id;
 	} while ($cat_id != 0 && isset($categories[$cat_id]));
-	
+
 	// RETRIEVE SELLER INFO FROM DATABASE
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $Auction['user'] . " LIMIT 1";
 	$result = mysql_query($query);
@@ -380,7 +380,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 
 $query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - " . $count_auctions . "), closedauctions = (closedauctions + " . $count_auctions . ")";
 $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	
+
 if (count($categories) > 0)
 {
 	foreach ($categories as $cat_id => $category)

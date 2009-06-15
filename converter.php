@@ -66,7 +66,7 @@ $template->assign_vars(array(
 		'ERROR' => (!isset($errormsg)) ? '' : $errormsg,
 		'CONVERSION' => $conversion,
 		'AMOUNT' => (isset($_POST['amount'])) ? $_POST['amount'] : ((isset($_GET['AMOUNT'])) ? $_GET['AMOUNT'] : 0),
-		
+
 		'B_CONVERSION' => (isset($_POST['action']) && $_POST['action'] == 'convert')
 		));
 

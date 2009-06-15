@@ -23,7 +23,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'ok')
 		$query = "SELECT email, id, name FROM " . $DBPrefix . "users WHERE nick = '" . $username . "' OR email = '" . $username . "' LIMIT 1";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		
+
 		if (mysql_num_rows($res) > 0)
 		{
 			// Generate a new random password and mail it to the user
@@ -61,9 +61,9 @@ $template->assign_vars(array(
 		'L_ERROR' => (isset($errmsg)) ? '<p class="errfont">' . $TPL_errmsg . '</p>' : '',
 		'L_MSG' => $MGS_2__0039,
 		'L_UNAME' => $MGS_2__0040,
-		
+
 		'USERNAME' => (isset($username)) ? $username : '',
-		
+
 		'B_FIRST' => (!isset($_POST['action']) || (isset($_POST['action']) && isset($TPL_errmsg)))
 		));
 

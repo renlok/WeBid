@@ -122,7 +122,7 @@ The Install.php script included with WeBid will:
 
   - CHMOD File Permissions that are necessary to allow for the proper operation of the WeBid Auction Script are as follows: 
 
-	> /includes/data.inc.php 777 
+	> /includes/config.inc.php 777 
 
  	  NOTE: After install is complete, change data.inc.php to CHMOD 705 .
 

@@ -23,7 +23,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$ERR = $ERR_047;
 	}
-	elseif ($_POST['sizetype'] == 'fix' && (empty($_POST['width'] ) || empty($_POST['height'])))
+	elseif ($_POST['sizetype'] == 'fix' && (empty($_POST['width']) || empty($_POST['height'])))
 	{
 		$ERR = $ERR_047;
 	}
@@ -34,26 +34,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// Update database
-		$query = "UPDATE " . $DBPrefix . "bannerssettings SET
-				sizetype = '" . $_POST['sizetype'] . "',
-				width = " . intval($_POST['width']) . ",
-				height = " . intval($_POST['height']);
+		$query = "UPDATE " . $DBPrefix . "settings SET
+				banner_sizetype = '" . $_POST['sizetype'] . "',
+				banner_width = " . intval($_POST['width']) . ",
+				banner_height = " . intval($_POST['height']);
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['600'];
 	}
-	$system->SETTINGS['sizetype'] = $_POST['sizetype'];
-	$system->SETTINGS['width'] = $_POST['width'];
-	$system->SETTINGS['height'] = $_POST['height'];
-}
-else
-{
-	$query = "SELECT * FROM " . $DBPrefix . "bannerssettings";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) > 0)
-	{
-		$system->SETTINGS = mysql_fetch_array($res);
-	}
+	$system->SETTINGS['banner_sizetype'] = $_POST['sizetype'];
+	$system->SETTINGS['banner_width'] = $_POST['width'];
+	$system->SETTINGS['banner_height'] = $_POST['height'];
 }
 
 ?>
@@ -111,7 +101,7 @@ else
 				  <tr valign="top" bgcolor="#dddddd">
 					<td width="73" height="22">
 					  <input type="radio" name="sizetype" value="any"
-								<?php if ($system->SETTINGS['sizetype'] == 'any') print " CHECKED";?>
+								<?php if ($system->SETTINGS['banner_sizetype'] == 'any') print " CHECKED";?>
 								>
 					  </td>
 					<td height="22" width="559">
@@ -121,7 +111,7 @@ else
 				  <tr valign="top">
 					<td width="73" height="22" bgcolor="#eeeeee">
 					  <input type="radio" name="sizetype" value="fix"
-								<?php if ($system->SETTINGS['sizetype'] == 'fix') print " CHECKED";?>
+								<?php if ($system->SETTINGS['banner_sizetype'] == 'fix') print " CHECKED";?>
 								>
 					  </td>
 					<td height="22" width="559" bgcolor="#eeeeee">
@@ -133,7 +123,7 @@ else
 					  <?php echo $MSG['_0017']; ?>
 					  </td>
 					<td width="559" height="22" bgcolor="#eeeeee">
-					  <input type=text NAME=width value="<?php echo $system->SETTINGS['width']; ?>">
+					  <input type=text NAME=width value="<?php echo $system->SETTINGS['banner_width']; ?>">
 					  <?php echo $MSG['5224']; ?>
 					  </td>
 				  </tr>
@@ -142,7 +132,7 @@ else
 					  <?php echo $MSG['_0018']; ?>
 					  </td>
 					<td height="22" width="559" bgcolor="#eeeeee">
-					  <input type=text NAME=height value="<?php echo $system->SETTINGS['height']; ?>">
+					  <input type=text NAME=height value="<?php echo $system->SETTINGS['banner_height']; ?>">
 					  <?php echo $MSG['5224']; ?>
 					  </td>
 				  </tr>

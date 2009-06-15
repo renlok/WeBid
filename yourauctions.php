@@ -48,17 +48,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 					@rmdir($upload_path . $v);
 				}
 			}
-			
+
 			// Delete Invited Users List and Black Lists associated with this auction
 			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			// Auction
 			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$removed++;
 		}
-		
+
 		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - " . $removed . ")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}

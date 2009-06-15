@@ -386,7 +386,7 @@ switch ($_SESSION['action'])
 				}
 
 				$iquantity = ($atype == 2 || $buy_now_only == 'y') ? $iquantity : 1;
-				
+
 				if (!(strpos($a_starts, '-') === false))
 				{
 					$a_starts = gmmktime(substr($a_starts, 11, 2),

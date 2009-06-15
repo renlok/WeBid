@@ -23,18 +23,14 @@ $jsfiles = (basename($_SERVER['PHP_SELF']) == 'sell.php') ? '<script type="text/
 <script type="text/javascript" src="fck/fckeditor.js"></script>' : '';
 
 // Get users and auctions counters
-$query = "SELECT * FROM " . $DBPrefix . "counterstoshow";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$COUNTERSTOSHOW = mysql_fetch_array($res);
 $query = "SELECT * FROM " . $DBPrefix . "counters";
 $result_counters = mysql_query($query);
 $counters = '';
 if ($result_counters)
 {
-	if ($COUNTERSTOSHOW['auctions'] == 'y') $counters .= '<b>' . mysql_result($result_counters, 0, 'auctions') . '</b>&nbsp;' . strtoupper($MSG['232']) . '|&nbsp;';
-	if ($COUNTERSTOSHOW['users'] == 'y') $counters .= '<b>' . mysql_result($result_counters, 0, 'users') . '</b>&nbsp;' . strtoupper($MSG['231']) . '&nbsp;|&nbsp;';
-	if ($COUNTERSTOSHOW['online'] == 'y')
+	if ($system->SETTINGS['counter_auctions'] == 'y') $counters .= '<b>' . mysql_result($result_counters, 0, 'auctions') . '</b>&nbsp;' . strtoupper($MSG['232']) . '|&nbsp;';
+	if ($system->SETTINGS['counter_users'] == 'y') $counters .= '<b>' . mysql_result($result_counters, 0, 'users') . '</b>&nbsp;' . strtoupper($MSG['231']) . '&nbsp;|&nbsp;';
+	if ($system->SETTINGS['counter_online'] == 'y')
 	{
 		if (!$user->logged_in)
 		{

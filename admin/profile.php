@@ -19,13 +19,11 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-$query = "SELECT * FROM " . $DBPrefix . "usersettings";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$MANDATORY_FIELDS = unserialize(mysql_result($res, 0, 'mandatory_fields'));
-$DISPLAYED_FIELDS = unserialize(mysql_result($res, 0, 'displayed_feilds'));
+$MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
+$DISPLAYED_FIELDS = unserialize($system->SETTINGS['displayed_feilds']);
 
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	$MANDATORY_FIELDS = array(
 			'birthdate' => $_POST['birthdate'],
 			'address' => $_POST['address'],
@@ -48,7 +46,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
 	$mdata = serialize($MANDATORY_FIELDS);
 	$sdata = serialize($DISPLAYED_FIELDS);
-	$query = "UPDATE ".$DBPrefix."usersettings SET mandatory_fields = '" . $mdata . "', displayed_feilds = '" . $sdata . "'";
+	$query = "UPDATE ".$DBPrefix."settings SET mandatory_fields = '" . $mdata . "', displayed_feilds = '" . $sdata . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 	$ERR = "User Registration Fields Updated!";

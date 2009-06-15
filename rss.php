@@ -23,7 +23,7 @@ $user_id = intval($_REQUEST['user_id']);
 
 $feed = intval($_REQUEST['feed']);
 $feed = (!$feed) ? 1 : $feed;
-		
+
 switch ($feed)
 {
 	case 1: 
@@ -136,7 +136,7 @@ while ($auction_data = mysql_fetch_array($res))
 			$cat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $category_names[$crumbs[$i]['cat_id']] . '</a>';
 		}
 	}
-	
+
 	$template->assign_block_vars('rss', array(
 			'PRICE' => str_replace(array('<b>', '</b>'), '', $system->print_money(($auction_data['num_bids'] == 0) ? $auction_data['minimum_bid'] : $auction_data['current_bid'], false)),
 			'TITLE' => $auction_data['title'],

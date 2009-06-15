@@ -111,7 +111,7 @@ else
 		{
 			$BG = '';
 		}
-		
+
 		// Select the translated category name
 		$row['cat_name'] = $category_names[$row['cat_id']];
 

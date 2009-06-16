@@ -228,12 +228,12 @@ scrollbar-arrow-color: #ffffff;
 			  </tr>
 			  <tr bgcolor="#FFFFFF">
 				<td width="204" valign="top" align="right"> <?php print $MSG['010'].' *'; ?> </td>
-				<td width="486"><input type=text name=city size=40 maxlength=255 value="<?echo $city; ?>">
+				<td width="486"><input type=text name=city size=40 maxlength=255 value="<?php echo $city; ?>">
 				</td>
 			  </tr>
 			  <tr bgcolor="#FFFFFF">
 				<td width="204" valign="top" align="right"> <?php print $MSG['011'].' *'; ?> </td>
-				<td width="486"><input type=text name=prov size=40 maxlength=255 value="<?echo $prov; ?>">
+				<td width="486"><input type=text name=prov size=40 maxlength=255 value="<?php echo $prov; ?>">
 				</td>
 			  </tr>
 			  <tr bgcolor="#FFFFFF">

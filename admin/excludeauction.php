@@ -223,7 +223,7 @@ scrollbar-arrow-color: #ffffff;
 					  ?>
 					  <tr>
 						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['312']; ?> </td>
-						<td width="486"><?print $title; ?></td>
+						<td width="486"><?php print $title; ?></td>
 					  </tr>
 					  <tr>
 						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['313']; ?> </td>

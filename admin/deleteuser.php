@@ -258,7 +258,7 @@ scrollbar-arrow-color: #ffffff;
 ?>
 					  <tr>
 						<td width="204" valign="top" align="right"><?php print $MSG['302']; ?> </td>
-						<td width="486"><?print $username; ?> </td>
+						<td width="486"><?php print $username; ?> </td>
 					  </tr>
 					  <tr>
 						<td width="204" valign="top" align="right"><?php print $MSG['003']; ?> </td>

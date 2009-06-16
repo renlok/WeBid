@@ -745,6 +745,7 @@ $MSG['663'] = "Picture Gallery";
 $MSG['664'] = "If you activate this option, sellers will be able to upload additional pictures up to the maximum you specify (see below).";
 $MSG['665'] = "Activate Picture Gallery?";
 $MSG['666'] = "Max. Number of pictures";
+$MSG['667'] = "Viewing user: ";
 $MSG['670'] = "Activate Picture Gallery fee?";
 $MSG['671'] = "Max. pictures size";
 $MSG['672'] = "Kbytes";

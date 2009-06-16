@@ -170,9 +170,9 @@ $_SESSION['RETURN_LIST_OFFSET'] = intval($_GET['offset']);
 					</table>
 					<?php
 					//-- Build navigation line
-					print "<table width=100% border=0 cellpadding=4 cellspacing=0 align="center">
+					print '<table width=100% border=0 cellpadding=4 cellspacing=0 align="center">
 			   <tr align="center" bgcolor=#FFFFFF>
-			   <td COLSPAN=2>";
+			   <td COLSPAN=2>';
 					print "<SPAN CLASS=\"navigation\">";
 					$num_pages = ceil($num_auctions / $limit);
 					$i = 0;

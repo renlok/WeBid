@@ -102,16 +102,13 @@ if (mysql_num_rows($res) > 0)
 			  <table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#FFFFFF">
 				<tr>
 				  <td bgcolor="#ffffff">
-					<b>
-					  <?php print $MSG['200']; ?></b>
-					  <?php echo $USER['nick']; ?>
-					  (<A HREF=<?php echo $USER['email']; ?>><?php echo $USER['email']; ?></A>)
+					  <?php print $MSG['667']; ?> <b><?php echo $USER['nick']; ?></b>
 					</td>
 					<td ALIGN="right">
 					<?php
 						$lastlogin = strtotime($USER['lastlogin']);
 					?>
-					<?php echo $MSG['559'].":".date('Y-m-d H:i:s', $lastlogin + $system->tdiff); ?>
+					<?php echo $MSG['559'].": ".date('Y-m-d H:i:s', $lastlogin + $system->tdiff); ?>
 				</tr>
 			  </table>
 			  <table width="90%" border="0" cellspacing="1" cellpadding="2" bgcolor="#CCCCCC">

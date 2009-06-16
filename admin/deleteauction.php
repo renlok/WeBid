@@ -192,7 +192,7 @@ if (!$_POST['action']) {
 				  <?php print $MSG['312']; ?>
 				</td>
 				<td width="486">
-				  <?print $title; ?>
+				  <?php print $title; ?>
 				</td>
 			  </tr>
 			  <tr>

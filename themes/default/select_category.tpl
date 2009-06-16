@@ -1,6 +1,7 @@
 <style type="text/css">.box {hight: 100; width:300;}</style>
 <script type="text/javascript">
-function SubmitBoxes(N) {
+function SubmitBoxes(N)
+{
 	document.catform.box.value = N;
 	document.catform.submit();
 }
@@ -12,9 +13,6 @@ function SubmitBoxes(N) {
 		<form name="catform" action="select_category.php#goto" method="post">
 		<input type="hidden" name="action" value="process">
 		<input type="hidden" name="box" value="">
-<!-- BEGIN dontsubmit -->
-		<input type="hidden" name="S{dontsubmit.K}" value="{dontsubmit.V}">
-<!-- END dontsubmit --> 
 	  <table width="80%" BORDER="0" CELLPADDING="4" class="content">
 		<tr> 
 		  <td colspan="2" valign="top"> 
@@ -30,8 +28,8 @@ function SubmitBoxes(N) {
 <!-- ENDIF -->
 		<tr> 
 <!-- BEGIN boxes -->
-		  <td align="center" style="width:30%;">
-			  <select name="cat{boxes.I}" class="box" size="15" onClick="SubmitBoxes({boxes.I2})" style="width:230px;">
+		  <td align="center" style="width:{boxes.PERCENT}%;">
+			  <select name="cat{boxes.I}" class="box" size="15" onClick="SubmitBoxes({boxes.I})" style="width:230px;">
 	<!-- BEGIN cats -->
 				<option value="{boxes.cats.K}" {boxes.cats.SELECTED}>{boxes.cats.CATNAME}</option>
 	<!-- END cats -->

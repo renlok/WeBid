@@ -45,5 +45,6 @@
 - Added an option to enable or disable the template cache
 - Added an option to make the time remaining on on auction to become an automatic countdown timer after a given time
 - Fixed some minor bugs in the auction/ user control where the auction title/user name do not show when deleting/suspending user/auction
+- Cleaned up the auction lists in the admin panel so they display more useful information
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

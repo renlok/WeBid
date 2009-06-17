@@ -16,13 +16,6 @@
 include 'includes/common.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
-if (!ini_get('register_globals')) {
-    $superglobales = array($_SERVER, $_ENV,
-        $_FILES, $_COOKIE, $_POST, $_GET);
-    foreach ($superglobales as $superglobal) {
-        extract($superglobal, EXTR_SKIP);
-    }
-}
 // Is the seller logged in?
 if (!$user->logged_in)
 {
@@ -52,7 +45,7 @@ while (true)
 	$i++;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == 'process')
+if (isset($_POST['action']) && $_POST['action'] == 'process' && $_POST['box'] == '')
 {
     $_SESSION['action'] = 1;
 	$VARNAME = 'cat' . (count($POST) - 1);

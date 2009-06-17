@@ -143,7 +143,14 @@ if (!function_exists('ArrangeDateNoCorrection'))
 	{
 		global $MSG;
 		$mth = 'MON_0' . gmdate('m', $DATE);
-		$return = $MSG[$mth] . ' ' . gmdate('d, Y - H:i', $DATE);
+		if ($system->SETTINGS['datesformat'] == 'USA')
+		{
+			$return = $MSG[$mth] . ' ' . gmdate('d, Y - H:i', $DATE);
+		}
+		else
+		{
+			$return = gmdate('d', $DATE) . ' ' . $MSG[$mth] . ', ' . gmdate('Y - H:i', $DATE);
+		}
 		return $return;
 	}
 }

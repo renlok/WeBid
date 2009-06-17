@@ -670,6 +670,7 @@ $MSG['551'] = "After the amount (i.e. 200 USD)";
 $MSG['553'] = "Currency settings updated";
 $MSG['554'] = "Number of news you want to show";
 $MSG['556'] = "Current logo";
+$MSG['557'] = "Item Details";
 $MSG['558'] = "Created";
 $MSG['559'] = "Last login";
 $MSG['560'] = "Status";

@@ -188,7 +188,11 @@ scrollbar-arrow-color: #ffffff;
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
 		<tr>
 		  <td width="30"><img src="images/i_auc.gif" ></td>
-		  <td class=white><?php echo $MSG['239']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5091']; ?></td>
+		  <td class=white><?php echo $MSG['239']; ?>&nbsp;&gt;&gt;&nbsp;<?php if ($suspended > 0) {
+				print $MSG['322'];
+			} else {
+				print $MSG['321'];
+			} ?></td>
 		</tr>
 	  </table></td>
   </tr>

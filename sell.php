@@ -389,7 +389,7 @@ switch ($_SESSION['action'])
 
 				if (!(strpos($a_starts, '-') === false))
 				{
-					$a_starts = gmmktime(substr($a_starts, 11, 2),
+					$a_starts = _gmmktime(substr($a_starts, 11, 2),
 						substr($a_starts, 14, 2),
 						substr($a_starts, 17, 2),
 						substr($a_starts, 5, 2),
@@ -433,7 +433,7 @@ switch ($_SESSION['action'])
 		}
 		if (!(strpos($a_starts, '-') === false))
 		{
-			$a_starts = gmmktime(substr($a_starts, 11, 2),
+			$a_starts = _gmmktime(substr($a_starts, 11, 2),
 				substr($a_starts, 14, 2),
 				substr($a_starts, 17, 2),
 				substr($a_starts, 5, 2),
@@ -469,7 +469,7 @@ switch ($_SESSION['action'])
 		$TPL_auction_type .= '</select>' . "\n";
 
 		// duration
-		$time_passed = (time() - $a_starts) / (3600 * 24); // get time passed in days
+		$time_passed = ($a_starts == '') ? 0 : (time() - $a_starts) / (3600 * 24); // get time passed in days
 		$query = "SELECT * FROM " . $DBPrefix . "durations WHERE days > " . floor($time_passed) . " ORDER BY days";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);

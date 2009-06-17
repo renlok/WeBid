@@ -456,6 +456,7 @@ else
 {
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(0, -1, 1, 2, -1, 'All', 0, 0, '', '');";
 }
+$query[] = "UPDATE `" . $DBPrefix . "categories` SET cat_id = 0 WHERE parent_id = -1"; // just incase
 
 # ############################
 

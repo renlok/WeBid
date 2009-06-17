@@ -11,189 +11,82 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
+
 define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
+include $include_path . 'dates.inc.php';
 include 'loggedin.inc.php';
-//-- Set offset and limit for pagination
-$limit = 30;
-if (!isset($_GET['offset'])) {
-  $offset = 0;
-} else {
-  $offset = $_GET['offset'];
+
+unset($ERR);
+
+// Set offset and limit for pagination
+$limit = 20;
+if (!$_GET['offset'])
+{
+	$offset = 0;
 }
-$PAGES = ceil($TOTALUSERS / $limit);
-#// Set return script name
+else
+{
+	$offset = $_GET['offset'];
+}
 $_SESSION['RETURN_LIST'] = 'listclosedauctions.php';
-$_SESSION['RETURN_LIST_OFFSET'] = intval($_GET['offset']);
+$_SESSION['RETURN_LIST_OFFSET'] = $offset;
 
+$query = "SELECT COUNT(id) As auctions FROM " . $DBPrefix . "auctions WHERE closed = 1 AND suspended = 0";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$num_auctions = mysql_result($res, 0, 'auctions');
 
+$query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name FROM " . $DBPrefix . "auctions a
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
+		WHERE a.closed = 1 AND a.suspended = 0 ORDER BY nick LIMIT " . $offset . ", " . $limit;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$bgcolour = '#FFFFFF';
+while ($row = mysql_fetch_assoc($res))
+{
+	$bgcolour = ($bgcolour == '#FFFFFF') ?  '#EEEEEE' : '#FFFFFF';
+	$template->assign_block_vars('auctions', array(
+			'BGCOLOUR' => $bgcolour,
+			'SUSPENDED' => $row['suspended'],
+			'ID' => $row['id'],
+			'TITLE' => $row['title'],
+			'START_TIME' => ArrangeDateNoCorrection($row['starts']),
+			'END_TIME' => ArrangeDateNoCorrection($row['ends']),
+			'USERNAME' => $row['nick'],
+			'CATEGORY' => $row['cat_name']
+			));
+}
+
+$num_pages = ceil($num_auctions / $limit);
+$pagnation = '';
+for ($i = 0; $i < $num_pages; $i++)
+{
+	$of = ($i * $limit);
+	if ($of != $offset)
+	{
+		$pagnation .= '<a href="listclosedauctions.php?offset=' . $of . '" class="navigation">' . ($i + 1) . '</a>';
+	}
+	else
+	{
+		$pagnation .= $i + 1;
+	}
+	if (($i + 1) < $num_pages) $pagnation .= ' | ';
+}
+
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'PAGE_TITLE' => $MSG['5226'],
+		'NUM_AUCTIONS' => $num_auctions,
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'OFFSET' => $offset,
+		'PAGNATION' => $pagnation
+		));
+
+$template->set_filenames(array(
+		'body' => 'listauctions.tpl'
+		));
+$template->display('body');
 ?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr> 
-	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-		<tr> 
-		  <td width="30"><img src="images/i_auc.gif" ></td>
-		  <td class=white><?php echo $MSG['239']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5226']; ?></td>
-		</tr>
-	  </table></td>
-  </tr>
-  <tr>
-	<td align="center" valign="middle">&nbsp;</td>
-  </tr>
-	<tr> 
-	<td align="center" valign="middle">
-<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
-<tr>
-  <td align="center" class=title><?php print $MSG['5226']; ?></td>
-</tr>
-<tr>
-  <td><table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3">
-	  <?php
-	  $query = "select count(id) as auctions from " . $DBPrefix . "auctions WHERE closed<>'0' AND suspended='0'";
-	  $result = mysql_query($query);
-	  if (!$result){
-	  	print "$ERR_001<BR>$query<BR>".mysql_error();
-	  	exit;
-	  }
-	  $num_auctions = mysql_result($result,0,"auctions");
-	  print "<tr bgcolor=#FFFFFF><td COLSPAN=7><B>
-				$num_auctions ".$MSG['311']."</B> 
-				</td></tr>";
-	?>
-	  <tr bgcolor="#FFCC00">
-		<td align="center"> <B> <?php print $MSG['312']; ?> </B>  </td>
-		<td align="center"> <B> <?php print $MSG['313']; ?> </B>  </td>
-		<td align="center"> <B> <?php print $MSG['314']; ?> </B>  </td>
-		<td align="center"> <B> <?php print $MSG['315']; ?> </B>  </td>
-		<td ALIGN=LEFT> <B> <?php print $MSG['316']; ?> </B>  </td>
-		<td ALIGN=LEFT> <B> <?php print $MSG['317']; ?> </B>  </td>
-		<td ALIGN=LEFT> <B> <?php print $MSG['297']; ?> </B>  </td>
-	  </tr>
-		<?php
-					$query = "SELECT DISTINCT(a.id), a.closed, u.nick, a.title, a.starts, a.description, c.cat_name, d.description as duration, a.suspended
-				  FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "users u, " . $DBPrefix . "categories c, " . $DBPrefix . "durations d
-				  WHERE u.id = a.user and c.cat_id = a.category and d.days = a.duration AND a.closed<>'0' AND a.suspended='0'
-				  ORDER BY u.nick limit $offset, $limit";
-					$result = mysql_query($query);
-					if (!$result){
-						print "Database access error: abnormal termination<BR>$query<BR>".mysql_error();
-						exit;
-					}
-					$num_auction = mysql_num_rows($result);
-					$i = 0;
-					$bgcolor = "#FFFFFF";
-					while ($i < $num_auction) {
-						if ($bgcolor == "#FFFFFF"){
-							$bgcolor = "#EEEEEE";
-						}else{
-							$bgcolor = "#FFFFFF";
-						}
-						$id = mysql_result($result,$i,"id");
-						
-						$query = "SELECT id FROM " . $DBPrefix . "winners WHERE auction='$id'";
-						$res_w = @mysql_query($query);
-						if (!$res_w) {
-							print "$query<BR>".mysql_error();
-							exit;
-						} elseif (@mysql_num_rows($res_w) > 0) {
-							$HASWINNERS = trUE;
-						} else {
-							$HASWINNERS = FALSE;
-						}
-						
-						$title = stripslashes(mysql_result($result,$i,"title"));
-						$nick = mysql_result($result,$i,"nick");
-						$tmp_date = mysql_result($result,$i,"starts") + $system->tdiff;
-						$duration = mysql_result($result,$i,"duration");
-						$category = mysql_result($result,$i,"cat_name");
-						$description = strip_tags(stripslashes(mysql_result($result,$i,"description")));
-						$suspended = mysql_result($result,$i,"suspended");
-						if ($system->SETTINGS['datesformat'] == 'USA') {
-							$date = gmdate('m/d/Y', $tmp_date);
-						} else {
-							$date = gmdate('d/m/Y', $tmp_date);
-						}
-						
-						print "<tr bgcolor=$bgcolor>
-					<td>";
-						if ($suspended == 1) {
-							print "<FONT COLOR=red><B>$title</B>";
-						} else {
-							print $title;
-						}
-						print "
-						</td>
-						<td>
-						".$nick."
-						
-						</td>
-						<td>
-						".$date."
-						
-						</td>
-						<td>
-						$duration
-						
-						</td>
-						<td>
-						$category
-						
-						</td>
-						<td>
-						$description
-						
-						</td>
-						<td ALIGN=LEFT>
-						<A HREF=\"editauction.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['298']."</A><BR>
-						<A HREF=\"deleteauction.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['008']."</A><BR>
-						<A HREF=\"excludeauction.php?id=$id&offset=$offset\" class=\"nounderlined\">";
-						if ($suspended == 0) {
-							print $MSG['300'];
-						} else {
-							print $MSG['310'];
-						}
-						if ($HASWINNERS) {
-							print "<BR><A HREF=\"viewwinners.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['_0163']."</A>";
-						}
-						print "</A><BR>
-						</td>
-						<tr>";
-						$i++;
-					}
-					?>
-					</table>
-					<?php
-					//-- Build navigation line
-					print '<table width=100% border=0 cellpadding=4 cellspacing=0 align="center">
-			   <tr align="center" bgcolor=#FFFFFF>
-			   <td COLSPAN=2>';
-					print "<SPAN CLASS=\"navigation\">";
-					$num_pages = ceil($num_auctions / $limit);
-					$i = 0;
-					while ($i < $num_pages ){
-						$of = ($i * $limit);
-						if ($of != $offset){
-							print "<A HREF=\"listclosedauctions.php?offset=$of\" CLASS=\"navigation\">".($i + 1)."</A>";
-							if ($i != $num_pages) print " | ";
-						}else{
-							print $i + 1;
-							if ($i != $num_pages) print " | ";
-						}
-						$i++;
-					}
-					print "</SPAN></tr></td></table>";
-					
-	  ?>
-	</td></tr>
-	</table>
-</td>
-</tr>
-</table>
-</body>
-</html>

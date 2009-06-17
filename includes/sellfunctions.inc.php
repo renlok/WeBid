@@ -169,17 +169,14 @@ function remove_bids($auction_id)
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 }
 
-function _gmmktime($hr, $min, $sec, $mon, $day, $year, $null = NULL)
+function _gmmktime($hr, $min, $sec, $mon, $day, $year, $null = null)
 {
-	$gmmktime = gmmktime($hr, $min, $sec, $mon, $day, $year);
-	$testtime = gmmktime(0,0,0,6,1,2008);
-	if ($testtime == 1212278400)
-	{
-		return $gmmktime;
-	}
-	else
-	{
-		return $gmmktime - ($testtime - 1212278400);
-	}
+    if (gmmktime(0,0,0,6,1,2008, 0) == 1212282000)
+    {
+        //Seems to be running PHP (like 4.3.11).
+        //At least if current local timezone is Europe/Stockholm with DST in effect, skipping the ,0 helps:
+        return gmmktime($hr, $min, $sec, $mon, $day, $year); //without is_dst-parameter at the end
+    }
+    return gmmktime($hr, $min, $sec, $mon, $day, $year, 0);
 }
 ?>

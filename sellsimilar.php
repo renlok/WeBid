@@ -53,6 +53,9 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_pict_url']		= '';
 	$_SESSION['SELL_sendemail']		= $RELISTEDAUCTION['sendemail'];
 	$_SESSION['SELL_shipping_terms'] = $RELISTEDAUCTION['shipping_terms'];
+	$_SESSION['SELL_is_bold']			= $RELISTEDAUCTION['bold'];
+	$_SESSION['SELL_is_highlighted']	= $RELISTEDAUCTION['highlighted'];
+	$_SESSION['SELL_is_featured']		= $RELISTEDAUCTION['featured'];
 
 	if (floatval($RELISTEDAUCTION['reserve_price']) > 0)
 	{

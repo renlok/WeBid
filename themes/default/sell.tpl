@@ -216,23 +216,28 @@ $(document).ready(function(){
 	<!-- ELSE -->
 					<input type="hidden" name="increments" id="inc1" value="1">
 	<!-- ENDIF -->
+    <!-- IF B_EDIT_STARTTIME -->
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_2__0016}</b>
 						</td>
 						<td class="rightpan">
-	<!-- IF B_EDITING -->
+        <!-- IF B_EDITING -->
 							{START_TIME}
 							<input type="hidden" name="a_starts" value="{START_TIME}">
-	<!-- ELSE -->
-							<input type="text" name="a_starts" id="pubdate_input" value="{START_TIME}" size="20" maxlength="19">
+        <!-- ELSE -->
+        					{L_211} <input type="checkbox" name="start_now" {START_NOW}><br>
+							{L_260} <input type="text" name="a_starts" id="pubdate_input" value="{START_TIME}" size="20" maxlength="19">
 							<a href="javascript:pubdate_cal.popup()"><img src="includes/img/calendar.gif" width="16" height="16" border="0" alt="Click Here to Pick up the date" /></a>
 							<script type="text/javascript">
 							var pubdate_cal = new xar_base_calendar(document.getElementById("pubdate_input"), "."); pubdate_cal.year_scroll = true; pubdate_cal.time_comp = true;
 							</script>
-	<!-- ENDIF -->
+        <!-- ENDIF -->
 						</td>
 					</tr>
+	<!-- ELSE -->
+    				<input type="hidden" name="start_now" value="1" {START_NOW}>
+    <!-- ENDIF -->
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_022}</b>
@@ -254,7 +259,6 @@ $(document).ready(function(){
 							{L_033}
 						</td>
 					</tr>
-
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_25_0215}</b>
@@ -263,7 +267,6 @@ $(document).ready(function(){
 							<textarea name="shipping_terms" rows="3" cols="34">{SHIPPING_TERMS}</textarea>
 						</td>
 					</tr>
-
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_026}</b>
@@ -272,6 +275,24 @@ $(document).ready(function(){
 							{PAYMENTS}
 						</td>
 					</tr>
+	<!-- IF B_MKFEATURED or B_MKBOLD or B_MKHIGHLIGHT -->
+                    <tr>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L_268}</b>
+						</td>
+						<td class="rightpan">
+        <!-- IF B_MKFEATURED -->
+        					<p><input type="checkbox" name="is_featured" {IS_FEATURED}> {L_273}</p>
+        <!-- ENDIF -->
+        <!-- IF B_MKBOLD -->
+        					<p><input type="checkbox" name="is_bold" {IS_BOLD}> {L_274}</p>
+        <!-- ENDIF -->
+        <!-- IF B_MKHIGHLIGHT -->
+        					<p><input type="checkbox" name="is_highlighted" {IS_HIGHLIGHTED}> {L_292}</p>
+        <!-- ENDIF -->
+						</td>
+					</tr>
+	<!-- ENDIF -->
 				</table>
 				
 				<div style="text-align:center">

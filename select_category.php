@@ -108,11 +108,14 @@ elseif (count($_POST) == 0)
     $_SESSION['SELL_shipping_terms'] = '';
     $_SESSION['SELL_payment'] = '';
     $_SESSION['SELL_international'] = '';
-    $_SESSION['SELL_private'] = '';
     $_SESSION['SELL_sendemail'] = '';
     $_SESSION['SELL_buy_now_only'] = '';
     $_SESSION['SELL_action'] = '';
     $_SESSION['SELL_shipping_cost'] = 0;
+	$_SESSION['SELL_is_bold'] = 'n';
+	$_SESSION['SELL_is_highlighted'] = 'n';
+	$_SESSION['SELL_is_featured'] = 'n';
+	$_SESSION['SELL_start_now'] = '';
 }
 
 // Build the categories arrays

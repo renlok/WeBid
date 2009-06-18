@@ -51,6 +51,8 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `cookiesprefix`, ADD `c
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `ao_hpf_enabled` enum('y','n') NOT NULL default 'y', ADD `ao_hi_enabled` enum('y','n') NOT NULL default 'y',
 			ADD `ao_bi_enabled` enum('y','n') NOT NULL default 'y'";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userslanguage`;";
+$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `bold` enum('y','n') NOT NULL default 'n', ADD `highlighted` enum('y','n') NOT NULL default 'n',
+			ADD `featured` enum('y','n') NOT NULL default 'n'";
 
 //0.7.2 to 0.7.3
 /*

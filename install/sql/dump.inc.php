@@ -96,6 +96,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `shipping_terms` tinytext NOT NULL,
   `bn_only` enum('y','n') NOT NULL default 'n',
   `adultonly` enum('y','n') NOT NULL default 'n',
+  `bold` enum('y','n') NOT NULL default 'n',
+  `highlighted` enum('y','n') NOT NULL default 'n',
+  `featured` enum('y','n') NOT NULL default 'n',
   PRIMARY KEY  (`id`),
   KEY `id` (`id`)
 );";

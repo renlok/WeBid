@@ -43,6 +43,9 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_iquantity']		= $RELISTEDAUCTION['quantity'];
 	$_SESSION['SELL_shipping_cost']	= $RELISTEDAUCTION['shipping_cost'];
 	$_SESSION['SELL_minimum_bid']	= $RELISTEDAUCTION['minimum_bid'];
+	$_SESSION['SELL_is_bold']			= $RELISTEDAUCTION['bold'];
+	$_SESSION['SELL_is_highlighted']	= $RELISTEDAUCTION['highlighted'];
+	$_SESSION['SELL_is_featured']		= $RELISTEDAUCTION['featured'];
 
 	if (floatval($RELISTEDAUCTION['reserve_price']) > 0)
 	{

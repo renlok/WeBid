@@ -89,7 +89,7 @@ switch ($_SESSION['action'])
 		else
 		{
 			// set time back to GMT
-			$a_starts = $a_starts - $system->tdiff;
+			$a_starts = empty($start_now) ? ($a_starts - $system->tdiff) : time();
 			$a_ends = $a_starts + ($duration * 24 * 60 * 60);
 			// insert auction
 			$query = addauction();
@@ -409,7 +409,7 @@ switch ($_SESSION['action'])
 						'RESERVE' => $system->print_money($reserve_price),
 						'BN_PRICE' => $system->print_money($buy_now_price),
 						'SHIPPING_COST' => $system->print_money($shipping_cost),
-						'STARTDATE' => FormatDate($a_starts),
+						'STARTDATE' => (empty($start_now)) ? FormatDate($a_starts) : FormatDate($system->ctime),
 						'DURATION' => mysql_result($res, 0, 'description'),
 						'INCREMENTS' => ($increments == 1) ? $MSG['614'] : $system->print_money($customincrement),
 						'ATYPE' => $auction_types[$atype],
@@ -489,7 +489,7 @@ switch ($_SESSION['action'])
 		while ($row = mysql_fetch_assoc($res))
 		{
 			$checked = (in_array(trim($row['description']), $payment)) ? 'checked' : '';
-			$TPL_payments_list .= '<input type="checkbox" name="payment[]" value="' . $row['description'] . '" ' . $checked . '>' . $row['description'] . '<br>';
+			$TPL_payments_list .= '<p><input type="checkbox" name="payment[]" value="' . $row['description'] . '" ' . $checked . '>' . $row['description'] . '</p>';
 		}
 
 		// make hour
@@ -557,13 +557,22 @@ switch ($_SESSION['action'])
 				'INTERNATIONAL' => (!empty($international)) ? 'checked' : '',
 				'SHIPPING_TERMS' => $shipping_terms,
 				'ITEMQTYD' => ($atype == 2 || $buy_now_only == 'y') ? '' : 'disabled',
+				'START_NOW' => (!empty($start_now)) ? 'checked' : '',
+				'IS_BOLD' => ($is_bold == 'y') ? 'checked' : '',
+				'IS_HIGHLIGHTED' => ($is_highlighted == 'y') ? 'checked' : '',
+				'IS_FEATURED' => ($is_featured == 'y') ? 'checked' : '',				
 
 				'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),
 				'B_ADULTONLY' => ($system->SETTINGS['adultonly'] == 'y'),
 				'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] == 'y' && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only'] == 'y') || $system->SETTINGS['bn_only_disable'] == 'n')),
 				'B_BN' => ($system->SETTINGS['buy_now'] == 2),
 				'B_EDITING' => ($_SESSION['SELL_action'] == 'edit'),
-				'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1)
+				// options,
+				'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
+				'B_EDIT_STARTTIME' => ($system->SETTINGS['edit_starttime'] == 1),
+				'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
+				'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
+				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y')
 				));
 		break;
 }

@@ -613,6 +613,8 @@ $MSG['439'] = "Bold Item Fee";
 $MSG['440'] = "Reserve Price Fee";
 $MSG['441'] = "Please create your username and password";
 $MSG['442'] = "Please enter your username and password";
+$MSG['443'] = "%s currently has a full inbox at the moment please try again later";
+$MSG['444'] = "Messages deleted";
 
 $MSG['453'] = "Winners details";
 $MSG['454'] = "Auctions you won";

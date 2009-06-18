@@ -18,7 +18,8 @@ include 'includes/common.inc.php';
 $URL = trim($_GET['url']);
 
 // Update clickthrough counter in the database
-mysql_query("UPDATE " . $DBPrefix . "banners set clicks = clicks + 1 WHERE id=" . intval($_GET['banner']));
+$query = "UPDATE " . $DBPrefix . "banners set clicks = clicks + 1 WHERE id=" . intval($_GET['banner']);
+$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 // Redirect
 header('location: ' . $URL);

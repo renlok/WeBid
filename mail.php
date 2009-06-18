@@ -41,40 +41,43 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	$message = $system->cleanvars($_POST['message']);
 	$_SESSION['messagecont'] = $message;
 	// check user exists
-	$sql = "SELECT * FROM " . $DBPrefix . "users WHERE nick='$sendto'";
-	$run = mysql_query($sql);
-	$system->check_mysql($run, $sql, __LINE__, __FILE__);
-	$usercheck = mysql_num_rows($run);
+	$query = "SELECT * FROM " . $DBPrefix . "users WHERE nick = '" . $sendto . "'";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$usercheck = mysql_num_rows($res);
 	if ($usercheck == '0')
 	{
 		$_SESSION['message'] = $ERR_609;
 		header('location: mail.php?x=1');
 		exit;
 	}
-	$userarray = mysql_fetch_array($run);
+	$userarray = mysql_fetch_array($res);
 	$sendtoid = $userarray['id'];
 	// check use mailbox insnt full
-	$sql = mysql_query("SELECT * FROM " . $DBPrefix . "messages WHERE sentto='$sendtoid'");
-	$mailboxsize = mysql_num_rows($sql);
+	$query = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = '" . $sendtoid . "'";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$mailboxsize = mysql_num_rows($res);
 	if ($mailboxsize >= '30')
 	{
-		$_SESSION['message'] = $sendto . ' currently has a full inbox at the moment please try again later';
+		$_SESSION['message'] = sprintf($MSG['443'], $sendto);
 		header('location: mail.php');
 		exit;
 	}
 	// send message
 	$nowmessage = nl2br($message);
 	$userid = $user->user_data['id'];
-	$sql = "INSERT INTO " . $DBPrefix . "messages( `sentto` , `from` , `when` , `message` , `subject` )  VALUES ('$sendtoid', '$userid', '" . time() . "', '$nowmessage', '$subject')";
-	$run = mysql_query($sql);
-	$system->check_mysql($run, $sql, __LINE__, __FILE__);
+	$query = "INSERT INTO " . $DBPrefix . "messages (`sentto` ,`from` , `when`, `message`, `subject`)
+			VALUES ('" . $sendtoid . "', '" . $userid . "', '" . time() . "', '" . $nowmessage . "', '" . $subject . "')";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 	if (isset($_SESSION['reply']))
 	{
 		$reply = $_SESSION['reply'];
-		$sql = "UPDATE " . $DBPrefix . "messages SET replied = 1 WHERE id = '$reply'";
-		$run = mysql_query($sql);
-		$system->check_mysql($run, $sql, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "messages SET replied = 1 WHERE id = '" . $reply . "'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		unset($_SESSION['reply']);
 	}
 	// delete session of sent message
@@ -91,10 +94,10 @@ if (isset($_REQUEST['deleteid']) && is_array($_REQUEST['deleteid']))
 	{
 		$message_id .= ',' . intval($temparr[$i]);
 	}
-	$sql = "DELETE FROM " . $DBPrefix . "messages WHERE id IN ($message_id)";
-	$run = mysql_query($sql);
-	$system->check_mysql($run, $sql, __LINE__, __FILE__);
-	$ERR = "Messages removed";
+	$query = "DELETE FROM " . $DBPrefix . "messages WHERE id IN (" . $message_id . ")";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$ERR = $MSG['444'];
 }
 // if sending a message
 if ($x == 1)
@@ -108,10 +111,10 @@ if ($x == 1)
 	// if sent from userpage
 	if ($u > 0)
 	{
-		$sql = "SELECT * FROM " . $DBPrefix . "users WHERE id='$u'";
-		$run = mysql_query($sql);
-		$system->check_mysql($run, $sql, __LINE__, __FILE__);
-		$array = mysql_fetch_array($run);
+		$query = "SELECT * FROM " . $DBPrefix . "users WHERE id='$u'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$array = mysql_fetch_array($res);
 		$sendto = $array['nick'];
 	}
 	// get variables
@@ -161,13 +164,13 @@ else
 	$orderby = "ORDER BY `id` DESC";
 }
 
-$sql = "SELECT m.*, u.nick FROM " . $DBPrefix . "messages m
+$query = "SELECT m.*, u.nick FROM " . $DBPrefix . "messages m
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = m.from)
-		WHERE sentto = '$userid' $orderby";
+		WHERE sentto = '" . $userid . "' " . $orderby;
 // get users messages
-$run = mysql_query($sql);
-$system->check_mysql($run, $sql, __LINE__, __FILE__);
-$messages = mysql_num_rows($run);
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$messages = mysql_num_rows($res);
 // display number of messages
 $messagespaceused = ($messages * 4) + 1;
 $messagespaceleft = (30 - $messages) * 4;
@@ -187,7 +190,7 @@ $template->assign_vars(array(
 		'REPLY_MSG' => (isset($TPL_message_cont)) ? $TPL_message_cont : ''
 		));
 
-while ($array = mysql_fetch_array($run))
+while ($array = mysql_fetch_array($res))
 {
 	$template->assign_block_vars('msgs', array(
 			'SENT' => gmdate('M d, Y H:ia', $array['when'] + $system->tdiff),

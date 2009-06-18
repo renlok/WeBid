@@ -71,7 +71,8 @@ else
 // sort out counter
 if (empty($auction_data['counter']))
 {
-	mysql_query("INSERT INTO " . $DBPrefix . "auccounter VALUES (" . $id . ", 1)");
+	$query = "INSERT INTO " . $DBPrefix . "auccounter VALUES (" . $id . ", 1)";
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$auction_data['counter'] = 1;
 }
 else
@@ -82,7 +83,8 @@ else
 	}
 	if (!in_array($id, $_SESSION['WEBID_VIEWED_AUCTIONS']))
 	{
-		mysql_query("UPDATE " . $DBPrefix . "auccounter set counter = counter + 1 WHERE auction_id = " . $id);
+		$query = "UPDATE " . $DBPrefix . "auccounter set counter = counter + 1 WHERE auction_id = " . $id;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$_SESSION['WEBID_VIEWED_AUCTIONS'][] = $id;
 	}
 }

@@ -413,7 +413,7 @@ $template->assign_vars(array(
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
 		'ENDS' => $ending_time,
-		'ENDS_IN' => ($start - $ends),
+		'ENDS_IN' => ($ends - $start),
 		'STARTTIME' => ArrangeDateNoCorrection($start + $system->tdiff),
 		'ENDTIME' => ArrangeDateNoCorrection($ends + $system->tdiff),
 		'BUYNOW1' => $auction_data['buy_now'],

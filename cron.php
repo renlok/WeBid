@@ -130,14 +130,13 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 	// update category tables
 	$cat_id = $Auction['category'];
 	$root_cat = $cat_id;
-	do
+	while ($cat_id != 0 && isset($categories[$cat_id]))
 	{
 		// update counter for this category
 		$R_parent_id = $categories[$cat_id]['parent_id'];
 		$R_cat_id = $categories[$cat_id]['cat_id'];
 		$R_counter = intval($categories[$cat_id]['counter']);
-		$R_sub_counter = intval($categories[$cat_id]['sub_counter']);
-		$R_sub_counter--;
+		$R_sub_counter = intval($categories[$cat_id]['sub_counter']) - 1;
 		if ($cat_id == $root_cat)
 			--$R_counter;
 		if ($R_counter < 0)
@@ -147,8 +146,10 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 		$categories[$cat_id]['counter'] = $R_counter;
 		$categories[$cat_id]['sub_counter'] = $R_sub_counter;
 		$categories[$cat_id]['updated'] = true;
+		if ($cat_id == $R_parent_id) // incase something messes up
+			break;
 		$cat_id = $R_parent_id;
-	} while ($cat_id != 0 && isset($categories[$cat_id]));
+	}
 
 	// RETRIEVE SELLER INFO FROM DATABASE
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $Auction['user'] . " LIMIT 1";

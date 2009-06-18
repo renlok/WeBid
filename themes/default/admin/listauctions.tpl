@@ -71,5 +71,5 @@
     </td>
 </tr>
 </table>
-</body>
-</html>
+
+<!-- INCLUDE footer.tpl -->

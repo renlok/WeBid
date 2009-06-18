@@ -48,6 +48,8 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `cookiesprefix`, ADD `c
 			ADD `counter_auctions` enum('y','n') NOT NULL default 'y', ADD `counter_users` enum('y','n') NOT NULL default 'y', ADD `counter_online` enum('y','n') NOT NULL default 'y',
 			ADD `banemail` text NOT NULL, ADD `mandatory_fields` varchar(255) NOT NULL default 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}',
 			ADD `displayed_feilds` VARCHAR(255) NOT NULL default 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}'";
+$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `ao_hpf_enabled` enum('y','n') NOT NULL default 'y', ADD `ao_hi_enabled` enum('y','n') NOT NULL default 'y',
+			ADD `ao_bi_enabled` enum('y','n') NOT NULL default 'y'";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userslanguage`;";
 
 //0.7.2 to 0.7.3

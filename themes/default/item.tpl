@@ -10,10 +10,10 @@ $(document).ready(function() {
 	function displaytime()
 	{
 		currenttime -= 1;
-		var hours = currenttime / 3600;
-		var mins = (currenttime - (hours * 3600)) / 60;
-		var secs = currenttime - (hours * 3600) - (mins * 60);
-		var timestring = padlength(Math.Round(hours)) + ':' + padlength(Math.Round(mins)) + ':' + padlength(Math.Round(secs));
+		var hours = Math.floor(currenttime / 3600);
+		var mins = Math.floor((currenttime - (hours * 3600)) / 60);
+		var secs = Math.floor(currenttime - (hours * 3600) - (mins * 60));
+		var timestring = padlength(hours) + ':' + padlength(mins) + ':' + padlength(secs);
 		$("#ending_counter").html(timestring);
 	}
 	setInterval(displaytime, 1000);

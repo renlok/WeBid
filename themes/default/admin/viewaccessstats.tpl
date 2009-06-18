@@ -90,5 +90,5 @@
 	<td align="center" valign="middle">&nbsp;</td>
 </tr>
 </table>
-</body>
-</html>
+
+<!-- INCLUDE footer.tpl -->

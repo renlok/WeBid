@@ -33,7 +33,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `lastlogin` varchar(14) NOT NULL default '',
   `status` int(2) NOT NULL default '0',
   KEY `id` (`id`)
-) AUTO_INCREMENT=1 ;";
+) ;";
 
 # 
 # Dumping data for table `" . $DBPrefix . "adminusers`
@@ -126,7 +126,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "banners` (
   `height` int(11) NOT NULL default '0',
   `user` int(11) NOT NULL default '0',
   KEY `id` (`id`)
-) AUTO_INCREMENT=1 ;";
+) ;";
 
 # 
 # Dumping data for table `" . $DBPrefix . "banners`
@@ -200,7 +200,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannersusers` (
   `company` varchar(255) default NULL,
   `email` varchar(255) default NULL,
   KEY `id` (`id`)
-) AUTO_INCREMENT=1 ;";
+) ;";
 
 # 
 # Dumping data for table `" . $DBPrefix . "bannersusers`
@@ -222,7 +222,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bids` (
   `bidwhen` varchar(14) default NULL,
   `quantity` int(11) default '0',
   PRIMARY KEY  (`id`)
-) AUTO_INCREMENT=1 ;";
+) ;";
 
 # 
 # Dumping data for table `" . $DBPrefix . "bids`
@@ -788,7 +788,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currencies` (
   `id` int(11) NOT NULL auto_increment,
   `currency` varchar(100) NOT NULL default '',
   KEY `id` (`id`)
-) AUTO_INCREMENT=1 ;";
+) ;";
 
 # 
 # Dumping data for table `" . $DBPrefix . "currencies`
@@ -1508,7 +1508,10 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `counter_online` enum('y','n') NOT NULL default 'y',
   `banemail` text NOT NULL,
   `mandatory_fields` varchar(255) NOT NULL default '',
-  `displayed_feilds` VARCHAR(255) NOT NULL default ''
+  `displayed_feilds` VARCHAR(255) NOT NULL default '',
+  `ao_hpf_enabled` enum('y','n') NOT NULL default 'y',
+  `ao_hi_enabled` enum('y','n') NOT NULL default 'y',
+  `ao_bi_enabled` enum('y','n') NOT NULL default 'y'
 );";
 
 # 
@@ -1516,7 +1519,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}');";
+('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}', 'y', 'y', 'y');";
 
 
 # ############################

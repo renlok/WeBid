@@ -413,7 +413,7 @@ $template->assign_vars(array(
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
 		'ENDS' => $ending_time,
-		'ENDS_IN' => ($ends - $start),
+		'ENDS_IN' => ($ends - time()),
 		'STARTTIME' => ArrangeDateNoCorrection($start + $system->tdiff),
 		'ENDTIME' => ArrangeDateNoCorrection($ends + $system->tdiff),
 		'BUYNOW1' => $auction_data['buy_now'],
@@ -467,7 +467,7 @@ $template->assign_vars(array(
 		'B_USERBID' => $userbid,
 		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user']),
 		'B_HASBUYER' => (count($hbidder_data) > 0),
-		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($start - $ends) / 3600))
+		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600))
 		));
 
 include 'header.php';

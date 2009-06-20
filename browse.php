@@ -216,7 +216,7 @@ else
 	$result = mysql_query($qs);
 	$system->check_mysql($result, $qs, __LINE__, __FILE__);
 
-	include $include_path . "browseitems.inc.php";
+	include $include_path . 'browseitems.inc.php';
 	browseItems($result, 'browse.php');
 
 	$template->assign_vars(array(

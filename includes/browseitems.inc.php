@@ -40,7 +40,6 @@ function browseItems($result, $current_page)
 			$tplv['img'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . $row['pict_url'] . '" border=0 /></a>';
 
 			// this subastas title and link to details
-			$tplv['id'] = $row['id'];
 			$tplv['title'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '">' . $row['title'] . '</a>';
 
 			if ($row['current_bid'] == 0)
@@ -62,33 +61,30 @@ function browseItems($result, $current_page)
 				$tplv['buy_now'] = '';
 			}
 
-			$tplv['bid'] = $row['current_bid'];
-
 			// number of bids for this auction
 			$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . $row['id'];
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$num_bids = mysql_num_rows($res);
-			$rpr = intval($row['reserved_price']);
-			$reserved_price = ($rpr != 0) ? ' <img src="images/r.gif">' : '';
-
-			$tplv['rpr'] = $reserved_price . $num_bids;
+			$reserved_price = ($row['reserved_price'] != 0) ? ' <img src="images/r.gif">' : '';
 
 			// time left till the end of this auction 
 			$s_difference = time() - $row['starts'];
 			$difference = $row['ends'] - time();
 
 			$template->assign_block_vars('items', array(
-				'ID' => $tplv['id'],
-				'ROWCOLOUR' => ($k % 2) ? 'bgcolor="#FFFEEE"' : '',
+				'ID' => $row['id'],
+				'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : ($k % 2) ? 'bgcolor="#FFFEEE"' : '',
 				'IMAGE' => $tplv['img'],
 				'TITLE' => $tplv['title'],
 				'BUY_NOW' => $tplv['buy_now'],
-				'BID' => $tplv['bid'],
-				'BIDFORM' => $system->print_money($tplv['bid']),
+				'BID' => $row['current_bid'],
+				'BIDFORM' => $system->print_money($row['current_bid']),
 				'TIMELEFT' => FormatTimeLeft($difference),
 				'NUMBIDS' => $num_bids,
-				'RESERVE' => $reserved_price
+				'RESERVE' => $reserved_price,
+
+				'B_BOLD' => ($row['bold'] == 'y')
 			));
 			$k++;
 		}

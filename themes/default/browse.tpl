@@ -17,12 +17,12 @@
 			</th>
 		</tr>
 <!-- BEGIN items -->
-		<tr align="center" {items.ROWCOLOUR}>
+		<tr align="center" {items.ROWCOLOUR}<!-- IF items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
 			<td align="center">
 				{items.IMAGE}
 			</td>
 			<td align="left">
-				{items.TITLE} {items.BUY_NOW}
+                {items.TITLE} {items.BUY_NOW}
 			</td>
 			<td align="right">
 				{items.BIDFORM}

@@ -18,15 +18,6 @@ include $include_path . 'dates.inc.php';
 
 $NOW = time();
 
-if (!ini_get('register_globals'))
-{
-	$superglobales = array($_POST, $_GET);
-	foreach ($superglobales as $superglobal)
-	{
-		extract($superglobal, EXTR_SKIP);
-	}
-}
-
 $q = trim($_GET['q']);
 $query = $q;
 $qquery = ereg_replace("%", "\\%", $query);
@@ -163,7 +154,7 @@ else
 	$result = mysql_query($sql . " LIMIT $left_limit,$lines");
 	$system->check_mysql($result, $sql, __LINE__, __FILE__);
 	// to be sure about items format, I've unified the call
-	include $include_path . "browseitems.inc.php";
+	include $include_path . 'browseitems.inc.php';
 	browseItems($result, 'search.php');
 }
 

@@ -53,6 +53,14 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `ao_hpf_enabled` enum('y
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userslanguage`;";
 $query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `bold` enum('y','n') NOT NULL default 'n', ADD `highlighted` enum('y','n') NOT NULL default 'n',
 			ADD `featured` enum('y','n') NOT NULL default 'n'";
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
+  `gateways` text NOT NULL default 'paypal',
+  `paypal_address` varchar(50) NOT NULL default '',
+  `paypal_required` int(1) NOT NULL default '0',
+  `paypal_active` int(1) NOT NULL default '0'
+) ;";
+$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal', '', 0, 0);";
 
 //0.7.2 to 0.7.3
 /*

@@ -146,6 +146,7 @@ function SwitchMenu(obj){
 		  	<div class="menutitle" onClick="SwitchMenu('fees')">{L_25_0012}</div>
 			<span class="submenu" id="fees">
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/fees.php" target="content" class="submenulink">{L_25_0012}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/fee_gateways.php" target="content" class="submenulink">{L_445}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/enablefees.php" target="content" class="submenulink">{L_395}</a><br>
 			</span>
 		  </TD>

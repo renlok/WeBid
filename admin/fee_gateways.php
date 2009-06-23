@@ -24,13 +24,30 @@ $gateway_data = mysql_fetch_assoc($res);
 
 $gateways = explode(',', $gateway_data['gateways']);
 
+if (isset($_POST['action']))
+{
+	// build the sql
+	$query = 'UPDATE ' . $DBPrefix . 'gateways SET ';
+	for ($i = 0; $i < count($gateways); $i++)
+	{
+		if ($i != 0)
+			$query .= ', ';
+		$gateway = $gateways[$i];
+		$query .= $gateway . '_active = ' . intval($_POST[$gateway . '_active']) . ', ';
+		$query .= $gateway . '_required = ' . intval($_POST[$gateway . '_required']) . ', ';
+		$query .= $gateway . '_address = ' . $_POST[$gateway . '_address'];
+	}
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+}
+
 for ($i = 0; $i < count($gateways); $i++)
 {
 	$gateway = $gateways[$i];
 	$template->assign_block_vars('gateways', array(
-			'NAME' => $gateway,
-			'ENABLED' => $gateway_data[$gateway . '_active'],
-			'REQUIRED' => $gateway_data[$gateway . '_required'],
+			'NAME' => str_replace('_', ' ', ucfirst($gateway)),
+			'PLAIN_NAME' => $gateway,
+			'ENABLED' => ($gateway_data[$gateway . '_active'] == 1) ? 'checked' : '',
+			'REQUIRED' => ($gateway_data[$gateway . '_required'] == 1) ? 'checked' : '',
 			'ADDRESS' => $gateway_data[$gateway . '_address']
 			));
 }

@@ -615,6 +615,9 @@ $MSG['441'] = "Please create your username and password";
 $MSG['442'] = "Please enter your username and password";
 $MSG['443'] = "%s currently has a full inbox at the moment please try again later";
 $MSG['444'] = "Messages deleted";
+$MSG['445'] = "Payments Gateways";
+$MSG['446'] = "Required?";
+$MSG['447'] = "Enabled?";
 
 $MSG['453'] = "Winners details";
 $MSG['454'] = "Auctions you won";

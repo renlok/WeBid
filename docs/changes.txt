@@ -49,5 +49,6 @@
 - Added option to make auctions bold/highlighted or featured
 - Add option to start auction now
 - Moved all the strings from mail.php into the language file
+- Fixed the admin newsletter sending page
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

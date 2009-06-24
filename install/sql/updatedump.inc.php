@@ -55,7 +55,7 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `bold` enum('y','n') NOT
 			ADD `featured` enum('y','n') NOT NULL default 'n'";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
-  `gateways` text NOT NULL default 'paypal',
+  `gateways` text,
   `paypal_address` varchar(50) NOT NULL default '',
   `paypal_required` int(1) NOT NULL default '0',
   `paypal_active` int(1) NOT NULL default '0'

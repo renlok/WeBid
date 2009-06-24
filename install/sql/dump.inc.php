@@ -1124,7 +1124,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "fontsandcolors` VALUES (1, 3, '#FF9900
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
-  `gateways` text NOT NULL default 'paypal',
+  `gateways` text,
   `paypal_address` varchar(50) NOT NULL default '',
   `paypal_required` int(1) NOT NULL default '0',
   `paypal_active` int(1) NOT NULL default '0'

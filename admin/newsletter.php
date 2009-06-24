@@ -20,7 +20,7 @@ include $main_path . "fck/fckeditor.php";
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "newsletter") {
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
 	if (empty($_POST['subject']) || empty($_POST['content'])) {
 		$ERR = $ERR_5014;
 	} else {

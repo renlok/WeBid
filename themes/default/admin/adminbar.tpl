@@ -190,17 +190,16 @@ function SwitchMenu(obj){
 		  <td width="170">
 		  	<div class="menutitle" onClick="SwitchMenu('users')">{L_25_0010}</div>
 			<span class="submenu" id="users">
-			<b><FONT COLOR=#666666>{L_365}</FONT></b><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/newadminuser.php" target="content" class="submenulink">{L_367}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/adminusers.php" target="content" class="submenulink">{L_525}</a><br><br>
-			<b><FONT COLOR=#666666>{L_350}</FONT></b><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/acceptancetext.php" target="content" class="submenulink">{L_25_0110}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/listusers.php" target="content" class="submenulink">{L_045}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/usergroups.php" target="content" class="submenulink">{L_448}</a><br>
+            <img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/acceptancetext.php" target="content" class="submenulink">{L_25_0110}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/profile.php" target="content" class="submenulink">{L_048}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/activatenewsletter.php" target="content" class="submenulink">{L_25_0079}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/newsletter.php" target="content" class="submenulink">{L_607}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/banips.php" target="content" class="submenulink">{L_2_0017}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/winner_address.php" target="content" class="submenulink">{L_30_0083}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/banips.php" target="content" class="submenulink">{L_2_0017}</a><br><br>
+			<b><FONT COLOR=#666666>{L_365}</FONT></b><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/newadminuser.php" target="content" class="submenulink">{L_367}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/adminusers.php" target="content" class="submenulink">{L_525}</a><br>
 			</span>
 		  </TD>
 		</tr>

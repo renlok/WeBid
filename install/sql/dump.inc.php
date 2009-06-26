@@ -1143,12 +1143,13 @@ $query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal', '', 0, 0);
 # 
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
+$query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `group_name` varchar(50) NOT NULL default '',
   `can_sell` int(1) NOT NULL default '0',
   `can_buy` int(1) NOT NULL default '0',
-  `count` int(15) NOT NULL default '0'
+  `count` int(15) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
 ) ;";
 
 # 

@@ -50,5 +50,6 @@
 - Add option to start auction now
 - Moved all the strings from mail.php into the language file
 - Fixed the admin newsletter sending page
+- Merged winner_address.php and contactseller.php
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

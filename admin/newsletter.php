@@ -20,42 +20,43 @@ include $main_path . "fck/fckeditor.php";
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
-	if (empty($_POST['subject']) || empty($_POST['content'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	if (empty($_POST['subject']) || empty($_POST['content']))
+	{
 		$ERR = $ERR_5014;
-	} else {
+	}
+	else
+	{
 		$COUNTER = 0;
-		switch($_POST['usersfilter']) {
-			case 'all':
-			$query = "SELECT email FROM " . $DBPrefix . "users WHERE nletter = 1";
-			break;
+		$query = "SELECT email FROM " . $DBPrefix . "users WHERE nletter = 1";
+		switch($_POST['usersfilter'])
+		{
 			case 'active':
-			$query = "SELECT email FROM " . $DBPrefix . "users WHERE nletter = 1 AND suspended = 0";
-			break;
+				$query .= ' AND suspended = 0';
+				break;
 			case 'admin':
-			$query = "SELECT email FROM " . $DBPrefix . "users WHERE nletter = 1 AND suspended = 1";
-			break;
+				$query .= ' AND suspended = 1';
+				break;
 			case 'fee':
-			$query = "SELECT email FROM " . $DBPrefix . "users WHERE nletter = 1 AND suspended = 9";
-			break;
+				$query .= ' AND suspended = 9';
+				break;
 			case 'confirmed':
-			$query = "SELECT email FROM " . $DBPrefix . "users WHERE nletter = 1 AND suspended = 8";
-			break;
+				$query .= ' AND suspended = 8';
+				break;
 		}
 		$subject = stripslashes($_POST['subject']);
 		$content = stripslashes($_POST['content']);
-		$headers = 'From:'.$system->SETTINGS['sitename'].' <'.$system->SETTINGS['adminmail'].'>'."\n".'Content-Type: text/html; charset='.$CHARSET;
-		$result = mysql_query($query);
-		while ($row = mysql_fetch_array($result)) {
-			if (mail($row['email'], $subject, $content, $headers)) {
+		$headers = 'From:' . $system->SETTINGS['sitename'] . ' <' . $system->SETTINGS['adminmail'] . '>' . "\n" . 'Content-Type: text/html; charset=' . $CHARSET;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		while ($row = mysql_fetch_assoc($result))
+		{
+			if (mail($row['email'], $subject, $content, $headers))
+			{
 				$COUNTER++;
 			}
 		}
-		if (!$result) {
-			$ERR = $ERR_001;
-		} else {
-			$ERR = $COUNTER.$MSG['5300'];
-		}
+		$ERR = $COUNTER . $MSG['5300'];
 	}
 }
 

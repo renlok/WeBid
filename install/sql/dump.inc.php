@@ -1138,6 +1138,28 @@ $query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal', '', 0, 0);
 
 # ############################
 
+# 
+# Table structure for table `" . $DBPrefix . "groups`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(50) NOT NULL default '',
+  `can_sell` int(1) NOT NULL default '0',
+  `can_buy` int(1) NOT NULL default '0',
+  `count` int(15) NOT NULL default '0'
+) ;";
+
+# 
+# Dumping data for table `" . $DBPrefix . "groups`
+# 
+
+$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0);";
+$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0);";
+
+# ############################
+
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
 `id` int( 50 ) NOT NULL AUTO_INCREMENT ,

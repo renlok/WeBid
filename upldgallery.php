@@ -140,10 +140,10 @@ if ($_POST['uploadpicture'] == $MSG['681'])
 	{
 		if (!isset($_SESSION['UPLOADED_PICTURES']) || !is_array($_SESSION['UPLOADED_PICTURES'])) $_SESSION['UPLOADED_PICTURES'] = array();
 		if (!isset($_SESSION['UPLOADED_PICTURES_SIZE']) || !is_array($_SESSION['UPLOADED_PICTURES_SIZE'])) $_SESSION['UPLOADED_PICTURES_SIZE'] = array();
-		$filename = strtolower($_FILES['userfile']['name']);
+		$filename = $_FILES['userfile']['name'];
 		$nameparts = explode('.', $filename);
 		$file_ext = $nameparts[count($nameparts) - 1];
-		$file_types = array('gif', 'jpg', 'jpeg', 'png');
+		$file_types = array('gif', 'jpg', 'jpeg', 'png', 'GIF', 'JPG', 'JPEG', 'PNG');
 
 		if ($_FILES['userfile']['size'] > $system->SETTINGS['maxuploadsize'])
 		{
@@ -168,25 +168,9 @@ if ($_POST['uploadpicture'] == $MSG['681'])
 			}
 			// Move uploaded file into TMP directory & rename
 			$replace = array('.', ' ', ',');
-			switch($file_ext)
-			{
-				case 'gif':
-					$newname = str_replace('.gif', '', $filename);
-					$newname = str_replace($replace, '_', $newname) . '.gif';
-					break;
-				case 'jpg':
-					$newname = str_replace('.jpg', '', $filename);
-					$newname = str_replace($replace, '_', $newname) . '.jpg';
-					break;
-				case 'jpeg':
-					$newname = str_replace('.jpeg', '', $filename);
-					$newname = str_replace($replace, '_', $newname) . '.jpeg';
-					break;
-				case 'png':
-					$newname = str_replace('.png', '', $filename);
-					$newname = str_replace($replace, '_', $newname) . '.png';
-					break;
-			}
+			// clean the file
+			$newname = str_replace('.' . $file_ext, '', $filename);
+			$newname = str_replace($replace, '_', $newname) . '.' . $file_ext;
 			if ($system->move_file($_FILES['userfile']['tmp_name'], $upload_path . session_id() . '/' . $newname))
 			{
 				// Populate arrays

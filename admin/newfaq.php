@@ -17,10 +17,9 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-#//Default for error message (blank)
 unset($ERR);
 
-#// Insert new message
+// Insert new message
 if (isset($_POST['action']) && $_POST['action'] == "update") {
 	if (strlen($_POST[question]) == 0 && strlen($_POST[answer]) == 0){
 		$ERR = "Required fields missing (all fields are required).";

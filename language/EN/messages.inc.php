@@ -490,6 +490,7 @@ $MSG['295'] = "COUNTRY";
 $MSG['296'] = "E-MAIL";
 $MSG['297'] = "ACTION";
 $MSG['298'] = "Edit";
+$MSG['299'] = "Activate user";
 $MSG['300'] = "Suspend";
 $MSG['301'] = "users found in the database";
 $MSG['302'] = "Name";
@@ -598,6 +599,9 @@ $MSG['413'] = "Error Handling settings updated.";
 $MSG['415'] = "Error";
 $MSG['416'] = "Please report the above error message to:";
 $MSG['417'] = "General";
+$MSG['418'] = "Are you sure you want to activate this user?";
+$MSG['419'] = "Status";
+
 $MSG['429'] = "There were no bids or reserve price was not met";
 $MSG['430'] = "User Signup Fee";
 $MSG['431'] = "Auction Fees";

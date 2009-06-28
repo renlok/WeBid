@@ -19,315 +19,184 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path."countries.inc.php";
 
-$username = $name;
+unset($ERR);
 $id = intval($_REQUEST['id']);
 
-//-- Data check
-if (!$_REQUEST[id]) {
-	header("Location: listusers.php");
+// Data check
+if (empty($id) || $id <= 0)
+{
+	header('location: listusers.php?PAGE=' . intval($_GET['offset']));
 	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_SELF']))) {
-	$ERR_CODE = 1;
-	
-	//-- Check if the users has some auction
-	$query = "select * from " . $DBPrefix . "auctions WHERE user='$id'";
-	
-	$result = mysql_query($query);
-	if (!$result) {
-		print "Database access error: abnormal termination".mysql_error();
-		exit;
-	}
-	
-	$num_auctions = mysql_num_rows($result);
-	if ($num_auctions > 0) {
-		
-		$ERR = "The user is the SELLER in the following auctions:<BR>";
-		$i =  0;
-		while ($i < $num_auctions) {
-			$ERR_CODE=2;
-			$ERR .= mysql_result($result,$i,"id")."<BR>";
-			$i++;
-		}
-	}
-	
-	//-- Check if the user is BIDDER in some auction
-	$query = "select * from " . $DBPrefix . "bids WHERE bidder='$id'";
-	$result = mysql_query($query);
-	if (!$result) {
-		print "Database access error: abnormal termination".mysql_error();
-		exit;
-	}
-	
-	$num_auctions = mysql_num_rows($result);
-	if ($num_auctions > 0) {
-		$ERR_CODE=1;
-		$ERR = "The user placed a bid in the following auctions:<BR>";
-		$i =  0;
-		while ($i < $num_auctions){
-			$ERR .= mysql_result($result,$i,"bidder")."<BR>";
-			$i++;
-		}
-	}
-	
-	//-- check if user is suspended or not
-	$suspend = mysql_query("select suspended from " . $DBPrefix . "users WHERE id=\"$id\"");
-	if (!$suspend){
-		print "Database access error: abnormal termination".mysql_error();
-		exit;
-	}
-	$myrow=mysql_fetch_array($suspend);
-	$suspended = $myrow['suspended'];
-	
-	if ($ERR_CODE==1) {
-		//-- delete user
-		$sql="delete from " . $DBPrefix . "users WHERE id='$id'";
-		$res=mysql_query($sql);
-		//-- delete user bids
-		$decremsql = mysql_query("select * FROM " . $DBPrefix . "bids WHERE bidder='$id'");
-		$bid_decrem = mysql_num_rows($decremsql);
-		$sql="delete from " . $DBPrefix . "bids WHERE bidder='$id'";
-		$res=mysql_query($sql);
-		//-- delete user's auctions
-		$decremsql = mysql_query("select * FROM " . $DBPrefix . "auctions WHERE user='$id'");
-		$row=mysql_fetch_array($decremsql);
-		// update "categories" table - for counters
-		$cat_id = $row['category'];
-		$root_cat = $cat_id;
-		do {
-			$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id=\"$cat_id\"";
-			$result = mysql_query($query);
-			if ( $result ) {
-				if ( mysql_num_rows($result)>0 ) {
-					$R_parent_id = mysql_result($result,0,"parent_id");
-					$R_cat_id = mysql_result($result,0,"cat_id");
-					$R_counter = intval(mysql_result($result,0,"counter"));
-					$R_sub_counter = intval(mysql_result($result,0,"sub_counter"));
-					
-					$R_sub_counter--;
-					if ( $cat_id == $root_cat )
-					--$R_counter;
-					
-					if ($R_counter < 0) $R_counter = 0;
-					if ($R_sub_counter < 0) $R_sub_counter = 0;
-					
-					$query = "UPDATE " . $DBPrefix . "categories SET counter='$R_counter', sub_counter='$R_sub_counter' WHERE cat_id=\"$cat_id\"";
-					if ( !mysql_query($query) )	errorLogSQL();
-					
-					$cat_id = $R_parent_id;
-				}
-			}
-		} while ($cat_id!=0);
-		
-		$auction_decrem = mysql_num_rows($decremsql);
-		$sql = "delete from " . $DBPrefix . "auctions WHERE user='$id'";
-		$res=mysql_query($sql);
-		
-		//-- Update counters
-		if ($suspended == 0) {
-			$query = mysql_query("UPDATE " . $DBPrefix . "counters set users=(users-1), bids=(bids-$bid_decrem), auctions=(auctions-$auction_decrem)");
-		} elseif ($suspended == 1) {
-			$query = mysql_query("UPDATE " . $DBPrefix . "counters set users=(users-1), inactiveusers=(inactiveusers-1), bids=(bids-$bid_decrem), auctions=(auctions-$auction_decrem)");
-		}
-		$URL = $_SESSION['RETURN_LIST']."?PAGE=".$_SESSION['RETURN_LIST_PAGE'];
-		unset($_SESSION['RETURN_LIST']);
-		header("Location: $URL");
-		exit;
-	}
-	if ($ERR_CODE == 2) {
-		//-- delete user
-		$sql="delete from " . $DBPrefix . "users WHERE id='$id'";
-		$res=mysql_query($sql);
-		$suspended = mysql_result( $res, 0, "suspended" );
-		//-- delete user auctions
-		$sql="delete from " . $DBPrefix . "auctions WHERE user='$id'";
-		$res=mysql_query($sql);
-		//-- Update counters
-		if ($suspended == 0){
-			$query = mysql_query("UPDATE " . $DBPrefix . "counters set users=(users-1)");
-		} elseif ($suspended==1) {
-			$query = mysql_query("UPDATE " . $DBPrefix . "counters set inactiveusers=(inactiveusers-1)");
-		}
-		$URL = $_SESSION['RETURN_LIST']."?PAGE=".$_SESSION['RETURN_LIST_PAGE'];
-		unset($_SESSION['RETURN_LIST']);
-		header("Location: $URL");
-		exit;	}
-}
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	$ERR = '';
+	$has_auctions = false;
+	$has_bids = false;
+	$catscontrol = new MPTTcategories();
 
+	// Check if the users has some auction
+	$query = "SELECT id, title FROM " . $DBPrefix . "auctions WHERE user = " . $id;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$num_auctions = mysql_num_rows($res);
 
-if (!$_POST['action'] || ($_POST['action'] && $ERR)) {
-	$query = "select * from " . $DBPrefix . "users WHERE id=".intval($id);
-	$result = mysql_query($query);
-	if (!$result) {
-		print "Database access error: abnormal termination".mysql_error();
-		exit;
-	}
-	
-	$username = mysql_result($result,0,"name");
-	
-	$nick = mysql_result($result,0,"nick");
-	$password = mysql_result($result,0,"password");
-	$email = mysql_result($result,0,"email");
-	$address = mysql_result($result,0,"address");
-	
-	$country = mysql_result($result,0,"country");
-	$country_list="";
-	foreach ($countries as $code => $descr)
+	if ($num_auctions > 0)
 	{
-		$country_list .= "<option value=\"$descr\"";
-		if ($descr == $country) {
-			$country_list .= " selected";
+		$ERR = "The user is the SELLER in the following auctions:<br>";
+		while ($row = mysql_fetch_assoc($res))
+		{
+			$has_auctions = true;
+			$ERR .= $row['id'] . ' - <a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '" target="_blank">' . $row['title'] . '</a><br>';
 		}
-		$country_list .= ">$descr</option>\n";
-	};
-	
-	$prov = mysql_result($result,0,"prov");
-	$zip = mysql_result($result,0,"zip");
-	
-	$birthdate = mysql_result($result,0,"birthdate");
-	$birth_day = substr($birthdate,6,2);
-	$birth_month = substr($birthdate,4,2);
-	$birth_year = substr($birthdate,0,4);
-	$birthdate = "$birth_day/$birth_month/$birth_year";
-	
-	$phone = mysql_result($result,0,"phone");
-	$suspended = mysql_result($result,0,"suspended");
-	
-	$rate_num = mysql_result($result,0,"rate_num");
-	$rate_sum = mysql_result($result,0,"rate_sum");
-	if ($rate_num) {
-		$rate = round($rate_sum / $rate_num);
-	} else {
-		$rate=0;
 	}
+
+	// Check if the user is BIDDER in some auction
+	$query = "SELECT * FROM " . $DBPrefix . "bids WHERE bidder = " . $id;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$num_bids = mysql_num_rows($res);
+
+	if ($num_bids > 0)
+	{
+		$has_bids = true;
+		$ERR .= sprintf('The user has placed bids on %s auction(s).', $num_auctions);
+	}
+
+	if (!isset($_POST['ignore']) && ($has_bids || $has_auctions))
+	{
+		$template->assign_vars(array(
+				'MESSAGE' => $ERR . '<p>' . $MSG['419'] . '</p>',
+				'STRING' => $MSG['030'],
+				'ID' => $id,
+				'OFFSET' => $_POST['offset']
+				));
+		
+		$template->set_filenames(array(
+				'body' => 'excludeuser.tpl'
+				));
+		$template->display('body');
+		exit;
+	}
+
+	// check if user is suspended or not
+	$query = "SELECT suspended FROM " . $DBPrefix . "users WHERE id = " . $id;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$myrow = mysql_fetch_assoc($res);
+	$suspended = $myrow['suspended'];
+
+	// delete user
+	$query = "DELETE FROM " . $DBPrefix . "users WHERE id = " . $id;
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+	if ($has_auctions)
+	{
+		// update categories table
+		$query = "SELECT c.level, c.left_id, c.right_id FROM " . $DBPrefix . "auctions a
+				LEFT JOIN " . $DBPrefix . "categories c ON (a.category = c.cat_id)
+				WHERE a.user = " . $id;
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		while ($row = mysql_fetch_array($res))
+		{
+			$crumbs = $catscontrol->get_bread_crumbs($row['left_id'], $row['right_id']);
+			for ($i = 0; $i < count($crumbs); $i++)
+			{
+				$query = "UPDATE " . $DBPrefix . "categories SET counter = counter - 1, sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
+		}
+
+		// delete user's auctions
+		$query = "DELETE FROM " . $DBPrefix . "auctions WHERE user = " . $id;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	}
+
+	if ($has_bids)
+	{
+		// update auctions table
+		$query = "SELECT a.id, a.current_bid, b.bid FROM " . $DBPrefix . "bids b
+				LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
+				WHERE b.bidder = " . $id . " ORDER BY b.bid DESC";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		while ($row = mysql_fetch_array($res))
+		{
+			// check if user is highest bidder
+			if ($row['current_bid'] == $row['bid'])
+			{
+				$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . $row['id'] . " ORDER BY bid DESC LIMIT 1, 1";
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$next_bid = mysql_fetch_assoc($res);
+				// set new highest bid
+				$extra = ", current_bid = '" . $next_bid['bid'] . "'";
+			}
+			$query = "UPDATE " . $DBPrefix . "auctions SET num_bids = num_bids - 1" . $extra . " WHERE id = " . $row['id'];
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+
+		// delete bids
+		$query = "DELETE FROM " . $DBPrefix . "bids WHERE bidder = " . $id;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	}
+
+	// Update user counters
+	if ($suspended == 0)
+	{
+		$query = "UPDATE " . $DBPrefix . "counters set users = users - 1, bids = bids - " . $num_bids . ", auctions = auctions - " . $num_auctions;
+	}
+	else
+	{
+		$query = "UPDATE " . $DBPrefix . "counters set inactiveusers = inactiveusers - 1, bids = bids - " . $num_bids . ", auctions = auctions - " . $num_auctions;
+	}
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+	header('location: listusers.php?PAGE=' . intval($_REQUEST['offset']));
+	exit;
 }
 
-?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-<STYLE TYPE="text/css">
-body {
-scrollbar-face-color: #aaaaaa;
-scrollbar-shadow-color: #666666;
-scrollbar-highlight-color: #aaaaaa;
-scrollbar-3dlight-color: #dddddd;
-scrollbar-darkshadow-color: #444444;
-scrollbar-track-color: #cccccc;
-scrollbar-arrow-color: #ffffff;
-}</STYLE>
-</head>
-<body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr> 
-	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-		<tr> 
-		  <td width="30"><img src="images/i_use.gif" ></td>
-		  <td class=white><?php echo $MSG['25_0010']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['045']; ?></td>
-		</tr>
-	  </table></td>
-  </tr>
-  <tr>
-	<td align="center" valign="middle">&nbsp;</td>
-  </tr>
-	<tr> 
-	<td align="center" valign="middle">
+// load the page
+$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $id;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$user_data = mysql_fetch_assoc($res);
 
-<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="CENTER">
-		<tr>
-		  <td align=CENTER class=title><?php print $MSG['304']; ?></td>
-		</tr>
-		<tr>
-		  <td><table width=100% border=0 cellpadding="4" cellspacing=0 bgcolor="#FFFFFF" celpadding=4>
-					<tr>
-					  <td align=CENTER colspan=5><br>
-						<br>
-					  </td>
-					</tr>
-					<table width="100%" border="0" cellpadding="5" bgcolor=#FFFFFF>
-					  <?php
-					  if ($ERR) {
+$birth_day = substr($user_data['birthdate'], 6, 2);
+$birth_month = substr($user_data['birthdate'], 4, 2);
+$birth_year = substr($user_data['birthdate'], 0, 4);
+
+if ($system->SETTINGS['datesformat'] == 'USA')
+{
+	$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
+}
+else
+{
+	$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
+}
+
+$template->assign_vars(array(
+		'ACTION' => $MSG['304'],
+		'REALNAME' => $user_data['name'],
+		'USERNAME' => $user_data['nick'],
+		'EMAIL' => $user_data['email'],
+		'ADDRESS' => $user_data['address'],
+		'PROV' => $user_data['prov'],
+		'ZIP' => $user_data['zip'],
+		'COUNTRY' => $user_data['country'],
+		'PHONE' => $user_data['phone'],
+		'RATE' => ($user_data['rate_num'] == 0) ? 0 : ($user_data['rate_sum'] / $user_data['rate_num']),
+		'DOB' => $birthdate,
+		'QUESTION' => $MSG['307'],
+		'MODE' => '',
+		'ID' => $_GET['id'],
+		'OFFSET' => $_GET['offset']
+		));
+
+$template->set_filenames(array(
+		'body' => 'excludeuser.tpl'
+		));
+$template->display('body');
 ?>
-					  <tr>
-						<td width="204" valign="top" align="right"></td>
-						<td width="486"><?php print $ERR; ?> </td>
-					  </tr>
-					  <?php
-					  }
-?>
-					  <tr>
-						<td width="204" valign="top" align="right"><?php print $MSG['302']; ?> </td>
-						<td width="486"><?php print $username; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204" valign="top" align="right"><?php print $MSG['003']; ?> </td>
-						<td width="486"><?php print $nick; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204" valign="top" align="right"><?php print $MSG['004']; ?> </td>
-						<td width="486"><?php print $password; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204"  valign="top" align="right"><?php print $MSG['303']; ?> </td>
-						<td width="486"><?php print $email; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204"  valign="top" align="right"><?php print $MSG['252']; ?> </td>
-						<td width="486"><?php print $birthdate; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204" valign="top" align="right"><?php print $MSG['009']; ?> </td>
-						<td width="486"><?php print $address; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204" valign="top" align="right"><?php print $MSG['014']; ?> </td>
-						<td width="486"><?php print $country; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204" valign="top" align="right"><?php print $MSG['012']; ?> </td>
-						<td width="486"><?php print $zip; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204" valign="top" align="right"><?php print $MSG['013']; ?> </td>
-						<td width="486"><?php print $phone; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204" valign="top" align="right"><?php print $MSG['300']; ?> </td>
-						<td width="486">
-						<?php
-						if ($suspended == 0)
-						print $MSG['029'];
-						else
-						print $MSG['030'];
-						
-						?>
-						</td>
-					  </tr>
-					  <tr>
-						<td width="204" valign="top" align="right">&nbsp;</td>
-						<td width="486">
-						<A HREF=userfeedback.php?id=<?php echo $id; ?>><?php echo $MSG['208']; ?></A>
-						</td>
-					  </tr>
-					  <tr>
-						<td width="204">&nbsp;</td>
-						<td width="486"><?php print $MSG['307']; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204">&nbsp;</td>
-						<td width="486"><form name=details action="deleteuser.php" method="POST">
-							<input type="hidden" name="id" value="<?php echo $id; ?>">
-							<input type="hidden" name="offset" value="<?php echo $_GET['offset']; ?>">
-							<input type="hidden" name="action" value="Delete">
-							<input TYPE="submit" name="act" value="<?php print $MSG['008']; ?>">
-						  </form></td>
-					</table>
-				  </table></td>
-		</tr>
-	  </table>
-</td>
-</tr>
-</table>
-</body>
-</html>

@@ -35,10 +35,6 @@
                     <td>{USERNAME}</td>
                 </tr>
                 <tr>
-                    <td>{L_004}</td>
-                    <td>{PASSWORD}</td>
-                </tr>
-                <tr>
                     <td>{L_303}</td>
                     <td>{EMAIL}</td>
                 </tr>
@@ -68,7 +64,10 @@
                 </tr>
                 <tr>
                     <td>{L_222}</td>
-                    <td><img src="../images/estrella_{RATE}.gif"></td>
+                    <td>
+                        <img src="../images/estrella_{RATE}.gif">
+                        <p><a href="userfeedback.php?id={ID}">{L_208}</a></p>
+                    </td>
                 </tr>
                 <tr>
                     <td width="204">&nbsp;</td>
@@ -77,7 +76,7 @@
                 <tr>
                     <td width="204">&nbsp;</td>
                     <td>
-                        <form name="details" action="excludeuser.php" method="post">
+                        <form name="details" action="" method="post">
                             <input type="hidden" name="id" value="{ID}">
                             <input type="hidden" name="offset" value="{OFFSET}">
                             <input type="hidden" name="action" value="update">

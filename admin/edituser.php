@@ -11,20 +11,21 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
+
 define('InAdmin', 1);
 include "../includes/common.inc.php";
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include "../includes/countries.inc.php";
+include '../includes/countries.inc.php';
 
 $username = $_REQUEST['name'];
-$userid = $_REQUEST['userid'];
+$userid = intval($_REQUEST['userid']);
 
 // Data check
-if (empty($userid))
+if (empty($userid) || $userid <= 0)
 {
-  header("Location: listusers.php");
-  exit;
+	header('location: listusers.php?PAGE=' . intval($_GET['offset']));
+	exit;
 }
 
 // Retrieve users signup settings

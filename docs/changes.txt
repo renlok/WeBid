@@ -51,5 +51,7 @@
 - Moved all the strings from mail.php into the language file
 - Fixed the admin newsletter sending page
 - Merged winner_address.php and contactseller.php
+- Fixed exculdeuser.php so it displays the correct language string when activating a users account
+- Fixed delete user page now after deleting a user who has made bids the auctions current bid & num bids will be correct afterwards
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

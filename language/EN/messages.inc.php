@@ -600,7 +600,7 @@ $MSG['415'] = "Error";
 $MSG['416'] = "Please report the above error message to:";
 $MSG['417'] = "General";
 $MSG['418'] = "Are you sure you want to activate this user?";
-$MSG['419'] = "Status";
+$MSG['419'] = "Are you sure you want to delete this user? All thier auctions and bids will be deleted and this cannot be undone";
 
 $MSG['429'] = "There were no bids or reserve price was not met";
 $MSG['430'] = "User Signup Fee";

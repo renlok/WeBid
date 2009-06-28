@@ -21,7 +21,7 @@ include $include_path . 'countries.inc.php';
 
 if (!isset($_REQUEST['id']))
 {
-	header('location: listusers.php');
+	header('location: listusers.php?PAGE=' . intval($_REQUEST['offset']));
 	exit;
 }
 
@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 
-	header('location: listusers.php');
+	header('location: listusers.php?PAGE=' . intval($_POST['offset']));
 	exit;
 }
 
@@ -92,7 +92,6 @@ $template->assign_vars(array(
 		'ACTION' => $action,
 		'REALNAME' => $user_data['name'],
 		'USERNAME' => $user_data['nick'],
-		'PASSWORD' => $user_data['password'],
 		'EMAIL' => $user_data['email'],
 		'ADDRESS' => $user_data['address'],
 		'PROV' => $user_data['prov'],

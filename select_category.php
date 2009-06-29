@@ -96,7 +96,6 @@ elseif (count($_POST) == 0)
     $_SESSION['SELL_description'] = '';
     $_SESSION['SELL_pict_url'] = '';
     $_SESSION['SELL_atype'] = '';
-    $_SESSION['SELL_adultonly'] = '';
     $_SESSION['SELL_iquantity'] = '';
     $_SESSION['SELL_with_buy_now'] = '';
     $_SESSION['SELL_buy_now_price'] = '';

@@ -53,7 +53,7 @@ function browseItems($result, $current_page)
 			}
 			elseif ($row['buy_now'] > 0 && $row['bn_only'] == 'y')
 			{
-				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . 'images/buy_it_now.gif" border=0></a> ' . $system->print_money($row['buy_now']) . ') <img src="' . $system->SETTINGS['siteurl'] . 'images/bn_only.png" border="0">';
+				$tplv['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . 'images/buy_it_now.gif" border=0 class="buynow"></a> ' . $system->print_money($row['buy_now']) . ') <img src="' . $system->SETTINGS['siteurl'] . 'images/bn_only.png" border="0" class="buynow">';
 				$row['current_bid'] = $row['buy_now'];
 			}
 			else
@@ -66,7 +66,6 @@ function browseItems($result, $current_page)
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$num_bids = mysql_num_rows($res);
-			$reserved_price = ($row['reserved_price'] != 0) ? ' <img src="images/r.gif">' : '';
 
 			// time left till the end of this auction 
 			$s_difference = time() - $row['starts'];
@@ -82,7 +81,7 @@ function browseItems($result, $current_page)
 				'BIDFORM' => $system->print_money($row['current_bid']),
 				'TIMELEFT' => FormatTimeLeft($difference),
 				'NUMBIDS' => $num_bids,
-				'RESERVE' => $reserved_price,
+				'RESERVE' => ($row['reserve_price'] > 0) ? ' <img src="images/r.gif">' : '',
 
 				'B_BOLD' => ($row['bold'] == 'y')
 			));

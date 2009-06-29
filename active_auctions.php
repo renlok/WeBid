@@ -36,17 +36,12 @@ $NOW = time();
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
 		  WHERE user = " . $user_id . "
 		  AND closed = 0
-		  AND starts <= '" . $NOW . "' ";
-if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in)
-{
-	$query .= "AND adultonly = 'n'";
-}
+		  AND starts <= '" . $NOW . "'";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $num_auctions = mysql_result($res, 0, 'auctions');
 
 // Handle pagination
-$TOTALAUCTIONS = $num_auctions;
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1 || $_GET['PAGE'] == '')
 {
 	$OFFSET = 0;
@@ -57,17 +52,13 @@ else
 	$PAGE = $_GET['page'];
 	$OFFSET = ($PAGE - 1) * $LIMIT;
 }
-$PAGES = ceil($TOTALAUCTIONS / $LIMIT);
+$PAGES = ceil($num_auctions / $LIMIT);
 if (!isset($PAGES) || $PAGES < 1) $PAGES = 1;
 
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 		WHERE user = " . $user_id . "
 		AND closed = 0
-		AND starts <= '" . $NOW . "' ";
-if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in)
-{
-	$query .= "AND adultonly='n' ";
-}
+		AND starts <= '" . $NOW . "'";
 $query .= "ORDER BY ends ASC LIMIT $OFFSET, $LIMIT";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);

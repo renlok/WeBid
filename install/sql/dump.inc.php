@@ -95,7 +95,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `sold` enum('y','n','s') NOT NULL default 'n',
   `shipping_terms` tinytext NOT NULL,
   `bn_only` enum('y','n') NOT NULL default 'n',
-  `adultonly` enum('y','n') NOT NULL default 'n',
   `bold` enum('y','n') NOT NULL default 'n',
   `highlighted` enum('y','n') NOT NULL default 'n',
   `featured` enum('y','n') NOT NULL default 'n',
@@ -1530,7 +1529,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `catstoshow` int(11) NOT NULL default '0',
   `uniqueseller` int(11) NOT NULL default '0',
   `bn_only` enum('y','n') NOT NULL default 'n',
-  `adultonly` enum('y','n') NOT NULL default 'n',
   `winner_address` enum('y','n') NOT NULL default 'n',
   `boardsmsgs` int(11) NOT NULL default '0',
   `activationtype` INT(1) NOT NULL DEFAULT  '0',
@@ -1565,7 +1563,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}', 'y', 'y', 'y');";
+('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '".$siteEmail."', 1, 5, 100, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'unique', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}', 'y', 'y', 'y');";
 
 
 # ############################

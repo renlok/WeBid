@@ -55,7 +55,6 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_title']			= $RELISTEDAUCTION['title'];
 		$_SESSION['SELL_description']	= stripslashes($RELISTEDAUCTION['description']);
 		$_SESSION['SELL_atype']			= $RELISTEDAUCTION['auction_type'];
-		$_SESSION['SELL_adultonly']		= $RELISTEDAUCTION['adultonly'];
 		$_SESSION['SELL_buy_now_only']	= $RELISTEDAUCTION['bn_only'];
 		$_SESSION['SELL_suspended']		= $RELISTEDAUCTION['suspended'];
 		$_SESSION['SELL_iquantity']		= $RELISTEDAUCTION['quantity'];

@@ -414,7 +414,6 @@ switch ($_SESSION['action'])
 						'INCREMENTS' => ($increments == 1) ? $MSG['614'] : $system->print_money($customincrement),
 						'ATYPE' => $auction_types[$atype],
 						'ATYPE_PLAIN' => $atype,
-						'ADULT_ONLY' => ($adultonly == 'y') ? $MSG['030'] : $MSG['029'],
 						'SHIPPING' => (intval($shipping) == 1) ? $MSG['031'] : $MSG['032'],
 						'INTERNATIONAL' => ($international) ? $MSG['033'] : $MSG['043'],
 						'SHIPPING_TERMS' => nl2br(stripslashes($shipping_terms)),
@@ -422,7 +421,6 @@ switch ($_SESSION['action'])
 						'CAT_LIST' => $TPL_categories_list,
 
 						'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y'),
-						'B_ADULTONLY' => ($system->SETTINGS['adultonly'] == 'y'),
 						'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only == 'y')),
 						'B_BN' => ($system->SETTINGS['buy_now'] == 2),
 						'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
@@ -533,8 +531,6 @@ switch ($_SESSION['action'])
 				// auction details
 				'AUC_TITLE' => $title,
 				'AUC_DESCRIPTION' => $oFCKeditor->CreateHtml(),
-				'ADULTONLY_Y' => ($adultonly == 'y') ? 'checked' : '',
-				'ADULTONLY_N' => ($adultonly == 'y') ? '' : 'checked',
 				'ITEMQTY' => $iquantity,
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid),
 				'BN_ONLY' => ($buy_now_only == 'y') ? 'disabled' : '',
@@ -563,7 +559,6 @@ switch ($_SESSION['action'])
 				'IS_FEATURED' => ($is_featured == 'y') ? 'checked' : '',				
 
 				'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),
-				'B_ADULTONLY' => ($system->SETTINGS['adultonly'] == 'y'),
 				'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] == 'y' && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only'] == 'y') || $system->SETTINGS['bn_only_disable'] == 'n')),
 				'B_BN' => ($system->SETTINGS['buy_now'] == 2),
 				'B_EDITING' => ($_SESSION['SELL_action'] == 'edit'),

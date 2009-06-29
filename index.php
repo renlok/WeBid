@@ -87,12 +87,8 @@ while ($i < $num_cat && $i < $system->SETTINGS['catstoshow'])
 
 // get last created auctions
 $query = "SELECT id, title, starts from " . $DBPrefix . "auctions
-		 WHERE closed='0' AND suspended = 0 AND ";
-if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in)
-{
-	$query .= "adultonly='n' AND ";
-}
-$query .= "starts<=" . $NOW . "
+		 WHERE closed = 0 AND suspended = 0
+		 AND starts <= " . $NOW . "
 		 ORDER BY starts DESC
 		 LIMIT " . $system->SETTINGS['lastitemsnumber'];
 $res = mysql_query($query);

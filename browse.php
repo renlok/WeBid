@@ -169,11 +169,6 @@ else
 			AND closed = 0
 			AND private = 'n'
 			AND suspended = 0";
-	if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in)
-	{
-		$qs .= "AND adultonly = 'n'";
-	}
-
 	if (!empty($_POST['catkeyword']))
 	{
 		$qs .= " AND title like '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
@@ -203,10 +198,6 @@ else
 			AND closed = 0
 			AND private = 'n'
 			AND suspended = 0";
-	if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in)
-	{
-		$qs .= " AND adultonly='n'";
-	}
 	if (!empty($_POST['catkeyword']))
 	{
 		$qs .= " AND title LIKE '%" . $system->cleanvars($_POST['catkeyword']) . "%'";

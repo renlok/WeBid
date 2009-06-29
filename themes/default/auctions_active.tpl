@@ -18,7 +18,7 @@
 					<td width="45%">
 						<a href="{SITEURL}item.php?id={auctions.ID}">{auctions.TITLE}</a>
 						<!-- IF auctions.B_BUY_NOW -->
-						&nbsp;&nbsp;&nbsp;(<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img align="middle" src="{SITEURL}images/{auctions.BNIMG}" border="0"></a>&nbsp;{auctions.BNFORMAT})
+						&nbsp;&nbsp;&nbsp;(<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img src="{SITEURL}images/{auctions.BNIMG}" border="0" class="buynow"></a>&nbsp;{auctions.BNFORMAT})
 						<!-- ENDIF -->
 					</td>
 					<td width="15%">{auctions.BIDFORMAT}</td>

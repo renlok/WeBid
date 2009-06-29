@@ -33,11 +33,7 @@ $NOW = time();
 // get number of closed auctions for this user
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
 	  WHERE user = " . intval($user_id) . "
-	  AND closed = 1 ";
-if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in)
-{
-	$query .= "AND adultonly = 'n'";
-}
+	  AND closed = 1";
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 $num_auctions = mysql_result($result, 0, 'auctions');
@@ -59,10 +55,6 @@ if (!$PAGES) $PAGES = 1;
 $qs = "SELECT * FROM " . $DBPrefix . "auctions
 	WHERE user = " . intval($user_id) . "
 	AND closed = 1 ";
-if ($system->SETTINGS['adultonly'] == 'y' && !$user->logged_in)
-{
-	$qs .= "AND adultonly = 'n' ";
-}
 $qs .= "ORDER BY ends ASC LIMIT $OFFSET, $LIMIT";
 $result = mysql_query($qs);
 $system->check_mysql($result, $qs, __LINE__, __FILE__);

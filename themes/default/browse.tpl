@@ -28,7 +28,7 @@
 				{items.BIDFORM}
 			</td>
 			<td align="center">
-				{items.RESERVE}{items.NUMBIDS}
+				{items.RESERVE} {items.NUMBIDS}
 			</td>
 			<td align="center">
 				{items.TIMELEFT}

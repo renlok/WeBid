@@ -120,20 +120,6 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan">{ATYPE}</td>
 					</tr>
-	<!-- IF B_ADULTONLY -->
-					<tr>
-						<td align="right" width="25%" class="leftpan" valign="top">
-							<b>{L_30_0075}</b>
-						</td>
-						<td class="rightpan">
-							{L_30_0076}<br>
-							<input type="radio" name="adultonly" value="n" {ADULTONLY_N}>
-							{L_029}
-							<input type="radio" name="adultonly" value="y" {ADULTONLY_Y}>
-							{L_030}
-						</td>
-					</tr>
-	<!-- ENDIF -->
 					<tr>
 						<td align="right" width="25%" valign="middle" class="leftpan">
 							<b>{L_258}</b>
@@ -376,12 +362,6 @@ $(document).ready(function(){
 				<td valign="top" align="right"><b>{L_261}</b> </td>
 				<td>{ATYPE}</td>
 			</tr>
-	<!-- IF B_ADULTONLY -->
-			<tr>
-				<td valign="top" align="right"><b>{L_30_0075}</b></td>
-				<td>{ADULT_ONLY}</td>
-			</tr>
-	<!-- ENDIF -->
 			<tr>
 				<td valign="top" align="right"><b>{L_025}</b></td>
 				<td>{SHIPPING}<br>{INTERNATIONAL}</td>

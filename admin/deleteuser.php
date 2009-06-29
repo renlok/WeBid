@@ -44,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	if ($num_auctions > 0)
 	{
-		$ERR = "The user is the SELLER in the following auctions:<br>";
+		$ERR = $MSG['420'];
 		while ($row = mysql_fetch_assoc($res))
 		{
 			$has_auctions = true;
@@ -61,7 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if ($num_bids > 0)
 	{
 		$has_bids = true;
-		$ERR .= sprintf('The user has placed bids on %s auction(s).', $num_auctions);
+		$ERR .= sprintf($MSG['421'], $num_auctions);
 	}
 
 	if (!isset($_POST['ignore']) && ($has_bids || $has_auctions))

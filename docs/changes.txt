@@ -53,5 +53,7 @@
 - Merged winner_address.php and contactseller.php
 - Fixed exculdeuser.php so it displays the correct language string when activating a users account
 - Fixed delete user page now after deleting a user who has made bids the auctions current bid & num bids will be correct afterwards
+- Fixed the reserved 'r' displays on auctions listings now while browsing the categories
+- Removed all referances to the never excisting 'adultonly' setting
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

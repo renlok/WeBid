@@ -24,6 +24,8 @@ class user
 
 		$this->numbers = '1234567890';
 		$this->logged_in = false;
+		$this->can_sell = false;
+		$this->can_buy = false;
 		$this->user_data = array();
 
 		if (isset($_SESSION['WEBID_LOGGED_NUMBER']) && isset($_SESSION['WEBID_LOGGED_IN']) && isset($_SESSION['WEBID_LOGGED_PASS']))
@@ -40,6 +42,21 @@ class user
 				{
 					$this->logged_in = true;
 					$this->user_data = $user_data;
+					// check if user can sell or buy
+					$query = "SELECT can_sell, can_buy FROM " . $DBPrefix . "groups WHERE id IN (" . $user_data['groups'] . ") AND (can_sell = 1 OR can_buy = 1)";
+					$res = mysql_query($query);
+					$system->check_mysql($res, $query, __LINE__, __FILE__);
+					while ($row = mysql_fetch_assoc($res))
+					{
+						if ($row['can_sell'] == 1)
+						{
+							$this->can_sell = true;
+						}
+						if ($row['can_buy'] == 1)
+						{
+							$this->can_buy = true;
+						}
+					}
 				}
 			}
 		}

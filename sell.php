@@ -39,7 +39,7 @@ if (!$user->logged_in)
 	exit;
 }
 
-if ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] != 'seller')
+if (!$user->can_sell)
 {
 	header('location: user_menu.php?cptab=selling');
 	exit;

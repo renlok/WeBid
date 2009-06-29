@@ -74,12 +74,7 @@ $DISPLAYED_FIELDS = unserialize($system->SETTINGS['displayed_feilds']);
 
 if (isset($_POST['action']) && $_POST['action'] == 'first')
 {
-	if (empty($_POST['accounttype']) && $system->SETTINGS['accounttype'] == 'sellerbuyer')
-	{
-		$TPL_err = 1;
-		$TPL_errmsg = $MSG['25_0137'];
-	}
-	elseif (empty($_POST['TPL_name']))
+	if (empty($_POST['TPL_name']))
 	{
 		$TPL_err = 1;
 		$TPL_errmsg = $ERR_5029;
@@ -191,9 +186,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$TPL_err = 1;
 				$TPL_errmsg = $ERR_111; // Selected user already exists
 			}
-			$sql = "SELECT email FROM " . $DBPrefix . "users WHERE email = '" . $system->cleanvars($_POST['TPL_email']) . "'";
-			$res = mysql_query($sql);
-			$system->check_mysql($res, $sql, __LINE__, __FILE__);
+			$query = "SELECT email FROM " . $DBPrefix . "users WHERE email = '" . $system->cleanvars($_POST['TPL_email']) . "'";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if (mysql_num_rows($res) > 0)
 			{
 				$TPL_err = 1;
@@ -209,17 +204,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$TODAY = $NOWB;
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 2) ? 0 : 8;
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 0) ? 10 : $SUSPENDED;
-				if ($system->SETTINGS['accounttype'] == 'sellerbuyer')
+
+				$query = "SELECT id FROM " . $DBPrefix . "groups WHERE auto_join = 1";
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$groups = array();
+				while ($row = mysql_fetch_assoc($res))
 				{
-					$selected_accounttype = $_POST['accounttype'];
-				}
-				else
-				{
-					$selected_accounttype = 'unique';
+					$groups[] = $row['id'];
 				}
 				$hash = get_hash();
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter,email, reg_date, rate_sum,  rate_num, birthdate, suspended, accounttype, language)
+						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate, suspended, language, groups)
 						VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
 						'" . md5($MD5_PREFIX . $TPL_password_hidden) . "',
 						'" . $hash . "',
@@ -232,11 +228,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $system->cleanvars($_POST['TPL_phone']) . "',
 						'" . $system->cleanvars($_POST['TPL_nletter']) . "',
 						'" . $system->cleanvars($_POST['TPL_email']) . "',
-						'" . $TODAY . "', 0, 0,
+						'" . $TODAY . "',
 						'" . $DATE . "',
 						'" . $SUSPENDED . "',
-						'" . $selected_accounttype . "',
-						'" . $language . "')";
+						'" . $language . "',
+						'" . implode(',', $groups) . "')";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$TPL_id_hidden = mysql_insert_id();
 				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES(
@@ -324,7 +320,6 @@ $template->assign_vars(array(
 		'L_MESSAGE' => (isset($TPL_message)) ? $TPL_message : '',
 
 		'B_ERRORMSG' => (!empty($TPL_errmsg)),
-		'B_BUYSELLER' => ($system->SETTINGS['accounttype'] == 'sellerbuyer'),
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_SHOWACCEPTANCE' => ($system->SETTINGS['showacceptancetext'] == 1),
@@ -347,8 +342,6 @@ $template->assign_vars(array(
 					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : ''
 					),
 
-		'V_SELSELCT' => (isset($_POST['accounttype']) && $_POST['accounttype'] == 'seller') ? 'checked=true' : '',
-		'V_BUYSELCT' => (isset($_POST['accounttype']) && $_POST['accounttype'] == 'buyer') ? 'checked=true' : '',
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
 		'V_NNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 2) ? 'checked=true' : '',
 		'V_YNAME' => (isset($_POST['TPL_name'])) ? $_POST['TPL_name'] : '',

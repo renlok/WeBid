@@ -56,10 +56,6 @@ if (isset($_POST['requesttoadmin']))
 			));
 	$emailer->email_sender($system->SETTINGS['adminmail'], 'buyer_request.inc.php', 'Account change request');
 	$request_sent = $MSG['25_0142'];
-	// Update user's status
-	$query = "UPDATE " . $DBPrefix . "users SET accounttype = 'buyertoseller' WHERE id = " . $user->user_data['id'];
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$user->user_data['accounttype'] = 'buyertoseller';
 }
 
 $cptab = (isset($_GET['cptab'])) ? $_GET['cptab'] : '';
@@ -108,9 +104,8 @@ switch ($_SESSION['cptab'])
 $template->assign_vars(array(
 		'B_REQUEST' => isset($request_sent),
 		'B_TMPMSG' => isset($_SESSION['TMP_MSG']),
-		'B_CANSELL' => (($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] == 'seller') || ($system->SETTINGS['accounttype'] == 'unique')),
-		'B_ONLYBUYER' => ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] == 'buyer'),
-		'B_BUYTOSELL' => ($system->SETTINGS['accounttype'] == 'sellerbuyer' && $user->user_data['accounttype'] == 'buyertoseller'),
+		'B_CANSELL' => ($user->can_sell),
+		'B_ONLYBUYER' => (!$user->can_buy),
 
 		'TMPMSG' => (isset($_SESSION['TMP_MSG'])) ? $_SESSION['TMP_MSG'] : '',
 		'REQUEST' => (isset($request_sent)) ? $request_sent : '',

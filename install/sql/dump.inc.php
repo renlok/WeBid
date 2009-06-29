@@ -1148,6 +1148,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
   `can_sell` int(1) NOT NULL default '0',
   `can_buy` int(1) NOT NULL default '0',
   `count` int(15) NOT NULL default '0',
+  `auto_join` int(15) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1155,8 +1156,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
 # Dumping data for table `" . $DBPrefix . "groups`
 # 
 
-$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0);";
-$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0);";
+$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0, 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0, 1);";
 
 # ############################
 
@@ -1516,7 +1517,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `defaultlanguage` char(2) NOT NULL default 'EN',
   `pagewidth` int(11) NOT NULL default '0',
   `pagewidthtype` enum('perc','fix') NOT NULL default 'perc',
-  `accounttype` enum('sellerbuyer','unique') NOT NULL default 'unique',
   `catsorting` enum('alpha','counter') NOT NULL default 'alpha',
   `usersauth` enum('y','n') NOT NULL default 'y',
   `background` tinytext NOT NULL,
@@ -1607,15 +1607,14 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `phone` varchar(40) default NULL,
   `email` varchar(50) default NULL,
   `reg_date` int(15) default NULL,
-  `rate_sum` int(11) default NULL,
-  `rate_num` int(11) default NULL,
+  `rate_sum` int(11) NOT NULL default '0',
+  `rate_num` int(11) NOT NULL default '0',
   `birthdate` int(8) default NULL,
   `suspended` int(1) default '0',
   `nletter` int(1) NOT NULL default '0',
   `balance` double NOT NULL default '0',
   `auc_watch` varchar(20) default '',
   `item_watch` text,
-  `accounttype` enum('seller','buyer','buyertoseller','unique') NOT NULL default 'unique',
   `endemailmode` enum('one','cum','none') NOT NULL default 'one',
   `startemailmode` enum('yes','no') NOT NULL default 'yes',
   `emailtype` enum('html','text') NOT NULL default 'text',

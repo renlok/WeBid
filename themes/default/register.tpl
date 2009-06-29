@@ -12,24 +12,6 @@
 		<div class="table2">
 			<form name="registration" action="{SSLURL}register.php" method="post">
 				<table width="90%" border="0" cellpadding="4" cellspacing=0>
-					<!-- IF B_BUYSELLER -->
-					<tr>
-						<td width="40%" valign="top" align="right"><b>{L_25_0133}</b></td>
-						<td width="60%">
-							<input type="radio" name="accounttype" value='seller' {V_SELSELCT}>
-							{L_25_0134}
-							<!-- IF B_ADMINAPROVE -->
-							<p class="errfont">{L_25_0136}</p>
-							<!-- ENDIF -->
-							<br>
-							<input type="radio" name="accounttype" value='buyer' {V_BUYSELCT}>
-							{L_25_0135}
-							<!-- IF B_ADMINAPROVE -->
-							<p class="errfont">{L_25_0136}</p>
-							<!-- ENDIF -->
-						</td>
-					</tr>
-					<!-- ENDIF -->
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_002}</b> *</td>
 						<td width="60%">

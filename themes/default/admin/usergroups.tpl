@@ -38,6 +38,7 @@
 					<td><b>{L_451}</b></td>
 					<td><b>{L_578}</b></td>
 					<td><b>{L_579}</b></td>
+					<td><b>{L_580}</b></td>
                     <td>&nbsp;</td>
 				</tr>
 <!-- IF B_EDIT -->
@@ -60,6 +61,12 @@
                         	<option value="0" {CAN_BUY_N}>{L_029}</option>
                         </select>
                     </td>
+					<td>
+                    	<select name="auto_join">
+                        	<option value="1" {AUTO_JOIN_Y}>{L_030}</option>
+                        	<option value="0" {AUTO_JOIN_N}>{L_029}</option>
+                        </select>
+                    </td>
                     <td><input type="hidden" name="id" value="{GROUP_ID}"></td>
 				</tr>
                 <tr bgcolor="#FFCC00">
@@ -73,6 +80,7 @@
 					<td>{groups.USER_COUNT}</td>
 					<td>{groups.CAN_SELL}</td>
 					<td>{groups.CAN_BUY}</td>
+					<td>{groups.AUTO_JOIN}</td>
                     <td align="center"><a href="usergroups.php?id={groups.ID}&action=edit">{L_298}</a></td>
 				</tr>
 <!-- END groups -->

@@ -35,6 +35,8 @@ if (isset($_GET['action']) && !isset($_POST['action']))
 				'CAN_SELL_N' => ($group['can_sell'] == 0) ? 'selected="true"' : '',
 				'CAN_BUY_Y' => ($group['can_buy'] == 1) ? 'selected="true"' : '',
 				'CAN_BUY_N' => ($group['can_buy'] == 0) ? 'selected="true"' : '',
+				'AUTO_JOIN_Y' => ($group['auto_join'] == 1) ? 'selected="true"' : '',
+				'AUTO_JOIN_N' => ($group['auto_join'] == 0) ? 'selected="true"' : '',
 				'USER_COUNT' => $group['count']
 				));
 		$edit = true;
@@ -56,13 +58,14 @@ if (isset($_POST['action']))
 				group_name = '" . $system->cleanvars($_POST['group_name']) . "',
 				count = " . intval($_POST['user_count']) . ",
 				can_sell = " . intval($_POST['can_sell']) . ",
-				can_buy = " . intval($_POST['can_buy']) . "
+				can_buy = " . intval($_POST['can_buy']) . ",
+				auto_join = " . intval($_POST['auto_join']) . "
 				WHERE id = " . intval($_POST['id']);
 	}
 	if ($_GET['action'] == 'new' || empty($_GET['id']))
 	{
-		$query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy) VALUES
-				('" . $system->cleanvars($_POST['group_name']) . "', " . intval($_POST['user_count']) . ", " . intval($_POST['can_sell']) . ", " . intval($_POST['can_buy']) . ")";
+		$query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy, auto_join) VALUES
+				('" . $system->cleanvars($_POST['group_name']) . "', " . intval($_POST['user_count']) . ", " . intval($_POST['can_sell']) . ", " . intval($_POST['can_buy']) . ", " . intval($_POST['auto_join']) . ")";
 	}
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 }
@@ -78,6 +81,7 @@ while ($row = mysql_fetch_assoc($res))
 			'NAME' => $row['group_name'],
 			'CAN_SELL' => ($row['can_sell'] == 1) ? $MSG['030'] : $MSG['029'],
 			'CAN_BUY' => ($row['can_buy'] == 1) ? $MSG['030'] : $MSG['029'],
+			'AUTO_JOIN' => ($row['auto_join'] == 1) ? $MSG['030'] : $MSG['029'],
 			'USER_COUNT' => $row['count']
 			));
 }

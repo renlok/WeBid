@@ -35,8 +35,6 @@
 		{L_25_0140} <input type="submit" name="requesttoadmin" value="{L_25_0141}"  class="button">
 	</p>
 	</form>
-	<!-- ELSEIF B_BUYTOSELL -->
-	<p>{L_25_0143}</p>
 	<!-- ENDIF -->
 <!-- ELSEIF THISPAGE eq 'summary' -->
 	<div class="padding">

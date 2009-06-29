@@ -33,9 +33,9 @@ if (isset($_POST['action']))
 		if ($i != 0)
 			$query .= ', ';
 		$gateway = $gateways[$i];
-		$query .= $gateway . '_active = ' . intval($_POST[$gateway . '_active']) . ', ';
-		$query .= $gateway . '_required = ' . intval($_POST[$gateway . '_required']) . ', ';
-		$query .= $gateway . '_address = ' . $_POST[$gateway . '_address'];
+		$query .= $gateway . '_active = ' . (isset($_POST[$gateway . '_active']) ? 1 : 0) . ', ';
+		$query .= $gateway . '_required = ' . (isset($_POST[$gateway . '_required']) ? 1 : 0) . ', ';
+		$query .= $gateway . "_address = '" . $_POST[$gateway . '_address'] . "'";
 	}
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 }

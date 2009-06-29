@@ -41,6 +41,11 @@
 						<td colspan="2">{L_447} <input type="checkbox" name="{gateways.PLAIN_NAME}_active"{gateways.ENABLED}></td>
 					</tr>
 <!-- END gateways -->
+					
+					<tr>
+						<td><input type="hidden" name="action" value="update"></td>
+						<td><input type="submit" name="act" value="{L_530}"></td>
+					</tr>
 				</table>
 			</td>
 		</tr>

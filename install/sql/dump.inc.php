@@ -1621,6 +1621,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `emailtype` enum('html','text') NOT NULL default 'text',
   `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
   `payment_details` text,
+  `groups` text,
   `bn_only` enum('y','n') NOT NULL default 'y',
   `timecorrection` int(3) NOT NULL default '0',
   `paypal_email` varchar(255) default NULL,

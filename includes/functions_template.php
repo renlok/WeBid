@@ -231,15 +231,16 @@ class template_compile
 
 			$text_blocks = str_replace($var_val[0], $new, $text_blocks);
 		}
-		
+
 		if (strpos($text_blocks, '{L_') !== false)
 		{
 			$text_blocks = preg_replace('#\{L_([a-z0-9\-_]*)\}#is', "<?php echo ((isset(\$this->_rootref['L_\\1'])) ? \$this->_rootref['L_\\1'] : ((isset(\$MSG['\\1'])) ? \$MSG['\\1'] : '{ L_\\1 }')); ?>", $text_blocks);
 		}
 
 		// Handle remaining varrefs
-		$text_blocks = preg_replace('#\{([a-z0-9\-_]+)\}#is', "<?php echo (isset(\$this->_rootref['\\1'])) ? \$this->_rootref['\\1'] : ''; ?>", $text_blocks);
-		$text_blocks = preg_replace('#\{\$([a-z0-9\-_]+)\}#is', "<?php echo (isset(\$this->_tpldata['DEFINE']['.']['\\1'])) ? \$this->_tpldata['DEFINE']['.']['\\1'] : ''; ?>", $text_blocks);
+		$text_blocks = preg_replace('#\{([a-z0-9_-]+)\}#is', "<?php echo (isset(\$this->_rootref['\\1'])) ? \$this->_rootref['\\1'] : ''; ?>", $text_blocks);
+		$text_blocks = preg_replace('#\{([a-z0-9_-]+)\(([a-z0-9]+)\)\}#is', "<?php echo (isset(\$this->_rootref['\\1'][\\2])) ? \$this->_rootref['\\1'][\\2] : ''; ?>", $text_blocks);
+		$text_blocks = preg_replace('#\{\$([a-z0-9_-]+)\}#is', "<?php echo (isset(\$this->_tpldata['DEFINE']['.']['\\1'])) ? \$this->_tpldata['DEFINE']['.']['\\1'] : ''; ?>", $text_blocks);
 
 		return;
 	}

@@ -337,6 +337,15 @@ $template->assign_vars(array(
 		'COUNTRY' => ($DISPLAYED_FIELDS['country_regshow'] == 1),
 		'ZIP' => ($DISPLAYED_FIELDS['zip_regshow'] == 1),
 		'TEL' => ($DISPLAYED_FIELDS['tel_regshow'] == 1),
+		'REQUIRED' => array(
+					($MANDATORY_FIELDS['birthdate'] == 'y') ? ' *' : '',
+					($MANDATORY_FIELDS['address'] == 'y') ? ' *' : '',
+					($MANDATORY_FIELDS['city'] == 'y') ? ' *' : '',
+					($MANDATORY_FIELDS['prov'] == 'y') ? ' *' : '',
+					($MANDATORY_FIELDS['country'] == 'y') ? ' *' : '',
+					($MANDATORY_FIELDS['zip'] == 'y') ? ' *' : '',
+					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : ''
+					),
 
 		'V_SELSELCT' => (isset($_POST['accounttype']) && $_POST['accounttype'] == 'seller') ? 'checked=true' : '',
 		'V_BUYSELCT' => (isset($_POST['accounttype']) && $_POST['accounttype'] == 'buyer') ? 'checked=true' : '',

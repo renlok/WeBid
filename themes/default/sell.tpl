@@ -56,6 +56,9 @@ $(document).ready(function(){
 	$("#sps").click(function(){
 		$("#shipping_cost").attr("disabled","disabled");
 	});
+	<!-- IF B_FEES -->
+		// something
+	<!-- ENDIF -->
 });
 </script>
 <div class="content">
@@ -276,6 +279,16 @@ $(document).ready(function(){
         <!-- IF B_MKHIGHLIGHT -->
         					<p><input type="checkbox" name="is_highlighted" {IS_HIGHLIGHTED}> {L_292}</p>
         <!-- ENDIF -->
+						</td>
+					</tr>
+	<!-- ENDIF -->
+	<!-- IF B_FEES -->
+                    <tr>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L_263}</b>
+						</td>
+						<td class="rightpan">
+                        	<span id="to_pay">0.00</span>
 						</td>
 					</tr>
 	<!-- ENDIF -->

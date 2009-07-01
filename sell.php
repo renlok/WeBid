@@ -567,7 +567,8 @@ switch ($_SESSION['action'])
 				'B_EDIT_STARTTIME' => ($system->SETTINGS['edit_starttime'] == 1),
 				'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
 				'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
-				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y')
+				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),
+				'B_FEES' => ($system->SETTINGS['fees'] == 'y')
 				));
 		break;
 }

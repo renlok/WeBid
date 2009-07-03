@@ -73,6 +73,14 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
 ) ;";
 $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0, 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0, 1);";
+$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `paid` int(1) NOT NULL default '0';";
+$query[] = "CREATE TABLE `" . $DBPrefix . "userfees` (
+  `id` INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `auc_id` int(15) NOT NULL,
+  `amt` double(6,4) NOT NULL default '0',
+  `paid` int(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+);";
 
 //0.7.2 to 0.7.3
 /*

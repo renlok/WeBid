@@ -59,6 +59,8 @@ class template
 		{
 			$this->root = $main_path . 'themes/' . $system->SETTINGS['theme'] . $admindir;
 			$this->cachepath = $main_path . 'cache/tpl_' . str_replace('_', '-', $system->SETTINGS['theme']) . $admincache . '_';
+			$this->default_root = $main_path . 'themes/default' . $admindir;
+			$this->default_cachepath = $main_path . 'cache/tpl_default' . $admincache . '_';
 		}
 		else
 		{

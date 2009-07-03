@@ -516,6 +516,39 @@ switch ($_SESSION['action'])
 		$oFCKeditor->Value = stripslashes($description);
 		$oFCKeditor->Width = '90%';
 		$oFCKeditor->Height = '400';
+		
+		// build the fees javascript
+		$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$fees = array( //0 = single value, 1 = staged fees
+			'setup' => 1,
+			'hpfeat_fee' => 0,
+			'bolditem_fee' => 0,
+			'hlitem_fee' => 0,
+			'rp_fee' => 0,
+			'picture_fee' => 0,
+			'buyout_fee' => 0
+			);
+		$feevarsset = array();
+		$fee_javascript = '';
+		while ($row = mysql_fetch_assoc($res))
+		{
+			if (isset($fees[$row['type']]) && $fees[$row['type']] == 0)
+				$fee_javascript .= 'var ' . $row['type'] . ' = ' . $row['value'] . ';' . "\n";
+			if (isset($fees[$row['type']]) && $fees[$row['type']] == 1)
+			{
+				if (!isset($feevarsset[$row['type']]))
+				{
+					$fee_javascript .= 'var ' . $row['type'] . ' = new Array();' . "\n";
+					$feevarsset[$row['type']] = 0;
+				}
+				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '][0] = ' . $row['fee_from'] . ';' . "\n";
+				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '][1] = ' . $row['fee_to'] . ';' . "\n";
+				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '][2] = ' . $row['value'] . ';' . "\n";
+				$feevarsset[$row['type']]++;
+			}
+		}
 
 		$template->assign_vars(array(
 				'TITLE' => $MSG['028'],
@@ -528,6 +561,7 @@ switch ($_SESSION['action'])
 				'PAYMENTS' => $TPL_payments_list,
 				'PAGE' => 0,
 				'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
+				'FEE_JS' => $fee_javascript,
 				// auction details
 				'AUC_TITLE' => $title,
 				'AUC_DESCRIPTION' => $oFCKeditor->CreateHtml(),

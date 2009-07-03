@@ -104,7 +104,7 @@
 						<td>
 							<select name="type[]">
 								<option value="flat"{fees.FLATTYPE}>{L_393}</option>
-								<option value="perc"{fees.PRECTYPE}>{L_357}</option>
+								<option value="perc"{fees.PERCTYPE}>{L_357}</option>
 							</select>
 						</td>
 						<td align="center"><input type="checkbox" name="fee_delete[]" value="{fees.ID}"></td>

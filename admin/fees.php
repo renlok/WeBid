@@ -106,9 +106,9 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 					'ID' => $row['id'],
 					'FROM' => $system->print_money_nosymbol($row['fee_from']),
 					'TO' => $system->print_money_nosymbol($row['fee_to']),
-					'VALUE' => $row['value'],
 					'FLATTYPE' => ($row['fee_type'] == 'flat') ? ' selected="selected"' : '',
-					'PERCTYPE' => ($row['fee_type'] == 'perc') ? ' selected="selected"' : ''
+					'PERCTYPE' => ($row['fee_type'] == 'perc') ? ' selected="selected"' : '',
+					'VALUE' => $row['value']
 					));
 		}
 

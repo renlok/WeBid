@@ -43,8 +43,9 @@ class user
 					$this->logged_in = true;
 					$this->user_data = $user_data;
 					// check if user can sell or buy
-					$user_data['groups'][] = 0; // just in case
-					$query = "SELECT can_sell, can_buy FROM " . $DBPrefix . "groups WHERE id IN (" . implode(',', $user_data['groups']) . ") AND (can_sell = 1 OR can_buy = 1)";
+					if (count($user_data['groups']) < 1)
+						$user_data['groups'] = 0; // just in case
+					$query = "SELECT can_sell, can_buy FROM " . $DBPrefix . "groups WHERE id IN (" . $user_data['groups'] . ") AND (can_sell = 1 OR can_buy = 1)";
 					$res = mysql_query($query);
 					$system->check_mysql($res, $query, __LINE__, __FILE__);
 					while ($row = mysql_fetch_assoc($res))

@@ -56,9 +56,34 @@ $(document).ready(function(){
 	$("#sps").click(function(){
 		$("#shipping_cost").attr("disabled","disabled");
 	});
-	<!-- IF B_FEES -->
-		// something
-	<!-- ENDIF -->
+<!-- IF B_FEES -->
+	{FEE_JS}
+	// something
+	$("#min_bid").change(function(){
+		var min_bid = $("#min_bid").value();
+		for (var i = 0; i < setup.length; i++)
+		{
+			if (setup[i][0] < min_bid && setup[i][1] > min_bid)
+			{
+				updatefee(setup[i][2]);
+				break;
+			}
+		}
+	});
+	$("#bn").change(function(){
+		if ($("#bn").value() > 0)
+			updatefee(buyout_fee);
+	});
+	$("#reserve_price").change(function(){
+		if ($("#reserve_price").value() > 0)
+			updatefee(rp_fee);
+	});
+
+	function updatefee(newfee)
+	{
+		$("#to_pay").text($("#to_pay").text() + newfee);
+	}
+<!-- ENDIF -->
 });
 </script>
 <div class="content">

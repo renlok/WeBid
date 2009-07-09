@@ -518,7 +518,7 @@ switch ($_SESSION['action'])
 		$oFCKeditor->Height = '400';
 		
 		// build the fees javascript
-		$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type";
+		$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type, fee_from ASC";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$fees = array( //0 = single value, 1 = staged fees
@@ -532,6 +532,7 @@ switch ($_SESSION['action'])
 			);
 		$feevarsset = array();
 		$fee_javascript = '';
+		$fee_value = $fee_rp = $fee_bn = $fee_min_bid = 0;
 		while ($row = mysql_fetch_assoc($res))
 		{
 			if (isset($fees[$row['type']]) && $fees[$row['type']] == 0)
@@ -543,11 +544,42 @@ switch ($_SESSION['action'])
 					$fee_javascript .= 'var ' . $row['type'] . ' = new Array();' . "\n";
 					$feevarsset[$row['type']] = 0;
 				}
+				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '] = new Array();' . "\n";
 				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '][0] = ' . $row['fee_from'] . ';' . "\n";
 				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '][1] = ' . $row['fee_to'] . ';' . "\n";
 				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '][2] = ' . $row['value'] . ';' . "\n";
+				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '][3] = \'' . $row['fee_type'] . '\';' . "\n";
 				$feevarsset[$row['type']]++;
 			}
+			if ($minimum_bid > $row['fee_from'] && $minimum_bid < $row['fee_to'])
+			{
+				if ($row['fee_type'] == 'flat')
+				{
+					$fee_value += $row['value'];
+					$fee_min_bid = $row['value'];
+				}
+				else
+				{
+					$fee_value += ($row['value'] / 100) * $minimum_bid;
+					$fee_min_bid = ($row['value'] / 100) * $minimum_bid;
+				}
+			}
+			if ($row['type'] == 'buyout_fee' && $buy_now_price > 0)
+			{
+				$fee_value += $row['value'];
+				$fee_bn = $row['value'];
+			}
+			if ($row['type'] == 'rp_fee' && $reserve_price > 0)
+			{
+				$fee_value += $row['value'];
+				$fee_rp = $row['value'];
+			}
+			if ($row['type'] == 'bolditem_fee' && $is_bold == 'y')
+				$fee_value += $row['value'];
+			if ($row['type'] == 'hlitem_fee' && $is_highlighted == 'y')
+				$fee_value += $row['value'];
+			if ($row['type'] == 'hpfeat_fee' && $is_featured == 'y')
+				$fee_value += $row['value'];
 		}
 
 		$template->assign_vars(array(
@@ -590,7 +622,12 @@ switch ($_SESSION['action'])
 				'START_NOW' => (!empty($start_now)) ? 'checked' : '',
 				'IS_BOLD' => ($is_bold == 'y') ? 'checked' : '',
 				'IS_HIGHLIGHTED' => ($is_highlighted == 'y') ? 'checked' : '',
-				'IS_FEATURED' => ($is_featured == 'y') ? 'checked' : '',				
+				'IS_FEATURED' => ($is_featured == 'y') ? 'checked' : '',
+
+				'FEE_VALUE' => $fee_value,
+				'FEE_MIN_BID' => $fee_min_bid,
+				'FEE_BN' => $fee_bn,
+				'FEE_RP' => $fee_rp,
 
 				'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),
 				'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] == 'y' && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only'] == 'y') || $system->SETTINGS['bn_only_disable'] == 'n')),

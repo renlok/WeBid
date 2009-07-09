@@ -59,29 +59,68 @@ $(document).ready(function(){
 <!-- IF B_FEES -->
 	{FEE_JS}
 	// something
-	$("#min_bid").change(function(){
-		var min_bid = $("#min_bid").value();
-		for (var i = 0; i < setup.length; i++)
-		{
-			if (setup[i][0] < min_bid && setup[i][1] > min_bid)
-			{
-				updatefee(setup[i][2]);
-				break;
+	var min_bid_fee = {FEE_MIN_BID};
+	var bn = {FEE_BN};
+	var rp = {FEE_RP};
+	$("#min_bid").blur(function(){
+		var min_bid = parseFloat($("#min_bid").val());
+		updatefee(min_bid_fee * -1);
+		if (min_bid == 0) {
+			min_bid_fee = 0;
+		} else {
+			for (var i = 0; i < setup.length; i++) {
+				if (setup[i][0] < min_bid && setup[i][1] > min_bid) {
+					if (setup[i][3] == 'flat') {
+						min_bid_fee = setup[i][2];
+						updatefee(setup[i][2]);
+					} else {
+						min_bid_fee = (setup[i][2] / 100) * min_bid;
+						updatefee(min_bid_fee);
+					}
+					break;
+				}
 			}
 		}
 	});
-	$("#bn").change(function(){
-		if ($("#bn").value() > 0)
-			updatefee(buyout_fee);
+	$("#bn").blur(function(){
+		if (bn == parseInt($("#bn").val())){
+			if (parseInt($("#bn").val()) > 0)
+				updatefee(buyout_fee);
+			else
+				updatefee(buyout_fee * -1);
+			bn = parseInt($("#bn").val());
+		}
 	});
-	$("#reserve_price").change(function(){
-		if ($("#reserve_price").value() > 0)
-			updatefee(rp_fee);
+	$("#reserve_price").blur(function(){
+		if (rp == parseInt($("#reserve_price").val())){
+			if (parseInt($("#reserve_price").val()) > 0)
+				updatefee(rp_fee);
+			else
+				updatefee(rp_fee * -1);
+			rp = parseInt($("#reserve_price").val());
+		}
+	});
+	$("#is_featured").click(function(){
+		if ($('#is_featured').is(':checked'))
+			updatefee(hpfeat_fee);
+		else
+			updatefee(hpfeat_fee * -1);
+	});
+	$("#is_bold").click(function(){
+		if ($('#is_bold').is(':checked'))
+			updatefee(bolditem_fee);
+		else
+			updatefee(bolditem_fee * -1);
+	});
+	$("#is_highlighted").click(function(){
+		if ($('#is_highlighted').is(':checked'))
+			updatefee(hlitem_fee);
+		else
+			updatefee(hlitem_fee * -1);
 	});
 
-	function updatefee(newfee)
-	{
-		$("#to_pay").text($("#to_pay").text() + newfee);
+	function updatefee(newfee){
+		$("#to_pay").text(parseFloat($("#to_pay").text()) + newfee);
 	}
 <!-- ENDIF -->
 });
@@ -92,6 +131,7 @@ $(document).ready(function(){
 			{TITLE}
 		</div>
 		<div class="table2">
+        	<a name="goto"></a>
 <!-- IF PAGE eq 0 -->
 			<form name="sell" action="{ASSLURL}sell.php" method="post" enctype="multipart/form-data">
 				<table width="100%" border="0" cellpadding="4" cellspacing="0">
@@ -296,13 +336,13 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan">
         <!-- IF B_MKFEATURED -->
-        					<p><input type="checkbox" name="is_featured" {IS_FEATURED}> {L_273}</p>
+        					<p><input type="checkbox" name="is_featured" id="is_featured" {IS_FEATURED}> {L_273}</p>
         <!-- ENDIF -->
         <!-- IF B_MKBOLD -->
-        					<p><input type="checkbox" name="is_bold" {IS_BOLD}> {L_274}</p>
+        					<p><input type="checkbox" name="is_bold" id="is_bold" {IS_BOLD}> {L_274}</p>
         <!-- ENDIF -->
         <!-- IF B_MKHIGHLIGHT -->
-        					<p><input type="checkbox" name="is_highlighted" {IS_HIGHLIGHTED}> {L_292}</p>
+        					<p><input type="checkbox" name="is_highlighted" id="is_highlighted" {IS_HIGHLIGHTED}> {L_292}</p>
         <!-- ENDIF -->
 						</td>
 					</tr>
@@ -313,7 +353,7 @@ $(document).ready(function(){
 							<b>{L_263}</b>
 						</td>
 						<td class="rightpan">
-                        	<span id="to_pay">0.00</span>
+                        	<span id="to_pay">{FEE_VALUE}</span>
 						</td>
 					</tr>
 	<!-- ENDIF -->

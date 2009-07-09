@@ -4,18 +4,21 @@
 <head>
 <title>{PAGE_TITLE}</title>
 <meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
+<meta name="description" content="{DESCRIPTION}">
+<meta name="keywords" content="{KEYWORDS}">
+<meta name="generator" content="WeBid">
 {STYLES}
 <link rel="stylesheet" type="text/css" href="{SITEURL}themes/default/style.css">
 <link rel="stylesheet" type="text/css" href="{SITEURL}themes/default/jquery.lightbox.css" media="screen">
 
-<link rel="alternate" type="application/rss+xml" title="{L_924}" href="{SITEURL}rss.php?feed=1" />
-<link rel="alternate" type="application/rss+xml" title="{L_925}" href="{SITEURL}rss.php?feed=2" />
-<link rel="alternate" type="application/rss+xml" title="{L_926}" href="{SITEURL}rss.php?feed=3" />
-<link rel="alternate" type="application/rss+xml" title="{L_927}" href="{SITEURL}rss.php?feed=4" />
-<link rel="alternate" type="application/rss+xml" title="{L_928}" href="{SITEURL}rss.php?feed=5" />
-<link rel="alternate" type="application/rss+xml" title="{L_929}" href="{SITEURL}rss.php?feed=6" />
-<link rel="alternate" type="application/rss+xml" title="{L_930}" href="{SITEURL}rss.php?feed=7" />
-<link rel="alternate" type="application/rss+xml" title="{L_931}" href="{SITEURL}rss.php?feed=8" />
+<link rel="alternate" type="application/rss+xml" title="{L_924}" href="{SITEURL}rss.php?feed=1">
+<link rel="alternate" type="application/rss+xml" title="{L_925}" href="{SITEURL}rss.php?feed=2">
+<link rel="alternate" type="application/rss+xml" title="{L_926}" href="{SITEURL}rss.php?feed=3">
+<link rel="alternate" type="application/rss+xml" title="{L_927}" href="{SITEURL}rss.php?feed=4">
+<link rel="alternate" type="application/rss+xml" title="{L_928}" href="{SITEURL}rss.php?feed=5">
+<link rel="alternate" type="application/rss+xml" title="{L_929}" href="{SITEURL}rss.php?feed=6">
+<link rel="alternate" type="application/rss+xml" title="{L_930}" href="{SITEURL}rss.php?feed=7">
+<link rel="alternate" type="application/rss+xml" title="{L_931}" href="{SITEURL}rss.php?feed=8">
 
 <script type="text/javascript" src="{SITEURL}js/jquery.js"></script>
 <script type="text/javascript" src="{SITEURL}js/jquery.dimensions.js"></script>
@@ -47,9 +50,6 @@ $(document).ready(function() {
 });
 </script>
 {EXTRAINC}
-<meta name="description" content="{DESCRIPTION}">
-<meta name="keywords" content="{KEYWORDS}">
-<meta name="generator" content="WeBid">
 </head>
 <body>
 <div align="{PAGEALIGN}">

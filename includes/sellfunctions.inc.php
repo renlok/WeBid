@@ -175,6 +175,51 @@ function remove_bids($auction_id)
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 }
 
+function get_fee($minimum_bid)
+{
+	$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type, fee_from ASC";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+	$fee_value = 0;
+	while ($row = mysql_fetch_assoc($res))
+	{
+		if ($minimum_bid > $row['fee_from'] && $minimum_bid < $row['fee_to'])
+		{
+			if ($row['fee_type'] == 'flat')
+			{
+				$fee_value += $row['value'];
+			}
+			else
+			{
+				$fee_value += ($row['value'] / 100) * $minimum_bid;
+			}
+		}
+		if ($row['type'] == 'buyout_fee' && $buy_now_price > 0)
+		{
+			$fee_value += $row['value'];
+		}
+		if ($row['type'] == 'rp_fee' && $reserve_price > 0)
+		{
+			$fee_value += $row['value'];
+		}
+		if ($row['type'] == 'bolditem_fee' && $is_bold == 'y')
+		{
+			$fee_value += $row['value'];
+		}
+		if ($row['type'] == 'hlitem_fee' && $is_highlighted == 'y')
+		{
+			$fee_value += $row['value'];
+		}
+		if ($row['type'] == 'hpfeat_fee' && $is_featured == 'y')
+		{
+			$fee_value += $row['value'];
+		}
+	}
+	
+	return $fee_value;
+}
+
 function _gmmktime($hr, $min, $sec, $mon, $day, $year, $null = null)
 {
     if (gmmktime(0,0,0,6,1,2008, 0) == 1212282000)

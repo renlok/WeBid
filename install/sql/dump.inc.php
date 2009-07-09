@@ -1635,6 +1635,25 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
 # ############################
 
 # 
+# Table structure for table `" . $DBPrefix . "userfees`
+# 
+
+$query[] = "CREATE TABLE `" . $DBPrefix . "userfees` (
+  `id` INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `auc_id` int(15) NOT NULL,
+  `user_id` int(15) NOT NULL,
+  `amt` double(6,4) NOT NULL default '0',
+  `paid` int(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+);";
+
+# 
+# Dumping data for table `" . $DBPrefix . "userfees`
+# 
+
+# ############################
+
+# 
 # Table structure for table `" . $DBPrefix . "usersips`
 # 
 
@@ -1670,6 +1689,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `feedback_win` tinyint(1) NOT NULL default '0',
   `feedback_sel` tinyint(1) NOT NULL default '0',
   `qty` int(11) NOT NULL default '1',
+  `paid` int(1) NOT NULL default '0',
   KEY `id` (`id`)
 ) ;";
 

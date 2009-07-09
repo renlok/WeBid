@@ -126,6 +126,13 @@ switch ($_SESSION['action'])
 					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
+
+				// work out & add fee
+				if ($system->SETTINGS['fees'] == 'y')
+				{
+					$query = "INSERT INTO " . $DBPrefix . "userfees VALUES (NULL, " . $auction_id . ", " . $user->user_data['id'] . ", " . get_fee($minimum_bid) . ", 0)";
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
 			}
 			$UPLOADED_PICTURES = (isset($_SESSION['UPLOADED_PICTURES'])) ? $_SESSION['UPLOADED_PICTURES'] : array();
 			// remove old images if any
@@ -532,7 +539,7 @@ switch ($_SESSION['action'])
 			);
 		$feevarsset = array();
 		$fee_javascript = '';
-		$fee_value = $fee_rp = $fee_bn = $fee_min_bid = 0;
+		$fee_rp = $fee_bn = $fee_min_bid = 0;
 		while ($row = mysql_fetch_assoc($res))
 		{
 			if (isset($fees[$row['type']]) && $fees[$row['type']] == 0)
@@ -555,31 +562,21 @@ switch ($_SESSION['action'])
 			{
 				if ($row['fee_type'] == 'flat')
 				{
-					$fee_value += $row['value'];
 					$fee_min_bid = $row['value'];
 				}
 				else
 				{
-					$fee_value += ($row['value'] / 100) * $minimum_bid;
 					$fee_min_bid = ($row['value'] / 100) * $minimum_bid;
 				}
 			}
 			if ($row['type'] == 'buyout_fee' && $buy_now_price > 0)
 			{
-				$fee_value += $row['value'];
 				$fee_bn = $row['value'];
 			}
 			if ($row['type'] == 'rp_fee' && $reserve_price > 0)
 			{
-				$fee_value += $row['value'];
 				$fee_rp = $row['value'];
 			}
-			if ($row['type'] == 'bolditem_fee' && $is_bold == 'y')
-				$fee_value += $row['value'];
-			if ($row['type'] == 'hlitem_fee' && $is_highlighted == 'y')
-				$fee_value += $row['value'];
-			if ($row['type'] == 'hpfeat_fee' && $is_featured == 'y')
-				$fee_value += $row['value'];
 		}
 
 		$template->assign_vars(array(
@@ -624,7 +621,7 @@ switch ($_SESSION['action'])
 				'IS_HIGHLIGHTED' => ($is_highlighted == 'y') ? 'checked' : '',
 				'IS_FEATURED' => ($is_featured == 'y') ? 'checked' : '',
 
-				'FEE_VALUE' => $fee_value,
+				'FEE_VALUE' => get_fee($minimum_bid),
 				'FEE_MIN_BID' => $fee_min_bid,
 				'FEE_BN' => $fee_bn,
 				'FEE_RP' => $fee_rp,

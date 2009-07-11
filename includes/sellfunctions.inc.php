@@ -177,6 +177,8 @@ function remove_bids($auction_id)
 
 function get_fee($minimum_bid)
 {
+	global $system, $DBPrefix, $buy_now_price, $reserve_price, $is_bold, $is_highlighted, $is_featured;
+
 	$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type, fee_from ASC";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);

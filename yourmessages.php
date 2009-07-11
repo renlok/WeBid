@@ -38,19 +38,17 @@ if ($check == 0)
 
 $array = mysql_fetch_array($res);
 $sent = gmdate('M d, Y H:ia', $array['when'] + $system->tdiff);
-$from = $array['from'];
 $sendusername = $array['nick'];
 $subject = $array['subject'];
-$replied = $array['replied'];
 $message = $array['message'];
 $hash = md5(rand(1, 9999));
 $array['message'] = str_replace('<br>', '', $array['message']);
 $_SESSION['msg' . $hash] = "\n\n-+-+-+-+-+-+-+-+-+\n\n" . $array['message'];
 
-$senderusername = '<a href="profile.php?user_id=1&auction_id=' . $from . '">' . $sendusername . '</a>';
+$senderusername = '<a href="profile.php?user_id=1&auction_id=' . $array['from'] . '">' . $sendusername . '</a>';
 
 // if admin message
-if ($from == 0)
+if ($array['from'] == 0)
 {
 	$senderusername = $MSG['110'];
 }
@@ -63,6 +61,7 @@ $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 $_SESSION['subject' . $hash] = (substr($subject, 0, 3) == 'Re:') ? $subject : 'Re: ' . $subject;
 $_SESSION['sendto' . $hash] = $sendusername;
 $_SESSION['reply' . $hash] = $messageid;
+$_SESSION['question' . $hash] = $array['question'];
 
 $template->assign_vars(array(
 		'SUBJECT' => $subject,

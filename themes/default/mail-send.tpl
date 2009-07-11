@@ -28,6 +28,7 @@ $(".form1").submit(function(){
 		<td><textarea name="message" rows="5" id="message" style="width:90%">{REPLY_MSG}</textarea></td>
 	  </tr>
 	</table>
+    <input type="hidden" name="hash" value="{HASH}">
 	<input name="submit" type="submit" value="submit">
 	</form>
 </center>

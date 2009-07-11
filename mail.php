@@ -27,7 +27,7 @@ $replymessage = (isset($_GET['message']))? $_GET['message'] : '';
 $order = (isset($_GET['order']))? $_GET['order'] : '';
 $action = (isset($_GET['action']))? $_GET['action'] : '';
 $messageid = (isset($_GET['id']))? $_GET['id'] : '';
-$delete = (isset($_POST['delete']))? $_POST['delete'] : null;
+$delete = (isset($_POST['delete']))? $_POST['delete'] : NULL;
 $userid = $user->user_data['id'];
 $ERR = '';
 
@@ -45,20 +45,19 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$usercheck = mysql_num_rows($res);
-	if ($usercheck == '0')
+	if ($usercheck == 0)
 	{
 		$_SESSION['message'] = $ERR_609;
 		header('location: mail.php?x=1');
 		exit;
 	}
 	$userarray = mysql_fetch_array($res);
-	$sendtoid = $userarray['id'];
+
 	// check use mailbox insnt full
-	$query = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = '" . $sendtoid . "'";
-	$res = mysql_query($query);
+	$query = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = " . $userarray['id'];
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$mailboxsize = mysql_num_rows($res);
-	if ($mailboxsize >= '30')
+	if ($mailboxsize >= 30)
 	{
 		$_SESSION['message'] = sprintf($MSG['443'], $sendto);
 		header('location: mail.php');
@@ -67,23 +66,23 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	// send message
 	$nowmessage = nl2br($message);
 	$userid = $user->user_data['id'];
-	$query = "INSERT INTO " . $DBPrefix . "messages (`sentto` ,`from` , `when`, `message`, `subject`)
-			VALUES ('" . $sendtoid . "', '" . $userid . "', '" . time() . "', '" . $nowmessage . "', '" . $subject . "')";
+	$reply_of = (isset($_SESSION['reply' . $_POST['hash']])) ? $_SESSION['reply' . $_POST['hash']] : 0;
+	$query = "INSERT INTO " . $DBPrefix . "messages (`sentto` ,`from` , `when`, `message`, `subject`, reply_of, question)
+			VALUES (" . $userarray['id'] . ", " . $userid . ", " . time() . ", '" . $nowmessage . "', '" . $subject . "', " . $reply_of . ", " . $_SESSION['question' . $_POST['hash']] . ")";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-	if (isset($_SESSION['reply']))
+	if (isset($_SESSION['reply' . $_POST['hash']]))
 	{
-		$reply = $_SESSION['reply'];
-		$query = "UPDATE " . $DBPrefix . "messages SET replied = 1 WHERE id = '" . $reply . "'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		unset($_SESSION['reply']);
+		$reply = $_SESSION['reply' . $_POST['hash']];
+		$query = "UPDATE " . $DBPrefix . "messages SET replied = 1 WHERE id = " . $reply;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		unset($_SESSION['reply' . $_POST['hash']]);
 	}
 	// delete session of sent message
-	unset($_SESSION['messagecont']);
-	unset($_SESSION['subject']);
-	unset($_SESSION['sendto']);
+	unset($_SESSION['messagecont' . $_POST['hash']]);
+	unset($_SESSION['subject' . $_POST['hash']]);
+	unset($_SESSION['sendto' . $_POST['hash']]);
 }
 
 if (isset($_REQUEST['deleteid']) && is_array($_REQUEST['deleteid']))
@@ -111,10 +110,10 @@ if ($x == 1)
 	// if sent from userpage
 	if ($u > 0)
 	{
-		$query = "SELECT * FROM " . $DBPrefix . "users WHERE id='$u'";
+		$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . intval($u);
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$array = mysql_fetch_array($res);
+		$array = mysql_fetch_assoc($res);
 		$sendto = $array['nick'];
 	}
 	// get variables
@@ -184,6 +183,7 @@ $template->assign_vars(array(
 		'TITLE' => $title,
 		'SENTFROM' => $sentfrom,
 		'MSGCOUNT' => $messages,
+		'HASH' => $replymessage,
 		'REPLY_X' => $x,
 		'REPLY_TO' => (isset($TPL_sendto)) ? $TPL_sendto : '',
 		'REPLY_SUBJECT' => (isset($TPL_subject)) ? $TPL_subject : '',

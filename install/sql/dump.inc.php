@@ -1163,17 +1163,18 @@ $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
-`id` int( 50 ) NOT NULL AUTO_INCREMENT ,
-`sentto` int( 25 ) NOT NULL default '0',
-`from` int( 25 ) NOT NULL default '0',
-`when` varchar( 20 ) NOT NULL default '',
-`message` text NOT NULL ,
-`read` int( 1 ) NOT NULL default '0',
-`subject` varchar( 50 ) NOT NULL default '',
-`replied` int( 1 ) NOT NULL default '0',
-`noticed` int( 1 ) NOT NULL default '0',
-PRIMARY KEY ( `id` )
-) ENGINE = MYISAM DEFAULT CHARSET = latin1;";
+  `id` int(50) NOT NULL AUTO_INCREMENT ,
+  `sentto` int(25) NOT NULL default '0',
+  `from` int(25) NOT NULL default '0',
+  `when` varchar(20) NOT NULL default '',
+  `message` text NOT NULL ,
+  `read` int(1) NOT NULL default '0',
+  `subject` varchar(50) NOT NULL default '',
+  `replied` int(1) NOT NULL default '0',
+  `reply_of` INT(50) NOT NULL default '0'
+  `question` int(15) NOT NULL default '0',
+  PRIMARY KEY (`id`)
+) ;";
 
 # ############################
 
@@ -1639,7 +1640,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
 # 
 
 $query[] = "CREATE TABLE `" . $DBPrefix . "userfees` (
-  `id` INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `id` INT(15) NOT NULL AUTO_INCREMENT ,
   `auc_id` int(15) NOT NULL,
   `user_id` int(15) NOT NULL,
   `amt` double(6,4) NOT NULL default '0',

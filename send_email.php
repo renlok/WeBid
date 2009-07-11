@@ -35,10 +35,11 @@ else
 	$auction_id = intval($_GET['auction_id']);
 }
 $_SESSION['CURRENT_ITEM'] = $auction_id;
+
 // Get item description
 $query = "SELECT a.user, a.title, u.nick, u.email FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		WHERE a.id=" . intval($auction_id);
+		WHERE a.id = " . intval($auction_id);
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 
@@ -48,25 +49,19 @@ if (mysql_num_rows($result) == 0)
 }
 else
 {
-	$seller_id = stripslashes(mysql_result($result, 0, 'user'));
-	$item_title = stripslashes(mysql_result($result, 0, 'title'));
-	$seller_nick = stripslashes(mysql_result($result, 0, 'nick'));
-	$seller_email = stripslashes(mysql_result($result, 0, 'email'));
+	$auction_data = mysql_fetch_assoc($result);
+	$seller_id = $auction_data['user'];
+	$item_title = $auction_data['title'];
+	$seller_nick = $auction_data['nick'];
+	$seller_email = $auction_data['email'];
 }
 
-$TPL_auction_id = $auction_id;
-$userid = $user->user_data['id'];
-$TPL_seller_nick_value = $seller_nick;
-$TPL_seller_email_value = $seller_email;
-$TPL_sender_name_value = $_POST['sender_name'];
-$TPL_sender_email_value = $_POST['sender_email'];
-$TPL_item_title = $item_title;
-$TPL_sender_question = $_POST['sender_question'];
 $cleaned_question = strip_tags($system->filter($_POST['sender_question']));
 if ($system->SETTINGS['wordsfilter'] == 'y')
 {
 	$cleaned_question = $system->filter($cleaned_question);
 }
+
 if (isset($_POST['action']) || !empty($_POST['action']))
 {
 	// Check errors
@@ -100,21 +95,21 @@ if (isset($_POST['action']) || !empty($_POST['action']))
 				));
 		$item_title = $system->uncleanvars($item_title);
 		$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
-		$emailer->email_uid = $userid;
+		$emailer->email_uid = $user->user_data['id'];
 		$emailer->email_sender($seller_email, 'send_email.inc.php', $subject);
-		$sql = "INSERT INTO " . $DBPrefix . "messages (`sentto`, `from`, `when`, `message`, `subject`) VALUES ('$seller_id', '$userid', '" . time() . "', '" . mysql_escape_string($cleaned_question) . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "')";
-		$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
+		$query = "INSERT INTO " . $DBPrefix . "messages (`sentto`, `from`, `when`, `message`, `subject`, question) VALUES (" . $seller_id . ", " . $user->user_data['id'] . ", '" . time() . "', '" . mysql_escape_string($cleaned_question) . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "', " . $auction_id . ")";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 }
 
 $template->assign_vars(array(
 		'MESSAGE' => (isset($mes)) ? $mes : '',
 		'ERROR' => (isset($TPL_error_text)) ? $TPL_error_text : '',
-		'AUCT_ID' => $TPL_auction_id,
-		'SELLER_NICK' => $TPL_seller_nick_value,
-		'SELLER_EMAIL' => $TPL_seller_email_value,
-		'SELLER_QUESTION' => $TPL_sender_question,
-		'ITEM_TITLE' => $TPL_item_title,
+		'AUCT_ID' => $auction_id,
+		'SELLER_NICK' => $seller_nick,
+		'SELLER_EMAIL' => $seller_email,
+		'SELLER_QUESTION' => $_POST['sender_question'],
+		'ITEM_TITLE' => $item_title,
 		'EMAIL' => ($user->logged_in) ? $user->user_data['email'] : ''
 		));
 

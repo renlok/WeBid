@@ -95,7 +95,6 @@ $system->check_mysql($result_auction, $query, __LINE__, __FILE__);
 
 $num = mysql_num_rows($result_auction);
 printLog($num . " auctions to close");
-
 $count_auctions = 0;
 $n = 1;
 while ($Auction = mysql_fetch_array($result_auction)) // loop auctions

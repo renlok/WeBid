@@ -603,6 +603,7 @@ $MSG['418'] = "Are you sure you want to activate this user?";
 $MSG['419'] = "Are you sure you want to delete this user? All thier auctions and bids will be deleted and this cannot be undone";
 $MSG['420'] = "The user is the SELLER in the following auctions:<br>";
 $MSG['421'] = "The user has placed bids on %s auction(s).";
+$MSG['422'] = "Outstanding payments";
 
 $MSG['429'] = "There were no bids or reserve price was not met";
 $MSG['430'] = "User Signup Fee";
@@ -830,7 +831,7 @@ $MSG['918'] = "Other Help Topics:";
 $MSG['919'] = "General Help";
 $MSG['920'] = "Activate Buy Now?";
 $MSG['921'] = "If you activate this option, users will be able to buy the item from the auction right away, if there are no bids placed for this item. This option must first be enabled by seller who opens the auction.";
-$MSG['922'] = "Send message to seller";
+$MSG['922'] = "Send question to seller";
 $MSG['923'] = "Seller location";
 $MSG['924'] = "Just Listed";
 $MSG['925'] = "Closing Soon";

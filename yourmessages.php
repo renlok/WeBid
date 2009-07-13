@@ -43,7 +43,6 @@ $subject = $array['subject'];
 $message = $array['message'];
 $hash = md5(rand(1, 9999));
 $array['message'] = str_replace('<br>', '', $array['message']);
-$_SESSION['msg' . $hash] = "\n\n-+-+-+-+-+-+-+-+-+\n\n" . $array['message'];
 
 $senderusername = '<a href="profile.php?user_id=1&auction_id=' . $array['from'] . '">' . $sendusername . '</a>';
 
@@ -61,6 +60,7 @@ $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 $_SESSION['subject' . $hash] = (substr($subject, 0, 3) == 'Re:') ? $subject : 'Re: ' . $subject;
 $_SESSION['sendto' . $hash] = $sendusername;
 $_SESSION['reply' . $hash] = $messageid;
+$_SESSION['reply_of' . $hash] = $array['reply_of'];
 $_SESSION['question' . $hash] = $array['question'];
 
 $template->assign_vars(array(

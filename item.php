@@ -89,8 +89,6 @@ else
 	}
 }
 
-$difference = $ends - time();
-
 // get watch item data
 if ($user->logged_in)
 {
@@ -112,7 +110,9 @@ if ($user->logged_in)
 		$watch_string = $MSG['5202'];
 	}
 }
+
 // get ending time
+$difference = $ends - time();
 if ($difference > 0)
 {
 	$ending_time = '';
@@ -314,7 +314,7 @@ else
 $view_history = '';
 if ($num_bids > 0 && !isset($_GET['history']))
 {
-	$view_history = "(<a href='" . $system->SETTINGS['siteurl'] . "item.php?id=$id&history=view#history'>" . $MSG['105'] . "</a>)";
+	$view_history = '(<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=$id&history=view#history">' . $MSG['105'] . '</a>)';
 }
 elseif (isset($_GET['history']))
 {

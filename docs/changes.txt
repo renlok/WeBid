@@ -57,5 +57,7 @@
 - Removed all referances to the never excisting 'adultonly' setting
 - Added ability to use array variables in the templates
 - Added user groups
+- Added questions to the items page
+- Added a thread to PM so you can see your previous messages in a conversation
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

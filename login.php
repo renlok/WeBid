@@ -56,6 +56,12 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 					(NULL, '" . $_SESSION['WEBID_LOGGED_IN'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
+		// delete your old session
+		if (isset($_COOKIE['WEBID_ONLINE']))
+		{
+			$query = "DELETE from " . $DBPrefix . "online WHERE SESSION = " . $_COOKIE['WEBID_ONLINE'];
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
 	}
 	else
 	{

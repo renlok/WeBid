@@ -44,7 +44,9 @@ if ($result_counters)
 				$s = $_COOKIE['WEBID_ONLINE'];
 				setcookie('WEBID_ONLINE', $s, time() + 900);
 			}
-		} else {
+		}
+		else
+		{
 			$s = 'uId-' . $user->user_data['id'];
 		}
 		$uxtime = time();
@@ -54,17 +56,17 @@ if ($result_counters)
 
 		if (mysql_num_rows($res) == 0)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES ('$s', '$uxtime')";
+			$query = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES ('$s', " . $uxtime . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		else
 		{
 			$oID = mysql_result($res, 0, 'ID');
-			$query = "UPDATE " . $DBPrefix . "online SET time = '$uxtime' WHERE ID = '$oID'";
+			$query = "UPDATE " . $DBPrefix . "online SET time = " . $uxtime . " WHERE ID = '$oID'";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		$deltime = $uxtime - 900;
-		$query = "DELETE from " . $DBPrefix . "online WHERE time < '$deltime'";
+		$query = "DELETE from " . $DBPrefix . "online WHERE time < " . $deltime;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$query = "SELECT * FROM " . $DBPrefix . "online";
 		$res = mysql_query($query);

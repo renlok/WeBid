@@ -21,7 +21,7 @@ Congratulations, you have won <b>Spy Muppets: License to Croak (GBA)</b> (Transa
     <input type="hidden" name="no_shipping" value="1">
     <input type="hidden" name="no_note" value="1">
     <input type="hidden" name="custom" value="2177TBL50">
-    <input type="hidden" name="notify_url" value="{SITEURL}pp_paypal.php">
+    <input type="hidden" name="notify_url" value="{SITEURL}validate.php?paypal">
     <input name="submit" type="button" value="Pay" border="0">
 </td>
 </form>

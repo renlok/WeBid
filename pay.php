@@ -21,33 +21,27 @@ if (!$user->logged_in)
 	exit;
 }
 
-$query = "SELECT a.id, a.title, a.shipping_cost, w.bid FROM " . $DBPrefix . "winners w
-		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
-		WHERE w.paid = 0 AND w.winner = " . $user->user_data['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-
-while ($row = mysql_fetch_assoc($res))
+switch($_GET['a'])
 {
-	$template->assign_block_vars('to_pay', array(
-			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'],
-			'TITLE' => $row['title'],
-			'SHIPPING' => $system->print_money($row['shipping_cost']),
-			'BID' => $system->print_money($row['bid']),
-			'TOTAL' => $system->print_money($row['shipping_cost'] + $row['bid']),
-			'ID' => $row['id']
-			));
+	case 1: // add to account balance
+		$query = "SELECT paypal_address FROM " . $DBPrefix . "gateways LIMIT 1";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$paytoemail = mysql_result($res, 0);
+		$payvalue = $system->input_money($_POST['pfval']);
+		break;
+	case 2:
 }
 
-$query = "SELECT balance FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$user_balance = mysql_result($res, 0);
-
 $template->assign_vars(array(
-		'USER_BALANCE' => $system->print_money($user_balance),
-		'PAY_BALANCE' => $system->print_money_nosymbol(($user_balance < 0) ? 0 - $user_balance : 0),
-		'CURRENCY' -> $system->SETTINGS['currency']
+		'PAYTOEMAIL' => $paytoemail,
+		'PAY_VAL' => $payvalue,
+		'CURRENCY' -> $system->SETTINGS['currency'],
+		'TITLE' => $title,
+		'PAY_VAL' => $payvalue,
+		'PAY_VAL' => $payvalue,
+		'PAY_VAL' => $payvalue,
+		'PAY_VAL' => $payvalue
 		));
 
 include 'header.php';

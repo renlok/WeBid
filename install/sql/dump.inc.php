@@ -1171,7 +1171,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
   `read` int(1) NOT NULL default '0',
   `subject` varchar(50) NOT NULL default '',
   `replied` int(1) NOT NULL default '0',
-  `reply_of` INT(50) NOT NULL default '0'
+  `reply_of` INT(50) NOT NULL default '0',
   `question` int(15) NOT NULL default '0',
   PRIMARY KEY (`id`)
 ) ;";

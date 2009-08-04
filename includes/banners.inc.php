@@ -19,7 +19,7 @@ if (!function_exists('view'))
 	function view()
 	{
 		global $system, $DBPrefix, $uploaded_path;
-		
+
 		$return = '';
 		$BANNERSARRAY = array();
 
@@ -89,7 +89,7 @@ if (!function_exists('view'))
 			{
 				$query .= " AND width = " . $system->SETTINGS['banner_width'] . " AND height = " . $system->SETTINGS['banner_height'];
 			}
-			
+
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if (mysql_num_rows($res) > 0)

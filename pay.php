@@ -51,10 +51,8 @@ $template->assign_vars(array(
 		));
 
 include 'header.php';
-$TMP_usmenutitle = $MSG['453'];
-include 'includes/user_cp.php';
 $template->set_filenames(array(
-		'body' => 'outstanding.tpl'
+		'body' => 'pay.tpl'
 		));
 $template->display('body');
 include 'footer.php';

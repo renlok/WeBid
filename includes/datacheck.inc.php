@@ -19,7 +19,7 @@ function CheckFirstRegData()
 	/*
 	Checks the first data posted by the user
 	in the registration process
-	
+
 	Return codes:   000 = data ok!
 	002 = name missing
 	003 = nick missing
@@ -79,7 +79,6 @@ function CheckFirstRegData()
 } //CheckFirstRegData()
 
 function CheckSellData(){
-	
 	/*
 	return codes:
 	017 = item title missing
@@ -98,21 +97,21 @@ function CheckSellData(){
 	600 = wrong auction type
 	601 = wrong quantity of items
 	*/
-	
+
 	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system;
 	global $payments, $auction_types, $private, $invitedlists, $num, $nnum;
-	
+
 	if (empty($title))
 	{
 		return '017';
 	}
-	
+
 	if (empty($description))
 	{
 		return '018';
 	}
-	
+
 	if (!$system->CheckMoney($minimum_bid) && $buy_now_only == 'n')
 	{
 		return '058';

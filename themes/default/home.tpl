@@ -95,16 +95,16 @@
 		<tr>
 		  <td class="titTable1"><div class="imgTitL"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="space"></div>{L_221}<div class="imgTitR"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="space"></div></td>
 		</tr>
-		<tr>
-		  <td class="table1">
-	  <TABLE WIDTH="100%">
-	  <!-- IF B_LOGIN_ERROR -->
+        <!-- IF B_LOGIN_ERROR -->
 	  	<TR>
 		<TD colspan="2" class="errfont">
 			{LOGIN_ERROR}
 		</TD>
 		</TR>
 	  <!-- ENDIF -->
+		<tr>
+		  <td class="table1">
+	  <TABLE WIDTH="100%">
 	  	<TR>
 		<TD WIDTH="25%"><label for="username" title="please enter your username">{L_003}&nbsp;</label></TD>
 		<TD WIDTH="75%"><input type="text" name="username" id="username" size="10" MAXLENGTH="20"></TD>

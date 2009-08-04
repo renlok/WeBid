@@ -17,12 +17,12 @@ if (!defined('InWeBid')) exit();
 include $include_path . "messages.inc.php";
 
 if ($user->user_data['startemailmode'] == 'yes')
-{	
+{
 	$emailer = new email_class();
 	$emailer->assign_vars(array(
 			'SITE_URL' => $system->SETTINGS['siteurl'],
 			'SITENAME' => $system->SETTINGS['sitename'],
-			
+
 			'A_ID' => $auction_id,
 			'A_TITLE' => $_SESSION['SELL_title'],
 			'A_TYPE' => ($_SESSION['SELL_atype'] == 1) ? $MSG['642'] : $MSG['641'],
@@ -31,7 +31,7 @@ if ($user->user_data['startemailmode'] == 'yes')
 			'A_RESERVE' => $system->print_money($_SESSION['SELL_reserve_price'], false),
 			'A_BNPRICE' => $system->print_money($_SESSION['SELL_buy_now_price'], false),
 			'A_ENDS' => ArrangeDateNoCorrection($a_ends + $system->tdiff),
-			
+
 			'C_NAME' => $user->user_data['name']
 			));
 	$emailer->email_uid = $user->user_data['id'];

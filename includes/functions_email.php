@@ -23,7 +23,7 @@ class email_class
 		global $system, $CHARSET;
 
 		$headers = array();
-		
+
 		if (!isset($this->from) || empty($this->from))
 		{
 			$this->from = $system->SETTINGS['adminmail'];

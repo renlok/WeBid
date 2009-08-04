@@ -14,7 +14,7 @@
 
 session_start();
 define('InWeBid', 1);
-include('config.inc.php');
+include 'config.inc.php';
 
 $MD5_PREFIX = 'fhQYBpS5FNs4';
 $include_path = $main_path . 'includes/'; 

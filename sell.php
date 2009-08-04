@@ -132,6 +132,8 @@ switch ($_SESSION['action'])
 				{
 					$query = "INSERT INTO " . $DBPrefix . "userfees VALUES (NULL, " . $auction_id . ", " . $user->user_data['id'] . ", " . get_fee($minimum_bid) . ", 0)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . get_fee($minimum_bid) . " WHERE id = " . $user->user_data['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 			}
 			$UPLOADED_PICTURES = (isset($_SESSION['UPLOADED_PICTURES'])) ? $_SESSION['UPLOADED_PICTURES'] : array();
@@ -523,7 +525,7 @@ switch ($_SESSION['action'])
 		$oFCKeditor->Value = stripslashes($description);
 		$oFCKeditor->Width = '90%';
 		$oFCKeditor->Height = '400';
-		
+
 		// build the fees javascript
 		$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type, fee_from ASC";
 		$res = mysql_query($query);

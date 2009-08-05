@@ -604,6 +604,10 @@ $MSG['419'] = "Are you sure you want to delete this user? All thier auctions and
 $MSG['420'] = "The user is the SELLER in the following auctions:<br>";
 $MSG['421'] = "The user has placed bids on %s auction(s).";
 $MSG['422'] = "Outstanding payments";
+$MSG['423'] = "Payment Success";
+$MSG['424'] = "Your payment has been confirmed.<br><br>Thank you for your business.";
+$MSG['425'] = "Payment Failure";
+$MSG['426'] = "Your payment hasn't been registered, or was invalid.<br> <br> Sorry for the inconvenience.";
 
 $MSG['429'] = "There were no bids or reserve price was not met";
 $MSG['430'] = "User Signup Fee";

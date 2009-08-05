@@ -40,7 +40,7 @@ class fees
 		{
 			return;
 		}
-		
+
 		//validate payment
 		$req = 'cmd=_notify-validate';
 
@@ -53,16 +53,16 @@ class fees
 		$header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
 		$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
 		$header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-		
+
 		$fp = fsockopen ('www.paypal.com', 80, $errno, $errstr, 30);
-		
+
 		$payment_status = $_POST['payment_status'];
 		$payment_gross = $_POST['mc_gross'];
 		$payment_currency = $_POST['mc_currency'];
 		$txn_id = $_POST['txn_id'];
-		
-		list($custom, $fee_table) = explode('TBL',$_POST['custom']);
-		
+
+		list($custom, $fee_type) = explode('WEBID', $_POST['custom']);
+
 		if (!$fp)
 		{
 			$error_output = $errstr . ' (' . $errno . ')';
@@ -70,20 +70,31 @@ class fees
 		else
 		{
 			fputs ($fp, $header . $req);
-		
+
 			while (!feof($fp))
 			{
 				$res = fgets ($fp, 1024);
-		
+
 				if (strcmp ($res, 'VERIFIED') == 0)
 				{
-					// do something
+					$this->callback_process($custom_id, $fee_type, $payment_gateway, $payment_amount);
 				}
 			}
 			fclose ($fp);
 		}
 	}
 	
-	
+	function callback_process($custom_id, $fee_type, $payment_gateway, $payment_amount, $currency = NULL)
+	{
+		global $system, $DBPrefix;
+
+		switch ($fee_type)
+		{
+			case 1:
+				$query = "UPDATE " . $DBPrefix . "users SET balance = balance + " . $payment_amount . " WHERE id = " . $custom_id;
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			break;
+		}
+	}
 }
 ?>

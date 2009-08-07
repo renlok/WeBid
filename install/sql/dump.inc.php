@@ -541,7 +541,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0);";
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "countries`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "countries` (
-  `country` varchar(35) NOT NULL default '',
+  `country` varchar(40) NOT NULL default '',
   PRIMARY KEY  (`country`)
 ) ;";
 
@@ -1022,10 +1022,10 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fees`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
-  `id` INT(5) NOT NULL AUTO_INCREMENT ,
-  `fee_from` double(16, 4) NOT NULL ,
-  `fee_to` double(6, 4) NOT NULL ,
-  `fee_type` enum('flat', 'perc') NOT NULL,
+  `id` INT(5) NOT NULL AUTO_INCREMENT,
+  `fee_from` double(16, 4) NOT NULL default '0',
+  `fee_to` double(6, 4) NOT NULL default '0',
+  `fee_type` enum('flat', 'perc') NOT NULL default 'flat',
   `value` double(8,4) NOT NULL ,
   `type` varchar(15) NOT NULL,
   PRIMARY KEY  (`id`)
@@ -1639,6 +1639,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
 # Table structure for table `" . $DBPrefix . "userfees`
 # 
 
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userfees`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "userfees` (
   `id` INT(15) NOT NULL AUTO_INCREMENT ,
   `auc_id` int(15) NOT NULL,

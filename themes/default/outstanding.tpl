@@ -1,12 +1,12 @@
-<!-- INCLUDE user_menu_header.html -->
+<!-- INCLUDE user_menu_header.tpl -->
 
 <table>
 <tr>
-    <td width="130px"><b>Account Balance:</b></td>
+    <td width="150px"><b>Account Balance:</b></td>
     <td style="text-align:center; width: 200px;">{USER_BALANCE}</td>
     <td style="text-align:center; width: 200px;">
     	<form name="" method="post" action="{SITEURL}pay.php?a=1" id="fees">
-        {CURRENCY} <input type="text" name="pfval" value="{PAY_BALANCE}" size="7">&nbsp;<input type="button" name="Pay" value="Pay" class="pay">
+        {CURRENCY} <input type="text" name="pfval" value="{PAY_BALANCE}" size="7">&nbsp;<input type="submit" name="Pay" value="Pay" class="pay">
         </form>
     </td>
 </tr>
@@ -28,7 +28,7 @@
     <td style="text-align: center; background-color: #FFFFaa;">
     	<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
     	<input type="hidden" name="pfval" value="{to_pay.ID}">
-        <input type="button" name="Pay" value="Pay" class="pay" />
+        <input type="submit" name="Pay" value="Pay" class="pay" />
         </form>
     </td>
 </tr>
@@ -51,4 +51,4 @@
 </tr>
 </table>
 
-<!-- INCLUDE user_menu_footer.html -->
+<!-- INCLUDE user_menu_footer.tpl -->

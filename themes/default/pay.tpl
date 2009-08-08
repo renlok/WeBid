@@ -1,5 +1,3 @@
-<p align="center">
-Congratulations, you have won <b>Spy Muppets: License to Croak (GBA)</b> (Transaction ID: 2177).</p>
 <p align="center">Please proceed to one of the payment gateways listed below to pay the seller the amount of <b>969.99 USD</b>.</p>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="3" class="paymenttable">

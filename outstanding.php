@@ -47,7 +47,7 @@ $user_balance = mysql_result($res, 0);
 $template->assign_vars(array(
 		'USER_BALANCE' => $system->print_money($user_balance),
 		'PAY_BALANCE' => $system->print_money_nosymbol(($user_balance < 0) ? 0 - $user_balance : 0),
-		'CURRENCY' -> $system->SETTINGS['currency']
+		'CURRENCY' => $system->SETTINGS['currency']
 		));
 
 include 'header.php';

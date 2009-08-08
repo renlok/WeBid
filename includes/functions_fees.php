@@ -18,12 +18,12 @@ if (!defined('InWeBid')) exit('Access denied');
 class fees
 {
 	var $ASCII_RANGE;
-	
+
 	function fees()
 	{
 		$this->ASCII_RANGE = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	}
-	
+
 	function paypal_validate()
 	{
 		global $system, $_POST;
@@ -83,7 +83,7 @@ class fees
 			fclose ($fp);
 		}
 	}
-	
+
 	function callback_process($custom_id, $fee_type, $payment_gateway, $payment_amount, $currency = NULL)
 	{
 		global $system, $DBPrefix;
@@ -92,6 +92,10 @@ class fees
 		{
 			case 1:
 				$query = "UPDATE " . $DBPrefix . "users SET balance = balance + " . $payment_amount . " WHERE id = " . $custom_id;
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			break;
+			case 2:
+				$query = "UPDATE " . $DBPrefix . "winners SET paid = 1 WHERE id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 		}

@@ -32,16 +32,39 @@ switch($_GET['a'])
 		$pp_paytoemail = $gayeway_data['paypal_address'];
 		$payvalue = $system->input_money($_POST['pfval']);
 		$custoncode = $user->user_data['id'] . 'WEBID1';
+		$message = sprintf($MSG['582'], $payvalue);
 		$title = '';
 		break;
 	case 2:
+		$query = "SELECT w.id, a.title, a.shipping_cost, w.bid, u.paypal_email FROM " . $DBPrefix . "auctions a
+				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
+				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
+				WHERE a.id = " . intval($_POST['pfval']);
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+		// check its real
+		if (mysql_num_rows($res) < 1)
+		{
+			header('location: outstanding.php');
+			exit;
+		}
+
+		$data = mysql_fetch_assoc($res);
+		$pp_paytoemail = $data['paypal_email'];
+		$payvalue = $data['shipping_cost'] + $data['bid'];
+		$custoncode = $data['id'] . 'WEBID2';
+		$message = sprintf($MSG['581'], $payvalue);
+		$title = '';
+		break;
 }
 
 $template->assign_vars(array(
+		'TOP_MESSAGE' => $message,
 		'B_ENPAYPAL' => $gayeway_data['paypal_active'],
 		'PP_PAYTOEMAIL' => $pp_paytoemail,
 		'PAY_VAL' => $payvalue,
-		'CURRENCY' -> $system->SETTINGS['currency'],
+		'CURRENCY' => $system->SETTINGS['currency'],
 		'TITLE' => $title,
 		'CUSTOM_CODE' => $custoncode
 		));

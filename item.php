@@ -405,6 +405,8 @@ if (!$has_ended)
 	$bn_link = ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $id . '"><img border="0" align="absbottom" alt="' . $MSG['496'] . '" src="' . $system->SETTINGS['siteurl'] . 'images/buy_it_now.gif"></a>';
 }
 
+$page_title = $auction_data['title'];
+
 $template->assign_vars(array(
 		'ID' => $auction_data['id'],
 		'TITLE' => $auction_data['title'],

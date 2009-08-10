@@ -36,7 +36,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	}
 }
 
-loadblock($MSG['671'], $MSG['25_0187'], 'kbytes', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), $MSG['672']);
+loadblock($MSG['671'], $MSG['25_0187'], 'days', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), $MSG['672']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

@@ -59,5 +59,6 @@
 - Added user groups
 - Added questions to the items page
 - Added a thread to PM so you can see your previous messages in a conversation
+- Added the option to disable proxy bidding
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

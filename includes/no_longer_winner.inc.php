@@ -20,12 +20,12 @@ $emailer = new email_class();
 $emailer->assign_vars(array(
 		'SITE_URL' => $system->SETTINGS['siteurl'],
 		'SITENAME' => $system->SETTINGS['sitename'],
-		
+
 		'C_NAME' => $OldWinner_name,
 		'C_BID' => $OldWinner_bid,
-		
+
 		'N_BID' => $new_bid,
-		
+
 		'A_TITLE' => $item_title,
 		'A_ENDS' => $ends_string,
 		'A_PICURL' => ($pict_url_plain != '') ? $uploaded_path . $item_id . '/' . $pict_url_plain : 'images/email_alerts/default_item_img.jpg',

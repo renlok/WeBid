@@ -608,6 +608,8 @@ $MSG['423'] = "Payment Success";
 $MSG['424'] = "Your payment has been confirmed.<br><br>Thank you for your business.";
 $MSG['425'] = "Payment Failure";
 $MSG['426'] = "Your payment hasn't been registered, or was invalid.<br> <br> Sorry for the inconvenience.";
+$MSG['427'] = "Enable Proxy Bidding";
+$MSG['428'] = "Enable/ Disable the proxy bidding feature";
 
 $MSG['429'] = "There were no bids or reserve price was not met";
 $MSG['430'] = "User Signup Fee";
@@ -816,6 +818,18 @@ $MSG['725'] = "Optimisation";
 $MSG['726'] = "Enable/ Disable template cache";
 $MSG['727'] = "This will massively increase the speed of your site. It is recommended this is only disabled when making updates to your template";
 $MSG['728'] = "Optimisation settings updated";
+$MSG['729'] = "Set payment type";
+$MSG['730'] = "This is how users will pay the fees. Balance mode is where the users can choose when to pay and live payments is where the user must pay for every action that has a fee";
+$MSG['731'] = "Balance mode";
+$MSG['732'] = "Live payments";
+$MSG['733'] = "The following settings are only used when in balance mode";
+$MSG['734'] = "Maximum Debit";
+$MSG['735'] = "The maximum an account can have before they must pay it back";
+$MSG['736'] = "Signup Credit";
+$MSG['737'] = "The credit given to an account on its creation";
+$MSG['738'] = "Suspend Accounts";
+$MSG['739'] = "Suspend Accounts that are over the Debit Limit";
+
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";
 $MSG['903'] = "In which format do you want to receive your emails";

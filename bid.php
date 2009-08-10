@@ -162,7 +162,17 @@ if (isset($_POST['action']) && !isset($errmsg))
 	// make the bid
 	if ($atype == 1 && !isset($errmsg)) // normal auction
 	{
-		if ($WINNING_BIDDER == $bidder_id)
+		if ($system->SETTINGS['proxy_bidding'] == 'n')
+		{
+			$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . $bid . ", num_bids = num_bids + 1 WHERE id = " . $id;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			// Also update bids table
+			$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . $bid . ", '" . $NOW . "', " . $qty . ")";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			extend_auction($item_id, $c);
+			$bidding_ended = true;
+		}
+		elseif ($WINNING_BIDDER == $bidder_id)
 		{
 			$query = "SELECT bid FROM " . $DBPrefix . "proxybid p
 					LEFT JOIN " . $DBPrefix . "users u ON (p.userid = u.id)
@@ -186,7 +196,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 
 					if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve)
 					{
-						$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = $next_bid, num_bids = num_bids + 1 WHERE id = " . $id;
+						$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($reserve) . ", num_bids = num_bids + 1 WHERE id = " . $id;
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						// Also update bids table
 						$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($reserve) . ", '" . $NOW . "', " . $qty . ")";
@@ -197,7 +207,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 				}
 			}
 		}
-		if (!$bidding_ended && !isset($errmsg))
+		if (!$bidding_ended && !isset($errmsg) && $system->SETTINGS['proxy_bidding'] == 'y')
 		{
 			$query = "SELECT * FROM " . $DBPrefix . "proxybid p, " . $DBPrefix . "users u WHERE itemid = " . $id . " AND p.userid = u.id and u.suspended = 0 ORDER by bid DESC";
 			$result = mysql_query($query);

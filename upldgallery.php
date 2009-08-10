@@ -147,7 +147,7 @@ if ($_POST['uploadpicture'] == $MSG['681'])
 
 		if ($_FILES['userfile']['size'] > $system->SETTINGS['maxuploadsize'])
 		{
-			$ERR = $ERR_709 . '&nbsp;' . ($system->SETTINGS['maxuploadsize'] / 1024) . '&nbsp;Kbytes';
+			$ERR = $ERR_709 . '&nbsp;' . ($system->SETTINGS['maxuploadsize'] / 1024) . '&nbsp;' . $MSG['672'];
 		}
 		elseif (!in_array($file_ext, $file_types))
 		{

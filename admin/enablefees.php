@@ -23,13 +23,26 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  fees = '" . $_POST['fees'] . "'";
+			  fees = '" . $_POST['fees'] . "',
+			  fee_type = '" . $_POST['fee_type'] . "',
+			  fee_max_debt = '" . $_POST['fee_max_debt'] . "',
+			  fee_signup_bonus = '" . $_POST['fee_signup_bonus'] . "',
+			  fee_disable_acc = '" . $_POST['fee_disable_acc'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['fees'] = $_POST['fees'];
+	$system->SETTINGS['fee_type'] = $_POST['fee_type'];
+	$system->SETTINGS['fee_max_debt'] = $_POST['fee_max_debt'];
+	$system->SETTINGS['fee_signup_bonus'] = $_POST['fee_signup_bonus'];
+	$system->SETTINGS['fee_disable_acc'] = $_POST['fee_disable_acc'];
 	$ERR = $MSG['247'];
 }
 
 loadblock($MSG['395'], $MSG['397'], 'yesno', 'fees', $system->SETTINGS['fees'], $MSG['030'], $MSG['029']);
+loadblock($MSG['729'], $MSG['730'], 'batchstacked', 'fee_type', $system->SETTINGS['fee_type'], $MSG['731'], $MSG['732']);
+loadblock('', '', $MSG['733']);
+loadblock($MSG['733'], $MSG['734'], 'days', 'fee_max_debt', $system->SETTINGS['fee_max_debt']);
+loadblock($MSG['735'], $MSG['736'], 'days', 'fee_signup_bonus', $system->SETTINGS['fee_signup_bonus']);
+loadblock($MSG['737'], $MSG['738'], 'yesno', 'fee_disable_acc', $system->SETTINGS['fee_disable_acc'], $MSG['030'], $MSG['029']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

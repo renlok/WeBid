@@ -23,6 +23,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
+			  proxy_bidding = '" . $_POST['proxy_bidding'] . "',
 			  edit_starttime = '" . $_POST['edit_starttime'] . "',
 			  cust_increment = " . $_POST['cust_increment'] . ",
 			  hours_countdown = '" . $_POST['hours_countdown'] . "',
@@ -36,9 +37,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['ao_hpf_enabled'] = $_POST['ao_hpf_enabled'];
 	$system->SETTINGS['ao_hi_enabled'] = $_POST['ao_hi_enabled'];
 	$system->SETTINGS['ao_bi_enabled'] = $_POST['ao_bi_enabled'];
+	$system->SETTINGS['proxy_bidding'] = $_POST['proxy_bidding'];
 	$ERR = $MSG['5088'];
 }
 
+loadblock($MSG['427'], $MSG['428'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], $MSG['030'], $MSG['029']);
 loadblock($MSG['5090'], $MSG['5089'], 'batch', 'edit_starttime', $system->SETTINGS['edit_starttime'], $MSG['030'], $MSG['029']);
 loadblock($MSG['068'], $MSG['070'], 'batch', 'cust_increment', $system->SETTINGS['cust_increment'], $MSG['030'], $MSG['029']);
 loadblock($MSG['5091'], $MSG['5095'], 'days', 'hours_countdown', $system->SETTINGS['hours_countdown'], $MSG['25_0037']);

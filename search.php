@@ -55,8 +55,8 @@ else
 		$qp .= "(cat_name LIKE '%" . addslashes($qquery) . "%') ";
 	}
 
-	$sql_count = "SELECT count(*) FROM " . $DBPrefix . "auctions WHERE ($qp1) AND (closed='0') AND (suspended='0') AND private='n' AND starts <= " . $NOW . " ORDER BY ends";
-	$sql = "SELECT * FROM " . $DBPrefix . "auctions WHERE ($qp1) AND (closed='0') AND (suspended ='0') AND private='n' AND starts <= " . $NOW . " ORDER BY ends";
+	$sql_count = "SELECT count(*) FROM " . $DBPrefix . "auctions WHERE ($qp1) AND closed = 0 AND suspended = 0 AND private = 'n' AND starts <= " . $NOW . " ORDER BY ends";
+	$sql = "SELECT * FROM " . $DBPrefix . "auctions WHERE ($qp1) AND closed = 0 AND suspended = 0 AND private = 'n' AND starts <= " . $NOW . " ORDER BY ends";
 	$sql_cat = "SELECT * FROM " . $DBPrefix . "categories WHERE " . $qp . " ORDER BY cat_name ASC";
 	// get categories whose names fit the search criteria
 

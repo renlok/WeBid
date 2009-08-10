@@ -26,34 +26,41 @@ $NOW = time();
 if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password']))
 {
 	$password = md5($MD5_PREFIX . $_POST['password']);
-	$query = "SELECT id, hash FROM " . $DBPrefix . "users WHERE
+	$query = "SELECT id, hash, suspended FROM " . $DBPrefix . "users WHERE
 			nick = '" . $system->cleanvars($_POST['username']) . "'
 			AND password = '" . $password . "' AND suspended = 0";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($res) > 0)
 	{
-		$_SESSION['WEBID_LOGGED_IN'] 		= mysql_result($res, 0, 'id');
-		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, mysql_result($res, 0, 'hash'));
+		$user_data = mysql_fetch_assoc($res);
+		if ($user_data['suspended'] == 9)
+		{
+			$_SESSION['signup_id'] = $user_data['id'];
+			header('location: pay.php?a=3');
+			exit;
+		}
+		$_SESSION['WEBID_LOGGED_IN'] 		= $user_data['id'];
+		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $user_data['hash']);
 		$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
 		// Update "last login" fields in users table
-		$query = "UPDATE " . $DBPrefix . "users SET lastlogin = '" . gmdate("Y-m-d H:i:s") . "' WHERE id = " . $_SESSION['WEBID_LOGGED_IN'];
+		$query = "UPDATE " . $DBPrefix . "users SET lastlogin = '" . gmdate("Y-m-d H:i:s") . "' WHERE id = " . $user_data['id'];
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		// Remember me option
 		if ($_POST['rememberme'] == 1)
 		{
 			$remember_key = md5(time());
-			$query = "INSERT INTO " . $DBPrefix . "rememberme VALUES (" . mysql_result($res, 0, 'id') . ", '" . addslashes($remember_key) . "')";
+			$query = "INSERT INTO " . $DBPrefix . "rememberme VALUES (" . $user_data['id'] . ", '" . addslashes($remember_key) . "')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			setcookie('WEBID_RM_ID', $remember_key, time() + (3600 * 24 * 365));
 		}
-		$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = " . $_SESSION['WEBID_LOGGED_IN'] . " AND ip = '" . $_SERVER['REMOTE_ADDR'] . "'";
+		$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = " . $user_data['id'] . " AND ip = '" . $_SERVER['REMOTE_ADDR'] . "'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		if (mysql_num_rows($res) == 0)
 		{
 			$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-					(NULL, '" . $_SESSION['WEBID_LOGGED_IN'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
+					(NULL, '" . $user_data['id'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		// delete your old session

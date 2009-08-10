@@ -57,6 +57,21 @@ switch($_GET['a'])
 		$message = sprintf($MSG['581'], $payvalue);
 		$title = '';
 		break;
+	case 3: // pay signup fee (live mode)
+		if (!isset($_SESSION['signup_id']) || !is_int($_SESSION['signup_id']) || $_SESSION['signup_id'] < 1 || $system->SETTINGS['fee_type'] != 2)
+		{
+			header('location: index.php');
+			exit;
+		}
+		$pp_paytoemail = $gayeway_data['paypal_address'];
+		$query = "SELECT signup_fee FROM " . $DBPrefix . "fees LIMIT 1";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$payvalue = mysql_result($res, 0);
+		$custoncode = $_SESSION['signup_id'] . 'WEBID3';
+		$message = sprintf($MSG['583'], $payvalue);
+		$title = '';
+		break;
 }
 
 $template->assign_vars(array(

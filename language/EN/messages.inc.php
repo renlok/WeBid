@@ -727,7 +727,7 @@ $MSG['579'] = "Can Buy";
 $MSG['580'] = "Auto Join";
 $MSG['581'] = "Please proceed to one of the payment gateways listed below to pay the seller the amount of <b>%s</b>.";
 $MSG['582'] = "Please proceed to one of the payment gateways listed below to credit your account by amount of <b>%s</b>.";
-
+$MSG['583'] = "To activate your account please proceed to one of the payment gateways listed below to pay the fee of <b>%s</b>.";
 $MSG['584'] = "This is the font used in the footer";
 $MSG['585'] = "This is the font used in the titles of pages";
 $MSG['586'] = "Border colour";

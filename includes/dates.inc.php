@@ -80,7 +80,7 @@ if (!function_exists('FormatTimeLeft'))
 	function FormatTimeLeft($diff)
 	{
 		global $MSG;
-		
+
 		$days_difference = floor($diff / 86400);
 		$difference = $diff % 86400;
 		$hours_difference = floor($difference / 3600);
@@ -89,7 +89,7 @@ if (!function_exists('FormatTimeLeft'))
 		$seconds_difference = $difference % 60;
 		$secshow = false;
 		$timeleft = '';
-		
+
 		if ($days_difference > 0)
 		{
 			$timeleft = $days_difference . 'd ';
@@ -122,7 +122,7 @@ if (!function_exists('FormatTimeLeft'))
 		{
 			$timeleft = '<span style="color:#FF0000;">' . $timeleft . '</span>';
 		}
-		
+
 		return $timeleft;
 	}
 }
@@ -141,7 +141,7 @@ if (!function_exists('ArrangeDateNoCorrection'))
 {
 	function ArrangeDateNoCorrection($DATE)
 	{
-		global $MSG;
+		global $MSG, $system;
 		$mth = 'MON_0' . gmdate('m', $DATE);
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{

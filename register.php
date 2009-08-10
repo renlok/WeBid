@@ -205,6 +205,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 2) ? 0 : 8;
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 0) ? 10 : $SUSPENDED;
 
+				$query = "SELECT signup_fee FROM " . $DBPrefix . "fees LIMIT 1";
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$signup_fee = mysql_result($res, 0);
+				if ($system->SETTINGS['fee_type'] == 2 && $signup_fee > 0)
+				{
+					$SUSPENDED = 9;
+				}
+				$balance = ($system->SETTINGS['fee_type'] == 2) ? 0 : ($system->SETTINGS['fee_signup_bonus'] - $signup_fee);
+
 				$query = "SELECT id FROM " . $DBPrefix . "groups WHERE auto_join = 1";
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -215,7 +225,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				}
 				$hash = get_hash();
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate, suspended, language, groups)
+						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate, suspended, language, groups, balance)
 						VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
 						'" . md5($MD5_PREFIX . $TPL_password_hidden) . "',
 						'" . $hash . "',
@@ -232,7 +242,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $DATE . "',
 						'" . $SUSPENDED . "',
 						'" . $language . "',
-						'" . implode(',', $groups) . "')";
+						'" . implode(',', $groups) . "',
+						'" . $balance . "')";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$TPL_id_hidden = mysql_insert_id();
 				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES(
@@ -243,6 +254,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				$_SESSION['language'] = $language;
+
+				if ($system->SETTINGS['fee_type'] == 2 && $signup_fee > 0)
+				{
+					$_SESSION['signup_id'] = $TPL_id_hidden;
+					header('location: pay.php?a=3');
+					exit;
+				}
 			}
 		}
 	}

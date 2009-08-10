@@ -98,6 +98,10 @@ class fees
 				$query = "UPDATE " . $DBPrefix . "winners SET paid = 1 WHERE id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
+			case 3:
+				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $custom_id;
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			break;
 		}
 	}
 }

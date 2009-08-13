@@ -55,7 +55,7 @@ if (!isset($_GET['id']) && !isset($_POST['action']))
 if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 {
 	// User wants to confirm his/her registration
-	$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . intval($_POST['id']) . " and suspended = 8";
+	$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . intval($_POST['id']) . " AND suspended = 8";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 

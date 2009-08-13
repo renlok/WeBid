@@ -291,15 +291,18 @@ function window_open(pagina,titulo,ancho,largo,x,y){
 					if ($suspended == 1) {
 						print "<B><FONT COLOR=violet>".$MSG['5294']."</B>";
 					}
+					if ($suspended == 7) {
+						print "<B><FONT COLOR=red>".$MSG['5297']."</B>";
+					}
+					if ($suspended == 8) {
+						print '<B><FONT COLOR=orange>'.$MSG['5292'].'</B>
+							   <BR><a href="listusers.php?resend=1&id=' . $id . '">' . $MSG['25_0074'] . '</a>';
+					}
 					if ($suspended == 9) {
 						print "<B><FONT COLOR=red>".$MSG['5293']."</B>";
 					}
 					if ($suspended == 10) {
 						print "<B><FONT COLOR=orange><A HREF=\"excludeuser.php?id=$id&offset=$offset\" class=\"nounderlined\">".$MSG['25_0136']."</A>";
-					}
-					if ($suspended == 8) {
-						print '<B><FONT COLOR=orange>'.$MSG['5292'].'</B>
-							   <BR><a href="listusers.php?resend=1&id=' . $id . '">' . $MSG['25_0074'] . '</a>';
 					}
 					print "</td>";
 					print "<td ALIGN=LEFT>

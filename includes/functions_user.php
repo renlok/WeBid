@@ -17,7 +17,7 @@ if (!defined('InWeBid')) exit('Access denied');
 class user
 {
 	var $user_data, $numbers, $logged_in;
-	
+
 	function user()
 	{
 		global $_SESSION, $system, $DBPrefix;
@@ -42,24 +42,43 @@ class user
 				{
 					$this->logged_in = true;
 					$this->user_data = $user_data;
-					// check if user can sell or buy
-					if (count($user_data['groups']) < 1)
-						$user_data['groups'] = 0; // just in case
-					$query = "SELECT can_sell, can_buy FROM " . $DBPrefix . "groups WHERE id IN (" . $user_data['groups'] . ") AND (can_sell = 1 OR can_buy = 1)";
-					$res = mysql_query($query);
-					$system->check_mysql($res, $query, __LINE__, __FILE__);
-					while ($row = mysql_fetch_assoc($res))
+					if ($this->user_data['suspended'] != 7)
 					{
-						if ($row['can_sell'] == 1)
+						// check if user can sell or buy
+						if (count($user_data['groups']) < 1)
+							$user_data['groups'] = 0; // just in case
+						$query = "SELECT can_sell, can_buy FROM " . $DBPrefix . "groups WHERE id IN (" . $user_data['groups'] . ") AND (can_sell = 1 OR can_buy = 1)";
+						$res = mysql_query($query);
+						$system->check_mysql($res, $query, __LINE__, __FILE__);
+						while ($row = mysql_fetch_assoc($res))
 						{
-							$this->can_sell = true;
-						}
-						if ($row['can_buy'] == 1)
-						{
-							$this->can_buy = true;
+							if ($row['can_sell'] == 1)
+							{
+								$this->can_sell = true;
+							}
+							if ($row['can_buy'] == 1)
+							{
+								$this->can_buy = true;
+							}
 						}
 					}
 				}
+			}
+			$this->check_balance();
+		}
+	}
+
+	function check_balance()
+	{
+		global $system, $DBPrefix;
+
+		// check if user needs to be suspended
+		if ($system->SETTINGS['fee_type'] == 1 && $this->logged_in && $this->user_data['suspended'] != 7)
+		{
+			if ($system->SETTINGS['fee_max_debt'] <= (-1 * $this->user_data['balance']))
+			{
+				$query = "UPDATE " . $DBPrefix . "users SET suspended = 7 WHERE id = " . $this->user_data['id'];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			}
 		}
 	}

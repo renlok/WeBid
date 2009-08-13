@@ -1082,6 +1082,7 @@ $MSG['5293'] = "Sign up fee not paid";
 $MSG['5294'] = "Suspended by the admin";
 $MSG['5295'] = "View";
 $MSG['5296'] = "All users";
+$MSG['5297'] = "Balance over debt limit";
 $MSG['5299'] = "Limit submission to";
 $MSG['5300'] = " messages sent.";
 $MSG['5318'] = "View Platform Statistics";

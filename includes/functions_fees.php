@@ -91,7 +91,20 @@ class fees
 		switch ($fee_type)
 		{
 			case 1:
-				$query = "UPDATE " . $DBPrefix . "users SET balance = balance + " . $payment_amount . " WHERE id = " . $custom_id;
+				$addquery = '';
+				if ($system->SETTINGS['fee_disable_acc'] == 'y')
+				{
+					$query = "SELECT suspended, balance FROM " . $DBPrefix . "users WHERE id = " . $custom_id;
+					$res = mysql_query($query);
+					$system->check_mysql($res, $query, __LINE__, __FILE__);
+					$data = mysql_fetch_assoc($res);
+					// reable user account if it was disabled
+					if ($data['suspended'] == 7 && ($data['balance'] + $payment_amount) >= 0)
+					{
+						$addquery = ', suspended = 0 ';
+					}
+				}
+				$query = "UPDATE " . $DBPrefix . "users SET balance = balance + " . $payment_amount . $addquery . " WHERE id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 2:

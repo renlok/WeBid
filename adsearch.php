@@ -180,7 +180,7 @@ if ((!empty($wher) || !isset($ora)) && isset($_POST['go']))
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-	$hash = mysql_fetch_array($res);
+	$hash = mysql_fetch_assoc($res);
 	$total = (int)$hash['total'];
 
 	// get number of pages

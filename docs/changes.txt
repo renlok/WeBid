@@ -44,7 +44,7 @@
 - Fixed a bug in auctions_active.tpl where buy it now is not displayed
 - Added an option to enable or disable the template cache
 - Added an option to make the time remaining on on auction to become an automatic countdown timer after a given time
-- Fixed some minor bugs in the auction/ user control where the auction title/user name do not show when deleting/suspending user/auction
+- Fixed some minor bugs in the auction/user control where the auction title/user name do not show when deleting/suspending user/auction
 - Cleaned up the auction lists in the admin panel so they display more useful information
 - Added option to make auctions bold/highlighted or featured
 - Add option to start auction now

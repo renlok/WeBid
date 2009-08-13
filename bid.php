@@ -23,6 +23,12 @@ if (!$user->logged_in)
 	exit;
 }
 
+if (!$user->can_buy)
+{
+	header('location: user_menu.php');
+	exit;
+}
+
 $id = intval($_REQUEST['id']);
 $bid = $_REQUEST['bid'];
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;

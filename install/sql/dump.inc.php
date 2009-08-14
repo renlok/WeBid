@@ -332,10 +332,10 @@ if ($_GET['cats'] == 1)
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 0, 142, 147, 0, 'Coins &amp; Stamps', 0, 0, '', '');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 73, 143, 144, 1, 'Coins', 0, 0, '', '');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 73, 145, 146, 1, 'Philately', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 0, 148, 223, 0, 'Collectibles', 1, 0, '', '');";
+	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 0, 148, 223, 0, 'Collectibles', 0, 0, '', '');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 76, 149, 150, 1, 'Advertising', 0, 0, '', '');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 76, 151, 152, 1, 'Animals', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 76, 153, 154, 1, 'Animation', 1, 1, '', '');";
+	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 76, 153, 154, 1, 'Animation', 0, 0, '', '');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 76, 155, 156, 1, 'Antique Reproductions', 0, 0, '', '');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 76, 157, 158, 1, 'Autographs', 0, 0, '', '');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 76, 159, 160, 1, 'Barber Shop', 0, 0, '', '');";
@@ -1026,7 +1026,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
   `fee_from` double(16, 4) NOT NULL default '0',
   `fee_to` double(6, 4) NOT NULL default '0',
   `fee_type` enum('flat', 'perc') NOT NULL default 'flat',
-  `value` double(8,4) NOT NULL ,
+  `value` double(8,4) NOT NULL,
   `type` varchar(15) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ;";
@@ -1692,7 +1692,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `winner` int(32) NOT NULL default '0',
   `bid` double NOT NULL default '0',
   `closingdate` int(15) NOT NULL default '0',
-  `fee` double NOT NULL default '0',
   `feedback_win` tinyint(1) NOT NULL default '0',
   `feedback_sel` tinyint(1) NOT NULL default '0',
   `qty` int(11) NOT NULL default '1',

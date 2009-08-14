@@ -174,7 +174,7 @@ if ($_GET['action'] == 'buy')
 			$Winner = mysql_fetch_array($result);
 
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, " . intval($_REQUEST['id']) . ", " . $user_id . ", " . $Winner['id'] . ", " . $buy_now_price . ", '" . $NOW . "', 0, 0, 0, 1)";
+					(NULL, " . intval($_REQUEST['id']) . ", " . $user_id . ", " . $Winner['id'] . ", " . $buy_now_price . ", '" . $NOW . "', 0, 0, 1, 0)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			include $include_path . 'endauction_youwin_nodutch.inc.php';
 		}

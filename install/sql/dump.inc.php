@@ -88,7 +88,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `photo_uploaded` tinyint(1) default NULL,
   `quantity` int(11) default NULL,
   `suspended` int(1) default '0',
-  `private` enum('y','n') NOT NULL default 'n',
   `relist` int(11) NOT NULL default '0',
   `relisted` int(11) NOT NULL default '0',
   `num_bids` int(11) NOT NULL default '0',

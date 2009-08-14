@@ -1,3 +1,44 @@
+<!-- IF B_FEATURED_ITEMS -->
+	<table width="98%" border="0" cellspacing="1" cellpadding="4">
+		<tr>
+			<th width="9%" align="center" height="5">
+				{L_167}
+			</th>
+			<th width="49%" height="5" align="center">
+				{L_168}
+			</th>
+			<th width="14%" height="5" align="center">
+				{L_169}
+			</th>
+			<th width="14%" height="5" align="center">
+				{L_170}
+			</th>
+			<th width="14%" align="center" height="5">
+				{L_171}
+			</th>
+		</tr>
+    <!-- BEGIN featured_items -->
+		<tr align="center" {items.ROWCOLOUR}<!-- IF items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
+			<td align="center">
+				{items.IMAGE}
+			</td>
+			<td align="left">
+                {items.TITLE} {items.BUY_NOW}
+			</td>
+			<td align="right">
+				{items.BIDFORM}
+			</td>
+			<td align="center">
+				{items.RESERVE} {items.NUMBIDS}
+			</td>
+			<td align="center">
+				{items.TIMELEFT}
+			</td>
+		</tr>
+    <!-- END featured_items -->
+	</table>
+<!-- ENDIF -->
+
 	<table width="98%" border="0" cellspacing="1" cellpadding="4">
 		<tr>
 			<th width="9%" align="center" height="5">

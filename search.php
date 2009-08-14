@@ -55,8 +55,8 @@ else
 		$qp .= "(cat_name LIKE '%" . addslashes($qquery) . "%') ";
 	}
 
-	$sql_count = "SELECT count(*) FROM " . $DBPrefix . "auctions WHERE ($qp1) AND closed = 0 AND suspended = 0 AND private = 'n' AND starts <= " . $NOW . " ORDER BY ends";
-	$sql = "SELECT * FROM " . $DBPrefix . "auctions WHERE ($qp1) AND closed = 0 AND suspended = 0 AND private = 'n' AND starts <= " . $NOW . " ORDER BY ends";
+	$sql_count = "SELECT count(*) FROM " . $DBPrefix . "auctions WHERE " . $qp1 . " AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " ORDER BY ends";
+	$sql = "SELECT * FROM " . $DBPrefix . "auctions WHERE " . $qp1 . " AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " ORDER BY ends";
 	$sql_cat = "SELECT * FROM " . $DBPrefix . "categories WHERE " . $qp . " ORDER BY cat_name ASC";
 	// get categories whose names fit the search criteria
 
@@ -151,11 +151,15 @@ else
 	if (($total % $lines) > 0)
 		++$PAGES;
 
-	$result = mysql_query($sql . " LIMIT $left_limit,$lines");
+	$result = mysql_query($sql . " LIMIT $left_limit, $lines");
 	$system->check_mysql($result, $sql, __LINE__, __FILE__);
+
+	$feat_res = mysql_query($sql . " LIMIT " . intval(($PAGE - 1) * 5) . ", 5");
+	$system->check_mysql($feat_res, $sql, __LINE__, __FILE__);
+
 	// to be sure about items format, I've unified the call
 	include $include_path . 'browseitems.inc.php';
-	browseItems($result, 'search.php');
+	browseItems($result, $feat_res, 'search.php');
 }
 
 include 'header.php';

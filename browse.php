@@ -164,20 +164,19 @@ else
 	$insql = ($id != 0) ? "category IN " . $catalist . " AND" : '';
 
 	// get total number of records
-	$qs = "SELECT count(*) FROM " . $DBPrefix . "auctions
-			WHERE $insql starts <= " . $NOW . "
+	$query = "SELECT count(*) FROM " . $DBPrefix . "auctions
+			WHERE " . $insql . " starts <= " . $NOW . "
 			AND closed = 0
-			AND private = 'n'
 			AND suspended = 0";
 	if (!empty($_POST['catkeyword']))
 	{
-		$qs .= " AND title like '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
+		$query .= " AND title like '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
 	}
-	$rsl = mysql_query($qs);
-	$system->check_mysql($rsl, $qs, __LINE__, __FILE__);
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$hash = mysql_fetch_assoc($res);
+	$total = (int)$hash[0];
 
-	$hash = mysql_fetch_array($rsl);
-	$total = !$hash[0] ? 1 : (int)$hash[0];
 	// Handle pagination
 	$TOTALAUCTIONS = $total;
 
@@ -193,22 +192,34 @@ else
 	}
 	$PAGES = ceil($TOTALAUCTIONS / $LIMIT);
 
-	$qs = "SELECT * FROM " . $DBPrefix . "auctions
-			WHERE $insql starts <= " . $NOW . "
+	$query = "SELECT * FROM " . $DBPrefix . "auctions
+			WHERE " . $insql . " starts <= " . $NOW . "
 			AND closed = 0
-			AND private = 'n'
 			AND suspended = 0";
 	if (!empty($_POST['catkeyword']))
 	{
-		$qs .= " AND title LIKE '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
+		$query .= " AND title LIKE '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
 	}
-	$qs .= " ORDER BY ends ASC LIMIT " . intval($OFFSET) . "," . intval($LIMIT);
+	$query .= " ORDER BY ends ASC LIMIT " . intval($OFFSET) . "," . intval($LIMIT);
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-	$result = mysql_query($qs);
-	$system->check_mysql($result, $qs, __LINE__, __FILE__);
+	// get featured items
+	$query = "SELECT * FROM " . $DBPrefix . "auctions
+			WHERE " . $insql . " starts <= " . $NOW . "
+			AND closed = 0
+			AND suspended = 0
+			AND featured = 'y'";
+	if (!empty($_POST['catkeyword']))
+	{
+		$query .= " AND title LIKE '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
+	}
+	$query .= " ORDER BY ends ASC LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
+	$feat_res = mysql_query($query);
+	$system->check_mysql($feat_res, $query, __LINE__, __FILE__);
 
 	include $include_path . 'browseitems.inc.php';
-	browseItems($result, 'browse.php');
+	browseItems($res, $feat_res, 'browse.php');
 
 	$template->assign_vars(array(
 			'TOP_HTML' => $TPL_main_value,

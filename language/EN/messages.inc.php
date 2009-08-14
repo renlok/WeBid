@@ -162,7 +162,6 @@ $ERR_714 = "You have not activated your account yet";
 $ERR_5000 = "Messages to show must be numeric";
 $ERR_5001 = "Messages to show cannot be zero";
 $ERR_5002 = "You must select at least one statistic type (accesses, browsers & platforms, by country)";
-$ERR_5007 = "To set up a private auction you must select at least one user from the Invited Users list.";
 $ERR_5014 = "Subject or message missing";
 $ERR_5029 = "Name missing";
 $ERR_5030 = "Username missing";
@@ -1033,8 +1032,6 @@ $MSG['5188'] = "Delete selected users";
 $MSG['5189'] = "Submit Auction";
 $MSG['5190'] = "Reset Fields";
 $MSG['5191'] = "Invited Users Lists and Banned Users List";
-$MSG['5192'] = "Set this auction as <b>private</b>: only users belonging to one of the selected Invited Users List will be able to access your auction and bid.<br>
-			If you don't select this option your auction will be public (visible to all users) but only invited users will be entitled to bid.";
 $MSG['5193'] = "Send invitation e-mail to the invited users";
 $MSG['5199'] = "Confirm bid";
 $MSG['5200'] = "Post question";

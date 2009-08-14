@@ -100,7 +100,7 @@ function CheckSellData(){
 
 	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system;
-	global $payments, $auction_types, $private, $invitedlists, $num, $nnum;
+	global $payments, $auction_types, $invitedlists, $num, $nnum;
 
 	if (empty($title))
 	{
@@ -208,11 +208,6 @@ function CheckSellData(){
 			$buy_now_price='';
 			return '064';
 		}
-	}
-	
-	if ($private == 'y' && !is_array($invitedlists))
-	{
-		return '5007';
 	}
 
 	if ($with_reserve == 'yes' && $reserve_price <= $minimum_bid)

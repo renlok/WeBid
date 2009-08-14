@@ -80,7 +80,7 @@ if ($items != '' && $items != null)
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($result) > 0)
 	{
-		browseItems($result, 'item_watch.php');
+		browseItems($result, false, 'item_watch.php');
 	}
 }
 

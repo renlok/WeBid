@@ -27,7 +27,7 @@ function get_reminders($secid)
 	global $DBPrefix, $system;
 	$data = array();
 	// get number of new messages
-	$query = "SELECT COUNT(*) AS total FROM " . $DBPrefix . "messages WHERE `read` = 0 AND sentto = " . $secid;
+	$query = "SELECT COUNT(*) AS total FROM " . $DBPrefix . "messages WHERE isread = 0 AND sentto = " . $secid;
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$data[] = mysql_result($res, 0, 'total');

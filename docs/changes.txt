@@ -60,5 +60,6 @@
 - Added questions to the items page
 - Added a thread to PM so you can see your previous messages in a conversation
 - Added the option to disable proxy bidding
+- Updated the messages table so the colomn names are no longer conflicting with mysql commands
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

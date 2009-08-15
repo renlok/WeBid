@@ -24,7 +24,7 @@ if (!$user->logged_in)
 $messageid = intval($_GET['id']);
 // check message is to user
 $query = "SELECT m.*, u.nick FROM " . $DBPrefix . "messages m
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = m.from)
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = m.sentfrom)
 		WHERE m.sentto = " . $user->user_data['id'] . " AND m.id = " . $messageid;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -37,23 +37,23 @@ if ($check == 0)
 }
 
 $array = mysql_fetch_array($res);
-$sent = gmdate('M d, Y H:ia', $array['when'] + $system->tdiff);
+$sent = gmdate('M d, Y H:ia', $array['sentat'] + $system->tdiff);
 $sendusername = $array['nick'];
 $subject = $array['subject'];
 $message = $array['message'];
 $hash = md5(rand(1, 9999));
 $array['message'] = str_replace('<br>', '', $array['message']);
 
-$senderusername = '<a href="profile.php?user_id=1&auction_id=' . $array['from'] . '">' . $sendusername . '</a>';
+$senderusername = '<a href="profile.php?user_id=1&auction_id=' . $array['sentfrom'] . '">' . $sendusername . '</a>';
 
 // if admin message
-if ($array['from'] == 0)
+if ($array['sentfrom'] == 0)
 {
 	$senderusername = $MSG['110'];
 }
 
 // Update message
-$query = "UPDATE " . $DBPrefix . "messages SET `read` = 1 WHERE id = " . $messageid;
+$query = "UPDATE " . $DBPrefix . "messages SET isread = 1 WHERE id = " . $messageid;
 $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 // set session for reply

@@ -64,7 +64,7 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	}
 	// send message
 	$nowmessage = nl2br($message);
-	$query = "INSERT INTO " . $DBPrefix . "messages (`sentto` ,`from` , `when`, `message`, `subject`, reply_of, question)
+	$query = "INSERT INTO " . $DBPrefix . "messages (sentto ,sentfrom , sentat, message, subject, reply_of, question)
 			VALUES (" . $userarray['id'] . ", " . $user->user_data['id'] . ", " . time() . ", '" . $nowmessage . "', '" . $subject . "', " . $_SESSION['reply_of' . $_POST['hash']] . ", " . $_SESSION['question' . $_POST['hash']] . ")";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
@@ -110,18 +110,18 @@ if ($x == 1)
 	}
 
 	// get convo
-	if (isset($_SESSION['reply_of' . $_GET['hash']]))
+	if (isset($_SESSION['reply_of' . $_GET['message']]))
 	{
-		$tid = $_SESSION['reply_of' . $_GET['hash']];
-		$query = "SELECT from, message FROM " . $DBPrefix . "messages WHERE reply_of = " . $tid . " OR id = " . $tid . " ORDER BY id ASC";
+		$tid = $_SESSION['reply_of' . $_GET['message']];
+		$query = "SELECT sentfrom, message FROM " . $DBPrefix . "messages WHERE reply_of = " . $tid . " OR id = " . $tid . " ORDER BY id ASC";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$oid = 0;
 		while ($row = mysql_fetch_assoc($res))
 		{
-			$oid = ($oid == 0) ? $row['from'] : $oid;
+			$oid = ($oid == 0) ? $row['sentfrom'] : $oid;
 			$template->assign_block_vars('convo', array(
-					'BGCOLOUR' => ($oid == $row['from']) ? ' background-color: #FFFEEE' : '',
+					'BGCOLOUR' => ($oid == $row['sentfrom']) ? ' background-color: #FFFEEE' : '',
 					'MSG' => $row['message']
 					));
 		}
@@ -170,7 +170,7 @@ else
 }
 
 $query = "SELECT m.*, u.nick FROM " . $DBPrefix . "messages m
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = m.from)
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = m.sentfrom)
 		WHERE sentto = '" . $user->user_data['id'] . "' " . $orderby;
 // get users messages
 $res = mysql_query($query);
@@ -194,7 +194,7 @@ $template->assign_vars(array(
 		'REPLY_TO' => (isset($sendto)) ? $sendto : '',
 		'REPLY_SUBJECT' => (isset($subject)) ? $subject : '',
 
-		'B_CONVO' => (isset($_SESSION['reply_of' . $_GET['hash']]))
+		'B_CONVO' => (isset($_SESSION['reply_of' . $_GET['message']]))
 		));
 
 while ($array = mysql_fetch_array($res))

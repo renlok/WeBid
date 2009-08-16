@@ -87,6 +87,23 @@ switch($_GET['a'])
 		$message = sprintf($MSG['590'], $payvalue);
 		$title = '';
 		break;
+	case 5: // pay relist fee (live mode)
+		$pp_paytoemail = $gayeway_data['paypal_address'];
+		// number of auctions to relist
+		$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions WHERE suspended = 8 AND user_id = " . $user->user_data['id'];
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$count = mysql_result($res, 0);
+		// get relist fee
+		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$relist_fee = mysql_result($res, 0);
+		$payvalue = $relist_fee * $count;
+		$custoncode = $user->user_data['id'] . 'WEBID5';
+		$message = sprintf($MSG['591'], $payvalue);
+		$title = '';
+		break;
 }
 
 $template->assign_vars(array(

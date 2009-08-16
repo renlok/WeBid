@@ -2,6 +2,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	var relist_fee = {RELIST_FEE};
 	$("#sellall").click(function() {
 		$("input[@class=sellid]").each(function() {
 			if (this.checked) {
@@ -29,6 +30,12 @@ $(document).ready(function() {
 			return false;
 		}
 	});
+	$("#relistid").click(function(){
+		if (this.is(':checked'))
+			$("#to_pay").text(parseFloat($("#to_pay").text()) - relist_fee);
+		else
+			$("#to_pay").text(parseFloat($("#to_pay").text()) + relist_fee);
+	});
 });
 </script>
 <form name="closed" method="post" action="" id="processdel">
@@ -42,9 +49,15 @@ $(document).ready(function() {
 				<dd><a href="yourauctions_sold.php">{L_25_0119}</a></dd>
 			</dl>
 		</td>
+        <td>
+<!-- IF B_RELIST_FEE -->
+            {L_437}: {RELIST_FEE} - {L_189}: <span id="to_pay">0.00</span>
+<!-- ENDIF -->
+        </td>
 	</tr>
 </table>
-<table width="100%" border="0" cellspacing="1" cellpadding="4" align="CENTER">
+
+<table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
 	<tr bgcolor="{TBLHEADERCOLOUR}">
 		<td class="titTable1" width="40%">
 			<a href="yourauctions_c.php?ca_ord=title&ca_type={ORDERNEXT}">{L_624}</a>
@@ -106,7 +119,7 @@ $(document).ready(function() {
 		</td>
 		<td width="10%"  align="center">
 		<!-- IF items.B_CANRELIST -->
-			<a href="relistauction.php?id={items.ID}">{L_2__0049}</a>
+			<input type="checkbox" name="relist[]" value="{items.ID}" class="relistid">
 		<!-- ELSE -->
 			<a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
 		<!-- ENDIF -->

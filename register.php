@@ -15,6 +15,11 @@
 include 'includes/common.inc.php';
 include $include_path . 'countries.inc.php';
 include $include_path . 'banemails.inc.php';
+// check recaptcha is enabled
+if ($system->SETTINGS['spam_register'] == 2)
+{
+	include $include_path . 'recaptchalib.php';
+}
 
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 {
@@ -141,7 +146,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		$birth_year = $_POST['TPL_year'];
 		$DATE = $birth_year . $birth_month . $birth_day;
 
-		if (strlen($_POST['TPL_nick']) < 6)
+		if ($system->SETTINGS['spam_register'] == 2)
+		{
+			$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
+		}
+
+		if ($system->SETTINGS['spam_register'] == 2 && !$resp->is_valid)
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $MSG['752'];
+		}
+		elseif (strlen($_POST['TPL_nick']) < 6)
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_107;
@@ -343,6 +358,8 @@ $template->assign_vars(array(
 		'B_SHOWACCEPTANCE' => ($system->SETTINGS['showacceptancetext'] == 1),
 		'B_FIRST' => $first,
 
+		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
+		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : '';
 		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 1),
 		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 1),
 		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 1),

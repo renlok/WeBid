@@ -14,7 +14,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
 ) ;";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'signup_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'setup');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'endauction');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hpfeat_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'bolditem_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hlitem_fee');";
@@ -51,7 +50,8 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `cookiesprefix`, ADD `c
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `ao_hpf_enabled` enum('y','n') NOT NULL default 'y', ADD `ao_hi_enabled` enum('y','n') NOT NULL default 'y',
 			ADD `ao_bi_enabled` enum('y','n') NOT NULL default 'y', DROP `accounttype`,
 			ADD `fee_type` int(1) NOT NULL default '1' AFTER `fees`, ADD `proxy_bidding` enum('y','n') NOT NULL default 'y', ADD `fee_max_debt` double(6,4) NOT NULL default '25.00',
-			ADD `fee_signup_bonus` double(6,4) NOT NULL default '0.00', ADD `fee_disable_acc` enum('y','n') NOT NULL default 'y'";
+			ADD `fee_signup_bonus` double(6,4) NOT NULL default '0.00', ADD `fee_disable_acc` enum('y','n') NOT NULL default 'y',
+			ADD `recaptcha_public` varchar(40) default '', ADD `recaptcha_private` varchar(40) default '', ADD `spam_sendtofriend` int(1) default '1', ADD `spam_register` int(1) default '1'";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userslanguage`;";
 $query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `bold` enum('y','n') NOT NULL default 'n', ADD `highlighted` enum('y','n') NOT NULL default 'n',
 			ADD `featured` enum('y','n') NOT NULL default 'n', DROP `adultonly`, DROP `private`";

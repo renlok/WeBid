@@ -27,6 +27,11 @@ $NOW = time();
 $NOWB = gmdate('Ymd');
 $catscontrol = new MPTTcategories();
 
+$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$relist_fee = mysql_result($res, 0);
+
 // Update
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -81,34 +86,48 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Re-list auctions
 	if (is_array($_POST['relist']))
 	{
-		unset($RELISTED_TITLE);
-		foreach ($_POST['relist'] as $k => $v)
+		foreach ($_POST['relist'] as $k)
 		{
 			$k = intval($k);
-			$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . $k;
+			$query = "SELECT duration, category FROM " . $DBPrefix . "auctions WHERE id = " . $k;
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$AUCTION = mysql_fetch_array($res);
+			$AUCTION = mysql_fetch_assoc($res);
 
 			// auction ends
-			$WILLEND = time() + ($_POST['duration'][$k] * 24 * 60 * 60);
+			$WILLEND = time() + ($AUCTION['duration'] * 24 * 60 * 60);
+			$suspend = 0;
+
+			if ($system->SETTINGS['fees'] == 'y')
+			{
+				if ($system->SETTINGS['fee_type'] == 1)
+				{
+					// charge relist fee
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $relist_fee . " WHERE id = " . $user->user_data['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+				else
+				{
+					$suspend = 8;
+				}
+			}
 
 			$query = "UPDATE " . $DBPrefix . "auctions
 				  SET starts = '" . $NOW . "',
 				  ends = '" . $WILLEND . "',
-				  duration = '" . $_POST['duration'][$k] . "',
 				  closed = 0,
 				  num_bids = 0,
 				  relisted = relisted + 1,
 				  current_bid = 0,
-				  sold = 'n'
+				  sold = 'n',
+				  suspended = " . $suspend . "
 				  WHERE id = " . $k;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 			// Insert into relisted table
 			$query = "INSERT INTO " . $DBPrefix . "closedrelisted VALUES (" . $k . ", '" . $NOWB . "', '" . $k . "')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-
+			// delete bids
 			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $k;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			// Proxy Bids
@@ -117,7 +136,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			// Winners: only in case of reserve not reached
 			$query = "DELETE FROM " . $DBPrefix . "winners WHERE auction = " . $k;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			unset($_SESSION['EDITED_AUCTIONS']);
 			// Update COUNTERS table
 			$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -133,9 +151,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			}
-
-			$RELISTED_TITLE[$AUCTION['id']] = $AUCTION['title'];
-			unset($_SESSION['CLOSED_EDITED']);
+			if ($system->SETTINGS['fee_type'] == 2 && isset($relist_fee) && $relist_fee > 0)
+			{
+				header('location: pay.php?a=5');
+				exit;
+			}
 		}
 	}
 }
@@ -270,13 +290,15 @@ $template->assign_vars(array(
 		'ORDERCOL' => $_SESSION['ca_ord'],
 		'ORDERNEXT' => $_SESSION['ca_nexttype'],
 		'ORDERTYPEIMG' => $_SESSION['ca_type_img'],
+		'RELIST_FEE' => $system->print_money($relist_fee),
 
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_c.php?PAGE=' . $PREV . '&id=' . $id . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_c.php?PAGE=' . $NEXT . '&id=' . $id . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES,
 
-		'B_AREITEMS' => ($i > 0)
+		'B_AREITEMS' => ($i > 0),
+		'B_RELIST_FEE' => ($relist_fee > 0 && $system->SETTINGS['fees'] == 'y')
 		));
 
 include 'header.php';

@@ -1,5 +1,25 @@
 <!-- INCLUDE user_menu_header.tpl -->
 
+<script type="text/javascript">
+$(document).ready(function() {
+	var relist_fee = {RELIST_FEE};
+	$("#processrelist").submit(function() {
+		if (confirm('{L_30_0087}')){
+			return true;
+		} else {
+			return false;
+		}
+	});
+	$("#relistid").click(function(){
+		if (this.is(':checked'))
+			$("#to_pay").text(parseFloat($("#to_pay").text()) - relist_fee);
+		else
+			$("#to_pay").text(parseFloat($("#to_pay").text()) + relist_fee);
+	});
+});
+</script>
+
+<form name="closed" method="post" action="" id="processrelist">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td align="right">
@@ -31,6 +51,7 @@
 <!-- IF ORDERCOL eq 'ends' -->
 			<a href="yourauctions_sold.php?solda_ord=ends&solda_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
+		</td>
 		<td class="titTable1" width="10%" align="center">
 			<a href="yourauctions_sold.php?solda_ord=num_bids&solda_type={ORDERNEXT}">{L_627}</a>
 <!-- IF ORDERCOL eq 'num_bids' -->
@@ -71,7 +92,7 @@
 		<td width="10%"  align="center">
 	<!-- IF items.B_CLOSED -->
 		<!-- IF items.B_RELIST -->
-			<a href="relistauction.php?id={items.ID}">{L_2__0049}</a>
+			<input type="checkbox" name="relist[]" value="{items.ID}" class="relistid">
 		<!-- ELSE -->
 			<a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
 		<!-- ENDIF -->
@@ -81,9 +102,17 @@
 		</td>
 	</tr>
 <!-- END items -->
-		<td colspan=6>&nbsp;</td>
+    <tr>
+		<td colspan="6">&nbsp;</td>
 	</tr>
+    <tr>
+        <td colspan="6" align="center">
+            <input type="hidden" name="action" value="update">
+            <input type="submit" name="Submit" value="{L_631}" class="button">
+        </td>
+    </tr>
 </table>
+</form>
 
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 	<tr>

@@ -62,5 +62,7 @@
 - Added the option to disable proxy bidding
 - Updated the messages table so the colomn names are no longer conflicting with mysql commands
 - Reduced the size of the `no image available` image
+- Changed how relisting items works they are now relisted automatically and you dont have to go though the sell pages again
+- Added spam prevention methods
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

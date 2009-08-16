@@ -13,6 +13,11 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
+// check recaptcha is enabled
+if ($system->SETTINGS['spam_register'] == 2)
+{
+	include $include_path . 'recaptchalib.php';
+}
 
 if (isset($_REQUEST['id']))
 {
@@ -34,7 +39,7 @@ if (mysql_num_rows($result) > 0)
 
 if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 {
-	// --Check errors
+	// check errors
 	if (empty($_POST['sender_name']) || empty($_POST['sender_email']) || empty($_POST['friend_name']) || empty($_POST['friend_email']))
 	{
 		$TPL_error_text = $ERR_031;
@@ -43,6 +48,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 	if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['sender_email']) || !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['friend_email']))
 	{
 		$TPL_error_text = $ERR_008;
+	}
+	
+	if ($system->SETTINGS['spam_register'] == 2)
+	{
+		$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
+		if (!$resp->is_valid)
+		{
+			$TPL_error_text = $MSG['752'];
+		}
 	}
 
 	if (!empty($TPL_error_text))
@@ -72,6 +86,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 $template->assign_vars(array(
 		'ERROR' => $TPL_error_text,
 		'ID' => intval($_REQUEST['id']),
+		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
+		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : '';
 		'TITLE' => $TPL_item_title,
 		'FRIEND_NAME' => (isset($_POST['friend_name'])) ? $_POST['friend_name'] : '',
 		'FRIEND_EMAIL' => (isset($_POST['friend_email'])) ? $_POST['friend_email'] : '',

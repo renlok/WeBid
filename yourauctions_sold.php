@@ -28,40 +28,79 @@ $NOWB = gmdate('Ymd');
 // Update
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// Delete auction
-	if (is_array($_POST['delete']))
+	// Re-list auctions
+	if (is_array($_POST['relist']))
 	{
-		foreach ($_POST['delete'] as $k => $v)
+		foreach ($_POST['relist'] as $k)
 		{
-			$v = intval($v);
-			// Pictures Gallery
-			if (file_exists($upload_path . $v))
+			$k = intval($k);
+			$query = "SELECT duration, category FROM " . $DBPrefix . "auctions WHERE id = " . $k;
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$AUCTION = mysql_fetch_assoc($res);
+
+			// auction ends
+			$WILLEND = time() + ($AUCTION['duration'] * 24 * 60 * 60);
+			$suspend = 0;
+
+			if ($system->SETTINGS['fees'] == 'y')
 			{
-				if ($dir = @opendir($upload_path . $v))
+				if ($system->SETTINGS['fee_type'] == 1)
 				{
-					while ($file = readdir($dir))
-					{
-						if ($file != '.' && $file != '..')
-						{
-							unlink($upload_path . $v . '/' . $file);
-						}
-					}
-					closedir($dir);
-					@rmdir($upload_path . $v);
+					// charge relist fee
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $relist_fee . " WHERE id = " . $user->user_data['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+				else
+				{
+					$suspend = 8;
 				}
 			}
-			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = closedauctions - 1";
+
+			$query = "UPDATE " . $DBPrefix . "auctions
+				  SET starts = '" . $NOW . "',
+				  ends = '" . $WILLEND . "',
+				  closed = 0,
+				  num_bids = 0,
+				  relisted = relisted + 1,
+				  current_bid = 0,
+				  sold = 'n',
+				  suspended = " . $suspend . "
+				  WHERE id = " . $k;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $v;
+
+			// Insert into relisted table
+			$query = "INSERT INTO " . $DBPrefix . "closedrelisted VALUES (" . $k . ", '" . $NOWB . "', '" . $k . "')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			// Bids
-			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $v;
+			// delete bids
+			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $k;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			// Proxy Bids
-			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $v;
+			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $k;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			// Winners: only in case of reserve not reached
+			$query = "DELETE FROM " . $DBPrefix . "winners WHERE auction = " . $k;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			// Update COUNTERS table
+			$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $AUCTION['category'];
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$parent_node = mysql_fetch_assoc($res);
+			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+			// update recursive categories
+			for ($i = 0; $i < count($crumbs); $i++)
+			{
+				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
+			if ($system->SETTINGS['fee_type'] == 2 && isset($relist_fee) && $relist_fee > 0)
+			{
+				header('location: pay.php?a=5');
+				exit;
+			}
 		}
 	}
 }

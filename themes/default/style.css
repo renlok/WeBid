@@ -38,7 +38,7 @@ table	{ color: #000000; }
 .titTable3	{ background-color: #c2e5ff; text-align: right; padding: 5px; font-size: 11px; color: #666666; border-top-width: 1px; border-top-style: solid; border-top-color: #cccccc; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #cccccc; }
 .titTable4	{ background-color: #EEEEEE; text-align: left; padding: 5px; font-size: 10px; font-weight: bolder; color: #666666; border-top-width: 1px; border-top-style: solid; border-top-color: #B3B3B3; text-transform: uppercase; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #B3B3B3; font-family: Verdana, Arial, sans-serif; }
 p	{ margin: 0px 0px 5px 0px; }
-dl.phpa-tabs	{ margin: 5px 5px 0px; padding: 0; width: 100%; font-size: 13px; }
+dl.phpa-tabs	{ margin: 0 0 0 5px; padding: 0; width: 100%; font-size: 13px; }
 dl.phpa-tabs dd	{ margin: 1px; padding: 5px; float: left; background: transparent url(img/bot_deg.gif) repeat; border-top: 1px solid #AEACAC; border-right: 1px solid #AEACAC; border-bottom: 0px; border-left: 1px solid #AEACAC; }
 h3	{ color: #BA1D1D; font-size: 14px; font-weight: bold; text-transform: uppercase; margin: 10px 0 0 0; }
 input	{ color: #444444; font-size: 12px; }

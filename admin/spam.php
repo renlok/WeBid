@@ -1,0 +1,61 @@
+<?php
+/***************************************************************************
+ *   copyright				: (C) 2008 WeBid
+ *   site					: http://www.webidsupport.com/
+ ***************************************************************************/
+
+/***************************************************************************
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version. Although none of the code may be
+ *   sold. If you have been sold this script, get a refund.
+ ***************************************************************************/
+
+define('InAdmin', 1);
+include '../includes/common.inc.php';
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
+
+unset($ERR);
+
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	if (($_POST['spam_sendtofriend'] == 2 || $_POST['spam_register'] == 2) && empty($_POST['recaptcha_public']) && empty($_POST['recaptcha_private']))
+	{
+		$ERR = $MSG['751'];
+	}
+	else
+	{
+		$query = "UPDATE " . $DBPrefix . "settings SET
+					recaptcha_public = '" . $_POST['recaptcha_public'] . ",'
+					recaptcha_private = '" . $_POST['recaptcha_private'] . "',
+					spam_sendtofriend = " . $_POST['spam_sendtofriend'] . ",
+					spam_register = " . $_POST['spam_register'];
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$system->SETTINGS['recaptcha_public'] = $_POST['recaptcha_public'];
+		$system->SETTINGS['recaptcha_private'] = $_POST['recaptcha_private'];
+		$system->SETTINGS['spam_sendtofriend'] = $_POST['spam_sendtofriend'];
+		$system->SETTINGS['spam_register'] = $_POST['spam_register'];
+		$ERR = $MSG['750'];
+	}
+}
+
+loadblock($MSG['746'], $MSG['748'], 'text', 'recaptcha_public', $system->SETTINGS['recaptcha_public']);
+loadblock($MSG['747'], '', 'text', 'recaptcha_private', $system->SETTINGS['recaptcha_private']);
+loadblock($MSG['743'], $MSG['745'], 'select3num', 'spam_register', $system->SETTINGS['spam_register'], $MSG['740'], $MSG['741'], $MSG['742']);
+loadblock($MSG['744'], '', 'select3num', 'spam_sendtofriend', $system->SETTINGS['spam_sendtofriend'], $MSG['740'], $MSG['741'], $MSG['742']);
+
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'TYPE' => 'set',
+		'TYPENAME' => $MSG['5142'],
+		'PAGENAME' => $MSG['749']
+		));
+
+$template->set_filenames(array(
+		'body' => 'adminpages.tpl'
+		));
+$template->display('body');
+?>

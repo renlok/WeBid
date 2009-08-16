@@ -3,18 +3,11 @@
 	<link rel="stylesheet" type="text/css" href="{SITEURL}admin/style.css">
 	<script type="text/javascript" src="{SITEURL}admin/{SITEURL}fck/fckeditor.js"></script>
 	<script type="text/javascript">
-		function window_open(pagina,titulo,ancho,largo,x,y){
-		var Ventana= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+ancho+',height='+largo;
-		open(pagina,titulo,Ventana);
-		}
-	</script>
-	<script type="text/javascript" src="{SITEURL}admin/{SITEURL}admin/js/jquery.js"></script>
-	<script type="text/javascript">
 		$(document).ready(function() {
-		$('a.new-window').click(function(){
-		window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX=100,screenY=100,status=0,menubar=0,resizable=0,width=550,height=550");
-		return false;
-		});
+			$('a.new-window').click(function(){
+				window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX=100,screenY=100,status=0,menubar=0,resizable=0,width=550,height=550");
+				return false;
+			});
 		});
 	</script>
 </head>

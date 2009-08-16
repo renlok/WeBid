@@ -20,7 +20,6 @@ include 'loggedin.inc.php';
 $fees = array( //0 = single value, 1 = staged fees
 	'signup_fee' => 0,
 	'setup' => 1,
-	'endauction' => 1,
 	'hpfeat_fee' => 0,
 	'bolditem_fee' => 0,
 	'hlitem_fee' => 0,
@@ -33,7 +32,6 @@ $fees = array( //0 = single value, 1 = staged fees
 $feenames = array(
 	'signup_fee' => $MSG['430'],
 	'setup' => $MSG['432'],
-	'endauction' => $MSG['438'],
 	'hpfeat_fee' => $MSG['433'],
 	'bolditem_fee' => $MSG['439'],
 	'hlitem_fee' => $MSG['434'],

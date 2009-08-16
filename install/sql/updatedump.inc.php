@@ -76,7 +76,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
 $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0, 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0, 1);";
 $query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `paid` int(1) NOT NULL default '0', DROP `fee`;";
-$query[] = "ALTER TABLE `" . $DBPrefix . "messages` ADD `reply_of` INT(50) NOT NULL default '0', ADD `question` int(15) NOT NULL default '0', DROP `noticed`;";
+$query[] = "ALTER TABLE `" . $DBPrefix . "messages` ADD `reply_of` INT(50) NOT NULL default '0', ADD `question` int(15) NOT NULL default '0', DROP `noticed`,
+			CHANGE `from` `sentfrom` int(25) NOT NULL default '0', CHANGE `when` `sentat` varchar(20) NOT NULL default '',
+			CHANGE `read` `isread` int(1) NOT NULL default '0';";
 $query[] = "CREATE TABLE `" . $DBPrefix . "userfees` (
   `id` INT(15) NOT NULL AUTO_INCREMENT ,
   `auc_id` int(15) NOT NULL,

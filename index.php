@@ -59,30 +59,22 @@ else
 	$catsorting = ' ORDER BY sub_counter DESC';
 }
 
-$TPL_categories_value = '';
 $query = "SELECT distinct * FROM " . $DBPrefix . "categories
 		  WHERE parent_id = 0
-		  $catsorting";
+		  " . $catsorting . "
+		  LIMIT " . $system->SETTINGS['catstoshow'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_cat = mysql_num_rows($res);
-$i = 0;
-while ($i < $num_cat && $i < $system->SETTINGS['catstoshow'])
+
+while ($row = mysql_fetch_assoc($res))
 {
-	$catlink = '';
-	$cat_id = mysql_result($res, $i, 'cat_id');
-	$cat_name = $category_names[$cat_id];
-	$sub_count = intval(mysql_result($res, $i, 'sub_counter'));
-	$cat_colour = mysql_result($res, $i, 'cat_colour');
-	$cat_image = mysql_result($res, $i, 'cat_image');
 	$template->assign_block_vars('cat_list', array(
-			'CATAUCNUM' => ($sub_count != 0) ? '(' . $sub_count . ')' : '',
-			'ID' => $cat_id,
-			'IMAGE' => (!empty($cat_image)) ? '<img src="' . $cat_image . '" border=0>' : '',
-			'COLOUR' => (empty($cat_colour)) ? '#FFFFFF' : $cat_colour,
-			'NAME' => $category_names[$cat_id]
+			'CATAUCNUM' => ($row['sub_counter'] != 0) ? '(' . $row['sub_counter'] . ')' : '',
+			'ID' => $row['cat_id'],
+			'IMAGE' => (!empty($row['cat_image'])) ? '<img src="' . $row['cat_image'] . '" border=0>' : '',
+			'COLOUR' => (empty($row['cat_colour'])) ? '#FFFFFF' : $row['cat_colour'],
+			'NAME' => $category_names[$row['cat_id']]
 			));
-	$i++;
 }
 
 // get last created auctions
@@ -93,28 +85,16 @@ $query = "SELECT id, title, starts from " . $DBPrefix . "auctions
 		 LIMIT " . $system->SETTINGS['lastitemsnumber'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auction = mysql_num_rows($res);
 
 $i = 0;
 $bgcolor = '#FFFFFF';
-while ($i < $num_auction)
+while ($row = mysql_fetch_assoc($res))
 {
-	if ($bgcolor == '#FFFFFF')
-	{
-		$bgcolor = '#FFFEEE';
-	}
-	else
-	{
-		$bgcolor = '#FFFFFF';
-	}
-
-	$date = mysql_result($res, $i, 'starts') + $system->tdiff;
-
 	$template->assign_block_vars('auc_last', array(
-			'BGCOLOUR' => $bgcolor,
-			'DATE' => ArrangeDateNoCorrection($date),
-			'ID' => mysql_result($res, $i, 'id'),
-			'TITLE' => mysql_result($res, $i, 'title')
+			'BGCOLOUR' => ($bgcolor == '#FFFFFF') ? '#FFFEEE' : '#FFFFFF',
+			'DATE' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
+			'ID' => $row['id'],
+			'TITLE' => $row['title']
 			));
 	$i++;
 }
@@ -126,22 +106,12 @@ $query = "SELECT ends, id, title FROM " . $DBPrefix . "auctions
 		 ORDER BY ends LIMIT " . $system->SETTINGS['endingsoonnumber'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auction = mysql_num_rows($res);
 
 $i = 0;
 $bgcolor = '#FFFFFF';
-while ($i < $num_auction)
+while ($row = mysql_fetch_assoc($res))
 {
-	if ($bgcolor == '#FFFFFF')
-	{
-		$bgcolor = '#FFFEEE';
-	}
-	else
-	{
-		$bgcolor = '#FFFFFF';
-	}
-	$ends = mysql_result($res, $i, 'ends');
-	$difference = $ends - time();
+	$difference = $row['ends'] - time();
 	if ($difference > 0)
 	{
 		$ends_string = FormatTimeLeft($difference);
@@ -151,10 +121,10 @@ while ($i < $num_auction)
 		$ends_string = $MSG['911'];
 	}
 	$template->assign_block_vars('end_soon', array(
-			'BGCOLOUR' => $bgcolor,
+			'BGCOLOUR' => ($bgcolor == '#FFFFFF') ? '#FFFEEE' : '#FFFFFF',
 			'DATE' => $ends_string,
-			'ID' => mysql_result($res, $i, 'id'),
-			'TITLE' => mysql_result($res, $i, 'title')
+			'ID' => $row['id'],
+			'TITLE' => $row['title']
 			));
 	$i++;
 }
@@ -162,38 +132,26 @@ while ($i < $num_auction)
 $end_soon = ($i > 0) ? true : false;
 // get higher bids
 $query = "SELECT max(b.bid) AS max_bid, a.title, a.id FROM " . $DBPrefix . "bids b
-LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
-WHERE a.suspended = 0 AND a.closed = 0 AND a.starts <= '" . $NOW . "' GROUP BY b.bid, b.auction ORDER BY max_bid DESC";
+		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
+		WHERE a.suspended = 0 AND a.closed = 0 AND a.starts <= '" . $NOW . "'
+		GROUP BY b.bid, b.auction ORDER BY max_bid DESC
+		LIMIT " . $system->SETTINGS['higherbidsnumber'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auction = mysql_num_rows($res);
 
-$i = 0;
-$j = 0;
+$i = $j = 0;
 $bgcolor = '#FFFFFF';
 $AU = array();
-while ($i < $num_auction && $j < $system->SETTINGS['higherbidsnumber'])
+while ($row = mysql_fetch_assoc($res))
 {
-	if ($bgcolor == '#FFFFFF')
-	{
-		$bgcolor = '#FFFEEE';
-	}
-	else
-	{
-		$bgcolor = '#FFFFFF';
-	}
-
-	$max_bid = mysql_result($res, $i, 'max_bid');
-	$id = mysql_result($res, $i, 'id');
-
-	if (!in_array($id, $AU))
+	if (!in_array($row['id'], $AU))
 	{
 		$template->assign_block_vars('max_bids', array(
-				'BGCOLOUR' => $bgcolor,
-				'FBID' => $system->print_money($max_bid),
-				'BID' => $max_bid,
-				'ID' => $id,
-				'TITLE' => mysql_result($res, $i, 'title')
+				'BGCOLOUR' => ($bgcolor == '#FFFFFF') ? '#FFFEEE' : '#FFFFFF',
+				'FBID' => $system->print_money($row['max_bid']),
+				'BID' => $row['max_bid'],
+				'ID' => $row['id'],
+				'TITLE' => $row['title']
 				));
 		$AU[] = $id;
 		$j++;
@@ -206,7 +164,7 @@ $query = "SELECT id, category FROM " . $DBPrefix . "faqscat_translated WHERE lan
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $i = 0;
-while ($faqscat = mysql_fetch_array($res))
+while ($faqscat = mysql_fetch_assoc($res))
 {
 	$template->assign_block_vars('helpbox', array(
 			'ID' => $faqscat['id'],
@@ -225,20 +183,12 @@ if ($system->SETTINGS['newsbox'] == 1)
 			ORDER BY new_date DESC, id DESC LIMIT " . $system->SETTINGS['newstoshow'];
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	while ($new = mysql_fetch_array($res))
+	while ($new = mysql_fetch_assoc($res))
 	{
-		if (!empty($new['title']))
-		{
-			$title = stripslashes($new['title']);
-		}
-		else
-		{
-			$title = stripslashes($new['t']);
-		}
 		$template->assign_block_vars('newsbox', array(
 				'ID' => $new['id'],
 				'DATE' => FormatDate($new['new_date']),
-				'TITLE' => $title
+				'TITLE' => (!empty($new['title'])) ? $new['title'] : $new['t']
 				));
 	}
 }

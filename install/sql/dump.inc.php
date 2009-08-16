@@ -1160,23 +1160,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 
 
 # ############################
 
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "messages`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
-  `id` int(50) NOT NULL AUTO_INCREMENT ,
-  `sentto` int(25) NOT NULL default '0',
-  `from` int(25) NOT NULL default '0',
-  `when` varchar(20) NOT NULL default '',
-  `message` text NOT NULL ,
-  `read` int(1) NOT NULL default '0',
-  `subject` varchar(50) NOT NULL default '',
-  `replied` int(1) NOT NULL default '0',
-  `reply_of` INT(50) NOT NULL default '0',
-  `question` int(15) NOT NULL default '0',
-  PRIMARY KEY (`id`)
-) ;";
-
-# ############################
-
 # 
 # Table structure for table `" . $DBPrefix . "increments`
 # 
@@ -1252,6 +1235,27 @@ $query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (17, 4999, '1000',
 $query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (16, 999, '100', 0, 'starT.gif');";
 $query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (15, 99, '50', 0, 'starB.gif');";
 $query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (14, 49, '10', 0, 'starY.gif');";
+
+# ############################
+
+# 
+# Table structure for table `" . $DBPrefix . "messages`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "messages`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
+  `id` int(50) NOT NULL AUTO_INCREMENT ,
+  `sentto` int(25) NOT NULL default '0',
+  `sentfrom` int(25) NOT NULL default '0',
+  `sentat` varchar(20) NOT NULL default '',
+  `message` text NOT NULL ,
+  `isread` int(1) NOT NULL default '0',
+  `subject` varchar(50) NOT NULL default '',
+  `replied` int(1) NOT NULL default '0',
+  `reply_of` INT(50) NOT NULL default '0',
+  `question` int(15) NOT NULL default '0',
+  PRIMARY KEY (`id`)
+) ;";
 
 # ############################
 

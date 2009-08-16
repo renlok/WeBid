@@ -61,5 +61,6 @@
 - Added a thread to PM so you can see your previous messages in a conversation
 - Added the option to disable proxy bidding
 - Updated the messages table so the colomn names are no longer conflicting with mysql commands
+- Reduced the size of the `no image available` image
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

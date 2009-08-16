@@ -18,25 +18,26 @@
 			</th>
 		</tr>
     <!-- BEGIN featured_items -->
-		<tr align="center" {items.ROWCOLOUR}<!-- IF items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
+		<tr align="center" {featured_items.ROWCOLOUR}<!-- IF featured_items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
 			<td align="center">
-				{items.IMAGE}
+				{featured_items.IMAGE}
 			</td>
 			<td align="left">
-                {items.TITLE} {items.BUY_NOW}
+                {featured_items.TITLE} {featured_items.BUY_NOW}
 			</td>
 			<td align="right">
-				{items.BIDFORM}
+				{featured_items.BIDFORM}
 			</td>
 			<td align="center">
-				{items.RESERVE} {items.NUMBIDS}
+				{featured_items.RESERVE} {featured_items.NUMBIDS}
 			</td>
 			<td align="center">
-				{items.TIMELEFT}
+				{featured_items.TIMELEFT}
 			</td>
 		</tr>
     <!-- END featured_items -->
 	</table>
+    <br class="spacer" />
 <!-- ENDIF -->
 
 	<table width="98%" border="0" cellspacing="1" cellpadding="4">

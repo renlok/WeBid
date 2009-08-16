@@ -33,7 +33,7 @@ $(".form1").submit(function(){
 	</form>
 </center>
 <!-- IF B_CONVO -->
-<div style="overflow:auto; margin:20px;">
+<div style="overflow:scroll; min-height:100px; max-height:500px; width:400px; margin:20px;">
 	<!-- BEGIN convo -->
     <div style="border:#000000 solid 1px;{convo.BGCOLOUR}">
     	{convo.MSG}

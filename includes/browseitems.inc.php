@@ -108,7 +108,7 @@ function browseItems($result, $feat_res, $current_page)
 function build_items($row)
 {
 	// image icon
-	if (empty($row['pict_url']))
+	if (!empty($row['pict_url']))
 	{
 		$row['pict_url'] = 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
 	}

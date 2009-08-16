@@ -95,7 +95,7 @@ $system->check_mysql($result_auction, $query, __LINE__, __FILE__);
 
 $num = mysql_num_rows($result_auction);
 printLog($num . " auctions to close");
-$count_auctions = 0;
+$count_auctions = $num;
 $n = 1;
 while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 {
@@ -124,28 +124,6 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 			$emailer->email_uid = $watchusers['id'];
 			$emailer->email_sender($e_mail, 'auctionend_watchmail.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['471']);
 		}
-	}
-
-	// update category tables
-	$cat_id = $Auction['category'];
-	$root_cat = $cat_id;
-	while ($cat_id != 0 && isset($categories[$cat_id]))
-	{
-		// update counter for this category
-		$R_counter = intval($categories[$cat_id]['counter']) - 1;
-		$R_sub_counter = intval($categories[$cat_id]['sub_counter']) - 1;
-		if ($cat_id == $root_cat)
-			--$R_counter;
-		if ($R_counter < 0)
-			$R_counter = 0;
-		if ($R_sub_counter < 0)
-			$R_sub_counter = 0;
-		$categories[$cat_id]['counter'] = $R_counter;
-		$categories[$cat_id]['sub_counter'] = $R_sub_counter;
-		$categories[$cat_id]['updated'] = true;
-		if ($cat_id == $categories[$cat_id]['parent_id']) // incase something messes up
-			break;
-		$cat_id = $categories[$cat_id]['parent_id'];
 	}
 
 	// RETRIEVE SELLER INFO FROM DATABASE
@@ -311,6 +289,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 			$query = "UPDATE " . $DBPrefix . "auctions SET starts = '" . $NOW . "', ends = '" . $_ENDS . "',
 					current_bid = 0, num_bids = 0, relisted = relisted + 1 WHERE id = " . $Auction['id'];
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$count_auctions--;
 		}
 		else
 		{
@@ -324,6 +303,28 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 
 	if ($close_auction)
 	{
+		// update category tables
+		$cat_id = $Auction['category'];
+		$root_cat = $cat_id;
+		while ($cat_id != -1 && isset($categories[$cat_id]))
+		{
+			// update counter for this category
+			$R_counter = intval($categories[$cat_id]['counter']) - 1;
+			$R_sub_counter = intval($categories[$cat_id]['sub_counter']) - 1;
+			if ($cat_id == $root_cat)
+				--$R_counter;
+			if ($R_counter < 0)
+				$R_counter = 0;
+			if ($R_sub_counter < 0)
+				$R_sub_counter = 0;
+			$categories[$cat_id]['counter'] = $R_counter;
+			$categories[$cat_id]['sub_counter'] = $R_sub_counter;
+			$categories[$cat_id]['updated'] = true;
+			if ($cat_id == $categories[$cat_id]['parent_id']) // incase something messes up
+				break;
+			$cat_id = $categories[$cat_id]['parent_id'];
+		}
+
 		// Close auction
 		$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1,
 				 sold = CASE sold WHEN 's' THEN 'y' ELSE sold END
@@ -373,7 +374,6 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 	// Update bid counter
 	$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids - " . $decrem . ")";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$count_auctions++;
 }
 
 $query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - " . $count_auctions . "), closedauctions = (closedauctions + " . $count_auctions . ")";

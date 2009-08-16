@@ -104,15 +104,15 @@ switch ($_SESSION['action'])
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if ($_SESSION['SELL_action'] == 'edit' || $_SESSION['SELL_action'] == 'relist')
 			{
-				$auction_id = $TPL_auction_id = $_SESSION['SELL_auction_id'];
+				$auction_id = $_SESSION['SELL_auction_id'];
 			}
 			else
 			{
-				$sql = "SELECT LAST_INSERT_ID() as id";
-				$res_ = mysql_query($sql);
-				$system->check_mysql($res_, $sql, __LINE__, __FILE__);
-				$auction_id = mysql_result($res_, 0, 'id');
-				$TPL_auction_id = $_SESSION['SELL_auction_id'] = $auction_id;
+				$query = "SELECT LAST_INSERT_ID() as id";
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$auction_id = mysql_result($res, 0, 'id');
+				$_SESSION['SELL_auction_id'] = $auction_id;
 
 				// update recursive categories
 				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['SELL_sellcat'];
@@ -132,8 +132,16 @@ switch ($_SESSION['action'])
 				{
 					$query = "INSERT INTO " . $DBPrefix . "userfees VALUES (NULL, " . $auction_id . ", " . $user->user_data['id'] . ", " . get_fee($minimum_bid) . ", 0)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . get_fee($minimum_bid) . " WHERE id = " . $user->user_data['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					if ($system->SETTINGS['fee_type'] == 2)
+					{
+						$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
+						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					}
+					else
+					{
+						$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . get_fee($minimum_bid) . " WHERE id = " . $user->user_data['id'];
+						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					}
 				}
 			}
 			$UPLOADED_PICTURES = (isset($_SESSION['UPLOADED_PICTURES'])) ? $_SESSION['UPLOADED_PICTURES'] : array();
@@ -253,10 +261,16 @@ switch ($_SESSION['action'])
 				}
 			}
 			unsetsessions();
+			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2)
+			{
+				$_SESSION['auction_id'] = $auction_id;
+				header('location: pay.php?a=4');
+				exit;
+			}
 			$template->assign_vars(array(
 					'TITLE' => $MSG['028'],
 					'PAGE' => 2,
-					'AUCTION_ID' => $TPL_auction_id
+					'AUCTION_ID' => $auction_id
 					));
 			break;
 		}

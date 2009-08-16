@@ -14,7 +14,6 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-// UNDER CONSTRUCTION XD
 class fees
 {
 	var $ASCII_RANGE;
@@ -113,6 +112,12 @@ class fees
 			break;
 			case 3:
 				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $custom_id;
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			break;
+			case 4:
+				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $custom_id;
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$query = "DELETE FROM " . $DBPrefix . "userfees WHERE auc_id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 		}

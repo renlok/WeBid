@@ -73,3 +73,4 @@ a:active	{ color: #BA1D1D; }
 .leftside { display:block; float:left; text-align:left; margin-left:5px; }
 .fbstar { margin:0; padding:0; vertical-align:middle; }
 .alt-row{ background-color:#FFFEEE; }
+.spacer { margin: 5px 0 5px 0; }

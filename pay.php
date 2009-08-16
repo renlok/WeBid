@@ -64,12 +64,27 @@ switch($_GET['a'])
 			exit;
 		}
 		$pp_paytoemail = $gayeway_data['paypal_address'];
-		$query = "SELECT signup_fee FROM " . $DBPrefix . "fees LIMIT 1";
+		$query = "SELECT type FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$payvalue = mysql_result($res, 0);
 		$custoncode = $_SESSION['signup_id'] . 'WEBID3';
 		$message = sprintf($MSG['583'], $payvalue);
+		$title = '';
+		break;
+	case 4: // pay auction fee (live mode)
+		if (!isset($_SESSION['auction_id']) || !is_int($_SESSION['auction_id']) || $_SESSION['auction_id'] < 1 || $system->SETTINGS['fee_type'] != 2)
+		{
+			header('location: index.php');
+			exit;
+		}
+		$pp_paytoemail = $gayeway_data['paypal_address'];
+		$query = "SELECT amt FROM " . $DBPrefix . "userfees WHERE auc_id = " . $_SESSION['auction_id'] . " AND user_id = " . $user->user_data['id'];
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$payvalue = mysql_result($res, 0, 'amt');
+		$custoncode = $_SESSION['auction_id'] . 'WEBID4';
+		$message = sprintf($MSG['590'], $payvalue);
 		$title = '';
 		break;
 }

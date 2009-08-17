@@ -21,9 +21,12 @@ $banneruser = $_GET['user'];
 $banner = $_GET['banner'];
 $name = $_GET['name'];
 
-@mysql_query("DELETE FROM " . $DBPrefix . "banners WHERE id = $banner");
-@mysql_query("DELETE FROM " . $DBPrefix . "bannerscategories WHERE banner = $banner");
-@mysql_query("DELETE FROM " . $DBPrefix . "bannerskeywords WHERE banner = $banner");
+$query = "DELETE FROM " . $DBPrefix . "banners WHERE id = " . $banner;
+$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+$query = "DELETE FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $banner;
+$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+$query = "DELETE FROM " . $DBPrefix . "bannerskeywords WHERE banner = " . $banner;
+$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 @unlink($upload_path . 'banners/' . $banneruser . '/' . $name);
 
 // Redirect

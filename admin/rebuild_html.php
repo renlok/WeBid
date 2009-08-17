@@ -15,43 +15,39 @@
 function rebuild_html_file($table)
 {
 	global $DBPrefix;
-	switch($table) {
-		case "countries" :
-			$output_filename = "../includes/countries.inc.php";
-			$field_name = "country";
-			$array_name = "countries";
-			break;
-		default :
-			break;
+	switch($table)
+	{
+		case 'countries':
+			$output_filename = '../includes/countries.inc.php';
+			$field_name = 'country';
+			$array_name = 'countries';
+		break;
 	}
-	
-	$sqlqry = "SELECT " . $field_name . " FROM " . $DBPrefix . $table . " ORDER BY " . $field_name . ";";
-	$result = mysql_query($sqlqry) or die(mysql_error());
-	
-	$output = "<?php\n";
-	$output.= "$" . $array_name . " = array(\"\", \n";
-	
-	if ($result)
-		$num_rows = mysql_num_rows($result);
-	else
-		$num_rows = 0;
-	
+
+	$query = "SELECT " . $field_name . " FROM " . $DBPrefix . $table . " ORDER BY " . $field_name . ";";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$num_rows = mysql_num_rows($res);
+
+	$output = '<?php' . "\n";
+	$output.= '$' . $array_name . ' = array(\'\', ' . "\n";
+
 	$i = 0;
-	while ($i < $num_rows){
-		$value = mysql_result($result,$i, $field_name);
-		$output .= "\"" . $value . "\"";
+	while ($row = mysql_fetch_assoc($res))
+	{
+		$output .= '\'' . $row[$field_name] . '\'';
 		$i++;
 		if ($i < $num_rows)
-			$output .= ",\n";
+			$output .= ',' . "\n";
 		else
 			$output .= "\n";
 	}
-	
-	$output .= ");\n?>\n";
-	
-	$handle = fopen ( $output_filename , "w" );
-	fputs ( $handle, $output );
-	fclose ($handle);
+
+	$output .= ');' . "\n" . '?>';
+
+	$handle = fopen($output_filename, 'w');
+	fputs($handle, $output);
+	fclose($handle);
 }
 ?>
 

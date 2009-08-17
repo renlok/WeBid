@@ -18,57 +18,49 @@ include 'loggedin.inc.php';
 function rebuild_table_file($table)
 {
 	global $DBPrefix;
-	switch($table) {
-		case "membertypes" :
-			$output_filename = "../includes/membertypes.inc.php";
-			$field_name = array("id","feedbacks","membertype","icon");
+	switch($table)
+	{
+		case 'membertypes':
+			$output_filename = '../includes/membertypes.inc.php';
+			$field_name = array('id', 'feedbacks', 'membertype', 'icon');
 			$sort_field = 1;
-			$array_name = "membertypes";
-			$output = "<?php\n";
-			$output.= "$" . $array_name . " = array(\n";
-			break;
-		default :
-			break;
+			$array_name = 'membertypes';
+			$output = '<?php' . "\n";
+			$output.= '$' . $array_name . ' = array(' . "\n";
+		break;
 	}
-	
-	$sqlqry = "SELECT " . join(",",$field_name) . " FROM " . $DBPrefix . "" . $table . " ORDER BY " .$field_name[$sort_field] . ";";
-	$result = mysql_query($sqlqry);
-	
-	if ($result)
-	$num_rows = mysql_num_rows($result);
-	else {
-		echo mysql_error();
-		$num_rows = 0;
-	}
-	
+
+	$query = "SELECT " . join(',', $field_name) . " FROM " . $DBPrefix . "" . $table . " ORDER BY " .$field_name[$sort_field] . ";";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$num_rows = mysql_num_rows($res);
+
 	$i = 0;
-	while ($i < $num_rows) {
-		reset($field_name);
-		if (count($field_name) > 1) {
-			$fldn=each($field_name);
-			$output.="\"" . mysql_result($result,$i, $fldn['value']) . "\" => array(\n";
-			$j=1;
-			do {
-				$output .= "\"" . $fldn['value'] . "\"=>\"" . mysql_result($result,$i, $fldn['value']) . "\",";
-				$fldn=each($field_name);
-				$j++;
-			}while ($j<count($field_name));
-			$output .= "\"" . $fldn['value'] . "\"=>\"" . mysql_result($result,$i, $fldn['value']) . "\")";
-		} else {
-			$fldn=each($field_name);
-			$output .= "\"" . mysql_result($result,$i, $fldn['value']) . "\"";
+	while ($row = mysql_fetch_assoc($res))
+	{
+		$output .= '\'' . $row[$fldn[0]] . '\' => array(' . "\n";
+		$field_count = count($field_name);
+		$j = 0;
+		foreach ($field_name as $field)
+		{
+			$output .= '\'' . $field . '\' => \'' . $row[$field] . '\', ';
+			$j++;
+			if ($j < $field_count)
+				$output .= ', ';
+			else
+				$output .= ')';
 		}
 		$i++;
 		if ($i < $num_rows)
-		$output .= ",\n";
+			$output .= ',' . "\n";
 		else
-		$output .= "\n";
+			$output .= "\n";
 	}
-	
-	$output .= ");\n?>\n";
-	
-	$handle = fopen ( $output_filename , "w" );
-	fputs ( $handle, $output );
-	fclose ($handle);
+
+	$output .= ');' . "\n" . '?>';
+
+	$handle = fopen($output_filename, 'w');
+	fputs($handle, $output);
+	fclose($handle);
 }
 ?>

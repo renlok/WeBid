@@ -19,15 +19,14 @@
 </tr>
 <tr>
 	<td align="center" valign="middle">
-		<br>
-		<form name="conf" action="" method="post">
 		<table width="95%" border="0" cellpadding="1" bgcolor="#0083D7">
 		<tr>
 			<td align="center" class="title">{L_25_0012}</td>
 		</tr>
 		<tr>
-			<td>
-				<table width="100%" cellpadding="2" align="center" bgcolor="#FFFFFF">
+			<td bgcolor="#FFFFFF">
+                <form name="conf" action="" method="post">
+				<table width="100%" cellpadding="2" align="center">
 					<tr class="c3">
 						<td colspan="2" bgcolor="#CCCCCC"><b>{L_417}</b></td>
 					</tr>

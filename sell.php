@@ -54,7 +54,7 @@ if (!$user->can_sell)
 // set variables
 setvars();
 
-if ($_GET['mode'] == 'recall')
+if (isset($_GET['mode']) && $_GET['mode'] == 'recall')
 	$_SESSION['action'] = 1;
 
 switch ($_SESSION['action'])

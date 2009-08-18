@@ -19,16 +19,16 @@ $item_title = $system->uncleanvars($Auction['title']);
 $emailer = new email_class();
 $emailer->assign_vars(array(
 		'W_NAME' => $Winner['name'],
-		
+
 		'A_PICURL' => ($Auction['pict_url'] != '') ? $uploaded_path . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
 		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
 		'A_TITLE' => $Auction['title'],
 		'A_CURRENTBID' => $system->print_money($Auction['current_bid'], false),
 		'A_ENDS' => $ends_string,
-		
+
 		'S_NICK' => $Seller['nick'],
 		'S_EMAIL' => $Seller['email'],
-		
+
 		'SITE_URL' => $system->SETTINGS['siteurl'],
 		'SITENAME' => $system->SETTINGS['sitename']
 		));

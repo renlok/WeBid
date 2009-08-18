@@ -29,10 +29,7 @@
 <!-- IF B_NOTBOUGHT -->
 					<tr>
 						<td align="right">{L_003}</td>
-						<td>
-							<b>{YOURUSERNAME}</b>
-							<input type="hidden" name="nick" value="{YOURUSERNAME}">
-						</td>
+						<td><b>{YOURUSERNAME}</b></td>
 					</tr>
 	<!-- IF B_USERAUTH -->
 					<tr>

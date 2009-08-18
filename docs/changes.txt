@@ -64,5 +64,6 @@
 - Reduced the size of the `no image available` image
 - Changed how relisting items works they are now relisted automatically and you dont have to go though the sell pages again
 - Added spam prevention methods
+- Fixed the buy it now auction email so it contains the correct info (Bug #30)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

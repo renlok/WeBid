@@ -16,12 +16,12 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
+
 unset($ERR);
 
-#//
-if (isset($_POST['action']) && $_POST['action'] == "update")
+if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	#// Data check
+	// Data check
 	if ($_POST['status'] == 'enabled' && (!is_numeric($_POST['timebefore']) || !is_numeric($_POST['extend'])))
 	{
 		$ERR = $MSG['2_0038'];
@@ -104,11 +104,11 @@ if (isset($_POST['action']) && $_POST['action'] == "update")
 		  <?php echo $MSG['2_0034']; ?>
 		  </td>
 		<td height="31" width="418">
-		  <input type="radio" name="status" value="enabled" <?php if ($system->SETTINGS['status'] == 'enabled') print " CHECKED";?>>
+		  <input type="radio" name="status" value="enabled" <?php if ($system->SETTINGS['ae_status'] == 'enabled') print " CHECKED";?>>
 		  
 		  <?php echo $MSG['030']; ?>
 		  
-		  <input type="radio" name="status" value="disabled" <?php if ($system->SETTINGS['status'] == 'disabled') print " CHECKED";?>>
+		  <input type="radio" name="status" value="disabled" <?php if ($system->SETTINGS['ae_status'] == 'disabled') print " CHECKED";?>>
 		  
 		  <?php echo $MSG['029']; ?>
 		   </td>
@@ -122,12 +122,12 @@ if (isset($_POST['action']) && $_POST['action'] == "update")
 		<td height="31" width="418">
 		  <?php echo $MSG['2_0035']; ?>
 		   &nbsp;
-		  <input type=text name=extend value="<?php echo $system->SETTINGS['extend']; ?>" size=5>
+		  <input type=text name=extend value="<?php echo $system->SETTINGS['ae_extend']; ?>" size=5>
 		  &nbsp; &nbsp;
 		   
 		  <?php echo $MSG['2_0036']; ?>
 		   &nbsp;
-		  <input type=text name=timebefore value="<?php echo $system->SETTINGS['timebefore']; ?>" size=5>
+		  <input type=text name=timebefore value="<?php echo $system->SETTINGS['ae_timebefore']; ?>" size=5>
 		  &nbsp; &nbsp;
 		   
 		  <?php echo $MSG['2_0037']; ?>

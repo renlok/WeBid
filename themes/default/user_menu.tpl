@@ -31,11 +31,12 @@
 			<li><a href="selling.php">{L_453}</a><br></li>
 	</ul>
 	<!-- ELSEIF B_ONLYBUYER -->
+    <div class="padding">
 	<form name="request" action="user_menu.php" method="post">
-	<p>
-		{L_25_0140} <input type="submit" name="requesttoadmin" value="{L_25_0141}"  class="button">
-	</p>
+        <p>{L_25_0140}</p>
+        <p><input type="submit" name="requesttoadmin" value="{L_25_0141}"  class="button"></p>
 	</form>
+    </div>
 	<!-- ENDIF -->
 <!-- ELSEIF THISPAGE eq 'summary' -->
 	<div class="padding">

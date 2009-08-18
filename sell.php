@@ -39,6 +39,12 @@ if (!$user->logged_in)
 	exit;
 }
 
+if ($user->user_data['suspended'] == 7)
+{
+	header('location: message.php');
+	exit;
+}
+
 if (!$user->can_sell)
 {
 	header('location: user_menu.php?cptab=selling');
@@ -652,7 +658,7 @@ switch ($_SESSION['action'])
 				'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
 				'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
 				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),
-				'B_FEES' => ($system->SETTINGS['fees'] == 'y')
+				'B_FEES' => ($system->SETTINGS['fees'] == 'y' && !($_SESSION['SELL_action'] == 'edit' || $_SESSION['SELL_action'] == 'relist'))
 				));
 		break;
 }

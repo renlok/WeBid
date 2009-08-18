@@ -28,7 +28,7 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 	$password = md5($MD5_PREFIX . $_POST['password']);
 	$query = "SELECT id, hash, suspended FROM " . $DBPrefix . "users WHERE
 			nick = '" . $system->cleanvars($_POST['username']) . "'
-			AND password = '" . $password . "' AND suspended = 0";
+			AND password = '" . $password . "' AND (suspended = 0 OR suspended = 7)";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($res) > 0)

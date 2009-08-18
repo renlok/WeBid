@@ -23,6 +23,12 @@ if (!$user->logged_in)
 	exit;
 }
 
+if ($user->user_data['suspended'] == 7)
+{
+	header('location: message.php');
+	exit;
+}
+
 if (!$user->can_buy)
 {
 	header('location: user_menu.php');

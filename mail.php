@@ -121,7 +121,7 @@ if ($x == 1)
 		{
 			$oid = ($oid == 0) ? $row['sentfrom'] : $oid;
 			$template->assign_block_vars('convo', array(
-					'BGCOLOUR' => ($oid == $row['sentfrom']) ? ' background-color: #FFFEEE' : '',
+					'BGCOLOUR' => ($oid == $row['sentfrom']) ? ' background-color: #EEEEEE' : '',
 					'MSG' => $row['message']
 					));
 		}

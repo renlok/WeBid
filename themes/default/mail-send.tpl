@@ -31,9 +31,9 @@ $(".form1").submit(function(){
     <input type="hidden" name="hash" value="{HASH}">
 	<input name="submit" type="submit" value="submit">
 	</form>
-</center>
 <!-- IF B_CONVO -->
-<div style="overflow:scroll; min-height:100px; max-height:500px; width:400px; margin:20px;">
+<br class="spacer">
+<div style="overflow:scroll; min-height:100px; max-height:500px; width:80%;">
 	<!-- BEGIN convo -->
     <div style="border:#000000 solid 1px;{convo.BGCOLOUR}">
     	{convo.MSG}
@@ -41,4 +41,5 @@ $(".form1").submit(function(){
     <!-- END convo -->
 </div>
 <!-- ENDIF -->
+</center>
 <br>

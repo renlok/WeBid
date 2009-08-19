@@ -15,7 +15,7 @@ td.title {
 }
 </style>
 </head>
-<body>
+<body style="margin:0;">
 <div align="center" style="padding:25px; width:90%;">
 <div class="box">
 	<table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#0083D7">

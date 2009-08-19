@@ -14,7 +14,7 @@
 
 function rebuild_html_file($table)
 {
-	global $DBPrefix;
+	global $DBPrefix, $system;
 	switch($table)
 	{
 		case 'countries':

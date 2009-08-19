@@ -2,7 +2,7 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="{SITEURL}admin/style.css">
 </head>
-<body>
+<body style="margin:0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 	<td background="{SITEURL}admin/images/bac_barint.gif">

@@ -88,7 +88,7 @@ scrollbar-arrow-color: #ffffff;
 }</STYLE>
 <TITLE></TITLE>
 </head>
-<body bgcolor="#FFFFFF" text="#000000" link="#0066FF" vlink="#666666" alink="#000066" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body style="margin:0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr> 
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">

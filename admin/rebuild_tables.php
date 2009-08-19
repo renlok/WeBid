@@ -17,7 +17,7 @@ include 'loggedin.inc.php';
 
 function rebuild_table_file($table)
 {
-	global $DBPrefix;
+	global $DBPrefix, $system;
 	switch($table)
 	{
 		case 'membertypes':

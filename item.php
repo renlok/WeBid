@@ -284,7 +284,7 @@ if ($customincrement == 0)
 	$result_incr = mysql_query($query);
 	if (mysql_num_rows($result_incr) != 0)
 	{
-		$increment = mysql_result($result_incr, 0, "increment");
+		$increment = mysql_result($result_incr, 0, 'increment');
 	}
 }
 else
@@ -314,7 +314,7 @@ else
 $view_history = '';
 if ($num_bids > 0 && !isset($_GET['history']))
 {
-	$view_history = '(<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=$id&history=view#history">' . $MSG['105'] . '</a>)';
+	$view_history = '(<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $id . '&history=view#history">' . $MSG['105'] . '</a>)';
 }
 elseif (isset($_GET['history']))
 {

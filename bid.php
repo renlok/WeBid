@@ -44,7 +44,7 @@ $bidding_ended = false;
 if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 {
 	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	header('Location: ' . $sslurl . 'bid.php?id=' . $id . '&bid=' . $bid . '&qty=' . $qty);
+	header('location: ' . $sslurl . 'bid.php?id=' . $id . '&bid=' . $bid . '&qty=' . $qty);
 	exit;
 }
 

@@ -113,7 +113,7 @@
 					</tr>
         <!-- ENDIF -->
                     <tr>
-						<td colspan="2"><!-- INCLUDE captcha.tpl --></td>
+						<td colspan="2">{CAPCHA}</td>
 					</tr>
 				</table>
 				<div style="text-align:center">

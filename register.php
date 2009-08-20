@@ -18,7 +18,11 @@ include $include_path . 'banemails.inc.php';
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
 {
-	include $include_path . 'recaptchalib.php';
+	include $include_path . 'captcha/recaptchalib.php';
+}
+elseif ($system->SETTINGS['spam_register'] == 1)
+{
+	include $include_path . 'captcha/captcha.php';
 }
 
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
@@ -152,6 +156,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		}
 
 		if ($system->SETTINGS['spam_register'] == 2 && !$resp->is_valid)
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $MSG['752'];
+		}
+		elseif ($system->SETTINGS['spam_register'] == 1 && !captcha::solved())
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $MSG['752'];
@@ -359,7 +368,7 @@ $template->assign_vars(array(
 		'B_FIRST' => $first,
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : '';
+		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : ($system->SETTINGS['spam_register'] == 1) ? captcha::form() : '';
 		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 1),
 		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 1),
 		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 1),

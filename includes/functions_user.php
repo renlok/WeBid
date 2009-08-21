@@ -79,6 +79,18 @@ class user
 			{
 				$query = "UPDATE " . $DBPrefix . "users SET suspended = 7 WHERE id = " . $this->user_data['id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+				// send email
+				$emailer = new email_class();
+				$emailer->assign_vars(array(
+						'SITENAME' => $system->SETTINGS['sitename'],
+
+						'NAME' => $this->user_data['name'],
+						'BALANCE' => print_money($this->user_data['balance'], false),
+						'OUTSTANDING' => $system->SETTINGS['siteurl'] . 'outstanding.php'
+						));
+				$emailer->email_uid = $this->user_data['id'];
+				$emailer->email_sender($this->user_data['email'], 'suspended_balance.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['753']);
 			}
 		}
 	}

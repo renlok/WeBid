@@ -19,9 +19,9 @@ $emailer->assign_vars(array(
 		'SITE_URL' => $system->SETTINGS['siteurl'],
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'ADMINMAIL' => $system->SETTINGS['adminmail'],
-		
+
 		'REPORT' => $report,
-		
+
 		'S_NAME' => $row['name']
 		));
 $emailer->email_uid = $row['id'];

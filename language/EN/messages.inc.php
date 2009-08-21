@@ -844,6 +844,8 @@ $MSG['753'] = 'Account Suspended';
 $MSG['754'] = 'You have reached the debt limit allowed on your account; your account will be suspended until this is paid back';
 $MSG['755'] = 'Paid';
 $MSG['756'] = 'Pay Now';
+$MSG['757'] = 'Security Code';
+$MSG['758'] = 'Verify Code';
 
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";

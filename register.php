@@ -22,7 +22,7 @@ if ($system->SETTINGS['spam_register'] == 2)
 }
 elseif ($system->SETTINGS['spam_register'] == 1)
 {
-	include $include_path . 'captcha/captcha.php';
+	include $include_path . 'captcha/securimage.php';
 }
 
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
@@ -75,11 +75,16 @@ $TPL_err = 0;
 
 if (empty($_POST['action']))
 {
-	$action = "first";
+	$action = 'first';
 }
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 $DISPLAYED_FIELDS = unserialize($system->SETTINGS['displayed_feilds']);
+
+if ($system->SETTINGS['spam_register'] == 1)
+{
+	$resp = new Securimage();
+}
 
 if (isset($_POST['action']) && $_POST['action'] == 'first')
 {
@@ -160,7 +165,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 			$TPL_err = 1;
 			$TPL_errmsg = $MSG['752'];
 		}
-		elseif ($system->SETTINGS['spam_register'] == 1 && !captcha::solved())
+		elseif ($system->SETTINGS['spam_register'] == 1 && !$resp->check($_POST['captcha_code']))
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $MSG['752'];
@@ -291,7 +296,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 }
 
 $country = '';
-if (!isset($_POST['action']) || ($_POST['action'] == "first" && isset($TPL_err)))
+if (!isset($_POST['action']) || ($_POST['action'] == 'first' && isset($TPL_err)))
 {
 	$selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
 	foreach ($countries as $key => $name)
@@ -333,22 +338,22 @@ if (!isset($_POST['action']) || ($_POST['action'] == "first" && isset($TPL_err))
 	$dobday .= '</select>';
 }
 
-if (isset($_POST['action']) && $_POST['action'] == "first" && !$TPL_err)
+if (isset($_POST['action']) && $_POST['action'] == 'first' && !$TPL_err)
 {
 	if ($system->SETTINGS['activationtype'] == 0)
 	{
-		include $include_path . "user_confirmation_needapproval.inc.php";
+		include $include_path . 'user_confirmation_needapproval.inc.php';
 		$TPL_message = $MSG['016_a'];
 	}
 	elseif ($system->SETTINGS['activationtype'] == 1)
 	{
-		include $include_path . "user_confirmation.inc.php";
+		include $include_path . 'user_confirmation.inc.php';
 		$TPL_message = sprintf($MSG['016'], $TPL_email_hidden);
 	}
 	else
 	{
 		$USER = array('name' => $TPL_name_hidden, 'email' => $_POST['TPL_email']);
-		include $include_path . "user_approved.inc.php";
+		include $include_path . 'user_approved.inc.php';
 		$TPL_message = $MSG['016_b'];
 	}
 	$first = false;
@@ -358,7 +363,7 @@ $template->assign_vars(array(
 		'L_ERROR' => $TPL_errmsg,
 		'L_COUNTRIES' => $country,
 		'L_ACCEPTANCE' => nl2br(stripslashes($system->SETTINGS['acceptancetext'])),
-		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == "USA") ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
+		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'L_MESSAGE' => (isset($TPL_message)) ? $TPL_message : '',
 
 		'B_ERRORMSG' => (!empty($TPL_errmsg)),
@@ -368,7 +373,7 @@ $template->assign_vars(array(
 		'B_FIRST' => $first,
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : ($system->SETTINGS['spam_register'] == 1) ? captcha::form() : '';
+		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : ($system->SETTINGS['spam_register'] == 1) ? $resp->show_html() : '',
 		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 1),
 		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 1),
 		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 1),

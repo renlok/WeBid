@@ -32,8 +32,8 @@
 						<td class="error" colspan="3" align="center">{ERROR}</td>
 					</tr>
 <!-- ENDIF -->
-                    <tr valign="top">
 <!-- BEGIN lang -->
+					<tr valign="top">
 	<!-- IF lang.S_FIRST_ROW -->
     					<td width="204" valign="top" align="right">{L_519}:</td>
     <!-- ELSE -->
@@ -41,17 +41,18 @@
     <!-- ENDIF -->
 						<td width="10"><img src="../includes/flags/{lang.LANG}.gif"></td>
                         <td width="486"><input type="text" name="title[{lang.LANG}]" size="40" maxlength="255" value=""></td>
+					</tr>
 <!-- END lang -->
-                    </tr>
-                    <tr>
 <!-- BEGIN lang -->
+					<tr>
 	<!-- IF lang.S_FIRST_ROW -->
     					<td width="204" valign="top" align="right">{L_520}:</td>
     <!-- ELSE -->
     					<td>&nbsp;</td>
     <!-- ENDIF -->
 						<td width="10" valign="top"><img src="../includes/flags/{lang.LANG}.gif"></td>
-                        <td width="486"><textarea name="content[{lang.LANG}" cols="45" rows="20"></textarea></td>
+                        <td width="486"><textarea name="content[{lang.LANG}]" cols="45" rows="20"></textarea></td>
+					</tr>
 <!-- END lang -->
                     </tr>
                     <tr>

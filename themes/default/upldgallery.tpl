@@ -2,8 +2,20 @@
 <head>
 <title>{SITENAME}</title>
 <link rel="stylesheet" type="text/css" href="themes/{THEME}/style.css">
-<!-- IF B_CROPSCREEN -->
 <script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	var num_images = $('#numimages', window.opener.document).val();
+	var now_images = {NUMIMAGES};
+	var image_cost = {IMAGE_COST};
+	if (num_images != now_images) {
+		var fee_diff = (now_images - num_images) * image_cost;
+		$("#to_pay", window.opener.document).text(parseFloat($("#to_pay", window.opener.document).text()) + fee_diff);
+		$('#numimages', window.opener.document).val(now_images);
+	}
+});
+</script>
+<!-- IF B_CROPSCREEN -->
 <script type="text/javascript" src="js/jquery.imgareaselect.js"></script>
 <script type="text/javascript">
 function preview(img, selection) {
@@ -32,7 +44,7 @@ $(document).ready(function () {
 		var y2 = $('#y2').val();
 		var w = $('#w').val();
 		var h = $('#h').val();
-		if (x1=="" || y1=="" || x2=="" || y2=="" || w=="" || h==""){
+		if (x1=="" || y1=="" || x2=="" || y2=="" || w=="" || h=="") {
 			alert("You must make a selection first");
 			return false;
 		} else {

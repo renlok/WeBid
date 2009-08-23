@@ -38,12 +38,12 @@ function rebuild_table_file($table)
 	$i = 0;
 	while ($row = mysql_fetch_assoc($res))
 	{
-		$output .= '\'' . $row[$fldn[0]] . '\' => array(' . "\n";
+		$output .= '\'' . $row[$field_name[0]] . '\' => array(' . "\n";
 		$field_count = count($field_name);
 		$j = 0;
 		foreach ($field_name as $field)
 		{
-			$output .= '\'' . $field . '\' => \'' . $row[$field] . '\', ';
+			$output .= '\'' . $field . '\' => \'' . $row[$field] . '\'';
 			$j++;
 			if ($j < $field_count)
 				$output .= ', ';

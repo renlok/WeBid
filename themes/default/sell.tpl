@@ -174,7 +174,9 @@ $(document).ready(function(){
 						<td valign="top" class="rightpan">
 							<h3>{L_663}</h3>
 							{L_673} {MAXPICS} {L_674}<br>
-							[<a href="upldgallery.php" alt="gallery" class="new-window">{L_677}</a>]</td>
+							[<a href="upldgallery.php" alt="gallery" class="new-window">{L_677}</a>]
+                            <input type="hidden" name="numimages" value="{NUMIMAGES}" id="numimages" />
+                        </td>
 					</tr>
 	<!-- ENDIF -->
 					<tr>

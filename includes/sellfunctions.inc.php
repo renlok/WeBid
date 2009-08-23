@@ -176,7 +176,7 @@ function remove_bids($auction_id)
 
 function get_fee($minimum_bid)
 {
-	global $system, $DBPrefix, $buy_now_price, $reserve_price, $is_bold, $is_highlighted, $is_featured;
+	global $system, $DBPrefix, $buy_now_price, $reserve_price, $is_bold, $is_highlighted, $is_featured, $_SESSION;
 
 	$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type, fee_from ASC";
 	$res = mysql_query($query);
@@ -215,6 +215,10 @@ function get_fee($minimum_bid)
 		if ($row['type'] == 'hpfeat_fee' && $is_featured == 'y')
 		{
 			$fee_value += $row['value'];
+		}
+		if ($row['type'] == 'picture_fee' && count($_SESSION['UPLOADED_PICTURES']) > 0)
+		{
+			$fee_value += count($_SESSION['UPLOADED_PICTURES']) * $row['value'];
 		}
 	}
 	

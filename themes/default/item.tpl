@@ -246,7 +246,7 @@ $(document).ready(function() {
 				</form>
 				</table>
 	<!-- ELSE -->
-				<p align="center">{BUYNOW} <a href='{BIDURL}buy_now.php?id={ID}'><img border='0' align='absbottom' alt='{L_496}' src='{SITEURL}images/buy_it_now.gif'></a></p>
+				<p align="center">{BUYNOW} <a href="{BIDURL}buy_now.php?id={ID}"><img border="0" align="absbottom" alt="{L_496}" src="{BNIMG}"></a></p>
 	<!-- ENDIF -->
 <!-- ENDIF -->
 			  </td>

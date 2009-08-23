@@ -603,7 +603,7 @@ switch ($_SESSION['action'])
 
 		$template->assign_vars(array(
 				'TITLE' => $MSG['028'],
-				'ERROR' => ($ERR == "ERR_") ? '' : $$ERR,
+				'ERROR' => ($ERR == 'ERR_') ? '' : $$ERR,
 				'MAXPICS' => $system->SETTINGS['maxpictures'],
 				'CAT_LIST' => $TPL_categories_list,
 				'ATYPE' => $TPL_auction_type,
@@ -642,6 +642,7 @@ switch ($_SESSION['action'])
 				'IS_BOLD' => ($is_bold == 'y') ? 'checked' : '',
 				'IS_HIGHLIGHTED' => ($is_highlighted == 'y') ? 'checked' : '',
 				'IS_FEATURED' => ($is_featured == 'y') ? 'checked' : '',
+				'NUMIMAGES' => count($_SESSION['UPLOADED_PICTURES']),
 
 				'FEE_VALUE' => get_fee($minimum_bid),
 				'FEE_MIN_BID' => $fee_min_bid,

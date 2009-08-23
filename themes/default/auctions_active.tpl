@@ -14,11 +14,11 @@
 				</tr>
 <!-- BEGIN auctions -->
 				<tr style="text-align:center; background-color:{auctions.BGCOLOUR};">
-					<td width="10%"><a href="{SITEURL}item.php?id={auctions.ID}"><img src="{SITEURL}{auctions.PIC_URL}" border="0" alt="image"></a></td>
+					<td width="10%"><a href="{SITEURL}item.php?id={auctions.ID}"><img src="{auctions.PIC_URL}" border="0" alt="image"></a></td>
 					<td width="45%">
 						<a href="{SITEURL}item.php?id={auctions.ID}">{auctions.TITLE}</a>
 						<!-- IF auctions.B_BUY_NOW -->
-						&nbsp;&nbsp;&nbsp;(<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img src="{SITEURL}images/{auctions.BNIMG}" border="0" class="buynow"></a>&nbsp;{auctions.BNFORMAT})
+						&nbsp;&nbsp;&nbsp;(<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img src="{auctions.BNIMG}" border="0" class="buynow"></a>&nbsp;{auctions.BNFORMAT})
 						<!-- ENDIF -->
 					</td>
 					<td width="15%">{auctions.BIDFORMAT}</td>

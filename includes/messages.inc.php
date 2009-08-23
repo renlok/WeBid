@@ -43,7 +43,7 @@ else
 
 if (!isset($language) || empty($language)) $language = $system->SETTINGS['defaultlanguage'];
 
-require($main_path . 'language/' . $language . '/messages.inc.php');
+include $main_path . 'language/' . $language . '/messages.inc.php';
 
 //find installed languages
 $LANGUAGES = array();
@@ -58,4 +58,10 @@ if ($handle = opendir($main_path . 'language'))
 	}
 }
 closedir($handle);
+
+function get_lang_img($string)
+{
+	global $system, $language;
+	return $system->SETTINGS['siteurl'] . 'language/' . $language . '/images/' . $string;
+}
 ?>

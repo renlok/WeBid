@@ -76,11 +76,11 @@ while ($row = mysql_fetch_array($result))
 
 	if (strlen($row['pict_url']) > 0)
 	{
-		$row['pict_url'] = 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
+		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
 	}
 	else
 	{
-		$row['pict_url'] = 'images/nopicture.gif';
+		$row['pict_url'] = get_lang_img('nopicture.gif');
 	}
 
 	// number of bids for this auction
@@ -100,7 +100,7 @@ while ($row = mysql_fetch_array($result))
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
 			'TITLE' => $row['title'],
-			'BNIMG' => ($row['bn_only'] == 'n') ? 'buy_it_now.gif' : 'bn_only.png',
+			'BNIMG' => get_lang_img(($row['bn_only'] == 'n') ? 'buy_it_now.gif' : 'bn_only.png'),
 			'BNVALUE' => $row['buy_now'],
 			'BNFORMAT' => $system->print_money($row['buy_now']),
 			'BIDVALUE' => $row['minimum_bid'],

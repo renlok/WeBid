@@ -107,17 +107,19 @@ function browseItems($result, $feat_res, $current_page)
 
 function build_items($row)
 {
+	global $system;
+
 	// image icon
 	if (!empty($row['pict_url']))
 	{
-		$row['pict_url'] = 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
+		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
 	}
 	else
 	{
-		$row['pict_url'] = 'images/nopicture.gif';
+		$row['pict_url'] = get_lang_img('nopicture.gif');
 	}
 
-	$row['pict_url'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . $row['pict_url'] . '" border=0 /></a>';
+	$row['pict_url'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '"><img src="' . $row['pict_url'] . '" border=0 /></a>';
 
 	// this subastas title and link to details
 	$row['title'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '">' . $row['title'] . '</a>';
@@ -129,12 +131,12 @@ function build_items($row)
 
 	if ($row['buy_now'] > 0 && $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
 	{
-		$row['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . 'images/buy_it_now.gif" border=0 class="buynow"></a> ' . $system->print_money($row['buy_now']) . ')';
+		$row['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a> ' . $system->print_money($row['buy_now']) . ')';
 	}
 	elseif ($row['buy_now'] > 0 && $row['bn_only'] == 'y')
 	{
 		$row['current_bid'] = $row['buy_now'];
-		$row['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . $system->SETTINGS['siteurl'] . 'images/buy_it_now.gif" border=0 class="buynow"></a> ' . $system->print_money($row['buy_now']) . ') <img src="' . $system->SETTINGS['siteurl'] . 'images/bn_only.png" border="0" class="buynow">';
+		$row['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a> ' . $system->print_money($row['buy_now']) . ') <img src="' . get_lang_img('bn_only.png') . '" border="0" class="buynow">';
 	}
 	else
 	{

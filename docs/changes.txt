@@ -67,5 +67,6 @@
 - Fixed the buy it now auction email so it contains the correct info (Bug #30)
 - Fixed buying.php so the quantity is shown correctly if you use buy it now at different times for the same item
 - Fixed buying.php so the Your Bid and Total Due show the correct values when an item is bought with buy it now
+- moved the images which contain words into the language folder so they can be translated
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

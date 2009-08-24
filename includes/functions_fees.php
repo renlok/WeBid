@@ -119,6 +119,8 @@ class fees
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$query = "DELETE FROM " . $DBPrefix . "userfees WHERE auc_id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 5:
 				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $custom_id;

@@ -20,7 +20,7 @@ function openLogFile()
 {
 	global $logFileHandle, $logPath;
 
-	$logFileHandle = fopen($logPath . 'cron.log', "a");
+	$logFileHandle = fopen($logPath . 'cron.log', 'a');
 }
 
 function closeLogFile()
@@ -46,7 +46,7 @@ function printLog($str)
 function printLogL($str, $level)
 {
 	for ($i = 1; $i <= $level; ++$i)
-	$str = "\t" . $str;
+		$str = "\t" . $str;
 	printLog($str);
 }
 
@@ -64,7 +64,7 @@ function constructCategories()
 }
 // initialize cron script
 openLogFile();
-printLog("=============== STARTING CRON SCRIPT: " . gmdate("F d, Y H:i:s"));
+printLog('=============== STARTING CRON SCRIPT: ' . gmdate('F d, Y H:i:s'));
 
 $categories = constructCategories();
 
@@ -79,7 +79,7 @@ $categories = constructCategories();
  * b) send email to winner (if any) - passing seller's data
  * c) send email to seller (reporting if there was a winner)
  */
-printLog("++++++ Closing expired auctions");
+printLog('++++++ Closing expired auctions');
 $NOW = time();
 $NOWB = gmdate('Ymd');
 $query = "SELECT * FROM " . $DBPrefix . "auctions
@@ -94,14 +94,14 @@ $result_auction = mysql_query($query);
 $system->check_mysql($result_auction, $query, __LINE__, __FILE__);
 
 $num = mysql_num_rows($result_auction);
-printLog($num . " auctions to close");
+printLog($num . ' auctions to close');
 $count_auctions = $num;
 $n = 1;
 while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 {
 	$n++;
 	$Auction['description'] = strip_tags($Auction['description']);
-	printLog("\nProcessing auction: " . $Auction['id']);
+	printLog("\n" . 'Processing auction: ' . $Auction['id']);
 
 	// Send notification to all users watching this auction
 	$query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE '% " . $Auction['id'] . " %'";
@@ -263,7 +263,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 			printLog($report_text);
 		}
 	} // end auction ends
-	printLogL ("mail to seller: " . $Seller['email'], 1);
+	printLogL ('mail to seller: ' . $Seller['email'], 1);
 
 	$month = gmdate('m', $Auction['ends'] + $system->tdiff);
 	$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);

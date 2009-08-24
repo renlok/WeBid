@@ -36,7 +36,7 @@ if (isset($_GET['action']))
 			}
 			$errmsg = $MSG['30_0033'];
 		break;
-		
+
 		case 'updatecounters':
 			//update users counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "users WHERE suspended = 0";
@@ -45,7 +45,7 @@ if (isset($_GET['action']))
 			$USERS = mysql_result($res, 0);
 			$query = "UPDATE " . $DBPrefix . "counters SET users = " . $USERS;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			//update suspended users counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "users WHERE suspended != 0";
 			$res = mysql_query($query);
@@ -53,7 +53,7 @@ if (isset($_GET['action']))
 			$USERS = mysql_result($res, 0);
 			$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = " . $USERS;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			//update auction counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed = 0 AND suspended = 0";
 			$res = mysql_query($query);
@@ -61,7 +61,7 @@ if (isset($_GET['action']))
 			$AUCTIONS = mysql_result($res, 0);
 			$query = "UPDATE " . $DBPrefix . "counters SET auctions = " . $AUCTIONS;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			//update closed auction counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed != 0";
 			$res = mysql_query($query);
@@ -69,7 +69,7 @@ if (isset($_GET['action']))
 			$AUCTIONS = mysql_result($res, 0);
 			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = " . $AUCTIONS;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			//update suspended auctions counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed = 0 and suspended != 0";
 			$res = mysql_query($query);
@@ -77,7 +77,7 @@ if (isset($_GET['action']))
 			$AUCTIONS = mysql_result($res, 0);
 			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = " . $AUCTIONS;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			//update bids
 			$query = "SELECT COUNT(b.id) FROM " . $DBPrefix . "bids b, " . $DBPrefix . "auctions a
 					WHERE b.auction=a.id AND a.closed = 0 AND a.suspended = 0";
@@ -86,7 +86,7 @@ if (isset($_GET['action']))
 			$BIDS = mysql_num_rows($res);
 			$query = "UPDATE " . $DBPrefix . "counters set bids = " . $BIDS;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			$errmsg = $MSG['1029'];
 		break;
 	}

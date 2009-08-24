@@ -29,6 +29,11 @@
 		<tr>
 			<td>
 				<table width="100%" cellpadding="2" align="center" bgcolor="#FFFFFF">
+<!-- IF ERROR ne '' -->
+					<tr bgcolor="yellow">
+						<td class="error" colspan="2" align="center">{ERROR}</td>
+					</tr>
+<!-- ENDIF -->
 <!-- BEGIN gateways -->
 					<tr class="c3">
 						<td colspan="2" bgcolor="#CCCCCC"><b>{gateways.NAME}</b></td>

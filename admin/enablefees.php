@@ -34,10 +34,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['fee_max_debt'] = $_POST['fee_max_debt'];
 	$system->SETTINGS['fee_signup_bonus'] = $_POST['fee_signup_bonus'];
 	$system->SETTINGS['fee_disable_acc'] = $_POST['fee_disable_acc'];
-	$ERR = $MSG['247'];
+	$ERR = $MSG['761'];
 }
 
-loadblock($MSG['395'], $MSG['397'], 'yesno', 'fees', $system->SETTINGS['fees'], $MSG['030'], $MSG['029']);
+loadblock($MSG['395'], $MSG['397'], 'yesno', 'fees', $system->SETTINGS['fees'], $MSG['759'], $MSG['760']);
 loadblock($MSG['729'], $MSG['730'], 'batchstacked', 'fee_type', $system->SETTINGS['fee_type'], $MSG['731'], $MSG['732']);
 loadblock('', '', $MSG['733']);
 loadblock($MSG['733'], $MSG['734'], 'days', 'fee_max_debt', $system->SETTINGS['fee_max_debt']);

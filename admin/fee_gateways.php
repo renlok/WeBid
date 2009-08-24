@@ -17,6 +17,8 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+unset($ERR);
+
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -36,8 +38,12 @@ if (isset($_POST['action']))
 		$query .= $gateway . '_active = ' . (isset($_POST[$gateway . '_active']) ? 1 : 0) . ', ';
 		$query .= $gateway . '_required = ' . (isset($_POST[$gateway . '_required']) ? 1 : 0) . ', ';
 		$query .= $gateway . "_address = '" . $_POST[$gateway . '_address'] . "'";
+		$gateway_data[$gateway . '_active'] = $_POST[$gateway . '_active'];
+		$gateway_data[$gateway . '_required'] = $_POST[$gateway . '_required'];
+		$gateway_data[$gateway . '_address'] = $_POST[$gateway . '_address'];
 	}
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$ERR = $MSG['762'];
 }
 
 for ($i = 0; $i < count($gateways); $i++)
@@ -54,7 +60,7 @@ for ($i = 0; $i < count($gateways); $i++)
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($errmsg)) ? $errmsg : ''
+		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
 
 $template->set_filenames(array(

@@ -107,7 +107,7 @@ function browseItems($result, $feat_res, $current_page)
 
 function build_items($row)
 {
-	global $system;
+	global $system, $uploaded_path;
 
 	// image icon
 	if (!empty($row['pict_url']))

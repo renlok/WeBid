@@ -14,8 +14,6 @@
 
 if (!defined('InWeBid')) exit();
 
-include $include_path . "messages.inc.php";
-
 if ($user->user_data['startemailmode'] == 'yes')
 {
 	$emailer = new email_class();

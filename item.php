@@ -194,7 +194,7 @@ while ($bidrec = mysql_fetch_assoc($result_numbids))
 			$bidderarray[$bidrec['nick']] = $bidrec['nick'];
 		}
 	}
-	if ($left > 0) //store highest bidder details
+	if ($left > 0 && !in_array($bidrec['bidder'], $hbidder_data)) //store highest bidder details
 	{
 		$hbidder_data[] = $bidrec['bidder'];
 		$fb_pos = $fb_neg = 0;

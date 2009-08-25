@@ -1,4 +1,4 @@
-Hello {REALNAME},
+Dear {REALNAME},
 This is an automatic response from Your Item Watch.
 Someone has bid on an item you have added to your item watch list.
 

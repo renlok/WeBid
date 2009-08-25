@@ -850,6 +850,10 @@ $MSG['759'] = 'Enable';
 $MSG['760'] = 'Disable';
 $MSG['761'] = 'Fee Settings Updated';
 $MSG['762'] = 'Fee Gateway Settings Updated';
+$MSG['763'] = 'Balance';
+$MSG['764'] = 'Send payment reminder';
+$MSG['765'] = 'Payment reminder sent';
+$MSG['766'] = 'Invoice';
 
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";

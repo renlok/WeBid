@@ -1,4 +1,4 @@
-Hello {S_NAME},
+Dear {S_NAME},
 We're sorry, your auction you created on {SITENAME} has ended with no winner
 
 Auction URL: {A_URL}

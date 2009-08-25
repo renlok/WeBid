@@ -1,4 +1,4 @@
-Hello {S_NAME},
+Dear {S_NAME},
 Congratulations your item has just sold!
 
 Below are the details.

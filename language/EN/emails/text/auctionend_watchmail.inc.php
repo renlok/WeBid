@@ -1,4 +1,4 @@
-Hello {NAME},
+Dear {NAME},
 This is an automatic response from Your Item Watch.
 The auction closed which was on your Item Watch list.
 

@@ -10,6 +10,7 @@ h3	{ color: #0083D7; font-size: 14px; font-weight: bold; margin: 10px 0 0 0; }
 select	{ color: #444444; font-size: 12px; }
 input	{ color: #444444; font-size: 12px;}
 table {font : normal 11px Verdana, Arial, Helvetica, sans-serif; color : #666666;}
+.small {font : normal 10px Verdana, Arial, Helvetica, sans-serif;}
 .title {font : bold 16px Verdana, Arial, Helvetica, sans-serif; color : #FFFFFF;}
 .error {font : bold 12px Verdana, Arial, Helvetica, sans-serif; color : #FF0000;}
 .white {font : 11px Verdana, Arial, Helvetica, sans-serif; color : #FFFFFF;}

@@ -1,4 +1,4 @@
-Hello {C_NAME},
+Dear {C_NAME},
 Your item has been successfully listed on {SITENAME}. The item will display instantly in search results.
 
 Here are the listing details:

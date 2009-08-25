@@ -1,4 +1,4 @@
-Hello {W_NAME},
+Dear {W_NAME},
 Congratulations you won the following item:
 
 {A_TITLE}

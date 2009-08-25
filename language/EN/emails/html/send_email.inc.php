@@ -1,4 +1,4 @@
-Hello {SLEER_NICK},<br>
+Dear {SLEER_NICK},<br>
 <br>
 This message is sent from {SITENAME}.<br>
 <br>

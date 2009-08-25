@@ -1,4 +1,4 @@
-Hello {NAME},<br>
+Dear {NAME},<br>
 <br>
 Your account on {SITENAME} has been suspended because you have exceeded the maximum debt limit allowed.<br>
 <br>

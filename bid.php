@@ -434,7 +434,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $c + $system->tdiff);
 		$new_bid = $system->print_money($next_bid);
 		// Send e-mail message
-		include($include_path . 'no_longer_winner.inc.php');
+		include $include_path . 'no_longer_winner.inc.php';
 	}
 	$template->assign_vars(array(
 			'PAGE' => 2,

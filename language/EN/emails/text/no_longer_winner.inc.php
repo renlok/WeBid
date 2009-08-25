@@ -1,4 +1,4 @@
-Hello {C_NAME},
+Dear {C_NAME},
 Your bid of {C_BID} is no longer the leading bid on the following:
 
 {A_TITLE}

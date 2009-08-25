@@ -1,6 +1,6 @@
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body style="margin:0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -8,7 +8,7 @@
     <td background="images/bac_barint.gif">
         <table width="100%" border="0" cellspacing="5" cellpadding="0">
             <tr>
-                <td width="30"><img src="images/i_auc.gif" ></td>
+                <td width="30"><img src="images/i_auc.gif"></td>
                 <td class="white">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</td>
             </tr>
         </table>
@@ -24,9 +24,9 @@
             <td align="center" class="title">{PAGE_TITLE}</td>
         </tr>
         <tr>
-            <td>
+            <td bgcolor="#FFFFFF">
                 <table width="100%" cellspacing="0" border="0" align="center">
-                <tr bgcolor="#FFFFFF">
+                <tr>
                     <td colspan="3"><b>{NUM_AUCTIONS} {L_311}</b> </td>
                 </tr>
                 <tr bgcolor="#FFCC00">

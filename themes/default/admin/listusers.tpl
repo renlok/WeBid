@@ -113,30 +113,26 @@
                     </tr>
 <!-- END users -->
                 </table>
-<div class="white" align="center">
-    <p>{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}</p>
+                <div class="white" align="center">
+                    <p>{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}</p>
 <!-- IF PAGE gt 1 -->
-    <a href="?PAGE={PREV}"><u>{L_5119}</u></a>&nbsp;&nbsp;
+                    <a href="?PAGE={PREV}"><u>{L_5119}</u></a>&nbsp;&nbsp;
 <!-- ENDIF -->
 <!-- BEGIN pages -->
-<!-- IF PAGE eq pages.COUNTER -->
-	<b>{COUNTER}</b>&nbsp;&nbsp;
-<!-- ELSE -->
-	<a href="?PAGE={COUNTER}"><u>{COUNTER}</u></a>&nbsp;&nbsp;
-<!-- ENDIF -->
+    <!-- IF PAGE eq pages.COUNTER -->
+                    <b>{COUNTER}</b>&nbsp;&nbsp;
+    <!-- ELSE -->
+                    <a href="?PAGE={COUNTER}"><u>{COUNTER}</u></a>&nbsp;&nbsp;
+    <!-- ENDIF -->
 <!-- END pages -->
 <!-- IF PAGE lt PAGES -->
-    <a href="?PAGE={NEXT}"><u>{L_5120}</u></a> 
+                    <a href="?PAGE={NEXT}"><u>{L_5120}</u></a> 
 <!-- ENDIF -->
-</div>
-</td>
-</tr>
-</table>
-<BR>
-</td>
-</tr>
-</table>
-</td>
+                </div>
+            </td>
+        </tr>
+        </table>
+    </td>
 </tr>
 </table>
 

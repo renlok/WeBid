@@ -69,7 +69,6 @@ function get_hash()
 	return $hash;
 }
 
-$NOWB = time();
 $TPL_errmsg = '';
 $TPL_err = 0;
 
@@ -230,7 +229,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$TPL_password_hidden = $_POST['TPL_password'];
 				$TPL_name_hidden = $_POST['TPL_name'];
 				$TPL_email_hidden = $_POST['TPL_email'];
-				$TODAY = $NOWB;
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 2) ? 0 : 8;
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 0) ? 10 : $SUSPENDED;
 
@@ -267,7 +265,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $system->cleanvars($_POST['TPL_phone']) . "',
 						'" . $system->cleanvars($_POST['TPL_nletter']) . "',
 						'" . $system->cleanvars($_POST['TPL_email']) . "',
-						'" . $TODAY . "',
+						'" . time() . "',
 						'" . $DATE . "',
 						'" . $SUSPENDED . "',
 						'" . $language . "',
@@ -283,6 +281,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				$_SESSION['language'] = $language;
+
+				if ($system->SETTINGS['activationtype'] == 0)
+				{
+					include $include_path . 'user_confirmation_needapproval.inc.php';
+					$TPL_message = $MSG['016_a'];
+				}
+				elseif ($system->SETTINGS['activationtype'] == 1)
+				{
+					include $include_path . 'user_confirmation.inc.php';
+					$TPL_message = sprintf($MSG['016'], $TPL_email_hidden);
+				}
+				else
+				{
+					$USER = array('name' => $TPL_name_hidden, 'email' => $_POST['TPL_email']);
+					include $include_path . 'user_approved.inc.php';
+					$TPL_message = $MSG['016_b'];
+				}
+				$first = false;
 
 				if ($system->SETTINGS['fee_type'] == 2 && $signup_fee > 0)
 				{
@@ -336,27 +352,6 @@ if (!isset($_POST['action']) || ($_POST['action'] == 'first' && isset($TPL_err))
 		$dobday .= '<option value="' . $j . '"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == $j) ? ' selected' : '') . '>' . $j . '</option>';
 	}
 	$dobday .= '</select>';
-}
-
-if (isset($_POST['action']) && $_POST['action'] == 'first' && !$TPL_err)
-{
-	if ($system->SETTINGS['activationtype'] == 0)
-	{
-		include $include_path . 'user_confirmation_needapproval.inc.php';
-		$TPL_message = $MSG['016_a'];
-	}
-	elseif ($system->SETTINGS['activationtype'] == 1)
-	{
-		include $include_path . 'user_confirmation.inc.php';
-		$TPL_message = sprintf($MSG['016'], $TPL_email_hidden);
-	}
-	else
-	{
-		$USER = array('name' => $TPL_name_hidden, 'email' => $_POST['TPL_email']);
-		include $include_path . 'user_approved.inc.php';
-		$TPL_message = $MSG['016_b'];
-	}
-	$first = false;
 }
 
 $template->assign_vars(array(

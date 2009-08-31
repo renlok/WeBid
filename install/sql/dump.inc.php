@@ -258,6 +258,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
 if ($_GET['cats'] == 1)
 {
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(0, -1, 1, 390, -1, 'All', 0, 0, '', '');";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "categories` AUTO_INCREMENT = 1;";
+	$query[] = "UPDATE `" . $DBPrefix . "categories` SET cat_id = 0 WHERE parent_id = -1;";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 0, 2, 55, 0, 'Art &amp; Antiques', 0, 0, '', '');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 1, 7, 8, 1, 'Ancient World', 0, 0, '', '');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, 1, 5, 6, 1, 'Amateur Art', 0, 0, '', '');";
@@ -456,8 +458,9 @@ if ($_GET['cats'] == 1)
 else
 {
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(0, -1, 1, 2, -1, 'All', 0, 0, '', '');";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "categories` AUTO_INCREMENT = 1;";
+	$query[] = "UPDATE `" . $DBPrefix . "categories` SET cat_id = 0 WHERE parent_id = -1";
 }
-$query[] = "UPDATE `" . $DBPrefix . "categories` SET cat_id = 0 WHERE parent_id = -1"; // just incase
 
 # ############################
 

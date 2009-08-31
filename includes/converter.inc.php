@@ -49,13 +49,13 @@ function CurrenciesList()
 function ConvertCurrency($FROM, $INTO, $AMOUNT)
 {
 	global $include_path, $conversionarray;
-	
+
 	$params1 = array(
 		'FromCurrency' 	=> $FROM,
 		'ToCurrency' 	=> $INTO
 		);
 	if ($FROM == $INTO) return $AMOUNT;
-	
+
 	$rate = findconversionrate($FROM, $INTO);
 	if ($rate == 0)
 	{
@@ -85,12 +85,12 @@ function ConvertCurrency($FROM, $INTO, $AMOUNT)
 function buildcache($newaarray)
 {
 	global $include_path;
-	
+
 	$output_filename = $include_path . 'currencies.php';
 	$output = "<?\n";
 	$output.= "\$conversionarray[] = '" . time() . "';\n";
 	$output.= "\$conversionarray[] = array(\n";
-	
+
 	for ($i = 0; $i < count($newaarray); $i++){
 		$output .= "\t" . "array('from' => '" . $newaarray[$i]['from'] . "', 'to' => '" . $newaarray[$i]['to'] . "', 'rate' => '" . $newaarray[$i]['rate'] . "')";
 		if ($i < (count($newaarray) - 1))
@@ -102,9 +102,9 @@ function buildcache($newaarray)
 			$output .= "\n";
 		}
 	}
-	
+
 	$output .= ");\n?>\n";
-	
+
 	$handle = fopen($output_filename, 'w');
 	fputs($handle, $output);
 	fclose($handle);
@@ -113,7 +113,7 @@ function buildcache($newaarray)
 function findconversionrate($FROM, $INTO)
 {
 	global $conversionarray;
-	
+
 	if (time() - (3600 * 24) < $conversionarray[0])
 	{
 		for ($i = 0; $i < count($conversionarray[1]); $i++)
@@ -134,7 +134,7 @@ function googleconvert($amount, $fromCurrency , $toCurrency)
 {
 	$url = 'http://www.google.com/finance/converter?a=%s&from=%s&to=%s';
 	$finalurl = sprintf($url, $amount, $fromCurrency, $toCurrency);
-	
+
 	// Renders the google page result
 	$htmlrender = file_get_contents($finalurl);	   
 	if (!empty($htmlrender))

@@ -139,7 +139,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$TPL_birthdate = $_POST['TPL_year'] . $_POST['TPL_month'] . $_POST['TPL_day'];
 
-			$sql = "UPDATE " . $DBPrefix . "users SET email='" . $system->cleanvars($_POST['TPL_email']) . "',
+			$query = "UPDATE " . $DBPrefix . "users SET email='" . $system->cleanvars($_POST['TPL_email']) . "',
 					birthdate = '" . $system->cleanvars($TPL_birthdate) . "',
 					address = '" . $system->cleanvars($_POST['TPL_address']) . "',
 					city = '" . $system->cleanvars($_POST['TPL_city']) . "',
@@ -154,12 +154,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 			if (strlen($_POST['TPL_password']) > 0)
 			{
-				$sql .= "', password = '" . md5($MD5_PREFIX . addslashes($_POST['TPL_password']));
+				$query .= "', password = '" . md5($MD5_PREFIX . addslashes($_POST['TPL_password']));
 			}
 
-			$sql .= "' WHERE id = " . $user->user_data['id'];
-			$res = mysql_query($sql);
-			$system->check_mysql($res, $sql, __LINE__, __FILE__);
+			$query .= "' WHERE id = " . $user->user_data['id'];
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$ERR = $MSG['183'];
 		}
 	}

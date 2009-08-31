@@ -166,7 +166,7 @@ if ($_GET['action'] == 'buy')
 			$Winner = mysql_fetch_assoc($res);
 
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, " . intval($_REQUEST['id']) . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, 0, 1, 0)";
+					(NULL, " . intval($_REQUEST['id']) . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, 1, 0)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			// get end string
 			$month = gmdate('m', $Auction['ends'] + $system->tdiff);

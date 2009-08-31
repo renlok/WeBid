@@ -31,10 +31,11 @@ function browseItems($result, $feat_res, $current_page)
 			// time left till the end of this auction 
 			$s_difference = time() - $row['starts'];
 			$difference = $row['ends'] - time();
+			$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
 			$template->assign_block_vars('featured_items', array(
 				'ID' => $row['id'],
-				'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : ($k % 2) ? 'bgcolor="#FFFEEE"' : '',
+				'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
 				'IMAGE' => $row['pict_url'],
 				'TITLE' => $row['title'],
 				'BUY_NOW' => $row['buy_now'],
@@ -60,10 +61,11 @@ function browseItems($result, $feat_res, $current_page)
 		// time left till the end of this auction 
 		$s_difference = time() - $row['starts'];
 		$difference = $row['ends'] - time();
+		$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
 		$template->assign_block_vars('items', array(
 			'ID' => $row['id'],
-			'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : ($k % 2) ? 'bgcolor="#FFFEEE"' : '',
+			'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
 			'IMAGE' => $row['pict_url'],
 			'TITLE' => $row['title'],
 			'BUY_NOW' => $row['buy_now'],

@@ -19,6 +19,7 @@ include 'loggedin.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
 unset($ERR);
+$catscontrol = new MPTTcategories();
 
 // Data check
 if (!isset($_REQUEST['id']))
@@ -44,7 +45,8 @@ if (isset($_POST['action']))
 	&& !empty($_POST['buy_now']))
 	{
 		$DATE = explode('/', $_POST['date']);
-		if ($system->SETTINGS['datesformat'] == 'USA') {
+		if ($system->SETTINGS['datesformat'] == 'USA')
+		{
 			$tmp_day = $DATE[1];
 			$tmp_month = $DATE[0];
 			$tmp_year = $DATE[2];
@@ -61,7 +63,7 @@ if (isset($_POST['action']))
 		{
 			$tmp_year = '20' . $tmp_year;
 		}
-		
+
 		if (!ereg("^[0-9]{2}/[0-9]{2}/[0-9]{2,4}$", $_POST['date'])) //date check
 		{
 			$ERR = $ERR_700;
@@ -91,57 +93,47 @@ if (isset($_POST['action']))
 			{
 				// and increase new category counters
 				$ct = intval($_POST['category']);
-				$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . $ct;
+				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $ct;
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$row = mysql_fetch_array($res);
-				$parent_id = $row['parent_id'];
-				
-				$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + 1, sub_counter = sub_counter + 1 WHERE cat_id = " . $ct;
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				
-				// update recursive categories
-				while ($parent_id != 0)
+				$parent_node = mysql_fetch_assoc($res);
+				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+				for ($i = 0; $i < count($crumbs); $i++)
 				{
-					// update this parent's subcounter
-					$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent_id;
-					$res = mysql_query($query);
-					$system->check_mysql($res, $query, __LINE__, __FILE__);
-					$rw = mysql_fetch_array($res);
-					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $parent_id;
+					if ($crumbs[$i]['cat_id'] == $ct)
+					{
+						$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + 1, sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+					}
+					else
+					{
+						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+					}
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					
-					// get next parent
-					$parent_id = intval($rw['parent_id']);
 				}
-				
+
 				// and decrease old category counters
 				$cta = intval($AUCTION['category']);
-				$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . $cta;
+				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $cta;
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$row = mysql_fetch_array($res);
-				$parent_id = $row['parent_id'];
-				
-				$query = "UPDATE " . $DBPrefix . "categories SET counter = counter - 1, sub_counter = sub_counter - 1 WHERE cat_id = " . $cta;
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				
-				// update recursive categories
-				while ($parent_id != 0)
+				$parent_node = mysql_fetch_assoc($res);
+				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+				for ($i = 0; $i < count($crumbs); $i++)
 				{
-					// update the parents subcounter
-					$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent_id;
-					$res = mysql_query($query);
-					$system->check_mysql($res, $query, __LINE__, __FILE__);
-					$rw = mysql_fetch_array($res);
-					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $parent_id;
+					if ($crumbs[$i]['cat_id'] == $cta)
+					{
+						$query = "UPDATE " . $DBPrefix . "categories SET counter = counter - 1, sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+					}
+					else
+					{
+						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+					}
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					
-					// get next parent
-					$parent_id = intval($rw['parent_id']);
 				}
 			}
-			
+
 			$query = "UPDATE " . $DBPrefix . "auctions SET
 					title = '" . $system->cleanvars($_POST['title']) . "',
 					starts = '" . $a_start . "',
@@ -155,7 +147,7 @@ if (isset($_POST['action']))
 					reserve_price = '" . $system->cleanvars($_POST['reserve_price']) . "'
 					WHERE id = " . $_POST['id'];
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			$URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
 			unset($_SESSION['RETURN_LIST'], $_SESSION['RETURN_LIST_OFFSET']);
 			header('location: ' . $URL);
@@ -166,7 +158,6 @@ if (isset($_POST['action']))
 	{
 		$ERR = $ERR_112;
 	}
-	
 }
 
 if (!isset($_POST['action']) || isset($ERR))
@@ -219,13 +210,13 @@ if (!isset($_POST['action']) || isset($ERR))
 	{
 		$starts = gmdate('d/m/Y', $starts);
 	}
-	
+
 	// DURATIONS
 	$dur_list = ''; // empty string to begin HTML list
 	$query = "SELECT days, description FROM " . $DBPrefix . "durations";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	
+
 	while ($row = mysql_fetch_assoc($res))
 	{
 		// Append to the list
@@ -238,7 +229,7 @@ if (!isset($_POST['action']) || isset($ERR))
 		}
 		$dur_list .= '>' . $row['description'] . '</option>' . "\n";
 	}
-	
+
 	// CATEGORIES
 	$categories_list = '<select name="category">' . "\n";
 	if (isset($category_plain) && count($category_plain) > 0) {

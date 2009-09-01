@@ -224,7 +224,7 @@ switch($step)
 		}
 		if ($newfrom >= $_GET['count'])
 		{
-			echo '<script type="text/javascript">window.location = "../test.php?right=' . $_SESSION['cats_lftrgt'][0]['right'] . '";</script>';
+			echo 'Update complete now remove the install folder from your server';
 		}
 		else
 		{

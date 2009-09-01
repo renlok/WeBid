@@ -39,7 +39,7 @@ $(document).ready(function() {
 		{VIEW_HISTORY1}
 		<a href="{SITEURL}friend.php?id={ID}">{L_106}</a> | 
 <!-- IF B_CANCONTACTSELLER -->
-		<a href="{SITEURL}send_email.php?">{L_922}</a> | 
+		<a href="{SITEURL}send_email.php?auction_id={ID}">{L_922}</a> | 
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
 		<a href="{SITEURL}item_watch.php?{WATCH_VAR}={ID}">{WATCH_STRING}</a>
@@ -264,6 +264,23 @@ $(document).ready(function() {
 		{AUCTION_DESCRIPTION}
 	  </div>
 	</div>
+<!-- IF B_HAS_QUESTIONS -->
+	<div class="tableContent2">
+	  <div class="titTable4">
+		<a name="questions"></a>{L_552}
+	  </div>
+	  <div class="table2">
+	<!-- BEGIN questions -->
+      	<b>{L_5239}</b>
+        <div class="smallspan padding">
+		<!-- BEGIN conv -->
+        	<p><b>{questions.conv.BY_WHO}</b>: {questions.conv.MESSAGE}</p>
+        <!-- END conv -->
+        </div>
+    <!-- END questions -->
+	  </div>
+	</div>
+<!-- ENDIF -->
 <!-- IF B_HASGALELRY -->
 	<div class="tableContent2">
 		<div class="titTable4">

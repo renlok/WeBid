@@ -16,18 +16,22 @@ $(".form1").submit(function(){
 	<form name="form1" id="form1" method="post" action="mail.php">
 	<table width="80%" border="1" style="border-collapse: collapse;">
 	  <tr>
-		<td width="100px" nowrap="nowrap" valign="top"><label for="to">To:</label></td>
+		<td width="100px" nowrap="nowrap" valign="top"><label for="to">{L_241}:</label></td>
 		<td><input name="sendto" type="text" size="40" value="{REPLY_TO}" id="to" /></td>
 	  </tr>
 	  <tr>
-		<td nowrap="nowrap" valign="top"><label for="subject">Subject:</label></td>
+		<td nowrap="nowrap" valign="top"><label for="subject">{L_332}:</label></td>
 		<td><input name="subject" type="text" size="40" value="{REPLY_SUBJECT}" id="subject" /></td>
 	  </tr>
 	  <tr>
-		<td nowrap="nowrap" valign="top"><label for="message">Message:</label></td>
+		<td nowrap="nowrap" valign="top"><label for="message">{L_333}:</label></td>
 		<td><textarea name="message" rows="5" id="message" style="width:90%"></textarea></td>
 	  </tr>
 	</table>
+<!-- IF B_QMKPUBLIC -->
+	<p><input type="checkbox" name="public"{REPLY_PUBLIC}> {L_543}</p>
+    <input type="hidden" name="is_question" value="0">
+<!-- ENDIF -->
     <input type="hidden" name="hash" value="{HASH}">
 	<input name="submit" type="submit" value="submit">
 	</form>

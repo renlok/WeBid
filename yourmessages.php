@@ -60,7 +60,7 @@ $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 $_SESSION['subject' . $hash] = (substr($subject, 0, 3) == 'Re:') ? $subject : 'Re: ' . $subject;
 $_SESSION['sendto' . $hash] = $sendusername;
 $_SESSION['reply' . $hash] = $messageid;
-$_SESSION['reply_of' . $hash] = $array['reply_of'];
+$_SESSION['reply_of' . $hash] = ($array['reply_of'] == 0) ? $messageid : $array['reply_of'];
 $_SESSION['question' . $hash] = $array['question'];
 
 $template->assign_vars(array(

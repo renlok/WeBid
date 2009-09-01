@@ -4,7 +4,7 @@
 $(document).ready(function() {
 	$("#checkboxall").click(function() {
 		var checked_status = this.checked
-		$("input[@class=deleteid]").each(function() {
+		$(".deleteid").each(function() {
 			this.checked = checked_status;
 		});
 	});
@@ -21,7 +21,7 @@ $(document).ready(function() {
 	  <td width="100">{WHENSENT}</td>
 	  <td>{TITLE}</td>
 	  <td width="200">{SENTFROM}</td>
-	  <td width="50" nowrap="nowrap">{L_2__0028}<br><input type="checkbox" name="" id="checkboxall" value=""></td>
+	  <td nowrap="nowrap">{L_2__0028}<br><input type="checkbox" name="" id="checkboxall" value=""></td>
 	</tr>
   </thead>
   <tbody>

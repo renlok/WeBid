@@ -56,14 +56,14 @@ else
 	$seller_email = $auction_data['email'];
 }
 
-$cleaned_question = $system->cleanvars($_POST['sender_question']);
-if ($system->SETTINGS['wordsfilter'] == 'y')
-{
-	$cleaned_question = $system->filter($cleaned_question);
-}
-
 if (isset($_POST['action']) || !empty($_POST['action']))
 {
+	$cleaned_question = $system->cleanvars($_POST['sender_question']);
+	if ($system->SETTINGS['wordsfilter'] == 'y')
+	{
+		$cleaned_question = $system->filter($cleaned_question);
+	}
+
 	// Check errors
 	if (isset($_POST['action']) && (!isset($_POST['sender_name']) || !isset($_POST['sender_email']) || empty($seller_nick) || empty($seller_email)))
 	{

@@ -272,16 +272,36 @@ if ($user->logged_in && $num_bids > 0)
 	}
 }
 
+// sort out user questions
+$query = "SELECT id, message FROM " . $DBPrefix . "messages WHERE reply_of = 0 AND question = " . $id;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$num_questions = mysql_num_rows($res);
+while ($row = mysql_fetch_assoc($res))
+{
+	$template->assign_block_vars('questions', array()); // just need to create the block
+	$query = "SELECT sentfrom, message FROM " . $DBPrefix . "messages WHERE question = " . $id . " ORDER BY sentat ASC";
+	$res_ = mysql_query($query);
+	$system->check_mysql($res_, $query, __LINE__, __FILE__);
+	while ($row_ = mysql_fetch_assoc($res_))
+	{
+		$template->assign_block_vars('questions.conv', array(
+				'MESSAGE' => $row_['message'],
+				'BY_WHO' => ($user_id == $row_['sentfrom']) ? $MSG['125'] : $MSG['555']
+				));
+	}
+}
+
 $high_bid = ($num_bids == 0) ? $minimum_bid : $high_bid;
 
 if ($customincrement == 0)
 {
 	// Get bid increment for current bid and calculate minimum bid
 	$query = "SELECT increment FROM " . $DBPrefix . "increments WHERE
-	((low <= $high_bid AND high >= $high_bid) OR
-	(low < $high_bid AND high < $high_bid)) ORDER BY increment DESC";
-
+	((low <= " . $high_bid . " AND high >= " . $high_bid . ") OR
+	(low < " . $high_bid . " AND high < " . $high_bid . ")) ORDER BY increment DESC";
 	$result_incr = mysql_query($query);
+	$system->check_mysql($result_incr, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($result_incr) != 0)
 	{
 		$increment = mysql_result($result_incr, 0, 'increment');
@@ -460,7 +480,7 @@ $template->assign_vars(array(
 
 		'B_HASENDED' => $has_ended,
 		'B_CANEDIT' => ($user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
-		'B_CANCONTACTSELLER' => ($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)),
+		'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && $user->user_data['id'] != $auction_data['user']),
 		'B_HASIMAGE' => (!empty($pict_url_plain)),
 		'B_NOTBNONLY' => ($auction_data['bn_only'] == 'n'),
 		'B_HASRESERVE' => ($auction_data['reserve_price'] > 0 && $auction_data['reserve_price'] > $auction_data['current_bid']),
@@ -472,7 +492,8 @@ $template->assign_vars(array(
 		'B_USERBID' => $userbid,
 		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user']),
 		'B_HASBUYER' => (count($hbidder_data) > 0),
-		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600))
+		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
+		'B_HAS_QUESTIONS' => ($num_questions > 0)
 		));
 
 include 'header.php';

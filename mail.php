@@ -62,11 +62,19 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 		header('location: mail.php');
 		exit;
 	}
+
 	// send message
 	$nowmessage = nl2br($message);
-	$query = "INSERT INTO " . $DBPrefix . "messages (sentto ,sentfrom , sentat, message, subject, reply_of, question)
+	$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject, reply_of, question)
 			VALUES (" . $userarray['id'] . ", " . $user->user_data['id'] . ", " . time() . ", '" . $nowmessage . "', '" . $subject . "', " . $_SESSION['reply_of' . $_POST['hash']] . ", " . $_SESSION['question' . $_POST['hash']] . ")";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+	if (isset($_POST['is_question']) && isset($_SESSION['reply_of' . $_POST['hash']]) && $_SESSION['reply_of' . $_POST['hash']] > 0)
+	{
+		$public = (isset($_POST['public'])) ? 1 : 0;
+		$query = "UPDATE " . $DBPrefix . "messages SET public = " . $public . " WHERE id = " . $_SESSION['reply_of' . $_POST['hash']];
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	}
 
 	if (isset($_SESSION['reply' . $_POST['hash']]))
 	{
@@ -94,11 +102,13 @@ if (isset($_REQUEST['deleteid']) && is_array($_REQUEST['deleteid']))
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$ERR = $MSG['444'];
 }
+
 // if sending a message
 if ($x == 1)
 {
 	$subject = $_SESSION['subject' . $replymessage];
 	$sendto = $_SESSION['sendto' . $replymessage];
+	$question = false;
 	// if sent from userpage
 	if ($u > 0)
 	{
@@ -110,10 +120,20 @@ if ($x == 1)
 	}
 
 	// get convo
-	if (isset($_SESSION['reply_of' . $_GET['message']]))
+	if (isset($_SESSION['reply_of' . $_GET['message']]) && $_SESSION['reply_of' . $_GET['message']] != 0)
 	{
 		$tid = $_SESSION['reply_of' . $_GET['message']];
-		$query = "SELECT sentfrom, message FROM " . $DBPrefix . "messages WHERE reply_of = " . $tid . " OR id = " . $tid . " ORDER BY id ASC";
+		$query = "SELECT sentfrom, question, public FROM " . $DBPrefix . "messages WHERE id = " . $tid;
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$array = mysql_fetch_assoc($res);
+		$reply_public = $array['public'];
+		if ($array['question'] > 0 && $user->user_data['id'] != $array['sentfrom'])
+		{
+			$question = true;
+		}
+
+		$query = "SELECT sentfrom, message, question FROM " . $DBPrefix . "messages WHERE reply_of = " . $tid . " OR id = " . $tid . " ORDER BY id DESC";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$oid = 0;
@@ -134,39 +154,35 @@ $whensent = '<a href="mail.php?order=1">' . $MSG['242'] . '</a>';
 $title = '<a href="mail.php?order=5">' . $MSG['519'] . '</a>';
 
 // order messages
-if ($order == '1')
+switch ($order)
 {
-	$orderby = "ORDER BY `id` DESC";
-	$whensent = '<a href="mail.php?order=2">' . $MSG['242'] . ' <img src="images/arrow_down.gif"></a>';
-}
-elseif ($order == '2')
-{
-	$orderby = "ORDER BY `id` ASC";
-	$whensent = '<a href="mail.php?order=1">' . $MSG['242'] . ' <img src="images/arrow_up.gif"></a>';
-}
-elseif ($order == '3')
-{
-	$orderby = "ORDER BY `from` DESC";
-	$sentfrom = '<a href="mail.php?order=4">' . $MSG['240'] . ' <img src="images/arrow_down.gif"></a>';
-}
-elseif ($order == '4')
-{
-	$orderby = "ORDER BY `from` ASC";
-	$sentfrom = '<a href="mail.php?order=3">' . $MSG['240'] . ' <img src="images/arrow_up.gif"></a>';
-}
-elseif ($order == '5')
-{
-	$orderby = "ORDER BY `subject` DESC";
-	$title = '<a href="mail.php?order=6">' . $MSG['519'] . ' <img src="images/arrow_down.gif"></a>';
-}
-elseif ($order == '6')
-{
-	$orderby = "ORDER BY `subject` ASC";
-	$title = '<a href="mail.php?order=5">' . $MSG['519'] . ' <img src="images/arrow_up.gif"></a>';
-}
-else
-{
-	$orderby = "ORDER BY `id` DESC";
+	case 1:
+		$orderby = "ORDER BY id DESC";
+		$whensent = '<a href="mail.php?order=2">' . $MSG['242'] . ' <img src="images/arrow_down.gif"></a>';
+	break;
+	case 2:
+		$orderby = "ORDER BY id ASC";
+		$whensent = '<a href="mail.php?order=1">' . $MSG['242'] . ' <img src="images/arrow_up.gif"></a>';
+	break;
+	case 3:
+		$orderby = "ORDER BY sentfrom DESC";
+		$sentfrom = '<a href="mail.php?order=4">' . $MSG['240'] . ' <img src="images/arrow_down.gif"></a>';
+	break;
+	case 4:
+		$orderby = "ORDER BY sentfrom ASC";
+		$sentfrom = '<a href="mail.php?order=3">' . $MSG['240'] . ' <img src="images/arrow_up.gif"></a>';
+	break;
+	case 5:
+		$orderby = "ORDER BY subject DESC";
+		$title = '<a href="mail.php?order=6">' . $MSG['519'] . ' <img src="images/arrow_down.gif"></a>';
+	break;
+	case 6:
+		$orderby = "ORDER BY subject ASC";
+		$title = '<a href="mail.php?order=5">' . $MSG['519'] . ' <img src="images/arrow_up.gif"></a>';
+	break;
+	default:
+		$orderby = "ORDER BY id DESC";
+	break;
 }
 
 $query = "SELECT m.*, u.nick FROM " . $DBPrefix . "messages m
@@ -193,17 +209,19 @@ $template->assign_vars(array(
 		'REPLY_X' => $x,
 		'REPLY_TO' => (isset($sendto)) ? $sendto : '',
 		'REPLY_SUBJECT' => (isset($subject)) ? $subject : '',
+		'REPLY_PUBLIC' => (isset($reply_public) && $reply_public == 1) ? ' checked="checked"' : '',
 
+		'B_QMKPUBLIC' => (isset($question)) ? $question : false,
 		'B_CONVO' => (isset($_SESSION['reply_of' . $_GET['message']]))
 		));
 
 while ($array = mysql_fetch_array($res))
 {
 	$template->assign_block_vars('msgs', array(
-			'SENT' => gmdate('M d, Y H:ia', $array['when'] + $system->tdiff),
+			'SENT' => gmdate('M d, Y H:ia', $array['sentat'] + $system->tdiff),
 			'ID' => $array['id'],
-			'SENDER' => ($array['from'] == 0) ? 'Admin' : '<a href="profile.php?user_id=' . $array['from'] . '">' . $array['nick'] . '</a>',
-			'SUBJECT' => ($array['read'] == 0) ? '<b>' . $array['subject'] . '</b>' : $array['subject']
+			'SENDER' => ($array['sentfrom'] == 0) ? 'Admin' : '<a href="profile.php?user_id=' . $array['sentfrom'] . '">' . $array['nick'] . '</a>',
+			'SUBJECT' => ($array['isread'] == 0) ? '<b>' . $array['subject'] . '</b>' : $array['subject']
 			));
 }
 

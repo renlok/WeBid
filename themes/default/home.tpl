@@ -25,6 +25,17 @@
 	</td>
 	<td valign="top">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="maincolum">
+  <tr>
+    <td class="table2">
+    <!-- BEGIN featured -->
+    <div style="float:left;display:block;width:180px;margin:5px;background-color:#FFFEEE;border:#CCCCCC 1px solid;padding:5px;">
+        <div style="display:block;" align="center"><img src="{featured.IMAGE}" /></div>
+        <div style="display:block;" align="center"><a href="{SITEURL}item.php?id={featured.ID}">{featured.TITLE}</a><br />
+{featured.BID}</div>
+    </div>
+    <!-- END featured -->
+    </td>
+  </tr>  
 <!-- IF B_AUC_LAST -->
   <tr>
 	<td class="titTable4">{L_278}</td>

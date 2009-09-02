@@ -77,6 +77,36 @@ while ($row = mysql_fetch_assoc($res))
 			));
 }
 
+// get featured items
+$query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid
+        FROM " . $DBPrefix . "auctions
+        WHERE closed = 0 AND suspended = 0 AND starts <= " . $NOW . "
+		AND featured = 'y'
+        ORDER BY RAND() DESC LIMIT 12";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+while($row = mysql_fetch_assoc($res))
+{
+	$ends = $row['ends'];
+	$difference = $ends - time();
+	if ($difference > 0)
+	{
+		$ends_string = FormatTimeLeft($difference);
+	}
+	else
+	{
+		$ends_string = $MSG['911'];
+	}
+	$high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
+	$template->assign_block_vars('featured', array(
+			'ENDS' => $ends_string,
+			'ID' => $row['id'],
+			'BID' => $system->print_money($high_bid),
+			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'TITLE' => $row['title']
+			));
+}
+
 // get last created auctions
 $query = "SELECT id, title, starts from " . $DBPrefix . "auctions
 		 WHERE closed = 0 AND suspended = 0

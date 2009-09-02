@@ -33,7 +33,7 @@ switch($_GET['a'])
 		$payvalue = $system->input_money($_POST['pfval']);
 		$custoncode = $user->user_data['id'] . 'WEBID1';
 		$message = sprintf($MSG['582'], $system->print_money_nosymbol($payvalue));
-		$title = '';
+		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['25_0012'];
 		break;
 	case 2:
 		$query = "SELECT w.id, a.title, a.shipping_cost, w.bid, u.paypal_email FROM " . $DBPrefix . "auctions a
@@ -55,7 +55,7 @@ switch($_GET['a'])
 		$payvalue = $data['shipping_cost'] + $data['bid'];
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money_nosymbol($payvalue));
-		$title = '';
+		$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
 		break;
 	case 3: // pay signup fee (live mode)
 		if (!isset($_SESSION['signup_id']) || !is_int($_SESSION['signup_id']) || $_SESSION['signup_id'] < 1 || $system->SETTINGS['fee_type'] != 2)
@@ -70,7 +70,7 @@ switch($_GET['a'])
 		$payvalue = mysql_result($res, 0);
 		$custoncode = $_SESSION['signup_id'] . 'WEBID3';
 		$message = sprintf($MSG['583'], $system->print_money_nosymbol($payvalue));
-		$title = '';
+		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['430'];
 		break;
 	case 4: // pay auction fee (live mode)
 		if (!isset($_SESSION['auction_id']) || !is_int($_SESSION['auction_id']) || $_SESSION['auction_id'] < 1 || $system->SETTINGS['fee_type'] != 2)
@@ -85,7 +85,7 @@ switch($_GET['a'])
 		$payvalue = mysql_result($res, 0, 'amt');
 		$custoncode = $_SESSION['auction_id'] . 'WEBID4';
 		$message = sprintf($MSG['590'], $system->print_money_nosymbol($payvalue));
-		$title = '';
+		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['432'];
 		break;
 	case 5: // pay relist fee (live mode)
 		$pp_paytoemail = $gayeway_data['paypal_address'];
@@ -102,7 +102,7 @@ switch($_GET['a'])
 		$payvalue = $relist_fee * $count;
 		$custoncode = $user->user_data['id'] . 'WEBID5';
 		$message = sprintf($MSG['591'], $system->print_money_nosymbol($payvalue));
-		$title = '';
+		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['437'];
 		break;
 }
 

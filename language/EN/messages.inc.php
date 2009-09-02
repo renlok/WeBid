@@ -857,6 +857,9 @@ $MSG['764'] = 'Send payment reminder';
 $MSG['765'] = 'Payment reminder sent';
 $MSG['766'] = 'Invoice';
 $MSG['767'] = 'Click on the button on the right to proceed to PayPal';
+$MSG['768'] = 'Signup Fee';
+$MSG['769'] = 'Click on the button on the right to proceed to PayPal';
+$MSG['770'] = 'Click on the button on the right to proceed to PayPal';
 
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";

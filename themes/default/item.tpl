@@ -10,13 +10,18 @@ $(document).ready(function() {
 	function displaytime()
 	{
 		currenttime -= 1;
-		var hours = Math.floor(currenttime / 3600);
-		var mins = Math.floor((currenttime - (hours * 3600)) / 60);
-		var secs = Math.floor(currenttime - (hours * 3600) - (mins * 60));
-		var timestring = padlength(hours) + ':' + padlength(mins) + ':' + padlength(secs);
-		$("#ending_counter").html(timestring);
+		if (currenttime > 0){
+			var hours = Math.floor(currenttime / 3600);
+			var mins = Math.floor((currenttime - (hours * 3600)) / 60);
+			var secs = Math.floor(currenttime - (hours * 3600) - (mins * 60));
+			var timestring = padlength(hours) + ':' + padlength(mins) + ':' + padlength(secs);
+			$("#ending_counter").html(timestring);
+			setTimeout(displaytime, 1000);
+		} else {
+			$("#ending_counter").html('<span class="errfont">{L_911}</span>');
+		}
 	}
-	setInterval(displaytime, 1000);
+	setTimeout(displaytime, 1000);
 });
 </script>
 <!-- ENDIF -->

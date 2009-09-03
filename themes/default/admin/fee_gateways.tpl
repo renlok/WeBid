@@ -39,7 +39,7 @@
 						<td colspan="2" bgcolor="#CCCCCC"><b>{gateways.NAME}</b></td>
 					</tr>
 					<tr class="c1">
-						<td width="50%"><a href="http://paypal.com" target="_blank">{L_720}</a>: <input type="text" name="{gateways.PLAIN_NAME}_address" value="{gateways.ADDRESS}"></td>
+						<td width="50%"><a href="http://paypal.com" target="_blank">{L_720}</a>: <input type="text" name="{gateways.PLAIN_NAME}_address" value="{gateways.ADDRESS}" size="50"></td>
 						<td>{L_446} <input type="checkbox" name="{gateways.PLAIN_NAME}_required"{gateways.REQUIRED}></td>
 					</tr>
                     <tr class="c1">

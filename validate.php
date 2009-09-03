@@ -14,7 +14,7 @@
 
 include 'includes/common.inc.php';
 
-if (isset($_GET['fail']) || isset($_GET['complete']))
+if (isset($_GET['fail']) || isset($_GET['completed']))
 {
 	$template->assign_vars(array(
 			'TITLE_MESSAGE' => (isset($_GET['fail'])) ? $MSG['425'] :  $MSG['423'],

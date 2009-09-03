@@ -120,7 +120,7 @@ $ERR_113 = "You must be at least 18 years old to register";
 $ERR_114 = "No active auctions for this category";
 $ERR_115 = "E-mail address already used";
 $ERR_116 = "No help available on that topic.";
-$ERR_117 = "Incorrect date format";
+$ERR_117 = "Invalid date";
 $ERR_119 = "sample error message for preview purposes.<br>
 			MySQL said: cannot connect to server (localhost)";
 $ERR_122 = "No auction found";

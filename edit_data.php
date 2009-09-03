@@ -135,6 +135,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$TPL_err = 1;
 			$ERR = $ERR_5040;
 		}
+		elseif (!checkdate($_POST['TPL_month'], $_POST['TPL_day'], $_POST['TPL_year']))
+		{
+			$TPL_err = 1;
+			$ERR = $ERR_117;
+		}
 		else
 		{
 			$TPL_birthdate = $_POST['TPL_year'] . $_POST['TPL_month'] . $_POST['TPL_day'];

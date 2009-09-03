@@ -199,6 +199,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_113;
 		}
+		elseif (!checkdate($birth_month, $birth_day, $birth_year))
+		{
+			$TPL_err = 1;
+			$ERR = $ERR_117;
+		}
 		elseif (BannedEmail($_POST['TPL_email'], $BANNEDDOMAINS))
 		{
 			$TPL_err = 1;

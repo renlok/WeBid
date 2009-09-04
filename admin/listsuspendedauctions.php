@@ -56,7 +56,8 @@ while ($row = mysql_fetch_assoc($res))
 			'START_TIME' => ArrangeDateNoCorrection($row['starts']),
 			'END_TIME' => ArrangeDateNoCorrection($row['ends']),
 			'USERNAME' => $row['nick'],
-			'CATEGORY' => $row['cat_name']
+			'CATEGORY' => $row['cat_name'],
+			'B_HASWINNERS' => false
 			));
 }
 

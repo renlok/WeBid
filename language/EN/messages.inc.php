@@ -1202,9 +1202,7 @@ $MSG['_0153'] = "Relists / <br>Relisted";
 $MSG['_0162'] = "You can choose to automatically relist your auction, if no bids have been posted.<br>
 			Enter the number of times you want your auction to be relisted (enter zero or leave blank if you don't want the automatic relisting to be applied to this auction).
 			<br><font color='red'>Maximum number of allowed relistings: ";
-$MSG['_0163'] = "Winners";
-$MSG['_0164'] = "Invalid auction ID";
-$MSG['_0165'] = "The specified auction does not exist";
+$MSG['_0163'] = "View Winners";
 $MSG['_0167'] = "Manually relisted";
 $MSG['_0168'] = "Manually relisted auctions";
 

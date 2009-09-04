@@ -317,7 +317,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 }
 
 $country = '';
-if (!isset($_POST['action']) || ($_POST['action'] == 'first' && isset($TPL_err)))
+if (!isset($_POST['action']) || (isset($_POST['action']) && $TPL_err == 1))
 {
 	$selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
 	foreach ($countries as $key => $name)

@@ -54,12 +54,15 @@
                         <a href="editauction.php?id={auctions.ID}&offset={OFFSET}">{L_298}</a><br>
                         <a href="deleteauction.php?id={auctions.ID}&offset={OFFSET}">{L_008}</a><br>
                         <a href="excludeauction.php?id={auctions.ID}&offset={OFFSET}">
-                        <!-- IF auctions.SUSPENDED eq 0 -->
+                    <!-- IF auctions.SUSPENDED eq 0 -->
                         {L_300}
-                        <!-- ELSE -->
+                    <!-- ELSE -->
                         {L_310}
-                        <!-- ENDIF -->
-                        </a>
+                    <!-- ENDIF -->
+                    	</a>
+                    <!-- IF auctions.B_HASWINNERS -->
+                        <br><a href="viewwinners.php?id={auctions.ID}&offset={OFFSET}">{L__0163}</a>
+                    <!-- ENDIF -->
                     </td>
                 <tr>
                 <!-- END auctions -->

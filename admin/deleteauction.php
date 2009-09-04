@@ -22,10 +22,10 @@ $username = $name;
 
 //-- Data check
 if (!$_REQUEST['id']) {
-  $URL = $_SESSION['RETURN_LIST'];
-  unset($_SESSION['RETURN_LIST']);
-  header("Location: $URL");
-  exit;
+	$URL = $_SESSION['RETURN_LIST'];
+	unset($_SESSION['RETURN_LIST']);
+	header("Location: $URL");
+	exit;
 }
 
 if (isset($_POST['action']) && $_POST['action'] == "Delete") {

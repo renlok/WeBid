@@ -29,7 +29,7 @@ class global_class
 		$this->tdiff = ($this->SETTINGS['timecorrection'] + gmdate('I')) * 3600;
 		if (is_dir($main_path . 'install')){ echo 'please delete the install directory'; exit; }
 		// Check ip
-		if (!defined('IPBan'))
+		if (!defined('IPBan') && !defined('InAdmin'))
 		{
 			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE ip = '" . $_SERVER['REMOTE_ADDR'] . "' AND action = 'deny'";
 			$result = mysql_query($query);

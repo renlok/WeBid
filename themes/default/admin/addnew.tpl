@@ -15,7 +15,7 @@
     </td>
 </tr>
 <tr>
-    <td align="center" valign="middle">&nbsp;</td>
+    <td>&nbsp;</td>
 </tr>
 <tr> 
     <td align="center" valign="middle">
@@ -71,11 +71,11 @@
                             <input type="submit" value="{L_518}">
                         </td>
                     </tr>
-                </table>
+                </table>	
+                </form>
             </td>
         </tr>
-        </table>	
-        </form>
+        </table>
     </td>
 </tr>
 </table>

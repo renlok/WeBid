@@ -17,28 +17,28 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$id = $_REQUEST[id];
-$offset = $_REQUEST[offset];
-if ($_POST[action] == "update")
+$id = intval($_REQUEST['id']);
+if ($_POST['action'] == 'update')
 {
 	if (is_array($_POST['accept']))
 	{
-		foreach ($_POST['accept'] as $k => $v)
+		foreach ($_POST['accept'] as $v)
 		{
-			@mysql_query("UPDATE " . $DBPrefix . "usersips SET action='accept' WHERE id=$k");
+			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'accept' WHERE id = " . $v;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}
 	if (is_array($_POST['deny']))
 	{
-		foreach ($_POST['deny'] as $k => $v)
+		foreach ($_POST['deny'] as $v)
 		{
-			@mysql_query("UPDATE " . $DBPrefix . "usersips SET action='deny' WHERE id=$k");
+			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'deny' WHERE id = " . $v;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}
 }
 
-#//
-$query = "SELECT nick,email,lastlogin FROM " . $DBPrefix . "users WHERE id='".$id."'";
+$query = "SELECT nick, lastlogin FROM " . $DBPrefix . "users WHERE id = " . $id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 if (mysql_num_rows($res) > 0)
@@ -46,198 +46,34 @@ if (mysql_num_rows($res) > 0)
 	$USER = mysql_fetch_array($res);
 }
 
-#//
-$query = "SELECT * FROM " . $DBPrefix . "usersips WHERE user='$id' AND type='first'";
+$query = "SELECT id, type, ip, action FROM " . $DBPrefix . "usersips WHERE user = " . $id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 if (mysql_num_rows($res) > 0)
 {
-	$FIRST = mysql_fetch_array($res);
-}
-
-$query = "SELECT * FROM " . $DBPrefix . "usersips WHERE user='$id' AND type<>'first'";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0)
-{
-	while ($row = mysql_fetch_array($res))
+	$bgcolour = '#FFFFFF';
+	while ($row = mysql_fetch_assoc($res))
 	{
-		$NEXT[$row['id']] = $row;
+		$bgcolour = ($bgcolour == '#FFFFFF') ? '#EEEEEE' : '#FFFFFF';
+		$template->assign_block_vars('ips', array(
+				'BGCOLOUR' => $bgcolour,
+				'TYPE' => $row['type'],
+				'ID' => $row['id'],
+				'IP' => $row['ip'],
+				'ACTION' => $row['action']
+				));
 	}
 }
 
+$template->assign_vars(array(
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'ID' => $id,
+		'NICK' => $USER['nick'],
+		'LASTLOGIN' => date('Y-m-d H:i:s', strtotime($USER['lastlogin']) + $system->tdiff)
+		));
+
+$template->set_filenames(array(
+		'body' => 'viewuserips.tpl'
+		));
+$template->display('body');
 ?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body style="margin:0;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr> 
-	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-		<tr> 
-		  <td width="30"><img src="images/i_use.gif" ></td>
-		  <td class=white><?php echo $MSG['25_0010']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['045']; ?></td>
-		</tr>
-	  </table></td>
-  </tr>
-  <tr>
-	<td align="center" valign="middle">&nbsp;</td>
-  </tr>
-	<tr> 
-	<td align="center" valign="middle">
-<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
-	<tr>
-		<td align="center" class=title>
-			<?php print $MSG['2_0004']; ?>
-		</td>
-	</tr>
-	<tr>
-		<td>
-
-	  <table width=100% CELPADDING=0 cellspacing=1 border=0 align="center" cellpadding="3">
-		<tr bgcolor=#FFFFFF align="center">
-		  <td colspan=7>
-		  <form NAME=banform action="" method="post">
-			  <table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#FFFFFF">
-				<tr>
-				  <td bgcolor="#ffffff">
-					  <?php print $MSG['667']; ?> <b><?php echo $USER['nick']; ?></b>
-					</td>
-					<td ALIGN="right">
-					<?php
-						$lastlogin = strtotime($USER['lastlogin']);
-					?>
-					<?php echo $MSG['559'].": ".date('Y-m-d H:i:s', $lastlogin + $system->tdiff); ?>
-				</tr>
-			  </table>
-			  <table width="90%" border="0" cellspacing="1" cellpadding="2" bgcolor="#CCCCCC">
-				<tr>
-				  <td width="35%" bgcolor="#eeeeee">
-					<div align="center"><b>
-					  <?php print $MSG['087']; ?>
-					  </b></div>
-				  </td>
-				  <td width="27%" bgcolor="#eeeeee">
-					<div align="center"><b>
-					  <?php print $MSG['2_0009']; ?>
-					  </b></div>
-				  </td>
-				  <td width="21%" bgcolor="#eeeeee">
-					<div align="center"><b>
-					  <?php print $MSG['560']; ?>
-					  </b></div>
-				  </td>
-				  <td width="17%" bgcolor="#eeeeee">
-					<div align="center"><b>
-					  <?php print $MSG['5028']; ?>
-					  </b></div>
-				  </td>
-				</tr>
-				<tr bgcolor="#FFFFFF">
-				  <td width="35%"> <b>
-					<?php print $MSG['2_0005']; ?>
-					</b></td>
-				  <td width="27%">
-					<div align="center"><b>
-					  <?php print $FIRST['ip']; ?>
-					  </b></div>
-				  </td>
-				  <td width="21%" align=center> 
-					<?php
-					if ($FIRST['action'] == 'accept')
-					{
-						print $MSG['2_0012'];
-					}
-					else
-					{
-						print $MSG['2_0013'];
-					}
-				  ?>
-					 </td>
-				  <td width="17%"> 
-					<?php
-					if ($FIRST['action'] == 'accept')
-					{
-					?>
-					<input type="checkbox" name="deny[<?php echo $FIRST['id']; ?>]2" value="<?php echo $FIRST['id']; ?>">
-					<?php
-					print "&nbsp;".$MSG['2_0006'];
-					}
-					else
-					{
-					?>
-					<input type="checkbox" name="accept[<?php echo $FIRST['id']; ?>]2" value="<?php echo $FIRST['id']; ?>">
-					<?php
-					print "&nbsp;".$MSG['2_0007'];
-					}
-				  ?>
-					 </td>
-				</tr>
-				<?php
-				if (is_array($NEXT))
-				{
-					foreach ($NEXT as $k => $v)
-					{
-				?>
-				<tr bgcolor="#FFFFFF">
-				  <td width="35%"> 
-					<?php echo $MSG['221']; ?>
-					 </td>
-				  <td width="27%" align=center> 
-					<?php echo $v['ip']; ?>
-					 </td>
-				  <td width="21%" align=center> 
-					<?php
-					if ($v['action'] == 'accept')
-					{
-						print $MSG['2_0012'];
-					}
-					else
-					{
-						print $MSG['2_0013'];
-					}
-				  ?>
-					 </td>
-				  <td width="17%"> 
-					<?php
-					if ($v['action'] == 'accept')
-					{
-					?>
-					<input type="checkbox" name="deny[<?php echo $v['id']; ?>]2" value="<?php echo $v['id']; ?>">
-					<?php
-					print "&nbsp;".$MSG['2_0006'];
-					}
-					else
-					{
-					?>
-					<input type="checkbox" name="accept[<?php echo $v['id']; ?>]2" value="<?php echo $v['id']; ?>">
-					<?php
-					print "&nbsp;".$MSG['2_0007'];
-					}
-				  ?>
-					 </td>
-				  <?php
-					}
-				}
-				?>
-				</tr>
-			  </table>
-			  <p>&nbsp;</p>
-			  <p>
-				<input type="submit" name="Submit" value="<?php echo $MSG['2_0015']; ?>">
-				<input type=hidden NAME=action VALUE=update>
-				<input type=hidden NAME=id VALUE=<?php echo $id; ?>>
-			  </p>
-			</form>
-		  </td>
-		</tr>
-
-	  </table>
-</td></tr></table>
-
-</td>
-</tr>
-</table>
-</body>
-</html>

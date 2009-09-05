@@ -38,7 +38,7 @@ if (isset($_POST['action']))
 			header('location: login.php');
 			exit;
 		break;
-		
+
 		case 'login':
 			if (strlen($_POST['username']) == 0 || strlen($_POST['password']) == 0)
 			{

@@ -27,12 +27,12 @@
             <td bgcolor="#FFFFFF">
                 <table width="100%" cellspacing="0" border="0" align="center">
                 <tr>
-                    <td colspan="3"><b>{NUM_AUCTIONS} {L_311}</b> </td>
+                    <td colspan="3"><b>{NUM_AUCTIONS} {L_311}</b></td>
                 </tr>
                 <tr bgcolor="#FFCC00">
-                    <td align="center"><b>{L_017}<b></td>
-                    <td align="center"><b>{L_557}<b></td>
-                    <td align="left"><b>{L_297}<b></td>
+                    <td align="center"><b>{L_017}</b></td>
+                    <td align="center"><b>{L_557}</b></td>
+                    <td align="left"><b>{L_297}</b></td>
                 <tr>
                 <!-- BEGIN auctions -->
                 <tr style="background-color:{auctions.BGCOLOUR};">

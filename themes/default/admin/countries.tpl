@@ -30,7 +30,7 @@
 	</td>
 </tr>
 <tr>
-	<td align="center" valign="middle">&nbsp;</td>
+	<td>&nbsp;</td>
 </tr>
 <tr>
 	<td align="center" valign="middle">

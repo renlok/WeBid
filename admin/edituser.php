@@ -41,7 +41,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$birth_day = $DATE[1];
 			$birth_month = $DATE[0];
 			$birth_year = $DATE[2];
-		} else {
+		}
+		else
+		{
 			$birth_day = $DATE[0];
 			$birth_month = $DATE[1];
 			$birth_year = $DATE[2];
@@ -60,7 +62,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$ERR = $ERR_110;
 		}
-		elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$",$_POST['email']))
+		elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['email']))
 		{
 			$ERR = $ERR_008;
 		}

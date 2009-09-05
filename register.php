@@ -286,6 +286,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				$_SESSION['language'] = $language;
+				$first = false;
 
 				if ($system->SETTINGS['activationtype'] == 0)
 				{
@@ -303,7 +304,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					include $include_path . 'user_approved.inc.php';
 					$TPL_message = $MSG['016_b'];
 				}
-				$first = false;
 
 				if ($system->SETTINGS['fee_type'] == 2 && $signup_fee > 0)
 				{
@@ -319,6 +319,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 $country = '';
 if (!isset($_POST['action']) || (isset($_POST['action']) && $TPL_err == 1))
 {
+	$first = true;
 	$selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
 	foreach ($countries as $key => $name)
 	{
@@ -333,7 +334,6 @@ if (!isset($_POST['action']) || (isset($_POST['action']) && $TPL_err == 1))
 		}
 		$country .= '>' . $name . '</option>' . "\n";
 	}
-	$first = true;
 	$dobmonth = '<select name="TPL_month">
 			<option value="00"></option>
 			<option value="01"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '01') ? ' selected' : '') . '>' . $MSG['MON_001E'] . '</option>
@@ -366,7 +366,7 @@ $template->assign_vars(array(
 		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'L_MESSAGE' => (isset($TPL_message)) ? $TPL_message : '',
 
-		'B_ERRORMSG' => (!empty($TPL_errmsg)),
+		'B_ERRORMSG' => ($TPL_err == 1),
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_SHOWACCEPTANCE' => ($system->SETTINGS['showacceptancetext'] == 1),

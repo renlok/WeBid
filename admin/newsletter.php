@@ -60,11 +60,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
-$USERSFILTER = array("all" => $MSG['5296'],
-		"active" => $MSG['5291'],
-		"admin" => $MSG['5294'],
-		"fee" => $MSG['5293'],
-		"confirmed" => $MSG['5292']);
+$USERSFILTER = array('all' => $MSG['5296'],
+	'active' => $MSG['5291'],
+	'admin' => $MSG['5294'],
+	'fee' => $MSG['5293'],
+	'confirmed' => $MSG['5292']);
 
 $selectsetting = (isset($_POST['usersfilter'])) ? $_POST['usersfilter'] : '';
 loadblock($MSG['5299'], '', generateSelect('usersfilter', $USERSFILTER));

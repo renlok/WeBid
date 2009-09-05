@@ -54,7 +54,7 @@
                 </tr>
                 <tr bgcolor="#EEEEEE">
                     <td>{L_004} *</td>
-                    <td><input type="text" name="password" size="20" maxlength="20"></td>
+                    <td><input type="text" name="repeat_password" size="20" maxlength="20"></td>
                 </tr>
                 <tr>
                     <td>{L_303} *</td>

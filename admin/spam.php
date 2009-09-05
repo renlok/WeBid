@@ -28,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$query = "UPDATE " . $DBPrefix . "settings SET
-					recaptcha_public = '" . $_POST['recaptcha_public'] . ",'
+					recaptcha_public = '" . $_POST['recaptcha_public'] . "',
 					recaptcha_private = '" . $_POST['recaptcha_private'] . "',
 					spam_sendtofriend = " . $_POST['spam_sendtofriend'] . ",
 					spam_register = " . $_POST['spam_register'];

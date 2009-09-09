@@ -73,7 +73,11 @@ switch($_GET['a'])
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['430'];
 		break;
 	case 4: // pay auction fee (live mode)
-		if (!isset($_SESSION['auction_id']) || !is_int($_SESSION['auction_id']) || $_SESSION['auction_id'] < 1 || $system->SETTINGS['fee_type'] != 2)
+		if (isset($_GET['auction_id']))
+		{
+			$_SESSION['auction_id'] = intval($_GET['auction_id']);
+		}
+		if (!isset($_SESSION['auction_id']) || $_SESSION['auction_id'] < 1 || $system->SETTINGS['fee_type'] != 2)
 		{
 			header('location: index.php');
 			exit;
@@ -110,7 +114,7 @@ $template->assign_vars(array(
 		'TOP_MESSAGE' => $message,
 		'B_ENPAYPAL' => ($gayeway_data['paypal_active'] && !empty($pp_paytoemail)),
 		'PP_PAYTOEMAIL' => $pp_paytoemail,
-		'PAY_VAL' => $payvalue,
+		'PAY_VAL' => $system->print_money_nosymbol($system->input_money($payvalue)),
 		'CURRENCY' => $system->SETTINGS['currency'],
 		'TITLE' => $title,
 		'CUSTOM_CODE' => $custoncode

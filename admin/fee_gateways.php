@@ -38,8 +38,8 @@ if (isset($_POST['action']))
 		$query .= $gateway . '_active = ' . (isset($_POST[$gateway . '_active']) ? 1 : 0) . ', ';
 		$query .= $gateway . '_required = ' . (isset($_POST[$gateway . '_required']) ? 1 : 0) . ', ';
 		$query .= $gateway . "_address = '" . $_POST[$gateway . '_address'] . "'";
-		$gateway_data[$gateway . '_active'] = $_POST[$gateway . '_active'];
-		$gateway_data[$gateway . '_required'] = $_POST[$gateway . '_required'];
+		$gateway_data[$gateway . '_active'] = (isset($_POST[$gateway . '_active']) ? 1 : 0);
+		$gateway_data[$gateway . '_required'] = (isset($_POST[$gateway . '_required']) ? 1 : 0);
 		$gateway_data[$gateway . '_address'] = $_POST[$gateway . '_address'];
 	}
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

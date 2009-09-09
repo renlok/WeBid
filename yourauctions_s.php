@@ -15,8 +15,6 @@
 include 'includes/common.inc.php';
 include $include_path . 'auctionstoshow.inc.php';
 
-print_r($_POST);
-
 $NOW = time();
 $NOWB = gmdate('Ymd');
 
@@ -53,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 				}
 			}
 
-			// Auction
+			// remove auction
 			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$removed++;
@@ -117,8 +115,9 @@ else
 {
 	$_SESSION['sa_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0" />';
 }
-$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . "
-		AND suspended != 0 ORDER BY " . $_SESSION['sa_ord'] . " " . $_SESSION['sa_type'] . " LIMIT $OFFSET,$LIMIT";
+$query = "SELECT id, title, current_bid, num_bids, relist, relisted, current_bid, suspended
+		FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . "
+		AND suspended != 0 ORDER BY " . $_SESSION['sa_ord'] . " " . $_SESSION['sa_type'] . " LIMIT " . $OFFSET . ", " . $LIMIT;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
@@ -129,12 +128,11 @@ while ($item = mysql_fetch_array($res))
 			'BGCOLOUR' => ($i % 2) ? '#FFCCFF' : '#EEEEEE',
 			'ID' => $item['id'],
 			'TITLE' => $item['title'],
-			'STARTS' => FormatDate($item['starts']),
-			'ENDS' => FormatDate($item['ends']),
 			'BID' => $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 			'RELIST' => $item['relist'],
 			'RELISTED' => $item['relisted'],
+			'SUSPENDED' => $item['suspended'],
 
 			'B_HASNOBIDS' => ($item['current_bid'] == 0)
 			));

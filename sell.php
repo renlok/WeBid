@@ -120,34 +120,38 @@ switch ($_SESSION['action'])
 				$auction_id = mysql_result($res, 0, 'id');
 				$_SESSION['SELL_auction_id'] = $auction_id;
 
-				// update recursive categories
-				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['SELL_sellcat'];
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$parent_node = mysql_fetch_assoc($res);
-				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
-
-				for ($i = 0; $i < count($crumbs); $i++)
-				{
-					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				}
-
 				// work out & add fee
 				if ($system->SETTINGS['fees'] == 'y')
 				{
-					$query = "INSERT INTO " . $DBPrefix . "userfees VALUES (NULL, " . $auction_id . ", " . $user->user_data['id'] . ", " . get_fee($minimum_bid) . ", 0)";
+					$fee = get_fee($minimum_bid);
+					$query = "INSERT INTO " . $DBPrefix . "userfees VALUES (NULL, " . $auction_id . ", " . $user->user_data['id'] . ", " . $fee . ", 0)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					if ($system->SETTINGS['fee_type'] == 2)
+					if ($system->SETTINGS['fee_type'] == 2 && $fee > 0)
 					{
 						$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					}
 					else
 					{
-						$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . get_fee($minimum_bid) . " WHERE id = " . $user->user_data['id'];
+						$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee . " WHERE id = " . $user->user_data['id'];
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
+						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					}
+				}
+				
+				if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0))
+				{
+					// update recursive categories
+					$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['SELL_sellcat'];
+					$res = mysql_query($query);
+					$system->check_mysql($res, $query, __LINE__, __FILE__);
+					$parent_node = mysql_fetch_assoc($res);
+					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+	
+					for ($i = 0; $i < count($crumbs); $i++)
+					{
+						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					}
 				}
@@ -269,7 +273,7 @@ switch ($_SESSION['action'])
 				}
 			}
 			unsetsessions();
-			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2)
+			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{
 				$_SESSION['auction_id'] = $auction_id;
 				header('location: pay.php?a=4');

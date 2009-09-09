@@ -85,6 +85,9 @@ elseif (isset($_POST['usersfilter']))
 		case 'fee':
 			$Q = 9;
 		break;
+		case 'admin_approve':
+			$Q = 10;
+		break;
 	}
 	$_SESSION['usersfilter'] = $_POST['usersfilter'];
 }
@@ -103,6 +106,9 @@ elseif (!isset($_POST['usersfilter']) && isset($_SESSION['usersfilter']))
 		break;
 		case 'fee':
 			$Q = 9;
+		break;
+		case 'admin_approve':
+			$Q = 10;
 		break;
 	}
 }

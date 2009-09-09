@@ -1,4 +1,5 @@
 <?php
+define('InAdmin', 1);
 include '../includes/common.inc.php';
 ?>
 <html>

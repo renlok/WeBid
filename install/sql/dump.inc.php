@@ -1026,7 +1026,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fees`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `fee_from` double(16, 4) NOT NULL default '0',
-  `fee_to` double(6, 4) NOT NULL default '0',
+  `fee_to` double(16, 4) NOT NULL default '0',
   `fee_type` enum('flat', 'perc') NOT NULL default 'flat',
   `value` double(8,4) NOT NULL,
   `type` varchar(15) NOT NULL,

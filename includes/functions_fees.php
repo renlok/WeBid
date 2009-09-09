@@ -115,12 +115,32 @@ class fees
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 4:
+				$catscontrol = new MPTTcategories();
+
 				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$query = "DELETE FROM " . $DBPrefix . "userfees WHERE auc_id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+				$query = "SELECT category FROM " . $DBPrefix . "auctions WHERE id = " . $custom_id;
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$auc_data = mysql_fetch_assoc($res);
+
+				// update recursive categories
+				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auc_data['category'];
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$parent_node = mysql_fetch_assoc($res);
+				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+				for ($i = 0; $i < count($crumbs); $i++)
+				{
+					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
 			break;
 			case 5:
 				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $custom_id;

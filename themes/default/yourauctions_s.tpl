@@ -36,22 +36,10 @@ $(document).ready(function() {
 </table>
 <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
 	<tr bgcolor="{TBLHEADERCOLOUR}">
-		<td class="titTable1" width="32%">
+		<td class="titTable1">
 			<a href="yourauctions_s.php?sa_ord=title&sa_type={ORDERNEXT}">{L_624}</a>
 <!-- IF ORDERCOL eq 'title' -->
 			<a href="yourauctions_s.php?sa_ord=title&sa_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
-<!-- ENDIF -->
-		</td>
-		<td class="titTable1" width="11%">
-			<a href="yourauctions_s.php?sa_ord=starts&sa_type={ORDERNEXT}">{L_625}</a>
-<!-- IF ORDERCOL eq 'starts' -->
-			<a href="yourauctions_s.php?sa_ord=starts&sa_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
-<!-- ENDIF -->
-		</td>
-		<td class="titTable1" width="11%">
-			<a href="yourauctions_s.php?sa_ord=ends&sa_type={ORDERNEXT}">{L_626}</a>
-<!-- IF ORDERCOL eq 'ends' -->
-			<a href="yourauctions_s.php?sa_ord=ends&sa_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
 		</td>
 		<td class="titTable1" width="9%" align="center">
@@ -75,18 +63,13 @@ $(document).ready(function() {
 		<td class="titTable1" width="8%" align="center">
 			{L_008}
 		</td>
+        <td class="titTable1" width="15%">&nbsp;</td>
 	</tr>
 <!-- IF B_AREITEMS -->
 	<!-- BEGIN items -->
 	<tr bgcolor="{items.BGCOLOUR}">
-		<td width="32%">
+		<td>
 			<a href="item.php?id={items.ID}">{items.TITLE}</a>
-		</td>
-		<td width="11%">
-			{items.STARTS}
-		</td>
-		<td width="11%">
-			{items.ENDS}
 		</td>
 		<td width="9%"  align="center">
 		<!-- IF items.RELIST eq 0 -->
@@ -115,15 +98,22 @@ $(document).ready(function() {
 			<input type="checkbox" name="O_delete[]" value="{items.ID}" class="O_delete">
 		<!-- ENDIF -->
 		</td>
+		<td align="center">
+		<!-- IF items.SUSPENDED eq 9 -->
+			<a href="{SITEURL}pay.php?a=4&auction_id={items.ID}">{L_769}</a>
+		<!-- ELSEIF items.SUSPENDED eq 8 -->
+			<a href="{SITEURL}pay.php?a=5">{L_770}</a>
+		<!-- ENDIF -->
+		</td>
 	</tr>
 	<!-- END items -->
 <!-- ENDIF -->
 	<tr bgcolor="{BGCOLOUR}">
-		<td colspan="7">&nbsp;</td>
+		<td colspan="6">&nbsp;</td>
 		<td align="center"><a href="#" id="deleteall">{L_30_0102}</a></td>
 	</tr>
 	<tr>
-		<td class=white colspan="8" align="center">
+		<td class=white colspan="7" align="center">
 			<input type="hidden" name="action" value="delopenauctions">
 			<input type="submit" name="Submit" value="{L_631}"  class="button">
 		</td>

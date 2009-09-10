@@ -16,6 +16,7 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
+
 if ($_POST && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_SELF']))) {
 	$sql="UPDATE " . $DBPrefix . "feedbacks SET 
 		  rate='".$_POST['aTPL_rate']."', 

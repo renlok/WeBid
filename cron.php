@@ -269,7 +269,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 	$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);
 
 	$close_auction = false;
-	if ($Auction['relist'] > 0 && ($Auction['relist'] - $Auction['relisted']) > 0)
+	if ($Auction['relist'] > 0 && ($Auction['relist'] - $Auction['relisted']) > 0 && $Auction['suspended'] == 0)
 	{
 		// Auctomatic relisting
 		$query = "SELECT id FROM " . $DBPrefix . "bids WHERE auction = '" . $Auction['id'] . "'";
@@ -299,6 +299,11 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 	else
 	{
 		$close_auction = true;
+	}
+
+	if ($Auction['suspended'] == 9)
+	{
+		$count_auctions--;
 	}
 
 	if ($close_auction)

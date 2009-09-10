@@ -13,11 +13,10 @@
  ***************************************************************************/
 
 session_start();
-error_reporting(E_ALL);
 define('InWeBid', 1);
 $step = (!isset($_GET['step'])) ? 1 : $_GET['step'];
 
-include('../includes/config.inc.php');
+include '../includes/config.inc.php';
 if (!mysql_connect($DbHost, $DbUser, $DbPassword))
 {
 	die('<p>Cannot connect to '.$DbHost.'</p>');

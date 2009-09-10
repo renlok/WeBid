@@ -19,19 +19,6 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-// Create currencies array
-$query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY ime";
-$res_ = mysql_query($query);
-$system->check_mysql($res_, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res_) > 0)
-{
-	while ($row = mysql_fetch_array($res_))
-	{
-		$CURRENCIES[$row['id']] = $row['symbol'] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
-		$CURRENCIES_SYMBOLS[$row['id']] = $row['symbol'];
-	}
-}
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Data check
@@ -55,18 +42,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$ERR = $MSG['553'];
 	}
 	$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
-	$system->SETTINGS = $_POST;
+	$system->SETTINGS['moneyformat'] = $_POST['moneyformat'];
+	$system->SETTINGS['moneydecimals'] = $_POST['moneydecimals'];
+	$system->SETTINGS['moneysymbol'] = $_POST['moneysymbol'];
 }
 
-$OTHERCURRENCIES = array();
-$query = "SELECT * FROM " . $DBPrefix . "currencies";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0)
+// Create currencies array
+$query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY ime";
+$res_ = mysql_query($query);
+$system->check_mysql($res_, $query, __LINE__, __FILE__);
+if (mysql_num_rows($res_) > 0)
 {
-	while ($row = mysql_fetch_array($res))
+	while ($row = mysql_fetch_array($res_))
 	{
-		$OTHERCURRENCIES[$row['id']] = $row['currency'];
+		$CURRENCIES[$row['id']] = $row['symbol'] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
+		$CURRENCIES_SYMBOLS[$row['id']] = $row['symbol'];
 	}
 }
 

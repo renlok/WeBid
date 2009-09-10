@@ -119,6 +119,7 @@ switch ($_SESSION['action'])
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$auction_id = mysql_result($res, 0, 'id');
 				$_SESSION['SELL_auction_id'] = $auction_id;
+				$addcounter = true;
 
 				// work out & add fee
 				if ($system->SETTINGS['fees'] == 'y')
@@ -130,6 +131,7 @@ switch ($_SESSION['action'])
 					{
 						$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						$addcounter = false;
 					}
 					else
 					{
@@ -139,7 +141,13 @@ switch ($_SESSION['action'])
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					}
 				}
-				
+
+				if ($addcounter)
+				{
+					$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+
 				if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0))
 				{
 					// update recursive categories
@@ -238,9 +246,8 @@ switch ($_SESSION['action'])
 						}
 					}
 				}
-				$EMAILMODE = $user->user_data['startemailmode'];
 				$ubn_only = $user->user_data['bn_only'];
-				if ($EMAILMODE == 'yes')
+				if ($user->user_data['startemailmode'] == 'yes')
 				{
 					include $include_path . 'auction_confirmation.inc.php';
 				}

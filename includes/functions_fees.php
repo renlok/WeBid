@@ -115,6 +115,7 @@ class fees
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 4:
+				global $user, $MSG;
 				$catscontrol = new MPTTcategories();
 
 				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $custom_id;
@@ -124,10 +125,26 @@ class fees
 				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
-				$query = "SELECT category FROM " . $DBPrefix . "auctions WHERE id = " . $custom_id;
+				$query = "SELECT category, title, minimum_bid, pict_url, buy_now, reserve_price, auction_type, ends
+						FROM " . $DBPrefix . "auctions WHERE id = " . $custom_id;
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$auc_data = mysql_fetch_assoc($res);
+
+				// auction data
+				$auction_id = $custom_id;
+				$title = $auc_data['title'];
+				$atype = $auc_data['auction_type'];
+				$pict_url = $auc_data['pict_url'];
+				$minimum_bid = $auc_data['minimum_bid'];
+				$reserve_price = $auc_data['reserve_price'];
+				$buy_now_price = $auc_data['buy_now'];
+				$a_ends = $auc_data['ends'];
+
+				if ($user->user_data['startemailmode'] == 'yes')
+				{
+					include $include_path . 'auction_confirmation.inc.php';
+				}
 
 				// update recursive categories
 				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auc_data['category'];

@@ -13,7 +13,7 @@ function submitlogin ()
 		<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
 		<tr>
 			<td>
-			<dl class="phpa-tabs">
+			<dl class="tabs">
 				<dd><a href="{SITEURL}user_menu.php?cptab=summary">{L_25_0080}</a></dd>  
 				<dd><a href="{SITEURL}user_menu.php?cptab=account">{L_25_0081}</a></dd>  
 <!-- IF B_CAN_SELL -->

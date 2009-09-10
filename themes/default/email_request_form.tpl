@@ -30,7 +30,7 @@
 							{L_002}
 						</td>
 						<td width="60%">
-							<input type="TEXT" name="TPL_sender_name" size="25" value="{MSG_YNAME}" />
+							<input type="text" name="TPL_sender_name" size="25" value="{MSG_YNAME}" />
 						</td>
 					</tr>
 					<tr>
@@ -38,7 +38,7 @@
 							{L_006}
 						</td>
 						<td width="60%">
-							<input type="TEXT" name="TPL_sender_mail" size="25" value="{MSG_YEMAIL}" />
+							<input type="text" name="TPL_sender_mail" size="25" value="{MSG_YEMAIL}" />
 						</td>
 					</tr>
 					<tr>

@@ -35,7 +35,7 @@ $(document).ready(function() {
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td colspan="9" align="right">
-			<dl class="phpa-tabs">
+			<dl class="tabs">
 				<dd><a href="yourauctions_p.php">{L_25_0115}</a></dd>
 				<dd><a href="yourauctions_c.php">{L_204}</a></dd>
 				<dd><a href="yourauctions_s.php">{L_2__0056}</a></dd>

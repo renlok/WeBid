@@ -202,7 +202,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		elseif (!checkdate($birth_month, $birth_day, $birth_year))
 		{
 			$TPL_err = 1;
-			$ERR = $ERR_117;
+			$TPL_errmsg = $ERR_117;
 		}
 		elseif (BannedEmail($_POST['TPL_email'], $BANNEDDOMAINS))
 		{
@@ -354,7 +354,7 @@ if (!isset($_POST['action']) || (isset($_POST['action']) && $TPL_err == 1))
 	for ($i = 1; $i <= 31; $i++)
 	{
 		$j = (strlen($i) == 1) ? '0' . $i : $i;
-		$dobday .= '<option value="' . $j . '"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == $j) ? ' selected' : '') . '>' . $j . '</option>';
+		$dobday .= '<option value="' . $j . '"' . ((isset($_POST['TPL_day']) && $_POST['TPL_day'] == $j) ? ' selected' : '') . '>' . $j . '</option>';
 	}
 	$dobday .= '</select>';
 }

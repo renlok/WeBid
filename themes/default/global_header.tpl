@@ -81,19 +81,19 @@ $(document).ready(function() {
 		  <table cellspacing="0" class="table-bar">
 		  <tbody>
 			<tr>
-			  <td><a href="{SITEURL}index.php?">{L_166}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="spacer"></div></td>
+			  <td><a href="{SITEURL}index.php?">{L_166}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
 				<!-- IF B_CAN_SELL -->
-			  <td><a href="{SITEURL}select_category.php?">{L_028}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="spacer"></div></td>
+			  <td><a href="{SITEURL}select_category.php?">{L_028}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
 				<!-- ENDIF -->
 				<!-- IF B_LOGGED_IN -->
-			  <td><a href="{SITEURL}user_menu.php?">{L_622}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="spacer"></div></td>
-			  <td><a href="{SSLURL}logout.php?">{L_245}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="spacer"></div></td>
+			  <td><a href="{SITEURL}user_menu.php?">{L_622}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
+			  <td><a href="{SSLURL}logout.php?">{L_245}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
 				<!-- ELSE -->
-			  <td><a href="{SSLURL}register.php?">{L_235}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="spacer"></div></td>
-			  <td><a href="{SSLURL}user_login.php?">{L_052}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="spacer"></div></td>
+			  <td><a href="{SSLURL}register.php?">{L_235}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
+			  <td><a href="{SSLURL}user_login.php?">{L_052}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
 				<!-- ENDIF -->
 				<!-- IF B_BOARDS -->
-			  <td><a href="{SITEURL}boards.php">{L_5030}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="spacer"></div></td>
+			  <td><a href="{SITEURL}boards.php">{L_5030}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
 				<!-- ENDIF -->
 			  <td><a href="{SITEURL}faqs.php" alt="faqs" class="new-window">{L_148}</a></td>
 			</tr>

@@ -355,7 +355,7 @@ $(document).ready(function(){
 							<b>{L_263}</b>
 						</td>
 						<td class="rightpan">
-                        	<span id="to_pay">{FEE_VALUE}</span>
+                        	<span id="to_pay">{FEE_VALUE}</span> {CURRENCY}
 						</td>
 					</tr>
 	<!-- ENDIF -->

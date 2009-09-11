@@ -171,11 +171,16 @@ if (isset($_POST['action']) && !isset($errmsg))
 			$errmsg = $ERR_611;
 		}
 	}
+	$send_email = false;
 	// make the bid
 	if ($atype == 1 && !isset($errmsg)) // normal auction
 	{
 		if ($system->SETTINGS['proxy_bidding'] == 'n')
 		{
+			if ($current_bid < $bid)
+			{
+				$send_email = true;
+			}
 			$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . $bid . ", num_bids = num_bids + 1 WHERE id = " . $id;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			// Also update bids table
@@ -251,6 +256,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 
 				if ($proxy_max_bid < $bid)
 				{
+					$send_email = true;
 					$next_bid = $proxy_max_bid + $increment;
 					if (($proxy_max_bid + $increment) > $bid)
 					{
@@ -375,15 +381,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 		}
 	}
 	// send emails where needed
-	$send_email = false;
 	$query = "SELECT bidder, bid FROM " . $DBPrefix . "bids WHERE auction = " . $id . " ORDER BY bid DESC";
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
 
 	if (mysql_num_rows($result) > 1)
 	{
-		$send_email = ($atype == 2) ? false : true;
-
 		$OldWinner_id = mysql_result($result, 1, 'bidder');
 		$new_bid = $next_bid;
 		$OldWinner_bid = $system->print_money($new_bid - $increment);

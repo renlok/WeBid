@@ -77,7 +77,7 @@ else
 		{
 			if ($crumbs[$i]['cat_id'] > 0)
 			{
-				if ($i > 1)
+				if ($i > 0)
 				{
 					$TPL_categories_string .= ' &gt; ';
 				}
@@ -164,7 +164,7 @@ else
 	$insql = ($id != 0) ? "category IN " . $catalist . " AND" : '';
 
 	// get total number of records
-	$query = "SELECT count(*) FROM " . $DBPrefix . "auctions
+	$query = "SELECT count(*) as count FROM " . $DBPrefix . "auctions
 			WHERE " . $insql . " starts <= " . $NOW . "
 			AND closed = 0
 			AND suspended = 0";
@@ -175,11 +175,9 @@ else
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$hash = mysql_fetch_assoc($res);
-	$total = (int)$hash[0];
+	$TOTALAUCTIONS = $hash['count'];
 
 	// Handle pagination
-	$TOTALAUCTIONS = $total;
-
 	if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)
 	{
 		$OFFSET = 0;

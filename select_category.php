@@ -122,7 +122,14 @@ $SHOWBUTTON = false;
 for ($i = 0; $i <= $box; $i++)
 {
 	$parent = (isset($POST['cat' . ($i - 1)])) ? $POST['cat' . ($i - 1)] : 0;
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($parent);
+	if ($parent == 0)
+	{
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE parent_id = -1";
+	}
+	else
+	{
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($parent);
+	}
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$cat = mysql_fetch_assoc($res);

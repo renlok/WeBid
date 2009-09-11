@@ -59,8 +59,12 @@ else
 	$catsorting = ' ORDER BY sub_counter DESC';
 }
 
-$query = "SELECT distinct * FROM " . $DBPrefix . "categories
-		  WHERE parent_id = 0
+$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE parent_id = -1";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+$query = "SELECT * FROM " . $DBPrefix . "categories
+		  WHERE parent_id = " . mysql_result($res, 0) . "
 		  " . $catsorting . "
 		  LIMIT " . $system->SETTINGS['catstoshow'];
 $res = mysql_query($query);

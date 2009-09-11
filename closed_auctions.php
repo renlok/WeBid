@@ -105,7 +105,6 @@ while ($row = mysql_fetch_array($result))
 			'BNFORMAT' => $system->print_money($row['buy_now']),
 			'BIDVALUE' => $row['minimum_bid'],
 			'BIDFORMAT' => $system->print_money($row['minimum_bid']),
-			'RESERVE' => ($row['reserve_price'] > 0) ? '<img src="images/r.gif" alt="reserve set">' : '',
 			'NUM_BIDS' => $num_bids,
 			'TIMELEFT' => $days_difference . ' ' . $MSG['126a'],
 

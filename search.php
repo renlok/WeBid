@@ -18,8 +18,7 @@ include $include_path . 'dates.inc.php';
 
 $NOW = time();
 
-$q = trim($_GET['q']);
-$query = $q;
+$query = trim($_GET['q']);
 $qquery = ereg_replace("%", "\\%", $query);
 $qquery = ereg_replace("_", "\\_", $qquery);
 
@@ -33,30 +32,12 @@ if (strlen($query) == 0)
 }
 else
 {
-	// generate query syntax for searching in auction
-	$search_words = explode (" ", $qquery);
-
-	$qp1 = " (title LIKE '%" . addslashes($qquery) . "%' OR id = " . intval($q) . ")  ";
+	$qp1 = " (title LIKE '%" . addslashes($qquery) . "%' OR id = " . intval($qquery) . ")
+			 AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " AND ends > " . $NOW . " ORDER BY ends";
 	$qp = " (cat_name LIKE '%" . addslashes($qquery) . "%') ";
 
-	$addOR = true;
-	foreach ($search_words as $val)
-	{
-		$val = ereg_replace("%", "\\%", $val);
-		$val = ereg_replace("_", "\\_", $val);
-		if ($addOR)
-		{
-			$qp1 .= " OR ";
-			$qp .= " OR ";
-		}
-		$addOR = true;
-
-		$qp1 .= " (title LIKE '%" . addslashes($val) . "%') ";
-		$qp .= "(cat_name LIKE '%" . addslashes($qquery) . "%') ";
-	}
-
-	$sql_count = "SELECT count(*) FROM " . $DBPrefix . "auctions WHERE " . $qp1 . " AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " ORDER BY ends";
-	$sql = "SELECT * FROM " . $DBPrefix . "auctions WHERE " . $qp1 . " AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " ORDER BY ends";
+	$sql_count = "SELECT count(*) FROM " . $DBPrefix . "auctions WHERE " . $qp1;
+	$sql = "SELECT * FROM " . $DBPrefix . "auctions WHERE " . $qp1;
 	$sql_cat = "SELECT * FROM " . $DBPrefix . "categories WHERE " . $qp . " ORDER BY cat_name ASC";
 	// get categories whose names fit the search criteria
 

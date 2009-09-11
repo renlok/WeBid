@@ -163,7 +163,7 @@ for ($i = 0; $i < count($crumbs); $i++)
 {
 	if ($crumbs[$i]['cat_id'] > 0)
 	{
-		if ($i > 1)
+		if ($i > 0)
 		{
 			$cat_value .= ' > ';
 		}

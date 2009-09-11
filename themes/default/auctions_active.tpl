@@ -22,7 +22,7 @@
 						<!-- ENDIF -->
 					</td>
 					<td width="15%">{auctions.BIDFORMAT}</td>
-					<td width="15%">{auctions.RESERVE} {auctions.NUM_BIDS}</td>
+					<td width="15%">{auctions.NUM_BIDS}</td>
 					<td width="15%">{auctions.TIMELEFT}</td>
 				</tr>
 <!-- END auctions -->

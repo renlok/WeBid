@@ -43,7 +43,6 @@ function browseItems($result, $feat_res, $current_page)
 				'BIDFORM' => $system->print_money($row['current_bid']),
 				'TIMELEFT' => FormatTimeLeft($difference),
 				'NUMBIDS' => $row['num_bids'],
-				'RESERVE' => ($row['reserve_price'] > 0) ? ' <img src="images/r.gif">' : '',
 
 				'B_BOLD' => ($row['bold'] == 'y')
 			));
@@ -73,7 +72,6 @@ function browseItems($result, $feat_res, $current_page)
 			'BIDFORM' => $system->print_money($row['current_bid']),
 			'TIMELEFT' => FormatTimeLeft($difference),
 			'NUMBIDS' => $row['num_bids'],
-			'RESERVE' => ($row['reserve_price'] > 0) ? ' <img src="images/r.gif">' : '',
 
 			'B_BOLD' => ($row['bold'] == 'y')
 		));

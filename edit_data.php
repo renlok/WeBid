@@ -216,7 +216,7 @@ for ($i = 1; $i <= 31; $i++)
 }
 $dobday .= '</select>';
 
-$selectsetting = $user->user_data['timecorrection'];
+$selectsetting = $USER['timecorrection'];
 $time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
 
 $template->assign_vars(array(

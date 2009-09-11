@@ -29,7 +29,7 @@
 				{featured_items.BIDFORM}
 			</td>
 			<td align="center">
-				{featured_items.RESERVE} {featured_items.NUMBIDS}
+				{featured_items.NUMBIDS}
 			</td>
 			<td align="center">
 				{featured_items.TIMELEFT}
@@ -70,7 +70,7 @@
 				{items.BIDFORM}
 			</td>
 			<td align="center">
-				{items.RESERVE} {items.NUMBIDS}
+				{items.NUMBIDS}
 			</td>
 			<td align="center">
 				{items.TIMELEFT}

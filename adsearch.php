@@ -108,7 +108,7 @@ if (!empty($_POST['minprice'])) $wher .= "(au.minimum_bid >= " . floatval($_POST
 if (!empty($_POST['ending']) && ($_POST['ending'] == '1' || $_POST['ending'] == '2' || $_POST['ending'] == '4' || $_POST['ending'] == '6'))
 {
 	$data = time() + ($ending * 86400);
-	$wher .= "(au.ends <= $data) AND";
+	$wher .= "(au.ends <= $data) AND ";
 }
 
 if (!empty($_POST['country']))
@@ -126,11 +126,11 @@ if (isset($_POST['payment']))
 		{
 			if (!$pri)
 			{
-				$ora = "AND ((au.payment LIKE '%" . addslashes($val) . "%')";
+				$ora = "((au.payment LIKE '%" . addslashes($val) . "%')";
 			}
 			else
 			{
-				$ora .= " OR (au.payment LIKE '%" . addslashes($val) . "%')";
+				$ora .= " OR (au.payment LIKE '%" . addslashes($val) . "%') AND ";
 			}
 			$pri = true;
 		}
@@ -138,7 +138,7 @@ if (isset($_POST['payment']))
 	}
 	else
 	{
-		$ora = "AND (au.payment LIKE '%" . addslashes($_POST['payment'][0]) . "%')";
+		$ora = "(au.payment LIKE '%" . addslashes($_POST['payment'][0]) . "%') AND ";
 	}
 }
 
@@ -175,7 +175,7 @@ if ((!empty($wher) || !isset($ora)) && isset($_POST['go']))
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			AND	au.starts <= " . $NOW . "
+			au.starts <= " . $NOW . "
 			ORDER BY " . $by;
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -193,7 +193,7 @@ if ((!empty($wher) || !isset($ora)) && isset($_POST['go']))
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			AND	au.starts <= " . $NOW . "
+			au.starts <= " . $NOW . "
 			ORDER BY " . $by . " LIMIT " . intval($left_limit) . ", " . intval($lines);
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -203,7 +203,7 @@ if ((!empty($wher) || !isset($ora)) && isset($_POST['go']))
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			AND featured = 'y'
+			featured = 'y'
 			AND	au.starts <= " . $NOW . "
 			ORDER BY " . $by . " LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
 	$feat_res = mysql_query($query);

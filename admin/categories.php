@@ -125,8 +125,7 @@ if (isset($_POST['action']))
 //show the page... 
 if (!isset($_GET['parent']))
 {
-	$parent = 0;
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE parent_id = -1";
+	$query = "SELECT left_id, right_id, level, cat_id FROM " . $DBPrefix . "categories WHERE parent_id = -1";
 }
 else
 {
@@ -136,6 +135,11 @@ else
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $parent_node = mysql_fetch_assoc($res);
+
+if (!isset($_GET['parent']))
+{
+	$parent = $parent_node['id'];
+}
 
 $crumb_string = '';
 if ($parent != 0)
@@ -164,7 +168,7 @@ for ($i = 0; $i < count($children); $i++)
 			'CAT_COLOUR' => $child['cat_colour'],
 			'CAT_IMAGE' => $child['cat_image'],
 			'ROW_COLOUR' => $colourrow[$c],
-			
+
 			'B_CAN_DELETE' => ($child['left_id'] == ($child['right_id'] - 1) && $child['sub_counter'] == 0)
 			));
 	$c = ($c == 1) ? 0 : 1;

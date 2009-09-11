@@ -16,9 +16,9 @@ body	{ font-style: normal; font-weight: normal; font-size: medium; font-family: 
 .errfont	{ background-color: #FFFF00; font-weight: bold; font-family: Verdana, Arial, Sans; color: #FF0000; text-align: center; }
 .footer	{ clear: both; width: inherit; padding: 5px 5px 5px 5px; text-align: center; color: #666666; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; }
 .hg	{ background-color: #FFFF99; }
-.imgSep	{ background: transparent url(img/imgsep.gif) no-repeat center; margin: 0px 4px 0px 4px; padding: 0px; display: inline; height: 8px; width: 8px; }
-.imgTitL	{ background: transparent url(img/tit_l.gif) no-repeat center; margin: 0px 5px 0px 0px; padding: 0px; display: inline; height: 8px; width: 8px; }
-.imgTitR	{ background: transparent url(img/tit_r.gif) no-repeat center; margin: 0px 0px 0px 5px; padding: 0px; display: inline; height: 8px; width: 8px; }
+.imgSep	{ background: transparent url(img/imgsep.gif) no-repeat center; margin: 0px 4px 1px 4px; display: inline; height: 8px; width: 8px; }
+.imgTitL	{ background: transparent url(img/tit_l.gif) no-repeat center; margin: 0px 5px 1px 0px; display: inline; height: 8px; width: 8px; }
+.imgTitR	{ background: transparent url(img/tit_r.gif) no-repeat center; margin: 0px 0px 1px 5px; display: inline; height: 8px; width: 8px; }
 .logo	{ width: auto; padding: 0; background-color: #ffffff; margin: 0; top: 10px; float: none; text-align: left; }
 .navbar	{ border-top: 1px solid #666666; background: #C2E5FF; padding: 5px; margin: 0px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #666666; text-align: center; }
 .padding	{ padding: 15px; }

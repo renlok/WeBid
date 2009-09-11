@@ -404,7 +404,7 @@ switch ($_SESSION['action'])
 				{
 					if ($crumbs[$i]['cat_id'] > 0)
 					{
-						if ($i > 1)
+						if ($i > 0)
 						{
 							$TPL_categories_list .= ' &gt; ';
 						}
@@ -492,7 +492,7 @@ switch ($_SESSION['action'])
 		{
 			if ($crumbs[$i]['cat_id'] > 0)
 			{
-				if ($i > 1)
+				if ($i > 0)
 				{
 					$TPL_categories_list .= ' &gt; ';
 				}

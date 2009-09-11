@@ -21,6 +21,12 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// update users
+	if ($system->SETTINGS['fee_max_debt'] < $_POST['fee_max_debt'])
+	{
+		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE suspended = 7 AND balance > " . $_POST['fee_max_debt'];
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	}
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
 			  fees = '" . $_POST['fees'] . "',

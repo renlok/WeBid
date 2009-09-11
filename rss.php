@@ -129,7 +129,7 @@ while ($auction_data = mysql_fetch_array($res))
 	{
 		if ($crumbs[$i]['cat_id'] > 0)
 		{
-			if ($i > 1)
+			if ($i > 0)
 			{
 				$cat_value .= ' / ';
 			}

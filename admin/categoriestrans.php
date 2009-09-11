@@ -64,7 +64,8 @@ function rebuild_cat_file($cats)
 	fclose($handle);
 }
 
-if (isset($_POST['categories'])){
+if (isset($_POST['categories']))
+{
 	rebuild_cat_file($_POST['categories']);
 	include "util_cc1.php";
 }

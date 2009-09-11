@@ -73,7 +73,7 @@ function selectAllDelete(formObj, isInverse)
 <!-- BEGIN cats -->
 				<tr valign="top" style="background-color: {cats.ROW_COLOUR};">
 					<td width="10" align="right" valign="top">
-						<a href="categories.php?parent={cats.CAT_ID}"><img src="{SITEURL}images/plus.gif" border=0 alt="Browse Subcategories"></a>
+						<a href="categories.php?parent={cats.CAT_ID}"><img src="{SITEURL}images/plus.gif" border="0" alt="Browse Subcategories" style="vertical-align:middle;"></a>
 					</td>
 					<td valign="top">
 						<input type="text" name="categories[{cats.CAT_ID}]" value="{cats.CAT_NAME}" size="50">

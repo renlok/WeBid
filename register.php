@@ -199,7 +199,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_113;
 		}
-		elseif (!checkdate($birth_month, $birth_day, $birth_year))
+		elseif (!empty($birth_month) && !empty($birth_day) && !empty($birth_year) && !checkdate($birth_month, $birth_day, $birth_year))
 		{
 			$TPL_err = 1;
 			$TPL_errmsg = $ERR_117;

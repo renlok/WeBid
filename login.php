@@ -17,7 +17,7 @@ include 'includes/common.inc.php';
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 {
 	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	header('Location: ' . $sslurl . 'user_login.php');
+	header('location: ' . $sslurl . 'user_login.php');
 	exit;
 }
 

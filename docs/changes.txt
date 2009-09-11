@@ -69,5 +69,7 @@
 - Fixed buying.php so the Your Bid and Total Due show the correct values when an item is bought with buy it now
 - moved the images which contain words into the language folder so they can be translated
 - Fixed the buy it now only auctions so if a single user buys multiple items they wont be shown multiple times in the highest bidder list
+- Changed the regular search from an OR search to an AND search
+- Removed the r image from listing with a reserve price
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

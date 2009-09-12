@@ -1,25 +1,21 @@
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="{SITEURL}admin/style.css" />
-<script type="text/javascript">
-function window_open(pagina,titulo,ancho,largo,x,y){
-	var Ventana= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+ancho+',height='+largo;
-	open(pagina,titulo,Ventana);
-}
-function selectAllDelete(formObj, isInverse) 
-{
-   for (var i=0; i < formObj.length; i++) 
-   {
-	  fldObj = formObj.elements[i];
-	  if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
-	  { 
-		 if (isInverse)
-			fldObj.checked = (fldObj.checked) ? false : true;
-		 else fldObj.checked = true; 
-	   }
-   }
-}
-</script>
+    <link rel="stylesheet" type="text/css" href="{SITEURL}admin/style.css" />
+    <script type="text/javascript">
+		function selectAllDelete(formObj, isInverse) 
+		{
+		   for (var i=0; i < formObj.length; i++) 
+		   {
+			  fldObj = formObj.elements[i];
+			  if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
+			  { 
+				 if (isInverse)
+					fldObj.checked = (fldObj.checked) ? false : true;
+				 else fldObj.checked = true; 
+			   }
+		   }
+		}
+    </script>
 </head>
 <body style="margin:0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -38,7 +34,6 @@ function selectAllDelete(formObj, isInverse)
 </tr>
 <tr> 
 	<td align="center" valign="middle">
-		<br>
 		<form name="conf" action="" method="post">
 		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
 		<tr> 
@@ -46,7 +41,7 @@ function selectAllDelete(formObj, isInverse)
 		</tr>
 		<tr> 
 			<td> 
-				<table width="100%" cellpadding=2 bgcolor="#FFFFFF">
+				<table width="100%" cellpadding="2" bgcolor="#FFFFFF">
 <!-- IF ERROR ne '' -->
 				<tr bgcolor="yellow">
 					<td class="error" colspan="2" align="center">{ERROR}</td>

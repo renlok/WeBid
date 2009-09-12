@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 WeBid
+ *   copyright				: (C) 2008, 2009 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -91,7 +91,7 @@ switch($step)
 		{
 			$_SESSION['ordered_cats'] = array();
 		}
-		
+
 		$parent_id = -1;
 		$group = array();
 		foreach ($_SESSION['import_cats'] as $k => $v)
@@ -168,7 +168,7 @@ switch($step)
 		{
 			$_SESSION['cats_lftrgt'] = array();
 		}
-		
+
 		$cats = array();
 		$count = 1;
 		$cats[0] = array('left' => $count);
@@ -198,8 +198,11 @@ switch($step)
 		unset($_SESSION['ordered_cats']);
 		if (!isset($_GET['from']))
 		{
-			$query = "INSERT INTO `" . $DBPrefix . "categories` (cat_id, left_id, right_id, level, cat_name, parent_id) VALUES
-			(0, " . $_SESSION['cats_lftrgt'][0]['left'] . ", " . $_SESSION['cats_lftrgt'][0]['right'] . ", -1, 'All', -1)";
+			$query = "INSERT INTO `" . $DBPrefix . "categories` (left_id, right_id, level, cat_name, parent_id) VALUES
+			(" . $_SESSION['cats_lftrgt'][0]['left'] . ", " . $_SESSION['cats_lftrgt'][0]['right'] . ", -1, 'All', -1)";
+			$res = mysql_query($query) or die(mysql_error());
+			$top_id = mysql_insert_id();
+			$query = "UPDATE `" . $DBPrefix . "categories` SET parent_id = " . $top_id . " WHERE parent_id = 0";
 			$res = mysql_query($query) or die(mysql_error());
 			$newfrom = $from = 1;
 		}

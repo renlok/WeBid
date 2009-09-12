@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 WeBid
+ *   copyright				: (C) 2008, 2009 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -138,7 +138,7 @@ $parent_node = mysql_fetch_assoc($res);
 
 if (!isset($_GET['parent']))
 {
-	$parent = $parent_node['id'];
+	$parent = $parent_node['cat_id'];
 }
 
 $crumb_string = '';

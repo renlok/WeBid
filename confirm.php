@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 WeBid
+ *   copyright				: (C) 2008, 2009 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -65,7 +65,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 	// login user
 	$query = "SELECT id, hash, password FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']);
 	$res = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($res) > 0)
 	{
 		$password = mysql_result($res, 0, 'password');

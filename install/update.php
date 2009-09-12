@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 WeBid
+ *   copyright				: (C) 2008, 2009 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -11,24 +11,29 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-include('functions.php');
+
+include 'functions.php';
 ?>
 <h1>WeBid Updater, v0.7.3/4 to v0.8</h1>
 <?php
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
-switch($step){
+switch($step)
+{
 	case 2:
 		$siteURL = $_GET['URL'];
 		$siteEmail = $_GET['EMail'];
-		include('../includes/config.inc.php');
-		if (!mysql_connect($DbHost, $DbUser, $DbPassword)){
+		include '../includes/config.inc.php';
+		if (!mysql_connect($DbHost, $DbUser, $DbPassword))
+		{
 			die('<p>Cannot connect to '.$DbHost.'</p>');
 		}
-		if (!mysql_select_db($DbDatabase)){
+		if (!mysql_select_db($DbDatabase))
+		{
 			die('<p>Cannot select database</p>');
 		}
-		include('sql/updatedump.inc.php');
-		for ($i = $from; $i < $to; $i++){
+		include 'sql/updatedump.inc.php';
+		for ($i = 0; $i < count($query); $i++)
+		{
 			mysql_query($query[$i]) or print(mysql_error() . '<br>' . $query[$i] . '<br>');
 		}
 		echo 'Complete, now to <b><a href="MPTT_converter.php">step 3</a></b>';
@@ -47,7 +52,8 @@ $main_path	= "'.$path.'";
 		$output = makeconfigfile($content);
 		if ($output)
 			echo 'Complete, now to <b><a href="?step=2&URL='.$_POST['URL'].'&cats='.$cats.'&n=1">step 2</a></b>';
-		else {
+		else
+		{
 			echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
 			echo '<p><textarea style="width:500px; height:500px;">
 '.$content.'

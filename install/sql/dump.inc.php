@@ -1396,18 +1396,23 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "rates` (
 # Dumping data for table `" . $DBPrefix . "rates`
 # 
 
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (1, 'United States', 'U.S. Dollar', 'USD');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (1, 'Great Britain', 'Pound Sterling ', 'GBP');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (2, 'Argentina', 'Argentinian Peso', 'ARS');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (3, 'Australia', 'Australian Dollar ', 'AUD');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (4, 'Burma', 'Myanmar (Burma) Kyat', 'MMK');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (5, 'Brazil', 'Brazilian Real ', 'BRL');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (6, 'Chile', 'Chilean Peso ', 'CLP');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (7, 'China', 'Chinese Renminbi ', 'CNY');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (8, 'Colombia', 'Colombian Peso ', 'COP');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (9, 'Neth. Antilles', 'Neth. Antilles Guilder', 'ANG');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (10, 'Czech. Republic', 'Czech. Republic Koruna ', 'CZK');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (11, 'Denmark', 'Danish Krone ', 'DKK');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (12, 'European Union', 'EURO', 'EUR');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (13, 'Fiji', 'Fiji Dollar ', 'FJD');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (14, 'Jamaica', 'Jamaican Dollar', 'JMD');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (15, 'Trinidad & Tobago', 'Trinidad & Tobago Dollar', 'TTD');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (16, 'Hong Kong', 'Hong Kong Dollar', 'HKD');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (17, 'Ghana', 'Ghanaian Cedi', 'GHC');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (18, 'Iceland', 'Icelandic Krona ', 'INR');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (19, 'India', 'Indian Rupee', 'INR');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (20, 'Indonesia', 'Indonesian Rupiah ', 'IDR');";
@@ -1416,6 +1421,8 @@ $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (22, 'Japan', 'Japanese 
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (23, 'Malaysia', 'Malaysian Ringgit', 'MYR');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (24, 'Mexico', 'New Peso', 'MXN');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (25, 'Morocco', 'Moroccan Dirham ', 'MAD');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (26, 'Honduras', 'Honduras Lempira', 'HNL');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (27, 'Hungaria', 'Hungarian Forint', 'HUF');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (28, 'New Zealand', 'New Zealand Dollar', 'NZD');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (29, 'Norway', 'Norwege Krone', 'NOK');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (30, 'Pakistan', 'Pakistan Rupee ', 'PKR');";
@@ -1434,23 +1441,16 @@ $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (42, 'Sweden', 'Swedish 
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (43, 'Switzerland', 'Swiss Franc', 'CHF');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (44, 'Taiwan', 'Taiwanese New Dollar ', 'TWD');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (45, 'Thailand', 'Thailand Thai Baht ', 'THB');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (46, 'Pacific Financial Community', 'Pacific Financial Community Franc', 'CFP');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (47, 'Tunisia', 'Tunisisan Dinar', 'TND');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (48, 'Turkey', 'Turkish Lira', 'TRL');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (49, 'Great Britain', 'Pound Sterling ', 'GBP');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (49, 'United States', 'U.S. Dollar', 'USD');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (50, 'Venezuela', 'Bolivar ', 'VEB');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (51, 'Bahamas', 'Bahamian Dollar', 'BSD');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (52, 'Croatia', 'Croatian Kuna', 'HRK');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (53, 'East Caribe', 'East Caribbean Dollar', 'XCD');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (54, 'CFA Franc (African Financial Community)', 'African Financial Community Franc', 'CFA');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (55, 'Pacific Financial Community', 'Pacific Financial Community Franc', 'CFP');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (56, 'Ghana', 'Ghanaian Cedi', 'GHC');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (57, 'Honduras', 'Honduras Lempira', 'HNL');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (58, 'Hungaria', 'Hungarian Forint', 'HUF');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (59, 'Jamaica', 'Jamaican Dollar', 'JMD');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (60, 'Burma', 'Myanmar (Burma) Kyat', 'MMK');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (61, 'Neth. Antilles', 'Neth. Antilles Guilder', 'ANG');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (62, 'Trinidad & Tobago', 'Trinidad & Tobago Dollar', 'TTD');";
-$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (63, 'Canadian', 'Canadian Dollar', 'CAD');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (55, 'Canadian', 'Canadian Dollar', 'CAD');";
 
 # ############################
 

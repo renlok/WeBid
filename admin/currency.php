@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 WeBid
+ *   copyright				: (C) 2008, 2009 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,6 +18,19 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+
+// Create currencies array
+$query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY ime";
+$res_ = mysql_query($query);
+$system->check_mysql($res_, $query, __LINE__, __FILE__);
+if (mysql_num_rows($res_) > 0)
+{
+	while ($row = mysql_fetch_array($res_))
+	{
+		$CURRENCIES[$row['id']] = $row['symbol'] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
+		$CURRENCIES_SYMBOLS[$row['id']] = $row['symbol'];
+	}
+}
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -39,24 +52,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				moneydecimals = " . intval($_POST['moneydecimals']) . ",
 				moneysymbol = " . intval($_POST['moneysymbol']);
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
+		$system->SETTINGS['moneyformat'] = $_POST['moneyformat'];
+		$system->SETTINGS['moneydecimals'] = $_POST['moneydecimals'];
+		$system->SETTINGS['moneysymbol'] = $_POST['moneysymbol'];
 		$ERR = $MSG['553'];
-	}
-	$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
-	$system->SETTINGS['moneyformat'] = $_POST['moneyformat'];
-	$system->SETTINGS['moneydecimals'] = $_POST['moneydecimals'];
-	$system->SETTINGS['moneysymbol'] = $_POST['moneysymbol'];
-}
-
-// Create currencies array
-$query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY ime";
-$res_ = mysql_query($query);
-$system->check_mysql($res_, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res_) > 0)
-{
-	while ($row = mysql_fetch_array($res_))
-	{
-		$CURRENCIES[$row['id']] = $row['symbol'] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
-		$CURRENCIES_SYMBOLS[$row['id']] = $row['symbol'];
 	}
 }
 

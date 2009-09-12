@@ -4,7 +4,7 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `hash` VARCHAR(5) NOT NULL 
 $query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD `hash` VARCHAR(5) NOT NULL AFTER `password` ";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fees`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
-  `id` INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `id` INT(5) NOT NULL AUTO_INCREMENT ,
   `fee_from` double(16,4) NOT NULL ,
   `fee_to` double(16,4) NOT NULL ,
   `fee_type` enum('flat', 'perc') NOT NULL,

@@ -75,6 +75,7 @@ switch ($user_data['suspended'])
 	case 0:
 		$action = $MSG['305'];
 		$question = $MSG['308'];
+		$mode = 'suspend';
 		break;
 	case 10:
 		$action = $MSG['299'];
@@ -83,7 +84,6 @@ switch ($user_data['suspended'])
 	default:
 		$action = $MSG['306'];
 		$question = $MSG['309'];
-		$mode = 'suspend';
 		break;
 }
 

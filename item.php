@@ -493,7 +493,8 @@ $template->assign_vars(array(
 		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user']),
 		'B_HASBUYER' => (count($hbidder_data) > 0),
 		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
-		'B_HAS_QUESTIONS' => ($num_questions > 0)
+		'B_HAS_QUESTIONS' => ($num_questions > 0),
+		'B_CAN_BUY' => $user->can_buy
 		));
 
 include 'header.php';

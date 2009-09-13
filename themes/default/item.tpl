@@ -216,15 +216,15 @@ $(document).ready(function() {
 			  <td valign='middle' style='border-left: 1px solid #ddddff; border-right: 1px solid #ddddff;'>
 			<tr>
 			  <td>
-<!-- IF B_HASENDED eq false -->
+<!-- IF B_HASENDED eq false and B_CAN_BUY -->
 	<!-- IF B_NOTBNONLY -->
 				<table width="100%" border=0 cellpadding=2 cellspacing=0 border=1>
-				<form name='bid' action="{BIDURL}bid.php" method='post'>
+				<form name="bid" action="{BIDURL}bid.php" method="post">
 				<tr>
-				  <td width=65%>
+				  <td width="65%">
 					<table width=100% border=0 cellpadding=2 cellspacing=0>
 					  <tr>
-						<td align=left>
+						<td align="left">
 						<b>
 		<!-- IF ATYPE eq 1 -->
 						{L_124}: {NEXTBID}

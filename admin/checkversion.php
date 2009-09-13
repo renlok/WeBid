@@ -17,20 +17,26 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (!($handle = @fopen("http://www.webidsupport.com/version.txt", "r"))){
+if (!($handle = @fopen("http://www.webidsupport.com/version.txt", "r")))
+{
 	$error = $ERR_25_0002;
 	$realversion = 'Unknown';
-} else {
+}
+else
+{
 	$realversion = fread($handle, 5);
 	fclose($handle);
 }
 $handle = fopen("../includes/version.txt", "r") or die("error");
 $myversion = fread($handle, 5);
 fclose($handle);
-if ($realversion != $myversion){
+if ($realversion != $myversion)
+{
 	$myversion = "<span style='color:#ff0000;'>".$myversion."</span>";
 	$text = $MSG['30_0211'];
-} else {
+}
+else
+{
 	$myversion = "<span style='color:#00ae00;'>".$myversion."</span>";
 	$text = $MSG['30_0212'];
 }

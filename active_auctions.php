@@ -58,8 +58,8 @@ if (!isset($PAGES) || $PAGES < 1) $PAGES = 1;
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 		WHERE user = " . $user_id . "
 		AND closed = 0
-		AND starts <= '" . $NOW . "'";
-$query .= "ORDER BY ends ASC LIMIT $OFFSET, $LIMIT";
+		AND starts <= '" . $NOW . "'
+		ORDER BY ends ASC LIMIT $OFFSET, $LIMIT";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
@@ -96,7 +96,8 @@ while ($row = mysql_fetch_array($res))
 			'NUM_BIDS' => $num_bids,
 			'TIMELEFT' => FormatTimeLeft($difference),
 
-			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] == 'y' || $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price']))))
+			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] == 'y' || $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),
+			'B_BNONLY' => ($row['bn_only'] == 'y')
 			));
 
 	$auctions_count++;

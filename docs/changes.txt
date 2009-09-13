@@ -71,5 +71,6 @@
 - Fixed the buy it now only auctions so if a single user buys multiple items they wont be shown multiple times in the highest bidder list
 - Changed the regular search from an OR search to an AND search
 - Removed the r image from listing with a reserve price
+- Fixed the active auction page so for buy it only auctions the buy it now price is displayed instead of the current bid
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

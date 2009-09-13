@@ -108,7 +108,8 @@ while ($row = mysql_fetch_array($result))
 			'NUM_BIDS' => $num_bids,
 			'TIMELEFT' => $days_difference . ' ' . $MSG['126a'],
 
-			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['current_bid'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
+			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] == 'y' || $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),
+			'B_BNONLY' => ($row['bn_only'] == 'y')
 			));
 
 	$auctions_count++;

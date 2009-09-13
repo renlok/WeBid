@@ -22,6 +22,12 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$bn_only_percent = ($_POST['bn_only_percent'] > 100) ? 100 : ($_POST['bn_only_percent'] < 0) ? 0 : intval($_POST['bn_only_percent']);
+	// reset the bn_only blockers
+	if ($bn_only_percent > $system->SETTINGS['bn_only_percent'])
+	{
+		$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE id = bn_only = 'n'";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	}
 	$query = "UPDATE " . $DBPrefix . "settings SET
 				buy_now = " . intval($_POST['buy_now']) . ",
 				bn_only = '" . $_POST['bn_only'] . "',

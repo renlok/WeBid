@@ -17,11 +17,16 @@
 					<td width="10%"><a href="{SITEURL}item.php?id={auctions.ID}"><img src="{auctions.PIC_URL}" width="{THUMBWIDTH}" border='0' alt="image"></a></td>
 					<td width="45%">
 						<a href="{SITEURL}item.php?id={auctions.ID}">{auctions.TITLE}</a>
-						<!-- IF B_BUY_NOW -->
-						&nbsp;&nbsp;&nbsp;(<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img align="middle" src="{auctions.BNIMG}" border="0"></a>&nbsp;{auctions.BNFORMAT})
-						<!-- ENDIF -->
+    <!-- IF auctions.B_BUY_NOW and not auctions.B_BNONLY -->
+						&nbsp;&nbsp;(<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img align="middle" src="{auctions.BNIMG}" border="0"></a> {auctions.BNFORMAT})
+    <!-- ENDIF -->
 					</td>
-					<td width="15%">{auctions.BIDFORMAT}</td>
+					<td width="15%">
+	<!-- IF auctions.B_BNONLY -->
+    					<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img src="{auctions.BNIMG}" border="0" class="buynow"></a> {auctions.BNFORMAT}
+    <!-- ELSE -->
+                        {auctions.BIDFORMAT}
+    <!-- ENDIF --></td>
 					<td width="15%">{auctions.NUM_BIDS}</td>
 					<td width="15%">{auctions.TIMELEFT}</td>
 				</tr>

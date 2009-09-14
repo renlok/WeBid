@@ -27,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$ERR = $ERR_047;
 	}
-	elseif ($_POST['sizetype'] == 'fix' && (!ereg("^[0-9]+$",$_POST['width']) || !ereg("^[0-9]+$",$_POST['height'])))
+	elseif ($_POST['sizetype'] == 'fix' && (!ereg("^[0-9]+$", $_POST['width']) || !ereg("^[0-9]+$", $_POST['height'])))
 	{
 		$ERR = $MSG['_0020'];
 	}
@@ -46,117 +46,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['banner_height'] = $_POST['height'];
 }
 
-?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body style="margin:0;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr> 
-	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-		<tr> 
-		  <td width="30"><img src="images/i_ban.gif" ></td>
-		  <td class=white><?php echo $MSG['25_0011']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['_0013']; ?></td>
-		</tr>
-	  </table></td>
-  </tr>
-  <tr>
-	<td align="center" valign="middle">&nbsp;</td>
-  </tr>
-	<tr> 
-	<td align="center" valign="middle">
-<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
-<tr>
-<td align="center">
-	<BR>
-	<form NAME=conf action="" method="post">
-		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
-			<tr>
-				<td align="center" class=title>
-					<?php print $MSG['_0013']; ?>
-					</B></td>
-			</tr>
-			<tr>
-				<td>
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'BANNER_SIZE_ANY' => ($system->SETTINGS['banner_sizetype'] == 'any') ? ' checked' : '',
+		'BANNER_SIZE_FIX' => ($system->SETTINGS['banner_sizetype'] == 'any') ? ' checked' : '',
+		'BANNER_WIDTH' => $system->SETTINGS['banner_width'],
+		'BANNER_HEIGHT' => $system->SETTINGS['banner_height']
+		));
 
-				<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
-				  <?php
-				  if (!empty($ERR))
-				  {
-						?>
-				  <tr>
-					<td class=error colspan="2" align="center" bgcolor=yellow>
-					  <?php echo $ERR; ?>
-					 </td>
-				  </tr>
-				  <?php
-				  }
-						?>
-				  <tr valign="top">
-					<td colspan="2">
-					  <?php print $MSG['_0014']; ?>
-					  </td>
-				  </tr>
-				  <tr valign="top" bgcolor="#dddddd">
-					<td width="73" height="22">
-					  <input type="radio" name="sizetype" value="any"
-								<?php if ($system->SETTINGS['banner_sizetype'] == 'any') print " CHECKED";?>
-								>
-					  </td>
-					<td height="22" width="559">
-					  <?php echo $MSG['_0015']; ?>
-					  </td>
-				  </tr>
-				  <tr valign="top">
-					<td width="73" height="22" bgcolor="#eeeeee">
-					  <input type="radio" name="sizetype" value="fix"
-								<?php if ($system->SETTINGS['banner_sizetype'] == 'fix') print " CHECKED";?>
-								>
-					  </td>
-					<td height="22" width="559" bgcolor="#eeeeee">
-					  <?php echo $MSG['_0016']; ?>
-					  </td>
-				  </tr>
-				  <tr valign="top">
-					<td width="73" height="22" bgcolor="#eeeeee">
-					  <?php echo $MSG['_0017']; ?>
-					  </td>
-					<td width="559" height="22" bgcolor="#eeeeee">
-					  <input type=text NAME=width value="<?php echo $system->SETTINGS['banner_width']; ?>">
-					  <?php echo $MSG['5224']; ?>
-					  </td>
-				  </tr>
-				  <tr valign="top">
-					<td width="73" height="22" bgcolor="#eeeeee">
-					  <?php echo $MSG['_0018']; ?>
-					  </td>
-					<td height="22" width="559" bgcolor="#eeeeee">
-					  <input type=text NAME=height value="<?php echo $system->SETTINGS['banner_height']; ?>">
-					  <?php echo $MSG['5224']; ?>
-					  </td>
-				  </tr>
-				  <tr>
-					<td width="73">&nbsp; </td>
-					<td width="559">
-					  <input type="hidden" name="action" value="update">
-					  <input type="hidden" name="id" value="<?php echo $id; ?>">
-					  <input type="submit" name="act" value="<?php print $MSG['530']; ?>">
-					</td>
-				  </tr>
-				  <tr>
-					<td colspan="2"> </td>
-				  </tr>
-				</table>
-				</td>
-			</tr>
-		</table>
-		</form>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-</body>
-</html>
+$template->set_filenames(array(
+		'body' => 'bannersettings.tpl'
+		));
+$template->display('body');
+
+?>

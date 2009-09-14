@@ -34,71 +34,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['30_0033'];
 }
 
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl']
+		));
+
+$template->set_filenames(array(
+		'body' => 'clearcache.tpl'
+		));
+$template->display('body');
 ?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body style="margin:0;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-		<td background="images/bac_barint.gif">
-			<table width="100%" border="0" cellspacing="5" cellpadding="0">
-				<tr>
-					<td width="30"><img src="images/i_gra.gif"></td>
-					<td class=white><?php echo $MSG['25_0009']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['30_0031']; ?></td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td align="center" valign="middle">&nbsp;</td>
-	</tr>
-	<tr>
-		<td align="center" valign="middle">
-			<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
-				<tr>
-					<td align="center"> <br>
-						<form name="conf" action="" method="post">
-							<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
-								<tr>
-									<td align=CENTER class=title><?php print $MSG['30_0031']; ?></td>
-								</tr>
-								<tr>
-									<td>
-										<table width=100% cellpadding=2 align="CENTER" bgcolor="#FFFFFF">
-											<?php
-											if (!empty($ERR))
-											{
-											?>
-											<tr bgcolor=yellow>
-												<td colspan="2" align=CENTER><b><?php print $ERR; ?> </b></td>
-											</tr>
-											<?php
-											}
-				 							?>
-											<tr valign="TOP">
-												<td width="393" align="center"> 
-													<?php echo $MSG['30_0032']; ?>
-												</td>
-											</tr>
-											<tr valign="TOP">
-												<td align="center">
-													<input type="hidden" name="action" value="update">
-													<input type="submit" name="submit" value="<?php echo $MSG['30_0031']; ?>">
-												</td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-						</form>
-						<br>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-</body>
-</html>

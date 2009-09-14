@@ -28,111 +28,18 @@ if ($_POST['action'] == 'update')
 	$system->SETTINGS['boards'] = $_POST['boards'];
 	$system->SETTINGS['boardslink'] = $_POST['boardslink'];
 }
+
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'BOARDS_YES' => ($system->SETTINGS['boards'] == 'y') ? ' checked' : '',
+		'BOARDS_NO' => ($system->SETTINGS['boards'] == 'n') ? ' checked' : '',
+		'BOARDS_LINK_YES' => ($system->SETTINGS['boardslink'] == 'y') ? ' checked' : '',
+		'BOARDS_LINK_NO' => ($system->SETTINGS['boardslink'] == 'n') ? ' checked' : ''
+		));
+
+$template->set_filenames(array(
+		'body' => 'boardsettings.tpl'
+		));
+$template->display('body');
 ?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body style="margin:0;">
-<table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
-<tr>
-	<td background="images/bac_barint.gif" colspan="2">
-		<table width="100%" border="0" cellspacing="5" cellpadding="0">
-		<tr> 
-		<td width="30"><img src="images/i_con.gif" ></td>
-		<td class=white><?php echo $MSG['25_0018']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['5047']; ?></td>
-		</tr>
-		</table>
-	</td>
-</tr>
-<tr>
-	<td align="center" valign="middle">&nbsp;</td>
-  </tr>
-<tr>
-<td>
-<CENTER>
-				<BR>
-				<form NAME=conf action="" method="post">
-					<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
-						<tr>
-							<td align="center"><FONT COLOR=#FFFFFF FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="4"><B>
-								<?php print $MSG['5047']; ?>
-								</B></FONT></td>
-						</tr>
-						<tr>
-							<td>
-
-				<table width=100% cellpadding=2 align="center" bgcolor="#FFFFFF">
-				  <?php
-					  if (!empty($ERR))
-					  {
-				  ?>
-				  <tr bgcolor=yellow>
-					<td colspan="2" align="center"><B><FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="2" COLOR="#FF0000">
-					  <?php print $ERR; ?>
-					  </FONT></B></td>
-				  </tr>
-				  <?php
-					  }
-				   ?>
-				  <tr valign="top">
-					<td width=195 height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  <?php echo $MSG['5048']; ?>
-					  </FONT></td>
-					<td width="437" height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  <input type="radio" name="boards" value="y" <?if ($system->SETTINGS[boards] == "y") print " CHECKED"?>>
-					  <?php print $MSG['030']; ?>
-					  <input type="radio" name="boards" value="n" <?if ($system->SETTINGS[boards] == "n") print " CHECKED"?>>
-					  <?php print $MSG['029']; ?>
-					  </FONT></td>
-				  </tr>
-				  <tr valign="top">
-					<td width=195>&nbsp;</td>
-					<td width="437"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  </FONT></td>
-				  </tr>
-				  <tr valign="top">
-					<td width=195 height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  <?php echo $MSG['5049']; ?>
-					  </FONT></td>
-					<td width="437" height="22"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  <input type="radio" name="boardslink" value="y" <?if ($system->SETTINGS[boardslink] == "y") print " CHECKED"?>>
-					  <?php print $MSG['030']; ?>
-					  <input type="radio" name="boardslink" value="n" <?if ($system->SETTINGS[boardslink] == "n") print " CHECKED"?>>
-					  <?php print $MSG['029']; ?>
-					  <BR><?php echo $MSG['5050']; ?>
-					  </FONT></td>
-				  </tr>
-				  <tr valign="top">
-					<td width=195>&nbsp;</td>
-					<td width="437"><FONT FACE="Verdana, Verdana, Arial, Helvetica, sans-serif" SIZE="2">
-					  </FONT></td>
-				  </tr>
-				  <tr valign="top">
-					<td width=195 height="22">&nbsp;</td>
-					<td width="437" height="22">&nbsp;</td>
-				  </tr>
-				  <tr>
-					<td width=195>
-					  <input type="hidden" name="action" value="update">
-					</td>
-					<td width="437">
-					  <input type=submit NAME=act value="<?php print $MSG['530']; ?>">
-					</td>
-				  </tr>
-				  <tr>
-					<td width=195></td>
-					<td width="437"> </td>
-				  </tr>
-				</table>
-							</td>
-						</tr>
-					</table>
-					</form>
-	</CENTER>
-
-</td>
-</tr>
-</table>
-</body>
-</html>

@@ -17,9 +17,9 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (!($handle = @fopen("http://www.webidsupport.com/version.txt", "r")))
+if (!($handle = @fopen('http://www.webidsupport.com/version.txt', 'r')))
 {
-	$error = $ERR_25_0002;
+	$ERR = $ERR_25_0002;
 	$realversion = 'Unknown';
 }
 else
@@ -27,50 +27,39 @@ else
 	$realversion = fread($handle, 5);
 	fclose($handle);
 }
-$handle = fopen("../includes/version.txt", "r") or die("error");
+
+$handle = fopen('../includes/version.txt', 'r') or die('error');
 $myversion = fread($handle, 5);
 fclose($handle);
+
 if ($realversion != $myversion)
 {
-	$myversion = "<span style='color:#ff0000;'>".$myversion."</span>";
+	$myversion = '<span style="color:#ff0000;">' . $myversion . '</span>';
 	$text = $MSG['30_0211'];
 }
 else
 {
-	$myversion = "<span style='color:#00ae00;'>".$myversion."</span>";
+	$myversion = '<span style="color:#00ae00;">' . $myversion . '</span>';
 	$text = $MSG['30_0212'];
 }
+
 $output =<<<EOD
 $error
 Your Version: <b>$myversion</b><br>
 Current Version: $realversion<br>
 $text
 EOD;
+
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? '<p>' . $ERR . '</p>' : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'TEXT' => $text,
+		'MYVERSION' => $myversion,
+		'REALVERSION' => $realversion
+		));
+
+$template->set_filenames(array(
+		'body' => 'checkversion.tpl'
+		));
+$template->display('body');
 ?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body style="margin:0;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-		<td background="images/bac_barint.gif">
-			<table width="100%" border="0" cellspacing="5" cellpadding="0">
-				<tr>
-					<td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
-					<td class="white"><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['25_0169a']; ?></td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td align="center" valign="middle">&nbsp;</td>
-	</tr>
-	<tr>
-		<td align="center" valign="middle">
-		<?php echo $output; ?>
-		</td>
-	</tr>
-</table>
-</body>
-</html>

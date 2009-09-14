@@ -14,7 +14,7 @@
 
 include 'includes/common.inc.php';
 
-if ($system->SETTINGS['fees'] == 'y')
+if ($system->SETTINGS['fees'] == 'n')
 {
 	header('location: index.php');
 	exit;

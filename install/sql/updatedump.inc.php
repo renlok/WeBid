@@ -49,8 +49,8 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `cookiesprefix`, ADD `c
 			ADD `displayed_feilds` VARCHAR(255) NOT NULL default 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}'";
 $query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `ao_hpf_enabled` enum('y','n') NOT NULL default 'y', ADD `ao_hi_enabled` enum('y','n') NOT NULL default 'y',
 			ADD `ao_bi_enabled` enum('y','n') NOT NULL default 'y', DROP `accounttype`,
-			ADD `fee_type` int(1) NOT NULL default '1' AFTER `fees`, ADD `proxy_bidding` enum('y','n') NOT NULL default 'y', ADD `fee_max_debt` double(6,4) NOT NULL default '25.00',
-			ADD `fee_signup_bonus` double(6,4) NOT NULL default '0.00', ADD `fee_disable_acc` enum('y','n') NOT NULL default 'y',
+			ADD `fee_type` int(1) NOT NULL default '1' AFTER `fees`, ADD `proxy_bidding` enum('y','n') NOT NULL default 'y', ADD `fee_max_debt` double(16,4) NOT NULL default '25.00',
+			ADD `fee_signup_bonus` double(16,4) NOT NULL default '0.00', ADD `fee_disable_acc` enum('y','n') NOT NULL default 'y',
 			ADD `recaptcha_public` varchar(40) default '', ADD `recaptcha_private` varchar(40) default '', ADD `spam_sendtofriend` int(1) default '1', ADD `spam_register` int(1) default '1'";
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userslanguage`;";
 $query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `bold` enum('y','n') NOT NULL default 'n', ADD `highlighted` enum('y','n') NOT NULL default 'n',

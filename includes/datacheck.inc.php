@@ -90,6 +90,7 @@ function CheckSellData(){
 	023 = category missing
 	024 = payment method missing
 	025 = payment method missing
+	060 = start time has already happened
 	061 = buy now price inserted is not correct
 	062 = may not set a reserve price in a Dutch Auction
 	063 = may not use custom increments in a Dutch Auction
@@ -100,7 +101,7 @@ function CheckSellData(){
 
 	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system;
-	global $payments, $auction_types, $invitedlists, $num, $nnum;
+	global $payments, $auction_types, $invitedlists, $num, $nnum, $a_starts;
 
 	if (empty($title))
 	{
@@ -120,27 +121,27 @@ function CheckSellData(){
 	{
 		$minimum_bid = $system->input_money($minimum_bid);
 	}
-	
+
 	if ((empty($minimum_bid) || $minimum_bid < 0) && ($buy_now_only == 'n' || !$buy_now_only))
 	{
 		return '019';
 	}
-	
+
 	if (empty($reserve_price) && $with_reserve == 'yes')
 	{
 		return '021';
 	}
-	
+
 	if ($increments == 2 && (empty($customincrement) || floatval($system->input_money($customincrement)) == 0))
 	{
 		return '056';
 	}
-	
+
 	if (!ereg("^([0-9])*|(\.[0-9]{1,2})?$", $customincrement))
 	{
 		return '057';
 	}
-	
+
 	if ($with_reserve == 'yes' && !ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($reserve_price)))
 	{
 		return '022';
@@ -149,7 +150,7 @@ function CheckSellData(){
 	{
 		$reserve_price = $system->input_money($reserve_price);
 	}
-	
+
 	if ($buy_now_only == 'y')
 	{
 		$buy_now = 'yes';
@@ -158,7 +159,7 @@ function CheckSellData(){
 			return '061';
 		}
 	}
-	
+
 	if ($buy_now == 'yes' && (!ereg("^([0-9])*|(\.[0-9]{1,2})?$", $system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0))
 	{
 		return '061';
@@ -167,7 +168,7 @@ function CheckSellData(){
 	{
 		$buy_now_price = $system->input_money($buy_now_price);
 	}	
-	
+
 	$numpay = count($payment);
 	if ($numpay == 0)
 	{
@@ -177,17 +178,17 @@ function CheckSellData(){
 	{
 		$payment_ok = 1;
 	}
-	
+
 	if (!isset($auction_types[intval($atype)]))
 	{
 		return '600';
 	}
-	
+
 	if (intval($iquantity) < 1)
 	{
 		return '601';
 	}
-	
+
 	if ($atype == 2)
 	{
 		if ($with_reserve == 'yes')
@@ -214,7 +215,7 @@ function CheckSellData(){
 	{
 		return '5045';
 	}
-	
+
 	if ($buy_now == 'yes' && $buy_now_only == 'n')
 	{
 		if (($with_reserve == 'yes' && $buy_now_price <= $reserve_price) || $buy_now_price <= $minimum_bid)
@@ -222,7 +223,7 @@ function CheckSellData(){
 			return '5046';
 		}
 	}
-	
+
 	if (!empty($_POST['relist']) && !is_numeric($_POST['relist']))
 	{
 		return '_0149';
@@ -230,6 +231,21 @@ function CheckSellData(){
 	elseif ($_POST['relist'] > $system->SETTINGS['relisting'] && !empty($_POST['relist']))
 	{
 		return '_0161';
+	}
+
+	if (!(strpos($a_starts, '-') === false))
+	{
+		$a_starts = _gmmktime(substr($a_starts, 11, 2),
+			substr($a_starts, 14, 2),
+			substr($a_starts, 17, 2),
+			substr($a_starts, 5, 2),
+			substr($a_starts, 8, 2),
+			substr($a_starts, 0, 4), 0);
+
+		if ($a_starts < time())
+		{
+			return '60';
+		}
 	}
 	
 }//--CheckSellData

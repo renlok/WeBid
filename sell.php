@@ -362,7 +362,7 @@ switch ($_SESSION['action'])
 				}
 				else
 				{
-					$ERR = "ERR_602";
+					$ERR = 'ERR_602';
 					$er = true;
 				}
 			}

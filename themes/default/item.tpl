@@ -226,21 +226,19 @@ $(document).ready(function() {
 					  <tr>
 						<td align="left">
 						<b>
+		<!-- IF QTY gt 1 -->
+							{L_284}: <input type="text" name="qty" size=15 /> {QTY} {L_5408}<br>
+		<!-- ENDIF -->
+							{L_121} <input type="text" name="bid" size="15">
 		<!-- IF ATYPE eq 1 -->
 						{L_124}: {NEXTBID}
 						 <br>
 		<!-- ENDIF -->
-		<!-- IF QTY gt 1 -->
-							 {L_284}: <input type="text" name="qty" size=15 /> {QTY} {L_5408}<br>
-		<!-- ENDIF -->
-						 {L_121}
-					   <br><input type="text" name="bid" size=15 />
 						</td>
 					  </tr>
 					</table>
 				   </td>
 				   <td valign='center' align='center' class='tema' width="50%">
-					 <input type="hidden" name="bid_next" value="{PNEXTBID}">
 					 <input type="hidden" name="seller_id" value="{SELLER_ID}">
 					 <input type="hidden" name="title" value="{TITLE}" >
 					 <input type="hidden" name="category" value="{CAT_ID}" >

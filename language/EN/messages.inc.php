@@ -94,6 +94,7 @@ $ERR_068 = "Chosen theme does not exist";
 $ERR_069 = "Currency conversion failed";
 $ERR_070 = "This message doesn't exist";
 $ERR_071 = "Username is invalid can only contain letters and numbers";
+$ERR_071 = "You must enter a bid amount";
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
@@ -285,7 +286,7 @@ $MSG['117'] = "Higher bidder";
 $MSG['118'] = "Ends within";
 $MSG['119'] = "# of bids";
 $MSG['120'] = "Bid increment";
-$MSG['121'] = "Place Your Maximum Bid Here";
+$MSG['121'] = "Place Your Bid Here:";
 $MSG['122'] = "Edit, delete or add auction durations using the form below";
 $MSG['123'] = "Durations table updated";
 $MSG['124'] = "Minimum bid";

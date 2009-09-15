@@ -101,7 +101,7 @@ function CheckSellData(){
 
 	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system;
-	global $payments, $auction_types, $invitedlists, $num, $nnum, $a_starts;
+	global $payments, $auction_types, $invitedlists, $num, $nnum, $a_starts, $start_now;
 
 	if (empty($title))
 	{
@@ -233,7 +233,7 @@ function CheckSellData(){
 		return '_0161';
 	}
 
-	if (!(strpos($a_starts, '-') === false))
+	if (!(strpos($a_starts, '-') === false) && empty($start_now))
 	{
 		$a_starts = _gmmktime(substr($a_starts, 11, 2),
 			substr($a_starts, 14, 2),
@@ -244,7 +244,7 @@ function CheckSellData(){
 
 		if ($a_starts < time())
 		{
-			return '60';
+			return '060';
 		}
 	}
 	

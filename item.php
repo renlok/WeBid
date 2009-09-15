@@ -446,7 +446,6 @@ $template->assign_vars(array(
 		'MINBID' => $min_bid,
 		'MAXBID' => $high_bid,
 		'NEXTBID' => $next_bid,
-		'PNEXTBID' => $next_bidp,
 		'INTERNATIONAL' => ($auction_data['international'] == 1) ? $MSG['033'] : $MSG['043'],
 		'SHIPPING' => ($auction_data['shipping'] == 1) ? $MSG['031'] : $MSG['032'],
 		'SHIPPINGTERMS' => nl2br($auction_data['shipping_terms']),

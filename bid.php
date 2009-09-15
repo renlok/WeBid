@@ -91,8 +91,15 @@ if (mysql_num_rows($res) == 0)
 {
 	$errmsg = $ERR_606;
 }
+
+// check user entered a bid
+if (empty($bid) && !isset($errmsg))
+{
+	$errmsg = $ERR_071;
+}
+
 // check the bid is valid
-if (!$system->CheckMoney($bid))
+if (!$system->CheckMoney($bid) && !isset($errmsg))
 {
 	$errmsg = $ERR_058;
 }
@@ -112,7 +119,7 @@ $reserve = $Data['reserve_price'];
 $c = $Data['ends'];
 $cbid = ($current_bid == 0) ? $minimum_bid : $current_bid;
 
-if ($Data['ends'] <= time() || $Data['closed'] == 1)
+if (($Data['ends'] <= time() || $Data['closed'] == 1) && !isset($errmsg))
 {
 	$errmsg = $ERR_614;
 }
@@ -150,7 +157,7 @@ else
 }
 
 $tmpmsg = CheckBidData();
-if ($tmpmsg != 0)
+if ($tmpmsg != 0 && !isset($errmsg))
 {
 	$errmsg = ${'ERR_' . $tmpmsg};
 }

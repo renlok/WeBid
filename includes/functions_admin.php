@@ -67,11 +67,11 @@ if (!defined('AdminFuncCall'))
 			}
 			if ($selectsetting == $option)
 			{
-				$html .= '<option value=' . $option . ' selected>' . $value . '</option>';
+				$html .= '<option value="' . $option . '" selected>' . $value . '</option>';
 			}
 			else
 			{
-				$html .= '<option value=' . $option . '>' . $value . '</option>';
+				$html .= '<option value="' . $option . '">' . $value . '</option>';
 			}
 		}
 		$html .= '</select>';

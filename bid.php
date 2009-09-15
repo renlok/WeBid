@@ -36,7 +36,7 @@ if (!$user->can_buy)
 }
 
 $id = intval($_REQUEST['id']);
-$bid = $_REQUEST['bid'];
+$bid = $_POST['bid'];
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
 $bidder_id = $user->user_data['id'];
 $bidding_ended = false;
@@ -95,7 +95,7 @@ if (mysql_num_rows($res) == 0)
 // check user entered a bid
 if (empty($bid) && !isset($errmsg))
 {
-	$errmsg = $ERR_071;
+	$errmsg = $ERR_072;
 }
 
 // check the bid is valid

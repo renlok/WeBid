@@ -18,6 +18,7 @@ include $main_path . 'language/' . $language . '/categories.inc.php';
 $NOW = time();
 $p24h = time() + (24 * 60 * 60);
 $m24h = time() - (24 * 60 * 60);
+$catscontrol = new MPTTcategories();
 
 $user_id = intval($_REQUEST['user_id']);
 

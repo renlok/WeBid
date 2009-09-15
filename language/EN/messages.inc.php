@@ -94,7 +94,7 @@ $ERR_068 = "Chosen theme does not exist";
 $ERR_069 = "Currency conversion failed";
 $ERR_070 = "This message doesn't exist";
 $ERR_071 = "Username is invalid can only contain letters and numbers";
-$ERR_071 = "You must enter a bid amount";
+$ERR_072 = "You must enter a bid amount";
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";

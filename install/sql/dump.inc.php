@@ -1631,7 +1631,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `item_watch` text,
   `endemailmode` enum('one','cum','none') NOT NULL default 'one',
   `startemailmode` enum('yes','no') NOT NULL default 'yes',
-  `emailtype` enum('html','text') NOT NULL default 'text',
+  `emailtype` enum('html','text') NOT NULL default 'html',
   `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
   `payment_details` text,
   `groups` text,

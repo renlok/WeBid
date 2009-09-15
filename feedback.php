@@ -285,8 +285,8 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 			'WS' => $ws,
 			'FEEDBACK' => $TPL_feedback,
 			'RATE1' => (!isset($_POST['TPL_rate']) || $_POST['TPL_rate'] == 1) ? ' checked="true"' : '',
-			'RATE2' => (isset($_POST['TPL_rate'] && $_POST['TPL_rate'] == 0) ? ' checked="true"' : '',
-			'RATE3' => (isset($_POST['TPL_rate'] && $_POST['TPL_rate'] == -1) ? ' checked="true"' : '',
+			'RATE2' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == 0) ? ' checked="true"' : '',
+			'RATE3' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == -1) ? ' checked="true"' : '',
 			'SBMSG' => $sbmsg,
 			'THEM' => $them,
 

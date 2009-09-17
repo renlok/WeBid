@@ -107,13 +107,13 @@
 		<!-- END fees -->
 					<tr valign="top">
 						<td>{L_394}</td>
-						<td><input name="new_fee_from" type="text" size="9"></td>
-						<td><input name="new_fee_to" type="text" size="9"></td>
-						<td><input name="new_value" type="text" size="9"></td>
+						<td><input name="new_fee_from" type="text" size="9" value="{FEE_FROM}"></td>
+						<td><input name="new_fee_to" type="text" size="9" value="{FEE_TO}"></td>
+						<td><input name="new_value" type="text" size="9" value="{FEE_VALUE}"></td>
 						<td>
 							<select name="new_type">
-								<option value="flat">{L_393}</option>
-								<option value="perc">{L_357}</option>
+								<option value="flat"<!-- IF FEE_TYPE eq 'flat' --> selected<!-- ENDIF -->>{L_393}</option>
+								<option value="perc"<!-- IF FEE_TYPE eq 'perc' --> selected<!-- ENDIF -->>{L_357}</option>
 							</select>
 						</td>
 						<td>&nbsp;</td>

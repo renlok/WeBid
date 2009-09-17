@@ -46,9 +46,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 loadblock($MSG['395'], $MSG['397'], 'yesno', 'fees', $system->SETTINGS['fees'], $MSG['759'], $MSG['760']);
 loadblock($MSG['729'], $MSG['730'], 'batchstacked', 'fee_type', $system->SETTINGS['fee_type'], $MSG['731'], $MSG['732']);
 loadblock('', '', $MSG['733']);
-loadblock($MSG['733'], $MSG['734'], 'days', 'fee_max_debt', $system->SETTINGS['fee_max_debt']);
-loadblock($MSG['735'], $MSG['736'], 'days', 'fee_signup_bonus', $system->SETTINGS['fee_signup_bonus']);
-loadblock($MSG['737'], $MSG['738'], 'yesno', 'fee_disable_acc', $system->SETTINGS['fee_disable_acc'], $MSG['030'], $MSG['029']);
+loadblock($MSG['734'], $MSG['735'], 'days', 'fee_max_debt', $system->SETTINGS['fee_max_debt']);
+loadblock($MSG['736'], $MSG['737'], 'days', 'fee_signup_bonus', $system->SETTINGS['fee_signup_bonus']);
+loadblock($MSG['738'], $MSG['739'], 'yesno', 'fee_disable_acc', $system->SETTINGS['fee_disable_acc'], $MSG['030'], $MSG['029']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

@@ -17,10 +17,12 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-function ToBeDeleted($index){
+function ToBeDeleted($index)
+{
 	global $delete;
 	$i = 0;
-	while ($i < count($delete)){
+	while ($i < count($delete))
+	{
 		if ($delete[$i] == $index) return true;
 		$i++;
 	}
@@ -33,44 +35,35 @@ $lows = $_POST['lows'];
 $highs = $_POST['highs'];
 $delete = $_POST['delete'];
 
-if (isset($_POST['act'])) {
-	//-- Al fields must be numeric with
-	
-	$i = 0;
-	while ($i < count($increments) - 1){
-		/*$lows[$i] = $system->input_money($lows[$i]);
-		$highs[$i] = $system->input_money($highs[$i]);
-		$increments[$i] = $system->input_money($increments[$i]);
-		*/
-		//print "$lows[$i] - $highs[$i] - $increments[$i]<BR>";
-		if (!$system->CheckMoney($lows[$i])){
-			$ERR = "ERR_030";
+if (isset($_POST['act']))
+{
+	for ($i = 0; $i < count($increments); $i++)
+	{
+		if (!empty($lows[$i]) && !empty($highs[$i]) && !empty($increments[$i]) && !ToBeDeleted($i))
+		{
+			if (!$system->CheckMoney($lows[$i]))
+			{
+				$ERR = 'ERR_030';
+			}
+			if (!$system->CheckMoney($highs[$i]))
+			{
+				$ERR = 'ERR_030';
+			}
+			if (!$system->CheckMoney($increments[$i]))
+			{
+				$ERR = 'ERR_030';
+			}
+			if ($lows[$i] > $highs[$i])
+			{
+				$ERR = 'ERR_713';
+			}
 		}
-		if (!$system->CheckMoney($highs[$i])){
-			$ERR = "ERR_030";
-		}
-		if (!$system->CheckMoney($increments[$i])){
-			$ERR = "ERR_030";
-		}
-		
-		/*
-		if (!ereg("^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{1,2})$",$lows[$i])){
-		$ERR = "ERR_030";
-		}
-		if (!ereg("^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{1,2})$",$highs[$i])){
-		$ERR = "ERR_030";
-		}
-		if (!ereg("^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{1,2})$",$increments[$i])){
-		$ERR = "ERR_030";
-		}
-		*/
-		$i++;
 	}
 }
 
-if (isset($_POST['act']) && !isset($ERR)){
-	
-	//-- Build new increments array
+if (isset($_POST['act']) && !isset($ERR))
+{
+	// Build new increments array
 	$rebuilt_increments = array();
 	$rebuilt_lows = array();
 	$rebuilt_highs = array();
@@ -87,7 +80,8 @@ if (isset($_POST['act']) && !isset($ERR)){
 	
 	$query = "DELETE FROM " . $DBPrefix . "increments";
 	$result = mysql_query($query);
-	if (!$result){
+	if (!$result)
+	{
 		print "Database access error - abnormal termination".mysql_error();
 		exit;
 	}

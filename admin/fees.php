@@ -90,9 +90,22 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 			}
 			if(!empty($_POST['new_fee_from']) && !empty($_POST['new_fee_to']) && !empty($_POST['new_value']))
 			{
-				$query = "INSERT INTO " . $DBPrefix . "fees VALUES
-						(NULL, '" . $_POST['new_fee_from'] . "', '" . $_POST['new_fee_to'] . "', '" . $_POST['new_type'] . "', '" . $_POST['new_value'] . "', '" . $_GET['type'] . "')";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				if ($_POST['new_fee_from'] <= $_POST['new_fee_to'])
+				{
+					$query = "INSERT INTO " . $DBPrefix . "fees VALUES
+							(NULL, '" . $_POST['new_fee_from'] . "', '" . $_POST['new_fee_to'] . "', '" . $_POST['new_type'] . "', '" . $_POST['new_value'] . "', '" . $_GET['type'] . "')";
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+				else
+				{
+					$errmsg = $ERR_713;
+					$template->assign_vars(array(
+							'FEE_FROM' => $_POST['new_fee_from'],
+							'FEE_TO' => $_POST['new_fee_to'],
+							'FEE_VALUE' => $_POST['new_value'],
+							'FEE_TYPE' => $_POST['new_type']
+							));
+				}
 			}
 		}
 		$query = "SELECT * FROM " . $DBPrefix . "fees WHERE type = '" . $_GET['type'] . "'";

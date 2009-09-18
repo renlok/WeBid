@@ -258,12 +258,20 @@ else
 	$image_fee = 0;
 }
 
+// get decimals for javascript rounder
+$decimals = '';
+for ($i = 0; $i < $system->SETTINGS['moneydecimals']; $i++)
+{
+	$decimals .= 0;
+}
+
 $template->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'THEME' => $system->SETTINGS['theme'],
 		'HEADERCOLOUR' => $system->SETTINGS['headercolor'],
 		'NUMIMAGES' => count($_SESSION['UPLOADED_PICTURES']),
 		'IMAGE_COST' => $image_fee,
+		'FEE_DECIMALS' => $decimals,
 
 		'B_CROPSCREEN' => $cropdefault
 		));

@@ -1484,7 +1484,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `newsbox` int(1) NOT NULL default '0',
   `newstoshow` int(11) NOT NULL default '0',
   `moneyformat` int(1) NOT NULL default '0',
-  `moneydecimals` int(11) NOT NULL default '0',
+  `moneydecimals` int(11) NOT NULL default '2',
   `moneysymbol` int(1) NOT NULL default '0',
   `currency` varchar(10) NOT NULL default '',
   `showacceptancetext` int(1) NOT NULL default '0',

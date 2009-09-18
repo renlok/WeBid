@@ -612,6 +612,13 @@ switch ($_SESSION['action'])
 			}
 		}
 
+		// get decimals for javascript rounder
+		$decimals = '';
+		for ($i = 0; $i < $system->SETTINGS['moneydecimals']; $i++)
+		{
+			$decimals .= 0;
+		}
+
 		$template->assign_vars(array(
 				'TITLE' => $MSG['028'],
 				'ERROR' => ($ERR == 'ERR_') ? '' : $$ERR,
@@ -656,9 +663,11 @@ switch ($_SESSION['action'])
 				'NUMIMAGES' => count($_SESSION['UPLOADED_PICTURES']),
 
 				'FEE_VALUE' => get_fee($minimum_bid),
+				'FEE_VALUE_F' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
 				'FEE_MIN_BID' => $fee_min_bid,
 				'FEE_BN' => $fee_bn,
 				'FEE_RP' => $fee_rp,
+				'FEE_DECIMALS' => $decimals,
 
 				'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),
 				'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] == 'y' && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only'] == 'y') || $system->SETTINGS['bn_only_disable'] == 'n')),

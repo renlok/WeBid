@@ -78,7 +78,8 @@ function CheckFirstRegData()
 	return '000';
 } //CheckFirstRegData()
 
-function CheckSellData(){
+function CheckSellData()
+{
 	/*
 	return codes:
 	017 = item title missing
@@ -100,7 +101,7 @@ function CheckSellData(){
 	*/
 
 	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
-	global $atype, $iquantity, $increments, $customincrement, $system;
+	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
 	global $payments, $auction_types, $invitedlists, $num, $nnum, $a_starts, $start_now;
 
 	if (empty($title))
@@ -224,16 +225,17 @@ function CheckSellData(){
 		}
 	}
 
-	if (!empty($_POST['relist']) && !is_numeric($_POST['relist']))
+	/*if (!empty($_POST['relist']) && !is_numeric($_POST['relist']))
 	{
 		return '_0149';
 	}
+
 	elseif ($_POST['relist'] > $system->SETTINGS['relisting'] && !empty($_POST['relist']))
 	{
 		return '_0161';
-	}
+	}*/
 
-	if (!(strpos($a_starts, '-') === false) && empty($start_now))
+	if (!(strpos($a_starts, '-') === false) && empty($start_now) && $_SESSION['SELL_action'] != 'edit')
 	{
 		$a_starts = _gmmktime(substr($a_starts, 11, 2),
 			substr($a_starts, 14, 2),

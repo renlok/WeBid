@@ -120,7 +120,9 @@ $(document).ready(function(){
 	});
 
 	function updatefee(newfee){
-		$("#to_pay").text(parseFloat($("#to_pay").text()) + newfee);
+		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
+		$("#fee_exact").val(nowfee);
+		$("#to_pay").text(Math.round(nowfee*1{FEE_DECIMALS})/1{FEE_DECIMALS});
 	}
 <!-- ENDIF -->
 });
@@ -355,7 +357,8 @@ $(document).ready(function(){
 							<b>{L_263}</b>
 						</td>
 						<td class="rightpan">
-                        	<span id="to_pay">{FEE_VALUE}</span> {CURRENCY}
+                        	<input type="hidden" name="fee_exact" id="fee_exact" value="{FEE_VALUE}">
+                        	<span id="to_pay">{FEE_VALUE_F}</span> {CURRENCY}
 						</td>
 					</tr>
 	<!-- ENDIF -->

@@ -59,6 +59,12 @@ if ($handle = opendir($main_path . 'language'))
 }
 closedir($handle);
 
+// check language exists
+if (!in_array($language, $LANGUAGES))
+{
+	$language = $system->SETTINGS['defaultlanguage'];
+}
+
 function get_lang_img($string)
 {
 	global $system, $language;

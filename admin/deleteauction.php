@@ -13,288 +13,127 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-include "../includes/common.inc.php";
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path."countries.inc.php";
+include $main_path . 'language/' . $language . '/categories.inc.php';
 
-$username = $name;
-
-//-- Data check
-if (!$_REQUEST['id']) {
+// Data check
+if (!$_REQUEST['id'])
+{
 	$URL = $_SESSION['RETURN_LIST'];
 	unset($_SESSION['RETURN_LIST']);
-	header("Location: $URL");
+	header('location: ' . $URL);
 	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == "Delete") {
-  if (!$ERR) {
-	//-- Get category
-	$query = "select category,photo_uploaded,pict_url from " . $DBPrefix . "auctions WHERE id='".$_POST['id']."'";
-	$res__ = mysql_query($query);
-	$system->check_mysql($res__, $query, __LINE__, __FILE__);
-	$cat_id = mysql_result($res__,0,"category");
-	$photo_uploaded = mysql_result($res__,0,"photo_uploaded");
-	$pict_url = mysql_result($res__,0,"pict_url");
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	$catscontrol = new MPTTcategories();
+	$auc_id = intval($_POST['id']);
 
-	//-- delete auction
-	$sql="delete from " . $DBPrefix . "auctions WHERE id='".$_POST['id']."'";
-	$res=mysql_query($sql);
-	$system->check_mysql($res, $sql, __LINE__, __FILE__);
-
-	//-- Update counters
-	mysql_query("UPDATE " . $DBPrefix . "counters set auctions=(auctions-1)");
-
-	//-- delete bids
-	$query = "SELECT count(auction) as BIDS from " . $DBPrefix . "bids WHERE auction='".$_POST['id']."'";
+	// get auction data
+	$query = "SELECT category, num_bids, suspended, closed FROM " . $DBPrefix . "auctions WHERE id = " . $auc_id;
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$auc_data = mysql_fetch_assoc($res);
+
+	// Delete related values
+	$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $auc_id;
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+	// delete bids
+	$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $auc_id;
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+	// Delete proxybids
+	$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $auc_id;
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+	// Delete file in counters
+	$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $auc_id;
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+	if ($auc_data['suspended'] == 0 && $auc_data['closed'] == 0)
+	{
+		// update main counters
+		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - 1), bids = (bids - " . $auc_data['num_bids'] . ")";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	
-	if (mysql_num_rows($res) > 0) {
-	  $BIDS = mysql_result($res,0,"BIDS");
-	  $sql="delete from " . $DBPrefix . "bids WHERE auction='".$_POST['id']."'";
-	  $res=mysql_query($sql);
-	  $system->check_mysql($res, $sql, __LINE__, __FILE__);
-
-	  #// Delete entries from the proxybid table
-	  $sql="delete from " . $DBPrefix . "proxybid WHERE itemid='".$_POST['id']."'";
-	  $res=mysql_query($sql);
-	  $system->check_mysql($res, $sql, __LINE__, __FILE__);
-	} else {
-	  $BIDS = 0;
-	}
-
-	#// Delete file in counters
-	mysql_query("DELETE " . $DBPrefix . "auccounter WHERE auction_id=".$_POST['id']);
-
-	//-- Update counters
-	mysql_query("UPDATE " . $DBPrefix . "bids set bids=(bids-$BIDS)");
-
-	// update "categories" table - for counters
-	$root_cat = $cat_id;
-	do {
-		// update counter for this category
-		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id=\"$cat_id\"";
-		$result = mysql_query($query);
-		$system->check_mysql($result, $query, __LINE__, __FILE__);
-
-		if (mysql_num_rows($result)>0) {
-			$R_parent_id = mysql_result($result,0,"parent_id");
-			$R_cat_id = mysql_result($result,0,"cat_id");
-			$R_counter = intval(mysql_result($result,0,"counter"));
-			$R_sub_counter = intval(mysql_result($result,0,"sub_counter"));
-			
-			$R_sub_counter--;
-			if ( $cat_id == $root_cat )
-				--$R_counter;
-			
-			if ($R_counter < 0) $R_counter = 0;
-			if ($R_sub_counter < 0) $R_sub_counter = 0;
-		
-			$query = "UPDATE " . $DBPrefix . "categories SET counter='$R_counter', sub_counter='$R_sub_counter' WHERE cat_id=\"$cat_id\"";
+		// update recursive categories
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auc_data['category'];
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$parent_node = mysql_fetch_assoc($res);
+		$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+	
+		for ($i = 0; $i < count($crumbs); $i++)
+		{
+			$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
-			$cat_id = $R_parent_id;
 		}
-	} while ($cat_id!=0);
-
-	#// ##############################################################################################
-	#// Delete any image for this auction (uploaded picture and pictures gallery)
-
-	#// Pictures gallery
-	if (file_exists($upload_path.$_POST['id'])) {
-	  if ($dir = @opendir($upload_path.$_POST['id'])) {
-		while ($file = readdir($dir)) {
-		  if ($file != "." && $file != "..") {
-			@unlink($upload_path.$_POST['id']."/".$file);
-		  }
-		}
-		closedir($dir);
-		@rmdir($upload_path.$_POST['id']);
-	  }
 	}
 
-	#// Uploaded picture
-	if ($photo_uploaded)  {
-	  @unlink($upload_path.$pict_url);
+	// Delete auctions images
+	if (file_exists($upload_path . $auc_id))
+	{
+		if ($dir = @opendir($upload_path . $auc_id))
+		{
+			while ($file = readdir($dir))
+			{
+				if ($file != '.' && $file != '..')
+				{
+					@unlink($upload_path . $auc_id . '/' . $file);
+				}
+			}
+			closedir($dir);
+			@rmdir($upload_path . $auc_id);
+		}
 	}
 
 	$URL = $_SESSION['RETURN_LIST'];
 	unset($_SESSION['RETURN_LIST']);
-	Header("location:  $URL?offset=".$_REQUEST['offset']);
-  }
+	header('location: ' . $URL . '?offset=' . $_REQUEST['offset']);
+	exit;
 }
 
+$query = "SELECT u.nick, a.title, a.starts, a.description, a.category, d.description as duration,
+		a.suspended, a.current_bid, a.quantity, a.reserve_price
+		FROM " . $DBPrefix . "auctions a
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+		LEFT JOIN " . $DBPrefix . "durations d ON (d.days = a.duration)
+		WHERE a.id = " . $_GET['id'];
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$auc_data = mysql_fetch_assoc($res);
 
-if (!$_POST['action']) {
-  $query = "select a.id, u.nick, a.title, a.starts, a.description,
-	c.cat_name, d.description as duration, a.suspended, a.current_bid,
-	a.quantity, a.reserve_price from " . $DBPrefix . "auctions
-	a, " . $DBPrefix . "users u, " . $DBPrefix . "categories c, " . $DBPrefix . "durations d WHERE u.id = a.user and
-	c.cat_id = a.category and d.days = a.duration and a.id=\"".$_GET['id']."\"";
-  $result = mysql_query($query);
-  $system->check_mysql($result, $query, __LINE__, __FILE__);
-
-  $id = mysql_result($result,0,"id");
-  $title = mysql_result($result,0,"title");
-  $nick = mysql_result($result,0,"nick");
-  $tmp_date = mysql_result($result,0,"starts");
-  $duration = mysql_result($result,0,"duration");
-  $category = mysql_result($result,0,"cat_name");
-  $description = mysql_result($result,0,"description");
-  $suspended = mysql_result($result,0,"suspended");
-  $current_bid = mysql_result($result,0,"current_bid");
-  $quantity = mysql_result($result,0,"quantity");
-  $reserve_price = mysql_result($result,0,"reserve_price");
-	if ($system->SETTINGS['datesformat'] == "USA") {
-		$date = gmdate('m/d/Y', $tmp_date);
-	} else {
-		$date = gmdate('d/m/Y', $tmp_date);
-	}
+if ($system->SETTINGS['datesformat'] == 'USA')
+{
+	$date = gmdate('m/d/Y', $auc_data['starts']);
+}
+else
+{
+	$date = gmdate('d/m/Y', $auc_data['starts']);
 }
 
+$template->assign_vars(array(
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'ID' => $_GET['id'],
+		'TITLE' => $auc_data['title'],
+		'NICK' => $auc_data['nick'],
+		'STARTS' => $date,
+		'DURATION' => $auc_data['duration'],
+		'CATEGORY' => $category_names[$auc_data['category']],
+		'DESCRIPTION' => stripslashes($auc_data['description']),
+		'CURRENT_BID' => $system->print_money($auc_data['current_bid']),
+		'QTY' => $auc_data['quantity'],
+		'RESERVE_PRICE' => $system->print_money($auc_data['reserve_price']),
+		'SUSPENDED' => $auc_data['suspended'],
+		'OFFSET' => $_REQUEST['offset']
+		));
+
+$template->set_filenames(array(
+		'body' => 'deleteauction.tpl'
+		));
+$template->display('body');
 ?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body style="margin:0;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr> 
-	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-		<tr> 
-		  <td width="30"><img src="images/i_auc.gif" ></td>
-		  <td class=white><?php echo $MSG['239']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['325']; ?></td>
-		</tr>
-	  </table></td>
-  </tr>
-  <tr>
-	<td align="center" valign="middle">&nbsp;</td>
-  </tr>
-	<tr> 
-	  <td align="center" valign="middle">
-		<table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7" align="center">
-			<tr>
-			<td align="center" class=title>
-			  <?php print $MSG['325']; ?>
-			</td>
-		  </tr>
-		<tr>
-			<td align="center">
-			<table width=100% cellpadding=4 cellspacing=0 border=0 bgcolor="#FFFFFF">
-			  <tr>
-								<td align="center" COLSPAN=2> <BR><BR>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204" VALIGN="top" ALIGN="right">
-				  <?php print $MSG['312']; ?>
-				</td>
-				<td width="486">
-				  <?php print $title; ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204" VALIGN="top" ALIGN="right">
-				  <?php print $MSG['313']; ?>
-				</td>
-				<td width="486">
-				  <?php print $nick; ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204" VALIGN="top" ALIGN="right">
-				  <?php print $MSG['314']; ?>
-				</td>
-				<td width="486">
-				  <?php print $date; ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204"  VALIGN="top" ALIGN="right">
-				  <?php print $MSG['315']; ?>
-				</td>
-				<td width="486">
-				  <?php print $duration; ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204"  VALIGN="top" ALIGN="right">
-				  <?php print $MSG['316']; ?>
-				</td>
-				<td width="486">
-				  <?php print $category; ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204" VALIGN="top" ALIGN="right">
-				  <?php print $MSG['317']; ?>
-				</td>
-				<td width="486">
-				  <?php print stripslashes($description); ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204" VALIGN="top" ALIGN="right">
-				  <?php print $MSG['318']; ?>
-				</td>
-				<td width="486">
-				  <?php print $current_bid; ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204" VALIGN="top" ALIGN="right">
-				  <?php print $MSG['319']; ?>
-				</td>
-				<td width="486">
-				  <?php print $quantity; ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204" VALIGN="top" ALIGN="right">
-				  <?php print $MSG['320']; ?>
-				</td>
-				<td width="486">
-				  <?php print $reserve_price; ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204" VALIGN="top" ALIGN="right">
-				  <?php print $MSG['300']; ?>
-				</td>
-				<td width="486">
-				  <?php
-				  if ($suspended == 0)
-				  print $MSG['029'];
-				  else
-				  print $MSG['030'];
-				  ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204">&nbsp;</td>
-				<td width="486">
-				  <?php print $MSG['326']; ?>
-				</td>
-			  </tr>
-			  <tr>
-				<td width="204">&nbsp;</td>
-				<td width="486">
-				  <form NAME=details ACTION="deleteauction.php" METHOD="POST">
-					<input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
-					<input type="hidden" name="offset" value="<?php echo $_REQUEST['offset']; ?>">
-					<input type="hidden" name="action" value="Delete">
-					<input type="submit" name="act" value="<?php print $MSG['008']; ?>">
-				  </form>
-				</td>
-			  </tr>
-			</table>
-		  </td>
-		</tr>
-	  </table>
-	</td>
-  </tr>
-</table>
-</body>
-</html>

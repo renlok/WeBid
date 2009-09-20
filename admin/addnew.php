@@ -55,7 +55,7 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
-		
+
 $template->set_filenames(array(
 		'body' => 'addnew.tpl'
 		));

@@ -195,7 +195,8 @@ $category_names = array(
 197 => 'Vintage Vehicles',
 71 => 'Watches',
 142 => 'Weddings',
-67 => 'Women'
+67 => 'Women',
+1 => 'All'
 );
 
 $category_plain = array(

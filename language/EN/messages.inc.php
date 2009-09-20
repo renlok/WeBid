@@ -845,6 +845,9 @@ $MSG['767'] = 'Click on the button on the right to proceed to PayPal';
 $MSG['768'] = 'Signup Fee';
 $MSG['769'] = 'Pay listing fee';
 $MSG['770'] = 'Pay relist fee';
+$MSG['771'] = 'Default Name';
+$MSG['772'] = 'Translation';
+
 
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";

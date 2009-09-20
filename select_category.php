@@ -113,7 +113,7 @@ elseif (count($_POST) == 0)
 	$_SESSION['SELL_is_bold'] = 'n';
 	$_SESSION['SELL_is_highlighted'] = 'n';
 	$_SESSION['SELL_is_featured'] = 'n';
-	$_SESSION['SELL_start_now'] = '';
+	$_SESSION['SELL_start_now'] = '1';
 }
 
 // Build the categories arrays

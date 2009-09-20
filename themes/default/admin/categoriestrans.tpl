@@ -41,8 +41,8 @@
                     </td>
                 </tr>
                 <tr bgcolor="#EEEEEE">
-                    <td><b>Default Name</b></td>
-                    <td><b>Translation</b></td>
+                    <td><b>{L_771}</b></td>
+                    <td><b>{L_772}</b></td>
                 </tr>
 <!-- BEGIN cats -->
                 <tr valign="top" style="background-color: {cats.ROW_COLOUR};">

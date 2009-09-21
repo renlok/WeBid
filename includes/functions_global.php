@@ -11,6 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
+
 if (!defined('InWeBid')) exit('Access denied');
 
 class global_class

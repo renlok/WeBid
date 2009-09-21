@@ -74,5 +74,6 @@
 - Fixed the active auction page so for buy it only auctions the buy it now price is displayed instead of the current bid
 - Added a start date check so auction cannot be started in the past
 - Added a check to check if the users choosen language actually exists
+- Fixed the admin delete auction page which would hang when you tried to delete an auction
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

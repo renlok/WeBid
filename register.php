@@ -244,6 +244,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				if ($system->SETTINGS['fee_type'] == 2 && $signup_fee > 0)
 				{
 					$SUSPENDED = 9;
+					$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1";
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+				else
+				{
+					$query = "UPDATE " . $DBPrefix . "counters SET users = users + 1";
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 				$balance = ($system->SETTINGS['fee_type'] == 2) ? 0 : ($system->SETTINGS['fee_signup_bonus'] - $signup_fee);
 
@@ -280,9 +287,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$TPL_id_hidden = mysql_insert_id();
 				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES(
 						  NULL, " . intval($TPL_id_hidden) . ", '" . $_SERVER['REMOTE_ADDR'] . "', 'first','accept')";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-
-				$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				$_SESSION['language'] = $language;

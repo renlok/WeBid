@@ -114,7 +114,7 @@ $template->assign_vars(array(
 		'TOP_MESSAGE' => $message,
 		'B_ENPAYPAL' => ($gayeway_data['paypal_active'] && !empty($pp_paytoemail)),
 		'PP_PAYTOEMAIL' => $pp_paytoemail,
-		'PAY_VAL' => $system->print_money_nosymbol($system->input_money($payvalue)),
+		'PAY_VAL' => $system->input_money($system->print_money_nosymbol($payvalue)),
 		'CURRENCY' => $system->SETTINGS['currency'],
 		'TITLE' => $title,
 		'CUSTOM_CODE' => $custoncode

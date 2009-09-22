@@ -246,8 +246,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
   `cat_name` tinytext,
   `sub_counter` int(11) default 0,
   `counter` int(11) default 0,
-  `cat_colour` tinytext NOT NULL,
-  `cat_image` tinytext NOT NULL,
+  `cat_colour` tinytext default '',
+  `cat_image` tinytext default '',
   PRIMARY KEY  (`cat_id`)
 );";
 
@@ -1125,14 +1125,18 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
   `gateways` text,
   `paypal_address` varchar(50) NOT NULL default '',
   `paypal_required` int(1) NOT NULL default '0',
-  `paypal_active` int(1) NOT NULL default '0'
+  `paypal_active` int(1) NOT NULL default '0',
+  `authnet_address` varchar(50) NOT NULL default '',
+  `authnet_password` varchar(50) NOT NULL default '',
+  `authnet_required` int(1) NOT NULL default '0',
+  `authnet_active` int(1) NOT NULL default '0'
 ) ;";
 
 # 
 # Dumping data for table `" . $DBPrefix . "gateways`
 # 
 
-$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal', '', 0, 0);";
+$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet', '', 0, 0, '', '', 0, 0);";
 
 # ############################
 
@@ -1335,6 +1339,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "payments` (
 
 $query[] = "INSERT INTO `" . $DBPrefix . "payments` VALUES (1, 'Paypal');";
 $query[] = "INSERT INTO `" . $DBPrefix . "payments` VALUES (2, 'Wire Transfer');";
+$query[] = "INSERT INTO `" . $DBPrefix . "payments` VALUES (3, 'Authorize.net');";
 
 # ############################
 
@@ -1637,7 +1642,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `groups` text,
   `bn_only` enum('y','n') NOT NULL default 'y',
   `timecorrection` int(3) NOT NULL default '0',
-  `paypal_email` varchar(255) default NULL,
+  `paypal_email` varchar(50) default NULL,
+  `authnet_id` varchar(50) default NULL,
+  `authnet_pass` varchar(50) default NULL,
   `language` char(2) NOT NULL default '',
   PRIMARY KEY  (`id`)
 );";

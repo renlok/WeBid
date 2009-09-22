@@ -53,7 +53,7 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 			}
 			else
 			{
-				$query = "UPDATE " . $DBPrefix . "fees SET value = '" . $_POST['value'] . "' WHERE type = '" . $_GET['type'] . "'";
+				$query = "UPDATE " . $DBPrefix . "fees SET value = '" . $system->input_money($_POST['value']) . "' WHERE type = '" . $_GET['type'] . "'";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$errmsg = $feenames[$_GET['type']] . $MSG['359'];
 			}
@@ -74,10 +74,15 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 		{
 			for($i = 0; $i < count($_POST['tier_id']); $i++)
 			{
+				$value = $_POST['value'][$i];
+				if ($_POST['type'][$i] == 'flat')
+				{
+					$value = $system->input_money($value);
+				}
 				$query = "UPDATE " . $DBPrefix . "fees SET
-						fee_from = '" . $_POST['fee_from'][$i] . "',
-						fee_to = '" . $_POST['fee_to'][$i] . "',
-						value = '" . $_POST['value'][$i] . "',
+						fee_from = '" . $system->input_money($_POST['fee_from'][$i]) . "',
+						fee_to = '" . $system->input_money($_POST['fee_to'][$i]) . "',
+						value = '" . $value . "',
 						fee_type = '" . $_POST['type'][$i] . "'
 						WHERE id = " . $_POST['tier_id'][$i];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

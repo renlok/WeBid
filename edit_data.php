@@ -94,6 +94,11 @@ $TIMECORRECTION = array(
 	'+23' => '+23 h'
 );
 
+$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$gateway_data = mysql_fetch_assoc($res);
+
 $ERR = '';
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -154,15 +159,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					phone = '" . $system->cleanvars($_POST['TPL_phone']) . "',
 					timecorrection = '" . $system->cleanvars($_POST['TPL_timezone']) . "',
 					emailtype = '" . $system->cleanvars($_POST['TPL_emailtype']) . "',
-					paypal_email = '" . $system->cleanvars($_POST['TPL_pp_email']) . "',
-					nletter = '" . $system->cleanvars($_POST['TPL_nletter']);
+					nletter = '" . $system->cleanvars($_POST['TPL_nletter']) . "'";
+
+			if ($gateway_data['paypal_active'] == 1)
+			{
+				$query .= ", paypal_email = '" . $system->cleanvars($_POST['TPL_pp_email']) . "'";
+			}
+
+			if ($gateway_data['authnet_active'] == 1)
+			{
+				$query .= ", authnet_id = '" . $system->cleanvars($_POST['TPL_authnet_id']) . "',
+							authnet_pass = '" . $system->cleanvars($_POST['TPL_authnet_pass']) . "'";
+			}
 
 			if (strlen($_POST['TPL_password']) > 0)
 			{
-				$query .= "', password = '" . md5($MD5_PREFIX . addslashes($_POST['TPL_password']));
+				$query .= ", password = '" . md5($MD5_PREFIX . addslashes($_POST['TPL_password'])) . "'";
 			}
 
-			$query .= "' WHERE id = " . $user->user_data['id'];
+			$query .= " WHERE id = " . $user->user_data['id'];
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$ERR = $MSG['183'];
 		}
@@ -235,13 +250,17 @@ $template->assign_vars(array(
 
 		//payment stuff
 		'PP_EMAIL' => $USER['paypal_email'],
+		'AN_ID' => $USER['authnet_id'],
+		'AN_PASS' => $USER['authnet_pass'],
 
 		'NLETTER1' => ($USER['nletter'] == 1) ? ' checked="checked"' : '',
 		'NLETTER2' => ($USER['nletter'] == 2) ? ' checked="checked"' : '',
 		'EMAILTYPE1' => ($USER['emailtype'] == 'html') ? ' checked="checked"' : '',
 		'EMAILTYPE2' => ($USER['emailtype'] == 'text') ? ' checked="checked"' : '',
 
-		'B_NEWLETTER' => ($system->SETTINGS['newsletter'] == 1)
+		'B_NEWLETTER' => ($system->SETTINGS['newsletter'] == 1),
+		'B_PAYPAL' => ($gateway_data['paypal_active'] == 1),
+		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1)
 		));
 
 $TMP_usmenutitle = $MSG['509'];

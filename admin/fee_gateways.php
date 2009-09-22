@@ -19,6 +19,20 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
+$gatways = array(
+	'paypal' => 'PayPal',
+	'authnet' => 'Authorize.net'
+	);
+$links = array(
+	'paypal' => 'http://paypal.com',
+	'authnet' => 'http://authorize.net/'
+	);
+$varialbes = array(
+	'paypal_address' => $MSG['720'],
+	'authnet_address' => $MSG['773'],
+	'authnet_password' => $MSG['774']
+	);
+
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -38,6 +52,11 @@ if (isset($_POST['action']))
 		$query .= $gateway . '_active = ' . (isset($_POST[$gateway . '_active']) ? 1 : 0) . ', ';
 		$query .= $gateway . '_required = ' . (isset($_POST[$gateway . '_required']) ? 1 : 0) . ', ';
 		$query .= $gateway . "_address = '" . $_POST[$gateway . '_address'] . "'";
+		if (isset($_POST[$gateway . '_password']))
+		{
+			$query .= ', ' . $gateway . "_password = '" . $_POST[$gateway . '_password'] . "'";
+			$gateway_data[$gateway . '_password'] = $_POST[$gateway . '_password'];
+		}
 		$gateway_data[$gateway . '_active'] = (isset($_POST[$gateway . '_active']) ? 1 : 0);
 		$gateway_data[$gateway . '_required'] = (isset($_POST[$gateway . '_required']) ? 1 : 0);
 		$gateway_data[$gateway . '_address'] = $_POST[$gateway . '_address'];
@@ -50,11 +69,17 @@ for ($i = 0; $i < count($gateways); $i++)
 {
 	$gateway = $gateways[$i];
 	$template->assign_block_vars('gateways', array(
-			'NAME' => str_replace('_', ' ', ucfirst($gateway)),
+			'NAME' => $gatways[$gateway],
 			'PLAIN_NAME' => $gateway,
 			'ENABLED' => ($gateway_data[$gateway . '_active'] == 1) ? 'checked' : '',
 			'REQUIRED' => ($gateway_data[$gateway . '_required'] == 1) ? 'checked' : '',
-			'ADDRESS' => $gateway_data[$gateway . '_address']
+			'ADDRESS' => $gateway_data[$gateway . '_address'],
+			'PASSWORD' => $gateway_data[$gateway . '_password'],
+			'WEBSITE' => $links[$gateway],
+			'ADDRESS_NAME' => $varialbes[$gateway . '_address'],
+			'ADDRESS_PASS' => $varialbes[$gateway . '_password'],
+
+			'B_PASSWORD' => (isset($gateway_data[$gateway . '_password']))
 			));
 }
 

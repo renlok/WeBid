@@ -105,14 +105,30 @@
 </div>
 
 <table width="100%" border="0" cellpadding="4" align="center">
+<!-- IF B_PAYPAL -->
 	<tr>
 		<td align="right" width="30%">{L_720}</td>
 		<td>
 			<input type="text" name="TPL_pp_email" size=40 value="{PP_EMAIL}" />
 		</td>
 	</tr>
+<!-- ENDIF -->
+<!-- IF B_AUTHNET -->
 	<tr>
-		<td colspan=2 align="center" height="22">&nbsp;</td>
+		<td align="right" width="30%">{L_773}</td>
+		<td>
+			<input type="text" name="TPL_authnet_id" size=40 value="{AN_ID}" />
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="30%">{L_774}</td>
+		<td>
+			<input type="text" name="TPL_authnet_pass" size=40 value="{AN_PASS}" />
+		</td>
+	</tr>
+<!-- ENDIF -->
+	<tr>
+		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr>
 		<td colspan=2 align="center">

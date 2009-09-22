@@ -847,7 +847,8 @@ $MSG['769'] = 'Pay listing fee';
 $MSG['770'] = 'Pay relist fee';
 $MSG['771'] = 'Default Name';
 $MSG['772'] = 'Translation';
-
+$MSG['773'] = 'Authorize.net ID';
+$MSG['774'] = 'Authorize.net Password';
 
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";

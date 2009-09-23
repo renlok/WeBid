@@ -23,13 +23,30 @@ class fees
 		$this->ASCII_RANGE = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	}
 
+	function hmac($key, $data)
+	{
+		// RFC 2104 HMAC implementation for php.
+		// Creates an md5 HMAC.
+		// Eliminates the need to install mhash to compute a HMAC
+		// Hacked by Lance Rushing
+
+		$b = 64; // byte length for md5
+		if (strlen($key) > $b)
+		{
+			$key = pack("H*", md5($key));
+		}
+		$key  = str_pad($key, $b, chr(0x00));
+		$ipad = str_pad('', $b, chr(0x36));
+		$opad = str_pad('', $b, chr(0x5c));
+		$k_ipad = $key ^ $ipad ;
+		$k_opad = $key ^ $opad;
+
+		return md5($k_opad  . pack("H*", md5($k_ipad . $data)));
+	}
+
 	function paypal_validate()
 	{
 		global $system, $_POST;
-
-		$confirmed = false;	// used to check if the payment is confirmed
-		$errstr = $error_output = '';
-		$errno = 0;
 
 		// we ensure that the txn_id (transaction ID) contains only ASCII chars...
 		$pos = strspn($_POST['txn_id'], $this->ASCII_RANGE);
@@ -55,12 +72,8 @@ class fees
 
 		$fp = fsockopen ('www.paypal.com', 80, $errno, $errstr, 30);
 
-		$payment_status = $_POST['payment_status'];
-		$payment_gross = $_POST['mc_gross'];
-		$payment_currency = $_POST['mc_currency'];
-		$txn_id = $_POST['txn_id'];
-
-		list($custom, $fee_type) = explode('WEBID', $_POST['custom']);
+		$payment_amount = $_POST['mc_gross'];
+		list($custom_id, $fee_type) = explode('WEBID', $_POST['custom']);
 
 		if (!$fp)
 		{
@@ -76,14 +89,36 @@ class fees
 
 				if (strcmp ($res, 'VERIFIED') == 0)
 				{
-					$this->callback_process($custom_id, $fee_type, $payment_gateway, $payment_amount);
+					$this->callback_process($custom_id, $fee_type, $payment_amount);
 				}
 			}
 			fclose ($fp);
 		}
 	}
 
-	function callback_process($custom_id, $fee_type, $payment_gateway, $payment_amount, $currency = NULL)
+	function authnet_validate()
+	{
+		global $system, $_POST;
+
+		$payment_amount = $_POST['x_amount'];
+
+		list($custom_id, $fee_type) = explode('WEBID', $_POST['custom']);
+
+		if ($_POST['x_response_code'] == 1)
+		{
+			$this->callback_process($custom_id, $fee_type, $payment_amount);
+			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?completed';
+		}
+		else
+		{
+			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?fail';
+		}
+
+		header('location: '. $redirect_url);
+		exit;
+	}
+
+	function callback_process($custom_id, $fee_type, $payment_amount, $currency = NULL)
 	{
 		global $system, $DBPrefix;
 

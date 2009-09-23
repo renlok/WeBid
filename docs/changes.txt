@@ -2,5 +2,6 @@
 -----------------------------
 - Fixed the fee stettings page so it works when using a comma as a decimal (Bug #49)
 - Added an Authorize.net gateway option
+- Fixed bug with paypal payment validator
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

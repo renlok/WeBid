@@ -14,7 +14,7 @@
 
 include 'functions.php';
 ?>
-<h1>WeBid Updater, v0.7.3/4 to v0.8</h1>
+<h1>WeBid Updater, v0.8.0 to v0.8.1</h1>
 <?php
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
 switch($step)
@@ -36,7 +36,8 @@ switch($step)
 		{
 			mysql_query($query[$i]) or print(mysql_error() . '<br>' . $query[$i] . '<br>');
 		}
-		echo 'Complete, now to <b><a href="MPTT_converter.php">step 3</a></b>';
+		//echo 'Complete, now to <b><a href="MPTT_converter.php">step 3</a></b>';
+		echo 'Update complete now remove the install folder from your server';
 		break;
 	case 1:
 		echo '<b>step 1:</b> writting config file...<br>';

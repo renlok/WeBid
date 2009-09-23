@@ -37,5 +37,9 @@ if (isset($_GET['paypal']))
 {
 	$fees->paypal_validate();
 }
+if (isset($_GET['authnet']))
+{
+	$fees->authnet_validate();
+}
 
 ?>

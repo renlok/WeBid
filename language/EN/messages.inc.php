@@ -28,8 +28,8 @@ $DOCDIR = "ltr";
 // Error messages and user interface messages are below. Translate them taking care of leaving
 // The PHP and HTML tags unchanged.
 // Error messages =============================================================
-$ERR = ""; // leave this line as is
-$ERR_000 = ""; // leave this line as is
+$ERR = ''; // leave this line as is
+$ERR_000 = ''; // leave this line as is
 $ERR_001 = "Database access error. Please contact the site administrator.";
 $ERR_002 = "Name missing";
 $ERR_003 = "Username missing";
@@ -847,8 +847,8 @@ $MSG['769'] = 'Pay listing fee';
 $MSG['770'] = 'Pay relist fee';
 $MSG['771'] = 'Default Name';
 $MSG['772'] = 'Translation';
-$MSG['773'] = 'Authorize.net ID';
-$MSG['774'] = 'Authorize.net Password';
+$MSG['773'] = 'Authorize.net Login ID';
+$MSG['774'] = 'Authorize.net Transaction Key';
 
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";

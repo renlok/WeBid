@@ -13,7 +13,7 @@
  ***************************************************************************/
 include('functions.php');
 ?>
-<h1>WeBid Installer v0.8.0</h1>
+<h1>WeBid Installer v0.8.1</h1>
 <?php
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
 switch($step){

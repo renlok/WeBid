@@ -26,17 +26,21 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $gayeway_data = mysql_fetch_assoc($res);
 
+$fees = new fees;
+
 switch($_GET['a'])
 {
 	case 1: // add to account balance
 		$pp_paytoemail = $gayeway_data['paypal_address'];
+		$an_paytoid = $gayeway_data['authnet_address'];
+		$an_paytopass = $gayeway_data['authnet_password'];
 		$payvalue = $system->input_money($_POST['pfval']);
 		$custoncode = $user->user_data['id'] . 'WEBID1';
 		$message = sprintf($MSG['582'], $system->print_money_nosymbol($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['25_0012'];
 		break;
 	case 2:
-		$query = "SELECT w.id, a.title, a.shipping_cost, w.bid, u.paypal_email FROM " . $DBPrefix . "auctions a
+		$query = "SELECT w.id, a.title, a.shipping_cost, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
 				WHERE a.id = " . intval($_POST['pfval']);
@@ -52,6 +56,8 @@ switch($_GET['a'])
 
 		$data = mysql_fetch_assoc($res);
 		$pp_paytoemail = $data['paypal_email'];
+		$an_paytoid = $data['authnet_id'];
+		$an_paytopass = $data['authnet_pass'];
 		$payvalue = $data['shipping_cost'] + $data['bid'];
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money_nosymbol($payvalue));
@@ -64,6 +70,8 @@ switch($_GET['a'])
 			exit;
 		}
 		$pp_paytoemail = $gayeway_data['paypal_address'];
+		$an_paytoid = $gayeway_data['authnet_address'];
+		$an_paytopass = $gayeway_data['authnet_password'];
 		$query = "SELECT type FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -83,6 +91,8 @@ switch($_GET['a'])
 			exit;
 		}
 		$pp_paytoemail = $gayeway_data['paypal_address'];
+		$an_paytoid = $gayeway_data['authnet_address'];
+		$an_paytopass = $gayeway_data['authnet_password'];
 		$query = "SELECT amt FROM " . $DBPrefix . "userfees WHERE auc_id = " . $_SESSION['auction_id'] . " AND user_id = " . $user->user_data['id'];
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -93,6 +103,8 @@ switch($_GET['a'])
 		break;
 	case 5: // pay relist fee (live mode)
 		$pp_paytoemail = $gayeway_data['paypal_address'];
+		$an_paytoid = $gayeway_data['authnet_address'];
+		$an_paytopass = $gayeway_data['authnet_password'];
 		// number of auctions to relist
 		$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions WHERE suspended = 8 AND user_id = " . $user->user_data['id'];
 		$res = mysql_query($query);
@@ -110,14 +122,27 @@ switch($_GET['a'])
 		break;
 }
 
+$sequance = rand(1, 1000);
+$timestamp = time();
+$pay_val = $system->input_money($system->print_money_nosymbol($payvalue));
 $template->assign_vars(array(
 		'TOP_MESSAGE' => $message,
-		'B_ENPAYPAL' => ($gayeway_data['paypal_active'] && !empty($pp_paytoemail)),
+		// enabled gateways
+		'B_ENPAYPAL' => ($gayeway_data['paypal_active'] == 1 && !empty($pp_paytoemail)),
+		'B_ENAUTHNET' => ($gayeway_data['authnet_active'] == 1 && !empty($an_paytoid) && !empty($an_paytopass)),
+		// paypal
 		'PP_PAYTOEMAIL' => $pp_paytoemail,
-		'PAY_VAL' => $system->input_money($system->print_money_nosymbol($payvalue)),
+		// authorize.net
+		'AN_PAYTOID' => $an_paytoid,
+		'AN_PAYTOPASS' => $an_paytopass,
+		'AN_KEY' => ($gayeway_data['authnet_active'] == 1) ? $fees->hmac($an_paytopass, $an_paytoid . "^" . $sequance . "^" . $timestamp . "^" . $pay_val . "^" . $system->SETTINGS['currency']) : '',
+		'AN_SEQUENCE' => $sequance,
+		// item values
+		'PAY_VAL' => $pay_val,
 		'CURRENCY' => $system->SETTINGS['currency'],
 		'TITLE' => $title,
-		'CUSTOM_CODE' => $custoncode
+		'CUSTOM_CODE' => $custoncode,
+		'TIMESTAMP' => $timestamp
 		));
 
 include 'header.php';

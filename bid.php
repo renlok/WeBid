@@ -104,6 +104,9 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 	$errmsg = $ERR_058;
 }
 
+// reformat bid to valid number
+$bid = $system->input_money($bid);
+
 $Data = mysql_fetch_array($res);
 $item_title = $Data['title'];
 $item_id = $Data['id'];
@@ -465,7 +468,7 @@ if (!isset($_POST['action']) || isset($errmsg))
 			'TITLE' => $item_title,
 			'CURRENT_BID' => $system->print_money($cbid),
 			'ATYPE' => $atype,
-			'BID' => $bid,
+			'BID' => $system->print_money_nosymbol($bid),
 			'NEXT_BID' => $system->print_money($next_bid),
 			'QTY' => $qty,
 			'TQTY' => $aquantity,

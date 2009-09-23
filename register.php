@@ -278,7 +278,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $system->cleanvars($_POST['TPL_nletter']) . "',
 						'" . $system->cleanvars($_POST['TPL_email']) . "',
 						'" . time() . "',
-						'" . $DATE . "',
+						'" . ((empty($DATE)) ? $DATE : 0) . "',
 						'" . $SUSPENDED . "',
 						'" . $language . "',
 						'" . implode(',', $groups) . "',

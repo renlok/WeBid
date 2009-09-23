@@ -1628,7 +1628,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `reg_date` int(15) default NULL,
   `rate_sum` int(11) NOT NULL default '0',
   `rate_num` int(11) NOT NULL default '0',
-  `birthdate` int(8) default '',
+  `birthdate` int(8) default '0',
   `suspended` int(1) default '0',
   `nletter` int(1) NOT NULL default '0',
   `balance` double NOT NULL default '0',

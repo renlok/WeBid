@@ -171,6 +171,7 @@ if ($_GET['action'] == 'buy')
 			// get end string
 			$month = gmdate('m', $Auction['ends'] + $system->tdiff);
 			$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);
+			$Auction['current_bid'] = $Auction['buy_now'];
 			include $include_path . 'endauction_youwin_nodutch.inc.php';
 		}
 

@@ -74,7 +74,7 @@ function extend_auction($id, $ends)
 
 	if ($system->SETTINGS['ae_status'] == 'enabled' && ($ends - $system->SETTINGS['ae_timebefore']) < time())
 	{
-		$query = "UPDATE FROM " . $DBPrefix . "auctions SET ends = ends + " . $system->SETTINGS['ae_extend'] . " WHERE id = " . $id;
+		$query = "UPDATE " . $DBPrefix . "auctions SET ends = ends + " . $system->SETTINGS['ae_extend'] . " WHERE id = " . $id;
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 	}
@@ -247,7 +247,6 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 
-				$next_bid = $next_bid;
 				if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve)
 				{
 					$next_bid = $reserve;
@@ -273,7 +272,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 						$next_bid = $bid;
 					}
 
-					$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (" . $id . ", " . $bidder_id . ", " . floatval($next_bid) . ")";
+					$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (" . $id . ", " . $bidder_id . ", " . floatval($bid) . ")";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 					if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve)

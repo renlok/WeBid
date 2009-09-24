@@ -264,7 +264,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				}
 				$hash = get_hash();
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate, suspended, language, groups, balance)
+						(nick, password, hash, name, address, city, prov, country, zip, phone,
+						nletter, email, reg_date, birthdate, suspended, language, groups, balance, timecorrection)
 						VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
 						'" . md5($MD5_PREFIX . $TPL_password_hidden) . "',
 						'" . $hash . "',
@@ -282,7 +283,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $SUSPENDED . "',
 						'" . $language . "',
 						'" . implode(',', $groups) . "',
-						'" . $balance . "')";
+						'" . $balance . "',
+						" . $system->SETTINGS['timecorrection'] . ")";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$TPL_id_hidden = mysql_insert_id();
 				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES(

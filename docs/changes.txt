@@ -1,11 +1,8 @@
-0.8.1 - 22/09/09
+0.8.2 - 24/09/09
 -----------------------------
-- Fixed the fee stettings page so it works when using a comma as a decimal (Bug #49)
-- Added an Authorize.net gateway option
-- Fixed bug with paypal payment validator
-- Fixed the registration error when birthdate is not a required feild and is left blank (Bug #50)
-- Fixed selling bug where it was trying to insert the value 'n' into a interger row (Bug #51)
-- Fixed the bug with buy it now emails where it shows the current bid instead of the buy it now value as the price (Bug #54)
-- Fixed the bidding when using a comma as a decimal
+- Changed the regisration so the users default time setting is set to the sites time setting instead of GMT
+- Fixed admin/time.php so its not trying to load a file that doesnt exist (Bug #56)
+- Fixed proxy bidding (Bug #64)
+- Fixed the autoextension option (Bug #55)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

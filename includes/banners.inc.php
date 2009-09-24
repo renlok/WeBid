@@ -51,7 +51,7 @@ if (!function_exists('view'))
 		{
 			global $title, $description, $category;
 			$query = "SELECT * FROM " . $DBPrefix . "bannerskeywords
-					 WHERE keyword LIKE '%" . $title . "%' OR keyword LIKE '%" . $description . "%'";
+					 WHERE keyword LIKE '%" . $title . "%' OR keyword LIKE '%" . mysql_escape_string($description) . "%'";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if (mysql_num_rows($res) > 0)

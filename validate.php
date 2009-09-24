@@ -29,8 +29,6 @@ if (isset($_GET['fail']) || isset($_GET['completed']))
 	exit;
 }
 
-include 'includes/common.inc.php';
-
 $fees = new fees;
 
 if (isset($_GET['paypal']))

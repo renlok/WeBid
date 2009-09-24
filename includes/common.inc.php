@@ -32,6 +32,7 @@ include $include_path . 'dates.inc.php';
 include $include_path . 'functions_global.php';
 include $include_path . 'functions_email.php';
 include $include_path . 'functions_categories.php';
+include $include_path . 'functions_fees.php';
 include $include_path . 'functions_user.php';
 include $include_path . 'template.php';
 

@@ -4,5 +4,10 @@
 - Fixed admin/time.php so its not trying to load a file that doesnt exist (Bug #56)
 - Fixed proxy bidding (Bug #64)
 - Fixed the autoextension option (Bug #55)
+- Fixed the exclude auction page (Bug #63)
+- Fixed the fee gateway so the password feild displays for Authorize.Net
+- Fixed when you do an update the Authorize.Net will actually show in the admin panel (Bug #57)
+- Fixed a bug where the fees class cannot be called (Bug #60)
+- Fixed the banner selection script from throwing an error when an ' is used in an items description (Bug #58)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

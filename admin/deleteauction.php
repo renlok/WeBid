@@ -19,7 +19,7 @@ include 'loggedin.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
 // Data check
-if (!$_REQUEST['id'])
+if (!isset($_REQUEST['id']))
 {
 	$URL = $_SESSION['RETURN_LIST'];
 	unset($_SESSION['RETURN_LIST']);

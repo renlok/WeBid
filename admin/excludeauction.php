@@ -13,303 +13,135 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-include "../includes/common.inc.php";
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path."countries.inc.php";
+include $main_path . 'language/' . $language . '/categories.inc.php';
 
-$username = $name;
-
-if (!isset($_GET['id']) && !isset($_POST['id'])) {
+if (!isset($_REQUEST['id']))
+{
 	$URL = $_SESSION['RETURN_LIST'];
 	unset($_SESSION['RETURN_LIST']);
-	header("Location: $URL");
+	header('location: ' . $URL);
 	exit;
 }
 
-foreach ($_GET as $k=>$v){
-  $var = $k;
-  $$var = $v; 
-}
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	$catscontrol = new MPTTcategories();
+	$id = intval($_POST['id']);
 
-foreach ($_POST as $k=>$v){
-  $var = $k;
-  $$var = $v; 
-}
+	// get auction data
+	$query = "SELECT category, closed, suspended FROM " . $DBPrefix . "auctions WHERE id = " . $id;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$auc_data = mysql_fetch_assoc($res);
 
-if ($action && strstr(basename($_SERVER['HTTP_REFERER']),basename($_SERVER['PHP_SELF']))){
-	if ($mode == "activate") {
-		$sql="UPDATE " . $DBPrefix . "auctions set suspended=0 WHERE id='$id'";
-		if ($closed==1) {
-			$counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET suspendedauction=(suspendedauction-1),closedauctions=(closedauctions+1)");
-		} else if ($closed==0) {
-			$counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET suspendedauction=(suspendedauction-1),auctions=(auctions+1)");
-			$query = "select category from " . $DBPrefix . "auctions WHERE id='$id'";
-			$res__ = mysql_query($query);
-			if (!$res__) {
-				print $ERR_001." $query<BR>".mysql_error();
-				exit;
-			} else {
-				$cat_id = mysql_result($res__,0,"category");
-			}
-			// update "categories" table - for counters
-			$root_cat = $cat_id;
-			do {
-				// update counter for this category
-				$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id=\"$cat_id\"";
-				$result = mysql_query($query);
-				
-				if ($result) {
-					if (mysql_num_rows($result)>0) {
-						$R_parent_id = mysql_result($result,0,"parent_id");
-						$R_cat_id = mysql_result($result,0,"cat_id");
-						$R_counter = intval(mysql_result($result,0,"counter"));
-						$R_sub_counter = intval(mysql_result($result,0,"sub_counter"));
-						
-						$R_sub_counter++;
-						if ( $cat_id == $root_cat )
-						++$R_counter;
-						
-						if ($R_counter < 0) $R_counter = 0;
-						if ($R_sub_counter < 0) $R_sub_counter = 0;
-						
-						$query = "UPDATE " . $DBPrefix . "categories SET counter='$R_counter', sub_counter='$R_sub_counter' WHERE cat_id=\"$cat_id\"";
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-						
-						$cat_id = $R_parent_id;
-					}
-				}
-			} while ($cat_id!=0);
+	if ($auc_data['suspended'] > 0)
+	{
+		// update auction table
+		$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $id;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+		if ($auc_data['closed'] == 1)
+		{
+			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions - 1), closedauctions = (closedauctions + 1)";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
-	} else {
-		$sql="UPDATE " . $DBPrefix . "auctions set suspended=1 WHERE id='$id'";
-		/* Update column suspendedauction,auctions,closedauctions   in table " . $DBPrefix . "counters */
-		if ($closed==1) {
-			$counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET suspendedauction=(suspendedauction+1),closedauctions=(closedauctions-1)");
-		} else if ($closed==0){
-			$counteruser = mysql_query("UPDATE " . $DBPrefix . "counters SET suspendedauction=(suspendedauction+1),auctions=(auctions-1)");
-			$query = "select category from " . $DBPrefix . "auctions WHERE id='$id'";
-			$res__ = mysql_query($query);
-			if (!$res__) {
-				print $ERR_001." $query<BR>".mysql_error();
-				exit;
-			} else {
-				$cat_id = mysql_result($res__,0,"category");
+		else
+		{
+			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions - 1), auctions = (auctions + 1)";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+			// update recursive categories
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auc_data['category'];
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$parent_node = mysql_fetch_assoc($res);
+			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+			for ($i = 0; $i < count($crumbs); $i++)
+			{
+				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			}
-			// update "categories" table - for counters
-			$root_cat = $cat_id;
-			do {
-				// update counter for this category
-				$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id=\"$cat_id\"";
-				$result = mysql_query($query);
-				if ($result) {
-					if (mysql_num_rows($result)>0) {
-						$R_parent_id = mysql_result($result,0,"parent_id");
-						$R_cat_id = mysql_result($result,0,"cat_id");
-						$R_counter = intval(mysql_result($result,0,"counter"));
-						$R_sub_counter = intval(mysql_result($result,0,"sub_counter"));
-						
-						$R_sub_counter--;
-						if ( $cat_id == $root_cat )
-						--$R_counter;
-						
-						if ($R_counter < 0) $R_counter = 0;
-						if ($R_sub_counter < 0) $R_sub_counter = 0;
-						
-						$query = "UPDATE " . $DBPrefix . "categories SET counter='$R_counter', sub_counter='$R_sub_counter' WHERE cat_id=\"$cat_id\"";
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-						
-						$cat_id = $R_parent_id;
-					}
-				}
-			} while ($cat_id!=0);
 		}
 	}
-	$res=mysql_query($sql);
-	$URL = $_SESSION['RETURN_LIST']."?offset=".$_SESSION['RETURN_LIST_OFFSET'];
+	else
+	{
+		// suspend auction
+		$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 1 WHERE id = " . $id;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+		if ($auc_data['closed'] == 1)
+		{
+			$query ="UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions + 1), closedauctions = (closedauctions - 1)";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		else
+		{
+			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions + 1), auctions = (auctions - 1)";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+			// update recursive categories
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auc_data['category'];
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$parent_node = mysql_fetch_assoc($res);
+			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+			for ($i = 0; $i < count($crumbs); $i++)
+			{
+				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
+		}
+	}
+
+	$URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
 	unset($_SESSION['RETURN_LIST']);
-	header("Location: $URL");
+	header('location: ' . $URL);
 	exit;
 }
 
+$query = "SELECT u.nick, a.title, a.starts, a.description, a.category, d.description as duration,
+		a.suspended, a.current_bid, a.quantity, a.reserve_price
+		FROM " . $DBPrefix . "auctions a
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+		LEFT JOIN " . $DBPrefix . "durations d ON (d.days = a.duration)
+		WHERE a.id = " . $_GET['id'];
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$auc_data = mysql_fetch_assoc($res);
 
-if (!$action || ($action && $updated)){
-	
-	$query = "select a.id, u.nick, a.title, a.starts, a.description,
-		c.cat_name, d.description as duration, a.suspended, a.current_bid,
-		a.quantity, a.reserve_price, a.minimum_bid from " . $DBPrefix . "auctions
-		a, " . $DBPrefix . "users u, " . $DBPrefix . "categories c, " . $DBPrefix . "durations d WHERE u.id = a.user and
-		c.cat_id = a.category and d.days = a.duration and a.id=\"$id\"";
-	$result = mysql_query($query);
-	if (!$result) {
-		print "Database access error: abnormal termination".mysql_error();
-		exit;
-	}
-	
-	
-	$id = mysql_result($result,0,"id");
-	$title = stripslashes(mysql_result($result,0,"title"));
-	$nick = mysql_result($result,0,"nick");
-	$tmp_date = mysql_result($result,0,"starts");
-	$duration = mysql_result($result,0,"duration");
-	$category = mysql_result($result,0,"cat_name");
-	$description = stripslashes(mysql_result($result,0,"description"));
-	$suspended = mysql_result($result,0,"suspended");
-	$current_bid = mysql_result($result,0,"current_bid");
-	$min_bid = mysql_result($result,0,"minimum_bid");
-	$quantity = mysql_result($result,0,"quantity");
-	$reserve_price = mysql_result($result,0,"reserve_price");
-	
-	$day = substr($tmp_date,6,2);
-	$month = substr($tmp_date,4,2);
-	$year = substr($tmp_date,0,4);
-	$date = "$day/$month/$year";
-	
+if ($system->SETTINGS['datesformat'] == 'USA')
+{
+	$date = gmdate('m/d/Y', $auc_data['starts']);
+}
+else
+{
+	$date = gmdate('d/m/Y', $auc_data['starts']);
 }
 
+$template->assign_vars(array(
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'PAGE_TITLE' => ($auc_data['suspended'] > 0) ? $MSG['322'] : $MSG['321'],
+		'ID' => $_GET['id'],
+		'TITLE' => $auc_data['title'],
+		'NICK' => $auc_data['nick'],
+		'STARTS' => $date,
+		'DURATION' => $auc_data['duration'],
+		'CATEGORY' => $category_names[$auc_data['category']],
+		'DESCRIPTION' => stripslashes($auc_data['description']),
+		'CURRENT_BID' => $system->print_money($auc_data['current_bid']),
+		'QTY' => $auc_data['quantity'],
+		'RESERVE_PRICE' => $system->print_money($auc_data['reserve_price']),
+		'SUSPENDED' => $auc_data['suspended'],
+		'OFFSET' => $_REQUEST['offset']
+		));
+
+$template->set_filenames(array(
+		'body' => 'excludeauction.tpl'
+		));
+$template->display('body');
 ?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-<STYLE TYPE="text/css">
-body {
-scrollbar-face-color: #aaaaaa;
-scrollbar-shadow-color: #666666;
-scrollbar-highlight-color: #aaaaaa;
-scrollbar-3dlight-color: #dddddd;
-scrollbar-darkshadow-color: #444444;
-scrollbar-track-color: #cccccc;
-scrollbar-arrow-color: #ffffff;
-}</STYLE>
-</head>
-<body style="margin:0;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-		<tr>
-		  <td width="30"><img src="images/i_auc.gif" ></td>
-		  <td class=white><?php echo $MSG['239']; ?>&nbsp;&gt;&gt;&nbsp;<?php if ($suspended > 0) {
-				print $MSG['322'];
-			} else {
-				print $MSG['321'];
-			} ?></td>
-		</tr>
-	  </table></td>
-  </tr>
-  <tr>
-	<td align="center" valign="middle">&nbsp;</td>
-  </tr>
-  <tr>
-	<td align="center" valign="middle"><table width="95%" border="0" cellspacing="1" cellpadding="1" bgcolor="#0083D7" align="center">
-		<tr>
-		  <td align="center" class=title>
-			<?php
-			if ($suspended > 0) {
-				print $MSG['322'];
-			} else {
-				print $MSG['321'];
-			}
-			?>
-			</B></td>
-		</tr>
-		<tr>
-		  <td bgcolor="#FFFFFF">
-		  <table width=100% CELPADDING=4 cellspacing=0 border=0 bgcolor="#FFFFFF">
-					  <?php
-					  if ($updated) {
-					  ?>
-					  <tr>
-						<td></td>
-						<td width=486>Auctions data updated</td>
-					  </tr>
-					  <?php
-					  }
-					  ?>
-					  <tr>
-						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['312']; ?> </td>
-						<td width="486"><?php print $title; ?></td>
-					  </tr>
-					  <tr>
-						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['313']; ?> </td>
-						<td width="486"><?php print $nick; ?></td>
-					  </tr>
-					  <tr>
-						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['314']; ?> </td>
-						<td width="486"><?php print $date; ?></td>
-					  </tr>
-					  <tr>
-						<td width="204"  VALIGN="top" ALIGN="right"><?php print $MSG['315']; ?> </td>
-						<td width="486"><?php print $duration; ?></td>
-					  </tr>
-					  <tr>
-						<td width="204"  VALIGN="top" ALIGN="right"><?php print $MSG['316']; ?> </td>
-						<td width="486"><?php print $category; ?></td>
-					  </tr>
-					  <tr>
-						<td width="204" VALIGN="top" ALIGN="right">
-						  <?php print $MSG['317']; ?> </td>
-						<td width="486">
-						  <?php print $description; ?> </td>
-					  </tr>
-					  <tr>
-						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['318']; ?> </td>
-						<td width="486"><?php print $current_bid; ?></td>
-					  </tr>
-					  <tr>
-						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['327']; ?> </td>
-						<td width="486"><?php print $min_bid; ?></td>
-					  </tr>
-					  <tr>
-						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['319']; ?> </td>
-						<td width="486"><?php print $quantity; ?></td>
-					  </tr>
-					  <tr>
-						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['320']; ?> </td>
-						<td width="486"><?php print $reserve_price; ?></td>
-					  </tr>
-					  <tr>
-						<td width="204" VALIGN="top" ALIGN="right"><?php print $MSG['300']; ?> </td>
-						<td width="486">
-						<?php
-						  if ($suspended == 0)
-						  print $MSG['029'];
-						  else
-						  print $MSG['030'];						 
-						?>
-						</td>
-					  </tr>
-					  <tr>
-						<td width="204">&nbsp;</td>
-						<td width="486">
-						  <?php
-						  if ($suspended > 0) {
-						  	print $MSG['324'];
-						  	$mode = "activate";
-						  } else {
-						  	print $MSG['323'];
-						  	$mode = "suspend";
-						  }
-										?>
-						</td>
-					  </tr>
-					  <tr>
-						<td width="204">&nbsp;</td>
-						<td width="486"><form NAME=details ACTION="excludeauction.php" METHOD="POST">
-							<input type="hidden" name="id" value="<?php echo $id; ?>">
-							<input type="hidden" name="offset" value="<?php echo $offset; ?>">
-							<input type="hidden" name="action" value="Delete">
-							<input type="hidden" name="mode" value="<?php print $mode; ?>">
-							<input type="submit" name="act" value="<?php print $MSG['030']; ?>">
-						  </form></td>
-					  </tr>
-					</table>
-				 
-				 </td>
-			  </tr>
-			</table>
-			
-			</td>
-  </tr>
-</table>
-</body>
-</html>

@@ -41,7 +41,7 @@
 					<tr class="c1">
 						<td width="50%">
                         	<a href="{gateways.WEBSITE}" target="_blank">{gateways.ADDRESS_NAME}</a>: <input type="text" name="{gateways.PLAIN_NAME}_address" value="{gateways.ADDRESS}" size="50">
-<!-- IF B_PASSWORD -->
+<!-- IF gateways.B_PASSWORD -->
                             <p>{gateways.ADDRESS_PASS}: <input type="text" name="{gateways.PLAIN_NAME}_password" value="{gateways.PASSWORD}" size="50"></p>
 <!-- ENDIF -->
 						</td>

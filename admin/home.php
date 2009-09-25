@@ -79,12 +79,13 @@ if (isset($_GET['action']))
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 			//update bids
-			$query = "SELECT COUNT(b.id) FROM " . $DBPrefix . "bids b, " . $DBPrefix . "auctions a
-					WHERE b.auction=a.id AND a.closed = 0 AND a.suspended = 0";
+			$query = "SELECT COUNT(b.id) FROM " . $DBPrefix . "bids b
+					LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
+					WHERE a.closed = 0 AND a.suspended = 0";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$BIDS = mysql_num_rows($res);
-			$query = "UPDATE " . $DBPrefix . "counters set bids = " . $BIDS;
+			$BIDS = mysql_result($res, 0);
+			$query = "UPDATE " . $DBPrefix . "counters SET bids = " . $BIDS;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 			$errmsg = $MSG['1029'];

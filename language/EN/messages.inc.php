@@ -849,6 +849,7 @@ $MSG['771'] = 'Default Name';
 $MSG['772'] = 'Translation';
 $MSG['773'] = 'Authorize.net Login ID';
 $MSG['774'] = 'Authorize.net Transaction Key';
+$MSG['775'] = 'Buyer Fee';
 
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";

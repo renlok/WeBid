@@ -93,7 +93,7 @@ else
 if ($user->logged_in)
 {
 	// Check if this item is not already added
-	$query = "SELECT item_watch from " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
+	$query = "SELECT item_watch FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
 
@@ -273,14 +273,14 @@ if ($user->logged_in && $num_bids > 0)
 }
 
 // sort out user questions
-$query = "SELECT id, message FROM " . $DBPrefix . "messages WHERE reply_of = 0 AND question = " . $id;
+$query = "SELECT id FROM " . $DBPrefix . "messages WHERE reply_of = 0 AND public = 1 AND question = " . $id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $num_questions = mysql_num_rows($res);
 while ($row = mysql_fetch_assoc($res))
 {
 	$template->assign_block_vars('questions', array()); // just need to create the block
-	$query = "SELECT sentfrom, message FROM " . $DBPrefix . "messages WHERE question = " . $id . " ORDER BY sentat ASC";
+	$query = "SELECT sentfrom, message FROM " . $DBPrefix . "messages WHERE question = " . $id . " AND reply_of = " . $row['id'] . " OR id = " . $row['id'] . " ORDER BY sentat ASC";
 	$res_ = mysql_query($query);
 	$system->check_mysql($res_, $query, __LINE__, __FILE__);
 	while ($row_ = mysql_fetch_assoc($res_))

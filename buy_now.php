@@ -78,7 +78,7 @@ if ($Auction['bn_only'] == 'n')
 }
 
 // get user's nick
-$query = "select nick, email FROM " . $DBPrefix . "users WHERE id = " . $Auction['user'];
+$query = "SELECT nick, email, rate_sum FROM " . $DBPrefix . "users WHERE id = " . $Auction['user'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $Seller = mysql_fetch_assoc($res);
@@ -90,13 +90,7 @@ $system->check_mysql($result, $query, __LINE__, __FILE__);
 $num_feedbacks = mysql_num_rows($result);
 
 // Get current total rate value for user
-$query = "SELECT rate_sum FROM " . $DBPrefix . "users WHERE id = " . $Auction['user'];
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-if (mysql_num_rows($result) > 0)
-{
-	$total_rate = mysql_result($result, 0, 'rate_sum');
-}
+$total_rate = $Seller['rate_sum'];
 
 $i = 0;
 foreach ($memtypesarr as $k => $l)

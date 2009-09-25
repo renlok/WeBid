@@ -1036,6 +1036,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
 # 
 
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'signup_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyer_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'setup');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hpfeat_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'bolditem_fee');";

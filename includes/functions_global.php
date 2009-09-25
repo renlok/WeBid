@@ -147,7 +147,7 @@ class global_class
 		elseif ($this->SETTINGS['moneyformat'] == 2)
 		{
 			// Drop thousands separator
-			$str = str_replace('\.', '', $str);
+			$str = str_replace('.', '', $str);
 
 			// Change decimals separator
 			$str = str_replace(',', '.', $str);

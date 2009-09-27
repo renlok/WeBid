@@ -147,7 +147,11 @@ if ($_GET['action'] == 'buy')
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$query = "UPDATE " . $DBPrefix . "counters SET bids = bids + 1";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			// so its not over written by the cron
+			$tmpauc = $Auction;
 			include 'cron.php';
+			$Auction = $tmpauc;
+			unset($tmpauc);
 		}
 		else
 		{

@@ -15,6 +15,7 @@
 include 'includes/common.inc.php';
 include $include_path . 'countries.inc.php';
 include $include_path . 'banemails.inc.php';
+
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
 {
@@ -247,6 +248,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
+				elseif ($system->SETTINGS['activationtype'] == 1)
+				{
+					$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1";
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
 				else
 				{
 					$query = "UPDATE " . $DBPrefix . "counters SET users = users + 1";
@@ -287,8 +293,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						" . $system->SETTINGS['timecorrection'] . ")";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$TPL_id_hidden = mysql_insert_id();
-				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES(
-						  NULL, " . intval($TPL_id_hidden) . ", '" . $_SERVER['REMOTE_ADDR'] . "', 'first','accept')";
+				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
+						  (NULL, " . intval($TPL_id_hidden) . ", '" . $_SERVER['REMOTE_ADDR'] . "', 'first','accept')";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				$_SESSION['language'] = $language;

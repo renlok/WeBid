@@ -14,7 +14,7 @@
 
 include 'functions.php';
 ?>
-<h1>WeBid Updater, v0.8.1 to v0.8.2</h1>
+<h1>WeBid Updater, v0.8.0 to v0.8.1</h1>
 <?php
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
 switch($step)

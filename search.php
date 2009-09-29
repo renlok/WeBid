@@ -18,9 +18,7 @@ include $include_path . 'dates.inc.php';
 
 $NOW = time();
 
-$query = trim($_GET['q']);
-$qquery = ereg_replace("%", "\\%", $query);
-$qquery = ereg_replace("_", "\\_", $qquery);
+$query = $system->cleanvars(trim($_GET['q']));
 
 if (strlen($query) == 0)
 {
@@ -32,97 +30,21 @@ if (strlen($query) == 0)
 }
 else
 {
-	$qp1 = " (title LIKE '%" . addslashes($qquery) . "%' OR id = " . intval($qquery) . ")
-			 AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " AND ends > " . $NOW . " ORDER BY ends";
-	$qp = " (cat_name LIKE '%" . addslashes($qquery) . "%') ";
+	$sql = "SELECT * FROM " . $DBPrefix . "auctions WHERE " . $qp1 . "
+			(title LIKE '%" . $query . "%' OR id = " . intval($query) . ")
+			AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " AND ends > " . $NOW;
 
-	$sql_count = "SELECT count(*) FROM " . $DBPrefix . "auctions WHERE " . $qp1;
-	$sql = "SELECT * FROM " . $DBPrefix . "auctions WHERE " . $qp1;
-	$sql_cat = "SELECT * FROM " . $DBPrefix . "categories WHERE " . $qp . " ORDER BY cat_name ASC";
-	// get categories whose names fit the search criteria
-
-	$result = mysql_query($sql_cat);
-	$system->check_mysql($result, $sql_cat, __LINE__, __FILE__);
-
-	$subcat_count = 0;
-
-	// query succeeded - display list of categories
-	$need_to_continue = 1;
-	$cycle = 1;
-
-	$TPL_main_value = '';
-	while ($row = mysql_fetch_array($result))
-	{
-		++$subcat_count;
-		if ($cycle == 1)
-		{
-			$TPL_main_value .= '<tr align="left">' . "\n";
-		}
-		$sub_counter = (int)$row['sub_counter'];
-		$cat_counter = (int)$row['counter'];
-		if ($sub_counter != 0)
-		{
-			$count_string = '(' . $sub_counter . ')';
-		}
-		else
-		{
-			if ($cat_counter != 0)
-			{
-				$count_string = '(' . $cat_counter . ')';
-			}
-			else
-			{
-				$count_string = '';
-			}
-		}
-		if ($row['cat_colour'] != '')
-		{
-			$BG = 'bgcolor="' . $row['cat_colour'] . '"';
-		}
-		else
-		{
-			$BG = '';
-		}
-
-		// Select the translated category name
-		$row['cat_name'] = $category_names[$row['cat_id']];
-
-		$catimage = (!empty($row['cat_image'])) ? '<img src="' . $row['cat_image'] . '" border=0>' : '';
-		$TPL_main_value .= "	<TD $BG WIDTH=\"33%\">$catimage<a href=\"" . $system->SETTINGS['siteurl'] . "browse.php?id=" . $row['cat_id'] . "\">" . $row['cat_name'] . "</a>" . $count_string . "</FONT></TD>\n";
-
-		++$cycle;
-		if ($cycle == 4)
-		{
-			$cycle = 1;
-			$TPL_main_value .= "</TR>\n";
-		}
-	}
-
-	if ($cycle >= 2 && $cycle <= 3)
-	{
-		while ($cycle < 4)
-		{
-			$TPL_main_value .= "	<TD WIDTH=\"33%\">&nbsp;</TD>\n";
-			++$cycle;
-		}
-		$TPL_main_value .= "</TR>\n";
-	}
-
-	/* get list of auctions of this category */
-	$auctions_count = 0;
-
-	/* retrieve records corresponding to passed page number */
+	// retrieve records corresponding to passed page number
 	$PAGE = (int)$_GET['page'];
 	if ($PAGE == 0) $PAGE = 1;
-	$lines = (int)$lines;
-	if ($lines == 0) $lines = 50;
+	$lines = 50;
 
-	/* determine limits for SQL query */
+	// determine limits for SQL query
 	$left_limit = ($PAGE - 1) * $lines;
 
 	/* get total number of records */
-	$rsl = mysql_query($sql_count);
-	$system->check_mysql($rsl, $sql_count, __LINE__, __FILE__);
+	$rsl = mysql_query($sql);
+	$system->check_mysql($rsl, $sql, __LINE__, __FILE__);
 
 	$hash = mysql_fetch_array($rsl);
 	$total = (int)$hash[0];
@@ -132,11 +54,13 @@ else
 	if (($total % $lines) > 0)
 		++$PAGES;
 
-	$result = mysql_query($sql . " LIMIT $left_limit, $lines");
-	$system->check_mysql($result, $sql, __LINE__, __FILE__);
+	$query = $sql . " ORDER BY ends LIMIT " . $left_limit . ", " . $lines;
+	$result = mysql_query($query);
+	$system->check_mysql($result, $query, __LINE__, __FILE__);
 
-	$feat_res = mysql_query($sql . " LIMIT " . intval(($PAGE - 1) * 5) . ", 5");
-	$system->check_mysql($feat_res, $sql, __LINE__, __FILE__);
+	$query = $sql . " AND featured = 'y' ORDER BY ends LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
+	$feat_res = mysql_query($query);
+	$system->check_mysql($feat_res, $query, __LINE__, __FILE__);
 
 	// to be sure about items format, I've unified the call
 	include $include_path . 'browseitems.inc.php';

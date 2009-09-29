@@ -49,7 +49,7 @@ if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1 || $_GET['PAGE'] == '')
 }
 else
 {
-	$PAGE = $_GET['page'];
+	$PAGE = $_GET['PAGE'];
 	$OFFSET = ($PAGE - 1) * $LIMIT;
 }
 $PAGES = ceil($num_auctions / $LIMIT);

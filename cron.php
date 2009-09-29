@@ -171,7 +171,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 			}
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-			(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $Winner['id'] . "', " . $Auction['current_bid'] . ", '" . $NOW . "', 0, 0, 1, 0)";
+			(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $Winner['id'] . "', " . $Auction['current_bid'] . ", '" . $NOW . "', 0, 0, 1, 0, 0)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		else
@@ -250,7 +250,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 					$totalamount = $row['maxbid'];
 					// Add winner's data to "winners" table
 					$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0)";
+					(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0, 0)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 				if (!$row = mysql_fetch_array($res))

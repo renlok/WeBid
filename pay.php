@@ -120,6 +120,27 @@ switch($_GET['a'])
 		$message = sprintf($MSG['591'], $system->print_money_nosymbol($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['437'];
 		break;
+	case 6: // pay buyer fee (live mode)
+		if (isset($_GET['auction_id']))
+		{
+			$_SESSION['auction_id'] = intval($_GET['auction_id']);
+		}
+		if (!isset($_SESSION['auction_id']) || $_SESSION['auction_id'] < 1 || $system->SETTINGS['fee_type'] != 2)
+		{
+			header('location: index.php');
+			exit;
+		}
+		$pp_paytoemail = $gateway_data['paypal_address'];
+		$an_paytoid = $gateway_data['authnet_address'];
+		$an_paytopass = $gateway_data['authnet_password'];
+		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$payvalue = mysql_result($res, 0);
+		$custoncode = $_SESSION['auction_id'] . 'WEBID6';
+		$message = sprintf($MSG['776'], $system->print_money_nosymbol($payvalue));
+		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['775'];
+		break;
 }
 
 $sequance = rand(1, 1000);

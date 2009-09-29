@@ -11,5 +11,8 @@
 - Fixed the banner selection script from throwing an error when an ' is used in an items description (Bug #58)
 - Fixed the counter resync button so it calculates the number of bids correctly
 - Fixed the buyer questions on the item page so the questions are only shown if the question was set to public (Bug #62)
+- Fixed the pagnation in active_auctions.php (Bug #67)
+- Fixed the admin edit auction where it messes up the ending time
+- Fixed the regular search so it no longer thinks every auction is a featured auction
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

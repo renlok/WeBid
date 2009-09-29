@@ -1712,6 +1712,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `feedback_sel` tinyint(1) NOT NULL default '0',
   `qty` int(11) NOT NULL default '1',
   `paid` int(1) NOT NULL default '0',
+  `bf_paid` INT(1) NOT NULL DEFAULT  '0',
   KEY `id` (`id`)
 ) ;";
 

@@ -87,7 +87,7 @@ if (isset($_POST['action']))
 			$start = gmdate('H i s', $AUCTION['starts']);
 			$start = explode(' ', $start);
 			$a_start = gmmktime($start[0], $start[1], $start[2], $tmp_month, $tmp_day, $tmp_year);
-			$a_ends = $T + ($_POST['duration'] * 24 * 60 * 60);
+			$a_ends = $a_start + ($_POST['duration'] * 24 * 60 * 60);
 
 			if ($AUCTION['category'] != $_POST['category'])
 			{

@@ -13,7 +13,7 @@
  ***************************************************************************/
 include('functions.php');
 ?>
-<h1>WeBid Installer v0.8.2</h1>
+<h1>WeBid Installer v0.8.1</h1>
 <?php
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
 switch($step){
@@ -50,7 +50,7 @@ switch($step){
 		break;
 	case 1:
 		$cats = (isset($_POST['importcats'])) ? 1 : 0;
-		echo '<b>Step 1:</b> Writting config file...<br>';
+		echo '<b>Step 1:</b> Writing config file...<br>';
 		$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
 		$content = '<?php
 $DbHost	 = "'.$_POST['DBHost'].'";
@@ -67,7 +67,7 @@ $main_path	= "'.$path.'";
 		}
 		else
 		{
-			echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
+			echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the includes directory)';
 			echo '<p><textarea style="width:500px; height:500px;">
 '.$content.'
 			</textarea></p>';

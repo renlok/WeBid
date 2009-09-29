@@ -187,7 +187,7 @@ while ($row = mysql_fetch_assoc($res))
 				'ID' => $row['id'],
 				'TITLE' => $row['title']
 				));
-		$AU[] = $id;
+		$AU[] = $row['id'];
 		$j++;
 	}
 	$i++;

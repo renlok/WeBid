@@ -198,6 +198,33 @@ class fees
 				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
+			case 6: //buyer fee
+				$query = "SELECT id, title, pict_url, buy_now, ends
+						FROM " . $DBPrefix . "auctions WHERE id = " . $custom_id;
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$auc_data = mysql_fetch_assoc($res);
+				// get end string
+				$month = gmdate('m', $Auction['ends'] + $system->tdiff);
+				$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);
+				$Auction['current_bid'] = $Auction['buy_now'];
+
+				// get user details
+				$query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$Winner = mysql_fetch_assoc($res);
+
+				// get sellers details
+				$query = "SELECT nick, email, rate_sum FROM " . $DBPrefix . "users WHERE id = " . $Auction['user'];
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$Seller = mysql_fetch_assoc($res);
+				include $include_path . 'endauction_youwin_nodutch.inc.php';
+				$query = "UPDATE " . $DBPrefix . "winners SET bf_paid = 1 WHERE bf_paid = 0 AND auction = " . $custom_id . " AND winner = " . $user->user_data['id'];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			break;
+			
 		}
 	}
 }

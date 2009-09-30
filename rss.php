@@ -20,10 +20,10 @@ $p24h = time() + (24 * 60 * 60);
 $m24h = time() - (24 * 60 * 60);
 $catscontrol = new MPTTcategories();
 
-$user_id = intval($_REQUEST['user_id']);
+$user_id = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['user_id']) : 0;
+$limit = '';
 
-$feed = intval($_REQUEST['feed']);
-$feed = (!$feed) ? 1 : $feed;
+$feed = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['feed']) : '';
 
 switch ($feed)
 {
@@ -80,7 +80,7 @@ switch ($feed)
 		$RSStitle = $MSG['931']; // item with a Buy Now
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND a.buy_nowe > 0';
+		$subquery = 'a.starts <= ' . $NOW . ' AND a.buy_now > 0';
 		break;
 
 	default:

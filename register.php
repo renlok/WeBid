@@ -80,10 +80,12 @@ if (empty($_POST['action']))
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 $DISPLAYED_FIELDS = unserialize($system->SETTINGS['displayed_feilds']);
+$spam_html = '';
 
 if ($system->SETTINGS['spam_register'] == 1)
 {
 	$resp = new Securimage();
+	$spam_html = $resp->show_html();
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'first')
@@ -385,7 +387,7 @@ $template->assign_vars(array(
 		'B_FIRST' => $first,
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : ($system->SETTINGS['spam_register'] == 1) ? $resp->show_html() : '',
+		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
 		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 1),
 		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 1),
 		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 1),

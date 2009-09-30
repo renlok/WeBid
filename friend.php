@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
+
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_sendtofriend'] == 2)
 {
@@ -41,9 +42,11 @@ if (mysql_num_rows($result) > 0)
 	$TPL_item_title = mysql_result($result, 0, 'title');
 }
 
+$spam_html = '';
 if ($system->SETTINGS['spam_register'] == 1)
 {
 	$resp = new Securimage();
+	$spam_html = $resp->show_html();
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
@@ -61,7 +64,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 	
 	if ($system->SETTINGS['spam_sendtofriend'] == 2)
 	{
-		echo 0;
 		$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
 		if (!$resp->is_valid)
 		{
@@ -70,7 +72,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 	}
 	elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
 	{
-		echo $_POST['captcha_code'] . 1;
 		if (!$resp->check($_POST['captcha_code']))
 		{
 			$TPL_error_text = $MSG['752'];
@@ -106,7 +107,7 @@ $template->assign_vars(array(
 		'ERROR' => $TPL_error_text,
 		'ID' => intval($_REQUEST['id']),
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => ($system->SETTINGS['spam_sendtofriend'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : ($system->SETTINGS['spam_sendtofriend'] == 1) ? $resp->show_html() : '',
+		'CAPCHA' => ($system->SETTINGS['spam_sendtofriend'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
 		'TITLE' => $TPL_item_title,
 		'FRIEND_NAME' => (isset($_POST['friend_name'])) ? $_POST['friend_name'] : '',
 		'FRIEND_EMAIL' => (isset($_POST['friend_email'])) ? $_POST['friend_email'] : '',

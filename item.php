@@ -110,6 +110,11 @@ if ($user->logged_in)
 		$watch_string = $MSG['5202'];
 	}
 }
+else
+{
+	$watch_var = '';
+	$watch_string = '';
+}
 
 // get ending time
 $difference = $ends - time();
@@ -478,7 +483,7 @@ $template->assign_vars(array(
 		'BIDURL' => ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'],
 
 		'B_HASENDED' => $has_ended,
-		'B_CANEDIT' => ($user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
+		'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
 		'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && $user->user_data['id'] != $auction_data['user']),
 		'B_HASIMAGE' => (!empty($pict_url_plain)),
 		'B_NOTBNONLY' => ($auction_data['bn_only'] == 'n'),

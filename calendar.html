@@ -4,9 +4,12 @@ URL: http://www.softcomplex.com/products/tigra_calendar/
 Version: 3.2
 Date: 10/14/2002 (mm/dd/yyyy)
 Feedback: feedback@softcomplex.com (specify product title in the subject)
-Note: Permission given to use this script in ANY kind of applications if header lines are left unchanged.
+Note: Permission given to use this script in ANY kind of applications if
+   header lines are left unchanged.
 Note: Script consists of two files: calendar?.js and calendar.html
-About us: Our company provides offshore IT consulting services. Contact us at sales@softcomplex.com if you have any programming task you want to be handled by professionals. Our typical hourly rate is $20.
+About us: Our company provides offshore IT consulting services.
+	Contact us at sales@softcomplex.com if you have any programming task you
+	want to be handled by professionals. Our typical hourly rate is $20.
 -->
 <html>
 <head>
@@ -24,7 +27,7 @@ var ARR_WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 // day week starts from (normally 0-Su or 1-Mo)
 var NUM_WEEKSTART = 1;
 // path to the directory where calendar images are stored. trailing slash req.
-var STR_ICONPATH = 'includes/img/';
+var STR_ICONPATH = 'img/';
 
 var re_url = new RegExp('datetime=(\\-?\\d+)');
 var dt_current = (re_url.exec(String(window.location))
@@ -133,7 +136,7 @@ while (dt_current_day.getMonth() == dt_current.getMonth() ||
 		if (dt_current_day.getMonth() == this.dt_current.getMonth())
 			// print days of current month
 			document.write('<font color="#000000">');
-		else
+		else 
 			// print days of other months
 			document.write('<font color="#606060">');
 
@@ -150,3 +153,4 @@ if (obj_caller && obj_caller.time_comp)
 </table>
 </body>
 </html>
+

@@ -23,7 +23,7 @@ if (!$user->logged_in)
 	exit;
 }
 
-if ($user->user_data['suspended'] == 7)
+if ($user->user_data['suspended'] == 7 || $user->user_data['suspended'] == 6)
 {
 	header('location: message.php');
 	exit;

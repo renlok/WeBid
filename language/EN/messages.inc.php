@@ -850,6 +850,8 @@ $MSG['772'] = 'Translation';
 $MSG['773'] = 'Authorize.net Login ID';
 $MSG['774'] = 'Authorize.net Transaction Key';
 $MSG['775'] = 'Buyer Fee';
+$MSG['776'] = "To finalise the sale please proceed to one of the payment gateways listed below to pay the fee of <b>%s</b>.";
+$MSG['777'] = 'You have an outstanding payment of the buyers fee for the item %s; your account will be suspended until this is paid. You can pay for this now at <a href="%s">Here</a>';
 
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";

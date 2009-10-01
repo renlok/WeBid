@@ -193,9 +193,18 @@ $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 $USER = mysql_fetch_array($result);
-$TPL_day = substr($USER['birthdate'], 6, 2);
-$TPL_month = substr($USER['birthdate'], 4, 2);
-$TPL_year = substr($USER['birthdate'], 0, 4);
+if ($USER['birthdate'] != 0)
+{
+	$TPL_day = substr($USER['birthdate'], 6, 2);
+	$TPL_month = substr($USER['birthdate'], 4, 2);
+	$TPL_year = substr($USER['birthdate'], 0, 4);
+}
+else
+{
+	$TPL_day = '';
+	$TPL_month = '';
+	$TPL_year = '';
+}
 
 $country = '';
 foreach ($countries as $code => $name)

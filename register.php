@@ -250,7 +250,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
-				elseif ($system->SETTINGS['activationtype'] == 1)
+				elseif ($system->SETTINGS['activationtype'] == 1 || $system->SETTINGS['activationtype'] == 0)
 				{
 					$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

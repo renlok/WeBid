@@ -25,7 +25,7 @@ if (!$user->logged_in)
 	exit;
 }
 
-if ($user->user_data['suspended'] == 7)
+if ($user->user_data['suspended'] == 7 || $user->user_data['suspended'] == 6)
 {
 	header('location: message.php');
 	exit;
@@ -186,19 +186,17 @@ if ($_GET['action'] == 'buy')
 					(NULL, " . intval($_REQUEST['id']) . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
+			// get end string
+			$month = gmdate('m', $Auction['ends'] + $system->tdiff);
+			$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);
+			$Auction['current_bid'] = $Auction['buy_now'];
+			include $include_path . 'endauction_youwin_nodutch.inc.php';
+
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{
 				$_SESSION['auction_id'] = $auction_id;
 				header('location: pay.php?a=6');
 				exit;
-			}
-			else
-			{
-				// get end string
-				$month = gmdate('m', $Auction['ends'] + $system->tdiff);
-				$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);
-				$Auction['current_bid'] = $Auction['buy_now'];
-				include $include_path . 'endauction_youwin_nodutch.inc.php';
 			}
 		}
 

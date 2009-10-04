@@ -186,7 +186,7 @@ function get_fee($minimum_bid)
 	$fee_value = 0;
 	while ($row = mysql_fetch_assoc($res))
 	{
-		if ($minimum_bid > $row['fee_from'] && $minimum_bid < $row['fee_to'])
+		if ($minimum_bid > $row['fee_from'] && $minimum_bid < $row['fee_to'] && $row['type'] == 'setup')
 		{
 			if ($row['fee_type'] == 'flat')
 			{

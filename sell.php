@@ -591,7 +591,7 @@ switch ($_SESSION['action'])
 				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '][3] = \'' . $row['fee_type'] . '\';' . "\n";
 				$feevarsset[$row['type']]++;
 			}
-			if ($minimum_bid > $row['fee_from'] && $minimum_bid < $row['fee_to'])
+			if ($minimum_bid > $row['fee_from'] && $minimum_bid < $row['fee_to'] && $row['type'] == 'setup')
 			{
 				if ($row['fee_type'] == 'flat')
 				{

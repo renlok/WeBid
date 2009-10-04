@@ -47,3 +47,7 @@
 </tr>
 <!-- ENDIF -->
 </table>
+
+<!-- IF B_TOUSER -->
+{TOUSER_STRING}
+<!-- ENDIF -->

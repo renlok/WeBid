@@ -40,7 +40,8 @@ switch($_GET['a'])
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['25_0012'];
 		break;
 	case 2:
-		$query = "SELECT w.id, a.title, a.shipping_cost, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass FROM " . $DBPrefix . "auctions a
+		$query = "SELECT w.id, a.title, a.shipping_cost, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
+				u.id As uid, u.nick FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
 				WHERE a.id = " . intval($_POST['pfval']);
@@ -56,6 +57,7 @@ switch($_GET['a'])
 
 		$data = mysql_fetch_assoc($res);
 		$pp_paytoemail = $data['paypal_email'];
+		$extrastring = sprintf($MSG['778'], $data['uid'], $data['nick']);
 		$an_paytoid = $data['authnet_id'];
 		$an_paytopass = $data['authnet_pass'];
 		$payvalue = $data['shipping_cost'] + $data['bid'];
@@ -163,7 +165,10 @@ $template->assign_vars(array(
 		'CURRENCY' => $system->SETTINGS['currency'],
 		'TITLE' => $title,
 		'CUSTOM_CODE' => $custoncode,
-		'TIMESTAMP' => $timestamp
+		'TIMESTAMP' => $timestamp,
+
+		'TOUSER_STRING' => (isset($extrastring)) ? $extrastring : '',
+		'B_TOUSER' => ($_GET['a'] == 2)
 		));
 
 include 'header.php';

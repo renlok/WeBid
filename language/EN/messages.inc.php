@@ -652,6 +652,7 @@ $MSG['518'] = "Add new";
 $MSG['519'] = "Title";
 $MSG['520'] = "Content";
 $MSG['521'] = "Activate";
+$MSG['522'] = "Buyer fees due";
 $MSG['524'] = "SETTINGS";
 $MSG['525'] = "Admin users management";
 $MSG['526'] = "General Settings";
@@ -852,6 +853,7 @@ $MSG['774'] = 'Authorize.net Transaction Key';
 $MSG['775'] = 'Buyer Fee';
 $MSG['776'] = "To finalise the sale please proceed to one of the payment gateways listed below to pay the fee of <b>%s</b>.";
 $MSG['777'] = 'You have an outstanding payment of the buyers fee for the item %s; your account will be suspended until this is paid. You can pay for this now at <a href="%s">Here</a>';
+$MSG['778'] = 'If you wish to via an alternative method contact <a href="profile.php?user_id=%s">%s</a> to find out how.';
 
 $MSG['901'] = "Number of items";
 $MSG['902'] = "HTML";

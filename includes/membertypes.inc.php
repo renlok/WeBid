@@ -19,6 +19,6 @@ $membertypes = array(
 '21' => array(
 'id' => '21', 'feedbacks' => '99999', 'membertype' => '50000', 'icon' => 'starFV.gif'),
 '22' => array(
-'id' => '22', 'feedbacks' => '999999', 'membertype' => '', 'icon' => 'starFR.gif')
+'id' => '22', 'feedbacks' => '999999', 'membertype' => '100000', 'icon' => 'starFR.gif')
 );
 ?>

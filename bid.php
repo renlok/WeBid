@@ -410,34 +410,29 @@ if (isset($_POST['action']) && !isset($errmsg))
 	}
 	// Update counters table with the new bid
 	// Send notification if users keyword matches (Item Watch)
-	$query = "SELECT * FROM " . $DBPrefix . "users WHERE item_watch != '' AND  item_watch != NULL AND id != " . $bidder_id;
+	$query = "SELECT id, email, name, item_watch FROM " . $DBPrefix . "users WHERE item_watch != '' AND  item_watch != NULL AND id != " . $bidder_id;
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$num_users = mysql_num_rows($result);
-	$i = 0;
-	while ($i < $num_users)
+
+	while ($row = mysql_fetch_assoc($result))
 	{
-		$items = mysql_result($result, $i, 'item_watch');
-		$email = mysql_result($result, $i, 'email');
-		$username = mysql_result($result, $i, 'name');
 		// If keyword matches with opened auction title or/and desc send user a mail
-		if (strstr($items, $id) !== false)
+		if (strstr($row['item_watch'], $id) !== false)
 		{
 			// Get data about the auction
-			$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . intval($id);
+			$query = "SELECT title, current_bid FROM " . $DBPrefix . "auctions WHERE id = " . intval($id);
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$emailer = new email_class();
 			$emailer->assign_vars(array(
-					'REALNAME' => $username,
+					'REALNAME' => $row['name'],
 					'TITLE' => mysql_result($res, 0, 'title'),
 					'BID' => $system->print_money(mysql_result($res, 0, 'current_bid'), false),
 					'AUCTION_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $id
 					));
-			$emailer->email_uid = $bidder_id;
-			$emailer->email_sender($email, 'item_watch.inc.php', $system->SETTINGS['sitename'].' - '.$MSG['472']);
+			$emailer->email_uid = $row['id'];
+			$emailer->email_sender($row['email'], 'item_watch.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['472']);
 		}
-		$i++;
 	}
 	// End of Item watch
 	if ($send_email)

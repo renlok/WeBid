@@ -179,6 +179,8 @@ if ($_GET['action'] == 'buy')
 				else
 				{
 					$bf_paid = 0;
+					$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $user->user_data['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 			}
 

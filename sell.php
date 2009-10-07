@@ -97,6 +97,8 @@ switch ($_SESSION['action'])
 			// set time back to GMT
 			$a_starts = empty($start_now) ? ($a_starts - $system->tdiff) : time();
 			$a_ends = $a_starts + ($duration * 24 * 60 * 60);
+			// get fee
+			$fee = get_fee($minimum_bid);
 			// insert auction
 			$query = addauction();
 			if ($_SESSION['SELL_action'] == 'edit')
@@ -119,49 +121,87 @@ switch ($_SESSION['action'])
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$auction_id = mysql_result($res, 0, 'id');
 				$_SESSION['SELL_auction_id'] = $auction_id;
-				$addcounter = true;
+			}
 
-				// work out & add fee
-				if ($system->SETTINGS['fees'] == 'y')
-				{
-					$fee = get_fee($minimum_bid);
-					$query = "INSERT INTO " . $DBPrefix . "userfees VALUES (NULL, " . $auction_id . ", " . $user->user_data['id'] . ", " . $fee . ", 0)";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					if ($system->SETTINGS['fee_type'] == 2 && $fee > 0)
-					{
-						$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-						$addcounter = false;
-					}
-					else
-					{
-						$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee . " WHERE id = " . $user->user_data['id'];
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					}
-				}
+			$addcounter = true;
 
-				if ($addcounter)
+			// work out & add fee
+			if ($system->SETTINGS['fees'] == 'y')
+			{
+				$feeupdate = false;
+				if ($_SESSION['SELL_action'] == 'edit')
 				{
-					$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				}
-
-				if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0))
-				{
-					// update recursive categories
-					$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['SELL_sellcat'];
+					$query = "SELECT id FROM " . $DBPrefix . "userfees WHERE auc_id = " . $auction_id;
 					$res = mysql_query($query);
 					$system->check_mysql($res, $query, __LINE__, __FILE__);
-					$parent_node = mysql_fetch_assoc($res);
-					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
-	
-					for ($i = 0; $i < count($crumbs); $i++)
+					if (mysql_num_rows($res) == 1)
 					{
-						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+						$feeupdate = true;
+						$query = "UPDATE " . $DBPrefix . "userfees SET amt = amt + " . $fee . " WHERE auc_id = " . $auction_id;
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					}
 				}
+				if (!$feeupdate)
+				{
+					$query = "INSERT INTO " . $DBPrefix . "userfees VALUES (NULL, " . $auction_id . ", " . $user->user_data['id'] . ", " . $fee . ", 0)";
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+				if ($system->SETTINGS['fee_type'] == 2 && $fee > 0)
+				{
+					$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$addcounter = false;
+				}
+				else
+				{
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee . " WHERE id = " . $user->user_data['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
 			}
+
+			if ($addcounter && $_SESSION['SELL_action'] != 'edit')
+			{
+				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
+			elseif (!$addcounter && $_SESSION['SELL_action'] == 'edit')
+			{
+				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions - 1";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
+
+			if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit')
+			{
+				// update recursive categories
+				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['SELL_sellcat'];
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$parent_node = mysql_fetch_assoc($res);
+				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+				for ($i = 0; $i < count($crumbs); $i++)
+				{
+					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+			}
+
+			if (!$addcounter && $_SESSION['SELL_action'] == 'edit')
+			{
+				// update recursive categories
+				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['SELL_sellcat'];
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$parent_node = mysql_fetch_assoc($res);
+				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+				for ($i = 0; $i < count($crumbs); $i++)
+				{
+					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+			}
+
 			$UPLOADED_PICTURES = (isset($_SESSION['UPLOADED_PICTURES'])) ? $_SESSION['UPLOADED_PICTURES'] : array();
 			// remove old images if any
 			if (is_dir($upload_path . $auction_id))
@@ -299,8 +339,8 @@ switch ($_SESSION['action'])
 		// run the word filter
 		if ($system->SETTINGS['wordsfilter'] == 'y')
 		{
-			$TPL_title_value = $title = $system->filter($title);
-			$TPL_description_shown_value = $description = $system->filter($description);
+			$title = $system->filter($title);
+			$description = $system->filter($description);
 		}
 		// check for errors
 		if ($ERR == 'ERR_')
@@ -611,6 +651,7 @@ switch ($_SESSION['action'])
 				$fee_rp = $row['value'];
 			}
 		}
+		$fee_javascript .= 'var current_fee = ' . (isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0';
 
 		// get decimals for javascript rounder
 		$decimals = '';
@@ -679,7 +720,7 @@ switch ($_SESSION['action'])
 				'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
 				'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
 				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),
-				'B_FEES' => ($system->SETTINGS['fees'] == 'y' && !($_SESSION['SELL_action'] == 'edit' || $_SESSION['SELL_action'] == 'relist'))
+				'B_FEES' => ($system->SETTINGS['fees'] == 'y')
 				));
 		break;
 }

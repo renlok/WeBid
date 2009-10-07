@@ -61,6 +61,7 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_is_bold']			= $RELISTEDAUCTION['bold'];
 		$_SESSION['SELL_is_highlighted']	= $RELISTEDAUCTION['highlighted'];
 		$_SESSION['SELL_is_featured']		= $RELISTEDAUCTION['featured'];
+		$_SESSION['SELL_current_fee']		= $RELISTEDAUCTION['current_fee'];
 
 		$_SESSION['SELL_minimum_bid'] = floatval($RELISTEDAUCTION['minimum_bid']);
 		if (floatval($RELISTEDAUCTION['reserve_price']) > 0)

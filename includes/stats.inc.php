@@ -14,8 +14,8 @@
  
 if (!defined('InWeBid')) exit();
 
-include $include_path . "useragent.inc.php";
-include $include_path . "domains.inc.php";
+include $include_path . 'useragent.inc.php';
+include $include_path . 'domains.inc.php';
 
 // Retrieve stats settings
 $query = "SELECT * FROM " . $DBPrefix . "statssettings";
@@ -23,8 +23,8 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $STATSSETTINGS = mysql_fetch_array($res);
 
-$THISDAY	 = gmdate('j');
-$THISMONTH   = gmdate('n');
+$THISDAY	= gmdate('j');
+$THISMONTH	= gmdate('n');
 $THISYEAR	= gmdate('Y');
 
 if ($STATSSETTINGS['activate'] == 'y')

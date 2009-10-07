@@ -1,4 +1,19 @@
 <?php
+/***************************************************************************
+ *   copyright				: (C) 2008, 2009 WeBid
+ *   site					: http://www.webidsupport.com/
+ ***************************************************************************/
+
+/***************************************************************************
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version. Although none of the code may be
+ *   sold. If you have been sold this script, get a refund.
+ ***************************************************************************/
+
+if (!defined('InWeBid')) exit();
+
 function generate_id()
 {
 	if (!isset($_SESSION['SELL_auction_id']))
@@ -124,7 +139,7 @@ function unsetsessions()
 
 function updateauction($type)
 {
-	global $_SESSION, $DBPrefix, $a_starts, $a_ends, $payment_text, $system;
+	global $_SESSION, $DBPrefix, $a_starts, $a_ends, $payment_text, $system, $fee;
 	$extraquery = ($type == 2) ? 
 		",relisted = relisted + 1,
 		current_bid = 0,
@@ -155,7 +170,8 @@ function updateauction($type)
 		closed = 0,
 		bold = '" . $_SESSION['SELL_is_bold'] . "',
 		highlighted = '" . $_SESSION['SELL_is_highlighted'] . "',
-		featured = '" . $_SESSION['SELL_is_featured'] . "'";
+		featured = '" . $_SESSION['SELL_is_featured'] . "',
+		current_fee = current_fee + " . $fee;
 		$query .= $extraquery;
 		$query .= " WHERE id = " . $_SESSION['SELL_auction_id'];
 	return $query;
@@ -163,9 +179,9 @@ function updateauction($type)
 
 function addauction()
 {
-	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system;
+	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee;
 	
-	return "INSERT INTO " . $DBPrefix . "auctions VALUES (NULL, " . $user->user_data['id'] . ", '" . $system->cleanvars($_SESSION['SELL_title']) . "', '" .  $a_starts . "', '" . addslashes($_SESSION['SELL_description']) . "', '" . $system->cleanvars($_SESSION['SELL_pict_url']) . "', " . $_SESSION['SELL_sellcat'] . ", '" . $_SESSION['SELL_minimum_bid'] . "', '" . $_SESSION['SELL_shipping_cost'] . "', '" . (($_SESSION['SELL_with_reserve']=="yes")?$_SESSION['SELL_reserve_price']:"0") . "', '" . (($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0) . "', '" . $_SESSION['SELL_atype'] . "', '" . $_SESSION['SELL_duration'] . "', " . floatval($_SESSION['SELL_customincrement']) . ", '" . $_SESSION['SELL_shipping'] . "', '" . $payment_text . "', " . (($_SESSION['SELL_international']) ? 1 : 0) . ", '" . $a_ends . "', 0, 0, " . (($_SESSION['SELL_file_uploaded']) ? 1 : 0) . ", " . $_SESSION['SELL_iquantity'] . ", 0, 0, " . intval($_SESSION['SELL_relist']) . ", 0, 0, '" . $system->cleanvars($_SESSION['SELL_shipping_terms']) . "', '" . $_SESSION['SELL_buy_now_only'] . "', '" . $_SESSION['SELL_is_bold'] . "', '" . $_SESSION['SELL_is_highlighted'] . "', '" . $_SESSION['SELL_is_featured'] . "')";
+	return "INSERT INTO " . $DBPrefix . "auctions VALUES (NULL, " . $user->user_data['id'] . ", '" . $system->cleanvars($_SESSION['SELL_title']) . "', '" .  $a_starts . "', '" . addslashes($_SESSION['SELL_description']) . "', '" . $system->cleanvars($_SESSION['SELL_pict_url']) . "', " . $_SESSION['SELL_sellcat'] . ", '" . $_SESSION['SELL_minimum_bid'] . "', '" . $_SESSION['SELL_shipping_cost'] . "', '" . (($_SESSION['SELL_with_reserve']=="yes")?$_SESSION['SELL_reserve_price']:"0") . "', '" . (($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0) . "', '" . $_SESSION['SELL_atype'] . "', '" . $_SESSION['SELL_duration'] . "', " . floatval($_SESSION['SELL_customincrement']) . ", '" . $_SESSION['SELL_shipping'] . "', '" . $payment_text . "', " . (($_SESSION['SELL_international']) ? 1 : 0) . ", '" . $a_ends . "', 0, 0, " . (($_SESSION['SELL_file_uploaded']) ? 1 : 0) . ", " . $_SESSION['SELL_iquantity'] . ", 0, 0, " . intval($_SESSION['SELL_relist']) . ", 0, 0, '" . $system->cleanvars($_SESSION['SELL_shipping_terms']) . "', '" . $_SESSION['SELL_buy_now_only'] . "', '" . $_SESSION['SELL_is_bold'] . "', '" . $_SESSION['SELL_is_highlighted'] . "', '" . $_SESSION['SELL_is_featured'] . "', " . $fee . ")";
 }
 
 function remove_bids($auction_id)
@@ -222,7 +238,17 @@ function get_fee($minimum_bid)
 			$fee_value += count($_SESSION['UPLOADED_PICTURES']) * $row['value'];
 		}
 	}
-	
+
+	if ($_SESSION['SELL_action'] == 'edit')
+	{
+		global $user;
+
+		$query = "SELECT current_fee FROM " . $DBPrefix . "auctions WHERE id = " . $_SESSION['SELL_auction_id'] . " AND user = " . $user->user_data['id'];
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$fee_value = $fee_value - mysql_result($res, 0);
+	}
+
 	return $fee_value;
 }
 

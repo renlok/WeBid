@@ -15,5 +15,11 @@
 - Fixed the admin edit auction where it messes up the ending time
 - Fixed the regular search so it no longer thinks every auction is a featured auction
 - Fixed confirm user/register pages so users arnt counted twice
+- Fixed the recapcha so it doesnt keep giving a fatal error
+- Fixed the buy it now RSS feed
+- Fixed the send auction to a friend page so it no longer just shows a blank page
+- Fixed edit auction so you can no longer make edits for free
+- Fixed the category selection screen so when you select a blank area in a box the partent categories will not load again in the next box
+- Added a pay now button to buy it now confirmation screen
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

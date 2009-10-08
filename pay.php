@@ -36,7 +36,7 @@ switch($_GET['a'])
 		$an_paytopass = $gateway_data['authnet_password'];
 		$payvalue = $system->input_money($_POST['pfval']);
 		$custoncode = $user->user_data['id'] . 'WEBID1';
-		$message = sprintf($MSG['582'], $system->print_money_nosymbol($payvalue));
+		$message = sprintf($MSG['582'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['25_0012'];
 		break;
 	case 2:
@@ -62,7 +62,7 @@ switch($_GET['a'])
 		$an_paytopass = $data['authnet_pass'];
 		$payvalue = $data['shipping_cost'] + $data['bid'];
 		$custoncode = $data['id'] . 'WEBID2';
-		$message = sprintf($MSG['581'], $system->print_money_nosymbol($payvalue));
+		$message = sprintf($MSG['581'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
 		break;
 	case 3: // pay signup fee (live mode)
@@ -79,7 +79,7 @@ switch($_GET['a'])
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$payvalue = mysql_result($res, 0);
 		$custoncode = $_SESSION['signup_id'] . 'WEBID3';
-		$message = sprintf($MSG['583'], $system->print_money_nosymbol($payvalue));
+		$message = sprintf($MSG['583'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['430'];
 		break;
 	case 4: // pay auction fee (live mode)
@@ -100,7 +100,7 @@ switch($_GET['a'])
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$payvalue = mysql_result($res, 0, 'amt');
 		$custoncode = $_SESSION['auction_id'] . 'WEBID4';
-		$message = sprintf($MSG['590'], $system->print_money_nosymbol($payvalue));
+		$message = sprintf($MSG['590'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['432'];
 		break;
 	case 5: // pay relist fee (live mode)
@@ -119,7 +119,7 @@ switch($_GET['a'])
 		$relist_fee = mysql_result($res, 0);
 		$payvalue = $relist_fee * $count;
 		$custoncode = $user->user_data['id'] . 'WEBID5';
-		$message = sprintf($MSG['591'], $system->print_money_nosymbol($payvalue));
+		$message = sprintf($MSG['591'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['437'];
 		break;
 	case 6: // pay buyer fee (live mode)
@@ -140,7 +140,7 @@ switch($_GET['a'])
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$payvalue = mysql_result($res, 0);
 		$custoncode = $_SESSION['auction_id'] . 'WEBID6';
-		$message = sprintf($MSG['776'], $system->print_money_nosymbol($payvalue));
+		$message = sprintf($MSG['776'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['775'];
 		break;
 }

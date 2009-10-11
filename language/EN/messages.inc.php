@@ -699,6 +699,7 @@ $MSG['564'] = "Repeat password";
 $MSG['565'] = "User is";
 $MSG['566'] = "active";
 $MSG['567'] = "not active";
+$MSG['568'] = "plus %s more";
 $MSG['569'] = "Insert user";
 $MSG['570'] = "Never logged in";
 $MSG['571'] = "Standard font";

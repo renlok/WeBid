@@ -21,6 +21,53 @@ include $include_path."countries.inc.php";
 unset($ERR);
 $id = intval($_REQUEST['id']);
 
+function load_page($id, $question)
+{
+	global $template, $_GET, $MSG, $system, $DBPrefix;
+
+	// load the page
+	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $id;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$user_data = mysql_fetch_assoc($res);
+
+	$birth_day = substr($user_data['birthdate'], 6, 2);
+	$birth_month = substr($user_data['birthdate'], 4, 2);
+	$birth_year = substr($user_data['birthdate'], 0, 4);
+
+	if ($system->SETTINGS['datesformat'] == 'USA')
+	{
+		$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
+	}
+	else
+	{
+		$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
+	}
+
+	$template->assign_vars(array(
+			'ACTION' => $MSG['304'],
+			'REALNAME' => $user_data['name'],
+			'USERNAME' => $user_data['nick'],
+			'EMAIL' => $user_data['email'],
+			'ADDRESS' => $user_data['address'],
+			'PROV' => $user_data['prov'],
+			'ZIP' => $user_data['zip'],
+			'COUNTRY' => $user_data['country'],
+			'PHONE' => $user_data['phone'],
+			'RATE' => ($user_data['rate_num'] == 0) ? 0 : ($user_data['rate_sum'] / $user_data['rate_num']),
+			'DOB' => $birthdate,
+			'QUESTION' => $question,
+			'MODE' => '',
+			'ID' => $_GET['id'],
+			'OFFSET' => $_GET['offset']
+			));
+
+	$template->set_filenames(array(
+			'body' => 'excludeuser.tpl'
+			));
+	$template->display('body');
+}
+
 // Data check
 if (empty($id) || $id <= 0)
 {
@@ -44,10 +91,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if ($num_auctions > 0)
 	{
 		$ERR = $MSG['420'];
+		$i = 0;
 		while ($row = mysql_fetch_assoc($res))
 		{
+			if ($i >= 10)
+				break;
 			$has_auctions = true;
 			$ERR .= $row['id'] . ' - <a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '" target="_blank">' . $row['title'] . '</a><br>';
+			$i++;
+		}
+		if ($num_auctions != $i)
+		{
+			$ERR .= '<p>' . sprintf($MSG['568'], $num_auctions - $i) . '</p>';
 		}
 	}
 
@@ -65,17 +120,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	if (!isset($_POST['ignore']) && ($has_bids || $has_auctions))
 	{
-		$template->assign_vars(array(
-				'MESSAGE' => $ERR . '<p>' . $MSG['419'] . '</p>',
-				'STRING' => $MSG['030'],
-				'ID' => $id,
-				'OFFSET' => $_POST['offset']
-				));
-		
-		$template->set_filenames(array(
-				'body' => 'excludeuser.tpl'
-				));
-		$template->display('body');
+		$ERR .= '<input type="hidden" name="ignore" value="true">';
+		load_page($id, $ERR . '<p>' . $MSG['419'] . '</p>');
 		exit;
 	}
 
@@ -157,45 +203,5 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	exit;
 }
 
-// load the page
-$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$user_data = mysql_fetch_assoc($res);
-
-$birth_day = substr($user_data['birthdate'], 6, 2);
-$birth_month = substr($user_data['birthdate'], 4, 2);
-$birth_year = substr($user_data['birthdate'], 0, 4);
-
-if ($system->SETTINGS['datesformat'] == 'USA')
-{
-	$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
-}
-else
-{
-	$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
-}
-
-$template->assign_vars(array(
-		'ACTION' => $MSG['304'],
-		'REALNAME' => $user_data['name'],
-		'USERNAME' => $user_data['nick'],
-		'EMAIL' => $user_data['email'],
-		'ADDRESS' => $user_data['address'],
-		'PROV' => $user_data['prov'],
-		'ZIP' => $user_data['zip'],
-		'COUNTRY' => $user_data['country'],
-		'PHONE' => $user_data['phone'],
-		'RATE' => ($user_data['rate_num'] == 0) ? 0 : ($user_data['rate_sum'] / $user_data['rate_num']),
-		'DOB' => $birthdate,
-		'QUESTION' => $MSG['307'],
-		'MODE' => '',
-		'ID' => $_GET['id'],
-		'OFFSET' => $_GET['offset']
-		));
-
-$template->set_filenames(array(
-		'body' => 'excludeuser.tpl'
-		));
-$template->display('body');
+load_page($id, $MSG['307']);
 ?>

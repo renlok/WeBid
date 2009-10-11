@@ -1,25 +1,5 @@
-0.8.2 - 24/09/09
+0.8.3 - 11/10/09
 -----------------------------
-- Changed the regisration so the users default time setting is set to the sites time setting instead of GMT
-- Fixed admin/time.php so its not trying to load a file that doesnt exist (Bug #56)
-- Fixed proxy bidding (Bug #64)
-- Fixed the autoextension option (Bug #55)
-- Fixed the exclude auction page (Bug #63)
-- Fixed the fee gateway so the password feild displays for Authorize.Net
-- Fixed when you do an update the Authorize.Net will actually show in the admin panel (Bug #57)
-- Fixed a bug where the fees class cannot be called (Bug #60)
-- Fixed the banner selection script from throwing an error when an ' is used in an items description (Bug #58)
-- Fixed the counter resync button so it calculates the number of bids correctly
-- Fixed the buyer questions on the item page so the questions are only shown if the question was set to public (Bug #62)
-- Fixed the pagnation in active_auctions.php (Bug #67)
-- Fixed the admin edit auction where it messes up the ending time
-- Fixed the regular search so it no longer thinks every auction is a featured auction
-- Fixed confirm user/register pages so users arnt counted twice
-- Fixed the recapcha so it doesnt keep giving a fatal error
-- Fixed the buy it now RSS feed
-- Fixed the send auction to a friend page so it no longer just shows a blank page
-- Fixed edit auction so you can no longer make edits for free
-- Fixed the category selection screen so when you select a blank area in a box the partent categories will not load again in the next box
-- Added a pay now button to buy it now confirmation screen
+- Fixed the delete user page when the user has bids or auctions
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

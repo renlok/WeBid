@@ -80,7 +80,7 @@
                             <input type="hidden" name="id" value="{ID}">
                             <input type="hidden" name="offset" value="{OFFSET}">
                             <input type="hidden" name="action" value="update">
-                            <input type="hidden" name="idhidden" value="{ID}">
+                            <input type="hidden" name="id" value="{ID}">
                             <input type="hidden" name="mode" value="{MODE}">
                             <input type="submit" name="act" value="{L_030}">
                         </form>

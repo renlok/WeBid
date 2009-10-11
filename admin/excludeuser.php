@@ -28,11 +28,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if ($_POST['mode'] == 'activate')
 	{
-		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $_POST['idhidden'];
+		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $_POST['id'];
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - 1, users = users + 1";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$query = "SELECT name, email FROM " . $DBPrefix . "users WHERE id = " . $_POST['idhidden'];
+		$query = "SELECT name, email FROM " . $DBPrefix . "users WHERE id = " . $_POST['id'];
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$USER = mysql_fetch_assoc($res);
@@ -40,7 +40,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
-		$query = "UPDATE " . $DBPrefix . "users SET suspended = 1 WHERE id = '".$_POST['idhidden']."'";
+		$query = "UPDATE " . $DBPrefix . "users SET suspended = 1 WHERE id = '" . $_POST['id'];
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1, users = users - 1";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

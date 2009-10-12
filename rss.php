@@ -23,7 +23,7 @@ $catscontrol = new MPTTcategories();
 $user_id = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['user_id']) : 0;
 $limit = '';
 
-$feed = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['feed']) : '';
+$feed = (isset($_GET['feed'])) ? intval($_GET['feed']) : '';
 
 switch ($feed)
 {

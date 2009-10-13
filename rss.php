@@ -59,7 +59,7 @@ switch ($feed)
 		$RSStitle = $MSG['928'];
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND (a.current_bid <= 10 AND a.starts <= 10)';
+		$subquery = 'a.starts <= ' . $NOW . ' AND (a.current_bid <= 10 OR a.buy_now <= 10)';
 		break;
 
 	case 6: 

@@ -95,10 +95,11 @@ if (isset($_POST['action']) || !empty($_POST['action']))
 				));
 		$item_title = $system->uncleanvars($item_title);
 		$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
-		$emailer->email_uid = $user->user_data['id'];
+		$from_id = (!$user->logged_in) ? 0 : $user->user_data['id'];
+		$emailer->email_uid = $from_id;
 		$emailer->email_sender($seller_email, 'send_email.inc.php', $subject);
 		$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject, question)
-				VALUES (" . $seller_id . ", " . $user->user_data['id'] . ", '" . time() . "', '" . $cleaned_question . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "', " . $auction_id . ")";
+				VALUES (" . $seller_id . ", " . $from_id . ", '" . time() . "', '" . $cleaned_question . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "', " . $auction_id . ")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 }

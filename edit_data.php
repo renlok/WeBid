@@ -140,7 +140,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$TPL_err = 1;
 			$ERR = $ERR_5040;
 		}
-		elseif (!checkdate($_POST['TPL_month'], $_POST['TPL_day'], $_POST['TPL_year']))
+		elseif ((empty($_POST['TPL_day']) && empty($_POST['TPL_month']) && empty($_POST['TPL_year'])) || !checkdate($_POST['TPL_month'], $_POST['TPL_day'], $_POST['TPL_year']))
 		{
 			$TPL_err = 1;
 			$ERR = $ERR_117;
@@ -150,7 +150,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$TPL_birthdate = $_POST['TPL_year'] . $_POST['TPL_month'] . $_POST['TPL_day'];
 
 			$query = "UPDATE " . $DBPrefix . "users SET email='" . $system->cleanvars($_POST['TPL_email']) . "',
-					birthdate = '" . $system->cleanvars($TPL_birthdate) . "',
+					birthdate = '" . (empty($TPL_birthdate)) ? 0 : $TPL_birthdate . "',
 					address = '" . $system->cleanvars($_POST['TPL_address']) . "',
 					city = '" . $system->cleanvars($_POST['TPL_city']) . "',
 					prov = '" . $system->cleanvars($_POST['TPL_prov']) . "',
@@ -280,5 +280,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-
 ?>

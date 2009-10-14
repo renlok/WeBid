@@ -82,7 +82,7 @@ while ($row = mysql_fetch_assoc($res))
 }
 
 // get featured items
-$query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid
+$query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, bn_only, buy_now
         FROM " . $DBPrefix . "auctions
         WHERE closed = 0 AND suspended = 0 AND starts <= " . $NOW . "
 		AND featured = 'y'
@@ -102,6 +102,7 @@ while($row = mysql_fetch_assoc($res))
 		$ends_string = $MSG['911'];
 	}
 	$high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
+	$high_bid = ($row['bn_only'] == 'y') ? $row['buy_now'] : $high_bid;
 	$template->assign_block_vars('featured', array(
 			'ENDS' => $ends_string,
 			'ID' => $row['id'],

@@ -145,7 +145,7 @@ switch($_GET['a'])
 		break;
 }
 
-$sequance = rand(1, 1000);
+$sequence = rand(1, 1000);
 $timestamp = time();
 $pay_val = $system->input_money($system->print_money_nosymbol($payvalue));
 $template->assign_vars(array(
@@ -158,8 +158,8 @@ $template->assign_vars(array(
 		// authorize.net
 		'AN_PAYTOID' => $an_paytoid,
 		'AN_PAYTOPASS' => $an_paytopass,
-		'AN_KEY' => ($gateway_data['authnet_active'] == 1) ? $fees->hmac($an_paytopass, $an_paytoid . "^" . $sequance . "^" . $timestamp . "^" . $pay_val . "^" . $system->SETTINGS['currency']) : '',
-		'AN_SEQUENCE' => $sequance,
+		'AN_KEY' => ($gateway_data['authnet_active'] == 1) ? $fees->hmac($an_paytopass, $an_paytoid . "^" . $sequence . "^" . $timestamp . "^" . $pay_val . "^" . $system->SETTINGS['currency']) : '',
+		'AN_SEQUENCE' => $sequence,
 		// item values
 		'PAY_VAL' => $pay_val,
 		'CURRENCY' => $system->SETTINGS['currency'],

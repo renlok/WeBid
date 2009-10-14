@@ -1,5 +1,7 @@
 0.8.3 - 11/10/09
 -----------------------------
 - Fixed the delete user page when the user has bids or auctions
+- Fixed the index page so the buy it now only featured items show the correct price
+- Fixed the resync counters button so it now also resyncs the categorey counts
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

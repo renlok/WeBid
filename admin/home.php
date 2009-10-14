@@ -88,6 +88,31 @@ if (isset($_GET['action']))
 			$query = "UPDATE " . $DBPrefix . "counters SET bids = " . $BIDS;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
+			// update categories
+			$catscontrol = new MPTTcategories();
+			$query = "UPDATE " . $DBPrefix . "categories set counter = 0, sub_counter = 0";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
+			$query = "SELECT COUNT(*) AS COUNT, category FROM webid_auctions
+					WHERE closed = 0 AND suspended = 0 GROUP BY category";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			while ($row = mysql_fetch_assoc($res))
+			{
+					$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['category'];
+					$res = mysql_query($query);
+					$system->check_mysql($res, $query, __LINE__, __FILE__);
+					$parent_node = mysql_fetch_assoc($res);
+
+					$cat_value = '';
+					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+					for ($i = 0; $i < count($crumbs); $i++)
+					{
+						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $crumbs[$i]['cat_id'];
+						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					}
+			}
+
 			$errmsg = $MSG['1029'];
 		break;
 	}

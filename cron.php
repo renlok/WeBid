@@ -528,16 +528,19 @@ while($row = mysql_fetch_array($res))
 }
 
 // send buyer fee emails
-for ($i = 0; $i < count($buyer_emails); $i++)
+if ($buyer_fee > 0)
 {
-	$emailer = new email_class();
-	$emailer->assign_vars(array(
-			'ID' => $buyer_emails[$i]['id'],
-			'TITLE' => $buyer_emails[$i]['title'],
-			'NAME' => $buyer_emails[$i]['name']
-			));
-	$emailer->email_uid = $buyer_emails[$i]['uid'];
-	$emailer->email_sender($buyer_emails[$i]['email'], 'buyer_fee.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['522']);
+	for ($i = 0; $i < count($buyer_emails); $i++)
+	{
+		$emailer = new email_class();
+		$emailer->assign_vars(array(
+				'ID' => $buyer_emails[$i]['id'],
+				'TITLE' => $buyer_emails[$i]['title'],
+				'NAME' => $buyer_emails[$i]['name']
+				));
+		$emailer->email_uid = $buyer_emails[$i]['uid'];
+		$emailer->email_sender($buyer_emails[$i]['email'], 'buyer_fee.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['522']);
+	}
 }
 
 // Purging thumbnails cache

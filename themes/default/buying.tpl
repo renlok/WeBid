@@ -50,7 +50,7 @@
     		{L_755}
     <!-- ELSE -->
     		<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
-            <input type="hidden" name="pfval" value="{items.ID}">
+            <input type="hidden" name="pfval" value="{items.AUC_ID}">
             <input type="submit" name="Pay" value="{L_756}" class="pay" />
             </form>
     <!-- ENDIF -->

@@ -335,7 +335,7 @@ class email_class
 			}
 		}
 
-		return 'text';
+		return 'html';
 	}
 	
 	function sendmail()

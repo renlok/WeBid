@@ -125,11 +125,11 @@ $(document).ready(function() {
 						</tr>
 						<tr>
 						  <td width="50%" align="left">{L_118}: </td>
-						  <td align="left" style="height: 45px;" valign="top">
+						  <td align="left" valign="top">
 <!-- IF B_COUNTDOWN -->
                           	<span id="ending_counter">{ENDS}</span>
 <!-- ELSE -->
-                          	{ENDS}<br><span class="smallspan">({ENDTIME})</span>
+                          	{ENDS}<!-- IF B_SHOWENDTIME --><br><span class="smallspan">({ENDTIME})</span><!-- ENDIF -->
 <!-- ENDIF -->
                           </td>
 						</tr>

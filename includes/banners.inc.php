@@ -21,110 +21,56 @@ if (!function_exists('view'))
 		global $system, $DBPrefix, $uploaded_path;
 
 		$return = '';
+		$joinings = '';
+		$extra = '';
 		$BANNERSARRAY = array();
 
-		// First try to retrieve banners according the filters
-		// Categories filter
 		if (strstr($_SERVER['SCRIPT_FILENAME'], 'browse.php'))
 		{
-			$query = "SELECT * FROM " . $DBPrefix . "bannerscategories WHERE category = " . intval($GLOBALS['id']);
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0)
-			{
-				// We have at least one banners to show
-				while ($row = mysql_fetch_array($res))
-				{
-					$BANNERSARRAY[] = $row;
-				}
-
-				// Pick a random element
-				if (count($BANNERSARRAY) > 0)
-				{
-					$RAND_IDX = array_rand($BANNERSARRAY);
-					$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX]['banner'];
-				}
-			}
+			global $id;
+			$joinings = ', ' . $DBPrefix . 'bannerscategories c';
+			$extra =  ' AND c.category = ' . $id;
 		}
-		// Keywords filter
 		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'item.php'))
 		{
 			global $title, $description, $category;
-			$query = "SELECT * FROM " . $DBPrefix . "bannerskeywords
-					 WHERE keyword LIKE '%" . $title . "%' OR keyword LIKE '%" . mysql_escape_string($description) . "%'";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0)
-			{
-				// We have at least one banners to show
-				while ($row = mysql_fetch_array($res))
-				{
-					$BANNERSARRAY[] = $row;
-				}
-			}
-			$query = "SELECT * FROM " . $DBPrefix . "bannerscategories WHERE category = " . $category;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0)
-			{
-				// We have at least one banners to show
-				while ($row = mysql_fetch_array($res))
-				{
-					$BANNERSARRAY[] = $row;
-				}
-			}
-			// Pick a random element
-			if (count($BANNERSARRAY) > 0)
-			{
-				$RAND_IDX = array_rand($BANNERSARRAY);
-				$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX]['banner'];
-			}
+			$joinings = ', ' . $DBPrefix . 'bannerskeywords k';
+			$extra =  " AND k.keyword LIKE '%" . $title . "%' OR k.keyword LIKE '%" . mysql_escape_string($description) . "%'";
 		}
 
-		// We cannot apply filters in this page - let's retrieve a random banner
-		if (empty($BANNERTOSHOW))
+		$query = "SELECT b.* FROM " . $DBPrefix . "banners b " . $joinings . "
+				WHERE b.views < b.purchased OR b.purchased = 0" . $extra;
+		if ($system->SETTINGS['banner_sizetype'] == 'fix')
 		{
-			$query = "SELECT * FROM " . $DBPrefix . "banners WHERE (views < purchased AND purchased > 0) OR purchased = 0";
+			$query .= " AND b.width = " . $system->SETTINGS['banner_width'] . " AND b.height = " . $system->SETTINGS['banner_height'];
+		}
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+		if (mysql_num_rows($res) == 0)
+		{
+			$query = "SELECT b.* FROM " . $DBPrefix . "banners b " . $joinings . "
+					WHERE b.views < b.purchased OR b.purchased = 0" . $extra;
 			if ($system->SETTINGS['banner_sizetype'] == 'fix')
 			{
-				$query .= " AND width = " . $system->SETTINGS['banner_width'] . " AND height = " . $system->SETTINGS['banner_height'];
+				$query .= " AND b.width = " . $system->SETTINGS['banner_width'] . " AND b.height = " . $system->SETTINGS['banner_height'];
 			}
-
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0)
-			{
-				$CC = $C = 0;
+		}
 
-				while ($row = mysql_fetch_array($res))
-				{
-					$query = "SELECT banner FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $row['id'];
-					$res = mysql_query($query);
-					$system->check_mysql($res, $query, __LINE__, __FILE__);
-					$C = mysql_num_rows($res);
-					$query = "SELECT banner FROM " . $DBPrefix . "bannerskeywords WHERE banner = " . $row['id'];
-					$res = mysql_query($query);
-					$system->check_mysql($res, $query, __LINE__, __FILE__);
-					$CC = mysql_num_rows($res);
-
-					if ($C == 0 && $CC == 0)
-					{
-						$BANNERSARRAY[] = $row;
-					}
-				}
-			}
-
-			// Pick a random element
-			if (count($BANNERSARRAY) > 0)
-			{
-				$RAND_IDX = array_rand($BANNERSARRAY);
-				$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX]['id'];
-			}
+		// We have at least one banners to show
+		while ($row = mysql_fetch_array($res))
+		{
+			$BANNERSARRAY[] = $row;
 		}
 
 		// Display banner
-		if (isset($BANNERTOSHOW))
+		if (count($BANNERSARRAY) > 0)
 		{
+			$RAND_IDX = array_rand($BANNERSARRAY);
+			$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX]['id'];
+
 			$query = "SELECT * FROM " . $DBPrefix . "banners WHERE id = " . $BANNERTOSHOW;
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);

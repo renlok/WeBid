@@ -49,5 +49,7 @@
 </table>
 
 <!-- IF B_TOUSER -->
-{TOUSER_STRING}
+<div style="text-align:center;">
+    {TOUSER_STRING}
+</div>
 <!-- ENDIF -->

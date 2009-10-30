@@ -57,7 +57,7 @@ Minimum Web Server requirements for proper operation of the WeBid Auction Script
 
 Below we have provided Instructions to allow an advanced internet user/webmaster to:
 
-  - Download the WeBid FREE Auction Script;
+  - Download the WeBid Auction Script;
 
   - Unzip, Upload and properly set WeBid's File and Directory Permissions; and
 
@@ -124,9 +124,7 @@ The Install.php script included with WeBid will:
 
 	> /includes/config.inc.php 777 
 
- 	  NOTE: After install is complete, change data.inc.php to CHMOD 705 .
-
-	> /themes/default/settings.ini 777
+ 	  NOTE: After install is complete, change config.inc.php to CHMOD 644.
 
 	> /includes/countries.inc.php  777
 

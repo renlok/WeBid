@@ -48,8 +48,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$subject = stripslashes($_POST['subject']);
 		$content = stripslashes($_POST['content']);
 		$headers = 'From:' . $system->SETTINGS['sitename'] . ' <' . $system->SETTINGS['adminmail'] . '>' . "\n" . 'Content-Type: text/html; charset=' . $CHARSET;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		while ($row = mysql_fetch_assoc($result))
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		while ($row = mysql_fetch_assoc($res))
 		{
 			if (mail($row['email'], $subject, $content, $headers))
 			{

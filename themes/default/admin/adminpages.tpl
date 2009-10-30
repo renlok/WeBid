@@ -1,6 +1,7 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="{SITEURL}admin/style.css">
+	<script type="text/javascript" src="{SITEURL}js/jquery.js"></script>
 	<script type="text/javascript" src="{SITEURL}fck/fckeditor.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {

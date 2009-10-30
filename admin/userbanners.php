@@ -16,100 +16,103 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path."language/".$language."/categories.inc.php";
-#//
-$id = (int)$_REQUEST['id'];
-if (isset($_POST['action']) && $_POST['action'] == "insert") {
-	#// Data integrity
-	if (empty($_FILES['bannerfile']) || empty($_POST['url'])) {
+include $main_path . 'language/' . $language . '/categories.inc.php';
+
+$id = intval($_REQUEST['id']);
+// insert a new banner
+if (isset($_POST['action']) && $_POST['action'] == 'insert')
+{
+	// Data integrity
+	if (empty($_FILES['bannerfile']) || empty($_POST['url']))
+	{
 		$ERR = $ERR_047;
-	} else {
-		#// Handle upload
-		if (!file_exists($upload_path."banners")) {
+	}
+	else
+	{
+		// Handle upload
+		if (!file_exists($upload_path . 'banners'))
+		{
 			umask();
-			mkdir($upload_path."banners",0777);
+			mkdir($upload_path . 'banners', 0777);
 		}
-		if (!file_exists($upload_path."banners/$id")) {
+		if (!file_exists($upload_path . 'banners/' . $id))
+		{
 			umask();
 			mkdir($upload_path."banners/$id",0777);
 		}
-		
-		$TARGET = $upload_path."banners/$id/".$_FILES['bannerfile']['name'];
-		if (file_exists($TARGET)) {
+
+		$TARGET = $upload_path . 'banners/' . $id . '/' . $_FILES['bannerfile']['name'];
+		if (file_exists($TARGET))
+		{
 			$ERR = sprintf($MSG['_0047'], $TARGET);
-		} else {
+		}
+		else
+		{
 			list($imagewidth, $imageheight, $imageType) = getimagesize($_FILES['bannerfile']['tmp_name']);
 			$filename = basename($_FILES['bannerfile']['name']);
 			$file_ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			$file_types = array('gif', 'jpg', 'jpeg', 'png', 'swf', 'GIF', 'JPG', 'JPEG', 'PNG', 'SWF');
-			if (!in_array($file_ext, $file_types)) {
+			$file_types = array('gif', 'jpg', 'jpeg', 'png', 'swf');
+			if (!in_array(strtolower($file_ext), $file_types))
+			{
 				$ERR = $MSG['_0048'];
-			} else {
+			}
+			else
+			{
 				$imageType = image_type_to_mime_type($imageType);
 				switch ($imageType) {
-					case "image/gif":
+					case 'image/gif':
 						$FILETYPE = 'gif';
 						break;
-					case "image/pjpeg":
-					case "image/jpeg":
-					case "image/jpg":
+					case 'image/pjpeg':
+					case 'image/jpeg':
+					case 'image/jpg':
 						$FILETYPE = 'jpg';
 						break;
-					case "image/png":
-					case "image/x-png":
+					case 'image/png':
+					case 'image/x-png':
 						$FILETYPE = 'png';
 						break;
-					case "application/x-shockwave-flash":
+					case 'application/x-shockwave-flash':
 						$FILETYPE = 'swf';
 						break;
 				}
-				if (!empty($_FILES['bannerfile']['tmp_name']) && $_FILES['bannerfile']['tmp_name'] != "none") {
-					move_uploaded_file($_FILES['bannerfile']['tmp_name'],$TARGET);
-					chmod($TARGET,0666);
+				if (!empty($_FILES['bannerfile']['tmp_name']) && $_FILES['bannerfile']['tmp_name'] != 'none')
+				{
+					move_uploaded_file($_FILES['bannerfile']['tmp_name'], $TARGET);
+					chmod($TARGET, 0666);
 				}
-				
-				#// Update database
-				$query = "INSERT INTO " . $DBPrefix . "banners
-						  VALUES (
-						  NULL,
-						  '".addslashes($_FILES['bannerfile']['name'])."',
-						  '$FILETYPE',
-						  0,
-						  0,
-						  '".$_POST['url']."',
-						  '".mysql_real_escape_string($_POST['sponsortext'])."',
-						  '".mysql_real_escape_string($_POST['alt'])."',
-						  ".intval($_POST['purchased']).",
-						  $imagewidth,
-						  $imageheight,
-						  $id)";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+				// Update database
+				$query = "INSERT INTO " . $DBPrefix . "banners VALUES
+						(NULL, '" . mysql_escape_string($_FILES['bannerfile']['name']) . "', '" . $FILETYPE . "', 0, 0, '" . $_POST['url'] . "',
+						  '" . mysql_escape_string($_POST['sponsortext']) . "', '".mysql_escape_string($_POST['alt'])."',
+						  " . intval($_POST['purchased']) . ", " . $imagewidth . ", " . $imageheight . ", " . $id . ")";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$ID = mysql_insert_id();
 				
 				// Handle filters
-				if (is_array($_POST['categories']))
+				if (is_array($_POST['category']))
 				{
-					foreach ($_POST['categories'] as $k => $v)
+					foreach ($_POST['category'] as $k => $v)
 					{
-						$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES ($ID," . $system->cleanvars($v) . ")";
-						$res = mysql_query($query);
-						$system->check_mysql($res, $query, __LINE__, __FILE__);
+						$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES (" . $ID . "," . $system->cleanvars($v) . ")";
+						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					}
 				}
-				if (!empty($_POST['keywords'])) {
+				if (!empty($_POST['keywords']))
+				{
 					$KEYWORDS = explode("\n", $_POST['keywords']);
 					
 					foreach ($KEYWORDS as $k => $v)
 					{
-						if (!empty($v)) {
-							$query = "INSERT INTO " . $DBPrefix . "bannerskeywords VALUES ($ID,'".$system->cleanvars(chop($v))."')";
-							$res = mysql_query($query);
-							$system->check_mysql($res, $query, __LINE__, __FILE__);
+						if (!empty($v))
+						{
+							$query = "INSERT INTO " . $DBPrefix . "bannerskeywords VALUES (" . $ID . ",'" . $system->cleanvars(trim($v)) . "')";
+							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						}
 					}
 				}
-				header("Location: userbanners.php?id=$id");
+				header('location: userbanners.php?id=' . $id);
 				exit;
 			}
 		}
@@ -117,25 +120,20 @@ if (isset($_POST['action']) && $_POST['action'] == "insert") {
 }
 
 $BANNERS = array();
-#// Retrieve user's information
-$query = "SELECT * FROM " . $DBPrefix . "bannersusers WHERE id = $id";
-$res_ = mysql_query($query);
-$system->check_mysql($res_, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res_) > 0)
-{
-	$USER = mysql_fetch_array($res_);
+// Retrieve user's information
+$query = "SELECT id, name, company, email FROM " . $DBPrefix . "bannersusers WHERE id = " . $id;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$USER = mysql_fetch_assoc($res);
 	
-	#// REtrieve user's banners
-	$query = "SELECT * FROM " . $DBPrefix . "banners WHERE user = ".$USER['id'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) > 0)
-	{
-		while ($row = mysql_fetch_array($res))
-		{
-			$BANNERS[] = $row;
-		}
-	}
+// REtrieve user's banners
+$query = "SELECT * FROM " . $DBPrefix . "banners WHERE user = " . $USER['id'];
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+while ($row = mysql_fetch_array($res))
+{
+	$BANNERS[] = $row;
 }
 
 // -------------------------------------- category

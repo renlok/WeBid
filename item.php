@@ -118,7 +118,12 @@ else
 
 // get ending time
 $difference = $ends - time();
-if ($difference > 0)
+$showendtime = false;
+if ($start > time())
+{
+	$ending_time = '<span class="errfont">' . $MSG['668'] . '</span>';
+}
+elseif ($difference > 0)
 {
 	$ending_time = '';
 	$d = 0;
@@ -149,6 +154,7 @@ if ($difference > 0)
 		$ending_time .= $seconds_difference . $MSG['25_0033'];
 	}
 	$has_ended = false;
+	$showendtime = true;
 }
 else
 {
@@ -498,7 +504,8 @@ $template->assign_vars(array(
 		'B_HASBUYER' => (count($hbidder_data) > 0),
 		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
 		'B_HAS_QUESTIONS' => ($num_questions > 0),
-		'B_CAN_BUY' => $user->can_buy
+		'B_CAN_BUY' => $user->can_buy && !($start > time()),
+		'B_SHOWENDTIME' => $showendtime
 		));
 
 include 'header.php';

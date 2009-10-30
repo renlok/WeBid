@@ -35,23 +35,26 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if ($_POST['name'] && $_POST['email'])
 	{
-		$DATE = explode('/', $_POST['birthdate']);
-		if ($system->SETTINGS[datesformat] == 'USA')
+		if (!empty($_POST['birthdate']))
 		{
-			$birth_day = $DATE[1];
-			$birth_month = $DATE[0];
-			$birth_year = $DATE[2];
-		}
-		else
-		{
-			$birth_day = $DATE[0];
-			$birth_month = $DATE[1];
-			$birth_year = $DATE[2];
-		}
+			$DATE = explode('/', $_POST['birthdate']);
+			if ($system->SETTINGS['datesformat'] == 'USA')
+			{
+				$birth_day = $DATE[1];
+				$birth_month = $DATE[0];
+				$birth_year = $DATE[2];
+			}
+			else
+			{
+				$birth_day = $DATE[0];
+				$birth_month = $DATE[1];
+				$birth_year = $DATE[2];
+			}
 
-		if (strlen($birth_year) == 2)
-		{
-			$birth_year = '19' . $birth_year;
+			if (strlen($birth_year) == 2)
+			{
+				$birth_year = '19' . $birth_year;
+			}
 		}
 		
 		if (strlen($_POST['password']) > 0 && ($_POST['password'] != $_POST['repeat_password']))
@@ -96,7 +99,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		else
 		{
-			$birthdate = $birth_year . $birth_month . $birth_day;
+			if (!empty($_POST['birthdate']))
+			{
+				$birthdate = $birth_year . $birth_month . $birth_day;
+			}
+			else
+			{
+				$birthdate = 0;
+			}
+
 			$query = "UPDATE " . $DBPrefix . "users SET 
 				  name = '" . $system->cleanvars($_POST['name']) . "',
 				  email = '" . $system->cleanvars($_POST['email']) . "',
@@ -132,17 +143,24 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $user_data = mysql_fetch_assoc($res);
 
-$birth_day = substr($user_data['birthdate'], 6, 2);
-$birth_month = substr($user_data['birthdate'], 4, 2);
-$birth_year = substr($user_data['birthdate'], 0, 4);
-
-if ($system->SETTINGS['datesformat'] == 'USA')
+if ($user_data['birthdate'] != 0)
 {
-	$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
+	$birth_day = substr($user_data['birthdate'], 6, 2);
+	$birth_month = substr($user_data['birthdate'], 4, 2);
+	$birth_year = substr($user_data['birthdate'], 0, 4);
+
+	if ($system->SETTINGS['datesformat'] == 'USA')
+	{
+		$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
+	}
+	else
+	{
+		$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
+	}
 }
 else
 {
-	$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
+	$birthdate = '';
 }
 
 $country_list = '';

@@ -19,8 +19,7 @@ include $main_path . 'language/' . $language . '/categories.inc.php';
 $catscontrol = new MPTTcategories();
 
 // Get parameters from the URL
-$params['id'] = (isset($_GET['id'])) ? $_GET['id'] : 0;
-$id = intval($params['id']);
+$id = (isset($_GET['id'])) ? intval($_GET['id']) : 0;
 
 if ($id != 0)
 {

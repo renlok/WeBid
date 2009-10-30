@@ -126,6 +126,10 @@ if (($Data['ends'] <= time() || $Data['closed'] == 1) && !isset($errmsg))
 {
 	$errmsg = $ERR_614;
 }
+if (($Data['starts'] > time()) && !isset($errmsg))
+{
+	$errmsg = $ERR_073;
+}
 
 $query = "SELECT bid, bidder FROM " . $DBPrefix . "bids WHERE auction = " . $id . " ORDER BY bid DESC, id DESC LIMIT 1";
 $res = mysql_query($query);

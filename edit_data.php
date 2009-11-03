@@ -150,7 +150,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$TPL_birthdate = $_POST['TPL_year'] . $_POST['TPL_month'] . $_POST['TPL_day'];
 
 			$query = "UPDATE " . $DBPrefix . "users SET email='" . $system->cleanvars($_POST['TPL_email']) . "',
-					birthdate = '" . (empty($TPL_birthdate)) ? 0 : $TPL_birthdate . "',
+					birthdate = '" . ((empty($TPL_birthdate)) ? 0 : $TPL_birthdate) . "',
 					address = '" . $system->cleanvars($_POST['TPL_address']) . "',
 					city = '" . $system->cleanvars($_POST['TPL_city']) . "',
 					prov = '" . $system->cleanvars($_POST['TPL_prov']) . "',

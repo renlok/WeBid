@@ -247,8 +247,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
   `cat_name` tinytext,
   `sub_counter` int(11) default 0,
   `counter` int(11) default 0,
-  `cat_colour` tinytext default '',
-  `cat_image` tinytext default '',
+  `cat_colour` varchar(15) default '',
+  `cat_image` varchar(150) default '',
   PRIMARY KEY  (`cat_id`)
 );";
 

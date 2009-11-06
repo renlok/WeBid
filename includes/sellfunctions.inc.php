@@ -68,6 +68,13 @@ function setvars()
 	$is_highlighted = (isset($_POST['is_highlighted'])) ? 'y' : $_SESSION['SELL_is_highlighted'];
 	$start_now = (isset($_POST['start_now'])) ? $_POST['start_now'] : '';
 	$start_now = (isset($_SESSION['SELL_start_now']) && !isset($_POST['action'])) ? $_SESSION['SELL_start_now'] : $start_now;
+	if (isset($_POST['action']))
+	{
+		$is_bold = (isset($_POST['is_bold'])) ? 'y' : 'n';
+		$is_featured = (isset($_POST['is_featured'])) ? 'y' : 'n';
+		$is_highlighted = (isset($_POST['is_highlighted'])) ? 'y' : 'n';
+		$payment = (isset($_POST['payment'])) ? $payment : array();
+	}
 }
 
 function makesessions()

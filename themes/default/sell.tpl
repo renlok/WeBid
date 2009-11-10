@@ -298,7 +298,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 	<!-- ELSE -->
-    				<input type="hidden" name="start_now" value="1" {START_NOW}>
+    				<input type="hidden" name="start_now" value="1">
     <!-- ENDIF -->
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">

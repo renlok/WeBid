@@ -191,17 +191,25 @@ if (isset($_POST['action']) && !isset($errmsg))
 	{
 		if ($system->SETTINGS['proxy_bidding'] == 'n')
 		{
+			// is it the highest bid?
 			if ($current_bid < $bid)
 			{
-				$send_email = true;
+				// did you outbid someone?
+				$query = "SELECT u.id FROM " . $DBPrefix . "bids b, " . $DBPrefix . "users u WHERE b.auction = " . $id . " AND b.bidder = u.id and u.suspended = 0 ORDER BY bid DESC";
+				$result = mysql_query($query);
+				$system->check_mysql($result, $query, __LINE__, __FILE__);
+				if (mysql_num_rows($res) == 0 || mysql_result($res, 0) != $bidder_id)
+				{
+					$send_email = true;
+				}
+				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . $bid . ", num_bids = num_bids + 1 WHERE id = " . $id;
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				// Also update bids table
+				$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . $bid . ", '" . $NOW . "', " . $qty . ")";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				extend_auction($item_id, $c);
+				$bidding_ended = true;
 			}
-			$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . $bid . ", num_bids = num_bids + 1 WHERE id = " . $id;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			// Also update bids table
-			$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . $bid . ", '" . $NOW . "', " . $qty . ")";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			extend_auction($item_id, $c);
-			$bidding_ended = true;
 		}
 		elseif ($WINNING_BIDDER == $bidder_id)
 		{
@@ -269,7 +277,10 @@ if (isset($_POST['action']) && !isset($errmsg))
 
 				if ($proxy_max_bid < $bid)
 				{
-					$send_email = true;
+					if ($proxy_bidder_id != $bidder_id)
+					{
+						$send_email = true;
+					}
 					$next_bid = $proxy_max_bid + $increment;
 					if (($proxy_max_bid + $increment) > $bid)
 					{

@@ -1,14 +1,10 @@
-0.8.3 - 11/10/09
+0.8.4 - 06/11/09
 -----------------------------
-- Fixed the delete user page when the user has bids or auctions
-- Fixed the index page so the buy it now only featured items show the correct price
-- Fixed the resync counters button so it now also resyncs the category counts
-- Fixed the buyer fee emails so your not sent it when the fee is 0
-- Fixed the contact seller form so it does not show an error when your not logged in
-- Fixed the drop down list on the list users page show it actually sorts the users
-- Fixed the pay now button on the bought items page
-- Fixed the newsletter submission page
-- Fixed the bidding so you can no longer bid on auctions that have not yet started
-- Fixed the banner rotation
+- Fixed the sell page so you can now actually deselect bold/highlighted/featured item options (Bug #117)
+- Fixed the auction watch page so you can add more than 1 term
+- Fixed the suspend user page so it no longer returns an error
+- Fixed the resync counters button on the admin panel so it resyncs the category counts correctly
+- Fixed listing an auction when 'can edit start time' is set to no, auctions now list with correct start time
+- Fixed a bug where some users where reciving a 500 error when bidding (Bug #45)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

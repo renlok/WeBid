@@ -83,10 +83,10 @@ if (isset($_GET['change']) && $_GET['change'] == 'yes')
 elseif (count($_POST) == 0)
 {
     unset($_SESSION['RELISTEDAUCTION']);
-    unset($_SESSION['UPLOADED_PICTURES']);
     unset($_SESSION['UPLOADED_PICTURES_SIZE']);
     unset($_SESSION['GALLERY_UPDATED']);
 	unset($_SESSION['SELL_starts']);
+	$_SESSION['UPLOADED_PICTURES'] = 0;
     $_SESSION['SELL_with_reserve'] = '';
     $_SESSION['SELL_reserve_price'] = '';
     $_SESSION['SELL_minimum_bid'] = '';

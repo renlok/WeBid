@@ -31,14 +31,9 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 	if (!empty($auctions))
 	{
 		$match = strstr($auctions, $requestadd);
-		$auctions = $auctions;
-	}
-	else
-	{
-		$auctions = '';
 	}
 
-	if (!isset($match))
+	if (!isset($match) || empty($match))
 	{
 		$auction_watch = trim($auctions . ' ' . $requestadd);
 		$auction_watch_new = trim($auction_watch);

@@ -94,9 +94,11 @@ switch ($_SESSION['action'])
 		}
 		else
 		{
+			echo $start_now . '|';
 			// set time back to GMT
 			$a_starts = empty($start_now) ? ($a_starts - $system->tdiff) : time();
 			$a_ends = $a_starts + ($duration * 24 * 60 * 60);
+			echo $start_now;
 			// get fee
 			$fee = get_fee($minimum_bid);
 			// insert auction

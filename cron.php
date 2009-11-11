@@ -89,7 +89,7 @@ $query = "SELECT * FROM " . $DBPrefix . "auctions
 		 AND reserve_price > 0
 		 AND num_bids > 0
 		 AND current_bid < reserve_price
-		 AND sold = 's'))";
+		 AND sold = 'y'))";
 $result_auction = mysql_query($query);
 $system->check_mysql($result_auction, $query, __LINE__, __FILE__);
 

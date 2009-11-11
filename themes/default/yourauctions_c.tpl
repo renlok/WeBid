@@ -126,7 +126,7 @@ $(document).ready(function() {
 		</td>
 		<td width="10%"  align="center">
 		<!-- IF items.B_CANSSELL -->
-			<input type="checkbox" name="sell[{items.ID}]" value="y" class="sellid">
+			<input type="checkbox" name="sell[]" value="{items.ID}" class="sellid">
 		<!-- ENDIF -->
 		</td>
 		<td width="9%"  align="center">

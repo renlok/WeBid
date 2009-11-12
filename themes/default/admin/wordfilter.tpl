@@ -1,14 +1,14 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="{SITEURL}admin/style.css" />
 </head>
 <body style="margin:0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr> 
-	<td background="images/bac_barint.gif">
+	<td background="{SITEURL}admin/images/bac_barint.gif">
 		<table width="100%" border="0" cellspacing="5" cellpadding="0">
 			<tr> 
-				<td width="30"><img src="images/i_too.gif"></td>
+				<td width="30"><img src="{SITEURL}admin/images/i_too.gif"></td>
 				<td class="white">{L_5436}&nbsp;&gt;&gt;&nbsp;{L_5068}</td>
 			</tr>
 		</table>

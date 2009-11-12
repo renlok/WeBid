@@ -75,6 +75,7 @@ $ERR_042 = "You comment is missing";
 $ERR_043 = "Incorrect field format: must be numeric";
 $ERR_047 = "Required fields missing";
 $ERR_048 = "Incorrect login";
+$ERR_049 = "The category's name cannot be empty";
 $ERR_051 = "Please, insert a valid number of digits";
 $ERR_054 = "Please, fill in both the password fields";
 $ERR_055 = "User <I>%s</I> already exists in the database";

@@ -4,9 +4,10 @@
 - Fixed the auction watch page so you can add more than 1 term
 - Fixed the suspend user page so it no longer returns an error
 - Fixed the resync counters button on the admin panel so it resyncs the category counts correctly
-- Fixed listing an auction when 'can edit start time' is set to no, auctions now list with correct start time
+- Fixed listing an auction when 'can edit start time' is set to no, auctions now list with correct start time (Bug #71)
 - Fixed a bug where some users where reciving a 500 error when bidding (Bug #45)
 - Fixed a bug where auctions that didnt meet their reserve price are not shown in the control panel
 - Fixed the option to sell under price
+- Fixed (Bug #108)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

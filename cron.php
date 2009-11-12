@@ -83,13 +83,13 @@ printLog('++++++ Closing expired auctions');
 $NOW = time();
 $NOWB = gmdate('Ymd');
 $query = "SELECT * FROM " . $DBPrefix . "auctions
-		 WHERE ends <= '$NOW'
+		 WHERE ends <= '" . $NOW . "'
 		 AND ((closed = 0)
 		 OR (closed = 1
 		 AND reserve_price > 0
 		 AND num_bids > 0
 		 AND current_bid < reserve_price
-		 AND sold = 'y'))";
+		 AND sold = 's'))";
 $result_auction = mysql_query($query);
 $system->check_mysql($result_auction, $query, __LINE__, __FILE__);
 
@@ -159,7 +159,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 	$atype = intval($Auction['auction_type']); 
 	if ($atype == 1)
 	{
-		if ($decrem && ($Auction['current_bid'] >= $Auction['reserve_price'] || $Auction['sold'] == 's'))
+		if ($decrem > 0 && ($Auction['current_bid'] >= $Auction['reserve_price'] || $Auction['sold'] == 's'))
 		{
 			mysql_data_seek($result, 0);
 			$Winner = mysql_fetch_array($result);
@@ -202,6 +202,9 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
 			(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $Winner['id'] . "', " . $Auction['current_bid'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ")";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			
+			$query = "UPDATE " . $DBPrefix . "auctions SET sold = 'y' WHERE id = " . $Auction['id'];
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		else

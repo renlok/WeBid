@@ -31,7 +31,7 @@ if ($emailmode == 'one') {
 			'A_END' => $ends_string,
 			'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
 			'SITE_URL' => $system->SETTINGS['siteurl'],
-			'A_PICURL' => ($_SESSION['SELL_pict_url'] != '') ? $system->SETTINGS['siteurl'] . $uploaded_path . $auction_id . '/' . $pict_url : $system->SETTINGS['siteurl'] . 'images/email_alerts/default_item_img.jpg',
+			'A_PICURL' => ($pict_url != '') ? $system->SETTINGS['siteurl'] . $uploaded_path . $auction_id . '/' . $pict_url : $system->SETTINGS['siteurl'] . 'images/email_alerts/default_item_img.jpg',
 			'SITENAME' => $system->SETTINGS['sitename']
 			));
 	$emailer->email_uid = $Seller['id'];

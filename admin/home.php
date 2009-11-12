@@ -94,17 +94,16 @@ if (isset($_GET['action']))
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 			$query = "SELECT COUNT(*) AS COUNT, category FROM webid_auctions
-					WHERE closed = 0 AND suspended = 0 GROUP BY category";
+					WHERE closed = 0 AND starts <= " . time() . " AND suspended = 0 GROUP BY category";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			while ($row = mysql_fetch_assoc($res))
 			{
 					$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['category'];
-					$res = mysql_query($query);
-					$system->check_mysql($res, $query, __LINE__, __FILE__);
-					$parent_node = mysql_fetch_assoc($res);
+					$res_ = mysql_query($query);
+					$system->check_mysql($res_, $query, __LINE__, __FILE__);
+					$parent_node = mysql_fetch_assoc($res_);
 
-					$cat_value = '';
 					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 					for ($i = 0; $i < count($crumbs); $i++)
 					{

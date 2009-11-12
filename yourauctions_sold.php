@@ -167,15 +167,13 @@ $query = "SELECT a.* FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "winners 
 		AND a.suspended = 0
 		AND a.id = w.auction
 		GROUP BY w.auction
-		ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT $OFFSET,$LIMIT";
+		ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT " . $OFFSET . "," . $LIMIT;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $i = 0;
 while ($item = mysql_fetch_assoc($res))
 {
-	$relist = false;
-	if ((($reserve - $current) < 0) && ($item['reserve_price'] > 0 || $item['num_bids'] == 0)) $relist = true;
 	$template->assign_block_vars('items', array(
 			'BGCOLOUR' => ($i % 2) ? '#FFCCFF' : '#EEEEEE',
 			'ID' => $item['id'],
@@ -185,7 +183,6 @@ while ($item = mysql_fetch_assoc($res))
 			'BID' => ($item['current_bid'] == 0) ? '-' : $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 
-			'B_RELIST' => $relist,
 			'B_CLOSED' => ($item['closed'] == 1),
 			'B_HASNOBIDS' => ($item['current_bid'] == 0)
 			));

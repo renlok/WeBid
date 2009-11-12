@@ -64,9 +64,7 @@ $(document).ready(function() {
 			<a href="yourauctions_sold.php?solda_ord=current_bid&solda_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
 		</td>
-		<td class="titTable1" width="10%" align="center">
-			{L_630}
-		</td>
+		<td class="titTable1" width="10%">&nbsp;</td>
 	</tr>
 <!-- BEGIN items -->
 	<tr bgcolor="{items.BGCOLOUR}">
@@ -91,11 +89,7 @@ $(document).ready(function() {
 		</td>
 		<td width="10%"  align="center">
 	<!-- IF items.B_CLOSED -->
-		<!-- IF items.B_RELIST -->
-			<input type="checkbox" name="relist[]" value="{items.ID}" class="relistid">
-		<!-- ELSE -->
 			<a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
-		<!-- ENDIF -->
 	<!-- ELSE -->
 			{L_203}
 	<!-- ENDIF -->

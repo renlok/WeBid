@@ -9,5 +9,12 @@
 - Fixed a bug where auctions that didnt meet their reserve price are not shown in the control panel
 - Fixed the option to sell under price
 - Fixed (Bug #108)
+- Fixed the default language select page (Bug #122)
+- Fixed maintanance mode so any htlp you entered is displayed correctly
+- Fixed the pagination for the advanced search results
+- Fixed the contact the seller so when the sender is logged out the seller can still reply
+- Fixed the start auction now option for pending auctions ao it also updates the end date to be correct
+- Updated the view winners page so you can see winners for only the chosen auction if you want
+- Added a set as paid option on the view winners page
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

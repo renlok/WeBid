@@ -19,7 +19,6 @@ $(document).ready(function() {
 });
 </script>
 
-<form name="closed" method="post" action="" id="processrelist">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td align="right">
@@ -58,7 +57,7 @@ $(document).ready(function() {
 			<a href="yourauctions_sold.php?solda_ord=num_bids&solda_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
 		</td>
-		<td class="titTable1" width="11%" align="center">
+		<td class="titTable1" width="10%" align="center">
 			<a href="yourauctions_sold.php?solda_ord=current_bid&solda_type={ORDERNEXT}">{L_628}</a>
 <!-- IF ORDERCOL eq 'current_bid' -->
 			<a href="yourauctions_sold.php?solda_ord=current_bid&solda_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
@@ -69,7 +68,8 @@ $(document).ready(function() {
 <!-- BEGIN items -->
 	<tr bgcolor="{items.BGCOLOUR}">
 		<td width="40%">
-			<a href="item.php?id={items.ID}">{items.TITLE}</a>
+			<a href="item.php?id={items.ID}">{items.TITLE}</a><br />
+            <span class="smallspan"><a href="selling.php?id={items.ID}">{L_900}</a></span>
 		</td>
 		<td width="10%">
 			{items.STARTS}
@@ -77,36 +77,26 @@ $(document).ready(function() {
 		<td width="10%">
 			{items.ENDS}
 		</td>
-		<td width="10%"  align="center">
+		<td width="10%" align="center">
 			{items.BIDS}
 		</td>
-		<td width="11%"  align="center">
+		<td align="center">
 	<!-- IF items.B_HASNOBIDS -->
 			-
 	<!-- ELSE -->
 			{items.BID}
 	<!-- ENDIF -->
 		</td>
-		<td width="10%"  align="center">
+		<td width="10%" align="center">
 	<!-- IF items.B_CLOSED -->
 			<a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
 	<!-- ELSE -->
-			{L_203}
+			-
 	<!-- ENDIF -->
 		</td>
 	</tr>
 <!-- END items -->
-    <tr>
-		<td colspan="6">&nbsp;</td>
-	</tr>
-    <tr>
-        <td colspan="6" align="center">
-            <input type="hidden" name="action" value="update">
-            <input type="submit" name="Submit" value="{L_631}" class="button">
-        </td>
-    </tr>
 </table>
-</form>
 
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 	<tr>

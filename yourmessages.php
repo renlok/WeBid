@@ -38,18 +38,23 @@ if ($check == 0)
 
 $array = mysql_fetch_array($res);
 $sent = gmdate('M d, Y H:ia', $array['sentat'] + $system->tdiff);
-$sendusername = $array['nick'];
 $subject = $array['subject'];
 $message = $array['message'];
 $hash = md5(rand(1, 9999));
 $array['message'] = str_replace('<br>', '', $array['message']);
 
-$senderusername = '<a href="profile.php?user_id=1&auction_id=' . $array['sentfrom'] . '">' . $sendusername . '</a>';
-
-// if admin message
-if ($array['sentfrom'] == 0)
+if ($array['sentfrom'] == 0 && !empty($array['fromemail']))
+{
+	$senderusername = $array['fromemail'];
+}
+elseif ($array['sentfrom'] == 0 && empty($array['fromemail']))
 {
 	$senderusername = $MSG['110'];
+}
+else
+{
+	$sendusername = $array['nick'];
+	$senderlink = '<a href="profile.php?user_id=1&auction_id=' . $array['sentfrom'] . '">' . $sendusername . '</a>';
 }
 
 // Update message
@@ -65,7 +70,7 @@ $_SESSION['question' . $hash] = $array['question'];
 
 $template->assign_vars(array(
 		'SUBJECT' => $subject,
-		'SENDERNAME' => $senderusername,
+		'SENDERNAME' => (isset($senderlink)) ? $senderlink : $sendusername,
 		'SENT' => $sent,
 		'MESSAGE' => $message,
 		'ID' => $messageid,

@@ -20,14 +20,18 @@ include $main_path . "fck/fckeditor.php";
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	// Check if the specified user exists
 	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $_POST['superuser'] . "'";
-	$res_ = mysql_query($query);
-	$system->check_mysql($res_, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res_) == 0 && $_POST[active] == 'y') {
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	if (mysql_num_rows($res) == 0 && $_POST['active'] == 'y')
+	{
 		$ERR = $ERR_025;
-	} else {
+	}
+	else
+	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "maintainance SET
 				superuser = '" . $_POST['superuser'] . "',
@@ -39,13 +43,16 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 		$system->SETTINGS['active'] = $_POST['active'];
 		$ERR = $MSG['_0005'];
 	}
-} else {
+}
+else
+{
 	$query = "SELECT * FROM " . $DBPrefix . "maintainance LIMIT 1";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$system->SETTINGS['superuser'] = mysql_result($res, 0, 'superuser');
-	$system->SETTINGS['maintainancetext'] = mysql_result($res, 0, 'maintainancetext');		
-	$system->SETTINGS['active'] = mysql_result($res, 0, 'active');
+	$data = mysql_fetch_assoc($res);
+	$system->SETTINGS['superuser'] = $data['superuser'];
+	$system->SETTINGS['maintainancetext'] = $data['maintainancetext'];		
+	$system->SETTINGS['active'] = $data['active'];
 }
 
 loadblock('', $MSG['_0002']);

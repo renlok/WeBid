@@ -484,13 +484,13 @@ $template->assign_vars(array(
 		'WATCH_VAR' => $watch_var,
 		'WATCH_STRING' => $watch_string,
 
-		'YOURBIDMSG' => $yourbidmsg,
-		'YOURBIDCLASS' => $yourbidclass,
+		'YOURBIDMSG' => (isset($yourbidmsg)) ? $yourbidmsg : '',
+		'YOURBIDCLASS' => (isset($yourbidclass)) ? $yourbidclass : '',
 		'BIDURL' => ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'],
 
 		'B_HASENDED' => $has_ended,
 		'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
-		'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && $user->user_data['id'] != $auction_data['user']),
+		'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && (!$user->logged_in || $user->user_data['id'] != $auction_data['user'])),
 		'B_HASIMAGE' => (!empty($pict_url_plain)),
 		'B_NOTBNONLY' => ($auction_data['bn_only'] == 'n'),
 		'B_HASRESERVE' => ($auction_data['reserve_price'] > 0 && $auction_data['reserve_price'] > $auction_data['current_bid']),

@@ -91,8 +91,8 @@ while ($row = mysql_fetch_array($res))
 			'BNIMG' => get_lang_img(($row['bn_only'] == 'n') ? 'buy_it_now.gif' : 'bn_only.png'),
 			'BNVALUE' => $row['buy_now'],
 			'BNFORMAT' => $system->print_money($row['buy_now']),
-			'BIDVALUE' => $row['minimum_bid'],
-			'BIDFORMAT' => $system->print_money($row['minimum_bid']),
+			'BIDVALUE' => $row['current_bid'],
+			'BIDFORMAT' => $system->print_money($row['current_bid']),
 			'NUM_BIDS' => $num_bids,
 			'TIMELEFT' => FormatTimeLeft($difference),
 

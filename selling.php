@@ -21,10 +21,18 @@ if (!$user->logged_in)
 	exit;
 }
 
+if (isset($_GET['paid']))
+{
+	echo $query = "UPDATE " . $DBPrefix . "winners SET paid = 1 WHERE id = " . intval($_GET['paid']) . " AND seller = " . $user->user_data['id'];
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+}
+
+$searchid = (isset($_GET['id'])) ? ' AND b.id = ' . intval($_GET['id']) : '';
+
 // Get closed auctions with winners
 $query = "SELECT a.auction, b.title, b.ends
 		 FROM " . $DBPrefix . "winners a, " . $DBPrefix . "auctions b
-		 WHERE a.auction = b.id AND (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0 AND b.user = " . $user->user_data['id'] . "
+		 WHERE a.auction = b.id AND (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0 AND b.user = " . $user->user_data['id'] . $searchid . "
 		 GROUP BY b.id ORDER BY a.closingdate DESC";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -51,20 +59,23 @@ while ($row = mysql_fetch_array($res))
 		$fblink = ($winner['feedback_win'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $winner['winner'] . '&sid=' . $winner['seller'] . '&ws=w">' . $MSG['207'] . '</a>)' : '';
 		$template->assign_block_vars('a.w', array(
 				'BGCOLOUR' => $bgColor,
+				'ID' => $winner['id'],
 				'BID' => $winner['bid'],
 				'BIDF' => $system->print_money($winner['bid']),
 				'QTY' => $winner['qty'],
 				'NICK' => $winner['nick'],
 				'WINNERID' => $winner['winner'],
-				'EMAIL' => $winner['email'],
-				'FB' => $fblink
+				'FB' => $fblink,
+
+				'B_PAID' => ($winner['paid'] == 1)
 				));
 		$i++;
 	}
 }
 
 $template->assign_vars(array(
-		'NUM_WINNERS' => $i
+		'NUM_WINNERS' => $i,
+		'AUCID' => (!empty($searchid)) ? '&id=' . $searchid : ''
 		));
 
 include 'header.php';

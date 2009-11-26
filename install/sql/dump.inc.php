@@ -1138,7 +1138,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
 # Dumping data for table `" . $DBPrefix . "gateways`
 # 
 
-$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet', '', 0, 0, '', '', 0, 0);";
+$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet', '', 0, 1, '', '', 0, 1);";
 
 # ############################
 
@@ -1253,6 +1253,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
   `id` int(50) NOT NULL AUTO_INCREMENT ,
   `sentto` int(25) NOT NULL default '0',
   `sentfrom` int(25) NOT NULL default '0',
+  `fromemail` varchar(50) NOT NULL default '',
   `sentat` varchar(20) NOT NULL default '',
   `message` text NOT NULL ,
   `isread` int(1) NOT NULL default '0',

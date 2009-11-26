@@ -69,8 +69,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 	{
 		foreach ($_POST['startnow'] as $k => $v)
 		{
+			$query = "SELECT duration FROM " . $DBPrefix . "auctions WHERE id = " . $v;
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$data = mysql_fetch_assoc($res);
+
+			$ends = $NOW + ($data['duration'] * 24 * 60 * 60);
+
 			// Update end time to "now"
-			$query = "UPDATE " . $DBPrefix . "auctions SET starts = '" . $NOW . "' WHERE id = " . intval($v);
+			$query = "UPDATE " . $DBPrefix . "auctions SET starts = '" . $NOW . "', ends = '" . $ends . "' WHERE id = " . intval($v);
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}

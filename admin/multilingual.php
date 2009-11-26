@@ -19,7 +19,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == 'updatelanguage' && isset($_POST['defaultlanguage']))
+if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['defaultlanguage']))
 {
 	$query = "UPDATE " . $DBPrefix . "settings SET defaultlanguage = '" . $_POST['defaultlanguage'] . "'";
 	$result = mysql_query($query);

@@ -28,6 +28,7 @@ $order = (isset($_GET['order']))? $_GET['order'] : '';
 $action = (isset($_GET['action']))? $_GET['action'] : '';
 $messageid = (isset($_GET['id']))? $_GET['id'] : '';
 $delete = (isset($_POST['delete']))? $_POST['delete'] : NULL;
+$email = false;
 $ERR = '';
 
 if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message']))
@@ -44,29 +45,48 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$usercheck = mysql_num_rows($res);
-	if ($usercheck == 0)
+	if ($usercheck == 0) // no such user
 	{
-		$_SESSION['message'] = $ERR_609;
-		header('location: mail.php?x=1');
-		exit;
+		if ((!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $sendto))
+		{
+			$_SESSION['message'] = $ERR_609;
+			header('location: mail.php?x=1');
+			exit;
+		}
+		else
+		{
+			$email = true;
+		}
 	}
-	$userarray = mysql_fetch_array($res);
 
-	// check use mailbox insnt full
-	$query = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = " . $userarray['id'];
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$mailboxsize = mysql_num_rows($res);
-	if ($mailboxsize >= 30)
+	$nowmessage = nl2br($message);
+	if (!$email)
 	{
-		$_SESSION['message'] = sprintf($MSG['443'], $sendto);
-		header('location: mail.php');
-		exit;
+		$userarray = mysql_fetch_array($res);
+
+		// check use mailbox insnt full
+		$query = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = " . $userarray['id'];
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$mailboxsize = mysql_num_rows($res);
+		if ($mailboxsize >= 30)
+		{
+			$_SESSION['message'] = sprintf($MSG['443'], $sendto);
+			header('location: mail.php');
+			exit;
+		}
+	}
+	else
+	{
+		// send the email
+		$emailer = new email_class();
+		$emailer->email_basic($subject, $sendto, $nowmessage, $user->user_data['email']);
 	}
 
 	// send message
-	$nowmessage = nl2br($message);
-	$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject, reply_of, question)
-			VALUES (" . $userarray['id'] . ", " . $user->user_data['id'] . ", " . time() . ", '" . $nowmessage . "', '" . $subject . "', " . $_SESSION['reply_of' . $_POST['hash']] . ", " . $_SESSION['question' . $_POST['hash']] . ")";
+	$to_id = ($email) ? $sendto : $userarray['id'];
+	$id_type = ($email) ? 'fromemail' : 'sentto';
+	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, sentat, message, subject, reply_of, question)
+			VALUES (" . $to_id . ", " . $user->user_data['id'] . ", " . time() . ", '" . $nowmessage . "', '" . $subject . "', " . $_SESSION['reply_of' . $_POST['hash']] . ", " . $_SESSION['question' . $_POST['hash']] . ")";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 	if (isset($_POST['is_question']) && isset($_SESSION['reply_of' . $_POST['hash']]) && $_SESSION['reply_of' . $_POST['hash']] > 0)

@@ -25,7 +25,7 @@ if (basename($_SERVER['PHP_SELF']) != 'user_login.php')
 		$MAINTAINANCE = mysql_fetch_array($res);
 		if ($MAINTAINANCE['active'] == 'y' && ($user->user_data['nick'] != $MAINTAINANCE['superuser'] && $user->user_data['id'] != $MAINTAINANCE['superuser']))
 		{
-			print $MAINTAINANCE['maintainancetext'];
+			echo stripslashes($MAINTAINANCE['maintainancetext']);
 			exit;
 		}
 	}

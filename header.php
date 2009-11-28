@@ -88,6 +88,7 @@ $page_title = (isset($page_title)) ? ' ' . $page_title : '';
 
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl
+		'THEME' => $system->SETTINGS['theme'],
 		'PAGE_TITLE' => $system->SETTINGS['sitename'] . $page_title,
 		'CHARSET' => $CHARSET,
 		'STYLES' => $thisstyle,

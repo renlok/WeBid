@@ -8,8 +8,8 @@
 <meta name="keywords" content="{KEYWORDS}">
 <meta name="generator" content="WeBid">
 {STYLES}
-<link rel="stylesheet" type="text/css" href="{SITEURL}themes/default/style.css">
-<link rel="stylesheet" type="text/css" href="{SITEURL}themes/default/jquery.lightbox.css" media="screen">
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/style.css">
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/jquery.lightbox.css" media="screen">
 
 <link rel="alternate" type="application/rss+xml" title="{L_924}" href="{SITEURL}rss.php?feed=1">
 <link rel="alternate" type="application/rss+xml" title="{L_925}" href="{SITEURL}rss.php?feed=2">

@@ -56,8 +56,8 @@ else
 }
 
 loadblock('', $MSG['_0002']);
-loadblock($MSG['_0006'], '', 'yesno', 'active', $system->SETTINGS['active'], $MSG['030'], $MSG['029']);
-loadblock($MSG['003'], '', 'text', 'superuser', $system->SETTINGS['superuser'], $MSG['030'], $MSG['029']);
+loadblock($MSG['_0006'], '', 'yesno', 'active', $system->SETTINGS['active'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['003'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['030'], $MSG['029']));
 
 $oFCKeditor = new FCKeditor('maintainancetext');
 $oFCKeditor->BasePath = '../fck/';

@@ -69,7 +69,7 @@ $USERSFILTER = array('all' => $MSG['5296'],
 
 $selectsetting = (isset($_POST['usersfilter'])) ? $_POST['usersfilter'] : '';
 loadblock($MSG['5299'], '', generateSelect('usersfilter', $USERSFILTER));
-loadblock($MSG['332'], '', 'text', 'subject', $system->SETTINGS['subject'], $MSG['030'], $MSG['029']);
+loadblock($MSG['332'], '', 'text', 'subject', $system->SETTINGS['subject'], array($MSG['030'], $MSG['029']));
 
 $oFCKeditor = new FCKeditor('content');
 $oFCKeditor->BasePath = '../fck/';

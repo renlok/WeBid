@@ -21,11 +21,11 @@ if (!$user->logged_in)
 	exit;
 }
 
-$query = "SELECT a.auction, a.seller, a.winner, a.bid, b.id, b.current_bid, b.title, a.qty, b.ends FROM " . $DBPrefix . "winners a
+$query = "SELECT DISTINCT a.auction, a.seller, a.winner, a.bid, b.id, b.current_bid, b.title, a.qty, b.ends FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
-		AND ((a.seller = " . $user->user_data['id'] . " AND a.feedback_win = 0)
-		OR (a.winner = " . $user->user_data['id'] . " AND a.feedback_sel = 0))";
+		AND ((a.seller = " . $user->user_data['id'] . " AND a.feedback_sel = 0)
+		OR (a.winner = " . $user->user_data['id'] . " AND a.feedback_win = 0))";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
@@ -44,7 +44,7 @@ while ($row = mysql_fetch_array($res))
 			'ID' => $row['id'],
 			'ROWCOLOUR' => ($k % 2) ? 'bgcolor="#FFFEEE"' : '',
 			'TITLE' => $row['title'],
-			'WINORSELLNICK' => mysql_result($re_, 0, "nick"),
+			'WINORSELLNICK' => mysql_result($re_, 0, 'nick'),
 			'WINORSELL' => ($row['winner'] == $user->user_data['id']) ? $MSG['25_0002'] : $MSG['25_0001'],
 			'WINORSELLEMAIL' => mysql_result($re_, 0, "email"),
 			'BID' => $row['bid'],
@@ -53,7 +53,7 @@ while ($row = mysql_fetch_array($res))
 			'WINNER' => $row['winner'],
 			'SELLER' => $row['seller'],
 			'CLOSINGDATE' => FormatDate($row['ends']),
-			'WS' => ($row['winner'] == $user->user_data['id']) ? 's' : 'w'
+			'WS' => ($row['winner'] == $user->user_data['id']) ? 'w' : 's'
 			));
 	$k++;
 }

@@ -45,73 +45,70 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 
 	if (((isset($_POST['TPL_password']) && $system->SETTINGS['usersauth'] == 'y') || $system->SETTINGS['usersauth'] == 'n') && isset($_POST['TPL_rate']) && isset($_POST['TPL_feedback']) && !empty($_POST['TPL_feedback']))
 	{
-		$sql = "SELECT winner, seller, feedback_win, feedback_sel FROM " . $DBPrefix . "winners
+		$query = "SELECT winner, seller, feedback_win, feedback_sel, paid FROM " . $DBPrefix . "winners
 				WHERE auction = " . $_REQUEST['auction_id'] . "
 				AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']) . "
 				AND ((seller = " . $user->user_data['id'] . " AND feedback_win = 0)
 				OR (winner = " . $user->user_data['id'] . " AND feedback_sel = 0))";
-		$resids = mysql_query($sql);
-		$system->check_mysql($resids, $sql, __LINE__, __FILE__);
-		if (mysql_num_rows($resids) > 0)
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		if (mysql_num_rows($res) > 0)
 		{
+			// winner/seller check
+			$ws = ($user->user_data['id'] == $wsell['winner']) ? 'w' : 's';
+
 			if ($user->user_data['nick'] != $_POST['TPL_nick_hidden'])
 			{
-				$wsell = mysql_fetch_assoc($resids);
-				$sql = "SELECT id, nick, password FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
-				$resrater = mysql_query($sql);
-				$system->check_mysql($resrater, $sql, __LINE__, __FILE__);
-				if (mysql_num_rows($resrater) > 0)
+				$wsell = mysql_fetch_assoc($res);
+				if ((intval($_REQUEST['sid']) == $user->user_data['id'] && $wsell['feedback_sel'] == 1) || (intval($_REQUEST['wid']) == $user->user_data['id'] && $wsell['feedback_win'] == 1))
 				{
-					$arr = mysql_fetch_array ($resrater);
-					if ((intval($_REQUEST['sid']) == $arr['id'] && $wsell['feedback_sel'] == 0) || (intval($_REQUEST['wid']) == $arr['id'] && $wsell['feedback_win'] == 0))
+					$TPL_err = 1;
+					$TPL_errmsg = $ERR_074;
+				}
+				//elseif ((intval($_REQUEST['wid']) == $user->user_data['id'] && $wsell['paid'] == 1) || (intval($_REQUEST['sid']) == $user->user_data['id']))
+				elseif (true)
+				{
+					if ($system->SETTINGS['usersauth'] == 'n' || $user->user_data['password'] == md5($MD5_PREFIX . $_POST['TPL_password']))
 					{
-						if ($system->SETTINGS['usersauth'] == 'n' || $arr['password'] == md5($MD5_PREFIX . $_POST['TPL_password']))
+						$secTPL_rater_nick = $user->user_data['nick'];
+						$secTPL_feedback = ereg_replace("\n", '<br>', $_POST['TPL_feedback']);
+						$uid = ($ws == 's') ? $_REQUEST['sid'] : $_REQUEST['wid'];
+						$sql = "UPDATE " . $DBPrefix . "users SET rate_sum = rate_sum + " . $_POST['TPL_rate'] . ", rate_num = rate_num + 1 WHERE id = " . intval($uid);
+						$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
+						if ($system->SETTINGS['wordsfilter'] == 'y')
 						{
-							$secTPL_rater_nick = $user->user_data['nick'];
-							$secTPL_feedback = ereg_replace("\n", "<br>", $_POST['TPL_feedback']);
-							$uid = ($ws == 's') ? $_REQUEST['sid'] : $_REQUEST['wid'];
-							$sql = "UPDATE " . $DBPrefix . "users SET rate_sum = rate_sum + " . $_POST['TPL_rate'] . ", rate_num = rate_num + 1 WHERE id = " . intval($uid);
-							$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
-							if ($system->SETTINGS['wordsfilter'] == 'y')
-							{
-								$secTPL_feedback = $system->filter($secTPL_feedback);
-							}
-							$sql = "INSERT INTO " . $DBPrefix . "feedbacks (rated_user_id, rater_user_nick, feedback, rate, feedbackdate, auction_id) VALUES (
-								" . intval($uid) . ",
-								'" . $system->cleanvars($secTPL_rater_nick) . "',
-								'" . $system->cleanvars($secTPL_feedback) . "',
-								" . intval($_POST['TPL_rate']) . ", '" . time() . "'," . $_REQUEST['auction_id'] . ")";
-							$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
-							if ($ws == 's')
-							{
-								$sqlset = "feedback_sel = 1";
-							}
-							if ($ws == 'w')
-							{
-								$sqlset = "feedback_win = 1";
-							}
-							$sql = "UPDATE " . $DBPrefix . "winners SET $sqlset
-									WHERE auction = " . $_REQUEST['auction_id'] . " AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']);
-							$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
-							header ('location: feedback.php?faction=show&id=' . intval($uid));
-							exit;
+							$secTPL_feedback = $system->filter($secTPL_feedback);
 						}
-						else
+						$sql = "INSERT INTO " . $DBPrefix . "feedbacks (rated_user_id, rater_user_nick, feedback, rate, feedbackdate, auction_id) VALUES (
+							" . intval($uid) . ",
+							'" . $system->cleanvars($secTPL_rater_nick) . "',
+							'" . $system->cleanvars($secTPL_feedback) . "',
+							" . intval($_POST['TPL_rate']) . ", '" . time() . "'," . $_REQUEST['auction_id'] . ")";
+						$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
+						if ($ws == 's')
 						{
-							$TPL_err = 1;
-							$TPL_errmsg = $ERR_101;
+							$sqlset = "feedback_sel = 1";
 						}
+						if ($ws == 'w')
+						{
+							$sqlset = "feedback_win = 1";
+						}
+						$sql = "UPDATE " . $DBPrefix . "winners SET $sqlset
+								WHERE auction = " . $_REQUEST['auction_id'] . " AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']);
+						$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
+						header ('location: feedback.php?faction=show&id=' . intval($uid));
+						exit;
 					}
 					else
 					{
 						$TPL_err = 1;
-						$TPL_errmsg = $ERR_705;
+						$TPL_errmsg = $ERR_101;
 					}
 				}
 				else
 				{
 					$TPL_err = 1;
-					$TPL_errmsg = $ERR_102;
+					$TPL_errmsg = $ERR_705;
 				}
 			}
 			else

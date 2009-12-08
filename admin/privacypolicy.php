@@ -31,7 +31,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['privacypolicytext'] = $_POST['privacypolicytext'];
 	$ERR = $MSG['406'];
 }
-loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], $MSG['030'], $MSG['029']);
+loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['030'], $MSG['029']));
 
 $oFCKeditor = new FCKeditor('privacypolicytext');
 $oFCKeditor->BasePath = '../fck/';

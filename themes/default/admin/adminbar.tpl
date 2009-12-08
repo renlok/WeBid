@@ -95,8 +95,8 @@ function SwitchMenu(obj){
 		  	<div class="menutitle" onClick="SwitchMenu('settings')">{L_5142}</div>
 			<span class="submenu" id="settings">
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/settings.php" target="content" class="submenulink">{L_526}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/batch.php" target="content" class="submenulink">{L_348}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/picturesupload.php" target="content" class="submenulink">{L_25_0186}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/auctions.php" target="content" class="submenulink">{L_5087}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/spam.php" target="content" class="submenulink">{L_749}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/buyitnow.php" target="content" class="submenulink">{L_2__0025}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/errorhandling.php" target="content" class="submenulink">{L_409}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/countries.php" target="content" class="submenulink">{L_081}</a><br>
@@ -104,9 +104,6 @@ function SwitchMenu(obj){
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/durations.php" target="content" class="submenulink">{L_069}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/increments.php" target="content" class="submenulink">{L_128}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/membertypes.php" target="content" class="submenulink">{L_25_0169}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/https.php" target="content" class="submenulink">{L_1022}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/optimisation.php" target="content" class="submenulink">{L_725}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/spam.php" target="content" class="submenulink">{L_749}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/checkversion.php" target="content" class="submenulink">{L_25_0169a}</a><br><br>
 			<b><FONT COLOR=#666666>{L_276}</FONT></b><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/categories.php" target="content" class="submenulink">{L_078}</a><br>
@@ -134,7 +131,6 @@ function SwitchMenu(obj){
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/metatags.php" target="content" class="submenulink">{L_25_0178}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/contactseller.php" target="content" class="submenulink">{L_25_0216}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/buyerprivacy.php" target="content" class="submenulink">{L_236}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/auctions.php" target="content" class="submenulink">{L_5087}</a><br>
 			</span>
 		  </TD>
 		</tr>
@@ -212,7 +208,6 @@ function SwitchMenu(obj){
 		  <td width="170">
 		  	<div class="menutitle" onClick="SwitchMenu('auctions')">{L_239}</div>
 			<span class="submenu" id="auctions">
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/extension.php" target="content" class="submenulink">{L_2_0032}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/listauctions.php" target="content" class="submenulink">{L_067}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/listclosedauctions.php" target="content" class="submenulink">{L_5226}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/listsuspendedauctions.php" target="content" class="submenulink">{L_5227}</a><br>

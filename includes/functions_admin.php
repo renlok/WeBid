@@ -39,7 +39,7 @@ if (!defined('AdminFuncCall'))
 		return true;
 	}
 	
-	function loadblock($title = '', $description = '', $type = '', $name = '', $default = '', $tagline1 = '', $tagline2 = '', $tagline3 = '')
+	function loadblock($title = '', $description = '', $type = '', $name = '', $default = '', $tagline = array(), $header = false)
 	{
 		global $template;
 		
@@ -49,9 +49,11 @@ if (!defined('AdminFuncCall'))
 				'TYPE' => $type,
 				'NAME' => $name,
 				'DEFAULT' => $default,
-				'TAGLINE1' => $tagline1,
-				'TAGLINE2' => $tagline2,
-				'TAGLINE3' => $tagline3
+				'TAGLINE1' => (isset($tagline[0])) ? $tagline[0] : '',
+				'TAGLINE2' => (isset($tagline[1])) ? $tagline[1] : '',
+				'TAGLINE3' => (isset($tagline[2])) ? $tagline[2] : '',
+	
+				'B_HEADER' => $header
 				));
 	}
 	

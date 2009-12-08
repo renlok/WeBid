@@ -47,7 +47,7 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	$usercheck = mysql_num_rows($res);
 	if ($usercheck == 0) // no such user
 	{
-		if ((!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $sendto))
+		if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $sendto))
 		{
 			$_SESSION['message'] = $ERR_609;
 			header('location: mail.php?x=1');

@@ -29,7 +29,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['247'];
 }
 
-loadblock($MSG['237'], $MSG['238'], 'yesno', 'buyerprivacy', $system->SETTINGS['buyerprivacy'], $MSG['030'], $MSG['029']);
+loadblock($MSG['237'], $MSG['238'], 'yesno', 'buyerprivacy', $system->SETTINGS['buyerprivacy'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

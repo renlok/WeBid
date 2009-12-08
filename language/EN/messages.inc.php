@@ -97,6 +97,7 @@ $ERR_070 = "This message doesn't exist";
 $ERR_071 = "Username is invalid can only contain letters and numbers";
 $ERR_072 = "You must enter a bid amount";
 $ERR_073 = "You cannot bid on an auction that has not yet started";
+$ERR_074 = "You have already left feedback on this transaction";
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
@@ -860,6 +861,7 @@ $MSG['776'] = "To finalise the sale please proceed to one of the payment gateway
 $MSG['777'] = 'You have an outstanding payment of the buyers fee for the item %s; your account will be suspended until this is paid. You can pay for this now at <a href="%s">Here</a>';
 $MSG['778'] = 'If you wish to via an alternative method contact <a href="profile.php?user_id=%s">%s</a> to find out how.';
 
+$MSG['897'] = "Additional auction options";
 $MSG['898'] = "Paid";
 $MSG['899'] = "Set as Paid";
 $MSG['900'] = "View Winners";
@@ -1444,8 +1446,7 @@ $MSG['25_0184'] = "The Meta Keywords Tag gives some search engines additional in
 				Enter the your keywords below separated by comas (i.e. books, books auctions, book sales).";
 $MSG['25_0185'] = "Meta Tags Settings Updated";
 $MSG['25_0186'] = "Pictures Upload";
-$MSG['25_0187'] = "Enter the maximum allowed size (in Kbytes) of the pictures sellers can upload for each auction.<br>
-				<b>Note</b>: this is the standard image associated with an auction, picture gallery settings can be changed <a HREF=picturesgallery.php>here</a>.";
+$MSG['25_0187'] = "Enter the maximum allowed size (in Kbytes) of the pictures sellers can upload for each auction.";
 $MSG['25_0188'] = "Auctions notification e-mails";
 $MSG['25_0189'] = "As a seller, you can choose to receive one notification e-mail for each auction which closes, or to receive an e-mail once a day reporting all the closed auctions on that day.<br>
 				The second option is usually necessary if you have a huge number of auctions.<br>Finally you can also choose not to receive any notification e-mail but this choice is not recommended.";

@@ -51,11 +51,11 @@ else
 }
 
 loadblock('', $MSG['5144']);
-loadblock($MSG['5149'], '', 'yesno', 'activate', $statssettings['activate'], $MSG['030'], $MSG['029']);
+loadblock($MSG['5149'], '', 'yesno', 'activate', $statssettings['activate'], array($MSG['030'], $MSG['029']));
 loadblock('', $MSG['5150']);
-loadblock('' , '', 'checkbox', 'accesses', $statssettings['accesses'], $MSG['5145']);
-loadblock('' , '', 'checkbox', 'browsers', $statssettings['browsers'], $MSG['5146']);
-loadblock('' , '', 'checkbox', 'domains', $statssettings['domains'], $MSG['5147']);
+loadblock('' , '', 'checkbox', 'accesses', $statssettings['accesses'], array($MSG['5145']));
+loadblock('' , '', 'checkbox', 'browsers', $statssettings['browsers'], array($MSG['5146']));
+loadblock('' , '', 'checkbox', 'domains', $statssettings['domains'], array($MSG['5147']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

@@ -26,6 +26,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$ERR = $ERR_047;
 	}
+	elseif (!is_numeric($_POST['archiveafter']))
+	{
+		$ERR = $ERR_043;
+	}
 	else
 	{
 		// Update data
@@ -33,7 +37,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				sitename = '" . addslashes($_POST['sitename']) . "',
 				adminmail = '" . addslashes($_POST['adminmail']) . "',
 				siteurl = '" . addslashes($_POST['siteurl']) . "',
-				copyright = '" . addslashes($_POST['copyright']) . "'";
+				copyright = '" . addslashes($_POST['copyright']) . "',
+				cron = " . intval($_POST['cron']) . ",
+				archiveafter = " . intval($_POST['archiveafter']) . ",
+				cache_theme = '" . $_POST['cache_theme'] . "',
+				https = '" . $_POST['https'] . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['542'];
 	}
@@ -42,12 +50,33 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['adminmail'] = $_POST['adminmail'];
 	$system->SETTINGS['siteurl'] = $_POST['siteurl'];
 	$system->SETTINGS['copyright'] = $_POST['copyright'];
+
+	$system->SETTINGS['cron'] = $_POST['cron'];
+	$system->SETTINGS['archiveafter'] = $_POST['archiveafter'];
+
+	$system->SETTINGS['cache_theme'] = $_POST['cache_theme'];
+
+	$system->SETTINGS['https'] = $_POST['https'];
 }
 
+// general settings
 loadblock($MSG['527'], $MSG['535'], 'text', 'sitename', $system->SETTINGS['sitename']);
 loadblock($MSG['528'], $MSG['536'], 'text', 'siteurl', $system->SETTINGS['siteurl']);
 loadblock($MSG['540'], $MSG['541'], 'text', 'adminmail', $system->SETTINGS['adminmail']);
 loadblock($MSG['191'], $MSG['192'], 'text', 'copyright', $system->SETTINGS['copyright']);
+
+// batch settings
+loadblock($MSG['348'], '', '', '', '', array(), true);
+loadblock($MSG['372'], $MSG['371'], 'batch', 'cron', $system->SETTINGS['cron'], array($MSG['373'], $MSG['374']));
+loadblock($MSG['376'], $MSG['375'], 'days', 'archiveafter', $system->SETTINGS['archiveafter'], array($MSG['377']));
+
+// optimisation settings
+loadblock($MSG['725'], '', '', '', '', array(), true);
+loadblock($MSG['726'], $MSG['727'], 'yesno', 'cache_theme', $system->SETTINGS['cache_theme'], array($MSG['030'], $MSG['029']));
+
+// SLL settings
+loadblock($MSG['1022'], '', '', '', '', array(), true);
+loadblock($MSG['1023'], $MSG['1024'], 'yesno', 'https', $system->SETTINGS['https'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

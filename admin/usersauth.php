@@ -27,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$ERR = $MSG['25_0155'];
 }
 
-loadblock('', $MSG['25_0152'], 'yesnostacked', 'usersauth', $system->SETTINGS['usersauth'], $MSG['25_0153'], $MSG['25_0154']);
+loadblock('', $MSG['25_0152'], 'yesnostacked', 'usersauth', $system->SETTINGS['usersauth'], array($MSG['25_0153'], $MSG['25_0154']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

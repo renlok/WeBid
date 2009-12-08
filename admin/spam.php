@@ -43,8 +43,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 loadblock($MSG['746'], $MSG['748'], 'text', 'recaptcha_public', $system->SETTINGS['recaptcha_public']);
 loadblock($MSG['747'], '', 'text', 'recaptcha_private', $system->SETTINGS['recaptcha_private']);
-loadblock($MSG['743'], $MSG['745'], 'select3num', 'spam_register', $system->SETTINGS['spam_register'], $MSG['740'], $MSG['741'], $MSG['742']);
-loadblock($MSG['744'], '', 'select3num', 'spam_sendtofriend', $system->SETTINGS['spam_sendtofriend'], $MSG['740'], $MSG['741'], $MSG['742']);
+loadblock($MSG['743'], $MSG['745'], 'select3num', 'spam_register', $system->SETTINGS['spam_register'], array($MSG['740'], $MSG['741'], $MSG['742']));
+loadblock($MSG['744'], '', 'select3num', 'spam_sendtofriend', $system->SETTINGS['spam_sendtofriend'], array($MSG['740'], $MSG['741'], $MSG['742']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

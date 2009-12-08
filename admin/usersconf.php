@@ -27,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$ERR = $MSG['25_0155'];
 }
 
-loadblock('', $MSG['25_0152_a'], 'select3num', 'usersconf', $system->SETTINGS['activationtype'], $MSG['25_0152_b'], $MSG['25_0152_c'], $MSG['25_0152_d']);
+loadblock('', $MSG['25_0152_a'], 'select3num', 'usersconf', $system->SETTINGS['activationtype'], array($MSG['25_0152_b'], $MSG['25_0152_c'], $MSG['25_0152_d']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

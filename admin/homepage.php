@@ -85,8 +85,8 @@ loadblock('', '', generateSelect('pagewidthtype', $WIDTHTYPE));
 loadblock($MSG['5013'], $MSG['5014'], 'decimals', 'lastitemsnumber', $system->SETTINGS['lastitemsnumber']);
 loadblock($MSG['5015'], $MSG['5016'], 'decimals', 'higherbidsnumber', $system->SETTINGS['higherbidsnumber']);
 loadblock($MSG['5017'], $MSG['5018'], 'decimals', 'endingsoonnumber', $system->SETTINGS['endingsoonnumber']);
-loadblock($MSG['532'], $MSG['537'], 'batch', 'loginbox', $system->SETTINGS['loginbox'], $MSG['030'], $MSG['029']);
-loadblock($MSG['533'], $MSG['538'], 'batch', 'newsbox', $system->SETTINGS['newsbox'], $MSG['030'], $MSG['029']);
+loadblock($MSG['532'], $MSG['537'], 'batch', 'loginbox', $system->SETTINGS['loginbox'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['533'], $MSG['538'], 'batch', 'newsbox', $system->SETTINGS['newsbox'], array($MSG['030'], $MSG['029']));
 loadblock('', $MSG['554'], 'decimals', 'newstoshow', $system->SETTINGS['newstoshow']);
 
 $template->assign_vars(array(

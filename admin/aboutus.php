@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['5079'];
 }
 
-loadblock($MSG['5077'], $MSG['5076'], 'yesno', 'aboutus', $system->SETTINGS['aboutus'], $MSG['030'], $MSG['029']);
+loadblock($MSG['5077'], $MSG['5076'], 'yesno', 'aboutus', $system->SETTINGS['aboutus'], array($MSG['030'], $MSG['029']));
 
 $oFCKeditor = new FCKeditor('aboutustext');
 $oFCKeditor->BasePath = '../fck/';

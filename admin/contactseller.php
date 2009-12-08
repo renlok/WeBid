@@ -28,8 +28,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['25_0155'];
 }
 
-loadblock('', $MSG['25_0217'], 'select3contact', 'contactseller', $system->SETTINGS['contactseller'], $MSG['25_0218'], $MSG['25_0219'], $MSG['25_0220']);
-loadblock($MSG['30_0085'], $MSG['30_0084'], 'yesno', 'winner_address', $system->SETTINGS['winner_address'], $MSG['030'], $MSG['029']);
+loadblock('', $MSG['25_0217'], 'select3contact', 'contactseller', $system->SETTINGS['contactseller'], array($MSG['25_0218'], $MSG['25_0219'], $MSG['25_0220']));
+loadblock($MSG['30_0085'], $MSG['30_0084'], 'yesno', 'winner_address', $system->SETTINGS['winner_address'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

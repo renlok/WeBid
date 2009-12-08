@@ -97,6 +97,7 @@ $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $buyer_fee = mysql_result($res, 0);
+$buyer_fee = (empty($buyer_fee)) ? 0 : $buyer_fee;
 $buyer_emails = array();
 
 $num = mysql_num_rows($result_auction);

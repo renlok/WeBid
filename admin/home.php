@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-include "../includes/common.inc.php";
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -22,14 +22,14 @@ if (isset($_GET['action']))
 	switch($_GET['action'])
 	{
 		case 'clearcache':
-			if (is_dir($main_path.'cache'))
+			if (is_dir($main_path . 'cache'))
 			{
-				$dir = opendir($main_path.'cache');
+				$dir = opendir($main_path . 'cache');
 				while (($myfile = readdir($dir)) !== false)
 				{
 					if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php')
 					{
-						unlink($main_path.'cache/'.$myfile);
+						unlink($main_path . 'cache/' . $myfile);
 					}
 				}
 				closedir($dir);
@@ -93,7 +93,7 @@ if (isset($_GET['action']))
 			$query = "UPDATE " . $DBPrefix . "categories set counter = 0, sub_counter = 0";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
-			$query = "SELECT COUNT(*) AS COUNT, category FROM webid_auctions
+			$query = "SELECT COUNT(*) AS COUNT, category FROM " . $DBPrefix . "auctions
 					WHERE closed = 0 AND starts <= " . time() . " AND suspended = 0 GROUP BY category";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);

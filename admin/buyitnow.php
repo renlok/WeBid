@@ -41,10 +41,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['30_0066'];
 }
 
-loadblock($MSG['920'], $MSG['921'], 'batch', 'buy_now', $system->SETTINGS['buy_now'], $MSG['029'], $MSG['030']);
-loadblock($MSG['30_0064'], $MSG['30_0065'], 'yesno', 'bn_only', $system->SETTINGS['bn_only'], $MSG['030'], $MSG['029']);
-loadblock($MSG['355'], $MSG['358'], 'yesno', 'bn_only_disable', $system->SETTINGS['bn_only_disable'], $MSG['030'], $MSG['029']);
-loadblock($MSG['356'], '', 'percent', 'bn_only_percent', $system->SETTINGS['bn_only_percent'], $MSG['357']);
+loadblock($MSG['920'], $MSG['921'], 'batch', 'buy_now', $system->SETTINGS['buy_now'], array($MSG['029'], $MSG['030']));
+loadblock($MSG['30_0064'], $MSG['30_0065'], 'yesno', 'bn_only', $system->SETTINGS['bn_only'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['355'], $MSG['358'], 'yesno', 'bn_only_disable', $system->SETTINGS['bn_only_disable'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['356'], '', 'percent', 'bn_only_percent', $system->SETTINGS['bn_only_percent'], array($MSG['357']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

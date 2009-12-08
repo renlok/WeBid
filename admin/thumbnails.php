@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 }
 
 loadblock('', $MGS_2__0043);
-loadblock($MSG['25_0107'], '', 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], $MGS_2__0045);
+loadblock($MSG['25_0107'], '', 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], array($MGS_2__0045));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

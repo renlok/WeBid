@@ -30,7 +30,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$system->SETTINGS['termstext'] = $_POST['termstext'];
 	$ERR = $MSG['5084'];
 }
-loadblock($MSG['5082'], $MSG['5081'], 'yesno', 'terms', $system->SETTINGS['terms'], $MSG['030'], $MSG['029']);
+loadblock($MSG['5082'], $MSG['5081'], 'yesno', 'terms', $system->SETTINGS['terms'], array($MSG['030'], $MSG['029']));
 
 $oFCKeditor = new FCKeditor('termstext');
 $oFCKeditor->BasePath = '../fck/';

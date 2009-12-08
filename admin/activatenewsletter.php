@@ -29,7 +29,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['30_0049'];
 }
 
-loadblock($MSG['603'], $MSG['604'], 'batch', 'newsletter', $system->SETTINGS['newsletter'], $MSG['030'], $MSG['029']);
+loadblock($MSG['603'], $MSG['604'], 'batch', 'newsletter', $system->SETTINGS['newsletter'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

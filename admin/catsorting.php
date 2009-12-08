@@ -30,7 +30,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['25_0150'];
 }
 
-loadblock('', $MSG['25_0147'], 'sortstacked', 'catsorting', $system->SETTINGS['catsorting'], $MSG['25_0148'], $MSG['25_0149']);
+loadblock('', $MSG['25_0147'], 'sortstacked', 'catsorting', $system->SETTINGS['catsorting'], array($MSG['25_0148'], $MSG['25_0149']));
 loadblock($MSG['30_0030'], $MSG['30_0029'], 'percent', 'catstoshow', $system->SETTINGS['catstoshow']);
 
 $template->assign_vars(array(

@@ -28,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$ERR = $MSG['384'];
 }
 
-loadblock($MSG['380'], $MSG['379'], 'datestacked', 'datesformat', $system->SETTINGS['datesformat'], $MSG['382'], $MSG['383']);
+loadblock($MSG['380'], $MSG['379'], 'datestacked', 'datesformat', $system->SETTINGS['datesformat'], array($MSG['382'], $MSG['383']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

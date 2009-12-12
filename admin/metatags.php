@@ -30,7 +30,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['keywordstag'] = $_POST['keywordstag'];
 }
 
-loadblock('', $MSG['25_0179']);
 loadblock($MSG['25_0180'], $MSG['25_0182'], 'textarea', 'descriptiontag', stripslashes($system->SETTINGS['descriptiontag']));
 loadblock($MSG['25_0181'], $MSG['25_0184'], 'textarea', 'keywordstag', stripslashes($system->SETTINGS['keywordstag']));
 

@@ -64,14 +64,14 @@ if (isset($_GET['payreminder']) && isset($_GET['id']) && is_numeric($_GET['id'])
 	}
 }
 
-if ($_POST['usersfilter'] == 'all')
+if ($_GET['usersfilter'] == 'all')
 {
 	unset($_SESSION['usersfilter']);
 	unset($Q);
 }
-elseif (isset($_POST['usersfilter']))
+elseif (isset($_GET['usersfilter']))
 {
-	switch($_POST['usersfilter'])
+	switch($_GET['usersfilter'])
 	{
 		case 'active':
 			$Q = 0;
@@ -89,9 +89,9 @@ elseif (isset($_POST['usersfilter']))
 			$Q = 10;
 		break;
 	}
-	$_SESSION['usersfilter'] = $_POST['usersfilter'];
+	$_SESSION['usersfilter'] = $_GET['usersfilter'];
 }
-elseif (!isset($_POST['usersfilter']) && isset($_SESSION['usersfilter']))
+elseif (!isset($_GET['usersfilter']) && isset($_SESSION['usersfilter']))
 {
 	switch($_SESSION['usersfilter'])
 	{

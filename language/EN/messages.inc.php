@@ -187,7 +187,7 @@ $MSG['016'] = "Registration completed. Your data has been received.<br>A confirm
 $MSG['016_a'] = "Registration completed. Your data has been received.<br>The site admin will shortly review your account, once your account has been accepted by the admin you will be able to login";
 $MSG['016_b'] = "Registration completed. Your data has been received.<br>You may now login using your username and password.";
 $MSG['017'] = "Item title";
-$MSG['018'] = "Item description<br>(HTML allowed)";
+$MSG['018'] = "Item description";
 $MSG['019'] = "Default Image";
 $MSG['020'] = "Auction starts with";
 $MSG['021'] = "Reserve price";
@@ -578,13 +578,11 @@ $MSG['405'] = "Activate this option if you want a Privacy Policy link to appear 
 $MSG['406'] = "Privacy Policy Settings Updated";
 $MSG['409'] = "Error Handling";
 $MSG['410'] = "Fatal errors that occur during WeBid's execution (typically MySQL errors) will redirect users to an error page.
-			You can customise the error message you want to appear in the error page below.<br>
-			NOTE: HTML tags are allowed.";
+			You can customise the error message you want to appear in the error page below.";
 $MSG['411'] = "Error Text";
 $MSG['412'] = "Error E-mail Address";
 $MSG['413'] = "Error Handling settings updated.";
 $MSG['415'] = "Error";
-$MSG['416'] = "Please report the above error message to:";
 $MSG['417'] = "General";
 $MSG['418'] = "Are you sure you want to activate this user?";
 $MSG['419'] = "Are you sure you want to delete this user? All their auctions and bids will be deleted and this cannot be undone";
@@ -861,6 +859,15 @@ $MSG['776'] = "To finalise the sale please proceed to one of the payment gateway
 $MSG['777'] = 'You have an outstanding payment of the buyers fee for the item %s; your account will be suspended until this is paid. You can pay for this now at <a href="%s">Here</a>';
 $MSG['778'] = 'If you wish to via an alternative method contact <a href="profile.php?user_id=%s">%s</a> to find out how.';
 
+$MSG['888'] = 'Error log is currently empty';
+$MSG['889'] = "Error Log Purged";
+$MSG['890'] = "Purge Log";
+$MSG['891'] = "Error Log";
+$MSG['892'] = "To be activated";
+$MSG['893'] = "Total";
+$MSG['894'] = "User Settings";
+$MSG['895'] = "User Settings Updated";
+$MSG['896'] = "This is the size of the thumbnail that will appear on the auctions listing page";
 $MSG['897'] = "Additional auction options";
 $MSG['898'] = "Paid";
 $MSG['899'] = "Set as Paid";
@@ -946,7 +953,7 @@ $MSG['5018'] = "This is the number of items to show in the Next Ending list in t
 $MSG['5019'] = "General Layout Settings Updated";
 $MSG['5022'] = "USERS SEARCH";
 $MSG['5023'] = "Search &gt;&gt;";
-$MSG['5024'] = "Name, nick or e-mail";
+$MSG['5024'] = "Name, username or e-mail";
 $MSG['5025'] = "Account";
 $MSG['5028'] = "Action";
 $MSG['5029'] = "GO >>";
@@ -1284,16 +1291,8 @@ $MGS_2__0039 = "If you lost your password, please enter in your username or e-ma
 $MGS_2__0040 = "Username or e-mail address";
 $MGS_2__0041 = "Winning Bid";
 $MSG['2__0042'] = "Thumbnails";
-$MGS_2__0043 = "WeBid shows three different classes of thumbnails:
-				<UL>
-				<LI>Auctions Lists Thumbnails (These are the thumbnails appearing in the auctions lists like the categories browse page)
-				<LI>Home Page Thumbnails (These are the <I>home page featured items</I> thumbnails appearing the home page)
-				<LI>Category Thumbnails (These are the <I>category featured items</I> thumbnails appearing in the auctions lists like the categories browse page)
-				</UL>
-				You can set the thumbnails width to a different value for each thumbnail class.";
 $MGS_2__0044 = "Thumbnails width";
 $MGS_2__0045 = " pixels ";
-$MGS_2__0046 = "Thumbnails Settings Updated";
 $MSG['2__0047'] = "SELECT CATEGORY &gt;&gt;";
 $MSG['2__0048'] = "Close Now!";
 $MSG['2__0050'] = "Sell similar";
@@ -1361,7 +1360,7 @@ $MSG['25_0045'] = "Thumbnails Width";
 $MSG['25_0048'] = "Other thumbnails: ";
 $MSG['25_0049'] = "Newsletter Subscription";
 $MSG['25_0055'] = "Registered Active Users";
-$MSG['25_0056'] = "Registered Suspended Users";
+$MSG['25_0056'] = "Suspended Users";
 $MSG['25_0057'] = "Live Auctions";
 $MSG['25_0059'] = "Bids on live auctions";
 $MSG['25_0063'] = "Today's Accesses";
@@ -1382,11 +1381,10 @@ $MSG['25_0086'] = "By clicking the button below, you commit to pay the full <b i
 $MSG['25_0087'] = "You have been outbid";
 $MSG['25_0088'] = "You are the current highest bidder";
 $MSG['25_0089'] = "Congratulations, the item is yours. Please pay now";
-$MSG['25_0107'] = "Auctions Lists Thumbnails";
+$MSG['25_0107'] = "Thumbnails Size";
 $MSG['25_0108'] = "Home Page Thumbnails";
 $MSG['25_0109'] = "Categories Thumbnails";
 $MSG['25_0110'] = "Acceptance Text";
-$MSG['25_0111'] = "Acceptance Text Settings Updated";
 $MSG['25_0115'] = "Pending auctions";
 $MSG['25_0116'] = "Will start";
 $MSG['25_0117'] = "Will end";
@@ -1413,14 +1411,11 @@ $MSG['25_0149'] = "Categories counters";
 $MSG['25_0150']= "Categories Sorting Settings Updated";
 $MSG['25_0151'] = "Users Authentication";
 $MSG['25_0151_a'] = "Users Confirmation Method";
-$MSG['25_0152'] = "By default WeBid asks the user password before an auction is submitted or a bid is placed. This is a recommended additional security measure but you can disable the default setting by selection <b>No user authentication</b> below.";
-$MSG['25_0152_a'] = "On WeBid each users account must be activated before it can be used.<br>Choose which method you want to use";
-$MSG['25_0152_b'] = "The admin must activate each account. You will receive an email each time a new member signs up ready for their account to be reviewed.";
+$MSG['25_0152'] = "If this is enabled the users will be asked to enter their password before completing actions such as leaving feedback, submitting an auction or leaving a bid.";
+$MSG['25_0152_a'] = "On WeBid each users account must be activated before it can be used. Choose which method you want to use";
+$MSG['25_0152_b'] = "The admin must activate each account.";
 $MSG['25_0152_c'] = "User must activate their own account";
 $MSG['25_0152_d'] = "Users account is automatically activated on registration (not recommended)";
-$MSG['25_0153'] = "Default (ask for password before submitting an auction)";
-$MSG['25_0154'] = "No user authentication";
-$MSG['25_0155'] = "Users Authentication Settings Updated";
 $MSG['25_0157'] = "Your background image";
 $MSG['25_0166'] = "Back to auction";
 $MSG['25_0167'] = "icon";
@@ -1433,11 +1428,6 @@ $MSG['25_0172'] = "membership type";
 $MSG['25_0176'] = "CONVERT NOW!";
 $MSG['25_0177'] = "for";
 $MSG['25_0178'] = "HTML meta Tags";
-$MSG['25_0179'] = "To help crawler-based search engines (like Google) to better expose your site, you can use the <b>Meta Description Tag</b> and the <b>Meta Keywords Tag</b>.
-			<br>Both will give the search engine additional information besides the one they grab from your site's pages but <b>do not expect to get a good ranking in any search engine just because of Meta Tags!</b>.
-			Some search engines ignore Meta Tags at all.
-			<br>A good article to learn more about Meta Tags can be found <a HREF=http://searchenginewatch.com/webmasters/article.php/2167931 TARGET=_blank>here</a>.
-			<br><br>Leave the field(s) blank if you don't want to use Meta Tags.";
 $MSG['25_0180'] = "Meta Description Tag";
 $MSG['25_0181'] = "Meta Keywords Tag";
 $MSG['25_0182'] = "The Meta Description Tag is usually used to describe your pages in the search results pages search engines show.<br>

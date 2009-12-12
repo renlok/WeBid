@@ -20,14 +20,13 @@ include $main_path."fck/fckeditor.php";
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			  errortext = '" . addslashes($_POST['errortext']) . "',
-			  errormail = '" . $_POST['errormail'] . "'";
+			  errortext = '" . addslashes($_POST['errortext']) . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['errortext'] = $_POST['errortext'];
-	$system->SETTINGS['errormail'] = $_POST['errormail'];
 	$ERR = $MSG['413'];
 }
 
@@ -38,7 +37,6 @@ $oFCKeditor->Width  = '550';
 $oFCKeditor->Height = '400';
 
 loadblock($MSG['411'], $MSG['410'], $oFCKeditor->CreateHtml());
-loadblock($MSG['412'], $MSG['417'], 'text', 'errormail', $system->SETTINGS['errormail']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

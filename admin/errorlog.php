@@ -19,26 +19,33 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			usersauth = '" . addslashes($_POST['usersauth']) . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['usersauth'] = $_POST['usersauth'];
-	$ERR = $MSG['25_0155'];
+if (isset($_POST['action']) && $_POST['action'] == 'clearlog')
+{
+	$file = @fopen($logPath . 'error.log', 'w+');
+	fclose($file);
+	$ERR = $MSG['889'];
 }
 
-loadblock('', $MSG['25_0152'], 'yesnostacked', 'usersauth', $system->SETTINGS['usersauth'], array($MSG['25_0153'], $MSG['25_0154']));
+$data = file_get_contents($logPath . 'error.log');
+
+if ($data == '')
+{
+	$data = $MSG['888'];
+}
+else
+{
+	$data = str_replace("\n", '<br>', $data);
+	$data = preg_replace('/(\d{2}-\d{2}-\d{4}, \d{2}:\d{2}:\d{2}::)/s', '<b>$1</b>', $data);
+}
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'pre',
-		'TYPENAME' => $MSG['25_0008'],
-		'PAGENAME' => $MSG['25_0151']
+		'ERRORLOG' => $data
 		));
 
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
+		'body' => 'errorlog.tpl'
 		));
 $template->display('body');
 ?>

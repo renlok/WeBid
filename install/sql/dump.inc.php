@@ -1506,7 +1506,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `archiveafter` int(11) NOT NULL default '0',
   `datesformat` enum('USA','EUR') NOT NULL default 'EUR',
   `errortext` text NOT NULL,
-  `errormail` varchar(255) NOT NULL default '',
   `picturesgallery` int(1) NOT NULL default '0',
   `maxpictures` int(11) NOT NULL default '0',
   `buy_now` int(1) NOT NULL default '1',
@@ -1584,7 +1583,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. Please report to the administrator at ', '" . $siteEmail . "', 1, 5, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', '1', '25.00', '0.00', 'y', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}', 'y', 'y', 'y', 'y', '', '', 1, 1);";
+('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly', 1, 5, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', '1', '25.00', '0.00', 'y', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}', 'y', 'y', 'y', 'y', '', '', 1, 1);";
 
 
 # ############################

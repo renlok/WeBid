@@ -97,7 +97,7 @@ function SwitchMenu(obj){
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/settings.php" target="content" class="submenulink">{L_526}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/auctions.php" target="content" class="submenulink">{L_5087}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/spam.php" target="content" class="submenulink">{L_749}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/buyitnow.php" target="content" class="submenulink">{L_2__0025}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/usersettings.php" target="content" class="submenulink">{L_894}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/errorhandling.php" target="content" class="submenulink">{L_409}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/countries.php" target="content" class="submenulink">{L_081}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/payments.php" target="content" class="submenulink">{L_075}</a><br>
@@ -121,13 +121,12 @@ function SwitchMenu(obj){
 			<span class="submenu" id="preferences">
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/currency.php" target="content" class="submenulink">{L_5004}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/time.php" target="content" class="submenulink">{L_344}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/buyitnow.php" target="content" class="submenulink">{L_2__0025}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/dates.php" target="content" class="submenulink">{L_363}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/defaultcountry.php" target="content" class="submenulink">{L_5322}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/counters.php" target="content" class="submenulink">{L_2__0057}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/multilingual.php" target="content" class="submenulink">{L_2__0002}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/catsorting.php" target="content" class="submenulink">{L_25_0146}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/usersauth.php" target="content" class="submenulink">{L_25_0151}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/usersconf.php" target="content" class="submenulink">{L_25_0151_a}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/metatags.php" target="content" class="submenulink">{L_25_0178}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/contactseller.php" target="content" class="submenulink">{L_25_0216}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/buyerprivacy.php" target="content" class="submenulink">{L_236}</a><br>
@@ -160,7 +159,6 @@ function SwitchMenu(obj){
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/homepage.php" target="content" class="submenulink">{L_5005}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/fonts.php" target="content" class="submenulink">{L_5001}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/colors.php" target="content" class="submenulink">{L_5002}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/thumbnails.php" target="content" class="submenulink">{L_2__0042}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/clearcache.php" target="content" class="submenulink">{L_30_0031}</a><br>
 			</span>
 		  </TD>
@@ -189,7 +187,6 @@ function SwitchMenu(obj){
 			<span class="submenu" id="users">
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/listusers.php" target="content" class="submenulink">{L_045}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/usergroups.php" target="content" class="submenulink">{L_448}</a><br>
-            <img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/acceptancetext.php" target="content" class="submenulink">{L_25_0110}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/profile.php" target="content" class="submenulink">{L_048}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/activatenewsletter.php" target="content" class="submenulink">{L_25_0079}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/newsletter.php" target="content" class="submenulink">{L_607}</a><br>
@@ -262,7 +259,8 @@ function SwitchMenu(obj){
 		  	<div class="menutitle" onClick="SwitchMenu('tools')">{L_5436}</div>
 			<span class="submenu" id="tools">
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/maintainance.php" target="content" class="submenulink">{L__0001}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/wordsfilter.php" TARGET=content CLASS=submenulink>{L_5068}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/wordsfilter.php" target="content" class="submenulink">{L_5068}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/errorlog.php" target="content" class="submenulink">{L_891}</a><br>
 			</span>
 		  </TD>
 		</tr>

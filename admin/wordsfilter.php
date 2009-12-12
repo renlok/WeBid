@@ -59,6 +59,7 @@ while ($word = mysql_fetch_assoc($res))
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'WORDLIST' => $WORDSLIST,
 		'WFYES' => ($system->SETTINGS['wordsfilter'] == 'y') ? ' checked="checked"' : '',
 		'WFNO' => ($system->SETTINGS['wordsfilter'] == 'n') ? ' checked="checked"' : ''

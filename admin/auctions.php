@@ -53,7 +53,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  ae_extend = " . intval($_POST['extend']) . ",
 				  picturesgallery = " . $_POST['picturesgallery'] . ",
 				  maxpictures = " . $_POST['maxpictures'] . ",
-				  maxuploadsize = " . ($_POST['maxpicturesize'] * 1024);
+				  maxuploadsize = " . ($_POST['maxpicturesize'] * 1024) . "
+				  thumb_show = " . intval($_POST['thumb_show']);
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['5088'];
 	}
@@ -72,6 +73,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['picturesgallery'] = $_POST['picturesgallery'];
 	$system->SETTINGS['maxpictures'] = $_POST['maxpictures'];
 	$system->SETTINGS['maxuploadsize'] = $_POST['maxpicturesize'] * 1024;
+	$system->SETTINGS['thumb_show'] = $_POST['thumb_show'];
 }
 
 loadblock($MSG['427'], $MSG['428'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], array($MSG['030'], $MSG['029']));
@@ -95,6 +97,7 @@ loadblock($MSG['663'], '', '', '', '', array(), true);
 loadblock($MSG['665'], $MSG['664'], 'batch', 'picturesgallery', $system->SETTINGS['picturesgallery'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['666'], '', 'days', 'maxpictures', $system->SETTINGS['maxpictures']);
 loadblock($MSG['671'], $MSG['25_0187'], 'days', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), array($MSG['672']));
+loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], array($MGS_2__0045));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

@@ -5,5 +5,8 @@
 - Fixed a bug in the cron script where the buyer fee is left blank
 - Cleaned up the leave feedback page so it does not show multiple entries for the same auction
 - Fixed the feedback
+- Found and replace a shorttag which effects the converter
+- Added a version check to the admin homepage
+- Added a page to view the error log in admin panel
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -16,7 +16,16 @@ td.title {
 </style>
 </head>
 <body style="margin:0;">
-<div align="center" style="padding:25px; width:90%;">
+<div align="center" style="padding:20px; padding-top:10px; width:90%;">
+<!-- IF THIS_VERSION eq CUR_VERSION -->
+<div style="padding:5px 10px; background:#E2F9E3; border:1px solid #9C9; color:#060;">
+    {L_30_0212}
+</div>
+<!-- ELSE -->
+<div style="padding:5px 10px; background:#FFF1F9; border:1px solid #821517; color:#821517;">
+    {L_30_0211}
+</div>
+<!-- ENDIF -->
 <div class="box">
 	<table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#0083D7">
 	<tr>
@@ -82,7 +91,14 @@ td.title {
 		<td width="25%">{L_25_0055}</td>
 		<td width="25%"><b>{C_USERS}</b></td>
 		<td width="25%">{L_25_0056}</td>
-		<td width="25%"><b>{C_IUSERS}</b></td>
+		<td width="25%">
+<!-- IF USERCONF eq 0 -->
+        	{L_893}: <b>{C_IUSERS}</b><br>
+            {L_892}: <b>{C_UUSERS}</b> (<a href="{SITEURL}admin/listusers.php?usersfilter=admin_approve">{L_5295}</a>)
+<!-- ELSE -->
+        	<b>{C_IUSERS}</b>
+<!-- ENDIF -->
+        </td>
 	</tr>
 	<tr>
 		<td>{L_25_0057}</td>

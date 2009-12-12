@@ -17,8 +17,8 @@ include 'includes/common.inc.php';
 
 $template->assign_vars(array(
 		'ERROR' => print_r($_SESSION['SESSION_ERROR'], true),
-		'ERRORTXT' => $system->SETTINGS['errortext'],
-		'ERRORMAIL' => $system->SETTINGS['errormail']
+		'DEBUGGING' => false, // set to true when trying to fix the script
+		'ERRORTXT' => $system->SETTINGS['errortext']
 		));
 
 include 'header.php';

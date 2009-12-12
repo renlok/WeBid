@@ -87,7 +87,7 @@ function buildcache($newaarray)
 	global $include_path;
 
 	$output_filename = $include_path . 'currencies.php';
-	$output = "<?\n";
+	$output = "<?php\n";
 	$output.= "\$conversionarray[] = '" . time() . "';\n";
 	$output.= "\$conversionarray[] = array(\n";
 

@@ -137,6 +137,30 @@ $ACCESS['pageviews'] = (!isset($ACCESS['pageviews']) || empty($ACCESS['pageviews
 $ACCESS['uniquevisitors'] = (!isset($ACCESS['uniquevisitors']) || empty($ACCESS['uniquevisitors'])) ? 0 : $ACCESS['uniquevisitors'];
 $ACCESS['usersessions'] = (!isset($ACCESS['usersessions']) || empty($ACCESS['usersessions'])) ? 0 : $ACCESS['usersessions'];
 
+if ($system->SETTINGS['activationtype'] == 0)
+{
+	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE suspended = 10";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$uuser_count = mysql_result($res, 0);
+}
+
+// version check
+if (!($handle = @fopen('http://www.webidsupport.com/version.txt', 'r')))
+{
+	$ERR = $ERR_25_0002;
+	$realversion = 'Unknown';
+}
+else
+{
+	$realversion = fread($handle, 5);
+	fclose($handle);
+}
+
+$handle = fopen('../includes/version.txt', 'r') or die('error');
+$myversion = fread($handle, 5);
+fclose($handle);
+
 $template->assign_vars(array(
 		'ERROR' => (isset($errmsg)) ? $errmsg : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
@@ -150,16 +174,21 @@ $template->assign_vars(array(
 		'DATEFORMAT' => $system->SETTINGS['datesformat'],
 		'DATEEXAMPLE' => ($system->SETTINGS['datesformat'] == 'USA') ? $MSG['382'] : $MSG['383'],
 		'DEFULTCONTRY' => $system->SETTINGS['defaultcountry'],
+		'USERCONF' => $system->SETTINGS['activationtype'],
 		
 		'C_USERS' => $COUNTERS['users'],
 		'C_IUSERS' => $COUNTERS['inactiveusers'],
+		'C_UUSERS' => (isset($uuser_count)) ? $uuser_count : '',
 		'C_AUCTIONS' => $COUNTERS['auctions'],
 		'C_CLOSED' => $COUNTERS['closedauctions'],
 		'C_BIDS' => $COUNTERS['bids'],
 		
 		'A_PAGEVIEWS' => $ACCESS['pageviews'],
 		'A_UVISITS' => $ACCESS['uniquevisitors'],
-		'A_USESSIONS' => $ACCESS['usersessions']
+		'A_USESSIONS' => $ACCESS['usersessions'],
+
+		'THIS_VERSION' => $myversion,
+		'CUR_VERSION' => $realversion
 		));
 
 $template->set_filenames(array(

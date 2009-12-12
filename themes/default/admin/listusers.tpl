@@ -47,9 +47,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="7"><b>{TOTALUSERS} {L_301}</b></td>
-                        <td align="right">
-                            <form name="filter" id="filter" action="" method="post">
+                        <td colspan="4"><b>{TOTALUSERS} {L_301}</b></td>
+                        <td align="right" colspan="4">
+                            <form name="filter" id="filter" action="" method="get">
                                 <select name="usersfilter" id="userfilter">
                                     <option value="all">{L_5296}</option>
                                     <option value="active" <!-- IF USERFILTER eq 'active' -->selected<!-- ENDIF -->>{L_5291}</option>
@@ -58,6 +58,7 @@
                                     <option value="confirmed" <!-- IF USERFILTER eq 'confirmed' -->selected<!-- ENDIF -->>{L_5292}</option>
                                     <option value="admin_approve" <!-- IF USERFILTER eq 'admin_approve' -->selected<!-- ENDIF -->>{L_25_0136}</option>
                                 </select>
+                                <input type="submit" value="{L_5029}" />
                             </form>
                         </td>
                     </tr>
@@ -100,7 +101,7 @@
                             <b><span style="color:orange"><a href="excludeuser.php?id={users.ID}&offset={PAGE}" class="small">{L_25_0136}</a></span></b>
     <!-- ENDIF -->
                         </td>
-                        <td>
+                        <td nowrap>
                             <a href="edituser.php?userid={users.ID}&offset={PAGE}" class="small">{L_298}</a><br>
                             <a href="deleteuser.php?id={users.ID}&offset={PAGE}" class="small">{L_008}</a><br>
                             <a href="excludeuser.php?id={users.ID}&offset={PAGE}" class="small">

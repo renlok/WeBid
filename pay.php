@@ -108,7 +108,7 @@ switch($_GET['a'])
 		$an_paytoid = $gateway_data['authnet_address'];
 		$an_paytopass = $gateway_data['authnet_password'];
 		// number of auctions to relist
-		$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions WHERE suspended = 8 AND user_id = " . $user->user_data['id'];
+		$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions WHERE suspended = 8 AND user = " . $user->user_data['id'];
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$count = mysql_result($res, 0);

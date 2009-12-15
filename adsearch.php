@@ -26,7 +26,7 @@ $wher = '';
 $payment = (isset($_POST['payment'])) ? $_POST['payment'] : '';
 
 // so paginations work
-if (!empty($_SESSION['advs']))
+if (!empty($_POST))
 {
 	$_SESSION['advs'] = $_POST;
 }

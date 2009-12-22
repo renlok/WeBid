@@ -1,11 +1,6 @@
 0.9.0 - 02/12/09
 -----------------------------
-- Fixed the resync counters button in admin when using a custom table prefix
 - Reorganised a few of the admin pages and merged some with similar options to make it easier to use
-- Fixed a bug in the cron script where the buyer fee is left blank
-- Cleaned up the leave feedback page so it does not show multiple entries for the same auction
-- Fixed the feedback
-- Found and replace a shorttag which effects the converter
 - Added a version check to the admin homepage
 - Added a page to view the error log in admin panel
 

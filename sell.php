@@ -66,17 +66,6 @@ switch ($_SESSION['action'])
 			header('location: ' . $sslurl . 'sell.php');
 			exit;
 		}
-		$query = "SELECT * FROM " . $DBPrefix . "payments";
-		$res_payments = mysql_query($query);
-		$system->check_mysql($res_payments, $query, __LINE__, __FILE__);
-		$payment_text = '';
-		while ($paym = mysql_fetch_assoc($res_payments))
-		{
-			if (in_array($paym['description'], $payment))
-			{
-				$payment_text .= $paym['description'] . "\n";
-			}
-		}
 		if ($system->SETTINGS['usersauth'] == 'y' && (md5($MD5_PREFIX . $_POST['password']) != $user->user_data['password']))
 		{
 			$ERR = 'ERR_026';
@@ -94,6 +83,7 @@ switch ($_SESSION['action'])
 		}
 		else
 		{
+			$payment_text = implode(', ', $payment);
 			// set time back to GMT
 			$a_starts = empty($start_now) ? ($a_starts - $system->tdiff) : time();
 			$a_ends = $a_starts + ($duration * 24 * 60 * 60);

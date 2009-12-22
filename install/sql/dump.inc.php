@@ -1067,58 +1067,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "filterwords` VALUES ('');";
 # ############################
 
 # 
-# Table structure for table `" . $DBPrefix . "fontsandcolors`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fontsandcolors`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "fontsandcolors` (
-  `err_font` int(2) NOT NULL default '0',
-  `err_font_size` int(2) default NULL,
-  `err_font_color` varchar(7) default NULL,
-  `err_font_bold` enum('y','n') default NULL,
-  `err_font_italic` enum('y','n') default NULL,
-  `std_font` int(2) NOT NULL default '0',
-  `std_font_size` int(2) default NULL,
-  `std_font_color` varchar(7) default NULL,
-  `std_font_bold` enum('y','n') default NULL,
-  `std_font_italic` enum('y','n') default NULL,
-  `sml_font` int(2) NOT NULL default '0',
-  `sml_font_size` int(2) NOT NULL default '0',
-  `sml_font_color` varchar(7) NOT NULL default '',
-  `sml_font_bold` enum('y','n') NOT NULL default 'y',
-  `sml_font_italic` enum('y','n') NOT NULL default 'y',
-  `tlt_font` int(2) NOT NULL default '0',
-  `tlt_font_size` int(2) default NULL,
-  `tlt_font_color` varchar(7) default NULL,
-  `tlt_font_bold` enum('y','n') default NULL,
-  `tlt_font_italic` enum('y','n') default NULL,
-  `nav_font` int(2) NOT NULL default '0',
-  `nav_font_size` int(2) NOT NULL default '0',
-  `nav_font_color` varchar(7) NOT NULL default '',
-  `nav_font_bold` enum('y','n') NOT NULL default 'y',
-  `nav_font_italic` enum('y','n') NOT NULL default 'y',
-  `footer_font` int(2) NOT NULL default '0',
-  `footer_font_size` int(2) NOT NULL default '0',
-  `footer_font_color` varchar(7) NOT NULL default '',
-  `footer_font_bold` enum('y','n') NOT NULL default 'y',
-  `footer_font_italic` enum('y','n') NOT NULL default 'y',
-  `bordercolor` varchar(7) NOT NULL default '0',
-  `headercolor` varchar(7) NOT NULL default '0',
-  `tableheadercolor` varchar(7) NOT NULL default '0000',
-  `linkscolor` varchar(7) NOT NULL default '0',
-  `vlinkscolor` varchar(7) NOT NULL default '0',
-  `highlighteditems` varchar(7) NOT NULL default ''
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "fontsandcolors`
-# 
-
-$query[] = "INSERT INTO `" . $DBPrefix . "fontsandcolors` VALUES (1, 3, '#FF9900', 'y', 'n', 1, 2, '#000000', 'n', 'n', 1, 1, '#000000', 'n', 'n', 2, 4, '#3300CC', 'y', 'n', 1, 3, '#3366CC', 'y', 'n', 1, 1, '#aaaaaa', 'n', 'n', '3366cc', '#ffffff', '#888888', '003399', '#333333', 'd8ebff');";
-
-# ############################
-
-# 
 # Table structure for table `" . $DBPrefix . "gateways`
 # 
 
@@ -1515,7 +1463,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `higherbidsnumber` int(11) NOT NULL default '0',
   `endingsoonnumber` int(11) NOT NULL default '0',
   `boards` enum('y','n') NOT NULL default 'y',
-  `boardslink` enum('y','n') NOT NULL default 'y',
   `wordsfilter` enum('y','n') NOT NULL default 'y',
   `aboutus` enum('y','n') NOT NULL default 'y',
   `aboutustext` text NOT NULL,
@@ -1526,23 +1473,18 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `defaultcountry` varchar(30) NOT NULL default '0',
   `relisting` int(11) NOT NULL default '0',
   `defaultlanguage` char(2) NOT NULL default 'EN',
-  `pagewidth` int(11) NOT NULL default '0',
-  `pagewidthtype` enum('perc','fix') NOT NULL default 'perc',
   `catsorting` enum('alpha','counter') NOT NULL default 'alpha',
   `usersauth` enum('y','n') NOT NULL default 'y',
-  `background` tinytext NOT NULL,
-  `brepeat` enum('repeat','repeat-x','repeat-y','no-repeat','no') NOT NULL default 'no',
   `descriptiontag` text NOT NULL,
   `keywordstag` text NOT NULL,
   `maxuploadsize` int(11) NOT NULL default '0',
   `contactseller` enum('always','logged','never') NOT NULL default 'always',
   `theme` tinytext,
   `catstoshow` int(11) NOT NULL default '0',
-  `uniqueseller` int(11) NOT NULL default '0',
   `bn_only` enum('y','n') NOT NULL default 'n',
   `winner_address` enum('y','n') NOT NULL default 'n',
   `boardsmsgs` int(11) NOT NULL default '0',
-  `activationtype` INT(1) NOT NULL DEFAULT  '0',
+  `activationtype` INT(1) NOT NULL DEFAULT  1',
   `https` enum('y','n') NOT NULL default 'n',
   `bn_only_disable` enum('y','n') NOT NULL default 'n',
   `bn_only_percent` int(3) NOT NULL default '50',
@@ -1583,7 +1525,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly', 1, 5, 2, 'center', 120, 8, 8, 0, 'y', 'n', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 90, 'perc', 'alpha', 'y', '', 'no', '', '', 51200, 'always', 'default', 20, 0, 'n', 'y', 0, 0, 'n', 'n', 50, 'n', 1, 'n', '1', '25.00', '0.00', 'y', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}', 'y', 'y', 'y', 'y', '', '', 1, 1);";
+('WeBid', '" . $siteURL . "', '', 1, 1, 5, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly', 1, 5, 2, 'center', 120, 8, 8, 0, 'y', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 'alpha', 'y', '', '', 51200, 'always', 'default', 20, 'n', 'y', 0, 1, 'n', 'n', 50, 'n', 1, 'n', '1', '25.00', '0.00', 'y', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}', 'y', 'y', 'y', 'y', '', '', 1, 1);";
 
 
 # ############################

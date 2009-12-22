@@ -46,10 +46,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	}
 	$query .= "lastitemsnumber = " . intval($_POST['lastitemsnumber']) . ",
 				higherbidsnumber = " . intval($_POST['higherbidsnumber']) . ",
-				endingsoonnumber = " . intval($_POST['endingsoonnumber']) . ",
-				pagewidth = " . intval($_POST['pagewidth']) . ",
-				pagewidthtype = '" . $_POST['pagewidthtype'] . "',
-				alignment = '" . $_POST['alignment'] . "'";
+				endingsoonnumber = " . intval($_POST['endingsoonnumber']);
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['loginbox'] = $_POST['loginbox'];
 	$system->SETTINGS['newsbox'] = $_POST['newsbox'];
@@ -58,30 +55,13 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$system->SETTINGS['lastitemsnumber'] = $_POST['lastitemsnumber'];
 	$system->SETTINGS['higherbidsnumber'] = $_POST['higherbidsnumber'];
 	$system->SETTINGS['endingsoonnumber'] = $_POST['endingsoonnumber'];
-	$system->SETTINGS['pagewidth'] = $_POST['pagewidth'];
-	$system->SETTINGS['pagewidthtype'] = $_POST['pagewidthtype'];
-	$system->SETTINGS['alignment'] = $_POST['alignment'];
 	$ERR = $MSG['5019'];
 }
 
 $logoURL = $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'];
 
-$ALIGNMENT = array(
-	'left' => 'Left',
-	'center' => 'Center',
-	'right' => 'Right');
-
-$WIDTHTYPE = array(
-	'perc' => '%',
-	'fixed' => 'pixels');
-
 loadblock($MSG['531'], $MSG['556'], 'image', 'logo', $system->SETTINGS['logo']);
 loadblock('', $MSG['602'], 'upload', 'logo', $system->SETTINGS['logo']);
-$selectsetting = $system->SETTINGS['alignment'];
-loadblock($MSG['1056'], $MSG['1057'], generateSelect('alignment', $ALIGNMENT));
-loadblock($MGS_2__0051, $MGS_2__0052, 'decimals', 'pagewidth', $system->SETTINGS['pagewidth']);
-$selectsetting = $system->SETTINGS['pagewidthtype'];
-loadblock('', '', generateSelect('pagewidthtype', $WIDTHTYPE));
 loadblock($MSG['5013'], $MSG['5014'], 'decimals', 'lastitemsnumber', $system->SETTINGS['lastitemsnumber']);
 loadblock($MSG['5015'], $MSG['5016'], 'decimals', 'higherbidsnumber', $system->SETTINGS['higherbidsnumber']);
 loadblock($MSG['5017'], $MSG['5018'], 'decimals', 'endingsoonnumber', $system->SETTINGS['endingsoonnumber']);

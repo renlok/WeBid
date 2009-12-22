@@ -323,7 +323,7 @@ $(document).ready(function() {
 			  </table>
 			  <br>
 			  <b>{L_026}:</b> {PAYMENTS}<br>
-<!-- IF B_BUY_NOW_ONLY eq false -->
+<!-- IF ! B_BUY_NOW_ONLY -->
 			  <b><!-- IF ATYPE eq 1 -->{L_127}<!-- ELSE -->{L_038}<!-- ENDIF -->:</b> {MINBID}<br>
 <!-- ENDIF -->
 			  <br>

@@ -7,7 +7,7 @@
 <meta name="description" content="{DESCRIPTION}">
 <meta name="keywords" content="{KEYWORDS}">
 <meta name="generator" content="WeBid">
-{STYLES}
+
 <link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/style.css">
 <link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/jquery.lightbox.css" media="screen">
 
@@ -52,8 +52,8 @@ $(document).ready(function() {
 {EXTRAINC}
 </head>
 <body>
-<div align="{PAGEALIGN}">
-<table width="{PAGEWIDTH}" cellpadding="0" cellspacing="0" border="0" class="container" style="text-align:left;"> 
+<div align="center">
+<table width="90%" cellpadding="0" cellspacing="0" border="0" class="container" style="text-align:left;"> 
   <tr> 
   <td>
 	<table width="100%" border="0" cellpadding="5" cellspacing="5" class="logo">

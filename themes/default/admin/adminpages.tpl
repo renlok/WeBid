@@ -46,7 +46,7 @@
 <!-- BEGIN block -->
 					<tr valign="top">
   <!-- IF block.B_HEADER -->
-						<td colspan="2" style="padding:3px; border-top:#0083D7 1px solid; background:#ECECEC">
+						<td colspan="2" style="padding:3px; border-top:#0083D7 1px solid; background:#ECECEC;">
                         	<b>{block.TITLE}</b>
 						</td>
   <!-- ELSE -->

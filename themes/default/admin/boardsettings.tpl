@@ -40,14 +40,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>{L_5049}</td>
-                        <td>
-                            <input type="radio" name="boardslink" value="y"{BOARDS_LINK_YES}> {L_030}
-                            <input type="radio" name="boardslink" value="n"{BOARDS_LINK_NO}> {L_029}
-                            <p>{L_5050}</p>
-                        </td>
-                    </tr>
-                    <tr>
                         <td colspan="2">&nbsp;</td>
                     </tr>
                     <tr>

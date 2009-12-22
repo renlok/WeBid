@@ -3,5 +3,8 @@
 - Reorganised a few of the admin pages and merged some with similar options to make it easier to use
 - Added a version check to the admin homepage
 - Added a page to view the error log in admin panel
+- Removed option to enabled/ disable link to message boards
+- Removed options to edit sites background/pagewidth and page alignment via admin panel
+- Fixed a bug where payments methods wernt being set in the database
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -21,21 +21,17 @@ if ($_POST['action'] == 'update')
 {
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings set
-			boards = '" . $_POST['boards'] . "',
-			boardslink = '" . $_POST['boardslink'] . "'";
+			boards = '" . $_POST['boards'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$ERR = $MSG['5051'];
 	$system->SETTINGS['boards'] = $_POST['boards'];
-	$system->SETTINGS['boardslink'] = $_POST['boardslink'];
 }
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'BOARDS_YES' => ($system->SETTINGS['boards'] == 'y') ? ' checked' : '',
-		'BOARDS_NO' => ($system->SETTINGS['boards'] == 'n') ? ' checked' : '',
-		'BOARDS_LINK_YES' => ($system->SETTINGS['boardslink'] == 'y') ? ' checked' : '',
-		'BOARDS_LINK_NO' => ($system->SETTINGS['boardslink'] == 'n') ? ' checked' : ''
+		'BOARDS_NO' => ($system->SETTINGS['boards'] == 'n') ? ' checked' : ''
 		));
 
 $template->set_filenames(array(

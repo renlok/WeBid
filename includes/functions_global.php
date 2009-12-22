@@ -49,16 +49,7 @@ class global_class
 		$query = "SELECT * FROM " . $DBPrefix . "settings";
 		$result = mysql_query($query);
 		$this->check_mysql($result, $query, __LINE__, __FILE__);
-		$this->SETTINGS = mysql_fetch_array($result);
-		#// Retrieve fonts and colors settings
-		$query = "SELECT * FROM " . $DBPrefix . "fontsandcolors";
-		$result = mysql_query($query);
-		$this->check_mysql($result, $query, __LINE__, __FILE__);
-		$FONTSANDCOLORS = mysql_fetch_array($result);
-		foreach ($FONTSANDCOLORS as $k => $v)
-		{
-			$this->SETTINGS[$k] = $v;
-		}
+		$this->SETTINGS = mysql_fetch_assoc($result);
 	}
 
 	function check_mysql($result, $query, $line, $page)

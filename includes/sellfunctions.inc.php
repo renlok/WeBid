@@ -68,7 +68,7 @@ function setvars()
 	$is_highlighted = (isset($_POST['is_highlighted'])) ? 'y' : $_SESSION['SELL_is_highlighted'];
 	$start_now = (isset($_POST['start_now'])) ? $_POST['start_now'] : '';
 	$start_now = (isset($_SESSION['SELL_start_now']) && (!isset($_POST['action']) || $_POST['action'] != 2)) ? $_SESSION['SELL_start_now'] : $start_now;
-	if (isset($_POST['action']))
+	if (isset($_POST['action']) && $_POST['action'] == 2)
 	{
 		$is_bold = (isset($_POST['is_bold'])) ? 'y' : 'n';
 		$is_featured = (isset($_POST['is_featured'])) ? 'y' : 'n';
@@ -132,7 +132,7 @@ function unsetsessions()
 	$_SESSION['SELL_customincrement'] = '';
 	$_SESSION['SELL_shipping'] = '';
 	$_SESSION['SELL_shipping_terms'] = '';
-	$_SESSION['SELL_payment'] = '';
+	$_SESSION['SELL_payment'] = array();
 	$_SESSION['SELL_international'] = '';
 	$_SESSION['SELL_sendemail'] = '';
 	$_SESSION['SELL_buy_now_only'] = '';

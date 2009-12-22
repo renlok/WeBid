@@ -83,7 +83,6 @@ $mth = "MON_0" . gmdate('m', $system->ctime);
 $date = $MSG[$mth] . gmdate(' j, Y', $system->ctime);
 $counters .= $date . ' <span id="servertime">' . gmdate('H:i:s', $system->ctime) . '</span>';
 
-include $include_path . 'styles.inc.php';
 $page_title = (isset($page_title)) ? ' ' . $page_title : '';
 
 $template->assign_vars(array(
@@ -97,7 +96,6 @@ $template->assign_vars(array(
 		'EXTRAINC' => $jsfiles,
 		'ACTUALDATE' => ActualDate(),
 		'PAGEALIGN' => $system->SETTINGS['alignment'],
-		'PAGEWIDTH' => $system->SETTINGS['pagewidth'] . (($system->SETTINGS['pagewidthtype'] == 'perc') ? '%' : ''),
 		'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : "&nbsp;",
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',
 		'HEADERCOUNTER' => $counters,
@@ -110,7 +108,7 @@ $template->assign_vars(array(
 
 		'B_CAN_SELL' => $user->can_sell,
 		'B_LOGGED_IN' => $user->logged_in,
-		'B_BOARDS' => ($system->SETTINGS['boards'] == 'y' && $system->SETTINGS['boardslink'] == 'y')
+		'B_BOARDS' => ($system->SETTINGS['boards'] == 'y')
 		));
 
 $template->set_filenames(array(

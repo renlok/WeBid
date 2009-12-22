@@ -23,9 +23,15 @@ if (!$user->logged_in)
 	exit;
 }
 
-if ($system->SETTINGS['uniqueseller'] > 0 && $user->user_data['id'] != $system->SETTINGS['uniqueseller'])
+if ($user->user_data['suspended'] == 7 || $user->user_data['suspended'] == 6)
 {
-	header('location: index.php');
+	header('location: message.php');
+	exit;
+}
+
+if (!$user->can_sell)
+{
+	header('location: user_menu.php?cptab=selling');
 	exit;
 }
 

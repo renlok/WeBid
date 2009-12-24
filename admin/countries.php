@@ -16,7 +16,7 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include 'rebuild_html.php';
+include $include_path . 'functions_rebuild.inc.php';
 
 if (isset($_POST['act']))
 {

@@ -17,7 +17,7 @@ include $include_path . 'dates.inc.php';
 include $include_path . 'auction_types.inc.php';
 include $include_path . 'datacheck.inc.php';
 include $include_path . 'converter.inc.php';
-include $include_path . 'sellfunctions.inc.php';
+include $include_path . 'functions_sell.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 include $main_path . 'fck/fckeditor.php';
 

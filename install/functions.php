@@ -76,6 +76,20 @@ function makeconfigfile($contents, $main_path)
 	return $return;
 }
 
+function print_header($update)
+{
+	if ($update)
+	{
+		global $_SESSION;
+		if (!isset($_SESSION['oldversion']))
+		{
+			$_SESSION['oldversion'] = $myversion;
+		}
+
+		return '<h1>WeBid Updater, v' . $_SESSION['oldversion'] . ' to v' . $thisversion . '</h1>';
+	}
+}
+
 function check_version()
 {
 	global $system, $DBPrefix;
@@ -91,6 +105,23 @@ function check_version()
 	}
 
 	return $system->SETTINGS['version'];
+}
+
+function check_installation($else = true)
+{
+	include '../includes/common.inc.php';
+	// check webid install...
+	$query = "SELECT * FROM `" . $DBPrefix . "settings`";
+	$res = mysql_query($query);
+	if ($res !=== false)
+		return 'Complete, now to <b><a href="?step=2">step 2</a></b>';
+	else
+	{
+		if ($else)
+		{
+			return 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
+		}
+	}
 }
 
 function this_version()
@@ -293,5 +324,57 @@ function show_config_table($fresh = true)
 	$data .= '</form>';
 
 	return $data;
+}
+
+function search_cats($parent_id, $level)
+{
+	global $DBPrefix, $catscontrol;
+	$root = $catscontrol->get_virtual_root();
+	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
+	foreach ($tree as $k => $v)
+	{
+		$catstr .= ",\n" . $k . " => '" . $v . "'";
+	}
+	return $catstr;
+}
+
+function rebuild_cat_file()
+{
+	global $system, $main_path, $DBPrefix;
+	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
+	$result = mysql_query($query);
+	$cats = array();
+	while ($catarr = mysql_fetch_array($result))
+	{
+		$cats[$catarr['cat_id']] = $catarr['cat_name'];
+		$allcats[] = $catarr;
+	}
+	
+	$output = "<?php\n";
+	$output.= "$" . "category_names = array(\n";
+	
+	$num_rows = count($cats);
+	
+	$i = 0;
+	foreach ($cats as $k => $v)
+	{
+		$output .= "$k => '$v'";
+		$i++;
+		if ($i < $num_rows)
+			$output .= ",\n";
+		else
+			$output .= "\n";
+	}
+	
+	$output .= ");\n\n";
+	
+	$output .= "$" . "category_plain = array(\n0 => ''";
+	
+	$output .= search_cats(0, 0);
+	
+	$output .= ");\n?>";
+	
+	$handle = fopen ($main_path . "language/" . $system->SETTINGS['defaultlanguage'] . "/categories.inc.php", "w");
+	fputs($handle, $output);
 }
 ?>

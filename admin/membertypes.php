@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 $DBGStr = "DBGStr: ". count($delete). "-" .
 count($old_membertypes) . " <br><br>\n";
 
-include "./rebuild_tables.php";
+include $include_path . 'functions_rebuild.inc.php';
 
 /*
 * When the submit button is pressed (below on the page) on

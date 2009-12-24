@@ -14,12 +14,7 @@
 
 include 'functions.php';
 
-$thisversion = this_version();
-$myversion = check_version();
 $main_path = getmainpath();
-
-echo '<h1>WeBid Updater, v' . $myversion . ' to v' . $thisversion . '</h1>';
-
 /*
 how new updater will work
 in package config.inc.php will be named config.inc.php.new so it cannot be overwritten
@@ -28,6 +23,7 @@ in package config.inc.php will be named config.inc.php.new so it cannot be overw
 3. with database details check theres actually an installation of webid if not show link to make fresh install
 	- if there is but no config write config file
 4. collect query needed to run for version in use
+5. update langauge files
 */
 
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
@@ -35,19 +31,23 @@ if ($step == 0)
 {
 	if (!file_exists($main_path . 'includes/config.inc.php'))
 	{
+		$thisversion = this_version();
+		$myversion = check_version();
+		echo print_header($update);
 		echo show_config_table(false);
 	}
 	else
 	{
-		include '../includes/common.inc.php';
-		// check webid install...
-		
-		echo 'Complete, now to <b><a href="?step=2&n=1">step 2</a></b>';
+		$check = check_installation();
+		$thisversion = this_version();
+		$myversion = check_version();
+		echo print_header($update);
+		echo $check;
 	}
 }
 if ($step == 1)
 {
-	echo '<b>Step 1:</b> Writting config file...<br>';
+	$toecho = '<b>Step 1:</b> Writting config file...<br>';
 	$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
 	// generate config file
 	$content = '<?php';
@@ -61,120 +61,64 @@ if ($step == 1)
 	$output = makeconfigfile($content, $path);
 	if ($output)
 	{
-		echo 'Complete, now to <b><a href="?step=2&n=1">step 2</a></b>';
+		$check = check_installation();
+		$thisversion = this_version();
+		$myversion = check_version();
+		echo print_header($update);
+		echo $toecho;
+		echo $check;
 	}
 	else
 	{
+		$thisversion = this_version();
+		$myversion = check_version();
+		echo print_header($update);
+		echo $toecho;
 		echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
 		echo '<p><textarea style="width:500px; height:500px;">' . $content . '</textarea></p>';
-		echo 'Once you\'ve done this, you can continue to <b><a href="?step=2&n=1">step 2</a></b>';
+		echo 'Once you\'ve done this, you can continue to <b><a href="?step=2">step 2</a></b>';
 	}
 }
-
-// OLD STUFF...
-switch($step)
+if ($step == 2)
 {
-	case 2:
-		$siteURL = $_GET['URL'];
-		$siteEmail = $_GET['EMail'];
-		include '../includes/config.inc.php';
-		if (!mysql_connect($DbHost, $DbUser, $DbPassword))
-		{
-			die('<p>Cannot connect to '.$DbHost.'</p>');
-		}
-		if (!mysql_select_db($DbDatabase))
-		{
-			die('<p>Cannot select database</p>');
-		}
-		include 'sql/updatedump.inc.php';
-		for ($i = 0; $i < count($query); $i++)
-		{
-			mysql_query($query[$i]) or print(mysql_error() . '<br>' . $query[$i] . '<br>');
-		}
-		//echo 'Complete, now to <b><a href="MPTT_converter.php">step 3</a></b>';
-		echo 'Update complete now remove the install folder from your server';
-		break;
-	case 1:
-		echo '<b>step 1:</b> writting config file...<br>';
-		$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
-		$content = '<?php
-$DbHost	 = "'.$_POST['DBHost'].'";
-$DbDatabase = "'.$_POST['DBName'].'";
-$DbUser	 = "'.$_POST['DBUser'].'";
-$DbPassword = "'.$_POST['DBPass'].'";
-$DBPrefix	= "'.$_POST['DBPrefix'].'";
-$main_path	= "'.$path.'";
-?>';
-		$output = makeconfigfile($content);
-		if ($output)
-			echo 'Complete, now to <b><a href="?step=2&URL='.$_POST['URL'].'&cats='.$cats.'&n=1">step 2</a></b>';
-		else
-		{
-			echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
-			echo '<p><textarea style="width:500px; height:500px;">
-'.$content.'
-			</textarea></p>';
-			echo 'Once you\'ve done this, you can continue to <b><a href="?step=2&URL='.$_POST['URL'].'&n=1">step 2</a></b>';
-		}
-		break;
-	default:
-?>
-<form name="form1" method="post" action="?step=1">
-<table cellspacing="1" border="1" style="border-collapse:collapse;" cellpadding="6">
-  <tr>
-	<td width="140">URL</td>
-	<td width="108">
-	  <input type="text" name="URL" id="textfield" value="<?php echo getdomainpath(); ?>">
-	</td>
-	<td rowspan="2">
-	  The url &amp; location of the webid installation on your server. It's usually best to leave these as they are.<br>
-	  Also if your running on a windows server at the end of the <b>Doument Root</b> there should be a \\ (double backslash)
-	</td>
-  </tr>
-  <tr>
-	<td>Doument Root</td>
-	<td>
-	  <input type="text" name="mainpath" id="textfield" value="<?php echo getmainpath(); ?>">
-	</td>
-  </tr>
-  <tr>
-	<td>Database Host</td>
-	<td>
-	  <input type="text" name="DBHost" id="textfield" value="localhost">
-	</td>
-	<td>The location of your MySQL database in most cases its just localhost</td>
-  </tr>
-  <tr>
-	<td>Database Username</td>
-	<td>
-	  <input type="text" name="DBUser" id="textfield">
-	</td>
-	<td rowspan="3">The username, password and database name of the database your installing webid on</td>
-  </tr>
-  <tr>
-	<td>Database Password</td>
-	<td>
-	  <input type="text" name="DBPass" id="textfield">
-	</td>
-  </tr>
-  <tr>
-	<td>Database Name</td>
-	<td>
-	  <input type="text" name="DBName" id="textfield">
-	</td>
-  </tr>
-  <tr>
-	<td>Database Prefix</td>
-	<td>
-	  <input type="text" name="DBPrefix" id="textfield" value="webid_">
-	</td>
-	<td>the prefix of the webid tables in the database, used so you can install multiple scripts in the same database without issues.</td>
-  </tr>
-</table>
-<br>
-<input type="submit" value="install">
-</form>
-<?php
-	break;
+	$check = check_installation();
+	$thisversion = this_version();
+	$myversion = check_version();
+	echo print_header($update);
+	echo $check;
+	include 'sql/updatedump.inc.php';
+	for ($i = 0; $i < count($query); $i++)
+	{
+		mysql_query($query[$i]) or print(mysql_error() . '<br>' . $query[$i] . '<br>');
+	}
+	if ($myversion !== $thisversion)
+	{
+		echo '<script type="text/javascript">window.location = "install.php?step=2";</script>';
+		echo '<noscript>Javascript is disabled please <a href="?step=2">refresh the page</a></noscript>';
+	}
+	else
+		echo 'Complete, now to <b><a href="?step=3">step 3</a></b>';
 }
+if ($step == 3)
+{
+	$check = check_installation();
+	$thisversion = this_version();
+	$myversion = check_version();
+	echo print_header($update);
+	echo $check;
+	include $include_path . 'functions_rebuild.inc.php';
+	echo 'Rebuilding membertypes...<br>';
+	rebuild_table_file('membertypes');
+	echo 'Rebuilding countries...<br>';
+	rebuild_html_file('countries');
+
+	echo 'Rebuilding categories...<br>';
+	$catscontrol = new MPTTcategories();
+	rebuild_cat_file();
+
+	include $main_path . 'admin/util_cc1.php';
+
+	echo 'Update complete now remove the install folder from your server';
+}
+
 ?>

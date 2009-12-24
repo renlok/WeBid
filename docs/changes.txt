@@ -9,5 +9,6 @@
 - Fixed advanced search & search pagnation (Bug #128)
 - Fixed buying & pay pages so the buyer only has to pay shipping when seller has selected buyer pays shipping
 - Fixed feedback page so it shows corrent username
+- Improved the update script so it is possible to upgrade quickly though multiple version also it updates cache files so not so many things mess up when you do an update
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

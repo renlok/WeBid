@@ -71,7 +71,8 @@ if ($items != '' && $items != null)
 {
 	$item = split(' ', $items);
 	$itemids = '0';
-	for ($j = 0; $j < count($item); $j++)
+	$total = count($item);
+	for ($j = 0; $j < $total; $j++)
 	{
 		$itemids .= ',' . $item[$j];
 	}
@@ -80,7 +81,7 @@ if ($items != '' && $items != null)
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($result) > 0)
 	{
-		browseItems($result, false, 'item_watch.php');
+		browseItems($result, false, $total, 'item_watch.php');
 	}
 }
 

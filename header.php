@@ -90,7 +90,6 @@ $template->assign_vars(array(
 		'THEME' => $system->SETTINGS['theme'],
 		'PAGE_TITLE' => $system->SETTINGS['sitename'] . $page_title,
 		'CHARSET' => $CHARSET,
-		'STYLES' => $thisstyle,
 		'DESCRIPTION' => stripslashes($system->SETTINGS['descriptiontag']),
 		'KEYWORDS' => stripslashes($system->SETTINGS['keywordstag']),
 		'EXTRAINC' => $jsfiles,

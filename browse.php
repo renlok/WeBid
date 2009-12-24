@@ -216,7 +216,7 @@ else
 	$system->check_mysql($feat_res, $query, __LINE__, __FILE__);
 
 	include $include_path . 'browseitems.inc.php';
-	browseItems($res, $feat_res, 'browse.php');
+	browseItems($res, $feat_res, $total, 'browse.php', 'id=' . $id);
 
 	$template->assign_vars(array(
 			'TOP_HTML' => $TPL_main_value,

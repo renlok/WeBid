@@ -30,6 +30,10 @@ if (!empty($_POST))
 {
 	$_SESSION['advs'] = $_POST;
 }
+elseif (!isset($_GET['PAGE']) && empty($_POST))
+{
+	unset($_SESSION['advs']);
+}
 
 if (isset($_GET['PAGE']))
 {
@@ -40,127 +44,130 @@ else
 	$page = 1;
 }
 
-if (!empty($_SESSION['advs']['title']))
+if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 {
-	$wher .= '(';
-	if (isset($_SESSION['advs']['desc']))
+	if (!empty($_SESSION['advs']['title']))
 	{
-		$wher .= "(au.description like '%" . $system->cleanvars($_SESSION['advs']['title']) . "%') OR ";
-	}
-	$wher .= "(au.title like '%" . $system->cleanvars($_SESSION['advs']['title']) . "%' OR au.id = " . intval($_SESSION['advs']['title']) . ")) AND ";
-}
-
-if (!empty($_SESSION['advs']['seller']))
-{
-	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_SESSION['advs']['seller']) . "'";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-
-	if (mysql_num_rows($res) > 0)
-	{
-		$SELLER_ID = mysql_result($res, 0, 'id');
-		$wher .= "(au.user = '" . $SELLER_ID . "') AND ";
-	}
-	else
-	{
-		$wher .= "(au.user LIKE '%-------------%') AND ";
-	}
-}
-
-if (isset($_SESSION['advs']['buyitnow']))
-{
-	$wher .= "(au.buy_now > 0 AND (au.bn_only = 'y' OR au.bn_only = 'n' && (au.num_bids = 0 OR (au.reserve_price > 0 AND au.current_bid < au.reserve_price)))) AND ";
-}
-
-if (isset($_SESSION['advs']['buyitnowonly']))
-{
-	$wher .= "(au.bn_only = 'y') AND ";
-}
-
-if (!empty($_SESSION['advs']['zipcode']))
-{
-	$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
-	$wher .= "(u.zip LIKE '%" . addslashes($_SESSION['advs']['zipcode']) . "%') AND ";
-}
-
-if (!isset($_SESSION['advs']['closed']))
-{
-	$wher .= "(au.closed = '0') AND ";
-}
-
-if (!empty($_SESSION['advs']['category']))
-{
-	$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['advs']['category'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$parent_node = mysql_fetch_assoc($res);
-	$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);
-	$childarray = array($_SESSION['advs']['category']);
-	foreach ($children as $k => $v)
-	{
-		$childarray[] = $v['cat_id'];
-	}
-	$catalist = '(';
-	$catalist .= implode(',', $childarray);
-	$catalist .= ')';
-	$wher .= "(au.category IN " . $catalist . ") AND ";
-}
-
-if (!empty($_SESSION['advs']['maxprice'])) $wher .= "(au.minimum_bid <= " . floatval($_SESSION['advs']['maxprice']) . ") AND ";
-if (!empty($_SESSION['advs']['minprice'])) $wher .= "(au.minimum_bid >= " . floatval($_SESSION['advs']['minprice']) . ") AND ";
-
-if (!empty($_SESSION['advs']['ending']) && ($_SESSION['advs']['ending'] == '1' || $_SESSION['advs']['ending'] == '2' || $_SESSION['advs']['ending'] == '4' || $_SESSION['advs']['ending'] == '6'))
-{
-	$data = time() + ($ending * 86400);
-	$wher .= "(au.ends <= $data) AND ";
-}
-
-if (!empty($_SESSION['advs']['country']))
-{
-	$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
-	$wher .= "(u.country = '" . $system->cleanvars($_SESSION['advs']['country']) . "') AND ";
-}
-
-if (isset($_SESSION['advs']['payment']))
-{
-	if (is_array($_SESSION['advs']['payment']) && count($_SESSION['advs']['payment']) > 1)
-	{
-		$pri = false;
-		foreach ($payment as $key => $val)
+		$wher .= '(';
+		if (isset($_SESSION['advs']['desc']))
 		{
-			if (!$pri)
-			{
-				$ora = "((au.payment LIKE '%" . addslashes($val) . "%')";
-			}
-			else
-			{
-				$ora .= " OR (au.payment LIKE '%" . addslashes($val) . "%') AND ";
-			}
-			$pri = true;
+			$wher .= "(au.description like '%" . $system->cleanvars($_SESSION['advs']['title']) . "%') OR ";
 		}
-		$ora .= ") ";
+		$wher .= "(au.title like '%" . $system->cleanvars($_SESSION['advs']['title']) . "%' OR au.id = " . intval($_SESSION['advs']['title']) . ")) AND ";
+	}
+	
+	if (!empty($_SESSION['advs']['seller']))
+	{
+		$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_SESSION['advs']['seller']) . "'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+	
+		if (mysql_num_rows($res) > 0)
+		{
+			$SELLER_ID = mysql_result($res, 0, 'id');
+			$wher .= "(au.user = '" . $SELLER_ID . "') AND ";
+		}
+		else
+		{
+			$wher .= "(au.user LIKE '%-------------%') AND ";
+		}
+	}
+	
+	if (isset($_SESSION['advs']['buyitnow']))
+	{
+		$wher .= "(au.buy_now > 0 AND (au.bn_only = 'y' OR au.bn_only = 'n' && (au.num_bids = 0 OR (au.reserve_price > 0 AND au.current_bid < au.reserve_price)))) AND ";
+	}
+	
+	if (isset($_SESSION['advs']['buyitnowonly']))
+	{
+		$wher .= "(au.bn_only = 'y') AND ";
+	}
+	
+	if (!empty($_SESSION['advs']['zipcode']))
+	{
+		$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
+		$wher .= "(u.zip LIKE '%" . addslashes($_SESSION['advs']['zipcode']) . "%') AND ";
+	}
+	
+	if (!isset($_SESSION['advs']['closed']))
+	{
+		$wher .= "(au.closed = '0') AND ";
+	}
+	
+	if (!empty($_SESSION['advs']['category']))
+	{
+		$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['advs']['category'];
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$parent_node = mysql_fetch_assoc($res);
+		$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);
+		$childarray = array($_SESSION['advs']['category']);
+		foreach ($children as $k => $v)
+		{
+			$childarray[] = $v['cat_id'];
+		}
+		$catalist = '(';
+		$catalist .= implode(',', $childarray);
+		$catalist .= ')';
+		$wher .= "(au.category IN " . $catalist . ") AND ";
+	}
+	
+	if (!empty($_SESSION['advs']['maxprice'])) $wher .= "(au.minimum_bid <= " . floatval($_SESSION['advs']['maxprice']) . ") AND ";
+	if (!empty($_SESSION['advs']['minprice'])) $wher .= "(au.minimum_bid >= " . floatval($_SESSION['advs']['minprice']) . ") AND ";
+	
+	if (!empty($_SESSION['advs']['ending']) && ($_SESSION['advs']['ending'] == '1' || $_SESSION['advs']['ending'] == '2' || $_SESSION['advs']['ending'] == '4' || $_SESSION['advs']['ending'] == '6'))
+	{
+		$data = time() + ($ending * 86400);
+		$wher .= "(au.ends <= $data) AND ";
+	}
+	
+	if (!empty($_SESSION['advs']['country']))
+	{
+		$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
+		$wher .= "(u.country = '" . $system->cleanvars($_SESSION['advs']['country']) . "') AND ";
+	}
+	
+	if (isset($_SESSION['advs']['payment']))
+	{
+		if (is_array($_SESSION['advs']['payment']) && count($_SESSION['advs']['payment']) > 1)
+		{
+			$pri = false;
+			foreach ($payment as $key => $val)
+			{
+				if (!$pri)
+				{
+					$ora = "((au.payment LIKE '%" . addslashes($val) . "%')";
+				}
+				else
+				{
+					$ora .= " OR (au.payment LIKE '%" . addslashes($val) . "%') AND ";
+				}
+				$pri = true;
+			}
+			$ora .= ") ";
+		}
+		else
+		{
+			$ora = "(au.payment LIKE '%" . addslashes($_SESSION['advs']['payment'][0]) . "%') AND ";
+		}
+	}
+	
+	if (isset($_SESSION['advs']['SortProperty']) && $_SESSION['advs']['SortProperty'] == 'starts')
+	{
+		$by = 'au.starts DESC';
+	}
+	elseif (isset($_SESSION['advs']['SortProperty']) && $_SESSION['advs']['SortProperty'] == 'min_bid')
+	{
+		$by = 'au.minimum_bid';
+	}
+	elseif (isset($_SESSION['advs']['SortProperty']) && $_SESSION['advs']['SortProperty'] == 'max_bid')
+	{
+		$by = 'au.minimum_bid DESC';
 	}
 	else
 	{
-		$ora = "(au.payment LIKE '%" . addslashes($_SESSION['advs']['payment'][0]) . "%') AND ";
+		$by = 'au.ends ASC';
 	}
-}
-
-if (isset($_SESSION['advs']['SortProperty']) && $_SESSION['advs']['SortProperty'] == 'starts')
-{
-	$by = 'au.starts DESC';
-}
-elseif (isset($_SESSION['advs']['SortProperty']) && $_SESSION['advs']['SortProperty'] == 'min_bid')
-{
-	$by = 'au.minimum_bid';
-}
-elseif (isset($_SESSION['advs']['SortProperty']) && $_SESSION['advs']['SortProperty'] == 'max_bid')
-{
-	$by = 'au.minimum_bid DESC';
-}
-else
-{
-	$by = 'au.ends ASC';
 }
 
 if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SESSION['advs']))
@@ -215,7 +222,7 @@ if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SE
 	if (mysql_num_rows($res) > 0)
 	{
 		include $include_path . 'browseitems.inc.php';
-		browseItems($res, $feat_res, 'adsearch.php');
+		browseItems($res, $feat_res, $total, 'adsearch.php');
 
 		include 'header.php';
 		$template->set_filenames(array(

@@ -13,10 +13,65 @@
  ***************************************************************************/
 
 include 'functions.php';
-?>
-<h1>WeBid Updater, v0.8.1 to v0.8.2</h1>
-<?php
+
+$thisversion = this_version();
+$myversion = check_version();
+$main_path = getmainpath();
+
+echo '<h1>WeBid Updater, v' . $myversion . ' to v' . $thisversion . '</h1>';
+
+/*
+how new updater will work
+in package config.inc.php will be named config.inc.php.new so it cannot be overwritten
+1. check for config.inc.php
+2. if config file missing ask for details
+3. with database details check theres actually an installation of webid if not show link to make fresh install
+	- if there is but no config write config file
+4. collect query needed to run for version in use
+*/
+
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
+if ($step == 0)
+{
+	if (!file_exists($main_path . 'includes/config.inc.php'))
+	{
+		echo show_config_table(false);
+	}
+	else
+	{
+		include '../includes/common.inc.php';
+		// check webid install...
+		
+		echo 'Complete, now to <b><a href="?step=2&n=1">step 2</a></b>';
+	}
+}
+if ($step == 1)
+{
+	echo '<b>Step 1:</b> Writting config file...<br>';
+	$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
+	// generate config file
+	$content = '<?php';
+	$content .= '$DbHost	 = "' . $_POST['DBHost'] . '";';
+	$content .= '$DbDatabase = "' . $_POST['DBName'] . '";';
+	$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";';
+	$content .= '$DbPassword = "' . $_POST['DBPass'] . '";';
+	$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";';
+	$content .= '$main_path	= "' . $path . '";';
+	$content .= '?>';
+	$output = makeconfigfile($content, $path);
+	if ($output)
+	{
+		echo 'Complete, now to <b><a href="?step=2&n=1">step 2</a></b>';
+	}
+	else
+	{
+		echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
+		echo '<p><textarea style="width:500px; height:500px;">' . $content . '</textarea></p>';
+		echo 'Once you\'ve done this, you can continue to <b><a href="?step=2&n=1">step 2</a></b>';
+	}
+}
+
+// OLD STUFF...
 switch($step)
 {
 	case 2:
@@ -73,7 +128,7 @@ $main_path	= "'.$path.'";
 	</td>
 	<td rowspan="2">
 	  The url &amp; location of the webid installation on your server. It's usually best to leave these as they are.<br>
-	  Also if your running on windows at the end of the <b>Doument Root</b> there should be a \\ (double backslash)
+	  Also if your running on a windows server at the end of the <b>Doument Root</b> there should be a \\ (double backslash)
 	</td>
   </tr>
   <tr>

@@ -6,5 +6,8 @@
 - Removed option to enabled/ disable link to message boards
 - Removed options to edit sites background/pagewidth and page alignment via admin panel
 - Fixed a bug where payments methods wernt being set in the database
+- Fixed advanced search & search pagnation (Bug #128)
+- Fixed buying & pay pages so the buyer only has to pay shipping when seller has selected buyer pays shipping
+- Fixed feedback page so it shows corrent username
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

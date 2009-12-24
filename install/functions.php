@@ -12,41 +12,286 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
  
-function getmainpath(){
+function getmainpath()
+{
 	$path = getcwd();
 	$path = str_replace('install', '', $path);
 	return $path;
 }
 
-function getdomainpath(){
+function getdomainpath()
+{
 	$path = 'http://' . dirname($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 	if (strlen($path) < 12)
+	{
 		$path = 'http://' . dirname($_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
+	}
 	$path = str_replace('install', '', $path);
 	return $path;
 }
 
-function makeconfigfile($contents){
-	global $_POST;
-	$filename = $_POST['mainpath'] . "includes/config.inc.php";
-	if (!file_exists($filename)) {
-		touch($filename);
+function makeconfigfile($contents, $main_path)
+{
+	$filename = $main_path . 'includes/config.inc.php';
+	$altfilename = $main_path . 'includes/config.inc.php.new';
+
+	if (!file_exists($filename))
+	{
+		if (file_exists($altfilename))
+		{
+			rename($altfilename, $filename);
+		}
+		else
+		{
+			touch($filename);
+		}
 	}
 	
-	@chmod($filename,0777);
+	@chmod($filename, 0777);
 	
-	if (is_writable($filename)){
+	if (is_writable($filename))
+	{
 		if (!$handle = fopen($filename, 'w')) 
+		{
 			$return = false;
-		else {
+		}
+		else
+		{
 			if (fwrite($handle, $contents) === false)
+			{
 				$return = false;
+			}
 			else
+			{
 				$return = true;
+			}
 		}
 		fclose($handle);
-	} else
+	}
+	else
+	{
 		$return = false;
+	}
+
 	return $return;
+}
+
+function check_version()
+{
+	global $system, $DBPrefix;
+
+	// check if using an old version
+	if (!isset($system->SETTINGS['version']))
+	{
+		$version = file_get_contents('../includes/version.txt') or die('error');
+		$query = "ALTER TABLE `" . $DBPrefix . "settings` ADD `version` varchar(10) NOT NULL default '" . $version . "'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		return $version;
+	}
+
+	return $system->SETTINGS['version'];
+}
+
+function this_version()
+{
+	return file_get_contents('thisversion.txt') or die('error');
+}
+
+function show_config_table($fresh = true)
+{
+	$main_path = getmainpath();
+
+	$data = '<form name="form1" method="post" action="?step=1">';
+	$data .= '<table cellspacing="1" border="1" style="border-collapse:collapse;" cellpadding="6">';
+	$data .= '<tr>';
+	$data .= '	<td width="140">URL</td>';
+	$data .= '	<td width="108">';
+	$data .= '	  <input type="text" name="URL" id="textfield" value="' . getdomainpath() . '">';
+	$data .= '	</td>';
+	$data .= '	<td rowspan="2">';
+	$data .= '	  The url &amp; location of the webid installation on your server. It\'s usually best to leave these as they are.<br>';
+	$data .= '	  Also if your running on windows at the end of the <b>Doument Root</b> there should be a \\\\ (double backslash)';
+	$data .= '	</td>';
+	$data .= '  </tr>';
+	$data .= '  <tr>';
+	$data .= '	<td>Doument Root</td>';
+	$data .= '	<td>';
+	$data .= '	  <input type="text" name="mainpath" id="textfield" value="' . $main_path . '">';
+	$data .= '	</td>';
+	$data .= '</tr>';
+	if ($fresh)
+	{
+		$data .= '<tr>';
+		$data .= '	<td>Email Address</td>';
+		$data .= '	<td>';
+		$data .= '	  <input type="text" name="EMail" id="textfield">';
+		$data .= '	</td>';
+		$data .= '	<td>The admin email address</td>';
+		$data .= '</tr>';
+	}
+	$data .= '<tr>';
+	$data .= '	<td>Database Host</td>';
+	$data .= '	<td>';
+	$data .= '	  <input type="text" name="DBHost" id="textfield" value="localhost">';
+	$data .= '	</td>';
+	$data .= '	<td>The location of your MySQL database in most cases its just localhost</td>';
+	$data .= '  </tr>';
+	$data .= '  <tr>';
+	$data .= '	<td>Database Username</td>';
+	$data .= '	<td>';
+	$data .= '	  <input type="text" name="DBUser" id="textfield">';
+	$data .= '	</td>';
+	$data .= '	<td rowspan="3">The username, password and database name of the database your installing webid on</td>';
+	$data .= '  </tr>';
+	$data .= '  <tr>';
+	$data .= '	<td>Database Password</td>';
+	$data .= '	<td>';
+	$data .= '	  <input type="text" name="DBPass" id="textfield">';
+	$data .= '	</td>';
+	$data .= '  </tr>';
+	$data .= '  <tr>';
+	$data .= '	<td>Database Name</td>';
+	$data .= '	<td>';
+	$data .= '	  <input type="text" name="DBName" id="textfield">';
+	$data .= '	</td>';
+	$data .= '  </tr>';
+	$data .= '  <tr>';
+	$data .= '	<td>Database Prefix</td>';
+	$data .= '	<td>';
+	$data .= '	  <input type="text" name="DBPrefix" id="textfield" value="webid_">';
+	$data .= '	</td>';
+	$data .= '	<td>the prefix of the webid tables in the database, used so you can install multiple scripts in the same database without issues.</td>';
+	$data .= '</tr>';
+	if ($fresh)
+	{
+		$data .= '<tr>';
+		$data .= '	<td>Import Default Categories</td>';
+		$data .= '	<td>';
+		$data .= '	  <input type="checkbox" name="importcats" id="checkbox" checked="checked">';
+		$data .= '	</td>';
+		$data .= '	<td>Leaving this checked is recommened. But you make want to uncheck it if your auction site is a specalist niche and will need custom catergories.</td>';
+		$data .= '</tr>';
+	}
+	$data .= '</table>';
+
+	if ($fresh)
+	{
+		$directories = array(
+			'cache/',
+			'uploaded/',
+			'uploaded/banners/',
+			'uploaded/cache/'
+			);
+
+		umask(0);
+
+		$passed = true;
+		foreach ($directories as $dir)
+		{
+			$exists = $write = false;
+
+			// Try to create the directory if it does not exist
+			if (!file_exists($main_path . $dir))
+			{
+				@mkdir($main_path . $dir, 0777);
+				@chmod($main_path . $dir, 0777);
+			}
+
+			// Now really check
+			if (file_exists($main_path . $dir) && is_dir($main_path . $dir))
+			{
+				$exists = true;
+			}
+
+			// Now check if it is writable by storing a simple file
+			$fp = @fopen($main_path . $dir . 'test_lock', 'wb');
+			if ($fp !== false)
+			{
+				$write = true;
+			}
+			@fclose($fp);
+
+			@unlink($main_path . $dir . 'test_lock');
+
+			if (!$exists || !$write)
+			{
+				$passed = false;
+			}
+
+			$data .= '<tr><td>' . $dir . ':</td><td>';
+			$data .= ($exists) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+			$data .= ($write) ? ', <strong style="color:green">Writable</strong>' : (($exists) ? ', <strong style="color:red">Unwritable</strong>' : '');
+			$data .= '</tr>';
+		}
+
+		$directories = array(
+			'includes/config.inc.php',
+			'includes/countries.inc.php',
+			'includes/currencies.php',
+			'includes/membertypes.inc.php',
+			'language/EN/categories.inc.php',
+			'language/EN/categories_select_box.inc.php'
+			);
+
+		foreach ($directories as $dir)
+		{
+			$write = $exists = true;
+			if (file_exists($main_path . $dir))
+			{
+				if (!@is_writable($main_path . $dir))
+				{
+					$write = false;
+				}
+			}
+			else
+			{
+				$write = $exists = false;
+			}
+
+			if (!$exists || !$write)
+			{
+				$passed = false;
+			}
+
+			$data .= '<tr><td>' . $dir . ':</td><td>';
+			$data .= ($exists) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+			$data .= ($write) ? ', <strong style="color:green">Writable</strong>' : (($exists) ? ', <strong style="color:red">Unwritable</strong>' : '');
+			$data .= '</tr>';
+		}
+
+		$functions = array(
+			'imagecreate',
+			'imagecreatetruecolor',
+			'imagecolorallocate',
+			'imagefilledrectangle',
+			'imagestring',
+			'imagepng',
+			'imagealphablending',
+			'imagecopyresampled'
+			);
+
+		$gd_pass = true;
+		foreach ($functions as $func)
+		{
+			if (!function_exists($func))
+			{
+				$data .= $func;
+				$gd_pass = false;
+			}
+		}
+
+		$data .= '<tr><td>GD Support:</td><td>';
+		$data .= ($gd_pass) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+		$data .= '</tr>';
+
+		$data .= '</table>';
+	}
+
+	$data .= '<br>';
+	$data .= '<input type="submit" value="install">';
+	$data .= '</form>';
+
+	return $data;
 }
 ?>

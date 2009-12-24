@@ -60,7 +60,7 @@ $DbPassword = "'.$_POST['DBPass'].'";
 $DBPrefix	= "'.$_POST['DBPrefix'].'";
 $main_path	= "'.$path.'";
 ?>';
-		$output = makeconfigfile($content);
+		$output = makeconfigfile($content, $path);
 		if ($output)
 		{
 			echo 'Complete, now to <b><a href="?step=2&URL='.$_POST['URL'].'&EMail='.$_POST['EMail'].'&cats='.$cats.'&n=1">step 2</a></b>';

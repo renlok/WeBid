@@ -18,9 +18,9 @@ include $include_path . 'dates.inc.php';
 
 $NOW = time();
 
-$query = $system->cleanvars(trim($_GET['q']));
+$term = $system->cleanvars(trim($_GET['q']));
 
-if (strlen($query) == 0)
+if (strlen($term) == 0)
 {
 	$template->assign_vars(array(
 			'ERROR' => $ERR_037,
@@ -30,41 +30,37 @@ if (strlen($query) == 0)
 }
 else
 {
-	$sql = "SELECT * FROM " . $DBPrefix . "auctions WHERE " . $qp1 . "
-			(title LIKE '%" . $query . "%' OR id = " . intval($query) . ")
+	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE
+			(title LIKE '%" . $term . "%' OR id = " . intval($term) . ")
 			AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " AND ends > " . $NOW;
 
 	// retrieve records corresponding to passed page number
-	$PAGE = (int)$_GET['page'];
+	$PAGE = intval($_GET['PAGE']);
 	if ($PAGE == 0) $PAGE = 1;
 	$lines = 50;
 
 	// determine limits for SQL query
 	$left_limit = ($PAGE - 1) * $lines;
 
-	/* get total number of records */
-	$rsl = mysql_query($sql);
-	$system->check_mysql($rsl, $sql, __LINE__, __FILE__);
+	// get total number of records
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$total = mysql_num_rows($res);
 
-	$hash = mysql_fetch_array($rsl);
-	$total = (int)$hash[0];
+	// get number of pages
+	$PAGES = ceil($total / $lines);
 
-	/* get number of pages */
-	$PAGES = (int)($total / $lines);
-	if (($total % $lines) > 0)
-		++$PAGES;
+	$query_ = $query . " ORDER BY ends LIMIT " . $left_limit . ", " . $lines;
+	$res = mysql_query($query_);
+	$system->check_mysql($res, $query_, __LINE__, __FILE__);
 
-	$query = $sql . " ORDER BY ends LIMIT " . $left_limit . ", " . $lines;
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-
-	$query = $sql . " AND featured = 'y' ORDER BY ends LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
-	$feat_res = mysql_query($query);
-	$system->check_mysql($feat_res, $query, __LINE__, __FILE__);
+	$query_ = $query . " AND featured = 'y' ORDER BY ends LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
+	$feat_res = mysql_query($query_);
+	$system->check_mysql($feat_res, $query_, __LINE__, __FILE__);
 
 	// to be sure about items format, I've unified the call
 	include $include_path . 'browseitems.inc.php';
-	browseItems($result, $feat_res, 'search.php');
+	browseItems($res, $feat_res, $total, 'search.php', 'q=' . $term);
 }
 
 include 'header.php';

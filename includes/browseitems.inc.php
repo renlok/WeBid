@@ -14,10 +14,10 @@
 
 if (!defined('InWeBid')) exit();
 
-function browseItems($result, $feat_res, $current_page)
+function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
 {
 	global $system, $uploaded_path, $DBPrefix, $MSG, $ERR_114;
-	global $id, $template, $PAGES, $PAGE;
+	global $template, $PAGES, $PAGE;
 
 	$feat_items = false;
 	if ($feat_res != false)
@@ -78,6 +78,7 @@ function browseItems($result, $feat_res, $current_page)
 		$k++;
 	}
 
+	$extravar = (empty($extravar)) ? '' : '&' . $extravar;
 	$PREV = intval($PAGE - 1);
 	$NEXT = intval($PAGE + 1);
 	if ($PAGES > 1)
@@ -88,7 +89,7 @@ function browseItems($result, $feat_res, $current_page)
 		while ($COUNTER <= $PAGES && $COUNTER < ($PAGE+6))
 		{
 			$template->assign_block_vars('pages', array(
-				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $COUNTER . '&id=' . $id . '"><u>' . $COUNTER . '</u></a>'
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $COUNTER . $extravar . '"><u>' . $COUNTER . '</u></a>'
 			));
 			$COUNTER++;
 		}
@@ -96,10 +97,9 @@ function browseItems($result, $feat_res, $current_page)
 
 	$template->assign_vars(array(
 		'B_FEATURED_ITEMS' => $feat_items,
-		'NUM_AUCTIONS' => ($k == 0) ? $ERR_114 : $k,
-		'ID' => $id,
-		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $PREV . '&id=' . $id . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
-		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $NEXT . '&id=' . $id . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+		'NUM_AUCTIONS' => ($total == 0) ? $ERR_114 : $total,
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $PREV . $extravar . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $NEXT . $extravar . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES
 	));

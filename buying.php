@@ -22,7 +22,7 @@ if (!$user->logged_in)
 }
 
 // Get closed auctions with winners
-$query = "SELECT a.id, a.qty, a.seller, a.paid, a.feedback_sel, a.bid, a.auction, b.title, b.ends, b.shipping_cost, u.nick, u.email
+$query = "SELECT a.id, a.qty, a.seller, a.paid, a.feedback_sel, a.bid, a.auction, b.title, b.ends, b.shipping_cost, b.shipping, u.nick, u.email
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.seller)
@@ -35,6 +35,9 @@ $sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] =
 
 while ($row = mysql_fetch_assoc($res))
 {
+	$totalcost = ($row['qty'] > 1) ? ($row['bid'] * $row['qty']) : $row['bid'];
+	$totalcost = ($row['shipping'] == 2) ? $totalcost : ($totalcost + $row['shipping_cost']);
+
 	$template->assign_block_vars('items', array(
 			'ID' => $row['id'],
 			'AUC_ID' => $row['auction'],
@@ -43,7 +46,7 @@ while ($row = mysql_fetch_assoc($res))
 			'BID' => $row['bid'],
 			'FBID' => $system->print_money($row['bid']),
 			'QTY' => ($row['qty'] > 0) ? $row['qty'] : 1,
-			'TOTAL' => ($row['qty'] > 1) ? $system->print_money($row['bid'] * $row['qty'] + $row['shipping_cost']) : $system->print_money($row['bid'] + $row['shipping_cost']),
+			'TOTAL' => $system->print_money($totalcost),
 			'B_PAID' => ($row['paid'] == 1),
 
 			'SELLNICK' => $row['nick'],

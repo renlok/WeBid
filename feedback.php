@@ -132,7 +132,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 
 if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets user details
 {
-	$secid = ($ws == 's') ? $_REQUEST['sid'] : $_REQUEST['wid'];
+	$secid = ($ws == 'w') ? $_REQUEST['sid'] : $_REQUEST['wid'];
 	if ($_REQUEST['sid'] == $user->user_data['id'])
 	{
 		$them = $_REQUEST['wid'];

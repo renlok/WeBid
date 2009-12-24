@@ -40,7 +40,7 @@ switch($_GET['a'])
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['25_0012'];
 		break;
 	case 2:
-		$query = "SELECT w.id, a.title, a.shipping_cost, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
+		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
 				u.id As uid, u.nick FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
@@ -60,7 +60,7 @@ switch($_GET['a'])
 		$extrastring = sprintf($MSG['778'], $data['uid'], $data['nick']);
 		$an_paytoid = $data['authnet_id'];
 		$an_paytopass = $data['authnet_pass'];
-		$payvalue = $data['shipping_cost'] + $data['bid'];
+		$payvalue = ($data['shipping'] == 1) ? $data['shipping_cost'] + $data['bid'] : $data['bid'];
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];

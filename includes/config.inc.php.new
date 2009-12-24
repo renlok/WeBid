@@ -1,0 +1,8 @@
+<?php
+$DbHost	 = "localhost";
+$DbDatabase = ""; // database name
+$DbUser	 = ""; // database username
+$DbPassword = ""; // database password
+$DBPrefix	= "";
+$main_path	= ""; // server path to your webid installation
+?>

@@ -1485,7 +1485,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `bn_only` enum('y','n') NOT NULL default 'n',
   `winner_address` enum('y','n') NOT NULL default 'n',
   `boardsmsgs` int(11) NOT NULL default '0',
-  `activationtype` INT(1) NOT NULL DEFAULT  1',
+  `activationtype` INT(1) NOT NULL DEFAULT '1',
   `https` enum('y','n') NOT NULL default 'n',
   `bn_only_disable` enum('y','n') NOT NULL default 'n',
   `bn_only_percent` int(3) NOT NULL default '50',

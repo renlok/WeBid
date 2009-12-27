@@ -113,7 +113,7 @@ function check_installation($else = true)
 	// check webid install...
 	$query = "SELECT * FROM `" . $DBPrefix . "settings`";
 	$res = mysql_query($query);
-	if ($res !=== false)
+	if ($res != false)
 		return 'Complete, now to <b><a href="?step=2">step 2</a></b>';
 	else
 	{

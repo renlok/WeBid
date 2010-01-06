@@ -51,7 +51,7 @@ $oFCKeditor->Value = stripslashes($system->SETTINGS['acceptancetext']);
 $oFCKeditor->Width  = '550';
 $oFCKeditor->Height = '400';
 
-loadblock($MSG['5078'], $MSG['5080'], $oFCKeditor->CreateHtml());
+loadblock($MSG['594'], $MSG['5080'], $oFCKeditor->CreateHtml());
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

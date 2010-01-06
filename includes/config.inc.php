@@ -1,3 +1,4 @@
 <?php
-echo '<script type="text/javascript">window.location = "install/install.php";</script>';
+if (!defined('InInstaller'))
+	echo '<script type="text/javascript">window.location = "install/install.php";</script>';
 ?>

@@ -78,6 +78,7 @@ function makeconfigfile($contents, $main_path)
 
 function print_header($update)
 {
+	global $thisversion;
 	if ($update)
 	{
 		global $_SESSION;
@@ -87,6 +88,10 @@ function print_header($update)
 		}
 
 		return '<h1>WeBid Updater, v' . $_SESSION['oldversion'] . ' to v' . $thisversion . '</h1>';
+	}
+	else
+	{
+		return '<h1>WeBid Installer v' . $thisversion . '</h1>';
 	}
 }
 
@@ -107,26 +112,27 @@ function check_version()
 	return $system->SETTINGS['version'];
 }
 
-function check_installation($else = true)
+function check_installation()
 {
-	include '../includes/common.inc.php';
+	include '../includes/config.inc.php';
+	@mysql_connect($DbHost, $DbUser, $DbPassword);
+	@mysql_select_db($DbDatabase);
+	$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
 	// check webid install...
 	$query = "SELECT * FROM `" . $DBPrefix . "settings`";
-	$res = mysql_query($query);
+	$res = @mysql_query($query);
 	if ($res != false)
-		return 'Complete, now to <b><a href="?step=2">step 2</a></b>';
+		return true;
 	else
 	{
-		if ($else)
-		{
-			return 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
-		}
+		return false;
 	}
 }
 
 function this_version()
 {
-	return file_get_contents('thisversion.txt') or die('error');
+	$string = file_get_contents('thisversion.txt') or die('error');
+	return $string;
 }
 
 function show_config_table($fresh = true)
@@ -208,6 +214,11 @@ function show_config_table($fresh = true)
 
 	if ($fresh)
 	{
+		$data .= '<br>';
+		$data .= '<table cellspacing="1" border="1" style="border-collapse:collapse;" cellpadding="6" width="400px">';
+		$data .= '<tr>';
+		$data .= '	<td colspan="2"><b>File Checks:</b></td>';
+		$data .= '</tr>';
 		$directories = array(
 			'cache/',
 			'uploaded/',
@@ -320,7 +331,10 @@ function show_config_table($fresh = true)
 	}
 
 	$data .= '<br>';
-	$data .= '<input type="submit" value="install">';
+	if ($fresh && $passed || !$fresh)
+	{
+		$data .= '<input type="submit" value="install">';
+	}
 	$data .= '</form>';
 
 	return $data;

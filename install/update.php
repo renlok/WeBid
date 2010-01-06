@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 include 'functions.php';
+define('InInstaller', 1);
 
 $main_path = getmainpath();
 /*
@@ -33,7 +34,7 @@ if ($step == 0)
 	{
 		$thisversion = this_version();
 		$myversion = check_version();
-		echo print_header($update);
+		echo print_header(true);
 		echo show_config_table(false);
 	}
 	else
@@ -41,22 +42,29 @@ if ($step == 0)
 		$check = check_installation();
 		$thisversion = this_version();
 		$myversion = check_version();
-		echo print_header($update);
-		echo $check;
+		echo print_header(true);
+		if (!$check)
+		{
+			echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
+		}
+		else
+		{
+			echo 'Now to <b><a href="?step=1">step 1</a></b>';
+		}
 	}
 }
 if ($step == 1)
 {
-	$toecho = '<b>Step 1:</b> Writting config file...<br>';
+	$toecho = '<p><b>Step 1:</b> Writting config file...</p>';
 	$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
 	// generate config file
-	$content = '<?php';
-	$content .= '$DbHost	 = "' . $_POST['DBHost'] . '";';
-	$content .= '$DbDatabase = "' . $_POST['DBName'] . '";';
-	$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";';
-	$content .= '$DbPassword = "' . $_POST['DBPass'] . '";';
-	$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";';
-	$content .= '$main_path	= "' . $path . '";';
+	$content = '<?php' . "\n";
+	$content .= '$DbHost	 = "' . $_POST['DBHost'] . '";' . "\n";
+	$content .= '$DbDatabase = "' . $_POST['DBName'] . '";' . "\n";
+	$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";' . "\n";
+	$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
+	$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
+	$content .= '$main_path	= "' . $path . '";' . "\n";
 	$content .= '?>';
 	$output = makeconfigfile($content, $path);
 	if ($output)
@@ -64,15 +72,22 @@ if ($step == 1)
 		$check = check_installation();
 		$thisversion = this_version();
 		$myversion = check_version();
-		echo print_header($update);
+		echo print_header(true);
 		echo $toecho;
-		echo $check;
+		if (!$check)
+		{
+			echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
+		}
+		else
+		{
+			echo 'Complete, now to <b><a href="?step=2">step 2</a></b>';
+		}
 	}
 	else
 	{
 		$thisversion = this_version();
 		$myversion = check_version();
-		echo print_header($update);
+		echo print_header(true);
 		echo $toecho;
 		echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
 		echo '<p><textarea style="width:500px; height:500px;">' . $content . '</textarea></p>';
@@ -84,8 +99,12 @@ if ($step == 2)
 	$check = check_installation();
 	$thisversion = this_version();
 	$myversion = check_version();
-	echo print_header($update);
-	echo $check;
+	echo print_header(true);
+	if (!$check)
+	{
+		echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
+		exit;
+	}
 	include 'sql/updatedump.inc.php';
 	for ($i = 0; $i < count($query); $i++)
 	{
@@ -104,8 +123,12 @@ if ($step == 3)
 	$check = check_installation();
 	$thisversion = this_version();
 	$myversion = check_version();
-	echo print_header($update);
-	echo $check;
+	echo print_header(true);
+	if (!$check)
+	{
+		echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
+		exit;
+	}
 	include $include_path . 'functions_rebuild.inc.php';
 	echo 'Rebuilding membertypes...<br>';
 	rebuild_table_file('membertypes');

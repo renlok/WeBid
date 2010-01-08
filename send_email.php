@@ -100,7 +100,7 @@ if (isset($_POST['action']) || !empty($_POST['action']))
 		$emailer->email_uid = $seller_id;
 		$emailer->email_sender($seller_email, 'send_email.inc.php', $subject);
 		$query = "INSERT INTO " . $DBPrefix . "messages (sentto, " . $id_type . ", sentat, message, subject, question)
-				VALUES (" . $seller_id . ", " . $from_id . ", '" . time() . "', '" . $cleaned_question . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "', " . $auction_id . ")";
+				VALUES (" . $seller_id . ", '" . $from_id . "', '" . time() . "', '" . $cleaned_question . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "', " . $auction_id . ")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 }

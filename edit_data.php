@@ -140,14 +140,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$TPL_err = 1;
 			$ERR = $ERR_5040;
 		}
-		elseif ((empty($_POST['TPL_day']) && empty($_POST['TPL_month']) && empty($_POST['TPL_year'])) || !checkdate($_POST['TPL_month'], $_POST['TPL_day'], $_POST['TPL_year']))
+		elseif (!empty($_POST['TPL_day']) && !empty($_POST['TPL_month']) && !empty($_POST['TPL_year']) && !checkdate($_POST['TPL_month'], $_POST['TPL_day'], $_POST['TPL_year']))
 		{
 			$TPL_err = 1;
 			$ERR = $ERR_117;
 		}
 		else
 		{
-			$TPL_birthdate = $_POST['TPL_year'] . $_POST['TPL_month'] . $_POST['TPL_day'];
+			if (!empty($_POST['TPL_day']) && !empty($_POST['TPL_month']) && !empty($_POST['TPL_year']))
+			{
+				$TPL_birthdate = $_POST['TPL_year'] . $_POST['TPL_month'] . $_POST['TPL_day'];
+			}
+			else
+			{
+				$TPL_birthdate = '';
+			}
 
 			$query = "UPDATE " . $DBPrefix . "users SET email='" . $system->cleanvars($_POST['TPL_email']) . "',
 					birthdate = '" . ((empty($TPL_birthdate)) ? 0 : $TPL_birthdate) . "',

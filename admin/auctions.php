@@ -53,7 +53,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  ae_extend = " . intval($_POST['extend']) . ",
 				  picturesgallery = " . $_POST['picturesgallery'] . ",
 				  maxpictures = " . $_POST['maxpictures'] . ",
-				  maxuploadsize = " . ($_POST['maxpicturesize'] * 1024) . "
+				  maxuploadsize = " . ($_POST['maxpicturesize'] * 1024) . ",
 				  thumb_show = " . intval($_POST['thumb_show']);
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['5088'];

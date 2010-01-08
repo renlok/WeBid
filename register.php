@@ -152,9 +152,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 	}
 	else
 	{
-		$birth_day = $_POST['TPL_day'];
-		$birth_month = $_POST['TPL_month'];
-		$birth_year = $_POST['TPL_year'];
+		$birth_day = (isset($_POST['TPL_day'])) ? $_POST['TPL_day'] : '';
+		$birth_month = (isset($_POST['TPL_month'])) ? $_POST['TPL_month'] : '';
+		$birth_year = (isset($_POST['TPL_year'])) ? $_POST['TPL_year'] : '';
 		$DATE = $birth_year . $birth_month . $birth_day;
 
 		if ($system->SETTINGS['spam_register'] == 2)

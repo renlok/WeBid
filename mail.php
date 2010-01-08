@@ -86,7 +86,7 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	$to_id = ($email) ? $sendto : $userarray['id'];
 	$id_type = ($email) ? 'fromemail' : 'sentto';
 	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, sentat, message, subject, reply_of, question)
-			VALUES (" . $to_id . ", " . $user->user_data['id'] . ", " . time() . ", '" . $nowmessage . "', '" . $subject . "', " . $_SESSION['reply_of' . $_POST['hash']] . ", " . $_SESSION['question' . $_POST['hash']] . ")";
+			VALUES ('" . $to_id . "', " . $user->user_data['id'] . ", " . time() . ", '" . $nowmessage . "', '" . $subject . "', " . $_SESSION['reply_of' . $_POST['hash']] . ", " . $_SESSION['question' . $_POST['hash']] . ")";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 	if (isset($_POST['is_question']) && isset($_SESSION['reply_of' . $_POST['hash']]) && $_SESSION['reply_of' . $_POST['hash']] > 0)
@@ -237,10 +237,12 @@ $template->assign_vars(array(
 
 while ($array = mysql_fetch_array($res))
 {
+	$sender = ($array['sentfrom'] == 0) ? 'Admin' : '<a href="profile.php?user_id=' . $array['sentfrom'] . '">' . $array['nick'] . '</a>';
+	$sender = (!empty($array['fromemail'])) ? $array['fromemail'] : $sender;
 	$template->assign_block_vars('msgs', array(
 			'SENT' => gmdate('M d, Y H:ia', $array['sentat'] + $system->tdiff),
 			'ID' => $array['id'],
-			'SENDER' => ($array['sentfrom'] == 0) ? 'Admin' : '<a href="profile.php?user_id=' . $array['sentfrom'] . '">' . $array['nick'] . '</a>',
+			'SENDER' => $sender,
 			'SUBJECT' => ($array['isread'] == 0) ? '<b>' . $array['subject'] . '</b>' : $array['subject']
 			));
 }

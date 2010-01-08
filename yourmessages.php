@@ -45,11 +45,13 @@ $array['message'] = str_replace('<br>', '', $array['message']);
 
 if ($array['sentfrom'] == 0 && !empty($array['fromemail']))
 {
-	$senderusername = $array['fromemail'];
+	$sendusername = $array['fromemail'];
+	$senderlink = $sendusername;
 }
 elseif ($array['sentfrom'] == 0 && empty($array['fromemail']))
 {
-	$senderusername = $MSG['110'];
+	$sendusername = $MSG['110'];
+	$senderlink = $sendusername;
 }
 else
 {

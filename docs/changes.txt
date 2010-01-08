@@ -1,4 +1,4 @@
-0.9.0 - 02/12/09
+1.0.0 - 02/12/09
 -----------------------------
 - Reorganised a few of the admin pages and merged some with similar options to make it easier to use
 - Added a version check to the admin homepage
@@ -10,5 +10,6 @@
 - Fixed buying & pay pages so the buyer only has to pay shipping when seller has selected buyer pays shipping
 - Fixed feedback page so it shows corrent username
 - Improved the update script so it is possible to upgrade quickly though multiple version also it updates cache files so not so many things mess up when you do an update
+- Fixed the PM system for when the sender of a question is logged out (using just an email)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -83,8 +83,8 @@ switch ($_SESSION['cptab'])
 	case 'summary':
 		$reminders = get_reminders($user->user_data['id']);
 		$template->assign_vars(array(
-				'NEWMESSAGES' => ($reminders[0] > 0) ? $reminders[0] . ' ' . $MSG['508'] . '<br>' : '',
-				'FBTOLEAVE' => ($reminders[1] > 0) ? $reminders[1] . $MSG['072'] . '<br>' : '',
+				'NEWMESSAGES' => ($reminders[0] > 0) ? $reminders[0] . ' ' . $MSG['508'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'mail.php">' . $MSG['5295'] . '</a>)<br>' : '',
+				'FBTOLEAVE' => ($reminders[1] > 0) ? $reminders[1] . $MSG['072'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'buysellnofeedback.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'NO_REMINDERS' => (($reminders[0] + $reminders[1]) == 0) ? $MSG['510'] : '',
 				));
 		break;

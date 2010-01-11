@@ -48,18 +48,17 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 		$query = "SELECT winner, seller, feedback_win, feedback_sel, paid FROM " . $DBPrefix . "winners
 				WHERE auction = " . $_REQUEST['auction_id'] . "
 				AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']) . "
-				AND ((seller = " . $user->user_data['id'] . " AND feedback_win = 0)
-				OR (winner = " . $user->user_data['id'] . " AND feedback_sel = 0))";
+				AND ((seller = " . $user->user_data['id'] . " AND feedback_sel = 0)
+				OR (winner = " . $user->user_data['id'] . " AND feedback_win = 0))";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		if (mysql_num_rows($res) > 0)
 		{
-			// winner/seller check
-			$ws = ($user->user_data['id'] == $wsell['winner']) ? 'w' : 's';
-
 			if ($user->user_data['nick'] != $_POST['TPL_nick_hidden'])
 			{
 				$wsell = mysql_fetch_assoc($res);
+				// winner/seller check
+				$ws = ($user->user_data['id'] == $wsell['winner']) ? 'w' : 's';
 				if ((intval($_REQUEST['sid']) == $user->user_data['id'] && $wsell['feedback_sel'] == 1) || (intval($_REQUEST['wid']) == $user->user_data['id'] && $wsell['feedback_win'] == 1))
 				{
 					$TPL_err = 1;
@@ -72,7 +71,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 					{
 						$secTPL_rater_nick = $user->user_data['nick'];
 						$secTPL_feedback = ereg_replace("\n", '<br>', $_POST['TPL_feedback']);
-						$uid = ($ws == 's') ? $_REQUEST['sid'] : $_REQUEST['wid'];
+						$uid = ($ws == 'w') ? $_REQUEST['sid'] : $_REQUEST['wid'];
 						$sql = "UPDATE " . $DBPrefix . "users SET rate_sum = rate_sum + " . $_POST['TPL_rate'] . ", rate_num = rate_num + 1 WHERE id = " . intval($uid);
 						$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
 						if ($system->SETTINGS['wordsfilter'] == 'y')

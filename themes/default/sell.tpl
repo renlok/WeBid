@@ -122,7 +122,7 @@ $(document).ready(function(){
 	function updatefee(newfee){
 		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
 		$("#fee_exact").val(nowfee);
-		nowfee = Math.round(nowfee*1{FEE_DECIMALS})/1{FEE_DECIMALS} - current_fee;
+		nowfee = Math.round(nowfee*1{FEE_DECIMALS})/1{FEE_DECIMALS};
 		if (nowfee < 0){
 			nowfee = 0;
 		}

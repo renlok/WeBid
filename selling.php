@@ -23,7 +23,7 @@ if (!$user->logged_in)
 
 if (isset($_GET['paid']))
 {
-	echo $query = "UPDATE " . $DBPrefix . "winners SET paid = 1 WHERE id = " . intval($_GET['paid']) . " AND seller = " . $user->user_data['id'];
+	$query = "UPDATE " . $DBPrefix . "winners SET paid = 1 WHERE id = " . intval($_GET['paid']) . " AND seller = " . $user->user_data['id'];
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 }
 
@@ -56,7 +56,7 @@ while ($row = mysql_fetch_array($res))
 	while ($winner = mysql_fetch_array($rr))
 	{
 		$bgColor = ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB';
-		$fblink = ($winner['feedback_win'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $winner['winner'] . '&sid=' . $winner['seller'] . '&ws=w">' . $MSG['207'] . '</a>)' : '';
+		$fblink = ($winner['feedback_sel'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $winner['winner'] . '&sid=' . $winner['seller'] . '&ws=s">' . $MSG['207'] . '</a>)' : '';
 		$template->assign_block_vars('a.w', array(
 				'BGCOLOUR' => $bgColor,
 				'ID' => $winner['id'],

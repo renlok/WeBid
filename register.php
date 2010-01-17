@@ -284,7 +284,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $system->cleanvars($_POST['TPL_country']) . "',
 						'" . $system->cleanvars($_POST['TPL_zip']) . "',
 						'" . $system->cleanvars($_POST['TPL_phone']) . "',
-						'" . $system->cleanvars($_POST['TPL_nletter']) . "',
+						'" . intval($_POST['TPL_nletter']) . "',
 						'" . $system->cleanvars($_POST['TPL_email']) . "',
 						'" . time() . "',
 						'" . ((!empty($DATE)) ? $DATE : 0) . "',

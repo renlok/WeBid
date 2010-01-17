@@ -284,19 +284,19 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 					{
 						if ($system->SETTINGS['fee_type'] == 1 || $buyer_fee <= 0)
 						{
-							$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $buyer_fee . " WHERE id = " . $Winner['id'];
+							$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $buyer_fee . " WHERE id = " . $row['bidder'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						}
 						else
 						{
 							$bf_paid = 0;
-							$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $Winner['id'];
+							$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $row['bidder'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						}
 						$buyer_emails[] = array(
 							'name' => $Winner['name'],
 							'email' => $Winner['email'],
-							'uid' => $Winner['id'],
+							'uid' => $row['bidder'],
 							'id' => $Auction['id'],
 							'title' => $Auction['title']
 							);

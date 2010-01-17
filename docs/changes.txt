@@ -11,5 +11,8 @@
 - Fixed feedback page so it shows corrent username
 - Improved the update script so it is possible to upgrade quickly though multiple version also it updates cache files so not so many things mess up when you do an update
 - Fixed the PM system for when the sender of a question is logged out (using just an email)
+- Fixed feedback
+- Fixed an sql error that occurs when newsletter is disabled
+- Fixed the % of positive feedback displayed on auction page
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

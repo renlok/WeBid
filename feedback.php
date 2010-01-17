@@ -192,7 +192,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 	$hash = mysql_fetch_assoc($res);
-	$total = (int)$hash['rate_sum'];
+	$total = $hash['rate_sum'];
 	$TPL_nick = $hash['nick'];
 	$TPL_feedbacks_num = $total;
 	// get number of pages

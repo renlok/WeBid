@@ -23,9 +23,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings set 
-			timecorrection = " . intval($_POST['timecorrection']);
+			 timecorrection = " . intval($_POST['timecorrection']) . "
+			 datesformat = '" . $_POST['datesformat'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['timecorrection'] = $_POST['timecorrection'];	
+	$system->SETTINGS['timecorrection'] = $_POST['timecorrection'];
+	$system->SETTINGS['datesformat'] = $_POST['datesformat'];
 	$ERR = $MSG['347'];
 }
 
@@ -83,6 +85,8 @@ $selectsetting = $system->SETTINGS['timecorrection'];
 
 $html = generateSelect('timecorrection', $TIMECORRECTION);
 
+//load the template
+loadblock($MSG['363'], $MSG['379'], 'datestacked', 'datesformat', $system->SETTINGS['datesformat'], array($MSG['382'], $MSG['383']));
 loadblock($MSG['346'], $MSG['345'], 'dropdown', 'timecorrection', $system->SETTINGS['timecorrection']);
 
 $template->assign_vars(array(

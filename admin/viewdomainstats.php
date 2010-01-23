@@ -13,17 +13,18 @@
  ***************************************************************************/
  
 include '../includes/common.inc.php';
-include $include_path.'domains.inc.php';
+include $include_path . 'domains.inc.php';
 
 $ABSOLUTEWIDTH = 550;
 
-#// Retrieve data
+// Retrieve data
 $query = "SELECT * FROM " . $DBPrefix . "currentdomains WHERE month = " . date('n') . " AND year = " . date('Y') . " ORDER BY domain";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $MAX = 0;
 $TOTAL = 0;
+$DOM = array();
 while ($row = mysql_fetch_array($res))
 {
 	$DOM[$row['domain']] = $row['counter'];

@@ -14,5 +14,9 @@
 - Fixed feedback
 - Fixed an sql error that occurs when newsletter is disabled
 - Fixed the % of positive feedback displayed on auction page
+- Fixed the advanced search so when searching closed auctions the buy it now option doesn't show
+- Fixed javascript in your closed auctions page
+- Fixed admin countries page so you can not edit/delete the countries
+- Fixed the registration page display feilds settings
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

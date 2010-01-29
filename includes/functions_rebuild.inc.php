@@ -65,7 +65,7 @@ function rebuild_table_file($table)
 
 function rebuild_html_file($table)
 {
-	global $DBPrefix, $system;
+	global $DBPrefix, $system, $include_path;
 	switch($table)
 	{
 		case 'countries':

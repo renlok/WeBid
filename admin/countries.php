@@ -34,7 +34,7 @@ if (isset($_POST['act']))
 			{
 				$query .= " OR ";
 			}
-			$query .= "country = '" . $system->cleanvars($_POST['old_countries'][$_POST['delete'][$i]]) . "'";
+			$query .= "country = '" . $system->cleanvars($_POST['delete'][$i]) . "'";
 		}
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
@@ -74,7 +74,7 @@ while ($i < count($countries))
 	
 	$template->assign_block_vars('countries', array(
 			'COUNTRY' => $countries[$i],
-			'SELECTBOX' => ($USEDINUSERS == 0) ? '<input type="checkbox" name="delete[]" value="' . $j . '">' : '<img src="../images/nodelete.gif" alt="You cannot delete this">'
+			'SELECTBOX' => ($USEDINUSERS == 0) ? '<input type="checkbox" name="delete[]" value="' . $countries[$i] . '">' : '<img src="../images/nodelete.gif" alt="You cannot delete this">'
 			));
 	$i++;
 }

@@ -18,10 +18,10 @@ if (!function_exists('GetLeftSeconds'))
 {
 	function GetLeftSeconds()
 	{
-		$today = getdate();
-		$month = $today['mon'];
-		$mday = $today['mday'];
-		$year = $today['year'];
+		$today = explode('|', gmdate('j|n|Y'));
+		$month = $today[1];
+		$mday = $today[0];
+		$year = $today[2];
 		$lday = 31;
 		// Calculate last day
 		while (!checkdate($month, $lday, $year))

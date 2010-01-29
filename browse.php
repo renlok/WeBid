@@ -101,8 +101,8 @@ else
 		{
 			$TPL_main_value .= '<tr align="left">' . "\n";
 		}
-		$sub_counter = (int)$row['sub_counter'];
-		$cat_counter = (int)$row['counter'];
+		$sub_counter = $row['sub_counter'];
+		$cat_counter = $row['counter'];
 		if ($sub_counter != 0)
 		{
 			$count_string = ' (' . $sub_counter . ')';
@@ -148,17 +148,6 @@ else
 		}
 		$TPL_main_value .= '</tr>' . "\n";
 	}
-
-	// determine limits for SQL query
-	$lines = 30;
-	$page = (isset($_GET['page'])) ? $_GET['page'] : 1;
-	$left_limit = ($page - 1) * $lines;
-
-	// retrieve records corresponding to passed page number
-	$page = (int)$page;
-	if ($page == 0) $page = 1;
-	$lines = (int)$lines;
-	if ($lines == 0) $lines = 50;
 
 	$insql = ($id != 0) ? "category IN " . $catalist . " AND" : '';
 

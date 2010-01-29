@@ -80,6 +80,7 @@ if (empty($_POST['action']))
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 $DISPLAYED_FIELDS = unserialize($system->SETTINGS['displayed_feilds']);
+print_r($DISPLAYED_FIELDS);
 $spam_html = '';
 
 if ($system->SETTINGS['spam_register'] == 1)
@@ -388,13 +389,13 @@ $template->assign_vars(array(
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
 		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
-		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 1),
-		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 1),
-		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 1),
-		'PROV' => ($DISPLAYED_FIELDS['prov_regshow'] == 1),
-		'COUNTRY' => ($DISPLAYED_FIELDS['country_regshow'] == 1),
-		'ZIP' => ($DISPLAYED_FIELDS['zip_regshow'] == 1),
-		'TEL' => ($DISPLAYED_FIELDS['tel_regshow'] == 1),
+		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 'y'),
+		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 'y'),
+		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 'y'),
+		'PROV' => ($DISPLAYED_FIELDS['prov_regshow'] == 'y'),
+		'COUNTRY' => ($DISPLAYED_FIELDS['country_regshow'] == 'y'),
+		'ZIP' => ($DISPLAYED_FIELDS['zip_regshow'] == 'y'),
+		'TEL' => ($DISPLAYED_FIELDS['tel_regshow'] == 'y'),
 		'REQUIRED' => array(
 					($MANDATORY_FIELDS['birthdate'] == 'y') ? ' *' : '',
 					($MANDATORY_FIELDS['address'] == 'y') ? ' *' : '',

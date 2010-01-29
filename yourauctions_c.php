@@ -291,6 +291,7 @@ $template->assign_vars(array(
 		'ORDERNEXT' => $_SESSION['ca_nexttype'],
 		'ORDERTYPEIMG' => $_SESSION['ca_type_img'],
 		'RELIST_FEE' => $system->print_money($relist_fee),
+		'RELIST_FEE_NO' => $system->print_money_nosymbol($relist_fee),
 
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_c.php?PAGE=' . $PREV . '&id=' . $id . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_c.php?PAGE=' . $NEXT . '&id=' . $id . '"><u>' . $MSG['5120'] . '</u></a>' : '',

@@ -449,7 +449,7 @@ function which_os ( $browser_string, $browser_name, $version_number  )
 	$a_os = array( 'beos', 'os2', 'amiga', 'webtv', 'mac', 'nt', 'win', $a_unix, $a_linux );
 
 	//os tester
-	$i_count = count( $a_os );
+	$i_count = 9;
 	for ( $i = 0; $i < $i_count; $i++ )
 	{
 		// unpacks os array, assigns to variable

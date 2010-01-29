@@ -166,6 +166,8 @@ class global_class
 	{
 		$a = ($this->SETTINGS['moneyformat'] == 1) ? '.' : ',';
 		$b = ($this->SETTINGS['moneyformat'] == 1) ? ',' : '.';
+		$str = $this->print_money_nosymbol($str);
+
 		if ($link)
 		{
 			$currency = '<a href="' . $this->SETTINGS['siteurl'] . 'converter.php?AMOUNT=' . $str . '" alt="converter" class="new-window">' . $this->SETTINGS['currency'] . '</a>';
@@ -177,11 +179,11 @@ class global_class
 
 		if ($this->SETTINGS['moneysymbol'] == 2) // Symbol on the right
 		{
-			return '<b>' . number_format($str, $this->SETTINGS['moneydecimals'], $a, $b) . '</b> ' . $currency;
+			return '<b>' . $str . '</b> ' . $currency;
 		}
 		elseif ($this->SETTINGS['moneysymbol'] == 1) // Symbol on the left
 		{
-			return $currency . ' <b>' . number_format($str,$this->SETTINGS['moneydecimals'], $a, $b) . '</b>';
+			return $currency . ' <b>' . $str . '</b>';
 		}
 	}
 

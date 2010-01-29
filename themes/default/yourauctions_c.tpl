@@ -2,23 +2,23 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	var relist_fee = {RELIST_FEE};
+	var relist_fee = {RELIST_FEE_NO};
 	$("#sellall").click(function() {
-		$("input[@class=sellid]").each(function() {
-			if (this.checked) {
-				this.checked = false;
+		$(".sellid").each(function() {
+			if ($(this).attr('checked') == true) {
+				$(this).removeAttr('checked');
 			} else {
-				this.checked = true;
+				$(this).attr('checked', 'true');
 			}
 		});
 		return false;
 	});
 	$("#deleteall").click(function() {
-		$("input[@class=deleteid]").each(function() {
-			if (this.checked) {
-				this.checked = false;
+		$(".deleteid").each(function() {
+			if ($(this).attr('checked') == true) {
+				$(this).removeAttr('checked');
 			} else {
-				this.checked = true;
+				$(this).attr('checked', 'true');
 			}
 		});
 		return false;
@@ -30,11 +30,9 @@ $(document).ready(function() {
 			return false;
 		}
 	});
-	$("#relistid").click(function(){
-		if (this.is(':checked'))
-			$("#to_pay").text(parseFloat($("#to_pay").text()) - relist_fee);
-		else
-			$("#to_pay").text(parseFloat($("#to_pay").text()) + relist_fee);
+	$(".relistid").click(function(){
+		var n = $(".relistid:checked").length;
+		$("#to_pay").text(parseFloat(n * relist_fee));
 	});
 });
 </script>
@@ -140,7 +138,7 @@ $(document).ready(function() {
 	<tr bgcolor="{BGCOLOUR}">
 	  <td colspan="6">&nbsp;</td>
 	  <td align="center"><a href="#" id="sellall">{L_30_0102}</a></td>
-	  <td align="center"><a href="#" id="deleteall">{L_30_0102}</a></td>
+	  <td align="center"><span href="#" id="deleteall">{L_30_0102}</span></td>
 	</tr>
 		<tr>
 			<td colspan="10" align="center">

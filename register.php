@@ -80,7 +80,7 @@ if (empty($_POST['action']))
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 $DISPLAYED_FIELDS = unserialize($system->SETTINGS['displayed_feilds']);
-print_r($DISPLAYED_FIELDS);
+
 $spam_html = '';
 
 if ($system->SETTINGS['spam_register'] == 1)

@@ -37,7 +37,7 @@ elseif (!isset($_GET['PAGE']) && empty($_POST))
 
 if (isset($_GET['PAGE']))
 {
-	$page = $_GET['PAGE'];
+	$page = intval($_GET['PAGE']);
 }
 else
 {
@@ -174,11 +174,10 @@ if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SE
 {
 	// retrieve records corresponding to passed page number
 	$PAGE = intval($page);
-	if ($PAGE == 0) $PAGE = 1;
-	$lines = 50;
+	if ($page == 0) $page = 1;
 
 	// determine limits for SQL query
-	$left_limit = ($PAGE - 1) * $lines;
+	$left_limit = ($page - 1) * $system->SETTINGS['perpage'];
 
 	// get total number of records
 	$query = "SELECT count(*) AS total FROM " . $DBPrefix . "auctions au
@@ -194,8 +193,8 @@ if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SE
 	$total = (int)$hash['total'];
 
 	// get number of pages
-	$PAGES = intval($total / $lines);
-	if (($total % $lines) > 0)
+	$PAGES = intval($total / $system->SETTINGS['perpage']);
+	if (($total % $system->SETTINGS['perpage']) > 0)
 		++$PAGES;
 
 	// get records corresponding to this page
@@ -204,7 +203,7 @@ if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SE
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
 			au.starts <= " . $NOW . "
-			ORDER BY " . $by . " LIMIT " . intval($left_limit) . ", " . intval($lines);
+			ORDER BY " . $by . " LIMIT " . intval($left_limit) . ", " . $system->SETTINGS['perpage'];
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	

@@ -184,8 +184,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	// determine limits for SQL query
 	$secid = $_GET['id'];
 	if ($pg == 0) $pg = 1;
-	$lines = (isset($lines)) ? intval($lines) : 5;
-	$left_limit = ($pg - 1) * $lines;
+	$left_limit = ($pg - 1) * $system->SETTINGS['perpage'];
 
 	$query = "SELECT rate_sum, nick FROM " . $DBPrefix . "users WHERE id = " . intval($secid);
 	$res = mysql_query($query);
@@ -196,7 +195,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	$TPL_nick = $hash['nick'];
 	$TPL_feedbacks_num = $total;
 	// get number of pages
-	$pages = ceil($total / $lines);
+	$pages = ceil($total / $system->SETTINGS['perpage']);
 
 	$sql = "SELECT f.*, a.title, u.id As uId, u.rate_num, u.rate_sum
 		FROM " . $DBPrefix . "feedbacks f
@@ -204,7 +203,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 		LEFT JOIN " . $DBPrefix . "users u ON (u.nick = f.rater_user_nick)
 		WHERE rated_user_id = " . intval($secid) . "
 		ORDER by feedbackdate DESC
-		LIMIT " . intval($left_limit) . "," . intval($lines);
+		LIMIT " . intval($left_limit) . "," . $system->SETTINGS['perpage'];
 	$res = mysql_query($sql);
 	$system->check_mysql($res, $sql, __LINE__, __FILE__);
 	$i = 0;

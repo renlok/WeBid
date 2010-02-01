@@ -94,7 +94,6 @@ $template->assign_vars(array(
 		'KEYWORDS' => stripslashes($system->SETTINGS['keywordstag']),
 		'EXTRAINC' => $jsfiles,
 		'ACTUALDATE' => ActualDate(),
-		'PAGEALIGN' => $system->SETTINGS['alignment'],
 		'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : "&nbsp;",
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',
 		'HEADERCOUNTER' => $counters,

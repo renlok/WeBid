@@ -102,8 +102,8 @@ loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTI
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'pre',
-		'TYPENAME' => $MSG['25_0008'],
+		'TYPE' => 'set',
+		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['5087']
 		));
 

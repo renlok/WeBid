@@ -54,7 +54,8 @@ if ($myversion == '0.8.4')
 if ($myversion == '0.8.5')
 {
 	//0.8.5 to 1.0.0
-	$query[] = "ALTER TABLE  `" . $DBPrefix . "settings` DROP uniqueseller, DROP pagewidth, DROP pagewidthtype, DROP background, DROP brepeat;";
+	$query[] = "ALTER TABLE  `" . $DBPrefix . "settings` DROP uniqueseller DROP pagewidth DROP alignment DROP pagewidthtype DROP background DROP brepeat
+				ADD `perpage` int(10) NOT NULL default '15';";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fontsandcolors`;";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.0'";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "tmp_closed_edited`;";

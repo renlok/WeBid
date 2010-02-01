@@ -858,7 +858,6 @@ $MSG['776'] = "To finalise the sale please proceed to one of the payment gateway
 $MSG['777'] = 'You have an outstanding payment of the buyers fee for the item %s; your account will be suspended until this is paid. You can pay for this now at <a href="%s">Here</a>';
 $MSG['778'] = 'If you wish to via an alternative method contact <a href="profile.php?user_id=%s">%s</a> to find out how.';
 $MSG['779'] = 'User Registration Fields Updated';
-
 $MSG['780'] = 'Show On Registration Page';
 $MSG['781'] = 'Birthday Field Required?';
 $MSG['782'] = 'Address Field Required?';
@@ -867,6 +866,9 @@ $MSG['784'] = 'State/Province Field Required?';
 $MSG['785'] = 'Country Field Required?';
 $MSG['786'] = 'Zip/Post Code Field Required?';
 $MSG['787'] = 'Telephone Field Required?';
+$MSG['788'] = 'Display Settings';
+$MSG['789'] = 'Results shown per page';
+$MSG['790'] = 'The maximum number of items before a page brake';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

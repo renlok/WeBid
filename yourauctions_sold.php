@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include $include_path . 'auctionstoshow.inc.php';
 
 // If user is not logged in redirect to login page
 if (!$user->logged_in)
@@ -120,12 +119,11 @@ if (!isset($_GET['PAGE']) || $_GET['PAGE'] < 0 || empty($_GET['PAGE']))
 }
 else
 {
-	$OFFSET = ($_GET['PAGE'] - 1) * $LIMIT;
-	$PAGE = $_GET['PAGE'];
+	$PAGE = intval($_GET['PAGE']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
 
-$PAGES = ceil($TOTALAUCTIONS / $LIMIT);
-if (!$PAGES) $PAGES = 1;
+$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 // Handle columns sorting variables
 if (!isset($_SESSION['solda_ord']) && empty($_GET['solda_ord']))
@@ -167,7 +165,7 @@ $query = "SELECT a.* FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "winners 
 		AND a.suspended = 0
 		AND a.id = w.auction
 		GROUP BY w.auction
-		ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT " . $OFFSET . "," . $LIMIT;
+		ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT " . $OFFSET . "," . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

@@ -96,6 +96,7 @@ function SwitchMenu(obj){
 			<span class="submenu" id="settings">
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/settings.php" target="content" class="submenulink">{L_526}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/auctions.php" target="content" class="submenulink">{L_5087}</a><br>
+			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/displaysettings.php" target="content" class="submenulink">{L_788}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/spam.php" target="content" class="submenulink">{L_749}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/usersettings.php" target="content" class="submenulink">{L_894}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/errorhandling.php" target="content" class="submenulink">{L_409}</a><br>

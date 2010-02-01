@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include $include_path . 'auctionstoshow.inc.php';
 
 $NOW = time();
 $NOWB = gmdate('Ymd');
@@ -75,11 +74,11 @@ if (!isset($_GET['PAGE']) || $_GET['PAGE'] < 0 || empty($_GET['PAGE']))
 }
 else
 {
-	$OFFSET = ($_GET['PAGE'] - 1) * $LIMIT;
-	$PAGE = $_GET['PAGE'];
+	$PAGE = intval($_GET['PAGE']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-$PAGES = ceil($TOTALAUCTIONS / $LIMIT);
-if (!$PAGES) $PAGES = 1;
+$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+
 $_SESSION['backtolist_page'] = $PAGE;
 $_SESSION['backtolist'] = 'yourauctions_s.php';
 // Handle columns sorting variables
@@ -117,7 +116,7 @@ else
 }
 $query = "SELECT id, title, current_bid, num_bids, relist, relisted, current_bid, suspended
 		FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . "
-		AND suspended != 0 ORDER BY " . $_SESSION['sa_ord'] . " " . $_SESSION['sa_type'] . " LIMIT " . $OFFSET . ", " . $LIMIT;
+		AND suspended != 0 ORDER BY " . $_SESSION['sa_ord'] . " " . $_SESSION['sa_type'] . " LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

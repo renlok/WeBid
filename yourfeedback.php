@@ -38,15 +38,14 @@ foreach ($memtypesarr as $k => $l)
 }
 
 if (!isset($_GET['pg']) || $_GET['pg'] == 0) $_GET['pg'] = 1;
-$lines = (isset($lines)) ? $lines : 5;
-$left_limit = ($_GET['pg'] - 1) * $lines;
+$left_limit = ($_GET['pg'] - 1) * $system->SETTINGS['perpage'];
 
 $query = "SELECT count(*) FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user->user_data['id'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $total = mysql_result($res, 0);
 // get number of pages
-$pages = ceil($total / $lines);
+$pages = ceil($total / $system->SETTINGS['perpage']);
 
 $left_limit = ($left_limit < 0) ? 0 : $left_limit;
 
@@ -55,7 +54,7 @@ $query = "SELECT f.*, a.title FROM " . $DBPrefix . "feedbacks f
 		ON a.id = f.auction_id
 		WHERE rated_user_id = " . $user->user_data['id'] . "
 		ORDER by feedbackdate DESC
-		LIMIT $left_limit, $lines";
+		LIMIT $left_limit, " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

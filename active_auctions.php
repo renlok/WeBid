@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include $include_path . 'auctionstoshow.inc.php';
 include $include_path . 'dates.inc.php';
 
 if (isset($_GET['user_id']) && !empty($_GET['user_id']))
@@ -50,16 +49,16 @@ if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1 || $_GET['PAGE'] == '')
 else
 {
 	$PAGE = $_GET['PAGE'];
-	$OFFSET = ($PAGE - 1) * $LIMIT;
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-$PAGES = ceil($num_auctions / $LIMIT);
+$PAGES = ceil($num_auctions / $system->SETTINGS['perpage']);
 if (!isset($PAGES) || $PAGES < 1) $PAGES = 1;
 
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 		WHERE user = " . $user_id . "
 		AND closed = 0
 		AND starts <= '" . $NOW . "'
-		ORDER BY ends ASC LIMIT $OFFSET, $LIMIT";
+		ORDER BY ends ASC LIMIT $OFFSET, " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

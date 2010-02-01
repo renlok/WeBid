@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include $include_path . 'auctionstoshow.inc.php';
 include $include_path . 'dates.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 $catscontrol = new MPTTcategories();
@@ -162,8 +161,7 @@ else
 	}
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$hash = mysql_fetch_assoc($res);
-	$TOTALAUCTIONS = $hash['count'];
+	$TOTALAUCTIONS = mysql_result($res, 'count');
 
 	// Handle pagination
 	if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)
@@ -174,9 +172,9 @@ else
 	else
 	{
 		$PAGE = $_REQUEST['PAGE'];
-		$OFFSET = ($PAGE - 1) * $LIMIT;
+		$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 	}
-	$PAGES = ceil($TOTALAUCTIONS / $LIMIT);
+	$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 	$query = "SELECT * FROM " . $DBPrefix . "auctions
 			WHERE " . $insql . " starts <= " . $NOW . "
@@ -186,7 +184,7 @@ else
 	{
 		$query .= " AND title LIKE '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
 	}
-	$query .= " ORDER BY ends ASC LIMIT " . intval($OFFSET) . "," . intval($LIMIT);
+	$query .= " ORDER BY ends ASC LIMIT " . intval($OFFSET) . "," . $system->SETTINGS['perpage'];
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
@@ -205,7 +203,7 @@ else
 	$system->check_mysql($feat_res, $query, __LINE__, __FILE__);
 
 	include $include_path . 'browseitems.inc.php';
-	browseItems($res, $feat_res, $total, 'browse.php', 'id=' . $id);
+	browseItems($res, $feat_res, $TOTALAUCTIONS, 'browse.php', 'id=' . $id);
 
 	$template->assign_vars(array(
 			'TOP_HTML' => $TPL_main_value,

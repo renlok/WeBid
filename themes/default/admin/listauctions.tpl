@@ -64,7 +64,7 @@
                         <br><a href="viewwinners.php?id={auctions.ID}&offset={OFFSET}">{L__0163}</a>
                     <!-- ENDIF -->
                     </td>
-                <tr>
+                </tr>
                 <!-- END auctions -->
                 </table>
             </td>

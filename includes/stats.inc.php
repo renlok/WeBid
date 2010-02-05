@@ -99,11 +99,11 @@ if ($STATSSETTINGS['activate'] == 'y')
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		// End users accesses
 	}
-	
+
 	// Get user's agent and platform
 	$browser_info = browser_detection('full');
 	$browser_info[] = browser_detection('moz_version');
-	
+
 	$os = '';
 	switch ($browser_info[5])
 	{
@@ -202,30 +202,34 @@ if ($STATSSETTINGS['activate'] == 'y')
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		if (mysql_num_rows($res) == 0)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "currentbrowsers VALUES (" . $THISMONTH . ", " . $THISYEAR . ", '" . $browser . "', 0)";
+			$query = "INSERT INTO " . $DBPrefix . "currentbrowsers VALUES (" . $THISMONTH . ", " . $THISYEAR . ", '" . $browser . "', 1)";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		else
+		{
+			$query = "UPDATE " . $DBPrefix . "currentbrowsers SET
+					 counter = counter + 1
+					 WHERE browser = '" . $browser . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		
-		$query = "UPDATE " . $DBPrefix . "currentbrowsers SET
-				 counter = counter + 1
-				 WHERE browser = '" . $browser . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		
 		// Update the platfom stats
-		$query = "SELECT month FROM " . $DBPrefix . "currentplatforms WHERE month =" . $THISMONTH . " AND year = " . $THISYEAR . " AND platform = '" . $os . "'";
+		$query = "SELECT month FROM " . $DBPrefix . "currentplatforms WHERE month = " . $THISMONTH . " AND year = " . $THISYEAR . " AND platform = '" . $os . "'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		if (mysql_num_rows($res) == 0)
 		{
 			$query = "INSERT INTO " . $DBPrefix . "currentplatforms VALUES (
-					" . $THISMONTH . ",  " . $THISYEAR . ", '" . $os . "', 0)";
+					" . $THISMONTH . ",  " . $THISYEAR . ", '" . $os . "', 1)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
-		
-		$query = "UPDATE " . $DBPrefix . "currentplatforms SET
-				counter = counter + 1
-				WHERE platform = '" . $os . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		else
+		{
+			$query = "UPDATE " . $DBPrefix . "currentplatforms SET
+					counter = counter + 1
+					WHERE platform = '" . $os . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
 	}
 	
 	// Domains

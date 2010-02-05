@@ -81,7 +81,7 @@ function print_header($update)
 	global $thisversion;
 	if ($update)
 	{
-		global $_SESSION;
+		global $_SESSION, $myversion;
 		if (!isset($_SESSION['oldversion']))
 		{
 			$_SESSION['oldversion'] = $myversion;

@@ -156,7 +156,6 @@ function SwitchMenu(obj){
 		  	<div class="menutitle" onClick="SwitchMenu('graphic')">{L_25_0009}</div>
 			<span class="submenu" id="graphic">
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/theme.php" target="content" class="submenulink">{L_26_0002}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/homepage.php" target="content" class="submenulink">{L_5005}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/fonts.php" target="content" class="submenulink">{L_5001}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/colors.php" target="content" class="submenulink">{L_5002}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/clearcache.php" target="content" class="submenulink">{L_30_0031}</a><br>

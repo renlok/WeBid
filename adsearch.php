@@ -190,7 +190,7 @@ if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SE
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 	$hash = mysql_fetch_assoc($res);
-	$total = (int)$hash['total'];
+	$total = $hash['total'];
 
 	// get number of pages
 	$PAGES = intval($total / $system->SETTINGS['perpage']);

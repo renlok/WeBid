@@ -25,7 +25,7 @@ if (!$user->logged_in)
 	exit;
 }
 
-if ($user->user_data['suspended'] == 7 || $user->user_data['suspended'] == 6)
+if (in_array($user->user_data['suspended'], array(5, 6, 7)))
 {
 	header('location: message.php');
 	exit;
@@ -181,6 +181,43 @@ if ($_GET['action'] == 'buy')
 					$bf_paid = 0;
 					$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $user->user_data['id'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+				// do the final value fees
+				$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				while ($row = mysql_fetch_assoc($res))
+				{
+					if (floatval($Auction['buy_now']) > $row['fee_from'] && floatval($Auction['buy_now']) < $row['fee_to'])
+					{
+						if ($row['fee_type'] == 'flat')
+						{
+							$fee_value = $row['value'];
+						}
+						else
+						{
+							$fee_value = ($row['value'] / 100) * floatval($Auction['buy_now']);
+						}
+					}
+				}
+				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
+				{
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Winner['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+				else
+				{
+					$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Winner['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$emailer = new email_class();
+					$emailer->assign_vars(array(
+							'ID' => $Auction['id'],
+							'TITLE' => $Auction['title'],
+							'NAME' => $Seller['name'],
+							'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $Auction['id']
+							));
+					$emailer->email_uid = $Auction['user'];
+					$emailer->email_sender($Seller['email'], 'final_value_fee.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['523']);
 				}
 			}
 

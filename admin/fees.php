@@ -27,7 +27,8 @@ $fees = array( //0 = single value, 1 = staged fees
 	'rp_fee' => 0,
 	'picture_fee' => 0,
 	'relist_fee' => 0,
-	'buyout_fee' => 0
+	'buyout_fee' => 0,
+	'endauc_fee' => 1
 	);
 
 $feenames = array(
@@ -40,7 +41,8 @@ $feenames = array(
 	'rp_fee' => $MSG['440'],
 	'picture_fee' => $MSG['435'],
 	'relist_fee' => $MSG['437'],
-	'buyout_fee' => $MSG['436']
+	'buyout_fee' => $MSG['436'],
+	'endauc_fee' => $MSG['791']
 	);
 
 if(isset($_GET['type']) && isset($fees[$_GET['type']]))

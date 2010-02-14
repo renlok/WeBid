@@ -269,7 +269,11 @@ if ($user->logged_in && $num_bids > 0)
 		{
 			$yourbidmsg = $MSG['25_0088'];
 			$yourbidclass = 'yourbidwin';
-			if ($difference <= 0)
+			if ($difference <= 0 && $auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])
+			{
+				$yourbidmsg = $MSG['514'];
+			}
+			elseif ($difference <= 0)
 			{
 				$yourbidmsg = $MSG['25_0089'];
 			}

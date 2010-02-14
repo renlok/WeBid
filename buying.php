@@ -22,7 +22,7 @@ if (!$user->logged_in)
 }
 
 // Get closed auctions with winners
-$query = "SELECT a.id, a.qty, a.seller, a.paid, a.feedback_sel, a.bid, a.auction, b.title, b.ends, b.shipping_cost, b.shipping, u.nick, u.email
+$query = "SELECT DISTINCT a.qty, a.seller, a.paid, a.feedback_win, a.bid, a.auction, b.title, b.ends, b.shipping_cost, b.shipping, u.nick, u.email
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.seller)
@@ -39,7 +39,6 @@ while ($row = mysql_fetch_assoc($res))
 	$totalcost = ($row['shipping'] == 2) ? $totalcost : ($totalcost + $row['shipping_cost']);
 
 	$template->assign_block_vars('items', array(
-			'ID' => $row['id'],
 			'AUC_ID' => $row['auction'],
 			'TITLE' => $row['title'],
 			'ENDS' => FormatDate($row['ends']),
@@ -51,7 +50,7 @@ while ($row = mysql_fetch_assoc($res))
 
 			'SELLNICK' => $row['nick'],
 			'SELLEMAIL' => $row['email'],
-			'FB_LINK' => ($row['feedback_sel'] == 0) ? '<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['id'] . '&wid=' . $row['winner'] . '&sid=' . $row['seller'] . '&ws=s">' . $MSG['207'] . '</a>' : ''
+			'FB_LINK' => ($row['feedback_win'] == 0) ? '<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $user->user_data['id'] . '&sid=' . $row['seller'] . '&ws=w">' . $MSG['207'] . '</a>' : ''
 			));
 }
 

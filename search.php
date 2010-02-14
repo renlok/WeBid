@@ -37,10 +37,9 @@ else
 	// retrieve records corresponding to passed page number
 	$PAGE = intval($_GET['PAGE']);
 	if ($PAGE == 0) $PAGE = 1;
-	$lines = 50;
 
 	// determine limits for SQL query
-	$left_limit = ($PAGE - 1) * $lines;
+	$left_limit = ($PAGE - 1) * $system->SETTINGS['perpage'];
 
 	// get total number of records
 	$res = mysql_query($query);
@@ -48,9 +47,9 @@ else
 	$total = mysql_num_rows($res);
 
 	// get number of pages
-	$PAGES = ceil($total / $lines);
+	$PAGES = ceil($total / $system->SETTINGS['perpage']);
 
-	$query_ = $query . " ORDER BY ends LIMIT " . $left_limit . ", " . $lines;
+	$query_ = $query . " ORDER BY ends LIMIT " . $left_limit . ", " . $system->SETTINGS['perpage'];
 	$res = mysql_query($query_);
 	$system->check_mysql($res, $query_, __LINE__, __FILE__);
 

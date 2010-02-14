@@ -57,7 +57,8 @@ if ($myversion == '0.8.5')
 	$query[] = "ALTER TABLE  `" . $DBPrefix . "settings` DROP uniqueseller DROP pagewidth DROP alignment DROP pagewidthtype DROP background DROP brepeat
 				ADD `perpage` int(10) NOT NULL default '15';";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fontsandcolors`;";
-	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.0'";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "tmp_closed_edited`;";
+	$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'endauc_fee');";
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.0'";
 }
 ?>

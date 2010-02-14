@@ -55,7 +55,7 @@
 					</tr>
 					<tr class="c1">
 						<td><a href="{SITEURL}admin/fees.php?type=buyer_fee">{L_775}</a></td>
-						<td>&nbsp;</td>
+						<td><a href="{SITEURL}admin/fees.php?type=endauc_fee">{L_791}</a></td>
 					</tr>
 				</table>
 			</td>

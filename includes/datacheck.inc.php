@@ -128,7 +128,7 @@ function CheckSellData()
 		return '019';
 	}
 
-	if (empty($reserve_price) && $with_reserve == 'yes')
+	if (empty($reserve_price) && $with_reserve == 'yes' && $buy_now_only == 'n')
 	{
 		return '021';
 	}

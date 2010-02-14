@@ -204,6 +204,10 @@ class fees
 				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $user->user_data['id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
+			case 7: //final value fee
+				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $user->user_data['id'];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			break;
 			
 		}
 	}

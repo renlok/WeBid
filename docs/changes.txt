@@ -18,5 +18,12 @@
 - Fixed javascript in your closed auctions page
 - Fixed admin countries page so you can not edit/delete the countries
 - Fixed the registration page display feilds settings
+- Added option to set number of items shown per page
+- Updated browser detection script to version 5.2.0
+- Added theme manager section in the admin panel
+- Fixed buying.php
+- Fixed the 'Reserve price missing' error when using buy it now only
+- Fixed the error where the item page diplays the item as won even if rserve is not met
+- Added final value fee
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

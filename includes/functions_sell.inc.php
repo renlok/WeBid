@@ -16,6 +16,7 @@ if (!defined('InWeBid')) exit();
 
 function generate_id()
 {
+	global $_SESSION;
 	if (!isset($_SESSION['SELL_auction_id']))
 	{
 		$auction_id = md5(uniqid(rand()));

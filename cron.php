@@ -99,6 +99,16 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $buyer_fee = mysql_result($res, 0);
 $buyer_fee = (empty($buyer_fee)) ? 0 : $buyer_fee;
 $buyer_emails = array();
+$seller_emails = array();
+
+$query = "SELECT * FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$endauc_fee = array();
+while($row = mysql_fetch_assoc($res))
+{
+	$endauc_fee[] = $row;
+}
 
 $num = mysql_num_rows($result_auction);
 printLog($num . ' auctions to close');
@@ -191,14 +201,47 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 					$bf_paid = 0;
 					$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $Winner['id'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$buyer_emails[] = array(
+						'name' => $Winner['name'],
+						'email' => $Winner['email'],
+						'uid' => $Winner['id'],
+						'id' => $Auction['id'],
+						'title' => $Auction['title']
+						);
 				}
-				$buyer_emails[] = array(
-					'name' => $Winner['name'],
-					'email' => $Winner['email'],
-					'uid' => $Winner['id'],
-					'id' => $Auction['id'],
-					'title' => $Auction['title']
-					);
+
+				for ($i = 0; $i < count($endauc_fee); $i++)
+				{
+					if ($Auction['current_bid'] > $endauc_fee[$i]['fee_from'] && $Auction['current_bid'] < $endauc_fee[$i]['fee_to'])
+					{
+						if ($endauc_fee[$i]['fee_type'] == 'flat')
+						{
+							$fee_value = $endauc_fee[$i]['value'];
+						}
+						else
+						{
+							$fee_value = ($endauc_fee[$i]['value'] / 100) * $Auction['current_bid'];
+						}
+					}
+				}
+				// insert final value fees
+				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
+				{
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Winner['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
+				else
+				{
+					$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Winner['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$seller_emails[] = array(
+						'name' => $Seller['name'],
+						'email' => $Seller['email'],
+						'uid' => $Seller['id'],
+						'id' => $Auction['id'],
+						'title' => $Auction['title']
+						);
+				}
 			}
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
@@ -292,14 +335,47 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 							$bf_paid = 0;
 							$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $row['bidder'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+							$buyer_emails[] = array(
+								'name' => $Winner['name'],
+								'email' => $Winner['email'],
+								'uid' => $row['bidder'],
+								'id' => $Auction['id'],
+								'title' => $Auction['title']
+								);
 						}
-						$buyer_emails[] = array(
-							'name' => $Winner['name'],
-							'email' => $Winner['email'],
-							'uid' => $row['bidder'],
-							'id' => $Auction['id'],
-							'title' => $Auction['title']
-							);
+
+						for ($i = 0; $i < count($endauc_fee); $i++)
+						{
+							if ($Auction['current_bid'] > $endauc_fee[$i]['fee_from'] && $Auction['current_bid'] < $endauc_fee[$i]['fee_to'])
+							{
+								if ($endauc_fee[$i]['fee_type'] == 'flat')
+								{
+									$fee_value = $endauc_fee[$i]['value'];
+								}
+								else
+								{
+									$fee_value = ($endauc_fee[$i]['value'] / 100) * $Auction['current_bid'];
+								}
+							}
+						}
+						// insert final value fees
+						if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
+						{
+							$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Winner['id'];
+							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						}
+						else
+						{
+							$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Winner['id'];
+							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+							$seller_emails[] = array(
+								'name' => $Winner['name'],
+								'email' => $Winner['email'],
+								'uid' => $Winner['id'],
+								'id' => $Auction['id'],
+								'title' => $Auction['title']
+								);
+						}
 					}
 					// Add winner's data to "winners" table
 					$query = "INSERT INTO " . $DBPrefix . "winners VALUES
@@ -540,11 +616,24 @@ if ($buyer_fee > 0)
 		$emailer->assign_vars(array(
 				'ID' => $buyer_emails[$i]['id'],
 				'TITLE' => $buyer_emails[$i]['title'],
-				'NAME' => $buyer_emails[$i]['name']
+				'NAME' => $buyer_emails[$i]['name'],
+				'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=6&auction_id=' . $Auction['id']
 				));
 		$emailer->email_uid = $buyer_emails[$i]['uid'];
 		$emailer->email_sender($buyer_emails[$i]['email'], 'buyer_fee.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['522']);
 	}
+}
+for ($i = 0; $i < count($seller_emails); $i++)
+{
+	$emailer = new email_class();
+	$emailer->assign_vars(array(
+			'ID' => $seller_emails[$i]['id'],
+			'TITLE' => $seller_emails[$i]['title'],
+			'NAME' => $seller_emails[$i]['name'],
+			'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $Auction['id']
+			));
+	$emailer->email_uid = $seller_emails[$i]['uid'];
+	$emailer->email_sender($seller_emails[$i]['email'], 'final_value_fee.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['523']);
 }
 
 // Purging thumbnails cache

@@ -17,6 +17,7 @@ if (!defined('InWeBid')) exit('Access denied');
 class fees
 {
 	var $ASCII_RANGE;
+	var $data;
 
 	function fees()
 	{

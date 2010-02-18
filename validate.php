@@ -33,6 +33,7 @@ $fees = new fees;
 
 if (isset($_GET['paypal']))
 {
+	$fees->data = $_POST;
 	$fees->paypal_validate();
 }
 if (isset($_GET['authnet']))

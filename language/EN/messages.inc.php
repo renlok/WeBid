@@ -871,6 +871,9 @@ $MSG['788'] = 'Display Settings';
 $MSG['789'] = 'Results shown per page';
 $MSG['790'] = 'The maximum number of items before a page break';
 $MSG['791'] = 'Final Price Fee';
+$MSG['792'] = 'You need to pay for %s item(s)';
+$MSG['793'] = ' items you\'re bidding on are ending soon';
+$MSG['794'] = 'You have been outbid on %s items';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

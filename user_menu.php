@@ -27,7 +27,8 @@ function get_reminders($secid)
 	global $DBPrefix, $system;
 	$data = array();
 	// get number of new messages
-	$query = "SELECT COUNT(*) AS total FROM " . $DBPrefix . "messages WHERE isread = 0 AND sentto = " . $secid;
+	$query = "SELECT COUNT(*) AS total FROM " . $DBPrefix . "messages
+			WHERE isread = 0 AND sentto = " . $secid;
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$data[] = mysql_result($res, 0, 'total');
@@ -37,6 +38,25 @@ function get_reminders($secid)
 			WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
 			AND ((a.seller = " . $secid . " AND a.feedback_sel = 0)
 			OR (a.winner = " . $secid . " AND a.feedback_win = 0))";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$data[] = mysql_result($res, 0, 'total');
+	// get auctions still requiring payment
+	$query = "SELECT COUNT(DISTINCT id) AS total FROM " . $DBPrefix . "winners
+			WHERE paid = 0 AND winner = " . $secid;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$data[] = mysql_result($res, 0, 'total');
+	// get auctions ending soon
+	$query = "SELECT COUNT(DISTINCT auction) AS total FROM " . $DBPrefix . "bids
+			WHERE bidder = " . $secid . " GROUP BY auction";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$data[] = mysql_result($res, 0, 'total');
+	// get outbid auctions
+	$query = "SELECT COUNT(DISTINCT a.id) AS total FROM " . $DBPrefix . "bids b
+			LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
+			WHERE b.bid < a.current_bid AND b.bidder = " . $secid;
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$data[] = mysql_result($res, 0, 'total');
@@ -85,7 +105,10 @@ switch ($_SESSION['cptab'])
 		$template->assign_vars(array(
 				'NEWMESSAGES' => ($reminders[0] > 0) ? $reminders[0] . ' ' . $MSG['508'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'mail.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'FBTOLEAVE' => ($reminders[1] > 0) ? $reminders[1] . $MSG['072'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'buysellnofeedback.php">' . $MSG['5295'] . '</a>)<br>' : '',
-				'NO_REMINDERS' => (($reminders[0] + $reminders[1]) == 0) ? $MSG['510'] : '',
+				'TO_PAY' => ($reminders[2] > 0) ? sprintf($MSG['792'], $reminders[2]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'outstanding.php">' . $MSG['5295'] . '</a>)<br>' : '',
+				'BENDING_SOON' => ($reminders[3] > 0) ? $reminders[3] . $MSG['793'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourbids.php">' . $MSG['5295'] . '</a>)<br>' : '',
+				'BOUTBID' => ($reminders[4] > 0) ? sprintf($MSG['794'], $reminders[4]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourbids.php">' . $MSG['5295'] . '</a>)<br>' : '',
+				'NO_REMINDERS' => (($reminders[0] + $reminders[1] + $reminders[2] + $reminders[3] + $reminders[4]) == 0) ? $MSG['510'] : '',
 				));
 		break;
 	case 'account':

@@ -49,6 +49,9 @@
 				{FBTOLEAVE}
 				{NEWMESSAGES}
 				{NO_REMINDERS}
+                {TO_PAY}
+                {BENDING_SOON}
+                {BOUTBID}
 			</td>
 		</tr>
 		</table>

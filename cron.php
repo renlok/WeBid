@@ -227,12 +227,12 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 				// insert final value fees
 				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
 				{
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Winner['id'];
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Seller['id'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 				else
 				{
-					$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Winner['id'];
+					$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Seller['id'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					$seller_emails[] = array(
 						'name' => $Seller['name'],
@@ -361,12 +361,12 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 						// insert final value fees
 						if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
 						{
-							$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Winner['id'];
+							$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Seller['id'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						}
 						else
 						{
-							$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Winner['id'];
+							$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Seller['id'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 							$seller_emails[] = array(
 								'name' => $Winner['name'],

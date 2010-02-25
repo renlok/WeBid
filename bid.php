@@ -154,7 +154,7 @@ else
 	$increment = get_increment($high_bid);
 }
 
-if ($high_bid == 0 || $atype == 2)
+if (ceil($high_bid) == 0 || $atype == 2)
 {
 	$next_bid = $minimum_bid;
 }

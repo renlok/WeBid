@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			  perpage = '" . $_POST['perpage'] . "',
 			  lastitemsnumber = " . intval($_POST['lastitemsnumber']) . ",
 			  higherbidsnumber = " . intval($_POST['higherbidsnumber']) . ",
-			  endingsoonnumber = " . intval($_POST['endingsoonnumber']) . "',
+			  endingsoonnumber = " . intval($_POST['endingsoonnumber']) . ",
 			  loginbox = " . intval($_POST['loginbox']) . ",
 			  newsbox = " . intval($_POST['newsbox']) . ",
 			  newstoshow = " . intval($_POST['newstoshow']);
@@ -37,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['lastitemsnumber'] = $_POST['lastitemsnumber'];
 	$system->SETTINGS['higherbidsnumber'] = $_POST['higherbidsnumber'];
 	$system->SETTINGS['endingsoonnumber'] = $_POST['endingsoonnumber'];
-	$ERR = $MSG['5079'];
+	$ERR = $MSG['795'];
 }
 
 loadblock($MSG['789'], $MSG['790'], 'days', 'perpage', $system->SETTINGS['perpage']);

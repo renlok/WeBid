@@ -48,8 +48,9 @@ function get_reminders($secid)
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$data[] = mysql_result($res, 0, 'total');
 	// get auctions ending soon
-	$query = "SELECT COUNT(DISTINCT auction) AS total FROM " . $DBPrefix . "bids
-			WHERE bidder = " . $secid . " GROUP BY auction";
+	$query = "SELECT COUNT(DISTINCT b.auction) AS total FROM " . $DBPrefix . "bids b
+			LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
+			WHERE b.bidder = " . $secid . " AND a.ends <= " . (time() + (3600 * 24)) . " GROUP BY b.auction";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$data[] = mysql_result($res, 0, 'total');

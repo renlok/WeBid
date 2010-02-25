@@ -82,7 +82,7 @@
     <!-- BEGIN themes -->
                     <tr style="background-color:{themes.BGCOLOUR};">
                         <td style="padding-left:10px;">
-                            <input type="radio" name="theme" value="{themes.NAME}" <!-- IF themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
+                            <input type="radio" name="dtheme" value="{themes.NAME}" <!-- IF themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
                             <b>{themes.NAME}</b>
                         </td>
                         <td align="left">

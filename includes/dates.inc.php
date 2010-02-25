@@ -18,7 +18,7 @@ if (!function_exists('GetLeftSeconds'))
 {
 	function GetLeftSeconds()
 	{
-		$today = explode('|', gmdate('j|n|Y'));
+		$today = explode('|', gmdate('j|n|Y|G|i|s'));
 		$month = $today[1];
 		$mday = $today[0];
 		$year = $today[2];
@@ -30,9 +30,9 @@ if (!function_exists('GetLeftSeconds'))
 		}
 		// Days left t the end of the month
 		$daysleft = intval($lday - gmdate('d'));
-		$hoursleft = 24 - $today['hours'];
-		$minsleft = 60 - $today['minutes'];
-		$secsleft = 60 - $today['seconds'];
+		$hoursleft = 24 - $today[3];
+		$minsleft = 60 - $today[4];
+		$secsleft = 60 - $today[5];
 		$left = $secsleft + ($minsleft * 60) + ($hoursleft * 3600) + ($daysleft * 86400);
 		
 		return $left;

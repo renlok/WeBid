@@ -25,5 +25,8 @@
 - Fixed the 'Reserve price missing' error when using buy it now only
 - Fixed the error where the item page diplays the item as won even if rserve is not met
 - Added final value fee
+- Fixed an error in the paypal payment validation class
+- Added additional notices to the user summary page
+- Fixed a bug in the bidding where when bidding low values (< 1) it would say your bid is too low if you bidded the minimum bid
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

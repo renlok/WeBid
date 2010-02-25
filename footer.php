@@ -25,4 +25,7 @@ $template->set_filenames(array(
 		'footer' => 'global_footer.tpl'
 		));
 $template->display('footer');
+
+// if the page has loaded OK you dont need this data anymore :)
+unset($_SESSION['SESSION_ERROR']);
 ?>

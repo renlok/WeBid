@@ -268,7 +268,8 @@ function CheckBidData()
 	
 	if ($atype == 1) //normal auction
 	{
-		if ($bid < $next_bid)
+		// have to use bccomp to check if bid is less than next_bid
+		if (bccomp($bid, $next_bid, 2) == -1)
 		{
 			return '607';
 		}

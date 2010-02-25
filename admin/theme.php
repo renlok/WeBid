@@ -17,16 +17,16 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$theme_root = realpath($main_path . 'themes'); //theres no point repeatedly defining this
+$theme_root = realpath($main_path . 'themes/'); //theres no point repeatedly defining this
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (is_dir($main_path . 'themes/' . $_POST['theme']))
+	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']))
 	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
-				theme = '" . $_POST['theme'] . "'";
+				theme = '" . $_POST['dtheme'] . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$system->SETTINGS['theme'] = $_POST['theme'];
+		$system->SETTINGS['theme'] = $_POST['dtheme'];
 		$ERR = $MSG['26_0005'];
 	}
 	else
@@ -37,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'] == 'edit'))
 {
 	$filename = ($_POST['action'] == 'new_filename') ? $_POST['filename'] : $_POST['filename'];
-	$fh = fopen($theme_root . '/' . $_POST['theme'] . '/' . $filename, 'w') or die("can't open file");
+	$fh = fopen($theme_root . $_POST['theme'] . '/' . $filename, 'w') or die("can't open file");
 	fwrite($fh, $_POST['content']);
 	fclose($fh);
 }

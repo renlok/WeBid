@@ -874,6 +874,7 @@ $MSG['791'] = 'Final Price Fee';
 $MSG['792'] = 'You need to pay for %s item(s)';
 $MSG['793'] = ' items you\'re bidding on are ending soon';
 $MSG['794'] = 'You have been outbid on %s items';
+$MSG['795'] = 'Display Settings Updated';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

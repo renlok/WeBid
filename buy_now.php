@@ -183,9 +183,10 @@ if ($_GET['action'] == 'buy')
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 				// do the final value fees
-				$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";
+				$query = "SELECT value, fee_type, fee_from, fee_to FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$fee_value = 0;
 				while ($row = mysql_fetch_assoc($res))
 				{
 					if (floatval($Auction['buy_now']) > $row['fee_from'] && floatval($Auction['buy_now']) < $row['fee_to'])

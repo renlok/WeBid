@@ -273,7 +273,7 @@ if ($user->logged_in && $num_bids > 0)
 			{
 				$yourbidmsg = $MSG['514'];
 			}
-			elseif ($difference <= 0)
+			elseif ($difference <= 0 || $auction_data['bn_only'] == 'y')
 			{
 				$yourbidmsg = $MSG['25_0089'];
 			}
@@ -466,7 +466,7 @@ $template->assign_vars(array(
 		'SHIPPINGTERMS' => nl2br($auction_data['shipping_terms']),
 		'PAYMENTS' => str_replace("\n", ', ', $auction_data['payment']),
 		'AUCTION_VIEWS' => $auction_data['counter'],
-		'AUCTION_TYPE' => $auction_types[$auction_type],
+		'AUCTION_TYPE' => ($auction_data['bn_only'] == 'n') ? $auction_types[$auction_type] : $MSG['933'],
 		'ATYPE' => $auction_type,
 		'THUMBWIDTH' => $system->SETTINGS['thumb_show'],
 		'VIEW_HISTORY1' => (empty($view_history)) ? '' : $view_history . ' | ',

@@ -28,5 +28,18 @@
 - Fixed an error in the paypal payment validation class
 - Added additional notices to the user summary page
 - Fixed a bug in the bidding where when bidding low values (< 1) it would say your bid is too low if you bidded the minimum bid
+- Fixed the yourbids page so buy it now only items you have bought do not show on it
+- Fixed the item page so if the item is a buy ot now only auction and you have purchased an item it says you have won
+- Fixed the cumulative email spam problem
+- Fixed a bug in the getthumbnail.php where it doesnt display png files
+- Removed the banner settings page
+- Fixed proxy bidding so when two users bid the same the first to bid wins
+- Fixed a css rror in select_category.tpl
+- Added checks so atleast one usergroup must be auto join
+- Fixed edit user error messages so they now display
+- ~Fixed advanced search when buy it now only auctions are listed so they are in the correct order when sorted by price
+- Fixed advanced search when searching auction type
+- Fixed currency converter for when entering non standard values (15,000.06 15.000,06 etc)
+- Fixed maintainace mode so the remove install dir message is not shown when its enabled.
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

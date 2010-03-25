@@ -1,4 +1,4 @@
-<style type="text/css">.box {hight: 100; width:300;}</style>
+<style type="text/css">.box {height: 100; width:300;}</style>
 <script type="text/javascript">
 function SubmitBoxes(N)
 {

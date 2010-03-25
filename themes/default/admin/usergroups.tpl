@@ -29,7 +29,7 @@
 				<table width="100%" cellpadding="2" align="center" bgcolor="#FFFFFF">
 <!-- IF ERROR ne '' -->
 				<tr bgcolor="yellow">
-					<td class="error" colspan="2" align="center">{ERROR}</td>
+					<td class="error" colspan="7" align="center">{ERROR}</td>
 				</tr>
 <!-- ENDIF -->
 				<tr bgcolor="#FFCC00">

@@ -160,7 +160,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 	$winner_present = false;
 	$query = "SELECT u.* FROM " . $DBPrefix . "bids b
 			LEFT JOIN " . $DBPrefix . "users u ON (b.bidder = u.id)
-			WHERE auction = '" . $Auction['id'] . "' ORDER BY bid DESC";
+			WHERE auction = '" . $Auction['id'] . "' ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
 	$decrem = mysql_num_rows($result);
@@ -210,6 +210,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 						);
 				}
 
+				$fee_value = 0;
 				for ($i = 0; $i < count($endauc_fee); $i++)
 				{
 					if ($Auction['current_bid'] > $endauc_fee[$i]['fee_from'] && $Auction['current_bid'] < $endauc_fee[$i]['fee_to'])
@@ -344,6 +345,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 								);
 						}
 
+						$fee_value = 0;
 						for ($i = 0; $i < count($endauc_fee); $i++)
 						{
 							if ($Auction['current_bid'] > $endauc_fee[$i]['fee_from'] && $Auction['current_bid'] < $endauc_fee[$i]['fee_to'])
@@ -575,36 +577,39 @@ if ($num > 0)
 	}
 }
 
-// send cumunalative emails
+// send cumulative emails
 $query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE endemailmode = 'cum'";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
-while($row = mysql_fetch_array($res))
+while($row = mysql_fetch_assoc($res))
 {
 	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < '" . gmdate('Ymd') . "' AND seller_id = " . $row['id'];
 	$res_ = mysql_query($query);
 	$system->check_mysql($res_, $query, __LINE__, __FILE__);
 
-	while($pending = mysql_fetch_array($res_))
+	if (mysql_num_rows($res_) > 0)
 	{
-		$Auction = unserialize($pending['auction']);
-		$Seller = unserialize($pending['seller']);
-		$report .= "-------------------------------------------------------------------------\n" . 
-					$Auction['title'] . "\n" . 
-					"-------------------------------------------------------------------------\n";
-		if(strlen($pending['winners']) > 0)
+		while($pending = mysql_fetch_assoc($res_))
 		{
-			$report .= $MSG['453'] . ':' . "\n" . $pending['winners'] . "\n\n";
+			$Auction = unserialize($pending['auction']);
+			$Seller = unserialize($pending['seller']);
+			$report .= "-------------------------------------------------------------------------\n" . 
+						$Auction['title'] . "\n" . 
+						"-------------------------------------------------------------------------\n";
+			if(strlen($pending['winners']) > 0)
+			{
+				$report .= $MSG['453'] . ':' . "\n" . $pending['winners'] . "\n\n";
+			}
+			else
+			{
+				$report .= $MSG['1032']."\n\n";
+			}
+			$query = "DELETE FROM " . $DBPrefix . "pendingnotif WHERE id = " . $pending['id'];
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
-		else
-		{
-			$report .= $MSG['1032']."\n\n";
-		}
-		$query = "DELETE FROM " . $DBPrefix . "pendingnotif WHERE id = " . $pending['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		include $include_path . "endauction_cumulative.inc.php";
 	}
-	include $include_path . "endauction_cumulative.inc.php";
 }
 
 // send buyer fee emails

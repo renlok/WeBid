@@ -83,19 +83,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		elseif (empty($_POST['address']) && $MANDATORY_FIELDS['address'] == 'y')
 		{
-			$TPL_errmsg = $ERR_5034;
+			$ERR = $ERR_5034;
 		}
 		elseif (empty($_POST['city']) && $MANDATORY_FIELDS['city'] == 'y')
 		{
-			$TPL_errmsg = $ERR_5035;
+			$ERR = $ERR_5035;
 		}
 		elseif (empty($_POST['prov']) && $MANDATORY_FIELDS['prov'] == 'y')
 		{
-			$TPL_errmsg = $ERR_5036;
+			$ERR = $ERR_5036;
 		}
 		elseif (empty($_POST['country']) && $MANDATORY_FIELDS['country'] == 'y')
 		{
-			$TPL_errmsg = $ERR_5037;
+			$ERR = $ERR_5037;
+		}
+		elseif (count($_POST['group']) == 0)
+		{
+			$ERR = $ERR_044;
 		}
 		else
 		{

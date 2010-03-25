@@ -28,7 +28,16 @@ class global_class
 		$this->loadsettings();
 		$this->ctime = time() + (($this->SETTINGS['timecorrection'] + gmdate('I')) * 3600);
 		$this->tdiff = ($this->SETTINGS['timecorrection'] + gmdate('I')) * 3600;
-		if (is_dir($main_path . 'install')){ echo 'please delete the install directory'; exit; }
+		// check install directory
+		if (is_dir($main_path . 'install'))
+		{
+			if (!$this->check_maintainance_mode()) // check maint mode
+			{
+				echo 'please delete the install directory';
+				exit;
+			}
+		}
+
 		// Check ip
 		if (!defined('IPBan') && !defined('InAdmin'))
 		{
@@ -60,6 +69,29 @@ class global_class
 			header('location: ' . $this->SETTINGS['siteurl'] . 'error.php');
 			exit;
 		}
+	}
+
+	function check_maintainance_mode()
+	{
+		global $DBPrefix, $user, $system;
+
+		$query = "SELECT * FROM " . $DBPrefix . "maintainance";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		
+		if (mysql_num_rows($res) > 0)
+		{
+			$MAINTAINANCE = mysql_fetch_array($res);
+			if ($MAINTAINANCE['active'] == 'y')
+			{
+				if ($user->logged_in && ($user->user_data['nick'] == $MAINTAINANCE['superuser'] || $user->user_data['id'] == $MAINTAINANCE['superuser']))
+				{
+					return false;
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
 	function cleanvars($i, $trim = false)

@@ -159,7 +159,7 @@ function updateauction($type)
 		description = '" . addslashes($_SESSION['SELL_description']) . "',
 		pict_url = '" . $system->cleanvars($_SESSION['SELL_pict_url']) . "',
 		category = " . $_SESSION['SELL_sellcat'] . ",
-		minimum_bid = '" . $_SESSION['SELL_minimum_bid'] . "',
+		minimum_bid = '" . (($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']) . "',
 		shipping_cost = '" . $_SESSION['SELL_shipping_cost'] . "',
 		reserve_price = '" . (($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0) . "',
 		buy_now = '" . (($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0) . "',
@@ -189,7 +189,7 @@ function addauction()
 {
 	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee;
 	
-	return "INSERT INTO " . $DBPrefix . "auctions VALUES (NULL, " . $user->user_data['id'] . ", '" . $system->cleanvars($_SESSION['SELL_title']) . "', '" .  $a_starts . "', '" . addslashes($_SESSION['SELL_description']) . "', '" . $system->cleanvars($_SESSION['SELL_pict_url']) . "', " . $_SESSION['SELL_sellcat'] . ", '" . $_SESSION['SELL_minimum_bid'] . "', '" . $_SESSION['SELL_shipping_cost'] . "', '" . (($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0) . "', '" . (($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0) . "', '" . $_SESSION['SELL_atype'] . "', '" . $_SESSION['SELL_duration'] . "', " . floatval($_SESSION['SELL_customincrement']) . ", '" . $_SESSION['SELL_shipping'] . "', '" . $payment_text . "', " . (($_SESSION['SELL_international']) ? 1 : 0) . ", '" . $a_ends . "', 0, 0, " . (($_SESSION['SELL_file_uploaded']) ? 1 : 0) . ", " . $_SESSION['SELL_iquantity'] . ", 0, 0, " . intval($_SESSION['SELL_relist']) . ", 0, 'n', '" . $system->cleanvars($_SESSION['SELL_shipping_terms']) . "', '" . $_SESSION['SELL_buy_now_only'] . "', '" . $_SESSION['SELL_is_bold'] . "', '" . $_SESSION['SELL_is_highlighted'] . "', '" . $_SESSION['SELL_is_featured'] . "', " . $fee . ")";
+	return "INSERT INTO " . $DBPrefix . "auctions VALUES (NULL, " . $user->user_data['id'] . ", '" . $system->cleanvars($_SESSION['SELL_title']) . "', '" .  $a_starts . "', '" . addslashes($_SESSION['SELL_description']) . "', '" . $system->cleanvars($_SESSION['SELL_pict_url']) . "', " . $_SESSION['SELL_sellcat'] . ", '" . (($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']) . "', '" . $_SESSION['SELL_shipping_cost'] . "', '" . (($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0) . "', '" . (($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0) . "', '" . $_SESSION['SELL_atype'] . "', '" . $_SESSION['SELL_duration'] . "', " . floatval($_SESSION['SELL_customincrement']) . ", '" . $_SESSION['SELL_shipping'] . "', '" . $payment_text . "', " . (($_SESSION['SELL_international']) ? 1 : 0) . ", '" . $a_ends . "', 0, 0, " . (($_SESSION['SELL_file_uploaded']) ? 1 : 0) . ", " . $_SESSION['SELL_iquantity'] . ", 0, 0, " . intval($_SESSION['SELL_relist']) . ", 0, 'n', '" . $system->cleanvars($_SESSION['SELL_shipping_terms']) . "', '" . $_SESSION['SELL_buy_now_only'] . "', '" . $_SESSION['SELL_is_bold'] . "', '" . $_SESSION['SELL_is_highlighted'] . "', '" . $_SESSION['SELL_is_featured'] . "', " . $fee . ")";
 }
 
 function remove_bids($auction_id)

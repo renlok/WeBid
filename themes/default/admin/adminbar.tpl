@@ -171,7 +171,6 @@ function SwitchMenu(obj){
 		  	<div class="menutitle" onClick="SwitchMenu('banners')">{L_25_0011}</div>
 			<span class="submenu" id="banners">
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/banners.php" target="content" class="submenulink">{L_5205}</a><br>
-			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/bannerssettings.php" target="content" class="submenulink">{L__0013}</a><br>
 			<img src="{SITEURL}admin/images/bul.gif" hspace="2"><a href="{SITEURL}admin/managebanners.php" target="content" class="submenulink">{L__0008}</a><br>
 			</span>
 		  </TD>

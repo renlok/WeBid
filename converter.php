@@ -21,12 +21,13 @@ $conversion = '';
 if (isset($_POST['action']) && $_POST['action'] == 'convert')
 {
 	// Convert
-	$CONVERTED = ConvertCurrency($_POST['from'], $_POST['to'], $_POST['amount']);
+	$amount = $system->input_money($_POST['amount']);
+	$CONVERTED = ConvertCurrency($_POST['from'], $_POST['to'], $amount);
 	if ($CONVERTED == false)
 	{
 		$errormsg = $ERR_069;
 	}
-	$conversion = number_format($_POST['amount'], 4, '.', ',') . ' ' . $_POST['from'] . ' = ' . number_format($CONVERTED, 4, '.', ',') . ' ' . $_POST['to'];
+	$conversion = $system->print_money_nosymbol($_POST['amount']) . ' ' . $_POST['from'] . ' = ' . $system->print_money_nosymbol($CONVERTED) . ' ' . $_POST['to'];
 }
 
 include $include_path . 'styles.inc.php';

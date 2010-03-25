@@ -24,7 +24,6 @@ $uploaded_path = 'uploaded/';
 $upload_path = $main_path . $uploaded_path; 
 $logPath = $main_path . 'logs/';
 
-include $include_path . 'fonts.inc.php'; //fonts data dump
 include $include_path . 'errors.inc.php'; //error handler functions
 include $include_path . 'dates.inc.php';
 

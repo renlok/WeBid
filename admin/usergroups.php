@@ -52,6 +52,23 @@ if (isset($_GET['action']) && !isset($_POST['action']))
 
 if (isset($_POST['action']))
 {
+	$auto_join = true;
+	// check other groups are auto-join as every user needs a group
+	if ($_POST['auto_join'] == 0)
+	{
+		$query = "SELECT * FROM ". $DBPrefix . "groups WHERE auto_join = 1";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$auto_join = false;
+		while ($row = mysql_fetch_assoc($res))
+		{
+			if ($row['id'] != $_POST['id'])
+			{
+				$auto_join = true;
+			}
+		}
+		$ERR = $ERR_050;
+	}
 	if ($_GET['action'] == 'edit' || is_numeric($_GET['id']))
 	{
 		$query = "UPDATE ". $DBPrefix . "groups SET
@@ -59,7 +76,7 @@ if (isset($_POST['action']))
 				count = " . intval($_POST['user_count']) . ",
 				can_sell = " . intval($_POST['can_sell']) . ",
 				can_buy = " . intval($_POST['can_buy']) . ",
-				auto_join = " . intval($_POST['auto_join']) . "
+				auto_join = " . (($auto_join) ? intval($_POST['auto_join']) : 1) . "
 				WHERE id = " . intval($_POST['id']);
 	}
 	if ($_GET['action'] == 'new' || empty($_GET['id']))
@@ -87,6 +104,7 @@ while ($row = mysql_fetch_assoc($res))
 }
 
 $template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'B_EDIT' => $edit
 		));
 

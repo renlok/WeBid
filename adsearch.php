@@ -55,7 +55,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		}
 		$wher .= "(au.title like '%" . $system->cleanvars($_SESSION['advs']['title']) . "%' OR au.id = " . intval($_SESSION['advs']['title']) . ")) AND ";
 	}
-	
+
 	if (!empty($_SESSION['advs']['seller']))
 	{
 		$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_SESSION['advs']['seller']) . "'";
@@ -72,28 +72,33 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 			$wher .= "(au.user LIKE '%-------------%') AND ";
 		}
 	}
-	
+
 	if (isset($_SESSION['advs']['buyitnow']))
 	{
 		$wher .= "(au.buy_now > 0 AND (au.bn_only = 'y' OR au.bn_only = 'n' && (au.num_bids = 0 OR (au.reserve_price > 0 AND au.current_bid < au.reserve_price)))) AND ";
 	}
-	
+
 	if (isset($_SESSION['advs']['buyitnowonly']))
 	{
 		$wher .= "(au.bn_only = 'y') AND ";
 	}
-	
+
 	if (!empty($_SESSION['advs']['zipcode']))
 	{
 		$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
 		$wher .= "(u.zip LIKE '%" . addslashes($_SESSION['advs']['zipcode']) . "%') AND ";
 	}
-	
+
 	if (!isset($_SESSION['advs']['closed']))
 	{
 		$wher .= "(au.closed = '0') AND ";
 	}
-	
+
+	if (!empty($_SESSION['advs']['type']))
+	{
+		$wher .= "(au.auction_type = " . $_SESSION['advs']['type'] . ") AND ";
+	}
+
 	if (!empty($_SESSION['advs']['category']))
 	{
 		$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['advs']['category'];
@@ -111,22 +116,22 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$catalist .= ')';
 		$wher .= "(au.category IN " . $catalist . ") AND ";
 	}
-	
+
 	if (!empty($_SESSION['advs']['maxprice'])) $wher .= "(au.minimum_bid <= " . floatval($_SESSION['advs']['maxprice']) . ") AND ";
 	if (!empty($_SESSION['advs']['minprice'])) $wher .= "(au.minimum_bid >= " . floatval($_SESSION['advs']['minprice']) . ") AND ";
-	
+
 	if (!empty($_SESSION['advs']['ending']) && ($_SESSION['advs']['ending'] == '1' || $_SESSION['advs']['ending'] == '2' || $_SESSION['advs']['ending'] == '4' || $_SESSION['advs']['ending'] == '6'))
 	{
 		$data = time() + ($ending * 86400);
 		$wher .= "(au.ends <= $data) AND ";
 	}
-	
+
 	if (!empty($_SESSION['advs']['country']))
 	{
 		$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
 		$wher .= "(u.country = '" . $system->cleanvars($_SESSION['advs']['country']) . "') AND ";
 	}
-	
+
 	if (isset($_SESSION['advs']['payment']))
 	{
 		if (is_array($_SESSION['advs']['payment']) && count($_SESSION['advs']['payment']) > 1)
@@ -151,14 +156,14 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 			$ora = "(au.payment LIKE '%" . addslashes($_SESSION['advs']['payment'][0]) . "%') AND ";
 		}
 	}
-	
+
 	if (isset($_SESSION['advs']['SortProperty']) && $_SESSION['advs']['SortProperty'] == 'starts')
 	{
 		$by = 'au.starts DESC';
 	}
 	elseif (isset($_SESSION['advs']['SortProperty']) && $_SESSION['advs']['SortProperty'] == 'min_bid')
 	{
-		$by = 'au.minimum_bid';
+		$by = 'au.minimum_bid ASC';
 	}
 	elseif (isset($_SESSION['advs']['SortProperty']) && $_SESSION['advs']['SortProperty'] == 'max_bid')
 	{

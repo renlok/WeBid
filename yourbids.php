@@ -17,7 +17,8 @@ include 'includes/common.inc.php';
 
 // get active bids for this user
 $query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
-		WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = " . $user->user_data['id'] . " ORDER BY a.ends ASC, b.bidwhen DESC";
+		WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = " . $user->user_data['id'] . "
+		AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bidwhen DESC";
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 
@@ -26,40 +27,23 @@ $auctions_count = 0;
 $bgColor = '#EBEBEB';
 while ($row = mysql_fetch_array($result))
 {
-	$rowid = $row['id'];
-	if ($idcheck != $rowid)
+	if ($idcheck != $row['id'])
 	{
-		$bid = $row['bid'];
 		// prepare some data
-		if ($bgColor == '#EBEBEB')
-		{
-			$bgColor = '#FFFFFF';
-		}
-		else
-		{
-			$bgColor = '#EBEBEB';
-		}
+		$bgColor = ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB';
+
 		// Outbidded or winning bid
 		if ($row['current_bid'] != $row['bid']) $bgColor = '#FFFF00';
-		// current bid of this auction
-		if ($bid == 0)
-		{
-			$bid = $starting_price;
-		}
-		$bid = $system->print_money($bid);
-		// time left till the end of this auction
-		$difference = $row['ends'] - time();
 
 		$auctions_count++;
-
-		$idcheck = $rowid;
+		$idcheck = $row['id'];
 
 		$template->assign_block_vars('bids', array(
 				'BGCOLOUR' => $bgColor,
-				'ID' => $rowid,
+				'ID' => $row['id'],
 				'TITLE' => $row['title'],
-				'BID' => $bid,
-				'TIMELEFT' => FormatTimeLeft($difference)
+				'BID' => $system->print_money($row['bid']),
+				'TIMELEFT' => FormatTimeLeft($row['ends'] - time())
 				));
 	}
 }

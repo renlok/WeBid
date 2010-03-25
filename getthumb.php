@@ -42,6 +42,11 @@ elseif (!file_exists($_GET['fromfile']) && !fopen($_GET['fromfile'], 'r'))
 if (file_exists('uploaded/cache/' . $_GET['w'] . '-' . md5($fromfile)))
 {
 	$img = getimagesize($fromfile);
+	if ($img[2] == 1)
+	{
+		$img['mime'] = 'image/png';
+	}
+	header('Content-type: ' . $img['mime']);
 	echo file_get_contents('uploaded/cache/' . $_GET['w'] . '-' . md5($fromfile));
 }
 else
@@ -124,8 +129,7 @@ else
 	imagecopyresampled($ou, $funcall($fromfile), 0, 0, 0, 0, $w, $h, $img[0], $img[1]);
 	$funcall = "image$outype";
 	$funcall($ou, 'uploaded/cache/' . $_GET['w'] . '-' . md5($fromfile));
+	header('Content-type: ' . $img['mime']);
+	$funcall($ou);
 }
-
-header('Content-type: ' . $img['mime']);
-$funcall($ou);
 ?>

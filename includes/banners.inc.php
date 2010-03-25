@@ -40,10 +40,6 @@ if (!function_exists('view'))
 
 		$query = "SELECT b.* FROM " . $DBPrefix . "banners b " . $joinings . "
 				WHERE b.views < b.purchased OR b.purchased = 0" . $extra;
-		if ($system->SETTINGS['banner_sizetype'] == 'fix')
-		{
-			$query .= " AND b.width = " . $system->SETTINGS['banner_width'] . " AND b.height = " . $system->SETTINGS['banner_height'];
-		}
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 
@@ -51,10 +47,6 @@ if (!function_exists('view'))
 		{
 			$query = "SELECT b.* FROM " . $DBPrefix . "banners b " . $joinings . "
 					WHERE b.views < b.purchased OR b.purchased = 0";
-			if ($system->SETTINGS['banner_sizetype'] == 'fix')
-			{
-				$query .= " AND b.width = " . $system->SETTINGS['banner_width'] . " AND b.height = " . $system->SETTINGS['banner_height'];
-			}
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 		}

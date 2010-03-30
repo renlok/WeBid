@@ -122,12 +122,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  zip = '" . $system->cleanvars($_POST['zip']) . "',
 				  phone = '" . $system->cleanvars($_POST['phone']) . "',
 				  birthdate = '" . $system->cleanvars($birthdate) . "',
-				  groups = '" . implode(',', $_POST['group']) . "'";
+				  groups = '" . implode(',', $_POST['group']) . "',
+				  balance = '" . $system->input_money($_POST['balance']) . "'";
 			if (strlen($_POST['password']) > 0)
 			{
 				$query .=  ", password = '" . md5($MD5_PREFIX . $_POST['password']) . "'";
 			}
-			$query .=  " WHERE id='".AddSlashes($userid)."'";
+			$query .=  " WHERE id = " . $userid;
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 
@@ -200,6 +201,7 @@ $template->assign_vars(array(
 		'ZIP' => $user_data['zip'],
 		'COUNTRY' => $user_data['country'],
 		'PHONE' => $user_data['phone'],
+		'BALANCE' => $user_data['balance'],
 		'DOB' => $birthdate,
 		'COUNTRY_LIST' => $country_list,
 		'ID' => $userid,

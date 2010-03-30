@@ -74,9 +74,9 @@ The Install.php script included with WeBid will:
   - Test Critical File and Directory Permission settings.
   
 
-1. Download WeBid Auction Script:
+1. Download the latest version of WeBid:
 
-  - Download the latest full (or required update) version of WeBid GNU/GPL FREE auction script.
+  - Download the latest full (or required update) version of WeBid the GNU/GPL FREE auction script.
 
   - WeBid script is available FREE from the Official WeBid online website at http://www.Webidsupport.com
 

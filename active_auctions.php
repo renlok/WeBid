@@ -58,7 +58,7 @@ $query = "SELECT * FROM " . $DBPrefix . "auctions
 		WHERE user = " . $user_id . "
 		AND closed = 0
 		AND starts <= '" . $NOW . "'
-		ORDER BY ends ASC LIMIT $OFFSET, " . $system->SETTINGS['perpage'];
+		ORDER BY ends ASC LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

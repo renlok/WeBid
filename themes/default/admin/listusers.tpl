@@ -76,7 +76,7 @@
                     <tr bgcolor="{users.BGCOLOUR}">
                         <td>
                         	<b>{users.NICK}</b><br>
-                            &nbsp;<a href="viewuserauctions.php?id={users.ID}&offset={PAGE}" class="small">{L_5094}</a><br>
+                            &nbsp;<a href="listauctions.php?uid={users.ID}&offset={PAGE}" class="small">{L_5094}</a><br>
                             &nbsp;<a href="userfeedback.php?id={users.ID}&offset={PAGE}" class="small">{L_503}</a><br>
                             &nbsp;<a href="viewuserips.php?id={users.ID}&offset={PAGE}" class="small">{L_2_0004}</a>
                         </td>

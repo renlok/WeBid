@@ -27,7 +27,7 @@
             <td bgcolor="#FFFFFF">
                 <table width="100%" cellspacing="0" border="0" align="center">
                 <tr>
-                    <td colspan="3"><b>{NUM_AUCTIONS} {L_311}</b></td>
+                    <td colspan="3"><b>{NUM_AUCTIONS} {L_311}<!-- IF B_SEARCHUSER -->{L_934}{USERNAME}<!-- ENDIF --></b></td>
                 </tr>
                 <tr bgcolor="#FFCC00">
                     <td align="center"><b>{L_017}</b></td>

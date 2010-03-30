@@ -69,13 +69,33 @@
                 	<td colspan="4">
                         <p>
                             <input type="submit" name="Submit" value="{L_2_0015}">
-                            <input type="hidden" NAME="action" VALUE="update">
-                            <input type="hidden" NAME="id" VALUE="{ID}">
+                            <input type="hidden" name="offset" value="{OFFSET}">
+                            <input type="hidden" name="action" value="update">
+                            <input type="hidden" name="id" value="{ID}">
                         </p>
                     </td>
                 </tr>
                 </table>
                 </form>
+<!-- IF B_MULPAG -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td align="center">
+                            {L_5117} {PAGE} {L_5118} {PAGES}
+                            <br>
+    <!-- IF B_NOTLAST -->
+                            <a href="viewuserips.php?PAGE={PREV}&id={ID}&offset={OFFSET}"><u>{L_5119}</u></a>&nbsp;&nbsp;
+    <!-- ENDIF -->
+                            {PAGENA}
+                            &nbsp;&nbsp;
+    <!-- IF B_NOTLAST -->
+                            <a href="viewuserips.php?PAGE={NEXT}&id={ID}&offset={OFFSET}"><u>{L_5120}</u></a>
+    <!-- ENDIF -->
+                        </td>
+                    </tr>
+                </table>
+<!-- ENDIF -->
+			<a href="listusers.php?offset={OFFSET}" class="small">{L_5279}</a>
             </td>
         </tr>
         </table>

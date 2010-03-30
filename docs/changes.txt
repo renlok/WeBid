@@ -41,5 +41,6 @@
 - Fixed advanced search when searching auction type
 - Fixed currency converter for when entering non standard values (15,000.06 15.000,06 etc)
 - Fixed maintainace mode so the remove install dir message is not shown when its enabled.
+- Fixed a security issues with the comfirm account page
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

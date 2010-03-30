@@ -94,6 +94,10 @@
                     <td><input type="text" name="phone" size="40" maxlength="40" value="{PHONE}"></td>
                 </tr>
                 <tr>
+                    <td>{L_763}</td>
+                    <td><input type="text" name="balance" size="40" maxlength="10" value="{BALANCE}"></td>
+                </tr>
+                <tr>
                     <td>&nbsp;</td>
                     <td><a href="userfeedback.php?id={ID}">{L_208}</a></td>
                 </tr>

@@ -73,11 +73,11 @@ class global_class
 
 	function check_maintainance_mode()
 	{
-		global $DBPrefix, $user, $system;
+		global $DBPrefix, $user;
 
 		$query = "SELECT * FROM " . $DBPrefix . "maintainance";
 		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$this->check_mysql($res, $query, __LINE__, __FILE__);
 		
 		if (mysql_num_rows($res) > 0)
 		{

@@ -115,8 +115,8 @@ while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ID' => $secid,
-		'NICK' => $TPL_nick,
-		'FB_NUM' => $TPL_feedbacks_num,
+		'NICK' => $arr['nick'],
+		'FB_NUM' => $arr['rate_num'],
 		'FB_IMG' => $feedback_image,
 
 		'B_MULPAG' => ($PAGES > 1),
@@ -127,4 +127,8 @@ $template->assign_vars(array(
 		'PAGENA' => $pagenation
 		));
 
+$template->set_filenames(array(
+		'body' => 'userfeedback.tpl'
+		));
+$template->display('body');
 ?>

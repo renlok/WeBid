@@ -27,7 +27,7 @@
             <td bgcolor="#FFFFFF">
                 <table width="100%" cellspacing="0" border="0" align="center">
                 <tr>
-                    <td colspan="3"><b>{NUM_AUCTIONS} {L_311}<!-- IF B_SEARCHUSER -->{L_934}{USERNAME}<!-- ENDIF --></b></td>
+                    <td colspan="3"><b>{NUM_AUCTIONS} {L_311}<!-- IF B_SEARCHUSER --> {L_934}{USERNAME}<!-- ENDIF --></b></td>
                 </tr>
                 <tr bgcolor="#FFCC00">
                     <td align="center"><b>{L_017}</b></td>
@@ -51,9 +51,9 @@
                         <b>{L_041}:</b> {auctions.CATEGORY}
                     </td>
                     <td align="left">
-                        <a href="editauction.php?id={auctions.ID}&offset={OFFSET}">{L_298}</a><br>
-                        <a href="deleteauction.php?id={auctions.ID}&offset={OFFSET}">{L_008}</a><br>
-                        <a href="excludeauction.php?id={auctions.ID}&offset={OFFSET}">
+                        <a href="editauction.php?id={auctions.ID}&offset={PAGE}">{L_298}</a><br>
+                        <a href="deleteauction.php?id={auctions.ID}&offset={PAGE}">{L_008}</a><br>
+                        <a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">
                     <!-- IF auctions.SUSPENDED eq 0 -->
                         {L_300}
                     <!-- ELSE -->
@@ -61,7 +61,7 @@
                     <!-- ENDIF -->
                     	</a>
                     <!-- IF auctions.B_HASWINNERS -->
-                        <br><a href="viewwinners.php?id={auctions.ID}&offset={OFFSET}">{L__0163}</a>
+                        <br><a href="viewwinners.php?id={auctions.ID}&offset={PAGE}">{L__0163}</a>
                     <!-- ENDIF -->
                     </td>
                 </tr>

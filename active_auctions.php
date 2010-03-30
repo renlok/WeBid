@@ -41,14 +41,14 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $num_auctions = mysql_result($res, 0, 'auctions');
 
 // Handle pagination
-if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1 || $_GET['PAGE'] == '')
+if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
 {
 	$OFFSET = 0;
 	$PAGE = 1;
 }
 else
 {
-	$PAGE = $_GET['PAGE'];
+	$PAGE = intval($_GET['PAGE']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
 $PAGES = ceil($num_auctions / $system->SETTINGS['perpage']);

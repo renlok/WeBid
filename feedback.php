@@ -65,7 +65,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 					$TPL_errmsg = $ERR_074;
 				}
 				//elseif ((intval($_REQUEST['wid']) == $user->user_data['id'] && $wsell['paid'] == 1) || (intval($_REQUEST['sid']) == $user->user_data['id']))
-				elseif (true)
+				else
 				{
 					if ($system->SETTINGS['usersauth'] == 'n' || $user->user_data['password'] == md5($MD5_PREFIX . $_POST['TPL_password']))
 					{

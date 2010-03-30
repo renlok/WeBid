@@ -25,19 +25,26 @@ $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
 $user_sql = isset($_GET['uid']) ? " AND a.user = " . $uid : '';
 
 // Set offset and limit for pagination
-$limit = 20;
-if (!$_GET['offset'])
+if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
 {
-	$offset = 0;
+	$OFFSET = 0;
+	$PAGE = 1;
+}
+elseif (!isset($_SESSION['RETURN_LIST_OFFSET']) || $_SESSION['RETURN_LIST_OFFSET'] == '')
+{
+	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
 else
 {
-	$offset = $_GET['offset'];
+	$PAGE = intval($_GET['PAGE']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-$_SESSION['RETURN_LIST'] = 'listauctions.php';
-$_SESSION['RETURN_LIST_OFFSET'] = $offset;
 
-$query = "SELECT COUNT(id) As auctions FROM " . $DBPrefix . "auctions WHERE closed = 0";
+$_SESSION['RETURN_LIST'] = 'listauctions.php';
+$_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
+
+$query = "SELECT COUNT(a.id) As auctions FROM " . $DBPrefix . "auctions a WHERE a.closed = 0 " . $user_sql;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $num_auctions = mysql_result($res, 0, 'auctions');
@@ -45,7 +52,7 @@ $num_auctions = mysql_result($res, 0, 'auctions');
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
-		WHERE a.closed = 0 " . $user_sql . " ORDER BY nick LIMIT " . $offset . ", " . $limit;
+		WHERE a.closed = 0 " . $user_sql . " ORDER BY nick LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $bgcolour = '#FFFFFF';
@@ -66,15 +73,22 @@ while ($row = mysql_fetch_assoc($res))
 	$username = $row['nick'];
 }
 
-$num_pages = ceil($num_auctions / $limit);
+if ((!isset($username) || empty($username)) && $uid > 0)
+{
+	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $uid;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$username = mysql_result($res, 0);
+}
+
+$num_pages = ceil($num_auctions / $system->SETTINGS['perpage']);
 $pagnation = '';
 for ($i = 0; $i < $num_pages; $i++)
 {
-	$of = ($i * $limit);
-	if ($of != $offset)
+	if (($i + 1) != $PAGE)
 	{
 		$user = ($uid > 0) ? '&uid=' . $uid : '';
-		$pagnation .= '<a href="listauctions.php?offset=' . $of . $user . '" class="navigation">' . ($i + 1) . '</a>';
+		$pagnation .= '<a href="listauctions.php?PAGE=' . ($i + 1) . $user . '" class="navigation">' . ($i + 1) . '</a>';
 	}
 	else
 	{
@@ -88,9 +102,9 @@ $template->assign_vars(array(
 		'PAGE_TITLE' => $MSG['067'],
 		'NUM_AUCTIONS' => $num_auctions,
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'OFFSET' => $offset,
+		'PAGE' => $PAGE,
 		'PAGNATION' => $pagnation,
-		
+
 		'B_SEARCHUSER' => ($uid > 0),
 		'USERNAME' => $username
 		));

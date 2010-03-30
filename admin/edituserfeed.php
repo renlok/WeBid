@@ -85,7 +85,7 @@ function ResetForm(){
 </head>
 <body>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr> 
+  <tr>
 	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
 		<tr> 
 		  <td width="30"><img src="images/i_con.gif" ></td>

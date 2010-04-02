@@ -44,16 +44,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
-foreach ($LANGUAGES as $language)
+foreach ($LANGUAGES as $k => $language)
 {
 	$template->assign_block_vars('lang', array(
-			'LANG' => $language
+			'LANG' => $language,
+			'TITLE' => (isset($_POST['title'][$k])) ? $_POST['title'][$k] : '',
+			'CONTENT' => (isset($_POST['content'][$k])) ? $_POST['content'][$k] : ''
 			));
 }
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($ERR)) ? $ERR : ''
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'TITLE' => $MSG['518'],
+		'BUTTON' => $MSG['518'],
+
+		'B_ACTIVE' => ((isset($_POST['suspended']) && $_POST['suspended'] == 0) || !isset($_POST['suspended'])),
+		'B_INACTIVE' => (isset($_POST['suspended']) && $_POST['suspended'] == 1),
 		));
 
 $template->set_filenames(array(

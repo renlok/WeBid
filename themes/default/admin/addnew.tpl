@@ -21,7 +21,7 @@
     <td align="center" valign="middle">
         <table width="95%" border="0" cellpadding="1" bgcolor="#0083D7">
         <tr>
-            <td align="center" class="title">{L_518}</td>
+            <td align="center" class="title">{TITLE}</td>
         </tr>
         <tr>
             <td bgcolor="#FFFFFF">
@@ -40,7 +40,7 @@
     					<td>&nbsp;</td>
     <!-- ENDIF -->
 						<td width="10"><img src="../includes/flags/{lang.LANG}.gif"></td>
-                        <td width="486"><input type="text" name="title[{lang.LANG}]" size="40" maxlength="255" value=""></td>
+                        <td width="486"><input type="text" name="title[{lang.LANG}]" size="40" maxlength="255" value="{lang.TITLE}"></td>
 					</tr>
 <!-- END lang -->
 <!-- BEGIN lang -->
@@ -51,7 +51,7 @@
     					<td>&nbsp;</td>
     <!-- ENDIF -->
 						<td width="10" valign="top"><img src="../includes/flags/{lang.LANG}.gif"></td>
-                        <td width="486"><textarea name="content[{lang.LANG}]" cols="45" rows="20"></textarea></td>
+                        <td width="486"><textarea name="content[{lang.LANG}]" cols="45" rows="20">{lang.CONTENT}</textarea></td>
 					</tr>
 <!-- END lang -->
                     </tr>
@@ -59,8 +59,8 @@
                         <td valign="top" align="right">{L_521}</td>
                         <td>&nbsp;</td>
                         <td>
-                            <input type="radio" name="suspended" value="0" checked> {L_030}
-                            <input type="radio" name="suspended" value="1"> {L_029}
+                            <input type="radio" name="suspended" value="0"<!-- IF B_ACTIVE --> checked="checked"<!-- ENDIF -->> {L_030}
+                            <input type="radio" name="suspended" value="1"<!-- IF B_INACTIVE --> checked="checked"<!-- ENDIF -->> {L_029}
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +68,7 @@
                         <td>&nbsp;</td>
                         <td>
                             <input type="hidden" name="action" value="update">
-                            <input type="submit" value="{L_518}">
+                            <input type="submit" value="{BUTTON}">
                         </td>
                     </tr>
                 </table>	

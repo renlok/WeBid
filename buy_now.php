@@ -163,6 +163,7 @@ if ($_GET['action'] == 'buy')
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$Winner = mysql_fetch_assoc($res);
 			$bf_paid = 1;
+			$ff_paid = 1;
 
 			// work out & add fee
 			if ($system->SETTINGS['fees'] == 'y')
@@ -219,11 +220,12 @@ if ($_GET['action'] == 'buy')
 							));
 					$emailer->email_uid = $Auction['user'];
 					$emailer->email_sender($Seller['email'], 'final_value_fee.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['523']);
+					$ff_paid = 0;
 				}
 			}
 
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, " . intval($_REQUEST['id']) . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ")";
+					(NULL, " . intval($_REQUEST['id']) . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ", " . $ff_paid . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 			// get end string

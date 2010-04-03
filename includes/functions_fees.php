@@ -206,6 +206,8 @@ class fees
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 7: //final value fee
+				$query = "UPDATE " . $DBPrefix . "winners SET ff_paid = 1 WHERE ff_paid = 0 AND auction = " . $custom_id . " AND seller = " . $user->user_data['id'];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $user->user_data['id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;

@@ -188,6 +188,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 			}
 
 			$bf_paid = 1;
+			$ff_paid = 1;
 			// work out & add fee
 			if ($system->SETTINGS['fees'] == 'y')
 			{
@@ -233,6 +234,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 				}
 				else
 				{
+					$ff_paid = 0;
 					$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Seller['id'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					$seller_emails[] = array(
@@ -246,7 +248,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 			}
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-			(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $Winner['id'] . "', " . $Auction['current_bid'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ")";
+			(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $Winner['id'] . "', " . $Auction['current_bid'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ", " . $ff_paid . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			
 			$query = "UPDATE " . $DBPrefix . "auctions SET sold = 'y' WHERE id = " . $Auction['id'];
@@ -323,6 +325,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 					$totalamount = $row['maxbid'];
 
 					$bf_paid = 1;
+					$ff_paid = 1;
 					// work out & add fee
 					if ($system->SETTINGS['fees'] == 'y')
 					{
@@ -368,6 +371,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 						}
 						else
 						{
+							$ff_paid = 0;
 							$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Seller['id'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 							$seller_emails[] = array(
@@ -381,7 +385,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 					}
 					// Add winner's data to "winners" table
 					$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0, " . $bf_paid . ")";
+					(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 				if ($items_count == 0)

@@ -783,24 +783,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Zimbabwe');";
 # ############################
 
 # 
-# Table structure for table `" . $DBPrefix . "currencies`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currencies`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "currencies` (
-  `id` int(11) NOT NULL auto_increment,
-  `currency` varchar(100) NOT NULL default '',
-  KEY `id` (`id`)
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "currencies`
-# 
-
-
-# ############################
-
-# 
 # Table structure for table `" . $DBPrefix . "currentaccesses`
 # 
 
@@ -1457,10 +1439,10 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `archiveafter` int(11) NOT NULL default '0',
   `datesformat` enum('USA','EUR') NOT NULL default 'EUR',
   `errortext` text NOT NULL,
-  `picturesgallery` int(1) NOT NULL default '0',
   `maxpictures` int(11) NOT NULL default '0',
   `buy_now` int(1) NOT NULL default '1',
   `thumb_show` smallint(6) NOT NULL default '120',
+  `thumb_list` smallint(6) NOT NULL default '120',
   `lastitemsnumber` int(11) NOT NULL default '0',
   `higherbidsnumber` int(11) NOT NULL default '0',
   `endingsoonnumber` int(11) NOT NULL default '0',
@@ -1488,10 +1470,14 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `boardsmsgs` int(11) NOT NULL default '0',
   `activationtype` INT(1) NOT NULL DEFAULT '1',
   `https` enum('y','n') NOT NULL default 'n',
+  `https_url` varchar(255) NOT NULL default '',
   `bn_only_disable` enum('y','n') NOT NULL default 'n',
   `bn_only_percent` int(3) NOT NULL default '50',
   `buyerprivacy` ENUM('y','n') NOT NULL default 'n',
   `cust_increment` INT(1) NOT NULL DEFAULT '0',
+  `subtitle` ENUM('y','n') NOT NULL default 'y',
+  `extra_cat` ENUM('y','n') NOT NULL default 'n',
+  `buyerprivacy` ENUM('y','n') NOT NULL default 'n',
   `fees` ENUM('y','n') NOT NULL default 'n',
   `fee_type` int(1) NOT NULL default '1',
   `fee_max_debt` double(16,4) NOT NULL default '25.00',
@@ -1503,7 +1489,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `cache_theme` ENUM('y','n') NOT NULL default 'y',
   `hours_countdown` int(5) NOT NULL default '24',
   `edit_starttime` int(1) NOT NULL default '1',
-  `banner_sizetype` enum('fix','any') NOT NULL default 'any',
   `banner_width` int(11) NOT NULL default '468',
   `banner_height` int(11) NOT NULL default '60',
   `counter_auctions` enum('y','n') NOT NULL default 'y',
@@ -1519,7 +1504,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `recaptcha_public` varchar(40) NOT NULL default '',
   `recaptcha_private` varchar(40) NOT NULL default '',
   `spam_sendtofriend` int(1) NOT NULL default '1',
-  `spam_register` int(1) NOT NULL default '1'
+  `spam_register` int(1) NOT NULL default '1',
+  `mod_queue` enum('y','n') NOT NULL default 'n'
 );";
 
 # 
@@ -1527,7 +1513,96 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid', '" . $siteURL . "', '', '" . this_version() . "', 1, 1, 5, 15, 1, 2, 2, 'GBP', 1, 'By clicking below you agree to the terms of this website.', '".$siteEmail."', 1, 1, 'logo.gif', 0, 2, 30, 'EUR', 'An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly', 1, 5, 2, 120, 8, 8, 0, 'y', 'y', 'y', '', 'y', '', 'y', '', 'United Kingdom', 0, 'EN', 'alpha', 'y', '', '', 51200, 'always', 'default', 20, 'n', 'y', 0, 1, 'n', 'n', 50, 'n', 1, 'n', '1', '25.00', '0.00', 'y', 'disabled', 120, 300, 'y', 24, 1, 'any', 468, 60, 'y', 'y', 'y', '', 'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}', 'y', 'y', 'y', 'y', '', '', 1, 1);";
+('WeBid',
+'" . $siteURL . "',
+'',
+'" . this_version() . "',
+1,
+1,
+5,
+15,
+1,
+2,
+2,
+'GBP',
+1,
+'By clicking below you agree to the terms of this website.',
+'" . $siteEmail . "',
+1,
+1,
+'logo.gif',
+0,
+2,
+30,
+'EUR',
+'An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly',
+5,
+2,
+120,
+120,
+8,
+8,
+0,
+'y',
+'y',
+'y',
+'',
+'y',
+'',
+'y',
+'',
+'United Kingdom',
+0,
+'EN',
+'alpha',
+'y',
+'',
+'',
+51200,
+'always',
+'default',
+20,
+'n',
+'y',
+0,
+1,
+'n',
+'',
+'n',
+50,
+'n',
+1,
+'y',
+'n',
+'n',
+'n',
+1,
+'25.00',
+'0.00',
+'y',
+'disabled',
+120,
+300,
+'y',
+24,
+1,
+468,
+60,
+'y',
+'y',
+'y',
+'',
+'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}',
+'a:7:{s:17:\"birthdate_regshow\";s:1:\"1\";s:15:\"address_regshow\";s:1:\"1\";s:12:\"city_regshow\";s:1:\"1\";s:12:\"prov_regshow\";s:1:\"1\";s:15:\"country_regshow\";s:1:\"1\";s:11:\"zip_regshow\";s:1:\"1\";s:11:\"tel_regshow\";s:1:\"1\";}',
+'y',
+'y',
+'y',
+'y',
+'',
+'',
+1,
+1,
+'n');";
 
 
 # ############################
@@ -1657,6 +1732,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `qty` int(11) NOT NULL default '1',
   `paid` int(1) NOT NULL default '0',
   `bf_paid` INT(1) NOT NULL DEFAULT  '0',
+  `ff_paid` INT(1) NOT NULL DEFAULT '1',
   KEY `id` (`id`)
 ) ;";
 

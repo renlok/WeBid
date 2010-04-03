@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include $include_path . 'auction_types.inc.php';
 include $include_path . 'dates.inc.php';
 include $include_path . 'membertypes.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
@@ -466,7 +465,7 @@ $template->assign_vars(array(
 		'SHIPPINGTERMS' => nl2br($auction_data['shipping_terms']),
 		'PAYMENTS' => str_replace("\n", ', ', $auction_data['payment']),
 		'AUCTION_VIEWS' => $auction_data['counter'],
-		'AUCTION_TYPE' => ($auction_data['bn_only'] == 'n') ? $auction_types[$auction_type] : $MSG['933'],
+		'AUCTION_TYPE' => ($auction_data['bn_only'] == 'n') ? $system->SETTINGS['auction_types'][$auction_type] : $MSG['933'],
 		'ATYPE' => $auction_type,
 		'THUMBWIDTH' => $system->SETTINGS['thumb_show'],
 		'VIEW_HISTORY1' => (empty($view_history)) ? '' : $view_history . ' | ',

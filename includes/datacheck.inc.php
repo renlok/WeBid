@@ -102,7 +102,7 @@ function CheckSellData()
 
 	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
-	global $payments, $auction_types, $invitedlists, $num, $nnum, $a_starts, $start_now;
+	global $payments, $num, $nnum, $a_starts, $start_now;
 
 	if (empty($title))
 	{
@@ -180,7 +180,7 @@ function CheckSellData()
 		$payment_ok = 1;
 	}
 
-	if (!isset($auction_types[intval($atype)]))
+	if (!isset($system->SETTINGS['auction_types'][intval($atype)]))
 	{
 		return '600';
 	}
@@ -200,14 +200,14 @@ function CheckSellData()
 		}
 		if ($increments == 2)
 		{
-			$increments=1;
-			$customincrement='';
+			$increments = 1;
+			$customincrement = '';
 			return '063';
 		}
 		if ($buy_now == 'yes')
 		{
-			$buy_now='no';
-			$buy_now_price='';
+			$buy_now = 'no';
+			$buy_now_price = '';
 			return '064';
 		}
 	}
@@ -249,7 +249,6 @@ function CheckSellData()
 			return '060';
 		}
 	}
-	
 }//--CheckSellData
 
 function CheckBidData()

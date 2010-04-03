@@ -15,7 +15,6 @@
 define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'dates.inc.php';
-include $include_path . 'auction_types.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -93,7 +92,7 @@ $template->assign_vars(array(
 		'MIN_BID' => $system->print_money($AUCTION['minimum_bid']),
 		'STARTS' => FormatDate($AUCTION['starts']),
 		'ENDS' => FormatDate($AUCTION['ends']),
-		'AUCTION_TYPE' => $auction_types[$AUCTION['auction_type']],
+		'AUCTION_TYPE' => $system->SETTINGS['auction_types'][$AUCTION['auction_type']],
 		
 		'B_WINNERS' => $winners,
 		'B_BIDS' => $bids

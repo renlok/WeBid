@@ -14,7 +14,6 @@
 
 include 'includes/common.inc.php';
 include $include_path . 'dates.inc.php';
-include $include_path . 'auction_types.inc.php';
 include $include_path . 'datacheck.inc.php';
 include $include_path . 'converter.inc.php';
 include $include_path . 'functions_sell.inc.php';
@@ -482,7 +481,7 @@ switch ($_SESSION['action'])
 						'STARTDATE' => (empty($start_now)) ? FormatDate($a_starts) : FormatDate($system->ctime),
 						'DURATION' => mysql_result($res, 0, 'description'),
 						'INCREMENTS' => ($increments == 1) ? $MSG['614'] : $system->print_money($customincrement),
-						'ATYPE' => $auction_types[$atype],
+						'ATYPE' => $system->SETTINGS['auction_types'][$atype],
 						'ATYPE_PLAIN' => $atype,
 						'SHIPPING' => (intval($shipping) == 1) ? $MSG['031'] : $MSG['032'],
 						'INTERNATIONAL' => ($international) ? $MSG['033'] : $MSG['043'],
@@ -530,7 +529,7 @@ switch ($_SESSION['action'])
 
 		// auction types
 		$TPL_auction_type = '<select name="atype" id="atype">' . "\n";
-		foreach ($auction_types as $key => $val)
+		foreach ($system->SETTINGS['auction_types'] as $key => $val)
 		{
 			$TPL_auction_type .= "\t" . '<option value="' . $key . '" ' . (($key == $atype) ? 'selected="true"' : '') . '>' . $val . '</option>' . "\n";
 		}

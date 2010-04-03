@@ -811,6 +811,7 @@ function get_item_version( $pv_browser_user_agent, $pv_search_string, $pv_b_brea
 	with for example google bot you want the first occurance returned, since that's where the
 	numbering happens 
 	*/
+	$start_pos = '';
 	for ( $i = 0; $i < 4; $i++ )
 	{
 		//start the search after the first string occurrence
@@ -824,7 +825,7 @@ function get_item_version( $pv_browser_user_agent, $pv_search_string, $pv_b_brea
 			if $pv_b_break_last $pv_extra_search conditions exist. Since we only want this test
 			to run if and only if we need it, it's triggered by caller passing these values.
 			*/
-			if ( !$pv_b_break_last || ( $pv_extra_search && strstr( $pv_browser_user_agent, $pv_extra_search ) ) ) 
+			if ( !$pv_b_break_last || ($pv_extra_search && strstr($pv_browser_user_agent, $pv_extra_search))) 
 			{
 				break;
 			}

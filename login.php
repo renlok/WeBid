@@ -14,13 +14,6 @@
 
 include 'includes/common.inc.php';
 
-if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	header('location: ' . $sslurl . 'user_login.php');
-	exit;
-}
-
 $NOW = time();
 
 if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password']))
@@ -28,7 +21,7 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 	$password = md5($MD5_PREFIX . $_POST['password']);
 	$query = "SELECT id, hash, suspended FROM " . $DBPrefix . "users WHERE
 			nick = '" . $system->cleanvars($_POST['username']) . "'
-			AND password = '" . $password . "' AND (suspended = 0 OR suspended = 7 OR suspended = 6)";
+			AND password = '" . $password . "'";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($res) > 0)
@@ -38,6 +31,12 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 		{
 			$_SESSION['signup_id'] = $user_data['id'];
 			header('location: pay.php?a=3');
+			exit;
+		}
+		elseif (!in_array($user_data['suspended'], array(0, 5, 6)))
+		{
+			$_SESSION['SUSPENDED'] 		= $user_data['suspended'];
+			header('location: message.php');
 			exit;
 		}
 		$_SESSION['WEBID_LOGGED_IN'] 		= $user_data['id'];
@@ -63,12 +62,26 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 					(NULL, '" . $user_data['id'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
+
 		// delete your old session
 		if (isset($_COOKIE['WEBID_ONLINE']))
 		{
 			$query = "DELETE from " . $DBPrefix . "online WHERE SESSION = '" . $_COOKIE['WEBID_ONLINE'] . "'";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
+
+		if (isset($_SESSION['REDIRECT_AFTER_LOGIN']))
+		{
+			$URL = str_replace('\r', '', str_replace('\n', '', $_SESSION['REDIRECT_AFTER_LOGIN']));
+			unset($_SESSION['REDIRECT_AFTER_LOGIN']);
+		}
+		else
+		{
+			$URL = 'user_menu.php';
+		}
+
+		header('location: ' . $URL);
+		exit;
 	}
 	else
 	{

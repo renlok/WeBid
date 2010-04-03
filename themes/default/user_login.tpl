@@ -8,7 +8,7 @@
 	</div>
 <!-- ENDIF -->
 	<div class="table2">
-		<form name="user_login" action="{SSLURL}user_login.php" method="post">
+		<form name="user_login" action="{SSLURL}login.php" method="post">
 			<table width="100%" cellspacing="0" cellpadding="4" border="0">
 				<tr>
 					<td width="40%" align="right"><b>{L_187}</b> </td>

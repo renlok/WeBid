@@ -1168,8 +1168,8 @@ $MSG['9005'] = "Reserve Price Fee ";
 $MSG['9006'] = "<b> % of the Reserve price </b>";
 $MSG['_0001'] = "Under Maintenance Page";
 $MSG['_0002'] = "You can temporary disable the access to your site if necessary.<br>
-			In Maintenance mode only one user will have access to it. After you registered a user via <a TARGET=_new HREF=../register.php>the usual users registration page</a>
-			, insert below the username. After switching the site to Maintenance mode <a TARGET=_new HREF=../user_login.php>login here</a> to access the site.<br>
+			In Maintenance mode only one user will have access to it. After you registered a user via <a target=\"_new\" href=\"../register.php\">the usual users registration page</a>
+			, insert below the username. After switching the site to Maintenance mode <a target=\"_new\" href=\"../user_login.php\">login here</a> to access the site.<br>
 			The \"Under Maintenance\" text is usually a custom HTML page (enter the HTML code below).";
 $MSG['_0004'] = "Under Maintenance HTML code";
 $MSG['_0005'] = "Under Maintenance settings updated";

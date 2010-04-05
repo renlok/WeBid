@@ -48,6 +48,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  ao_hpf_enabled = '" . $_POST['ao_hpf_enabled'] . "',
 				  ao_hi_enabled = '" . $_POST['ao_hi_enabled'] . "',
 				  ao_bi_enabled = '" . $_POST['ao_bi_enabled'] . "',
+				  subtitle = '" . $_POST['subtitle'] . "',
+				  extra_cat = '" . $_POST['extra_cat'] . "',
 				  ae_status = '" . (($_POST['status'] == 'y') ? 'enabled' : 'disabled') . "',
 				  ae_timebefore = " . intval($_POST['timebefore']) . ",
 				  ae_extend = " . intval($_POST['extend']) . ",
@@ -65,6 +67,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['ao_hi_enabled'] = $_POST['ao_hi_enabled'];
 	$system->SETTINGS['ao_bi_enabled'] = $_POST['ao_bi_enabled'];
 	$system->SETTINGS['proxy_bidding'] = $_POST['proxy_bidding'];
+	$system->SETTINGS['subtitle'] = $_POST['subtitle'];
+	$system->SETTINGS['extra_cat'] = $_POST['extra_cat'];
 
 	$system->SETTINGS['ae_status'] = ($_POST['status'] == 'y') ? 'enabled' : 'disabled';
 	$system->SETTINGS['ae_timebefore'] = $_POST['timebefore'];
@@ -85,6 +89,8 @@ loadblock($MSG['897'], '', '', '', '', array(), true);
 loadblock($MSG['142'], $MSG['157'], 'yesno', 'ao_hpf_enabled', $system->SETTINGS['ao_hpf_enabled'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['162'], $MSG['164'], 'yesno', 'ao_hi_enabled', $system->SETTINGS['ao_hi_enabled'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['174'], $MSG['194'], 'yesno', 'ao_bi_enabled', $system->SETTINGS['ao_bi_enabled'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['797'], $MSG['798'], 'yesno', 'subtitle', $system->SETTINGS['subtitle'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['799'], $MSG['800'], 'yesno', 'extra_cat', $system->SETTINGS['extra_cat'], array($MSG['030'], $MSG['029']));
 
 // auction extension options
 loadblock($MSG['2_0032'], '', '', '', '', array(), true); // :O

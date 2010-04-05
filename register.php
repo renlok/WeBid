@@ -29,6 +29,7 @@ elseif ($system->SETTINGS['spam_register'] == 1)
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 {
 	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
+	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
 	header('Location: ' . $sslurl . 'register.php');
 	exit;
 }

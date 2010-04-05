@@ -18,6 +18,7 @@ include $include_path . 'countries.inc.php';
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 {
 	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
+	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
 	header('location: ' . $sslurl . 'user_login.php');
 	exit;
 }

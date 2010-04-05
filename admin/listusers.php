@@ -59,7 +59,7 @@ if (isset($_GET['payreminder']) && isset($_GET['id']) && is_numeric($_GET['id'])
 				'BALANCE' => $USER['balance']
 				));
 		$emailer->email_uid = $USER['id'];
-		$emailer->email_sender($useremail, 'payment_reminder.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['766']);
+		$emailer->email_sender($USER['email'], 'payment_reminder.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['766']);
 		$ERR = $MSG['765'];
 	}
 }

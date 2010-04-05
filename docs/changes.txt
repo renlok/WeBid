@@ -42,5 +42,8 @@
 - Fixed currency converter for when entering non standard values (15,000.06 15.000,06 etc)
 - Fixed maintainace mode so the remove install dir message is not shown when its enabled.
 - Fixed a security issues with the comfirm account page
+- Added translation to the auction types
+- Added option for users using shared SSL to enter the HTTPS URL
+- Fixed the payment reminder emails
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -441,6 +441,9 @@ if (!$has_ended)
 
 $page_title = $auction_data['title'];
 
+$sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
+$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
+
 $template->assign_vars(array(
 		'ID' => $auction_data['id'],
 		'TITLE' => $auction_data['title'],
@@ -489,7 +492,7 @@ $template->assign_vars(array(
 
 		'YOURBIDMSG' => (isset($yourbidmsg)) ? $yourbidmsg : '',
 		'YOURBIDCLASS' => (isset($yourbidclass)) ? $yourbidclass : '',
-		'BIDURL' => ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'],
+		'BIDURL' => $sslurl,
 
 		'B_HASENDED' => $has_ended,
 		'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),

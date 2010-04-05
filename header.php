@@ -85,6 +85,9 @@ $counters .= $date . ' <span id="servertime">' . gmdate('H:i:s', $system->ctime)
 
 $page_title = (isset($page_title)) ? ' ' . $page_title : '';
 
+$sslurl = ($system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
+$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
+
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl
 		'THEME' => $system->SETTINGS['theme'],
@@ -98,8 +101,8 @@ $template->assign_vars(array(
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',
 		'HEADERCOUNTER' => $counters,
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'SSLURL' => ($system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'],
-		'ASSLURL' => ($system->SETTINGS['https'] == 'y' && $system->SETTINGS['usersauth'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'],
+		'SSLURL' => $sslurl,
+		'ASSLURL' => ($system->SETTINGS['https'] == 'y' && $system->SETTINGS['usersauth'] == 'y') ? $sslurl : $system->SETTINGS['siteurl'],
 		'Q' => (isset($q)) ? $q : '',
 		'SELECTION_BOX' => file_get_contents($main_path . "language/" . $language . "/categories_select_box.inc.php"),
 		'YOURUSERNAME' => ($user->logged_in) ? $user->user_data['nick'] : '',

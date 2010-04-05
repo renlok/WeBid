@@ -41,7 +41,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				cron = " . intval($_POST['cron']) . ",
 				archiveafter = " . intval($_POST['archiveafter']) . ",
 				cache_theme = '" . $_POST['cache_theme'] . "',
-				https = '" . $_POST['https'] . "'";
+				https = '" . $_POST['https'] . "',
+				https_url = '" . $_POST['https_url'] . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['542'];
 	}
@@ -57,6 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['cache_theme'] = $_POST['cache_theme'];
 
 	$system->SETTINGS['https'] = $_POST['https'];
+	$system->SETTINGS['https_url'] = $_POST['https_url'];
 }
 
 // general settings
@@ -77,6 +79,7 @@ loadblock($MSG['726'], $MSG['727'], 'yesno', 'cache_theme', $system->SETTINGS['c
 // SLL settings
 loadblock($MSG['1022'], '', '', '', '', array(), true);
 loadblock($MSG['1023'], $MSG['1024'], 'yesno', 'https', $system->SETTINGS['https'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['801'], $MSG['802'], 'yesno', 'https_url', $system->SETTINGS['https_url'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

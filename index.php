@@ -24,6 +24,7 @@ if ($system->SETTINGS['cron'] == 2)
 if ($system->SETTINGS['loginbox'] == 1 && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 {
 	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
+	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
 	header('Location: ' . $sslurl . 'index.php');
 	exit;
 }

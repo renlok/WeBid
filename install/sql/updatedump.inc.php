@@ -65,7 +65,10 @@ if ($myversion == '0.8.5')
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "tmp_closed_edited`;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currencies`;";
 	$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'endauc_fee');";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `ff_paid` INT(1) NOT NULL DEFAULT '1'";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `ff_paid` int(1) NOT NULL DEFAULT '1'";
+	$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'subtitle_fee');";
+	$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'excat_fee');";
+	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `secondcat` int(11) default NULL AFTER `category`";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.0'";
 }
 ?>

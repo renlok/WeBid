@@ -25,7 +25,7 @@ $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST[
 $ERR = 'ERR_';
 $catscontrol = new MPTTcategories();
 
-if (!isset($_SESSION['SELL_sellcat']) || !is_numeric($_SESSION['SELL_sellcat']))
+if (!isset($_SESSION['SELL_sellcat1']) || !is_numeric($_SESSION['SELL_sellcat1']))
 {
 	header('location: select_category.php');
 	exit;
@@ -163,33 +163,15 @@ switch ($_SESSION['action'])
 			if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit')
 			{
 				// update recursive categories
-				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['SELL_sellcat'];
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$parent_node = mysql_fetch_assoc($res);
-				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
-
-				for ($i = 0; $i < count($crumbs); $i++)
-				{
-					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				}
+				update_cat_counters(true, $_SESSION['SELL_sellcat1']);
+				update_cat_counters(true, $_SESSION['SELL_sellcat2']);
 			}
 
 			if (!$addcounter && $_SESSION['SELL_action'] == 'edit')
 			{
 				// update recursive categories
-				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['SELL_sellcat'];
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$parent_node = mysql_fetch_assoc($res);
-				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
-
-				for ($i = 0; $i < count($crumbs); $i++)
-				{
-					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				}
+				update_cat_counters(false, $_SESSION['SELL_sellcat1']);
+				update_cat_counters(false, $_SESSION['SELL_sellcat2']);
 			}
 
 			$UPLOADED_PICTURES = (isset($_SESSION['UPLOADED_PICTURES'])) ? $_SESSION['UPLOADED_PICTURES'] : array();
@@ -421,24 +403,8 @@ switch ($_SESSION['action'])
 					}
 				}
 				// category name
-				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($sellcat);
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$parent_node = mysql_fetch_assoc($res);
-
-				$TPL_categories_list = '';
-				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
-				for ($i = 0; $i < count($crumbs); $i++)
-				{
-					if ($crumbs[$i]['cat_id'] > 0)
-					{
-						if ($i > 0)
-						{
-							$TPL_categories_list .= ' &gt; ';
-						}
-						$TPL_categories_list .= $category_names[$crumbs[$i]['cat_id']];
-					}
-				}
+				$category_string1 = get_category_string($sellcat1);
+				$category_string2 = get_category_string($sellcat2);
 
 				$query = "SELECT description FROM " . $DBPrefix . "durations WHERE days = " . $duration;
 				$res = mysql_query($query);
@@ -488,7 +454,8 @@ switch ($_SESSION['action'])
 						'INTERNATIONAL' => ($international) ? $MSG['033'] : $MSG['043'],
 						'SHIPPING_TERMS' => nl2br(stripslashes($shipping_terms)),
 						'PAYMENTS_METHODS' => $TPL_payment_methods,
-						'CAT_LIST' => $TPL_categories_list,
+						'CAT_LIST1' => $category_string1,
+						'CAT_LIST2' => $category_string2,
 
 						'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y'),
 						'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only == 'y')),
@@ -509,24 +476,8 @@ switch ($_SESSION['action'])
 				substr($a_starts, 0, 4), 0);
 		}
 	case 1:
-		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($sellcat);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$parent_node = mysql_fetch_assoc($res);
-
-		$TPL_categories_list = '';
-		$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
-		for ($i = 0; $i < count($crumbs); $i++)
-		{
-			if ($crumbs[$i]['cat_id'] > 0)
-			{
-				if ($i > 0)
-				{
-					$TPL_categories_list .= ' &gt; ';
-				}
-				$TPL_categories_list .= $category_names[$crumbs[$i]['cat_id']];
-			}
-		}
+		$category_string1 = get_category_string($sellcat1);
+		$category_string2 = get_category_string($sellcat2);
 
 		// auction types
 		$TPL_auction_type = '<select name="atype" id="atype">' . "\n";
@@ -654,7 +605,8 @@ switch ($_SESSION['action'])
 				'TITLE' => $MSG['028'],
 				'ERROR' => ($ERR == 'ERR_') ? '' : $$ERR,
 				'MAXPICS' => $system->SETTINGS['maxpictures'],
-				'CAT_LIST' => $TPL_categories_list,
+				'CAT_LIST1' => $category_string1,
+				'CAT_LIST2' => $category_string2,
 				'ATYPE' => $TPL_auction_type,
 				'CURRENCY' => $system->SETTINGS['currency'],
 				'DURATIONS' => $TPL_durations_list,

@@ -72,6 +72,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `description` text,
   `pict_url` tinytext,
   `category` int(11) default NULL,
+  `secondcat` int(11) default NULL,
   `minimum_bid` double(16,4) default '0.00',
   `shipping_cost` double(16,4) default NULL,
   `reserve_price` double(16,4) default NULL,
@@ -1026,6 +1027,8 @@ $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'bolditem
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hlitem_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'rp_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'picture_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'subtitle_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'excat_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'relist_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyout_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'endauc_fee');";

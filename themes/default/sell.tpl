@@ -152,7 +152,10 @@ $(document).ready(function(){
 							<b>{L_287}</b>
 						</td>
 						<td class="rightpan">
-							{CAT_LIST}<br>
+							{CAT_LIST1}<br>
+	<!-- IF CAT_LIST2 ne '' -->
+							{CAT_LIST2}<br>
+	<!-- ENDIF -->
 							[<a href="select_category.php?change=yes">{L_5113}</a>]
 						</td>
 					</tr>
@@ -463,7 +466,12 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 				<td  valign="top" align="right"><b>{L_027}</b></td>
-				<td>{CAT_LIST}</td>
+				<td>
+					{CAT_LIST1}
+	<!-- IF CAT_LIST2 ne '' -->
+					<br>{CAT_LIST2}
+	<!-- ENDIF -->
+				</td>
 			</tr>
 			<tr>
 				<td  valign="top" align="right"></td>

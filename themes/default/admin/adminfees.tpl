@@ -57,6 +57,10 @@
 						<td><a href="{SITEURL}admin/fees.php?type=buyer_fee">{L_775}</a></td>
 						<td><a href="{SITEURL}admin/fees.php?type=endauc_fee">{L_791}</a></td>
 					</tr>
+					<tr class="c1">
+						<td><a href="{SITEURL}admin/fees.php?type=subtitle_fee">{L_803}</a></td>
+						<td><a href="{SITEURL}admin/fees.php?type=excat_fee">{L_804}</a></td>
+					</tr>
 				</table>
 			</td>
 		</tr>

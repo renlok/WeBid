@@ -59,11 +59,6 @@ class global_class
 		$result = mysql_query($query);
 		$this->check_mysql($result, $query, __LINE__, __FILE__);
 		$this->SETTINGS = mysql_fetch_assoc($result);
-		// add auction types
-		$this->SETTINGS['auction_types'] = array (
-			1 => $MSG['1021'],
-			2 => $MSG['1020']
-		);
 	}
 
 	function check_mysql($result, $query, $line, $page)

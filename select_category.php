@@ -39,6 +39,7 @@ if (!$user->can_sell)
 $ERR = '';
 $box = (isset($_POST['box'])) ? $_POST['box'] + 1 : 0;
 $catscontrol = new MPTTcategories();
+$cat_no = (isset($_REQUEST['cat_no'])) ? $_REQUEST['cat_no'] : 1;
 $i = 0;
 while (true)
 {
@@ -54,15 +55,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'process' && $_POST['box'] ==
 {
     $_SESSION['action'] = 1;
 	$VARNAME = 'cat' . (count($POST) - 1);
-	$_SESSION['SELL_sellcat'] = $POST[$VARNAME];
+	$_SESSION['SELL_sellcat' . $cat_no] = $POST[$VARNAME];
 	$query = "SELECT left_id, right_id FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_POST[$VARNAME]);
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$lft_rgt = mysql_fetch_assoc($res);
 	if ($lft_rgt['left_id'] + 1 == $lft_rgt['right_id'])
 	{
-		header('location: sell.php');
-		exit;
+		if ($system->SETTINGS['extra_cat'] == 'n' || ($cat_no == 2 && $system->SETTINGS['extra_cat'] == 'y'))
+		{
+			header('location: sell.php');
+			exit;
+		}
+		else
+		{
+			header('location: select_category.php?cat_no=2');
+			exit;
+		}
 	}
 	else
 	{
@@ -74,7 +83,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'process' && $_POST['box'] ==
 // Process change mode
 if (isset($_GET['change']) && $_GET['change'] == 'yes')
 {
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_SESSION['SELL_sellcat']);
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_SESSION['SELL_sellcat' . $cat_no]);
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$cat = mysql_fetch_assoc($res);
@@ -184,6 +193,7 @@ for ($i = 0; $i < $boxes; $i++)
 
 $template->assign_vars(array(
         'B_SHOWBUTTON' => $SHOWBUTTON,
+		'CAT_NO' => $cat_no,
         'ERROR' => $ERR
         ));
 

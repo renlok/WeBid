@@ -119,6 +119,7 @@ $ERR_114 = "No active auctions for this category";
 $ERR_115 = "E-mail address already used";
 $ERR_117 = "Invalid date of birth";
 $ERR_122 = "No auction found";
+$ERR_600 = 'Invalid auction type';
 $ERR_601 = "Quantity field not correct";
 $ERR_602 = "Images must be GIF or JPG";
 $ERR_603 = "The image is too large.";
@@ -884,6 +885,9 @@ $MSG['799'] = 'Enable Secondary Category';
 $MSG['800'] = 'Allows sellers to add their auction to multiple categories';
 $MSG['801'] = 'Shared SSL URL';
 $MSG['802'] = 'If you\'re using shared SSL enter the URL here';
+$MSG['803'] = 'Subtitle Fee';
+$MSG['804'] = 'Extra Category Fee';
+$MSG['805'] = 'Skip step';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

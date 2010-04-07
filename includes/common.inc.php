@@ -42,6 +42,12 @@ set_error_handler('WeBidErrorHandler');
 
 include $include_path . 'messages.inc.php';
 
+// add auction types
+$system->SETTINGS['auction_types'] = array (
+	1 => $MSG['1021'],
+	2 => $MSG['1020']
+);
+
 // Atuomatically login user is necessary "Remember me" option
 if (!$user->logged_in && isset($_COOKIE['WEBID_RM_ID']))
 {

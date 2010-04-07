@@ -45,5 +45,8 @@
 - Added translation to the auction types
 - Added option for users using shared SSL to enter the HTTPS URL
 - Fixed the payment reminder emails
+- Added missing language string ('Invalid auction type')
+- Added option for secondary category
+- Added option for auctions to have subtitles
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

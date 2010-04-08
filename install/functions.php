@@ -104,8 +104,7 @@ function check_version()
 	{
 		$version = file_get_contents('../includes/version.txt') or die('error');
 		$query = "ALTER TABLE `" . $DBPrefix . "settings` ADD `version` varchar(10) NOT NULL default '" . $version . "'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$res = @mysql_query($query);
 		return $version;
 	}
 
@@ -388,7 +387,7 @@ function rebuild_cat_file()
 	
 	$output .= ");\n?>";
 	
-	$handle = fopen ($main_path . "language/" . $system->SETTINGS['defaultlanguage'] . "/categories.inc.php", "w");
+	$handle = fopen ($main_path . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 }
 ?>

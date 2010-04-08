@@ -435,6 +435,7 @@ switch ($_SESSION['action'])
 
 				$template->assign_vars(array(
 						'TITLE' => $title,
+						'SUBTITLE' => $subtitle,
 						'ERROR' => ($ERR == "ERR_") ? '' : $$ERR,
 						'PAGE' => 1,
 						'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
@@ -456,12 +457,14 @@ switch ($_SESSION['action'])
 						'PAYMENTS_METHODS' => $TPL_payment_methods,
 						'CAT_LIST1' => $category_string1,
 						'CAT_LIST2' => $category_string2,
+						'FEE' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
 
 						'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y'),
 						'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only == 'y')),
 						'B_BN' => ($system->SETTINGS['buy_now'] == 2),
 						'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
-						'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1)
+						'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
+						'B_FEES' => ($system->SETTINGS['fees'] == 'y')
 						));
 				break;
 			}
@@ -476,6 +479,11 @@ switch ($_SESSION['action'])
 				substr($a_starts, 0, 4), 0);
 		}
 	case 1:
+		// check if user skiped adding second category
+		if (isset($_POST['act']) && $_POST['act'] == 'skipexcat')
+		{
+			$_SESSION['SELL_sellcat2'] = 0;
+		}
 		$category_string1 = get_category_string($sellcat1);
 		$category_string2 = get_category_string($sellcat2);
 
@@ -549,11 +557,12 @@ switch ($_SESSION['action'])
 			'hlitem_fee' => 0,
 			'rp_fee' => 0,
 			'picture_fee' => 0,
-			'buyout_fee' => 0
+			'buyout_fee' => 0,
+			'subtitle_fee' => 0
 			);
 		$feevarsset = array();
 		$fee_javascript = '';
-		$fee_rp = $fee_bn = $fee_min_bid = 0;
+		$subtitle_fee = $fee_rp = $fee_bn = $fee_min_bid = 0;
 		while ($row = mysql_fetch_assoc($res))
 		{
 			if (isset($fees[$row['type']]) && $fees[$row['type']] == 0)
@@ -591,6 +600,10 @@ switch ($_SESSION['action'])
 			{
 				$fee_rp = $row['value'];
 			}
+			if ($row['type'] == 'subtitle_fee' && strlen($subtitle) > 0)
+			{
+				echo $subtitle_fee = $row['value'];
+			}
 		}
 		$fee_javascript .= 'var current_fee = ' . (isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0';
 
@@ -616,6 +629,7 @@ switch ($_SESSION['action'])
 				'FEE_JS' => $fee_javascript,
 				// auction details
 				'AUC_TITLE' => $title,
+				'AUC_SUBTITLE' => $subtitle,
 				'AUC_DESCRIPTION' => $oFCKeditor->CreateHtml(),
 				'ITEMQTY' => $iquantity,
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid),
@@ -650,6 +664,7 @@ switch ($_SESSION['action'])
 				'FEE_MIN_BID' => $fee_min_bid,
 				'FEE_BN' => $fee_bn,
 				'FEE_RP' => $fee_rp,
+				'FEE_SUBTITLE' => $subtitle_fee,
 				'FEE_DECIMALS' => $decimals,
 
 				'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),

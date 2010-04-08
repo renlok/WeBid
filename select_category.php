@@ -191,9 +191,19 @@ for ($i = 0; $i < $boxes; $i++)
 	}
 }
 
+$extra_cat = 0;
+if ($cat_no == 2)
+{
+	$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'excat_fee'";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$extra_cat = mysql_result($res, 0);
+}
+
 $template->assign_vars(array(
         'B_SHOWBUTTON' => $SHOWBUTTON,
 		'CAT_NO' => $cat_no,
+		'COST' => ($extra_cat > 0) ? $system->print_money($extra_cat) : '',
         'ERROR' => $ERR
         ));
 

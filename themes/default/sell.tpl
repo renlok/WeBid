@@ -62,6 +62,7 @@ $(document).ready(function(){
 	var min_bid_fee = {FEE_MIN_BID};
 	var bn = {FEE_BN};
 	var rp = {FEE_RP};
+	var st = {FEE_SUBTITLE};
 	$("#min_bid").blur(function(){
 		var min_bid = parseFloat($("#min_bid").val());
 		updatefee(min_bid_fee * -1);
@@ -118,8 +119,16 @@ $(document).ready(function(){
 		else
 			updatefee(hlitem_fee * -1);
 	});
+	$("#subtitle").blur(function(){
+		if (st > 0 && $("#subtitle").val().length == 0)
+			updatefee(subtitle_fee * -1);
+		elseif (st == 0 && $("#subtitle").val().length > 0)
+			updatefee(subtitle_fee);
+		st = $("#subtitle").val().length;
+	});
 
 	function updatefee(newfee){
+		alert(newfee);
 		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
 		$("#fee_exact").val(nowfee);
 		nowfee = Math.round(nowfee*1{FEE_DECIMALS})/1{FEE_DECIMALS};
@@ -167,7 +176,14 @@ $(document).ready(function(){
 							<input type="text" name="title" size="40" maxlength="70" value="{AUC_TITLE}">
 						</td>
 					</tr>
-
+					<tr>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L_806}</b>
+						</td>
+						<td class="rightpan">
+							<input type="text" name="subtitle" id="subtitle" size="40" maxlength="70" value="{AUC_SUBTITLE}">
+						</td>
+					</tr>
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_018}</b>
@@ -392,6 +408,10 @@ $(document).ready(function(){
 				<td width="60%" >{TITLE}</td>
 			</tr>
 			<tr>
+				<td width="40%" align="right"  valign="top"><b>{L_806}</b></td>
+				<td width="60%" >{SUBTITLE}</td>
+			</tr>
+			<tr>
 				<td  valign="top" align="right"><b>{L_018}</b></td>
 				<td>{AUC_DESCRIPTION}</td>
 			</tr>
@@ -473,6 +493,12 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 				</td>
 			</tr>
+	<!-- IF B_FEES -->
+			<tr>
+				<td valign="top" align="right"><b>{L_263}</b> </td>
+				<td>{FEE}</td>
+			</tr>
+	<!-- ENDIF -->
 			<tr>
 				<td  valign="top" align="right"></td>
 				<td>{L_264}<a href="{SITEURL}sell.php?mode=recall">{L_265}</a>{L_266}<br></td>

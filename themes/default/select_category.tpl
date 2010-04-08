@@ -16,8 +16,8 @@ function SubmitBoxes(N)
 		<input type="hidden" name="cat_no" value="{CAT_NO}">
 		<table width="80%" border="0" cellpadding="4" class="content">
 		<tr>
-		  <td colspan="2" valign="top"> 
-			{L_2__0038}
+		  <td colspan="2" valign="top">
+			<!-- IF CAT_NO eq 2 -->{L_2__0041} {COST}<!-- ELSE -->{L_2__0038}<!-- ENDIF -->
 		  </td>
 		</tr>
 <!-- IF ERROR ne '' -->
@@ -54,10 +54,12 @@ function SubmitBoxes(N)
 		</table>
 		</form>
 <!-- IF CAT_NO eq 2 && ! B_SHOWBUTTON -->
+		<div class="padding" style="text-align:right;">
 		<form name="catform" action="select_category.php#goto" method="post">
-			<input type="hidden" name="action" value="skipexcat">
+			<input type="hidden" name="act" value="skipexcat">
 			<input type="submit" name="submitit" value="{L_805}" class="button">
 		</form>
+		</div>
 <!-- ENDIF -->
 	</div>
 </div>

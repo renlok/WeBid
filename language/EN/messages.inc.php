@@ -888,6 +888,7 @@ $MSG['802'] = 'If you\'re using shared SSL enter the URL here';
 $MSG['803'] = 'Subtitle Fee';
 $MSG['804'] = 'Extra Category Fee';
 $MSG['805'] = 'Skip step';
+$MSG['806'] = 'Item subtitle';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";
@@ -1315,6 +1316,7 @@ $MSG['2__0037'] = "Submit auction";
 $MSG['2__0038'] = "Select your category";
 $MGS_2__0039 = "If you lost your password, please enter in your username or e-mail address below.";
 $MGS_2__0040 = "Username or e-mail address";
+$MSG['2__0041'] = "Select secondary category";
 $MSG['2__0042'] = "Thumbnails";
 $MGS_2__0045 = " pixels ";
 $MSG['2__0047'] = "SELECT CATEGORY &gt;&gt;";

@@ -31,7 +31,8 @@ function generate_id()
 
 function setvars()
 {
-	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $description, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sellcat1, $sellcat2, $sendemail, $txt, $num, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now;
+	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $description, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price;
+	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sellcat1, $sellcat2, $sendemail, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now;
 	global $_POST, $_SESSION;
 	
 	$with_reserve = (isset($_POST['with_reserve'])) ? $_POST['with_reserve'] : $_SESSION['SELL_with_reserve'];
@@ -42,6 +43,7 @@ function setvars()
 	$shipping_cost = (empty($shipping_cost)) ? 0 : $shipping_cost;
 	$imgtype = (isset($_POST['imgtype'])) ? $_POST['imgtype'] : $_SESSION['SELL_file_uploaded'];
 	$title = (isset($_POST['title'])) ? $_POST['title'] : $_SESSION['SELL_title'];
+	$subtitle = (isset($_POST['subtitle'])) ? $_POST['subtitle'] : $_SESSION['SELL_subtitle'];
 	$description = (isset($_POST['description'])) ? $_POST['description'] : $_SESSION['SELL_description'];
 	$pict_url = (isset($_POST['pict_url'])) ? $_POST['pict_url'] : $_SESSION['SELL_pict_url'];
 	$atype = (isset($_POST['atype'])) ? $_POST['atype'] : $_SESSION['SELL_atype'];
@@ -81,7 +83,8 @@ function setvars()
 
 function makesessions()
 {
-	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $description, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sendemail, $txt, $num, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now, $_SESSION;
+	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $description, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price;
+	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sendemail, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now, $_SESSION;
 
 	$_SESSION['SELL_with_reserve'] = $with_reserve;
 	$_SESSION['SELL_reserve_price'] = $reserve_price;
@@ -89,6 +92,7 @@ function makesessions()
 	$_SESSION['SELL_shipping_cost'] = $shipping_cost;
 	$_SESSION['SELL_file_uploaded'] = $imgtype;
 	$_SESSION['SELL_title'] = $title;
+	$_SESSION['SELL_subtitle'] = $subtitle;
 	$_SESSION['SELL_description'] = $description;
 	$_SESSION['SELL_pict_url'] = $pict_url;
 	$_SESSION['SELL_atype'] = $atype;
@@ -122,6 +126,7 @@ function unsetsessions()
 	$_SESSION['SELL_shipping_cost'] = 0;
 	$_SESSION['SELL_file_uploaded'] = '';
 	$_SESSION['SELL_title'] = '';
+	$_SESSION['SELL_subtitle'] = '';
 	$_SESSION['SELL_description'] = '';
 	$_SESSION['SELL_pict_url'] = '';
 	$_SESSION['SELL_atype'] = '';
@@ -203,7 +208,7 @@ function remove_bids($auction_id)
 
 function get_fee($minimum_bid)
 {
-	global $system, $DBPrefix, $buy_now_price, $reserve_price, $is_bold, $is_highlighted, $is_featured, $_SESSION;
+	global $system, $DBPrefix, $buy_now_price, $reserve_price, $is_bold, $is_highlighted, $is_featured, $_SESSION, $subtitle, $sellcat2;
 
 	$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type, fee_from ASC";
 	$res = mysql_query($query);
@@ -246,6 +251,14 @@ function get_fee($minimum_bid)
 		if ($row['type'] == 'picture_fee' && count($_SESSION['UPLOADED_PICTURES']) > 0)
 		{
 			$fee_value += count($_SESSION['UPLOADED_PICTURES']) * $row['value'];
+		}
+		if ($row['type'] == 'subtitle_fee' && !empty($subtitle))
+		{
+			$fee_value += $row['value'];
+		}
+		if ($row['type'] == 'excat_fee' && $sellcat2 > 0)
+		{
+			$fee_value += $row['value'];
 		}
 	}
 

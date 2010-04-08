@@ -464,7 +464,8 @@ switch ($_SESSION['action'])
 						'B_BN' => ($system->SETTINGS['buy_now'] == 2),
 						'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
 						'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
-						'B_FEES' => ($system->SETTINGS['fees'] == 'y')
+						'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
+						'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y')
 						));
 				break;
 			}
@@ -602,7 +603,7 @@ switch ($_SESSION['action'])
 			}
 			if ($row['type'] == 'subtitle_fee' && strlen($subtitle) > 0)
 			{
-				echo $subtitle_fee = $row['value'];
+				$subtitle_fee = $row['value'];
 			}
 		}
 		$fee_javascript .= 'var current_fee = ' . (isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0';
@@ -677,7 +678,8 @@ switch ($_SESSION['action'])
 				'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
 				'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
 				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),
-				'B_FEES' => ($system->SETTINGS['fees'] == 'y')
+				'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
+				'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y')
 				));
 		break;
 }

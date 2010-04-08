@@ -119,6 +119,7 @@ $(document).ready(function(){
 		else
 			updatefee(hlitem_fee * -1);
 	});
+	<!-- IF B_SUBTITLE -->
 	$("#subtitle").blur(function(){
 		if (st > 0 && $("#subtitle").val().length == 0)
 			updatefee(subtitle_fee * -1);
@@ -126,6 +127,7 @@ $(document).ready(function(){
 			updatefee(subtitle_fee);
 		st = $("#subtitle").val().length;
 	});
+	<!-- ENDIF -->
 
 	function updatefee(newfee){
 		alert(newfee);
@@ -176,6 +178,7 @@ $(document).ready(function(){
 							<input type="text" name="title" size="40" maxlength="70" value="{AUC_TITLE}">
 						</td>
 					</tr>
+	<!-- IF B_SUBTITLE -->
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_806}</b>
@@ -184,6 +187,7 @@ $(document).ready(function(){
 							<input type="text" name="subtitle" id="subtitle" size="40" maxlength="70" value="{AUC_SUBTITLE}">
 						</td>
 					</tr>
+	<!-- ENDIF -->
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_018}</b>
@@ -407,10 +411,12 @@ $(document).ready(function(){
 				<td width="40%" align="right"  valign="top"><b>{L_017}</b></td>
 				<td width="60%" >{TITLE}</td>
 			</tr>
+	<!-- IF B_SUBTITLE -->
 			<tr>
 				<td width="40%" align="right"  valign="top"><b>{L_806}</b></td>
 				<td width="60%" >{SUBTITLE}</td>
 			</tr>
+	<!-- ENDIF -->
 			<tr>
 				<td  valign="top" align="right"><b>{L_018}</b></td>
 				<td>{AUC_DESCRIPTION}</td>

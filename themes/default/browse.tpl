@@ -24,6 +24,7 @@
 			</td>
 			<td align="left">
                 {featured_items.TITLE} {featured_items.BUY_NOW}
+				<!-- IF B_SUBTITLE && featured_items.SUBTITLE ne '' --><p class="smallspan">{featured_items.SUBTITLE}</p><!-- ENDIF -->
 			</td>
 			<td align="right">
 				{featured_items.BIDFORM}
@@ -65,6 +66,7 @@
 			</td>
 			<td align="left">
                 {items.TITLE} {items.BUY_NOW}
+				<!-- IF B_SUBTITLE && items.SUBTITLE ne '' --><p class="smallspan">{items.SUBTITLE}</p><!-- ENDIF -->
 			</td>
 			<td align="right">
 				{items.BIDFORM}

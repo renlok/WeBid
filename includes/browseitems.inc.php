@@ -38,6 +38,7 @@ function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
 				'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
 				'IMAGE' => $row['pict_url'],
 				'TITLE' => $row['title'],
+				'SUBTITLE' => $row['subtitle'],
 				'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
 				'BID' => $row['current_bid'],
 				'BIDFORM' => $system->print_money($row['current_bid']),
@@ -67,6 +68,7 @@ function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
 			'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
 			'IMAGE' => $row['pict_url'],
 			'TITLE' => $row['title'],
+			'SUBTITLE' => $row['subtitle'],
 			'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
 			'BID' => $row['current_bid'],
 			'BIDFORM' => $system->print_money($row['current_bid']),
@@ -97,6 +99,8 @@ function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
 
 	$template->assign_vars(array(
 		'B_FEATURED_ITEMS' => $feat_items,
+		'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y'),
+
 		'NUM_AUCTIONS' => ($total == 0) ? $ERR_114 : $total,
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $PREV . $extravar . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . $current_page . '?PAGE=' . $NEXT . $extravar . '"><u>' . $MSG['5120'] . '</u></a>' : '',
@@ -112,7 +116,7 @@ function build_items($row)
 	// image icon
 	if (!empty($row['pict_url']))
 	{
-		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
+		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_list'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
 	}
 	else
 	{

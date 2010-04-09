@@ -44,13 +44,26 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			'tel_regshow' => $_POST['tel_regshow']
 			);
 
-	$mdata = serialize($MANDATORY_FIELDS);
-	$sdata = serialize($DISPLAYED_FIELDS);
-	$query = "UPDATE ".$DBPrefix."settings SET
-			  mandatory_fields = '" . $mdata . "',
-			  displayed_feilds = '" . $sdata . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$ERR = $MSG['779'];
+	// common sense check field cant be required if its not visible
+	$required = array_keys($MANDATORY_FIELDS);
+	$display = array_keys($DISPLAYED_FIELDS);
+	for ($i = 0; $i < 7; $i++)
+	{
+		if ($MANDATORY_FIELDS[$required[$i]] == 'y' && $DISPLAYED_FIELDS[$display[$i]] == 'n')
+		{
+			$ERR = $MSG['809'];
+		}
+	}
+	if (!isset($ERR))
+	{
+		$mdata = serialize($MANDATORY_FIELDS);
+		$sdata = serialize($DISPLAYED_FIELDS);
+		$query = "UPDATE ".$DBPrefix."settings SET
+				  mandatory_fields = '" . $mdata . "',
+				  displayed_feilds = '" . $sdata . "'";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$ERR = $MSG['779'];
+	}
 }
 
 $template->assign_vars(array(

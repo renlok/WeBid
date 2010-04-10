@@ -892,6 +892,8 @@ $MSG['806'] = 'Item subtitle';
 $MSG['807'] = 'Front Page Settings';
 $MSG['808'] = 'This is the size of the thumbnail that will appear on lists of auctions such as when a user does a search';
 $MSG['809'] = 'A field must be shown if it\'s a required field';
+$MSG['810'] = 'A vaild paypal email address is required';
+$MSG['811'] = 'A vaild authnet id and password is required';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

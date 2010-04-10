@@ -79,7 +79,7 @@ loadblock($MSG['726'], $MSG['727'], 'yesno', 'cache_theme', $system->SETTINGS['c
 // SLL settings
 loadblock($MSG['1022'], '', '', '', '', array(), true);
 loadblock($MSG['1023'], $MSG['1024'], 'yesno', 'https', $system->SETTINGS['https'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['801'], $MSG['802'], 'yesno', 'https_url', $system->SETTINGS['https_url'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['801'], $MSG['802'], 'text', 'https_url', $system->SETTINGS['https_url']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

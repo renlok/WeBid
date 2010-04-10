@@ -43,15 +43,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 
 loadblock($MSG['789'], $MSG['790'], 'days', 'perpage', $system->SETTINGS['perpage']);
-loadblock($MSG['25_0107'], $MSG['808'], 'days', 'thumb_list', $system->SETTINGS['thumb_list']);
+loadblock($MSG['25_0107'], $MSG['808'], 'decimals', 'thumb_list', $system->SETTINGS['thumb_list'], array($MGS_2__0045));
 
 loadblock($MSG['807'], '', '', '', '', array(), true);
-loadblock($MSG['5013'], $MSG['5014'], 'decimals', 'lastitemsnumber', $system->SETTINGS['lastitemsnumber']);
-loadblock($MSG['5015'], $MSG['5016'], 'decimals', 'higherbidsnumber', $system->SETTINGS['higherbidsnumber']);
-loadblock($MSG['5017'], $MSG['5018'], 'decimals', 'endingsoonnumber', $system->SETTINGS['endingsoonnumber']);
+loadblock($MSG['5013'], $MSG['5014'], 'days', 'lastitemsnumber', $system->SETTINGS['lastitemsnumber']);
+loadblock($MSG['5015'], $MSG['5016'], 'days', 'higherbidsnumber', $system->SETTINGS['higherbidsnumber']);
+loadblock($MSG['5017'], $MSG['5018'], 'days', 'endingsoonnumber', $system->SETTINGS['endingsoonnumber']);
 loadblock($MSG['532'], $MSG['537'], 'batch', 'loginbox', $system->SETTINGS['loginbox'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['533'], $MSG['538'], 'batch', 'newsbox', $system->SETTINGS['newsbox'], array($MSG['030'], $MSG['029']));
-loadblock('', $MSG['554'], 'decimals', 'newstoshow', $system->SETTINGS['newstoshow']);
+loadblock('', $MSG['554'], 'days', 'newstoshow', $system->SETTINGS['newstoshow']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

@@ -145,6 +145,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$TPL_err = 1;
 			$ERR = $ERR_117;
 		}
+		elseif ($gateway_data['paypal_required'] == 1 && empty($_POST['TPL_pp_email']))
+		{
+			$TPL_err = 1;
+			$ERR = $MSG['810'];
+		}
+		elseif ($gateway_data['authnet_required'] == 1 && (empty($_POST['TPL_authnet_id']) || empty($_POST['TPL_authnet_pass'])))
+		{
+			$TPL_err = 1;
+			$ERR = $MSG['811'];
+		}
 		else
 		{
 			if (!empty($_POST['TPL_day']) && !empty($_POST['TPL_month']) && !empty($_POST['TPL_year']))
@@ -261,7 +271,7 @@ $template->assign_vars(array(
 		'PROV' => $USER['prov'],
 		'ZIP' => $USER['zip'],
 		'PHONE' => $USER['phone'],
-		'DATEFORMAT' => ($system->SETTINGS['datesformat'] == "USA") ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
+		'DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'TOMEZONE' => $time_correction,
 
 		//payment stuff

@@ -11,7 +11,7 @@
 		<!-- ENDIF -->
 		<div class="table2">
 			<form name="registration" action="{SSLURL}register.php" method="post">
-				<table width="90%" border="0" cellpadding="4" cellspacing=0>
+				<table width="90%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_002}</b> *</td>
 						<td width="60%">
@@ -101,6 +101,12 @@
 						</td>
 					</tr>
         <!-- ENDIF -->
+					<tr>
+						<td valign="top" align="right">{L_346}</td>
+						<td>
+							{TOMEZONE}
+						</td>
+					</tr>
         <!-- IF B_NLETTER -->
 					<tr>
 						<td width="40%" align=right><b>{L_608}</b></td>
@@ -112,10 +118,40 @@
 						</td>
 					</tr>
         <!-- ENDIF -->
+				</table>
+
+				<div class="padding">
+					<h2>{L_719}</h2>
+				</div>
+
+				<table width="90%" border="0" cellpadding="4" cellspacing="0">
+				<!-- IF B_PAYPAL -->
+					<tr>
+						<td align="right" width="30%">{L_720}{REQUIRED(7)}</td>
+						<td>
+							<input type="text" name="TPL_pp_email" size=40 value="{PP_EMAIL}" />
+						</td>
+					</tr>
+				<!-- ENDIF -->
+				<!-- IF B_AUTHNET -->
+					<tr>
+						<td align="right" width="30%">{L_773}{REQUIRED(8)}</td>
+						<td>
+							<input type="text" name="TPL_authnet_id" size=40 value="{AN_ID}" />
+						</td>
+					</tr>
+					<tr>
+						<td align="right" width="30%">{L_774}{REQUIRED(8)}</td>
+						<td>
+							<input type="text" name="TPL_authnet_pass" size=40 value="{AN_PASS}" />
+						</td>
+					</tr>
+				<!-- ENDIF -->
                     <tr>
 						<td colspan="2">{CAPCHA}</td>
 					</tr>
 				</table>
+
 				<div style="text-align:center">
 					<!-- IF B_SHOWACCEPTANCE -->
 					<p>{L_ACCEPTANCE}</p>

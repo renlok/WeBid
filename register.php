@@ -71,6 +71,25 @@ function get_hash()
 	return $hash;
 }
 
+function generateSelect($name = '', $options = array())
+{
+	global $selectsetting;
+	$html = '<select name="' . $name . '">';
+	foreach ($options as $option => $value)
+	{
+		if ($selectsetting == $option)
+		{
+			$html .= '<option value=' . $option . ' selected>' . $value . '</option>';
+		}
+		else
+		{
+			$html .= '<option value=' . $option . '>' . $value . '</option>';
+		}
+	}
+	$html .= '</select>';
+	return $html;
+}
+
 $TPL_errmsg = '';
 $TPL_err = 0;
 
@@ -78,6 +97,12 @@ if (empty($_POST['action']))
 {
 	$action = 'first';
 }
+
+$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$gateway_data = mysql_fetch_assoc($res);
+
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 $DISPLAYED_FIELDS = unserialize($system->SETTINGS['displayed_feilds']);
@@ -214,6 +239,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 			$TPL_err = 1;
 			$TPL_errmsg = $MSG['30_0054'];
 		}
+		elseif ($gateway_data['paypal_required'] == 1 && empty($_POST['TPL_pp_email']))
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $MSG['810'];
+		}
+		elseif ($gateway_data['authnet_required'] == 1 && (empty($_POST['TPL_authnet_id']) || empty($_POST['TPL_authnet_pass'])))
+		{
+			$TPL_err = 1;
+			$TPL_errmsg = $MSG['811'];
+		}
 		else
 		{
 			$sql = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_POST['TPL_nick']) . "'";
@@ -274,8 +309,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				}
 				$hash = get_hash();
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone,
-						nletter, email, reg_date, birthdate, suspended, language, groups, balance, timecorrection)
+						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, 
+						birthdate, suspended, language, groups, balance, timecorrection, paypal_email, authnet_id, authnet_pass)
 						VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
 						'" . md5($MD5_PREFIX . $TPL_password_hidden) . "',
 						'" . $hash . "',
@@ -294,7 +329,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $language . "',
 						'" . implode(',', $groups) . "',
 						'" . $balance . "',
-						" . $system->SETTINGS['timecorrection'] . ")";
+						" . intval($_POST['TPL_timezone']) . ",
+						'" . ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : '') . "',
+						'" . ((isset($_POST['TPL_authnet_id'])) ? $system->cleanvars($_POST['TPL_authnet_id']) : '') . "',
+						'" . ((isset($_POST['TPL_authnet_pass'])) ? $system->cleanvars($_POST['TPL_authnet_pass']) : '') . "')";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$TPL_id_hidden = mysql_insert_id();
 				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
@@ -333,47 +371,98 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 }
 
 $country = '';
-if (!isset($_POST['action']) || (isset($_POST['action']) && $TPL_err == 1))
+
+$TIMECORRECTION = array(
+	'-23' => '-23 h',
+	'-22' => '-22 h',
+	'-21' => '-21 h',
+	'-20' => '-20 h',
+	'-19' => '-19 h',
+	'-18' => '-18 h',
+	'-17' => '-17 h',
+	'-16' => '-16 h',
+	'-15' => '-15 h',
+	'-14' => '-14 h',
+	'-13' => '-13 h',
+	'-12' => '-12 h',
+	'-11' => '-11 h',
+	'-10' => '-10 h',
+	'-9' => '-9 h',
+	'-8' => '-8 h',
+	'-7' => '-7 h',
+	'-6' => '-6 h',
+	'-5' => '-5 h',
+	'-4' => '-4 h',
+	'-3' => '-3 h',
+	'-2' => '-2 h',
+	'-1' => '-1 h',
+	'0' => 'GMT',
+	'+1' => '+1 h',
+	'+2' => '+2 h',
+	'+3' => '+3 h',
+	'+4' => '+4 h',
+	'+5' => '+5 h',
+	'+6' => '+6 h',
+	'+7' => '+7 h',
+	'+8' => '+8 h',
+	'+9' => '+9 h',
+	'+10' => '+10 h',
+	'+11' => '+11 h',
+	'+12' => '+12 h',
+	'+13' => '+13 h',
+	'+14' => '+14 h',
+	'+15' => '+15 h',
+	'+16' => '+16 h',
+	'+17' => '+17 h',
+	'+18' => '+18 h',
+	'+19' => '+19 h',
+	'+20' => '+20 h',
+	'+21' => '+21 h',
+	'+22' => '+22 h',
+	'+23' => '+23 h'
+);
+
+$first = true;
+$selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
+foreach ($countries as $key => $name)
 {
-	$first = true;
-	$selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
-	foreach ($countries as $key => $name)
+	$country .= '<option value="' . $name . '"';
+	if ($name == $selcountry)
 	{
-		$country .= '<option value="' . $name . '"';
-		if ($name == $selcountry)
-		{
-			$country .= ' selected';
-		}
-		elseif ($system->SETTINGS['defaultcountry'] == $name)
-		{
-			$country .= ' selected';
-		}
-		$country .= '>' . $name . '</option>' . "\n";
+		$country .= ' selected';
 	}
-	$dobmonth = '<select name="TPL_month">
-			<option value="00"></option>
-			<option value="01"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '01') ? ' selected' : '') . '>' . $MSG['MON_001E'] . '</option>
-			<option value="02"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '02') ? ' selected' : '') . '>' . $MSG['MON_002E'] . '</option>
-			<option value="03"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '03') ? ' selected' : '') . '>' . $MSG['MON_003E'] . '</option>
-			<option value="04"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '04') ? ' selected' : '') . '>' . $MSG['MON_004E'] . '</option>
-			<option value="05"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '05') ? ' selected' : '') . '>' . $MSG['MON_005E'] . '</option>
-			<option value="06"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '06') ? ' selected' : '') . '>' . $MSG['MON_006E'] . '</option>
-			<option value="07"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '07') ? ' selected' : '') . '>' . $MSG['MON_007E'] . '</option>
-			<option value="08"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '08') ? ' selected' : '') . '>' . $MSG['MON_008E'] . '</option>
-			<option value="09"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '09') ? ' selected' : '') . '>' . $MSG['MON_009E'] . '</option>
-			<option value="10"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '10') ? ' selected' : '') . '>' . $MSG['MON_010E'] . '</option>
-			<option value="11"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '11') ? ' selected' : '') . '>' . $MSG['MON_011E'] . '</option>
-			<option value="12"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '12') ? ' selected' : '') . '>' . $MSG['MON_012E'] . '</option>
-		</select>';
-	$dobday = '<select name="TPL_day">
-			<option value=""></option>';
-	for ($i = 1; $i <= 31; $i++)
+	elseif ($system->SETTINGS['defaultcountry'] == $name)
 	{
-		$j = (strlen($i) == 1) ? '0' . $i : $i;
-		$dobday .= '<option value="' . $j . '"' . ((isset($_POST['TPL_day']) && $_POST['TPL_day'] == $j) ? ' selected' : '') . '>' . $j . '</option>';
+		$country .= ' selected';
 	}
-	$dobday .= '</select>';
+	$country .= '>' . $name . '</option>' . "\n";
 }
+$dobmonth = '<select name="TPL_month">
+		<option value="00"></option>
+		<option value="01"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '01') ? ' selected' : '') . '>' . $MSG['MON_001E'] . '</option>
+		<option value="02"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '02') ? ' selected' : '') . '>' . $MSG['MON_002E'] . '</option>
+		<option value="03"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '03') ? ' selected' : '') . '>' . $MSG['MON_003E'] . '</option>
+		<option value="04"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '04') ? ' selected' : '') . '>' . $MSG['MON_004E'] . '</option>
+		<option value="05"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '05') ? ' selected' : '') . '>' . $MSG['MON_005E'] . '</option>
+		<option value="06"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '06') ? ' selected' : '') . '>' . $MSG['MON_006E'] . '</option>
+		<option value="07"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '07') ? ' selected' : '') . '>' . $MSG['MON_007E'] . '</option>
+		<option value="08"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '08') ? ' selected' : '') . '>' . $MSG['MON_008E'] . '</option>
+		<option value="09"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '09') ? ' selected' : '') . '>' . $MSG['MON_009E'] . '</option>
+		<option value="10"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '10') ? ' selected' : '') . '>' . $MSG['MON_010E'] . '</option>
+		<option value="11"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '11') ? ' selected' : '') . '>' . $MSG['MON_011E'] . '</option>
+		<option value="12"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '12') ? ' selected' : '') . '>' . $MSG['MON_012E'] . '</option>
+	</select>';
+$dobday = '<select name="TPL_day">
+		<option value=""></option>';
+for ($i = 1; $i <= 31; $i++)
+{
+	$j = (strlen($i) == 1) ? '0' . $i : $i;
+	$dobday .= '<option value="' . $j . '"' . ((isset($_POST['TPL_day']) && $_POST['TPL_day'] == $j) ? ' selected' : '') . '>' . $j . '</option>';
+}
+$dobday .= '</select>';
+
+$selectsetting = (isset($_POST['TPL_timezone'])) ? $_POST['TPL_timezone'] : '';
+$time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
 
 $template->assign_vars(array(
 		'L_ERROR' => $TPL_errmsg,
@@ -381,12 +470,20 @@ $template->assign_vars(array(
 		'L_ACCEPTANCE' => nl2br(stripslashes($system->SETTINGS['acceptancetext'])),
 		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'L_MESSAGE' => (isset($TPL_message)) ? $TPL_message : '',
+		'TOMEZONE' => $time_correction,
+
+		//payment stuff
+		'PP_EMAIL' => (isset($_POST['TPL_pp_email'])) ? $_POST['TPL_pp_email'] : '',
+		'AN_ID' => (isset($_POST['TPL_authnet_id'])) ? $_POST['TPL_authnet_id'] : '',
+		'AN_PASS' => (isset($_POST['TPL_authnet_pass'])) ? $_POST['TPL_authnet_pass'] : '',
 
 		'B_ERRORMSG' => ($TPL_err == 1),
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_SHOWACCEPTANCE' => ($system->SETTINGS['showacceptancetext'] == 1),
 		'B_FIRST' => $first,
+		'B_PAYPAL' => ($gateway_data['paypal_active'] == 1),
+		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
 		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
@@ -404,7 +501,9 @@ $template->assign_vars(array(
 					($MANDATORY_FIELDS['prov'] == 'y') ? ' *' : '',
 					($MANDATORY_FIELDS['country'] == 'y') ? ' *' : '',
 					($MANDATORY_FIELDS['zip'] == 'y') ? ' *' : '',
-					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : ''
+					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : '',
+					($gateway_data['paypal_required'] == 1) ? ' *' : '',
+					($gateway_data['authnet_required'] == 1) ? ' *' : ''
 					),
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',

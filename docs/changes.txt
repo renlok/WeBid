@@ -48,5 +48,8 @@
 - Added missing language string ('Invalid auction type')
 - Added option for secondary category
 - Added option for auctions to have subtitles
+- Added payment gateway fields to registration page
+- Added timezone selection to registration page
+- When a payment gateway is set to required a user must now enter their details for this gateway before they can sign up
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -23,7 +23,7 @@ $NOW = time();
 $userjoin = '';
 $ora = '';
 $wher = '';
-$payment = (isset($_POST['payment'])) ? $_POST['payment'] : '';
+$payment = (isset($_POST['payment'])) ? $_POST['payment'] : array();
 
 // so paginations work
 if (!empty($_POST))
@@ -114,7 +114,12 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$catalist = '(';
 		$catalist .= implode(',', $childarray);
 		$catalist .= ')';
-		$wher .= "au.category IN (" . $catalist . ") AND ";
+		$wher .= "(au.category IN " . $catalist;
+		if ($system->SETTINGS['extra_cat'] == 'y')
+		{
+			$wher .= " OR au.secondcat IN " . $catalist;
+		}
+		$wher .= ") AND ";
 	}
 
 	if (!empty($_SESSION['advs']['maxprice'])) $wher .= "(au.minimum_bid <= " . floatval($_SESSION['advs']['maxprice']) . ") AND ";
@@ -178,7 +183,6 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 {
 	// retrieve records corresponding to passed page number
-	$PAGE = intval($page);
 	if ($page == 0) $page = 1;
 
 	// determine limits for SQL query
@@ -219,7 +223,7 @@ if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SE
 			AND " . $wher . $ora . "
 			featured = 'y'
 			AND	au.starts <= " . $NOW . "
-			ORDER BY " . $by . " LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
+			ORDER BY " . $by . " LIMIT " . intval(($page - 1) * 5) . ", 5";
 	$feat_res = mysql_query($query);
 	$system->check_mysql($feat_res, $query, __LINE__, __FILE__);
 
@@ -242,21 +246,29 @@ if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SE
 	}
 }
 
-// payment
-$qurey = "SELECT * FROM " . $DBPrefix . "payments";
-$res = mysql_query($qurey);
-$system->check_mysql($res, $qurey, __LINE__, __FILE__);
-$TPL_payments_list = '';
-while ($row = mysql_fetch_assoc($res))
+// payments
+$payment_methods = '';
+$query = "SELECT * FROM " . $DBPrefix . "gateways";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$gateways_data = mysql_fetch_assoc($res);
+$gateway_list = explode(',', $gateways_data['gateways']);
+foreach ($gateway_list as $v)
 {
-	$TPL_payments_list .= '<input type="checkbox" name="payment[]" value="' . $row['description'] . '"';
-	if (isset($payment[$i]) && $row['description'] == $payment[$i])
+	if ($gateways_data[$v . '_active'] == 1)
 	{
-		$TPL_payments_list .= ' checked=true';
+		$checked = (in_array($v, $payment)) ? 'checked' : '';
+		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '>' . $system->SETTINGS['gatways'][$v] . '</p>';
 	}
-	$TPL_payments_list .= ' /> ' . $row['description'] . '<br>';
-	$i++;
 }
+
+$payment_options = unserialize($system->SETTINGS['payment_options']);
+foreach ($payment_options as $k => $v)
+{
+	$checked = (in_array($k, $payment)) ? 'checked' : '';
+	$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
+}
+
 // category
 $TPL_categories_list = '<select name="category" onChange="javascript:document.adsearch.submit()">' . "\n";
 if (isset($category_plain) && count($category_plain) > 0)
@@ -268,7 +280,7 @@ if (isset($category_plain) && count($category_plain) > 0)
 	}
 }
 $TPL_categories_list .= '</select>' . "\n";
-// Variant fields construction
+// variant fields construction
 $cattree = array();
 // country
 $TPL_countries_list = '<select name="country">' . "\n";
@@ -284,7 +296,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'CATEGORY_LIST' => $TPL_categories_list,
 		'CURRENCY' => $system->SETTINGS['currency'],
-		'PAYMENTS_LIST' => $TPL_payments_list,
+		'PAYMENTS_LIST' => $payment_methods,
 		'COUNTRY_LIST' => $TPL_countries_list
 		));
 

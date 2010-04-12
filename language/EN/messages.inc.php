@@ -264,7 +264,7 @@ $MSG['088'] = "into this currency";
 $MSG['089'] = "Process changes";
 $MSG['090'] = "Countries table updated";
 $MSG['091'] = "Change language";
-$MSG['092'] = "Edit, delete or add payment methods using the form below.";
+$MSG['092'] = 'Edit, delete or add payment methods using the form below. These are alternative external payment options, to enable or disable the inbuilt payment gateways see the <a href="fee_gateways.php">payment gateway settings</a> page.';
 $MSG['093'] = "Payment methods table updated";
 $MSG['094'] = "Edit, delete or add countries using the form below.";
 $MSG['095'] = "Welcome, You're Now A Member!";

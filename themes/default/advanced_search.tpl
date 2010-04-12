@@ -9,7 +9,7 @@
 <!-- ENDIF -->
 	<div class="table2">
 		<form name="adsearch" method="post" action="">
-			<table width="100%" border="0" align="center" cellpadding=4 cellspacing="0">
+			<table width="100%" border="0" align="center" cellpadding="4" cellspacing="0">
 				<tr>
 					<td width="45%" align="right">{L_1000}</td>
 					<td width="55%">
@@ -61,7 +61,7 @@
 				</tr>
 				<tr>
 					<td align="right">{L_012}</td>
-					<td><INPUT TYPE="text" NAME="zipcode" VALUE="" SIZE=12 /></td>
+					<td><input type="text" name="zipcode" size="12" /></td>
 				</tr>
 				<tr>
 					<td align="right">{L_1009}</td>

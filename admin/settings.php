@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// Update data
-		$query = "UPDATE " . $DBPrefix . "settings set
+		$query = "UPDATE " . $DBPrefix . "settings SET
 				sitename = '" . addslashes($_POST['sitename']) . "',
 				adminmail = '" . addslashes($_POST['adminmail']) . "',
 				siteurl = '" . addslashes($_POST['siteurl']) . "',

@@ -59,6 +59,10 @@ class global_class
 		$result = mysql_query($query);
 		$this->check_mysql($result, $query, __LINE__, __FILE__);
 		$this->SETTINGS = mysql_fetch_assoc($result);
+		$this->SETTINGS['gatways'] = array(
+			'paypal' => 'PayPal',
+			'authnet' => 'Authorize.net'
+			);
 	}
 
 	function check_mysql($result, $query, $line, $page)

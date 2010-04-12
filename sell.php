@@ -391,17 +391,26 @@ switch ($_SESSION['action'])
 			if (!$er)
 			{
 				// payment methods
-				$query = "SELECT * FROM " . $DBPrefix . "payments";
-				$res_payments = mysql_query($query);
-				$system->check_mysql($res_payments, $query, __LINE__, __FILE__);
-				$TPL_payment_methods = '';
-				while ($pay = mysql_fetch_array($res_payments))
+				$payment_methods = '';
+				$query = "SELECT * FROM " . $DBPrefix . "gateways";
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$gateways_data = mysql_fetch_assoc($res);
+				$gateway_list = explode(',', $gateways_data['gateways']);
+				foreach ($gateway_list as $v)
 				{
-					if (in_array($pay['description'], $payment))
+					if ($gateways_data[$v . '_active'] == 1)
 					{
-						$TPL_payment_methods .= $pay['description'] . '<br>';
+						$payment_methods .= '<p>' . $system->SETTINGS['gatways'][$v] . '</p>';
 					}
 				}
+
+				$payment_options = unserialize($system->SETTINGS['payment_options']);
+				foreach ($payment_options as $k => $v)
+				{
+					$payment_methods .= '<p>' . $v . '</p>';
+				}
+
 				// category name
 				$category_string1 = get_category_string($sellcat1);
 				$category_string2 = get_category_string($sellcat2);
@@ -454,7 +463,7 @@ switch ($_SESSION['action'])
 						'SHIPPING' => (intval($shipping) == 1) ? $MSG['031'] : $MSG['032'],
 						'INTERNATIONAL' => ($international) ? $MSG['033'] : $MSG['043'],
 						'SHIPPING_TERMS' => nl2br(stripslashes($shipping_terms)),
-						'PAYMENTS_METHODS' => $TPL_payment_methods,
+						'PAYMENTS_METHODS' => $payment_methods,
 						'CAT_LIST1' => $category_string1,
 						'CAT_LIST2' => $category_string2,
 						'FEE' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
@@ -510,14 +519,26 @@ switch ($_SESSION['action'])
 		$TPL_durations_list .= '</select>' . "\n";
 
 		// payments
-		$query = "SELECT * FROM " . $DBPrefix . "payments";
+		$payment_methods = '';
+		$query = "SELECT * FROM " . $DBPrefix . "gateways";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$TPL_payments_list = '';
-		while ($row = mysql_fetch_assoc($res))
+		$gateways_data = mysql_fetch_assoc($res);
+		$gateway_list = explode(',', $gateways_data['gateways']);
+		foreach ($gateway_list as $v)
 		{
-			$checked = (in_array(trim($row['description']), $payment)) ? 'checked' : '';
-			$TPL_payments_list .= '<p><input type="checkbox" name="payment[]" value="' . $row['description'] . '" ' . $checked . '>' . $row['description'] . '</p>';
+			if ($gateways_data[$v . '_active'] == 1)
+			{
+				$checked = (in_array($v, $payment)) ? 'checked' : '';
+				$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '>' . $system->SETTINGS['gatways'][$v] . '</p>';
+			}
+		}
+
+		$payment_options = unserialize($system->SETTINGS['payment_options']);
+		foreach ($payment_options as $k => $v)
+		{
+			$checked = (in_array($k, $payment)) ? 'checked' : '';
+			$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
 		}
 
 		// make hour
@@ -624,7 +645,7 @@ switch ($_SESSION['action'])
 				'ATYPE' => $TPL_auction_type,
 				'CURRENCY' => $system->SETTINGS['currency'],
 				'DURATIONS' => $TPL_durations_list,
-				'PAYMENTS' => $TPL_payments_list,
+				'PAYMENTS' => $payment_methods,
 				'PAGE' => 0,
 				'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 				'FEE_JS' => $fee_javascript,

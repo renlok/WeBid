@@ -434,6 +434,28 @@ if (file_exists($uploaded_path . $id))
 	}
 }
 
+// payment methods
+$payment = explode("\n", $auction_data['payment']);
+$payment_methods = '';
+$query = "SELECT * FROM " . $DBPrefix . "gateways";
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$gateways_data = mysql_fetch_assoc($res);
+$gateway_list = explode(',', $gateways_data['gateways']);
+foreach ($gateway_list as $v)
+{
+	if ($gateways_data[$v . '_active'] == 1)
+	{
+		$payment_methods .= $system->SETTINGS['gatways'][$v] . ', ';
+	}
+}
+
+$payment_options = unserialize($system->SETTINGS['payment_options']);
+foreach ($payment_options as $k => $v)
+{
+	$payment_methods .= $v . ', ';
+}
+
 if (!$has_ended)
 {
 	$bn_link = ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $id . '"><img border="0" align="absbottom" alt="' . $MSG['496'] . '" src="' . get_lang_img('buy_it_now.gif') . '"></a>';
@@ -466,7 +488,7 @@ $template->assign_vars(array(
 		'INTERNATIONAL' => ($auction_data['international'] == 1) ? $MSG['033'] : $MSG['043'],
 		'SHIPPING' => ($auction_data['shipping'] == 1) ? $MSG['031'] : $MSG['032'],
 		'SHIPPINGTERMS' => nl2br($auction_data['shipping_terms']),
-		'PAYMENTS' => str_replace("\n", ', ', $auction_data['payment']),
+		'PAYMENTS' => $payment_methods,
 		'AUCTION_VIEWS' => $auction_data['counter'],
 		'AUCTION_TYPE' => ($auction_data['bn_only'] == 'n') ? $system->SETTINGS['auction_types'][$auction_type] : $MSG['933'],
 		'ATYPE' => $auction_type,

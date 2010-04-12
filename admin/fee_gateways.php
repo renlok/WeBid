@@ -19,10 +19,6 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-$gatways = array(
-	'paypal' => 'PayPal',
-	'authnet' => 'Authorize.net'
-	);
 $links = array(
 	'paypal' => 'http://paypal.com',
 	'authnet' => 'http://authorize.net/'
@@ -69,7 +65,7 @@ for ($i = 0; $i < count($gateways); $i++)
 {
 	$gateway = $gateways[$i];
 	$template->assign_block_vars('gateways', array(
-			'NAME' => $gatways[$gateway],
+			'NAME' => $system->SETTINGS['gatways'][$gateway],
 			'PLAIN_NAME' => $gateway,
 			'ENABLED' => ($gateway_data[$gateway . '_active'] == 1) ? 'checked' : '',
 			'REQUIRED' => ($gateway_data[$gateway . '_required'] == 1) ? 'checked' : '',

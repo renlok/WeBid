@@ -1262,26 +1262,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "online` (
 # ############################
 
 # 
-# Table structure for table `" . $DBPrefix . "payments`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "payments`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "payments` (
-  `id` int(2) default NULL,
-  `description` varchar(30) default NULL
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "payments`
-# 
-
-$query[] = "INSERT INTO `" . $DBPrefix . "payments` VALUES (1, 'Paypal');";
-$query[] = "INSERT INTO `" . $DBPrefix . "payments` VALUES (2, 'Wire Transfer');";
-$query[] = "INSERT INTO `" . $DBPrefix . "payments` VALUES (3, 'Authorize.net');";
-
-# ############################
-
-# 
 # Table structure for table `" . $DBPrefix . "pendingnotif`
 # 
 
@@ -1508,7 +1488,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `recaptcha_private` varchar(40) NOT NULL default '',
   `spam_sendtofriend` int(1) NOT NULL default '1',
   `spam_register` int(1) NOT NULL default '1',
-  `mod_queue` enum('y','n') NOT NULL default 'n'
+  `mod_queue` enum('y','n') NOT NULL default 'n',
+  `payment_options` text NOT NULL
 );";
 
 # 
@@ -1604,7 +1585,8 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 '',
 1,
 1,
-'n');";
+'n',
+'a:2:{i:0;s:13:\"Wire Transfer\";i:1;s:6:\"Cheque\";}');";
 
 
 # ############################

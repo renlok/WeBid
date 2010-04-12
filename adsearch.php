@@ -114,7 +114,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$catalist = '(';
 		$catalist .= implode(',', $childarray);
 		$catalist .= ')';
-		$wher .= "(au.category IN " . $catalist . ") AND ";
+		$wher .= "au.category IN (" . $catalist . ") AND ";
 	}
 
 	if (!empty($_SESSION['advs']['maxprice'])) $wher .= "(au.minimum_bid <= " . floatval($_SESSION['advs']['maxprice']) . ") AND ";

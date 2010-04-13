@@ -332,4 +332,14 @@ function get_category_string($sellcat)
 	}
 	return $TPL_categories_list;
 }
+
+function check_gateway($gateway)
+{
+	if ($gateway == 'paypal' && !empty($user->user_data['paypal_email']))
+		return true;
+	if ($gateway == 'authnet' && !empty($user->user_data['authnet_id']) && !empty($user->user_data['authnet_pass']))
+		return true;
+	return false;
+}
+
 ?>

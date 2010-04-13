@@ -145,7 +145,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$TPL_err = 1;
 			$ERR = $ERR_117;
 		}
-		elseif ($gateway_data['paypal_required'] == 1 && empty($_POST['TPL_pp_email']))
+		elseif ($gateway_data['paypal_required'] == 1 && (empty($_POST['TPL_pp_email']) || !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['TPL_email'])))
 		{
 			$TPL_err = 1;
 			$ERR = $MSG['810'];

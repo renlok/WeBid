@@ -444,7 +444,7 @@ $gateways_data = mysql_fetch_assoc($res);
 $gateway_list = explode(',', $gateways_data['gateways']);
 foreach ($gateway_list as $v)
 {
-	if ($gateways_data[$v . '_active'] == 1)
+	if ($gateways_data[$v . '_active'] == 1 && in_array($v, $payment))
 	{
 		$payment_methods .= $system->SETTINGS['gatways'][$v] . ', ';
 	}
@@ -453,7 +453,10 @@ foreach ($gateway_list as $v)
 $payment_options = unserialize($system->SETTINGS['payment_options']);
 foreach ($payment_options as $k => $v)
 {
-	$payment_methods .= $v . ', ';
+	if (in_array($k, $payment))
+	{
+		$payment_methods .= $v . ', ';
+	}
 }
 
 if (!$has_ended)

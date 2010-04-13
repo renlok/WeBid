@@ -41,7 +41,7 @@ switch($_GET['a'])
 		break;
 	case 2:
 		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
-				u.id As uid, u.nick FROM " . $DBPrefix . "auctions a
+				u.id As uid, u.nick, a.payment FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
 				WHERE a.id = " . intval($_POST['pfval']);
@@ -56,10 +56,11 @@ switch($_GET['a'])
 		}
 
 		$data = mysql_fetch_assoc($res);
-		$pp_paytoemail = $data['paypal_email'];
+		$payment = explode("\n", $data['payment']);
+		$pp_paytoemail = (in_array('paypal', $payment)) ? $data['paypal_email'] : '';
 		$extrastring = sprintf($MSG['778'], $data['uid'], $data['nick']);
-		$an_paytoid = $data['authnet_id'];
-		$an_paytopass = $data['authnet_pass'];
+		$an_paytoid = (in_array('authnet', $payment)) ? $data['authnet_id'] : '';
+		$an_paytopass = (in_array('authnet', $payment)) ? $data['authnet_pass'] : '';
 		$payvalue = ($data['shipping'] == 1) ? $data['shipping_cost'] + $data['bid'] : $data['bid'];
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money($payvalue));

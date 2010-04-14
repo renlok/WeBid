@@ -47,15 +47,15 @@
                     <td>{CATEGORY}</td>
                 </tr>
                 <tr>
-                    <td>{L_317}</td>
+                    <td>{L_018}</td>
                     <td>{DESCRIPTION}</td>
                 </tr>
                 <tr>
-                    <td>{L_318}</td>
+                    <td>{L_116}</td>
                     <td>{CURRENT_BID}</td>
                 </tr>
                 <tr>
-                    <td>{L_319}</td>
+                    <td>{L_258}</td>
                     <td>{QTY}</td>
                 </tr>
                 <tr>

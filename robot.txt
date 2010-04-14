@@ -28,6 +28,3 @@ Disallow: /themes/
 # Files
 Disallow: /batch.php
 Disallow: /cron.php
-Disallow: /csseditor.php
-Disallow: /csseditor_.php
-Disallow: /csssyntax.inc

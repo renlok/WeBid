@@ -49,8 +49,6 @@ if (mysql_num_rows($result) == 0)
 }
 $auction_data = mysql_fetch_assoc($result);
 $category = $auction_data['category'];
-$title = $auction_data['title'];
-$description = $auction_data['description'];
 $pict_url_plain = $auction_data['pict_url'];
 $auction_type = $auction_data['auction_type'];
 $ends = $auction_data['ends'];

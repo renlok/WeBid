@@ -29,14 +29,13 @@
 </tr>
 <tr>
 	<td align="center" valign="middle">
-		<br>
-		<form name="conf" action="" method="post" enctype="multipart/form-data">
 		<table width="95%" border="0" cellpadding="1" bgcolor="#0083D7">
 		<tr>
 			<td align="center" class="title">{TITLEBARNAME}{PAGENAME}</td>
 		</tr>
 		<tr>
 			<td>
+				<form name="conf" action="" method="post" enctype="multipart/form-data">
 				<table width="100%" cellpadding="2" align="center" bgcolor="#FFFFFF">
 <!-- IF ERROR ne '' -->
 					<tr bgcolor="yellow">
@@ -99,7 +98,7 @@
 				{DROPDOWN}
 	<!-- ELSEIF block.TYPE eq 'upload' -->
 				<input type="file" name="{block.NAME}" size="25" maxlength="100">
-				<input type=HIDDEN name="MAX_FILE_SIZE" value="51200">
+				<input type="hidden" name="MAX_FILE_SIZE" value="51200">
 	<!-- ELSEIF block.TYPE eq 'image' -->
 				<img src="{IMAGEURL}">{block.TAGLINE1}<br>
 	<!-- ELSEIF block.TYPE eq 'link' -->
@@ -124,10 +123,10 @@
 						<td>&nbsp;</td>
 					</tr>
 				</table>
+				</form>
 			</td>
 		</tr>
 		</table>
-		</form>
 	</td>
 </tr>
 </table>

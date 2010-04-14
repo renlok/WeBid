@@ -295,7 +295,7 @@ $(document).ready(function() {
 		<!-- BEGIN gallery -->
 				<td>
 				<a href="{SITEURL}{UPLOADEDPATH}{ID}/{gallery.V}" title="{gallery.V}">
-					<img src='{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}' border=0 width="{THUMBWIDTH}" HSPACE=10>
+					<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}" border="0" width="{THUMBWIDTH}" hspace="10">
 				</a>
 				</td>
 		<!-- END gallery -->

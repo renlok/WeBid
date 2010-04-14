@@ -34,12 +34,14 @@
 					</tr>
 <!-- ENDIF -->
 					<tr valign="top">
-						<td colspan="2" align="center">
+						<td>{L_812}</td>
+						<td align="center">
                         	<!-- IF FILENAME ne '' --><b>{FILENAME}</b><!-- ELSE --><input type="text" name="new_filename" value="" style="width:600px;"><!-- ENDIF -->
                         </td>
 					</tr>
 					<tr valign="top">
-						<td colspan="2" align="center">
+						<td>{L_813}</td>
+						<td align="center">
                         	<textarea style="width:600px; height:400px;" name="content">{FILECONTENTS}</textarea>
                         </td>
 					</tr>

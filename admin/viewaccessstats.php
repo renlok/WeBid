@@ -32,14 +32,14 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 while ($row = mysql_fetch_array($res)) {
-	$TOTAL_PAGEVIEWS += $month['pageviews'];
-	$TOTAL_UNIQUEVISITORS += $month['uniquevisitiors'];
-	$TOTAL_USERSESSIONS += $month['usersessions'];
+	$TOTAL_PAGEVIEWS += $row['pageviews'];
+	$TOTAL_UNIQUEVISITORS += $row['uniquevisitors'];
+	$TOTAL_USERSESSIONS += $row['usersessions'];
 	$template->assign_block_vars('sitestats', array(
 			'DATE' => $row['day'] . '/' . $row['month'] . '/' . $row['year'],
 			'PAGEVIEWS' => $row['pageviews'],
 			'PAGEVIEWS_WIDTH' => ($row['pageviews'] * 100) / $MAX,
-			'UNIQUEVISITORS' => $row['uniquevisitiors'],
+			'UNIQUEVISITORS' => $row['uniquevisitors'],
 			'UNIQUEVISITORS_WIDTH' => ($row['uniquevisitiors'] * 100) / $MAX,
 			'USERSESSIONS' => $row['usersessions'],
 			'USERSESSIONS_WIDTH' => ($row['usersessions'] * 100) / $MAX

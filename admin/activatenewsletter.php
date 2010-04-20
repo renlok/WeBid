@@ -16,7 +16,6 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path . 'fonts.inc.php';
 
 unset($ERR);
 

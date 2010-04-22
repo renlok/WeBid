@@ -55,7 +55,7 @@ function SubmitBoxes(N)
 		</form>
 <!-- IF CAT_NO eq 2 && ! B_SHOWBUTTON -->
 		<div class="padding" style="text-align:right;">
-		<form name="catform" action="select_category.php#goto" method="post">
+		<form name="catform" action="sell.php" method="post">
 			<input type="hidden" name="act" value="skipexcat">
 			<input type="submit" name="submitit" value="{L_805}" class="button">
 		</form>

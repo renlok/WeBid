@@ -192,22 +192,23 @@ if ($cropdefault)
 	list($imgwidth, $imgheight) = getimagesize($upload_path . session_id() . '/' . $image);
 	$swidth = ($imgwidth < 380) ? '' : ' width: 380px;';
 	$imgratio = ($imgwidth > 380) ? $imgwidth / 380 : 1;
-	$startX = $imgwidth;
-	$startY = $imgheight;
-	if ($imgwidth > $imgheight)
+	$whratio = $imgheight / $imgwidth;
+	if ($imgwidth > $imgheight) //landscape
 	{
 		$ratio = '1.2:1';
 		$thumbwh = 'width:' . $width . '; height:' . $height . ';';
 		$scaleX = 120;
 		$scaleY = 100;
+		$startY = 380 * $whratio;
 		$startX = $startY * 1.2;
 	}
-	else
+	else //portrait
 	{
 		$ratio = '1:1.2';
 		$thumbwh = 'height:' . $width . '; width:' . $height . ';';
 		$scaleX = 100;
 		$scaleY = 120;
+		$startX = 380 * $whratio;
 		$startY = $startX * 1.2;
 	}
 

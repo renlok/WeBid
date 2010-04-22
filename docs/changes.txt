@@ -52,5 +52,6 @@
 - Added timezone selection to registration page
 - When a payment gateway is set to required a user must now enter their details for this gateway before they can sign up
 - Edited the edit auction page so you can edit any option for the auction
+- Fixed the area select box when uploading a large image
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

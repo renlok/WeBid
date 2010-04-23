@@ -130,7 +130,6 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 
 	function updatefee(newfee){
-		alert(newfee);
 		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
 		$("#fee_exact").val(nowfee);
 		nowfee = Math.round(nowfee*1{FEE_DECIMALS})/1{FEE_DECIMALS};

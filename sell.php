@@ -164,14 +164,20 @@ switch ($_SESSION['action'])
 			{
 				// update recursive categories
 				update_cat_counters(true, $_SESSION['SELL_sellcat1']);
-				update_cat_counters(true, $_SESSION['SELL_sellcat2']);
+				if (isset($_SESSION['SELL_sellcat2']) && !empty($_SESSION['SELL_sellcat2']))
+				{
+					update_cat_counters(true, $_SESSION['SELL_sellcat2']);
+				}
 			}
 
 			if (!$addcounter && $_SESSION['SELL_action'] == 'edit')
 			{
 				// update recursive categories
 				update_cat_counters(false, $_SESSION['SELL_sellcat1']);
-				update_cat_counters(false, $_SESSION['SELL_sellcat2']);
+				if (isset($_SESSION['SELL_sellcat2']) && !empty($_SESSION['SELL_sellcat2']))
+				{
+					update_cat_counters(false, $_SESSION['SELL_sellcat2']);
+				}
 			}
 
 			$UPLOADED_PICTURES = (isset($_SESSION['UPLOADED_PICTURES'])) ? $_SESSION['UPLOADED_PICTURES'] : array();

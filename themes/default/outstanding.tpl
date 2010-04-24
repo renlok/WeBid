@@ -21,7 +21,13 @@
 </tr>
 <!-- BEGIN to_pay -->
 <tr>
-    <td style="text-align: center;"><a href="{to_pay.URL}" target="_blank">{to_pay.TITLE}</a></td>
+    <td style="text-align: center;">
+    <!-- IF to_pay.TITLE eq '' -->
+    	<a href="{to_pay.URL}" target="_blank">{to_pay.TITLE}</a>
+    <!-- ELSE -->
+    	{L_113} {to_pay.ID}
+    <!-- ENDIF -->
+    </td>
     <td style="text-align: center;">{to_pay.BID}</td>
     <td style="text-align: center;">{to_pay.SHIPPING}</td>
     <td style="text-align: center;">{to_pay.TOTAL}</td>

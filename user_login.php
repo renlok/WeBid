@@ -41,55 +41,71 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 			header('location: pay.php?a=3');
 			exit;
 		}
-		elseif (!in_array($user_data['suspended'], array(0, 5, 6)))
-		{
-			$_SESSION['SUSPENDED'] 		= $user_data['suspended'];
-			header('location: message.php');
-			exit;
-		}
-		$_SESSION['WEBID_LOGGED_IN'] 		= $user_data['id'];
-		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $user_data['hash']);
-		$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
-		// Update "last login" fields in users table
-		$query = "UPDATE " . $DBPrefix . "users SET lastlogin = '" . gmdate("Y-m-d H:i:s") . "' WHERE id = " . $user_data['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		// Remember me option
-		if ($_POST['rememberme'] == 1)
-		{
-			$remember_key = md5(time());
-			$query = "INSERT INTO " . $DBPrefix . "rememberme VALUES (" . $user_data['id'] . ", '" . addslashes($remember_key) . "')";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			setcookie('WEBID_RM_ID', $remember_key, time() + (3600 * 24 * 365));
-		}
-		$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = " . $user_data['id'] . " AND ip = '" . $_SERVER['REMOTE_ADDR'] . "'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0)
-		{
-			$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-					(NULL, '" . $user_data['id'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		}
 
-		// delete your old session
-		if (isset($_COOKIE['WEBID_ONLINE']))
+		if ($user_data['suspended'] == 1)
 		{
-			$query = "DELETE from " . $DBPrefix . "online WHERE SESSION = '" . $_COOKIE['WEBID_ONLINE'] . "'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$ERR = $ERR_618;
 		}
-
-		if (isset($_SESSION['REDIRECT_AFTER_LOGIN']))
+		elseif ($user_data['suspended'] == 8)
 		{
-			$URL = str_replace('\r', '', str_replace('\n', '', $_SESSION['REDIRECT_AFTER_LOGIN']));
-			unset($_SESSION['REDIRECT_AFTER_LOGIN']);
+			$ERR = $ERR_620;
+		}
+		elseif ($user_data['suspended'] == 10)
+		{
+			$ERR = $ERR_621;
 		}
 		else
 		{
-			$URL = 'user_menu.php';
-		}
+			$_SESSION['WEBID_LOGGED_IN'] 		= $user_data['id'];
+			$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $user_data['hash']);
+			$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
+			// Update "last login" fields in users table
+			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = '" . gmdate("Y-m-d H:i:s") . "' WHERE id = " . $user_data['id'];
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			// Remember me option
+			if (isset($_POST['rememberme']))
+			{
+				$remember_key = md5(time());
+				$query = "INSERT INTO " . $DBPrefix . "rememberme VALUES (" . $user_data['id'] . ", '" . addslashes($remember_key) . "')";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				setcookie('WEBID_RM_ID', $remember_key, time() + (3600 * 24 * 365));
+			}
+			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = " . $user_data['id'] . " AND ip = '" . $_SERVER['REMOTE_ADDR'] . "'";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			if (mysql_num_rows($res) == 0)
+			{
+				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
+						(NULL, '" . $user_data['id'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
 
-		header('location: ' . $URL);
-		exit;
+			// delete your old session
+			if (isset($_COOKIE['WEBID_ONLINE']))
+			{
+				$query = "DELETE from " . $DBPrefix . "online WHERE SESSION = '" . $_COOKIE['WEBID_ONLINE'] . "'";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
+
+			if (in_array($user_data['suspended'], array(5, 6, 7)))
+			{
+				header('location: message.php');
+				exit;
+			}
+
+			if (isset($_SESSION['REDIRECT_AFTER_LOGIN']))
+			{
+				$URL = str_replace('\r', '', str_replace('\n', '', $_SESSION['REDIRECT_AFTER_LOGIN']));
+				unset($_SESSION['REDIRECT_AFTER_LOGIN']);
+			}
+			else
+			{
+				$URL = 'user_menu.php';
+			}
+
+			header('location: ' . $URL);
+			exit;
+		}
 	}
 	else
 	{

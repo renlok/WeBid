@@ -37,8 +37,8 @@ foreach ($memtypesarr as $k => $l)
 	}
 }
 
-if (!isset($_GET['pg']) || $_GET['pg'] == 0) $_GET['pg'] = 1;
-$left_limit = ($_GET['pg'] - 1) * $system->SETTINGS['perpage'];
+$page = (!isset($_GET['pg']) || $_GET['pg'] == 0) ? $_GET['pg'] : 1;
+$left_limit = ($page - 1) * $system->SETTINGS['perpage'];
 
 $query = "SELECT count(*) FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user->user_data['id'];
 $res = mysql_query($query);
@@ -99,15 +99,14 @@ while ($arrfeed = mysql_fetch_assoc($res))
 	$i++;
 }
 
-$thispage = (isset($_GET['pg'])) ? $_GET['pg'] : 1;
-$firstpage = (($thispage - 5) <= 0) ? 1 : ($thispage - 5);
-$lastpage = (($thispage + 5) > $pages) ? $pages : ($thispage + 5);
-$backpage = (($thispage - 1) <= 0) ? 1 : ($thispage - 1);
-$nextpage = (($thispage + 1) > $pages) ? $pages : ($thispage + 1);
-$echofeed = ($thispage == 1) ? '' : '<a href="yourfeedback.php">&laquo;</a> <a href="yourfeedback.php?pg=' . $backpage . '"><</a> ';
+$firstpage = (($page - 5) <= 0) ? 1 : ($page - 5);
+$lastpage = (($page + 5) > $pages) ? $pages : ($page + 5);
+$backpage = (($page - 1) <= 0) ? 1 : ($page - 1);
+$nextpage = (($page + 1) > $pages) ? $pages : ($page + 1);
+$echofeed = ($page == 1) ? '' : '<a href="yourfeedback.php">&laquo;</a> <a href="yourfeedback.php?pg=' . $backpage . '"><</a> ';
 for ($ind2 = $firstpage; $ind2 <= $lastpage; $ind2++)
 {
-	if ($pg != $ind2)
+	if ($page != $ind2)
 	{
 		$echofeed .= '<a href="yourfeedback.php?pg=' . $ind2 . '">' . $ind2 . '</a>';
 	}

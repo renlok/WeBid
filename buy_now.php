@@ -33,6 +33,7 @@ if (in_array($user->user_data['suspended'], array(5, 6, 7)))
 
 if (!$user->can_buy)
 {
+	$_SESSION['TMP_MSG'] = $MSG['819'];
 	header('location: user_menu.php');
 	exit;
 }
@@ -63,7 +64,7 @@ if ($Auction['bn_only'] == 'n')
 {
 	if (!($Auction['buy_now'] > 0 && ($Auction['num_bids'] == 0 || ($Auction['reserve_price'] > 0 && $Auction['current_bid'] < $Auction['reserve_price']) || ($Auction['current_bid'] < $Auction['buy_now']))))
 	{
-		$ERR = '712';
+		$ERR = $ERR_712;
 	}
 	else
 	{
@@ -73,7 +74,7 @@ if ($Auction['bn_only'] == 'n')
 		$maxbid = mysql_result($res, 0, 'maxbid');
 		if (($maxbid > 0 && $maxbid >= $Auction['reserve_price']))
 		{
-			$ERR = '712';
+			$ERR = $ERR_712;
 		}
 	}
 }
@@ -103,40 +104,33 @@ foreach ($memtypesarr as $k => $l)
 	}
 }
 
-if ($_GET['action'] == 'buy')
+$buy_done = 0;
+if (isset($_GET['action']) && $_GET['action'] == 'buy')
 {
 	if ($system->SETTINGS['usersauth'] == 'y')
 	{
 		// check if password entered
 		if (strlen($_POST['password']) == 0)
 		{
-			$ERR = '610';
+			$ERR = $ERR_610;
 		}
 		// check if password is correct
 		if ($user->user_data['password'] != md5($MD5_PREFIX . $_POST['password']))
 		{
-			$ERR = '611';
-		}
-		else
-		{
-			if ($user->user_data['suspended'] > 0)
-			{
-				$ERR = '618';
-			}
+			$ERR = $ERR_611;
 		}
 	}
 	// check if buyer is not the seller
 	if ($user->user_data['id'] == $Auction['user'])
 	{
-		$ERR = '711';
+		$ERR = $ERR_711;
 	}
 	// perform final actions
 	if (isset($ERR))
 	{
-		$TPL_errmsg = ${'ERR_' . $ERR} ;
+		$TPL_errmsg = $ERR;
 	}
-
-	if (empty($ERR))
+	else
 	{
 		$query = "INSERT INTO " . $DBPrefix . "bids VALUES
 				(NULL, " . intval($_REQUEST['id']) . ", " . intval($user->user_data['id']) . ", " . floatval($Auction['buy_now']) . ", '" . $NOW . "', 1)";

@@ -19,15 +19,15 @@ include 'includes/common.inc.php';
 $query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
 		WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = " . $user->user_data['id'] . "
 		AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bidwhen DESC";
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-$idcheck = '';
+$idcheck = array();
 $auctions_count = 0;
 $bgColor = '#EBEBEB';
-while ($row = mysql_fetch_array($result))
+while ($row = mysql_fetch_assoc($res))
 {
-	if ($idcheck != $row['id'])
+	if (!in_array($row['id'], $idcheck))
 	{
 		// prepare some data
 		$bgColor = ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB';
@@ -36,7 +36,7 @@ while ($row = mysql_fetch_array($result))
 		if ($row['current_bid'] != $row['bid']) $bgColor = '#FFFF00';
 
 		$auctions_count++;
-		$idcheck = $row['id'];
+		$idcheck[] = $row['id'];
 
 		$template->assign_block_vars('bids', array(
 				'BGCOLOUR' => $bgColor,

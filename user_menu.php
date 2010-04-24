@@ -50,17 +50,29 @@ function get_reminders($secid)
 	// get auctions ending soon
 	$query = "SELECT COUNT(DISTINCT b.auction) AS total FROM " . $DBPrefix . "bids b
 			LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
-			WHERE b.bidder = " . $secid . " AND a.ends <= " . (time() + (3600 * 24)) . " GROUP BY b.auction";
+			WHERE b.bidder = " . $secid . " AND a.ends <= " . (time() + (3600 * 24)) . "
+			AND a.closed = 0 GROUP BY b.auction";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$data[] = mysql_result($res, 0, 'total');
 	// get outbid auctions
-	$query = "SELECT COUNT(DISTINCT a.id) AS total FROM " . $DBPrefix . "bids b
-			LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
-			WHERE b.bid < a.current_bid AND b.bidder = " . $secid;
+	$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
+			WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = " . $secid . "
+			AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bidwhen DESC";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data[] = mysql_result($res, 0, 'total');
+	$idcheck = array();
+	$auctions_count = 0;
+	while ($row = mysql_fetch_assoc($res))
+	{
+		if (!in_array($row['id'], $idcheck))
+		{
+			// Outbidded or winning bid
+			if ($row['current_bid'] != $row['bid']) $auctions_count++;;
+			$idcheck[] = $row['id'];
+		}
+	}
+	$data[] = $auctions_count;
 
 	return $data;
 }

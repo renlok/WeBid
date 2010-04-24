@@ -46,6 +46,7 @@ if (in_array($user->user_data['suspended'], array(5, 6, 7)))
 
 if (!$user->can_sell)
 {
+	$_SESSION['TMP_MSG'] = $MSG['818'];
 	header('location: user_menu.php?cptab=selling');
 	exit;
 }
@@ -69,13 +70,6 @@ switch ($_SESSION['action'])
 		if ($system->SETTINGS['usersauth'] == 'y' && (md5($MD5_PREFIX . $_POST['password']) != $user->user_data['password']))
 		{
 			$ERR = 'ERR_026';
-		}
-		else
-		{
-			if ($user->user_data['suspended'] > 0)
-			{
-				$ERR = 'ERR_618';
-			}
 		}
 		if ($ERR != 'ERR_')
 		{

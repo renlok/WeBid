@@ -4,11 +4,11 @@
 - Added a version check to the admin homepage
 - Added a page to view the error log in admin panel
 - Removed option to enabled/ disable link to message boards
-- Removed options to edit sites background/pagewidth and page alignment via admin panel
-- Fixed a bug where payments methods wernt being set in the database
-- Fixed advanced search & search pagnation (Bug #128)
+- Removed options to edit sites background/page width and page alignment via admin panel
+- Fixed a bug where payments methods wern't being set in the database
+- Fixed advanced search & search pagination (Bug #128)
 - Fixed buying & pay pages so the buyer only has to pay shipping when seller has selected buyer pays shipping
-- Fixed feedback page so it shows corrent username
+- Fixed feedback page so it shows correct username
 - Improved the update script so it is possible to upgrade quickly though multiple version also it updates cache files so not so many things mess up when you do an update
 - Fixed the PM system for when the sender of a question is logged out (using just an email)
 - Fixed feedback
@@ -17,31 +17,31 @@
 - Fixed the advanced search so when searching closed auctions the buy it now option doesn't show
 - Fixed javascript in your closed auctions page
 - Fixed admin countries page so you can not edit/delete the countries
-- Fixed the registration page display feilds settings
+- Fixed the registration page display fields settings
 - Added option to set number of items shown per page
 - Updated browser detection script to version 5.2.0
 - Added theme manager section in the admin panel
 - Fixed buying.php
 - Fixed the 'Reserve price missing' error when using buy it now only
-- Fixed the error where the item page diplays the item as won even if rserve is not met
+- Fixed the error where the item page displays the item as won even if reserve is not met
 - Added final value fee
 - Fixed an error in the paypal payment validation class
 - Added additional notices to the user summary page
-- Fixed a bug in the bidding where when bidding low values (< 1) it would say your bid is too low if you bidded the minimum bid
+- Fixed a bug in the bidding where when bidding low values (< 1) it would say your bid is too low if you bided the minimum bid
 - Fixed the yourbids page so buy it now only items you have bought do not show on it
-- Fixed the item page so if the item is a buy ot now only auction and you have purchased an item it says you have won
+- Fixed the item page so if the item is a buy it now only auction and you have purchased an item it says you have won
 - Fixed the cumulative email spam problem
-- Fixed a bug in the getthumbnail.php where it doesnt display png files
+- Fixed a bug in the getthumbnail.php where it doesn't display png files
 - Removed the banner settings page
 - Fixed proxy bidding so when two users bid the same the first to bid wins
-- Fixed a css rror in select_category.tpl
-- Added checks so atleast one usergroup must be auto join
+- Fixed a css error in select_category.tpl
+- Added checks so at least one user group must be auto join
 - Fixed edit user error messages so they now display
 - ~Fixed advanced search when buy it now only auctions are listed so they are in the correct order when sorted by price
 - Fixed advanced search when searching auction type
 - Fixed currency converter for when entering non standard values (15,000.06 15.000,06 etc)
-- Fixed maintainace mode so the remove install dir message is not shown when its enabled.
-- Fixed a security issues with the comfirm account page
+- Fixed maintenance mode so the remove install dir message is not shown when its enabled.
+- Fixed a security issues with the confirm account page
 - Added translation to the auction types
 - Added option for users using shared SSL to enter the HTTPS URL
 - Fixed the payment reminder emails
@@ -53,5 +53,6 @@
 - When a payment gateway is set to required a user must now enter their details for this gateway before they can sign up
 - Edited the edit auction page so you can edit any option for the auction
 - Fixed the area select box when uploading a large image
+- Added input_money() to some variable where missing to avoid errors
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

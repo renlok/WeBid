@@ -231,7 +231,6 @@ if ($system->SETTINGS['newsbox'] == 1)
 
 $template->assign_vars(array(
 		'FLAGS' => ShowFlags(),
-		'LOGIN_ERROR' => (isset($_SESSION['loginerror'])) ? $_SESSION['loginerror'] : '',
 
 		'B_AUC_LAST' => $auc_last,
 		'B_HIGH_BIDS' => $high_bids,
@@ -239,7 +238,6 @@ $template->assign_vars(array(
 		'B_HELPBOX' => $helpbox,
 		'B_MULT_LANGS' => (count($LANGUAGES) > 1),
 		'B_LOGIN_BOX' => ($system->SETTINGS['loginbox'] == 1),
-		'B_LOGIN_ERROR' => (isset($_SESSION['loginerror'])),
 		'B_NEWS_BOX' => ($system->SETTINGS['newsbox'] == 1)
 		));
 

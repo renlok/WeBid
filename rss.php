@@ -21,7 +21,7 @@ $m24h = time() - (24 * 60 * 60);
 $catscontrol = new MPTTcategories();
 
 $user_id = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['user_id']) : 0;
-$limit = '';
+$limit = ' LIMIT ' . $system->SETTINGS['perpage'];
 
 $feed = (isset($_GET['feed'])) ? intval($_GET['feed']) : '';
 
@@ -117,7 +117,7 @@ $query = "SELECT a.*, u.nick from " . $DBPrefix . "auctions a
 		ORDER BY " . $postdate . " " . $sort . " " . $limit;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-while ($auction_data = mysql_fetch_array($res))
+while ($auction_data = mysql_fetch_assoc($res))
 {
 	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['category'];
 	$res = mysql_query($query);

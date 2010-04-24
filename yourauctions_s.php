@@ -34,20 +34,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 			$removed = 0;
 			$v = intval($v);
 			// Pictures Gallery
-			if (file_exists($upload_path . '/' . $v))
+			if ($dir = @opendir($upload_path . '/' . $v))
 			{
-				if ($dir = @opendir($upload_path . '/' . $v))
+				while ($file = readdir($dir))
 				{
-					while ($file = readdir($dir))
+					if ($file != '.' && $file != '..')
 					{
-						if ($file != '.' && $file != '..')
-						{
-							@unlink($upload_path . '/' . $v . $file);
-						}
+						@unlink($upload_path . '/' . $v . $file);
 					}
-					closedir($dir);
-					@rmdir($upload_path . '/' . $v);
 				}
+				closedir($dir);
+				@rmdir($upload_path . '/' . $v);
 			}
 
 			// remove auction

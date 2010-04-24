@@ -102,17 +102,10 @@
 		</tr>
 	  </table>
 	<!-- ELSE -->
-		<FORM NAME="login" ACTION="{SSLURL}login.php" METHOD="post"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<FORM NAME="login" ACTION="{SSLURL}user_login.php" METHOD="post"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		  <td class="titTable1"><div class="imgTitL"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="space"></div>{L_221}<div class="imgTitR"><img src="{SITEURL}images/transparent.gif" width="10" height="10" alt="space"></div></td>
 		</tr>
-        <!-- IF B_LOGIN_ERROR -->
-	  	<TR>
-		<TD colspan="2" class="errfont">
-			{LOGIN_ERROR}
-		</TD>
-		</TR>
-	  <!-- ENDIF -->
 		<tr>
 		  <td class="table1">
 	  <TABLE WIDTH="100%">

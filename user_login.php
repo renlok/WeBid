@@ -13,7 +13,8 @@
  ***************************************************************************/
 
 include 'includes/common.inc.php';
-include $include_path . 'countries.inc.php';
+
+$NOW = time();
 
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 {
@@ -23,8 +24,81 @@ if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 	exit;
 }
 
+if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password']))
+{
+	$password = md5($MD5_PREFIX . $_POST['password']);
+	$query = "SELECT id, hash, suspended FROM " . $DBPrefix . "users WHERE
+			nick = '" . $system->cleanvars($_POST['username']) . "'
+			AND password = '" . $password . "'";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	if (mysql_num_rows($res) > 0)
+	{
+		$user_data = mysql_fetch_assoc($res);
+		if ($user_data['suspended'] == 9)
+		{
+			$_SESSION['signup_id'] = $user_data['id'];
+			header('location: pay.php?a=3');
+			exit;
+		}
+		elseif (!in_array($user_data['suspended'], array(0, 5, 6)))
+		{
+			$_SESSION['SUSPENDED'] 		= $user_data['suspended'];
+			header('location: message.php');
+			exit;
+		}
+		$_SESSION['WEBID_LOGGED_IN'] 		= $user_data['id'];
+		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $user_data['hash']);
+		$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
+		// Update "last login" fields in users table
+		$query = "UPDATE " . $DBPrefix . "users SET lastlogin = '" . gmdate("Y-m-d H:i:s") . "' WHERE id = " . $user_data['id'];
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		// Remember me option
+		if ($_POST['rememberme'] == 1)
+		{
+			$remember_key = md5(time());
+			$query = "INSERT INTO " . $DBPrefix . "rememberme VALUES (" . $user_data['id'] . ", '" . addslashes($remember_key) . "')";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			setcookie('WEBID_RM_ID', $remember_key, time() + (3600 * 24 * 365));
+		}
+		$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = " . $user_data['id'] . " AND ip = '" . $_SERVER['REMOTE_ADDR'] . "'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		if (mysql_num_rows($res) == 0)
+		{
+			$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
+					(NULL, '" . $user_data['id'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after','accept')";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+
+		// delete your old session
+		if (isset($_COOKIE['WEBID_ONLINE']))
+		{
+			$query = "DELETE from " . $DBPrefix . "online WHERE SESSION = '" . $_COOKIE['WEBID_ONLINE'] . "'";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+
+		if (isset($_SESSION['REDIRECT_AFTER_LOGIN']))
+		{
+			$URL = str_replace('\r', '', str_replace('\n', '', $_SESSION['REDIRECT_AFTER_LOGIN']));
+			unset($_SESSION['REDIRECT_AFTER_LOGIN']);
+		}
+		else
+		{
+			$URL = 'user_menu.php';
+		}
+
+		header('location: ' . $URL);
+		exit;
+	}
+	else
+	{
+		$ERR = $ERR_038;
+	}
+}
+
 $template->assign_vars(array(
-		'L_ERROR' => (isset($errmsg)) ? $errmsg : '',
+		'L_ERROR' => (isset($ERR)) ? $ERR : '',
 		'USER' => (isset($_POST['username'])) ? $_POST['username'] : ''
 		));
 

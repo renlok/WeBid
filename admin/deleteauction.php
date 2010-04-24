@@ -75,20 +75,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 
 	// Delete auctions images
-	if (file_exists($upload_path . $auc_id))
+	if ($dir = @opendir($upload_path . $auc_id))
 	{
-		if ($dir = @opendir($upload_path . $auc_id))
+		while ($file = readdir($dir))
 		{
-			while ($file = readdir($dir))
+			if ($file != '.' && $file != '..')
 			{
-				if ($file != '.' && $file != '..')
-				{
-					@unlink($upload_path . $auc_id . '/' . $file);
-				}
+				@unlink($upload_path . $auc_id . '/' . $file);
 			}
-			closedir($dir);
-			@rmdir($upload_path . $auc_id);
 		}
+		closedir($dir);
+		@rmdir($upload_path . $auc_id);
 	}
 
 	$URL = $_SESSION['RETURN_LIST'];

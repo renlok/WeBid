@@ -31,8 +31,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$query = "UPDATE ". $DBPrefix . "settings SET
 			  fees = '" . $_POST['fees'] . "',
 			  fee_type = '" . $_POST['fee_type'] . "',
-			  fee_max_debt = '" . $_POST['fee_max_debt'] . "',
-			  fee_signup_bonus = '" . $_POST['fee_signup_bonus'] . "',
+			  fee_max_debt = '" . $system->input_money($_POST['fee_max_debt']) . "',
+			  fee_signup_bonus = '" . $system->input_money($_POST['fee_signup_bonus']) . "',
 			  fee_disable_acc = '" . $_POST['fee_disable_acc'] . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['fees'] = $_POST['fees'];

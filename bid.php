@@ -55,11 +55,12 @@ if ($id == 0)
 	exit;
 }
 
-function get_increment($bid)
+function get_increment($val, $input_check = true)
 {
 	global $system, $DBPrefix;
 
-	$val = $system->input_money($bid);
+	if ($input_check)
+		$val = $system->input_money($val);
 	$query = "SELECT increment FROM " . $DBPrefix . "increments 
 			WHERE ((low <= " . $val . " AND high >= " . $val . ")
 			OR (low < " . $val . " AND high < " . $val . ")) ORDER BY increment DESC";
@@ -152,7 +153,7 @@ if ($customincrement > 0)
 }
 else
 {
-	$increment = get_increment($high_bid);
+	$increment = get_increment($high_bid, false);
 }
 
 if (ceil($high_bid) == 0 || $atype == 2)

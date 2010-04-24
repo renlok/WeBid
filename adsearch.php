@@ -69,7 +69,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		}
 		else
 		{
-			$wher .= "(au.user LIKE '%-------------%') AND ";
+			$ERR = $ERR_100;
 		}
 	}
 
@@ -101,7 +101,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 
 	if (!empty($_SESSION['advs']['category']))
 	{
-		$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $_SESSION['advs']['category'];
+		$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_SESSION['advs']['category']);
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$parent_node = mysql_fetch_assoc($res);
@@ -122,8 +122,8 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$wher .= ") AND ";
 	}
 
-	if (!empty($_SESSION['advs']['maxprice'])) $wher .= "(au.minimum_bid <= " . floatval($_SESSION['advs']['maxprice']) . ") AND ";
-	if (!empty($_SESSION['advs']['minprice'])) $wher .= "(au.minimum_bid >= " . floatval($_SESSION['advs']['minprice']) . ") AND ";
+	if (!empty($_SESSION['advs']['maxprice'])) $wher .= "(au.minimum_bid <= " . $system->input_money($_SESSION['advs']['maxprice']) . ") AND ";
+	if (!empty($_SESSION['advs']['minprice'])) $wher .= "(au.minimum_bid >= " . $system->input_money($_SESSION['advs']['minprice']) . ") AND ";
 
 	if (!empty($_SESSION['advs']['ending']) && ($_SESSION['advs']['ending'] == '1' || $_SESSION['advs']['ending'] == '2' || $_SESSION['advs']['ending'] == '4' || $_SESSION['advs']['ending'] == '6'))
 	{
@@ -180,7 +180,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 	}
 }
 
-if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SESSION['advs']))
+if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SESSION['advs']) && !isset($ERR))
 {
 	// retrieve records corresponding to passed page number
 	if ($page == 0) $page = 1;

@@ -15,14 +15,8 @@
 include 'includes/common.inc.php';
 
 // check recaptcha is enabled
-if ($system->SETTINGS['spam_sendtofriend'] == 2)
-{
-	include $include_path . 'captcha/recaptchalib.php';
-}
-elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
-{
-	include $include_path . 'captcha/securimage.php';
-}
+include $include_path . 'captcha/recaptchalib.php';
+include $include_path . 'captcha/securimage.php';
 
 if (isset($_REQUEST['id']))
 {
@@ -103,11 +97,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 	}
 }
 
+if ($system->SETTINGS['spam_sendtofriend'] == 2)
+{
+	$capcha_text = recaptcha_get_html($system->SETTINGS['recaptcha_public']);
+}
+elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
+{
+	$capcha_text = $spam_html;
+}
+
 $template->assign_vars(array(
 		'ERROR' => $TPL_error_text,
 		'ID' => intval($_REQUEST['id']),
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => ($system->SETTINGS['spam_sendtofriend'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
+		'CAPCHA' => (!isset($capcha_text) || !empty($capcha_text)) ? $capcha_text : '',
 		'TITLE' => $TPL_item_title,
 		'FRIEND_NAME' => (isset($_POST['friend_name'])) ? $_POST['friend_name'] : '',
 		'FRIEND_EMAIL' => (isset($_POST['friend_email'])) ? $_POST['friend_email'] : '',

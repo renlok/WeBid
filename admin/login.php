@@ -32,7 +32,7 @@ if (isset($_POST['action']))
 			}
 			$md5_pass = md5($MD5_PREFIX . $_POST['password']);
 			$query = "INSERT INTO " . $DBPrefix . "adminusers VALUES
-					(NULL, '" . $_POST['username'] . "', '" . $md5_pass . "', '" . get_hash() . "', '" . gmdate('Ymd') . "', '" . time() . "', 1)";
+					(NULL, '" . $system->cleanvars($_POST['username']) . "', '" . $md5_pass . "', '" . get_hash() . "', '" . gmdate('Ymd') . "', '" . time() . "', 1)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			// Redirect
 			header('location: login.php');
@@ -51,7 +51,7 @@ if (isset($_POST['action']))
 			else
 			{
 				$password = md5($MD5_PREFIX . $_POST['password']);
-				$query = "SELECT id, hash FROM " . $DBPrefix . "adminusers WHERE username = '" . $_POST['username'] . "' and password = '" . $password . "'";
+				$query = "SELECT id, hash FROM " . $DBPrefix . "adminusers WHERE username = '" . $system->cleanvars($_POST['username']) . "' and password = '" . $password . "'";
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 

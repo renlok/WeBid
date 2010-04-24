@@ -55,7 +55,7 @@ if ($myversion == '0.8.5')
 {
 	//0.8.5 to 1.0.0
 	$query[] = "ALTER TABLE  `" . $DBPrefix . "settings` DROP uniqueseller DROP pagewidth DROP alignment DROP pagewidthtype DROP background DROP brepeat
-				ADD `perpage` int(10) NOT NULL default '15' DROP banner_sizetype DROP picturesgallery;";
+				ADD `perpage` int(10) NOT NULL default '15' DROP banner_sizetype;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `subtitle` ENUM('y','n') NOT NULL default 'y'
 				ADD `extra_cat` ENUM('y','n') NOT NULL default 'n'
 				ADD `mod_queue` ENUM('y','n') NOT NULL default 'n'

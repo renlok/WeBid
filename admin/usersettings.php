@@ -16,7 +16,7 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'fck/fckeditor.php';
+include $main_path . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
@@ -45,13 +45,13 @@ loadblock($MSG['25_0151_a'], $MSG['25_0152_a'], 'select3num', 'usersconf', $syst
 loadblock($MSG['25_0110'], '', '', '', '', array(), true);
 loadblock($MSG['534'], $MSG['539'], 'batch', 'showacceptancetext', $system->SETTINGS['showacceptancetext'], array($MSG['030'], $MSG['029']));
 
-$oFCKeditor = new FCKeditor('acceptancetext');
-$oFCKeditor->BasePath = '../fck/';
-$oFCKeditor->Value = stripslashes($system->SETTINGS['acceptancetext']);
-$oFCKeditor->Width  = '550';
-$oFCKeditor->Height = '400';
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
 
-loadblock($MSG['594'], $MSG['5080'], $oFCKeditor->CreateHtml());
+loadblock($MSG['594'], $MSG['5080'], $CKEditor->editor('acceptancetext', stripslashes($system->SETTINGS['acceptancetext'])));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

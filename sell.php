@@ -18,7 +18,7 @@ include $include_path . 'datacheck.inc.php';
 include $include_path . 'converter.inc.php';
 include $include_path . 'functions_sell.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
-include $main_path . 'fck/fckeditor.php';
+include $main_path . 'ckeditor/ckeditor.php';
 
 $_SESSION['action'] = (!isset($_SESSION['action'])) ? 1 : $_SESSION['action'];
 $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST['action'];
@@ -562,11 +562,9 @@ switch ($_SESSION['action'])
 			$TPL_start_date = gmdate('Y-m-d H:i:s', $a_starts);
 		}
 
-		$oFCKeditor = new FCKeditor('description') ;
-		$oFCKeditor->BasePath = 'fck/';
-		$oFCKeditor->Value = stripslashes($description);
-		$oFCKeditor->Width = '90%';
-		$oFCKeditor->Height = '400';
+		$CKEditor = new CKEditor();
+		$CKEditor->basePath = $main_path . 'ckeditor/';
+		$CKEditor->returnOutput = true;
 
 		// build the fees javascript
 		$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type, fee_from ASC";
@@ -652,7 +650,7 @@ switch ($_SESSION['action'])
 				// auction details
 				'AUC_TITLE' => $title,
 				'AUC_SUBTITLE' => $subtitle,
-				'AUC_DESCRIPTION' => $oFCKeditor->CreateHtml(),
+				'AUC_DESCRIPTION' => $CKEditor->editor('description', stripslashes($description)),
 				'ITEMQTY' => $iquantity,
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid),
 				'BN_ONLY' => ($buy_now_only == 'y') ? 'disabled' : '',

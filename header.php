@@ -20,7 +20,7 @@ if (basename($_SERVER['PHP_SELF']) != 'error.php')
 	include $include_path . 'stats.inc.php';
 
 $jsfiles = (basename($_SERVER['PHP_SELF']) == 'sell.php') ? '<script type="text/javascript" src="includes/calendar.js"></script>
-<script type="text/javascript" src="fck/fckeditor.js"></script>' : '';
+<script type="text/javascript" src="ckeditor/ckeditor.js"></script>' : '';
 
 // Get users and auctions counters
 $query = "SELECT * FROM " . $DBPrefix . "counters";

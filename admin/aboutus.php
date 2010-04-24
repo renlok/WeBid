@@ -17,7 +17,7 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path . 'time.inc.php';
-include $main_path . 'fck/fckeditor.php';
+include $main_path . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
@@ -35,13 +35,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 loadblock($MSG['5077'], $MSG['5076'], 'yesno', 'aboutus', $system->SETTINGS['aboutus'], array($MSG['030'], $MSG['029']));
 
-$oFCKeditor = new FCKeditor('aboutustext');
-$oFCKeditor->BasePath = '../fck/';
-$oFCKeditor->Value = stripslashes($system->SETTINGS['aboutustext']);
-$oFCKeditor->Width  = '550';
-$oFCKeditor->Height = '400';
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
 
-loadblock($MSG['5078'], $MSG['5080'], $oFCKeditor->CreateHtml());
+loadblock($MSG['5078'], $MSG['5080'], $CKEditor->editor('aboutustext', stripslashes($system->SETTINGS['aboutustext'])));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

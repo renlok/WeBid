@@ -55,5 +55,6 @@
 - Fixed the area select box when uploading a large image
 - Added input_money() to some variable where missing to avoid errors
 - Fixed how suspending accounts work now users will actually receive messages about why they cant do things when their account is suspended
+- Replaced FCKeditor 2.6.3 with CKEditor 3.2.1
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

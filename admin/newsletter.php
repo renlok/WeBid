@@ -16,7 +16,7 @@ define('InAdmin', 1);
 include "../includes/common.inc.php";
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . "fck/fckeditor.php";
+include $main_path . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
@@ -71,13 +71,13 @@ $selectsetting = (isset($_POST['usersfilter'])) ? $_POST['usersfilter'] : '';
 loadblock($MSG['5299'], '', generateSelect('usersfilter', $USERSFILTER));
 loadblock($MSG['332'], '', 'text', 'subject', $system->SETTINGS['subject'], array($MSG['030'], $MSG['029']));
 
-$oFCKeditor = new FCKeditor('content');
-$oFCKeditor->BasePath = '../fck/';
-$oFCKeditor->Value = stripslashes($system->SETTINGS['content']);
-$oFCKeditor->Width  = '550';
-$oFCKeditor->Height = '400';
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
 
-loadblock($MSG['605'], $MSG['30_0055'], $oFCKeditor->CreateHtml());
+loadblock($MSG['605'], $MSG['30_0055'], $CKEditor->editor('content', stripslashes($system->SETTINGS['content'])));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

@@ -16,7 +16,7 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'fck/fckeditor.php';
+include $main_path . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
@@ -33,13 +33,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['030'], $MSG['029']));
 
-$oFCKeditor = new FCKeditor('privacypolicytext');
-$oFCKeditor->BasePath = '../fck/';
-$oFCKeditor->Value = stripslashes($system->SETTINGS['privacypolicytext']);
-$oFCKeditor->Width  = '550';
-$oFCKeditor->Height = '400';
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
 
-loadblock($MSG['404'], $MSG['5080'], $oFCKeditor->CreateHtml());
+loadblock($MSG['404'], $MSG['5080'], $CKEditor->editor('privacypolicytext', stripslashes($system->SETTINGS['privacypolicytext'])));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

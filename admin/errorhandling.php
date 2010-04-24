@@ -16,7 +16,7 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path."fck/fckeditor.php";
+include $main_path . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
@@ -30,13 +30,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['413'];
 }
 
-$oFCKeditor = new FCKeditor('errortext');
-$oFCKeditor->BasePath = '../fck/';
-$oFCKeditor->Value = stripslashes($system->SETTINGS['errortext']);
-$oFCKeditor->Width  = '550';
-$oFCKeditor->Height = '400';
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
 
-loadblock($MSG['411'], $MSG['410'], $oFCKeditor->CreateHtml());
+loadblock($MSG['411'], $MSG['410'], $CKEditor->editor('errortext', stripslashes($system->SETTINGS['errortext'])));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

@@ -16,11 +16,12 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . "fck/fckeditor.php";
+include $main_path . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
-if (isset($_POST['action']) && $_POST['action'] == "update") {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			terms = '" . $_POST['terms'] . "',
@@ -30,15 +31,16 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 	$system->SETTINGS['termstext'] = $_POST['termstext'];
 	$ERR = $MSG['5084'];
 }
+
 loadblock($MSG['5082'], $MSG['5081'], 'yesno', 'terms', $system->SETTINGS['terms'], array($MSG['030'], $MSG['029']));
 
-$oFCKeditor = new FCKeditor('termstext');
-$oFCKeditor->BasePath = '../fck/';
-$oFCKeditor->Value = stripslashes($system->SETTINGS['termstext']);
-$oFCKeditor->Width  = '550';
-$oFCKeditor->Height = '400';
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
 
-loadblock($MSG['5083'], $MSG['5080'], $oFCKeditor->CreateHtml());
+loadblock($MSG['5083'], $MSG['5080'], $CKEditor->editor('termstext', stripslashes($system->SETTINGS['termstext'])));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

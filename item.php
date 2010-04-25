@@ -25,8 +25,7 @@ foreach ($membertypes as $idm => $memtypearr)
 ksort($memtypesarr, SORT_NUMERIC);
 
 $id = (isset($_SESSION['CURRENT_ITEM'])) ? intval($_SESSION['CURRENT_ITEM']) : 0;
-$id = (isset($_GET['id'])) ? intval($_GET['id']) : 0;
-$id = (isset($_POST['id'])) ? intval($_POST['id']) : $id;
+$id = (isset($_REQUEST['id'])) ? intval($_REQUEST['id']) : 0;
 if (!is_numeric($id)) $id = 0;
 $bidderarray = array();
 $bidderarraynum = 1;
@@ -44,7 +43,9 @@ $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 if (mysql_num_rows($result) == 0)
 {
-	header('location: index.php');
+	$_SESSION['msg_title'] = $ERR_622;
+	$_SESSION['msg_body'] = $ERR_623;
+	header('location: message.php');
 	exit;
 }
 $auction_data = mysql_fetch_assoc($result);

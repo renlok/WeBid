@@ -104,11 +104,12 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 						$TPL_errmsg = $ERR_101;
 					}
 				}
+				/*
 				else
 				{
 					$TPL_err = 1;
 					$TPL_errmsg = $ERR_705;
-				}
+				}*/
 			}
 			else
 			{

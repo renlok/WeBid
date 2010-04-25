@@ -14,7 +14,12 @@
 
 include 'includes/common.inc.php';
 
-if ($user->logged_in && $user->user_data['suspended'] == 7)
+if (isset($_SESSION['msg_title']) && isset($_SESSION['msg_body']))
+{
+	$title = $_SESSION['msg_title'];
+	$body = $_SESSION['msg_body'];
+}
+elseif ($user->logged_in && $user->user_data['suspended'] == 7)
 {
 	$title = $MSG['753'];
 	$body = $MSG['754'];

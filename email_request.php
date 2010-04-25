@@ -42,31 +42,42 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 {
 	if (empty($_POST['TPL_sender_name']) || empty($_POST['TPL_sender_mail']) || empty($_POST['TPL_text']))
 	{
-		$TPL_error_text = $ERR_031;
+		$ERR = $ERR_031;
 	}
 	elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['TPL_sender_mail']) || !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['TPL_sender_mail']))
 	{
-		$TPL_error_text = $ERR_008;
+		$ERR = $ERR_008;
+	}
+	elseif ($auction_id < 0 || empty($auction_id))
+	{
+		$ERR = $ERR_622;
 	}
 	else
 	{
 		$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = " . $auction_id;
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$item_title = mysql_result($res, 0, 'title');
-		$item_title = $system->uncleanvars($item_title);
-		// Send e-mail message
-		$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
-		$message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $_POST['TPL_sender_mail'] . "\n\n" . $_POST['TPL_text'];
-		$emailer = new email_class();
-		$emailer->email_uid = $user_id;
-		$emailer->email_basic($subject, $email, nl2br($message), $_POST['TPL_sender_name']); //sent the email :D
-		// send a copy to their mesasge box
-		$nowmessage = nl2br($system->cleanvars($message));
-		$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject)
-				VALUES (" . $user_id . ", " . $user->user_data['id'] . ", '" . time() . "', '" . $nowmessage . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "')";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$sent = true;
+		if (mysql_num_rows($res) == 0)
+		{
+			$ERR = $ERR_622;
+		}
+		else
+		{
+			$item_title = mysql_result($res, 0, 'title');
+			$item_title = $system->uncleanvars($item_title);
+			// Send e-mail message
+			$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
+			$message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $_POST['TPL_sender_mail'] . "\n\n" . $_POST['TPL_text'];
+			$emailer = new email_class();
+			$emailer->email_uid = $user_id;
+			$emailer->email_basic($subject, $email, nl2br($message), $_POST['TPL_sender_name']); //sent the email :D
+			// send a copy to their mesasge box
+			$nowmessage = nl2br($system->cleanvars($message));
+			$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject)
+					VALUES (" . $user_id . ", " . $user->user_data['id'] . ", '" . time() . "', '" . $nowmessage . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "')";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$sent = true;
+		}
 	}
 }
 

@@ -123,7 +123,6 @@ $ERR_600 = 'Invalid auction type';
 $ERR_601 = "Quantity field not correct";
 $ERR_602 = "Images must be GIF or JPG";
 $ERR_603 = "The image is too large.";
-$ERR_605 = "The specified ID is not valid";
 $ERR_606 = "The specified auction ID is not correct";
 $ERR_607 = "Your bid is below the minimum bid";
 $ERR_608 = "The specified quantity is not correct";
@@ -138,6 +137,8 @@ $ERR_618 = "Your account has been suspended by admin.";
 $ERR_619 = "This auction has been suspended";
 $ERR_620 = "Your account has yet to be activated please check your emails for the activation link.";
 $ERR_621 = "Your account has yet to be activated by admin.";
+$ERR_622 = "No such auction.";
+$ERR_623 = "The auction you are trying to find either never existed or has been removed.";
 $ERR_700 = "Incorrect date format";
 $ERR_701 = "Invalid quantity (must be >0).";
 $ERR_702 = "Current Bid must be greater than minimum bid.";
@@ -235,12 +236,6 @@ $MSG['057'] = "Edit the currency symbol below";
 $MSG['058'] = "Submit new currency";
 $MSG['059'] = "Email Sent";
 $MSG['060'] = "Currency symbol updated";
-$MSG['061'] = "INSTALLATION";
-$MSG['062'] = "ADMINISTRATION";
-$MSG['063'] = "CONFIGURATION";
-$MSG['064'] = "Step 1. - Create MySQL database";
-$MSG['065'] = "Step2. - Create necessary tables";
-$MSG['066'] = "Step 3. - Populate tables";
 $MSG['067'] = "View Open Auctions";
 $MSG['068'] = "Allow Custom Increments";
 $MSG['069'] = "Auctions Duration";
@@ -705,31 +700,17 @@ $MSG['567'] = "not active";
 $MSG['568'] = "plus %s more";
 $MSG['569'] = "Insert user";
 $MSG['570'] = "Never logged in";
-$MSG['571'] = "Standard font";
-$MSG['572'] = "Error font";
-$MSG['574'] = "Footer font";
-$MSG['575'] = "Title font";
-$MSG['576'] = "This is the font used to display error message";
-$MSG['577'] = "This is the basic font used to display all the site's text, if not otherwise specified.<br>";
 $MSG['578'] = "Can Sell";
 $MSG['579'] = "Can Buy";
 $MSG['580'] = "Auto Join";
 $MSG['581'] = "Please proceed to one of the payment gateways listed below to pay the seller the amount of <b>%s</b>.";
 $MSG['582'] = "Please proceed to one of the payment gateways listed below to credit your account by amount of <b>%s</b>.";
 $MSG['583'] = "To activate your account please proceed to one of the payment gateways listed below to pay the fee of <b>%s</b>.";
-$MSG['584'] = "This is the font used in the footer";
-$MSG['585'] = "This is the font used in the titles of pages";
-$MSG['586'] = "Border colour";
-$MSG['587'] = "This is the colour of the border of the most external box";
-$MSG['588'] = "Navigation font";
-$MSG['589'] = "This is the font format of the navigation links in the header of the pages";
 $MSG['590'] = "To finalise your auction please proceed to one of the payment gateways listed below to pay the fee of <b>%s</b>.";
 $MSG['591'] = "To finalise the relisting your auction(s) please proceed to one of the payment gateways listed below to pay the fee of <b>%s</b>.";
 $MSG['592'] = "Logged in as: ";
 $MSG['593'] = "Reminders";
 $MSG['594'] = "Acceptance text";
-$MSG['595'] = "Links Colour";
-$MSG['596'] = "Visited Links Colour";
 $MSG['597'] = "Activate banners support?";
 $MSG['600'] = "Banners settings updated";
 $MSG['602'] = "Upload a new logo (max. 50 KB)";
@@ -1031,9 +1012,10 @@ $MSG['5065'] = "Delete all messages older than";
 $MSG['5067'] = "Update Counters ";
 $MSG['5068'] = "Words Filter";
 $MSG['5069'] = "The Words Filter option gives you the possibility to eliminate undesired words from:
-<UL>
-<LI>TITLE and DESCRIPTION of the auctions.
-<LI>Messages posted to the message boards";
+<ul>
+<li>TITLE and DESCRIPTION of the auctions.</li>
+<li>Messages posted to the message boards</li>
+</ul>";
 $MSG['5070'] = "Enable Words Filter?";
 $MSG['5071'] = "Undesired words list";
 $MSG['5072'] = "Enter the undesired words one per line (max. 255 characters per line). Note that each line will be
@@ -1045,7 +1027,7 @@ $MSG['5076'] = "Activate this option if you want an <U>About  us</U> link to app
 $MSG['5077'] = "Activate About us page?";
 $MSG['5078'] = "About us page content";
 $MSG['5079'] = "About us Settings Updated";
-$MSG['5080'] = "Note: each new line character will be converted to <b>&lt;BR&gt;</b> HTML tag.";
+$MSG['5080'] = "Note: each new line character will be converted to <b>&lt;br&gt;</b> HTML tag.";
 $MSG['5081'] = "Activate this option if you want a <U>Terms &amp; Conditions</U> link to appear in the footer of your pages.";
 $MSG['5082'] = "Activate Terms &amp; Conditions page?";
 $MSG['5083'] = "Terms &amp; Conditions page content<br>(HTML allowed)";
@@ -1061,12 +1043,8 @@ $MSG['5092'] = "Auction Search";
 $MSG['5093'] = "Title, Description";
 $MSG['5094'] = "View auctions";
 $MSG['5095'] = "Hours remaining on an auction until the time remaining becomes an automatic countdown timer";
-$MSG['5110'] = "Highlighted Items Option is: ";
-$MSG['5111'] = "ON";
-$MSG['5112'] = "OFF";
 $MSG['5113'] = "Change";
 $MSG['5115'] = "days";
-$MSG['5116'] = "Bulk Uploaded auctions";
 $MSG['5117'] = "Page";
 $MSG['5118'] = "of";
 $MSG['5119'] = "&lt;&lt;Prev";
@@ -1101,8 +1079,6 @@ $MSG['5167'] = "Browser Statistics for ";
 $MSG['5168'] = "Domain Statistics for";
 $MSG['5169'] = "Browser";
 $MSG['5170'] = "Domain";
-$MSG['5171'] = "Invited Users Lists";
-$MSG['5172'] = "Banned Users List";
 $MSG['5180'] = "User";
 $MSG['5181'] = "Add &gt;&gt;";
 $MSG['5182'] = "Search user (nick, name or e-mail)";
@@ -1113,8 +1089,6 @@ $MSG['5187'] = "Edit content of list: ";
 $MSG['5188'] = "Delete selected users";
 $MSG['5189'] = "Submit Auction";
 $MSG['5190'] = "Reset Fields";
-$MSG['5191'] = "Invited Users Lists and Banned Users List";
-$MSG['5193'] = "Send invitation e-mail to the invited users";
 $MSG['5199'] = "Confirm bid";
 $MSG['5200'] = "Post question";
 $MSG['5201'] = "Post message";
@@ -1169,10 +1143,6 @@ $MSG['5318'] = "View Platform Statistics";
 $MSG['5322'] = "Default country";
 $MSG['5321'] = "You can select a default country for your site.<br>It will automatically appear as the selected country in the countries select box throughout the site.";
 $MSG['5323'] = "Default country updated";
-$MSG['5342'] = "Featured Items";
-$MSG['5388'] = "Custom Tags";
-$MSG['5389'] = "Tag";
-$MSG['5392'] = "You can use the tags below in your e-mail messages texts to add custom contents.";
 $MSG['5408'] = "Max. ";
 $MSG['5431'] = "Send me a new password";
 $MSG['5436'] = "Tools";
@@ -1185,8 +1155,6 @@ $MSG['5506'] = "Positive feedback: ";
 $MSG['5507'] = "<font color=red>Negative feedback: </font>";
 $MSG['5508'] = "Member since ";
 $MSG['5509'] = "Feedback times ";
-$MSG['9005'] = "Reserve Price Fee ";
-$MSG['9006'] = "<b> % of the Reserve price </b>";
 $MSG['_0001'] = "Under Maintenance Page";
 $MSG['_0002'] = "You can temporary disable the access to your site if necessary.<br>
 			In Maintenance mode only one user will have access to it. After you registered a user via <a target=\"_new\" href=\"../register.php\">the usual users registration page</a>
@@ -1254,7 +1222,6 @@ $MSG['_0163'] = "View Winners";
 $MSG['_0167'] = "Manually relisted";
 $MSG['_0168'] = "Manually relisted auctions";
 
-$MSG['2_0001'] = "Classifieds";
 $MSG['2_0004'] = "View User's IPs";
 $MSG['2_0005'] = "Sign up IP";
 $MSG['2_0006'] = "Ban";
@@ -1264,9 +1231,6 @@ $MSG['2_0012'] = "<FONT COLOR=GREEN><b>Accepted</b></FONT>";
 $MSG['2_0013'] = "<FONT COLOR=red><b>Banned</b></FONT>";
 $MSG['2_0015'] = "Process Selection";
 $MSG['2_0017'] = "IP Addresses";
-$MSG['2_0018'] = "IP ADDRESS SEARCH";
-$MSG['2_0019'] = "Enter the complete IP address or a part of it.<br>
-				Examples:<UL><LI>215.25.0.55<LI>225.76<LI>36.52.125</UL>";
 $MSG['2_0020'] = "Banned IP Addresses Management";
 $MSG['2_0021'] = "Ban this IP address: ";
 $MSG['2_0024'] = "(Complete IP address - example: 185.39.51.63)";
@@ -1278,7 +1242,6 @@ $MSG['2_0026'] = "We're sorry but, for one or more reasons, you have been denied
 				<br><br>
 				Thank you";
 $MSG['2_0032'] = "Auction Extension Settings";
-$MSG['2_0033'] = "AUCTIONS EXTENSION";
 $MSG['2_0034'] = "Enable Auctions Auto extension?";
 $_CUSTOM_0032 = "Auctions Auto extension gives you the ability to automatically extend by <b>X</b> seconds the auctions end time,
 				if someone bids in the last <b>Y</b> seconds of the auction lifetime.<br>";
@@ -1286,7 +1249,6 @@ $MSG['2_0035'] = "Extend auction by ";
 $MSG['2_0036'] = " seconds if someone bid during the last ";
 $MSG['2_0037'] = " seconds";
 $MSG['2_0038'] = "Please enter valid numeric values";
-$MSG['2_0039'] = "Auction Auto extension Settings Updated";
 $MSG['2__0001'] = "Choose language";
 $MSG['2__0002'] = "Multilingual support";
 $MGS_2__0003 = "<br>The default language is English.<br>
@@ -1327,7 +1289,6 @@ $MSG['2__0038'] = "Select your category";
 $MGS_2__0039 = "If you lost your password, please enter in your username or e-mail address below.";
 $MGS_2__0040 = "Username or e-mail address";
 $MSG['2__0041'] = "Select secondary category";
-$MSG['2__0042'] = "Thumbnails";
 $MGS_2__0045 = " pixels ";
 $MSG['2__0047'] = "SELECT CATEGORY &gt;&gt;";
 $MSG['2__0048'] = "Close Now!";
@@ -1337,11 +1298,11 @@ $MSG['2__0056'] = "Suspended auctions";
 $MSG['2__0057'] = "Show counters";
 $MGS_2__0058 = "You can decide to show some counters in the header of your site's pages.<br>
 				There are three different counters available:
-				<UL>
-				<LI>Active auctions
-				<LI>Registered users
-				<LI>Online users
-				</UL>
+				<ul>
+				<li>Active auctions</li>
+				<li>Registered users</li>
+				<li>Online users</li>
+				</ul>
 				You can enable/disable each counter below";
 $MGS_2__0059 = "Online users";
 $MGS_2__0060 = "Active auctions";
@@ -1351,16 +1312,6 @@ $MGS_2__0063 = "Counters Settings Updated";
 $MGS_2__0064 = "USERS ONLINE";
 $MGS_2__0066 = "Enabled";
 $MGS_2__0067 = "Disabled";
-$MSG['2__0069'] = "Edited in this session.";
-$MSG['2__0074'] = "The following auctions have been relisted.";
-$MSG['2__0075'] = "Auction Title";
-$MSG['2__0076'] = "Total Fees Charged";
-$MSG['2__0078'] = ": database updated";
-$MSG['2__0079'] = "Database tables created, or updated where necessary";
-$MSG['2__0081'] = "If you were coming from bulk uploaded auctions and want to come back,";
-$MSG['2__0082'] = "CLICK HERE";
-$MSG['2__0083'] = "If you were coming from closed auctions and want to come back,";
-$MSG['2__0084'] = "uploaded";
 $MSG['25_0001'] = "WINNER";
 $MSG['25_0002'] = "SELLER";
 $MSG['25_0003'] = "Leave feedback";
@@ -1482,14 +1433,7 @@ $MSG['25_0195'] = "You can choose to receive a notification e-mail for each auct
 $MSG['25_0196'] = "Receive the <b>auction setup confirmation e-mail</b>.";
 $MSG['25_0197'] = "Do not Receive the <b>auction setup confirmation e-mail</b>.";
 $MSG['25_0199'] = "Closing auctions resume";
-$MSG['25_0200'] = "Feedback total: ";
-$MSG['25_0201'] = "Reply to this feedback: ";
-$MSG['25_0202'] = " reply: ";
-$MSG['25_0203'] = " on ";
 $MSG['25_0209'] = "Sell under price";
-$MSG['25_0210'] = " positive ";
-$MSG['25_0211'] = " fair ";
-$MSG['25_0212'] = " negative ";
 $MSG['25_0214'] = "Search also closed auctions: ";
 $MSG['25_0215'] = "Shipping terms";
 $MSG['25_0216'] = "Contact the seller";
@@ -1499,9 +1443,7 @@ $MSG['25_0217'] = "Giving anybody the option to contact sellers through your web
 $MSG['25_0218'] = "Any visitor can contact the seller (the ability to contact the seller will be ALWAYS shown)";
 $MSG['25_0219'] = "Only logged in users can contact the seller (the ability to contact the seller will be shown only to other users of your site if logged in)";
 $MSG['25_0220'] = "Nobody can contact the seller (the ability to contact the seller will NEVER be shown)";
-$MSG['25_0222'] = "you save ";
 $MSG['25_0223'] = "Feedback you've received";
-$MSG['25_0229'] = "Pages: ";
 
 // multi-language months
 $MSG['MON_001'] = "Jan";
@@ -1535,41 +1477,13 @@ $MSG['26_0002'] = "Manage Themes";
 $MSG['26_0003'] = "Edit Theme Files";
 $MSG['26_0004'] = "Add Theme File";
 $MSG['26_0005'] = "Default Theme Updated";
-$MSG['30_0004'] = "Edit Standard Font";
-$MSG['30_0005'] = "Edit Error Font";
-$MSG['30_0006'] = "Edit Title Font";
-$MSG['30_0007'] = "Edit Navigation Font";
-$MSG['30_0008'] = "Edit Footer Font";
-$MSG['30_0009'] = "The font properties of the fonts used on your site are defined in the CSS file of the active theme.
-				<br>You can change them choosing the <B>Edit</B> option below for font type you want to customise.<br>Alternatively you can edit the CSS file with your favourite text editor. We recommend this option only for user with CSS knowledge.";
-$MSG['30_0010'] = "Current CSS file: ";
-$MSG['30_0011'] = "Some of the colours used by the theme you have selected can be changed below.<br>Choose the <B>Edit</B> option below for the colour you want to change.
-				<br>Alternatively you can edit the CSS file with your favourite text editor. We recommend this option only for user with CSS knowledge.";
-$MSG['30_0012'] = "Edit Border Colour";
-$MSG['30_0013'] = "Table Header Colour";
-$MSG['30_0014'] = "This is the background colour of the table headers.";
-$MSG['30_0015'] = "Edit Table Header Colour";
-$MSG['30_0016'] = "Highlighted Items Background";
-$MSG['30_0017'] = "This is the background colour of the highlighted items.";
-$MSG['30_0018'] = "Edit Highlighted Items Background";
-$MSG['30_0019'] = "This is the colour of the unvisited links.";
-$MSG['30_0020'] = "Edit Links Colour";
-$MSG['30_0021'] = "This is the colour of the visited links.";
-$MSG['30_0022'] = "Edit Visited Links Colour";
-$MSG['30_0023'] = "Page Background Colour";
-$MSG['30_0024'] = "This is the background colour of the pages.";
-$MSG['30_0025'] = "Edit Page Background Colour";
-$MSG['30_0026'] = "Container Background Colour";
-$MSG['30_0027'] = "This is the background colour of the most external box appearing in all pages.";
-$MSG['30_0028'] = "Edit Container Background Colour";
 $MSG['30_0029'] = "You can set below the number of categories you want to be shown in the left column of the home page";
 $MSG['30_0030'] = "Categories to show: ";
 $MSG['30_0031'] = "Clear Cache";
 $MSG['30_0032'] = "Delete all the template cache files, you will need to do this each time you edit a template file";
 $MSG['30_0033'] = "Cache cleared";
 $MSG['30_0049'] = "Newsletter Settings Updated";
-$MSG['30_0053'] = "Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:";
-$MSG['30_0054'] = "Invalid e-mail address: free e-mails are not allowed on this website. Please use a different e-mail address.";
+$MSG['30_0053'] = "<p>Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:</p>";
 $MSG['30_0055'] = "The newsletter sent through WeBid will be sent automatically in <B>HTML</B>, so, it is necessary to add a tag <CODE>&lt;BR&gt;</CODE> tags for each new line you are going to add. Otherwise, the message will look like a single line of text without format.";
 $MSG['30_0062'] = "Please enter at least 4 characters";
 $MSG['30_0063'] = "Buy it now only?";
@@ -1579,32 +1493,22 @@ $MSG['30_0066'] = "Buy it now only settings updates";
 $MSG['30_0067'] = "<B>Buy it now only</B> auction";
 $MSG['30_0069'] = "Seller: edit this auction";
 $MSG['30_0070'] = "Search only in this category";
-$MSG['30_0075'] = "Adult Only Auction?";
-$MSG['30_0076'] = "If the content of this auction is orientated towards an adult audience, please select <B>yes</B> below. Adult Only auctions will only be visible to logged in users";
 $MSG['30_0080'] = "Payment Options";
 $MSG['30_0081'] = "Viewed ";
 $MSG['30_0084'] = "You can decide to have the winners address included in the notification e-mail sent to the seller when an auction closes. Just enable or disable this option below.";
 $MSG['30_0085'] = "Include winners' address in e-mails?";
 $MSG['30_0086'] = "Address: ";
 $MSG['30_0087'] = "Are you sure you want to process the selected auctions?";
-$MSG['30_0090'] = "Optional";
 $MSG['30_0098'] = "&nbsp; = Outbid";
 $MSG['30_0100'] = "<B>Buy it now!</B> auctions";
 $MSG['30_0101'] = "<B>Buy it now only</B> auctions";
 $MSG['30_0102'] = "Check/Uncheck All";
-$MSG['30_0160'] = "Edit Background Image Properties";
 $MSG['30_0176'] = "View Winners";
 $MSG['30_0177'] = "Auction ended";
 $MSG['30_0178'] = "&nbsp;&nbsp;No winners found for this auction";
 $MSG['30_0179'] = "Winning bid";
-$MSG['30_0180'] = "Complete Bids History";
+$MSG['30_0180'] = "Complete Bid History";
 $MSG['30_0181'] = "Message Board";
-$MSG['30_0184'] = "The Background Image is the image appearing in the background of your site's pages. You can also set how you prefer the image to repeat (horizontally, vertically, etc).
-				<br><B>Note:</B> the image path is relative to the main WeBid installation directory and should be in the form <CODE>url(path/to/image.gif)</CODE><br>
-				For example, if you place your background image in the <code>images/</code> directory and the image name is <code>mybackground.gif</code> you should enter <code>url(images/mybackground.gif)</code> in the <B><code>background-image:</code></B> property field.";
-$MSG['30_0187'] = "Navigation Bar Background Colour";
-$MSG['30_0188'] = "You can set below the colour of the whole navigation bar where the links are shown in the header of your site.";
-$MSG['30_0189'] = "Edit Navigation Bar Background Colour";
 $MSG['30_0208'] = "Place bid >>";
 $MSG['30_0209'] = "Meet the seller";
 $MSG['30_0210'] = "*When items relating to these key words are added you will be notified via email";

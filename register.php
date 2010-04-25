@@ -237,7 +237,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		elseif (BannedEmail($_POST['TPL_email'], $BANNEDDOMAINS))
 		{
 			$TPL_err = 1;
-			$TPL_errmsg = $MSG['30_0054'];
+			$TPL_errmsg = sprintf($MSG['30_0053'], $TPL_domains_alert);
 		}
 		elseif ($gateway_data['paypal_required'] == 1 && empty($_POST['TPL_pp_email']))
 		{

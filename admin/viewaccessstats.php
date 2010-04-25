@@ -40,7 +40,7 @@ while ($row = mysql_fetch_array($res)) {
 			'PAGEVIEWS' => $row['pageviews'],
 			'PAGEVIEWS_WIDTH' => ($row['pageviews'] * 100) / $MAX,
 			'UNIQUEVISITORS' => $row['uniquevisitors'],
-			'UNIQUEVISITORS_WIDTH' => ($row['uniquevisitiors'] * 100) / $MAX,
+			'UNIQUEVISITORS_WIDTH' => ($row['uniquevisitors'] * 100) / $MAX,
 			'USERSESSIONS' => $row['usersessions'],
 			'USERSESSIONS_WIDTH' => ($row['usersessions'] * 100) / $MAX
 			));

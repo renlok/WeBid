@@ -45,7 +45,7 @@ $system->check_mysql($result, $query, __LINE__, __FILE__);
 
 if (mysql_num_rows($result) == 0)
 {
-	$TPL_error_text = $ERR_605;
+	$TPL_error_text = $ERR_606;
 }
 else
 {

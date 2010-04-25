@@ -21,7 +21,7 @@ $(".form1").submit(function(){
 	  </tr>
 	  <tr>
 		<td nowrap="nowrap" valign="top"><label for="subject">{L_332}:</label></td>
-		<td><input name="subject" type="text" size="40" value="{REPLY_SUBJECT}" id="subject" /></td>
+		<td><input name="subject" type="text" size="40" value="{REPLY_SUBJECT}" id="subject" maxlength="50" /></td>
 	  </tr>
 	  <tr>
 		<td nowrap="nowrap" valign="top"><label for="message">{L_333}:</label></td>

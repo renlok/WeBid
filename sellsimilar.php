@@ -36,13 +36,14 @@ if (!isset($_POST['action']))
 	$_SESSION['RELISTEDAUCTION']	= $RELISTEDAUCTION;
 	$_SESSION['SELL_starts']		= '';
 	$_SESSION['SELL_title']			= $RELISTEDAUCTION['title'];
+	$_SESSION['SELL_subtitle']		= $RELISTEDAUCTION['subtitle'];
 	$_SESSION['SELL_description']	= $RELISTEDAUCTION['description'];
 	$_SESSION['SELL_atype']			= $RELISTEDAUCTION['auction_type'];
 	$_SESSION['SELL_iquantity']		= $RELISTEDAUCTION['quantity'];
 	$_SESSION['SELL_shipping_cost']	= $RELISTEDAUCTION['shipping_cost'];
 	$_SESSION['SELL_minimum_bid']	= $RELISTEDAUCTION['minimum_bid'];
-	$_SESSION['sellcat']			= $RELISTEDAUCTION['category'];
-	$_SESSION['SELL_sellcat']		= $RELISTEDAUCTION['category'];
+	$_SESSION['SELL_sellcat1']		= $RELISTEDAUCTION['category'];
+	$_SESSION['SELL_sellcat2']		= $RELISTEDAUCTION['secondcat'];
 	$_SESSION['SELL_duration']		= $RELISTEDAUCTION['duration'];
 	$_SESSION['SELL_relist']		= $RELISTEDAUCTION['relist'];
 	$_SESSION['SELL_shipping']		= $RELISTEDAUCTION['shipping'];
@@ -87,7 +88,7 @@ if (!isset($_POST['action']))
 	else
 	{
 		$_SESSION['SELL_increment']			= 1;
-		$_SESSION['SELL_customincrement']	= '';
+		$_SESSION['SELL_customincrement']	= 0;
 	}
 
 	header('location: sell.php?mode=recall');

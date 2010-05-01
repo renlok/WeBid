@@ -90,8 +90,8 @@ function generateSelect($name = '', $options = array())
 	return $html;
 }
 
-$TPL_errmsg = '';
-$TPL_err = 0;
+$first = true;
+unset($ERR);
 
 if (empty($_POST['action']))
 {
@@ -119,63 +119,51 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 {
 	if (empty($_POST['TPL_name']))
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5029;
+		$ERR = $ERR_5029;
 	}
 	elseif (empty($_POST['TPL_nick']))
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5030;
+		$ERR = $ERR_5030;
 	}
 	elseif (empty($_POST['TPL_password']))
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5031;
+		$ERR = $ERR_5031;
 	}
 	elseif (empty($_POST['TPL_repeat_password']))
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5032;
+		$ERR = $ERR_5032;
 	}
 	elseif (empty($_POST['TPL_email']))
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5033;
+		$ERR = $ERR_5033;
 	}
 	elseif (empty($_POST['TPL_address']) && $MANDATORY_FIELDS['address'] == 'y')
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5034;
+		$ERR = $ERR_5034;
 	}
 	elseif (empty($_POST['TPL_city']) && $MANDATORY_FIELDS['city'] == 'y')
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5035;
+		$ERR = $ERR_5035;
 	}
 	elseif (empty($_POST['TPL_prov']) && $MANDATORY_FIELDS['prov'] == 'y')
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5036;
+		$ERR = $ERR_5036;
 	}
 	elseif (empty($_POST['TPL_country']) && $MANDATORY_FIELDS['country'] == 'y')
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5037;
+		$ERR = $ERR_5037;
 	}
 	elseif (empty($_POST['TPL_zip']) && $MANDATORY_FIELDS['zip'] == 'y')
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5038;
+		$ERR = $ERR_5038;
 	}
 	elseif (empty($_POST['TPL_phone']) && $MANDATORY_FIELDS['tel'] == 'y')
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5039;
+		$ERR = $ERR_5039;
 	}
 	elseif ((empty($_POST['TPL_day']) || empty($_POST['TPL_month']) || empty($_POST['TPL_year'])) && $MANDATORY_FIELDS['birthdate'] == 'y')
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_5040;
+		$ERR = $ERR_5040;
 	}
 	else
 	{
@@ -191,63 +179,51 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 
 		if ($system->SETTINGS['spam_register'] == 2 && !$resp->is_valid)
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $MSG['752'];
+			$ERR = $MSG['752'];
 		}
 		elseif ($system->SETTINGS['spam_register'] == 1 && !$resp->check($_POST['captcha_code']))
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $MSG['752'];
+			$ERR = $MSG['752'];
 		}
 		elseif (strlen($_POST['TPL_nick']) < 6)
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $ERR_107;
+			$ERR = $ERR_107;
 		}
 		elseif (strlen ($_POST['TPL_password']) < 6)
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $ERR_108;
+			$ERR = $ERR_108;
 		}
 		elseif ($_POST['TPL_password'] != $_POST['TPL_repeat_password'])
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $ERR_109;
+			$ERR = $ERR_109;
 		}
 		elseif (strlen($_POST['TPL_email']) < 5)
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $ERR_110;
+			$ERR = $ERR_110;
 		}
-		elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['TPL_email']))
+		elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_email']))
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $ERR_008;
+			$ERR = $ERR_008;
 		}
 		elseif (!CheckAge($birth_day, $birth_month, $birth_year) && $MANDATORY_FIELDS['birthdate'] == 'y')
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $ERR_113;
+			$ERR = $ERR_113;
 		}
 		elseif (!empty($birth_month) && !empty($birth_day) && !empty($birth_year) && !checkdate($birth_month, $birth_day, $birth_year))
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $ERR_117;
+			$ERR = $ERR_117;
 		}
 		elseif (BannedEmail($_POST['TPL_email'], $BANNEDDOMAINS))
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = sprintf($MSG['30_0053'], $TPL_domains_alert);
+			$ERR = sprintf($MSG['30_0053'], $TPL_domains_alert);
 		}
 		elseif ($gateway_data['paypal_required'] == 1 && empty($_POST['TPL_pp_email']))
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $MSG['810'];
+			$ERR = $MSG['810'];
 		}
 		elseif ($gateway_data['authnet_required'] == 1 && (empty($_POST['TPL_authnet_id']) || empty($_POST['TPL_authnet_pass'])))
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $MSG['811'];
+			$ERR = $MSG['811'];
 		}
 		else
 		{
@@ -256,19 +232,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 			$system->check_mysql($res, $sql, __LINE__, __FILE__);
 			if (mysql_num_rows($res) > 0)
 			{
-				$TPL_err = 1;
-				$TPL_errmsg = $ERR_111; // Selected user already exists
+				$ERR = $ERR_111; // Selected user already exists
 			}
 			$query = "SELECT email FROM " . $DBPrefix . "users WHERE email = '" . $system->cleanvars($_POST['TPL_email']) . "'";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if (mysql_num_rows($res) > 0)
 			{
-				$TPL_err = 1;
-				$TPL_errmsg = $ERR_115; // E-mail already used
+				$ERR = $ERR_115; // E-mail already used
 			}
 
-			if ($TPL_err == 0)
+			if (!isset($ERR))
 			{
 				$TPL_nick_hidden = $_POST['TPL_nick'];
 				$TPL_password_hidden = $_POST['TPL_password'];
@@ -422,7 +396,6 @@ $TIMECORRECTION = array(
 	'+23' => '+23 h'
 );
 
-$first = true;
 $selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
 foreach ($countries as $key => $name)
 {
@@ -465,7 +438,7 @@ $selectsetting = (isset($_POST['TPL_timezone'])) ? $_POST['TPL_timezone'] : '';
 $time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
 
 $template->assign_vars(array(
-		'L_ERROR' => $TPL_errmsg,
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'L_COUNTRIES' => $country,
 		'L_ACCEPTANCE' => nl2br(stripslashes($system->SETTINGS['acceptancetext'])),
 		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
@@ -477,7 +450,6 @@ $template->assign_vars(array(
 		'AN_ID' => (isset($_POST['TPL_authnet_id'])) ? $_POST['TPL_authnet_id'] : '',
 		'AN_PASS' => (isset($_POST['TPL_authnet_pass'])) ? $_POST['TPL_authnet_pass'] : '',
 
-		'B_ERRORMSG' => ($TPL_err == 1),
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_SHOWACCEPTANCE' => ($system->SETTINGS['showacceptancetext'] == 1),

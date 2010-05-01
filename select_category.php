@@ -107,6 +107,7 @@ elseif (count($_POST) == 0)
     $_SESSION['SELL_minimum_bid'] = '';
     $_SESSION['SELL_file_uploaded'] = '';
     $_SESSION['SELL_title'] = '';
+    $_SESSION['SELL_subtitle'] = '';
     $_SESSION['SELL_description'] = '';
     $_SESSION['SELL_pict_url'] = '';
     $_SESSION['SELL_atype'] = '';
@@ -116,7 +117,7 @@ elseif (count($_POST) == 0)
     $_SESSION['SELL_duration'] = '';
     $_SESSION['SELL_relist'] = '';
     $_SESSION['SELL_increments'] = '';
-    $_SESSION['SELL_customincrement'] = '';
+    $_SESSION['SELL_customincrement'] = 0;
     $_SESSION['SELL_shipping'] = '';
     $_SESSION['SELL_shipping_terms'] = '';
     $_SESSION['SELL_payment'] = '';

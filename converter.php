@@ -30,8 +30,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'convert')
 	$conversion = $system->print_money_nosymbol($_POST['amount']) . ' ' . $_POST['from'] . ' = ' . $system->print_money_nosymbol($CONVERTED) . ' ' . $_POST['to'];
 }
 
-include $include_path . 'styles.inc.php';
-
 foreach ($CURRENCIES as $k => $v)
 {
 	$fromselected = false;
@@ -62,7 +60,6 @@ foreach ($CURRENCIES as $k => $v)
 
 $template->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
-		'STYLES' => $thisstyle,
 		'THEME' => $system->SETTINGS['theme'],
 		'ERROR' => (!isset($errormsg)) ? '' : $errormsg,
 		'CONVERSION' => $conversion,

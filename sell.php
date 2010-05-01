@@ -15,7 +15,6 @@
 include 'includes/common.inc.php';
 include $include_path . 'dates.inc.php';
 include $include_path . 'datacheck.inc.php';
-include $include_path . 'converter.inc.php';
 include $include_path . 'functions_sell.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 include $main_path . 'ckeditor/ckeditor.php';
@@ -49,6 +48,12 @@ if (!$user->can_sell)
 	$_SESSION['TMP_MSG'] = $MSG['818'];
 	header('location: user_menu.php?cptab=selling');
 	exit;
+}
+
+// check if user skiped adding second category
+if (isset($_POST['act']) && $_POST['act'] == 'skipexcat')
+{
+	$_SESSION['SELL_sellcat2'] = 0;
 }
 
 // set variables
@@ -256,7 +261,7 @@ switch ($_SESSION['action'])
 						}
 					}
 				}
-				$ubn_only = $user->user_data['bn_only'];
+
 				if ($user->user_data['startemailmode'] == 'yes')
 				{
 					include $include_path . 'auction_confirmation.inc.php';
@@ -276,12 +281,12 @@ switch ($_SESSION['action'])
 						$system->check_mysql($result, $query, __LINE__, __FILE__);
 						$totalbnaucs = mysql_result($result, 0);
 						$percent = ($totalbnaucs * 100) / $totalaucs;
-						if ($ubn_only == 'y' && $system->SETTINGS['bn_only_percent'] <= $percent)
+						if ($user->user_data['bn_only'] == 'y' && $system->SETTINGS['bn_only_percent'] <= $percent)
 						{
 							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'n' WHERE id = " . $user->user_data['id'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 						}
-						if ($ubn_only == 'n' && $system->SETTINGS['bn_only_percent'] > $percent)
+						if ($user->user_data['bn_only'] == 'n' && $system->SETTINGS['bn_only_percent'] > $percent)
 						{
 							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE id = " . $user->user_data['id'];
 							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -399,7 +404,7 @@ switch ($_SESSION['action'])
 				$gateway_list = explode(',', $gateways_data['gateways']);
 				foreach ($gateway_list as $v)
 				{
-					if ($gateways_data[$v . '_active'] == 1)
+					if ($gateways_data[$v . '_active'] == 1 && in_array($v, $payment))
 					{
 						$payment_methods .= '<p>' . $system->SETTINGS['gatways'][$v] . '</p>';
 					}
@@ -408,7 +413,10 @@ switch ($_SESSION['action'])
 				$payment_options = unserialize($system->SETTINGS['payment_options']);
 				foreach ($payment_options as $k => $v)
 				{
-					$payment_methods .= '<p>' . $v . '</p>';
+					if (in_array($k, $payment))
+					{
+						$payment_methods .= '<p>' . $v . '</p>';
+					}
 				}
 
 				// category name
@@ -489,11 +497,6 @@ switch ($_SESSION['action'])
 				substr($a_starts, 0, 4), 0);
 		}
 	case 1:
-		// check if user skiped adding second category
-		if (isset($_POST['act']) && $_POST['act'] == 'skipexcat')
-		{
-			$_SESSION['SELL_sellcat2'] = 0;
-		}
 		$category_string1 = get_category_string($sellcat1);
 		$category_string2 = get_category_string($sellcat2);
 
@@ -506,7 +509,7 @@ switch ($_SESSION['action'])
 		$TPL_auction_type .= '</select>' . "\n";
 
 		// duration
-		$time_passed = ($a_starts == '') ? 0 : (time() - $a_starts) / (3600 * 24); // get time passed in days
+		$time_passed = ($a_starts == '' && $_SESSION['SELL_action'] != 'edit') ? 0 : (time() - $a_starts) / (3600 * 24); // get time passed in days
 		$query = "SELECT * FROM " . $DBPrefix . "durations WHERE days > " . floor($time_passed) . " ORDER BY days";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);

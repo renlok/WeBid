@@ -21,7 +21,7 @@ function CurrenciesList()
 {
 	if (!isset($_SESSION['curlist']))
 	{
-		$s = new soapclientt('http://webservices.lb.lt/ExchangeRates/ExchangeRates.asmx/getListOfCurrencies');
+		$s = new nusoap_client('http://webservices.lb.lt/ExchangeRates/ExchangeRates.asmx/getListOfCurrencies');
 		$result= $s->call('getListOfCurrencies',array(),'','http://webservices.lb.lt/ExchangeRates/getListOfCurrencies');
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser,XML_OPTION_CASE_FOLDING,0);
@@ -59,7 +59,7 @@ function ConvertCurrency($FROM, $INTO, $AMOUNT)
 	$rate = findconversionrate($FROM, $INTO);
 	if ($rate == 0)
 	{
-		$sclient = new soapclientt($include_path . 'CurrencyConverter.wdsl', 'wsdl');
+		$sclient = new nusoap_client($include_path . 'CurrencyConverter.wdsl', 'wsdl');
 		$p = $sclient->getProxy();
 		$ratio = $p->ConversionRate($params1);
 		if (is_array($ratio))

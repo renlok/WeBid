@@ -65,11 +65,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$ERR = $ERR_110;
 		}
-		elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['email']))
+		elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['email']))
 		{
 			$ERR = $ERR_008;
 		}
-		elseif (!ereg("^[0-9]{2}/[0-9]{2}/[0-9]{4}$",$_POST['birthdate']) && !ereg("^[0-9]{2}/[0-9]{2}/[0-9]{2}$", $_POST['birthdate']) && $MANDATORY_FIELDS['birthdate'] == 'y')
+		elseif (!preg_match('/^([0-9]{2})\/([0-9]{2})\/([0-9]{2,4})$/', $_POST['birthdate']) && $MANDATORY_FIELDS['birthdate'] == 'y')
 		{ //Birthdate check
 			$ERR = $ERR_043;
 		}

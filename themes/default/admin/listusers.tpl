@@ -106,9 +106,11 @@
                             <a href="deleteuser.php?id={users.ID}&offset={PAGE}" class="small">{L_008}</a><br>
                             <a href="excludeuser.php?id={users.ID}&offset={PAGE}" class="small">
     <!-- IF users.SUSPENDED eq 0 -->
-                                {L_300}
+                                {L_305}
+    <!-- ELSEIF users.SUSPENDED eq 8 -->
+                                {L_515}
     <!-- ELSE -->
-                                {L_310}
+                                {L_299}
     <!-- ENDIF -->
                             </a><br>
                             <a href="listusers.php?payreminder=1&id={users.ID}&offset={PAGE}" class="small">{L_764}</a>

@@ -18,8 +18,10 @@ include $include_path . 'dates.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
 // set default variables
+unset($ERR);
 $catscontrol = new MPTTcategories();
 $NOW = time();
+$searching = false;
 $userjoin = '';
 $ora = '';
 $wher = '';
@@ -46,6 +48,7 @@ else
 
 if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 {
+	$searching = true;
 	if (!empty($_SESSION['advs']['title']))
 	{
 		$wher .= '(';
@@ -96,7 +99,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 
 	if (!empty($_SESSION['advs']['type']))
 	{
-		$wher .= "(au.auction_type = " . $_SESSION['advs']['type'] . ") AND ";
+		$wher .= "(au.auction_type = " . intval($_SESSION['advs']['type']) . ") AND ";
 	}
 
 	if (!empty($_SESSION['advs']['category']))
@@ -180,7 +183,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 	}
 }
 
-if ((!empty($wher) || !isset($ora)) && isset($_SESSION['advs']) && is_array($_SESSION['advs']) && !isset($ERR))
+if ($searching && !isset($ERR))
 {
 	// retrieve records corresponding to passed page number
 	if ($page == 0) $page = 1;

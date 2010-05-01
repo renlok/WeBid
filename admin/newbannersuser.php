@@ -24,7 +24,7 @@ if ($_POST[action] == "insert" && basename($_SERVER['HTTP_REFERER']) == basename
 	{
 		$ERR = $ERR_047;
 	}
-	elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$",$_POST[email]))
+	elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i',$_POST[email]))
 	{
 		$ERR = $ERR_008;
 	}

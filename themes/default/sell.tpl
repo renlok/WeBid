@@ -65,7 +65,9 @@ $(document).ready(function(){
 	var st = {FEE_SUBTITLE};
 	$("#min_bid").blur(function(){
 		var min_bid = parseFloat($("#min_bid").val());
+		alert('min_bid_fee: '+min_bid_fee);
 		updatefee(min_bid_fee * -1);
+		min_bid_fee = 0; // just incase theres nothing
 		if (min_bid == 0) {
 			min_bid_fee = 0;
 		} else {
@@ -82,6 +84,7 @@ $(document).ready(function(){
 				}
 			}
 		}
+		alert('New min_bid_fee: '+min_bid_fee);
 	});
 	$("#bn").blur(function(){
 		if (bn == parseInt($("#bn").val())){

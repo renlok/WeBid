@@ -153,7 +153,6 @@ if ($PAGES > 1)
 
 $template->assign_vars(array(
 		'BGCOLOUR' => ($i % 2) ? '#FFCCFF' : '#EEEEEE',
-		'TBLHEADERCOLOUR' => $system->SETTINGS['tableheadercolor'],
 		'ORDERCOL' => $_SESSION['sa_ord'],
 		'ORDERNEXT' => $_SESSION['sa_nexttype'],
 		'ORDERTYPEIMG' => $_SESSION['sa_type_img'],

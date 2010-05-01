@@ -205,7 +205,6 @@ if ($PAGES > 1)
 }
 
 $template->assign_vars(array(
-		'TBLHEADERCOLOUR' => $system->SETTINGS['tableheadercolor'],
 		'ORDERCOL' => $_SESSION['solda_ord'],
 		'ORDERNEXT' => $_SESSION['solda_nexttype'],
 		'ORDERTYPEIMG' => $_SESSION['solda_type_img'],

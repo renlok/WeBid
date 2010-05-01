@@ -27,7 +27,7 @@ if ($_POST[action] == "update")
 		$ERR = $ERR_047;
 		$USER = $_POST;
 	}
-	elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$",$_POST[email]))
+	elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i',$_POST[email]))
 	{
 		$ERR = $ERR_008;
 		$USER = $_POST;

@@ -39,7 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$ERR = $ERR_047;
 	}
-	elseif (!empty($_POST['moneydecimals']) && !ereg("^[0-9]+$", $_POST['moneydecimals']))
+	elseif (!empty($_POST['moneydecimals']) && !is_numeric($_POST['moneydecimals']))
 	{
 		$ERR = $ERR_051;
 	}

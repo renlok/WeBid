@@ -55,6 +55,14 @@ if ($step == 0)
 }
 if ($step == 1)
 {
+	if (!mysql_connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass']))
+	{
+		die('<p>Cannot connect to ' . $DbHost . ' with the supplied username and password. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
+	}
+	if (!mysql_select_db($_POST['DBName']))
+	{
+		die('<p>Cannot select database ' . $_POST['DBName'] . '. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
+	}
 	$toecho = '<p><b>Step 1:</b> Writting config file...</p>';
 	$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
 	// generate config file

@@ -4,11 +4,11 @@
 			{L_001}
 		</div>
 <!-- IF B_FIRST -->
-		<!-- IF B_ERRORMSG -->
+	<!-- IF ERROR ne '' -->
 		<div class="errfont">
-			{L_ERROR}
+			{ERROR}
 		</div>
-		<!-- ENDIF -->
+	<!-- ENDIF -->
 		<div class="table2">
 			<form name="registration" action="{SSLURL}register.php" method="post">
 				<table width="90%" border="0" cellpadding="4" cellspacing="0">

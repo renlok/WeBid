@@ -17,13 +17,15 @@ if (!defined('InWeBid')) exit('Access denied');
 class global_class
 {
 	var $SETTINGS, $ctime, $tdiff;
-	
+
 	function global_class()
 	{
 		global $DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $main_path;
+
 		// Database connection
 		if (!mysql_connect($DbHost,$DbUser,$DbPassword)) die();
 		if (!mysql_select_db($DbDatabase)) die();
+
 		// Load settings
 		$this->loadsettings();
 		$this->ctime = time() + (($this->SETTINGS['timecorrection'] + gmdate('I')) * 3600);
@@ -79,22 +81,31 @@ class global_class
 	{
 		global $DBPrefix, $user;
 
-		$query = "SELECT * FROM " . $DBPrefix . "maintainance";
-		$res = mysql_query($query);
-		$this->check_mysql($res, $query, __LINE__, __FILE__);
-		
-		if (mysql_num_rows($res) > 0)
+		if (!isset($this->SETTINGS['MAINTAINANCE']))
 		{
-			$MAINTAINANCE = mysql_fetch_array($res);
-			if ($MAINTAINANCE['active'] == 'y')
+			$query = "SELECT * FROM " . $DBPrefix . "maintainance";
+			$res = mysql_query($query);
+			$this->check_mysql($res, $query, __LINE__, __FILE__);
+
+			if (mysql_num_rows($res) > 0)
 			{
-				if ($user->logged_in && ($user->user_data['nick'] == $MAINTAINANCE['superuser'] || $user->user_data['id'] == $MAINTAINANCE['superuser']))
-				{
-					return false;
-				}
-				return true;
+				$this->SETTINGS['MAINTAINANCE'] = mysql_fetch_assoc($res);
+			}
+			else
+			{
+				return false;
 			}
 		}
+
+		if ($this->SETTINGS['MAINTAINANCE']['active'] == 'y')
+		{
+			if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['MAINTAINANCE']['superuser'] || $user->user_data['id'] == $this->SETTINGS['MAINTAINANCE']['superuser']))
+			{
+				return false;
+			}
+			return true;
+		}
+
 		return false;
 	}
 
@@ -166,10 +177,12 @@ class global_class
 	//CURRENCY FUNCTIONS
 	function input_money($str)
 	{
+		if (empty($str))
+			return 0;
 		if ($this->SETTINGS['moneyformat'] == 1)
 		{
 			// Drop thousands separator
-			$str = ereg_replace(',', '', $str);
+			$str = str_replace(',', '', $str);
 		}
 		elseif ($this->SETTINGS['moneyformat'] == 2)
 		{
@@ -187,12 +200,12 @@ class global_class
 	{
 		if ($this->SETTINGS['moneyformat'] == 1)
 		{
-			if (!ereg('^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{0,3})?$', $amount))
+			if (!preg_match('#^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{0,3})?$#', $amount))
 				return false;
 		}
 		elseif ($this->SETTINGS['moneyformat'] == 2)
 		{
-			if (!ereg('^([0-9]+|[0-9]{1,3}(\.[0-9]{3})*)(,[0-9]{0,3})?$', $amount))
+			if (!preg_match('#^([0-9]+|[0-9]{1,3}(\.[0-9]{3})*)(,[0-9]{0,3})?$#', $amount))
 				return false;
 		}
 		return true;

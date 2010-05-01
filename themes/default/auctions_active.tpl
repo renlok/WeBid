@@ -31,12 +31,11 @@
 					<td width="15%">{auctions.NUM_BIDS} </td>
 					<td width="15%">{auctions.TIMELEFT}</td>
 				</tr>
-<!-- END auctions -->
-<!-- BEGIN no_auctions -->
+<!-- BEGINELSE -->
 				<tr align="center">
 					<td colspan="5">{L_910}</td>
 				</tr>
-<!-- END no_auctions -->
+<!-- END auctions -->
 			</table>
 <!-- IF B_MULPAG -->
 			<table width=100% cellpadding=0 cellspacing=0 border=0>

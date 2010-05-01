@@ -4,24 +4,16 @@
 $(document).ready(function() {
 	var relist_fee = {RELIST_FEE_NO};
 	$("#sellall").click(function() {
-		$(".sellid").each(function() {
-			if ($(this).attr('checked') == true) {
-				$(this).removeAttr('checked');
-			} else {
-				$(this).attr('checked', 'true');
-			}
+		var checked_status = this.checked;
+		$("input[name=sell[]]").each(function() {
+			this.checked = checked_status;
 		});
-		return false;
 	});
 	$("#deleteall").click(function() {
-		$(".deleteid").each(function() {
-			if ($(this).attr('checked') == true) {
-				$(this).removeAttr('checked');
-			} else {
-				$(this).attr('checked', 'true');
-			}
+		var checked_status = this.checked;
+		$("input[name=delete[]]").each(function() {
+			this.checked = checked_status;
 		});
-		return false;
 	});
 	$("#processdel").submit(function() {
 		if (confirm('{L_30_0087}')){
@@ -56,7 +48,7 @@ $(document).ready(function() {
 </table>
 
 <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
-	<tr bgcolor="{TBLHEADERCOLOUR}">
+	<tr>
 		<td class="titTable1" width="40%">
 			<a href="yourauctions_c.php?ca_ord=title&ca_type={ORDERNEXT}">{L_624}</a>
 <!-- IF ORDERCOL eq 'title' -->
@@ -124,21 +116,21 @@ $(document).ready(function() {
 		</td>
 		<td width="10%"  align="center">
 		<!-- IF items.B_CANSSELL -->
-			<input type="checkbox" name="sell[]" value="{items.ID}" class="sellid">
+			<input type="checkbox" name="sell[]" value="{items.ID}">
 		<!-- ENDIF -->
 		</td>
 		<td width="9%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
-			<input type="checkbox" name="delete[]" value="{items.ID}" class="deleteid">
+			<input type="checkbox" name="delete[]" value="{items.ID}">
 		<!-- ENDIF -->
 		</td>
 	</tr>
 	<!-- END items -->
 <!-- ENDIF -->
 	<tr bgcolor="{BGCOLOUR}">
-	  <td colspan="6">&nbsp;</td>
-	  <td align="center"><a href="#" id="sellall">{L_30_0102}</a></td>
-	  <td align="center"><span href="#" id="deleteall">{L_30_0102}</span></td>
+	  <td colspan="6" align="right">{L_30_0102}</td>
+	  <td align="center"><input type="checkbox" id="sellall"></td>
+	  <td align="center"><input type="checkbox" id="deleteall"></td>
 	</tr>
 		<tr>
 			<td colspan="10" align="center">

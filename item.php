@@ -96,7 +96,7 @@ if ($user->logged_in)
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
 
 	$watcheditems = trim(mysql_result($result, 0, 'item_watch'));
-	$auc_ids = split(' ', $watcheditems);
+	$auc_ids = explode(' ', $watcheditems);
 	if (in_array($id, $auc_ids))
 	{
 		$watch_var = 'delete';
@@ -530,7 +530,7 @@ $template->assign_vars(array(
 		'B_BUY_NOW' => ($auction_data['buy_now'] > 0 && ($auction_data['bn_only'] == 'y' || $auction_data['bn_only'] == 'n' && ($auction_data['num_bids'] == 0 || ($auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])))),
 		'B_BUY_NOW_ONLY' => ($auction_data['bn_only'] == 'y'),
 		'B_USERBID' => $userbid,
-		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user']),
+		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && (!$user->logged_in || ($user->logged_in && $user->user_data['id'] != $auction_data['user']))),
 		'B_HASBUYER' => (count($hbidder_data) > 0),
 		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
 		'B_HAS_QUESTIONS' => ($num_questions > 0),

@@ -51,7 +51,7 @@ class email_class
 		$j = 0;
 		while ($i < count($buffer))
 		{
-			if (!ereg("^#(.)*$", $buffer[$i]))
+			if (!preg_match('/^#(.)*$/', $buffer[$i]))
 			{
 				$skipped_buffer[$j] = $buffer[$i];
 				$j++;

@@ -3,14 +3,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#deleteall").click(function() {
-		$("input[@class=O_delete]").each(function() {
-			if (this.checked) {
-				this.checked = false;
-			} else {
-				this.checked = true;
-			}
+		var checked_status = this.checked;
+		$("input[name=O_delete[]]").each(function() {
+			this.checked = checked_status;
 		});
-		return false;
 	});
 	$("#processdel").submit(function() {
 		if (confirm('{L_30_0087}')){
@@ -35,7 +31,7 @@ $(document).ready(function() {
 	</tr>
 </table>
 <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
-	<tr bgcolor="{TBLHEADERCOLOUR}">
+	<tr>
 		<td class="titTable1">
 			<a href="yourauctions_s.php?sa_ord=title&sa_type={ORDERNEXT}">{L_624}</a>
 <!-- IF ORDERCOL eq 'title' -->
@@ -95,7 +91,7 @@ $(document).ready(function() {
 		</td>
 		<td width="8%" align="center">
 		<!-- IF items.B_HASNOBIDS -->
-			<input type="checkbox" name="O_delete[]" value="{items.ID}" class="O_delete">
+			<input type="checkbox" name="O_delete[]" value="{items.ID}">
 		<!-- ENDIF -->
 		</td>
 		<td align="center">
@@ -109,11 +105,12 @@ $(document).ready(function() {
 	<!-- END items -->
 <!-- ENDIF -->
 	<tr bgcolor="{BGCOLOUR}">
-		<td colspan="6">&nbsp;</td>
-		<td align="center"><a href="#" id="deleteall">{L_30_0102}</a></td>
+		<td colspan="5" align="right">{L_30_0102}</td>
+		<td align="center"><input type="checkbox" id="deleteall"></td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td class=white colspan="7" align="center">
+		<td class="white" colspan="7" align="center">
 			<input type="hidden" name="action" value="delopenauctions">
 			<input type="submit" name="Submit" value="{L_631}"  class="button">
 		</td>

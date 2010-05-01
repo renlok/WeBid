@@ -75,7 +75,7 @@ if (isset($_POST['action']) || !empty($_POST['action']))
 		$TPL_error_text = $ERR_031;
 	}
 
-	if (isset($_POST['action']) && (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['sender_email']) || !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $seller_email)))
+	if (isset($_POST['action']) && (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['sender_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $seller_email)))
 	{
 		$TPL_error_text = $ERR_008;
 	}
@@ -111,7 +111,7 @@ $template->assign_vars(array(
 		'AUCT_ID' => $auction_id,
 		'SELLER_NICK' => $seller_nick,
 		'SELLER_EMAIL' => $seller_email,
-		'SELLER_QUESTION' => $_POST['sender_question'],
+		'SELLER_QUESTION' => (isset($_POST['sender_question'])) ? $_POST['sender_question'] : '',
 		'ITEM_TITLE' => $item_title,
 		'EMAIL' => ($user->logged_in) ? $user->user_data['email'] : ''
 		));

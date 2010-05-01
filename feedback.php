@@ -70,7 +70,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 					if ($system->SETTINGS['usersauth'] == 'n' || $user->user_data['password'] == md5($MD5_PREFIX . $_POST['TPL_password']))
 					{
 						$secTPL_rater_nick = $user->user_data['nick'];
-						$secTPL_feedback = ereg_replace("\n", '<br>', $_POST['TPL_feedback']);
+						$secTPL_feedback = str_replace("\n", '<br>', $_POST['TPL_feedback']);
 						$uid = ($ws == 'w') ? $_REQUEST['sid'] : $_REQUEST['wid'];
 						$sql = "UPDATE " . $DBPrefix . "users SET rate_sum = rate_sum + " . $_POST['TPL_rate'] . ", rate_num = rate_num + 1 WHERE id = " . intval($uid);
 						$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);

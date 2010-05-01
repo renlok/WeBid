@@ -57,7 +57,7 @@ function CheckFirstRegData()
 	{
 		return '007';
 	}
-	if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $email))
+	if (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $email))
 	{
 		return '008';
 	}
@@ -138,12 +138,12 @@ function CheckSellData()
 		return '056';
 	}
 
-	if (!ereg("^([0-9])*|(\.[0-9]{1,2})?$", $customincrement))
+	if (!(empty($customincrement) || floatval($system->input_money($customincrement)) == 0) && !is_float($system->input_money($customincrement)))
 	{
 		return '057';
 	}
 
-	if ($with_reserve == 'yes' && !ereg("^([0-9])*|(\.[0-9]{1,2})?$",$system->input_money($reserve_price)))
+	if ($with_reserve == 'yes' && !is_float($system->input_money($reserve_price)))
 	{
 		return '022';
 	}
@@ -155,13 +155,13 @@ function CheckSellData()
 	if ($buy_now_only == 'y')
 	{
 		$buy_now = 'yes';
-		if (!ereg("^([0-9])*|(\.[0-9]{1,2})?$", $system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0)
+		if (!is_float($system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0)
 		{
 			return '061';
 		}
 	}
 
-	if ($buy_now == 'yes' && (!ereg("^([0-9])*|(\.[0-9]{1,2})?$", $system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0))
+	if ($buy_now == 'yes' && (!is_float($system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0))
 	{
 		return '061';
 	}

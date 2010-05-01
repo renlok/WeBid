@@ -18,7 +18,7 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == "purge") {
-	if (ereg("^[0-9]+$", $_POST['days'])) {
+	if (is_numeric($_POST['days'])) {
 		// Build date
 		$DATE = time() - $_POST['days'] * 3600 * 24;
 		$query = "DELETE FROM " . $DBPrefix . "comm_messages WHERE msgdate <= $DATE AND boardid = " . $id;

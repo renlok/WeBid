@@ -37,6 +37,7 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_auction_id']	= $RELISTEDAUCTION['id'];
 	$_SESSION['SELL_starts']		= '';
 	$_SESSION['SELL_title']			= $RELISTEDAUCTION['title'];
+	$_SESSION['SELL_subtitle']		= $RELISTEDAUCTION['subtitle'];
 	$_SESSION['SELL_description']	= stripslashes($RELISTEDAUCTION['description']);
 	$_SESSION['SELL_atype']			= $RELISTEDAUCTION['auction_type'];
 	$_SESSION['SELL_buy_now_only']	= $RELISTEDAUCTION['bn_only'];
@@ -57,8 +58,8 @@ if (!isset($_POST['action']))
 		$_SESSION['SELL_with_reserve']  = 'no';
 	}
 
-	$_SESSION['sellcat'] = $RELISTEDAUCTION['category'];
-	$_SESSION['SELL_sellcat'] = $RELISTEDAUCTION['category'];
+	$_SESSION['SELL_sellcat1'] = $RELISTEDAUCTION['category'];
+	$_SESSION['SELL_sellcat2']	= $RELISTEDAUCTION['secondcat'];
 
 	if (floatval($RELISTEDAUCTION['buy_now']) > 0)
 	{
@@ -81,7 +82,7 @@ if (!isset($_POST['action']))
 	else
 	{
 		$_SESSION['SELL_increment'] = 1;
-		$_SESSION['SELL_customincrement'] = '';
+		$_SESSION['SELL_customincrement'] = 0;
 	}
 	$_SESSION['SELL_country']		 = $RELISTEDAUCTION['location'];
 	$_SESSION['SELL_shipping_cost']	 = $RELISTEDAUCTION['shipping_cost'];
@@ -96,6 +97,7 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_pict_url_temp']	 = str_replace('thumb-', '', $RELISTEDAUCTION['pict_url']);
 	$_SESSION['SELL_sendemail']		 = $RELISTEDAUCTION['sendemail'];
 	$_SESSION['SELL_action']		 = 'reopen';
+
 	header('location: sell.php?mode=recall');
 }
 ?>

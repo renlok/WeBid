@@ -2,7 +2,6 @@
 <head>
 <title>{SITENAME}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-{STYLES}
 <link rel="stylesheet" type="text/css" href="themes/{THEME}/style.css">
 </head>
 <body>

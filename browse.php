@@ -19,13 +19,23 @@ $catscontrol = new MPTTcategories();
 
 // Get parameters from the URL
 $id = (isset($_GET['id'])) ? intval($_GET['id']) : 0;
+$all_items = true;
 
 if ($id != 0)
 {
 	$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$parent_node = mysql_fetch_assoc($res);
+}
+else
+{
+	$query = "SELECT right_id, left_id, cat_id FROM " . $DBPrefix . "categories WHERE left_id = 1";
+}
+
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$parent_node = mysql_fetch_assoc($res);
+$id = (isset($parent_node['cat_id'])) ? $parent_node['cat_id'] : $id;
+if ($parent_node['left_id'] != 1)
+{
 	$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);
 	$childarray = array($id);
 	foreach ($children as $k => $v)
@@ -35,24 +45,21 @@ if ($id != 0)
 	$catalist = '(';
 	$catalist .= implode(',', $childarray);
 	$catalist .= ')';
+	$all_items = false;
 }
+
 $NOW = time();
 
 /*
 specified category number
 look into table - and if we don't have such category - redirect to full list
 */
-$bool = false;
-if ($id != 0)
-{
-	$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$category = mysql_fetch_array($result);
-	$bool = (mysql_num_rows($result) == 0);
-}
+$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
+$result = mysql_query($query);
+$system->check_mysql($result, $query, __LINE__, __FILE__);
+$category = mysql_fetch_assoc($result);
 
-if ($bool)
+if (mysql_num_rows($result) == 0)
 {
 	// redirect to global categories list
 	header ('location: browse.php?id=0');
@@ -61,26 +68,18 @@ if ($bool)
 else
 {
 	// Retrieve the translated category name
-	if ($id == 0)
+	$par_id = $category['parent_id'];
+	$TPL_categories_string = '';
+	$crumbs = $catscontrol->get_bread_crumbs($category['left_id'], $category['right_id']);
+	for ($i = 0; $i < count($crumbs); $i++)
 	{
-		$TPL_categories_string = $MSG['2__0027'];
-		$par_id = 0;
-	}
-	else
-	{
-		$par_id = $category['parent_id'];
-		$TPL_categories_string = '';
-		$crumbs = $catscontrol->get_bread_crumbs($category['left_id'], $category['right_id']);
-		for ($i = 0; $i < count($crumbs); $i++)
+		if ($crumbs[$i]['cat_id'] > 0)
 		{
-			if ($crumbs[$i]['cat_id'] > 0)
+			if ($i > 0)
 			{
-				if ($i > 0)
-				{
-					$TPL_categories_string .= ' &gt; ';
-				}
-				$TPL_categories_string .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $category_names[$crumbs[$i]['cat_id']] . '</a>';
+				$TPL_categories_string .= ' &gt; ';
 			}
+			$TPL_categories_string .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $category_names[$crumbs[$i]['cat_id']] . '</a>';
 		}
 	}
 
@@ -148,10 +147,10 @@ else
 		$TPL_main_value .= '</tr>' . "\n";
 	}
 
-	$insql = ($id != 0) ? "category IN " . $catalist . " AND" : '';
+	$insql = (!$all_items) ? "category IN " . $catalist . " AND" : '';
 
 	// get total number of records
-	$query = "SELECT count(*) as count FROM " . $DBPrefix . "auctions
+	$query = "SELECT count(*) as COUNT FROM " . $DBPrefix . "auctions
 			WHERE " . $insql . " starts <= " . $NOW . "
 			AND closed = 0
 			AND suspended = 0";
@@ -161,7 +160,7 @@ else
 	}
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$TOTALAUCTIONS = mysql_result($res, 'count');
+	$TOTALAUCTIONS = mysql_result($res, 0);
 
 	// Handle pagination
 	if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)

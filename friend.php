@@ -51,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 		$TPL_error_text = $ERR_031;
 	}
 
-	if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['sender_email']) || !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['friend_email']))
+	if (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['sender_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['friend_email']))
 	{
 		$TPL_error_text = $ERR_008;
 	}
@@ -80,7 +80,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 	else
 	{
 		$emailsent = 0;
-		include $include_path . 'friend_confirmation.inc.php';
 		$emailer = new email_class();
 		$emailer->assign_vars(array(
 				'S_NAME' => $_POST['sender_name'],

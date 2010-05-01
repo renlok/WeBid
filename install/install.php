@@ -51,10 +51,18 @@ switch($step)
 		}
 		else
 		{
-			echo 'Installation complete now set-up your admin account <a href="' . urlencode($_GET['URL']) . 'admin">here</a> and remove the install folder from your server';
+			echo 'Installation complete now set-up your admin account <a href="admin/">here</a> and remove the install folder from your server';
 		}
 		break;
 	case 1:
+		if (!mysql_connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass']))
+		{
+			die('<p>Cannot connect to ' . $DbHost . ' with the supplied username and password. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
+		}
+		if (!mysql_select_db($_POST['DBName']))
+		{
+			die('<p>Cannot select database ' . $_POST['DBName'] . '. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
+		}
 		$cats = (isset($_POST['importcats'])) ? 1 : 0;
 		echo '<b>Step 1:</b> Writing config file...<br>';
 		$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];

@@ -18,7 +18,7 @@ if (basename($_SERVER['PHP_SELF']) != 'user_login.php')
 	// And if the logged in user is the superuser
 	if ($system->check_maintainance_mode())
 	{
-		echo stripslashes($MAINTAINANCE['maintainancetext']);
+		echo stripslashes($system->SETTINGS['MAINTAINANCE']['maintainancetext']);
 		exit;
 	}
 }

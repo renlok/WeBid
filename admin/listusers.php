@@ -64,15 +64,15 @@ if (isset($_GET['payreminder']) && isset($_GET['id']) && is_numeric($_GET['id'])
 	}
 }
 
-if ($_GET['usersfilter'] == 'all')
+if (isset($_GET['usersfilter']))
 {
-	unset($_SESSION['usersfilter']);
-	unset($Q);
-}
-elseif (isset($_GET['usersfilter']))
-{
+	$_SESSION['usersfilter'] = $_GET['usersfilter'];
 	switch($_GET['usersfilter'])
 	{
+		case 'all':
+			unset($_SESSION['usersfilter']);
+			unset($Q);
+		break;
 		case 'active':
 			$Q = 0;
 		break;
@@ -89,7 +89,6 @@ elseif (isset($_GET['usersfilter']))
 			$Q = 10;
 		break;
 	}
-	$_SESSION['usersfilter'] = $_GET['usersfilter'];
 }
 elseif (!isset($_GET['usersfilter']) && isset($_SESSION['usersfilter']))
 {
@@ -207,7 +206,7 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TOTALUSERS' => $TOTALUSERS,
-		'USERFILTER' => $_SESSION['usersfilter'],
+		'USERFILTER' => (isset($_SESSION['usersfilter'])) ? $_SESSION['usersfilter'] : '',
 
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES,

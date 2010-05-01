@@ -51,7 +51,7 @@ if ($handle = opendir($main_path . 'language'))
 {
 	while (false !== ($file = readdir($handle)))
 	{ 
-		if (ereg("^([A-Z]{2})$", $file, $regs))
+		if (preg_match('/^([A-Z]{2})$/i', $file, $regs))
 		{
 			$LANGUAGES[$regs[1]] = $regs[1];
 		}

@@ -3,24 +3,16 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#closeall").click(function() {
-		$("input[@class=closenow]").each(function() {
-			if (this.checked) {
-				this.checked = false;
-			} else {
-				this.checked = true;
-			}
+		var checked_status = this.checked;
+		$("input[name=closenow[]]").each(function() {
+			this.checked = checked_status;
 		});
-		return false;
 	});
 	$("#deleteall").click(function() {
-		$("input[@class=O_delete]").each(function() {
-			if (this.checked) {
-				this.checked = false;
-			} else {
-				this.checked = true;
-			}
+		var checked_status = this.checked;
+		$("input[name=O_delete[]]").each(function() {
+			this.checked = checked_status;
 		});
-		return false;
 	});
 	$("#processdel").submit(function() {
 		if (confirm('{L_30_0087}')){
@@ -45,7 +37,7 @@ $(document).ready(function() {
 	</tr>
 </table>
 <table width="100%" border="0" cellspacing="1" cellpadding="4" align="CENTER">
-<tr bgcolor="{TBLHEADERCOLOUR}">
+<tr>
 		<td class="titTable1" width="32%">
 			<a href="yourauctions.php?oa_ord=title&oa_type={ORDERNEXT}">{L_624}</a>
 <!-- IF ORDERCOL eq 'title' -->
@@ -126,19 +118,19 @@ $(document).ready(function() {
 		</td>
 		<td width="8%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
-			<input type="checkbox" name="O_delete[]" value="{items.ID}" class="O_delete">
+			<input type="checkbox" name="O_delete[]" value="{items.ID}">
 		<!-- ENDIF -->
 		</td>
 		<td width="6%"  align="center" bgcolor="#FFFFaa">
-			<input type="checkbox" name="closenow[]" value="{items.ID}" class="closenow">
+			<input type="checkbox" name="closenow[]" value="{items.ID}">
 		</td>
 	</tr>
 	<!-- END items -->
 <!-- ENDIF -->
 	<tr bgcolor="{BGCOLOUR}">
-		<td colspan="7">&nbsp;</td>
-		<td align="center"><a href="#" id="deleteall">{L_30_0102}</a></td>
-		<td align="center"><a href="#" id="closeall">{L_30_0102}</a></td>
+		<td colspan="7" align="right">{L_30_0102}</td>
+		<td align="center"><input type="checkbox" id="deleteall"></td>
+		<td align="center"><input type="checkbox" id="closeall"></td>
 	</tr>
 	<tr>
 		<td colspan="9" align="center">

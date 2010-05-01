@@ -119,7 +119,7 @@ function makesessions()
 function unsetsessions()
 {
 	global $_SESSION;
-	
+
 	$_SESSION['SELL_with_reserve'] = '';
 	$_SESSION['SELL_reserve_price'] = '';
 	$_SESSION['SELL_minimum_bid'] = 0.99;
@@ -136,7 +136,7 @@ function unsetsessions()
 	$_SESSION['SELL_duration'] = '';
 	$_SESSION['SELL_relist'] = '';
 	$_SESSION['SELL_increments'] = '';
-	$_SESSION['SELL_customincrement'] = '';
+	$_SESSION['SELL_customincrement'] = 0;
 	$_SESSION['SELL_shipping'] = '';
 	$_SESSION['SELL_shipping_terms'] = '';
 	$_SESSION['SELL_payment'] = array();

@@ -107,52 +107,42 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		if (strlen($_POST['TPL_password']) < 6 && strlen($_POST['TPL_password']) > 0)
 		{
-			$TPL_err = 1;
 			$ERR = $ERR_011;
 		}
 		elseif ($_POST['TPL_password'] != $_POST['TPL_repeat_password'])
 		{
-			$TPL_err = 1;
 			$ERR = $ERR_109;
 		}
 		elseif (strlen($_POST['TPL_email']) < 5)
 		{
-			$TPL_err = 1;
 			$ERR = $ERR_110;
 		}
-		elseif (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['TPL_email']))
+		elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_email']))
 		{
-			$TPL_err = 1;
 			$ERR = $ERR_008;
 		}
 		elseif (strlen($_POST['TPL_zip']) < 4 && $MANDATORY_FIELDS['zip'] == 'y')
 		{
-			$TPL_err = 1;
 			$ERR = $ERR_616;
 		}
 		elseif (strlen($_POST['TPL_phone']) < 3 && $MANDATORY_FIELDS['tel'] == 'y')
 		{
-			$TPL_err = 1;
 			$ERR = $ERR_617;
 		}
 		elseif ((empty($_POST['TPL_day']) || empty($_POST['TPL_month']) || empty($_POST['TPL_year'])) && $MANDATORY_FIELDS['birthdate'] == 'y')
 		{
-			$TPL_err = 1;
 			$ERR = $ERR_5040;
 		}
 		elseif (!empty($_POST['TPL_day']) && !empty($_POST['TPL_month']) && !empty($_POST['TPL_year']) && !checkdate($_POST['TPL_month'], $_POST['TPL_day'], $_POST['TPL_year']))
 		{
-			$TPL_err = 1;
 			$ERR = $ERR_117;
 		}
-		elseif ($gateway_data['paypal_required'] == 1 && (empty($_POST['TPL_pp_email']) || !eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$", $_POST['TPL_email'])))
+		elseif ($gateway_data['paypal_required'] == 1 && (empty($_POST['TPL_pp_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_pp_email'])))
 		{
-			$TPL_err = 1;
 			$ERR = $MSG['810'];
 		}
 		elseif ($gateway_data['authnet_required'] == 1 && (empty($_POST['TPL_authnet_id']) || empty($_POST['TPL_authnet_pass'])))
 		{
-			$TPL_err = 1;
 			$ERR = $MSG['811'];
 		}
 		else

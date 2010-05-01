@@ -21,7 +21,7 @@ include 'loggedin.inc.php';
 if (isset($_POST['action']) && $_POST['action'] == "update") {
 	if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active'])) {
 		$ERR = $ERR_047;
-	} elseif (!ereg("^[0-9]+$", $_POST['msgstoshow'])) {
+	} elseif (!is_numeric($_POST['msgstoshow'])) {
 		$ERR = $ERR_5000;
 	} elseif (intval($_POST['msgstoshow'] == 0)) {
 		$ERR = $ERR_5001;

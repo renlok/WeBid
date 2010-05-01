@@ -32,7 +32,7 @@ $(document).ready(function() {
 	</tr>
 </table>
 <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
-	<tr bgcolor="{TBLHEADERCOLOUR}">
+	<tr>
 		<td class="titTable1" width="40%">
 			<a href="yourauctions_sold.php?solda_ord=title&solda_type={ORDERNEXT}">{L_624}</a>
 <!-- IF ORDERCOL eq 'title' -->

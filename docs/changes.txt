@@ -58,5 +58,8 @@
 - Replaced FCKeditor 2.6.3 with CKEditor 3.2.1
 - Added an error message for when a user tries to view an invalid auction
 - Removed 96 unused language strings
+- Replaced all the ereg functions with preg_match as they are depreciated as of PHP 5.3
+- Updated NuSOAP from v0.6.3 to v0.9.5
+- Fixed a bug in the min bid fees javascript where it would occasionally mess up
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

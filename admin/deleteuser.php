@@ -77,7 +77,6 @@ if (empty($id) || $id <= 0)
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	$ERR = '';
 	$has_auctions = false;
 	$has_bids = false;
 	$catscontrol = new MPTTcategories();

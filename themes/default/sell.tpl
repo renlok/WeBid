@@ -65,7 +65,6 @@ $(document).ready(function(){
 	var st = {FEE_SUBTITLE};
 	$("#min_bid").blur(function(){
 		var min_bid = parseFloat($("#min_bid").val());
-		alert('min_bid_fee: '+min_bid_fee);
 		updatefee(min_bid_fee * -1);
 		min_bid_fee = 0; // just incase theres nothing
 		if (min_bid == 0) {
@@ -84,7 +83,6 @@ $(document).ready(function(){
 				}
 			}
 		}
-		alert('New min_bid_fee: '+min_bid_fee);
 	});
 	$("#bn").blur(function(){
 		if (bn == parseInt($("#bn").val())){
@@ -122,15 +120,15 @@ $(document).ready(function(){
 		else
 			updatefee(hlitem_fee * -1);
 	});
-	<!-- IF B_SUBTITLE -->
+<!-- IF B_SUBTITLE -->
 	$("#subtitle").blur(function(){
 		if (st > 0 && $("#subtitle").val().length == 0)
 			updatefee(subtitle_fee * -1);
-		elseif (st == 0 && $("#subtitle").val().length > 0)
+		else
 			updatefee(subtitle_fee);
 		st = $("#subtitle").val().length;
 	});
-	<!-- ENDIF -->
+<!-- ENDIF -->
 
 	function updatefee(newfee){
 		var nowfee = parseFloat($("#fee_exact").val()) + newfee;

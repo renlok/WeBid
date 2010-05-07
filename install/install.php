@@ -51,7 +51,7 @@ switch($step)
 		}
 		else
 		{
-			echo 'Installation complete now set-up your admin account <a href="admin/">here</a> and remove the install folder from your server';
+			echo 'Installation complete now set-up your admin account <a href="' . $_GET['URL'] . 'admin/">here</a> and remove the install folder from your server';
 		}
 		break;
 	case 1:

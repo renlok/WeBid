@@ -250,7 +250,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
 			(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $Winner['id'] . "', " . $Auction['current_bid'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ", " . $ff_paid . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			
+
 			$query = "UPDATE " . $DBPrefix . "auctions SET sold = 'y' WHERE id = " . $Auction['id'];
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
@@ -273,7 +273,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 
 		if ($decrem == 0)
 		{
-			$report_text = 'No bids';
+			$report_text = $ERR_075;
 		}
 		else
 		{
@@ -439,6 +439,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 		// update category tables
 		$cat_id = $Auction['category'];
 		$root_cat = $cat_id;
+		$second_cat = false;
 		while ($cat_id != -1 && isset($categories[$cat_id]))
 		{
 			// update counter for this category
@@ -456,6 +457,13 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 			if ($cat_id == $categories[$cat_id]['parent_id']) // incase something messes up
 				break;
 			$cat_id = $categories[$cat_id]['parent_id'];
+
+			if (!$second_cat && !($cat_id != -1 && isset($categories[$cat_id])) && $system->SETTINGS['extra_cat'] == 'y' && $Auction['secondcat'] != 0)
+			{
+				$second_cat = true;
+				$cat_id = $Auction['secondcat'];
+				$root_cat = $cat_id;
+			}
 		}
 
 		// Close auction

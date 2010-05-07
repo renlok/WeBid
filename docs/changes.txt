@@ -61,5 +61,8 @@
 - Replaced all the ereg functions with preg_match as they are depreciated as of PHP 5.3
 - Updated NuSOAP from v0.6.3 to v0.9.5
 - Fixed a bug in the min bid fees javascript where it would occasionally mess up
+- Updated imageAreaSelect to version 0.9.2
+- Removed jquery dimensions plugin
+- Updated jQuery to version 1.4.2
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

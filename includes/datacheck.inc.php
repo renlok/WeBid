@@ -138,12 +138,12 @@ function CheckSellData()
 		return '056';
 	}
 
-	if (!(empty($customincrement) || floatval($system->input_money($customincrement)) == 0) && !is_float($system->input_money($customincrement)))
+	if (!(empty($customincrement) || floatval($system->input_money($customincrement)) == 0) && !$system->CheckMoney($customincrement))
 	{
 		return '057';
 	}
 
-	if ($with_reserve == 'yes' && !is_float($system->input_money($reserve_price)))
+	if ($with_reserve == 'yes' && !$system->CheckMoney($reserve_price))
 	{
 		return '022';
 	}
@@ -155,13 +155,9 @@ function CheckSellData()
 	if ($buy_now_only == 'y')
 	{
 		$buy_now = 'yes';
-		if (!is_float($system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0)
-		{
-			return '061';
-		}
 	}
 
-	if ($buy_now == 'yes' && (!is_float($system->input_money($buy_now_price)) || empty($buy_now_price)  || $buy_now_price == 0))
+	if ($buy_now == 'yes' && (!$system->CheckMoney($buy_now_price) || empty($buy_now_price)  || floatval($buy_now_price) == 0))
 	{
 		return '061';
 	}

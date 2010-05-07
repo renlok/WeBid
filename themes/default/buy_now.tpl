@@ -4,6 +4,14 @@
 			{TITLE}
 		</div>
 		<div class="table2">
+<!-- IF ERROR ne '' -->
+			<div class="errfont">
+				{ERROR}
+			</div>
+<!-- ENDIF -->
+<!-- IF B_NOTBOUGHT -->
+            <form action="{ASSLURL}buy_now.php?id={ID}" method="post">
+<!-- ENDIF -->
             <table border=0 width="100%" cellspacing="0" cellpadding="4">
                 <tr>
                     <td align=right width="40%"><b>{L_017} :</b></td>
@@ -29,7 +37,6 @@
                 <tr>
                     <td align="right">{L_003}</td>
                     <td>
-                        <form action="{ASSLURL}buy_now.php?action=buy&id={ID}" method="post">
                         <b>{YOURUSERNAME}</b>
                     </td>
                 </tr>
@@ -43,6 +50,7 @@
 	<!-- ENDIF -->
             </table>
             <div style="text-align:center;">
+                <input type="hidden" name="action" value="buy" />
                 <input type="submit" name="" value="{L_496}" class="button" />
             </div>
             </form>

@@ -28,7 +28,6 @@ $DOCDIR = "ltr";
 // Error messages and user interface messages are below. Translate them taking care of leaving
 // The PHP and HTML tags unchanged.
 // Error messages =============================================================
-$ERR = ''; // leave this line as is
 $ERR_000 = ''; // leave this line as is
 $ERR_001 = "Database access error. Please contact the site administrator.";
 $ERR_002 = "Name missing";
@@ -100,6 +99,7 @@ $ERR_071 = "Username is invalid can only contain letters and numbers";
 $ERR_072 = "You must enter a bid amount";
 $ERR_073 = "You cannot bid on an auction that has not yet started";
 $ERR_074 = "You have already left feedback on this transaction";
+$ERR_075 = 'No bids';
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";

@@ -2,6 +2,42 @@
 <head>
 <title>{SITENAME}</title>
 <link rel="stylesheet" type="text/css" href="themes/{THEME}/style.css">
+<style media="all" type="text/css">
+.imgareaselect-border1 {
+	background: url(images/border-v.gif) repeat-y left top;
+}
+
+.imgareaselect-border2 {
+    background: url(images/border-h.gif) repeat-x left top;
+}
+
+.imgareaselect-border3 {
+    background: url(images/border-v.gif) repeat-y right top;
+}
+
+.imgareaselect-border4 {
+    background: url(images/border-h.gif) repeat-x left bottom;
+}
+
+.imgareaselect-border1, .imgareaselect-border2,
+.imgareaselect-border3, .imgareaselect-border4 {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.imgareaselect-handle {
+    background-color: #fff;
+    border: solid 1px #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.imgareaselect-outer {
+    background-color: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+</style>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {

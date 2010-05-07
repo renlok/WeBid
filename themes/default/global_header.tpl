@@ -21,7 +21,6 @@
 <link rel="alternate" type="application/rss+xml" title="{L_931}" href="{SITEURL}rss.php?feed=8">
 
 <script type="text/javascript" src="{SITEURL}js/jquery.js"></script>
-<script type="text/javascript" src="{SITEURL}js/jquery.dimensions.js"></script>
 <script type="text/javascript" src="{SITEURL}js/jquery.lightbox.js"></script>
 
 <script type="text/javascript">

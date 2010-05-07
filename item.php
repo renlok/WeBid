@@ -471,6 +471,7 @@ $sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_ur
 $template->assign_vars(array(
 		'ID' => $auction_data['id'],
 		'TITLE' => $auction_data['title'],
+		'SUBTITLE' => $auction_data['subtitle'],
 		'AUCTION_DESCRIPTION' => stripslashes($auction_data['description']),
 		'PIC_URL' => $uploaded_path . $id . '/' . $pict_url_plain,
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $system->print_money($auction_data['shipping_cost']),

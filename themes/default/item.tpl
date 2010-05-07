@@ -31,7 +31,12 @@ $(document).ready(function() {
 	 <div class="titTable2">
 	  <table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td>{TITLE}</td>
+			<td>
+            	{TITLE}
+<!-- IF SUBTITLE ne '' -->
+            	<p class="smallspan">{SUBTITLE}</p>
+<!-- ENDIF -->
+            </td>
 			<td align="right">{L_113}: {ID}</td>
 		</tr>
 	  </table>

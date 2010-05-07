@@ -413,8 +413,10 @@ switch ($_SESSION['action'])
 				$payment_options = unserialize($system->SETTINGS['payment_options']);
 				foreach ($payment_options as $k => $v)
 				{
-					if (in_array($k, $payment))
+					if (in_array($k, $payment, true))
 					{
+						echo $k;
+						print_r($payment);
 						$payment_methods .= '<p>' . $v . '</p>';
 					}
 				}
@@ -540,7 +542,7 @@ switch ($_SESSION['action'])
 		$payment_options = unserialize($system->SETTINGS['payment_options']);
 		foreach ($payment_options as $k => $v)
 		{
-			$checked = (in_array($k, $payment)) ? 'checked' : '';
+			$checked = (in_array($k, $payment, true)) ? 'checked' : '';
 			$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
 		}
 
@@ -628,7 +630,7 @@ switch ($_SESSION['action'])
 				$subtitle_fee = $row['value'];
 			}
 		}
-		$fee_javascript .= 'var current_fee = ' . (isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0';
+		$fee_javascript .= 'var current_fee = ' . ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0') . ';';
 
 		// get decimals for javascript rounder
 		$decimals = '';

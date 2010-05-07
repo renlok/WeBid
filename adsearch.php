@@ -273,7 +273,7 @@ foreach ($payment_options as $k => $v)
 }
 
 // category
-$TPL_categories_list = '<select name="category" onChange="javascript:document.adsearch.submit()">' . "\n";
+$TPL_categories_list = '<select name="category">' . "\n";
 if (isset($category_plain) && count($category_plain) > 0)
 {
 	$category = (isset($_SESSION['advs']['category'])) ? $_SESSION['advs']['category'] : '';

@@ -54,7 +54,7 @@ function get_reminders($secid)
 			AND a.closed = 0 GROUP BY b.auction";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data[] = mysql_result($res, 0, 'total');
+	$data[] = (mysql_num_rows($res) > 0) ? mysql_result($res, 0, 'total') : 0;
 	// get outbid auctions
 	$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
 			WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = " . $secid . "

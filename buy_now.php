@@ -46,6 +46,7 @@ if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' &
 	exit;
 }
 
+unset($ERR);
 ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 $query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . intval($_REQUEST['id']);
@@ -105,7 +106,7 @@ foreach ($memtypesarr as $k => $l)
 }
 
 $buy_done = 0;
-if (isset($_GET['action']) && $_GET['action'] == 'buy')
+if (isset($_POST['action']) && $_POST['action'] == 'buy')
 {
 	if ($system->SETTINGS['usersauth'] == 'y')
 	{
@@ -126,11 +127,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'buy')
 		$ERR = $ERR_711;
 	}
 	// perform final actions
-	if (isset($ERR))
-	{
-		$TPL_errmsg = $ERR;
-	}
-	else
+	if (!isset($ERR))
 	{
 		$query = "INSERT INTO " . $DBPrefix . "bids VALUES
 				(NULL, " . intval($_REQUEST['id']) . ", " . intval($user->user_data['id']) . ", " . floatval($Auction['buy_now']) . ", '" . $NOW . "', 1)";
@@ -242,7 +239,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'buy')
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($TPL_errmsg)) ? $TPL_errmsg : '',
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_REQUEST['id'],
 		'TITLE' => $Auction['title'],
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),

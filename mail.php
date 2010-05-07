@@ -29,7 +29,6 @@ $action = (isset($_GET['action']))? $_GET['action'] : '';
 $messageid = (isset($_GET['id']))? $_GET['id'] : '';
 $delete = (isset($_POST['delete']))? $_POST['delete'] : NULL;
 $email = false;
-$ERR = '';
 
 if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message']))
 {

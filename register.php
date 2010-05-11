@@ -251,7 +251,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 2) ? 0 : 8;
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 0) ? 10 : $SUSPENDED;
 
-				$query = "SELECT type FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
+				$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$signup_fee = mysql_result($res, 0);

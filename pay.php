@@ -75,7 +75,7 @@ switch($_GET['a'])
 		$pp_paytoemail = $gateway_data['paypal_address'];
 		$an_paytoid = $gateway_data['authnet_address'];
 		$an_paytopass = $gateway_data['authnet_password'];
-		$query = "SELECT type FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
+		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$payvalue = mysql_result($res, 0);

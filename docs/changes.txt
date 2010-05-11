@@ -64,5 +64,6 @@
 - Updated imageAreaSelect to version 0.9.2
 - Removed jquery dimensions plugin
 - Updated jQuery to version 1.4.2
+- Fixed registration fee
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

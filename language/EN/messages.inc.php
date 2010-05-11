@@ -16,8 +16,7 @@ if (!defined('InWeBid')) exit();
 
 // CHARSET ENCODING
 // Change the charset according to the language used in this file.
-// UTF-8 should work with almost any language
-$CHARSET = "UTF-8";
+$CHARSET = "ISO-8859-1";
 // DOCUMENT DIRECTION
 // Change the $DOCDIR variable below according to the document direction needed
 // by the language you are using.
@@ -28,7 +27,6 @@ $DOCDIR = "ltr";
 // Error messages and user interface messages are below. Translate them taking care of leaving
 // The PHP and HTML tags unchanged.
 // Error messages =============================================================
-$ERR_000 = ''; // leave this line as is
 $ERR_001 = "Database access error. Please contact the site administrator.";
 $ERR_002 = "Name missing";
 $ERR_003 = "Username missing";
@@ -71,7 +69,7 @@ $ERR_039 = "You have already confirmed your registration.";
 $ERR_040 = "You are the winning bidder and cannot place a bid lower than your previous maximum bid.";
 $ERR_041 = "Please, choose a rate between 1 and 5";
 $ERR_042 = "You comment is missing";
-$ERR_043 = "Incorrect field format: must be numeric";
+$ERR_043 = "Invalid field format: must be numeric";
 $ERR_044 = "A user must be a member of atleast one group";
 $ERR_047 = "Required fields missing";
 $ERR_048 = "Incorrect login";

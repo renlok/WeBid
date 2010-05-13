@@ -117,6 +117,7 @@ else
 // get ending time
 $difference = $ends - time();
 $showendtime = false;
+$has_ended = false;
 if ($start > time())
 {
 	$ending_time = '<span class="errfont">' . $MSG['668'] . '</span>';
@@ -151,7 +152,6 @@ elseif ($difference > 0)
 	{
 		$ending_time .= $seconds_difference . $MSG['25_0033'];
 	}
-	$has_ended = false;
 	$showendtime = true;
 }
 else
@@ -177,6 +177,28 @@ for ($i = 0; $i < count($crumbs); $i++)
 			$cat_value .= ' > ';
 		}
 		$cat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $crumbs[$i]['cat_name'] . '</a>';
+	}
+}
+
+$secondcat_value = '';
+if ($system->SETTINGS['extra_cat'] == 'y' && $auction_data['secondcat'] > 0)
+{
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['secondcat'];
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$parent_node = mysql_fetch_assoc($res);
+
+	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+	for ($i = 0; $i < count($crumbs); $i++)
+	{
+		if ($crumbs[$i]['cat_id'] > 0)
+		{
+			if ($i > 0)
+			{
+				$secondcat_value .= ' > ';
+			}
+			$secondcat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $crumbs[$i]['cat_name'] . '</a>';
+		}
 	}
 }
 
@@ -434,18 +456,27 @@ if (file_exists($uploaded_path . $id))
 }
 
 // payment methods
-$payment = explode("\n", $auction_data['payment']);
+$payment = explode(', ', $auction_data['payment']);
 $payment_methods = '';
 $query = "SELECT * FROM " . $DBPrefix . "gateways";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $gateways_data = mysql_fetch_assoc($res);
 $gateway_list = explode(',', $gateways_data['gateways']);
+$p_first = true;
 foreach ($gateway_list as $v)
 {
 	if ($gateways_data[$v . '_active'] == 1 && in_array($v, $payment))
 	{
-		$payment_methods .= $system->SETTINGS['gatways'][$v] . ', ';
+		if (!$p_first)
+		{
+			$payment_methods .= ', ';
+		}
+		else
+		{
+			$p_first = false;
+		}
+		$payment_methods .= $system->SETTINGS['gatways'][$v];
 	}
 }
 
@@ -454,7 +485,15 @@ foreach ($payment_options as $k => $v)
 {
 	if (in_array($k, $payment))
 	{
-		$payment_methods .= $v . ', ';
+		if (!$p_first)
+		{
+			$payment_methods .= ', ';
+		}
+		else
+		{
+			$p_first = false;
+		}
+		$payment_methods .= $v;
 	}
 }
 
@@ -498,7 +537,9 @@ $template->assign_vars(array(
 		'THUMBWIDTH' => $system->SETTINGS['thumb_show'],
 		'VIEW_HISTORY1' => (empty($view_history)) ? '' : $view_history . ' | ',
 		'VIEW_HISTORY2' => $view_history,
+		'TOPCATSPATH' => ($system->SETTINGS['extra_cat'] == 'y' && isset($_SESSION['browse_id']) && $_SESSION['browse_id'] == $auction_data['secondcat']) ? $secondcat_value : $cat_value,
 		'CATSPATH' => $cat_value,
+		'SECCATSPATH' => $secondcat_value,
 		'CAT_ID' => $auction_data['category'],
 		'UPLOADEDPATH' => $uploaded_path,
 		'BNIMG' => get_lang_img('buy_it_now.gif'),
@@ -545,4 +586,5 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
+unset($_SESSION['browse_id']);
 ?>

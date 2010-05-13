@@ -19,6 +19,7 @@ $catscontrol = new MPTTcategories();
 
 // Get parameters from the URL
 $id = (isset($_GET['id'])) ? intval($_GET['id']) : 0;
+$_SESSION['browse_id'] = $id;
 $all_items = true;
 
 if ($id != 0)
@@ -147,7 +148,12 @@ else
 		$TPL_main_value .= '</tr>' . "\n";
 	}
 
-	$insql = (!$all_items) ? "category IN " . $catalist . " AND" : '';
+	$insql = "(category IN " . $catalist;
+	if ($system->SETTINGS['extra_cat'] == 'y')
+	{
+		$insql .= " OR secondcat IN " . $catalist;
+	}
+	$insql = (!$all_items) ? $insql . ") AND" : '';
 
 	// get total number of records
 	$query = "SELECT count(*) as COUNT FROM " . $DBPrefix . "auctions

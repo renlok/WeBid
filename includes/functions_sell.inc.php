@@ -222,44 +222,47 @@ function get_fee($minimum_bid)
 		{
 			if ($row['fee_type'] == 'flat')
 			{
-				$fee_value += $row['value'];
+				$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 			}
 			else
 			{
-				$fee_value += ($row['value'] / 100) * $minimum_bid;
+				$tmp = bcdiv($row['value'], '100', $system->SETTINGS['moneydecimals']);
+				$tmp = bcmul($tmp, $minimum_bid, $system->SETTINGS['moneydecimals']);
+				$fee_value = bcadd($fee_value, $tmp, $system->SETTINGS['moneydecimals']);
 			}
 		}
 		if ($row['type'] == 'buyout_fee' && $buy_now_price > 0)
 		{
-			$fee_value += $row['value'];
+			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'rp_fee' && $reserve_price > 0)
 		{
-			$fee_value += $row['value'];
+			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'bolditem_fee' && $is_bold == 'y')
 		{
-			$fee_value += $row['value'];
+			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'hlitem_fee' && $is_highlighted == 'y')
 		{
-			$fee_value += $row['value'];
+			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'hpfeat_fee' && $is_featured == 'y')
 		{
-			$fee_value += $row['value'];
+			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'picture_fee' && count($_SESSION['UPLOADED_PICTURES']) > 0)
 		{
-			$fee_value += count($_SESSION['UPLOADED_PICTURES']) * $row['value'];
+			$tmp = bcmul(count($_SESSION['UPLOADED_PICTURES']), $row['value'], $system->SETTINGS['moneydecimals']);
+			$fee_value = bcadd($fee_value, $tmp, $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'subtitle_fee' && !empty($subtitle))
 		{
-			$fee_value += $row['value'];
+			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'excat_fee' && $sellcat2 > 0)
 		{
-			$fee_value += $row['value'];
+			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 	}
 
@@ -270,7 +273,11 @@ function get_fee($minimum_bid)
 		$query = "SELECT current_fee FROM " . $DBPrefix . "auctions WHERE id = " . $_SESSION['SELL_auction_id'] . " AND user = " . $user->user_data['id'];
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$fee_value = $fee_value - mysql_result($res, 0);
+		$fee_value = bcsub($fee_value, mysql_result($res, 0), $system->SETTINGS['moneydecimals']);
+		if ($fee_value < 0)
+		{
+			$fee_value = 0;
+		}
 	}
 
 	return $fee_value;

@@ -27,7 +27,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 <div class="content">
 	<div class="tableContent2">
-	 <br><b>{L_041}:</b> {CATSPATH}<br><br>
+	 <br><b>{L_041}:</b> {TOPCATSPATH}<br><br>
 	 <div class="titTable2">
 	  <table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
@@ -336,7 +336,8 @@ $(document).ready(function() {
 			  <b>{L_112}:</b> {ENDTIME}<br>
 			  <b>{L_113}:</b> {ID}<br>
 			  <br>
-			  <b>{L_041}:</b> {CATSPATH}
+			  <b>{L_041}:</b> {CATSPATH}<br>
+              <!-- IF SECCATSPATH ne '' --><b>{L_814}:</b>: {SECCATSPATH}<!-- ENDIF -->
 			</div>
 		  </div>
 		</td>

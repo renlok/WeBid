@@ -881,6 +881,7 @@ $MSG['816'] = 'Gallery';
 $MSG['817'] = 'Prices';
 $MSG['818'] = 'You do not have permission to list items';
 $MSG['819'] = 'You do not have permission to buy items';
+$MSG['820'] = 'Account selling permission request';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

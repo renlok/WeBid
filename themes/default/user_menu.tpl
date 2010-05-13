@@ -1,12 +1,8 @@
 <!-- INCLUDE user_menu_header.tpl -->
 
-<!-- IF B_REQUEST or B_TMPMSG -->
+<!-- IF TMPMSG ne '' -->
 	<p style="background-color;#FF9933;display:block" >
-	<!-- IF B_TMPMSG -->
-		<b><span style="color:white">{TMPMSG}</span></b>
-	<!-- ELSE -->
-		<b><span style="color:white">{REQUEST}</span></b>
-	<!-- ENDIF -->
+		<b><span style="color:white;">{TMPMSG}</span></b>
 	</p>
 <!-- ENDIF -->
 
@@ -30,9 +26,9 @@
 			<li><a href="yourauctions_sold.php">{L_25_0119}</a></li>
 			<li><a href="selling.php">{L_453}</a><br></li>
 	</ul>
-	<!-- ELSEIF B_ONLYBUYER -->
+	<!-- ELSE -->
     <div class="padding">
-	<form name="request" action="user_menu.php" method="post">
+	<form name="request" action="" method="post">
         <p>{L_25_0140}</p>
         <p><input type="submit" name="requesttoadmin" value="{L_25_0141}"  class="button"></p>
 	</form>

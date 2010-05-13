@@ -249,7 +249,7 @@ function CheckSellData()
 
 function CheckBidData()
 {
-	global $bid, $next_bid, $atype, $qty, $Data, $bidder_id;
+	global $bid, $next_bid, $atype, $qty, $Data, $bidder_id, $system;
 	
 	if ($Data['suspended'] > 0)
 	{
@@ -264,7 +264,7 @@ function CheckBidData()
 	if ($atype == 1) //normal auction
 	{
 		// have to use bccomp to check if bid is less than next_bid
-		if (bccomp($bid, $next_bid, 2) == -1)
+		if (bccomp($bid, $next_bid, $system->SETTINGS['moneydecimals']) == -1)
 		{
 			return '607';
 		}

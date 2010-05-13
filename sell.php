@@ -413,10 +413,8 @@ switch ($_SESSION['action'])
 				$payment_options = unserialize($system->SETTINGS['payment_options']);
 				foreach ($payment_options as $k => $v)
 				{
-					if (in_array($k, $payment, true))
+					if (in_array($k, $payment))
 					{
-						echo $k;
-						print_r($payment);
 						$payment_methods .= '<p>' . $v . '</p>';
 					}
 				}
@@ -511,7 +509,7 @@ switch ($_SESSION['action'])
 		$TPL_auction_type .= '</select>' . "\n";
 
 		// duration
-		$time_passed = ($a_starts == '' && $_SESSION['SELL_action'] != 'edit') ? 0 : (time() - $a_starts) / (3600 * 24); // get time passed in days
+		$time_passed = ($_SESSION['SELL_action'] != 'edit') ? 0 : (time() - $a_starts) / (3600 * 24); // get time passed in days
 		$query = "SELECT * FROM " . $DBPrefix . "durations WHERE days > " . floor($time_passed) . " ORDER BY days";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -524,6 +522,7 @@ switch ($_SESSION['action'])
 		$TPL_durations_list .= '</select>' . "\n";
 
 		// payments
+		print_r($payment);
 		$payment_methods = '';
 		$query = "SELECT * FROM " . $DBPrefix . "gateways";
 		$res = mysql_query($query);
@@ -542,7 +541,7 @@ switch ($_SESSION['action'])
 		$payment_options = unserialize($system->SETTINGS['payment_options']);
 		foreach ($payment_options as $k => $v)
 		{
-			$checked = (in_array($k, $payment, true)) ? 'checked' : '';
+			$checked = (in_array($k, $payment)) ? 'checked' : '';
 			$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
 		}
 

@@ -87,8 +87,8 @@ if (isset($_POST['requesttoadmin']))
 			'EMAIL' => $user->user_data['email'],
 			'ID' => $user->user_data['id']
 			));
-	$emailer->email_sender($system->SETTINGS['adminmail'], 'buyer_request.inc.php', 'Account change request');
-	$request_sent = $MSG['25_0142'];
+	$emailer->email_sender($system->SETTINGS['adminmail'], 'buyer_request.inc.php', $MSG['820']);
+	$_SESSION['TMP_MSG'] = $MSG['25_0142'];
 }
 
 $cptab = (isset($_GET['cptab'])) ? $_GET['cptab'] : '';
@@ -138,13 +138,9 @@ switch ($_SESSION['cptab'])
 }
 
 $template->assign_vars(array(
-		'B_REQUEST' => isset($request_sent),
-		'B_TMPMSG' => isset($_SESSION['TMP_MSG']),
 		'B_CANSELL' => ($user->can_sell),
-		'B_ONLYBUYER' => (!$user->can_buy),
 
 		'TMPMSG' => (isset($_SESSION['TMP_MSG'])) ? $_SESSION['TMP_MSG'] : '',
-		'REQUEST' => (isset($request_sent)) ? $request_sent : '',
 		'THISPAGE' => $_SESSION['cptab']
 		));
 

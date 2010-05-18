@@ -466,6 +466,7 @@ $gateway_list = explode(',', $gateways_data['gateways']);
 $p_first = true;
 foreach ($gateway_list as $v)
 {
+	$v = strtolower($v);
 	if ($gateways_data[$v . '_active'] == 1 && in_array($v, $payment))
 	{
 		if (!$p_first)

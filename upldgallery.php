@@ -145,8 +145,16 @@ if ($_POST['uploadpicture'] == $MSG['681'])
 		if (!isset($_SESSION['UPLOADED_PICTURES_SIZE']) || !is_array($_SESSION['UPLOADED_PICTURES_SIZE'])) $_SESSION['UPLOADED_PICTURES_SIZE'] = array();
 		$filename = $_FILES['userfile']['name'];
 		$nameparts = explode('.', $filename);
-		$file_ext = $nameparts[count($nameparts) - 1];
+		$ext_key = count($nameparts) - 1;
+		$file_ext = $nameparts[$ext_key];
 		$file_types = array('gif', 'jpg', 'jpeg', 'png', 'GIF', 'JPG', 'JPEG', 'PNG');
+
+		// clean the name
+		unset($nameparts[$ext_key]);
+		$newname = implode('_', $nameparts);
+
+		$newname = preg_replace('/[^a-zA-Z0-9_]/', '', $newname);
+		$newname .= '.' . $file_ext;
 
 		if ($_FILES['userfile']['size'] > $system->SETTINGS['maxuploadsize'])
 		{
@@ -156,7 +164,7 @@ if ($_POST['uploadpicture'] == $MSG['681'])
 		{
 			$ERR = $ERR_710 . ' (' . $file_ext . ')';
 		}
-		elseif (in_array($_FILES['userfile']['name'], $_SESSION['UPLOADED_PICTURES']))
+		elseif (in_array($newname, $_SESSION['UPLOADED_PICTURES']))
 		{
 			$ERR = $MGS_2__0054 . ' (' . $_FILES['userfile']['name'] . ')';
 		}
@@ -170,10 +178,6 @@ if ($_POST['uploadpicture'] == $MSG['681'])
 				chmod($upload_path . session_id(), 0777); //incase mkdir fails
 			}
 			// Move uploaded file into TMP directory & rename
-			$replace = array('.', ' ', ',');
-			// clean the file
-			$newname = str_replace('.' . $file_ext, '', $filename);
-			$newname = str_replace($replace, '_', $newname) . '.' . $file_ext;
 			if ($system->move_file($_FILES['userfile']['tmp_name'], $upload_path . session_id() . '/' . $newname))
 			{
 				// Populate arrays

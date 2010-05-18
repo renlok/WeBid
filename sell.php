@@ -404,6 +404,7 @@ switch ($_SESSION['action'])
 				$gateway_list = explode(',', $gateways_data['gateways']);
 				foreach ($gateway_list as $v)
 				{
+					$v = strtolower($v);
 					if ($gateways_data[$v . '_active'] == 1 && in_array($v, $payment))
 					{
 						$payment_methods .= '<p>' . $system->SETTINGS['gatways'][$v] . '</p>';
@@ -533,6 +534,7 @@ switch ($_SESSION['action'])
 		{
 			if ($gateways_data[$v . '_active'] == 1 && check_gateway($v))
 			{
+				$v = strtolower($v);
 				$checked = (in_array($v, $payment)) ? 'checked' : '';
 				$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '>' . $system->SETTINGS['gatways'][$v] . '</p>';
 			}

@@ -12,6 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
+define('ErrorPage', 1);
 include 'includes/common.inc.php';
 
 if (isset($_SESSION['msg_title']) && isset($_SESSION['msg_body']))

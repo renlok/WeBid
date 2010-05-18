@@ -65,5 +65,6 @@
 - Removed jquery dimensions plugin
 - Updated jQuery to version 1.4.2
 - Fixed registration fee
+- Fixed upload gallery so files with any name (with non alpha-numeric characters) will be accepted
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

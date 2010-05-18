@@ -41,14 +41,16 @@ class global_class
 		}
 
 		// Check ip
-		if (!defined('IPBan') && !defined('InAdmin'))
+		if (!defined('ErrorPage') && !defined('InAdmin'))
 		{
 			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE ip = '" . $_SERVER['REMOTE_ADDR'] . "' AND action = 'deny'";
 			$result = mysql_query($query);
 			$this->check_mysql($result, $query, __LINE__, __FILE__);
 			if (mysql_num_rows($result) > 0)
 			{
-				header('location: iperror.php');
+				$_SESSION['msg_title'] = $MSG['2_0027'];
+				$_SESSION['msg_body'] = $MSG['2_0026'];
+				header('location: message.php');
 				exit;
 			}
 		}

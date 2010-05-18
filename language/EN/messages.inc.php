@@ -1240,6 +1240,7 @@ $MSG['2_0026'] = "We're sorry but, for one or more reasons, you have been denied
 				removed the item(s) from our database.
 				<br><br>
 				Thank you";
+$MSG['2_0027'] = "Your IP has been banned";
 $MSG['2_0032'] = "Auction Extension Settings";
 $MSG['2_0034'] = "Enable Auctions Auto extension?";
 $_CUSTOM_0032 = "Auctions Auto extension gives you the ability to automatically extend by <b>X</b> seconds the auctions end time,

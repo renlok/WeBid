@@ -523,7 +523,6 @@ switch ($_SESSION['action'])
 		$TPL_durations_list .= '</select>' . "\n";
 
 		// payments
-		print_r($payment);
 		$payment_methods = '';
 		$query = "SELECT * FROM " . $DBPrefix . "gateways";
 		$res = mysql_query($query);
@@ -633,13 +632,6 @@ switch ($_SESSION['action'])
 		}
 		$fee_javascript .= 'var current_fee = ' . ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0') . ';';
 
-		// get decimals for javascript rounder
-		$decimals = '';
-		for ($i = 0; $i < $system->SETTINGS['moneydecimals']; $i++)
-		{
-			$decimals .= 0;
-		}
-
 		$template->assign_vars(array(
 				'TITLE' => $MSG['028'],
 				'ERROR' => ($ERR == 'ERR_') ? '' : $$ERR,
@@ -691,7 +683,7 @@ switch ($_SESSION['action'])
 				'FEE_BN' => $fee_bn,
 				'FEE_RP' => $fee_rp,
 				'FEE_SUBTITLE' => $subtitle_fee,
-				'FEE_DECIMALS' => $decimals,
+				'FEE_DECIMALS' => $system->SETTINGS['moneydecimals'],
 
 				'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),
 				'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] == 'y' && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only'] == 'y') || $system->SETTINGS['bn_only_disable'] == 'n')),

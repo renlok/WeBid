@@ -14,6 +14,9 @@
 
 include 'includes/common.inc.php';
 
+$query = "DELETE from " . $DBPrefix . "online WHERE SESSION = 'uId-" . $_SESSION['WEBID_LOGGED_IN'] . "'";
+$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+
 unset($_SESSION['WEBID_LOGGED_IN'], $_SESSION['WEBID_LOGGED_NUMBER'], $_SESSION['WEBID_LOGGED_PASS']);
 if (isset($_COOKIE['WEBID_RM_ID']))
 {

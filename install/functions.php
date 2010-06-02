@@ -301,29 +301,12 @@ function show_config_table($fresh = true)
 			$data .= '</tr>';
 		}
 
-		$functions = array(
-			'imagecreate',
-			'imagecreatetruecolor',
-			'imagecolorallocate',
-			'imagefilledrectangle',
-			'imagestring',
-			'imagepng',
-			'imagealphablending',
-			'imagecopyresampled'
-			);
-
-		$gd_pass = true;
-		foreach ($functions as $func)
-		{
-			if (!function_exists($func))
-			{
-				$data .= $func;
-				$gd_pass = false;
-			}
-		}
-
 		$data .= '<tr><td>GD Support:</td><td>';
-		$data .= ($gd_pass) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+		$data .= (extension_loaded('gd') && function_exists('gd_info')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+		$data .= '</tr>';
+
+		$data .= '<tr><td>BC Math Support:</td><td>';
+		$data .= (extension_loaded('bcmath')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 
 		$data .= '</table>';

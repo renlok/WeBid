@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-include "../includes/common.inc.php";
+include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -60,7 +60,7 @@ $template->assign_vars(array(
 		'BUTTON' => $MSG['518'],
 
 		'B_ACTIVE' => ((isset($_POST['suspended']) && $_POST['suspended'] == 0) || !isset($_POST['suspended'])),
-		'B_INACTIVE' => (isset($_POST['suspended']) && $_POST['suspended'] == 1),
+		'B_INACTIVE' => (isset($_POST['suspended']) && $_POST['suspended'] == 1)
 		));
 
 $template->set_filenames(array(

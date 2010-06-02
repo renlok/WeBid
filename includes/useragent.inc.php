@@ -533,7 +533,6 @@ function browser_detection( $which_test, $test_excludes='' ) {
 		if ( $browser_version_number && preg_match( '/[0-9]*\.*[0-9]*/', $browser_version_number, $a_math_version_number ) )
 		{ 
 			$math_version_number = $a_math_version_number[0];
-			//print_r($a_math_version_number);
 		}
 		if ( $b_mobile_test )
 		{
@@ -586,7 +585,6 @@ function browser_detection( $which_test, $test_excludes='' ) {
 			break;
 		case 'full':// returns all relevant browser information in an array
 			$a_full_data = array( $browser_name, $browser_version_number, $ie_version, $dom_browser, $safe_browser, $os_type, $os_number, $s_browser, $ua_type, $math_version_number, $a_moz_data, $a_webkit_data, $mobile_test, $a_mobile_data, $true_msie_version );
-			// print_r( $a_full_data );
 			return $a_full_data;
 			break;
 		case 'type':// returns what type, bot, browser, maybe downloader in future

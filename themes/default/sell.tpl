@@ -129,14 +129,13 @@ $(document).ready(function(){
 		st = $("#subtitle").val().length;
 	});
 <!-- ENDIF -->
-
 	function updatefee(newfee){
 		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
 		$("#fee_exact").val(nowfee);
-		nowfee = Math.round(nowfee*1{FEE_DECIMALS})/1{FEE_DECIMALS};
 		if (nowfee < 0){
 			nowfee = 0;
 		}
+		nowfee = nowfee.toFixed({FEE_DECIMALS});
 		$("#to_pay").text(nowfee);
 	}
 <!-- ENDIF -->

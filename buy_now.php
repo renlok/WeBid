@@ -59,6 +59,10 @@ if ($Auction['closed'] == 1)
 	header('location: item.php?id=' . $_REQUEST['id']);
 	exit;
 }
+if ($Auction['starts'] > time())
+{
+	$ERR = $ERR_073;
+}
 
 // If there are bids for this auction -> error
 if ($Auction['bn_only'] == 'n')

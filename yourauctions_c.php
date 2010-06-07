@@ -236,7 +236,7 @@ while ($item = mysql_fetch_array($res))
 			$canrelist = true;
 		}
 
-		if ($item['reserve_price'] > 0 || $item['num_bids'] > 0)
+		if ($item['reserve_price'] > 0 && $item['num_bids'] > 0)
 		{
 			$cansell = true;
 		}

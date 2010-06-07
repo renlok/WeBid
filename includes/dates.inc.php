@@ -41,10 +41,15 @@ if (!function_exists('GetLeftSeconds'))
 
 if (!function_exists('FormatDate'))
 {
-	function FormatDate($DATE)
+	function FormatDate($DATE, $GMT = true)
 	{
 		global $system;
-		
+
+		if (!$GMT)
+		{
+			$DATE += $system->tdiff;
+		}
+
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
 			$F_date = gmdate('m/d/Y', $DATE);

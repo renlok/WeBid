@@ -50,7 +50,6 @@ if (mysql_num_rows($result) == 0)
 }
 $auction_data = mysql_fetch_assoc($result);
 $category = $auction_data['category'];
-$pict_url_plain = $auction_data['pict_url'];
 $auction_type = $auction_data['auction_type'];
 $ends = $auction_data['ends'];
 $start = $auction_data['starts'];
@@ -58,14 +57,8 @@ $user_id = $auction_data['user'];
 $minimum_bid = $auction_data['minimum_bid'];
 $high_bid = $auction_data['current_bid'];
 $customincrement = $auction_data['increment'];
-if ($system->SETTINGS['datesformat'] == 'USA')
-{
-	$seller_reg = gmdate('m/d/Y', $auction_data['reg_date'] + $system->tdiff);
-}
-else
-{
-	$seller_reg = gmdate('d/m/Y', $auction_data['reg_date'] + $system->tdiff);
-}
+$seller_reg = FormatDate($auction_data['reg_date'], false);
+
 // sort out counter
 if (empty($auction_data['counter']))
 {
@@ -292,6 +285,7 @@ if ($user->logged_in && $num_bids > 0)
 			if ($difference <= 0 && $auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])
 			{
 				$yourbidmsg = $MSG['514'];
+				$yourbidclass = 'yourbidloss';
 			}
 			elseif ($difference <= 0 || $auction_data['bn_only'] == 'y')
 			{
@@ -513,7 +507,7 @@ $template->assign_vars(array(
 		'TITLE' => $auction_data['title'],
 		'SUBTITLE' => $auction_data['subtitle'],
 		'AUCTION_DESCRIPTION' => stripslashes($auction_data['description']),
-		'PIC_URL' => $uploaded_path . $id . '/' . $pict_url_plain,
+		'PIC_URL' => $uploaded_path . $id . '/' . $auction_data['pict_url'],
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $system->print_money($auction_data['shipping_cost']),
 		'COUNTRY' => $auction_data['country'],
 		'ZIP' => $auction_data['zip'],
@@ -564,7 +558,7 @@ $template->assign_vars(array(
 		'B_HASENDED' => $has_ended,
 		'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
 		'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && (!$user->logged_in || $user->user_data['id'] != $auction_data['user'])),
-		'B_HASIMAGE' => (!empty($pict_url_plain)),
+		'B_HASIMAGE' => (!empty($auction_data['pict_url'])),
 		'B_NOTBNONLY' => ($auction_data['bn_only'] == 'n'),
 		'B_HASRESERVE' => ($auction_data['reserve_price'] > 0 && $auction_data['reserve_price'] > $auction_data['current_bid']),
 		'B_BNENABLED' => ($system->SETTINGS['buy_now'] == 2),

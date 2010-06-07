@@ -85,7 +85,7 @@ $(document).ready(function(){
 		}
 	});
 	$("#bn").blur(function(){
-		if (bn == parseInt($("#bn").val())){
+		if (bn != parseInt($("#bn").val())){
 			if (parseInt($("#bn").val()) > 0)
 				updatefee(buyout_fee);
 			else
@@ -94,7 +94,7 @@ $(document).ready(function(){
 		}
 	});
 	$("#reserve_price").blur(function(){
-		if (rp == parseInt($("#reserve_price").val())){
+		if (rp != parseInt($("#reserve_price").val())){
 			if (parseInt($("#reserve_price").val()) > 0)
 				updatefee(rp_fee);
 			else

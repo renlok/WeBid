@@ -70,7 +70,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 $query = "SELECT t.*, n.suspended FROM " . $DBPrefix . "news_translated t
 		LEFT JOIN " . $DBPrefix . "news n ON (n.id = t.id) WHERE t.id = " . intval($_GET['id']);
 $res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);lse
+$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $CONT_tr = array();
 $TIT_tr = array();

@@ -53,7 +53,7 @@
 - When a payment gateway is set to required a user must now enter their details for this gateway before they can sign up
 - Edited the edit auction page so you can edit any option for the auction
 - Fixed the area select box when uploading a large image
-- Added input_money() to some variable where missing to avoid errors
+- Added input_money() to some variables where missing to avoid errors
 - Fixed how suspending accounts work now users will actually receive messages about why they cant do things when their account is suspended
 - Replaced FCKeditor 2.6.3 with CKEditor 3.2.1
 - Added an error message for when a user tries to view an invalid auction
@@ -68,5 +68,6 @@
 - Fixed upload gallery so files with any name (with non alpha-numeric characters) will be accepted
 - Fixed the online counter so when a user logs off they don't appear online twice
 - Added a check to the buy it now so it shows an error if the item hasn't started yet
+- Added the $upload_path variable to the getthumb page
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

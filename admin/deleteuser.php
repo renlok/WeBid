@@ -71,7 +71,7 @@ function load_page($id, $question)
 // Data check
 if (empty($id) || $id <= 0)
 {
-	header('location: listusers.php?PAGE=' . intval($_GET['offset']));
+	header('location: listusers.php?PAGE=' . intval($_REQUEST['offset']));
 	exit;
 }
 

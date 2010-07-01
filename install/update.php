@@ -49,7 +49,7 @@ if ($step == 0)
 		}
 		else
 		{
-			echo 'Now to <b><a href="?step=1">step 1</a></b>';
+			echo 'Now to <b><a href="?step=2">step 1</a></b>';
 		}
 	}
 }
@@ -117,14 +117,17 @@ if ($step == 2)
 	for ($i = 0; $i < count($query); $i++)
 	{
 		mysql_query($query[$i]) or print(mysql_error() . '<br>' . $query[$i] . '<br>');
+		echo '<b>' . $query[$i] . '</b><br>';
 	}
-	if ($myversion !== $thisversion)
+	if ($myversion == $thisversion)
 	{
-		echo '<script type="text/javascript">window.location = "install.php?step=2";</script>';
-		echo '<noscript>Javascript is disabled please <a href="?step=2">refresh the page</a></noscript>';
+		echo 'Complete, now to <b><a href="?step=3">step 3</a></b>';
 	}
 	else
-		echo 'Complete, now to <b><a href="?step=3">step 3</a></b>';
+	{
+		echo '<script type="text/javascript">window.location = "?step=2";</script>';
+		echo '<noscript>Javascript is disabled please <a href="?step=2">refresh the page</a></noscript>';
+	}
 }
 if ($step == 3)
 {
@@ -137,6 +140,7 @@ if ($step == 3)
 		echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
 		exit;
 	}
+	include $main_path . 'includes/common.inc.php';
 	include $include_path . 'functions_rebuild.inc.php';
 	echo 'Rebuilding membertypes...<br>';
 	rebuild_table_file('membertypes');

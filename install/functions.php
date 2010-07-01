@@ -46,9 +46,9 @@ function makeconfigfile($contents, $main_path)
 			touch($filename);
 		}
 	}
-	
+
 	@chmod($filename, 0777);
-	
+
 	if (is_writable($filename))
 	{
 		if (!$handle = fopen($filename, 'w')) 
@@ -97,10 +97,10 @@ function print_header($update)
 
 function check_version()
 {
-	global $system, $DBPrefix;
+	global $DBPrefix, $settings_version;
 
 	// check if using an old version
-	if (!isset($system->SETTINGS['version']))
+	if (!isset($settings_version) || empty($settings_version))
 	{
 		$version = file_get_contents('../includes/version.txt') or die('error');
 		$query = "ALTER TABLE `" . $DBPrefix . "settings` ADD `version` varchar(10) NOT NULL default '" . $version . "'";
@@ -108,11 +108,13 @@ function check_version()
 		return $version;
 	}
 
-	return $system->SETTINGS['version'];
+	return $settings_version;
 }
 
 function check_installation()
 {
+	global $DBPrefix, $settings_version, $main_path;
+
 	include '../includes/config.inc.php';
 	@mysql_connect($DbHost, $DbUser, $DbPassword);
 	@mysql_select_db($DbDatabase);
@@ -121,7 +123,10 @@ function check_installation()
 	$query = "SELECT * FROM `" . $DBPrefix . "settings`";
 	$res = @mysql_query($query);
 	if ($res != false)
+	{
+		$settings_version = @mysql_result($res, 0, 'version');
 		return true;
+	}
 	else
 	{
 		return false;
@@ -345,12 +350,12 @@ function rebuild_cat_file()
 		$cats[$catarr['cat_id']] = $catarr['cat_name'];
 		$allcats[] = $catarr;
 	}
-	
+
 	$output = "<?php\n";
 	$output.= "$" . "category_names = array(\n";
-	
+
 	$num_rows = count($cats);
-	
+
 	$i = 0;
 	foreach ($cats as $k => $v)
 	{
@@ -361,15 +366,15 @@ function rebuild_cat_file()
 		else
 			$output .= "\n";
 	}
-	
+
 	$output .= ");\n\n";
-	
+
 	$output .= "$" . "category_plain = array(\n0 => ''";
-	
+
 	$output .= search_cats(0, 0);
-	
+
 	$output .= ");\n?>";
-	
+
 	$handle = fopen ($main_path . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 }

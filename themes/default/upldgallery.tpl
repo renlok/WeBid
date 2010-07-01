@@ -46,7 +46,7 @@ $(document).ready(function () {
 	var image_cost = {IMAGE_COST};
 	if (num_images != now_images) {
 		var fee_diff = (now_images - num_images) * image_cost;
-		var nowfee = $("#fee_exact", window.opener.document).val()) + fee_diff;
+		var nowfee = $("#fee_exact", window.opener.document).val() + fee_diff;
 		$("#fee_exact", window.opener.document).val(nowfee);
 		$("#to_pay").text(Math.round(nowfee*1{FEE_DECIMALS})/1{FEE_DECIMALS});
 		$('#numimages', window.opener.document).val(now_images);

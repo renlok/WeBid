@@ -16,52 +16,8 @@ if (!defined('InWeBid')) exit();
 
 if (!isset($_SERVER['SCRIPT_NAME'])) $_SERVER['SCRIPT_NAME'] = 'cron.php';
 
-function openLogFile()
-{
-	global $logFileHandle, $logPath;
+include $include_path . 'functions_cron.php';
 
-	$logFileHandle = fopen($logPath . 'cron.log', 'a');
-}
-
-function closeLogFile()
-{
-	global $logFileHandle;
-
-	if ($logFileHandle)
-		fclose ($logFileHandle);
-}
-
-function printLog($str)
-{
-	global $logFileHandle;
-
-	if ($logFileHandle)
-	{
-		if (substr($str, strlen($str) - 1, 1) != "\n")
-			$str .= "\n";
-		fwrite ($logFileHandle, $str);
-	}
-}
-
-function printLogL($str, $level)
-{
-	for ($i = 1; $i <= $level; ++$i)
-		$str = "\t" . $str;
-	printLog($str);
-}
-
-function constructCategories()
-{
-	global $DBPrefix;
-	$query = "SELECT cat_id, parent_id, sub_counter, counter
-			 FROM " . $DBPrefix . "categories ORDER BY cat_id";
-	$res = mysql_query($query) or die(mysql_error());
-	while ($row = mysql_fetch_array($res)) {
-		$row['updated'] = false;
-		$categories[$row['cat_id']] = $row;
-	}
-	return $categories;
-}
 // initialize cron script
 openLogFile();
 printLog('=============== STARTING CRON SCRIPT: ' . gmdate('F d, Y H:i:s'));
@@ -82,16 +38,6 @@ $categories = constructCategories();
 printLog('++++++ Closing expired auctions');
 $NOW = time();
 $NOWB = gmdate('Ymd');
-$query = "SELECT * FROM " . $DBPrefix . "auctions
-		 WHERE ends <= '" . $NOW . "'
-		 AND ((closed = 0)
-		 OR (closed = 1
-		 AND reserve_price > 0
-		 AND num_bids > 0
-		 AND current_bid < reserve_price
-		 AND sold = 's'))";
-$result_auction = mysql_query($query);
-$system->check_mysql($result_auction, $query, __LINE__, __FILE__);
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
 $res = mysql_query($query);
@@ -110,160 +56,88 @@ while($row = mysql_fetch_assoc($res))
 	$endauc_fee[] = $row;
 }
 
-$num = mysql_num_rows($result_auction);
+
+$query = "SELECT * FROM " . $DBPrefix . "auctions
+		 WHERE ends <= '" . $NOW . "'
+		 AND ((closed = 0)
+		 OR (closed = 1
+		 AND reserve_price > 0
+		 AND num_bids > 0
+		 AND current_bid < reserve_price
+		 AND sold = 's'))";
+$result = mysql_query($query);
+$system->check_mysql($result, $query, __LINE__, __FILE__);
+
+$count_auctions = $num = mysql_num_rows($result);
 printLog($num . ' auctions to close');
-$count_auctions = $num;
+
 $n = 1;
-while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
+while ($Auction = mysql_fetch_array($result)) // loop auctions
 {
 	$n++;
-	$Auction['description'] = strip_tags($Auction['description']);
 	printLog("\n" . 'Processing auction: ' . $Auction['id']);
+	$Auction['description'] = strip_tags($Auction['description']);
 
 	// Send notification to all users watching this auction
-	$query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE '% " . $Auction['id'] . " %'";
-	$resultUSERS = mysql_query($query);
-	$system->check_mysql($resultUSERS, $query, __LINE__, __FILE__);
-	while ($watchusers = mysql_fetch_array($resultUSERS))
-	{
-		$usname = $watchusers['name'];
-		$e_mail = $watchusers['email'];
-		$keys = explode(' ', $watchusers['item_watch']);
-		// If keyword matches with opened auction title or/and desc send user a mail
-		if (in_array($Auction['id'], $keys))
-		{
-			$emailer = new email_class();
-			$emailer->assign_vars(array(
-					'URL' => $system->SETTINGS['siteurl'] . 'item.php?mode=1&id=' . $Auction['id'],
-					'TITLE' => $Auction['title'],
-					'NAME' => $usname
-					));
-			$emailer->email_uid = $watchusers['id'];
-			$emailer->email_sender($e_mail, 'auctionend_watchmail.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['471']);
-		}
-	}
+	sendWatchEmails($Auction['id']);
 
 	// RETRIEVE SELLER INFO FROM DATABASE
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $Auction['user'] . " LIMIT 1";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($result) > 0)
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	if (mysql_num_rows($res) > 0)
 	{
-		$Seller = mysql_fetch_array($result);
+		$Seller = mysql_fetch_array($res);
 	}
 	else
 	{
 		$Seller = array();
 	}
 
-	// check if there is a winner - and get his info
+	// get an order list of bids of the item (high to low)
 	$winner_present = false;
 	$query = "SELECT u.* FROM " . $DBPrefix . "bids b
 			LEFT JOIN " . $DBPrefix . "users u ON (b.bidder = u.id)
 			WHERE auction = '" . $Auction['id'] . "' ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$decrem = mysql_num_rows($result);
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$decrem = mysql_num_rows($res);
 
 	// send email to seller - to notify him
 	// create a "report" to seller depending of what kind auction is
-	$atype = intval($Auction['auction_type']); 
+	$atype = intval($Auction['auction_type']);
 	if ($atype == 1)
 	{
 		if ($decrem > 0 && ($Auction['current_bid'] >= $Auction['reserve_price'] || $Auction['sold'] == 's'))
 		{
-			mysql_data_seek($result, 0);
-			$Winner = mysql_fetch_array($result);
+			mysql_data_seek($res, 0); // load row 0
+			$Winner = mysql_fetch_assoc($res);
 			$Winner['quantity'] = $Auction['quantity'];
+			$WINNING_BID = $Auction['current_bid'];
 			$winner_present = true;
 		}
-		$WINNING_BID = $Auction['current_bid'];
+
 		// Standard auction
 		if ($winner_present)
 		{
-			$report_text = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)' . "\n";
-			if ($system->SETTINGS['winner_address'] == 'y' && $Winner['address'] != '')
-			{
-				$report_text .= $MSG['30_0086'] . $Winner['address'] . ' ' . $Winner['city'] . ' ' . $Winner['prov'] . ' ' . $Winner['zip'] . ', ' . $Winner['country'];
-			}
 
 			$bf_paid = 1;
 			$ff_paid = 1;
 			// work out & add fee
 			if ($system->SETTINGS['fees'] == 'y')
 			{
-				if ($system->SETTINGS['fee_type'] == 1 || $buyer_fee <= 0)
-				{
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $buyer_fee . " WHERE id = " . $Winner['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				}
-				else
-				{
-					$bf_paid = 0;
-					$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $Winner['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$buyer_emails[] = array(
-						'name' => $Winner['name'],
-						'email' => $Winner['email'],
-						'uid' => $Winner['id'],
-						'id' => $Auction['id'],
-						'title' => $Auction['title']
-						);
-				}
-
-				$fee_value = 0;
-				for ($i = 0; $i < count($endauc_fee); $i++)
-				{
-					if ($Auction['current_bid'] > $endauc_fee[$i]['fee_from'] && $Auction['current_bid'] < $endauc_fee[$i]['fee_to'])
-					{
-						if ($endauc_fee[$i]['fee_type'] == 'flat')
-						{
-							$fee_value = $endauc_fee[$i]['value'];
-						}
-						else
-						{
-							$fee_value = ($endauc_fee[$i]['value'] / 100) * $Auction['current_bid'];
-						}
-					}
-				}
-				// insert final value fees
-				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
-				{
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Seller['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				}
-				else
-				{
-					$ff_paid = 0;
-					$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Seller['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$seller_emails[] = array(
-						'name' => $Seller['name'],
-						'email' => $Seller['email'],
-						'uid' => $Seller['id'],
-						'id' => $Auction['id'],
-						'title' => $Auction['title']
-						);
-				}
+				sortFees();
 			}
+
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
 			(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $Winner['id'] . "', " . $Auction['current_bid'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ", " . $ff_paid . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-
-			$query = "UPDATE " . $DBPrefix . "auctions SET sold = 'y' WHERE id = " . $Auction['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		}
-		else
-		{
-			$report_text = $MSG['429'];
 		}
 	}
 	else
 	{
 		// Dutch Auction
-		unset($WINNERS_NICK, $WINNERS_EMAIL, $WINNERS_NAME, $WINNERS_QUANT, $WINNERS_BIDQUANT);
-		$report_text = '';
 		// find out winners sorted by bid
 		$query = "SELECT *, MAX(bid) AS maxbid
 				FROM " . $DBPrefix . "bids WHERE auction = " . $Auction['id'] . " GROUP BY bidder
@@ -271,118 +145,51 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-		if ($decrem == 0)
-		{
-			$report_text = $ERR_075;
-		}
-		else
+		if ($decrem > 0)
 		{
 			$WINNERS_ID = array();
+			$winner_array = array();
 			$report_text = '';
 			$items_count = $Auction['quantity'];
 			$items_sold = 0;
-			$WINNING_BID = 0;
-			while($row = mysql_fetch_array($res))
+			while($row = mysql_fetch_assoc($res))
 			{
 				if (!in_array($row['bidder'], $WINNERS_ID))
 				{
-					if ($row['maxbid'] < $WINNING_BID)
-					{
-						$WINNING_BID = $row['maxbid'];
-					}
 					$items_wanted = $row['quantity'];
 					$items_got = 0;
 					if ($items_wanted <= $items_count)
 					{
 						$items_got = $items_wanted;
-						$items_count -= $items_got;
 					}
 					else
 					{
 						$items_got = $items_count;
-						$items_count -= $items_got;
 					}
+					$items_count -= $items_got;
 					$items_sold += $items_got;
+
 					// Retrieve winner nick from the database
-					$query = "SELECT nick, email, name, address, city, zip, prov, country FROM " . $DBPrefix . "users WHERE id = " . $row['bidder'] . " LIMIT 1";
+					$query = "SELECT id, nick, email, name, address, city, zip, prov, country
+							FROM " . $DBPrefix . "users WHERE id = " . $row['bidder'] . " LIMIT 1";
 					$res_n = mysql_query($query);
 					$system->check_mysql($res_n, $query, __LINE__, __FILE__);
 					$Winner = mysql_fetch_assoc($res_n);
-					$ADDRESS = $Winner['address'] . ' ' . $Winner['city'] . ' ' . $Winner['zip'] . ' ' . $Winner['prov'] . ', ' . $Winner['country'];
 					// set arrays
-					$WINNERS_ID[$Winner['nick']] = $row['bidder'];
-					$WINNERS_BID[$Winner['nick']] = $row['maxbid'];
-					$WINNERS_NICK[$Winner['nick']] = $Winner['nick'];
-					$WINNERS_EMAIL[$Winner['nick']] = $Winner['email'];
-					$WINNERS_NAME[$Winner['nick']] = $Winner['name'];
-					$WINNERS_QUANT[$Winner['nick']] = $items_got;
-					$WINNERS_BIDQUANT[$Winner['nick']] = $items_wanted;
-					// ============================
-					$report_text .= ' ' . $MSG['159'] . ' ' . $Winner['nick'] . ' (' . $Winner['email'] . ') ' . $items_got . ' ' . $MSG['5492'] . ', ' . $MSG['5493'] . ' ' . $system->print_money($row['bid']) . ' ' . $MSG['5495'] . ' - (' . $MSG['5494'] . ' ' . $items_wanted . ' ' . $MSG['5492'] . ')' . "\n";
-					if ($system->SETTINGS['winner_address'] == 'y') {
-						$report_text .= ' ' . $MSG['30_0086'] . $ADDRESS . "\n";
-					}
-					$totalamount = $row['maxbid'];
+					$WINNERS_ID[] = $row['bidder'];
+					$Winner['maxbid'] = $row['maxbid'];
+					$Winner['quantity'] = $items_got;
+					$Winner['wanted'] = $items_wanted;
+					$winner_array[] = $Winner; // set array ready for emails
 
 					$bf_paid = 1;
 					$ff_paid = 1;
 					// work out & add fee
 					if ($system->SETTINGS['fees'] == 'y')
 					{
-						if ($system->SETTINGS['fee_type'] == 1 || $buyer_fee <= 0)
-						{
-							$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $buyer_fee . " WHERE id = " . $row['bidder'];
-							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-						}
-						else
-						{
-							$bf_paid = 0;
-							$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $row['bidder'];
-							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-							$buyer_emails[] = array(
-								'name' => $Winner['name'],
-								'email' => $Winner['email'],
-								'uid' => $row['bidder'],
-								'id' => $Auction['id'],
-								'title' => $Auction['title']
-								);
-						}
-
-						$fee_value = 0;
-						for ($i = 0; $i < count($endauc_fee); $i++)
-						{
-							if ($Auction['current_bid'] > $endauc_fee[$i]['fee_from'] && $Auction['current_bid'] < $endauc_fee[$i]['fee_to'])
-							{
-								if ($endauc_fee[$i]['fee_type'] == 'flat')
-								{
-									$fee_value = $endauc_fee[$i]['value'];
-								}
-								else
-								{
-									$fee_value = ($endauc_fee[$i]['value'] / 100) * $Auction['current_bid'];
-								}
-							}
-						}
-						// insert final value fees
-						if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
-						{
-							$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Seller['id'];
-							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-						}
-						else
-						{
-							$ff_paid = 0;
-							$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Seller['id'];
-							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-							$seller_emails[] = array(
-								'name' => $Winner['name'],
-								'email' => $Winner['email'],
-								'uid' => $Winner['id'],
-								'id' => $Auction['id'],
-								'title' => $Auction['title']
-								);
-						}
+						sortFees();
 					}
+
 					// Add winner's data to "winners" table
 					$query = "INSERT INTO " . $DBPrefix . "winners VALUES
 					(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
@@ -393,9 +200,6 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 					break;
 				}
 			}
-
-			$report_text .= $MSG['643'] . ' ' . $system->print_money($WINNING_BID);
-			printLog($report_text);
 		}
 	} // end auction ends
 	printLogL ('mail to seller: ' . $Seller['email'], 1);
@@ -429,7 +233,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 		}
 	}
 
-	if ($Auction['suspended'] == 9)
+	if ($Auction['suspended'] != 0)
 	{
 		$count_auctions--;
 	}
@@ -467,9 +271,7 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 		}
 
 		// Close auction
-		$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1,
-				 sold = CASE sold WHEN 's' THEN 'y' ELSE sold END
-				 WHERE id = " . $Auction['id'];
+		$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'y' WHERE id = " . $Auction['id'];
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 
@@ -478,16 +280,12 @@ while ($Auction = mysql_fetch_array($result_auction)) // loop auctions
 	{
 		// Send mail to the seller
 		include $include_path . 'endauction_winner.inc.php';
-		if (isset($WINNERS_NICK) && is_array($WINNERS_NICK) && count($WINNERS_NICK) > 0)
+		if (isset($winner_array) && is_array($winner_array) && count($winner_array) > 0)
 		{
-			foreach ($WINNERS_NICK as $k => $v)
+			for ($i = 0, $count = count($winner_array); $i < $count; $i++)
 			{
-				$Winner['name'] = $WINNERS_NAME[$k];
-				$Winner['email'] = $WINNERS_EMAIL[$k];
-				$Winner['nick'] = $WINNERS_NICK[$k];
-				$Winner['quantity'] = $WINNERS_QUANT[$k];
-				$Winner['wanted'] = $WINNERS_BIDQUANT[$k];
 				// Send mail to the buyer
+				$Winner = $winner_array[$i];
 				include $include_path . 'endauction_youwin.inc.php';
 			}
 		}

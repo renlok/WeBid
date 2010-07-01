@@ -744,7 +744,6 @@ $MSG['631'] = "Process selected auctions";
 $MSG['640'] = "*Note* If Dutch Auction you may not set a reserve price, custom increment amount or use the BUY NOW feature.";
 $MSG['641'] = "Dutch auction";
 $MSG['642'] = "Standard auction";
-$MSG['643'] = "\n\nThe winning bid amount is:";
 $MSG['645'] = "Post question for Seller";
 $MSG['646'] = "You must be logged in to ask questions to the seller";
 $MSG['647'] = "Ask";

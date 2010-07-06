@@ -55,7 +55,7 @@ class global_class
 			}
 		}
 	}
-	
+
 	function loadsettings()
 	{
 		global $DBPrefix;

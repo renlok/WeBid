@@ -118,10 +118,6 @@ function CheckSellData()
 	{
 		return '058';
 	}
-	else
-	{
-		$minimum_bid = $system->input_money($minimum_bid);
-	}
 
 	if ((empty($minimum_bid) || $minimum_bid < 0) && ($buy_now_only == 'n' || !$buy_now_only))
 	{

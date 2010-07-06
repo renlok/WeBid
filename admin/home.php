@@ -179,10 +179,6 @@ else
 	fclose($handle);
 }
 
-$handle = fopen('../includes/version.txt', 'r') or die('error');
-$myversion = fread($handle, 5);
-fclose($handle);
-
 $template->assign_vars(array(
 		'ERROR' => (isset($errmsg)) ? $errmsg : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
@@ -209,7 +205,7 @@ $template->assign_vars(array(
 		'A_UVISITS' => $ACCESS['uniquevisitors'],
 		'A_USESSIONS' => $ACCESS['usersessions'],
 
-		'THIS_VERSION' => $myversion,
+		'THIS_VERSION' => $system->SETTINGS['version'],
 		'CUR_VERSION' => $realversion
 		));
 

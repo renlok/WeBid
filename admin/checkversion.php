@@ -28,18 +28,14 @@ else
 	fclose($handle);
 }
 
-$handle = fopen('../includes/version.txt', 'r') or die('error');
-$myversion = fread($handle, 5);
-fclose($handle);
-
-if ($realversion != $myversion)
+if ($realversion != $system->SETTINGS['version'])
 {
-	$myversion = '<span style="color:#ff0000;">' . $myversion . '</span>';
+	$myversion = '<span style="color:#ff0000;">' . $system->SETTINGS['version'] . '</span>';
 	$text = $MSG['30_0211'];
 }
 else
 {
-	$myversion = '<span style="color:#00ae00;">' . $myversion . '</span>';
+	$myversion = '<span style="color:#00ae00;">' . $system->SETTINGS['version'] . '</span>';
 	$text = $MSG['30_0212'];
 }
 

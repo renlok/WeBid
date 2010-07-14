@@ -40,5 +40,17 @@ if (isset($_GET['authnet']))
 {
 	$fees->authnet_validate();
 }
+if (isset($_GET['worldpay']))
+{
+	$fees->worldpay_validate();
+}
+if (isset($_GET['moneybookers']))
+{
+	$fees->moneybookers_validate();
+}
+if (isset($_GET['toocheckout']))
+{
+	$fees->toocheckout_validate();
+}
 
 ?>

@@ -65,7 +65,10 @@ class global_class
 		$this->SETTINGS = mysql_fetch_assoc($result);
 		$this->SETTINGS['gatways'] = array(
 			'paypal' => 'PayPal',
-			'authnet' => 'Authorize.net'
+			'authnet' => 'Authorize.net',
+			'worldpay' => 'WorldPay',
+			'moneybookers' => 'Moneybookers',
+			'toocheckout' => '2Checkout'
 			);
 	}
 

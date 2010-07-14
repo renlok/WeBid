@@ -127,6 +127,30 @@
 		</td>
 	</tr>
 <!-- ENDIF -->
+<!-- IF B_WORLDPAY -->
+	<tr>
+		<td align="right" width="30%">{L_824}</td>
+		<td>
+			<input type="text" name="TPL_worldpay_id" size=40 value="{WP_ID}" />
+		</td>
+	</tr>
+<!-- ENDIF -->
+<!-- IF B_TOOCHECKOUT -->
+	<tr>
+		<td align="right" width="30%">{L_826}</td>
+		<td>
+			<input type="text" name="TPL_toocheckout_id" size=40 value="{TC_ID}" />
+		</td>
+	</tr>
+<!-- ENDIF -->
+<!-- IF B_MONEYBOOKERS -->
+	<tr>
+		<td align="right" width="30%">{L_825}</td>
+		<td>
+			<input type="text" name="TPL_moneybookers_email" size=40 value="{MB_EMAIL}" />
+		</td>
+	</tr>
+<!-- ENDIF -->
 	<tr>
 		<td colspan="2">&nbsp;</td>
 	</tr>

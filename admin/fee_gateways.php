@@ -20,13 +20,19 @@ include 'loggedin.inc.php';
 unset($ERR);
 
 $links = array(
-	'paypal' => 'http://paypal.com',
-	'authnet' => 'http://authorize.net/'
+	'paypal' => 'http://paypal.com/',
+	'authnet' => 'http://authorize.net/',
+	'worldpay' => 'http://rbsworldpay.com/',
+	'moneybookers' => 'http://moneybookers.com/',
+	'toocheckout' => 'http://2checkout.com/'
 	);
 $varialbes = array(
 	'paypal_address' => $MSG['720'],
 	'authnet_address' => $MSG['773'],
-	'authnet_password' => $MSG['774']
+	'authnet_password' => $MSG['774'],
+	'worldpay_id' => $MSG['824'],
+	'moneybookers_address' => $MSG['825'],
+	'toocheckout_id' => $MSG['826']
 	);
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";

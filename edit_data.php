@@ -144,6 +144,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$ERR = $MSG['811'];
 		}
+		elseif ($gateway_data['moneybookers_required'] == 1 && (empty($_POST['TPL_moneybookers_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_moneybookers_email'])))
+		{
+			$ERR = $MSG['822'];
+		}
+		elseif ($gateway_data['toocheckout_required'] == 1 && (empty($_POST['TPL_toocheckout_id'])))
+		{
+			$ERR = $MSG['821'];
+		}
+		elseif ($gateway_data['worldpay_required'] == 1 && (empty($_POST['TPL_worldpay_id'])))
+		{
+			$ERR = $MSG['823'];
+		}
 		else
 		{
 			if (!empty($_POST['TPL_day']) && !empty($_POST['TPL_month']) && !empty($_POST['TPL_year']))
@@ -176,6 +188,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			{
 				$query .= ", authnet_id = '" . $system->cleanvars($_POST['TPL_authnet_id']) . "',
 							authnet_pass = '" . $system->cleanvars($_POST['TPL_authnet_pass']) . "'";
+			}
+
+			if ($gateway_data['worldpay_active'] == 1)
+			{
+				$query .= ", worldpay_id = '" . $system->cleanvars($_POST['TPL_worldpay_id']) . "'";
+			}
+
+			if ($gateway_data['moneybookers_active'] == 1)
+			{
+				$query .= ", moneybookers_email = '" . $system->cleanvars($_POST['TPL_moneybookers_email']) . "'";
+			}
+
+			if ($gateway_data['toocheckout_active'] == 1)
+			{
+				$query .= ", toocheckout_id = '" . $system->cleanvars($_POST['TPL_toocheckout_id']) . "'";
 			}
 
 			if (strlen($_POST['TPL_password']) > 0)
@@ -267,6 +294,9 @@ $template->assign_vars(array(
 		'PP_EMAIL' => $USER['paypal_email'],
 		'AN_ID' => $USER['authnet_id'],
 		'AN_PASS' => $USER['authnet_pass'],
+		'WP_ID' => $USER['worldpay_id'],
+		'TC_ID' => $USER['toocheckout_id'],
+		'MB_EMAIL' => $USER['moneybookers_email'],
 
 		'NLETTER1' => ($USER['nletter'] == 1) ? ' checked="checked"' : '',
 		'NLETTER2' => ($USER['nletter'] == 2) ? ' checked="checked"' : '',
@@ -275,7 +305,10 @@ $template->assign_vars(array(
 
 		'B_NEWLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_PAYPAL' => ($gateway_data['paypal_active'] == 1),
-		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1)
+		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1),
+		'B_WORLDPAY' => ($gateway_data['worldpay_active'] == 1),
+		'B_TOOCHECKOUT' => ($gateway_data['toocheckout_active'] == 1),
+		'B_MONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1)
 		));
 
 $TMP_usmenutitle = $MSG['509'];

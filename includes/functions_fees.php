@@ -119,6 +119,72 @@ class fees
 		exit;
 	}
 
+	function worldpay_validate()
+	{
+		global $system, $_POST;
+
+		$payment_amount = $_POST['amount'];
+
+		list($custom_id, $fee_type) = explode('WEBID',$_POST['cartId']);
+
+		if ($_POST['transStatus'] == 'Y')
+		{
+			$this->callback_process($custom_id, $fee_type, $payment_amount);
+			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?completed';
+		}
+		else
+		{
+			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?fail';
+		}
+
+		header('location: '. $redirect_url);
+		exit;
+	}
+
+	function moneybookers_validate()
+	{
+		global $system, $_POST;
+
+		$payment_amount = $_POST['amount'];
+
+		list($custom_id, $fee_type) = explode('WEBID',$_POST['trans_id']);
+
+		if ($_POST['status'] == 2)
+		{
+			$this->callback_process($custom_id, $fee_type, $payment_amount);
+			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?completed';
+		}
+		else
+		{
+			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?fail';
+		}
+
+		header('location: '. $redirect_url);
+		exit;
+	}
+
+	function toocheckout_validate()
+	{
+		global $system, $_POST;
+
+		$payment_amount = $_POST['total'];
+
+		list($custom_id, $fee_type) = explode('WEBID',$_POST['cart_order_id']);
+
+		if ($_POST['cart_order_id'] != '' && $_POST['credit_card_processed'] == 'Y')
+		{
+			$this->callback_process($custom_id, $fee_type, $payment_amount);
+			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?completed';
+		}
+		else
+		{
+			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?fail';
+		}
+
+		header('location: '. $redirect_url);
+		exit;
+	}
+
 	function callback_process($custom_id, $fee_type, $payment_amount, $currency = NULL)
 	{
 		global $system, $DBPrefix;

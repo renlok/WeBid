@@ -225,6 +225,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		{
 			$ERR = $MSG['811'];
 		}
+		elseif ($gateway_data['moneybookers_required'] == 1 && (empty($_POST['TPL_moneybookers_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_moneybookers_email'])))
+		{
+			$ERR = $MSG['822'];
+		}
+		elseif ($gateway_data['toocheckout_required'] == 1 && (empty($_POST['TPL_toocheckout_id'])))
+		{
+			$ERR = $MSG['821'];
+		}
+		elseif ($gateway_data['worldpay_required'] == 1 && (empty($_POST['TPL_worldpay_id'])))
+		{
+			$ERR = $MSG['823'];
+		}
 		else
 		{
 			$sql = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_POST['TPL_nick']) . "'";
@@ -284,7 +296,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$hash = get_hash();
 				$query = "INSERT INTO " . $DBPrefix . "users
 						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, 
-						birthdate, suspended, language, groups, balance, timecorrection, paypal_email, authnet_id, authnet_pass)
+						birthdate, suspended, language, groups, balance, timecorrection, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
 						VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
 						'" . md5($MD5_PREFIX . $TPL_password_hidden) . "',
 						'" . $hash . "',
@@ -305,6 +317,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $balance . "',
 						" . intval($_POST['TPL_timezone']) . ",
 						'" . ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : '') . "',
+						'" . ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : '') . "',
+						'" . ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']) : '') . "',
+						'" . ((isset($_POST['toocheckout_id'])) ? $system->cleanvars($_POST['toocheckout_id']) : '') . "',
 						'" . ((isset($_POST['TPL_authnet_id'])) ? $system->cleanvars($_POST['TPL_authnet_id']) : '') . "',
 						'" . ((isset($_POST['TPL_authnet_pass'])) ? $system->cleanvars($_POST['TPL_authnet_pass']) : '') . "')";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -449,6 +464,9 @@ $template->assign_vars(array(
 		'PP_EMAIL' => (isset($_POST['TPL_pp_email'])) ? $_POST['TPL_pp_email'] : '',
 		'AN_ID' => (isset($_POST['TPL_authnet_id'])) ? $_POST['TPL_authnet_id'] : '',
 		'AN_PASS' => (isset($_POST['TPL_authnet_pass'])) ? $_POST['TPL_authnet_pass'] : '',
+		'WP_ID' => (isset($_POST['TPL_worldpay_id'])) ? $_POST['TPL_worldpay_id'] : '',
+		'MB_EMAIL' => (isset($_POST['TPL_moneybookers_email'])) ? $_POST['TPL_moneybookers_email'] : '',
+		'TC_ID' => (isset($_POST['TPL_toocheckout_id'])) ? $_POST['TPL_toocheckout_id'] : '',
 
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
@@ -456,6 +474,9 @@ $template->assign_vars(array(
 		'B_FIRST' => $first,
 		'B_PAYPAL' => ($gateway_data['paypal_active'] == 1),
 		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1),
+		'B_WORLDPAY' => ($gateway_data['worldpay_active'] == 1),
+		'B_TOOCHECKOUT' => ($gateway_data['toocheckout_active'] == 1),
+		'B_MONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
 		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
@@ -475,7 +496,10 @@ $template->assign_vars(array(
 					($MANDATORY_FIELDS['zip'] == 'y') ? ' *' : '',
 					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : '',
 					($gateway_data['paypal_required'] == 1) ? ' *' : '',
-					($gateway_data['authnet_required'] == 1) ? ' *' : ''
+					($gateway_data['authnet_required'] == 1) ? ' *' : '',
+					($gateway_data['worldpay_required'] == 1) ? ' *' : '',
+					($gateway_data['toocheckout_required'] == 1) ? ' *' : '',
+					($gateway_data['moneybookers_required'] == 1) ? ' *' : ''
 					),
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',

@@ -46,6 +46,57 @@
     </td>
 </tr>
 <!-- ENDIF -->
+<!-- IF B_ENWORLDPAY -->
+<tr>
+    <td width="160" class="paytable1"><img src="images/worldpay.gif"></td>
+    <td class="paytable2">WorldPay</td>
+    <td class="paytable3">
+    <form action="https://select.worldpay.com/wcc/purchase" method="post" id="form_worldpay">
+    	<input type="hidden" name="instId" value="{WP_PAYTOID}">
+        <input type="hidden" name="amount" value="{PAY_VAL}">
+        <input type="hidden" name="currency" value="{CURRENCY}">
+        <input type="hidden" name="desc" value="{TITLE}">
+        <input type="hidden" name="MC_callback" value="{SITEURL}validate.php?worldpay">
+        <input type="hidden" name="cartId" value="{CUSTOM_CODE}">
+        <input name="submit" type="submit" value="Pay" border="0">
+    </form>
+    </td>
+</tr>
+<!-- ENDIF -->
+<!-- IF B_ENMONEYBOOKERS -->
+<tr>
+    <td width="160" class="paytable1"><img src="images/moneybookers.gif"></td>
+    <td class="paytable2">Moneybookers</td>
+    <td class="paytable3">
+    <form action="https://www.moneybookers.com/app/payment.pl" method="post" id="form_moneybookers">
+    	<input type="hidden" name="pay_to_email" value="{MB_PAYTOEMAIL}">
+        <input type="hidden" name="amount" value="{PAY_VAL}">
+        <input type="hidden" name="language" value="EN">
+        <input type="hidden" name="merchant_fields" value="trans_id">
+        <input type="hidden" name="currency" value="{CURRENCY}">
+        <input type="hidden" name="return_url" value="{SITEURL}validate.php?completed">
+        <input type="hidden" name="cancel_url" value="{SITEURL}validate.php?fail">
+        <input type="hidden" name="status_url" value="{SITEURL}validate.php?moneybookers">
+        <input type="hidden" name="trans_id" value="{CUSTOM_CODE}">
+        <input name="submit" type="submit" value="Pay" border="0">
+    </form>
+    </td>
+</tr>
+<!-- ENDIF -->
+<!-- IF B_ENTOOCHECK -->
+<tr>
+    <td width="160" class="paytable1"><img src="images/toocheckout.gif"></td>
+    <td class="paytable2">2Checkout</td>
+    <td class="paytable3">
+    <form action="https://www2.2checkout.com/2co/buyer/purchase" method="post" id="form_toocheckout">
+    	<input type="hidden" name="sid" value="{TC_PAYTOID}">
+        <input type="hidden" name="total" value="{PAY_VAL}">
+        <input type="hidden" name="cart_order_id" value="{CUSTOM_CODE}">
+        <input name="submit" type="submit" value="Pay" border="0">
+    </form>
+    </td>
+</tr>
+<!-- ENDIF -->
 </table>
 
 <!-- IF B_TOUSER -->

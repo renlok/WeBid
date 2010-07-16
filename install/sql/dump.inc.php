@@ -1075,7 +1075,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
   `moneybookers_active` int(1) NOT NULL default '0',
   `toocheckout_address` varchar(50) NOT NULL default '',
   `toocheckout_required` int(1) NOT NULL default '0',
-  `toocheckout_active` int(1) NOT NULL default '0',
+  `toocheckout_active` int(1) NOT NULL default '0'
 ) ;";
 
 # 

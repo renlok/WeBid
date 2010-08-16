@@ -123,7 +123,7 @@ else
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
 
-$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+$PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 // Handle columns sorting variables
 if (!isset($_SESSION['solda_ord']) && empty($_GET['solda_ord']))

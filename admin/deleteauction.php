@@ -16,7 +16,6 @@ define('InAdmin', 1);
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
 
 // Data check
 if (!isset($_REQUEST['id']))
@@ -27,7 +26,7 @@ if (!isset($_REQUEST['id']))
 	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
+if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 {
 	$catscontrol = new MPTTcategories();
 	$auc_id = intval($_POST['id']);
@@ -59,14 +58,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		// update main counters
 		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - 1), bids = (bids - " . $auc_data['num_bids'] . ")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	
+
 		// update recursive categories
 		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auc_data['category'];
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$parent_node = mysql_fetch_assoc($res);
 		$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
-	
+
 		for ($i = 0; $i < count($crumbs); $i++)
 		{
 			$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
@@ -90,47 +89,31 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	$URL = $_SESSION['RETURN_LIST'];
 	unset($_SESSION['RETURN_LIST']);
-	header('location: ' . $URL . '?offset=' . $_REQUEST['offset']);
+	header('location: ' . $URL);
+	exit;
+}
+elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+{
+	$URL = $_SESSION['RETURN_LIST'];
+	unset($_SESSION['RETURN_LIST']);
+	header('location: ' . $URL);
 	exit;
 }
 
-$query = "SELECT u.nick, a.title, a.starts, a.description, a.category, d.description as duration,
-		a.suspended, a.current_bid, a.quantity, a.reserve_price
-		FROM " . $DBPrefix . "auctions a
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		LEFT JOIN " . $DBPrefix . "durations d ON (d.days = a.duration)
-		WHERE a.id = " . $_GET['id'];
+$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = " . $_GET['id'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$auc_data = mysql_fetch_assoc($res);
-
-if ($system->SETTINGS['datesformat'] == 'USA')
-{
-	$date = gmdate('m/d/Y', $auc_data['starts']);
-}
-else
-{
-	$date = gmdate('d/m/Y', $auc_data['starts']);
-}
+$title = mysql_result($res, 0);
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_GET['id'],
-		'TITLE' => $auc_data['title'],
-		'NICK' => $auc_data['nick'],
-		'STARTS' => $date,
-		'DURATION' => $auc_data['duration'],
-		'CATEGORY' => $category_names[$auc_data['category']],
-		'DESCRIPTION' => stripslashes($auc_data['description']),
-		'CURRENT_BID' => $system->print_money($auc_data['current_bid']),
-		'QTY' => $auc_data['quantity'],
-		'RESERVE_PRICE' => $system->print_money($auc_data['reserve_price']),
-		'SUSPENDED' => $auc_data['suspended'],
-		'OFFSET' => $_REQUEST['offset']
+		'MESSAGE' => sprintf($MSG['833'], $title),
+		'TYPE' => 1
 		));
 
 $template->set_filenames(array(
-		'body' => 'deleteauction.tpl'
+		'body' => 'confirm.tpl'
 		));
 $template->display('body');
 ?>

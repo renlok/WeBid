@@ -85,6 +85,8 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'THEME' => $system->SETTINGS['theme'],
 		'PAGE' => (mysql_num_rows($res) == 0) ? 1 : 2
 		));
 

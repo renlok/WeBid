@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'fees';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -53,7 +54,6 @@ loadblock($MSG['738'], $MSG['739'], 'yesno', 'fee_disable_acc', $system->SETTING
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'fee',
 		'TYPENAME' => $MSG['25_0012'],
 		'PAGENAME' => $MSG['395'],
 		'B_TITLES' => true

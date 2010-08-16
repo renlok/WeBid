@@ -70,6 +70,11 @@
 - Added a check to the buy it now so it shows an error if the item hasn't started yet
 - Added the $upload_path variable to the getthumb page
 - Cleaned up the cron file split it inot two files (cron.php & functions_cron.php)
+- Fixed the Page 1 of 0 error that occurs when there is no data
 - Fixed a bug with europe style currency when listing an item the min bid would be listed wrong
+- Changed all the admin delete X pages into a single confirm page
+- Added an option in admin FAQ & aution category pages so you can delete categories with content it just asks you what you wish to do with the content (move it/delete it)
+- Added variable template includes <!-- INCLUDE {VARIABLE}.tpl -->
+- Moved the admin theme folder directly in the themes folder so you ponly have one admin theme for however many themes
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'users';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -54,13 +55,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 $query = "SELECT * FROM " . $DBPrefix . "usersips WHERE user = 'NOUSER'";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
+$bg = '';
 while ($row = mysql_fetch_assoc($res))
 {
 	$template->assign_block_vars('ips', array(
 			'ID' => $row['id'],
 			'IP' => $row['ip'],
-			'ACTION' => $row['action']
+			'ACTION' => $row['action'],
+			'BG' => $bg
 			));
+	$bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 $template->set_filenames(array(

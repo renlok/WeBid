@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'users';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -33,7 +34,6 @@ loadblock($MSG['603'], $MSG['604'], 'batch', 'newsletter', $system->SETTINGS['ne
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'use',
 		'TYPENAME' => $MSG['25_0010'],
 		'PAGENAME' => $MSG['25_0079']
 		));

@@ -30,7 +30,7 @@ if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
 	$OFFSET = 0;
 	$PAGE = 1;
 }
-elseif (!isset($_SESSION['RETURN_LIST_OFFSET']) || $_SESSION['RETURN_LIST_OFFSET'] == '')
+elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listauctions.php')
 {
 	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];

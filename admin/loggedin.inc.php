@@ -12,8 +12,27 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (checklogin()) {
+if (checklogin())
+{
 	header("location: login.php");
 	exit;
+}
+else
+{
+	$template->assign_vars(array(
+			'DOCDIR' => $DOCDIR,
+			'THEME' => $system->SETTINGS['theme'],
+			'SITEURL' => $system->SETTINGS['siteurl'],
+			'CHARSET' => $CHARSET,
+			'ADMIN_USER' => $_SESSION['WEBID_ADMIN_USER'],
+			'CURRENT_PAGE' => $current_page
+			));
+	foreach ($LANGUAGES as $lang => $value)
+	{
+		$template->assign_block_vars('langs', array(
+				'LANG' => $value,
+				'B_DEFAULT' => ($lang == $system->SETTINGS['defaultlanguage'])
+				));
+	}
 }
 ?>

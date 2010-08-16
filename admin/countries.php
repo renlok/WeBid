@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -25,7 +26,7 @@ if (isset($_POST['act']))
 	{
 		// we use a single SQL query to quickly do ALL our deletes
 		$query = "DELETE FROM " . $DBPrefix . "countries WHERE ";
-		
+
 		// if this is the first country being deleted it don't
 		// precede it with an " or " in the SQL string
 		for ($i = 0; $i < count($_POST['delete']); $i++)
@@ -38,7 +39,7 @@ if (isset($_POST['act']))
 		}
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
-	
+
 	//update countries with new names
 	for ($i = 0; $i < count($_POST['old_countries']); $i++)
 	{
@@ -50,7 +51,7 @@ if (isset($_POST['act']))
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 	}
-	
+
 	// If a new country was added, insert it into database
 	if (!empty($_POST['new_countries'][(count($_POST['new_countries']) - 1)]))
 	{

@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -36,7 +37,6 @@ loadblock($MSG['30_0030'], $MSG['30_0029'], 'percent', 'catstoshow', $system->SE
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['25_0146']
 		));

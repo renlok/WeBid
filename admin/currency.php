@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -79,7 +80,6 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'LINKURL' => $link,
 		'OPTIONHTML' => $html,
-		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['5004']
 		));

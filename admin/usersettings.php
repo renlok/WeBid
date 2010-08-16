@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -56,7 +57,6 @@ loadblock($MSG['594'], $MSG['5080'], $CKEditor->editor('acceptancetext', stripsl
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['894']
 		));

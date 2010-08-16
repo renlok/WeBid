@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'content';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -27,15 +28,17 @@ if ($_POST['action'] == 'update')
 	$system->SETTINGS['boards'] = $_POST['boards'];
 }
 
+loadblock($MSG['5048'], '', 'yesno', 'boards', $system->SETTINGS['aboutus'], array($MSG['030'], $MSG['029']));
+
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'BOARDS_YES' => ($system->SETTINGS['boards'] == 'y') ? ' checked' : '',
-		'BOARDS_NO' => ($system->SETTINGS['boards'] == 'n') ? ' checked' : ''
+		'TYPENAME' => $MSG['25_0018'],
+		'PAGENAME' => $MSG['5047']
 		));
 
 $template->set_filenames(array(
-		'body' => 'boardsettings.tpl'
+		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
 ?>

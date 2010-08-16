@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$news_id = intval($_POST['id']);
-		$query = "UPDATE " . $DBPrefix . "news SET
+		echo $query = "UPDATE " . $DBPrefix . "news SET
 				title = '" . $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]) . "',
 				content='" . $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']]) . "',
 				suspended=" . intval($_POST['suspended']) . "
@@ -89,6 +89,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TITLE' => $MSG['343'],
 		'BUTTON' => $MSG['530'],
+		'ID' => intval($_GET['id']),
 
 		'B_ACTIVE' => ((isset($suspended) && $suspended == 0) || !isset($suspended)),
 		'B_INACTIVE' => (isset($suspended) && $suspended == 1),

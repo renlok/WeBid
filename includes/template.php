@@ -52,19 +52,18 @@ class template
 	{
 		global $main_path, $system;
 
-		$admindir = (!defined('InAdmin')) ? '' : '/admin';
-		$admincache = (!defined('InAdmin')) ? '' : 'admin';
+		$theme = (!defined('InAdmin')) ? $system->SETTINGS['theme'] : 'admin';
 
-		if (file_exists($main_path . 'themes/' . $system->SETTINGS['theme'] . $admindir))
+		if (file_exists($main_path . 'themes/' . $theme))
 		{
-			$this->root = $main_path . 'themes/' . $system->SETTINGS['theme'] . $admindir;
-			$this->cachepath = $main_path . 'cache/tpl_' . str_replace('_', '-', $system->SETTINGS['theme']) . $admincache . '_';
-			$this->default_root = $main_path . 'themes/default' . $admindir;
-			$this->default_cachepath = $main_path . 'cache/tpl_default' . $admincache . '_';
+			$this->root = $main_path . 'themes/' . $theme;
+			$this->cachepath = $main_path . 'cache/tpl_' . str_replace('_', '-', $theme) . '_';
+			$this->default_root = $main_path . 'themes/default';
+			$this->default_cachepath = $main_path . 'cache/tpl_default' . '_';
 		}
 		else
 		{
-			trigger_error('Template path could not be found: themes/' . $system->SETTINGS['theme'] . $admindir, E_USER_ERROR);
+			trigger_error('Template path could not be found: themes/' . $theme, E_USER_ERROR);
 		}
 
 		$this->_rootref = &$this->_tpldata['.'][0];

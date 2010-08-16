@@ -12,45 +12,46 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
+
 define('InAdmin', 1);
+$current_page = 'contents';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-$id = $_GET['id'];
-if ($id > 0){
-	$sql = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id='".$id."'";
-	$res = mysql_query($sql);
-	if (!$res){
-?>
-	<table width="100%" bgcolor="#FFFFFF" border=0 cellpadding="0" cellspacing="0">
-	<tr>
-	<td>
-	<BR>
-	<CENTER>
-	<BR>
-	<?php print $tlt_font; ?>
-	<B><?php print $MSG['207']; ?></B>
-	</FONT>
-	<BR>
-	
-	<?php
-		echo $err_font.$ERR_066;
-	?>
-	</FONT>
-<?php
-	} else {
-		#// Update user's record
-		$query = "SELECT SUM(rate) as FSUM,count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks
-				  WHERE rated_user_id='$id'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$SUM = mysql_result($res,0,"FSUM");
-		$NUM = mysql_result($res,0,"FNUM");
-		
-		@mysql_query("UPDATE " . $DBPrefix . "users SET rate_sum=$SUM, rate_num=$NUM,reg_date=reg_date WHERE id='$id'");
-	}			
+
+$id = intval($_REQUEST['id']);
+$user_id = intval($_REQUEST['user']);
+
+if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+{
+	$query = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id = " . $id;
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user_id;
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$fb_data = mysql_fetch_assoc($res);
+	$query = "UPDATE " . $DBPrefix . "users SET rate_sum = " . $fb_data['SUM'] . ", rate_num = " . $fb_data['NUM'] . " WHERE id = " . $user_id;
+	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	header('location: userfeedback.php?id=' . $user_id);
+	exit;
 }
+elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+{
+	header('location: userfeedback.php?id=' . $user_id);
+	exit;
+}
+
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'ID' => $id,
+		'USERID' => $user_id,
+		'MESSAGE' => $MSG['832'],
+		'TYPE' => 2
+		));
+
+$template->set_filenames(array(
+		'body' => 'confirm.tpl'
+		));
+$template->display('body');
+
 ?>
-<script type="text/javascript">
-window.location="userfeedback.php?id=<?php echo $id; ?>";
-</script>

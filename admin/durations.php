@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -25,12 +26,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$rebuilt_durations = array();
 	$rebuilt_days = array();
 
-	for ($i = 0; $i < count($_POST['new_durations']); $i++)
+	foreach ($_POST['new_durations'] as $k => $v)
 	{
-		if (!isset($_POST['delete'][$i]) && !empty($_POST['new_durations'][$i]) && !empty($_POST['new_days'][$i]))
+		if (!in_array($k, $_POST['delete']) && !empty($_POST['new_durations'][$k]) && !empty($_POST['new_days'][$k]))
 		{
-			$rebuilt_durations[] = $_POST['new_durations'][$i];
-			$rebuilt_days[] = $_POST['new_days'][$i];
+			$rebuilt_durations[] = $_POST['new_durations'][$k];
+			$rebuilt_days[] = $_POST['new_days'][$k];
 		}
 	}
 
@@ -70,4 +71,5 @@ $template->set_filenames(array(
 		'body' => 'durations.tpl'
 		));
 $template->display('body');
+
 ?>

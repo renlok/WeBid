@@ -87,7 +87,7 @@ else
 	$PAGE = intval($_GET['PAGE']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+$PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 if (!$PAGES) $PAGES = 1;
 $_SESSION['backtolist_page'] = $PAGE;
 // Handle columns sorting variables

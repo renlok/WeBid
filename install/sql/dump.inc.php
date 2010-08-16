@@ -1661,7 +1661,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `authnet_id` varchar(50) default '',
   `authnet_pass` varchar(50) default '',
   `worldpay_id` varchar(50) default '',
-  `moneybookers_address` varchar(50) default '',
+  `moneybookers_email` varchar(50) default '',
   `toocheckout_id` varchar(50) default '',
   `language` char(2) NOT NULL default '',
   PRIMARY KEY  (`id`)

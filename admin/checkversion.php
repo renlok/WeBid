@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'tools';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -39,15 +40,8 @@ else
 	$text = $MSG['30_0212'];
 }
 
-$output =<<<EOD
-$error
-Your Version: <b>$myversion</b><br>
-Current Version: $realversion<br>
-$text
-EOD;
-
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? '<p>' . $ERR . '</p>' : '',
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TEXT' => $text,
 		'MYVERSION' => $myversion,

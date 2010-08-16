@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'users';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -136,44 +137,48 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $TOTALUSERS = mysql_result($res, 0);
 
-// Set offset and limit for pagination
-$LIMIT = 30;
-
-if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1 || !$_GET['PAGE'])
+// get page limits
+if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
 {
 	$OFFSET = 0;
 	$PAGE = 1;
-} else {
-	$PAGE = $_GET['PAGE'];
-	$OFFSET = ($_GET['PAGE'] - 1) * $LIMIT;
 }
-$PAGES = ceil($TOTALUSERS / $LIMIT);
+elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'news.php')
+{
+	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+}
+else
+{
+	$PAGE = intval($_GET['PAGE']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+}
+
 $_SESSION['RETURN_LIST'] = 'listusers.php';
-$_SESSION['RETURN_LIST_PAGE'] = intval($PAGE);
+$_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
+$PAGES = ($TOTALUSERS == 0) ? 1 : ceil($TOTALUSERS / $system->SETTINGS['perpage']);
 
 if (isset($Q))
 {
-	$query = "SELECT * FROM " . $DBPrefix . "users WHERE suspended = " . $Q . " ORDER BY nick LIMIT " . $OFFSET . ", " . $LIMIT;
+	$query = "SELECT * FROM " . $DBPrefix . "users WHERE suspended = " . $Q;
 }
 elseif (isset($_POST['keyword']))
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users
-			WHERE name LIKE '%" . $keyword . "%' OR nick LIKE '%" . $keyword . "%' OR email LIKE '%" . $keyword . "%'
-			ORDER BY nick LIMIT " . $OFFSET . ", " . $LIMIT;
+			WHERE name LIKE '%" . $keyword . "%' OR nick LIKE '%" . $keyword . "%' OR email LIKE '%" . $keyword . "%'";
 }
 else
 {
-	$query = "SELECT * FROM " . $DBPrefix . "users ORDER BY nick LIMIT " . $OFFSET . ", " . $LIMIT;
+	$query = "SELECT * FROM " . $DBPrefix . "users";
 }
+$query .= " ORDER BY nick"; // ordered by
+$query .= " LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-
-$bgcolour = '#FFFFFF';
+$bg = '';
 while ($row = mysql_fetch_assoc($res))
 {
-	$bgcolour = ($bgcolour == '#FFFFFF') ? '#EEEEEE' : '#FFFFFF';
 	$template->assign_block_vars('users', array(
-			'BGCOLOUR' => $bgcolour,
 			'ID' => $row['id'],
 			'NICK' => $row['nick'],
 			'NAME' => $row['name'],
@@ -181,22 +186,26 @@ while ($row = mysql_fetch_assoc($res))
 			'EMAIL' => $row['email'],
 			'NEWSLETTER' => ($row['nletter'] == 1) ? $MSG['030'] : $MSG['029'],
 			'SUSPENDED' => $row['suspended'],
-			'BALANCE' => $system->print_money($row['balance'], false)
+			'BALANCE' => $system->print_money($row['balance'], false),
+			'BALANCE_CLEAN' => $row['balance'],
+			'BG' => $bg
 			));
+	$bg = ($bg == '') ? 'class="bg"' : '';
 }
 
+// get pagenation
 $PREV = intval($PAGE - 1);
 $NEXT = intval($PAGE + 1);
-
 if ($PAGES > 1)
 {
 	$LOW = $PAGE - 5;
 	if ($LOW <= 0) $LOW = 1;
 	$COUNTER = $LOW;
+	echo $LOW;
 	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
 	{
 		$template->assign_block_vars('pages', array(
-				'COUNTER' => $COUNTER
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listusers.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
 				));
 		$COUNTER++;
 	}
@@ -208,10 +217,10 @@ $template->assign_vars(array(
 		'TOTALUSERS' => $TOTALUSERS,
 		'USERFILTER' => (isset($_SESSION['usersfilter'])) ? $_SESSION['usersfilter'] : '',
 
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listusers.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listusers.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
-		'PAGES' => $PAGES,
-        'PREV' => $PREV,
-        'NEXT' => $NEXT
+		'PAGES' => $PAGES
 		));
 		
 $template->set_filenames(array(

@@ -13,208 +13,73 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
+include $include_path . 'functions_rebuild.inc.php';
+include $include_path . 'membertypes.inc.php';
 include 'loggedin.inc.php';
 
-$DBGStr = "DBGStr: ". count($delete). "-" .
-count($old_membertypes) . " <br><br>\n";
+unset($ERR);
 
-include $include_path . 'functions_rebuild.inc.php';
-
-/*
-* When the submit button is pressed (below on the page) on
-* the first call to countires.php it calls countires.php
-* again but with a form variable named "act" being sent as true
-* (see the submit input in the HTML below).  This causes the execution
-* of the below code.
-*/
-
-if (isset($_POST['act'])) {
-  $old_membertypes = $_POST['old_membertypes'];
-  $new_membertypes = $_POST['new_membertypes'];
-  $new_membertype = $_POST['new_membertype'];
-  $delete = $_POST['delete'];
-	/*
-	*	For a description of how the arrays (delete[], new_countries[],
-	*	old_countries[]) are set up see the body of the HTML below.
-	*/
-	// we use a single SQL query to quickly do ALL our deletes
-	$sqlstr = "DELETE FROM " . $DBPrefix . "membertypes WHERE id IN (";
-	/*
-	* Delete anything marked for deletion in the delete[]
-	* array.
-	*/
-	// if this is the first country being deleted it don't
-	// precede it with an " or " in the SQL string
-	if (is_array($delete)) {
-		$idslist=join(",",$delete);
-		$sqlstr.=$idslist.")";
-		$DBGStr=$sqlstr;
-		// If the delete array is > 0 in size
-		if (count($delete)) {
-			$result = mysql_query($sqlstr);
-			if ( !$result ) {
-				echo "$DBGStr";
-				$TPL_info_err = $ERR_001;
-			} else {
-				$TPL_info_err = "";
-			}
-		}
-	}
-	/*
-	* Now we update all the countries where old_countries
-	* isn't the same as new_countries (saving ourselves a
-	* lot of queries.
-	*/
-	if (is_array($old_membertypes)) {
-		foreach ($old_membertypes as $id => $val) {
-			if ( $val != $new_membertypes[$id]) {
-				$sqlstr = "UPDATE " . $DBPrefix . "membertypes SET
-							feedbacks = '" . $new_membertypes[$id]['feedbacks'] . "', 
-							membertype = '',
-							icon = '" . $system->cleanvars($new_membertypes[$id]['icon']) . "' 
-							WHERE id = " . $id;
-				$result = mysql_query($sqlstr);
-				if (!$result) {
-					$TPL_info_err = $ERR_001;
-					echo $sqlstr;
-				}
-			}
-		}
-	}
+if (isset($_POST['action']) && $_POST['action'] = 'update')
+{
+	$old_membertypes = $_POST['old_membertypes'];
+	$new_membertypes = $_POST['new_membertypes'];
+	$new_membertype = $_POST['new_membertype'];
+	$delete = $_POST['delete'];
 	
-	/* If a new membertype was added, insert it into database */
-	if ( !empty($new_membertype['feedbacks']) )
+	// delete with the deletes
+	if (is_array($delete))
 	{
-		$sqlstr = "INSERT INTO " . $DBPrefix . "membertypes VALUES (\"\",'";
-		$sqlstr .= $new_membertype['feedbacks'] . "','";
-		$sqlstr .= $new_membertype['membertype'] . "','";
-		$sqlstr .= "','";
-		$sqlstr .= $system->cleanvars($new_membertype['icon']) . "');";
-		$result = mysql_query($sqlstr);
-		if (!$result) {
-			$TPL_info_err = $ERR_001;
-			echo "$DBGStr";
+		$idslist = implode(',', $delete);
+		$query = "DELETE FROM " . $DBPrefix . "membertypes WHERE id IN (" . $idslist . ")";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	}
+
+	// now update everything else
+	if (is_array($old_membertypes))
+	{
+		foreach ($old_membertypes as $id => $val)
+		{
+			if ( $val != $new_membertypes[$id])
+			{
+				$query = "UPDATE " . $DBPrefix . "membertypes SET
+						feedbacks = '" . $new_membertypes[$id]['feedbacks'] . "', 
+						icon = '" . $system->cleanvars($new_membertypes[$id]['icon']) . "' 
+						WHERE id = " . $id;
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
 		}
 	}
 	
-	rebuild_table_file("membertypes");
-	
+	// If a new membertype was added, insert it into database
+	if (!empty($new_membertype['feedbacks']))
+	{
+		$query = "INSERT INTO " . $DBPrefix . "membertypes VALUES (NULL, '" . $new_membertype['feedbacks'] . "', '"
+				. $new_membertype['membertype'] . "', '" . "', '" . $system->cleanvars($new_membertype['icon']) . "');";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	}
+	rebuild_table_file('membertypes');
+	$ERR = $MSG['836'];
 }
-if (file_exists( "../includes/membertypes.inc.php"))
-	include "../includes/membertypes.inc.php";
-else {
-	rebuild_table_file("membertypes");
-	include "../includes/membertypes.inc.php";
+
+foreach ($membertypes as $id => $quest)
+{
+    $template->assign_block_vars('mtype', array(
+			'ID' => $id,
+			'FEEDBACK' => $quest['feedbacks'],
+			'ICON' => $quest['icon']
+			));
 }
-rebuild_table_file("membertypes");
+
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : ''
+		));
+		
+$template->set_filenames(array(
+		'body' => 'membertypes.tpl'
+		));
+$template->display('body');
 
 ?>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="style.css" />
-<SCRIPT type="text/javascript">
-function selectAll(formObj, isInverse) 
-{
-   for (var i=0;i < formObj.length;i++) 
-   {
-	  fldObj = formObj.elements[i];
-	  if (fldObj.type == 'checkbox' && fldObj.name.substring(0,6)=='delete')
-	  { 
-		 if (isInverse)
-			fldObj.checked = (fldObj.checked) ? false : true;
-		 else fldObj.checked = true; 
-	   }
-   }
-}
-</SCRIPT>
-
-</head>
-<body style="margin:0;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-	<td background="images/bac_barint.gif"><table width="100%" border="0" cellspacing="5" cellpadding="0">
-		<tr>
-		  <td width="30"><img src="images/i_set.gif" width="21" height="19"></td>
-		  <td class=white><?php echo $MSG['5142']; ?>&nbsp;&gt;&gt;&nbsp;<?php echo $MSG['25_0169']; ?>
-			</td>
-		</tr>
-	  </table></td>
-  </tr>
-  <tr>
-	<td align="center" valign="middle">&nbsp;</td>
-  </tr>
-  <tr>
-	<td align="center" valign="middle"><?php print $TPL_info_err . ""?>
-	  <table border=0 width=100% cellpadding=0 cellspacing=0 bgcolor="#FFFFFF">
-		<tr>
-		  <td>
-			  <BR>
-			<form NAME=conf ACTION=membertypes.php method="post">
-			  <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="0083D7" align="center">
-				<tr>
-				  <td align="center" class=title><?php print $MSG['25_0169']; ?></td>
-				</tr>
-				<tr>
-				  <td><table width=100% cellpadding=2 bgcolor="#FFFFFF">
-					  <tr>
-						<td width=20></td>
-						<td colspan="4">
-						  <?php 
-						  print $MSG['25_0170'];
-						  if ($$ERR) {
-						  	print "<FONT COLOR=red><BR><BR>".$$ERR;
-						  }
-						  ?>
-						   </td>
-					  </tr>
-					  <tr>
-						<td width=20></td>
-						<td bgcolor="#EEEEEE"> <B> <?php print $MSG['25_0171']; ?> </B> </td>
-						<td bgcolor="#EEEEEE"> <B> <?php print $MSG['25_0167']; ?> </B> </td>
-						<td bgcolor="#EEEEEE" width=20></td>
-						<td bgcolor="#EEEEEE"> <B> <?php print $MSG['25_0168']; ?> </B> </td>
-					  </tr>
-					  <?php
-					  foreach ($membertypes as $id => $quest) {
-					  ?>
-					  <tr>
-						<td width=20></td>
-						<td><input type=hidden NAME=old_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>'>
-						  <input type=text NAME=new_membertypes[<?php echo $id; ?>][feedbacks] VALUE='<?php echo $quest['feedbacks']; ?>' SIZE=5>
-						</td>
-						<td><input type=hidden NAME=old_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>'>
-						  <input type=text NAME=new_membertypes[<?php echo $id; ?>][icon] VALUE='<?php echo $quest['icon']; ?>' SIZE=30></td>
-						<td><IMG SRC='../images/icons/<?php echo $quest['icon']; ?>' align='middle'> </td>
-						<td><input type=checkbox NAME=delete[] VALUE='<?php echo $id; ?>'>
-						</td>
-					  </tr>
-					  <?php
-					  }
-					  ?>
-					  <tr>
-						<td width=20>
-						  Add</td>
-						<td><input type='text' NAME='new_membertype[feedbacks]' SIZE='5'></td>
-						<td><input type='text' NAME='new_membertype[icon]' SIZE='30'></td>
-						<td colspan=2 align=right>
-						<a href="javascript: void(0)" onClick="selectAll(document.forms[0],1)"><?php echo $MSG['30_0102']; ?></A></td>
-					  </tr>
-					  <tr>
-						<td width=20></td>
-						<td colspan="6" align="center"><input type="submit" name="act" value="<?php print $MSG['089']; ?>">
-						</td>
-					  </tr>
-					</table>
-					<input type=hidden name=new_membertypes[<?php echo $id; ?>][membertype] value='<?php echo $quest['membertype']; ?>' size=30></td>
-				</tr>
-			  </table>
-			</form></td>
-		</tr>
-	  </table></td>
-  </tr>
-</table>
-</body>
-</html>
-

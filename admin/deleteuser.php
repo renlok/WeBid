@@ -21,53 +21,6 @@ include $include_path."countries.inc.php";
 unset($ERR);
 $id = intval($_REQUEST['id']);
 
-function load_page($id, $question)
-{
-	global $template, $_GET, $MSG, $system, $DBPrefix;
-
-	// load the page
-	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $id;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$user_data = mysql_fetch_assoc($res);
-
-	$birth_day = substr($user_data['birthdate'], 6, 2);
-	$birth_month = substr($user_data['birthdate'], 4, 2);
-	$birth_year = substr($user_data['birthdate'], 0, 4);
-
-	if ($system->SETTINGS['datesformat'] == 'USA')
-	{
-		$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
-	}
-	else
-	{
-		$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
-	}
-
-	$template->assign_vars(array(
-			'ACTION' => $MSG['304'],
-			'REALNAME' => $user_data['name'],
-			'USERNAME' => $user_data['nick'],
-			'EMAIL' => $user_data['email'],
-			'ADDRESS' => $user_data['address'],
-			'PROV' => $user_data['prov'],
-			'ZIP' => $user_data['zip'],
-			'COUNTRY' => $user_data['country'],
-			'PHONE' => $user_data['phone'],
-			'RATE' => ($user_data['rate_num'] == 0) ? 0 : ($user_data['rate_sum'] / $user_data['rate_num']),
-			'DOB' => $birthdate,
-			'QUESTION' => $question,
-			'MODE' => '',
-			'ID' => $_GET['id'],
-			'OFFSET' => $_GET['offset']
-			));
-
-	$template->set_filenames(array(
-			'body' => 'excludeuser.tpl'
-			));
-	$template->display('body');
-}
-
 // Data check
 if (empty($id) || $id <= 0)
 {
@@ -75,10 +28,10 @@ if (empty($id) || $id <= 0)
 	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
+$has_auctions = false;
+$has_bids = false;
+if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 {
-	$has_auctions = false;
-	$has_bids = false;
 	$catscontrol = new MPTTcategories();
 
 	// Check if the users has some auction
@@ -89,20 +42,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	if ($num_auctions > 0)
 	{
-		$ERR = $MSG['420'];
-		$i = 0;
-		while ($row = mysql_fetch_assoc($res))
-		{
-			if ($i >= 10)
-				break;
-			$has_auctions = true;
-			$ERR .= $row['id'] . ' - <a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '" target="_blank">' . $row['title'] . '</a><br>';
-			$i++;
-		}
-		if ($num_auctions != $i)
-		{
-			$ERR .= '<p>' . sprintf($MSG['568'], $num_auctions - $i) . '</p>';
-		}
+		$has_auctions = true;
 	}
 
 	// Check if the user is BIDDER in some auction
@@ -114,14 +54,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if ($num_bids > 0)
 	{
 		$has_bids = true;
-		$ERR .= sprintf($MSG['421'], $num_auctions);
-	}
-
-	if (!isset($_POST['ignore']) && ($has_bids || $has_auctions))
-	{
-		$ERR .= '<input type="hidden" name="ignore" value="true">';
-		load_page($id, $ERR . '<p>' . $MSG['419'] . '</p>');
-		exit;
 	}
 
 	// check if user is suspended or not
@@ -198,9 +130,66 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
-	header('location: listusers.php?PAGE=' . intval($_REQUEST['offset']));
+	header('location: listusers.php');
+	exit;
+}
+elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+{
+	header('location: listusers.php');
 	exit;
 }
 
-load_page($id, $MSG['307']);
+// Check if the users has some auction
+$query = "SELECT id, title FROM " . $DBPrefix . "auctions WHERE user = " . $id;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$num_auctions = mysql_num_rows($res);
+
+if ($num_auctions > 0)
+{
+	$ERR = $MSG['420'];
+	$i = 0;
+	while ($row = mysql_fetch_assoc($res))
+	{
+		if ($i >= 10)
+			break;
+		$has_auctions = true;
+		$ERR .= $row['id'] . ' - <a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '" target="_blank">' . $row['title'] . '</a><br>';
+		$i++;
+	}
+	if ($num_auctions != $i)
+	{
+		$ERR .= '<p>' . sprintf($MSG['568'], $num_auctions - $i) . '</p>';
+	}
+}
+
+// Check if the user is BIDDER in some auction
+$query = "SELECT * FROM " . $DBPrefix . "bids WHERE bidder = " . $id;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$num_bids = mysql_num_rows($res);
+
+if ($num_bids > 0)
+{
+	$has_bids = true;
+	$ERR .= sprintf($MSG['421'], $num_auctions);
+}
+
+$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $id;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$username = mysql_result($res,0);
+
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'ID' => $id,
+		'MESSAGE' => sprintf($MSG['835'], $username),
+		'TYPE' => 1
+		));
+
+$template->set_filenames(array(
+		'body' => 'confirm.tpl'
+		));
+$template->display('body');
+
 ?>

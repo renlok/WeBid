@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'content';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -37,12 +38,9 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 $query = "SELECT * FROM " . $DBPrefix . "community ORDER BY name";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$bgcolour = '#FFFFFF';
 while ($row = mysql_fetch_array($res))
 {
-	$bgcolour = ($bgcolour == '#FFFFFF') ?  '#EEEEEE' : '#FFFFFF';
 	$template->assign_block_vars('boards', array(
-			'BGCOLOUR' => ($row['active'] == 1) ? $bgcolour : '#CCCCFF',
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'ACTIVE' => $row['active'],
@@ -52,7 +50,6 @@ while ($row = mysql_fetch_array($res))
 }
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
 

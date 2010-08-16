@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'fees';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -30,9 +31,9 @@ $varialbes = array(
 	'paypal_address' => $MSG['720'],
 	'authnet_address' => $MSG['773'],
 	'authnet_password' => $MSG['774'],
-	'worldpay_id' => $MSG['824'],
+	'worldpay_address' => $MSG['824'],
 	'moneybookers_address' => $MSG['825'],
-	'toocheckout_id' => $MSG['826']
+	'toocheckout_address' => $MSG['826']
 	);
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
@@ -76,10 +77,10 @@ for ($i = 0; $i < count($gateways); $i++)
 			'ENABLED' => ($gateway_data[$gateway . '_active'] == 1) ? 'checked' : '',
 			'REQUIRED' => ($gateway_data[$gateway . '_required'] == 1) ? 'checked' : '',
 			'ADDRESS' => $gateway_data[$gateway . '_address'],
-			'PASSWORD' => $gateway_data[$gateway . '_password'],
+			'PASSWORD' => (isset($gateway_data[$gateway . '_password'])) ? $gateway_data[$gateway . '_password'] : '',
 			'WEBSITE' => $links[$gateway],
 			'ADDRESS_NAME' => $varialbes[$gateway . '_address'],
-			'ADDRESS_PASS' => $varialbes[$gateway . '_password'],
+			'ADDRESS_PASS' => (isset($varialbes[$gateway . '_password'])) ? $varialbes[$gateway . '_password'] : '',
 
 			'B_PASSWORD' => (isset($gateway_data[$gateway . '_password']))
 			));
@@ -94,4 +95,5 @@ $template->set_filenames(array(
 		'body' => 'fee_gateways.tpl'
 		));
 $template->display('body');
+
 ?>

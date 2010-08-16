@@ -23,33 +23,15 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $STATSSETTINGS = mysql_fetch_array($res);
 
-$THISDAY	= gmdate('j');
-$THISMONTH	= gmdate('n');
+$THISDAY	= gmdate('d');
+$THISMONTH	= gmdate('m');
 $THISYEAR	= gmdate('Y');
 
 if ($STATSSETTINGS['activate'] == 'y')
 {
 	// Users accesses
 	if ($STATSSETTINGS['accesses'] == 'y')
-	{
-		// Did the month change? --
-		$query = "SELECT month from " . $DBPrefix . "currentaccesses LIMIT 1";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) > 0 && mysql_result($res, 0, 'month') != $THISMONTH)
-		{
-			// Archive current stats
-			$query = "SELECT month, year, SUM(pageviews) AS PG, SUM(uniquevisitors) as UN, SUM(usersessions) as SE FROM " . $DBPrefix . "currentaccesses GROUP BY month";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$TMP = mysql_fetch_array($res);
-			$query = "INSERT INTO " . $DBPrefix . "accesseshistoric VALUES (
-					  '" . $TMP['month'] . "', '" . $TMP['year'] . "', " . $TMP['PG'] . ", " . $TMP['UN'] . ", " . $TMP['SE'] . ")";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			$query = "DELETE FROM " . $DBPrefix . "currentaccesses";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		}
-		
+	{		
 		// check cookies and session vars
 		if (isset($_SESSION['USER_STATS_SESSION']))
 		{

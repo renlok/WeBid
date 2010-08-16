@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -28,13 +29,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['25_0155'];
 }
 
-loadblock('', $MSG['25_0217'], 'select3contact', 'contactseller', $system->SETTINGS['contactseller'], array($MSG['25_0218'], $MSG['25_0219'], $MSG['25_0220']));
+loadblock($MSG['25_0216'], $MSG['25_0217'], 'select3contact', 'contactseller', $system->SETTINGS['contactseller'], array($MSG['25_0218'], $MSG['25_0219'], $MSG['25_0220']));
 loadblock($MSG['30_0085'], $MSG['30_0084'], 'yesno', 'winner_address', $system->SETTINGS['winner_address'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'pre',
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['25_0216']
 		));

@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -88,9 +89,7 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 while ($row = mysql_fetch_array($res))
 {
-	$bgcolour = ($bgcolour == '#FFFFFF') ?  '#EEEEEE' : '#FFFFFF';
 	$template->assign_block_vars('increments', array(
-			'BGCOLOUR' => $bgcolour,
 			'ID' => $row['id'],
 			'HIGH' => $system->print_money_nosymbol($row['high']),
 			'LOW' => $system->print_money_nosymbol($row['low']),

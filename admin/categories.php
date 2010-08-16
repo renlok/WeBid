@@ -13,6 +13,7 @@
  ***************************************************************************/
  
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -42,12 +43,12 @@ function rebuild_cat_file()
 		$cats[$catarr['cat_id']] = $catarr['cat_name'];
 		$allcats[] = $catarr;
 	}
-	
+
 	$output = "<?php\n";
 	$output.= "$" . "category_names = array(\n";
-	
+
 	$num_rows = count($cats);
-	
+
 	$i = 0;
 	foreach ($cats as $k => $v)
 	{
@@ -58,68 +59,141 @@ function rebuild_cat_file()
 		else
 			$output .= "\n";
 	}
-	
+
 	$output .= ");\n\n";
-	
+
 	$output .= "$" . "category_plain = array(\n0 => ''";
-	
+
 	$output .= search_cats(0, 0);
-	
+
 	$output .= ");\n?>";
-	
-	$handle = fopen ($main_path . "language/" . $system->SETTINGS['defaultlanguage'] . "/categories.inc.php", "w");
+
+	$handle = fopen ($main_path . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 }
 
 if (isset($_POST['action']))
 {
-	//update all categories that arnt being deleted
-	if (isset($_POST['categories']) && is_array($_POST['categories']))
+	if ($_POST['action'] == $MSG['089'])
 	{
-		foreach ($_POST['categories'] as $k => $v)
+		//update all categories that arnt being deleted
+		if (isset($_POST['categories']) && is_array($_POST['categories']))
 		{
-			if (!isset($_POST['delete'][$k]))
+			foreach ($_POST['categories'] as $k => $v)
 			{
-				$query = "UPDATE " . $DBPrefix . "categories SET cat_name = '" . $system->cleanvars($_POST['categories'][$k]) . "',
-						cat_colour = '" . mysql_escape_string($_POST['colour'][$k]) . "', cat_image = '" . mysql_escape_string($_POST['image'][$k]) . "'
-						WHERE cat_id = " . intval($k);
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				if (!isset($_POST['delete'][$k]))
+				{
+					$query = "UPDATE " . $DBPrefix . "categories SET cat_name = '" . $system->cleanvars($_POST['categories'][$k]) . "',
+							cat_colour = '" . mysql_escape_string($_POST['colour'][$k]) . "', cat_image = '" . mysql_escape_string($_POST['image'][$k]) . "'
+							WHERE cat_id = " . intval($k);
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
 			}
 		}
-	}
-	//delete categories that are
-	if (isset($_POST['delete']) && is_array($_POST['delete']))
-	{
-		foreach ($_POST['delete'] as $k => $v)
+		//add category if need be
+		if (!empty($_POST['new_category']) && isset($_POST['parent']))
 		{
-			//never delete categories without using this function it will mess up your database big time
-			$catscontrol->delete(intval($k));
+			$add_data = array(
+				'cat_name' => $system->cleanvars($_POST['new_category']),
+				'cat_colour' => $_POST['cat_colour'],
+				'cat_image' => $_POST['cat_image']
+				);
+			$catscontrol->add($_POST['parent'], 0, $add_data);
 		}
-	}
-	//add category if need be
-	if (!empty($_POST['new_category']) && isset($_POST['parent']))
-	{
-		$add_data = array(
-			'cat_name' => $system->cleanvars($_POST['new_category']),
-			'cat_colour' => $_POST['cat_colour'],
-			'cat_image' => $_POST['cat_image']
-			);
-		$catscontrol->add($_POST['parent'], 0, $add_data);
-	}
-	if (!empty($_POST['mass_add']) && isset($_POST['parent']))
-	{
-		$add = explode("\n", $_POST['mass_add']);
-		if (is_array($add))
+		if (!empty($_POST['mass_add']) && isset($_POST['parent']))
 		{
-			foreach ($add as $v)
+			$add = explode("\n", $_POST['mass_add']);
+			if (is_array($add))
 			{
-				$add_data = array('cat_name' => $system->cleanvars($v));
-				$catscontrol->add($_POST['parent'], 0, $add_data);
+				foreach ($add as $v)
+				{
+					$add_data = array('cat_name' => $system->cleanvars($v));
+					$catscontrol->add($_POST['parent'], 0, $add_data);
+				}
 			}
 		}
+		if (isset($_POST['delete']) && is_array($_POST['delete']))
+		{
+			// Get data from the database
+			$query = "SELECT COUNT(a.id) as COUNT, c.* FROM " . $DBPrefix . "categories c
+						LEFT JOIN " . $DBPrefix . "auctions a ON ( a.category = c.cat_id )
+						WHERE c.cat_id IN (" . implode(',', $_POST['delete']) . ")
+						GROUP BY c.cat_id ORDER BY cat_name";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$message = $MSG['843'] . '<table cellpadding="0" cellspacing="0">';
+			$names = array();
+			$counter = 0;
+			while ($row = mysql_fetch_assoc($res))
+			{
+				$names[] = $row['cat_name'] . '<input type="hidden" name="delete[' . $row['id'] . ']" value="delete">';
+				if ($row['COUNT'] > 0 || $row['left_id'] != ($row['right_id'] - 1))
+				{
+					$message .= '<tr>';
+					$message .= '<td>' . $row['cat_name'] . '</td><td>';
+					$message .= '<select name="delete[' . $row['id'] . ']">';
+					$message .= '<option value="delete">' . $MSG['008'] . '</option>';
+					$message .= '<option value="move">' . $MSG['840'] . ': </option>';
+					$message .= '</select>';
+					$message .= '</td>';
+					$message .= '<td><input type="text" size="5" name="moveid[' . $row['id'] . ']"></td>';
+					$message .= '</tr>';
+					$counter++;
+				}
+			}
+			$message .= '</table>';
+			// build message
+			$template->assign_vars(array(
+					'ERROR' => (isset($ERR)) ? $ERR : '',
+					'ID' => '',
+					'MESSAGE' => (($counter > 0) ? $message : '') . '<p>' . $MSG['838'] . implode(', ', $names) . '</p>',
+					'TYPE' => 1
+					));
+
+			$template->set_filenames(array(
+					'body' => 'confirm.tpl'
+					));
+			$template->display('body');
+			exit;
+		}
+		rebuild_cat_file();
+		include 'util_cc1.php';
 	}
-	rebuild_cat_file();
-	include 'util_cc1.php';
+
+	if ($_POST['action'] == $MSG['030'])
+	{
+		//delete categories that are selected
+		if (isset($_POST['delete']) && is_array($_POST['delete']))
+		{
+			foreach ($_POST['delete'] as $k => $v)
+			{
+				$k = intval($k);
+				if ($v == 'delete')
+				{
+					//never delete categories without using this function it will mess up your database big time
+					$catscontrol->delete($k);
+				}
+				elseif ($v == 'move')
+				{
+					if (isset($_POST['moveid'][$k]) && !empty($_POST['moveid'][$k]) && is_numeric($_POST['moveid'][$k]))
+					{
+						// first move the parent
+						$catscontrol->move($k, $_POST['moveid'][$k]);
+						// remove the parent and raise the children up a level
+						$catscontrol->delete($k, true);
+						$query = "UPDATE " . $DBPrefix . "auctions SET category = " . $_POST['moveid'][$k] . " WHERE category = " . $k;
+						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					}
+					else
+					{
+						$ERR = $MSG['844'];
+					}
+				}
+			}
+		}
+		rebuild_cat_file();
+		include 'util_cc1.php';
+	}
 }
 
 //show the page... 
@@ -169,7 +243,8 @@ for ($i = 0; $i < count($children); $i++)
 			'CAT_IMAGE' => $child['cat_image'],
 			'ROW_COLOUR' => $colourrow[$c],
 
-			'B_CAN_DELETE' => ($child['left_id'] == ($child['right_id'] - 1) && $child['sub_counter'] == 0)
+			'B_SUBCATS' => ($child['left_id'] != ($child['right_id'] - 1)),
+			'B_AUCTIONS' => ($child['counter'] > 0)
 			));
 	$c = ($c == 1) ? 0 : 1;
 }

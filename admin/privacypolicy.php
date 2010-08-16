@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'contents';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -44,7 +45,6 @@ loadblock($MSG['404'], $MSG['5080'], $CKEditor->editor('privacypolicytext', stri
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'con',
 		'TYPENAME' => $MSG['25_0018'],
 		'PAGENAME' => $MSG['402']
 		));

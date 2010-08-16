@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'auctions';
 include '../includes/common.inc.php';
 include $include_path . 'dates.inc.php';
 include $include_path . 'functions_admin.php';
@@ -42,10 +43,8 @@ if (mysql_num_rows($res) == 0)
 	header('location: ' . $URL);
 	exit;
 }
-else
-{
-	$AUCTION = mysql_fetch_array($res);
-}
+
+$AUCTION = mysql_fetch_assoc($res);
 
 // Retrieve winners
 $query = "SELECT w.bid, w.qty, u.name, u.nick FROM " . $DBPrefix . "winners w
@@ -54,7 +53,7 @@ $query = "SELECT w.bid, w.qty, u.name, u.nick FROM " . $DBPrefix . "winners w
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $winners = false;
-while ($row = mysql_fetch_array($res))
+while ($row = mysql_fetch_assoc($res))
 {
 	$winners = true;
 	$template->assign_block_vars('winners', array(
@@ -72,7 +71,7 @@ $query = "SELECT b.bid, b.quantity, u.name, u.nick FROM " . $DBPrefix . "bids b
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $bids = false;
-while ($row = mysql_fetch_array($res))
+while ($row = mysql_fetch_assoc($res))
 {
 	$bids = true;
 	$template->assign_block_vars('bids', array(
@@ -93,7 +92,7 @@ $template->assign_vars(array(
 		'STARTS' => FormatDate($AUCTION['starts']),
 		'ENDS' => FormatDate($AUCTION['ends']),
 		'AUCTION_TYPE' => $system->SETTINGS['auction_types'][$AUCTION['auction_type']],
-		
+
 		'B_WINNERS' => $winners,
 		'B_BIDS' => $bids
 		));

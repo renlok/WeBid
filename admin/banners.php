@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'banners';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -32,7 +33,6 @@ loadblock($MSG['597'], '', 'batch', 'banners', $system->SETTINGS['banners'], arr
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'ban',
 		'TYPENAME' => $MSG['25_0011'],
 		'PAGENAME' => $MSG['5205']
 		));

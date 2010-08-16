@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'users';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -43,6 +44,7 @@ $STATUS = array(
 	2 => '<span style="color:#FF0000"><b>Not active</b></span>'
 );
 
+$bg = '';
 while ($User = mysql_fetch_assoc($res))
 {
     $created = substr($User['created'], 4, 2) . '/' . substr($User['created'], 6, 2) . '/' . substr($User['created'], 0, 4);
@@ -60,12 +62,13 @@ while ($User = mysql_fetch_assoc($res))
 			'USERNAME' => $User['username'],
 			'STATUS' => $STATUS[$User['status']],
 			'CREATED' => $created,
-			'LASTLOGIN' => $lastlogin
+			'LASTLOGIN' => $lastlogin,
+			'BG' => $bg
 			));
+	$bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
 		
@@ -73,4 +76,5 @@ $template->set_filenames(array(
 		'body' => 'adminusers.tpl'
 		));
 $template->display('body');
+
 ?>

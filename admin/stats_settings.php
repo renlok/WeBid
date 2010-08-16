@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'contents';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -60,10 +61,8 @@ loadblock('' , '', 'checkbox', 'domains', $statssettings['domains'], array($MSG[
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'con',
 		'TYPENAME' => $MSG['25_0023'],
-		'PAGENAME' => $MSG['5142'],
-		'TITLEBARNAME' => $MSG['5141']
+		'PAGENAME' => $MSG['5142']
 		));
 
 $template->set_filenames(array(

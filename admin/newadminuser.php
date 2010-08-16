@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'users';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -59,12 +60,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 loadblock($MSG['003'], '', 'text', 'username', $system->SETTINGS['username']);
 loadblock($MSG['004'], '', 'password', 'password', $system->SETTINGS['password']);
 loadblock($MSG['564'], '', 'password', 'repeatpassword', $system->SETTINGS['repeatpassword']);
-loadblock($MSG['565'], '', 'batch', 'status', $system->SETTINGS['status'], array($MSG['566'], $MSG['567']));
+loadblock('', '', 'batch', 'status', $system->SETTINGS['status'], array($MSG['566'], $MSG['567']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'use',
 		'TYPENAME' => $MSG['25_0010'],
 		'PAGENAME' => $MSG['367']
 		));

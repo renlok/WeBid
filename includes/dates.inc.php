@@ -159,16 +159,4 @@ if (!function_exists('ArrangeDateNoCorrection'))
 		return $return;
 	}
 }
-
-if (!function_exists('ArrangeDateNoCorrMesCompleto'))
-{
-	function ArrangeDateNoCorrMesCompleto($day, $month, $year, $hours, $minutes)
-	{
-		global $MSG;
-		$DATE = gmmktime($hours, $minutes, 0, $month, $day, $year);
-		$mth = 'MON_0' . gmdate('m', $DATE) . 'E';
-		$return = $MSG[$mth] . ' ' . gmdate('d, Y - H:i', $DATE);
-		return $return;
-	}
-}
 ?>

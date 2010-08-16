@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'tools';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -70,7 +71,6 @@ loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', stripslashes(
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'too',
 		'TYPENAME' => $MSG['5436'],
 		'PAGENAME' => $MSG['_0001']
 		));

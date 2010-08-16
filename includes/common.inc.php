@@ -16,7 +16,13 @@ session_start();
 error_reporting(E_ALL ^ E_NOTICE);
 // error_reporting(E_ALL); // use this for debugging
 define('InWeBid', 1);
-include 'config.inc.php';
+// file check & 
+if(!@include('config.inc.php'))
+{
+	$install_path = (!defined('InAdmin')) ? 'install/install.php' : '../install/install.php';
+	header('location: ' . $install_path);
+	exit;
+}
 
 $MD5_PREFIX = 'fhQYBpS5FNs4';
 $include_path = $main_path . 'includes/'; 

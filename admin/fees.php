@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'fees';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -150,7 +151,7 @@ $template->assign_vars(array(
 		));
 
 $template->set_filenames(array(
-		'body' => 'adminfees.tpl'
+		'body' => 'fees.tpl'
 		));
 $template->display('body');
 ?>

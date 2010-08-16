@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'contents';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -76,7 +77,7 @@ foreach ($LANGUAGES as $k => $v)
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'SITEURL' => $system->SETTINGS['siteurl'],
+		'FAQ_NAME' => $tr[$system->SETTINGS['defaultlanguage']],
 		'ID' => $_GET['id']
 		));
 

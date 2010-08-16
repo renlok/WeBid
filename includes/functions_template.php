@@ -111,9 +111,9 @@ class template_compile
 		$php_blocks = $matches[1];
 		$code = preg_replace('#<!-- PHP -->.*?<!-- ENDPHP -->#s', '<!-- PHP -->', $code);
 
-		preg_match_all('#<!-- INCLUDE ([a-zA-Z0-9\_\-\+\./]+) -->#', $code, $matches);
+		preg_match_all('#<!-- INCLUDE ([a-zA-Z0-9\_\-\+\./{}]+) -->#', $code, $matches);
 		$include_blocks = $matches[1];
-		$code = preg_replace('#<!-- INCLUDE [a-zA-Z0-9\_\-\+\./]+ -->#', '<!-- INCLUDE -->', $code);
+		$code = preg_replace('#<!-- INCLUDE [a-zA-Z0-9\_\-\+\./{}]+ -->#', '<!-- INCLUDE -->', $code);
 
 		preg_match_all('#<!-- INCLUDEPHP ([a-zA-Z0-9\_\-\+\./]+) -->#', $code, $matches);
 		$includephp_blocks = $matches[1];
@@ -177,7 +177,11 @@ class template_compile
 				case 'INCLUDE':
 					$temp = array_shift($include_blocks);
 					$compile_blocks[] = '<?php ' . $this->compile_tag_include($temp) . ' ?>';
-					$this->template->_tpl_include($temp, false);
+					// dont check variable file includes
+					if (!preg_match('#\{([a-z0-9_-]+)\}#is', $temp))
+					{
+						$this->template->_tpl_include($temp, false);
+					}
 				break;
 
 				case 'INCLUDEPHP':
@@ -566,6 +570,15 @@ class template_compile
 	*/
 	function compile_tag_include($tag_args)
 	{
+		// add variables
+		preg_match_all('#\{([a-z0-9_-]+)\}#is', $tag_args, $matches);
+		if (count($matches[0]) > 0)
+		{
+			for ($i = 0, $count = count($matches[1]); $i < $count; $i++)
+			{
+				$tag_args = str_replace($matches[0][$i], "' . ((isset(\$this->_rootref['" . $matches[1][$i] . "'])) ? \$this->_rootref['" . $matches[1][$i] . "'] : '') . '", $tag_args);
+			}
+		}
 		return "\$this->_tpl_include('$tag_args');";
 	}
 

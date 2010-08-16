@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -92,8 +93,7 @@ loadblock($MSG['346'], $MSG['345'], 'dropdown', 'timecorrection', $system->SETTI
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'OPTIONHTML' => $html,	
-		'TYPE' => 'pre',
+		'OPTIONHTML' => $html,
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['344'],
 		'DROPDOWN' => $html

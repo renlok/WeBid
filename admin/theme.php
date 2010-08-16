@@ -17,10 +17,10 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$theme_root = realpath($main_path . 'themes/'); //theres no point repeatedly defining this
+echo $theme_root = $main_path . 'themes/'; //theres no point repeatedly defining this
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']))
+	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']) && $_POST['dtheme'] != 'admin')
 	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
@@ -36,8 +36,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'] == 'edit'))
 {
-	$filename = ($_POST['action'] == 'new_filename') ? $_POST['filename'] : $_POST['filename'];
-	$fh = fopen($theme_root . $_POST['theme'] . '/' . $filename, 'w') or die("can't open file");
+	$filename = ($_POST['action'] == 'add') ? $_POST['new_filename'] : $_POST['filename'];
+	$fh = fopen($theme_root . $_POST['theme'] . '/' . $filename, 'w') or die("can't open file " . $theme_root . $_POST['theme'] . '/' . $filename);
 	fwrite($fh, $_POST['content']);
 	fclose($fh);
 }
@@ -53,15 +53,12 @@ if ($dir = @opendir($theme_root))
 		{
 			$THEMES[$atheme] = $atheme;
 			$bgcolour = ($bgcolour == '#FFFFFF') ?  '#EEEEEE' : '#FFFFFF';
-			$showadmin = ((isset($_POST['file']) && $_POST['file'] == 'admin' && $_POST['theme'] == $atheme && 
-						((isset($_SESSION['adminfiles']) && $_SESSION['adminfiles'] != $atheme) || !isset($_SESSION['adminfiles'])))
-						|| (!isset($_POST['file']) || (isset($_POST['file']) && $_POST['file'] != 'admin')) && isset($_SESSION['adminfiles']) && $_SESSION['adminfiles'] == $atheme);
 			$template->assign_block_vars('themes', array(
 					'BGCOLOUR' => $bgcolour,
 					'NAME' => $atheme,
 					'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
 					'B_LISTFILES' => $list_files,
-					'B_ADMINSHOWN' => $showadmin
+					'B_NOTADMIN' => ($atheme != 'admin')
 					));
 
 			if ($list_files)
@@ -86,35 +83,6 @@ if ($dir = @opendir($theme_root))
 							'FILE' => $files[$i]
 							));
 				}
-
-				if ($showadmin)
-				{
-					$_SESSION['adminfiles'] = $atheme;
-					// list files
-					$handler = opendir($theme_path . '/admin');
-
-					// keep going until all files in directory have been read
-					$files = array();
-					while ($file = readdir($handler))
-					{
-						$extension = substr($file, strrpos($file, '.') + 1);
-						if (in_array($extension, array('tpl', 'html', 'css')))
-						{
-							$files[] = $file;
-						}
-					}
-					sort($files);
-					for ($i = 0; $i < count($files); $i++)
-					{
-						$template->assign_block_vars('themes.adminfiles', array(
-								'FILE' => $files[$i]
-								));
-					}
-				}
-				else
-				{
-					$_SESSION['adminfiles'] = '';
-				}
 			}
 		}
 	}
@@ -122,7 +90,7 @@ if ($dir = @opendir($theme_root))
 }
 
 $edit_file = false;
-if (isset($_POST['file']) && $_POST['file'] != 'admin' && !empty($_POST['theme']))
+if (isset($_POST['file']) && !empty($_POST['theme']))
 {
 	$theme_path = $theme_root . '/' . $_POST['theme'];
 	if ($_POST['theme'] != 'CVS' && is_dir($theme_path) && substr($_POST['theme'], 0, 1) != '.')
@@ -136,6 +104,7 @@ if (isset($_POST['file']) && $_POST['file'] != 'admin' && !empty($_POST['theme']
 elseif ($_GET['do'] == 'addfile')
 {
 	$edit_file = true;
+	$theme = $_GET['theme'];
 }
 
 $template->assign_vars(array(

@@ -74,7 +74,7 @@ else
 	$PAGE = intval($_GET['PAGE']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+$PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 $_SESSION['backtolist_page'] = $PAGE;
 $_SESSION['backtolist'] = 'yourauctions_s.php';

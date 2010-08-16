@@ -87,7 +87,7 @@ for ($i = 0; $i < $num_pages; $i++)
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'PAGE_TITLE' => $MSG['5226'],
+		'PAGE_TITLE' => $MSG['214'],
 		'NUM_AUCTIONS' => $num_auctions,
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'PAGE' => $PAGE,

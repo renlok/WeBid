@@ -17,11 +17,11 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$msg = intval($_REQUEST['msg']);
-$board_id = intval($_REQUEST['id']);
+$msg = intval($_REQUEST['id']);
+$board_id = intval($_REQUEST['board_id']);
 
 // Insert new currency
-if (isset($_POST['action']) && $_POST['action'] == 'delete')
+if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 {
 	$query = "DELETE FROM " . $DBPrefix . "comm_messages WHERE id = " . $msg;
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -31,26 +31,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete')
 	header('location: editmessages.php?id=' . $board_id);
 	exit;
 }
-else
+elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
 {
-	// Retrieve message from the database
-	$query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE id = " . $msg;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data = mysql_fetch_assoc($res);
+	header('location: editmessages.php?id=' . $board_id);
+	exit;
 }
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'MESSAGE' => nl2br($data['message']),
-		'USER' => ($data['user'] > 0) ? $data['username'] : $MSG['5061'],
-		'POSTED' => FormatDate($data['msgdate']),
-		'BOARD_ID' => $board_id,
-		'MSG_ID' => $msg
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'ID' => $msg,
+		'MESSAGE' => sprintf($MSG['834'], $msg),
+		'TYPE' => 1
 		));
 
 $template->set_filenames(array(
-		'body' => 'deletemessage.tpl'
+		'body' => 'confirm.tpl'
 		));
 $template->display('body');
 ?>

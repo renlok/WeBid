@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -84,7 +85,6 @@ loadblock($MSG['801'], $MSG['802'], 'text', 'https_url', $system->SETTINGS['http
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'set',
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['526']
 		));

@@ -50,7 +50,7 @@ loadblock($MSG['356'], '', 'percent', 'bn_only_percent', $system->SETTINGS['bn_o
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['5142'],
+		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['2__0025']
 		));
 

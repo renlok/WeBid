@@ -201,7 +201,6 @@ if ($PAGES > 1)
 	$LOW = $PAGE - 5;
 	if ($LOW <= 0) $LOW = 1;
 	$COUNTER = $LOW;
-	echo $LOW;
 	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
 	{
 		$template->assign_block_vars('pages', array(

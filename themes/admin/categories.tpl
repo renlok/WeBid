@@ -25,7 +25,7 @@
                             <th><b>{L_008}</b></th>
                         </tr>
 <!-- BEGIN cats -->
-                        <tr {cats.BG}>
+                        <tr>
                             <td width="10" align="right" valign="middle">
                                 <a href="categories.php?parent={cats.CAT_ID}"><img src="{SITEURL}images/plus.gif" border="0" alt="Browse Subcategories"></a>
                             </td>

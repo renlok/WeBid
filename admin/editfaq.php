@@ -109,7 +109,8 @@ $faq = mysql_fetch_assoc($res);
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $faq['id'],
-		'FAQ_NAME' => $faq['question']
+		'FAQ_NAME' => $faq['question'],
+		'FAQ_CAT' => $faq['category']
 		));
 
 $template->set_filenames(array(

@@ -13,11 +13,12 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'interface';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-echo $theme_root = $main_path . 'themes/'; //theres no point repeatedly defining this
+$theme_root = $main_path . 'themes/'; //theres no point repeatedly defining this
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']) && $_POST['dtheme'] != 'admin')
@@ -42,7 +43,7 @@ elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'
 	fclose($fh);
 }
 
-$bgcolour = '#FFFFFF';
+$bg = '';
 if ($dir = @opendir($theme_root))
 {
 	while (($atheme = readdir($dir)) !== false)
@@ -52,14 +53,14 @@ if ($dir = @opendir($theme_root))
 		if ($atheme != 'CVS' && is_dir($theme_path) && substr($atheme, 0, 1) != '.')
 		{
 			$THEMES[$atheme] = $atheme;
-			$bgcolour = ($bgcolour == '#FFFFFF') ?  '#EEEEEE' : '#FFFFFF';
 			$template->assign_block_vars('themes', array(
-					'BGCOLOUR' => $bgcolour,
 					'NAME' => $atheme,
 					'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
 					'B_LISTFILES' => $list_files,
-					'B_NOTADMIN' => ($atheme != 'admin')
+					'B_NOTADMIN' => ($atheme != 'admin'),
+					'BG' => $bg
 					));
+			$bg = ($bg == '') ? 'class="bg"' : '';
 
 			if ($list_files)
 			{

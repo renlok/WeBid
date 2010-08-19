@@ -23,7 +23,7 @@ unset($ERR);
 // Insert new message
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (strlen($_POST['question']) == 0 && strlen($_POST['answer']) == 0)
+	if (empty($_POST['question'][$system->SETTINGS['defaultlanguage']]) || empty($_POST['answer'][$system->SETTINGS['defaultlanguage']]))
 	{
 		$system->SETTINGS = $_POST;
 		$ERR = $ERR_067;

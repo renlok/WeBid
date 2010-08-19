@@ -1635,7 +1635,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `name` tinytext,
   `address` tinytext,
   `city` varchar(25) default '',
-  `prov` varchar(10) default '',
+  `prov` varchar(20) default '',
   `country` varchar(30) default '',
   `zip` varchar(10) default '',
   `phone` varchar(40) default '',

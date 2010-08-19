@@ -229,9 +229,6 @@ if ($parent != 0)
 	}
 }
 
-$colourrow[0] = '#FFFFFF';
-$colourrow[1] = '#EEEEEE';
-$c = 0;
 $children = $catscontrol->get_children($parent_node['left_id'], $parent_node['right_id'], $parent_node['level']);
 for ($i = 0; $i < count($children); $i++)
 {
@@ -241,12 +238,10 @@ for ($i = 0; $i < count($children); $i++)
 			'CAT_NAME' => $system->uncleanvars($child['cat_name']),
 			'CAT_COLOUR' => $child['cat_colour'],
 			'CAT_IMAGE' => $child['cat_image'],
-			'ROW_COLOUR' => $colourrow[$c],
 
 			'B_SUBCATS' => ($child['left_id'] != ($child['right_id'] - 1)),
 			'B_AUCTIONS' => ($child['counter'] > 0)
 			));
-	$c = ($c == 1) ? 0 : 1;
 }
 
 $template->assign_vars(array(

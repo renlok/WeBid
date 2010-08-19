@@ -18,7 +18,7 @@
                         <td>
                         	<select name="category">
 <!-- BEGIN cats -->
-								<option value="{cats.ID}">{cats.CAT}</option>
+								<option value="{cats.ID}"<!-- IF cats.ID eq FAQ_CAT -->selected="selected"<!-- ENDIF -->>{cats.CAT}</option>
 <!-- END cats -->
                             </select>
                         </td>

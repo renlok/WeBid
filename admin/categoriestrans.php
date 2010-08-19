@@ -13,15 +13,13 @@
  ***************************************************************************/
  
 define('InAdmin', 1);
+$current_page = 'settings';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 $language = (isset($_GET['lang'])) ? $_GET['lang'] : 'EN';
 $catscontrol = new MPTTcategories();
-
-$colourrow[0] = '#FFFFFF';
-$colourrow[1] = '#EEEEEE';
 
 function search_cats($parent_id, $level)
 {
@@ -74,21 +72,10 @@ if (isset($_POST['categories']))
 
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
-// get the languages
-if (is_array($LANGUAGES))
-{
-	foreach ($LANGUAGES as $lang => $value)
-	{
-		$template->assign_block_vars('langs', array(
-				'LANG' => $lang
-				));
-	}
-}
-
 $query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories ORDER BY cat_name";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$c = 0;
+$bg = '';
 while ($row = mysql_fetch_assoc($res))
 {
 	// set category data
@@ -96,9 +83,9 @@ while ($row = mysql_fetch_assoc($res))
 			'CAT_ID' => $row['cat_id'],
 			'CAT_NAME' => $system->uncleanvars($row['cat_name']),
 			'TRAN_CAT' => $category_names[$row['cat_id']],
-			'ROW_COLOUR' => $colourrow[$c]
+			'BG' => $bg
 			));
-	$c = ($c == 1) ? 0 : 1;
+	$bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 $template->assign_vars(array(

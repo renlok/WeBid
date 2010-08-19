@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$news_id = intval($_POST['id']);
-		echo $query = "UPDATE " . $DBPrefix . "news SET
+		$query = "UPDATE " . $DBPrefix . "news SET
 				title = '" . $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]) . "',
 				content='" . $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']]) . "',
 				suspended=" . intval($_POST['suspended']) . "

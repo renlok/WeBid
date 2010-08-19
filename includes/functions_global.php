@@ -249,4 +249,21 @@ class global_class
 		return number_format($str, $this->SETTINGS['moneydecimals'], $a, $b);
 	}
 }
+
+// global functions
+function _gmmktime($hr, $min, $sec, $mon, $day, $year)
+{
+	if (@phpversion() >= '5.1.0')
+	{
+		return gmmktime($hr, $min, $sec, $mon, $day, $year); // is_dst is deprecated
+	}
+
+    if (gmmktime(0,0,0,6,1,2008, 0) == 1212282000)
+    {
+        //Seems to be running PHP (like 4.3.11).
+        //At least if current local timezone is Europe/Stockholm with DST in effect, skipping the ,0 helps:
+        return gmmktime($hr, $min, $sec, $mon, $day, $year); //without is_dst-parameter at the end
+    }
+    return gmmktime($hr, $min, $sec, $mon, $day, $year, 0);
+}
 ?>

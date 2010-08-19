@@ -143,7 +143,7 @@ if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
 	$OFFSET = 0;
 	$PAGE = 1;
 }
-elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'news.php')
+elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listusers.php')
 {
 	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
@@ -211,7 +211,6 @@ if ($PAGES > 1)
 }
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TOTALUSERS' => $TOTALUSERS,
 		'USERFILTER' => (isset($_SESSION['usersfilter'])) ? $_SESSION['usersfilter'] : '',

@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'users';
 include "../includes/common.inc.php";
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -56,7 +57,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$birth_year = '19' . $birth_year;
 			}
 		}
-		
+
 		if (strlen($_POST['password']) > 0 && ($_POST['password'] != $_POST['repeat_password']))
 		{
 			$ERR = $ERR_006;

@@ -19,13 +19,13 @@ if (!defined('AdminFuncCall'))
 	function checklogin()
 	{
 		global $_SESSION, $system, $DBPrefix;
-		
+
 		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS']))
 		{
 			$query = "SELECT hash, password FROM " . $DBPrefix . "adminusers WHERE password = '" . $_SESSION['WEBID_ADMIN_PASS'] . "' AND id = " . $_SESSION['WEBID_ADMIN_IN'];
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			
+
 			if (mysql_num_rows($res) > 0)
 			{
 				$user_data = mysql_fetch_array($res);
@@ -38,11 +38,11 @@ if (!defined('AdminFuncCall'))
 		}
 		return true;
 	}
-	
+
 	function loadblock($title = '', $description = '', $type = '', $name = '', $default = '', $tagline = array(), $header = false)
 	{
 		global $template;
-		
+
 		$template->assign_block_vars('block', array(
 				'TITLE' => $title,
 				'DESCRIPTION' => (!empty($description)) ? $description . '<br>' : '',
@@ -52,11 +52,11 @@ if (!defined('AdminFuncCall'))
 				'TAGLINE1' => (isset($tagline[0])) ? $tagline[0] : '',
 				'TAGLINE2' => (isset($tagline[1])) ? $tagline[1] : '',
 				'TAGLINE3' => (isset($tagline[2])) ? $tagline[2] : '',
-	
+
 				'B_HEADER' => $header
 				));
 	}
-	
+
 	function generateSelect($name = '', $options = array(), $usekey = true)
 	{
 		global $selectsetting;
@@ -79,7 +79,7 @@ if (!defined('AdminFuncCall'))
 		$html .= '</select>';
 		return $html;
 	}
-	
+
 	function get_hash()
 	{
 		$string = '0123456789abcdefghijklmnopqrstuvyxz';
@@ -92,7 +92,7 @@ if (!defined('AdminFuncCall'))
 		}
 		return $hash;
 	}
-	
+
 	define('AdminFuncCall', 1);
 }
 ?>

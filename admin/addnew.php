@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-$current_page = 'content';
+$current_page = 'contents';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';

@@ -1,31 +1,13 @@
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body style="margin:0;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr> 
-    <td background="images/bac_barint.gif">
-        <table width="100%" border="0" cellspacing="5" cellpadding="0">
-            <tr> 
-                <td width="30"><img src="images/i_use.gif" ></td>
-                <td class="white">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}</td>
-            </tr>
-        </table>
-    </td>
-</tr>
-<tr>
-    <td>&nbsp;</td>
-</tr>
-<tr> 
-    <td align="center" valign="middle">
-        <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
-        <tr>
-            <td align="center" class="title"><b>{ACTION}</b></td>
-        </tr>
-        <tr>
-            <td bgcolor="#FFFFFF">
-                <table width="100%" celpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF">
+<!-- INCLUDE header.tpl -->
+    	<div style="width:25%; float:left;">
+            <div style="margin-left:auto; margin-right:auto;">
+            	<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
+            </div>
+        </div>
+    	<div style="width:75%; float:right;">
+            <div class="main-box">
+            	<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{ACTION}</h4>
+                <table width="98%" celpadding="0" cellspacing="0" class="blank">
                 <tr>
                     <td width="204">{L_302}</td>
                     <td>{REALNAME}</td>
@@ -87,11 +69,5 @@
                     </td>
                 </tr>
                 </table>
-            </td>
-        </tr>
-        </table>
-    </td>
-</tr>
-</table>
-
+        </div>
 <!-- INCLUDE footer.tpl -->

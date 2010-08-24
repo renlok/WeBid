@@ -32,7 +32,6 @@ loadblock($MSG['597'], '', 'batch', 'banners', $system->SETTINGS['banners'], arr
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0011'],
 		'PAGENAME' => $MSG['5205']
 		));

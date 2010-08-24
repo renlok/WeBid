@@ -17,7 +17,6 @@ $current_page = 'contents';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path . 'time.inc.php';
 include $main_path . 'ckeditor/ckeditor.php';
 
 unset($ERR);

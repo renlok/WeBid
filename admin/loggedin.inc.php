@@ -25,6 +25,7 @@ else
 			'SITEURL' => $system->SETTINGS['siteurl'],
 			'CHARSET' => $CHARSET,
 			'ADMIN_USER' => $_SESSION['WEBID_ADMIN_USER'],
+			'ADMIN_ID' => $_SESSION['WEBID_ADMIN_IN'],
 			'CURRENT_PAGE' => $current_page
 			));
 	foreach ($LANGUAGES as $lang => $value)

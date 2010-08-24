@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'users';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -45,7 +46,7 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $num_ips = mysql_result($res, 0, 'ips');
 
 // Handle pagination
-if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1 || $_GET['PAGE'] == '')
+if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
 {
 	$OFFSET = 0;
 	$PAGE = 1;
@@ -55,8 +56,7 @@ else
 	$PAGE = $_GET['PAGE'];
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-$PAGES = ceil($num_ips / $system->SETTINGS['perpage']);
-if (!isset($PAGES) || $PAGES < 1) $PAGES = 1;
+$PAGES = ($num_ips == 0) ? 1 : ceil($num_ips / $system->SETTINGS['perpage']);
 
 $query = "SELECT nick, lastlogin FROM " . $DBPrefix . "users WHERE id = " . $id;
 $res = mysql_query($query);
@@ -72,35 +72,37 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 if (mysql_num_rows($res) > 0)
 {
-	$bgcolour = '#FFFFFF';
+	$bg = '';
 	while ($row = mysql_fetch_assoc($res))
 	{
 		$bgcolour = ($bgcolour == '#FFFFFF') ? '#EEEEEE' : '#FFFFFF';
 		$template->assign_block_vars('ips', array(
-				'BGCOLOUR' => $bgcolour,
 				'TYPE' => $row['type'],
 				'ID' => $row['id'],
 				'IP' => $row['ip'],
-				'ACTION' => $row['action']
+				'ACTION' => $row['action'],
+				'BG' => $bg
 				));
+		$bg = ($bg == '') ? 'class="bg"' : '';
 	}
 }
 
-$LOW = $PAGE - 5;
-if ($LOW <= 0) $LOW = 1;
-$COUNTER = $LOW;
-$pagenation = '';
-while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
+// get pagenation
+$url_id = 'id=' . $id;
+$PREV = intval($PAGE - 1);
+$NEXT = intval($PAGE + 1);
+if ($PAGES > 1)
 {
-	if ($PAGE == $COUNTER)
+	$LOW = $PAGE - 5;
+	if ($LOW <= 0) $LOW = 1;
+	$COUNTER = $LOW;
+	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
 	{
-		$pagenation .= '<b>' . $COUNTER . '</b>&nbsp;&nbsp;';
+		$template->assign_block_vars('pages', array(
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'admin/viewuserips.php?' . $url_id . '&PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+				));
+		$COUNTER++;
 	}
-	else
-	{
-		$pagenation .= '<a href="viewuserips.php?PAGE=' . $COUNTER . '&id=' . $id . '&offset=' . $uloffset . '"><u>' . $COUNTER . '</u></a>&nbsp;&nbsp;';
-	}
-	$COUNTER++;
 }
 
 $template->assign_vars(array(
@@ -110,12 +112,10 @@ $template->assign_vars(array(
 		'LASTLOGIN' => date('Y-m-d H:i:s', strtotime($USER['lastlogin']) + $system->tdiff),
 		'OFFSET' => $uloffset,
 
-		'B_MULPAG' => ($PAGES > 1),
-		'NEXT' => intval($PAGE + 1),
-		'PREV' => intval($PAGE - 1),
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/viewuserips.php?' . $url_id . '&PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/viewuserips.php?' . $url_id . '&PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
-		'PAGES' => $PAGES,
-		'PAGENA' => $pagenation
+		'PAGES' => $PAGES
 		));
 
 $template->set_filenames(array(

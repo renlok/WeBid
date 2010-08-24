@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'auctions';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include $include_path . 'dates.inc.php';
@@ -25,11 +26,12 @@ $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
 $user_sql = isset($_GET['uid']) ? " AND a.user = " . $uid : '';
 
 // Set offset and limit for pagination
-if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
+if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
 {
-	$OFFSET = 0;
-	$PAGE = 1;
+	$PAGE = intval($_GET['PAGE']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
+
 elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listauctions.php')
 {
 	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
@@ -37,8 +39,8 @@ elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'l
 }
 else
 {
-	$PAGE = intval($_GET['PAGE']);
-	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+	$OFFSET = 0;
+	$PAGE = 1;
 }
 
 $_SESSION['RETURN_LIST'] = 'listauctions.php';
@@ -48,6 +50,7 @@ $query = "SELECT COUNT(a.id) As auctions FROM " . $DBPrefix . "auctions a WHERE 
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $num_auctions = mysql_result($res, 0, 'auctions');
+$PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
@@ -55,12 +58,10 @@ $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_nam
 		WHERE a.closed = 0 " . $user_sql . " ORDER BY nick LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$bgcolour = '#FFFFFF';
+$bg = '';
 while ($row = mysql_fetch_assoc($res))
 {
-	$bgcolour = ($bgcolour == '#FFFFFF') ?  '#EEEEEE' : '#FFFFFF';
 	$template->assign_block_vars('auctions', array(
-			'BGCOLOUR' => $bgcolour,
 			'SUSPENDED' => $row['suspended'],
 			'ID' => $row['id'],
 			'TITLE' => $row['title'],
@@ -68,11 +69,14 @@ while ($row = mysql_fetch_assoc($res))
 			'END_TIME' => ArrangeDateNoCorrection($row['ends']),
 			'USERNAME' => $row['nick'],
 			'CATEGORY' => $row['cat_name'],
-			'B_HASWINNERS' => false
+			'B_HASWINNERS' => false,
+			'BG' => $bg
 			));
+	$bg = ($bg == '') ? 'class="bg"' : '';
 	$username = $row['nick'];
 }
 
+// this is used when viewing a users auctions
 if ((!isset($username) || empty($username)) && $uid > 0)
 {
 	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $uid;
@@ -81,32 +85,33 @@ if ((!isset($username) || empty($username)) && $uid > 0)
 	$username = mysql_result($res, 0);
 }
 
-$num_pages = ceil($num_auctions / $system->SETTINGS['perpage']);
-$pagnation = '';
-for ($i = 0; $i < $num_pages; $i++)
+// get pagenation
+$PREV = intval($PAGE - 1);
+$NEXT = intval($PAGE + 1);
+if ($PAGES > 1)
 {
-	if (($i + 1) != $PAGE)
+	$LOW = $PAGE - 5;
+	if ($LOW <= 0) $LOW = 1;
+	$COUNTER = $LOW;
+	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
 	{
-		$user = ($uid > 0) ? '&uid=' . $uid : '';
-		$pagnation .= '<a href="listauctions.php?PAGE=' . ($i + 1) . $user . '" class="navigation">' . ($i + 1) . '</a>';
+		$template->assign_block_vars('pages', array(
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listauctions.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+				));
+		$COUNTER++;
 	}
-	else
-	{
-		$pagnation .= $i + 1;
-	}
-	if (($i + 1) < $num_pages) $pagnation .= ' | ';
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'PAGE_TITLE' => $MSG['067'],
 		'NUM_AUCTIONS' => $num_auctions,
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'PAGE' => $PAGE,
-		'PAGNATION' => $pagnation,
-
 		'B_SEARCHUSER' => ($uid > 0),
-		'USERNAME' => $username
+		'USERNAME' => $username,
+
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+		'PAGE' => $PAGE,
+		'PAGES' => $PAGES
 		));
 
 $template->set_filenames(array(

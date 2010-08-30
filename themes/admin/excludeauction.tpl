@@ -1,31 +1,13 @@
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body style="margin:0;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-    <td background="images/bac_barint.gif">
-        <table width="100%" border="0" cellspacing="5" cellpadding="0">
-            <tr>
-                <td width="30"><img src="images/i_auc.gif"></td>
-                <td class="white">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</td>
-            </tr>
-        </table>
-    </td>
-</tr>
-<tr>
-    <td>&nbsp;</td>
-</tr>
-<tr>
-    <td align="center" valign="middle">
-        <table width="95%" border="0" cellpadding="1" bgcolor="#0083D7">
-        <tr>
-            <td align="center" class="title"><b>{PAGE_TITLE}</b></td>
-        </tr>
-        <tr>
-            <td bgcolor="#FFFFFF">
-                <table width="100%" cellpadding="2" border="0">
+<!-- INCLUDE header.tpl -->
+    	<div style="width:25%; float:left;">
+            <div style="margin-left:auto; margin-right:auto;">
+            	<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
+            </div>
+        </div>
+    	<div style="width:75%; float:right;">
+            <div class="main-box">
+            	<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</h4>
+                <table width="98%" celpadding="0" cellspacing="0" class="blank">
                 <tr>
                     <td width="20%">{L_312}</td>
                     <td>{TITLE}</td>
@@ -39,11 +21,11 @@
                     <td>{STARTS}</td>
                 </tr>
                 <tr>
-                    <td>{L_315}</td>
+                    <td>{L_022}</td>
                     <td>{DURATION}</td>
                 </tr>
                 <tr>
-                    <td>{L_316}</td>
+                    <td>{L_287}</td>
                     <td>{CATEGORY}</td>
                 </tr>
                 <tr>
@@ -59,7 +41,7 @@
                     <td>{QTY}</td>
                 </tr>
                 <tr>
-                    <td>{L_320}</td>
+                    <td>{L_021}</td>
                     <td>{RESERVE_PRICE}</td>
                 </tr>
                 <tr>
@@ -82,21 +64,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
+                    <td width="204">&nbsp;</td>
+                    <td>
                         <form name="details" action="" method="post">
                             <input type="hidden" name="id" value="{ID}">
                             <input type="hidden" name="offset" value="{OFFSET}">
-                            <input type="hidden" name="action" value="update">
-                            <input type="submit" name="act" value="{L_030}">
+                            <input type="submit" name="action" value="{L_030}">
+                            <input type="submit" name="action" value="{L_029}">
                         </form>
                     </td>
                 </tr>
                 </table>
-            </td>
-        </tr>
-        </table>
-    </td>
-</tr>
-</table>
-
+        </div>
 <!-- INCLUDE footer.tpl -->

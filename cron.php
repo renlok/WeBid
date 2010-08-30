@@ -75,6 +75,7 @@ $n = 1;
 while ($Auction = mysql_fetch_array($result)) // loop auctions
 {
 	$n++;
+	$report_text = '';
 	printLog("\n" . 'Processing auction: ' . $Auction['id']);
 	$Auction['description'] = strip_tags($Auction['description']);
 
@@ -120,7 +121,11 @@ while ($Auction = mysql_fetch_array($result)) // loop auctions
 		// Standard auction
 		if ($winner_present)
 		{
-
+			$report_text = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)' . "\n";
+			if ($system->SETTINGS['winner_address'] == 'y' && $Winner['address'] != '')
+			{
+				$report_text .= $MSG['30_0086'] . $Winner['address'] . ' ' . $Winner['city'] . ' ' . $Winner['prov'] . ' ' . $Winner['zip'] . ', ' . $Winner['country'];
+			}
 			$bf_paid = 1;
 			$ff_paid = 1;
 			// work out & add fee
@@ -133,6 +138,10 @@ while ($Auction = mysql_fetch_array($result)) // loop auctions
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
 			(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $Winner['id'] . "', " . $Auction['current_bid'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ", " . $ff_paid . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		else
+		{
+			$report_text = $MSG['429'];
 		}
 	}
 	else
@@ -149,7 +158,6 @@ while ($Auction = mysql_fetch_array($result)) // loop auctions
 		{
 			$WINNERS_ID = array();
 			$winner_array = array();
-			$report_text = '';
 			$items_count = $Auction['quantity'];
 			$items_sold = 0;
 			while($row = mysql_fetch_assoc($res))
@@ -181,6 +189,10 @@ while ($Auction = mysql_fetch_array($result)) // loop auctions
 					$Winner['quantity'] = $items_got;
 					$Winner['wanted'] = $items_wanted;
 					$winner_array[] = $Winner; // set array ready for emails
+					$report_text .= ' ' . $MSG['159'] . ' ' . $Winner['nick'] . ' (' . $Winner['email'] . ') ' . $items_got . ' ' . $MSG['5492'] . ', ' . $MSG['5493'] . ' ' . $system->print_money($row['bid']) . ' ' . $MSG['5495'] . ' - (' . $MSG['5494'] . ' ' . $items_wanted . ' ' . $MSG['5492'] . ')' . "\n";
+					if ($system->SETTINGS['winner_address'] == 'y') {
+						$report_text .= ' ' . $MSG['30_0086'] . $ADDRESS . "\n";
+					}
 
 					$bf_paid = 1;
 					$ff_paid = 1;

@@ -29,7 +29,7 @@
 <!-- ENDIF -->
                         <tr>
                             <th width="14%"><b>{L_5237}</b></th>
-                            <th><b>{L_316}</b></th>
+                            <th><b>{L_287}</b></th>
                             <th width="14%"><b>{L_008}</b></th>
                         </tr>
 <!-- BEGIN cats -->

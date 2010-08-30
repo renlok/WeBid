@@ -1647,7 +1647,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `suspended` int(1) default '0',
   `nletter` int(1) NOT NULL default '0',
   `balance` double NOT NULL default '0',
-  `auc_watch` varchar(20) default '',
+  `auc_watch` text,
   `item_watch` text,
   `endemailmode` enum('one','cum','none') NOT NULL default 'one',
   `startemailmode` enum('yes','no') NOT NULL default 'yes',

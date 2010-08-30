@@ -146,7 +146,7 @@ img {
 	border:none;
 }
 
-input, textarea {
+input, textarea, select {
 	border: 2px solid #CCCCCC;
 	padding: 4px;
 	background: #F7F7F7;
@@ -156,7 +156,7 @@ input, textarea {
 	border-radius: 3px;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus {
 	border: 2px solid #6F8BA1;
 }
 
@@ -212,13 +212,16 @@ ul.menu li {
 	font-size: 14px;
 }
 
-ul.menu li a, ul.menu li a:visited, .main-box a, .main-box a:visited {
+.menu li a, .menu li a:visited, .main-box a, .main-box a:visited, #header a, #header a:visited {
 	color: #000000;
 	text-decoration: none;
 }
 
-ul.menu li a:hover, .main-box a:hover {
+.menu li a:hover, .main-box a:hover, #header a:hover {
 	color: #6F8BA1;
+}
+
+.menu li a:hover {
 	margin-left: 2px;
 }
 

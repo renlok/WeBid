@@ -75,6 +75,7 @@
 - Changed all the admin delete X pages into a single confirm page
 - Added an option in admin FAQ & aution category pages so you can delete categories with content it just asks you what you wish to do with the content (move it/delete it)
 - Added variable template includes <!-- INCLUDE {VARIABLE}.tpl -->
-- Moved the admin theme folder directly in the themes folder so you ponly have one admin theme for however many themes
+- Moved the admin theme folder directly in the themes folder so you only have one admin theme for however many themes
+- Changed the auc_watch coloum to a text datatype so it can hold more than 1/2 search phrases
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

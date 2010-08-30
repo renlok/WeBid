@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'auctions';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -26,7 +27,7 @@ if (!isset($_REQUEST['id']))
 	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
+if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 {
 	$catscontrol = new MPTTcategories();
 	$id = intval($_POST['id']);
@@ -98,6 +99,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 	}
 
+	$URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
+	unset($_SESSION['RETURN_LIST']);
+	header('location: ' . $URL);
+	exit;
+}
+elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+{
 	$URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
 	unset($_SESSION['RETURN_LIST']);
 	header('location: ' . $URL);

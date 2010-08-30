@@ -30,16 +30,23 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 	unset($match); // just incase
 	if (!empty($auctions))
 	{
-		$match = strstr($auctions, $requestadd);
+		$checkarray = explode(' ', $requestadd);
+		$requestadd = '';
+		foreach ($checkarray as $check)
+		{
+			if (strpos($auctions, $check) === false)
+			{
+				$requestadd .= $check . ' ';
+			}
+		}
 	}
 
 	if (!isset($match) || empty($match))
 	{
 		$auction_watch = trim($auctions . ' ' . $requestadd);
-		$auction_watch_new = trim($auction_watch);
-		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = '" . $auction_watch_new . "' WHERE id = " . $user->user_data['id'];
+		echo $query = "UPDATE " . $DBPrefix . "users SET auc_watch = '" . $auction_watch . "' WHERE id = " . $user->user_data['id'];
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$user->user_data['auc_watch'] = $auction_watch_new;
+		$user->user_data['auc_watch'] = $auction_watch;
 	}
 }
 
@@ -61,10 +68,10 @@ if (isset($_GET['delete']))
 			$auction_watch = $auc_id[$j] . ' ' . $auction_watch;
 		}
 	}
-	$auction_watch_new = trim($auction_watch);
-	$query = "UPDATE " . $DBPrefix . "users SET auc_watch = '" . $auction_watch_new . "' WHERE id = " . $user->user_data['id'];
+	$auction_watch = trim($auction_watch);
+	$query = "UPDATE " . $DBPrefix . "users SET auc_watch = '" . $auction_watch . "' WHERE id = " . $user->user_data['id'];
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$user->user_data['auc_watch'] = $auction_watch_new;
+	$user->user_data['auc_watch'] = $auction_watch;
 }
 
 $auctions = trim($user->user_data['auc_watch']);

@@ -25,7 +25,7 @@ if (!isset($_REQUEST['id']))
 	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
+if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 {
 	if ($_POST['mode'] == 'activate')
 	{
@@ -47,6 +47,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 
+	header('location: listusers.php?PAGE=' . intval($_POST['offset']));
+	exit;
+}
+elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+{
 	header('location: listusers.php?PAGE=' . intval($_POST['offset']));
 	exit;
 }

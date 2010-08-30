@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'auctions';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -301,7 +302,7 @@ foreach ($gateway_list as $v)
 	if ($gateways_data[$v . '_active'] == 1)
 	{
 		$checked = (in_array($v, $payment)) ? 'checked' : '';
-		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '>' . $system->SETTINGS['gatways'][$v] . '</p>';
+		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '> ' . $system->SETTINGS['gatways'][$v] . '</p>';
 	}
 }
 
@@ -309,7 +310,7 @@ $payment_options = unserialize($system->SETTINGS['payment_options']);
 foreach ($payment_options as $k => $v)
 {
 	$checked = (in_array($k, $payment)) ? 'checked' : '';
-	$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
+	$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '> ' . $v . '</p>';
 }
 
 $template->assign_vars(array(

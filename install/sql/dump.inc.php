@@ -1119,20 +1119,21 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "increments` (
   `id` char(3) default NULL,
   `low` double(16,4) default NULL,
   `high` double(16,4) default NULL,
-  `increment` double(16,4) default NULL
+  `increment` double(16,4) default NULL,
+  PRIMARY KEY  (`id`)
 ) ;";
 
 # 
 # Dumping data for table `" . $DBPrefix . "increments`
 # 
 
-$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES ('1', 0.0000, 0.9900, 0.2800);";
-$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES ('2', 1.0000, 9.9900, 0.5000);";
-$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES ('3', 10.0000, 29.9900, 1.0000);";
-$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES ('4', 30.0000, 99.9900, 2.0000);";
-$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES ('5', 100.0000, 249.9900, 5.0000);";
-$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES ('6', 250.0000, 499.9900, 10.0000);";
-$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES ('7', 500.0000, 999.9900, 25.0000);";
+$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 0.0000, 0.9900, 0.2800);";
+$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 1.0000, 9.9900, 0.5000);";
+$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 10.0000, 29.9900, 1.0000);";
+$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 30.0000, 99.9900, 2.0000);";
+$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 100.0000, 249.9900, 5.0000);";
+$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 250.0000, 499.9900, 10.0000);";
+$query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 500.0000, 999.9900, 25.0000);";
 
 # ############################
 

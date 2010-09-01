@@ -31,7 +31,6 @@ if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
 	$PAGE = intval($_GET['PAGE']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-
 elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listauctions.php')
 {
 	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);

@@ -138,10 +138,10 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $TOTALUSERS = mysql_result($res, 0);
 
 // get page limits
-if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
+if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
 {
-	$OFFSET = 0;
-	$PAGE = 1;
+	$PAGE = intval($_GET['PAGE']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
 elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listusers.php')
 {
@@ -150,8 +150,8 @@ elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'l
 }
 else
 {
-	$PAGE = intval($_GET['PAGE']);
-	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+	$OFFSET = 0;
+	$PAGE = 1;
 }
 
 $_SESSION['RETURN_LIST'] = 'listusers.php';

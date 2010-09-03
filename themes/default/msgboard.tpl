@@ -52,8 +52,7 @@
 		<table width=100% cellpadding=0 cellspacing=0 border=0>
 			<tr>
 				<td align="center">
-					{L_5117}&nbsp;{PAGE}
-					{L_5118}&nbsp;{PAGES}
+					{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
 					<br>
 					{PREV}
 <!-- BEGIN pages -->

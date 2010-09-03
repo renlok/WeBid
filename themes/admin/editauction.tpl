@@ -13,7 +13,7 @@
 <!-- ENDIF -->
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
                     <tr>
-                        <td width="170" align="right">{L_313}</td>
+                        <td width="25%" align="right">{L_313}</td>
                         <td>{USER}</td>
                     </tr>
                     <tr>

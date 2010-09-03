@@ -28,31 +28,31 @@ if (!function_exists('view'))
 		if (strstr($_SERVER['SCRIPT_FILENAME'], 'browse.php'))
 		{
 			global $id;
-			$joinings = ', ' . $DBPrefix . 'bannerscategories c';
-			$extra =  ' AND c.category = ' . $id;
+			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerscategories c ON (c.banner = b.id)';
+			$extra .=  ' AND c.category = ' . $id;
 		}
 		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'item.php'))
 		{
 			global $title, $description, $category;
-			$joinings = ', ' . $DBPrefix . 'bannerskeywords k';
-			$extra =  " AND k.keyword LIKE '%" . $title . "%' OR k.keyword LIKE '%" . mysql_escape_string($description) . "%'";
+			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerskeywords k ON (k.banner = b.id)';
+			$extra .=  " AND k.keyword LIKE '%" . $title . "%' OR k.keyword LIKE '%" . mysql_escape_string($description) . "%'";
 		}
 
-		$query = "SELECT b.* FROM " . $DBPrefix . "banners b " . $joinings . "
+		$query = "SELECT b.id FROM " . $DBPrefix . "banners b " . $joinings . "
 				WHERE b.views < b.purchased OR b.purchased = 0" . $extra;
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 		if (mysql_num_rows($res) == 0)
 		{
-			$query = "SELECT b.* FROM " . $DBPrefix . "banners b " . $joinings . "
+			$query = "SELECT b.id FROM " . $DBPrefix . "banners b " . $joinings . "
 					WHERE b.views < b.purchased OR b.purchased = 0";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 		}
 
 		// We have at least one banners to show
-		while ($row = mysql_fetch_array($res))
+		while ($row = mysql_fetch_assoc($res))
 		{
 			$BANNERSARRAY[] = $row;
 		}
@@ -70,20 +70,20 @@ if (!function_exists('view'))
 			if ($THISBANNER['type'] == 'swf')
 			{
 				$return .= '
-				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="468" height="60">
-				<param name=movie value="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" />
-				<param name=quality value=high />
-				<embed src="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" quality=high pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="' . $THISBANNER['width'] . '" height="' . $THISBANNER['height'] . '"> </embed>
+				<object width="' . $THISBANNER['width'] . '" height="' . $THISBANNER['height'] . '">
+					<param name="movie" value="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '">
+					<param name="quality" value="high">
+					<embed src="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" width="' . $THISBANNER['width'] . '" height="' . $THISBANNER['height'] . '"></embed>
 				</object>';
 			}
 			else
 			{
 				$return .= '
-				<a href="' . $system->SETTINGS['siteurl'] . 'clickthrough.php?banner=' . $THISBANNER['id'] . '&url=' . $THISBANNER['url'] . '" target="_blank"> <img border=0 alt="' . $THISBANNER['alt'] . '" src="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" /></a>';
+				<a href="' . $system->SETTINGS['siteurl'] . 'clickthrough.php?banner=' . $THISBANNER['id'] . '&amp;url=' . $THISBANNER['url'] . '" target="_blank"> <img border=0 alt="' . $THISBANNER['alt'] . '" src="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" /></a>';
 			}
 			if (!empty($THISBANNER['sponsortext']))
 			{
-				$return .= '<br><a href="' . $system->SETTINGS['siteurl'] . 'clickthrough.php?banner=' . $THISBANNER['id'] . '&url=' . $THISBANNER['url'] . '" target="_blank">' . $THISBANNER['sponsortext'] . '</a>';
+				$return .= '<br><a href="' . $system->SETTINGS['siteurl'] . 'clickthrough.php?banner=' . $THISBANNER['id'] . '&amp;url=' . $THISBANNER['url'] . '" target="_blank">' . $THISBANNER['sponsortext'] . '</a>';
 			}
 			// Update views
 			$query = "UPDATE " . $DBPrefix . "banners set views = views + 1 WHERE id = " . $THISBANNER['id'];

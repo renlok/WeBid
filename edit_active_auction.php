@@ -111,7 +111,7 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_shipping_cost']	 = $RELISTEDAUCTION['shipping_cost'];
 		$_SESSION['SELL_shipping']		 = $RELISTEDAUCTION['shipping'];
 		$_SESSION['SELL_shipping_terms'] = $RELISTEDAUCTION['shipping_terms'];
-		$_SESSION['SELL_payment']		 = explode("\n", $RELISTEDAUCTION['payment']);
+		$_SESSION['SELL_payment']		 = explode(', ', $RELISTEDAUCTION['payment']);
 		$_SESSION['SELL_international']	 = $RELISTEDAUCTION['international'];
 		$_SESSION['SELL_file_uploaded']	 = $RELISTEDAUCTION['photo_uploaded'];
 		$_SESSION['SELL_pict_url']		 = $RELISTEDAUCTION['pict_url'];

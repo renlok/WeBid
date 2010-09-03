@@ -89,7 +89,7 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_location_zip']	 = $RELISTEDAUCTION['location_zip'];
 	$_SESSION['SELL_shipping']		 = $RELISTEDAUCTION['shipping'];
 	$_SESSION['SELL_shipping_terms'] = $RELISTEDAUCTION['shipping_terms'];
-	$_SESSION['SELL_payment']		 = explode("\n", $RELISTEDAUCTION['payment']);
+	$_SESSION['SELL_payment']		 = explode(', ', $RELISTEDAUCTION['payment']);
 	$_SESSION['SELL_international']	 = $RELISTEDAUCTION['international'];
 	$_SESSION['SELL_imgtype']		 = $RELISTEDAUCTION['imgtype'];
 	$_SESSION['SELL_file_uploaded']	 = $RELISTEDAUCTION['photo_uploaded'];

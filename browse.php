@@ -35,6 +35,7 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $parent_node = mysql_fetch_assoc($res);
 $id = (isset($parent_node['cat_id'])) ? $parent_node['cat_id'] : $id;
+$catalist = '';
 if ($parent_node['left_id'] != 1)
 {
 	$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);

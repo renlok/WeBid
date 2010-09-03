@@ -45,12 +45,11 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td align="center">
-{L_5117}&nbsp;&nbsp;{PAGE}
-{L_5118}&nbsp;&nbsp;{PAGES}
+{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
 <br />
 {PREV}
 <!-- BEGIN pages -->
-{pages.PAGE}&nbsp;&nbsp;
+	{pages.PAGE}&nbsp;&nbsp;
 <!-- END pages -->
 {NEXT}
 </td>

@@ -39,11 +39,11 @@ elseif (!isset($_GET['PAGE']) && empty($_POST))
 
 if (isset($_GET['PAGE']))
 {
-	$page = intval($_GET['PAGE']);
+	$PAGE = intval($_GET['PAGE']);
 }
 else
 {
-	$page = 1;
+	$PAGE = 1;
 }
 
 if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
@@ -186,10 +186,10 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 if ($searching && !isset($ERR))
 {
 	// retrieve records corresponding to passed page number
-	if ($page == 0) $page = 1;
+	if ($PAGE <= 0) $PAGE = 1;
 
 	// determine limits for SQL query
-	$left_limit = ($page - 1) * $system->SETTINGS['perpage'];
+	$left_limit = ($PAGE - 1) * $system->SETTINGS['perpage'];
 
 	// get total number of records
 	$query = "SELECT count(*) AS total FROM " . $DBPrefix . "auctions au
@@ -226,7 +226,7 @@ if ($searching && !isset($ERR))
 			AND " . $wher . $ora . "
 			featured = 'y'
 			AND	au.starts <= " . $NOW . "
-			ORDER BY " . $by . " LIMIT " . intval(($page - 1) * 5) . ", 5";
+			ORDER BY " . $by . " LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
 	$feat_res = mysql_query($query);
 	$system->check_mysql($feat_res, $query, __LINE__, __FILE__);
 

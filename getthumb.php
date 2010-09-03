@@ -14,8 +14,8 @@
 
 include 'includes/common.inc.php';
 
-$w = $_GET['w'];
-$fromfile = $_GET['fromfile'];
+$w = (isset($_GET['w'])) ? $_GET['w'] : '';
+$fromfile = (isset($_GET['fromfile'])) ? $_GET['fromfile'] : '';
 $nomanage = false;
 
 function ErrorPNG($err)

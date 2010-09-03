@@ -70,7 +70,7 @@ class user
 
 	function check_balance()
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $MSG;
 
 		// check if user needs to be suspended
 		if ($system->SETTINGS['fee_type'] == 1 && $this->logged_in && $this->user_data['suspended'] != 7)

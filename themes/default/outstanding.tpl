@@ -2,7 +2,7 @@
 
 <table>
 <tr>
-    <td width="150px"><b>Account Balance:</b></td>
+    <td width="150px"><b>{L_846}:</b></td>
     <td style="text-align:center; width: 200px;">{USER_BALANCE}</td>
     <td style="text-align:center; width: 200px;">
     	<form name="" method="post" action="{SITEURL}pay.php?a=1" id="fees">
@@ -13,10 +13,10 @@
 </table>
 <table style="width: 100%; border: 0; text-align:center;" cellspacing="1" cellpadding="4">
 <tr style="background-color:{TBLHEADERCOLOUR}">
-    <td style="width: 45%; text-align: center;">Item Description</td>
-    <td style="width: 10%; text-align: center;">Cost</td>
-    <td style="width: 10%; text-align: center;">Shipping</td>
-    <td style="width: 10%; text-align: center;">Total</td>
+    <td style="width: 45%; text-align: center;">{L_018}</td>
+    <td style="width: 10%; text-align: center;">{L_847}</td>
+    <td style="width: 10%; text-align: center;">{L_319}</td>
+    <td style="width: 10%; text-align: center;">{L_189}</td>
     <td style="text-align: center;">&nbsp;</td>
 </tr>
 <!-- BEGIN to_pay -->
@@ -44,15 +44,15 @@
 <br /><br />
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
-<td align="center">
-{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
-<br />
-{PREV}
+    <td align="center">
+        {L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
+        <br />
+        {PREV}
 <!-- BEGIN pages -->
-	{pages.PAGE}&nbsp;&nbsp;
+		{pages.PAGE}&nbsp;&nbsp;
 <!-- END pages -->
-{NEXT}
-</td>
+        {NEXT}
+    </td>
 </tr>
 </table>
 

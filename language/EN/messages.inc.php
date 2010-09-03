@@ -215,7 +215,6 @@ $MSG['038'] = "Asking Price";
 $MSG['039'] = "No reserve price";
 $MSG['040'] = "Submit auction";
 $MSG['041'] = "Item category";
-$MSG['042'] = "Item description";
 $MSG['043'] = "Will NOT ship internationally";
 $MSG['044'] = "Fill in your username and password and submit the form.";
 $MSG['045'] = "Users management";
@@ -897,6 +896,8 @@ $MSG['842'] = 'Set Fees';
 $MSG['843'] = 'What do you want to do with the auctions & subcategories in the following categories<br><small>(If you want to move them you must enter the category id of where you want them moved)</small>';
 $MSG['844'] = 'Some categories selected to move could not be processed as no category ID was given to where they would be moved to';
 $MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_blue.png"> Shows a category contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_red.png"> Shows a category contains auctions</p>';
+$MSG['846'] = 'Account Balance';
+$MSG['847'] = 'Price';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

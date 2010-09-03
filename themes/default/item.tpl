@@ -91,7 +91,7 @@ $(document).ready(function() {
 					<td align="left" valign="top">
 					  {L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}<br>
 					  <a href="#description"><img src="{SITEURL}images/info.gif" border='0'></a>
-					  <a href="#description">{L_042}</a> &nbsp;&nbsp;&nbsp; 
+					  <a href="#description">{L_018}</a> &nbsp;&nbsp;&nbsp; 
 					  <table border='0' width="100%" cellspacing="0" cellpadding="1">
 						<!-- auction type -->
 						<tr>
@@ -266,7 +266,7 @@ $(document).ready(function() {
 	<br>
 	<div class="tableContent2">
 	  <div class="titTable4">
-		<a name="description"></a>{L_042}
+		<a name="description"></a>{L_018}
 	  </div>
 	  <div class="table2">
 		{AUCTION_DESCRIPTION}

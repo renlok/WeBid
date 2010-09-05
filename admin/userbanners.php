@@ -62,7 +62,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 			else
 			{
 				$imageType = image_type_to_mime_type($imageType);
-				switch ($imageType) {
+				switch ($imageType)
+				{
 					case 'image/gif':
 						$FILETYPE = 'gif';
 						break;
@@ -89,7 +90,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 				$query = "INSERT INTO " . $DBPrefix . "banners VALUES
 						(NULL, '" . mysql_escape_string($_FILES['bannerfile']['name']) . "',
 						'" . $FILETYPE . "', 0, 0, '" . $_POST['url'] . "',
-						'" . mysql_escape_string($_POST['sponsortext']) . "', '".mysql_escape_string($_POST['alt'])."',
+						'" . mysql_escape_string($_POST['sponsortext']) . "', '" . mysql_escape_string($_POST['alt']) . "',
 						" . intval($_POST['purchased']) . ", " . $imagewidth . ", " . $imageheight . ", " . $id . ")";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$ID = mysql_insert_id();
@@ -99,7 +100,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 				{
 					foreach ($_POST['category'] as $k => $v)
 					{
-						$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES (" . $ID . "," . $system->cleanvars($v) . ")";
+						$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES (" . $ID . ", " . $v . ")";
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					}
 				}
@@ -177,12 +178,14 @@ $template->assign_vars(array(
 		'COMPANY' => $USER['company'],
 		'EMAIL' => $USER['email'],
 		// form values
+		'BANNERID' => '',
 		'URL' => (isset($_POST['url'])) ? $_POST['url'] : '',
 		'SPONSORTEXT' => (isset($_POST['sponsortext'])) ? $_POST['sponsortext'] : '',
 		'ALT' => (isset($_POST['alt'])) ? $_POST['alt'] : '',
 		'PURCHASED' => (isset($_POST['purchased'])) ? $_POST['purchased'] : '',
 		'KEYWORDS' => (isset($_POST['keywords'])) ? $_POST['keywords'] : '',
-		'CATEGORIES' => $TPL_categories_list
+		'CATEGORIES' => $TPL_categories_list,
+		'NOTEDIT' => true
 		));
 
 $template->set_filenames(array(

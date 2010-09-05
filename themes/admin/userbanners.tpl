@@ -53,16 +53,18 @@
                     	<td>{L__0051} <strong>{banners.CLICKS}</strong></td>
                     	<td>{L__0045}: <strong>{banners.PURCHASED}</strong></td>
                     	<td align="center">
-                        	<a href="viewfilters.php?banner={ID}" class="new-window" alt="{L__0052}"><img src="{SITEURL}themes/admin/images/cog.png" alt="{L__0052}"></a>
-                        	<a href="editbanner.php?banner={ID}"><img src="{SITEURL}themes/admin/images/application_form_edit.png" alt="{L__0055}"></a>
-                        	<a href="deletebanner.php?banner={ID}"><img src="{SITEURL}themes/admin/images/bin.png" alt="{L_008}"></a>
+                        	<a href="viewfilters.php?banner={banners.ID}&amp;id={ID}" class="new-window" alt="{L__0052}"><img src="{SITEURL}themes/admin/images/cog.png" alt="{L__0052}"></a>
+	<!-- IF NOTEDIT -->
+                        	<a href="editbanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/admin/images/application_form_edit.png" alt="{L__0055}"></a>
+                        	<a href="deletebanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/admin/images/bin.png" alt="{L_008}"></a>
+	<!-- ENDIF -->
                         </td>
                     </tr>
 <!-- END banners -->
                     </table>
                     <table width="98%" cellpadding="0" cellspacing="0" class="blank">
                     <tr>
-                    	<th colspan="2">{L__0041}</th>
+                    	<th colspan="2"><!-- IF NOTEDIT -->{L__0041}<!-- ELSE -->{L__0055}<!-- ENDIF --></th>
                     </tr>
                     <tr>
                     	<td width="30%">{L__0029}</td>
@@ -101,7 +103,8 @@
                     </table>
                     <input type="hidden" name="action" value="insert">
                     <input type="hidden" name="id" value="{ID}">
-                    <input type="submit" name="act" class="centre" value="{L__0040}">
+                    <input type="hidden" name="banner" value="{BANNERID}">
+                    <input type="submit" name="act" class="centre" value="<!-- IF NOTEDIT -->{L__0040}<!-- ELSE -->{L__0055}<!-- ENDIF -->">
 				</form>
             </div>
         </div>

@@ -14,7 +14,6 @@
 
 
 define('InAdmin', 1);
-$current_page = 'contents';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -45,7 +44,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $id,
 		'USERID' => $user_id,
-		'MESSAGE' => $MSG['832'],
+		'MESSAGE' => sprintf($MSG['848'], $id),
 		'TYPE' => 2
 		));
 

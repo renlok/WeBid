@@ -623,7 +623,7 @@ $MSG['500'] = "Total positive feedback received: ";
 $MSG['501'] = "Total negative feedback received: ";
 $MSG['502'] = "Total feedback received: ";
 $MSG['503'] = "Feedback";
-$MSG['504'] = "COMMENT";
+$MSG['504'] = "comment";
 $MSG['505'] = "Back to user's profile";
 $MSG['506'] = "sent feedback on: ";
 $MSG['507'] = "Hide history";
@@ -647,7 +647,6 @@ $MSG['525'] = "Admin users management";
 $MSG['526'] = "General Settings";
 $MSG['527'] = "Site name";
 $MSG['528'] = "Site URL";
-$MSG['529'] = "Leave Feedback";
 $MSG['530'] = "Save changes";
 $MSG['531'] = "Your logo";
 $MSG['532'] = "Display login box?";
@@ -898,6 +897,7 @@ $MSG['844'] = 'Some categories selected to move could not be processed as no cat
 $MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_blue.png"> Shows a category contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_red.png"> Shows a category contains auctions</p>';
 $MSG['846'] = 'Account Balance';
 $MSG['847'] = 'Price';
+$MSG['848'] = 'Are you sure you want to delete the user feedback (ID: %s)';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";
@@ -1230,8 +1230,6 @@ $MSG['_0162'] = "You can choose to automatically relist your auction, if no bids
 			Enter the number of times you want your auction to be relisted (enter zero or leave blank if you don't want the automatic relisting to be applied to this auction).
 			<br><font color='red'>Maximum number of allowed relistings: ";
 $MSG['_0163'] = "View Winners";
-$MSG['_0167'] = "Manually relisted";
-$MSG['_0168'] = "Manually relisted auctions";
 
 $MSG['2_0004'] = "View User's IPs";
 $MSG['2_0005'] = "Sign up IP";
@@ -1326,7 +1324,6 @@ $MGS_2__0066 = "Enabled";
 $MGS_2__0067 = "Disabled";
 $MSG['25_0001'] = "WINNER";
 $MSG['25_0002'] = "SELLER";
-$MSG['25_0003'] = "Leave feedback";
 $MSG['25_0004'] = "User name";
 $MSG['25_0005'] = 'User Registration Fields';
 $MSG['25_0006'] = "Final bid";

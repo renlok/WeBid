@@ -17,9 +17,20 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$banneruser = $_GET['user'];
+if (!isset($_GET['banner']) || empty($_GET['banner']))
+{
+	header('location: managebanners.php');
+	exit;
+}
+
 $banner = $_GET['banner'];
-$name = $_GET['name'];
+
+$query = "SELECT name, user FROM " . $DBPrefix . "banners WHERE id = " . $banner;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$bannername = mysql_result($res, 0, 'name');
+$banneruser = mysql_result($res, 0, 'user');
+
 
 $query = "DELETE FROM " . $DBPrefix . "banners WHERE id = " . $banner;
 $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -27,7 +38,7 @@ $query = "DELETE FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $ban
 $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 $query = "DELETE FROM " . $DBPrefix . "bannerskeywords WHERE banner = " . $banner;
 $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-@unlink($upload_path . 'banners/' . $banneruser . '/' . $name);
+@unlink($upload_path . 'banners/' . $banneruser . '/' . $bannername);
 
 // Redirect
 header('location: userbanners.php?id=' . $banneruser);

@@ -59,6 +59,6 @@
         <li class="contents"><a href="news.php">{L_25_0018}</a></li>
         <li class="stats"><a href="viewaccessstats.php">{L_25_0023}</a></li>
         <li class="tools"><a href="errorlog.php">{L_5436}</a></li>
-        <li class="help"><a href="help.php">{L_148}</a></li>
+        <li class="help"><a href="help.php" class="new-window" alt="{L_148}">{L_148}</a></li>
     </ul>
     <div id="wrapper" class="clearfix">

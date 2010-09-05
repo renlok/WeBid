@@ -197,7 +197,7 @@ $(window).load(function () {
 			{images.IMGSIZE}
 		</td>
 		<td align="center">
-			<a href="?action=delete&img={images.ID}"><IMG SRC="images/trash.png" border="0"></a>
+			<a href="?action=delete&img={images.ID}"><IMG SRC="images/trash.gif" border="0"></a>
 		</td>
 		<td align="center">
 			<a href="?action=makedefault&img={images.IMGNAME}"><img src="images/{images.DEFAULT}" border="0"></a>

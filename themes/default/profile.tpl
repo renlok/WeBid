@@ -35,9 +35,9 @@
 						</tr>
 						<tr>
 						   <td width="25%">&nbsp;</td>
-						   <td align="center" width="25%"><img src="{SITEURL}images/positive.gif"></td>
-						   <td align="center" width="25%"><img src="{SITEURL}images/neutral.gif"></td>
-						   <td align="center" width="25%"><img src="{SITEURL}images/negative.gif"></td>
+						   <td align="center" width="25%"><img src="{SITEURL}images/positive.png"></td>
+						   <td align="center" width="25%"><img src="{SITEURL}images/neutral.png"></td>
+						   <td align="center" width="25%"><img src="{SITEURL}images/negative.png"></td>
 						</tr>
 						<tr valign="top">
 							<td colspan="4" bgcolor="#eeeeee"><img src="{SITEURL}images/transparent.gif" width="1" height="5"></td>

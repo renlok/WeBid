@@ -185,7 +185,7 @@ for ($i = 0; $i < $boxes; $i++)
 	{
 		$template->assign_block_vars('boxes.cats', array(
 				'K' => $k,
-				'CATNAME' => $v,
+				'CATNAME' => $category_names[$k],
 				'SELECTED' => (isset($POST['cat' . $i]) && $POST['cat' . $i] == $k) ? ' selected' : ''
 				));
 	}

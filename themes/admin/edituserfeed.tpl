@@ -19,11 +19,11 @@
                     	<td>{L_503}</td>
                     	<td>
                         	<input type="radio" name="aTPL_rate" value="1" <!-- IF SEL1 -->checked="checked"<!-- ENDIF -->>
-                            <img src="{SITEURL}images/positive.gif" border="0">
+                            <img src="{SITEURL}images/positive.png" border="0">
                             <input type="radio" name="aTPL_rate" value="0" <!-- IF SEL2 -->checked="checked"<!-- ENDIF -->>
-                            <img src="{SITEURL}images/neutral.gif" border="0">
+                            <img src="{SITEURL}images/neutral.png" border="0">
                             <input type="radio" name="aTPL_rate" value="-1" <!-- IF SEL3 -->checked="checked"<!-- ENDIF -->>
-                            <img src="{SITEURL}images/negative.gif" border="0">
+                            <img src="{SITEURL}images/negative.png" border="0">
                         </td>
                     </tr>
                     <tr>

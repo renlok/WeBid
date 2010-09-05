@@ -27,11 +27,11 @@
 						<td align="right"><b>{L_503}:</b> </td>
 						<td>
 							<input type="radio" name="TPL_rate" value="1" {RATE1}>
-							<img src="{SITEURL}images/positive.gif" width=24 height=24 border=0 alt="+1" /> 
+							<img src="{SITEURL}images/positive.png"border="0" alt="+1" /> 
 							<input type="radio" name="TPL_rate" value="0" {RATE2}>
-							<img src="{SITEURL}images/neutral.gif" width=24 height=24 border=0 alt="0" />
+							<img src="{SITEURL}images/neutral.png" border="0" alt="0" />
 							<input type="radio" name="TPL_rate" value="-1" {RATE3}>
-							<img src="{SITEURL}images/negative.gif" width=24 height=24 border=0 alt="-1" />
+							<img src="{SITEURL}images/negative.png" border="0" alt="-1" />
 					</tr>
 					<tr>
 						<td align="right" valign="top"><b>{L_227}:</b></td>
@@ -49,7 +49,7 @@
 <!-- ENDIF -->
 					<tr>
 						<td colspan="2" align="center"><br>
-							<input type="submit" name="" value="{L_529}" class="button">
+							<input type="submit" name="" value="{L_207}" class="button">
 							<input type="reset" name="" class="button">
 						</td>
 					</tr>

@@ -47,7 +47,6 @@
                 <tr>
                     <td>{L_222}</td>
                     <td>
-                        <img src="../images/estrella_{RATE}.gif">
                         <p><a href="userfeedback.php?id={ID}">{L_208}</a></p>
                     </td>
                 </tr>

@@ -223,11 +223,11 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 		}
 		switch ($arrfeed['rate'])
 		{
-			case 1: $uimg = $system->SETTINGS['siteurl'] . 'images/positive.gif';
+			case 1: $uimg = $system->SETTINGS['siteurl'] . 'images/positive.png';
 				break;
-			case - 1: $uimg = $system->SETTINGS['siteurl'] . 'images/negative.gif';
+			case - 1: $uimg = $system->SETTINGS['siteurl'] . 'images/negative.png';
 				break;
-			case 0 : $uimg = $system->SETTINGS['siteurl'] . 'images/neutral.gif';
+			case 0 : $uimg = $system->SETTINGS['siteurl'] . 'images/neutral.png';
 				break;
 		}
 		$template->assign_block_vars('fbs', array(

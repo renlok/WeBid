@@ -10,7 +10,7 @@
 	<ul>
 		<li><a href="edit_data.php">{L_621}</a></li>
 		<li><a href="yourfeedback.php">{L_208}</a></li>
-		<li><a href="buysellnofeedback.php">{L_25_0003}</a> {FBTOLEAVE}</li>
+		<li><a href="buysellnofeedback.php">{L_207}</a> {FBTOLEAVE}</li>
 		<li><a href="mail.php">{L_623}</a> {NEWMESSAGES}</li>
         <li><a href="outstanding.php">{L_422}</a></li>
 	</ul>

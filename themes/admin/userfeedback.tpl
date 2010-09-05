@@ -17,7 +17,7 @@
 <!-- BEGIN feedback -->
 				<tr {feedback.BG}>
                 	<td>
-                    	<img align="middle" src="{SITEURL}images/{feedback.FB_TYPE}.gif">&nbsp;&nbsp;<b>{feedback.FB_FROM}</b>&nbsp;&nbsp;<span class="small">({L_506}{feedback.FB_TIME})</span>
+                    	<img align="middle" src="{SITEURL}images/{feedback.FB_TYPE}.png">&nbsp;&nbsp;<b>{feedback.FB_FROM}</b>&nbsp;&nbsp;<span class="small">({L_506}{feedback.FB_TIME})</span>
                         <p>{feedback.FB_MSG}</p>
                     </td>
                     <td align="right">

@@ -190,7 +190,7 @@ if ($system->SETTINGS['extra_cat'] == 'y' && $auction_data['secondcat'] > 0)
 			{
 				$secondcat_value .= ' > ';
 			}
-			$secondcat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $crumbs[$i]['cat_name'] . '</a>';
+			$secondcat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $category_names[$crumbs[$i]['cat_name']] . '</a>';
 		}
 	}
 }
@@ -239,7 +239,7 @@ while ($bidrec = mysql_fetch_assoc($result_numbids))
 				$fb_neg++;
 			}
 		}
-		  
+
 		$total_rate = $fb_pos - $fb_neg;
 
 		foreach ($memtypesarr as $k => $l)

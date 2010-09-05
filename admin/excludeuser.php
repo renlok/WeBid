@@ -18,6 +18,7 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path . 'countries.inc.php';
+include $include_path . 'membertypes.inc.php';
 
 if (!isset($_REQUEST['id']))
 {
@@ -107,7 +108,6 @@ $template->assign_vars(array(
 		'ZIP' => $user_data['zip'],
 		'COUNTRY' => $user_data['country'],
 		'PHONE' => $user_data['phone'],
-		'RATE' => ($user_data['rate_num'] == 0) ? 0 : ($user_data['rate_sum'] / $user_data['rate_num']),
 		'DOB' => $birthdate,
 		'QUESTION' => $question,
 		'MODE' => $mode,

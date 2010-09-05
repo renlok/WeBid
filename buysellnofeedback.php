@@ -65,7 +65,7 @@ $template->assign_vars(array(
 
 $TPL_rater_nick = $user->user_data['nick'];
 include 'header.php';
-$TMP_usmenutitle = $MSG['25_0003'];
+$TMP_usmenutitle = $MSG['207'];
 include 'includes/user_cp.php';
 $template->set_filenames(array(
 		'body' => 'sellbuyfeedback.tpl'

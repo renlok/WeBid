@@ -28,8 +28,10 @@ $result_counters = mysql_query($query);
 $counters = '';
 if ($result_counters)
 {
-	if ($system->SETTINGS['counter_auctions'] == 'y') $counters .= '<b>' . mysql_result($result_counters, 0, 'auctions') . '</b>&nbsp;' . strtoupper($MSG['232']) . '|&nbsp;';
-	if ($system->SETTINGS['counter_users'] == 'y') $counters .= '<b>' . mysql_result($result_counters, 0, 'users') . '</b>&nbsp;' . strtoupper($MSG['231']) . '&nbsp;|&nbsp;';
+	if ($system->SETTINGS['counter_auctions'] == 'y')
+		$counters .= '<b>' . mysql_result($result_counters, 0, 'auctions') . '</b> ' . strtoupper($MSG['232']) . '| ';
+	if ($system->SETTINGS['counter_users'] == 'y')
+		$counters .= '<b>' . mysql_result($result_counters, 0, 'users') . '</b> ' . strtoupper($MSG['231']) . ' | ';
 	if ($system->SETTINGS['counter_online'] == 'y')
 	{
 		if (!$user->logged_in)
@@ -74,7 +76,7 @@ if ($result_counters)
 
 		$count15min = mysql_num_rows($res);
 
-		$counters .= '<b>' . $count15min . '</b>&nbsp;' . $MGS_2__0064 . '&nbsp;|&nbsp;';
+		$counters .= '<b>' . $count15min . '</b> ' . $MGS_2__0064 . ' | ';
 	}
 }
 
@@ -85,8 +87,13 @@ $counters .= $date . ' <span id="servertime">' . gmdate('H:i:s', $system->ctime)
 
 $page_title = (isset($page_title)) ? ' ' . $page_title : '';
 
-$sslurl = ($system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
-$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
+$sslurl = $system->SETTINGS['siteurl'];
+if ($system->SETTINGS['https'] == 'y')
+{
+	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
+}
+// for images/ccs/javascript etc on secure pages
+$incurl = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on') ? $system->SETTINGS['siteurl'] : $sslurl;
 
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl
@@ -97,12 +104,13 @@ $template->assign_vars(array(
 		'KEYWORDS' => stripslashes($system->SETTINGS['keywordstag']),
 		'EXTRAINC' => $jsfiles,
 		'ACTUALDATE' => ActualDate(),
-		'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : "&nbsp;",
+		'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $incssl . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : '&nbsp;',
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',
 		'HEADERCOUNTER' => $counters,
-		'SITEURL' => (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on') ? $system->SETTINGS['siteurl'] : $sslurl,
+		'SITEURL' => $system->SETTINGS['siteurl'],
 		'SSLURL' => $sslurl,
 		'ASSLURL' => ($system->SETTINGS['https'] == 'y' && $system->SETTINGS['usersauth'] == 'y') ? $sslurl : $system->SETTINGS['siteurl'],
+		'INCURL' => $incurl,
 		'Q' => (isset($q)) ? $q : '',
 		'SELECTION_BOX' => file_get_contents($main_path . "language/" . $language . "/categories_select_box.inc.php"),
 		'YOURUSERNAME' => ($user->logged_in) ? $user->user_data['nick'] : '',

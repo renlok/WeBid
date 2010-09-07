@@ -79,7 +79,9 @@
 - Changed the auc_watch coloum to a text datatype so it can hold more than 1/2 search phrases
 - Fixed the outstanding payments pagination
 - Fixed the banner display criteria
-- Fixed some category translation errors in item.php & select_category.php thanks to janeks
+- Fixed some category translation errors in item.php & select_category.php (thanks to janeks)
 - Removed the hardcoded language strings from outstading.tpl into the language file
+- Fixed the confirm links form usernames containing &, ', ", <, > etc (thanks to slsdoug)
+- Fixed some issues with SSL
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

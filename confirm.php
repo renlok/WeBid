@@ -23,7 +23,7 @@ if (isset($_GET['id']) && !isset($_POST['action']))
 	{
 		$errmsg = $ERR_025;
 	}
-	elseif (!isset($_GET['hash']) || md5(mysql_result($result, 0, 'nick')) != $_GET['hash'])
+	elseif (!isset($_GET['hash']) || md5($system->uncleanvars(mysql_result($result, 0, 'nick'))) != $_GET['hash'])
 	{
 		$errmsg = $ERR_033;
 	}

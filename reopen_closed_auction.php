@@ -95,7 +95,6 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_file_uploaded']	 = $RELISTEDAUCTION['photo_uploaded'];
 	$_SESSION['SELL_pict_url']		 = $RELISTEDAUCTION['pict_url'];
 	$_SESSION['SELL_pict_url_temp']	 = str_replace('thumb-', '', $RELISTEDAUCTION['pict_url']);
-	$_SESSION['SELL_sendemail']		 = $RELISTEDAUCTION['sendemail'];
 	$_SESSION['SELL_action']		 = 'reopen';
 
 	header('location: sell.php?mode=recall');

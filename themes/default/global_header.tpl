@@ -20,8 +20,10 @@
 <link rel="alternate" type="application/rss+xml" title="{L_930}" href="{SITEURL}rss.php?feed=7">
 <link rel="alternate" type="application/rss+xml" title="{L_931}" href="{SITEURL}rss.php?feed=8">
 
-<script type="text/javascript" src="{INCURL}js/jquery.js"></script>
-<script type="text/javascript" src="{INCURL}js/jquery.lightbox.js"></script>
+<script type="text/javascript" src="{INCURL}loader.php?js={JSFILES}"></script>
+<!-- IF LOADCKEDITOR -->
+	<script type="text/javascript" src="{INCURL}ckeditor/ckeditor.js"></script>
+<!-- ENDIF -->
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -48,7 +50,6 @@ $(document).ready(function() {
 	});
 });
 </script>
-{EXTRAINC}
 </head>
 <body>
 <div align="center">

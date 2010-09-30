@@ -83,5 +83,9 @@
 - Removed the hardcoded language strings from outstading.tpl into the language file
 - Fixed the confirm links form usernames containing &, ', ", <, > etc (thanks to slsdoug)
 - Fixed some issues with SSL
+- added gz compression to the js files
+- added indexes to the categories table to speed it up
+- fixed the sell page when you create a dutch auction and go to make changes the option you cannot use no longer show (bin/reserve etc)
+- replaced realist fee with auto-relist 
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

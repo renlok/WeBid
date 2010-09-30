@@ -150,6 +150,8 @@ $ERR_710 = "Wrong file type. Allowed types are: GIF, PNG and JPEG";
 $ERR_711 = "You cannot buy, you are the seller!";
 $ERR_712 = "<b>Buy It Now</b> is not available for this auction";
 $ERR_713 = 'The value from must be less than the value to';
+$ERR_714 = 'The relist value must be numeric';
+$ERR_715 = 'You cannot choose to relist that many times';
 $ERR_5000 = "Messages to show must be numeric";
 $ERR_5001 = "Messages to show cannot be zero";
 $ERR_5002 = "You must select at least one statistic type (accesses, browsers &amp; platforms, by country)";
@@ -898,6 +900,10 @@ $MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/ima
 $MSG['846'] = 'Account Balance';
 $MSG['847'] = 'Price';
 $MSG['848'] = 'Are you sure you want to delete the user feedback (ID: %s)';
+$MSG['849'] = 'Enable Auto-Relist';
+$MSG['850'] = 'Allow users to automatically relist auctions if they end without a winner';
+$MSG['851'] = 'Max Relists';
+$MSG['852'] = 'Set the maximum times an auction can be automatically relisted';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";
@@ -1226,9 +1232,8 @@ $MSG['_0056'] = "New banner";
 $MSG['_0148'] = "Auction relisting";
 $MSG['_0151'] = " times";
 $MSG['_0153'] = "Relists / <br>Relisted";
-$MSG['_0162'] = "You can choose to automatically relist your auction, if no bids have been posted.<br>
-			Enter the number of times you want your auction to be relisted (enter zero or leave blank if you don't want the automatic relisting to be applied to this auction).
-			<br><font color='red'>Maximum number of allowed relistings: ";
+$MSG['_0161'] = "Automatic Relists";
+$MSG['_0162'] = "You can choose to automatically relist your auction, if no bids have been posted.";
 $MSG['_0163'] = "View Winners";
 
 $MSG['2_0004'] = "View User's IPs";
@@ -1319,7 +1324,7 @@ $MGS_2__0060 = "Active auctions";
 $MGS_2__0061 = "Registered users";
 $MGS_2__0062 = "Counters you want to show";
 $MGS_2__0063 = "Counters Settings Updated";
-$MGS_2__0064 = "USERS ONLINE";
+$MSG['2__0064'] = "USERS ONLINE";
 $MGS_2__0066 = "Enabled";
 $MGS_2__0067 = "Disabled";
 $MSG['25_0001'] = "WINNER";

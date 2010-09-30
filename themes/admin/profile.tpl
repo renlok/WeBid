@@ -13,8 +13,8 @@
 <!-- ENDIF -->
                     <table width="98%" cellpadding="0" cellspacing="0" class="blank">
                     <tr valign="top">
-                        <td width="25%">{L_781}</td>
-                        <td width="75%">
+                        <td width="50%">{L_781}</td>
+                        <td>
                             {L_030}<input type="radio" name="birthdate" value="y" <!-- IF REQUIRED_0 -->checked="checked"<!-- ENDIF -->>
                             {L_029}<input type="radio" name="birthdate" value="n" <!-- IF ! REQUIRED_0 -->checked="checked"<!-- ENDIF -->>
                         </td>

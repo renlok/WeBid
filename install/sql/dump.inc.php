@@ -251,7 +251,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
   `counter` int(11) default 0,
   `cat_colour` varchar(15) default '',
   `cat_image` varchar(150) default '',
-  PRIMARY KEY  (`cat_id`)
+  PRIMARY KEY  (`cat_id`),
+  INDEX (`left_id`, `right_id`, `level`)
 );";
 
 # 
@@ -1116,7 +1117,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "increments`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "increments` (
-  `id` char(3) default NULL,
+  `id` int(3) NOT NULL AUTO_INCREMENT,
   `low` double(16,4) default NULL,
   `high` double(16,4) default NULL,
   `increment` double(16,4) default NULL,
@@ -1449,8 +1450,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `termstext` text NOT NULL,
   `privacypolicy` enum('y','n') NOT NULL default 'y',
   `privacypolicytext` text NOT NULL,
-  `defaultcountry` varchar(30) NOT NULL default '0',
-  `relisting` int(11) NOT NULL default '0',
+  `defaultcountry` varchar(30) NOT NULL default '',
   `defaultlanguage` char(2) NOT NULL default 'EN',
   `catsorting` enum('alpha','counter') NOT NULL default 'alpha',
   `usersauth` enum('y','n') NOT NULL default 'y',
@@ -1500,7 +1500,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `spam_sendtofriend` int(1) NOT NULL default '1',
   `spam_register` int(1) NOT NULL default '1',
   `mod_queue` enum('y','n') NOT NULL default 'n',
-  `payment_options` text NOT NULL
+  `payment_options` text NOT NULL,
+  `autorelist` ENUM('y','n') NOT NULL default 'y',
+  `autorelist_max` int(3) NOT NULL default '10'
 );";
 
 # 
@@ -1548,7 +1550,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 'y',
 '',
 'United Kingdom',
-0,
 'EN',
 'alpha',
 'y',
@@ -1598,7 +1599,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 1,
 1,
 'n',
-'a:2:{i:0;s:13:\"Wire Transfer\";i:1;s:6:\"Cheque\";}');";
+'a:2:{i:0;s:13:\"Wire Transfer\";i:1;s:6:\"Cheque\";}',
+'y',
+10);";
 
 
 # ############################

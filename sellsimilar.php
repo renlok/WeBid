@@ -52,7 +52,6 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_imgtype']		= $RELISTEDAUCTION['imgtype'];
 	$_SESSION['SELL_file_uploaded']	= $RELISTEDAUCTION['photo_uploaded'];
 	$_SESSION['SELL_pict_url']		= '';
-	$_SESSION['SELL_sendemail']		= $RELISTEDAUCTION['sendemail'];
 	$_SESSION['SELL_shipping_terms'] = $RELISTEDAUCTION['shipping_terms'];
 	$_SESSION['SELL_is_bold']			= $RELISTEDAUCTION['bold'];
 	$_SESSION['SELL_is_highlighted']	= $RELISTEDAUCTION['highlighted'];

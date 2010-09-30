@@ -207,7 +207,8 @@ $left = $auction_data['quantity'];
 $hbidder_data = array();
 while ($bidrec = mysql_fetch_assoc($result_numbids))
 {
-	if (!isset($bidderarray[$bidrec['nick']])) {
+	if (!isset($bidderarray[$bidrec['nick']]))
+	{
 		if ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user'] && $user->user_data['id'] != $bidrec['bidder'])
 		{
 			$bidderarray[$bidrec['nick']] = $MSG['176'] . ' ' . $bidderarraynum;

@@ -266,4 +266,71 @@ function _gmmktime($hr, $min, $sec, $mon, $day, $year)
     }
     return gmmktime($hr, $min, $sec, $mon, $day, $year, 0);
 }
+
+function load_counters()
+{
+	global $system, $DBPrefix, $MSG, $_COOKIE, $user;
+	$query = "SELECT * FROM " . $DBPrefix . "counters";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$counter_data = mysql_fetch_assoc($res);
+	$counters = '';
+
+	if ($system->SETTINGS['counter_auctions'] == 'y')
+		$counters .= '<b>' . $counter_data['auctions'] . '</b> ' . strtoupper($MSG['232']) . '| ';
+	if ($system->SETTINGS['counter_users'] == 'y')
+		$counters .= '<b>' . $counter_data['users'] . '</b> ' . strtoupper($MSG['231']) . ' | ';
+	if ($system->SETTINGS['counter_online'] == 'y')
+	{
+		if (!$user->logged_in)
+		{
+			if (!isset($_COOKIE['WEBID_ONLINE']))
+			{
+				$s = md5(rand(0, 99) . session_id());
+				setcookie('WEBID_ONLINE', $s, time() + 900);
+			}
+			else
+			{
+				$s = $_COOKIE['WEBID_ONLINE'];
+				setcookie('WEBID_ONLINE', $s, time() + 900);
+			}
+		}
+		else
+		{
+			$s = 'uId-' . $user->user_data['id'];
+		}
+		$uxtime = time();
+		$query = "SELECT id FROM " . $DBPrefix . "online WHERE SESSION = '$s'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+		if (mysql_num_rows($res) == 0)
+		{
+			$query = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES ('$s', " . $uxtime . ")";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		else
+		{
+			$oID = mysql_result($res, 0, 'ID');
+			$query = "UPDATE " . $DBPrefix . "online SET time = " . $uxtime . " WHERE ID = '$oID'";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		}
+		$deltime = $uxtime - 900;
+		$query = "DELETE from " . $DBPrefix . "online WHERE time < " . $deltime;
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "SELECT * FROM " . $DBPrefix . "online";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+		$count15min = mysql_num_rows($res);
+
+		$counters .= '<b>' . $count15min . '</b> ' . $MSG['2__0064'] . ' | ';
+	}
+
+	// Display current Date/Time
+	$mth = 'MON_0' . gmdate('m', $system->ctime);
+	$date = $MSG[$mth] . gmdate(' j, Y', $system->ctime);
+	$counters .= $date . ' <span id="servertime">' . gmdate('H:i:s', $system->ctime) . '</span>';
+	return $counters;
+}
 ?>

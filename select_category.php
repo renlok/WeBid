@@ -121,7 +121,6 @@ elseif (count($_POST) == 0 && $_SESSION['SELL_action'] != 'edit')
     $_SESSION['SELL_shipping_terms'] = '';
     $_SESSION['SELL_payment'] = '';
     $_SESSION['SELL_international'] = '';
-    $_SESSION['SELL_sendemail'] = '';
     $_SESSION['SELL_buy_now_only'] = '';
     $_SESSION['SELL_action'] = '';
     $_SESSION['SELL_shipping_cost'] = 0;

@@ -63,6 +63,7 @@ $(document).ready(function(){
 	var bn = {FEE_BN};
 	var rp = {FEE_RP};
 	var st = {FEE_SUBTITLE};
+	var rl = {FEE_RELIST};
 	$("#min_bid").blur(function(){
 		var min_bid = parseFloat($("#min_bid").val());
 		updatefee(min_bid_fee * -1);
@@ -129,6 +130,14 @@ $(document).ready(function(){
 		st = $("#subtitle").val().length;
 	});
 <!-- ENDIF -->
+<!-- IF B_AUTORELIST -->
+	$("#autorelist").blur(function(){
+		var rl_times = $("#autorelist").val();
+		updatefee(relist_fee * rl * -1);
+		updatefee(relist_fee * rl_times);
+		rl = rl_times;
+	});
+<!-- ENDIF -->
 	function updatefee(newfee){
 		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
 		$("#fee_exact").val(nowfee);
@@ -141,6 +150,13 @@ $(document).ready(function(){
 <!-- ENDIF -->
 });
 </script>
+<!-- IF ATYPE_PLAIN eq 2 -->
+<style type="text/css">
+.dutchhide {
+	display: none;
+}
+</style>
+<!-- ENDIF -->
 <div class="content">
 	<div class="tableContent2">
 		<div class="titTable2">
@@ -188,10 +204,12 @@ $(document).ready(function(){
 					</tr>
 	<!-- ENDIF -->
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="center" valign="top" colspan="2">
 							<b>{L_018}</b>
 						</td>
-						<td class="rightpan">
+					</tr>
+					<tr>
+						<td class="rightpan" colspan="2">
 					   		{AUC_DESCRIPTION}
 						</td>
 					</tr>
@@ -374,6 +392,17 @@ $(document).ready(function(){
         <!-- IF B_MKHIGHLIGHT -->
         					<p><input type="checkbox" name="is_highlighted" id="is_highlighted" {IS_HIGHLIGHTED}> {L_292}</p>
         <!-- ENDIF -->
+						</td>
+					</tr>
+	<!-- ENDIF -->
+	<!-- IF B_AUTORELIST -->
+                    <tr>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L__0161}</b>
+						</td>
+						<td class="rightpan">
+                        	<p>{L__0162}</p>
+                        	{RELIST}
 						</td>
 					</tr>
 	<!-- ENDIF -->

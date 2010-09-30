@@ -583,11 +583,12 @@ switch ($_SESSION['action'])
 			'rp_fee' => 0,
 			'picture_fee' => 0,
 			'buyout_fee' => 0,
-			'subtitle_fee' => 0
+			'subtitle_fee' => 0,
+			'relist_fee' => 0
 			);
 		$feevarsset = array();
 		$fee_javascript = '';
-		$subtitle_fee = $fee_rp = $fee_bn = $fee_min_bid = 0;
+		$relist_fee = $subtitle_fee = $fee_rp = $fee_bn = $fee_min_bid = 0;
 		while ($row = mysql_fetch_assoc($res))
 		{
 			if (isset($fees[$row['type']]) && $fees[$row['type']] == 0)
@@ -629,8 +630,18 @@ switch ($_SESSION['action'])
 			{
 				$subtitle_fee = $row['value'];
 			}
+			if ($row['type'] == 'relist_fee' && strlen($auto_relist) > 0)
+			{
+				$relist_fee = $row['value'];
+			}
 		}
 		$fee_javascript .= 'var current_fee = ' . ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0') . ';';
+		$relist = '<select name="autorelist" id="autorelist">';
+		for ($i = 0; $i < $system->SETTINGS['maxpictures']; $i++)
+		{
+			$relist .= '<option value="' . $i . '">' . $i . '</option>';
+		}
+		$relist .= '</select>';
 
 		$template->assign_vars(array(
 				'TITLE' => $MSG['028'],
@@ -639,6 +650,7 @@ switch ($_SESSION['action'])
 				'CAT_LIST1' => $category_string1,
 				'CAT_LIST2' => $category_string2,
 				'ATYPE' => $TPL_auction_type,
+				'ATYPE_PLAIN' => $atype,
 				'CURRENCY' => $system->SETTINGS['currency'],
 				'DURATIONS' => $TPL_durations_list,
 				'PAYMENTS' => $payment_methods,
@@ -676,6 +688,7 @@ switch ($_SESSION['action'])
 				'IS_HIGHLIGHTED' => ($is_highlighted == 'y') ? 'checked' : '',
 				'IS_FEATURED' => ($is_featured == 'y') ? 'checked' : '',
 				'NUMIMAGES' => count($_SESSION['UPLOADED_PICTURES']),
+				'RELIST' => $relist,
 
 				'FEE_VALUE' => get_fee($minimum_bid),
 				'FEE_VALUE_F' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
@@ -683,6 +696,7 @@ switch ($_SESSION['action'])
 				'FEE_BN' => $fee_bn,
 				'FEE_RP' => $fee_rp,
 				'FEE_SUBTITLE' => $subtitle_fee,
+				'FEE_RELIST' => $relist_fee,
 				'FEE_DECIMALS' => $system->SETTINGS['moneydecimals'],
 
 				'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),
@@ -696,7 +710,8 @@ switch ($_SESSION['action'])
 				'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
 				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),
 				'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
-				'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y')
+				'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y'),
+				'B_AUTORELIST' => ($system->SETTINGS['autorelist'] == 'y')
 				));
 		break;
 }

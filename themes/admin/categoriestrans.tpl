@@ -17,7 +17,7 @@
                        	 <a href="categoriestrans.php?lang={langs.LANG}"><img align="middle" src="{SITEURL}includes/flags/{langs.LANG}.gif" border="0"></a>
 <!-- END langs -->
                     </div>
-                    <table width="198%" cellpadding="0" cellspacing="0" class="blank">
+                    <table width="98%" cellpadding="0" cellspacing="0" class="blank">
                     <tr>
                         <th><b>{L_771}</b></th>
                         <th><b>{L_772}</b></th>

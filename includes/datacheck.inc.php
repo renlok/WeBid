@@ -102,7 +102,7 @@ function CheckSellData()
 
 	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
-	global $payments, $num, $nnum, $a_starts, $start_now;
+	global $payments, $num, $nnum, $a_starts, $start_now, $relist;
 
 	if (empty($title))
 	{
@@ -217,15 +217,14 @@ function CheckSellData()
 		}
 	}
 
-	/*if (!empty($_POST['relist']) && !is_numeric($_POST['relist']))
+	if (!empty($relist) && !is_numeric($relist))
 	{
-		return '_0149';
+		return '714';
 	}
-
-	elseif ($_POST['relist'] > $system->SETTINGS['relisting'] && !empty($_POST['relist']))
+	elseif ($relist > $system->SETTINGS['autorelist_max'] && !empty($relist))
 	{
-		return '_0161';
-	}*/
+		return '715';
+	}
 
 	if (!(strpos($a_starts, '-') === false) && empty($start_now) && $_SESSION['SELL_action'] != 'edit')
 	{

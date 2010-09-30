@@ -64,6 +64,7 @@ if ($myversion == '0.8.5')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP background;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP brepeat;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP banner_sizetype;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP relisting;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `perpage` int(10) NOT NULL default '15';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `subtitle` ENUM('y','n') NOT NULL default 'y';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `extra_cat` ENUM('y','n') NOT NULL default 'n';";
@@ -71,6 +72,8 @@ if ($myversion == '0.8.5')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `thumb_list` INT( 6 ) NOT NULL default '120';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `https_url` varchar(255) NOT NULL default '';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `payment_options` text NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `autorelist` ENUM('y','n') NOT NULL default 'y';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `autorelist_max` int(3) NOT NULL default '10';";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `payment_options` = 'a:2:{i:0;s:13:\"Wire Transfer\";i:1;s:6:\"Cheque\";}'";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fontsandcolors`;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "tmp_closed_edited`;";
@@ -97,6 +100,7 @@ if ($myversion == '0.8.5')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `toocheckout_id` varchar(50) default '';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` CHANGE `auc_watch` `auc_watch` text;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "increments` ADD PRIMARY KEY (`id`) ;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD INDEX (`left_id`, `right_id`, `level`);";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.0'";
 }
 ?>

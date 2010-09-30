@@ -13,11 +13,10 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'stats';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-
-$ABSOLUTEWIDTH = 650;
 
 // Retrieve data
 $query = "SELECT * FROM " . $DBPrefix . "currentbrowsers WHERE month = " . date('n') . " AND year = " . date('Y') . " ORDER BY counter DESC";

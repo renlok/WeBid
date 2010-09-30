@@ -104,13 +104,6 @@ switch ($feed)
 		break;
 }
 
-$template->assign_vars(array(
-		'XML' => '<?xml version="1.0" encoding="' . $CHARSET . '"?>', //as the template parser doesnt like <? tags
-		'PAGE_TITLE' => $system->SETTINGS['sitename'],
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'RSSTITLE' => $RSStitle
-		));
-
 $query = "SELECT a.*, u.nick from " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		WHERE a.closed = 0 AND a.suspended = 0 AND " . $subquery . "
@@ -148,6 +141,13 @@ while ($auction_data = mysql_fetch_assoc($res))
 			'CAT' => $cat_value
 			));
 }
+
+$template->assign_vars(array(
+		'XML' => '<?xml version="1.0" encoding="' . $CHARSET . '"?>', //as the template parser doesnt like <? tags
+		'PAGE_TITLE' => $system->SETTINGS['sitename'],
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'RSSTITLE' => $RSStitle
+		));
 
 $template->set_filenames(array(
 		'body' => 'rss.tpl'

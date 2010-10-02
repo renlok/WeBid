@@ -24,16 +24,14 @@ if (!$user->logged_in)
 if (!isset($_POST['action']))
 {
 	// Get Closed auctions data
-	unset($_SESSION['RELISTEDAUCTION']);
 	unset($_SESSION['UPLOADED_PICTURES']);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE']);
 	unset($_SESSION['GALLERY_UPDATED']);
 	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . intval($_GET['id']) . " AND user = " . $user->user_data['id'];
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$RELISTEDAUCTION = mysql_fetch_array($result);
+	$RELISTEDAUCTION = mysql_fetch_assoc($result);
 
-	$_SESSION['RELISTEDAUCTION']	= $RELISTEDAUCTION;
 	$_SESSION['SELL_starts']		= '';
 	$_SESSION['SELL_title']			= $RELISTEDAUCTION['title'];
 	$_SESSION['SELL_subtitle']		= $RELISTEDAUCTION['subtitle'];
@@ -47,7 +45,7 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_duration']		= $RELISTEDAUCTION['duration'];
 	$_SESSION['SELL_relist']		= $RELISTEDAUCTION['relist'];
 	$_SESSION['SELL_shipping']		= $RELISTEDAUCTION['shipping'];
-	$_SESSION['SELL_payment']		= explode("\n", $RELISTEDAUCTION['payment']);
+	$_SESSION['SELL_payment']		= explode(', ', $RELISTEDAUCTION['payment']);
 	$_SESSION['SELL_international']	= $RELISTEDAUCTION['international'];
 	$_SESSION['SELL_imgtype']		= $RELISTEDAUCTION['imgtype'];
 	$_SESSION['SELL_file_uploaded']	= $RELISTEDAUCTION['photo_uploaded'];

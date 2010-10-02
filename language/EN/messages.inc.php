@@ -1308,6 +1308,7 @@ $MGS_2__0045 = " pixels ";
 $MSG['2__0047'] = "SELECT CATEGORY &gt;&gt;";
 $MSG['2__0048'] = "Close Now!";
 $MSG['2__0050'] = "Sell similar";
+$MSG['2__0051'] = "Relist";
 $MGS_2__0054 = "<b><FONT COLOR=red>Already selected</FONT></b>";
 $MSG['2__0056'] = "Suspended auctions";
 $MSG['2__0057'] = "Show counters";

@@ -636,12 +636,12 @@ switch ($_SESSION['action'])
 			}
 		}
 		$fee_javascript .= 'var current_fee = ' . ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0') . ';';
-		$relist = '<select name="autorelist" id="autorelist">';
+		$relist_options = '<select name="autorelist" id="autorelist">';
 		for ($i = 0; $i < $system->SETTINGS['maxpictures']; $i++)
 		{
-			$relist .= '<option value="' . $i . '">' . $i . '</option>';
+			$relist_options .= '<option value="' . $i . '">' . $i . '</option>';
 		}
-		$relist .= '</select>';
+		$relist_options .= '</select>';
 
 		$template->assign_vars(array(
 				'TITLE' => $MSG['028'],
@@ -688,7 +688,7 @@ switch ($_SESSION['action'])
 				'IS_HIGHLIGHTED' => ($is_highlighted == 'y') ? 'checked' : '',
 				'IS_FEATURED' => ($is_featured == 'y') ? 'checked' : '',
 				'NUMIMAGES' => count($_SESSION['UPLOADED_PICTURES']),
-				'RELIST' => $relist,
+				'RELIST' => $relist_options,
 
 				'FEE_VALUE' => get_fee($minimum_bid),
 				'FEE_VALUE_F' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),

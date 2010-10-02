@@ -217,13 +217,16 @@ function CheckSellData()
 		}
 	}
 
-	if (!empty($relist) && !is_numeric($relist))
+	if ($system->SETTINGS['autorelist'] == 'y')
 	{
-		return '714';
-	}
-	elseif ($relist > $system->SETTINGS['autorelist_max'] && !empty($relist))
-	{
-		return '715';
+		if (!empty($relist) && !is_numeric($relist))
+		{
+			return '714';
+		}
+		elseif ($relist > $system->SETTINGS['autorelist_max'] && !empty($relist))
+		{
+			return '715';
+		}
 	}
 
 	if (!(strpos($a_starts, '-') === false) && empty($start_now) && $_SESSION['SELL_action'] != 'edit')

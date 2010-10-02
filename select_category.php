@@ -96,7 +96,6 @@ if (isset($_GET['change']) && $_GET['change'] == 'yes')
 }
 elseif (count($_POST) == 0 && $_SESSION['SELL_action'] != 'edit')
 {
-    unset($_SESSION['RELISTEDAUCTION']);
     unset($_SESSION['UPLOADED_PICTURES_SIZE']);
     unset($_SESSION['GALLERY_UPDATED']);
 	unset($_SESSION['SELL_starts']);

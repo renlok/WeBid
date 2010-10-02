@@ -233,7 +233,6 @@ while ($item = mysql_fetch_array($res))
 		{
 			$canrelist = true;
 		}
-
 		if ($item['reserve_price'] > 0 && $item['num_bids'] > 0)
 		{
 			$cansell = true;
@@ -292,7 +291,8 @@ $template->assign_vars(array(
 		'PAGES' => $PAGES,
 
 		'B_AREITEMS' => ($i > 0),
-		'B_RELIST_FEE' => ($relist_fee > 0 && $system->SETTINGS['fees'] == 'y')
+		'B_RELIST_FEE' => ($relist_fee > 0 && $system->SETTINGS['fees'] == 'y'),
+		'B_AUTORELIST' => ($system->SETTINGS['autorelist'] == 'y')
 		));
 
 include 'header.php';

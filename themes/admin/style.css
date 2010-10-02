@@ -97,14 +97,14 @@ ul#tabnav li {
 	display: inline;
 }
 
-body#home li.home, body#tools li.tools, body#settings li.settings, body#fees li.fees, body#interface li.interface, body#banners li.banners, body#users li.users, body#auctions li.auctions, body#contents li.contents, body#stats li.stats a, body#help li.help a {
+body#home li.home, body#tools li.tools, body#settings li.settings, body#fees li.fees, body#interface li.interface, body#banners li.banners, body#users li.users, body#auctions li.auctions, body#contents li.contents, body#stats li.stats, body#help li.help {
 	border-bottom: 1px solid #A1A177;
 	background-color: #BBD9EE;
 }
 
-body#home li.home a, body#tools li.tools a, body#settings li.settings a, body#fees li.fees a, body#interface li.interface, body#banners li.banners, body#users li.users, body#auctions li.auctions, body#contents li.contents, body#stats li.stats a, body#help li.help a {
-	background-color: #fff;
-	color: #000;
+body#home li.home a, body#tools li.tools a, body#settings li.settings a, body#fees li.fees a, body#interface li.interface a, body#banners li.banners a, body#users li.users a, body#auctions li.auctions a, body#contents li.contents a, body#stats li.stats a, body#help li.help a {
+	background-color: #ffffff !important;
+	color: #000000;
 	position: relative;
 	top: 1px;
 	padding-top: 4px;

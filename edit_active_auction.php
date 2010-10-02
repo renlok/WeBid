@@ -35,8 +35,6 @@ if (mysql_num_rows($res) > 0) {
 if (!isset($_POST['action'])) // already closed auctions
 {
 	// Get Closed auctions data
-	unset($_SESSION['RELISTEDAUCTION']);
-	unset($_SESSION['FEATURED']);
 	unset($_SESSION['UPLOADED_PICTURES']);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE']);
 	unset($_SESSION['GALLERY_UPDATED']);

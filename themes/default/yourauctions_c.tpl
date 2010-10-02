@@ -108,10 +108,10 @@ $(document).ready(function() {
 			{items.BID}
 		</td>
 		<td width="10%"  align="center">
-		<!-- IF items.B_CANRELIST -->
+		<!-- IF items.B_CANRELIST and B_AUTORELIST -->
 			<input type="checkbox" name="relist[]" value="{items.ID}" class="relistid">
 		<!-- ELSE -->
-			<a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
+			<a href="sellsimilar.php?id={items.ID}"><!-- IF items.B_CANRELIST -->{L_2__0051}<!-- ELSE -->{L_2__0050}<!-- ENDIF --></a>
 		<!-- ENDIF -->
 		</td>
 		<td width="10%"  align="center">

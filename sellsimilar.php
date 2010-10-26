@@ -16,18 +16,19 @@ include 'includes/common.inc.php';
 
 if (!$user->logged_in)
 {
-	$_SESSION['REDIRECT_AFTER_LOGIN'] = "select_category.php";
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');
 	exit;
 }
 
 if (!isset($_POST['action']))
 {
+	$id = intval($_GET['id']);
 	// Get Closed auctions data
 	unset($_SESSION['UPLOADED_PICTURES']);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE']);
 	unset($_SESSION['GALLERY_UPDATED']);
-	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . intval($_GET['id']) . " AND user = " . $user->user_data['id'];
+	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . $id . " AND user = " . $user->user_data['id'];
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
 	$RELISTEDAUCTION = mysql_fetch_assoc($result);
@@ -86,6 +87,51 @@ if (!isset($_POST['action']))
 	{
 		$_SESSION['SELL_increment']			= 1;
 		$_SESSION['SELL_customincrement']	= 0;
+	}
+	if (isset($_GET['relist']))
+	{
+		$_SESSION['SELL_auction_id']	= $id;
+		$_SESSION['SELL_action']		= 'relist';
+		$_SESSION['SELL_pict_url']		= $RELISTEDAUCTION['pict_url'];
+		$_SESSION['SELL_pict_url_temp']	= str_replace('thumb-', '', $RELISTEDAUCTION['pict_url']);
+
+		// get gallery images
+		$UPLOADED_PICTURES = array();
+		$file_types = array('gif', 'jpg', 'jpeg', 'png');
+		if (is_dir($upload_path . intval($_GET['id'])))
+		{
+			$dir = opendir($upload_path . intval($_GET['id']));
+			while (($myfile = readdir($dir)) !== false)
+			{
+				if ($myfile != '.' && $myfile != '..' && !is_file($myfile))
+				{
+					$file_ext = strtolower(substr($myfile, strrpos($myfile, '.') + 1));
+					if (in_array($file_ext, $file_types) && (strstr($RELISTEDAUCTION['pict_url'], 'thumb-') === false || $RELISTEDAUCTION['pict_url'] != $myfile))
+					{
+						$UPLOADED_PICTURES[] = $myfile;
+					}
+				}
+			}
+			closedir($dir);
+		}
+		$_SESSION['UPLOADED_PICTURES'] = $UPLOADED_PICTURES;
+
+		if (count($UPLOADED_PICTURES) > 0)
+		{
+			if (!file_exists($upload_path . session_id()))
+			{
+				umask();
+				mkdir($upload_path . session_id(), 0777);
+			}
+			foreach ($UPLOADED_PICTURES as $k => $v)
+			{
+				$system->move_file($uploaded_path . intval($_GET['id']) . '/' . $v, $uploaded_path . session_id() . '/' . $v, false);
+			}
+			if (!empty($RELISTEDAUCTION['pict_url']))
+			{
+				$system->move_file($uploaded_path . intval($_GET['id']) . '/' . $RELISTEDAUCTION['pict_url'], $uploaded_path . session_id() . '/' . $RELISTEDAUCTION['pict_url'], false);
+			}
+		}
 	}
 
 	header('location: sell.php?mode=recall');

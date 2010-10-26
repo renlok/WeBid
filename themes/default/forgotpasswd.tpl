@@ -1,4 +1,4 @@
-<div class="titTable2">
+<div class="titTable2 rounded-top rounded-bottom">
 	{L_215}
 </div>
 {L_ERROR}

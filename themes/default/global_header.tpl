@@ -52,77 +52,61 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div align="center">
-<table width="90%" cellpadding="0" cellspacing="0" border="0" class="container" style="text-align:left;"> 
-  <tr> 
-  <td>
-	<table width="100%" border="0" cellpadding="5" cellspacing="5" class="logo">
-	<tbody>
-	  <tr>
-		<td width="50%">
-		  {LOGO}
-		</td><td width="50%">
-		  {BANNER}
-		</td>
-	  </tr>
-	</tbody>
-	</table>
-	<table width="100%" border="0" cellpadding="0" cellspacing="5" class="counters">
-	  <tr>
-		<td>
-		  <span class="leftside"><!-- IF B_LOGGED_IN -->{L_200} {YOURUSERNAME}. <a href="{SSLURL}logout.php?">{L_245}</a><!-- ENDIF --></span>
-		  <span class="rightside">{HEADERCOUNTER}</span>
-		</td>
-	  </tr>
-	</table>
-	<table width="100%" border="0" cellpadding="0" cellspacing="3" class="navbar">
-	  <tr>
-		<td>
-		  <table cellspacing="0" class="table-bar">
-		  <tbody>
-			<tr>
-			  <td><a href="{SITEURL}index.php?">{L_166}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
-				<!-- IF B_CAN_SELL -->
-			  <td><a href="{SITEURL}select_category.php?">{L_028}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
-				<!-- ENDIF -->
-				<!-- IF B_LOGGED_IN -->
-			  <td><a href="{SITEURL}user_menu.php?">{L_622}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
-			  <td><a href="{SSLURL}logout.php?">{L_245}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
-				<!-- ELSE -->
-			  <td><a href="{SSLURL}register.php?">{L_235}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
-			  <td><a href="{SSLURL}user_login.php?">{L_052}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
-				<!-- ENDIF -->
-				<!-- IF B_BOARDS -->
-			  <td><a href="{SITEURL}boards.php">{L_5030}</a><div class="imgSep"><img src="{SITEURL}images/transparent.gif" width="8" height="8" alt="spacer"></div></td>
-				<!-- ENDIF -->
-			  <td><a href="{SITEURL}faqs.php" alt="faqs" class="new-window">{L_148}</a></td>
-			</tr>
-		  </tbody>
-		  </table>
-		</td>
-	  </tr>
-	</table>
-	<table border="0" class="barSec" style="height:37; width:100%;">
-	  <tr>
-		<td width="50%">
-		  <form name="search" action="{SITEURL}search.php" method="GET">
-		  <div class="barSearch">
-		  <input type="hidden" name="">
-		  {L_103}
-		  <input type="text" name="q" size=15 value="{Q}">
-		  <input type="submit" name="" value="{L_275}" class="button">
-		  &nbsp;&nbsp;<a href="{SITEURL}adsearch.php">{L_464}</a> 
-		  </div>
-		  </form>
-		</td>
-		<td width="50%" align="right">
-		  <form name="gobrowse" action="{SITEURL}browse.php" method="GET">
-		  <div class="barBrowse">
-		  {L_104}
-		  {SELECTION_BOX}
-		  <input type="submit" name="sub" value="{L_275}" class="button">
-		  </div>
-		  </form>
-		</td>
-	  </tr>
-	</table>
+<div class="wrapper rounded-top rounded-bottom">
+	<div class="splitbox">
+    	<div class="leftside">
+        	{LOGO}
+        </div>
+    	<div class="rightside">
+        	{BANNER}
+        </div>
+    </div>
+	<div class="counters">
+        <span class="leftside"><!-- IF B_LOGGED_IN -->{L_200} {YOURUSERNAME}. <a href="{SSLURL}logout.php?">{L_245}</a><!-- ENDIF --></span>
+        <span class="rightside">{HEADERCOUNTER}</span>
+	</div>
+    <div class="navbar">
+        <table cellspacing="0">
+            <tbody>
+            <tr>
+                <td><a href="{SITEURL}index.php?">{L_166}</a></td>
+<!-- IF B_CAN_SELL -->
+				<td><a href="{SITEURL}select_category.php?">{L_028}</a></td>
+<!-- ENDIF -->
+<!-- IF B_LOGGED_IN -->
+                <td><a href="{SITEURL}user_menu.php?">{L_622}</a></td>
+                <td><a href="{SSLURL}logout.php?">{L_245}</a></td>
+<!-- ELSE -->
+                <td><a href="{SSLURL}register.php?">{L_235}</a></td>
+                <td><a href="{SSLURL}user_login.php?">{L_052}</a></td>
+<!-- ENDIF -->
+<!-- IF B_BOARDS -->
+				<td><a href="{SITEURL}boards.php">{L_5030}</a></td>
+<!-- ENDIF -->
+                <td id="last"><a href="{SITEURL}faqs.php" alt="faqs" class="new-window">{L_148}</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+	<div class="splitbox barSec">
+    	<div class="leftside">
+            <form name="search" action="{SITEURL}search.php" method="get">
+            <div class="barSearch">
+                <input type="hidden" name="">
+                {L_103}
+                <input type="text" name="q" size=15 value="{Q}">
+                <input type="submit" name="" value="{L_275}" class="button">
+                &nbsp;&nbsp;<a href="{SITEURL}adsearch.php">{L_464}</a> 
+            </div>
+            </form>
+		</div>
+    	<div class="rightside">
+            <form name="gobrowse" action="{SITEURL}browse.php" method="get">
+            <div class="barBrowse">
+                {L_104}
+                {SELECTION_BOX}
+                <input type="submit" name="sub" value="{L_275}" class="button">
+            </div>
+            </form>
+		</div>
+    </div>

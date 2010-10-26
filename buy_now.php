@@ -19,8 +19,11 @@ foreach ($membertypes as $idm => $memtypearr)
 	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
 }
 
+$id = intval($_REQUEST['id']);
+
 if (!$user->logged_in)
 {
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'buy_now.php?id=' . $id;
 	header('location: user_login.php');
 	exit;
 }
@@ -49,7 +52,7 @@ if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' &
 unset($ERR);
 ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
-$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . intval($_REQUEST['id']);
+$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . $id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $Auction = mysql_fetch_assoc($res);
@@ -73,7 +76,7 @@ if ($Auction['bn_only'] == 'n')
 	}
 	else
 	{
-		$query = "SELECT MAX(bid) AS maxbid FROM " . $DBPrefix . "proxybid WHERE itemid = " . intval($_REQUEST['id']);
+		$query = "SELECT MAX(bid) AS maxbid FROM " . $DBPrefix . "proxybid WHERE itemid = " . $id;
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$maxbid = mysql_result($res, 0, 'maxbid');
@@ -130,16 +133,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	{
 		$ERR = $ERR_711;
 	}
+	// check qty
+	if (isset($_GET['qty']) && $_GET['qty'] > $Auction['quantity'])
+	{
+		$ERR = $ERR_608;
+	}
 	// perform final actions
 	if (!isset($ERR))
 	{
 		$query = "INSERT INTO " . $DBPrefix . "bids VALUES
-				(NULL, " . intval($_REQUEST['id']) . ", " . intval($user->user_data['id']) . ", " . floatval($Auction['buy_now']) . ", '" . $NOW . "', 1)";
+				(NULL, " . $id . ", " . intval($user->user_data['id']) . ", " . floatval($Auction['buy_now']) . ", '" . $NOW . "', 1)";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		if ($Auction['quantity'] == 1)
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET ends = '" . $NOW . "', num_bids = num_bids + 1, current_bid = " . floatval($Auction['buy_now']) . "
-					WHERE id = " . intval($_REQUEST['id']);
+					WHERE id = " . $id;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$query = "UPDATE " . $DBPrefix . "counters SET bids = bids + 1";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -151,7 +159,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		}
 		else
 		{
-			$query = "UPDATE " . $DBPrefix . "auctions SET quantity = quantity - 1 WHERE id = " . intval($_REQUEST['id']);
+			$query = "UPDATE " . $DBPrefix . "auctions SET quantity = quantity - " . $_GET['qty'] . " WHERE id = " . $id;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			// do stuff that is important
 			$query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
@@ -221,7 +229,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			}
 
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, " . intval($_REQUEST['id']) . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ", " . $ff_paid . ")";
+					(NULL, " . $id . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, " . $_GET['qty'] . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 			// get end string
@@ -250,7 +258,9 @@ $template->assign_vars(array(
 		'SELLER' => ' <a href="profile.php?user_id=' . $Auction['user'] . '"><b>' . $Seller['nick'] . '</b></a>',
 		'SELLERNUMFBS' => '<b>(' . $total_rate . ')</b>',
 		'FBICON' => $TPL_rate_radio,
+		'LEFT' => $Auction['quantity'],
 
+		'B_QTY' => ($Auction['quantity'] > 1),
 		'B_NOTBOUGHT' => ($buy_done != 1),
 		'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y')
 		));

@@ -20,6 +20,7 @@ $NOWB = gmdate('Ymd');
 // If user is not logged in redirect to login page
 if (!$user->logged_in)
 {
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_s.php';
 	header('location: user_login.php');
 	exit;
 }

@@ -22,10 +22,10 @@
 <!-- BEGIN to_pay -->
 <tr>
     <td style="text-align: center;">
-    <!-- IF to_pay.TITLE eq '' -->
-    	<a href="{to_pay.URL}" target="_blank">{to_pay.TITLE}</a>
-    <!-- ELSE -->
+    <!-- IF to_pay.B_NOTITLE -->
     	{L_113} {to_pay.ID}
+    <!-- ELSE -->
+    	<a href="{to_pay.URL}" target="_blank">{to_pay.TITLE}</a>
     <!-- ENDIF -->
     </td>
     <td style="text-align: center;">{to_pay.BID}</td>

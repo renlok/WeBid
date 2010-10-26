@@ -1,6 +1,6 @@
 <div class="content">
 	<div class="tableContent2">
-		<div class="titTable2">
+		<div class="titTable2 rounded-top rounded-bottom">
 			{L_219}<a href="{SITEURL}profile.php?user_id={USER_ID}">{USERNAME}</a> <a href="{SITEURL}rss.php?feed=9&user_id={USER_ID}"><img src="{SITEURL}images/rss.png" alt="RSS" border="0"></a>
 		</div>
 		<div class="table2">

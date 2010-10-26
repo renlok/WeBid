@@ -1,5 +1,5 @@
 <div class="tableContent2">
-	<div class="titTable2">
+	<div class="titTable2 rounded-top rounded-bottom">
 		<a href="browse.php?id=0">{L_287}</a> : {CAT_STRING}
 	</div>
 	<div class="table2">

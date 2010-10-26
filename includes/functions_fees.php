@@ -18,10 +18,33 @@ class fees
 {
 	var $ASCII_RANGE;
 	var $data;
+	var $fee_types;
 
 	function fees()
 	{
 		$this->ASCII_RANGE = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$this->fee_types = $this->get_fee_types();
+	}
+
+	function get_fee_types()
+	{
+		global $system, $DBPrefix;
+		$query = "SELECT type FROM " . $DBPrefix . "fees GROUP BY type";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$fee_types = array();
+		while ($row = mysql_fetch_assoc($res))
+		{
+			$fee_types[] = $row;
+		}
+		return $fee_types;
+	}
+
+	function add_to_account($text, $type, $amount)
+	{
+		global $system, $DBPrefix;
+		$query = "INSERT INTO " . $DBPrefix . "accounts VALUES (NULL, '" . $user->user_data['nick'] . "', '" . $user->user_data['name'] . "', '" . $text . "', '" . $type . "', " . time() . ", '" . $amount . "')";
+		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 
 	function hmac($key, $data)

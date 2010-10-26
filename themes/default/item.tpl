@@ -28,7 +28,7 @@ $(document).ready(function() {
 <div class="content">
 	<div class="tableContent2">
 	 <br><b>{L_041}:</b> {TOPCATSPATH}<br><br>
-	 <div class="titTable2">
+	 <div class="titTable2 rounded-top rounded-bottom">
 	  <table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td>
@@ -182,7 +182,7 @@ $(document).ready(function() {
 		  </table>
 		</td>
 		<td width="2%">&nbsp;</td>
-		<td width=37% valign="top" bgcolor="#ffffff" align="left">
+		<td width="37%" valign="top" bgcolor="#ffffff" align="left">
 		  <table width="100%" cellspacing="0" cellpadding="4" border="0" bgcolor="#ffffff">
 			<tr align="left">
 			  <td align="left" class="titTable1" colspan="2">

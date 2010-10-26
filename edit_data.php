@@ -18,6 +18,7 @@ include $include_path . 'countries.inc.php';
 // If user is not logged in redirect to login page
 if (!$user->logged_in)
 {
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'edit_data.php';
 	header('location: user_login.php');
 	exit;
 }

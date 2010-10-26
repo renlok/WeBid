@@ -40,9 +40,10 @@ switch($_GET['a'])
 		$payvalue = $system->input_money($_POST['pfval']);
 		$custoncode = $user->user_data['id'] . 'WEBID1';
 		$message = sprintf($MSG['582'], $system->print_money($payvalue));
-		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['25_0012'];
+		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['935'];
+		$fees->add_to_account($MSG['935'], 'balance', $payvalue);
 		break;
-	case 2:
+	case 2: // pay for an item
 		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
 				u.id As uid, u.nick, a.payment, u.worldpay_id, u.toocheckout_id, u.moneybookers_address
 				FROM " . $DBPrefix . "auctions a
@@ -92,6 +93,7 @@ switch($_GET['a'])
 		$custoncode = $_SESSION['signup_id'] . 'WEBID3';
 		$message = sprintf($MSG['583'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['430'];
+		$fees->add_to_account($MSG['768'], 'signup_fee', $payvalue);
 		break;
 	case 4: // pay auction fee (live mode)
 		if (isset($_GET['auction_id']))
@@ -116,6 +118,7 @@ switch($_GET['a'])
 		$custoncode = $_SESSION['auction_id'] . 'WEBID4';
 		$message = sprintf($MSG['590'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['432'];
+		$fees->add_to_account($MSG['432'], 'setup', $payvalue);
 		break;
 	case 5: // pay relist fee (live mode)
 		$pp_paytoemail = $gateway_data['paypal_address'];
@@ -138,6 +141,7 @@ switch($_GET['a'])
 		$custoncode = $user->user_data['id'] . 'WEBID5';
 		$message = sprintf($MSG['591'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['437'];
+		$fees->add_to_account($MSG['437'], 'relist_fee', $payvalue);
 		break;
 	case 6: // pay buyer fee (live mode)
 		if (isset($_GET['auction_id']))
@@ -162,6 +166,7 @@ switch($_GET['a'])
 		$custoncode = $_SESSION['auction_id'] . 'WEBID6';
 		$message = sprintf($MSG['776'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['775'];
+		$fees->add_to_account($MSG['775'], 'buyer_fee', $payvalue);
 		break;
 	case 7: // pay final value fee (live mode)
 		if (isset($_GET['auction_id']))
@@ -203,6 +208,7 @@ switch($_GET['a'])
 		$custoncode = $_SESSION['auction_id'] . 'WEBID7';
 		$message = sprintf($MSG['776'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['791'];
+		$fees->add_to_account($MSG['791'], 'endauc_fee', $payvalue);
 		break;
 }
 

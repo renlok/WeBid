@@ -5,7 +5,7 @@
 - Added a page to view the error log in admin panel
 - Removed option to enabled/ disable link to message boards
 - Removed options to edit sites background/page width and page alignment via admin panel
-- Fixed a bug where payments methods wern't being set in the database
+- Fixed a bug where payments methods weren't being set in the database
 - Fixed advanced search & search pagination (Bug #128)
 - Fixed buying & pay pages so the buyer only has to pay shipping when seller has selected buyer pays shipping
 - Fixed feedback page so it shows correct username
@@ -55,7 +55,7 @@
 - Fixed the area select box when uploading a large image
 - Added input_money() to some variables where missing to avoid errors
 - Fixed how suspending accounts work now users will actually receive messages about why they cant do things when their account is suspended
-- Replaced FCKeditor 2.6.3 with CKEditor 3.2.1
+- Replaced FCKeditor 2.6.3 with CKEditor 3.4.1
 - Added an error message for when a user tries to view an invalid auction
 - Removed 96 unused language strings
 - Replaced all the ereg functions with preg_match as they are depreciated as of PHP 5.3
@@ -63,20 +63,20 @@
 - Fixed a bug in the min bid fees javascript where it would occasionally mess up
 - Updated imageAreaSelect to version 0.9.2
 - Removed jquery dimensions plugin
-- Updated jQuery to version 1.4.2
+- Updated jQuery to version 1.4.3
 - Fixed registration fee
 - Fixed upload gallery so files with any name (with non alpha-numeric characters) will be accepted
 - Fixed the online counter so when a user logs off they don't appear online twice
 - Added a check to the buy it now so it shows an error if the item hasn't started yet
 - Added the $upload_path variable to the getthumb page
-- Cleaned up the cron file split it inot two files (cron.php & functions_cron.php)
+- Cleaned up the cron file split it in to two files (cron.php & functions_cron.php)
 - Fixed the Page 1 of 0 error that occurs when there is no data
 - Fixed a bug with europe style currency when listing an item the min bid would be listed wrong
 - Changed all the admin delete X pages into a single confirm page
-- Added an option in admin FAQ & aution category pages so you can delete categories with content it just asks you what you wish to do with the content (move it/delete it)
+- Added an option in admin FAQ & auction category pages so you can delete categories with content it just asks you what you wish to do with the content (move it/delete it)
 - Added variable template includes <!-- INCLUDE {VARIABLE}.tpl -->
 - Moved the admin theme folder directly in the themes folder so you only have one admin theme for however many themes
-- Changed the auc_watch coloum to a text datatype so it can hold more than 1/2 search phrases
+- Changed the auc_watch column to a text datatype so it can hold more than 1/2 search phrases
 - Fixed the outstanding payments pagination
 - Fixed the banner display criteria
 - Fixed some category translation errors in item.php & select_category.php (thanks to janeks)
@@ -86,6 +86,10 @@
 - added gz compression to the js files
 - added indexes to the categories table to speed it up
 - fixed the sell page when you create a dutch auction and go to make changes the option you cannot use no longer show (bin/reserve etc)
-- replaced realist fee with auto-relist 
+- replaced the relist fee with auto-relist
+- Added an option for user to 'buy it now' more than one item at a time
+- Fixed outstanding.php to deal with quantities greater than 1
+- Improved the login so now after you login it takes you to the page you were just on instead of just taking you back to the last auction you viewed
+- Added a simple accounts feature which logs all payments made to admin
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

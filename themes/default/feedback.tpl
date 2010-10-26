@@ -1,6 +1,6 @@
 <div class="content">
 	<div class="tableContent2">
-		<div class="titTable2">
+		<div class="titTable2 rounded-top rounded-bottom">
 			{L_207}
 		</div>
 <!-- IF ERROR ne '' -->

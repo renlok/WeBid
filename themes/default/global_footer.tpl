@@ -36,11 +36,8 @@
 			"WeBid" linked to www.webidsupport.com. If you refuse to include even this then support on our
 			forums may be affected.
 		-->
-		Powered by <a href="http://www.webidsupport.com/">WeBid</a> &copy; 2008, 2009 <a href="http://www.webidsupport.com/">WeBid</a>
+		Powered by <a href="http://www.webidsupport.com/">WeBid</a> &copy; 2008 - 2010 <a href="http://www.webidsupport.com/">WeBid</a>
 	</div>
-	</td>
-	</tr>
-	</table>
 </div>
 </body>
 </html>

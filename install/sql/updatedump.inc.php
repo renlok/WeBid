@@ -101,6 +101,15 @@ if ($myversion == '0.8.5')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` CHANGE `auc_watch` `auc_watch` text;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "increments` ADD PRIMARY KEY (`id`) ;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD INDEX (`left_id`, `right_id`, `level`);";
+	$query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
+		`id` INT(7) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+		`nick` VARCHAR(20) NOT NULL ,
+		`name` TINYTEXT NOT NULL ,
+		`text` TEXT NOT NULL ,
+		`type` VARCHAR(15) NOT NULL ,
+		`paid_date` VARCHAR(16) NOT NULL ,
+		`amount` DOUBLE(6, 4) NOT NULL
+	)";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.0'";
 }
 ?>

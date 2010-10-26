@@ -16,6 +16,26 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accesseshistoric` (
 # Dumping data for table `" . $DBPrefix . "accesseshistoric`
 #  
 
+# ############################
+
+# 
+# Table structure for table `" . $DBPrefix . "accounts`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "accounts`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
+	`id` INT(7) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`nick` VARCHAR(20) NOT NULL ,
+	`name` TINYTEXT NOT NULL ,
+	`text` TEXT NOT NULL ,
+	`type` VARCHAR(15) NOT NULL ,
+	`paid_date` VARCHAR(16) NOT NULL ,
+	`amount` DOUBLE(6, 4) NOT NULL
+)";
+
+# 
+# Dumping data for table `" . $DBPrefix . "accounts`
+# 
 
 # ############################
 

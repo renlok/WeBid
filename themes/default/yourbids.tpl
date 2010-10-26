@@ -26,7 +26,7 @@
 			<a href="item.php?id={bids.ID}">{bids.TITLE}</a>
 		</td>
 		<td>
-			{bids.BID}
+			{bids.BID} <!-- IF bids.QTY gt 1 -->(x {bids.QTY} {L_5492})<!-- ENDIF -->
 		</td>
 		<td align="center">
 			{bids.TIMELEFT}

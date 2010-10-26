@@ -1,6 +1,6 @@
 <div class="content">
 	<div class="tableContent2">
-		<div class="titTable2">{L_139}</div>
+		<div class="titTable2 rounded-top rounded-bottom">{L_139}</div>
 		<div class="titTable3">
 			<a href="item.php?id={ID}">{L_138}</a>
 		</div>

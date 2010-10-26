@@ -145,11 +145,11 @@ if (!isset($_POST['action'])) // already closed auctions
 			}
 			foreach ($UPLOADED_PICTURES as $k => $v)
 			{
-				copy($uploaded_path . intval($_GET['id']) . '/' . $v, $uploaded_path . session_id() . '/' . $v);
+				$system->move_file($uploaded_path . intval($_GET['id']) . '/' . $v, $uploaded_path . session_id() . '/' . $v, false);
 			}
 			if (!empty($RELISTEDAUCTION['pict_url']))
 			{
-				copy($uploaded_path . intval($_GET['id']) . '/' . $RELISTEDAUCTION['pict_url'], $uploaded_path . session_id() . '/' . $RELISTEDAUCTION['pict_url']);
+				$system->move_file($uploaded_path . intval($_GET['id']) . '/' . $RELISTEDAUCTION['pict_url'], $uploaded_path . session_id() . '/' . $RELISTEDAUCTION['pict_url'], false);
 			}
 		}
 

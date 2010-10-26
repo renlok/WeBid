@@ -1,6 +1,6 @@
 <div class="content">
 	<div class="tableContent2">
-		<div class="titTable2">
+		<div class="titTable2 rounded-top rounded-bottom">
 			{TITLE}
 		</div>
 		<div class="table2">
@@ -22,7 +22,7 @@
                     <td>{SELLER} {SELLERNUMFBS} {FBICON}</td>
                 </tr>
                 <tr>
-                    <td align=right width="40%"><b>{L_497} :</b></td>
+                    <td align="right" width="40%"><b>{L_497}:</b></td>
                     <td>{BN_PRICE}</td>
                 </tr>
 <!-- IF ERROR ne '' -->
@@ -35,6 +35,16 @@
                 </tr>
 <!-- IF B_NOTBOUGHT -->
                 <tr>
+                    <td align="right"><b>{L_284}:</b></td>
+                    <td>
+    <!-- IF B_QTY -->
+    					<input type="text" name="qty" size="15" maxlength="15">{LEFT} {L_5408}
+    <!-- ELSE -->
+    					<input type="hidden" name="qty" value="1">1
+    <!-- ENDIF -->
+                    </td>
+                </tr>
+                <tr>
                     <td align="right">{L_003}</td>
                     <td>
                         <b>{YOURUSERNAME}</b>
@@ -42,16 +52,16 @@
                 </tr>
 	<!-- IF B_USERAUTH -->
                 <tr>
-                    <td align="right">{L_004} </td>
+                    <td align="right">{L_004}</td>
                     <td>
-                        <input type="password" name="password" size=15 maxlength=15 value="" />
+                        <input type="password" name="password" size="15" maxlength="15">
                     </td>
                 </tr>
 	<!-- ENDIF -->
             </table>
             <div style="text-align:center;">
-                <input type="hidden" name="action" value="buy" />
-                <input type="submit" name="" value="{L_496}" class="button" />
+                <input type="hidden" name="action" value="buy">
+                <input type="submit" name="" value="{L_496}" class="button">
             </div>
             </form>
 <!-- ELSE -->

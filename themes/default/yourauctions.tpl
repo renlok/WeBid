@@ -108,7 +108,7 @@ $(document).ready(function() {
 		<!-- IF items.B_HASNOBIDS -->
 			-
 		<!-- ELSE -->
-			{items.BID}<br>[{L_159} <a href="profile.php?user_id={items.BIDDERID}">{items.BIDDER}</a>]
+			{items.BID}
 		<!-- ENDIF -->
 		</td>
 		<td width="6%"  align="center">

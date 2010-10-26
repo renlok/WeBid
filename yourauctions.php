@@ -17,6 +17,7 @@ include 'includes/common.inc.php';
 // If user is not logged in redirect to login page
 if (!$user->logged_in)
 {
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions.php';
 	header('location: user_login.php');
 	exit;
 }
@@ -131,21 +132,13 @@ while ($item = mysql_fetch_array($res))
 {
 	if ($item['num_bids'] > 0)
 	{
-		$query = "SELECT b.bid AS maxbid, b.bidder, u.nick FROM " . $DBPrefix . "bids b
-				LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder) WHERE b.auction=" . intval($item['id']) . " ORDER BY b.bid DESC, b.id DESC LIMIT 1";
+		$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . intval($item['id']) . " ORDER BY bid DESC, id DESC LIMIT 1";
 		$result_ = mysql_query($query) ;
 		$system->check_mysql($result_, $query, __LINE__, __FILE__);
 		if (mysql_num_rows($result_) > 0)
 		{
-			$high_bid = mysql_result($result_, 0, 'maxbid');
-			$bidderid = mysql_result($result_, 0, 'bidder');
-			$bidder = mysql_result($result_, 0, 'nick');
+			$high_bid = mysql_result($result_, 0, 'bid');
 		}
-	}
-	else
-	{
-		$bidder = '';
-		$bidderid = '';
 	}
 	// Retrieve counter
 	$query = "SELECT counter FROM " . $DBPrefix . "auccounter WHERE auction_id = " . intval($item['id']);
@@ -170,8 +163,6 @@ while ($item = mysql_fetch_array($res))
 			'BIDS' => $item['num_bids'],
 			'RELIST' => $item['relist'],
 			'RELISTED' => $item['relisted'],
-			'BIDDER' => $bidder,
-			'BIDDERID' => $bidderid,
 			'COUNTER' => $viewcounter,
 
 			'B_HASNOBIDS' => ($item['current_bid'] == 0)

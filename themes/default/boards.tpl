@@ -1,5 +1,5 @@
 <div class="content">
-	<div class="titTable2">
+	<div class="titTable2 rounded-top rounded-bottom">
 		{L_5030}
 	</div>
 	<div class="padding" align="center">

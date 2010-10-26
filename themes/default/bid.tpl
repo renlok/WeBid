@@ -12,7 +12,7 @@ $(document).ready(function(){
 <!-- ENDIF -->
 <div class="content">
 	<div class="tableContent2">
-		<div class="titTable2">
+		<div class="titTable2 rounded-top rounded-bottom">
 			<!-- IF PAGE eq 1 -->{L_152}<!-- ELSE -->{L_271}<!-- ENDIF -->
 		</div>
 		<div class="titTable3">

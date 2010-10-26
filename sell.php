@@ -205,15 +205,13 @@ switch ($_SESSION['action'])
 				// Copy files
 				foreach ($UPLOADED_PICTURES as $k => $v)
 				{
-					copy($upload_path . session_id() . '/' . $v, $upload_path . $auction_id . '/' . $v);
+					$system->move_file($upload_path . session_id() . '/' . $v, $upload_path . $auction_id . '/' . $v);
 					chmod($upload_path . $auction_id . '/' . $v, 0777);
-					unlink($upload_path . session_id() . '/' . $v);
 				}
 				if (!empty($pict_url))
 				{
-					copy($upload_path . session_id() . '/' . $pict_url, $upload_path . $auction_id . '/' . $pict_url);
+					$system->move_file($upload_path . session_id() . '/' . $pict_url, $upload_path . $auction_id . '/' . $pict_url);
 					chmod($upload_path . $auction_id . '/' . $pict_url, 0777);
-					unlink($upload_path . session_id() . '/' . $pict_url);
 				}
 				// Delete files, using dir (to eliminate eventual odd files)
 				if ($dir = opendir($upload_path . session_id()))

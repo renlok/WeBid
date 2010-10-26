@@ -148,7 +148,7 @@ class global_class
 		return $txt;
 	}
 
-	function move_file($from, $to)
+	function move_file($from, $to, $removeorg = true)
 	{
 		$upload_mode = (@ini_get('open_basedir') || @ini_get('safe_mode') || strtolower(@ini_get('safe_mode')) == 'on') ? 'move' : 'copy';
 		switch ($upload_mode)
@@ -161,7 +161,8 @@ class global_class
 						return false;
 					}
 				}
-				@unlink($from);
+				if ($removeorg)
+					@unlink($from);
 				break;
 			
 			case 'move':
@@ -172,7 +173,8 @@ class global_class
 						return false;
 					}
 				}
-				@unlink($from);
+				if ($removeorg)
+					@unlink($from);
 				break;
 		}
 		@chmod($to, 0666);

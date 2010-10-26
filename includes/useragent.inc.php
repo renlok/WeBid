@@ -816,7 +816,7 @@ function get_item_version( $pv_browser_user_agent, $pv_search_string, $pv_b_brea
 		if ( strpos( $pv_browser_user_agent, $pv_search_string, $start_pos ) !== false )
 		{
 			// update start position if position found
-			$start_pos = strpos( $pv_browser_user_agent, $pv_search_string, $start_pos ) + strlen( $pv_search_string );
+			$start_pos = @strpos( $pv_browser_user_agent, $pv_search_string, $start_pos ) + strlen( $pv_search_string );
 			/*
 			msie (and maybe other userAgents requires special handling because some apps inject 
 			a second msie, usually at the beginning, custom modes allow breaking at first instance

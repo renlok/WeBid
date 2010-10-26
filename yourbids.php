@@ -16,7 +16,7 @@
 include 'includes/common.inc.php';
 
 // get active bids for this user
-$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
+$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid, b.quantity FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
 		WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = " . $user->user_data['id'] . "
 		AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bidwhen DESC";
 $res = mysql_query($query);
@@ -43,6 +43,7 @@ while ($row = mysql_fetch_assoc($res))
 				'ID' => $row['id'],
 				'TITLE' => $row['title'],
 				'BID' => $system->print_money($row['bid']),
+				'QTY' => $row['quantity'],
 				'TIMELEFT' => FormatTimeLeft($row['ends'] - time())
 				));
 	}

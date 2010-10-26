@@ -23,6 +23,7 @@ ksort($memtypesarr, SORT_NUMERIC);
 
 if (!$user->logged_in)
 {
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourfeedback.php';
 	header('location: user_login.php');
 	exit;
 }

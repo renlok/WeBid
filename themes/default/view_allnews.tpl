@@ -1,4 +1,4 @@
-<div class="bodycontent">
+<div class="padding">
 	{L_342}
 	<ul>
 	<!-- BEGIN news -->

@@ -1,6 +1,6 @@
 <div class="content">
 	<div class="tableContent2">
-		<div class="titTable2">
+		<div class="titTable2 rounded-top rounded-bottom">
 			{L_220}<a href="{SITEURL}profile.php?user_id={USER_ID}">{USERNAME}</a>
 		</div>
 		<div class="table2">

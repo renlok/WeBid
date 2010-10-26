@@ -24,6 +24,7 @@ elseif ($user->logged_in)
 }
 else
 {
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'closed_auctions.php';
 	header('location: user_login.php');
 	exit;
 }

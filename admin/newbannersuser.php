@@ -37,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 		(NULL, '" . mysql_real_escape_string($_POST['name']) . "', '" . mysql_real_escape_string($_POST['company']) . "', '" . $_POST['email'] . "')";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ID = mysql_insert_id();
-		header('location: userbanners.php?id = ' . $ID);
+		header('location: userbanners.php?id=' . $ID);
 		exit;
 	}
 }

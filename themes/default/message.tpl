@@ -1,5 +1,5 @@
 <div class="content">
-	<div class="titTable2">
+	<div class="titTable2 rounded-top rounded-bottom">
 		{TITLE_MESSAGE}
 	</div>
 <!-- IF L_ERROR ne '' -->

@@ -26,6 +26,7 @@ else
 
 if (!$user->logged_in)
 {
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'email_request.php';
 	header('location: user_login.php');
 	exit;
 }

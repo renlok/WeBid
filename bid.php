@@ -16,9 +16,15 @@ include 'includes/common.inc.php';
 include $include_path . 'datacheck.inc.php';
 
 $NOW = time();
+$id = intval($_REQUEST['id']);
+$bid = $_POST['bid'];
+$qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
+$bidder_id = $user->user_data['id'];
+$bidding_ended = false;
 
 if (!$user->logged_in)
 {
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'bid.php?id=' . $id;
 	header('location: user_login.php');
 	exit;
 }
@@ -35,12 +41,6 @@ if (!$user->can_buy)
 	header('location: user_menu.php');
 	exit;
 }
-
-$id = intval($_REQUEST['id']);
-$bid = $_POST['bid'];
-$qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
-$bidder_id = $user->user_data['id'];
-$bidding_ended = false;
 
 if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 {
@@ -132,6 +132,10 @@ if (($Data['ends'] <= time() || $Data['closed'] == 1) && !isset($errmsg))
 if (($Data['starts'] > time()) && !isset($errmsg))
 {
 	$errmsg = $ERR_073;
+}
+if ($aquantity < $qty)
+{
+	$errmsg = $ERR_608;
 }
 
 $query = "SELECT bid, bidder FROM " . $DBPrefix . "bids WHERE auction = " . $id . " ORDER BY bid DESC, id DESC LIMIT 1";

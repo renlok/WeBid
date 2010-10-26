@@ -16,6 +16,7 @@ include 'includes/common.inc.php';
 
 if (!$user->logged_in)
 {
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'selleremails.php';
 	header('location: user_login.php');
 	exit;
 }

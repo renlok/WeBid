@@ -111,7 +111,11 @@ $(document).ready(function() {
 		<!-- IF items.B_CANRELIST and B_AUTORELIST -->
 			<input type="checkbox" name="relist[]" value="{items.ID}" class="relistid">
 		<!-- ELSE -->
-			<a href="sellsimilar.php?id={items.ID}"><!-- IF items.B_CANRELIST -->{L_2__0051}<!-- ELSE -->{L_2__0050}<!-- ENDIF --></a>
+        	<!-- IF items.B_CANRELIST -->
+            <a href="sellsimilar.php?id={items.ID}&relist=1">{L_2__0051}</a>
+            <!-- ELSE -->
+            <a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
+            <!-- ENDIF -->
 		<!-- ENDIF -->
 		</td>
 		<td width="10%"  align="center">

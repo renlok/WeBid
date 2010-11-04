@@ -38,7 +38,7 @@
 		</tr>
     <!-- END featured_items -->
 	</table>
-    <br class="spacer" />
+    <br class="spacer">
 <!-- ENDIF -->
 
 	<table width="98%" border="0" cellspacing="1" cellpadding="4">

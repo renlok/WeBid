@@ -91,5 +91,10 @@
 - Fixed outstanding.php to deal with quantities greater than 1
 - Improved the login so now after you login it takes you to the page you were just on instead of just taking you back to the last auction you viewed
 - Added a simple accounts feature which logs all payments made to admin
+- All alternate row style data moved to the style sheet
+- Users no longer get send two emails if a keyword is in both the title and description
+- Fixed the bid counter so it now counts first bids and dutch auction bids
+- Fixed the RSS feeds to pull more than one entry
+- Upgraded the calendar script from v3.2 to v4.0.2
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -5,6 +5,7 @@
                         	<li><a href="{SITEURL}admin/fees.php">{L_25_0012}</a></li>
                         	<li><a href="{SITEURL}admin/fee_gateways.php">{L_445}</a></li>
                         	<li><a href="{SITEURL}admin/enablefees.php">{L_395}</a></li>
+                        	<li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
                         </ul>
                     </div>
                 </div>

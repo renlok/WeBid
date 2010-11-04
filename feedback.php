@@ -212,10 +212,10 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	$feed_disp = array();
 	while ($arrfeed = mysql_fetch_array($res))
 	{
-		$i = 0;
+		$j = 0;
 		foreach ($memtypesarr as $k => $l)
 		{
-			if ($k >= $arrfeed['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $arrfeed['rate_sum'] || $j++ == (count($memtypesarr) - 1))
 			{
 				$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 				break;
@@ -231,7 +231,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 				break;
 		}
 		$template->assign_block_vars('fbs', array(
-				'BGCOLOUR' => (!(($i + 1) % 2)) ? '#EEEEEE' : '#FFFFFF',
+				'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 				'IMG' => $uimg,
 				'USFLINK' => 'profile.php?user_id=' . $arrfeed['uId'] . '&auction_id=' . $arrfeed['auction_id'],
 				'USERID' => $arrfeed['uId'],

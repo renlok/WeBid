@@ -63,7 +63,7 @@ $query = "SELECT * FROM " . $DBPrefix . "auctions
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
-$bgColor = '#EBEBEB';
+$k = 0;
 while ($row = mysql_fetch_array($res))
 {
 	if (strlen($row['pict_url']) > 0)
@@ -84,7 +84,7 @@ while ($row = mysql_fetch_array($res))
 	$difference = $row['ends'] - time();
 
 	$template->assign_block_vars('auctions', array(
-			'BGCOLOUR' => ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB',
+			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
 			'TITLE' => $row['title'],
@@ -99,6 +99,7 @@ while ($row = mysql_fetch_array($res))
 			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] == 'y' || $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),
 			'B_BNONLY' => ($row['bn_only'] == 'y')
 			));
+	$k++;
 }
 
 // get this user's nick

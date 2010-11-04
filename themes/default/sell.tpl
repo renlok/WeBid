@@ -221,7 +221,7 @@ $(document).ready(function(){
 							<h3>{L_663}</h3>
 							{L_673} {MAXPICS} {L_674}<br>
 							[<a href="upldgallery.php" alt="gallery" class="new-window">{L_677}</a>]
-                            <input type="hidden" name="numimages" value="{NUMIMAGES}" id="numimages" />
+                            <input type="hidden" name="numimages" value="{NUMIMAGES}" id="numimages">
                         </td>
 					</tr>
 	<!-- ENDIF -->
@@ -330,9 +330,8 @@ $(document).ready(function(){
         <!-- ELSE -->
         					{L_211} <input type="checkbox" name="start_now" {START_NOW}><br>
 							{L_260} <input type="text" name="a_starts" id="pubdate_input" value="{START_TIME}" size="20" maxlength="19">
-							<a href="javascript:pubdate_cal.popup()"><img src="includes/img/calendar.gif" width="16" height="16" border="0" alt="Click Here to Pick up the date" /></a>
 							<script type="text/javascript">
-							var pubdate_cal = new xar_base_calendar(document.getElementById("pubdate_input"), "."); pubdate_cal.year_scroll = true; pubdate_cal.time_comp = true;
+								new tcal ({'id': 'pubdate_input','controlname': 'a_starts', 'formname': 'sell'});
 							</script>
         <!-- ENDIF -->
 						</td>

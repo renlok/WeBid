@@ -89,7 +89,7 @@
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_012}</b>{REQUIRED(5)}</td>
 						<td width="60%">
-							<input type="text" name="TPL_zip" size=8 value="{V_POSTCODE}" />
+							<input type="text" name="TPL_zip" size=8 value="{V_POSTCODE}">
 						</td>
 					</tr>
         <!-- ENDIF -->
@@ -129,7 +129,7 @@
 					<tr>
 						<td align="right" width="30%">{L_720}{REQUIRED(7)}</td>
 						<td>
-							<input type="text" name="TPL_pp_email" size=40 value="{PP_EMAIL}" />
+							<input type="text" name="TPL_pp_email" size=40 value="{PP_EMAIL}">
 						</td>
 					</tr>
 				<!-- ENDIF -->
@@ -137,13 +137,13 @@
 					<tr>
 						<td align="right" width="30%">{L_773}{REQUIRED(8)}</td>
 						<td>
-							<input type="text" name="TPL_authnet_id" size=40 value="{AN_ID}" />
+							<input type="text" name="TPL_authnet_id" size=40 value="{AN_ID}">
 						</td>
 					</tr>
 					<tr>
 						<td align="right" width="30%">{L_774}{REQUIRED(8)}</td>
 						<td>
-							<input type="text" name="TPL_authnet_pass" size=40 value="{AN_PASS}" />
+							<input type="text" name="TPL_authnet_pass" size=40 value="{AN_PASS}">
 						</td>
 					</tr>
 				<!-- ENDIF -->
@@ -151,7 +151,7 @@
 					<tr>
 						<td align="right" width="30%">{L_824}{REQUIRED(9)}</td>
 						<td>
-							<input type="text" name="TPL_worldpay_id" size=40 value="{WP_ID}" />
+							<input type="text" name="TPL_worldpay_id" size=40 value="{WP_ID}">
 						</td>
 					</tr>
 				<!-- ENDIF -->
@@ -159,7 +159,7 @@
 					<tr>
 						<td align="right" width="30%">{L_826}{REQUIRED(10)}</td>
 						<td>
-							<input type="text" name="TPL_toocheckout_id" size=40 value="{TC_ID}" />
+							<input type="text" name="TPL_toocheckout_id" size=40 value="{TC_ID}">
 						</td>
 					</tr>
 				<!-- ENDIF -->
@@ -167,7 +167,7 @@
 					<tr>
 						<td align="right" width="30%">{L_825}{REQUIRED(11)}</td>
 						<td>
-							<input type="text" name="TPL_moneybookers_email" size=40 value="{MB_EMAIL}" />
+							<input type="text" name="TPL_moneybookers_email" size=40 value="{MB_EMAIL}">
 						</td>
 					</tr>
 				<!-- ENDIF -->

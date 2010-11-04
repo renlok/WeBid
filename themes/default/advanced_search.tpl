@@ -19,13 +19,13 @@
 				<tr>
 					<td align="right">{L_1001}</td>
 					<td>
-						<input name="desc" type="checkbox" value="y" />
+						<input name="desc" type="checkbox" value="y">
 					</td>
 				</tr>
 				<tr>
 					<td align="right">{L_25_0214}</td>
 					<td>
-						<input name="closed" type="checkbox" id="closed" value="y" />
+						<input name="closed" type="checkbox" id="closed" value="y">
 					</td>
 				</tr>
 				<tr>
@@ -61,7 +61,7 @@
 				</tr>
 				<tr>
 					<td align="right">{L_012}</td>
-					<td><input type="text" name="zipcode" size="12" /></td>
+					<td><input type="text" name="zipcode" size="12"></td>
 				</tr>
 				<tr>
 					<td align="right">{L_1009}</td>

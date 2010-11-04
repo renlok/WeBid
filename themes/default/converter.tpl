@@ -30,7 +30,7 @@
 <!-- ENDIF -->
 					<tr valign="top">
 						<td width="22%">{L_082}<br>
-							<input type="text" name="amount" size="5" value="{AMOUNT}" />
+							<input type="text" name="amount" size="5" value="{AMOUNT}">
 						</td>
 						<td width="39%">{L_083}<br>
 							<select name="from">
@@ -49,13 +49,13 @@
 					</tr>
 				</table>
 				<div style="text-align:center">
-					<input type="hidden" name="action" value="convert" />
-					<input type="submit" name="Submit" value="{L_25_0176}" />
+					<input type="hidden" name="action" value="convert">
+					<input type="submit" name="Submit" value="{L_25_0176}">
 				</div>
 			</form>
 		</div>
 		<div style="text-align:center">
-			<input type="button" value="Close" onClick="javascript:window.close()" />
+			<input type="button" value="Close" onClick="javascript:window.close()">
 		</div>
 		<br>
 	</div>

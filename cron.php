@@ -154,63 +154,61 @@ while ($Auction = mysql_fetch_array($result)) // loop auctions
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-		if ($decrem > 0)
+		$decrem = $decrem + mysql_num_rows($res);
+		$WINNERS_ID = array();
+		$winner_array = array();
+		$items_count = $Auction['quantity'];
+		$items_sold = 0;
+		while($row = mysql_fetch_assoc($res))
 		{
-			$WINNERS_ID = array();
-			$winner_array = array();
-			$items_count = $Auction['quantity'];
-			$items_sold = 0;
-			while($row = mysql_fetch_assoc($res))
+			if (!in_array($row['bidder'], $WINNERS_ID))
 			{
-				if (!in_array($row['bidder'], $WINNERS_ID))
+				$items_wanted = $row['quantity'];
+				$items_got = 0;
+				if ($items_wanted <= $items_count)
 				{
-					$items_wanted = $row['quantity'];
-					$items_got = 0;
-					if ($items_wanted <= $items_count)
-					{
-						$items_got = $items_wanted;
-					}
-					else
-					{
-						$items_got = $items_count;
-					}
-					$items_count -= $items_got;
-					$items_sold += $items_got;
-
-					// Retrieve winner nick from the database
-					$query = "SELECT id, nick, email, name, address, city, zip, prov, country
-							FROM " . $DBPrefix . "users WHERE id = " . $row['bidder'] . " LIMIT 1";
-					$res_n = mysql_query($query);
-					$system->check_mysql($res_n, $query, __LINE__, __FILE__);
-					$Winner = mysql_fetch_assoc($res_n);
-					// set arrays
-					$WINNERS_ID[] = $row['bidder'];
-					$Winner['maxbid'] = $row['maxbid'];
-					$Winner['quantity'] = $items_got;
-					$Winner['wanted'] = $items_wanted;
-					$winner_array[] = $Winner; // set array ready for emails
-					$report_text .= ' ' . $MSG['159'] . ' ' . $Winner['nick'] . ' (' . $Winner['email'] . ') ' . $items_got . ' ' . $MSG['5492'] . ', ' . $MSG['5493'] . ' ' . $system->print_money($row['bid']) . ' ' . $MSG['5495'] . ' - (' . $MSG['5494'] . ' ' . $items_wanted . ' ' . $MSG['5492'] . ')' . "\n";
-					if ($system->SETTINGS['winner_address'] == 'y') {
-						$report_text .= ' ' . $MSG['30_0086'] . $ADDRESS . "\n";
-					}
-
-					$bf_paid = 1;
-					$ff_paid = 1;
-					// work out & add fee
-					if ($system->SETTINGS['fees'] == 'y')
-					{
-						sortFees();
-					}
-
-					// Add winner's data to "winners" table
-					$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$items_got = $items_wanted;
 				}
-				if ($items_count == 0)
+				else
 				{
-					break;
+					$items_got = $items_count;
 				}
+				$items_count -= $items_got;
+				$items_sold += $items_got;
+
+				// Retrieve winner nick from the database
+				$query = "SELECT id, nick, email, name, address, city, zip, prov, country
+						FROM " . $DBPrefix . "users WHERE id = " . $row['bidder'] . " LIMIT 1";
+				$res_n = mysql_query($query);
+				$system->check_mysql($res_n, $query, __LINE__, __FILE__);
+				$Winner = mysql_fetch_assoc($res_n);
+				// set arrays
+				$WINNERS_ID[] = $row['bidder'];
+				$Winner['maxbid'] = $row['maxbid'];
+				$Winner['quantity'] = $items_got;
+				$Winner['wanted'] = $items_wanted;
+				$winner_array[] = $Winner; // set array ready for emails
+				$report_text .= ' ' . $MSG['159'] . ' ' . $Winner['nick'] . ' (' . $Winner['email'] . ') ' . $items_got . ' ' . $MSG['5492'] . ', ' . $MSG['5493'] . ' ' . $system->print_money($row['bid']) . ' ' . $MSG['5495'] . ' - (' . $MSG['5494'] . ' ' . $items_wanted . ' ' . $MSG['5492'] . ')' . "\n";
+				if ($system->SETTINGS['winner_address'] == 'y') {
+					$report_text .= ' ' . $MSG['30_0086'] . $ADDRESS . "\n";
+				}
+
+				$bf_paid = 1;
+				$ff_paid = 1;
+				// work out & add fee
+				if ($system->SETTINGS['fees'] == 'y')
+				{
+					sortFees();
+				}
+
+				// Add winner's data to "winners" table
+				$query = "INSERT INTO " . $DBPrefix . "winners VALUES
+				(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
+			if ($items_count == 0)
+			{
+				break;
 			}
 		}
 	} // end auction ends

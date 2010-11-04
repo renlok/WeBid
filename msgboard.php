@@ -119,7 +119,7 @@ if (mysql_num_rows($res) > 0)
 				'MSG' => nl2br(stripslashes($messages['message'])),
 				'USERNAME' => $messages['username'],
 				'POSTED' => FormatDate($messages['msgdate']),
-				'BGCOLOUR' => ($k % 2) ? '#EEEEEE' : '#FFFFFF'
+				'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',
 				));
 		$k++;
 	}

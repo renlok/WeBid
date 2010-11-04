@@ -255,6 +255,13 @@ class global_class
 // global functions
 function _gmmktime($hr, $min, $sec, $mon, $day, $year)
 {
+	if ($system->SETTINGS['datesformat'] != 'USA')
+	{
+		$mon_ = $mon;
+		$mon = $day;
+		$day = $mon_;
+	}
+
 	if (@phpversion() >= '5.1.0')
 	{
 		return gmmktime($hr, $min, $sec, $mon, $day, $year); // is_dst is deprecated

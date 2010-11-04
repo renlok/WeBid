@@ -26,7 +26,7 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $setup = $buyer_fee = $endauc_fee = false;
 
-$bgColor = '#EBEBEB';
+$i = 0;
 while ($row = mysql_fetch_array($res))
 {
 	if ($row['type'] == 'setup')
@@ -35,7 +35,7 @@ while ($row = mysql_fetch_array($res))
 		{
 			$setup = true;
 			$template->assign_block_vars('setup_fees', array(
-					'BGCOLOUR' => ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB',
+					'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 					'FROM' => $system->print_money($row['fee_from']),
 					'TO' => $system->print_money($row['fee_to']),
 					'VALUE' => ($row['fee_type'] == 'flat') ? $system->print_money($row['value']) : $row['value'] . '%'
@@ -48,7 +48,7 @@ while ($row = mysql_fetch_array($res))
 		{
 			$buyer_fee = true;
 			$template->assign_block_vars('buyer_fee', array(
-					'BGCOLOUR' => ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB',
+					'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 					'FROM' => $system->print_money($row['fee_from']),
 					'TO' => $system->print_money($row['fee_to']),
 					'VALUE' => ($row['fee_type'] == 'flat') ? $system->print_money($row['value']) : $row['value'] . '%'
@@ -61,7 +61,7 @@ while ($row = mysql_fetch_array($res))
 		{
 			$endauc_fee = true;
 			$template->assign_block_vars('endauc_fee', array(
-					'BGCOLOUR' => ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB',
+					'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 					'FROM' => $system->print_money($row['fee_from']),
 					'TO' => $system->print_money($row['fee_to']),
 					'VALUE' => ($row['fee_type'] == 'flat') ? $system->print_money($row['value']) : $row['value'] . '%'
@@ -138,6 +138,7 @@ while ($row = mysql_fetch_array($res))
 				'SUBTITLE_FEE' => $system->print_money($row['value'])
 				));
 	}
+	$i++;
 }
 
 $template->assign_vars(array(

@@ -20,7 +20,7 @@ if (basename($_SERVER['PHP_SELF']) != 'error.php')
 	include $include_path . 'stats.inc.php';
 
 $jsfiles = 'js/jquery.js;js/jquery.lightbox.js;';
-$jsfiles .= (basename($_SERVER['PHP_SELF']) == 'sell.php') ? ';includes/calendar.js' : '';
+$jsfiles .= (basename($_SERVER['PHP_SELF']) == 'sell.php') ? ';js/calendar.php' : '';
 
 // Get users and auctions counters
 $counters = load_counters();

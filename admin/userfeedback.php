@@ -80,7 +80,7 @@ if (mysql_num_rows($res) > 0)
 		$template->assign_block_vars('feedback', array(
 				'FB_TYPE' => $fb_type,
 				'FB_FROM' => $arrfeed['rater_user_nick'],
-				'FB_TIME' => FormatDate($arrfeed['feedbackdate'], false),
+				'FB_TIME' => FormatDate($arrfeed['feedbackdate'], '/', false),
 				'FB_MSG' => nl2br($arrfeed['feedback']),
 				'FB_ID' => $arrfeed['id'],
 				'BG' => $bg

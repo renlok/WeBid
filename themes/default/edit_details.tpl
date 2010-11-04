@@ -1,6 +1,6 @@
 <!-- INCLUDE user_menu_header.tpl -->
 
-<form name="details" action="" method="POST">
+<form name="details" action="" method="post">
 <table width="100%" border="0" cellpadding="4" align="center">
 	<tr>
 		<td align="right" width="30%">{L_002}</td>
@@ -15,7 +15,7 @@
 	</tr>
 	<tr>
 		<td valign="top" class="errfont" style="text-align:right !important;">{L_004}</td>
-		<td align="left"><input type="password" name="TPL_password" size=20 maxlength="20" /> {L_050}</td>
+		<td align="left"><input type="password" name="TPL_password" size=20 maxlength="20"> {L_050}</td>
 	</tr>
 	<tr>
 		<td valign="top" class="errfont" style="text-align:right !important;">{L_005}</td>
@@ -26,7 +26,7 @@
 	<tr>
 		<td valign="top" align="right">{L_006}</td>
 		<td>
-			<input type="text" name="TPL_email" size=50 maxlength=50 value="{EMAIL}" />
+			<input type="text" name="TPL_email" size=50 maxlength=50 value="{EMAIL}">
 		</td>
 	</tr>
 	<tr>
@@ -38,19 +38,19 @@
 	<tr>
 		<td valign="top" align="right">{L_009}</td>
 		<td>
-			<input type="text" name="TPL_address" size=40 maxlength=255 value="{ADDRESS}" />
+			<input type="text" name="TPL_address" size=40 maxlength=255 value="{ADDRESS}">
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" align="right">{L_010}</td>
 		<td>
-			<input type="text" name="TPL_city" size=25 maxlength=25 value="{CITY}" />
+			<input type="text" name="TPL_city" size=25 maxlength=25 value="{CITY}">
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" align="right">{L_011}</td>
 		<td>
-			<input type="text" name="TPL_prov" size=10 maxlength=10 value="{PROV}" />
+			<input type="text" name="TPL_prov" size=10 maxlength=10 value="{PROV}">
 		</td>
 	</tr>
 	<tr>
@@ -64,13 +64,13 @@
 	<tr>
 		<td valign="top" align="right">{L_012}</td>
 		<td>
-			<input type="text" name="TPL_zip" size=8 value="{ZIP}" />
+			<input type="text" name="TPL_zip" size=8 value="{ZIP}">
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" align="right">{L_013}</td>
 		<td>
-			<input type="text" name="TPL_phone" size=40 maxlength=40 value="{PHONE}" />
+			<input type="text" name="TPL_phone" size=40 maxlength=40 value="{PHONE}">
 		</td>
 	</tr>
 	<tr>
@@ -109,7 +109,7 @@
 	<tr>
 		<td align="right" width="30%">{L_720}</td>
 		<td>
-			<input type="text" name="TPL_pp_email" size=40 value="{PP_EMAIL}" />
+			<input type="text" name="TPL_pp_email" size=40 value="{PP_EMAIL}">
 		</td>
 	</tr>
 <!-- ENDIF -->
@@ -117,13 +117,13 @@
 	<tr>
 		<td align="right" width="30%">{L_773}</td>
 		<td>
-			<input type="text" name="TPL_authnet_id" size=40 value="{AN_ID}" />
+			<input type="text" name="TPL_authnet_id" size=40 value="{AN_ID}">
 		</td>
 	</tr>
 	<tr>
 		<td align="right" width="30%">{L_774}</td>
 		<td>
-			<input type="text" name="TPL_authnet_pass" size=40 value="{AN_PASS}" />
+			<input type="text" name="TPL_authnet_pass" size=40 value="{AN_PASS}">
 		</td>
 	</tr>
 <!-- ENDIF -->
@@ -131,7 +131,7 @@
 	<tr>
 		<td align="right" width="30%">{L_824}</td>
 		<td>
-			<input type="text" name="TPL_worldpay_id" size=40 value="{WP_ID}" />
+			<input type="text" name="TPL_worldpay_id" size=40 value="{WP_ID}">
 		</td>
 	</tr>
 <!-- ENDIF -->
@@ -139,7 +139,7 @@
 	<tr>
 		<td align="right" width="30%">{L_826}</td>
 		<td>
-			<input type="text" name="TPL_toocheckout_id" size=40 value="{TC_ID}" />
+			<input type="text" name="TPL_toocheckout_id" size=40 value="{TC_ID}">
 		</td>
 	</tr>
 <!-- ENDIF -->
@@ -147,7 +147,7 @@
 	<tr>
 		<td align="right" width="30%">{L_825}</td>
 		<td>
-			<input type="text" name="TPL_moneybookers_email" size=40 value="{MB_EMAIL}" />
+			<input type="text" name="TPL_moneybookers_email" size=40 value="{MB_EMAIL}">
 		</td>
 	</tr>
 <!-- ENDIF -->
@@ -156,12 +156,12 @@
 	</tr>
 	<tr>
 		<td colspan=2 align="center">
-			<input type="submit" name="Input" value="{L_530}" class="button" />
-			<input type="reset" name="Input" class="button" />
+			<input type="submit" name="Input" value="{L_530}" class="button">
+			<input type="reset" name="Input" class="button">
 		</td>
 	</tr>
 </table>
-<input type="hidden" name="action" value="update" />
+<input type="hidden" name="action" value="update">
 </form>
 
 <!-- INCLUDE user_menu_footer.tpl -->

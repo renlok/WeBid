@@ -174,7 +174,7 @@ $i = 0;
 while ($item = mysql_fetch_assoc($res))
 {
 	$template->assign_block_vars('items', array(
-			'BGCOLOUR' => ($i % 2) ? '#FFCCFF' : '#EEEEEE',
+			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => $item['title'],
 			'STARTS' => FormatDate($item['starts']),

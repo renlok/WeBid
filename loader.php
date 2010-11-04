@@ -14,17 +14,48 @@
 
 ob_start('ob_gzhandler');
 header("Content-type: text/javascript");
+include 'includes/checks/files.php';
 if (isset($_GET['js']))
 {
 	$js = explode(';', $_GET['js']);
 	foreach ($js as $val)
 	{
-		if (is_file($val))
+		$ext = substr($val, strrpos($val, '.') + 1);
+		if ($ext == 'php')
 		{
-			echo file_get_contents($val);
-			echo "\n";
+			if (check_file($val))
+			{
+				include $val;
+			}
+		}
+		else
+		{
+			if (is_file($val))
+			{
+				echo file_get_contents($val);
+				echo "\n";
+			}
 		}
 	}
 }
 ob_end_flush();
+
+function check_file($file)
+{
+	global $file_hashs;
+	$tmp = $file_hashs;
+	$folders = explode('/', $file);
+	foreach ($folders as $val)
+	{
+		if (isset($tmp[$val]))
+		{
+			$tmp = $tmp[$val];
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return true;
+}
 ?>

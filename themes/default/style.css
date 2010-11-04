@@ -6,7 +6,7 @@
 .catsearch	{ background-color: #FFFF99; color: #333333; }
 .container	{ background-color: #ffffff; }
 .errfont	{ background-color: #FFFF00; font-weight: bold; font-family: Verdana, Arial, Sans; color: #FF0000; text-align: center; }
-.footer	{ clear: both; width: inherit; padding: 5px 5px 5px 5px; text-align: center; color: #666666; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; }
+.footer	{ clear: both; padding: 5px; text-align: center; font-size: x-small; }
 .hg	{ background-color: #FFFF99; }
 .imgSep	{ background: transparent url(img/imgsep.gif) no-repeat center; margin: 0px 4px 1px 4px; display: inline; height: 8px; width: 8px; }
 .imgTitL	{ background: transparent url(img/tit_l.gif) no-repeat center; margin: 0px 5px 1px 0px; display: inline; height: 8px; width: 8px; }
@@ -16,7 +16,7 @@
 .table1	{ clear: both; text-align: left; padding: 5px; }
 .table2	{ width: inherit; padding: 5px; clear: both; text-align: left; }
 .tableContent3	{ font-size: 10px; }
-.titTable3	{ background-color: #c2e5ff; text-align: right; padding: 5px; font-size: 11px; color: #666666; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; }
+.titTable3	{ background-color: #c2e5ff; text-align: right; padding: 5px; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; }
 .titTable4	{ background-color: #EEEEEE; text-align: left; padding: 5px; font-size: 10px; font-weight: bolder; color: #666666; border-top:  1px solid #C9C9C9; text-transform: uppercase; border-bottom: 1px solid #C9C9C9;}
 p	{ margin: 0px 0px 5px 0px; }
 dl.tabs	{ margin: 0 0 0 5px; padding: 0; width: 100%; font-size: 13px; }
@@ -60,6 +60,10 @@ td {
 	padding: 3px;
 }
 
+.notd td {
+	padding: 0px;
+}
+
 .padding {
 	padding: 15px;
 }
@@ -77,7 +81,7 @@ td {
 }
 
 .smallspan {
-	font-size:12px;
+	font-size:10px;
 }
 
 .yourbidloss {
@@ -240,4 +244,9 @@ a:hover {
 	-moz-border-radius-bottomright: 5px;
 	-webkit-border-bottom-right-radius: 5px;
 	-khtml-border-bottom-right-radius: 5px;
+}
+
+.centre {
+	padding: 0 auto;
+	text-align: center;
 }

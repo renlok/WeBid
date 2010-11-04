@@ -41,6 +41,7 @@ function SubmitBoxes(N)
 		<tr>
 	<!-- ENDIF -->
 <!-- END boxes -->
+		</tr>
 		<tr>
 		  <td colspan="3">&nbsp;</td>
 		</tr>

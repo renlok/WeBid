@@ -68,7 +68,7 @@ $(document).ready(function() {
 		</tr>
 <!-- IF B_AREITEMS -->
 	<!-- BEGIN items -->
-		<tr bgcolor="{items.BGCOLOUR}">
+		<tr {items.BGCOLOUR}>
 			<td width="32%">
 				<a href="item.php?id={items.ID}">{items.TITLE}</a>
 			</td>
@@ -94,7 +94,7 @@ $(document).ready(function() {
 		</tr>
 	<!-- END items -->
 <!-- ENDIF -->
-	<tr bgcolor="{BGCOLOUR}">
+	<tr {BGCOLOUR}>
 	  <td colspan="4" align="right">{L_30_0102}</td>
 	  <td align="center"><input type="checkbox" id="deleteall"></td>
 	  <td align="center"><input type="checkbox" id="startall"></td>

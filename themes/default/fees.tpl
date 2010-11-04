@@ -10,7 +10,7 @@
 					<th colspan="2">{L_431}</th>
 				</tr>
 	<!-- BEGIN setup_fees -->
-				<tr style="background-color:{setup_fees.BGCOLOUR};">
+				<tr {setup_fees.BGCOLOUR}>
 					<td align="left">{L_240} {setup_fees.FROM} {L_241} {setup_fees.TO}</td>
 					<td align="right">{setup_fees.VALUE}</td>
 	<!-- END setup_fees -->
@@ -23,7 +23,7 @@
 					<th colspan="2">{L_775}</th>
 				</tr>
 	<!-- BEGIN buyer_fee -->
-				<tr style="background-color:{buyer_fee.BGCOLOUR};">
+				<tr {buyer_fee.BGCOLOUR}>
 					<td align="left">{L_240} {buyer_fee.FROM} {L_241} {buyer_fee.TO}</td>
 					<td align="right">{buyer_fee.VALUE}</td>
 	<!-- END buyer_fee -->
@@ -36,7 +36,7 @@
 					<th colspan="2">{L_791}</th>
 				</tr>
 	<!-- BEGIN endauc_fee -->
-				<tr style="background-color:{endauc_fee.BGCOLOUR};">
+				<tr {endauc_fee.BGCOLOUR}>
 					<td align="left">{L_240} {endauc_fee.FROM} {L_241} {endauc_fee.TO}</td>
 					<td align="right">{endauc_fee.VALUE}</td>
 	<!-- END endauc_fee -->

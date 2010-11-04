@@ -43,6 +43,12 @@
 				<a href="item_watch.php?delete={items.ID}"><img src="{SITEURL}images/trash.gif" border="0"></a>
 			</td>
 		</tr>
+<!-- BEGINELSE -->
+		<tr align="center">
+			<td align="center" colspan="6">
+				{L_853}
+			</td>
+		</tr>
 <!-- END items -->
 	</table>
 </div>

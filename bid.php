@@ -276,6 +276,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 				// Also update bids table
 				$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($next_bid) . ", '" . $NOW . "', " . $qty . ")";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 1)";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			}
 			else // This is not the first bid
 			{
@@ -315,7 +317,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 					// Update bids table
 					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($next_bid) . ", '" . $NOW . "', " . $qty . ")";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 1 + " . $fakebids . ")";
+					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + (1 + " . $fakebids . "))";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . $next_bid . ", num_bids = (num_bids + 1 + " . $fakebids . ") WHERE id = " . $id;
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
@@ -406,6 +408,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 		if (!isset($errmsg))
 		{
 			$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($bid) . ", '" . $NOW . "', " . $qty . ")";
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 1)";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($bid) . ", num_bids = num_bids + 1 WHERE id = " . $id;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

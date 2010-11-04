@@ -113,9 +113,9 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 while ($auction_data = mysql_fetch_assoc($res))
 {
 	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['category'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$parent_node = mysql_fetch_assoc($res);
+	$res_ = mysql_query($query);
+	$system->check_mysql($res_, $query, __LINE__, __FILE__);
+	$parent_node = mysql_fetch_assoc($res_);
 
 	$cat_value = '';
 	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
@@ -133,11 +133,12 @@ while ($auction_data = mysql_fetch_assoc($res))
 
 	$template->assign_block_vars('rss', array(
 			'PRICE' => str_replace(array('<b>', '</b>'), '', $system->print_money(($auction_data['num_bids'] == 0) ? $auction_data['minimum_bid'] : $auction_data['current_bid'], false)),
-			'TITLE' => $auction_data['title'],
+			'TITLE' => $system->uncleanvars($auction_data['title']),
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $auction_data['id'],
 			'DESC' => $auction_data['description'],
 			'USER' => $auction_data['nick'],
-			'POSTED' => gmdate('D, j M Y H:i:s \G\M\T', $auction_data['starts']),
+			'POSTED' => gmdate('Y-m-d\TH:i:s-00:00', $auction_data['starts']),
+			//'POSTED' => gmdate('D, j M Y H:i:s \G\M\T', $auction_data['starts']),
 			'CAT' => $cat_value
 			));
 }

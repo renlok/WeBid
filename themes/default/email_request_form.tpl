@@ -30,7 +30,7 @@
 							{L_002}
 						</td>
 						<td width="60%">
-							<input type="text" name="TPL_sender_name" size="25" value="{MSG_YNAME}" />
+							<input type="text" name="TPL_sender_name" size="25" value="{MSG_YNAME}">
 						</td>
 					</tr>
 					<tr>
@@ -38,7 +38,7 @@
 							{L_006}
 						</td>
 						<td width="60%">
-							<input type="text" name="TPL_sender_mail" size="25" value="{MSG_YEMAIL}" />
+							<input type="text" name="TPL_sender_mail" size="25" value="{MSG_YEMAIL}">
 						</td>
 					</tr>
 					<tr>
@@ -49,9 +49,9 @@
 							<textarea name="TPL_text" cols="30" rows="8">{MSG_TEXT}</textarea>
 							<br>
 							<br>
-							<input type="hidden" name="user_id" value="{USERID}" />
-							<input type="hidden" name="username" value="{USERNAME}" />
-							<input type="hidden" name="action" value="proceed" />
+							<input type="hidden" name="user_id" value="{USERID}">
+							<input type="hidden" name="username" value="{USERNAME}">
+							<input type="hidden" name="action" value="proceed">
 							<input type="submit" name="Submit" value="Submit" class="button">
 							<input type="reset" name="Submit2" value="Reset" class="button">
 						</td>

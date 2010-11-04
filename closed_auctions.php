@@ -60,20 +60,10 @@ $qs .= "ORDER BY ends ASC LIMIT $OFFSET, " . $system->SETTINGS['perpage'];
 $result = mysql_query($qs);
 $system->check_mysql($result, $qs, __LINE__, __FILE__);
 
-$bgColor = '#EBEBEB';
 while ($row = mysql_fetch_array($result))
 {
 	$bid = $row['current_bid'];
 	$starting_price = $row['current_bid'];
-
-	if ($bgColor == '#EBEBEB')
-	{
-		$bgColor = '#FFFFFF';
-	}
-	else
-	{
-		$bgColor = '#EBEBEB';
-	}
 
 	if (strlen($row['pict_url']) > 0)
 	{
@@ -97,7 +87,7 @@ while ($row = mysql_fetch_array($result))
 	if (intval($difference / 3600) > 12) $days_difference++;
 
 	$template->assign_block_vars('auctions', array(
-			'BGCOLOUR' => $bgColor,
+			'BGCOLOUR' => (!($auctions_count % 2)) ? '' : 'class="alt-row"',
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
 			'TITLE' => $row['title'],

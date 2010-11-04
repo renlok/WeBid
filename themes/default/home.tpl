@@ -36,7 +36,7 @@
     <tr>
         <td class="table2">
         <!-- BEGIN auc_last -->
-            <p style="background-color:{auc_last.BGCOLOUR};display:block;">{auc_last.DATE} <a href="{SITEURL}item.php?id={auc_last.ID}">{auc_last.TITLE}</a></p>
+            <p style="display:block;" {auc_last.BGCOLOUR}>{auc_last.DATE} <a href="{SITEURL}item.php?id={auc_last.ID}">{auc_last.TITLE}</a></p>
         <!-- END auc_last -->
         </td>
     </tr>
@@ -48,7 +48,7 @@
     <tr>
         <td class="table2">
         <!-- BEGIN max_bids -->
-            <p style="background-color:{max_bids.BGCOLOUR};display:block;">{max_bids.FBID} <a href="{SITEURL}item.php?id={max_bids.ID}">{max_bids.TITLE}</a></p>
+            <p style="display:block;" {max_bids.BGCOLOUR}>{max_bids.FBID} <a href="{SITEURL}item.php?id={max_bids.ID}">{max_bids.TITLE}</a></p>
         <!-- END max_bids -->
         </td>
     </tr>
@@ -60,7 +60,7 @@
     <tr>
         <td class="table2">
         <!-- BEGIN end_soon -->
-            <p style="background-color:{end_soon.BGCOLOUR};display:block;">{end_soon.DATE} <a href="{SITEURL}item.php?id={end_soon.ID}">{end_soon.TITLE}</a></p>
+            <p style="display:block;" {end_soon.BGCOLOUR}>{end_soon.DATE} <a href="{SITEURL}item.php?id={end_soon.ID}">{end_soon.TITLE}</a></p>
         <!-- END end_soon -->
         </td>
     </tr>

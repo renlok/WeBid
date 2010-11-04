@@ -24,7 +24,7 @@
 					<td width="15%" class="titTable2">{L_364}</td>
 				</tr>
 <!-- BEGIN fbs -->
-				<tr bgcolor="{fbs.BGCOLOUR}">
+				<tr {fbs.BGCOLOUR}>
 					<td valign="top" width="5%">
 						<img src="{fbs.IMG}" align="middle" alt="">
 					</td>

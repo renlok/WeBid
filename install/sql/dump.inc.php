@@ -31,6 +31,10 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 	`type` VARCHAR(15) NOT NULL ,
 	`paid_date` VARCHAR(16) NOT NULL ,
 	`amount` DOUBLE(6, 4) NOT NULL
+	`day` INT(3) NOT NULL,
+	`week` INT(2) NOT NULL,
+	`month` INT(2) NOT NULL,
+	`year` INT(4) NOT NULL
 )";
 
 # 

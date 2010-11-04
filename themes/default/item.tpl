@@ -39,11 +39,14 @@ $(document).ready(function() {
             </td>
 			<td align="right">{L_113}: {ID}</td>
 		</tr>
-	  </table>
 <!-- IF B_CANEDIT -->
-	  <br>
-	  [<a href="{SITEURL}edit_active_auction.php?id={ID}">{L_30_0069}</a>]
+		<tr>
+			<td colspan="2">
+	  			[<a href="{SITEURL}edit_active_auction.php?id={ID}">{L_30_0069}</a>]
+            </td>
+		</tr>
 <!-- ENDIF -->
+	  </table>
 	</div>
 	<div class="titTable3">
 		{VIEW_HISTORY1}

@@ -123,11 +123,10 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $i = 0;
-$bgcolor = '#FFFFFF';
 while ($row = mysql_fetch_assoc($res))
 {
 	$template->assign_block_vars('auc_last', array(
-			'BGCOLOUR' => ($bgcolor == '#FFFFFF') ? '#FFFEEE' : '#FFFFFF',
+			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'DATE' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
 			'ID' => $row['id'],
 			'TITLE' => $row['title']
@@ -144,7 +143,6 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $i = 0;
-$bgcolor = '#FFFFFF';
 while ($row = mysql_fetch_assoc($res))
 {
 	$difference = $row['ends'] - time();
@@ -157,7 +155,7 @@ while ($row = mysql_fetch_assoc($res))
 		$ends_string = $MSG['911'];
 	}
 	$template->assign_block_vars('end_soon', array(
-			'BGCOLOUR' => ($bgcolor == '#FFFFFF') ? '#FFFEEE' : '#FFFFFF',
+			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'DATE' => $ends_string,
 			'ID' => $row['id'],
 			'TITLE' => $row['title']
@@ -176,14 +174,13 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $i = $j = 0;
-$bgcolor = '#FFFFFF';
 $AU = array();
 while ($row = mysql_fetch_assoc($res))
 {
 	if (!in_array($row['id'], $AU))
 	{
 		$template->assign_block_vars('max_bids', array(
-				'BGCOLOUR' => ($bgcolor == '#FFFFFF') ? '#FFFEEE' : '#FFFFFF',
+				'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 				'FBID' => $system->print_money($row['max_bid']),
 				'BID' => $row['max_bid'],
 				'ID' => $row['id'],

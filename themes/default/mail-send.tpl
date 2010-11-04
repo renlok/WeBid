@@ -17,11 +17,11 @@ $(".form1").submit(function(){
 	<table width="80%" border="1" style="border-collapse: collapse;">
 	  <tr>
 		<td width="100px" nowrap="nowrap" valign="top"><label for="to">{L_241}:</label></td>
-		<td><input name="sendto" type="text" size="40" value="{REPLY_TO}" id="to" /></td>
+		<td><input name="sendto" type="text" size="40" value="{REPLY_TO}" id="to"></td>
 	  </tr>
 	  <tr>
 		<td nowrap="nowrap" valign="top"><label for="subject">{L_332}:</label></td>
-		<td><input name="subject" type="text" size="40" value="{REPLY_SUBJECT}" id="subject" maxlength="50" /></td>
+		<td><input name="subject" type="text" size="40" value="{REPLY_SUBJECT}" id="subject" maxlength="50"></td>
 	  </tr>
 	  <tr>
 		<td nowrap="nowrap" valign="top"><label for="message">{L_333}:</label></td>

@@ -231,11 +231,12 @@ switch ($_SESSION['action'])
 				$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != '' AND id != " . $user->user_data['id'];
 				$result = mysql_query($query);
 				$system->check_mysql($result, $query, __LINE__, __FILE__);
+				$sent_to = array();
 				while ($row = mysql_fetch_assoc($result))
 				{
 					if (isset($match)) unset($match);
 					$w_title = explode(' ', strtolower($_SESSION['SELL_title']));
-					$w_descr = explode(' ', strtolower(str_replace(array('<br>', "\n"), '', $_SESSION['SELL_description'])));
+					$w_descr = explode(' ', strtolower(str_replace(array('<br>', "\n"), '', strip_tags($_SESSION['SELL_description']))));
 					$w_nick = strtolower($user->user_data['nick']);
 					$key = explode(' ', $row['auc_watch']);
 					if (is_array($key) && count($key) > 0)
@@ -243,7 +244,7 @@ switch ($_SESSION['action'])
 						foreach ($key as $k => $v)
 						{
 							$v = trim(strtolower($v));
-							if (in_array($v, $w_title) || in_array($v, $w_descr) || $v == $w_nick)
+							if ((in_array($v, $w_title) || in_array($v, $w_descr) || $v == $w_nick) && !in_array($row['id'], $sent_to))
 							{
 								$emailer = new email_class();
 								$emailer->assign_vars(array(
@@ -255,6 +256,7 @@ switch ($_SESSION['action'])
 										));
 								$emailer->email_uid = $row['id'];
 								$emailer->email_sender($row['email'], 'auction_watchmail.inc.php', $system->SETTINGS['sitename'] . '  ' . $MSG['471']);
+								$sent_to[] = $row['id'];
 							}
 						}
 					}
@@ -444,9 +446,9 @@ switch ($_SESSION['action'])
 					$a_starts = _gmmktime(substr($a_starts, 11, 2),
 						substr($a_starts, 14, 2),
 						substr($a_starts, 17, 2),
-						substr($a_starts, 5, 2),
-						substr($a_starts, 8, 2),
-						substr($a_starts, 0, 4), 0);
+						substr($a_starts, 0, 2),
+						substr($a_starts, 3, 2),
+						substr($a_starts, 6, 4), 0);
 				}
 
 				$template->assign_vars(array(
@@ -491,9 +493,9 @@ switch ($_SESSION['action'])
 			$a_starts = _gmmktime(substr($a_starts, 11, 2),
 				substr($a_starts, 14, 2),
 				substr($a_starts, 17, 2),
-				substr($a_starts, 5, 2),
-				substr($a_starts, 8, 2),
-				substr($a_starts, 0, 4), 0);
+				substr($a_starts, 0, 2),
+				substr($a_starts, 3, 2),
+				substr($a_starts, 6, 4), 0);
 		}
 	case 1:
 		$category_string1 = get_category_string($sellcat1);
@@ -547,22 +549,30 @@ switch ($_SESSION['action'])
 		// make hour
 		if ($_SESSION['SELL_action'] != 'edit')
 		{
+			if ($system->SETTINGS['datesformat'] == 'USA')
+			{
+				$gmdate_string = 'm-d-Y H:i:s';
+			}
+			else
+			{
+				$gmdate_string = 'd-m-Y H:i:s';
+			}
 			if (empty($a_starts))
 			{
-				$TPL_start_date = gmdate('Y-m-d H:i:s', $system->ctime);
+				$TPL_start_date = gmdate($gmdate_string, $system->ctime);
 			}
 			else
 			{
 				if (strpos($a_starts, '-') === false)
 				{
-					$a_starts = gmdate('Y-m-d H:i:s', $a_starts);
+					$a_starts = gmdate($gmdate_string, $a_starts);
 				}
 				$TPL_start_date = $a_starts;
 			}
 		}
 		else
 		{
-			$TPL_start_date = gmdate('Y-m-d H:i:s', $a_starts);
+			$TPL_start_date = gmdate($gmdate_string, $a_starts);
 		}
 
 		$CKEditor = new CKEditor();

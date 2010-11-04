@@ -70,7 +70,7 @@
                     {L_498}
                     <form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
                     <input type="hidden" name="pfval" value="{ID}">
-                    <input type="submit" name="Pay" value="{L_756}" class="pay" />
+                    <input type="submit" name="Pay" value="{L_756}" class="pay">
                     </form>
                 </td>
             </tr>

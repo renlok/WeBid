@@ -18,5 +18,4 @@ include $include_path . 'captcha/securimage.php';
 $img = new securimage();
 
 $img->show();
-
 ?>

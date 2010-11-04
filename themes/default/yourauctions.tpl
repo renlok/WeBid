@@ -127,7 +127,7 @@ $(document).ready(function() {
 	</tr>
 	<!-- END items -->
 <!-- ENDIF -->
-	<tr bgcolor="{BGCOLOUR}">
+	<tr {BGCOLOUR}>
 		<td colspan="7" align="right">{L_30_0102}</td>
 		<td align="center"><input type="checkbox" id="deleteall"></td>
 		<td align="center"><input type="checkbox" id="closeall"></td>

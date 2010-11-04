@@ -234,9 +234,9 @@ function CheckSellData()
 		$a_starts = _gmmktime(substr($a_starts, 11, 2),
 			substr($a_starts, 14, 2),
 			substr($a_starts, 17, 2),
-			substr($a_starts, 5, 2),
-			substr($a_starts, 8, 2),
-			substr($a_starts, 0, 4), 0);
+			substr($a_starts, 0, 2),
+			substr($a_starts, 3, 2),
+			substr($a_starts, 6, 4), 0);
 
 		if ($a_starts < time())
 		{

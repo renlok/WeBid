@@ -57,10 +57,9 @@ while ($row = mysql_fetch_array($res))
 	$system->check_mysql($rr, $query, __LINE__, __FILE__);
 	while ($winner = mysql_fetch_array($rr))
 	{
-		$bgColor = ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB';
 		$fblink = ($winner['feedback_sel'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $winner['winner'] . '&sid=' . $winner['seller'] . '&ws=s">' . $MSG['207'] . '</a>)' : '';
 		$template->assign_block_vars('a.w', array(
-				'BGCOLOUR' => $bgColor,
+				'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 				'ID' => $winner['id'],
 				'BID' => $winner['bid'],
 				'BIDF' => $system->print_money($winner['bid']),

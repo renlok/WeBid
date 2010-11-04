@@ -41,7 +41,7 @@ if (!function_exists('GetLeftSeconds'))
 
 if (!function_exists('FormatDate'))
 {
-	function FormatDate($DATE, $GMT = true)
+	function FormatDate($DATE, $spacer = '/', $GMT = true)
 	{
 		global $system;
 
@@ -52,11 +52,11 @@ if (!function_exists('FormatDate'))
 
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
-			$F_date = gmdate('m/d/Y', $DATE);
+			$F_date = gmdate('m' . $spacer . 'd' . $spacer . 'Y', $DATE);
 		}
 		else
 		{
-			$F_date = gmdate('d/m/Y', $DATE);
+			$F_date = gmdate('d' . $spacer . 'm' . $spacer . 'Y', $DATE);
 		}
 		return $F_date;
 	}
@@ -64,17 +64,18 @@ if (!function_exists('FormatDate'))
 
 if (!function_exists('FormatTimeStamp'))
 {
-	function FormatTimeStamp($DATE)
+	function FormatTimeStamp($DATE, $spacer = '/')
 	{
 		global $system;
 
+		$DATE = explode($spacer, $DATE);
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
-			$F_date = substr($DATE,5,2) . '/' . substr($DATE,8,2) . '/' . substr($DATE,0,4);
+			$F_date = _gmmktime(0, 0, 0, $DATE[0], $DATE[1], $DATE[2]);
 		}
 		else
 		{
-			$F_date = substr($DATE,8,2) . '/' . substr($DATE,5,2) . '/' . substr($DATE,0,4);
+			$F_date = _gmmktime(0, 0, 0, $DATE[1], $DATE[0], $DATE[2]);
 		}
 		return $F_date;
 	}

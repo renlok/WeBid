@@ -27,11 +27,11 @@
 						<td align="right"><b>{L_503}:</b> </td>
 						<td>
 							<input type="radio" name="TPL_rate" value="1" {RATE1}>
-							<img src="{SITEURL}images/positive.png"border="0" alt="+1" /> 
+							<img src="{SITEURL}images/positive.png"border="0" alt="+1"> 
 							<input type="radio" name="TPL_rate" value="0" {RATE2}>
-							<img src="{SITEURL}images/neutral.png" border="0" alt="0" />
+							<img src="{SITEURL}images/neutral.png" border="0" alt="0">
 							<input type="radio" name="TPL_rate" value="-1" {RATE3}>
-							<img src="{SITEURL}images/negative.png" border="0" alt="-1" />
+							<img src="{SITEURL}images/negative.png" border="0" alt="-1">
 					</tr>
 					<tr>
 						<td align="right" valign="top"><b>{L_227}:</b></td>
@@ -43,7 +43,7 @@
 					<tr>
 						<td align="right"><b>{L_188}:</b></td>
 						<td>
-							<input type="password" name="TPL_password" size="20" maxlength="20" value="" />
+							<input type="password" name="TPL_password" size="20" maxlength="20" value="">
 						</td>
 					</tr>
 <!-- ENDIF -->
@@ -54,9 +54,9 @@
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="TPL_nick_hidden" value="{USERNICK}" />
-				<input type="hidden" name="addfeedback" value="true" />
-				<input type="hidden" name="auction_id" value="{AUCT_ID}" />
+				<input type="hidden" name="TPL_nick_hidden" value="{USERNICK}">
+				<input type="hidden" name="addfeedback" value="true">
+				<input type="hidden" name="auction_id" value="{AUCT_ID}">
 			</form>
 		</div>
 	</div>

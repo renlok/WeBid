@@ -103,12 +103,16 @@ if ($myversion == '0.8.5')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD INDEX (`left_id`, `right_id`, `level`);";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 		`id` INT(7) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-		`nick` VARCHAR(20) NOT NULL ,
-		`name` TINYTEXT NOT NULL ,
-		`text` TEXT NOT NULL ,
-		`type` VARCHAR(15) NOT NULL ,
-		`paid_date` VARCHAR(16) NOT NULL ,
-		`amount` DOUBLE(6, 4) NOT NULL
+		`nick` VARCHAR(20) NOT NULL,
+		`name` TINYTEXT NOT NULL,
+		`text` TEXT NOT NULL,
+		`type` VARCHAR(15) NOT NULL,
+		`paid_date` VARCHAR(16) NOT NULL,
+		`amount` DOUBLE(6, 4) NOT NULL,
+		`day` INT(3) NOT NULL,
+		`week` INT(2) NOT NULL,
+		`month` INT(2) NOT NULL,
+		`year` INT(4) NOT NULL
 	)";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.0'";
 }

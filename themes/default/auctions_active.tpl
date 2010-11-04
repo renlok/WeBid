@@ -13,7 +13,7 @@
 					<th width="15%">{L_171}</th>
 				</tr>
 <!-- BEGIN auctions -->
-				<tr style="text-align:center; background-color:{auctions.BGCOLOUR};">
+				<tr style="text-align:center;" {auctions.BGCOLOUR}>
 					<td width="10%"><a href="{SITEURL}item.php?id={auctions.ID}"><img src="{auctions.PIC_URL}" border="0" alt="image"></a></td>
 					<td width="45%">
 						<a href="{SITEURL}item.php?id={auctions.ID}">{auctions.TITLE}</a>

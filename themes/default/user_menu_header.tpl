@@ -1,16 +1,10 @@
-<script type="text/javascript">
-function submitlogin ()
-{
-	document.user_login.submit ();
-}
-</script>
 <div class="content">
 	<div class="tableContent2">
 		<div class="titTable2">
 			{L_205}
 		</div>
-		
-		<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+
+		<table width="100%" cellpadding="0" cellspacing="0" class="notd">
 		<tr>
 			<td>
 			<dl class="tabs">

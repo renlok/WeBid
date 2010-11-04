@@ -66,7 +66,7 @@ $(document).ready(function() {
 		<td class="titTable1" width="10%">&nbsp;</td>
 	</tr>
 <!-- BEGIN items -->
-	<tr bgcolor="{items.BGCOLOUR}">
+	<tr {items.BGCOLOUR}>
 		<td width="40%">
 			<a href="item.php?id={items.ID}">{items.TITLE}</a><br />
             <span class="smallspan"><a href="selling.php?id={items.ID}">{L_900}</a></span>

@@ -18,7 +18,7 @@ $emailer = new email_class();
 $emailer->assign_vars(array(
 		'SITE_URL' => $system->SETTINGS['siteurl'],
 		'SITENAME' => $system->SETTINGS['sitename'],
-		
+
 		'C_NAME' => $USER['name']
 		));
 $emailer->userlang = $language;

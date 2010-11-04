@@ -154,7 +154,7 @@ while ($item = mysql_fetch_array($res))
 	}
 
 	$template->assign_block_vars('items', array(
-			'BGCOLOUR' => ($i % 2) ? '#FFCCFF' : '#EEEEEE',
+			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => $item['title'],
 			'STARTS' => FormatDate($item['starts']),
@@ -187,7 +187,7 @@ if ($PAGES > 1)
 }
 
 $template->assign_vars(array(
-		'BGCOLOUR' => ($i % 2) ? '#FFCCFF' : '#EEEEEE',
+		'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 		'ORDERCOL' => $_SESSION['oa_ord'],
 		'ORDERNEXT' => $_SESSION['oa_nexttype'],
 		'ORDERTYPEIMG' => $_SESSION['oa_type_img'],

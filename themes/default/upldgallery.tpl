@@ -104,10 +104,10 @@ $(window).load(function () {
 <!-- IF B_CROPSCREEN -->
 <div style="color:#000000;" align="center">
 	<p>{L_610}</p>
-	<img src="{IMGPATH}" style="{SWIDTH}" id="thumbnail" alt="Create Thumbnail" />
+	<img src="{IMGPATH}" style="{SWIDTH}" id="thumbnail" alt="Create Thumbnail">
 	<p>{L_613}</p>
 	<div style="overflow:hidden; border:#000000 double; {THUMBWH}">
-		<img src="{IMGPATH}" style="position: relative;" alt="Thumbnail Preview" id="thumbprev" />
+		<img src="{IMGPATH}" style="position: relative;" alt="Thumbnail Preview" id="thumbprev">
 	</div>
 	<form name="thumbnail" action="?action=crop&img={IMAGE}" method="post">
 		<input type="hidden" name="x1" value="0" id="x1">

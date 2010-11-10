@@ -102,7 +102,7 @@ if ($myversion == '0.8.5')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "increments` ADD PRIMARY KEY (`id`) ;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD INDEX (`left_id`, `right_id`, `level`);";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
-		`id` INT(7) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+		`id` INT(7) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		`nick` VARCHAR(20) NOT NULL,
 		`name` TINYTEXT NOT NULL,
 		`text` TEXT NOT NULL,

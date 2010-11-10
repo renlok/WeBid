@@ -291,6 +291,7 @@ if (file_exists($uploaded_path . $id))
 }
 
 // payments
+$payment = explode(', ', $auction_data['payment']);
 $payment_methods = '';
 $query = "SELECT * FROM " . $DBPrefix . "gateways";
 $res = mysql_query($query);
@@ -299,7 +300,8 @@ $gateways_data = mysql_fetch_assoc($res);
 $gateway_list = explode(',', $gateways_data['gateways']);
 foreach ($gateway_list as $v)
 {
-	if ($gateways_data[$v . '_active'] == 1)
+	$v = strtolower($v);
+	if ($gateways_data[$v . '_active'] == 1 && in_array($v, $payment))
 	{
 		$checked = (in_array($v, $payment)) ? 'checked' : '';
 		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '> ' . $system->SETTINGS['gatways'][$v] . '</p>';

@@ -16,44 +16,29 @@
 			<div class="titTable2">
 				{L_5236}
 			</div>
-			<div class="table2">
-			<form name=faqsindex action=viewfaqs.php method=post>
-			<table width="100%" border="0" align="center" cellpadding="4" cellspacing="0">
-			<tr>
-				<td width="46%" >
-					<select name="cat" onChange="document.faqsindex.submit()">
-						<option value="">- {FNAME} -</option>
+			<div class="padding">
+			<form name="faqsindex" action="viewfaqs.php" method="post">
+                <select name="cat" onChange="document.faqsindex.submit()">
+                    <option value="">- {FNAME} -</option>
 <!-- BEGIN cats -->
-						<option value="{cats.ID}">{cats.CAT}</option>
+					<option value="{cats.ID}">{cats.CAT}</option>
 <!-- END cats -->
-					</select>
-				</td>
-				<td>
-					<div style="text-align:right">
-						<a href="faqs.php">{L_5243}</a> | <a href="javascript:window.close()">{L_678}</a>
-					</div>
-				</td>
-			</tr>
-			</table>
+				</select>
+                <div style="text-align:right">
+                    <a href="faqs.php">{L_5243}</a> | <a href="javascript:window.close()">{L_678}</a>
+                </div>
 			</form>
-			<div style="color:#000000; font-size:12px;">
-				<b>{FNAME}</b>
-			</div>
-			<div> 
-				<ul>
+			<h1>{FNAME}</h1>
+			<ul>
 <!-- BEGIN faqs -->  
-					<li><a href="#{faqs.ID}">{faqs.Q}</a></li>
+				<li><a href="#{faqs.ID}">{faqs.Q}</a></li>
 <!-- END faqs -->
-				</ul>
-			</div>
-			<div style="color:#000000; font-size:12px;">
+			</ul>
 <!-- BEGIN faqs -->
-				<a name="{faqs.ID}"></a>
-				<b>{faqs.Q}</b><br>
-				{faqs.A}
-				<div style="text-align:right">
-					<a href="#top">{L_5245}</a>
-				</div>
+            <a name="{faqs.ID}"></a>
+            <h1>{faqs.Q}</h1>
+            <p>{faqs.A}</p>
+            <p style="text-align:right"><a href="#top">{L_5245}</a></p>
 <!-- END faqs -->
 			</div>
 		</div>

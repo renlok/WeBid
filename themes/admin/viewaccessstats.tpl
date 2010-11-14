@@ -12,7 +12,7 @@
 					{STATSMONTH}
 				</div>
                 <div style="text-align: center;" class="centre">
-                	<a href="viewbrowserstats.php">{L_5165}</a> | <a href="viewdomainstats.php">{L_5166}</a> | <a href="viewplatformstats.php">{L_5318}</a>
+                	<a href="viewbrowserstats.php">{L_5165}</a> | <a href="viewplatformstats.php">{L_5318}</a>
                 </div>
                 <table width="250" cellspacing="1" cellpadding="0" class="blank">
                     <tr>

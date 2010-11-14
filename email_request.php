@@ -41,13 +41,9 @@ $username = mysql_result($result, 0, 'nick');
 $sent = false;
 if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 {
-	if (empty($_POST['TPL_sender_name']) || empty($_POST['TPL_sender_mail']) || empty($_POST['TPL_text']))
+	if (empty($_POST['TPL_text']))
 	{
 		$ERR = $ERR_031;
-	}
-	elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_sender_mail']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_sender_mail']))
-	{
-		$ERR = $ERR_008;
 	}
 	elseif ($auction_id < 0 || empty($auction_id))
 	{
@@ -68,10 +64,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 			$item_title = $system->uncleanvars($item_title);
 			// Send e-mail message
 			$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
-			$message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $_POST['TPL_sender_mail'] . "\n\n" . $_POST['TPL_text'];
+			$message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $user->user_data['email'] . "\n\n" . $_POST['TPL_text'];
 			$emailer = new email_class();
 			$emailer->email_uid = $user_id;
-			$emailer->email_basic($subject, $email, nl2br($message), $_POST['TPL_sender_name']); //sent the email :D
+			$emailer->email_basic($subject, $email, nl2br($message), $user->user_data['name'] . '<'. $user->user_data['email'] . '>'); //send the email :D
 			// send a copy to their mesasge box
 			$nowmessage = nl2br($system->cleanvars($message));
 			$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject)
@@ -88,8 +84,6 @@ $template->assign_vars(array(
 		'USERID' => $user_id,
 		'USERNAME' => $username,
 		'AUCTION_ID' => $auction_id,
-		'MSG_YNAME' => (isset($_POST['TPL_sender_name'])) ? $_POST['TPL_sender_name'] : '',
-		'MSG_YEMAIL' => (isset($_POST['TPL_sender_mail'])) ? $_POST['TPL_sender_mail'] : '',
 		'MSG_TEXT' => (isset($_POST['TPL_text'])) ? $_POST['TPL_text'] : ''
 		));
 

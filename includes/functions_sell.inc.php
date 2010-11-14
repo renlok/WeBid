@@ -346,4 +346,14 @@ function check_gateway($gateway)
 	return false;
 }
 
+function _in_array($needle, $haystack)
+{
+	$needle = "$needle"; //important turns integers into strings
+	foreach ($haystack as $val)
+	{
+		if ($val == $needle)
+			return true;
+	}
+	return false;
+}
 ?>

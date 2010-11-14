@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
-$current_page = 'contents';
+$current_page = 'stats';
 include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -36,8 +36,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$query = "UPDATE " . $DBPrefix . "statssettings SET
 					activate = '" . $_POST['activate'] . "',
 					accesses = '" . $_POST['accesses'] . "',
-					browsers = '" . $_POST['browsers'] . "',
-					domains = '" . $_POST['domains'] . "'";
+					browsers = '" . $_POST['browsers'] . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['5148'];
 		$statssettings = $_POST;
@@ -56,7 +55,6 @@ loadblock($MSG['5149'], '', 'yesno', 'activate', $statssettings['activate'], arr
 loadblock('', $MSG['5150']);
 loadblock('' , '', 'checkbox', 'accesses', $statssettings['accesses'], array($MSG['5145']));
 loadblock('' , '', 'checkbox', 'browsers', $statssettings['browsers'], array($MSG['5146']));
-loadblock('' , '', 'checkbox', 'domains', $statssettings['domains'], array($MSG['5147']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

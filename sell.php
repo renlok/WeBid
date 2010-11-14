@@ -84,7 +84,7 @@ switch ($_SESSION['action'])
 		{
 			$payment_text = implode(', ', $payment);
 			// set time back to GMT
-			$a_starts = empty($start_now) ? ($a_starts - $system->tdiff) : time();
+			$a_starts = (empty($start_now) || $_SESSION['SELL_action'] == 'edit') ? ($a_starts - $system->tdiff) : time();
 			$a_ends = $a_starts + ($duration * 24 * 60 * 60);
 			// get fee
 			$fee = get_fee($minimum_bid);
@@ -405,7 +405,7 @@ switch ($_SESSION['action'])
 				foreach ($gateway_list as $v)
 				{
 					$v = strtolower($v);
-					if ($gateways_data[$v . '_active'] == 1 && in_array($v, $payment))
+					if ($gateways_data[$v . '_active'] == 1 && _in_array($v, $payment))
 					{
 						$payment_methods .= '<p>' . $system->SETTINGS['gatways'][$v] . '</p>';
 					}
@@ -414,7 +414,7 @@ switch ($_SESSION['action'])
 				$payment_options = unserialize($system->SETTINGS['payment_options']);
 				foreach ($payment_options as $k => $v)
 				{
-					if (in_array($k, $payment))
+					if (_in_array($k, $payment))
 					{
 						$payment_methods .= '<p>' . $v . '</p>';
 					}
@@ -534,7 +534,7 @@ switch ($_SESSION['action'])
 			if ($gateways_data[$v . '_active'] == 1 && check_gateway($v))
 			{
 				$v = strtolower($v);
-				$checked = (in_array($v, $payment)) ? 'checked' : '';
+				$checked = (_in_array($v, $payment)) ? 'checked' : '';
 				$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '>' . $system->SETTINGS['gatways'][$v] . '</p>';
 			}
 		}
@@ -542,21 +542,21 @@ switch ($_SESSION['action'])
 		$payment_options = unserialize($system->SETTINGS['payment_options']);
 		foreach ($payment_options as $k => $v)
 		{
-			$checked = (in_array($k, $payment)) ? 'checked' : '';
+			$checked = (_in_array($k, $payment)) ? 'checked' : '';
 			$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
 		}
 
 		// make hour
+		if ($system->SETTINGS['datesformat'] == 'USA')
+		{
+			$gmdate_string = 'm-d-Y H:i:s';
+		}
+		else
+		{
+			$gmdate_string = 'd-m-Y H:i:s';
+		}
 		if ($_SESSION['SELL_action'] != 'edit')
 		{
-			if ($system->SETTINGS['datesformat'] == 'USA')
-			{
-				$gmdate_string = 'm-d-Y H:i:s';
-			}
-			else
-			{
-				$gmdate_string = 'd-m-Y H:i:s';
-			}
 			if (empty($a_starts))
 			{
 				$TPL_start_date = gmdate($gmdate_string, $system->ctime);

@@ -18,7 +18,7 @@
 		</div>
 	<!-- ENDIF -->
 		<div class="table2">
-			<form name="seller" action="email_request.php" method="POST">
+			<form name="seller" action="email_request.php" method="post">
 				<table width=90% cellpadding="4" cellspacing="0">
 					<tr>
 						<td>{L_149}</td>
@@ -26,29 +26,11 @@
 				</table>
 				<table width="90%" align="center" cellpadding="4" cellspacing="0">
 					<tr>
-						<td align=right valign=top width="40%">
-							{L_002}
-						</td>
-						<td width="60%">
-							<input type="text" name="TPL_sender_name" size="25" value="{MSG_YNAME}">
-						</td>
-					</tr>
-					<tr>
-						<td align=right valign=top width="40%">
-							{L_006}
-						</td>
-						<td width="60%">
-							<input type="text" name="TPL_sender_mail" size="25" value="{MSG_YEMAIL}">
-						</td>
-					</tr>
-					<tr>
-						<td align=right valign=top width="40%">
+						<td align="right" valign="top" width="40%">
 							{L_333}
 						</td>
-						<td valign=top width="60%">
-							<textarea name="TPL_text" cols="30" rows="8">{MSG_TEXT}</textarea>
-							<br>
-							<br>
+						<td valign="top" width="60%">
+							<p><textarea name="TPL_text" cols="30" rows="8">{MSG_TEXT}</textarea></p>
 							<input type="hidden" name="user_id" value="{USERID}">
 							<input type="hidden" name="username" value="{USERNAME}">
 							<input type="hidden" name="action" value="proceed">

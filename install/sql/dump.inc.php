@@ -850,25 +850,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currentbrowsers` (
 # ############################
 
 # 
-# Table structure for table `" . $DBPrefix . "currentdomains`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentdomains`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "currentdomains` (
-  `month` char(2) NOT NULL default '0',
-  `year` varchar(4) NOT NULL default '0',
-  `domain` varchar(100) NOT NULL default '0',
-  `counter` int(11) NOT NULL default '0'
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "currentdomains`
-# 
-
-
-# ############################
-
-# 
 # Table structure for table `" . $DBPrefix . "currentplatforms`
 # 
 

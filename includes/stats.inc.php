@@ -15,7 +15,6 @@
 if (!defined('InWeBid')) exit();
 
 include $include_path . 'useragent.inc.php';
-include $include_path . 'domains.inc.php';
 
 // Retrieve stats settings
 $query = "SELECT * FROM " . $DBPrefix . "statssettings";
@@ -212,55 +211,6 @@ if ($STATSSETTINGS['activate'] == 'y')
 					WHERE platform = '" . $os . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
-	}
-	
-	// Domains
-	if ($STATSSETTINGS['domains'] == 'y')
-	{
-		// Resolve domain
-		if ((isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])) || (isset($_ENV['REMOTE_ADDR']) && !empty($_ENV['REMOTE_ADDR'])))
-		{
-			if (isset($_SERVER['REMOTE_ADDR']) && !empty($_SERVER['REMOTE_ADDR']))
-			{
-				$T = explode('.', gethostbyaddr($_SERVER['REMOTE_ADDR']));
-			}
-			else
-			{
-				$T = explode('.', gethostbyaddr($_ENV['REMOTE_ADDR']));
-			}
-		}
-		else
-		{
-			//Creates a fake variable if REMOTE_ADDR variable is unreadable
-			//cause some it is unavailable in some servers
-			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
-			$T = explode(".", gethostbyaddr($_SERVER['REMOTE_ADDR']));
-		}
-		
-		$DOMAIN = $T[count($T) - 1];
-		if (!isset($DOMAINS[$DOMAIN]))
-		{
-			$RESOLVEDDOMAIN = '?';
-		}
-		else
-		{
-			$RESOLVEDDOMAIN = $DOMAIN;
-		}
-		
-		$query = "SELECT month FROM " . $DBPrefix . "currentdomains WHERE month = " . $THISMONTH . " AND year = " . $THISYEAR . " AND domain = '" . $RESOLVEDDOMAIN . "'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0)
-		{
-			$query = "INSERT INTO " . $DBPrefix . "currentdomains VALUES (
-					" . $THISMONTH . ", " . $THISYEAR . ", '" . $RESOLVEDDOMAIN . "', 0)";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		}
-		
-		$query = "UPDATE " . $DBPrefix . "currentdomains SET
-				counter = counter + 1
-				WHERE domain = '" . $RESOLVEDDOMAIN . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 }
 ?>

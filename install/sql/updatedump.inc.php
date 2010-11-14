@@ -78,6 +78,7 @@ if ($myversion == '0.8.5')
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fontsandcolors`;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "tmp_closed_edited`;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currencies`;";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentdomains`;";
 	$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'endauc_fee');";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `ff_paid` int(1) NOT NULL default '1'";
 	$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'subtitle_fee');";

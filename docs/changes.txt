@@ -97,5 +97,6 @@
 - Fixed the RSS feeds to pull more than one entry
 - Upgraded the calendar script from v3.2 to v4.0.2
 - Removed the domain stats option from admin
+- Disabled the stats from counting bots
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

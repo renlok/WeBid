@@ -102,7 +102,7 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
 		}
 		$template->assign_block_vars('accounts', array(
 				'DATE' => $date,
-				'AMOUNT' => $system->print_money($row['amount'], false),
+				'AMOUNT' => $system->print_money($row['amount'], true, false),
 				'BG' => $bg
 				));
 		$bg = ($bg == '') ? 'class="bg"' : '';
@@ -132,7 +132,7 @@ else
 				'NICK' => $row['nick'],
 				'RNAME' => $row['name'],
 				'DATE' => ArrangeDateNoCorrection($row['paid_date']),
-				'AMOUNT' => $system->print_money($row['amount'], false),
+				'AMOUNT' => $system->print_money($row['amount'], true, false),
 				'TEXT' => $row['text'],
 				'BG' => $bg
 				));

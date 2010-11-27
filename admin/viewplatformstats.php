@@ -36,15 +36,15 @@ while ($row = mysql_fetch_assoc($res))
 	}
 }
 
-if (is_array($BROWSERS))
+if (is_array($PLATFORMS))
 {
-	foreach ($BROWSERS as $k => $v)
+	foreach ($PLATFORMS as $k => $v)
 	{
 		$template->assign_block_vars('sitestats', array(
 			'PLATFORM' => $k,
-			'NUM' => $BROWSERS[$k],
-			'WIDTH' => ($BROWSERS[$k] * 100) / $MAX,
-			'PERCENTAGE' => ceil(intval($BROWSERS[$k] * 100 / $TOTAL))
+			'NUM' => $PLATFORMS[$k],
+			'WIDTH' => ($PLATFORMS[$k] * 100) / $MAX,
+			'PERCENTAGE' => ceil(intval($PLATFORMS[$k] * 100 / $TOTAL))
 			));
 	}
 }

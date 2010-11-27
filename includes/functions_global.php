@@ -218,11 +218,9 @@ class global_class
 		return true;
 	}
 
-	function print_money($str, $link = true)
+	function print_money($str, $from_database = true, $link = true)
 	{
-		$a = ($this->SETTINGS['moneyformat'] == 1) ? '.' : ',';
-		$b = ($this->SETTINGS['moneyformat'] == 1) ? ',' : '.';
-		$str = $this->print_money_nosymbol($str);
+		$str = $this->print_money_nosymbol($str, $from_database);
 
 		if ($link)
 		{
@@ -243,10 +241,14 @@ class global_class
 		}
 	}
 
-	function print_money_nosymbol($str)
+	function print_money_nosymbol($str, $from_database = true)
 	{
 		$a = ($this->SETTINGS['moneyformat'] == 1) ? '.' : ',';
 		$b = ($this->SETTINGS['moneyformat'] == 1) ? ',' : '.';
+		if (!$from_database)
+		{
+			$str = $this->input_money($str, $from_database);
+		}
 
 		return number_format($str, $this->SETTINGS['moneydecimals'], $a, $b);
 	}

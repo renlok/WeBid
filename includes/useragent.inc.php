@@ -143,7 +143,7 @@ function browser_detection( $which_test, $test_excludes='' ) {
 	{
 		//initialize all variables with default values to prevent error
 		$dom_browser = false;
-		$ua_type = 'bot';// default to bot since you never know with bots
+		$ua_type = 'unknown';// default to bot since you never know with bots
 		$safe_browser = false;
 		$a_os_data = '';
 		$os_number = '';

@@ -84,6 +84,7 @@ if ($STATSSETTINGS['activate'] == 'y')
 	// Get user's agent and platform
 	$browser_info = browser_detection('full');
 	$browser_info[] = browser_detection('moz_version');
+	//var_dump($browser_info);
 
 	$os = '';
 	switch ($browser_info[5])
@@ -175,7 +176,7 @@ if ($STATSSETTINGS['activate'] == 'y')
 		$browser .= ' ' . $browser_info[1];
 	}
 	
-	if ($STATSSETTINGS['browsers'] == 'y')
+	if ($STATSSETTINGS['browsers'] == 'y' && !(isset($browser_info[8]) && $browser_info[8] == 'bot'))
 	{
 		// Update the browser stats
 		$query = "SELECT month FROM " . $DBPrefix . "currentbrowsers WHERE month = " . $THISMONTH . " AND year = " . $THISYEAR . " AND browser = '" . $browser . "'";

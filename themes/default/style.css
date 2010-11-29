@@ -2,7 +2,6 @@
 .barSearch	{ margin: 5px 0 0 0; padding: 0 0 0 5px; text-align: left; float: left; }
 .board	{ width: inherit; padding: 5px; clear: both; text-align: center; }
 .border	{ border: 1px solid #D6D6D6; }
-.button	{ background-color: #b9d3df; }
 .catsearch	{ background-color: #FFFF99; color: #333333; }
 .container	{ background-color: #ffffff; }
 .errfont	{ background-color: #FFFF00; font-weight: bold; font-family: Verdana, Arial, Sans; color: #FF0000; text-align: center; }

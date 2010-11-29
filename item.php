@@ -169,12 +169,12 @@ for ($i = 0; $i < count($crumbs); $i++)
 		{
 			$cat_value .= ' > ';
 		}
-		$cat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $crumbs[$i]['cat_name'] . '</a>';
+		$cat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $category_names[$crumbs[$i]['cat_id']] . '</a>';
 	}
 }
 
 $secondcat_value = '';
-if ($system->SETTINGS['extra_cat'] == 'y' && $auction_data['secondcat'] > 0)
+if ($system->SETTINGS['extra_cat'] == 'y' && intval($auction_data['secondcat']) > 0)
 {
 	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['secondcat'];
 	$res = mysql_query($query);
@@ -190,7 +190,7 @@ if ($system->SETTINGS['extra_cat'] == 'y' && $auction_data['secondcat'] > 0)
 			{
 				$secondcat_value .= ' > ';
 			}
-			$secondcat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $category_names[$crumbs[$i]['cat_name']] . '</a>';
+			$secondcat_value .= '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $crumbs[$i]['cat_id'] . '">' . $category_names[$crumbs[$i]['cat_id']] . '</a>';
 		}
 	}
 }
@@ -462,7 +462,7 @@ $p_first = true;
 foreach ($gateway_list as $v)
 {
 	$v = strtolower($v);
-	if ($gateways_data[$v . '_active'] == 1 && in_array($v, $payment))
+	if ($gateways_data[$v . '_active'] == 1 && _in_array($v, $payment))
 	{
 		if (!$p_first)
 		{
@@ -479,7 +479,7 @@ foreach ($gateway_list as $v)
 $payment_options = unserialize($system->SETTINGS['payment_options']);
 foreach ($payment_options as $k => $v)
 {
-	if (in_array($k, $payment))
+	if (_in_array($k, $payment))
 	{
 		if (!$p_first)
 		{

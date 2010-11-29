@@ -19,6 +19,8 @@ if (checklogin())
 }
 else
 {
+	$mth = 'MON_0' . gmdate('m', $_SESSION['WEBID_ADMIN_TIME']);
+	$return = gmdate('d', $_SESSION['WEBID_ADMIN_TIME']) . ' ' . $MSG[$mth] . ', ' . gmdate('Y - H:i', $_SESSION['WEBID_ADMIN_TIME']);
 	$template->assign_vars(array(
 			'DOCDIR' => $DOCDIR,
 			'THEME' => $system->SETTINGS['theme'],
@@ -27,7 +29,8 @@ else
 			'EXTRAJS' => (isset($extraJs)) ? $extraJs : '',
 			'ADMIN_USER' => $_SESSION['WEBID_ADMIN_USER'],
 			'ADMIN_ID' => $_SESSION['WEBID_ADMIN_IN'],
-			'CURRENT_PAGE' => $current_page
+			'CURRENT_PAGE' => $current_page,
+			'LAST_LOGIN' => $return
 			));
 	foreach ($LANGUAGES as $lang => $value)
 	{

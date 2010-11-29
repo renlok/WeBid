@@ -42,19 +42,33 @@ if (!function_exists('view'))
 				WHERE b.views < b.purchased OR b.purchased = 0" . $extra;
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$CKcount = false;
 
 		if (mysql_num_rows($res) == 0)
 		{
-			$query = "SELECT b.id FROM " . $DBPrefix . "banners b " . $joinings . "
-					WHERE b.views < b.purchased OR b.purchased = 0";
+			/*$query = "SELECT b.id FROM " . $DBPrefix . "banners b " . $joinings . "
+					WHERE b.views < b.purchased OR b.purchased = 0";*/
+			$query = "SELECT b.id, COUNT(k.banner) as Kcount, COUNT(c.banner) as Ccount FROM " . $DBPrefix . "banners b
+					LEFT JOIN " . $DBPrefix . "bannerscategories c ON (c.banner = b.id)
+					LEFT JOIN " . $DBPrefix . "bannerskeywords k ON (k.banner = b.id)
+					WHERE (b.views < b.purchased OR b.purchased = 0)
+					GROUP BY k.banner, c.banner";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$CKcount = false;
 		}
 
 		// We have at least one banners to show
 		while ($row = mysql_fetch_assoc($res))
 		{
-			$BANNERSARRAY[] = $row;
+			if ($CKcount && $row['Kcount'] == 0 && $row['Ccount'] == 0)
+			{
+				$BANNERSARRAY[] = $row;
+			}
+			elseif (!$CKcount)
+			{
+				$BANNERSARRAY[] = $row;
+			}
 		}
 
 		// Display banner

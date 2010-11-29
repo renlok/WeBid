@@ -344,4 +344,15 @@ function load_counters()
 	$counters .= $date . ' <span id="servertime">' . gmdate('H:i:s', $system->ctime) . '</span>';
 	return $counters;
 }
+
+function _in_array($needle, $haystack)
+{
+	$needle = "$needle"; //important turns integers into strings
+	foreach ($haystack as $val)
+	{
+		if ($val == $needle)
+			return true;
+	}
+	return false;
+}
 ?>

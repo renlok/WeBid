@@ -24,7 +24,7 @@ $banner = (isset($_GET['banner']) && !empty($_GET['banner'])) ? $_GET['banner'] 
 $banner = (isset($_POST['banner']) && !empty($_POST['banner'])) ? $_POST['banner'] : $banner;
 $id = intval($_REQUEST['id']);
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
+if (isset($_POST['action']) && $_POST['action'] == 'insert')
 {
 	// Data integrity
 	if (empty($_FILES['bannerfile']) || empty($_POST['url']))
@@ -94,7 +94,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					width = " . intval($imagewidth) . ",
 					height = " . intval($imageheight) . ",";
 		}		
-		
+
 		$query = "UPDATE " . $DBPrefix . "banners
 					SET " . $extrasql . "
 					url = '" . $_POST['url'] . "',
@@ -103,12 +103,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					purchased = " . intval($_POST['purchased']) . "
 					WHERE id = " . $banner;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		
+
 		$query = "DELETE FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $banner;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$query = "DELETE FROM " . $DBPrefix . "bannerskeywords WHERE banner = " . $banner;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		
+
 		// Handle filters
 		if (is_array($_POST['category']))
 		{
@@ -121,7 +121,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		if (!empty($_POST['keywords']))
 		{
-			$KEYWORDS = explode("\n",$_POST['keywords']);
+			$KEYWORDS = explode("\n", $_POST['keywords']);
 			foreach ($KEYWORDS as $k => $v)
 			{
 				if (!empty($v))
@@ -171,6 +171,7 @@ if (mysql_num_rows($res) > 0)
 }
 
 // Retrieve filters
+$CATEGORIES = array();
 $query = "SELECT * FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $banner;
 $resres = mysql_query($query);
 
@@ -182,6 +183,7 @@ if (mysql_num_rows($resres) > 0)
 		$CATEGORIES[] = $row['category'];
 	}
 }
+$KEYWORDS = '';
 $query = "SELECT * FROM " . $DBPrefix . "bannerskeywords WHERE banner = " . $banner;
 $resres = mysql_query($query);
 $system->check_mysql($resres, $query, __LINE__, __FILE__);

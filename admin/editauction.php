@@ -176,7 +176,7 @@ if (isset($_POST['action']))
 					shipping = '" . $_POST['shipping'] . "',
 					payment = '" . $system->cleanvars(implode(', ', $_POST['payment'])) . "',
 					international = " . ((isset($_POST['international'])) ? 1 : 0) . ",
-					shipping_terms = '" . $system->cleanvars($_POST['shipping_terms']) . "'
+					shipping_terms = '" . $system->cleanvars($_POST['shipping_terms']) . "',
 					bold = '" . ((isset($_POST['is_bold'])) ? 'y' : 'n') . "',
 					highlighted = '" . ((isset($_POST['is_highlighted'])) ? 'y' : 'n') . "',
 					featured = '" . ((isset($_POST['is_featured'])) ? 'y' : 'n') . "'
@@ -301,7 +301,7 @@ $gateway_list = explode(',', $gateways_data['gateways']);
 foreach ($gateway_list as $v)
 {
 	$v = strtolower($v);
-	if ($gateways_data[$v . '_active'] == 1 && in_array($v, $payment))
+	if ($gateways_data[$v . '_active'] == 1 && _in_array($v, $payment))
 	{
 		$checked = (in_array($v, $payment)) ? 'checked' : '';
 		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '> ' . $system->SETTINGS['gatways'][$v] . '</p>';
@@ -311,7 +311,7 @@ foreach ($gateway_list as $v)
 $payment_options = unserialize($system->SETTINGS['payment_options']);
 foreach ($payment_options as $k => $v)
 {
-	$checked = (in_array($k, $payment)) ? 'checked' : '';
+	$checked = (_in_array($k, $payment)) ? 'checked' : '';
 	$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '> ' . $v . '</p>';
 }
 

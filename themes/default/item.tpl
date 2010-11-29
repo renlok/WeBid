@@ -344,7 +344,7 @@ $(document).ready(function() {
 			  <b>{L_113}:</b> {ID}<br>
 			  <br>
 			  <b>{L_041}:</b> {CATSPATH}<br>
-              <!-- IF SECCATSPATH ne '' --><b>{L_814}:</b>: {SECCATSPATH}<!-- ENDIF -->
+              <!-- IF SECCATSPATH ne '' --><b>{L_814}:</b> {SECCATSPATH}<!-- ENDIF -->
 			</div>
 		  </div>
 		</td>

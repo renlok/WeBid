@@ -43,7 +43,7 @@
         <a href="index.php?lan={langs.LANG}"><img src="{SITEURL}includes/flags/{langs.LANG}.gif"></a>
 	<!-- ENDIF -->
 <!-- END langs -->
-        {L_592} {ADMIN_USER} | <a href="editadminuser.php?id={ADMIN_ID}">{L_5142}</a> | <a href="logout.php">{L_245}</a><br /><small>{L_559}: 12 Apr 2009</small>
+        {L_592} {ADMIN_USER} | <a href="editadminuser.php?id={ADMIN_ID}">{L_5142}</a> | <a href="logout.php">{L_245}</a><br /><small>{L_559}: {LAST_LOGIN}</small>
     </p>
 </div>
 

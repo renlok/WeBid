@@ -128,7 +128,7 @@ if ($arr = mysql_fetch_array($res))
 		'USER_ID' => $TPL_user_id,
 		'B_VIEW' => true,
 		'B_AUCID' => (isset($_GET['auction_id'])),
-		'B_CONTACT' => ($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in))
+		'B_CONTACT' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && (!$user->logged_in || $user->user_data['id'] != $TPL_user_id))
 		);
 }
 else

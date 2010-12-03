@@ -257,6 +257,7 @@ class global_class
 // global functions
 function _gmmktime($hr, $min, $sec, $mon, $day, $year)
 {
+	global $system;
 	if ($system->SETTINGS['datesformat'] != 'USA')
 	{
 		$mon_ = $mon;

@@ -79,6 +79,7 @@ $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
 loadblock($MSG['605'], $MSG['30_0055'], $CKEditor->editor('content', stripslashes($system->SETTINGS['content'])));
+loadblock('', '', $MSG['606']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

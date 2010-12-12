@@ -706,6 +706,7 @@ $MSG['602'] = "Upload a new logo (max. 50 KB)";
 $MSG['603'] = "Receive Newsletter?";
 $MSG['604'] = "If you activate this option, users will be able to subscribe to your newsletter from the registration page.<br>The \"Newsletter management\" will let you send e-mail messages to the subscribed users";
 $MSG['605'] = "Message Body";
+$MSG['606'] = "By clicking save changes the newsletter will be sent to all of the users who are signed up to receive the newsletter in the selected group.";
 $MSG['607'] = "Newsletter Submission";
 $MSG['608'] = "Would you like to receive our Newsletter?";
 $MSG['609'] = "Check NO to unsubscribe to our Newsletter";

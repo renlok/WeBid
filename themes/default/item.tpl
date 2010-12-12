@@ -186,12 +186,10 @@ $(document).ready(function() {
 		</td>
 		<td width="2%">&nbsp;</td>
 		<td width="37%" valign="top" bgcolor="#ffffff" align="left">
+          <div class="titTable1">
+          	<b>{L_30_0209}</b>
+          </div>
 		  <table width="100%" cellspacing="0" cellpadding="4" border="0" bgcolor="#ffffff">
-			<tr align="left">
-			  <td align="left" class="titTable1" colspan="2">
-				<b>{L_30_0209}</b>
-			  </td>
-			</tr>
 			<tr>
 			  <td width="3%" class='table2'>&nbsp;</td>
 			  <td class="table2" style="padding:10px;">
@@ -219,11 +217,7 @@ $(document).ready(function() {
 			  </td>
 			</tr>
 		  </table>
-		  <table width="100%" cellspacing="0" cellpadding="0" border="0" class="titTable1">
-			<tr>
-			  <td valign='middle' style='border-left: 1px solid #ddddff; border-right: 1px solid #ddddff;'>
-			<tr>
-			  <td>
+		  <div class="titTable1">
 <!-- IF B_HASENDED eq false and B_CAN_BUY -->
 	<!-- IF B_NOTBNONLY -->
 				<table width="100%" border=0 cellpadding=2 cellspacing=0 border=1>
@@ -257,12 +251,10 @@ $(document).ready(function() {
 				</form>
 				</table>
 	<!-- ELSE -->
-				<p align="center">{BUYNOW} <a href="{BIDURL}buy_now.php?id={ID}"><img border="0" align="absbottom" alt="{L_496}" src="{BNIMG}"></a></p>
+				{BUYNOW} <a href="{BIDURL}buy_now.php?id={ID}"><img border="0" align="absbottom" alt="{L_496}" src="{BNIMG}"></a>
 	<!-- ENDIF -->
 <!-- ENDIF -->
-			  </td>
-			</tr>
-		  </table>
+		  </div>
 		</td>
 	  </tr>
 	</table>

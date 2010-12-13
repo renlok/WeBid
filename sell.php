@@ -638,7 +638,7 @@ switch ($_SESSION['action'])
 			{
 				$subtitle_fee = $row['value'];
 			}
-			if ($row['type'] == 'relist_fee' && strlen($auto_relist) > 0)
+			if ($row['type'] == 'relist_fee' && strlen($relist) > 0)
 			{
 				$relist_fee = $row['value'];
 			}

@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 session_start();
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(0);
 // error_reporting(E_ALL); // use this for debugging
 define('InWeBid', 1);
 // file check & 

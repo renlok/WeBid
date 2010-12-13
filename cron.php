@@ -56,7 +56,6 @@ while($row = mysql_fetch_assoc($res))
 	$endauc_fee[] = $row;
 }
 
-
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 		 WHERE ends <= '" . $NOW . "'
 		 AND ((closed = 0)

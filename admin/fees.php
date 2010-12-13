@@ -97,28 +97,30 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$errmsg = $feenames[$_GET['type']] . $MSG['359'];
 			}
-			for($i = 0; $i < count($_POST['fee_delete']); $i++)
+			if (isset($_POST['fee_delete']))
 			{
-				$query = "DELETE FROM " . $DBPrefix . "fees WHERE id = " . $_POST['fee_delete'][$i];
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				for($i = 0; $i < count($_POST['fee_delete']); $i++)
+				{
+					$query = "DELETE FROM " . $DBPrefix . "fees WHERE id = " . $_POST['fee_delete'][$i];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				}
 			}
-			if(!empty($_POST['new_fee_from']) && !empty($_POST['new_fee_to']) && !empty($_POST['new_value']))
+			if(!empty($_POST['new_fee_from']) && !empty($_POST['new_fee_to']) && !empty($_POST['new_value']) && !empty($_POST['new_type']))
 			{
 				if ($_POST['new_fee_from'] <= $_POST['new_fee_to'])
 				{
+					$value = $_POST['new_value'];
+					if ($_POST['new_type'] == 'flat')
+					{
+						$value = $system->input_money($value);
+					}
 					$query = "INSERT INTO " . $DBPrefix . "fees VALUES
-							(NULL, '" . $_POST['new_fee_from'] . "', '" . $_POST['new_fee_to'] . "', '" . $_POST['new_type'] . "', '" . $_POST['new_value'] . "', '" . $_GET['type'] . "')";
+							(NULL, '" . $system->input_money($_POST['new_fee_from']) . "', '" . $system->input_money($_POST['new_fee_to']) . "', '" . $_POST['new_type'] . "', '" . $value . "', '" . $_GET['type'] . "')";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 				else
 				{
 					$errmsg = $ERR_713;
-					$template->assign_vars(array(
-							'FEE_FROM' => $_POST['new_fee_from'],
-							'FEE_TO' => $_POST['new_fee_to'],
-							'FEE_VALUE' => $_POST['new_value'],
-							'FEE_TYPE' => $_POST['new_type']
-							));
 				}
 			}
 		}
@@ -133,12 +135,16 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 					'TO' => $system->print_money_nosymbol($row['fee_to']),
 					'FLATTYPE' => ($row['fee_type'] == 'flat') ? ' selected="selected"' : '',
 					'PERCTYPE' => ($row['fee_type'] == 'perc') ? ' selected="selected"' : '',
-					'VALUE' => $row['value']
+					'VALUE' => ($row['fee_type'] == 'flat') ? $system->print_money_nosymbol($row['value']) : $row['value']
 					));
 		}
 
 		$template->assign_vars(array(
-				'CURRENCY' => $system->SETTINGS['currency']
+				'CURRENCY' => $system->SETTINGS['currency'],
+				'FEE_FROM' => isset($_POST['new_fee_from']) ? $_POST['new_fee_from'] : '',
+				'FEE_TO' => isset($_POST['new_fee_to']) ? $_POST['new_fee_to'] : '',
+				'FEE_VALUE' => isset($_POST['new_value']) ? $_POST['new_value'] : '',
+				'FEE_TYPE' => isset($_POST['new_type']) ? $_POST['new_type'] : ''
 				));
 	}
 }

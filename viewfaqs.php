@@ -22,14 +22,15 @@ if ($cat > 0)
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
+	$FAQ_ctitle = stripslashes(mysql_result($res, 0));
 	$template->assign_vars(array(
 			'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl
-			'PAGE_TITLE' => $system->SETTINGS['sitename'] . " " . $system->SETTINGS['title'],
+			'PAGE_TITLE' => $system->SETTINGS['sitename'] . ' ' . $MSG['5236'] . ' - ' . $FAQ_ctitle,
 			'CHARSET' => $CHARSET,
 			'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : "&nbsp;",
 			'SITEURL' => $system->SETTINGS['siteurl'],
 
-			'FNAME' => stripslashes(mysql_result($res, 0, "category"))
+			'FNAME' => $FAQ_ctitle
 			));
 	// Retrieve FAQs categories from the database
 	$query = "SELECT * FROM " . $DBPrefix . "faqscategories ORDER BY category ASC";
@@ -50,7 +51,7 @@ if ($cat > 0)
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-	while ($row = mysql_fetch_array($res))
+	while ($row = mysql_fetch_assoc($res))
 	{
 		if (!empty($row['question']) && !empty($row['answer']))
 		{

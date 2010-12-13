@@ -84,7 +84,7 @@ while ($row = mysql_fetch_array($res))
 	$difference = $row['ends'] - time();
 
 	$template->assign_block_vars('auctions', array(
-			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
+			'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
 			'TITLE' => $row['title'],

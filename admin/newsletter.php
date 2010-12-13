@@ -21,9 +21,12 @@ include $main_path . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
+$subject = (isset($_POST['subject'])) ? stripslashes($_POST['subject']) : '';
+$content = (isset($_POST['content'])) ? stripslashes($_POST['content']) : '';
+
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (empty($_POST['subject']) || empty($_POST['content']))
+	if (empty($subject) || empty($content))
 	{
 		$ERR = $ERR_5014;
 	}
@@ -46,8 +49,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$query .= ' AND suspended = 8';
 				break;
 		}
-		$subject = stripslashes($_POST['subject']);
-		$content = stripslashes($_POST['content']);
 		$headers = 'From:' . $system->SETTINGS['sitename'] . ' <' . $system->SETTINGS['adminmail'] . '>' . "\n" . 'Content-Type: text/html; charset=' . $CHARSET;
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -70,7 +71,7 @@ $USERSFILTER = array('all' => $MSG['5296'],
 
 $selectsetting = (isset($_POST['usersfilter'])) ? $_POST['usersfilter'] : '';
 loadblock($MSG['5299'], '', generateSelect('usersfilter', $USERSFILTER));
-loadblock($MSG['332'], '', 'text', 'subject', $system->SETTINGS['subject'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['332'], '', 'text', 'subject', $subject, array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
 $CKEditor->basePath = $main_path . 'ckeditor/';
@@ -78,7 +79,7 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['605'], $MSG['30_0055'], $CKEditor->editor('content', stripslashes($system->SETTINGS['content'])));
+loadblock($MSG['605'], $MSG['30_0055'], $CKEditor->editor('content', stripslashes($content)));
 loadblock('', '', $MSG['606']);
 
 $template->assign_vars(array(

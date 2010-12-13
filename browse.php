@@ -213,7 +213,8 @@ else
 
 	$template->assign_vars(array(
 			'TOP_HTML' => $TPL_main_value,
-			'CAT_STRING' => $TPL_categories_string
+			'CAT_STRING' => $TPL_categories_string,
+			'NUM_AUCTIONS' => $TOTALAUCTIONS
 			));
 }
 

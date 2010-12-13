@@ -60,6 +60,7 @@ if ($arr = mysql_fetch_array($res))
 	$system->check_mysql($res_, $sql, __LINE__, __FILE__);
 
 	$total_fb = 0;
+	$fb = array(-1 => 0, 0 => 0, 1 => 0);
 	$fb_as_seller = array(-1 => 0, 0 => 0, 1 => 0);
 	$fb_as_buyer = array(-1 => 0, 0 => 0, 1 => 0);
 	$fb_last_year = array(-1 => 0, 0 => 0, 1 => 0);

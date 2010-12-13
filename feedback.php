@@ -23,7 +23,7 @@ foreach ($membertypes as $idm => $memtypearr)
 ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 
-if (!isset($_POST['auction_id']) && !isset($_GET['auction_id']))
+if (isset($_SESSION['CURRENT_ITEM']))
 {
 	$_REQUEST['auction_id'] = $_SESSION['CURRENT_ITEM'];
 }
@@ -46,7 +46,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 	if (((isset($_POST['TPL_password']) && $system->SETTINGS['usersauth'] == 'y') || $system->SETTINGS['usersauth'] == 'n') && isset($_POST['TPL_rate']) && isset($_POST['TPL_feedback']) && !empty($_POST['TPL_feedback']))
 	{
 		$query = "SELECT winner, seller, feedback_win, feedback_sel, paid FROM " . $DBPrefix . "winners
-				WHERE auction = " . $_REQUEST['auction_id'] . "
+				WHERE auction = " . intval($_REQUEST['auction_id']) . "
 				AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']) . "
 				AND ((seller = " . $user->user_data['id'] . " AND feedback_sel = 0)
 				OR (winner = " . $user->user_data['id'] . " AND feedback_win = 0))";

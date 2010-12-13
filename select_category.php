@@ -97,8 +97,7 @@ if (isset($_GET['change']) && $_GET['change'] == 'yes')
 elseif (count($_POST) == 0)
 {
     unset($_SESSION['UPLOADED_PICTURES_SIZE']);
-    unset($_SESSION['GALLERY_UPDATED']);
-	unset($_SESSION['SELL_starts']);
+	$_SESSION['SELL_starts'] = '';
 	$_SESSION['UPLOADED_PICTURES'] = array();
     $_SESSION['SELL_with_reserve'] = '';
     $_SESSION['SELL_reserve_price'] = '';
@@ -108,6 +107,7 @@ elseif (count($_POST) == 0)
     $_SESSION['SELL_subtitle'] = '';
     $_SESSION['SELL_description'] = '';
     $_SESSION['SELL_pict_url'] = '';
+	$_SESSION['SELL_pict_url_temp'] = '';
     $_SESSION['SELL_atype'] = '';
     $_SESSION['SELL_iquantity'] = '';
     $_SESSION['SELL_with_buy_now'] = '';
@@ -202,7 +202,7 @@ $template->assign_vars(array(
         'B_SHOWBUTTON' => $SHOWBUTTON,
 		'CAT_NO' => $cat_no,
 		'COST' => ($extra_cat > 0) ? $system->print_money($extra_cat) : '',
-        'ERROR' => $ERR
+        'ERROR' => (isset($ERR)) ? $ERR : ''
         ));
 
 include 'header.php';

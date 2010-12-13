@@ -226,7 +226,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
-$USER = mysql_fetch_array($result);
+$USER = mysql_fetch_assoc($result);
 if ($USER['birthdate'] != 0)
 {
 	$TPL_day = substr($USER['birthdate'], 6, 2);

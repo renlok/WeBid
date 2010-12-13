@@ -85,7 +85,7 @@ function resizeThumbnailImage($thumb_image_name, $image, $width, $height, $start
 }
 
 // Process delete
-if ($_GET['action'] == 'delete' && isset($_GET['img']))
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img']))
 {
 	if ($_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])])
 	{
@@ -97,13 +97,13 @@ if ($_GET['action'] == 'delete' && isset($_GET['img']))
 	unset($_SESSION['UPLOADED_PICTURES_SIZE'][intval($_GET['img'])]);
 }
 
-if ($_GET['action'] == 'makedefault')
+if (isset($_GET['action']) && $_GET['action'] == 'makedefault')
 {
 	$cropdefault = true;
 	$image = $_GET['img'];
 }
 
-if ($_GET['action'] == 'crop' && !empty($_POST['w']))
+if (isset($_GET['action']) && $_GET['action'] == 'crop' && !empty($_POST['w']))
 {
 	if ($_POST['upload_thumbnail'] == $MSG['616'])
 	{
@@ -131,13 +131,12 @@ if ($_GET['action'] == 'crop' && !empty($_POST['w']))
 // close window
 if (!empty($_POST['creategallery']))
 {
-	$_SESSION['GALLERY_UPDATED'] = true;
-	print '<script type="text/javascript">window.close()</script>';
+	echo '<script type="text/javascript">window.close()</script>';
 	exit;
 }
 
 // PROCESS UPLOADED FILE
-if ($_POST['uploadpicture'] == $MSG['681'])
+if (isset($_POST['uploadpicture']) && $_POST['uploadpicture'] == $MSG['681'])
 {
 	if (!empty($_FILES['userfile']['tmp_name']) && $_FILES['userfile']['tmp_name'] != 'none')
 	{
@@ -276,7 +275,6 @@ for ($i = 0; $i < $system->SETTINGS['moneydecimals']; $i++)
 $template->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'THEME' => $system->SETTINGS['theme'],
-		'HEADERCOLOUR' => $system->SETTINGS['headercolor'],
 		'NUMIMAGES' => count($_SESSION['UPLOADED_PICTURES']),
 		'IMAGE_COST' => $image_fee,
 		'FEE_DECIMALS' => $decimals,

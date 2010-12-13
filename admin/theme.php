@@ -102,7 +102,7 @@ if (isset($_POST['file']) && !empty($_POST['theme']))
 		$filecontents = htmlentities(file_get_contents($theme_path . '/' . $filename));
 	}
 }
-elseif ($_GET['do'] == 'addfile')
+elseif (isset($_GET['do']) && $_GET['do'] == 'addfile')
 {
 	$edit_file = true;
 	$theme = $_GET['theme'];

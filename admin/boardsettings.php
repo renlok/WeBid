@@ -18,7 +18,7 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if ($_POST['action'] == 'update')
+if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings set

@@ -35,7 +35,7 @@ else
 			AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " AND ends > " . $NOW;
 
 	// retrieve records corresponding to passed page number
-	$PAGE = intval($_GET['PAGE']);
+	$PAGE = isset($_GET['PAGE']) ? intval($_GET['PAGE']) : 1;
 	if ($PAGE == 0) $PAGE = 1;
 
 	// determine limits for SQL query

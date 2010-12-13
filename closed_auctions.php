@@ -29,17 +29,15 @@ else
 	exit;
 }
 
-$NOW = time();
 // get number of closed auctions for this user
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
 	  WHERE user = " . intval($user_id) . "
 	  AND closed = 1";
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$num_auctions = mysql_result($result, 0, 'auctions');
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
+$TOTALAUCTIONS = mysql_result($result, 0, 'auctions');
 
 // Handle pagination
-$TOTALAUCTIONS = $num_auctions;
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1 || $_GET['PAGE'] == '')
 {
 	$OFFSET = 0;
@@ -51,16 +49,16 @@ else
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
 $PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
-if (!$PAGES) $PAGES = 1;
+if ($PAGES < 1) $PAGES = 1;
 
-$qs = "SELECT * FROM " . $DBPrefix . "auctions
-	WHERE user = " . intval($user_id) . "
-	AND closed = 1 ";
-$qs .= "ORDER BY ends ASC LIMIT $OFFSET, " . $system->SETTINGS['perpage'];
-$result = mysql_query($qs);
-$system->check_mysql($result, $qs, __LINE__, __FILE__);
+$query = "SELECT * FROM " . $DBPrefix . "auctions
+		WHERE user = " . intval($user_id) . "
+		AND closed = 1
+		ORDER BY ends ASC LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-while ($row = mysql_fetch_array($result))
+while ($row = mysql_fetch_assoc($res))
 {
 	$bid = $row['current_bid'];
 	$starting_price = $row['current_bid'];
@@ -75,9 +73,9 @@ while ($row = mysql_fetch_array($result))
 	}
 
 	// number of bids for this auction
-	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction=" . $row['id'];
-	$tmp_res = mysql_query($query);
-	$system->check_mysql($tmp_res, $query, __LINE__, __FILE__);
+	$query_ = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction=" . $row['id'];
+	$tmp_res = mysql_query($query_);
+	$system->check_mysql($tmp_res, $query_, __LINE__, __FILE__);
 	$num_bids = mysql_num_rows($tmp_res);
 
 	$difference = time() - $row['ends'];
@@ -87,7 +85,7 @@ while ($row = mysql_fetch_array($result))
 	if (intval($difference / 3600) > 12) $days_difference++;
 
 	$template->assign_block_vars('auctions', array(
-			'BGCOLOUR' => (!($auctions_count % 2)) ? '' : 'class="alt-row"',
+			'BGCOLOUR' => (!($TOTALAUCTIONS % 2)) ? '' : 'class="alt-row"',
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
 			'TITLE' => $row['title'],

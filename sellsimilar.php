@@ -27,7 +27,6 @@ if (!isset($_POST['action']))
 	// Get Closed auctions data
 	unset($_SESSION['UPLOADED_PICTURES']);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE']);
-	unset($_SESSION['GALLERY_UPDATED']);
 	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . $id . " AND user = " . $user->user_data['id'];
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);

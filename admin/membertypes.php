@@ -27,12 +27,11 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 	$old_membertypes = $_POST['old_membertypes'];
 	$new_membertypes = $_POST['new_membertypes'];
 	$new_membertype = $_POST['new_membertype'];
-	$delete = $_POST['delete'];
-	
+
 	// delete with the deletes
-	if (is_array($delete))
+	if (isset($_POST['delete']) && is_array($_POST['delete']))
 	{
-		$idslist = implode(',', $delete);
+		$idslist = implode(',', $_POST['delete']);
 		$query = "DELETE FROM " . $DBPrefix . "membertypes WHERE id IN (" . $idslist . ")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
@@ -52,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 			}
 		}
 	}
-	
+
 	// If a new membertype was added, insert it into database
 	if (!empty($new_membertype['feedbacks']))
 	{

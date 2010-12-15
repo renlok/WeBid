@@ -39,7 +39,7 @@ elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'
 {
 	$filename = ($_POST['action'] == 'add') ? $_POST['new_filename'] : $_POST['filename'];
 	$fh = fopen($theme_root . $_POST['theme'] . '/' . $filename, 'w') or die("can't open file " . $theme_root . $_POST['theme'] . '/' . $filename);
-	fwrite($fh, $_POST['content']);
+	fwrite($fh, stripslashes($_POST['content']));
 	fclose($fh);
 }
 

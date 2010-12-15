@@ -19,10 +19,12 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $include_path . 'functions_rebuild.inc.php';
 
+unset($ERR);
+
 if (isset($_POST['act']))
 {
 	// remove any countries that need to be
-	if (count($_POST['delete']) > 0)
+	if (isset($_POST['delete']) && count($_POST['delete']) > 0)
 	{
 		// we use a single SQL query to quickly do ALL our deletes
 		$query = "DELETE FROM " . $DBPrefix . "countries WHERE ";
@@ -59,6 +61,7 @@ if (isset($_POST['act']))
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 	rebuild_html_file('countries');
+	$ERR = $MSG['1028'];
 }
 
 include $include_path . 'countries.inc.php';
@@ -79,6 +82,10 @@ while ($i < count($countries))
 			));
 	$i++;
 }
+
+$template->assign_vars(array(
+		'ERROR' => isset($ERR) ? $ERR : ''
+		));
 
 $template->set_filenames(array(
 		'body' => 'countries.tpl'

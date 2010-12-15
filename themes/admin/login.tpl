@@ -1,5 +1,6 @@
 <html>
 <head>
+	<title>WeBid Administration back-end</title>
 	<link rel="stylesheet" type="text/css" href="{SITEURL}/themes/admin/style.css" />
 </head>
 <body style="margin:0;">

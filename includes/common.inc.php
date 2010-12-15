@@ -13,8 +13,8 @@
  ***************************************************************************/
 
 session_start();
-error_reporting(0);
-// error_reporting(E_ALL); // use this for debugging
+$error_reporting = E_ALL^E_NOTICE;
+//$error_reporting = E_ALL; // use this for debugging
 define('InWeBid', 1);
 // file check & 
 if(!@include('config.inc.php'))
@@ -44,7 +44,7 @@ include $include_path . 'template.php';
 $system = new global_class();
 $template = new template();
 $user = new user();
-set_error_handler('WeBidErrorHandler');
+set_error_handler('WeBidErrorHandler', $error_reporting);
 
 include $include_path . 'messages.inc.php';
 

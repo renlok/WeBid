@@ -982,6 +982,7 @@ $MSG['1022'] = "SSL Support";
 $MSG['1023'] = "Activate SSL support?";
 $MSG['1024'] = "<p>If you have SSL support on the server where you are running WeBid, you may want to give your customers a safer environment to operate.</p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.";
 $MSG['1025'] = "SSL settings updated";
+$MSG['1028'] = "Counteries updated";
 $MSG['1029'] = "Counters updated";
 $MSG['1030'] = "Re-sync the user, auction and bid counters";
 $MSG['1031'] = "Re-sync Counters";

@@ -6,7 +6,7 @@
         </div>
     	<div style="width:75%; float:right;">
             <div class="main-box">
-            	<h4 class="rounded-top rounded-bottom">{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}<!-- IF TITLEBARNAME ne '' -->&nbsp;&gt;&gt;&nbsp;{TITLEBARNAME}<!-- ENDIF --></h4>
+            	<h4 class="rounded-top rounded-bottom">{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</h4>
 <!-- IF ERROR ne '' -->
 					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->

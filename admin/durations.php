@@ -28,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	foreach ($_POST['new_durations'] as $k => $v)
 	{
-		if (!in_array($k, $_POST['delete']) && !empty($_POST['new_durations'][$k]) && !empty($_POST['new_days'][$k]))
+		if ((isset($_POST['delete']) && !in_array($k, $_POST['delete']) || !isset($_POST['delete'])) && !empty($_POST['new_durations'][$k]) && !empty($_POST['new_days'][$k]))
 		{
 			$rebuilt_durations[] = $_POST['new_durations'][$k];
 			$rebuilt_days[] = $_POST['new_days'][$k];

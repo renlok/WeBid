@@ -35,8 +35,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['perpage'] = $_POST['perpage'];
 	$system->SETTINGS['thumb_list'] = $_POST['thumb_list'];
+	$system->SETTINGS['loginbox'] = $_POST['loginbox'];
+	$system->SETTINGS['newsbox'] = $_POST['newsbox'];
 	$system->SETTINGS['newstoshow'] = $_POST['newstoshow'];
-	$system->SETTINGS['cust_increment'] = $_POST['cust_increment'];
 	$system->SETTINGS['lastitemsnumber'] = $_POST['lastitemsnumber'];
 	$system->SETTINGS['higherbidsnumber'] = $_POST['higherbidsnumber'];
 	$system->SETTINGS['endingsoonnumber'] = $_POST['endingsoonnumber'];

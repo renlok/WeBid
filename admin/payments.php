@@ -22,7 +22,8 @@ unset($ERR);
 
 function ToBeDeleted($index)
 {
-	global $delete;
+	if (!isset($_POST['delete']))
+		return false;
 
 	$i = 0;
 	while ($i < count($_POST['delete']))

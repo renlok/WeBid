@@ -98,5 +98,6 @@
 - Upgraded the calendar script from v3.2 to v4.0.2
 - Removed the domain stats option from admin
 - Disabled the stats from counting bots
+- Changed error reporting so by default it ignores E_NOTICE calls (http://www.php.net/manual/en/errorfunc.constants.php)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

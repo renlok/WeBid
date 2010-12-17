@@ -218,7 +218,7 @@ class global_class
 		return true;
 	}
 
-	function print_money($str, $from_database = true, $link = true)
+	function print_money($str, $from_database = true, $link = true, $bold = true)
 	{
 		$str = $this->print_money_nosymbol($str, $from_database);
 
@@ -231,13 +231,18 @@ class global_class
 			$currency = $this->SETTINGS['currency'];
 		}
 
+		if ($bold)
+		{
+			$str = '<b>' . $str . '</b>';
+		}
+
 		if ($this->SETTINGS['moneysymbol'] == 2) // Symbol on the right
 		{
-			return '<b>' . $str . '</b> ' . $currency;
+			return $str . ' ' . $currency;
 		}
 		elseif ($this->SETTINGS['moneysymbol'] == 1) // Symbol on the left
 		{
-			return $currency . ' <b>' . $str . '</b>';
+			return $currency . ' ' . $str;
 		}
 	}
 

@@ -21,12 +21,13 @@
 		</th>
 	</tr>
 <!-- BEGIN bids -->
-	<tr bgcolor="{bids.BGCOLOUR}">
+	<tr {bids.BGCOLOUR}>
 		<td align="left">
 			<a href="item.php?id={bids.ID}">{bids.TITLE}</a>
 		</td>
 		<td>
 			{bids.BID} <!-- IF bids.QTY gt 1 -->(x {bids.QTY} {L_5492})<!-- ENDIF -->
+            <!-- IF bids.PROXYBID ne '' --><p><span class="smallspan">{bids.PROXYBID}</span></p><!-- ENDIF -->
 		</td>
 		<td align="center">
 			{bids.TIMELEFT}

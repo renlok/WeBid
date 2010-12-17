@@ -16,24 +16,25 @@
 include 'includes/common.inc.php';
 
 // get active bids for this user
-$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid, b.quantity FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
-		WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = " . $user->user_data['id'] . "
+$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid, b.quantity, p.bid As proxybid FROM " . $DBPrefix . "bids b
+		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
+		LEFT JOIN " . $DBPrefix . "proxybid p ON (p.itemid = a.id)
+		WHERE a.closed = 0 AND b.bidder = " . $user->user_data['id'] . "
 		AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bidwhen DESC";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 $idcheck = array();
 $auctions_count = 0;
-$bgColor = '#EBEBEB';
 while ($row = mysql_fetch_assoc($res))
 {
 	if (!in_array($row['id'], $idcheck))
 	{
 		// prepare some data
-		$bgColor = ($bgColor == '#EBEBEB') ? '#FFFFFF' : '#EBEBEB';
+		$bgColor = (!($auctions_count % 2)) ? '' : 'class="alt-row"';
 
 		// Outbidded or winning bid
-		if ($row['current_bid'] != $row['bid']) $bgColor = '#FFFF00';
+		if ($row['current_bid'] != $row['bid']) $bgColor = 'style="background-color:#FFFF00;"';
 
 		$auctions_count++;
 		$idcheck[] = $row['id'];
@@ -44,7 +45,8 @@ while ($row = mysql_fetch_assoc($res))
 				'TITLE' => $row['title'],
 				'BID' => $system->print_money($row['bid']),
 				'QTY' => $row['quantity'],
-				'TIMELEFT' => FormatTimeLeft($row['ends'] - time())
+				'TIMELEFT' => FormatTimeLeft($row['ends'] - time()),
+				'PROXYBID' => (isset($row['proxybid']) && $row['proxybid'] > $row['bid']) ? $system->print_money($row['proxybid'], true, false, false) : ''
 				));
 	}
 }

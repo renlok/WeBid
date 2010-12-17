@@ -99,5 +99,6 @@
 - Removed the domain stats option from admin
 - Disabled the stats from counting bots
 - Changed error reporting so by default it ignores E_NOTICE calls (http://www.php.net/manual/en/errorfunc.constants.php)
+- Added proxy bid to be displayed on the your bids page
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

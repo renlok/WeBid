@@ -126,19 +126,23 @@ if (isset($_POST['action']))
 			$counter = 0;
 			while ($row = mysql_fetch_assoc($res))
 			{
-				$names[] = $row['cat_name'] . '<input type="hidden" name="delete[' . $row['id'] . ']" value="delete">';
 				if ($row['COUNT'] > 0 || $row['left_id'] != ($row['right_id'] - 1))
 				{
+					$names[] = $row['cat_name'];
 					$message .= '<tr>';
 					$message .= '<td>' . $row['cat_name'] . '</td><td>';
-					$message .= '<select name="delete[' . $row['id'] . ']">';
+					$message .= '<select name="delete[' . $row['cat_id'] . ']">';
 					$message .= '<option value="delete">' . $MSG['008'] . '</option>';
 					$message .= '<option value="move">' . $MSG['840'] . ': </option>';
 					$message .= '</select>';
 					$message .= '</td>';
-					$message .= '<td><input type="text" size="5" name="moveid[' . $row['id'] . ']"></td>';
+					$message .= '<td><input type="text" size="5" name="moveid[' . $row['cat_id'] . ']"></td>';
 					$message .= '</tr>';
 					$counter++;
+				}
+				else
+				{
+					$names[] = $row['cat_name'] . '<input type="hidden" name="delete[' . $row['cat_id'] . ']" value="delete">';
 				}
 			}
 			$message .= '</table>';
@@ -175,7 +179,8 @@ if (isset($_POST['action']))
 				}
 				elseif ($v == 'move')
 				{
-					if (isset($_POST['moveid'][$k]) && !empty($_POST['moveid'][$k]) && is_numeric($_POST['moveid'][$k]))
+					if (isset($_POST['moveid'][$k]) && !empty($_POST['moveid'][$k])
+						&& is_numeric($_POST['moveid'][$k]) && $catscontrol->check_category($_POST['moveid'][$k]))
 					{
 						// first move the parent
 						$catscontrol->move($k, $_POST['moveid'][$k]);

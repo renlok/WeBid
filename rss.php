@@ -132,7 +132,7 @@ while ($auction_data = mysql_fetch_assoc($res))
 	}
 
 	$template->assign_block_vars('rss', array(
-			'PRICE' => str_replace(array('<b>', '</b>'), '', $system->print_money(($auction_data['num_bids'] == 0) ? $auction_data['minimum_bid'] : $auction_data['current_bid'], false)),
+			'PRICE' => str_replace(array('<b>', '</b>'), '', $system->print_money(($auction_data['num_bids'] == 0) ? $auction_data['minimum_bid'] : $auction_data['current_bid'])),
 			'TITLE' => $system->uncleanvars($auction_data['title']),
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $auction_data['id'],
 			'DESC' => $auction_data['description'],

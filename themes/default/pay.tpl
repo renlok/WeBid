@@ -20,7 +20,7 @@
         <input type="hidden" name="no_note" value="1">
         <input type="hidden" name="custom" value="{CUSTOM_CODE}">
         <input type="hidden" name="notify_url" value="{SITEURL}validate.php?paypal">
-        <input name="submit" type="submit" value="Pay" border="0">
+        <input name="submit" type="submit" value="{L_756}" border="0">
     </form>
     </td>
 </tr>
@@ -41,7 +41,7 @@
         <input type="hidden" name="x_fp_timestamp" value="{TIMESTAMP}">
         <input type="hidden" name="x_fp_hash" value="{AN_KEY}">
         <input type="hidden" name="custom" value="{CUSTOM_CODE}">
-        <input name="submit" type="submit" value="Pay" border="0">
+        <input name="submit" type="submit" value="{L_756}" border="0">
     </form>
     </td>
 </tr>
@@ -58,7 +58,7 @@
         <input type="hidden" name="desc" value="{TITLE}">
         <input type="hidden" name="MC_callback" value="{SITEURL}validate.php?worldpay">
         <input type="hidden" name="cartId" value="{CUSTOM_CODE}">
-        <input name="submit" type="submit" value="Pay" border="0">
+        <input name="submit" type="submit" value="{L_756}" border="0">
     </form>
     </td>
 </tr>
@@ -78,7 +78,7 @@
         <input type="hidden" name="cancel_url" value="{SITEURL}validate.php?fail">
         <input type="hidden" name="status_url" value="{SITEURL}validate.php?moneybookers">
         <input type="hidden" name="trans_id" value="{CUSTOM_CODE}">
-        <input name="submit" type="submit" value="Pay" border="0">
+        <input name="submit" type="submit" value="{L_756}" border="0">
     </form>
     </td>
 </tr>
@@ -92,7 +92,7 @@
     	<input type="hidden" name="sid" value="{TC_PAYTOID}">
         <input type="hidden" name="total" value="{PAY_VAL}">
         <input type="hidden" name="cart_order_id" value="{CUSTOM_CODE}">
-        <input name="submit" type="submit" value="Pay" border="0">
+        <input name="submit" type="submit" value="{L_756}" border="0">
     </form>
     </td>
 </tr>

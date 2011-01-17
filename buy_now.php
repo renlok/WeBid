@@ -112,6 +112,8 @@ foreach ($memtypesarr as $k => $l)
 	}
 }
 
+$qty = (isset($_REQUEST['qty'])) ? intval($_REQUEST['qty']) : 1;
+
 $buy_done = 0;
 if (isset($_POST['action']) && $_POST['action'] == 'buy')
 {
@@ -134,7 +136,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		$ERR = $ERR_711;
 	}
 	// check qty
-	if (isset($_GET['qty']) && $_GET['qty'] > $Auction['quantity'])
+	if (isset($qty) && $qty > $Auction['quantity'])
 	{
 		$ERR = $ERR_608;
 	}
@@ -159,7 +161,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		}
 		else
 		{
-			$query = "UPDATE " . $DBPrefix . "auctions SET quantity = quantity - " . $_GET['qty'] . " WHERE id = " . $id;
+			$query = "UPDATE " . $DBPrefix . "auctions SET quantity = quantity - " . $qty . " WHERE id = " . $id;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			// do stuff that is important
 			$query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
@@ -229,7 +231,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			}
 
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, " . $id . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, " . $_GET['qty'] . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
+					(NULL, " . $id . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, " . $qty . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 			// get end string

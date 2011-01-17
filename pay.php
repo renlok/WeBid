@@ -45,7 +45,7 @@ switch($_GET['a'])
 		break;
 	case 2: // pay for an item
 		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
-				u.id As uid, u.nick, a.payment, u.worldpay_id, u.toocheckout_id, u.moneybookers_address
+				u.id As uid, u.nick, a.payment, u.worldpay_id, u.toocheckout_id, u.moneybookers_email
 				FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
@@ -68,7 +68,7 @@ switch($_GET['a'])
 		$an_paytopass = (in_array('authnet', $payment)) ? $data['authnet_pass'] : '';
 		$wp_paytoid = (in_array('worldpay', $payment)) ? $data['worldpay_id'] : '';
 		$tc_paytoid = (in_array('toocheckout', $payment)) ? $data['toocheckout_id'] : '';
-		$mb_paytoemail = (in_array('moneybookers', $payment)) ? $data['moneybookers_address'] : '';
+		$mb_paytoemail = (in_array('moneybookers', $payment)) ? $data['moneybookers_email'] : '';
 		$payvalue = ($data['shipping'] == 1) ? $data['shipping_cost'] + $data['bid'] : $data['bid'];
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money($payvalue));

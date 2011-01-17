@@ -341,7 +341,7 @@ function check_gateway($gateway)
 		return true;
 	if ($gateway == 'worldpay' && !empty($user->user_data['worldpay_id']))
 		return true;
-	if ($gateway == 'moneybookers' && !empty($user->user_data['moneybookers_address']))
+	if ($gateway == 'moneybookers' && !empty($user->user_data['moneybookers_email']))
 		return true;
 	if ($gateway == 'toocheckout_id' && !empty($user->user_data['authnet_id']))
 		return true;

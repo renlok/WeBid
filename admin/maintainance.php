@@ -39,11 +39,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				maintainancetext = '" . addslashes($_POST['maintainancetext']) . "',
 				active = '" . $_POST['active'] . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$system->SETTINGS['superuser'] = $_POST['superuser'];
-		$system->SETTINGS['maintainancetext'] = $_POST['maintainancetext'];		
-		$system->SETTINGS['active'] = $_POST['active'];
 		$ERR = $MSG['_0005'];
 	}
+	$system->SETTINGS['superuser'] = $_POST['superuser'];
+	$system->SETTINGS['maintainancetext'] = $_POST['maintainancetext'];		
+	$system->SETTINGS['active'] = $_POST['active'];
 }
 else
 {

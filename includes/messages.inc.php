@@ -19,7 +19,7 @@ if (isset($_GET['lan']) && !empty($_GET['lan']))
 {
 	if ($user->logged_in)
 	{
-		$query = "UPDATE " . $DBPrefix . "users SET language = '" . $_GET['lan'] . "' WHERE id = " . $user->user_data['id'];
+		$query = "UPDATE " . $DBPrefix . "users SET language = '" . mysql_real_escape_string($_GET['lan']) . "' WHERE id = " . $user->user_data['id'];
 	}
 	else
 	{

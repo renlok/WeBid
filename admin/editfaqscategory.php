@@ -69,7 +69,8 @@ while ($row = mysql_fetch_assoc($res))
 
 foreach ($LANGUAGES as $k => $v)
 {
-	$template->assign_block_vars('langs', array(
+	$k = trim($k);
+	$template->assign_block_vars('flangs', array(
 			'LANGUAGE' => $k,
 			'TRANSLATION' => $tr[$k]
 			));

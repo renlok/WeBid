@@ -109,7 +109,7 @@ $template->assign_vars(array(
 		'ERROR' => $TPL_error_text,
 		'ID' => intval($_REQUEST['id']),
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => (!isset($capcha_text)) ? $capcha_text : '',
+		'CAPCHA' => (isset($capcha_text)) ? $capcha_text : '',
 		'TITLE' => $TPL_item_title,
 		'FRIEND_NAME' => (isset($_POST['friend_name'])) ? $_POST['friend_name'] : '',
 		'FRIEND_EMAIL' => (isset($_POST['friend_email'])) ? $_POST['friend_email'] : '',

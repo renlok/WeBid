@@ -17,10 +17,11 @@ include $include_path . 'countries.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'ok')
 {
-	if (isset($_POST['TPL_username']))
+	if (isset($_POST['TPL_username']) && isset($_POST['TPL_email']))
 	{
 		$username = $system->cleanvars($_POST['TPL_username']);
-		$query = "SELECT email, id, name FROM " . $DBPrefix . "users WHERE nick = '" . $username . "' OR email = '" . $username . "' LIMIT 1";
+		$email = $system->cleanvars($_POST['TPL_email']);
+		$query = "SELECT email, id, name FROM " . $DBPrefix . "users WHERE nick = '" . $username . "' AND email = '" . $email . "' LIMIT 1";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 
@@ -46,25 +47,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'ok')
 		}
 		else
 		{
-			$TPL_err = 1;
-			$TPL_errmsg = $ERR_100;
+			$ERR = $ERR_076;
 		}
 	}
 	else
 	{
-		$TPL_err = 1;
-		$TPL_errmsg = $ERR_112;
+		$ERR = $ERR_112;
 	}
 }
 
 $template->assign_vars(array(
-		'L_ERROR' => (isset($errmsg)) ? '<p class="errfont">' . $TPL_errmsg . '</p>' : '',
-		'L_MSG' => $MGS_2__0039,
-		'L_UNAME' => $MGS_2__0040,
-
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'USERNAME' => (isset($username)) ? $username : '',
-
-		'B_FIRST' => (!isset($_POST['action']) || (isset($_POST['action']) && isset($TPL_errmsg)))
+		'EMAIL' => (isset($email)) ? $email : '',
+		'B_FIRST' => (!isset($_POST['action']) || (isset($_POST['action']) && isset($ERR)))
 		));
 
 include 'header.php';

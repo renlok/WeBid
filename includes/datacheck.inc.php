@@ -143,10 +143,6 @@ function CheckSellData()
 	{
 		return '022';
 	}
-	else
-	{
-		$reserve_price = $system->input_money($reserve_price);
-	}
 
 	if ($buy_now_only == 'y')
 	{
@@ -157,10 +153,6 @@ function CheckSellData()
 	{
 		return '061';
 	}
-	else
-	{
-		$buy_now_price = $system->input_money($buy_now_price);
-	}	
 
 	$numpay = count($payment);
 	if ($numpay == 0)

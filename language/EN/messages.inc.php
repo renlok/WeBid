@@ -77,7 +77,7 @@ $ERR_049 = "The category's name cannot be empty";
 $ERR_050 = "At least one group must have Auto Join enabled";
 $ERR_051 = "Please, insert a valid number of digits";
 $ERR_054 = "Please, fill in both the password fields";
-$ERR_055 = "User <I>%s</I> already exists in the database";
+$ERR_055 = "User <i>%s</i> already exists in the database";
 $ERR_056 = "Bid increment value missing";
 $ERR_057 = "Bid increment values must be numeric";
 $ERR_058 = "Incorrect money format.";
@@ -98,6 +98,7 @@ $ERR_072 = "You must enter a bid amount";
 $ERR_073 = "You cannot bid on an auction that has not yet started";
 $ERR_074 = "You have already left feedback on this transaction";
 $ERR_075 = 'No bids';
+$ERR_076 = 'Invalid Username/E-mail combination';
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
@@ -142,9 +143,9 @@ $ERR_701 = "Invalid quantity (must be >0).";
 $ERR_702 = "Current Bid must be greater than minimum bid.";
 $ERR_704 = "<br>You may not leave feedback about this user! <br>This auction is not closed!";
 $ERR_705 = "You may only leave feedback, if you have a closed transaction with this user!";
-$ERR_706 = "<I>Max. number of pictures</I> must be numeric.";
-$ERR_707 = "<I>Max picture size</I> cannot be zero.";
-$ERR_708 = "<I>Max picture size</I> must be numeric.";
+$ERR_706 = "<i>Max. number of pictures</i> must be numeric.";
+$ERR_707 = "<i>Max picture size</i> cannot be zero.";
+$ERR_708 = "<i>Max picture size</i> must be numeric.";
 $ERR_709 = "The picture you uploaded is too big. It cannot exceed ";
 $ERR_710 = "Wrong file type. Allowed types are: GIF, PNG and JPEG";
 $ERR_711 = "You cannot buy, you are the seller!";
@@ -282,7 +283,7 @@ $MSG['111'] = "Auction started";
 $MSG['112'] = "Auction ends";
 $MSG['113'] = "Auction ID";
 $MSG['114'] = "No picture available";
-$MSG['115'] = "Bid now!<br>It's FREE";
+$MSG['115'] = "Bid now!";
 $MSG['116'] = "Current Bid";
 $MSG['117'] = "Higher bidder";
 $MSG['118'] = "Ends within";
@@ -529,11 +530,11 @@ $MSG['364'] = "Date";
 $MSG['365'] = "Admin Users";
 $MSG['367'] = "New admin user";
 $MSG['368'] = "Mass category add<br><span class=\"smallspan\">Just enter category names and put each category on a new line</span>";
-$MSG['371'] = "WeBid needs to periodically run <CODE>batch.php</CODE> to close expired auctions and send notification e-mails to the seller and/or the winner. The recommended way to run <CODE>batch.php</CODE> is to set up a <a href=\"http://www.aota.net/Script_Installation_Tips/cronhelp.php4\" target=\"_blank\">cronjob</a> if you run a Unix/Linux server.<br>If for any reason you can't run a cronjob on your server, you can choose the <b>Non-batch</b> option below to have <CODE>batch.php</CODE> run by WeBid itself: in this case <CODE>cron.php</CODE> will be run each time someone access your home page.";
+$MSG['371'] = "WeBid needs to periodically run <code>batch.php</code> to close expired auctions and send notification e-mails to the seller and/or the winner. The recommended way to run <code>batch.php</code> is to set up a <a href=\"http://www.aota.net/Script_Installation_Tips/cronhelp.php4\" target=\"_blank\">cronjob</a> if you run a Unix/Linux server.<br>If for any reason you can't run a cronjob on your server, you can choose the <b>Non-batch</b> option below to have <code>batch.php</code> run by WeBid itself: in this case <code>cron.php</code> will be run each time someone access your home page.";
 $MSG['372'] = "Run cron";
 $MSG['373'] = "Batch";
 $MSG['374'] = "Non-batch";
-$MSG['375'] = "According to the default in WeBid's Settings, <CODE>cron.php</CODE> automatically deletes auctions older than 30 days.
+$MSG['375'] = "According to the default in WeBid's Settings, <code>cron.php</code> automatically deletes auctions older than 30 days.
 			<br>You may change the time period below.";
 $MSG['376'] = "Delete auctions older than";
 $MSG['377'] = " days";
@@ -760,7 +761,7 @@ $MSG['678'] = "Close";
 $MSG['679'] = "Please, follow the steps below.";
 $MSG['680'] = "Select the file to upload";
 $MSG['681'] = "Upload file";
-$MSG['682'] = "Repeat steps 1. and 2. for each picture. When finished click on the <I>Create Gallery</I> button below.<br>When you upload the first image or set one as the default you will need to create a thumbnail for it";
+$MSG['682'] = "Repeat steps 1. and 2. for each picture. When finished click on the <i>Create Gallery</i> button below.<br>When you upload the first image or set one as the default you will need to create a thumbnail for it";
 $MSG['683'] = "&gt;&gt;&gt; Create Gallery &lt;&lt;&lt;";
 $MSG['684'] = "Filename";
 $MSG['685'] = "Size (bytes)";
@@ -895,8 +896,8 @@ $MSG['840'] = 'Move to ';
 $MSG['841'] = 'Admin Templates';
 $MSG['842'] = 'Set Fees';
 $MSG['843'] = 'What do you want to do with the auctions & subcategories in the following categories<br><small>(If you want to move them you must enter the category id of where you want them moved)</small>';
-$MSG['844'] = 'Some categories selected to move could not be processed as no category ID was given to where they would be moved to';
-$MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_blue.png"> Shows a category contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_red.png"> Shows a category contains auctions</p>';
+$MSG['844'] = 'Some categories selected to move could not be processed as no valid category ID was given to where they would be moved to';
+$MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_blue.png"> Shows a category that contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_red.png"> Shows a category that contains auctions</p>';
 $MSG['846'] = 'Account Balance';
 $MSG['847'] = 'Price';
 $MSG['848'] = 'Are you sure you want to delete the user feedback (ID: %s)';
@@ -1026,7 +1027,7 @@ $MSG['5048'] = "Activate Message Boards Service?";
 $MSG['5051'] = "Message Boards Settings Updated";
 $MSG['5052'] = "Edit Message Board";
 $MSG['5053'] = "Last Message";
-$MSG['5056'] = "You are not logged in.<br>If you post a message it will appear as posted by <b><I>Unknown user</I></b>.";
+$MSG['5056'] = "You are not logged in.<br>If you post a message it will appear as posted by <b><i>Unknown user</i></b>.";
 $MSG['5057'] = "Post Message";
 $MSG['5058'] = "Back to message boards";
 $MSG['5059'] = "Messages";
@@ -1050,12 +1051,12 @@ treated like \"one word\".";
 $MSG['5073'] = "Words Filter Settings Updated";
 $MSG['5074'] = "About Us Page";
 $MSG['5075'] = "Terms &amp; Conditions Page";
-$MSG['5076'] = "Activate this option if you want an <U>About  us</U> link to appear in the footer of your pages.";
+$MSG['5076'] = "Activate this option if you want an <u>About  us</u> link to appear in the footer of your pages.";
 $MSG['5077'] = "Activate About us page?";
 $MSG['5078'] = "About us page content";
 $MSG['5079'] = "About us Settings Updated";
 $MSG['5080'] = "Note: each new line character will be converted to <b>&lt;br&gt;</b> HTML tag.";
-$MSG['5081'] = "Activate this option if you want a <U>Terms &amp; Conditions</U> link to appear in the footer of your pages.";
+$MSG['5081'] = "Activate this option if you want a <u>Terms &amp; Conditions</u> link to appear in the footer of your pages.";
 $MSG['5082'] = "Activate Terms &amp; Conditions page?";
 $MSG['5083'] = "Terms &amp; Conditions page content<br>(HTML allowed)";
 $MSG['5084'] = "Terms &amp; Conditions Settings Updated";
@@ -1174,7 +1175,7 @@ $MSG['5493'] = "bid";
 $MSG['5494'] = "bid for ";
 $MSG['5495'] = "for each ";
 $MSG['5506'] = "Positive feedback: ";
-$MSG['5507'] = "<font color=red>Negative feedback: </font>";
+$MSG['5507'] = '<span style="color:#CD0000;">Negative feedback:</span> ';
 $MSG['5508'] = "Member since ";
 $MSG['5509'] = "Feedback times ";
 $MSG['_0001'] = "Under Maintenance Page";
@@ -1245,8 +1246,8 @@ $MSG['2_0005'] = "Sign up IP";
 $MSG['2_0006'] = "Ban";
 $MSG['2_0007'] = "Accept";
 $MSG['2_0009'] = "IP Address";
-$MSG['2_0012'] = "<FONT COLOR=GREEN><b>Accepted</b></FONT>";
-$MSG['2_0013'] = "<FONT COLOR=red><b>Banned</b></FONT>";
+$MSG['2_0012'] = '<span style="color:#A2CD5A;"><b>Accepted</b></span>';
+$MSG['2_0013'] = '<span style="color:#CD0000;"><b>Banned</b></span>';
 $MSG['2_0015'] = "Process Selection";
 $MSG['2_0017'] = "IP Addresses";
 $MSG['2_0020'] = "IP Ban Management";
@@ -1272,30 +1273,30 @@ $MSG['2__0001'] = "Choose language";
 $MSG['2__0002'] = "Multilingual support";
 $MGS_2__0003 = "<br>The default language is English.<br>
 				If you want to enable multilingual support or change the default language you must follow the steps below:
-				<UL>
-				<LI>If you want to add a new language make a duplicate of language/EN and name it with the
+				<ul>
+				<li>If you want to add a new language make a duplicate of language/EN and name it with the
 				appropriate name: i.e. if you are translating to French you will need to name the directory FR
 				<br>
 				The first thing is to define the characters encoding your language requires at the top of the messages file.
-				The variable you must edit is <FONT FACE=courier>\$CHARSET</FONT>. UTF-8 encoding should work with almost all the languages.<br>
-				Next you'll have to define the document reading direction. The variable to modify is <FONT FACE=courier>\$DOCDIR</FONT>
+				The variable you must edit is <i>\$CHARSET</i>. UTF-8 encoding should work with almost all the languages.<br>
+				Next you'll have to define the document reading direction. The variable to modify is <i>\$DOCDIR</i>
 				and can have two possible values:
-				<UL>
-				<LI><b>ltr</b> (left-to-right): this is the default and means the text must be read from left to right
-				<LI><b>rtl</b> (right-to-left): means the text must be read from right to left (i.e. Arabian, Hebrew, etc)
-				</UL>
-				Once changed <FONT FACE=courier>\$CHARSET</FONT> and <FONT FACE=courier>\$DOCDIR</FONT> according to the language you are translating into,
+				<ul>
+				<li><b>ltr</b> (left-to-right): this is the default and means the text must be read from left to right
+				<li><b>rtl</b> (right-to-left): means the text must be read from right to left (i.e. Arabian, Hebrew, etc)
+				</ul>
+				Once changed <i>\$CHARSET</i> and <i>\$DOCDIR</i> according to the language you are translating into,
 				 you will have to translate all the error messages and user interface messages contained in the messages file.
 				
-				<LI>You will then need the flag(s) GIFs for the languages you are going to use, in the includes/flags directory. 
+				<li>You will then need the flag(s) GIFs for the languages you are going to use, in the includes/flags directory. 
 				Get the flag(s) you need and change the file name(s) to be XX.gif, where XX is the language code for your country language.
 				<br>Copy the renamed flag file(s) in the includes/flags/ directory.
 				<br><b>Note:</b> for each translation, you need the corresponding XX.gif file in includes/flags/
-				<LI>Select the default language below. All the other available languages will be available in the home page (the corresponding flags will be shown).
-				</UL>
+				<li>Select the default language below. All the other available languages will be available in the home page (the corresponding flags will be shown).
+				</ul>
 				";
 $MGS_2__0004 = "Default language";
-$MSG['2__0005'] = "<FONT COLOR=RED><b>Current default language</b></FONT>";
+$MSG['2__0005'] = '<span style="color:#CD0000;"><b>Current default language</b></span>';
 $MSG['2__0016'] = "Starting date";
 $MSG['2__0025'] = "Buy it now";
 $MSG['2__0027'] = "All";
@@ -1305,15 +1306,14 @@ $MSG['2__0030'] = " means the entry cannot be deleted because it's in use.";
 $MSG['2__0031'] = "Are you sure you want to delete these messages?";
 $MSG['2__0037'] = "Submit auction";
 $MSG['2__0038'] = "Select your category";
-$MGS_2__0039 = "If you lost your password, please enter in your username or e-mail address below.";
-$MGS_2__0040 = "Username or e-mail address";
+$MSG['2__0039'] = "If you lost your password, please enter in your username or e-mail address below.";
 $MSG['2__0041'] = "Select secondary category";
 $MGS_2__0045 = " pixels ";
 $MSG['2__0047'] = "SELECT CATEGORY &gt;&gt;";
 $MSG['2__0048'] = "Close Now!";
 $MSG['2__0050'] = "Sell similar";
 $MSG['2__0051'] = "Relist";
-$MGS_2__0054 = "<b><FONT COLOR=red>Already selected</FONT></b>";
+$MGS_2__0054 = '<span style="#CD0000;"><b>Already selected</b></span>';
 $MSG['2__0056'] = "Suspended auctions";
 $MSG['2__0057'] = "Show counters";
 $MGS_2__0058 = "You can decide to show some counters in the header of your site's pages.<br>
@@ -1500,13 +1500,13 @@ $MSG['30_0032'] = "Delete all the template cache files, you will need to do this
 $MSG['30_0033'] = "Cache cleared";
 $MSG['30_0049'] = "Newsletter Settings Updated";
 $MSG['30_0053'] = "<p>Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:</p>";
-$MSG['30_0055'] = "The newsletter sent through WeBid will be sent automatically in <B>HTML</B>, so, it is necessary to add a tag <CODE>&lt;BR&gt;</CODE> tags for each new line you are going to add. Otherwise, the message will look like a single line of text without format.";
+$MSG['30_0055'] = "The newsletter sent through WeBid will be sent automatically in <b>HTML</b>, so, it is necessary to add a tag <code>&lt;BR&gt;</code> tags for each new line you are going to add. Otherwise, the message will look like a single line of text without format.";
 $MSG['30_0062'] = "Please enter at least 4 characters";
 $MSG['30_0063'] = "Buy it now only?";
 $MSG['30_0064'] = "Activate <b>Buy it now only</b> auctions?";
 $MSG['30_0065'] = "Enabling the <b>Buy it now only</b> option you'll give your sellers the ability to set up auctions for which it will not be possible to place any bid, but only use the <b>Buy it now</b> feature (fixed price auctions).<br><b>Note:</b> the <b>Buy it now only</b> option will only take effect if <b>Buy it now</b> is enabled.";
 $MSG['30_0066'] = "Buy it now only settings updates";
-$MSG['30_0067'] = "<B>Buy it now only</B> auction";
+$MSG['30_0067'] = "<b>Buy it now only</b> auction";
 $MSG['30_0069'] = "Seller: edit this auction";
 $MSG['30_0070'] = "Search only in this category";
 $MSG['30_0080'] = "Payment Options";
@@ -1516,8 +1516,8 @@ $MSG['30_0085'] = "Include winners' address in e-mails?";
 $MSG['30_0086'] = "Address: ";
 $MSG['30_0087'] = "Are you sure you want to process the selected auctions?";
 $MSG['30_0098'] = "&nbsp; = Outbid";
-$MSG['30_0100'] = "<B>Buy it now!</B> auctions";
-$MSG['30_0101'] = "<B>Buy it now only</B> auctions";
+$MSG['30_0100'] = "<b>Buy it now!</b> auctions";
+$MSG['30_0101'] = "<b>Buy it now only</b> auctions";
 $MSG['30_0102'] = "Check/Uncheck All";
 $MSG['30_0176'] = "View Winners";
 $MSG['30_0177'] = "Auction ended";

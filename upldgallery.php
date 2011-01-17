@@ -47,7 +47,7 @@ function resizeThumbnailImage($thumb_image_name, $image, $width, $height, $start
 	$newImageHeight = ceil($height * $scale);
 	$newImage = imagecreatetruecolor($newImageWidth, $newImageHeight);
 	// make the background white
-	$bg = imagecolorallocate($im, 0, 0, 0);
+	$bg = imagecolorallocate($newImage, 0, 0, 0);
 	imagefill($newImage, 0, 0, $bg);
 	switch ($imageType)
 	{

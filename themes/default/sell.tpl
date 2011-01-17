@@ -86,6 +86,16 @@ $(document).ready(function(){
 		}
 	});
 	$("#bn").blur(function(){
+		bn();
+	});
+	$("#bn_yes").click(function(){
+		bn();
+	});
+	$("#bn_no").click(function(){
+		$("#bn").val(0);
+		bn();
+	});
+	function bn(){
 		if (bn != parseInt($("#bn").val())){
 			if (parseInt($("#bn").val()) > 0)
 				updatefee(buyout_fee);
@@ -93,8 +103,18 @@ $(document).ready(function(){
 				updatefee(buyout_fee * -1);
 			bn = parseInt($("#bn").val());
 		}
-	});
+	}
 	$("#reserve_price").blur(function(){
+		reserve();
+	});
+	$("#with_reserve_yes").click(function(){
+		reserve();
+	});
+	$("#with_reserve_no").click(function(){
+		$("#reserve_price").val(0);
+		reserve();
+	});
+	function reserve(){
 		if (rp != parseInt($("#reserve_price").val())){
 			if (parseInt($("#reserve_price").val()) > 0)
 				updatefee(rp_fee);
@@ -102,7 +122,7 @@ $(document).ready(function(){
 				updatefee(rp_fee * -1);
 			rp = parseInt($("#reserve_price").val());
 		}
-	});
+	}
 	$("#is_featured").click(function(){
 		if ($('#is_featured').is(':checked'))
 			updatefee(hpfeat_fee);

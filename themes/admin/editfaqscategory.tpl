@@ -12,16 +12,16 @@
 					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
                     <table width="98%" cellpadding="0" cellspacing="0" class="blank">
-<!-- BEGIN langs -->
+<!-- BEGIN flangs -->
                     <tr>
-	<!-- IF langs.S_FIRST_ROW -->
+	<!-- IF flangs.S_FIRST_ROW -->
                         <td width="20%">{L_5284}</td>
     <!-- ELSE -->
     					<td>&nbsp;</td>
     <!-- ENDIF -->
-                        <td width="5%"><img src="{SITEURL}includes/flags/{langs.LANGUAGE}.gif"></td>
+                        <td width="5%"><img src="{SITEURL}includes/flags/{flangs.LANGUAGE}.gif"></td>
                         <td width="75%" valign="top">
-                            <input type="text" name="category[{langs.LANGUAGE}]" size="50" maxlength="150" value="{langs.TRANSLATION}">
+                            <input type="text" name="category[{flangs.LANGUAGE}]" size="50" maxlength="150" value="{flangs.TRANSLATION}">
                         </td>
                     </tr>
 <!-- END langs -->

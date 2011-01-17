@@ -54,7 +54,7 @@ if ($myversion == '0.8.4')
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '0.8.5';";
 }
 
-if ($myversion == '0.8.5')
+if ($myversion == '0.8.5' || $myversion == '0.8.5 P1')
 {
 	//0.8.5 to 1.0.0
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP uniqueseller;";
@@ -116,5 +116,11 @@ if ($myversion == '0.8.5')
 		`year` INT(4) NOT NULL
 	)";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.0'";
+}
+
+if ($myversion == '1.0.0')
+{
+	//1.0.0 to 1.0.1
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.1';";
 }
 ?>

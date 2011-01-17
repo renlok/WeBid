@@ -62,7 +62,7 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_current_fee']		= $RELISTEDAUCTION['current_fee'];
 		if ($RELISTEDAUCTION['bn_only'] == 'n')
 		{
-			$_SESSION['SELL_minimum_bid'] = floatval($RELISTEDAUCTION['minimum_bid']);
+			$_SESSION['SELL_minimum_bid'] = $system->print_money_nosymbol($RELISTEDAUCTION['minimum_bid']);
 		}
 		else
 		{
@@ -71,7 +71,7 @@ if (!isset($_POST['action'])) // already closed auctions
 
 		if (floatval($RELISTEDAUCTION['reserve_price']) > 0)
 		{
-			$_SESSION['SELL_reserve_price'] = floatval($RELISTEDAUCTION['reserve_price']);
+			$_SESSION['SELL_reserve_price'] = $system->print_money_nosymbol($RELISTEDAUCTION['reserve_price']);
 			$_SESSION['SELL_with_reserve'] 	= 'yes';
 		}
 		else
@@ -85,7 +85,7 @@ if (!isset($_POST['action'])) // already closed auctions
 
 		if (floatval($RELISTEDAUCTION['buy_now']) > 0)
 		{
-			$_SESSION['SELL_buy_now_price'] = floatval($RELISTEDAUCTION['buy_now']);
+			$_SESSION['SELL_buy_now_price'] = $system->print_money_nosymbol($RELISTEDAUCTION['buy_now']);
 			$_SESSION['SELL_with_buy_now']	= 'yes';
 		}
 		else
@@ -98,14 +98,14 @@ if (!isset($_POST['action'])) // already closed auctions
 		if (floatval($RELISTEDAUCTION['increment']) > 0)
 		{
 			$_SESSION['SELL_increment']			= 2;
-			$_SESSION['SELL_customincrement']	= $RELISTEDAUCTION['increment'];
+			$_SESSION['SELL_customincrement']	= $system->print_money_nosymbol($RELISTEDAUCTION['increment']);
 		}
 		else
 		{
 			$_SESSION['SELL_increment']			= 1;
 			$_SESSION['SELL_customincrement']	= 0;
 		}
-		$_SESSION['SELL_shipping_cost']	 = $RELISTEDAUCTION['shipping_cost'];
+		$_SESSION['SELL_shipping_cost']	 = $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost']);
 		$_SESSION['SELL_shipping']		 = $RELISTEDAUCTION['shipping'];
 		$_SESSION['SELL_shipping_terms'] = $RELISTEDAUCTION['shipping_terms'];
 		$_SESSION['SELL_payment']		 = explode(', ', $RELISTEDAUCTION['payment']);

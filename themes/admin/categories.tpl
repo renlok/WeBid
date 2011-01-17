@@ -45,7 +45,7 @@
 <!-- END cats -->
                         <tr>
                             <td colspan="4" align="right">{L_30_0102}</td>
-                            <td><input type="checkbox" class="selectall" name="delete"></td>
+                            <td><input type="checkbox" class="selectall" value="delete"></td>
                         </tr>
                         <tr>
                             <td>{L_394}</td>

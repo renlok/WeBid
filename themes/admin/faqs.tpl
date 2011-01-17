@@ -28,7 +28,7 @@
 <!-- END cats -->
                     <tr>
                         <td align="right">{L_30_0102}</td>
-                        <td align="center"><input type="checkbox" class="selectall" name="delete"></td>
+                        <td align="center"><input type="checkbox" class="selectall" value="delete"></td>
                     </tr>
                     </table>
                     <input type="hidden" name="action" value="delete">

@@ -461,5 +461,22 @@ class MPTTcategories
 		}
 		return implode(', ', $data);
 	}
+
+	function check_category($id)
+	{
+		global $system, $DBPrefix;
+
+		$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $id . " LIMIT 1";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		if (mysql_num_rows($res) > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
 ?>

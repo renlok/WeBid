@@ -18,15 +18,10 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (!($handle = @fopen('http://www.webidsupport.com/version.txt', 'r')))
+if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt')))
 {
 	$ERR = $ERR_25_0002;
 	$realversion = 'Unknown';
-}
-else
-{
-	$realversion = fread($handle, 5);
-	fclose($handle);
 }
 
 if ($realversion != $system->SETTINGS['version'])

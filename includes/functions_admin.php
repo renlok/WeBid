@@ -93,6 +93,27 @@ if (!defined('AdminFuncCall'))
 		return $hash;
 	}
 
+	function load_file_from_url($url)
+	{
+		if (($handle = @fopen($url, 'r')) !== false)
+		{
+			$str = fread($handle, 5);
+			fclose($handle);
+		}
+		elseif (function_exists('curl_init') && function_exists('curl_setopt')
+			&& function_exists('curl_exec') && function_exists('curl_close'))
+		{
+			$curl = curl_init();
+			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_REFERER, $system->SETTINGS['siteurl']);
+			$str = curl_exec($curl);
+			curl_close($curl);
+			return $str;
+		}
+		return false;
+	}
+
 	define('AdminFuncCall', 1);
 }
 ?>

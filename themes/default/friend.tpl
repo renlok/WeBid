@@ -18,7 +18,7 @@
 	<!-- ENDIF -->
 		<table width="90%" cellpadding="4" cellspacing="0">
 		<tr> 
-			<td align="right"><b>{L_017}</b></td>
+			<td align="right" width="45%"><b>{L_017}</b></td>
 			<td align="left">{TITLE}</td>
 		</tr>
 		<tr> 
@@ -45,8 +45,11 @@
 		<tr> 
 			<td align="right" valign="top"><b>{L_144}</b></td>
 			<td align="left">
-				<textarea name="sender_comment" cols="23" rows="6">{COMMENT}</textarea> 
-				<br> <br> 
+				<textarea name="sender_comment" cols="30" rows="6">{COMMENT}</textarea>
+			</td>
+		</tr>
+		<tr> 
+			<td align="center" colspan="2">
 				<input type="hidden" name="id" value="{ID}"> 
 				<input type="hidden" name="item_title" value="{TITLE}"> 
 				<input type="hidden" name="action" value="sendmail">

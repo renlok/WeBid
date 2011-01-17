@@ -37,7 +37,7 @@
 <!-- END increments -->
                         <tr>
                             <td colspan="4" align="right">{L_30_0102}</td>
-                            <td align="center"><input type="checkbox" class="selectall" name="delete"></td>
+                            <td align="center"><input type="checkbox" class="selectall" value="delete"></td>
                         </tr>
                         <tr>
                             <td>{L_518}</td>

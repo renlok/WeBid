@@ -42,7 +42,7 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $num_auctions = mysql_result($res, 0, 'auctions');
 
 // Handle pagination
-if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
+if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '' || $_GET['PAGE'] < 1)
 {
 	$OFFSET = 0;
 	$PAGE = 1;

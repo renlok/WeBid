@@ -26,15 +26,16 @@ if (!$user->logged_in)
 // Auction id is present, now update table
 if (isset($_GET['add']) && !empty($_GET['add']))
 {
+	$add_id = intval($_GET['add']);
 	// Check if this item is not already added
 	$items = trim($user->user_data['item_watch']);
-	$match = strstr($items, $_GET['add']);
+	$match = strstr($items, $add_id);
 
 	if (!$match)
 	{
-		$item_watch = trim($items . ' ' . $_GET['add']);
+		$item_watch = trim($items . ' ' . $add_id);
 		$item_watch_new = trim($item_watch);
-		$query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . addslashes($item_watch_new) . "' WHERE id = " . $user->user_data['id'];
+		$query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . $item_watch_new . "' WHERE id = " . $user->user_data['id'];
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$user->user_data['item_watch'] = $item_watch_new;
 	}

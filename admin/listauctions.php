@@ -57,7 +57,7 @@ $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_nam
 		WHERE a.closed = 0 " . $user_sql . " ORDER BY nick LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$bg = '';
+$username = $bg = '';
 while ($row = mysql_fetch_assoc($res))
 {
 	$template->assign_block_vars('auctions', array(

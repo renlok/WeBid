@@ -12,6 +12,9 @@
 					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
 					<table width="98%" cellspacing="0">
+                    <tr>
+                        <td colspan="3"><a href="newfaq.php">{L_5231}</a></td>
+                    </tr>
 <!-- BEGIN cats -->
                     <tr>
                         <th width="86%">{cats.CAT}</th>

@@ -48,7 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
-				currency = '" . addslashes($CURRENCIES_SYMBOLS[$_POST['currency']]) . "',
+				currency = '" . $system->cleanvars($CURRENCIES_SYMBOLS[$_POST['currency']]) . "',
 				moneyformat = " . intval($_POST['moneyformat']) . ",
 				moneydecimals = " . intval($_POST['moneydecimals']) . ",
 				moneysymbol = " . intval($_POST['moneysymbol']);

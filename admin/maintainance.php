@@ -18,13 +18,15 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $main_path . "ckeditor/ckeditor.php";
+include $include_path . 'HTMLPurifier/HTMLPurifier.auto.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Check if the specified user exists
-	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $_POST['superuser'] . "'";
+	$superuser = $system->cleanvars($_POST['superuser']);
+	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $superuser . "'";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($res) == 0 && $_POST['active'] == 'y')
@@ -33,10 +35,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
+		$conf = HTMLPurifier_Config::createDefault();
+		$conf->set('Core', 'Encoding', $CHARSET); // replace with your encoding
+		$conf->set('HTML', 'Doctype', 'HTML 4.01 Transitional'); // replace with your doctype
+		$purifier = new HTMLPurifier($conf);
+
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "maintainance SET
-				superuser = '" . $_POST['superuser'] . "',
-				maintainancetext = '" . addslashes($_POST['maintainancetext']) . "',
+				superuser = '" . $superuser . "',
+				maintainancetext = '" . $purifier->purify($_POST['maintainancetext']) . "',
 				active = '" . $_POST['active'] . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['_0005'];

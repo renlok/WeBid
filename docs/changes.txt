@@ -1,20 +1,15 @@
-1.0.1 - 17/01/11
+1.0.2 - 17/01/11
 -----------------------------
-- Improved the version checker now if the server has allow_url_fopen disabled it will try to open the file with cURL (thanks John)
-- Fixed an error that could would effect transparent PNGs in the gallery uploader (thanks John)
-- Fixed a bug in the admin maintance page when it throws an error the values entered are now returned
-- Fixed accounts.php user data will now be stored correctly
-- Fixed FAQ category edit page where a black textbox appeared not linked to any language
-- Fixed a query in messages.inc.php
-- Fixed the admin cateogires page
-- Correctly renamed robot.txt to robots.txt
-- Fixed some remaining bugs related to the 1.000,00 currency format
-- Fixed an error in the send_email EN language file (thanks shlandau)
-- Fixed monetbookers gateway issues
-- Fixed forgot password error message
-- Fixed sell page javascript where it wouldn't remove the buy now or reserve fees after adding a value then disabling it
-- Fixed the send to a friend captcha
-- Fixed the buy it now only auctions with more than one quantity (thanks dragonflai)
-- Updated messages.inc.php (EN) and edited all the HTML to be valid
+- Fixed cron error when an auction closes without any bids (Bug #213)
+- Fixed a division by 0 error in profile.php
+- Fixed the delete faq bug (Bug #232)
+- Fixed the auction count in closed auctions page
+- Fixed profile invalid user check
+- Fixed bug where shipping price wasnt shown for buy it now only items (Bug #229)
+- Added an error check to the get_bread_crumbs and get_children_list functions to stop the errors
+- imgAreaSelect jQuery plugin upgraded to v0.9.4
+- jQuery JavaScript Library upgraded to v1.5.2
+- Updated install file
+- Added HTML purifier to sell description, maintanence mode text and error text
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

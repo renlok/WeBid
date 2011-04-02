@@ -158,11 +158,11 @@ $(document).ready(function() {
 						  <td width="50%" align="left">{L_116}: </td>
 						  <td align="left" valign="middle">{MAXBID}<!-- IF B_HASRESERVE -->&nbsp;<span class="smallspan">{L_514}</span><!-- ENDIF --></td>
 						</tr>
+<!-- ENDIF -->
 						<tr>
 						  <td width="50%" align="left">{L_023}: </td>
 						  <td align="left">{SHIPPING_COST}</td>
 						</tr>
-<!-- ENDIF -->
 <!-- IF B_BUY_NOW -->
 						<tr>
 						  <td width="50%" align="left">{L_496}:</td>

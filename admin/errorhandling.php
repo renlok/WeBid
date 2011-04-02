@@ -18,14 +18,20 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $main_path . 'ckeditor/ckeditor.php';
+include $include_path . 'HTMLPurifier/HTMLPurifier.auto.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	$conf = HTMLPurifier_Config::createDefault();
+	$conf->set('Core', 'Encoding', $CHARSET); // replace with your encoding
+	$conf->set('HTML', 'Doctype', 'HTML 4.01 Transitional'); // replace with your doctype
+	$purifier = new HTMLPurifier($conf);
+
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			  errortext = '" . addslashes($_POST['errortext']) . "'";
+			  errortext = '" . $purifier->purify($_POST['errortext']) . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['errortext'] = $_POST['errortext'];
 	$ERR = $MSG['413'];

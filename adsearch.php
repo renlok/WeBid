@@ -89,7 +89,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 	if (!empty($_SESSION['advs']['zipcode']))
 	{
 		$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
-		$wher .= "(u.zip LIKE '%" . addslashes($_SESSION['advs']['zipcode']) . "%') AND ";
+		$wher .= "(u.zip LIKE '%" . $system->cleanvars($_SESSION['advs']['zipcode']) . "%') AND ";
 	}
 
 	if (!isset($_SESSION['advs']['closed']))
@@ -149,11 +149,11 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 			{
 				if (!$pri)
 				{
-					$ora = "((au.payment LIKE '%" . addslashes($val) . "%')";
+					$ora = "((au.payment LIKE '%" . $system->cleanvars($val) . "%')";
 				}
 				else
 				{
-					$ora .= " OR (au.payment LIKE '%" . addslashes($val) . "%') AND ";
+					$ora .= " OR (au.payment LIKE '%" . $system->cleanvars($val) . "%') AND ";
 				}
 				$pri = true;
 			}
@@ -161,7 +161,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		}
 		else
 		{
-			$ora = "(au.payment LIKE '%" . addslashes($_SESSION['advs']['payment'][0]) . "%') AND ";
+			$ora = "(au.payment LIKE '%" . $system->cleanvars($_SESSION['advs']['payment'][0]) . "%') AND ";
 		}
 	}
 

@@ -372,6 +372,11 @@ class MPTTcategories
 	function get_children_list($left_id, $right_id, $return = 'cat_id')
 	{
 		global $system, $DBPrefix;
+
+		if (empty($left_id) || empty($right_id))
+		{
+			return array();
+		}
 		$query = "SELECT " . $return . " FROM " . $DBPrefix . "categories WHERE left_id > " . $left_id . " AND right_id < " . $right_id;
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -433,6 +438,11 @@ class MPTTcategories
 	function get_bread_crumbs($left_id, $right_id)
 	{
 		global $system, $DBPrefix;
+
+		if (empty($left_id) || empty($right_id))
+		{
+			return array();
+		}
 		// return an array of all parent nodes
 		$query = "SELECT cat_name, cat_id FROM " . $DBPrefix . "categories WHERE left_id <= " . $left_id . " AND right_id >= " . $right_id . " ORDER BY left_id ASC";
 		$res = mysql_query($query);

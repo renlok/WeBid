@@ -212,6 +212,7 @@ else
 	browseItems($res, $feat_res, $TOTALAUCTIONS, 'browse.php', 'id=' . $id);
 
 	$template->assign_vars(array(
+			'ID' => $id,
 			'TOP_HTML' => $TPL_main_value,
 			'CAT_STRING' => $TPL_categories_string,
 			'NUM_AUCTIONS' => $TOTALAUCTIONS

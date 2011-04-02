@@ -208,7 +208,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 			if (strlen($_POST['TPL_password']) > 0)
 			{
-				$query .= ", password = '" . md5($MD5_PREFIX . addslashes($_POST['TPL_password'])) . "'";
+				$query .= ", password = '" . md5($MD5_PREFIX . $_POST['TPL_password']) . "'";
 			}
 
 			$query .= " WHERE id = " . $user->user_data['id'];

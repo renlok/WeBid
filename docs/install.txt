@@ -41,13 +41,15 @@ Minimum Web Server requirements for proper operation of the WeBid Auction Script
 
 - Apache web server 
 
-- PHP 4.0.X (safe_mode=OFF) or PHP 5.X (Recommended) with either having the following configuration:
+- PHP 5.X with either having the following configuration:
 		
 	> no open_basedir restriction 
 
 	> dl() must be enabled 
 
 	> if uses GD Libraries support, the GD Libraries version is 2.0 or greater. 
+	
+	> BCMath enabled
 
 
 - MySQL Database 4.1 or higher 
@@ -122,9 +124,9 @@ The Install.php script included with WeBid will:
 
   - CHMOD File Permissions that are necessary to allow for the proper operation of the WeBid Auction Script are as follows: 
 
-	> /includes/config.inc.php 777 
+	> /includes/config.inc.php.new 777 
 
- 	  NOTE: After install is complete, change config.inc.php to CHMOD 644.
+ 	  NOTE: After install is complete, change config.inc.php to CHMOD 644 (the installer will rename the file).
 
 	> /includes/countries.inc.php  777
 
@@ -136,9 +138,11 @@ The Install.php script included with WeBid will:
 		
   - CHMOD Directory Permissions necessary are as follows:
 
+	> /cache/ 777
+
 	> /uploaded/ 777
 
-	> /uploaded/cache 777
+	> /uploaded/cache/ 777
 
 
 6. Executing the WeBid Installation script using your internet browser: 
@@ -251,7 +255,7 @@ The Install.php script included with WeBid will:
 		It is recommended that only users with prior experience modifying PHP code files should 
                 atempt to add additional language files to WeBid.
 
-	> English is the default language for WeBid using the language files **.EN.**.php
+	> English is the default language for WeBid using the EN language folder
 
 	> Review additional information in the AdminCP -> Preferences -> Multilingual support. 
 

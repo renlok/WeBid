@@ -230,9 +230,9 @@ while ($Auction = mysql_fetch_array($result)) // loop auctions
 			// Calculate end time
 			$_ENDS = $NOW + $Auction['duration'] * 24 * 60 * 60;
 
-			$query = "DELETE " . $DBPrefix . "bids WHERE auction = " . $Auction['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			$query = "DELETE " . $DBPrefix . "proxybid WHERE itemid = " . $Auction['id'];
+			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $Auction['id']; 
+			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__); 
+			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $Auction['id'];
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$query = "UPDATE " . $DBPrefix . "auctions SET starts = '" . $NOW . "', ends = '" . $_ENDS . "',
 					current_bid = 0, num_bids = 0, relisted = relisted + 1 WHERE id = " . $Auction['id'];

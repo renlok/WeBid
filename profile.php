@@ -41,8 +41,9 @@ if (!empty($_GET['user_id']))
 	$system->check_mysql($res, $sql, __LINE__, __FILE__);
 }
 
-if ($arr = mysql_fetch_array($res))
+if (@mysql_num_rows($res) == 1)
 {
+	$arr = mysql_fetch_assoc($res);
 	$TPL_user_id = $arr['id'];
 	$TPL_rate_ratio_value = '';
 	foreach ($memtypesarr as $k => $l)
@@ -100,6 +101,7 @@ if ($arr = mysql_fetch_array($res))
 
 	$feedback_rate = ($arr['rate_sum'] == 0) ? 1 : $arr['rate_sum'];
 	$feedback_rate = ($feedback_rate < 0) ? $feedback_rate * - 1 : $feedback_rate;
+	$total_fb = ($total_fb < 1) ? 1 : $total_fb;
 	$variables = array(
 		'RATE_VAL' => $TPL_rate_ratio_value,
 		'NUM_FB' => $arr['rate_num'],

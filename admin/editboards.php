@@ -37,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$query = "UPDATE " . $DBPrefix . "community
-				  SET name = '" . addslashes($_POST['name']) . "',
+				  SET name = '" . $system->cleanvars($_POST['name']) . "',
 				  msgstoshow = " . intval($_POST['msgstoshow']) . ",
 				  active = " . intval($_POST['active']) . "
 				  WHERE id = " . intval($_POST['id']);

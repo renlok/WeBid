@@ -23,16 +23,16 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			 descriptiontag = '" . addslashes($_POST['descriptiontag']) . "',
-			 keywordstag = '" . addslashes($_POST['keywordstag']) . "'";
+			 descriptiontag = '" . $system->cleanvars($_POST['descriptiontag']) . "',
+			 keywordstag = '" . $system->cleanvars($_POST['keywordstag']) . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$ERR = $MSG['25_0185'];
 	$system->SETTINGS['descriptiontag'] = $_POST['descriptiontag'];
 	$system->SETTINGS['keywordstag'] = $_POST['keywordstag'];
 }
 
-loadblock($MSG['25_0180'], $MSG['25_0182'], 'textarea', 'descriptiontag', stripslashes($system->SETTINGS['descriptiontag']));
-loadblock($MSG['25_0181'], $MSG['25_0184'], 'textarea', 'keywordstag', stripslashes($system->SETTINGS['keywordstag']));
+loadblock($MSG['25_0180'], $MSG['25_0182'], 'textarea', 'descriptiontag', $system->SETTINGS['descriptiontag']);
+loadblock($MSG['25_0181'], $MSG['25_0184'], 'textarea', 'keywordstag', $system->SETTINGS['keywordstag']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

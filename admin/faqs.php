@@ -18,16 +18,15 @@ include '../includes/common.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-//Default for error message (blank)
 unset($ERR);
 
 if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
-	foreach ($_POST['delete'] as $k => $v)
+	foreach ($_POST['delete'] as $val)
 	{
-		$query = "DELETE FROM " . $DBPrefix . "faqs WHERE id = " . $k;
+		$query = "DELETE FROM " . $DBPrefix . "faqs WHERE id = " . $val;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$query = "DELETE FROM " . $DBPrefix . "faqs_translated WHERE id = " . $k;
+		$query = "DELETE FROM " . $DBPrefix . "faqs_translated WHERE id = " . $val;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 }

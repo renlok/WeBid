@@ -66,7 +66,7 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 			if (isset($_POST['rememberme']))
 			{
 				$remember_key = md5(time());
-				$query = "INSERT INTO " . $DBPrefix . "rememberme VALUES (" . $user_data['id'] . ", '" . addslashes($remember_key) . "')";
+				$query = "INSERT INTO " . $DBPrefix . "rememberme VALUES (" . $user_data['id'] . ", '" . $remember_key . "')";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				setcookie('WEBID_RM_ID', $remember_key, time() + (3600 * 24 * 365));
 			}

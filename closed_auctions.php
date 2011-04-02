@@ -35,7 +35,7 @@ $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
 	  AND closed = 1";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALAUCTIONS = mysql_result($result, 0, 'auctions');
+$TOTALAUCTIONS = mysql_result($res, 0, 'auctions');
 
 // Handle pagination
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1 || $_GET['PAGE'] == '')

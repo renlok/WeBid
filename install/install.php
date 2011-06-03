@@ -74,6 +74,7 @@ switch($step)
 		$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
 		$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
 		$content .= '$main_path	= "' . $path . '";' . "\n";
+		$content .= '$MD5_PREFIX = "' . md5(microtime() . rand(0,50)) . '";' . "\n";
 		$content .= '?>';
 		$output = makeconfigfile($content, $path);
 		if ($output)

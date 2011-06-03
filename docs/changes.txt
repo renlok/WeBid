@@ -1,15 +1,10 @@
-1.0.2 - 17/01/11
+1.0.3 - 03/06/11
 -----------------------------
-- Fixed cron error when an auction closes without any bids (Bug #213)
-- Fixed a division by 0 error in profile.php
-- Fixed the delete faq bug (Bug #232)
-- Fixed the auction count in closed auctions page
-- Fixed profile invalid user check
-- Fixed bug where shipping price wasnt shown for buy it now only items (Bug #229)
-- Added an error check to the get_bread_crumbs and get_children_list functions to stop the errors
-- imgAreaSelect jQuery plugin upgraded to v0.9.4
-- jQuery JavaScript Library upgraded to v1.5.2
-- Updated install file
-- Added HTML purifier to sell description, maintanence mode text and error text
+- Updated PHP Browser dectection script to 5.3.16
+- Updated jQuery to 1.6.1
+- Updated imgAreaSelect jQuery plugin to 0.9.6
+- View FAQ ancors (Bug #269)
+- Made the confirm link more secure (Thanks to Lunkwill) (Bug #277)
+- Changed the MD5_PREFIX so its randomly generated on install
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

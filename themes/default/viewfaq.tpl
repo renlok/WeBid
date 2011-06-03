@@ -3,7 +3,7 @@
 <html lang="en" dir="{DOCDIR}">
 <head>
 <title>{PAGE_TITLE}</title>
-<link rel='stylesheet' type='text/css' href='{SITEURL}themes/default/style.css'>
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/default/style.css">
 <meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
 </head>
 <body>
@@ -31,11 +31,11 @@
 			<h1>{FNAME}</h1>
 			<ul>
 <!-- BEGIN faqs -->  
-				<li><a href="#{faqs.ID}">{faqs.Q}</a></li>
+				<li><a href="#faq{faqs.ID}">{faqs.Q}</a></li>
 <!-- END faqs -->
 			</ul>
 <!-- BEGIN faqs -->
-            <a name="{faqs.ID}"></a>
+            <a name="faq{faqs.ID}"></a>
             <h1>{faqs.Q}</h1>
             <p>{faqs.A}</p>
             <p style="text-align:right"><a href="#top">{L_5245}</a></p>

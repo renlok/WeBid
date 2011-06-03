@@ -23,7 +23,7 @@ if (isset($_GET['id']) && !isset($_POST['action']))
 	{
 		$errmsg = $ERR_025;
 	}
-	elseif (!isset($_GET['hash']) || md5($system->uncleanvars(mysql_result($result, 0, 'nick'))) != $_GET['hash'])
+	elseif (!isset($_GET['hash']) || md5($MD5_PREFIX . $system->uncleanvars(mysql_result($result, 0, 'nick'))) != $_GET['hash'])
 	{
 		$errmsg = $ERR_033;
 	}
@@ -57,7 +57,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']);
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (md5(mysql_result($res, 0, 'nick')) == $_POST['hash'])
+	if (md5($MD5_PREFIX . mysql_result($res, 0, 'nick')) == $_POST['hash'])
 	{
 		// User wants to confirm his/her registration
 		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . intval($_POST['id']) . " AND suspended = 8";
@@ -106,7 +106,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['250'])
 	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']);
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (md5(mysql_result($res, 0, 'nick')) == $_POST['hash'])
+	if (md5($MD5_PREFIX . mysql_result($res, 0, 'nick')) == $_POST['hash'])
 	{
 		// User doesn't want to confirm hid/her registration
 		$query = "DELETE FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']) . " AND suspended = 8";

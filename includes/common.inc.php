@@ -24,7 +24,7 @@ if(!@include('config.inc.php'))
 	exit;
 }
 
-$MD5_PREFIX = 'fhQYBpS5FNs4';
+$MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didnt set a code
 $include_path = $main_path . 'includes/'; 
 $uploaded_path = 'uploaded/';
 $upload_path = $main_path . $uploaded_path; 

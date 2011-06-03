@@ -19,7 +19,7 @@ $emailer->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ADMINMAIL' => $system->SETTINGS['adminmail'],
-		'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($TPL_nick_hidden),
+		'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($MD5_PREFIX . $TPL_nick_hidden),
 		'C_NAME' => $TPL_name_hidden
 		));
 $emailer->email_uid = $TPL_id_hidden;

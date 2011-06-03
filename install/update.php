@@ -64,6 +64,7 @@ if ($step == 1)
 		die('<p>Cannot select database ' . $_POST['DBName'] . '. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
 	}
 	$toecho = '<p><b>Step 1:</b> Writting config file...</p>';
+	$toecho .= '<p>As you are missing your old random security code all your users will have to reset their passwords after this update</p>';
 	$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
 	// generate config file
 	$content = '<?php' . "\n";
@@ -73,6 +74,7 @@ if ($step == 1)
 	$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
 	$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
 	$content .= '$main_path	= "' . $path . '";' . "\n";
+	$content .= '$MD5_PREFIX = "' . md5(microtime() . rand(0,50)) . '";' . "\n";
 	$content .= '?>';
 	$output = makeconfigfile($content, $path);
 	if ($output)

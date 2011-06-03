@@ -30,10 +30,9 @@ $emailer->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ADMINEMAIL' => $system->SETTINGS['adminmail'],
-		'CONFIRMATION_PAGE' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($TPL_nick_hidden),
+		'CONFIRMATION_PAGE' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($MD5_PREFIX . $TPL_nick_hidden),
 		'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo']
 		));
 $emailer->email_uid = $TPL_id_hidden;
 $emailer->email_sender(array($TPL_email_hidden, $system->SETTINGS['adminmail']), 'user_needapproval.inc.php', $system->SETTINGS['sitename']. ' '.$MSG['098']);
-
 ?>

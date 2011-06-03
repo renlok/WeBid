@@ -34,7 +34,7 @@ if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
 				'SITENAME' => $system->SETTINGS['sitename'],
 				'SITEURL' => $system->SETTINGS['siteurl'],
 				'ADMINMAIL' => $system->SETTINGS['adminmail'],
-				'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $USER['id'] . '&hash=' . md5($USER['nick']),
+				'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $USER['id'] . '&hash=' . md5($MD5_PREFIX . $USER['nick']),
 				'C_NAME' => $USER['name']
 				));
 		$emailer->email_uid = $USER['id'];

@@ -6,5 +6,6 @@
 - View FAQ ancors (Bug #269)
 - Made the confirm link more secure (Thanks to Lunkwill) (Bug #277)
 - Changed the MD5_PREFIX so its randomly generated on install
+- Changed the currency converter to pull data from google as its more reliable (Thanks to John) (Bug #194)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

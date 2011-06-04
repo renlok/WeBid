@@ -114,7 +114,7 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 }
 
 $template->assign_vars(array(
-		'L_ERROR' => (isset($ERR)) ? $ERR : '',
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'USER' => (isset($_POST['username'])) ? $_POST['username'] : ''
 		));
 

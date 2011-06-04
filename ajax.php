@@ -11,21 +11,14 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 include 'includes/common.inc.php';
+include $include_path . 'functions_ajax.php';
 
-$template->assign_vars(array(
-		'SITENAME' => $system->SETTINGS['sitename'],
-		'THEME' => $system->SETTINGS['theme'],
-		'ERROR' => (!isset($errormsg)) ? '' : $errormsg,
-		'CONVERSION' => $conversion,
-		'AMOUNT' => (isset($_POST['amount'])) ? $_POST['amount'] : ((isset($_GET['AMOUNT'])) ? $_GET['AMOUNT'] : 0),
-
-		'B_CONVERSION' => (isset($_POST['action']) && $_POST['action'] == 'convert')
-		));
-
-$template->set_filenames(array(
-		'body' => 'converter.tpl'
-		));
-$template->display('body');
+switch ($_GET)
+{
+	case 'converter':
+		converter_call();
+		break;
+}
 ?>

@@ -14,71 +14,47 @@
 
 if (!defined('InWeBid')) exit();
 
-include($include_path . 'nusoap.php');
-include($include_path . 'currencies.php');
+include $include_path . 'currencies.php';
 
 function CurrenciesList()
 {
-	if (!isset($_SESSION['curlist']))
+	global $system, $DBPrefix;
+
+	$query = "SELECT * FROM " . $DBPrefix . "rates";
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$CURRENCIES = array();
+	while ($row = mysql_fetch_assoc($res))
 	{
-		$s = new nusoap_client('http://webservices.lb.lt/ExchangeRates/ExchangeRates.asmx/getListOfCurrencies');
-		$result= $s->call('getListOfCurrencies',array(),'','http://webservices.lb.lt/ExchangeRates/getListOfCurrencies');
-		$parser = xml_parser_create();
-		xml_parser_set_option($parser,XML_OPTION_CASE_FOLDING,0);
-		xml_parser_set_option($parser,XML_OPTION_SKIP_WHITE,1);
-		xml_parse_into_struct($parser,$s->responseData,$values,$tags);
-		xml_parser_free($parser);
-		$CURRENCIES = array();
-		foreach ($values as $k => $v)
-		{
-			if ($v['tag'] == 'currency') $cur = $v['value'];
-			if ($v['tag'] == 'description' && $v['attributes']['lang'] == 'en')
-			{
-				$CURRENCIES[$cur] = $v['value'];
-			}
-		}
-		$_SESSION['curlist'] = $CURRENCIES;
-	}
-	else
-	{
-		$CURRENCIES = $_SESSION['curlist'];
+		$CURRENCIES[$row['symbol']] = $row['valuta'];
 	}
 	return $CURRENCIES;
 }
 
 function ConvertCurrency($FROM, $INTO, $AMOUNT)
 {
-	global $include_path, $conversionarray;
+	global $conversionarray;
 
-	$params1 = array(
-		'FromCurrency' 	=> $FROM,
-		'ToCurrency' 	=> $INTO
+	$data = array(
+		'amount'	=> $AMOUNT,
+		'from' 		=> $FROM,
+		'to' 		=> $INTO
 		);
 	if ($FROM == $INTO) return $AMOUNT;
 
-	$rate = findconversionrate($FROM, $INTO);
+	$CURRENCIES = CurrenciesList();
+
+	$rate = findconversionrate($from, $to);
 	if ($rate == 0)
 	{
-		$sclient = new nusoap_client($include_path . 'CurrencyConverter.wdsl', 'wsdl');
-		$p = $sclient->getProxy();
-		$ratio = $p->ConversionRate($params1);
-		if (is_array($ratio))
-		{
-			$ratio = googleconvert($AMOUNT, $FROM, $INTO);
-			if ($ratio == false)
-			{
-				return false;
-			}
-		}
-		$VAL = floatval($AMOUNT);
-		$conversionarray[1][] = array('from' => $FROM, 'to' => $INTO, 'rate' => $ratio);
+		$conversion = googleconvert($AMOUNT, $FROM, $INTO);
+		$conversionarray[1][] = array('from' => $FROM, 'to' => $INTO, 'rate' => $conversion);
 		buildcache($conversionarray[1]);
-		return $VAL * $ratio;
+		return $AMOUNT * $conversion;
 	}
 	else
 	{
-		$VAL = floatval($AMOUNT);
-		return $VAL * $rate;
+		return $AMOUNT * $rate;
 	}
 }
 
@@ -91,7 +67,8 @@ function buildcache($newaarray)
 	$output.= "\$conversionarray[] = '" . time() . "';\n";
 	$output.= "\$conversionarray[] = array(\n";
 
-	for ($i = 0; $i < count($newaarray); $i++){
+	for ($i = 0; $i < count($newaarray); $i++)
+	{
 		$output .= "\t" . "array('from' => '" . $newaarray[$i]['from'] . "', 'to' => '" . $newaarray[$i]['to'] . "', 'rate' => '" . $newaarray[$i]['rate'] . "')";
 		if ($i < (count($newaarray) - 1))
 		{
@@ -129,19 +106,16 @@ function findconversionrate($FROM, $INTO)
 	return 0;
 }
 
-//if everything else fails try this
 function googleconvert($amount, $fromCurrency , $toCurrency)
 {
-	$url = 'http://www.google.com/finance/converter?a=%s&from=%s&to=%s';
-	$finalurl = sprintf($url, $amount, $fromCurrency, $toCurrency);
-
-	// Renders the google page result
-	$htmlrender = file_get_contents($finalurl);	   
-	if (!empty($htmlrender))
-	{
-		preg_match('([0-9.]*)&nbsp;([a-zA-Z\ ]*)&nbsp;=&nbsp;<span class=bld>([0-9.]*)&nbsp;([a-zA-Z\ ]*)<\/span>', $htmlrender, $matches);
-		return (!empty($matches[4][0])) ? ($matches[3][0] / $matches[1][0]) : false;
-	}
-	return false;
+	//Call Google API
+	$google_url = "http://www.google.com/ig/calculator?hl=en&q=1" . $fromCurrency . "=?" . $toCurrency;
+	//Get and Store API results into a variable
+	$result = file_get_contents($google_url);
+	//Explode result to convert into an array
+	$result = explode('"', $result);
+	// get value
+	$converted_amount = explode(' ', $result[3]);
+	return $converted_amount[0];
 }
 ?>

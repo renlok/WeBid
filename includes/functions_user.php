@@ -94,5 +94,27 @@ class user
 			}
 		}
 	}
+
+	function is_valid_user($id)
+	{
+		global $system, $template, $MSG, $ERR_025, $DBPrefix;
+		$query = "SELECT id FROM " . $DBPrefix . "users WHERE id = " . intval($id);
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		if (mysql_num_rows($res) == 0)
+		{
+			$template->assign_vars(array(
+					'TITLE_MESSAGE' => $MSG['415'],
+					'BODY_MESSAGE' => $ERR_025
+					));
+			include 'header.php';
+			$template->set_filenames(array(
+					'body' => 'message.tpl'
+					));
+			$template->display('body');
+			include 'footer.php';
+			exit;
+		}
+	}
 }
 ?>

@@ -103,7 +103,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'makedefault')
 	$image = $_GET['img'];
 }
 
-if (isset($_GET['action']) && $_GET['action'] == 'crop' && !empty($_POST['w']))
+if (isset($_GET['action']) && $_GET['action'] == 'crop' && !empty($_POST['w']) && $_POST['w'] != 0)
 {
 	if ($_POST['upload_thumbnail'] == $MSG['616'])
 	{

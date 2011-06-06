@@ -63,6 +63,7 @@ function setvars()
 	$international = (isset($_POST['international'])) ? $_POST['international'] : $_SESSION['SELL_international'];
 	$international = (!empty($international)) ? true : false;
 	$sellcat1 = $_SESSION['SELL_sellcat1'];
+	$_SESSION['SELL_sellcat2'] = (isset($_SESSION['SELL_sellcat2'])) ? $_SESSION['SELL_sellcat2'] : '';
 	$sellcat2 = $_SESSION['SELL_sellcat2'];
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
 	$buy_now_only = (empty($buy_now_only)) ? 'n' : $buy_now_only;

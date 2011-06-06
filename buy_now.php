@@ -56,6 +56,21 @@ $query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . $id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $Auction = mysql_fetch_assoc($res);
+// such auction does not exist
+if (mysql_num_rows($res) == 0)
+{
+	$template->assign_vars(array(
+			'TITLE_MESSAGE' => $MSG['415'],
+			'BODY_MESSAGE' => $ERR_606
+			));
+	include 'header.php';
+	$template->set_filenames(array(
+			'body' => 'message.tpl'
+			));
+	$template->display('body');
+	include 'footer.php';
+	exit; // kill the page
+}
 
 if ($Auction['closed'] == 1)
 {

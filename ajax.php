@@ -15,7 +15,7 @@
 include 'includes/common.inc.php';
 include $include_path . 'functions_ajax.php';
 
-switch ($_GET)
+switch ($_GET['do'])
 {
 	case 'converter':
 		converter_call();

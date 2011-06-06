@@ -12,7 +12,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "api_converter.php",
+            url: "ajax.php?do=converter",
             data: dataString,
             success: function(data){
                 //Show results div

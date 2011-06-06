@@ -50,12 +50,6 @@ if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' &
 	exit;
 }
 
-if ($id == 0)
-{
-	header('location: index.php');
-	exit;
-}
-
 function get_increment($val, $input_check = true)
 {
 	global $system, $DBPrefix;
@@ -92,7 +86,17 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 // such auction does not exist
 if (mysql_num_rows($res) == 0)
 {
-	$errmsg = $ERR_606;
+	$template->assign_vars(array(
+			'TITLE_MESSAGE' => $MSG['415'],
+			'BODY_MESSAGE' => $ERR_606
+			));
+	include 'header.php';
+	$template->set_filenames(array(
+			'body' => 'message.tpl'
+			));
+	$template->display('body');
+	include 'footer.php';
+	exit; // kill the page
 }
 
 // check user entered a bid

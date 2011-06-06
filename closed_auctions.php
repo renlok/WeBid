@@ -29,6 +29,9 @@ else
 	exit;
 }
 
+// check trying to access valid user id
+$user->is_valid_user($user_id);
+
 // get number of closed auctions for this user
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
 	  WHERE user = " . intval($user_id) . "
@@ -110,17 +113,10 @@ if ($auctions_count == 0)
 }
 
 // get this user's nick
-$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user_id;
+$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $user_id;
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
-if (mysql_num_rows($result) > 0)
-{
-	$TPL_user_nick = mysql_result($result, 0, 'nick');
-}
-else
-{
-	$TPL_user_nick = '';
-}
+$TPL_user_nick = mysql_result($result, 0);
 
 $LOW = $PAGE - 5;
 if ($LOW <= 0) $LOW = 1;
@@ -160,5 +156,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-
 ?>

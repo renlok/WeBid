@@ -45,7 +45,7 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 	if (!isset($match) || empty($match))
 	{
 		$auction_watch = trim($auctions . ' ' . $requestadd);
-		echo $query = "UPDATE " . $DBPrefix . "users SET auc_watch = '" . $auction_watch . "' WHERE id = " . $user->user_data['id'];
+		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = '" . $auction_watch . "' WHERE id = " . $user->user_data['id'];
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$user->user_data['auc_watch'] = $auction_watch;
 	}

@@ -26,7 +26,7 @@ if (isset($_GET['lan']) && !empty($_GET['lan']))
 		// Set language cookie
 		setcookie('USERLANGUAGE', $_GET['lan'], time() + 31536000, '/');
 	}
-	$language = $_GET['lan'];
+	$language = preg_replace("/[^a-zA-Z\s]/", '', $_GET['lan']);
 }
 elseif ($user->logged_in)
 {

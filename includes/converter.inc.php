@@ -69,7 +69,7 @@ function buildcache($newaarray)
 
 	for ($i = 0; $i < count($newaarray); $i++)
 	{
-		$output .= "\t" . "array('from' => '" . $newaarray[$i]['from'] . "', 'to' => '" . $newaarray[$i]['to'] . "', 'rate' => '" . $newaarray[$i]['rate'] . "')";
+		$output .= "\t" . "array('from' => '" . floatval($newaarray[$i]['from']) . "', 'to' => '" . floatval($newaarray[$i]['to']) . "', 'rate' => '" . floatval($newaarray[$i]['rate']) . "')";
 		if ($i < (count($newaarray) - 1))
 		{
 			$output .= ",\n";

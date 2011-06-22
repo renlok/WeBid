@@ -23,15 +23,12 @@ foreach ($membertypes as $idm => $memtypearr)
 ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 
-if (isset($_SESSION['CURRENT_ITEM']))
-{
-	$_REQUEST['auction_id'] = $_SESSION['CURRENT_ITEM'];
-}
-elseif (isset($_REQUEST['auction_id']))
+if (isset($_REQUEST['auction_id']))
 {
 	$_SESSION['CURRENT_ITEM'] = intval($_REQUEST['auction_id']);
 }
 
+$auction_id = $_SESSION['CURRENT_ITEM'];
 $pg = (empty($_REQUEST['pg'])) ? 1 : $_REQUEST['pg'];
 $ws = (isset($_GET['ws'])) ? $_GET['ws'] : 'w';
 
@@ -46,7 +43,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 	if (((isset($_POST['TPL_password']) && $system->SETTINGS['usersauth'] == 'y') || $system->SETTINGS['usersauth'] == 'n') && isset($_POST['TPL_rate']) && isset($_POST['TPL_feedback']) && !empty($_POST['TPL_feedback']))
 	{
 		$query = "SELECT winner, seller, feedback_win, feedback_sel, paid FROM " . $DBPrefix . "winners
-				WHERE auction = " . intval($_REQUEST['auction_id']) . "
+				WHERE auction = " . $auction_id . "
 				AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']) . "
 				AND ((seller = " . $user->user_data['id'] . " AND feedback_sel = 0)
 				OR (winner = " . $user->user_data['id'] . " AND feedback_win = 0))";
@@ -82,7 +79,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 							" . intval($uid) . ",
 							'" . $system->cleanvars($secTPL_rater_nick) . "',
 							'" . $system->cleanvars($secTPL_feedback) . "',
-							" . intval($_POST['TPL_rate']) . ", '" . time() . "'," . $_REQUEST['auction_id'] . ")";
+							" . intval($_POST['TPL_rate']) . ", '" . time() . "'," . $auction_id . ")";
 						$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
 						if ($ws == 's')
 						{
@@ -93,7 +90,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 							$sqlset = "feedback_win = 1";
 						}
 						$sql = "UPDATE " . $DBPrefix . "winners SET $sqlset
-								WHERE auction = " . $_REQUEST['auction_id'] . " AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']);
+								WHERE auction = " . $auction_id . " AND winner = " . intval($_REQUEST['wid']) . " AND seller = " . intval($_REQUEST['sid']);
 						$system->check_mysql(mysql_query($sql), $sql, __LINE__, __FILE__);
 						header ('location: feedback.php?faction=show&id=' . intval($uid));
 						exit;
@@ -147,11 +144,11 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 	{
 		$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
 		$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-		header('Location: ' . $sslurl . 'feedback.php?auction_id=' . $_REQUEST['auction_id'] . '&sid=' . $_REQUEST['sid'] . '&wid=' . $_REQUEST['wid'] . '&ws=' . $_REQUEST['ws']);
+		header('Location: ' . $sslurl . 'feedback.php?auction_id=' . $auction_id . '&sid=' . $_REQUEST['sid'] . '&wid=' . $_REQUEST['wid'] . '&ws=' . $_REQUEST['ws']);
 		exit;
 	}
 
-	$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = " . $_REQUEST['auction_id'] . " LIMIT 1";
+	$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = " . $auction_id . " LIMIT 1";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$item_title = mysql_result($res, 0, 'title');
@@ -275,7 +272,7 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 			'USERNICK' => $TPL_nick,
 			'USERFB' => $TPL_feedbacks_sum,
 			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
-			'AUCT_ID' => $_REQUEST['auction_id'],
+			'AUCT_ID' => $auction_id,
 			'AUCT_TITLE' => $item_title,
 			'WID' => $_GET['wid'],
 			'SID' => $_GET['sid'],
@@ -319,7 +316,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			'USERFB' => $TPL_feedbacks_num,
 			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
 			'PAGENATION' => $echofeed,
-			'AUCT_ID' => $_REQUEST['auction_id'],
+			'AUCT_ID' => $auction_id,
 			'ID' => $_REQUEST['id']
 			));
 	include 'header.php';

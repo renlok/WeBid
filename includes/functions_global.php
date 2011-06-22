@@ -200,7 +200,7 @@ class global_class
 			$str = str_replace(',', '.', $str);
 		}
 		
-		return $str;
+		return floatval($str);
 	}
 
 	function CheckMoney($amount)
@@ -360,5 +360,12 @@ function _in_array($needle, $haystack)
 			return true;
 	}
 	return false;
+}
+
+// strip none alpha-numeric characters
+function strip_non_an_chars($str)
+{
+	$str = preg_replace("/[^a-zA-Z0-9\s]/", '', $str);
+	return $str;
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
-$conversionarray[] = '1265375103';
+$conversionarray[] = '1307368291';
 $conversionarray[] = array(
-	array('from' => 'GBP', 'to' => 'AED', 'rate' => '')
+	array('from' => 'GBP', 'to' => 'PLN', 'rate' => '4.44960104')
 );
 ?>

@@ -8,6 +8,7 @@
             <div class="main-box">
             	<h4 class="rounded-top rounded-bottom">{L_5436}&nbsp;&gt;&gt;&nbsp;{L_25_0169a}</h4>
 				<form name="errorlog" action="" method="post">
+                <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <!-- IF ERROR ne '' -->
 					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->

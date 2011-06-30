@@ -21,7 +21,7 @@ foreach ($membertypes as $idm => $memtypearr)
 
 $id = intval($_REQUEST['id']);
 
-if (!$user->logged_in)
+if (!$user->is_logged_in())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'buy_now.php?id=' . $id;
 	header('location: user_login.php');

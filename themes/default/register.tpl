@@ -11,6 +11,7 @@
 	<!-- ENDIF -->
 		<div class="table2">
 			<form name="registration" action="{SSLURL}register.php" method="post">
+            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="90%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_002}</b> *</td>

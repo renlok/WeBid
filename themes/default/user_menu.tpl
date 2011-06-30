@@ -29,6 +29,7 @@
 	<!-- ELSE -->
     <div class="padding">
 	<form name="request" action="" method="post">
+    	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
         <p>{L_25_0140}</p>
         <p><input type="submit" name="requesttoadmin" value="{L_25_0141}"  class="button"></p>
 	</form>

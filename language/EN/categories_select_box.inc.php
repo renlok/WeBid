@@ -1,6 +1,6 @@
 <select name="id">
-	<option value="">Select your category</option>
-	<option value=""></option>
+	<option value="0">All categories</option>
+	<option value="0">----------------------</option>
 	<option value="2">Art & Antiques</option>
 	<option value="29">Books</option>
 	<option value="68">Clothing & Accessories</option>
@@ -16,6 +16,4 @@
 	<option value="162">Other Goods & Services</option>
 	<option value="170">Sports & Recreation</option>
 	<option value="174">Toys & Games</option>
-	<option value=""></option>
-	<option value="0">All categories</option>
 </select>

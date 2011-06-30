@@ -62,6 +62,8 @@ if (!$user->logged_in && isset($_COOKIE['WEBID_RM_ID']))
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($res) > 0)
 	{
+		// generate a random unguessable token
+		$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
 		$id = mysql_result($res, 0, 'userid');
 		$query = "SELECT hash, password FROM " . $DBPrefix . "users WHERE id = " . $id;
 		$res = mysql_query($query);

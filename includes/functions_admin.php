@@ -29,7 +29,7 @@ if (!defined('AdminFuncCall'))
 			if (mysql_num_rows($res) > 0)
 			{
 				$user_data = mysql_fetch_array($res);
-				
+
 				if (strspn($user_data['password'], $user_data['hash']) == $_SESSION['WEBID_ADMIN_NUMBER'])
 				{
 					return false;

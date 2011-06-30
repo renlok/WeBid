@@ -14,6 +14,7 @@
 		</div>
 		<div class="table3">
 			<form name="form1" method="post" action="">
+            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="90%" border="0" cellspacing="0" cellpadding="5">
                     <tr class="row">
                         <td class="success-box" id="results" colspan="3" align="center">{CONVERSION}</td>

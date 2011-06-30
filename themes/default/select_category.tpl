@@ -11,6 +11,7 @@ function SubmitBoxes(N)
 	<div class="titTable2">{L_028}</div>
 		<a name="goto"></a>
 		<form name="catform" id="catform" action="select_category.php#goto" method="post">
+        <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 		<input type="hidden" name="action" value="process">
 		<input type="hidden" name="box" value="" id="catformbox">
 		<input type="hidden" name="cat_no" value="{CAT_NO}">
@@ -57,6 +58,7 @@ function SubmitBoxes(N)
 <!-- IF CAT_NO eq 2 && ! B_SHOWBUTTON -->
 		<div class="padding" style="text-align:right;">
 		<form name="catform" action="sell.php" method="post">
+        	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<input type="hidden" name="act" value="skipexcat">
 			<input type="submit" name="submitit" value="{L_805}" class="button">
 		</form>

@@ -239,6 +239,8 @@ class template
 		{
 			$this->_rootref[$key] = $val;
 		}
+		global $_SESSION;
+		if(isset($_SESSION['csrftoken'])) $this->_rootref['_CSRFTOKEN'] = $_SESSION['csrftoken'];
 
 		return true;
 	}

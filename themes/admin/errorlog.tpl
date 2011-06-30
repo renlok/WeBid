@@ -15,6 +15,7 @@
                     	{ERRORLOG}
                     </div>
                     <input type="hidden" name="action" value="clearlog">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_890}">
 				</form>
             </div>

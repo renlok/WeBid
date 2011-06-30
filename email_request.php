@@ -24,7 +24,7 @@ elseif (isset($_REQUEST['auction_id']))
 	$auction_id = $_SESSION['CURRENT_ITEM'] = intval($_REQUEST['auction_id']);
 }
 
-if (!$user->logged_in)
+if (!$user->is_logged_in())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'email_request.php';
 	header('location: user_login.php');

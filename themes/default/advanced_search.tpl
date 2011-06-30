@@ -9,6 +9,7 @@
 <!-- ENDIF -->
 	<div class="table2">
 		<form name="adsearch" method="post" action="">
+        	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<table width="100%" border="0" align="center" cellpadding="4" cellspacing="0">
 				<tr>
 					<td width="45%" align="right">{L_1000}</td>

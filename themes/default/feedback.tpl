@@ -10,6 +10,7 @@
 <!-- ENDIF -->
 		<div class="table2" style="padding:20px;">
 			<form name="addfeedback" action="{SSLURL}feedback.php?wid={WID}&sid={SID}&ws={WS}" method="post">
+            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" cellspacing="0" >
 					<tr>
 						<td width="40%" align="right"><b>{L_168}:</b></td>

@@ -68,6 +68,43 @@ class user
 		}
 	}
 
+	function is_logged_in()
+	{
+		global $main_path;
+		$fh = @fopen("$main_path/logs/requests.log", 'a');
+		if ($fh)
+		{
+			fwrite ($fh, gmdate("YMd-H:i:s") . "\n".
+				"POST: " . var_export($_POST, TRUE) . "\n" .
+			       	"\n\n");
+			fclose ($fh);
+		}
+		if(isset($_SESSION['csrftoken']))
+		{
+			# Token should exist as soon as a user is logged in
+			if(1 < count($_POST))		# More than 2 parameters in a POST (csrftoken + 1 more) => check
+				$valid_req = ($_POST['csrftoken'] == $_SESSION['csrftoken']);
+			else
+				$valid_req = true;		# Neither GET nor POST params exist => permit
+			if(!$valid_req)
+			{
+				global $template, $MSG, $ERR_077;
+				$template->assign_vars(array(
+						'TITLE_MESSAGE' => $MSG['936'],
+						'BODY_MESSAGE' => $ERR_077
+						));
+				include 'header.php';
+				$template->set_filenames(array(
+						'body' => 'message.tpl'
+						));
+				$template->display('body');
+				include 'footer.php';
+				exit; // kill the page
+			}
+		}
+		return $this->logged_in;
+	}
+
 	function check_balance()
 	{
 		global $system, $DBPrefix, $MSG;

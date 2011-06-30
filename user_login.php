@@ -34,6 +34,8 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($res) > 0)
 	{
+		// generate a random unguessable token
+		$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
 		$user_data = mysql_fetch_assoc($res);
 		if ($user_data['suspended'] == 9)
 		{

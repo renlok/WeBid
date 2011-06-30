@@ -67,47 +67,31 @@ $(document).ready(function() {
         <span class="rightside">{HEADERCOUNTER}</span>
 	</div>
     <div class="navbar">
-        <table cellspacing="0">
-            <tbody>
-            <tr>
-                <td><a href="{SITEURL}index.php?">{L_166}</a></td>
+        <ul>
+            <li><a href="{SITEURL}index.php?">{L_166}</a></li>
 <!-- IF B_CAN_SELL -->
-				<td><a href="{SITEURL}select_category.php?">{L_028}</a></td>
+			<li><a href="{SITEURL}select_category.php?">{L_028}</a></li>
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
-                <td><a href="{SITEURL}user_menu.php?">{L_622}</a></td>
-                <td><a href="{SSLURL}logout.php?">{L_245}</a></td>
+            <li><a href="{SITEURL}user_menu.php?">{L_622}</a></li>
+            <li><a href="{SSLURL}logout.php?">{L_245}</a></li>
 <!-- ELSE -->
-                <td><a href="{SSLURL}register.php?">{L_235}</a></td>
-                <td><a href="{SSLURL}user_login.php?">{L_052}</a></td>
+            <li><a href="{SSLURL}register.php?">{L_235}</a></li>
+            <li><a href="{SSLURL}user_login.php?">{L_052}</a></li>
 <!-- ENDIF -->
 <!-- IF B_BOARDS -->
-				<td><a href="{SITEURL}boards.php">{L_5030}</a></td>
+			<li><a href="{SITEURL}boards.php">{L_5030}</a></li>
 <!-- ENDIF -->
-                <td id="last"><a href="{SITEURL}faqs.php" alt="faqs" class="new-window">{L_148}</a></td>
-            </tr>
-            </tbody>
-        </table>
+            <li><a href="{SITEURL}faqs.php" alt="faqs" class="new-window">{L_148}</a></li>
+        </ul>
     </div>
-	<div class="splitbox barSec">
-    	<div class="leftside">
+	<div class="navbar">
+    	<div>
             <form name="search" action="{SITEURL}search.php" method="get">
-            <div class="barSearch">
-                <input type="hidden" name="">
-                {L_103}
-                <input type="text" name="q" size=15 value="{Q}">
-                <input type="submit" name="" value="{L_275}" class="button">
-                &nbsp;&nbsp;<a href="{SITEURL}adsearch.php">{L_464}</a> 
-            </div>
-            </form>
-		</div>
-    	<div class="rightside">
-            <form name="gobrowse" action="{SITEURL}browse.php" method="get">
-            <div class="barBrowse">
-                {L_104}
                 {SELECTION_BOX}
-                <input type="submit" name="sub" value="{L_275}" class="button">
-            </div>
+                <input type="text" name="q" size="50" value="{Q}">
+                <input type="submit" name="sub" value="{L_399}" class="button">
+                <a href="{SITEURL}adsearch.php">{L_464}</a>
             </form>
 		</div>
     </div>

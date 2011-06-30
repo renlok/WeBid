@@ -25,6 +25,7 @@
                         <td><input type="text" name="email" value="{EMAIL}"></td>
                     </tr>
 					</table>
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="hidden" name="action" value="insert">
                     <input type="submit" name="act" class="centre" value="{L_569}">
 				</form>

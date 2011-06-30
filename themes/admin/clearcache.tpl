@@ -13,6 +13,7 @@
 <!-- ENDIF -->
                     {L_30_0032}
                     <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_30_0031}">
 				</form>
             </div>

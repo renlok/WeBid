@@ -11,6 +11,7 @@
 <!-- ENDIF -->
 <!-- IF B_NOTBOUGHT -->
             <form action="{ASSLURL}buy_now.php?id={ID}" method="post">
+            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <!-- ENDIF -->
             <table border=0 width="100%" cellspacing="0" cellpadding="4">
                 <tr>
@@ -69,6 +70,7 @@
                 <td colspan="2" align="center">
                     {L_498}
                     <form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="hidden" name="pfval" value="{ID}">
                     <input type="submit" name="Pay" value="{L_756}" class="pay">
                     </form>

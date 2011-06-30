@@ -13,6 +13,7 @@
 		</div>
 <!-- ELSE -->
 		<form name="friend" action="friend.php" method="post">
+        <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 	<!-- IF ERROR ne '' -->
 		<div align="center" class="errfont">{ERROR}</div>
 	<!-- ENDIF -->

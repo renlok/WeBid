@@ -38,6 +38,6 @@ function converter_call($post_data = true, $data = array())
 
 	$conversion = ConvertCurrency($from, $to, $amount);
 	// construct string
-	echo $amount . ' ' . $CURRENCIES[$from] . ' = ' . number_format(($amount * $conversion), 2, '.', ',') . ' ' . $CURRENCIES[$to];
+	echo $amount . ' ' . $CURRENCIES[$from] . ' = ' . number_format($conversion, 2, '.', ',') . ' ' . $CURRENCIES[$to];
 }
 ?>

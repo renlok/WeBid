@@ -15,6 +15,7 @@
 	<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
 	<form action="login.php" method="post">
+    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 	<table width="100%" border="0" cellspacing="0" cellpadding="1" class="blank">
 		<tr>
 			<td align="right" stype="width:170px;"> 

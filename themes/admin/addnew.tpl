@@ -48,6 +48,7 @@
                     <input type="hidden" name="id" value="{ID}">
 <!-- ENDIF -->
                     <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" class="centre" value="{BUTTON}">
 				</form>
             </div>

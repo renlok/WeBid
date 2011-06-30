@@ -14,6 +14,7 @@ $(".form1").submit(function(){
 </script>
 <center>
 	<form name="form1" id="form1" method="post" action="mail.php">
+    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 	<table width="80%" border="1" style="border-collapse: collapse;">
 	  <tr>
 		<td width="100px" nowrap="nowrap" valign="top"><label for="to">{L_241}:</label></td>

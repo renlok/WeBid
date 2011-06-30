@@ -31,6 +31,7 @@
 <!-- END users -->
                     </table>
                     <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="Submit" value="{L_561}">
 				</form>
             </div>

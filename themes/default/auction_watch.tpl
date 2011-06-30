@@ -20,6 +20,7 @@
 	<tr>
 		<td colspan="2">
 			<form action="auction_watch.php?insert=true" method="post">
+            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<input type="text" size="60" name="add">
 			<input type="submit" value="{L_5204}" class="button">
 			</form>

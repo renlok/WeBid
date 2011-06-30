@@ -26,6 +26,7 @@ $(document).ready(function(){
 			</div>
 	<!-- ENDIF -->
 			<form name="bid" action="{ASSLURL}bid.php" method="post">
+            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<table width="60%" border=0 cellpadding="4" style="text-align:left;">
 				<tr>
 					<td rowspan="6">{IMAGE}</td>

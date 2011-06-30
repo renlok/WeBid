@@ -43,6 +43,7 @@
                     </table>
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id" value="{ID}">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_530}">
 				</form>
             </div>

@@ -29,6 +29,21 @@
         <!-- END featured -->
         </td>
     </tr>  
+    <!-- IF B_HOT_ITEMS -->
+    <tr>
+        <td class="titTable4">{L_279}</td>
+    </tr>
+    <tr>
+        <td class="table2">
+        <!-- BEGIN hotitems -->
+            <div style="float:left;display:block;width:180px;margin:5px;background-color:#FFFEEE;border:#CCCCCC 1px solid;padding:5px;">
+                <div style="display:block;" align="center"><img src="{hotitems.IMAGE}"></div>
+                <div style="display:block;" align="center"><a href="{SITEURL}item.php?id={hotitems.ID}">{hotitems.TITLE}</a><br>{hotitems.BID}</div>
+            </div>
+        <!-- END hotitems -->
+        </td>
+    </tr>
+    <!-- ENDIF -->
     <!-- IF B_AUC_LAST -->
     <tr>
         <td class="titTable4">{L_278}</td>
@@ -38,18 +53,6 @@
         <!-- BEGIN auc_last -->
             <p style="display:block;" {auc_last.BGCOLOUR}>{auc_last.DATE} <a href="{SITEURL}item.php?id={auc_last.ID}">{auc_last.TITLE}</a></p>
         <!-- END auc_last -->
-        </td>
-    </tr>
-    <!-- ENDIF -->
-    <!-- IF B_HIGH_BIDS -->
-    <tr>
-        <td class="titTable4">{L_279}</td>
-    </tr>
-    <tr>
-        <td class="table2">
-        <!-- BEGIN max_bids -->
-            <p style="display:block;" {max_bids.BGCOLOUR}>{max_bids.FBID} <a href="{SITEURL}item.php?id={max_bids.ID}">{max_bids.TITLE}</a></p>
-        <!-- END max_bids -->
         </td>
     </tr>
     <!-- ENDIF -->
@@ -94,6 +97,7 @@
     </div>
     <div class="smallpadding">
         <form name="login" action="{SSLURL}user_login.php" method="post">
+        <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
             <table width="100%">
             <tr>
                 <td width="25%"><label for="username" title="please enter your username">{L_003}</label></td>

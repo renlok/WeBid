@@ -245,6 +245,7 @@ $(document).ready(function() {
 					 <input type="hidden" name="title" value="{TITLE}" >
 					 <input type="hidden" name="category" value="{CAT_ID}" >
 					 <input type="hidden" name="id" value="{ID}">
+                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					 <input type="submit" name="" value="{L_30_0208}" class="button">
 					</td>
 				  </tr>

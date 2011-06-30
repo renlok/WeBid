@@ -31,7 +31,7 @@ if (!isset($_SESSION['SELL_sellcat1']) || !is_numeric($_SESSION['SELL_sellcat1']
 	exit;
 }
 
-if (!$user->logged_in)
+if (!$user->is_logged_in())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'sell.php';
 	header('location: user_login.php');

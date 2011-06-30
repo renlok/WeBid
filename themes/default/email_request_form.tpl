@@ -19,6 +19,7 @@
 	<!-- ENDIF -->
 		<div class="table2">
 			<form name="seller" action="email_request.php" method="post">
+            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width=90% cellpadding="4" cellspacing="0">
 					<tr>
 						<td>{L_149}</td>

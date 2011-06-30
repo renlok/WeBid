@@ -29,6 +29,7 @@
                     <input type="hidden" name="action" value="<!-- IF FILENAME ne '' -->edit<!-- ELSE -->add<!-- ENDIF -->">
                     <input type="hidden" name="filename" value="{FILENAME}">
                     <input type="hidden" name="theme" value="{THEME}">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_071}">
 				</form>
 <!-- ENDIF -->
@@ -65,6 +66,7 @@
 					</table>
                     <input type="hidden" name="action" value="update" id="action">
                     <input type="hidden" name="theme" value="" id="theme">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" value="{L_26_0000}">
 				</form>
             </div>

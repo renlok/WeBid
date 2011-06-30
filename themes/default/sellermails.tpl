@@ -1,6 +1,7 @@
 <!-- INCLUDE user_menu_header.tpl -->
 
 <form action="" method="post" name="thisform" id="thisform">
+<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <table width="100%" cellspacing="0" cellpadding="4" border="0" >
 	<tr>
 		<td width="93%">

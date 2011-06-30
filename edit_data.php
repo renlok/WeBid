@@ -16,7 +16,7 @@ include 'includes/common.inc.php';
 include $include_path . 'countries.inc.php';
 
 // If user is not logged in redirect to login page
-if (!$user->logged_in)
+if (!$user->is_logged_in())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'edit_data.php';
 	header('location: user_login.php');
@@ -45,55 +45,11 @@ function generateSelect($name = '', $options = array())
 	return $html;
 }
 
-$TIMECORRECTION = array(
-	'-23' => '-23 h',
-	'-22' => '-22 h',
-	'-21' => '-21 h',
-	'-20' => '-20 h',
-	'-19' => '-19 h',
-	'-18' => '-18 h',
-	'-17' => '-17 h',
-	'-16' => '-16 h',
-	'-15' => '-15 h',
-	'-14' => '-14 h',
-	'-13' => '-13 h',
-	'-12' => '-12 h',
-	'-11' => '-11 h',
-	'-10' => '-10 h',
-	'-9' => '-9 h',
-	'-8' => '-8 h',
-	'-7' => '-7 h',
-	'-6' => '-6 h',
-	'-5' => '-5 h',
-	'-4' => '-4 h',
-	'-3' => '-3 h',
-	'-2' => '-2 h',
-	'-1' => '-1 h',
-	'0' => 'GMT',
-	'+1' => '+1 h',
-	'+2' => '+2 h',
-	'+3' => '+3 h',
-	'+4' => '+4 h',
-	'+5' => '+5 h',
-	'+6' => '+6 h',
-	'+7' => '+7 h',
-	'+8' => '+8 h',
-	'+9' => '+9 h',
-	'+10' => '+10 h',
-	'+11' => '+11 h',
-	'+12' => '+12 h',
-	'+13' => '+13 h',
-	'+14' => '+14 h',
-	'+15' => '+15 h',
-	'+16' => '+16 h',
-	'+17' => '+17 h',
-	'+18' => '+18 h',
-	'+19' => '+19 h',
-	'+20' => '+20 h',
-	'+21' => '+21 h',
-	'+22' => '+22 h',
-	'+23' => '+23 h'
-);
+$TIMECORRECTION = array();
+for ($i = 12; $i > -13; $i--)
+{
+	$TIMECORRECTION[$i] = $MSG['TZ_' . $i];
+}
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
 $res = mysql_query($query);

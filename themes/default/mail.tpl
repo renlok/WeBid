@@ -15,6 +15,7 @@ $(document).ready(function() {
 	<!-- INCLUDE mail-send.tpl -->
 <!-- ENDIF -->
 <form action="mail.php" method="post" name="deletemessages">
+<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <table style="text-align: center; width: 90%; border-collapse: collapse; margin: 0 auto;" border="1" cellpadding="2" cellspacing="2">
   <thead>
 	<tr>

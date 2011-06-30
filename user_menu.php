@@ -16,7 +16,7 @@
 include 'includes/common.inc.php';
 
 // If user is not logged in redirect to login page
-if (!$user->logged_in)
+if (!$user->is_logged_in())
 {
 	header('location: user_login.php');
 	exit;

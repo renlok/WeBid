@@ -14,7 +14,7 @@
 
 include 'includes/common.inc.php';
 
-if (!$user->logged_in)
+if (!$user->is_logged_in())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');

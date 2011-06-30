@@ -35,6 +35,7 @@
                     </tr>
                     </table>
                     <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_008}">
 				</form>
             </div>

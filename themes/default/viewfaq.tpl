@@ -18,6 +18,7 @@
 			</div>
 			<div class="padding">
 			<form name="faqsindex" action="viewfaqs.php" method="post">
+            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                 <select name="cat" onChange="document.faqsindex.submit()">
                     <option value="">- {FNAME} -</option>
 <!-- BEGIN cats -->

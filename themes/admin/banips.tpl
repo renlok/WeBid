@@ -54,6 +54,7 @@
                         </tr>
                     </table>
                     <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_2_0015}">
 				</form>
             </div>

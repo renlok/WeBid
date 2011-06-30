@@ -27,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			  perpage = '" . $_POST['perpage'] . "',
 			  thumb_list = " . intval($_POST['thumb_list']) . ",
 			  lastitemsnumber = " . intval($_POST['lastitemsnumber']) . ",
-			  higherbidsnumber = " . intval($_POST['higherbidsnumber']) . ",
+			  hotitemsnumber = " . intval($_POST['hotitemsnumber']) . ",
 			  endingsoonnumber = " . intval($_POST['endingsoonnumber']) . ",
 			  loginbox = " . intval($_POST['loginbox']) . ",
 			  newsbox = " . intval($_POST['newsbox']) . ",
@@ -39,7 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['newsbox'] = $_POST['newsbox'];
 	$system->SETTINGS['newstoshow'] = $_POST['newstoshow'];
 	$system->SETTINGS['lastitemsnumber'] = $_POST['lastitemsnumber'];
-	$system->SETTINGS['higherbidsnumber'] = $_POST['higherbidsnumber'];
+	$system->SETTINGS['hotitemsnumber'] = $_POST['hotitemsnumber'];
 	$system->SETTINGS['endingsoonnumber'] = $_POST['endingsoonnumber'];
 	$ERR = $MSG['795'];
 }
@@ -49,7 +49,7 @@ loadblock($MSG['25_0107'], $MSG['808'], 'decimals', 'thumb_list', $system->SETTI
 
 loadblock($MSG['807'], '', '', '', '', array(), true);
 loadblock($MSG['5013'], $MSG['5014'], 'days', 'lastitemsnumber', $system->SETTINGS['lastitemsnumber']);
-loadblock($MSG['5015'], $MSG['5016'], 'days', 'higherbidsnumber', $system->SETTINGS['higherbidsnumber']);
+loadblock($MSG['5015'], $MSG['5016'], 'days', 'hotitemsnumber', $system->SETTINGS['hotitemsnumber']);
 loadblock($MSG['5017'], $MSG['5018'], 'days', 'endingsoonnumber', $system->SETTINGS['endingsoonnumber']);
 loadblock($MSG['532'], $MSG['537'], 'batch', 'loginbox', $system->SETTINGS['loginbox'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['533'], $MSG['538'], 'batch', 'newsbox', $system->SETTINGS['newsbox'], array($MSG['030'], $MSG['029']));

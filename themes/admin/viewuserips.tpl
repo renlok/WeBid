@@ -54,6 +54,7 @@
                     <input type="hidden" name="offset" value="{OFFSET}">
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id" value="{ID}">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_2_0015}">
 				</form>
                 <table width="98%" cellpadding="0" cellspacing="0" class="blank">

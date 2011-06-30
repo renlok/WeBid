@@ -10,6 +10,7 @@
             	<h4 class="rounded-top rounded-bottom">{L_854}&nbsp;&gt;&gt;&nbsp;{L_854}</h4>
 				<div class="plain-box">
                 	<form action="" method="post">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                 	<table cellpadding="0" cellspacing="0" width="100%" class="blank">
                     <tr>
                     	<td>{L_855}</td>

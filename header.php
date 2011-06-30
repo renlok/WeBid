@@ -53,10 +53,10 @@ $template->assign_vars(array(
 		'ASSLURL' => ($system->SETTINGS['https'] == 'y' && $system->SETTINGS['usersauth'] == 'y') ? $sslurl : $system->SETTINGS['siteurl'],
 		'INCURL' => $incurl,
 		'Q' => (isset($q)) ? $q : '',
-		'SELECTION_BOX' => file_get_contents($main_path . "language/" . $language . "/categories_select_box.inc.php"),
+		'SELECTION_BOX' => file_get_contents($main_path . 'language/' . $language . '/categories_select_box.inc.php'),
 		'YOURUSERNAME' => ($user->logged_in) ? $user->user_data['nick'] : '',
 
-		'B_CAN_SELL' => $user->can_sell,
+		'B_CAN_SELL' => ($user->can_sell || !$user->logged_in),
 		'B_LOGGED_IN' => $user->logged_in,
 		'B_BOARDS' => ($system->SETTINGS['boards'] == 'y')
 		));

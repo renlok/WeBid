@@ -110,6 +110,7 @@ $(window).load(function () {
 		<img src="{IMGPATH}" style="position: relative;" alt="Thumbnail Preview" id="thumbprev">
 	</div>
 	<form name="thumbnail" action="?action=crop&img={IMAGE}" method="post">
+    	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 		<input type="hidden" name="x1" value="0" id="x1">
 		<input type="hidden" name="y1" value="0" id="y1">
 		<input type="hidden" name="x2" value="{STARTX}" id="x2">
@@ -122,6 +123,7 @@ $(window).load(function () {
 </div>
 <!-- ELSE -->
 <form name="upload" action="" method="post" enctype="multipart/form-data">
+<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <table cellpadding="3" cellspacing="0" border="0" align="center" width="90%">
 	<tr>
 		<td bgcolor="{HEADERCOLOUR}" colspan="2">

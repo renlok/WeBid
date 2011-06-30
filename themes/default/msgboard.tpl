@@ -14,6 +14,7 @@
 			</tr>
 			<td align="center">
 			<form name="messageboard" action="" method="post">
+            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<input type="hidden" name="action" value="insertmessage">
 				<input type="hidden" name="board_id" value="{BOARD_ID}">
 <!-- IF B_LOGGED_IN eq false -->

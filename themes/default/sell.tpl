@@ -186,6 +186,7 @@ $(document).ready(function(){
         	<a name="goto"></a>
 <!-- IF PAGE eq 0 -->
 			<form name="sell" action="{ASSLURL}sell.php" method="post" enctype="multipart/form-data">
+            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" cellspacing="0">
 	<!-- IF ERROR ne '' -->
 					<tr>
@@ -445,6 +446,7 @@ $(document).ready(function(){
 			</form>
 <!-- ELSEIF PAGE eq 1 -->
 			<form name="preview" action="{ASSLURL}sell.php" method="post">
+            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<table width="100%" border="0" cellpadding="4" align="center" cellspacing=0>
 	<!-- IF ERROR ne '' -->
 			<tr>

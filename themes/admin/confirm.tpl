@@ -9,6 +9,7 @@
 	<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
 	<form action="" method="post">
+    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 		<p>{MESSAGE}</p>
         <div class="break">&nbsp;</div>
 <!-- IF TYPE eq 1 -->

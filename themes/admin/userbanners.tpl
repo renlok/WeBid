@@ -104,6 +104,7 @@
                     <input type="hidden" name="action" value="insert">
                     <input type="hidden" name="id" value="{ID}">
                     <input type="hidden" name="banner" value="{BANNERID}">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="<!-- IF NOTEDIT -->{L__0040}<!-- ELSE -->{L__0055}<!-- ENDIF -->">
 				</form>
             </div>

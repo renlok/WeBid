@@ -33,6 +33,7 @@
 <!-- END busers -->
 					</table>
                     <input type="hidden" name="action" value="deleteusers">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L__0028}">
 				</form>
             </div>

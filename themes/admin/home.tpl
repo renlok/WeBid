@@ -71,6 +71,10 @@
 <!-- END langs -->
                         </td>
 					</tr>
+					<tr class="bg">
+						<td><strong>{L_30_0214}</strong></td>
+						<td>{THIS_VERSION} ({CUR_VERSION})</td>
+					</tr>
 				</table>
             	<table width="98%" cellpadding="1" cellspacing="0">
 					<tr>
@@ -114,6 +118,7 @@
 						<td width="70%">{L_30_0032}</td>
 						<td>
                             <form action="?action=clearcache" method="post">
+                            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                                 <input type="submit" name="submit" value="{L_30_0031}">
                             </form>
                         </td>
@@ -122,6 +127,7 @@
 						<td>{L_1030}</td>
 						<td>
                             <form action="?action=updatecounters" method="post">
+                            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                             	<input type="submit" name="submit" value="{L_1031}">
                             </form>
                         </td>

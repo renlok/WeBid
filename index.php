@@ -164,34 +164,40 @@ while ($row = mysql_fetch_assoc($res))
 }
 
 $end_soon = ($i > 0) ? true : false;
-// get higher bids
-$query = "SELECT max(b.bid) AS max_bid, a.title, a.id FROM " . $DBPrefix . "bids b
-		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
-		WHERE a.suspended = 0 AND a.closed = 0 AND a.starts <= '" . $NOW . "'
-		GROUP BY b.bid, b.auction ORDER BY max_bid DESC
-		LIMIT " . $system->SETTINGS['higherbidsnumber'];
+// get hot items
+$query = "SELECT a.id, a.title, a.current_bid, a.pict_url, a.ends, a.num_bids, a.minimum_bid 
+        FROM " . $DBPrefix . "auctions a 
+        LEFT JOIN " . $DBPrefix . "auccounter c ON (a.id = c.auction_id) 
+        WHERE closed = 0 AND suspended = 0 AND starts <= " . $NOW . " 
+        ORDER BY c.counter DESC LIMIT " . $system->SETTINGS['hotitemsnumber'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
-$i = $j = 0;
-$AU = array();
+$i = 0;
 while ($row = mysql_fetch_assoc($res))
 {
-	if (!in_array($row['id'], $AU))
-	{
-		$template->assign_block_vars('max_bids', array(
-				'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
-				'FBID' => $system->print_money($row['max_bid']),
-				'BID' => $row['max_bid'],
-				'ID' => $row['id'],
-				'TITLE' => $row['title']
-				));
-		$AU[] = $row['id'];
-		$j++;
-	}
 	$i++;
+	$ends = $row['ends'];
+    $difference = $ends - time();
+    if ($difference > 0)
+	{
+        $ends_string = FormatTimeLeft($difference); 
+    }
+	else
+	{
+        $ends_string = $MSG['911'];
+    }
+    $high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
+    $template->assign_block_vars('hotitems', array(
+            'ENDS' => $ends_string,
+            'ID' => $row['id'],
+            'BID' => $system->print_money($high_bid),
+            'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+            'TITLE' => $row['title']
+            ));
 }
-$high_bids = ($j > 0) ? true : false;
+$hot_items = ($j > 0) ? true : false;
+
 // Build list of help topics
 $query = "SELECT id, category FROM " . $DBPrefix . "faqscat_translated WHERE lang = '" . $language . "' ORDER BY category ASC";
 $res = mysql_query($query);
@@ -230,9 +236,9 @@ $template->assign_vars(array(
 		'FLAGS' => ShowFlags(),
 
 		'B_AUC_LAST' => $auc_last,
-		'B_HIGH_BIDS' => $high_bids,
+		'B_HOT_ITEMS' => $hot_items,
 		'B_AUC_ENDSOON' => $end_soon,
-		'B_HELPBOX' => $helpbox,
+		'B_HELPBOX' => ($helpbox && $system->SETTINGS['helpbox'] == 1),
 		'B_MULT_LANGS' => (count($LANGUAGES) > 1),
 		'B_LOGIN_BOX' => ($system->SETTINGS['loginbox'] == 1),
 		'B_NEWS_BOX' => ($system->SETTINGS['newsbox'] == 1)

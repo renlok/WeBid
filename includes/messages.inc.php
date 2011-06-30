@@ -17,16 +17,16 @@ if (!defined('InWeBid')) exit();
 // Language management
 if (isset($_GET['lan']) && !empty($_GET['lan']))
 {
+	$language = preg_replace("/[^a-zA-Z\s]/", '', $_GET['lan']);
 	if ($user->logged_in)
 	{
-		$query = "UPDATE " . $DBPrefix . "users SET language = '" . mysql_real_escape_string($_GET['lan']) . "' WHERE id = " . $user->user_data['id'];
+		$query = "UPDATE " . $DBPrefix . "users SET language = '" . $language . "' WHERE id = " . $user->user_data['id'];
 	}
 	else
 	{
 		// Set language cookie
-		setcookie('USERLANGUAGE', $_GET['lan'], time() + 31536000, '/');
+		setcookie('USERLANGUAGE', $language, time() + 31536000, '/');
 	}
-	$language = preg_replace("/[^a-zA-Z\s]/", '', $_GET['lan']);
 }
 elseif ($user->logged_in)
 {
@@ -34,7 +34,7 @@ elseif ($user->logged_in)
 }
 elseif (isset($_COOKIE['USERLANGUAGE']))
 {
-	$language = $_COOKIE['USERLANGUAGE'];
+	$language = preg_replace("/[^a-zA-Z\s]/", '', $_COOKIE['USERLANGUAGE']);
 }
 else
 {

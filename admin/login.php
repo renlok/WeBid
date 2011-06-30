@@ -61,6 +61,8 @@ if (isset($_POST['action']))
 				}
 				else
 				{
+					// generate a random unguessable token
+					$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
 					$admin = mysql_fetch_array($res);
 					// Set sessions vars
 					$_SESSION['WEBID_ADMIN_NUMBER'] = strspn($password, $admin['hash']);

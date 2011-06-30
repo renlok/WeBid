@@ -26,6 +26,7 @@
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id" value="{BOARD_ID}">
                     <input type="hidden" name="msg" value="{MSG_ID}">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_530}">
 				</form>
             </div>

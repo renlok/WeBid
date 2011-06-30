@@ -33,10 +33,10 @@
 			This not only gives respect to the large amount of time given freely by the developers
 			but also helps build interest, traffic and use of WeBid. If you (honestly) cannot retain
 			the full copyright we ask you at least leave in place the "Powered by WeBid" line, with
-			"WeBid" linked to www.webidsupport.com. If you refuse to include even this then support on our
-			forums may be affected.
+			"WeBid" linked to www.webidsupport.com. If you must remove thte copyright message pelase make
+            a donation at http://www.webidsupport.com/donate.php to help pay for future developments
 		-->
-		Powered by <a href="http://www.webidsupport.com/">WeBid</a> &copy; 2008 - 2010 <a href="http://www.webidsupport.com/">WeBid</a>
+		Powered by <a href="http://www.webidsupport.com/">WeBid</a> &copy; 2008 - 2011 <a href="http://www.webidsupport.com/">WeBid</a>
 	</div>
 </div>
 </body>

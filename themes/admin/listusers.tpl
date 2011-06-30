@@ -22,6 +22,7 @@ $(document).ready(function() {
                 	<tr bgcolor="#FFFF66">
                         <td colspan="4">
                             <form name="search" action="" method="post">
+                            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                             	<p>{L_5024}</p>
                                 {L_5022} <input type="text" name="keyword" size="25"> <input type="submit" name="submit" value="{L_5023}">
                             </form>

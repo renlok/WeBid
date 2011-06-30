@@ -6,6 +6,7 @@
     <td style="text-align:center; width: 200px;">{USER_BALANCE}</td>
     <td style="text-align:center; width: 200px;">
     	<form name="" method="post" action="{SITEURL}pay.php?a=1" id="fees">
+        <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
         {CURRENCY} <input type="text" name="pfval" value="{PAY_BALANCE}" size="7">&nbsp;<input type="submit" name="Pay" value="Pay" class="pay">
         </form>
     </td>
@@ -33,6 +34,7 @@
     <td style="text-align: center;">{to_pay.TOTAL}</td>
     <td style="text-align: center; background-color: #FFFFaa;">
     	<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
+        <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
     	<input type="hidden" name="pfval" value="{to_pay.ID}">
         <input type="submit" name="Pay" value="{L_756}" class="pay">
         </form>

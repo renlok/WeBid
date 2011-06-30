@@ -11,6 +11,7 @@
 				<p>{L_267}</p>
 				<input type="hidden" name="id" value="{USERID}">
 				<input type="hidden" name="hash" value="{HASH}">
+                <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<input type="submit" name="action" value="{L_249}" class="button">
 				<input type="submit" name="action" value="{L_250}" class="button">
 			</form>

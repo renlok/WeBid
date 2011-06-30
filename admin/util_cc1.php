@@ -26,8 +26,8 @@ foreach ($LANGUAGES as $k => $v)
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$output = '<select name="id">' . "\n";
-	$output.= "\t" . '<option value="">' . $MSG['2__0038'] . '</option>' . "\n";
-	$output.= "\t" . '<option value=""></option>' . "\n";
+	$output.= "\t" . '<option value="0">' . $MSG['277'] . '</option>' . "\n";
+	$output.= "\t" . '<option value="0">----------------------</option>' . "\n";
 
 	$num_rows = mysql_num_rows($res);
 
@@ -40,8 +40,6 @@ foreach ($LANGUAGES as $k => $v)
 		$i++;
 	}
 
-	$output.= "\t" . '<option value=""></option>' . "\n";
-	$output.= "\t" . '<option value="0">' . $MSG['277'] . '</option>' . "\n";
 	$output.= '</select>'."\n";
 
 	$handle = fopen ($main_path . 'language/' . $k . '/categories_select_box.inc.php', 'w');

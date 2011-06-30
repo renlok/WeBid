@@ -4,6 +4,7 @@
 <div class="padding" align="center">
 <!-- IF B_FIRST -->
 	<form name="user_login" action="" method="post">
+    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 	<table width="80%" cellspacing="0" cellpadding="4" border="0">
 	<!-- IF ERROR ne '' -->
     <tr>

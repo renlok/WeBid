@@ -63,7 +63,6 @@
 	<!-- ELSEIF block.TYPE eq 'checkbox' -->
 				<input type="checkbox" name="{block.NAME}" id="{block.DEFAULT}" value="y"<!-- IF block.DEFAULT eq 'y' --> checked<!-- ENDIF -->> {block.TAGLINE1}
 	<!-- ELSEIF block.TYPE eq 'dropdown' -->
-				<form name="{block.NAME}" action="" method="GET"<!-- IF block.DEFAULT eq 'always' --> selected<!-- ENDIF -->>
 		  			<div class="Browse">
 				{DROPDOWN}
 	<!-- ELSEIF block.TYPE eq 'upload' -->
@@ -82,6 +81,7 @@
 <!-- END block -->
 				</table>
                     <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_530}">
 				</form>
             </div>

@@ -14,7 +14,7 @@
 
 include 'includes/common.inc.php';
 
-if (($system->SETTINGS['contactseller'] == 'logged' && !$user->logged_in) || $system->SETTINGS['contactseller'] == 'never')
+if (($system->SETTINGS['contactseller'] == 'logged' && !$user->is_logged_in()) || $system->SETTINGS['contactseller'] == 'never')
 {
 	if (isset($_SESSION['REDIRECT_AFTER_LOGIN']))
 	{

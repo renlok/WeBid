@@ -87,6 +87,7 @@
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="idhidden" value="{ID}">
                     <input type="hidden" name="mode" value="{MODE}">
+                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_071}">
 				</form>
             </div>

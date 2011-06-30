@@ -22,7 +22,7 @@ $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
 $bidder_id = $user->user_data['id'];
 $bidding_ended = false;
 
-if (!$user->logged_in)
+if (!$user->is_logged_in())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'bid.php?id=' . $id;
 	header('location: user_login.php');

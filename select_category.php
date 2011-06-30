@@ -16,7 +16,7 @@ include 'includes/common.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
 // Is the seller logged in?
-if (!$user->logged_in)
+if (!$user->is_logged_in())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');

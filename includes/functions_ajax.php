@@ -17,6 +17,7 @@ if (!defined('InWeBid')) exit('Access denied');
 // author: John	http://www.webidsupport.com/forums/member.php?5491-John
 function converter_call($post_data = true, $data = array())
 {
+	global $system;
 	include $include_path . 'converter.inc.php';
 
 	// get convertion data
@@ -33,11 +34,12 @@ function converter_call($post_data = true, $data = array())
 		$from = $data['from'];
 		$to = $data['to'];
 	}
+	$amount = $system->input_money($amount);
 
 	$CURRENCIES = CurrenciesList();
 
 	$conversion = ConvertCurrency($from, $to, $amount);
 	// construct string
-	echo $amount . ' ' . $CURRENCIES[$from] . ' = ' . number_format($conversion, 2, '.', ',') . ' ' . $CURRENCIES[$to];
+	echo $amount . ' ' . $CURRENCIES[$from] . ' = ' . $system->print_money($conversion, true, false, false) . ' ' . $CURRENCIES[$to];
 }
 ?>

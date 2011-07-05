@@ -178,9 +178,7 @@
 				</table>
 
 				<div style="text-align:center">
-					<!-- IF B_SHOWACCEPTANCE -->
-					<p>{L_ACCEPTANCE}</p>
-					<!-- ENDIF -->
+					<p><input type="checkbox" name="terms_check" id="terms_check"> {858}</p>
 					<input type="hidden" name="action" value="first">
 					<input type="submit" name="" value="{L_235}" class="button">
 					<input type="reset" name="" value="{L_035}" class="button">
@@ -188,7 +186,11 @@
 			</form>
 		</div>
 <!-- ELSE -->
-		<div align="center">{L_MESSAGE}</div>
+		<div class="padding">
+        	<h2>{L_HEADER}</h2>
+        	<p>{L_MESSAGE}</p>
+            <p>{L_860}</p>
+        </div>
 <!-- ENDIF -->
 	</div>
 </div>

@@ -117,7 +117,11 @@ if ($system->SETTINGS['spam_register'] == 1)
 
 if (isset($_POST['action']) && $_POST['action'] == 'first')
 {
-	if (empty($_POST['TPL_name']))
+	if (!isset($_POST['terms_check']))
+	{
+		$ERR = $ERR_078;
+	}
+	elseif (empty($_POST['TPL_name']))
 	{
 		$ERR = $ERR_5029;
 	}
@@ -339,7 +343,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				elseif ($system->SETTINGS['activationtype'] == 1)
 				{
 					include $include_path . 'user_confirmation.inc.php';
-					$TPL_message = sprintf($MSG['016'], $TPL_email_hidden);
+					$TPL_message = sprintf($MSG['016'], $TPL_email_hidden, $system->SETTINGS['sitename']);
 				}
 				else
 				{
@@ -354,6 +358,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					header('location: pay.php?a=3');
 					exit;
 				}
+
+				$template->assign_vars(array(
+						'L_HEADER' => sprintf($MSG['859'], $TPL_name_hidden),
+						'L_MESSAGE' => $TPL_message
+						));
 			}
 		}
 	}
@@ -411,9 +420,7 @@ $time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'L_COUNTRIES' => $country,
-		'L_ACCEPTANCE' => nl2br(stripslashes($system->SETTINGS['acceptancetext'])),
 		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
-		'L_MESSAGE' => (isset($TPL_message)) ? $TPL_message : '',
 		'TOMEZONE' => $time_correction,
 
 		//payment stuff
@@ -426,7 +433,6 @@ $template->assign_vars(array(
 
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
-		'B_SHOWACCEPTANCE' => ($system->SETTINGS['showacceptancetext'] == 1),
 		'B_FIRST' => $first,
 		'B_PAYPAL' => ($gateway_data['paypal_active'] == 1),
 		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1),

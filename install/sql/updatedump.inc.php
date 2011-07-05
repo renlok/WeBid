@@ -123,4 +123,21 @@ if ($myversion == '1.0.0')
 	//1.0.0 to 1.0.1
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.1';";
 }
+
+if ($myversion == '1.0.1')
+{
+	//1.0.1 to 1.0.2
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.2';";
+}
+
+if ($myversion == '1.0.2')
+{
+	//1.0.2 to 1.0.3
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `helpbox` int(1) NOT NULL default '1';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `hotitemsnumber` int(1) NOT NULL default '8';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `higherbidsnumber`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `showacceptancetext`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `acceptancetext`;";
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.3';";
+}
 ?>

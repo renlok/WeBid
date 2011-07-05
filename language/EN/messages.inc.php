@@ -100,6 +100,7 @@ $ERR_074 = "You have already left feedback on this transaction";
 $ERR_075 = 'No bids';
 $ERR_076 = 'Invalid Username/E-mail combination';
 $ERR_077 = 'Valid Token Expired';
+$ERR_078 = 'You must agree to the Terms and Conditions';
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
@@ -191,9 +192,6 @@ $MSG['012'] = "ZIP/Post Code";
 $MSG['013'] = "Telephone";
 $MSG['014'] = "Country";
 $MSG['015'] = "--Select here";
-$MSG['016'] = "Registration completed. Your data has been received.<br>A confirmation e-mail has been sent to: <i>%s</i>";
-$MSG['016_a'] = "Registration completed. Your data has been received.<br>The site admin will shortly review your account, once your account has been accepted by the admin you will be able to login";
-$MSG['016_b'] = "Registration completed. Your data has been received.<br>You may now login using your username and password.";
 $MSG['017'] = "Item title";
 $MSG['018'] = "Item description";
 $MSG['019'] = "Default Image";
@@ -912,6 +910,16 @@ $MSG['854'] = 'Accounts';
 $MSG['855'] = 'Choose View';
 $MSG['856'] = 'Select Period';
 $MSG['857'] = 'Total Invoiced';
+$MSG['858'] = 'I have read and agree to the <a href="' . $system->SETTINGS['siteurl'] . 'contents.php?show=terms">Terms and Conditions</a>';
+$MSG['859'] = 'Thank you %s for Registering.';
+$MSG['016'] = 'We have sent a confirmation email to %s. This email contains an activation link to confirm your email address, simply click on the link to activate your %s account.';
+$MSG['016_a'] = "The site admin will shortly review your account, once your account has been accepted by the admin you will be able to login";
+$MSG['016_b'] = "You may now login using your username and password.";
+$MSG['860'] = '<p>In the meantime here are some tips to get you started with ' . $system->SETTINGS['sitename'] . '.</p>
+<ul>
+  <li>Have photos ready when listing an item to sell, reduce the filesize to save time when uploading.</li>
+  <li>Featured auctions are much more likely to sell, your auction will be randomly featured on the ' . $system->SETTINGS['sitename'] . ' Home page.</li>
+</ul>';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

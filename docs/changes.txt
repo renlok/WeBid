@@ -13,5 +13,6 @@
 - Added option to hide helpbox on homepage
 - Replaced highest bids listing on home page with hot items list
 - Made timezone dropdown more user friendly
+- Removed the acceptance text option from admin
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

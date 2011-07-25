@@ -218,7 +218,7 @@ function get_fee($minimum_bid)
 	$fee_value = 0;
 	while ($row = mysql_fetch_assoc($res))
 	{
-		if ($minimum_bid > $row['fee_from'] && $minimum_bid < $row['fee_to'] && $row['type'] == 'setup')
+		if ($minimum_bid >= $row['fee_from'] && $minimum_bid <= $row['fee_to'] && $row['type'] == 'setup')
 		{
 			if ($row['fee_type'] == 'flat')
 			{
@@ -344,7 +344,7 @@ function check_gateway($gateway)
 		return true;
 	if ($gateway == 'moneybookers' && !empty($user->user_data['moneybookers_email']))
 		return true;
-	if ($gateway == 'toocheckout_id' && !empty($user->user_data['authnet_id']))
+	if ($gateway == 'toocheckout_id' && !empty($user->user_data['toocheckout_id']))
 		return true;
 	return false;
 }

@@ -38,8 +38,8 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_description']	= $RELISTEDAUCTION['description'];
 	$_SESSION['SELL_atype']			= $RELISTEDAUCTION['auction_type'];
 	$_SESSION['SELL_iquantity']		= $RELISTEDAUCTION['quantity'];
-	$_SESSION['SELL_shipping_cost']	= $RELISTEDAUCTION['shipping_cost'];
-	$_SESSION['SELL_minimum_bid']	= $RELISTEDAUCTION['minimum_bid'];
+	$_SESSION['SELL_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost']);
+	$_SESSION['SELL_minimum_bid']	= $system->print_money_nosymbol($RELISTEDAUCTION['minimum_bid']);
 	$_SESSION['SELL_sellcat1']		= $RELISTEDAUCTION['category'];
 	$_SESSION['SELL_sellcat2']		= $RELISTEDAUCTION['secondcat'];
 	$_SESSION['SELL_duration']		= $RELISTEDAUCTION['duration'];
@@ -57,7 +57,7 @@ if (!isset($_POST['action']))
 
 	if (floatval($RELISTEDAUCTION['reserve_price']) > 0)
 	{
-		$_SESSION['SELL_reserve_price'] = $RELISTEDAUCTION['reserve_price'];
+		$_SESSION['SELL_reserve_price'] = $system->print_money_nosymbol($RELISTEDAUCTION['reserve_price']);
 		$_SESSION['SELL_with_reserve']  = 'yes';
 	}
 	else
@@ -68,7 +68,7 @@ if (!isset($_POST['action']))
 
 	if (floatval($RELISTEDAUCTION['buy_now']) > 0)
 	{
-		$_SESSION['SELL_buy_now_price'] = $RELISTEDAUCTION['buy_now'];
+		$_SESSION['SELL_buy_now_price'] = $system->print_money_nosymbol($RELISTEDAUCTION['buy_now']);
 		$_SESSION['SELL_with_buy_now']  = 'yes';
 	}
 	else
@@ -80,7 +80,7 @@ if (!isset($_POST['action']))
 	if (floatval($RELISTEDAUCTION['increment']) > 0)
 	{
 		$_SESSION['SELL_increment']			= 2;
-		$_SESSION['SELL_customincrement']	= $RELISTEDAUCTION['increment'];
+		$_SESSION['SELL_customincrement']	= $system->print_money_nosymbol($RELISTEDAUCTION['increment']);
 	}
 	else
 	{

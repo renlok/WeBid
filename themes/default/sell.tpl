@@ -72,7 +72,7 @@ $(document).ready(function(){
 			min_bid_fee = 0;
 		} else {
 			for (var i = 0; i < setup.length; i++) {
-				if (setup[i][0] < min_bid && setup[i][1] > min_bid) {
+				if (setup[i][0] <= min_bid && setup[i][1] >= min_bid) {
 					if (setup[i][3] == 'flat') {
 						min_bid_fee = setup[i][2];
 						updatefee(setup[i][2]);

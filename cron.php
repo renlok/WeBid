@@ -71,7 +71,7 @@ $count_auctions = $num = mysql_num_rows($result);
 printLog($num . ' auctions to close');
 
 $n = 1;
-while ($Auction = mysql_fetch_array($result)) // loop auctions
+while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 {
 	$n++;
 	$report_text = '';
@@ -87,7 +87,7 @@ while ($Auction = mysql_fetch_array($result)) // loop auctions
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($res) > 0)
 	{
-		$Seller = mysql_fetch_array($res);
+		$Seller = mysql_fetch_assoc($res);
 	}
 	else
 	{
@@ -349,7 +349,7 @@ printLog("++++++ Archiving old auctions");
 $expireAuction = 60 * 60 * 24 * $system->SETTINGS['archiveafter']; // time of auction expiration (in seconds)
 $expiredTime = time() - $expireAuction;
 
-$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE ends <= '" . $expiredTime . "'";
+$query = "SELECT id FROM " . $DBPrefix . "auctions WHERE ends <= '" . $expiredTime . "'";
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 

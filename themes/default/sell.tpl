@@ -184,16 +184,20 @@ $(document).ready(function(){
 		</div>
 		<div class="table2">
         	<a name="goto"></a>
+<!-- IF ERROR ne '' -->
+            <div class="error-box">
+                {ERROR}
+            </div>
+<!-- ENDIF -->
 <!-- IF PAGE eq 0 -->
 			<form name="sell" action="{ASSLURL}sell.php" method="post" enctype="multipart/form-data">
             	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" cellspacing="0">
-	<!-- IF ERROR ne '' -->
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">&nbsp;</td>
-						<td class="errfont">{ERROR}</td>
+						<td class="centre" colspan="2">
+                        	<h2 class="underline">{L_865}</h2>
+						</td>
 					</tr>
-	<!-- ENDIF -->
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_287}</b>
@@ -274,15 +278,23 @@ $(document).ready(function(){
 							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>)
 						</td>
 					</tr>
-					<tr>
+	<!-- IF B_CUSINC -->
+					<tr class="dutchhide">
 						<td align="right" width="25%" valign="top" class="leftpan">
-							<b>{L_023}</b>
+							<b>{L_120}</b>
 						</td>
 						<td class="rightpan">
-							<input type="text" size="10" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}">
-							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>)
-						</td>
+							<input type="radio" name="increments" id="inc1" value="1" {INCREMENTS1}>
+							{L_614}
+							<br>
+							<input type="radio" name="increments" id="inc2" value="2" {INCREMENTS2}>
+							{L_615}
+							<input type="text" name="customincrement" id="custominc" size="10" value="{CUSTOM_INC}">
+							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>) </td>
 					</tr>
+	<!-- ELSE -->
+					<input type="hidden" name="increments" id="inc1" value="1">
+	<!-- ENDIF -->
 					<tr class="dutchhide">
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_021}</b>
@@ -322,23 +334,6 @@ $(document).ready(function(){
 							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>) </td>
 					</tr>
 	<!-- ENDIF -->
-	<!-- IF B_CUSINC -->
-					<tr class="dutchhide">
-						<td align="right" width="25%" valign="top" class="leftpan">
-							<b>{L_120}</b>
-						</td>
-						<td class="rightpan">
-							<input type="radio" name="increments" id="inc1" value="1" {INCREMENTS1}>
-							{L_614}
-							<br>
-							<input type="radio" name="increments" id="inc2" value="2" {INCREMENTS2}>
-							{L_615}
-							<input type="text" name="customincrement" id="custominc" size="10" value="{CUSTOM_INC}">
-							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>) </td>
-					</tr>
-	<!-- ELSE -->
-					<input type="hidden" name="increments" id="inc1" value="1">
-	<!-- ENDIF -->
     <!-- IF B_EDIT_STARTTIME -->
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
@@ -368,6 +363,31 @@ $(document).ready(function(){
 							{DURATIONS}
 						</td>
 					</tr>
+	<!-- IF B_AUTORELIST -->
+                    <tr>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L__0161}</b>
+						</td>
+						<td class="rightpan">
+                        	<p>{L__0162}</p>
+                        	{RELIST}
+						</td>
+					</tr>
+	<!-- ENDIF -->
+					<tr>
+						<td class="centre" colspan="2">
+                        	<h2 class="underline">{L_864}</h2>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L_023}</b>
+						</td>
+						<td class="rightpan">
+							<input type="text" size="10" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}">
+							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>)
+						</td>
+					</tr>
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_025}</b>
@@ -390,6 +410,11 @@ $(document).ready(function(){
 						</td>
 					</tr>
 					<tr>
+						<td class="centre" colspan="2">
+                        	<h2 class="underline">{L_30_0080}</h2>
+						</td>
+					</tr>
+					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_026}</b>
 						</td>
@@ -397,11 +422,14 @@ $(document).ready(function(){
 							{PAYMENTS}
 						</td>
 					</tr>
+					<tr>
+						<td class="centre" colspan="2">
+                        	<h2 class="underline">{L_268}</h2>
+						</td>
+					</tr>
 	<!-- IF B_MKFEATURED or B_MKBOLD or B_MKHIGHLIGHT -->
                     <tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
-							<b>{L_268}</b>
-						</td>
+						<td>&nbsp;</td>
 						<td class="rightpan">
         <!-- IF B_MKFEATURED -->
         					<p><input type="checkbox" name="is_featured" id="is_featured" {IS_FEATURED}> {L_273}</p>
@@ -412,17 +440,6 @@ $(document).ready(function(){
         <!-- IF B_MKHIGHLIGHT -->
         					<p><input type="checkbox" name="is_highlighted" id="is_highlighted" {IS_HIGHLIGHTED}> {L_292}</p>
         <!-- ENDIF -->
-						</td>
-					</tr>
-	<!-- ENDIF -->
-	<!-- IF B_AUTORELIST -->
-                    <tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
-							<b>{L__0161}</b>
-						</td>
-						<td class="rightpan">
-                        	<p>{L__0162}</p>
-                        	{RELIST}
 						</td>
 					</tr>
 	<!-- ENDIF -->
@@ -448,11 +465,6 @@ $(document).ready(function(){
 			<form name="preview" action="{ASSLURL}sell.php" method="post">
             <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<table width="100%" border="0" cellpadding="4" align="center" cellspacing=0>
-	<!-- IF ERROR ne '' -->
-			<tr>
-				<td class="errfont" colspan="2" align="center">{ERROR}</td>
-			</tr>
-	<!-- ENDIF -->
 			<tr>
 				<td colspan="2" align="center">{L_046}</td>
 			</tr>
@@ -575,8 +587,14 @@ $(document).ready(function(){
 			</div>
 			</form>
 <!-- ELSE -->
-			<div style="text-align:center">
-				<p>{L_100}{L_101}<a href="{SITEURL}item.php?id={AUCTION_ID}&mode=1">{SITEURL}item.php?id={AUCTION_ID}</a><p>
+			<div class="padding">
+				{L_100}
+                <p>{MESSAGE}</p>
+                <ul>
+                	<li><a href="{SITEURL}item.php?id={AUCTION_ID}&mode=1">{L_101}</a></li>
+                    <li><a href="{SITEURL}edit_active_auction.php?id={AUCTION_ID}">{L_30_0069}</a></li>
+                    <li><a href="{SITEURL}sellsimilar.php?id={AUCTION_ID}">{L_2__0050}</a></li>
+                </ul>
 			</div>
 <!-- ENDIF -->
 		</div>

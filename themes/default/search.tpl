@@ -4,8 +4,8 @@
 	</div>
 	<div class="table2">
 <!-- IF ERROR ne '' -->
-		<div class="padding" align="center">
-			<p class="errfont">{ERROR}</p>
+		<div class="error-box">
+			{ERROR}
 		</div>
 <!-- ELSE -->
 	<!-- IF NUM_AUCTIONS gt 0 -->

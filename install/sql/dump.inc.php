@@ -1571,7 +1571,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 'n',
 50,
 'n',
-1,
+0,
 'y',
 'n',
 'n',

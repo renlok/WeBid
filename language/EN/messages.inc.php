@@ -195,7 +195,7 @@ $MSG['015'] = "--Select here";
 $MSG['017'] = "Item title";
 $MSG['018'] = "Item description";
 $MSG['019'] = "Default Image";
-$MSG['020'] = "Auction starts with";
+$MSG['020'] = "Starting price";
 $MSG['021'] = "Reserve price";
 $MSG['022'] = "Duration";
 $MSG['023'] = "Shipping fee";
@@ -268,8 +268,9 @@ $MSG['096'] = "Actual language";
 $MSG['097'] = "Days";
 $MSG['098'] = "Registration Confirmation";
 $MSG['099'] = "Your Auction Has Been Confirmed";
-$MSG['100'] = "Your auction has been properly received.<br>A confirmation e-mail has been sent to your e-mail address.<br>";
-$MSG['101'] = "Auction URL: ";
+$MSG['100'] = "<h3>Your auction has been setup. A confirmation e-mail will been sent to you.</h3>";
+$MSG['101'] = "View your auction";
+$MSG['102'] = 'Auction Number - %s, your auction will close %s';
 $MSG['103'] = " Search ";
 $MSG['104'] = "Browse ";
 $MSG['105'] = "View history";
@@ -920,6 +921,21 @@ $MSG['860'] = '<p>In the meantime here are some tips to get you started with ' .
   <li>Have photos ready when listing an item to sell, reduce the filesize to save time when uploading.</li>
   <li>Featured auctions are much more likely to sell, your auction will be randomly featured on the ' . $system->SETTINGS['sitename'] . ' Home page.</li>
 </ul>';
+$MSG['861'] = 'Search auctions';
+$MSG['862'] = 'Login to continue';
+$MSG['863'] = '<h2>Not a Member yet?</h2>
+        <h3><a href="register.php">Register Now</a><br>
+        It will only take a minute</h3>
+        <p> Becoming a member enables you to:</p>
+        <ul>
+            <li>Sell anything</li>
+            <li>Be notified when an item your looking for is listed</li>
+            <li>Add items to your watchlist</li>
+            <li>Bid on items</li>
+            <li>plus a whole lot more</li>
+        </ul>';
+$MSG['864'] = 'Shipping Details';
+$MSG['865'] = 'Listing Details';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

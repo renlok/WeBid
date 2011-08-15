@@ -9,6 +9,11 @@ function SubmitBoxes(N)
 <div class="content">
 	<div class="tableContent2">
 	<div class="titTable2">{L_028}</div>
+<!-- IF ERROR ne '' -->
+		<div class="error-box">
+			{ERROR}
+		</div>
+<!-- ENDIF -->
 		<a name="goto"></a>
 		<form name="catform" id="catform" action="select_category.php#goto" method="post">
         <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
@@ -21,13 +26,6 @@ function SubmitBoxes(N)
 			<!-- IF CAT_NO eq 2 -->{L_2__0041} {COST}<!-- ELSE -->{L_2__0038}<!-- ENDIF -->
 		  </td>
 		</tr>
-<!-- IF ERROR ne '' -->
-		<tr> 
-		  <td colspan="2" class="errfont">
-			{ERROR}
-		  </td>
-		</tr>
-<!-- ENDIF -->
 		<tr> 
 <!-- BEGIN boxes -->
 		  <td align="center" style="width:{boxes.PERCENT}%;">

@@ -3,7 +3,7 @@
 		{L_464}
 	</div>
 <!-- IF ERROR ne '' -->
-	<div class="errfont">
+	<div class="error-box">
 		{ERROR}
 	</div>
 <!-- ENDIF -->
@@ -14,7 +14,7 @@
 				<tr>
 					<td width="45%" align="right">{L_1000}</td>
 					<td width="55%">
-						<input type="text" size="45" name="title">
+						<input type="search" size="45" name="title">
 					</td>
 				</tr>
 				<tr>

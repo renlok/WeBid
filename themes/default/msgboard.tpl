@@ -7,6 +7,11 @@
 		<a href="{SITEURL}boards.php">{L_5058}</a>
 	</div>
 	<div class="padding center" align="center">
+<!-- IF B_LOGGED_IN eq false -->
+        <div class="error-box">
+            {L_5056}
+        </div>
+<!-- ENDIF -->
 		<table width="70%" cellspacing="0" cellpadding="6" bgcolor="#EEEEEE">
 		<tr>
 			<tr>
@@ -17,9 +22,6 @@
             	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<input type="hidden" name="action" value="insertmessage">
 				<input type="hidden" name="board_id" value="{BOARD_ID}">
-<!-- IF B_LOGGED_IN eq false -->
-				<p class="errfont">{L_5056}</p>
-<!-- ENDIF -->
 				<textarea name="newmessage" cols="60" rows="5"></textarea>
 				<br>
 				<input type="submit" name="Submit" value="{L_5057}" class="button">

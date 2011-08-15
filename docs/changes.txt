@@ -1,18 +1,12 @@
-1.0.3 - 03/06/11
+1.1.0 - 10/07/11
 -----------------------------
-- Important security fixes
-- Updated PHP Browser dectection script to 5.3.16
-- Updated jQuery to 1.6.1
-- Updated imgAreaSelect jQuery plugin to 0.9.6
-- View FAQ ancors (Bug #269)
-- Made the confirm link more secure (Thanks to Lunkwill) (Bug #277)
-- Changed the MD5_PREFIX so its randomly generated on install
-- Changed the currency converter to pull data from google as its more reliable (Thanks to John) (Bug #194)
-- Added error messages for when trying to view an current/closed auctions pages for an invlid user
-- Added error messages for when trying to bid on an invlid auction
-- Added option to hide helpbox on homepage
-- Replaced highest bids listing on home page with hot items list
-- Made timezone dropdown more user friendly
-- Removed the acceptance text option from admin
+- Fixed bug in auction setup fee where users where not charged when starting price was at limits of fee range (Bug #302)
+- Fixed the sellsimilar page where it messed up the old prices (Bug #306)
+- Fixed now 2Checkout is shown as an option on listing an item (Bug #307)
+- Fixed bug where users were only charges for one item on winning a dutch auction (Bug #310)
+- Improved look of the error messages
+- Updated jQuery to 1.6.2
+- Added jQuery UI
+- Reordered the sell template make it look a bit neater
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

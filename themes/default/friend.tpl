@@ -12,11 +12,13 @@
 			</p>
 		</div>
 <!-- ELSE -->
+	<!-- IF ERROR ne '' -->
+		<div class="error-box">
+			{ERROR}
+		</div>
+	<!-- ENDIF -->
 		<form name="friend" action="friend.php" method="post">
         <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-	<!-- IF ERROR ne '' -->
-		<div align="center" class="errfont">{ERROR}</div>
-	<!-- ENDIF -->
 		<table width="90%" cellpadding="4" cellspacing="0">
 		<tr> 
 			<td align="right" width="45%"><b>{L_017}</b></td>

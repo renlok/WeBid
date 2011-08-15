@@ -17,18 +17,16 @@ function ResetFriendForm(){
 <!-- IF MESSAGE ne '' -->
 		<div align="center" class="padding">{MESSAGE}</div>
 <!-- ELSE -->
+	<!-- IF ERROR ne '' -->
+		<div class="error-box">
+			{ERROR}
+		</div>
+	<!-- ENDIF -->
 		<TABLE WIDTH="100%" >
 		<TR>
 		<TD>
 		<FORM NAME="sendemail" ACTION="send_email.php" METHOD=POST>
 		<TABLE WIDTH="90%" border="0" cellpadding="4" cellspacing="0" class="content">
-	<!-- IF ERROR ne '' -->
-		<TR> 
-		<TD colspan="2" class="errfont">
-			{ERROR}
-		</TD>
-		</TR>
-	<!-- ENDIF -->
 		<TR> 
 		<TD width="40%" ALIGN=right> <B>{L_125}</B> 
 		</TD>

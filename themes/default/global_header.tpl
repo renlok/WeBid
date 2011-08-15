@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en" dir="{DOCDIR}">
 <head>
 <title>{PAGE_TITLE}</title>
@@ -89,7 +88,7 @@ $(document).ready(function() {
     	<div>
             <form name="search" action="{SITEURL}search.php" method="get">
                 {SELECTION_BOX}
-                <input type="text" name="q" size="50" value="{Q}">
+                <input type="search" name="q" size="50" value="{Q}" placeholder="{L_861}">
                 <input type="submit" name="sub" value="{L_399}" class="button">
                 <a href="{SITEURL}adsearch.php">{L_464}</a>
             </form>

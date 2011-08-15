@@ -4,7 +4,7 @@
 			{L_207}
 		</div>
 <!-- IF ERROR ne '' -->
-		<div class="errfont">
+		<div class="error-box">
 			{ERROR}
 		</div>
 <!-- ENDIF -->

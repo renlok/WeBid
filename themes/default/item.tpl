@@ -18,7 +18,7 @@ $(document).ready(function() {
 			$("#ending_counter").html(timestring);
 			setTimeout(displaytime, 1000);
 		} else {
-			$("#ending_counter").html('<span class="errfont">{L_911}</span>');
+			$("#ending_counter").html('<div class="error-box">{L_911}</div>');
 		}
 	}
 	setTimeout(displaytime, 1000);

@@ -467,6 +467,14 @@ class template_compile
 					if (preg_match('#^((?:[a-z0-9\-_]+\.)+)?(\$)?(?=[A-Z])([A-Z0-9\-_]+)#s', $token, $varrefs))
 					{
 						$token = (!empty($varrefs[1])) ? $this->generate_block_data_ref(substr($varrefs[1], 0, -1), true, $varrefs[2]) . '[\'' . $varrefs[3] . '\']' : (($varrefs[2]) ? '$this->_tpldata[\'DEFINE\'][\'.\'][\'' . $varrefs[3] . '\']' : '$this->_rootref[\'' . $varrefs[3] . '\']');
+						// check if array variable
+						/* attempt to get array ifs to work
+						if (isset($tokens[$i + 3]) && $tokens[$i + 1] == '(' && $tokens[$i + 3] == ')')
+						{
+							$token .= "['" . $tokens[$i + 2] . "']";
+							$i = $i + 3;
+						}
+						*/
 					}
 					else if (preg_match('#^\.((?:[a-z0-9\-_]+\.?)+)$#s', $token, $varrefs))
 					{
@@ -492,6 +500,7 @@ class template_compile
 							// Add the block reference for the last child.
 							$varref .= "['" . $blocks[0] . "']";
 						}
+
 						$token = "sizeof($varref)";
 					}
 					else if (!empty($token))

@@ -21,7 +21,7 @@ $(document).ready(function(){
 		<div class="table2 padding" style="text-align:center;">
 <!-- IF PAGE eq 1 -->
 	<!-- IF ERROR ne '' -->
-			<div class="errfont">
+			<div class="error-box">
 				{ERROR}
 			</div>
 	<!-- ENDIF -->
@@ -45,8 +45,7 @@ $(document).ready(function(){
 	<!-- IF TQTY gt 1 -->
 				<tr bgcolor="#FFFEEE">
 					<td><b>{L_284}:</b></td>
-					<td><input type="text" size="3" name="qty" id="qty" value="{QTY}">
-					</td>
+					<td><input type="number" name="qty" id="qty" value="{QTY}" min="1" max="{TQTY}" step="1"></td>
 				</tr>
 	<!-- ENDIF -->
 	<!-- IF B_USERAUTH -->

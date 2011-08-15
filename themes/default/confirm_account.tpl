@@ -5,7 +5,9 @@
 		</div>
 		<div class="table2" style="text-align:center">
 <!-- IF PAGE eq error -->
-			<span class="errfont">{ERROR}</span>
+			<div class="error-box">
+            	{ERROR}
+            </div>
 <!-- ELSEIF PAGE eq confirm -->
 			<form name="registration" action="{SITEURL}confirm.php" method="post">
 				<p>{L_267}</p>

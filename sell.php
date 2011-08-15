@@ -312,7 +312,8 @@ switch ($_SESSION['action'])
 			$template->assign_vars(array(
 					'TITLE' => $MSG['028'],
 					'PAGE' => 2,
-					'AUCTION_ID' => $auction_id
+					'AUCTION_ID' => $auction_id,
+					'MESSAGE' => sprintf($MSG['102'], $auction_id, date('D j M \a\t g:ia', $a_ends))
 					));
 			break;
 		}

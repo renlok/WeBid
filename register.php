@@ -115,61 +115,100 @@ if ($system->SETTINGS['spam_register'] == 1)
 	$spam_html = $resp->show_html();
 }
 
+// missing check bools
+$birthday_missing = $address_missing = $city_missing = $prov_missing = $country_missing = $zip_missing = $tel_missing = $paypal_missing = $authnet_missing = $worldpay_missing = $toocheckout_missing = $moneybookers_missing = $name_missing = $nick_missing = $password_missing = $repeat_password_missing = $email_missing = false;
 if (isset($_POST['action']) && $_POST['action'] == 'first')
 {
 	if (!isset($_POST['terms_check']))
 	{
 		$ERR = $ERR_078;
 	}
-	elseif (empty($_POST['TPL_name']))
+	if (empty($_POST['TPL_name']))
 	{
 		$ERR = $ERR_5029;
+		$name_missing = true;
 	}
-	elseif (empty($_POST['TPL_nick']))
+	if (empty($_POST['TPL_nick']))
 	{
 		$ERR = $ERR_5030;
+		$nick_missing = true;
 	}
-	elseif (empty($_POST['TPL_password']))
+	if (empty($_POST['TPL_password']))
 	{
 		$ERR = $ERR_5031;
+		$password_missing = true;
 	}
-	elseif (empty($_POST['TPL_repeat_password']))
+	if (empty($_POST['TPL_repeat_password']))
 	{
 		$ERR = $ERR_5032;
+		$repeat_password_missing = true;
 	}
-	elseif (empty($_POST['TPL_email']))
+	if (empty($_POST['TPL_email']))
 	{
 		$ERR = $ERR_5033;
+		$email_missing = true;
 	}
-	elseif (empty($_POST['TPL_address']) && $MANDATORY_FIELDS['address'] == 'y')
+	if (empty($_POST['TPL_address']) && $MANDATORY_FIELDS['address'] == 'y')
 	{
 		$ERR = $ERR_5034;
+		$address_missing = true;
 	}
-	elseif (empty($_POST['TPL_city']) && $MANDATORY_FIELDS['city'] == 'y')
+	if (empty($_POST['TPL_city']) && $MANDATORY_FIELDS['city'] == 'y')
 	{
 		$ERR = $ERR_5035;
+		$city_missing = true;
 	}
-	elseif (empty($_POST['TPL_prov']) && $MANDATORY_FIELDS['prov'] == 'y')
+	if (empty($_POST['TPL_prov']) && $MANDATORY_FIELDS['prov'] == 'y')
 	{
 		$ERR = $ERR_5036;
+		$prov_missing = true;
 	}
-	elseif (empty($_POST['TPL_country']) && $MANDATORY_FIELDS['country'] == 'y')
+	if (empty($_POST['TPL_country']) && $MANDATORY_FIELDS['country'] == 'y')
 	{
 		$ERR = $ERR_5037;
+		$country_missing = true;
 	}
-	elseif (empty($_POST['TPL_zip']) && $MANDATORY_FIELDS['zip'] == 'y')
+	if (empty($_POST['TPL_zip']) && $MANDATORY_FIELDS['zip'] == 'y')
 	{
 		$ERR = $ERR_5038;
+		$zip_missing = true;
 	}
-	elseif (empty($_POST['TPL_phone']) && $MANDATORY_FIELDS['tel'] == 'y')
+	if (empty($_POST['TPL_phone']) && $MANDATORY_FIELDS['tel'] == 'y')
 	{
 		$ERR = $ERR_5039;
+		$tel_missing = true;
 	}
-	elseif ((empty($_POST['TPL_day']) || empty($_POST['TPL_month']) || empty($_POST['TPL_year'])) && $MANDATORY_FIELDS['birthdate'] == 'y')
+	if ((empty($_POST['TPL_day']) || empty($_POST['TPL_month']) || empty($_POST['TPL_year'])) && $MANDATORY_FIELDS['birthdate'] == 'y')
 	{
 		$ERR = $ERR_5040;
+		$birthday_missing = true;
 	}
-	else
+	if ($gateway_data['paypal_required'] == 1 && empty($_POST['TPL_pp_email']))
+	{
+		$ERR = $MSG['810'];
+		$paypal_missing = true;
+	}
+	if ($gateway_data['authnet_required'] == 1 && (empty($_POST['TPL_authnet_id']) || empty($_POST['TPL_authnet_pass'])))
+	{
+		$ERR = $MSG['811'];
+		$authnet_missing = true;
+	}
+	if ($gateway_data['moneybookers_required'] == 1 && (empty($_POST['TPL_moneybookers_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_moneybookers_email'])))
+	{
+		$ERR = $MSG['822'];
+		$moneybookers_missing = true;
+	}
+	if ($gateway_data['toocheckout_required'] == 1 && (empty($_POST['TPL_toocheckout_id'])))
+	{
+		$ERR = $MSG['821'];
+		$toocheckout_missing = true;
+	}
+	if ($gateway_data['worldpay_required'] == 1 && (empty($_POST['TPL_worldpay_id'])))
+	{
+		$ERR = $MSG['823'];
+		$worldpay_missing = true;
+	}
+	if (!isset($ERR))
 	{
 		$birth_day = (isset($_POST['TPL_day'])) ? $_POST['TPL_day'] : '';
 		$birth_month = (isset($_POST['TPL_month'])) ? $_POST['TPL_month'] : '';
@@ -220,26 +259,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		elseif (BannedEmail($_POST['TPL_email'], $BANNEDDOMAINS))
 		{
 			$ERR = sprintf($MSG['30_0053'], $TPL_domains_alert);
-		}
-		elseif ($gateway_data['paypal_required'] == 1 && empty($_POST['TPL_pp_email']))
-		{
-			$ERR = $MSG['810'];
-		}
-		elseif ($gateway_data['authnet_required'] == 1 && (empty($_POST['TPL_authnet_id']) || empty($_POST['TPL_authnet_pass'])))
-		{
-			$ERR = $MSG['811'];
-		}
-		elseif ($gateway_data['moneybookers_required'] == 1 && (empty($_POST['TPL_moneybookers_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_moneybookers_email'])))
-		{
-			$ERR = $MSG['822'];
-		}
-		elseif ($gateway_data['toocheckout_required'] == 1 && (empty($_POST['TPL_toocheckout_id'])))
-		{
-			$ERR = $MSG['821'];
-		}
-		elseif ($gateway_data['worldpay_required'] == 1 && (empty($_POST['TPL_worldpay_id'])))
-		{
-			$ERR = $MSG['823'];
 		}
 		else
 		{
@@ -463,6 +482,23 @@ $template->assign_vars(array(
 					($gateway_data['toocheckout_required'] == 1) ? ' *' : '',
 					($gateway_data['moneybookers_required'] == 1) ? ' *' : ''
 					),
+		'MISSING0' => ($name_missing) ? 1 : 0,
+		'MISSING1' => ($nick_missing) ? 1 : 0,
+		'MISSING2' => ($password_missing) ? 1 : 0,
+		'MISSING3' => ($repeat_password_missing) ? 1 : 0,
+		'MISSING4' => ($email_missing) ? 1 : 0,
+		'MISSING5' => ($birthday_missing) ? 1 : 0,
+		'MISSING6' => ($address_missing) ? 1 : 0,
+		'MISSING7' => ($city_missing) ? 1 : 0,
+		'MISSING8' => ($prov_missing) ? 1 : 0,
+		'MISSING9' => ($country_missing) ? 1 : 0,
+		'MISSING10' => ($zip_missing) ? 1 : 0,
+		'MISSING11' => ($tel_missing) ? 1 : 0,
+		'MISSING12' => ($paypal_missing) ? 1 : 0,
+		'MISSING13' => ($authnet_missing) ? 1 : 0,
+		'MISSING14' => ($worldpay_missing) ? 1 : 0,
+		'MISSING15' => ($toocheckout_missing) ? 1 : 0,
+		'MISSING16' => ($moneybookers_missing) ? 1 : 0,
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
 		'V_NNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 2) ? 'checked=true' : '',

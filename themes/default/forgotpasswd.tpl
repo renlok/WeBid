@@ -3,14 +3,14 @@
 </div>
 <div class="padding" align="center">
 <!-- IF B_FIRST -->
+	<!-- IF ERROR ne '' -->
+    <div class="error-box">
+        {ERROR}
+    </div>
+	<!-- ENDIF -->
 	<form name="user_login" action="" method="post">
     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 	<table width="80%" cellspacing="0" cellpadding="4" border="0">
-	<!-- IF ERROR ne '' -->
-    <tr>
-        <td class="errfont" colspan="2">{ERROR}</td>
-    </tr>
-	<!-- ENDIF -->
 	<tr>
 		<td colspan="2" align="center">{L_2__0039}</td>
 	</tr>

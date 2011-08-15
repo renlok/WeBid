@@ -140,4 +140,10 @@ if ($myversion == '1.0.2')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `acceptancetext`;";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.3';";
 }
+
+if ($myversion == '1.0.3')
+{
+	//1.0.3 to 1.1.0
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.1.0';";
+}
 ?>

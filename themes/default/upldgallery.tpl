@@ -122,6 +122,11 @@ $(window).load(function () {
 	<span class="smallspan">{L_629}</span>
 </div>
 <!-- ELSE -->
+	<!-- IF ERROR ne '' -->
+		<div class="error-box">
+			{ERROR}
+		</div>
+	<!-- ENDIF -->
 <form name="upload" action="" method="post" enctype="multipart/form-data">
 <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <table cellpadding="3" cellspacing="0" border="0" align="center" width="90%">
@@ -136,13 +141,6 @@ $(window).load(function () {
 			{L_679}
 		</td>
 	</tr>
-	<!-- IF ERROR ne '' -->
-	<tr>
-		<td class="errfont" align="center">
-			{ERROR}
-		</td>
-	</tr>
-	<!-- ENDIF -->
 	<!-- IF B_CANUPLOAD -->
 	<tr>
 		<td>
@@ -161,14 +159,13 @@ $(window).load(function () {
 			{L_682}
 		</td>
 	</tr>
-	<!-- ELSE -->
-	<tr>
-		<td class="errfont" align="center">
-			{L_688} {MAXIMAGES} {L_689}
-		</td>
-	</tr>
-	<!-- ENDIF -->
 </table>
+	<!-- ELSE -->
+</table>
+<div class="warning-box">
+    {L_688} {MAXIMAGES} {L_689}
+</div>
+	<!-- ENDIF -->
 <!-- ENDIF -->
 <br style="clear:both;">
 <br>

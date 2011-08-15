@@ -70,15 +70,6 @@ class user
 
 	function is_logged_in()
 	{
-		global $main_path;
-		$fh = @fopen("$main_path/logs/requests.log", 'a');
-		if ($fh)
-		{
-			fwrite ($fh, gmdate("YMd-H:i:s") . "\n".
-				"POST: " . var_export($_POST, TRUE) . "\n" .
-			       	"\n\n");
-			fclose ($fh);
-		}
 		if(isset($_SESSION['csrftoken']))
 		{
 			# Token should exist as soon as a user is logged in

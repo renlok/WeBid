@@ -27,7 +27,7 @@
 	<tr>
 		<td valign="top" align="right">{L_006}</td>
 		<td>
-			<input type="text" name="TPL_email" size=50 maxlength=50 value="{EMAIL}">
+			<input type="email" name="TPL_email" size=50 maxlength=50 value="{EMAIL}">
 		</td>
 	</tr>
 	<tr>

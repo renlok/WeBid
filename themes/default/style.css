@@ -22,7 +22,7 @@ h3	{ color: #BA1D1D; font-size: 14px; font-weight: bold; text-transform: upperca
 li	{ padding-bottom: 5px; }
 table.container	{ float: none; }
 th	{ color: #787878; font-size: 12px; background-color: #c2e5ff; font-weight: bold; text-transform: capitalize; padding: 0.3ex; }
-ul	{ margin: 0; padding: 10px 10px 10px 20px; list-style: url(img/bullet.gif) none; line-height: 1em; }
+ul	{ padding-left: 20px; list-style: url(img/bullet.gif) none; line-height: 1em; }
 .footer a:hover , .footer a:active	{ color: #6DC0FC; }
 .table-bar a:active	{ color: #BA1D1D; }
 
@@ -49,6 +49,13 @@ body {
 	min-width: 900px;
 }
 
+h1 { font-size: 1.9em; line-height: 1; margin-bottom: 0.5em; padding:0.1em 0; font-weight:200; }
+h2 { font-size: 1.7em; margin-bottom: 0.75em; }
+h3 { font-size: 1.5em; line-height: 1; margin-bottom: 1em; }
+h4 { font-size: 1.4em; line-height: 1; margin-bottom: 1em;  font-weight:700; }
+h5 { font-size: 1.2em; font-weight: bold; margin-bottom:1em; font-weight:200 }
+h6 { font-size: 1.1em; font-weight: bold; margin:0 0 1em 0;}
+
 input {
 	margin: 3px;
 	padding-left: 2px;
@@ -68,6 +75,10 @@ td {
 
 .smallpadding {
 	padding: 5px;
+}
+
+.underline  {
+	border-bottom:1px dotted #C9C9C9;
 }
 
 .copyright {
@@ -203,7 +214,7 @@ a:hover {
 	color: #666666;
 	border: 1px solid #C9C9C9;
 	text-transform: uppercase;
-	width: 90%;
+	width: 95%;
 	margin: 5px auto;
 }
 
@@ -246,4 +257,27 @@ a:hover {
 .centre {
 	padding: 0 auto;
 	text-align: center;
+}
+
+.error-box {
+	color: #B01717;
+	border-bottom: 1px solid #F6ABAB;
+	background: #FAD0D0 url(img/exclamation.png) no-repeat 3px;
+}
+
+.warning-box {
+	color: #957210;
+	border-bottom: 1px solid #FCEB77;
+	background: #FFF6BF url(img/error.png) no-repeat 3px;
+}
+
+.info-box, .error-box, .warning-box, .success-box {
+	padding: 4px 0 4px 22px;
+	margin: 3px 0;
+	font-size: 1.1em;
+}
+
+.missing {
+	border: 1px solid #F6ABAB;
+	background:#FAD0D0;
 }

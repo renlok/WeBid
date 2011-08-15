@@ -5,7 +5,7 @@
 		</div>
 		<div class="table2">
 <!-- IF ERROR ne '' -->
-			<div class="errfont">
+			<div class="error-box">
 				{ERROR}
 			</div>
 <!-- ENDIF -->
@@ -26,11 +26,6 @@
                     <td align="right" width="40%"><b>{L_497}:</b></td>
                     <td>{BN_PRICE}</td>
                 </tr>
-<!-- IF ERROR ne '' -->
-                <tr>
-                    <td colspan=2 align="center" class="errfont">{ERROR}</td>
-                </tr>
-<!-- ENDIF -->
                 <tr>
                     <td colspan=2 align="center">&nbsp;</td>
                 </tr>

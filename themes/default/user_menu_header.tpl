@@ -27,11 +27,11 @@
 				{UCP_TITLE}
 			</div>
 <!-- ENDIF -->
-			<div class="table2">
 <!-- IF B_ISERROR -->
-				<p class="errfont" style="background-color;#FF9933;display:block">{UCP_ERROR}</p>
+            <div class="error-box">
+                {UCP_ERROR}
+            </div>
 <!-- ENDIF -->
-			</div>
 			</td>
 		</tr>
 		</table>

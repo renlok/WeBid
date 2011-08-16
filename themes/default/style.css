@@ -280,4 +280,6 @@ a:hover {
 .missing {
 	border: 1px solid #F6ABAB;
 	background:#FAD0D0;
+	float: left;
+	margin-left: 5px;
 }

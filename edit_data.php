@@ -87,7 +87,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		elseif ((empty($_POST['TPL_day']) || empty($_POST['TPL_month']) || empty($_POST['TPL_year'])) && $MANDATORY_FIELDS['birthdate'] == 'y')
 		{
-			$ERR = $ERR_5040;
+			$ERR = $MSG['948'];
 		}
 		elseif (!empty($_POST['TPL_day']) && !empty($_POST['TPL_month']) && !empty($_POST['TPL_year']) && !checkdate($_POST['TPL_month'], $_POST['TPL_day'], $_POST['TPL_year']))
 		{

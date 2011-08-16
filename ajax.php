@@ -20,5 +20,8 @@ switch ($_GET['do'])
 	case 'converter':
 		converter_call();
 		break;
+	case 'uploadaucimages':
+		include $include_path . 'plupload/examples/upload.php';
+		break;
 }
 ?>

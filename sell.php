@@ -57,6 +57,24 @@ if (isset($_POST['act']) && $_POST['act'] == 'skipexcat')
 	$_SESSION['SELL_sellcat2'] = 0;
 }
 
+// GALLERY FUNCTIONS
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img'])) // Process delete photos
+{
+	if ($_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])])
+	{
+		unlink($upload_path . session_id() . '/' . $_SESSION['SELL_pict_url']);
+		unset($_SESSION['SELL_pict_url']);
+	}
+	unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
+	unset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
+	unset($_SESSION['UPLOADED_PICTURES_SIZE'][intval($_GET['img'])]);
+}
+
+if (isset($_GET['action']) && $_GET['action'] == 'makedefault')
+{
+	$_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $_GET['img'];
+}
+
 // set variables
 setvars();
 
@@ -65,7 +83,7 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'recall')
 
 switch ($_SESSION['action'])
 {
-	case 3:
+	case 4:
 		if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 		{
 			$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
@@ -311,15 +329,123 @@ switch ($_SESSION['action'])
 			}
 			$template->assign_vars(array(
 					'TITLE' => $MSG['028'],
-					'PAGE' => 2,
+					'PAGE' => 3,
 					'AUCTION_ID' => $auction_id,
 					'MESSAGE' => sprintf($MSG['102'], $auction_id, date('D j M \a\t g:ia', $a_ends))
 					));
 			break;
 		}
+	case 3:
+		$noerror = true;
+		// check for errors
+		if ($ERR == 'ERR_')
+		{
+			if (count($_SESSION['UPLOADED_PICTURES']) > $system->SETTINGS['maxpictures'])
+			{
+				$ERR = sprintf($MSG['674'], $system->SETTINGS['maxpictures']);
+			}
+			if ($ERR != 'ERR_')
+			{
+				$_SESSION['action'] = 2;
+				$noerror = false;
+			}
+		}
+		if ($noerror)
+		{
+			// payment methods
+			$payment_methods = '';
+			$query = "SELECT * FROM " . $DBPrefix . "gateways";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$gateways_data = mysql_fetch_assoc($res);
+			$gateway_list = explode(',', $gateways_data['gateways']);
+			foreach ($gateway_list as $v)
+			{
+				$v = strtolower($v);
+				if ($gateways_data[$v . '_active'] == 1 && _in_array($v, $payment))
+				{
+					$payment_methods .= '<p>' . $system->SETTINGS['gatways'][$v] . '</p>';
+				}
+			}
+
+			$payment_options = unserialize($system->SETTINGS['payment_options']);
+			foreach ($payment_options as $k => $v)
+			{
+				if (_in_array($k, $payment))
+				{
+					$payment_methods .= '<p>' . $v . '</p>';
+				}
+			}
+
+			// category name
+			$category_string1 = get_category_string($sellcat1);
+			$category_string2 = get_category_string($sellcat2);
+
+			$query = "SELECT description FROM " . $DBPrefix . "durations WHERE days = " . $duration;
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			// built gallery
+			if ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0)
+			{
+				foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
+				{
+					$template->assign_block_vars('gallery', array(
+							'K' => $k,
+							'IMAGE' => $uploaded_path . session_id() . '/' . $v
+							));
+				}
+			}
+
+			$iquantity = ($atype == 2 || $buy_now_only == 'y') ? $iquantity : 1;
+
+			if (!(strpos($a_starts, '-') === false))
+			{
+				$a_starts = _gmmktime(substr($a_starts, 11, 2),
+					substr($a_starts, 14, 2),
+					substr($a_starts, 17, 2),
+					substr($a_starts, 0, 2),
+					substr($a_starts, 3, 2),
+					substr($a_starts, 6, 4), 0);
+			}
+
+			$template->assign_vars(array(
+					'TITLE' => $title,
+					'SUBTITLE' => $subtitle,
+					'ERROR' => ($ERR == 'ERR_') ? '' : $$ERR,
+					'PAGE' => 2,
+					'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
+
+					'AUC_DESCRIPTION' => stripslashes($description),
+					'PIC_URL' => (empty($pict_url)) ? $MSG['114'] : '<img src="' . $uploaded_path . session_id() . '/' . $pict_url . '" />',
+					'MIN_BID' => $system->print_money($minimum_bid, false),
+					'RESERVE' => $system->print_money($reserve_price, false),
+					'BN_PRICE' => $system->print_money($buy_now_price, false),
+					'SHIPPING_COST' => $system->print_money($shipping_cost, false),
+					'STARTDATE' => (empty($start_now)) ? FormatDate($a_starts) : FormatDate($system->ctime),
+					'DURATION' => mysql_result($res, 0, 'description'),
+					'INCREMENTS' => ($increments == 1) ? $MSG['614'] : $system->print_money($customincrement, false),
+					'ATYPE' => $system->SETTINGS['auction_types'][$atype],
+					'ATYPE_PLAIN' => $atype,
+					'SHIPPING' => (intval($shipping) == 1) ? $MSG['031'] : $MSG['032'],
+					'INTERNATIONAL' => ($international) ? $MSG['033'] : $MSG['043'],
+					'SHIPPING_TERMS' => nl2br(stripslashes($shipping_terms)),
+					'PAYMENTS_METHODS' => $payment_methods,
+					'CAT_LIST1' => $category_string1,
+					'CAT_LIST2' => $category_string2,
+					'FEE' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
+
+					'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y'),
+					'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only == 'y')),
+					'B_BN' => ($system->SETTINGS['buy_now'] == 2),
+					'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
+					'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
+					'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
+					'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y')
+					));
+			break;
+		}
 	case 2:
 		$noerror = true;
-		$er = false;
 		if ($with_reserve == 'no') $reserve_price = 0;
 		if ($buy_now == 'no') $buy_now_price = 0;
 		// run the word filter
@@ -340,162 +466,41 @@ switch ($_SESSION['action'])
 		}
 		if ($noerror)
 		{
-			$auction_id = generate_id();
-			if ($imgtype == 1 && !empty($_FILES['userfile']['name']) && $_FILES['userfile']['name'] != 'none')
+			// built gallery
+			foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
 			{
-				$inf = getimagesize($_FILES['userfile']['tmp_name']);
-				$er = false;
-				if ($inf)
-				{
-					$inf[2] = intval($inf[2]);
-					if ($inf[2] < 1 || $inf[2] > 3)
-					{
-						$er = true;
-						$ERR = 'ERR_602';
-					}
-					elseif (intval($userfile_size) > $system->SETTINGS['maxuploadsize'])
-					{
-						$er = true;
-						$ERR = 'ERR_603';
-					}
-					else
-					{
-						switch ($inf[2])
-						{
-							case 1:
-								$ext = '.gif';
-								break;
-							case 2:
-								$ext = '.jpg';
-								break;
-							case 3:
-								$ext = '.png';
-								break;
-						}
-						$uploaded_filename = $auction_id . $ext;
-						$fname = $upload_path . $uploaded_filename;
-						if (file_exists($fname))
-						{
-							unlink($fname);
-						}
-						move_uploaded_file($_FILES['userfile']['tmp_name'], $fname);
-						chmod($fname, 0777);
-						$pict_url = $uploaded_filename;
-						$_SESSION['SELL_file_uploaded'] = $imgtype;
-					}
-				}
-				else
-				{
-					$ERR = 'ERR_602';
-					$er = true;
-				}
-			}
-			elseif ($imgtype == 0 && !empty($pict_url))
-			{
-				if ($_SESSION['SELL_file_uploaded'])
-				{
-					unlink($upload_path . $_SESSION['SELL_pict_url']);
-				}
-				$ext = strtolower(substr($pict_url, - 3));
-				if ($ext != 'gif' && $ext != 'jpg' && $ext != 'png')
-				{
-					$ERR = 'ERR_602';
-				}
-			}
-			if (!$er)
-			{
-				// payment methods
-				$payment_methods = '';
-				$query = "SELECT * FROM " . $DBPrefix . "gateways";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$gateways_data = mysql_fetch_assoc($res);
-				$gateway_list = explode(',', $gateways_data['gateways']);
-				foreach ($gateway_list as $v)
-				{
-					$v = strtolower($v);
-					if ($gateways_data[$v . '_active'] == 1 && _in_array($v, $payment))
-					{
-						$payment_methods .= '<p>' . $system->SETTINGS['gatways'][$v] . '</p>';
-					}
-				}
-
-				$payment_options = unserialize($system->SETTINGS['payment_options']);
-				foreach ($payment_options as $k => $v)
-				{
-					if (_in_array($k, $payment))
-					{
-						$payment_methods .= '<p>' . $v . '</p>';
-					}
-				}
-
-				// category name
-				$category_string1 = get_category_string($sellcat1);
-				$category_string2 = get_category_string($sellcat2);
-
-				$query = "SELECT description FROM " . $DBPrefix . "durations WHERE days = " . $duration;
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				// built gallery
-				if ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0)
-				{
-					foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
-					{
-						$template->assign_block_vars('gallery', array(
-								'K' => $k,
-								'IMAGE' => $uploaded_path . session_id() . '/' . $v
-								));
-					}
-				}
-
-				$iquantity = ($atype == 2 || $buy_now_only == 'y') ? $iquantity : 1;
-
-				if (!(strpos($a_starts, '-') === false))
-				{
-					$a_starts = _gmmktime(substr($a_starts, 11, 2),
-						substr($a_starts, 14, 2),
-						substr($a_starts, 17, 2),
-						substr($a_starts, 0, 2),
-						substr($a_starts, 3, 2),
-						substr($a_starts, 6, 4), 0);
-				}
-
-				$template->assign_vars(array(
-						'TITLE' => $title,
-						'SUBTITLE' => $subtitle,
-						'ERROR' => ($ERR == 'ERR_') ? '' : $$ERR,
-						'PAGE' => 1,
-						'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
-
-						'AUC_DESCRIPTION' => stripslashes($description),
-						'PIC_URL' => (empty($pict_url)) ? $MSG['114'] : '<img src="' . $uploaded_path . session_id() . '/' . $pict_url . '" />',
-						'MIN_BID' => $system->print_money($minimum_bid, false),
-						'RESERVE' => $system->print_money($reserve_price, false),
-						'BN_PRICE' => $system->print_money($buy_now_price, false),
-						'SHIPPING_COST' => $system->print_money($shipping_cost, false),
-						'STARTDATE' => (empty($start_now)) ? FormatDate($a_starts) : FormatDate($system->ctime),
-						'DURATION' => mysql_result($res, 0, 'description'),
-						'INCREMENTS' => ($increments == 1) ? $MSG['614'] : $system->print_money($customincrement, false),
-						'ATYPE' => $system->SETTINGS['auction_types'][$atype],
-						'ATYPE_PLAIN' => $atype,
-						'SHIPPING' => (intval($shipping) == 1) ? $MSG['031'] : $MSG['032'],
-						'INTERNATIONAL' => ($international) ? $MSG['033'] : $MSG['043'],
-						'SHIPPING_TERMS' => nl2br(stripslashes($shipping_terms)),
-						'PAYMENTS_METHODS' => $payment_methods,
-						'CAT_LIST1' => $category_string1,
-						'CAT_LIST2' => $category_string2,
-						'FEE' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
-
-						'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y'),
-						'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only == 'y')),
-						'B_BN' => ($system->SETTINGS['buy_now'] == 2),
-						'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
-						'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
-						'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
-						'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y')
+				$template->assign_block_vars('images', array(
+						'IMGNAME' => $v,
+						'ID' => $k,
+						'DEFAULT' => ($v == $_SESSION['SELL_pict_url_temp']) ? 'selected.gif' : 'unselected.gif',
+						'IMAGE' => $uploaded_path . session_id() . '/' . $v
 						));
-				break;
 			}
+
+			if ($system->SETTINGS['fees'] == 'y')
+			{
+				$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'picture_fee'";
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$image_fee = mysql_result($res, 0);
+			}
+			else
+			{
+				$image_fee = 0;
+			}
+
+			$template->assign_vars(array(
+					'TITLE' => $MSG['663'],
+					'ERROR' => ($ERR == 'ERR_') ? '' : $ERR,
+					'PAGE' => 1,
+					'IMAGE_COST' => ($image_fee != 0) ? sprintf($MSG['675'], $image_fee) : '',
+					'PICINFO' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']),
+					'ERRORMSG' => sprintf($MSG['674'], $system->SETTINGS['maxpictures']),
+					'MAXPICS' => $system->SETTINGS['maxpictures'],
+					'MAXPICSIZE' => $system->SETTINGS['maxuploadsize'],
+					'SESSION_ID' => session_id()
+					));
+			break;
 		}
 		if (!(strpos($a_starts, '-') === false))
 		{
@@ -663,7 +668,6 @@ switch ($_SESSION['action'])
 		$template->assign_vars(array(
 				'TITLE' => $MSG['028'],
 				'ERROR' => ($ERR == 'ERR_') ? '' : $$ERR,
-				'MAXPICS' => $system->SETTINGS['maxpictures'],
 				'CAT_LIST1' => $category_string1,
 				'CAT_LIST2' => $category_string2,
 				'ATYPE' => $TPL_auction_type,

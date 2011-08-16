@@ -17,30 +17,35 @@
 						<td width="40%" valign="top" align="right"><b>{L_002}</b> *</td>
 						<td width="60%">
 							<input type="text" name="TPL_name" <!-- IF MISSING0 eq 1 -->class="missing"<!-- ENDIF --> size=40 maxlength=255 value="{V_YNAME}" autofocus>
+                            <!-- IF MISSING0 eq 1 --><div class="error-box missing">{L_937}</div><!-- ENDIF -->
 						</td>
 					</tr>
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_003}</b> *</td>
 						<td width="60%">
 							<input type="text" name="TPL_nick" size=20 maxlength=20  value="{V_UNAME}" <!-- IF MISSING1 eq 1 -->class="missing"<!-- ENDIF -->> {L_050}
+                            <!-- IF MISSING1 eq 1 --><div class="error-box missing">{L_938}</div><!-- ENDIF -->
 						</td>
 					</tr>
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_004}</b> *</td>
 						<td width="60%">
 							<input type="password" name="TPL_password" size=20 maxlength=20 <!-- IF MISSING2 eq 1 -->class="missing"<!-- ENDIF -->> {L_050}
+                            <!-- IF MISSING2 eq 1 --><div class="error-box missing">{L_939}</div><!-- ENDIF -->
 						</td>
 					</tr>
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_005}</b> *</td>
 						<td width="60%">
 							<input type="password" name="TPL_repeat_password" size=20 maxlength=20 <!-- IF MISSING3 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING3 eq 1 --><div class="error-box missing">{L_940}</div><!-- ENDIF -->
 						</td>
 					</tr>
 					<tr>
 						<td width="40%"  valign="top" align="right"><b>{L_006}</b> *</td>
 						<td width="60%">
 							<input type="email" name="TPL_email" size=50 maxlength=50 value="{V_EMAIL}" <!-- IF MISSING4 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING4 eq 1 --><div class="error-box missing">{L_941}</div><!-- ENDIF -->
 						</td>
 					</tr>
         <!-- IF BIRTHDATE -->
@@ -48,6 +53,7 @@
 						<td width="40%" valign="top" align="right"><b>{L_252}</b>{REQUIRED(0)}</td>
 						<td width="60%">
 							{L_DATEFORMAT} <input type="text" name="TPL_year" size="4" maxlength="4" value="{V_YEAR}" <!-- IF MISSING5 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING5 eq 1 --><div class="error-box missing">{L_948}</div><!-- ENDIF -->
 						</td>
 					</tr>
         <!-- ENDIF -->
@@ -56,6 +62,7 @@
 						<td width="40%" valign="top" align="right"><b>{L_009}</b>{REQUIRED(1)}</td>
 						<td width="60%">
 							<input type="text" name="TPL_address" size=40 maxlength=255 value="{V_ADDRE}" <!-- IF MISSING6 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING6 eq 1 --><div class="error-box missing">{L_942}</div><!-- ENDIF -->
 						</td>
 					</tr>
         <!-- ENDIF -->
@@ -64,6 +71,7 @@
 						<td width="40%" valign="top" align="right"><b>{L_010}</b>{REQUIRED(2)}</td>
 						<td width="60%">
 							<input type="text" name="TPL_city" size=25 maxlength=25 value="{V_CITY}" <!-- IF MISSING7 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING7 eq 1 --><div class="error-box missing">{L_943}</div><!-- ENDIF -->
 						</td>
 					</tr>
         <!-- ENDIF -->
@@ -72,6 +80,7 @@
 						<td width="40%" valign="top" align="right"><b>{L_011}</b>{REQUIRED(3)}</td>
 						<td width="60%">
 							<input type="text" name="TPL_prov" size=10 maxlength=10 value="{V_PROV}" <!-- IF MISSING8 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING8 eq 1 --><div class="error-box missing">{L_944}</div><!-- ENDIF -->
 						</td>
 					</tr>
         <!-- ENDIF -->
@@ -83,6 +92,7 @@
 								<option value="">{L_251}</option>
 								{L_COUNTRIES}
 							</select>
+                            <!-- IF MISSING9 eq 1 --><div class="error-box missing">{L_945}</div><!-- ENDIF -->
 						</td>
 					</tr>
         <!-- ENDIF -->
@@ -91,6 +101,7 @@
 						<td width="40%" valign="top" align="right"><b>{L_012}</b>{REQUIRED(5)}</td>
 						<td width="60%">
 							<input type="text" name="TPL_zip" size=8 value="{V_POSTCODE}" <!-- IF MISSING10 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING10 eq 1 --><div class="error-box missing">{L_946}</div><!-- ENDIF -->
 						</td>
 					</tr>
         <!-- ENDIF -->
@@ -99,6 +110,7 @@
 						<td width="40%" valign="top" align="right"><b>{L_013}</b>{REQUIRED(6)}</td>
 						<td width="60%">
 							<input type="text" name="TPL_phone" size=40 maxlength=40 value="{V_PHONE}" <!-- IF MISSING11 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING11 eq 1 --><div class="error-box missing">{L_947}</div><!-- ENDIF -->
 						</td>
 					</tr>
         <!-- ENDIF -->
@@ -131,6 +143,7 @@
 						<td align="right" width="30%">{L_720}{REQUIRED(7)}</td>
 						<td>
 							<input type="text" name="TPL_pp_email" size=40 value="{PP_EMAIL}" <!-- IF MISSING12 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING12 eq 1 --><div class="error-box missing">{L_810}</div><!-- ENDIF -->
 						</td>
 					</tr>
 				<!-- ENDIF -->
@@ -139,6 +152,7 @@
 						<td align="right" width="30%">{L_773}{REQUIRED(8)}</td>
 						<td>
 							<input type="text" name="TPL_authnet_id" size=40 value="{AN_ID}" <!-- IF MISSING13 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING13 eq 1 --><div class="error-box missing">{L_811}</div><!-- ENDIF -->
 						</td>
 					</tr>
 					<tr>
@@ -153,6 +167,7 @@
 						<td align="right" width="30%">{L_824}{REQUIRED(9)}</td>
 						<td>
 							<input type="text" name="TPL_worldpay_id" size=40 value="{WP_ID}" <!-- IF MISSING14 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING14 eq 1 --><div class="error-box missing">{L_823}</div><!-- ENDIF -->
 						</td>
 					</tr>
 				<!-- ENDIF -->
@@ -161,6 +176,7 @@
 						<td align="right" width="30%">{L_826}{REQUIRED(10)}</td>
 						<td>
 							<input type="text" name="TPL_toocheckout_id" size=40 value="{TC_ID}" <!-- IF MISSING15 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING15 eq 1 --><div class="error-box missing">{L_821}</div><!-- ENDIF -->
 						</td>
 					</tr>
 				<!-- ENDIF -->
@@ -169,6 +185,7 @@
 						<td align="right" width="30%">{L_825}{REQUIRED(11)}</td>
 						<td>
 							<input type="text" name="TPL_moneybookers_email" size=40 value="{MB_EMAIL}" <!-- IF MISSING16 eq 1 -->class="missing"<!-- ENDIF -->>
+                            <!-- IF MISSING16 eq 1 --><div class="error-box missing">{L_822}</div><!-- ENDIF -->
 						</td>
 					</tr>
 				<!-- ENDIF -->

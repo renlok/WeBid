@@ -6,7 +6,7 @@
 - Fixed bug where users were only charges for one item on winning a dutch auction (Bug #310)
 - Improved look of the error messages
 - Updated jQuery to 1.6.2
-- Added jQuery UI
+- Added Plupload and merged the image upload process into the sell page
 - Reordered the sell template make it look a bit neater
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -1,3 +1,4 @@
+<!-- IF PAGE eq 0 -->
 <script type="text/javascript">
 $(document).ready(function(){
 	//sell javascript
@@ -56,7 +57,7 @@ $(document).ready(function(){
 	$("#sps").click(function(){
 		$("#shipping_cost").attr("disabled","disabled");
 	});
-<!-- IF B_FEES -->
+	<!-- IF B_FEES -->
 	{FEE_JS}
 	// something
 	var min_bid_fee = {FEE_MIN_BID};
@@ -141,7 +142,7 @@ $(document).ready(function(){
 		else
 			updatefee(hlitem_fee * -1);
 	});
-<!-- IF B_SUBTITLE -->
+		<!-- IF B_SUBTITLE -->
 	$("#subtitle").blur(function(){
 		if (st > 0 && $("#subtitle").val().length == 0)
 			updatefee(subtitle_fee * -1);
@@ -149,15 +150,15 @@ $(document).ready(function(){
 			updatefee(subtitle_fee);
 		st = $("#subtitle").val().length;
 	});
-<!-- ENDIF -->
-<!-- IF B_AUTORELIST -->
+		<!-- ENDIF -->
+		<!-- IF B_AUTORELIST -->
 	$("#autorelist").blur(function(){
 		var rl_times = $("#autorelist").val();
 		updatefee(relist_fee * rl * -1);
 		updatefee(relist_fee * rl_times);
 		rl = rl_times;
 	});
-<!-- ENDIF -->
+		<!-- ENDIF -->
 	function updatefee(newfee){
 		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
 		$("#fee_exact").val(nowfee);
@@ -167,9 +168,71 @@ $(document).ready(function(){
 		nowfee = nowfee.toFixed({FEE_DECIMALS});
 		$("#to_pay").text(nowfee);
 	}
-<!-- ENDIF -->
+	<!-- ENDIF -->
 });
 </script>
+<!-- ENDIF -->
+<!-- IF PAGE eq 1 -->
+<!-- Load Queue widget CSS and jQuery -->
+<style type="text/css">@import url({SITEURL}includes/plupload/js/jquery.plupload/css/jquery.plupload.queue.css);</style>
+
+<!-- Thirdparty intialization scripts, needed for the Google Gears and BrowserPlus runtimes -->
+<script type="text/javascript" src="{SITEURL}includes/plupload/js/plupload.gears.js"></script>
+<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+
+<!-- Load plupload and all it's runtimes and finally the jQuery queue widget -->
+<script type="text/javascript" src="{SITEURL}includes/plupload/js/plupload.full.js"></script>
+<script type="text/javascript" src="{SITEURL}includes/plupload/js/jquery.plupload/jquery.plupload.queue.js"></script>
+
+<script type="text/javascript">
+// Convert divs to queue widgets when the DOM is ready
+$(function() {
+	$("#uploader").pluploadQueue({
+		// General settings
+		runtimes : 'gears,flash,silverlight,browserplus,html5',
+		url : '{SITEURL}ajax.php?do=uploadaucimages',
+		max_file_size : '{MAXPICSIZE}kb',
+		chunk_size : '1mb',
+		unique_names : true,
+
+		// Specify what files to browse for
+		filters : [
+			{title : "Image files", extensions : "jpg,gif,png"}
+		],
+
+		// Flash settings
+		flash_swf_url : '{SITEURL}includes/plupload/js/plupload.flash.swf',
+
+		// Silverlight settings
+		silverlight_xap_url : '{SITEURL}includes/plupload/js/plupload.silverlight.xap'
+	});
+
+	// Client side form validation
+	$('form').submit(function(e) {
+		var uploader = $('#uploader').pluploadQueue();
+
+		// Validate number of uploaded files
+		if (uploader.total.uploaded == 0) {
+			// Files in queue upload them first
+			if (uploader.files.length > 0) {
+				if (uploader.files.length > {MAXPICS}) {
+					alert ('{ERRORMSG}');
+				} else {
+					// When all files are uploaded submit form
+					uploader.bind('UploadProgress', function() {
+						if (uploader.total.uploaded == uploader.files.length)
+							$('form').submit();
+					});
+
+					uploader.start();
+				}
+			}
+			//e.preventDefault();
+		}
+	});
+});
+</script>
+<!-- ENDIF -->
 <!-- IF ATYPE_PLAIN eq 2 -->
 <style type="text/css">
 .dutchhide {
@@ -190,7 +253,7 @@ $(document).ready(function(){
             </div>
 <!-- ENDIF -->
 <!-- IF PAGE eq 0 -->
-			<form name="sell" action="{ASSLURL}sell.php" method="post" enctype="multipart/form-data">
+			<form name="sell" action="{ASSLURL}sell.php" method="post">
             	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
@@ -238,18 +301,6 @@ $(document).ready(function(){
 					   		{AUC_DESCRIPTION}
 						</td>
 					</tr>
-					<input type="hidden" name="imgtype" value="1">
-	<!-- IF B_GALLERY -->
-					<tr>
-						<td align="right" width="25%" valign="middle" class="leftpan">&nbsp;</td>
-						<td valign="top" class="rightpan">
-							<h3>{L_663}</h3>
-							{L_673} {MAXPICS} {L_674}<br>
-							[<a href="upldgallery.php" alt="gallery" class="new-window">{L_677}</a>]
-                            <input type="hidden" name="numimages" value="{NUMIMAGES}" id="numimages">
-                        </td>
-					</tr>
-	<!-- ENDIF -->
 					<tr>
 						<th colspan="2" align="center" valign="middle" class="leftpan">
 							{L_640}
@@ -457,11 +508,56 @@ $(document).ready(function(){
 				</table>
 				
 				<div style="text-align:center">
+    <!-- IF B_GALLERY -->
 					<input type="hidden" value="2" name="action">
+					<input type="submit" name="" value="{L_661}"  class="button">&nbsp;&nbsp;&nbsp;<input type="reset" name="" value="{L_5190}" class="button">
+    <!-- ELSE -->
+					<input type="hidden" value="3" name="action">
 					<input type="submit" name="" value="{L_5189}"  class="button">&nbsp;&nbsp;&nbsp;<input type="reset" name="" value="{L_5190}" class="button">
+    <!-- ENDIF -->
 				</div>
 			</form>
 <!-- ELSEIF PAGE eq 1 -->
+			<form name="sell" action="{ASSLURL}sell.php" method="post">
+            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+                <table cellpadding="3" cellspacing="0" border="0" align="center" width="90%">
+                    <tr bgcolor="{HEADERCOLOUR}">
+                        <td width="76%" colspan="2">
+                            <b>{L_684}</b>
+                        </td>
+                        <td width="12%" align="center">
+                            <b>{L_008}</b>
+                        </td>
+                        <td width="12%" align="center">
+                            <b>{L_686}</b>
+                        </td>
+                    </tr>
+		<!-- BEGIN images -->
+                    <tr>
+                        <td>
+                        	<img src="{images.IMAGE}" width="60" border="0">
+                        </td>
+                        <td width="46%">
+                            {images.IMGNAME}
+                        </td>
+                        <td align="center">
+                            <a href="?action=delete&img={images.ID}"><IMG SRC="images/trash.gif" border="0"></a>
+                        </td>
+                        <td align="center">
+                            <a href="?action=makedefault&img={images.IMGNAME}"><img src="images/{images.DEFAULT}" border="0"></a>
+                        </td>
+                    </tr>
+		<!-- END images -->
+                </table>
+                <p>{PICINFO}</p>
+                <p>{IMAGE_COST}</p>
+                <div id="uploader">
+                    <p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+                </div>
+                <input type="hidden" value="3" name="action">
+                <input type="submit" name="" value="{L_5189}" class="button">
+			</form>
+<!-- ELSEIF PAGE eq 2 -->
 			<form name="preview" action="{ASSLURL}sell.php" method="post">
             <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<table width="100%" border="0" cellpadding="4" align="center" cellspacing=0>
@@ -582,7 +678,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 			</table>
 			<div style="text-align:center; padding-top: 10px;">
-				<input type="hidden" value="3" name="action">
+				<input type="hidden" value="4" name="action">
 				<input type="submit" name="" value="{L_2__0037}" class="button">
 			</div>
 			</form>

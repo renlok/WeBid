@@ -36,6 +36,7 @@ $query = "SELECT u.*, COUNT(b.user) as count FROM " . $DBPrefix . "bannersusers 
 		GROUP BY u.id ORDER BY u.name";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
+$bg = '';
 while ($row = mysql_fetch_assoc($res))
 {
 	$template->assign_block_vars('busers', array(

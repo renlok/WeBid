@@ -143,7 +143,13 @@ if ($myversion == '1.0.2')
 
 if ($myversion == '1.0.3')
 {
-	//1.0.3 to 1.1.0
+	//1.0.3 to 1.0.4
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.4';";
+}
+
+if ($myversion == '1.0.4')
+{
+	//1.0.4 to 1.1.0
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.1.0';";
 }
 ?>

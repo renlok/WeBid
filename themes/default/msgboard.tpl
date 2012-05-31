@@ -15,7 +15,15 @@
 		<table width="70%" cellspacing="0" cellpadding="6" bgcolor="#EEEEEE">
 		<tr>
 			<tr>
-				<td valign="top" class="titTable4">{L_30_0181}: {BOARD_NAME}</td>
+				<td width="100%" valign="top">{L_30_0181} {BOARD_NAME}</td>
+            </tr>
+            <!-- IF ERROR ne '' -->
+            <tr>
+                <td align="center">
+                	<div class="error">{ERROR}</div>
+                </td>
+            </tr>
+            <!-- ENDIF --> 
 			</tr>
 			<td align="center">
 			<form name="messageboard" action="" method="post">

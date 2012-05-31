@@ -6,7 +6,7 @@
         </div>
     	<div style="width:75%; float:right;">
             <div class="main-box">
-            	<h4 class="rounded-top rounded-bottom">{L_5436}&nbsp;&gt;&gt;&nbsp;{L_891}&nbsp;&gt;&gt;&nbsp;{L__0024}</h4>
+            	<h4 class="rounded-top rounded-bottom">{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L__0008}&nbsp;&gt;&gt;&nbsp;{L__0024}</h4>
 				<form name="upldbanner" action="" method="post" enctype="multipart/form-data">
 <!-- IF ERROR ne '' -->
 					<div class="error-box"><b>{ERROR}</b></div>

@@ -14,6 +14,7 @@
 
 include 'includes/common.inc.php';
 
+unset($ERR);
 if ($system->SETTINGS['boards'] == 'n')
 {
 	header('location: index.php');
@@ -48,6 +49,11 @@ $query = "SELECT id FROM " . $DBPrefix . "comm_messages WHERE boardid = " . $boa
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
+if (isset($_POST['action']) && empty($_POST['newmessage']))
+{
+	$ERR = $ERR_624;
+}
+
 $TOTALMSGS = mysql_num_rows($res);
 // Insert new message in the database
 if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_POST['newmessage'])) {
@@ -67,6 +73,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_P
 	$query = "UPDATE " . $DBPrefix . "community
 			SET messages = messages + 1, lastmessage = '$NOW' WHERE id = " . $board_id;
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	header('location: ' . $_SERVER['HTTP_REFERER']);
 }
 
 // retrieve message board title
@@ -147,6 +154,7 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $COUNT = mysql_num_rows($res);
 
 $template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'BOARD_NAME' => $BOARD_TITLE,
 		'BOARD_ID' => $board_id,
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?PAGE=' . $PREV . '&board_id=' . $board_id . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;' : '',

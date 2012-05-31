@@ -19,6 +19,7 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+$html = '';
 
 // Create currencies array
 $query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY ime";

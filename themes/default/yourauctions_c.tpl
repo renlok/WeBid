@@ -5,13 +5,13 @@ $(document).ready(function() {
 	var relist_fee = {RELIST_FEE_NO};
 	$("#sellall").click(function() {
 		var checked_status = this.checked;
-		$("input[name=sell[]]").each(function() {
+		$("input[name='sell[]']").each(function() {
 			this.checked = checked_status;
 		});
 	});
 	$("#deleteall").click(function() {
 		var checked_status = this.checked;
-		$("input[name=delete[]]").each(function() {
+		$("input[name='delete[]']").each(function() {
 			this.checked = checked_status;
 		});
 	});

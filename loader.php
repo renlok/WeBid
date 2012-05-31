@@ -28,7 +28,7 @@ if (isset($_GET['js']))
 				include $val;
 			}
 		}
-		else
+		elseif ($ext == 'js' || $ext == 'css')
 		{
 			if (is_file($val))
 			{

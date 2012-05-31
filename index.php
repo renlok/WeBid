@@ -196,7 +196,7 @@ while ($row = mysql_fetch_assoc($res))
             'TITLE' => $row['title']
             ));
 }
-$hot_items = ($j > 0) ? true : false;
+$hot_items = ($i > 0) ? true : false;
 
 // Build list of help topics
 $query = "SELECT id, category FROM " . $DBPrefix . "faqscat_translated WHERE lang = '" . $language . "' ORDER BY category ASC";

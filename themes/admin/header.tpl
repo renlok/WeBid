@@ -25,7 +25,7 @@
 			$(".selectall").click(function() {
 				var checked_status = this.checked;
 				var checkbox_name = this.value;
-				$("input[name=" + checkbox_name + "[]]").each(function() {
+				$("input[name=\"" + checkbox_name + "[]\"]").each(function() {
 					this.checked = checked_status;
 				});
 			});

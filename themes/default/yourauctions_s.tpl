@@ -4,7 +4,7 @@
 $(document).ready(function() {
 	$("#deleteall").click(function() {
 		var checked_status = this.checked;
-		$("input[name=O_delete[]]").each(function() {
+		$("input[name='O_delete[]']").each(function() {
 			this.checked = checked_status;
 		});
 	});

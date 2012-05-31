@@ -324,7 +324,7 @@ $template->assign_vars(array(
 		'DURLIST' => $dur_list,
 		'CATLIST1' => $categories_list1,
 		'CATLIST2' => $categories_list2,
-		'DESC' => $auction_data['duration'],
+		'DESC' => $auction_data['description'],
 		'CURRENT_BID' => $system->print_money_nosymbol($auction_data['current_bid']),
 		'MIN_BID' => $system->print_money_nosymbol($auction_data['minimum_bid']),
 		'QTY' => $auction_data['quantity'],

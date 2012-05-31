@@ -53,6 +53,7 @@ else
 		{
 			$catSQL .= " OR secondcat IN " . $catalist;
 		}
+		$catSQL .= ")";
 	}
 	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE
 			(title LIKE '%" . $term . "%' OR id = " . intval($term) . ")

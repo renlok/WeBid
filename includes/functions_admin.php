@@ -95,13 +95,21 @@ if (!defined('AdminFuncCall'))
 
 	function load_file_from_url($url)
 	{
-		if (($handle = @fopen($url, 'r')) !== false)
+		if(false !== ($str = file_get_contents($url)))
+		{
+			return $str; 
+		}
+		elseif(($handle = @fopen($url, 'r')) !== false)
 		{
 			$str = fread($handle, 5);
-			fclose($handle);
+			if(false !== $str)
+			{
+				fclose($handle);
+				return $str;
+			}
 		}
 		elseif (function_exists('curl_init') && function_exists('curl_setopt')
-			&& function_exists('curl_exec') && function_exists('curl_close'))
+		&& function_exists('curl_exec') && function_exists('curl_close'))
 		{
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $url);

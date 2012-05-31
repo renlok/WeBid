@@ -38,6 +38,7 @@ $(document).ready(function(){
 	$("#atype").change(function(){
 		if ($(this).attr("selectedIndex") == 1) { //dutch auction
 			$("#with_reserve_no").attr("checked", "checked");
+			$("#bn_only_no").attr("checked", "checked");
 			$("#bn_no").attr("checked", "checked");
 			$("#inc1").attr("checked", "checked");
 			$("#iqty").removeAttr("disabled");

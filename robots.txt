@@ -22,6 +22,7 @@ Disallow: /admin/
 Disallow: /cache/
 Disallow: /docs/
 Disallow: /fck/
+Disallow: /inc/
 Disallow: /includes/
 Disallow: /logs/
 Disallow: /themes/

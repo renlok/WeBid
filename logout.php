@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/common.inc.php';
+include 'common.php';
 
 $query = "DELETE from " . $DBPrefix . "online WHERE SESSION = 'uId-" . $_SESSION['WEBID_LOGGED_IN'] . "'";
 $system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

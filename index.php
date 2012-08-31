@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/common.inc.php';
+include 'common.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
 // Run cron according to SETTINGS
@@ -43,7 +43,7 @@ function ShowFlags()
 			$flags .= '<br>';
 			$counter = 0;
 		}
-		$flags .= '<a href="?lan=' . $lang . '"><img vspace="2" hspace="2" src="' . $system->SETTINGS['siteurl'] . 'includes/flags/' . $lang . '.gif" border="0" alt="' . $lang . '"></a>';
+		$flags .= '<a href="?lan=' . $lang . '"><img vspace="2" hspace="2" src="' . $system->SETTINGS['siteurl'] . 'inc/flags/' . $lang . '.gif" border="0" alt="' . $lang . '"></a>';
 		$counter++;
 	}
 	return $flags;

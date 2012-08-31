@@ -211,11 +211,11 @@ class template
 			return $filename;
 		}
 
-		global $main_path;
+		global $include_path;
 
 		if (!class_exists('template_compile'))
 		{
-			include($main_path . 'includes/functions_template.php');
+			include($include_path . 'functions_template.php');
 		}
 		$compile = new template_compile($this);
 

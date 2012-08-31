@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/common.inc.php';
+include 'common.php';
 
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl

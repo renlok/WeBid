@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/common.inc.php';
+include 'common.php';
 
 // If user is not logged in redirect to login page
 if (!$user->logged_in)
@@ -58,7 +58,7 @@ while ($row = mysql_fetch_assoc($res))
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['454'];
-include 'includes/user_cp.php';
+include $include_path . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'buying.tpl'
 		));

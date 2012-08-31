@@ -30,7 +30,7 @@
     <!-- ELSE -->
     					<td>&nbsp;</td>
     <!-- ENDIF -->
-                        <td align="right"><img src="../includes/flags/{qs.LANG}.gif"></td>
+                        <td align="right"><img src="../inc/flags/{qs.LANG}.gif"></td>
                         <td><input type="text" name="question[{qs.LANG}]" maxlength="200" value="{qs.QUESTION}"></td>
                     </tr>
 <!-- END qs -->
@@ -41,7 +41,7 @@
     <!-- ELSE -->
     					<td>&nbsp;</td>
     <!-- ENDIF -->
-                        <td align="right" valign="top"><img src="../includes/flags/{as.LANG}.gif"></td>
+                        <td align="right" valign="top"><img src="../inc/flags/{as.LANG}.gif"></td>
                         <td><textarea name="answer[{as.LANG}]" cols="40" rows="15">{as.ANSWER}</textarea></td>
                     </tr>
 <!-- END as -->

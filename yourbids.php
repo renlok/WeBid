@@ -1,7 +1,7 @@
 <?php
 
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,7 +13,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/common.inc.php';
+include 'common.php';
 
 // get active bids for this user
 $query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid, b.quantity, p.bid As proxybid FROM " . $DBPrefix . "bids b
@@ -57,7 +57,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['620'];
-include 'includes/user_cp.php';
+include $include_path . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourbids.tpl'
 		));

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/common.inc.php';
+include 'common.php';
 include $include_path . 'countries.inc.php';
 
 // If user is not logged in redirect to login page
@@ -270,7 +270,7 @@ $template->assign_vars(array(
 
 $TMP_usmenutitle = $MSG['509'];
 include 'header.php';
-include 'includes/user_cp.php';
+include $include_path . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'edit_details.tpl'
 		));

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,7 +14,7 @@
 
 ob_start('ob_gzhandler');
 header("Content-type: text/javascript");
-include 'includes/checks/files.php';
+include 'inc/checks/files.php';
 if (isset($_GET['js']))
 {
 	$js = explode(';', $_GET['js']);

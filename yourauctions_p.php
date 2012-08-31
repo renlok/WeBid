@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'includes/common.inc.php';
+include 'common.php';
 
 $NOW = time();
 $NOWB = gmdate('Ymd');
@@ -183,7 +183,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['25_0115'];
-include 'includes/user_cp.php';
+include $include_path . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourauctions_p.tpl'
 		));

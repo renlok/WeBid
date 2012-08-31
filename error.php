@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 $error = true;
-include 'includes/common.inc.php';
+include 'common.php';
 
 $template->assign_vars(array(
 		'ERROR' => print_r($_SESSION['SESSION_ERROR'], true),

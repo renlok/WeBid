@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,10 +14,10 @@
 
 define('InAdmin', 1);
 $current_page = 'users';
-include "../includes/common.inc.php";
+include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include '../includes/countries.inc.php';
+include $include_path . 'countries.inc.php';
 
 unset($ERR);
 $userid = intval($_REQUEST['userid']);

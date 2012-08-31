@@ -175,15 +175,15 @@ $(document).ready(function(){
 <!-- ENDIF -->
 <!-- IF PAGE eq 1 -->
 <!-- Load Queue widget CSS and jQuery -->
-<style type="text/css">@import url({SITEURL}includes/plupload/js/jquery.plupload/css/jquery.plupload.queue.css);</style>
+<style type="text/css">@import url({SITEURL}inc/plupload/js/jquery.plupload/css/jquery.plupload.queue.css);</style>
 
 <!-- Thirdparty intialization scripts, needed for the Google Gears and BrowserPlus runtimes -->
-<script type="text/javascript" src="{SITEURL}includes/plupload/js/plupload.gears.js"></script>
+<script type="text/javascript" src="{SITEURL}inc/plupload/js/plupload.gears.js"></script>
 <script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
 
 <!-- Load plupload and all it's runtimes and finally the jQuery queue widget -->
-<script type="text/javascript" src="{SITEURL}includes/plupload/js/plupload.full.js"></script>
-<script type="text/javascript" src="{SITEURL}includes/plupload/js/jquery.plupload/jquery.plupload.queue.js"></script>
+<script type="text/javascript" src="{SITEURL}inc/plupload/js/plupload.full.js"></script>
+<script type="text/javascript" src="{SITEURL}inc/plupload/js/jquery.plupload/jquery.plupload.queue.js"></script>
 
 <script type="text/javascript">
 // Convert divs to queue widgets when the DOM is ready
@@ -202,10 +202,10 @@ $(function() {
 		],
 
 		// Flash settings
-		flash_swf_url : '{SITEURL}includes/plupload/js/plupload.flash.swf',
+		flash_swf_url : '{SITEURL}inc/plupload/js/plupload.flash.swf',
 
 		// Silverlight settings
-		silverlight_xap_url : '{SITEURL}includes/plupload/js/plupload.silverlight.xap'
+		silverlight_xap_url : '{SITEURL}inc/plupload/js/plupload.silverlight.xap'
 	});
 
 	// Client side form validation

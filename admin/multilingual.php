@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2012 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,7 +14,7 @@
 
 define('InAdmin', 1);
 $current_page = 'settings';
-include '../includes/common.inc.php';
+include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
@@ -34,7 +34,7 @@ if (is_array($LANGUAGES))
 	reset($LANGUAGES);
 	foreach ($LANGUAGES as $k => $v){
 		$html .= '<input type="radio" name="defaultlanguage" value="' . $k . '"' . (($system->SETTINGS['defaultlanguage'] == $k) ? ' checked="checked"' : '') . '>
-	<img src="../includes/flags/' . $k . '.gif" hspace="2">
+	<img src="../inc/flags/' . $k . '.gif" hspace="2">
 	' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MSG['2__0005'] : '') . '<br>';
 	}
 }

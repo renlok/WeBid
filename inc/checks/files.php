@@ -1,5 +1,14 @@
 <?php
-// needs updating when 1.1 is released
+$file_allowed = array(
+'js' => array(
+	'jquery.lightbox.js' => '1',
+	'jquery.js' => '1',
+	'jquery.imgareaselect.js' => '1',
+	'calendar.php' => '1'
+)
+);
+
+// needs to be updated (to be used for file integrety check)
 $file_hashs = array(
 'logout.php' => 'd4de5e8c86408e2a872d47027d6b401c',
 'footer.php' => '61ad0e1afa20685e42e938e8da5daceb',

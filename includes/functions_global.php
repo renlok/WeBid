@@ -186,6 +186,7 @@ class global_class
 	{
 		if (empty($str))
 			return 0;
+		$str = preg_replace("/[^0-9\.\,]/", '', $str);
 		if ($this->SETTINGS['moneyformat'] == 1)
 		{
 			// Drop thousands separator
@@ -308,7 +309,7 @@ function load_counters()
 			}
 			else
 			{
-				$s = $_COOKIE['WEBID_ONLINE'];
+				$s = strip_non_an_chars($_COOKIE['WEBID_ONLINE']);
 				setcookie('WEBID_ONLINE', $s, time() + 900);
 			}
 		}

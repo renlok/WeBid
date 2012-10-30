@@ -42,8 +42,8 @@ ob_end_flush();
 
 function check_file($file)
 {
-	global $file_hashs;
-	$tmp = $file_hashs;
+	global $file_allowed;
+	$tmp = $file_allowed;
 	$folders = explode('/', $file);
 	foreach ($folders as $val)
 	{

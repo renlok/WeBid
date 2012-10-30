@@ -14,7 +14,7 @@
 
 include 'common.php';
 
-$w = (isset($_GET['w'])) ? $_GET['w'] : '';
+$w = (isset($_GET['w'])) ? intval($_GET['w']) : '';
 $fromfile = (isset($_GET['fromfile'])) ? $_GET['fromfile'] : '';
 $nomanage = false;
 
@@ -30,7 +30,7 @@ function ErrorPNG($err)
 }
 
 // control parameters and file existence
-if (!isset($_GET['fromfile']))
+if (!isset($_GET['fromfile']) || $fromfile == '')
 {
 	ErrorPNG('params empty');
 	exit;
@@ -41,7 +41,7 @@ elseif (!file_exists($_GET['fromfile']) && !fopen($_GET['fromfile'], 'r'))
 	exit;
 }
 
-if (file_exists($upload_path . 'cache/' . $_GET['w'] . '-' . md5($fromfile)))
+if (file_exists($upload_path . 'cache/' . $w . '-' . md5($fromfile)))
 {
 	$img = getimagesize($fromfile);
 	if ($img[2] == 1)
@@ -49,7 +49,7 @@ if (file_exists($upload_path . 'cache/' . $_GET['w'] . '-' . md5($fromfile)))
 		$img['mime'] = 'image/png';
 	}
 	header('Content-type: ' . $img['mime']);
-	echo file_get_contents($upload_path . 'cache/' . $_GET['w'] . '-' . md5($fromfile));
+	echo file_get_contents($upload_path . 'cache/' . $w . '-' . md5($fromfile));
 }
 else
 {
@@ -130,7 +130,7 @@ else
 	$funcall = "imagecreatefrom$imtype";
 	imagecopyresampled($ou, $funcall($fromfile), 0, 0, 0, 0, $w, $h, $img[0], $img[1]);
 	$funcall = "image$outype";
-	$funcall($ou, $upload_path . 'cache/' . $_GET['w'] . '-' . md5($fromfile));
+	$funcall($ou, $upload_path . 'cache/' . $w . '-' . md5($fromfile));
 	header('Content-type: ' . $img['mime']);
 	$funcall($ou);
 }

@@ -19,20 +19,14 @@ if(isset($_SESSION['csrftoken']))
 		$valid_req = ($_POST['csrftoken'] == $_SESSION['csrftoken']);
 	else
 		$valid_req = true;		# Neither GET nor POST params exist => permit
-	if(!$valid_req)
-	{
-		global $template, $MSG, $ERR_077;
-		$template->assign_vars(array(
-				'TITLE_MESSAGE' => $MSG['936'],
-				'BODY_MESSAGE' => $ERR_077
-				));
-		include 'header.php';
-		$template->set_filenames(array(
-				'body' => 'message.tpl'
-				));
-		$template->display('body');
-		include 'footer.php';
-		exit; // kill the page
+	if(!$valid_req) 
+	{ 
+		global $MSG, $ERR_077; 
+		 
+		$_SESSION['msg_title'] = $MSG['936']; 
+		$_SESSION['msg_body'] = $ERR_077; 
+			header('location: ../message.php'); 
+			exit; // kill the page 
 	}
 }
 else

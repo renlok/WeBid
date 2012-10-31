@@ -5,9 +5,6 @@
 <body style="margin:0;">
 <table width="95%" border="0" cellspacing="0" cellpadding="1" bgcolor="#0083D7">
 <tr>
-    <td align="center" class="title">{L_5068}</td>
-</tr>
-<tr>
     <td>
         <form name="conf" action="" method="post">
         <table width="100%" cellpadding="2" align="center" bgcolor="#FFFFFF">

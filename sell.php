@@ -18,7 +18,7 @@ include $include_path . 'datacheck.inc.php';
 include $include_path . 'functions_sell.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 include $main_path . 'ckeditor/ckeditor.php';
-include $include_path . 'HTMLPurifier/HTMLPurifier.auto.php';
+include $include_path . 'htmLawed.php';
 
 $_SESSION['action'] = (!isset($_SESSION['action'])) ? 1 : $_SESSION['action'];
 $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST['action'];
@@ -102,11 +102,10 @@ switch ($_SESSION['action'])
 		else
 		{
 			// clean up sell description
-			$conf = HTMLPurifier_Config::createDefault();
-			$conf->set('Core', 'Encoding', $CHARSET); // replace with your encoding
-			$conf->set('HTML', 'Doctype', 'HTML 4.01 Transitional'); // replace with your doctype
-			$purifier = new HTMLPurifier($conf);
-			$_SESSION['SELL_description'] = $purifier->purify($_SESSION['SELL_description']);
+			$conf = array();
+			$conf['safe'] = 1;
+			$conf['deny_attribute'] ='style';
+			$_SESSION['SELL_description'] = htmLawed($_SESSION['SELL_description'], $conf);
 
 			$payment_text = implode(', ', $payment);
 			// set time back to GMT

@@ -35,8 +35,7 @@
 							<input type="hidden" name="user_id" value="{USERID}">
 							<input type="hidden" name="username" value="{USERNAME}">
 							<input type="hidden" name="action" value="proceed">
-							<input type="submit" name="Submit" value="Submit" class="button">
-							<input type="reset" name="Submit2" value="Reset" class="button">
+							<input type="submit" name="Submit" value="{L_007}" class="button">
 						</td>
 					</tr>
 				</table>

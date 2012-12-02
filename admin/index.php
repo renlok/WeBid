@@ -134,7 +134,7 @@ if (isset($_GET['action']))
 						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $crumbs[$i]['cat_id'];
 						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					}
-					$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $row['category'];
+					$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $row['secondcat'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 			}

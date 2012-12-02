@@ -443,6 +443,7 @@ $template->assign_vars(array(
 		'L_COUNTRIES' => $country,
 		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'TOMEZONE' => $time_correction,
+		'TERMSTEXT' => $system->SETTINGS['termstext'],
 
 		//payment stuff
 		'PP_EMAIL' => (isset($_POST['TPL_pp_email'])) ? $_POST['TPL_pp_email'] : '',

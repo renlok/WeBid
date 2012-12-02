@@ -94,7 +94,7 @@ if (isset($_GET['change']) && $_GET['change'] == 'yes')
 		$POST['cat' . ($i - 1)] = $crumbs[$i]['cat_id'];
 	}
 }
-elseif (count($_POST) == 0)
+elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 {
     unset($_SESSION['UPLOADED_PICTURES_SIZE']);
 	$_SESSION['SELL_starts'] = '';

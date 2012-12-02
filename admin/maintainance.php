@@ -18,7 +18,7 @@ include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 include $main_path . "ckeditor/ckeditor.php";
-include $include_path . 'HTMLPurifier/HTMLPurifier.auto.php';
+include $include_path . 'htmLawed.php';
 
 unset($ERR);
 
@@ -35,15 +35,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
-		$conf = HTMLPurifier_Config::createDefault();
-		$conf->set('Core', 'Encoding', $CHARSET); // replace with your encoding
-		$conf->set('HTML', 'Doctype', 'HTML 4.01 Transitional'); // replace with your doctype
-		$purifier = new HTMLPurifier($conf);
-
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "maintainance SET
 				superuser = '" . $superuser . "',
-				maintainancetext = '" . $purifier->purify($_POST['maintainancetext']) . "',
+				maintainancetext = '" . htmLawed($_POST['maintainancetext'], array('safe'=>1)) . "',
 				active = '" . $_POST['active'] . "'";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$ERR = $MSG['_0005'];

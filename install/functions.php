@@ -115,7 +115,7 @@ function check_installation()
 {
 	global $DBPrefix, $settings_version, $main_path;
 
-	include '../includes/config.inc.php';
+	@include '../includes/config.inc.php';
 	@mysql_connect($DbHost, $DbUser, $DbPassword);
 	@mysql_select_db($DbDatabase);
 	$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
@@ -271,8 +271,38 @@ function show_config_table($fresh = true)
 			$data .= '</tr>';
 		}
 
+		//check config file exists and is writable
+		$write = $exists = true;
+		if (file_exists($main_path . 'includes/config.inc.php'))
+		{
+			if (!@is_writable($main_path . 'includes/config.inc.php'))
+			{
+				$write = false;
+			}
+		}
+		elseif (file_exists($main_path . 'includes/config.inc.php.new'))
+		{
+			if (!@is_writable($main_path . 'includes/config.inc.php.new'))
+			{
+				$write = false;
+			}
+		}
+		else
+		{
+			$write = $exists = false;
+		}
+
+		if (!$exists || !$write)
+		{
+			$passed = false;
+		}
+
+		$data .= '<tr><td>includes/config.inc.php.new:</td><td>';
+		$data .= ($exists) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+		$data .= ($write) ? ', <strong style="color:green">Writable</strong>' : (($exists) ? ', <strong style="color:red">Unwritable</strong>' : '');
+		$data .= '</tr>';
+
 		$directories = array(
-			'includes/config.inc.php',
 			'includes/countries.inc.php',
 			'includes/currencies.php',
 			'includes/membertypes.inc.php',

@@ -28,8 +28,7 @@ function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
 			// get the data we need
 			$row = build_items($row);
 
-			// time left till the end of this auction 
-			$s_difference = time() - $row['starts'];
+			// time left till the end of this auction
 			$difference = $row['ends'] - time();
 			$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
@@ -42,8 +41,8 @@ function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
 				'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
 				'BID' => $row['current_bid'],
 				'BIDFORM' => $system->print_money($row['current_bid']),
-				'TIMELEFT' => FormatTimeLeft($difference),
-				'NUMBIDS' => $row['num_bids'],
+				'CLOSES' => ArrangeDateNoCorrection($row['ends']),
+				'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
 				'B_BOLD' => ($row['bold'] == 'y')
 			));
@@ -59,7 +58,6 @@ function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
 		$row = build_items($row);
 
 		// time left till the end of this auction 
-		$s_difference = time() - $row['starts'];
 		$difference = $row['ends'] - time();
 		$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
@@ -72,8 +70,8 @@ function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
 			'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
 			'BID' => $row['current_bid'],
 			'BIDFORM' => $system->print_money($row['current_bid']),
-			'TIMELEFT' => FormatTimeLeft($difference),
-			'NUMBIDS' => $row['num_bids'],
+			'CLOSES' => ArrangeDateNoCorrection($row['ends']),
+			'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
 			'B_BOLD' => ($row['bold'] == 'y')
 		));
@@ -123,11 +121,6 @@ function build_items($row)
 		$row['pict_url'] = get_lang_img('nopicture.gif');
 	}
 
-	$row['pict_url'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '"><img src="' . $row['pict_url'] . '" border=0 /></a>';
-
-	// this subastas title and link to details
-	$row['title'] = '<a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '">' . $row['title'] . '</a>';
-
 	if ($row['current_bid'] == 0)
 	{
 		$row['current_bid'] = $row['minimum_bid'];
@@ -135,12 +128,12 @@ function build_items($row)
 
 	if ($row['buy_now'] > 0 && $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
 	{
-		$row['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a> ' . $system->print_money($row['buy_now']) . ')';
+		$row['buy_now'] = '<a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a>' . $system->print_money($row['buy_now']) . ')';
 	}
 	elseif ($row['buy_now'] > 0 && $row['bn_only'] == 'y')
 	{
 		$row['current_bid'] = $row['buy_now'];
-		$row['buy_now'] = '&nbsp;&nbsp;( <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a> ' . $system->print_money($row['buy_now']) . ') <img src="' . get_lang_img('bn_only.png') . '" border="0" class="buynow">';
+		$row['buy_now'] = '<a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a>' . $system->print_money($row['buy_now']) . ') <img src="' . get_lang_img('bn_only.png') . '" border="0" class="buynow">';
 	}
 	else
 	{

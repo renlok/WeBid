@@ -1,9 +1,5 @@
 <div class="content">
-	<div class="tableContent2">
-		<div class="titTable2">
-			{L_205}
-		</div>
-
+	<div class="padtb">
 		<table width="100%" cellpadding="0" cellspacing="0" class="notd">
 		<tr>
 			<td>
@@ -20,7 +16,7 @@
 		<tr>
 			<td>
 			<div class="titTable4">
-				{L_200}<b>{YOURUSERNAME}</b> [<a href="{SITEURL}logout.php">{L_245}</a>]
+				{L_205}
 			</div>
 <!-- IF B_MENUTITLE -->
 			<div class="titTable4">

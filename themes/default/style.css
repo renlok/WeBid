@@ -17,7 +17,6 @@
 p	{ margin: 0px 0px 5px 0px; }
 dl.tabs	{ margin: 0 0 0 5px; padding: 0; width: 100%; font-size: 13px; }
 dl.tabs dd	{ margin: 1px; padding: 5px; float: left; background: transparent url(img/bot_deg.gif) repeat; border-top: 1px solid #AEACAC; border-right: 1px solid #AEACAC; border-bottom: 0px; border-left: 1px solid #AEACAC; }
-h3	{ color: #BA1D1D; font-size: 14px; font-weight: bold; text-transform: uppercase; margin: 10px 0 0 0; }
 li	{ padding-bottom: 5px; }
 table.container	{ float: none; }
 th	{ color: #787878; font-size: 12px; background-color: #c2e5ff; font-weight: bold; text-transform: capitalize; padding: 0.3ex; }
@@ -33,7 +32,7 @@ body {
 }
 
 * {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Tahoma, Geneva, sans-serif;
 	font-size: 12px;
 	margin: 0;
 	padding: 0;
@@ -73,6 +72,10 @@ td {
 	margin: 15px;
 }
 
+.padtb {
+	margin: 20px 0 20px 0;
+}
+
 .smallpadding {
 	padding: 5px;
 }
@@ -91,6 +94,10 @@ td {
 
 .smallspan {
 	font-size:10px;
+}
+
+.bigfont {
+	font-size: 20px !important;
 }
 
 .yourbidloss {
@@ -281,4 +288,12 @@ a:hover {
 	background:#FAD0D0;
 	float: left;
 	margin-left: 5px;
+}
+
+.redfont {
+	color: #ef001b;
+}
+
+.grayfont {
+	color: #dcdcdc;
 }

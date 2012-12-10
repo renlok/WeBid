@@ -1,39 +1,25 @@
 <!-- IF B_FEATURED_ITEMS -->
-	<table width="98%" border="0" cellspacing="1" cellpadding="4">
-		<tr>
-			<th width="9%" align="center" height="5">
-				{L_167}
-			</th>
-			<th width="49%" height="5" align="center">
-				{L_168}
-			</th>
-			<th width="14%" height="5" align="center">
-				{L_169}
-			</th>
-			<th width="14%" height="5" align="center">
-				{L_170}
-			</th>
-			<th width="14%" align="center" height="5">
-				{L_171}
-			</th>
-		</tr>
+	<table width="99%" border="0" cellspacing="1" cellpadding="4">
     <!-- BEGIN featured_items -->
-		<tr align="center" {featured_items.ROWCOLOUR}<!-- IF featured_items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
-			<td align="center">
-				{featured_items.IMAGE}
+		<tr align="center">
+			<td align="center" width="15%">
+				<a href="{SITEURL}item.php?id={featured_items.ID}"><img src="{featured_items.IMAGE}" border="0"></a>
 			</td>
-			<td align="left">
-                {featured_items.TITLE} {featured_items.BUY_NOW}
+			<td align="left"<!-- IF featured_items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
+                <a href="{SITEURL}item.php?id={featured_items.ID}" class="bigfont">{featured_items.TITLE}</a>
 				<!-- IF B_SUBTITLE && featured_items.SUBTITLE ne '' --><p class="smallspan">{featured_items.SUBTITLE}</p><!-- ENDIF -->
+				<p>{L_949} {featured_items.CLOSES}</p>
 			</td>
-			<td align="right">
-				{featured_items.BIDFORM}
+			<td align="center" width="15%">
+	<!-- IF featured_items.BUY_NOW neq '' -->
+				<span class="redfont bigfont">{featured_items.BUY_NOW}</span>
+	<!-- ELSE -->
+				<span class="grayfont">{L_951}</span>
+	<!-- ENDIF -->
 			</td>
-			<td align="center">
-				{featured_items.NUMBIDS}
-			</td>
-			<td align="center">
-				{featured_items.TIMELEFT}
+			<td align="center" width="15%">
+				<span class="bigfont">{featured_items.BIDFORM}</span>
+				<p class="smallspan">{featured_items.NUMBIDS}</p>
 			</td>
 		</tr>
     <!-- END featured_items -->
@@ -41,46 +27,32 @@
     <br class="spacer">
 <!-- ENDIF -->
 
-	<table width="98%" border="0" cellspacing="1" cellpadding="4">
-		<tr>
-			<th width="9%" align="center" height="5">
-				{L_167}
-			</th>
-			<th width="49%" height="5" align="center">
-				{L_168}
-			</th>
-			<th width="14%" height="5" align="center">
-				{L_169}
-			</th>
-			<th width="14%" height="5" align="center">
-				{L_170}
-			</th>
-			<th width="14%" align="center" height="5">
-				{L_171}
-			</th>
-		</tr>
+	<table width="99%" border="0" cellspacing="1" cellpadding="4">
 <!-- BEGIN items -->
-		<tr align="center" {items.ROWCOLOUR}<!-- IF items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
-			<td align="center">
-				{items.IMAGE}
+		<tr align="center" {items.ROWCOLOUR}>
+			<td align="center" width="15%">
+				<a href="{SITEURL}item.php?id={items.ID}"><img src="{items.IMAGE}" border="0"></a>
 			</td>
-			<td align="left">
-                {items.TITLE} {items.BUY_NOW}
+			<td align="left"<!-- IF items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
+                <a href="{SITEURL}item.php?id={items.ID}" class="bigfont">{items.TITLE}</a>
 				<!-- IF B_SUBTITLE && items.SUBTITLE ne '' --><p class="smallspan">{items.SUBTITLE}</p><!-- ENDIF -->
+				<p>{L_949} {items.CLOSES}</p>
 			</td>
-			<td align="right">
-				{items.BIDFORM}
+			<td align="center" width="15%">
+	<!-- IF items.BUY_NOW neq '' -->
+				<span class="redfont bigfont">{items.BUY_NOW}</span>
+	<!-- ELSE -->
+				<span class="grayfont">{L_951}</span>
+	<!-- ENDIF -->
 			</td>
-			<td align="center">
-				{items.NUMBIDS}
-			</td>
-			<td align="center">
-				{items.TIMELEFT}
+			<td align="center" width="15%">
+				<span class="bigfont">{items.BIDFORM}</span>
+				<p class="smallspan">{items.NUMBIDS}</p>
 			</td>
 		</tr>
 <!-- END items -->
 		<tr align="center">
-			<td colspan="5">{NUM_AUCTIONS}</td>
+			<td colspan="4">{NUM_AUCTIONS}</td>
 		</tr>
 	</table>
 	<table width="100%" cellpadding="0" cellspacing="0" border="0">

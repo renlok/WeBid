@@ -336,6 +336,14 @@ switch ($_SESSION['action'])
 		}
 	case 3: // confirm auction
 		$noerror = true;
+		if ($with_reserve == 'no') $reserve_price = 0;
+		if ($buy_now == 'no') $buy_now_price = 0;
+		// run the word filter
+		if ($system->SETTINGS['wordsfilter'] == 'y')
+		{
+			$title = $system->filter($title);
+			$description = $system->filter($description);
+		}
 		// check for errors
 		if ($ERR == 'ERR_')
 		{
@@ -343,6 +351,7 @@ switch ($_SESSION['action'])
 			{
 				$ERR = sprintf($MSG['674'], $system->SETTINGS['maxpictures']);
 			}
+			$ERR = 'ERR_' . CheckSellData();
 			if ($ERR != 'ERR_')
 			{
 				$_SESSION['action'] = 2;

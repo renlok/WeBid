@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2012 WeBid
+ *   copyright				: (C) 2008 - 2013 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include 'common.inc.php';
+include 'common.php';
 
 if ($system->SETTINGS['boards'] == 'n')
 {

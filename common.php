@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2012 WeBid
+ *   copyright				: (C) 2008 - 2013 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,8 +16,9 @@ session_start();
 $error_reporting = E_ALL^E_NOTICE;
 $error_reporting = E_ALL; // use this for debugging
 define('InWeBid', 1);
+
 // file check & 
-if(!@include('config.inc.php'))
+if(!@include('includes/config.inc.php'))
 {
 	$install_path = (!defined('InAdmin')) ? 'install/install.php' : '../install/install.php';
 	header('location: ' . $install_path);

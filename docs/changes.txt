@@ -7,5 +7,6 @@
 - Improved look of the error messages
 - Added Plupload and merged the image upload process into the sell page
 - Reordered the sell template make it look a bit neater
+- Fixed max autorelist limit bug (Bug #391)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

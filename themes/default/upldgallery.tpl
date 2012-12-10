@@ -2,43 +2,95 @@
 <head>
 <title>{SITENAME}</title>
 <link rel="stylesheet" type="text/css" href="themes/{THEME}/style.css">
-<style media="all" type="text/css">
-.imgareaselect-border1 {
-	background: url(images/border-v.gif) repeat-y left top;
-}
-
-.imgareaselect-border2 {
-    background: url(images/border-h.gif) repeat-x left top;
-}
-
-.imgareaselect-border3 {
-    background: url(images/border-v.gif) repeat-y right top;
-}
-
-.imgareaselect-border4 {
-    background: url(images/border-h.gif) repeat-x left bottom;
-}
-
-.imgareaselect-border1, .imgareaselect-border2,
-.imgareaselect-border3, .imgareaselect-border4 {
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-}
-
-.imgareaselect-handle {
-    background-color: #fff;
-    border: solid 1px #000;
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-}
-
-.imgareaselect-outer {
-    background-color: #000;
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-}
-</style>
 <script type="text/javascript" src="js/jquery.js"></script>
+
+<!-- Load Queue widget CSS and jQuery -->
+<style type="text/css">@import url({SITEURL}inc/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+<!-- Third party script for BrowserPlus runtime (Google Gears included in Gears runtime now) -->
+<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+
+<!-- Load plupload and all it's runtimes and finally the jQuery queue widget -->
+<script type="text/javascript" src="{SITEURL}inc/plupload/js/plupload.full.js"></script>
+<script type="text/javascript" src="{SITEURL}inc/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+
+<script type="text/javascript">
+// Convert divs to queue widgets when the DOM is ready
+$(function() {
+	$("#uploader").pluploadQueue({
+		// General settings
+		runtimes : 'flash,gears,flash,silverlight,browserplus,html5',
+		url : '{SITEURL}ajax.php?do=uploadaucimages',
+		max_file_size : '{MAXPICSIZE}kb',
+		chunk_size : '1mb',
+		unique_names : true,
+
+		// Specify what files to browse for
+		filters : [
+			{title : "Image files", extensions : "jpg,gif,png"},
+		],
+
+		// Flash settings
+		flash_swf_url : '{SITEURL}inc/plupload/js/plupload.flash.swf',
+
+		// Silverlight settings
+		silverlight_xap_url : '{SITEURL}inc/plupload/js/plupload.silverlight.xap',
+
+		// Post init events, bound after the internal events
+		init : {
+			Refresh: function(up) {
+				// Called when upload shim is moved
+			},
+
+			StateChanged: function(up) {
+				// Called when the state of the queue is changed
+			},
+
+			QueueChanged: function(up) {
+				// Called when the files in queue are changed by adding/removing files
+				if (up.files.length > ({MAXPICS} - {UPLOADED}))
+				{
+					for (var key in up.files) {
+						if (up.files.length > ({MAXPICS} - {UPLOADED})) {
+							up.removeFile(up.files[key]);
+						}
+					}
+				}
+				up.refresh();
+			},
+
+			UploadProgress: function(up, file) {
+				// Called while a file is being uploaded
+			},
+
+			FilesAdded: function(up, files) {
+				// Callced when files are added to queue
+			},
+
+			FilesRemoved: function(up, files) {
+				// Called when files where removed from queue
+
+				plupload.each(files, function(file) {
+				});
+			},
+
+			FileUploaded: function(up, file, info) {
+				// Called when a file has finished uploading
+			},
+
+			ChunkUploaded: function(up, file, info) {
+				// Called when a file chunk has finished uploading
+			},
+
+			Error: function(up, args) {
+				// Called when a error has occured
+			}
+		}
+	});
+});
+</script>
+
 <script type="text/javascript">
 $(document).ready(function () {
 	var num_images = $('#numimages', window.opener.document).val();
@@ -53,166 +105,58 @@ $(document).ready(function () {
 	}
 });
 </script>
-<!-- IF B_CROPSCREEN -->
-<script type="text/javascript" src="js/jquery.imgareaselect.js"></script>
-<script type="text/javascript">
-function preview(img, selection) {
-	var scaleX = {SCALEX} / selection.width;
-	var scaleY = {SCALEY} / selection.height;
-
-	$('#thumbprev').css({
-		width: Math.round((scaleX / {IMGRATIO}) * {IMGWIDTH}) + 'px',
-		height: Math.round((scaleY / {IMGRATIO}) * {IMGHEIGHT}) + 'px',
-		marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
-		marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
-	});
-	$('#x1').val(selection.x1 * {IMGRATIO});
-	$('#y1').val(selection.y1 * {IMGRATIO});
-	$('#x2').val(selection.x2 * {IMGRATIO});
-	$('#y2').val(selection.y2 * {IMGRATIO});
-	$('#w').val(selection.width * {IMGRATIO});
-	$('#h').val(selection.height * {IMGRATIO});
-}
-
-$(document).ready(function () {
-	$('#save_thumb').click(function() {
-		var x1 = $('#x1').val();
-		var y1 = $('#y1').val();
-		var x2 = $('#x2').val();
-		var y2 = $('#y2').val();
-		var w = $('#w').val();
-		var h = $('#h').val();
-		if (x1=="" || y1=="" || x2=="" || y2=="" || w=="" || h=="") {
-			alert("You must make a selection first");
-			return false;
-		} else {
-			return true;
-		}
-	});
-});
-
-$(window).load(function () {
-	$('#thumbnail').imgAreaSelect({ aspectRatio: '{RATIO}', onSelectChange: preview, x1: 0, y1: 0, x2: {STARTX}, y2: {STARTY} });
-});
-
-</script>
-<!-- ENDIF -->
 </head>
 
-<body bgcolor="#FFFFFF">
-<div class="container">
-<!-- IF B_CROPSCREEN -->
-<div style="color:#000000;" align="center">
-	<p>{L_610}</p>
-	<img src="{IMGPATH}" style="{SWIDTH}" id="thumbnail" alt="Create Thumbnail">
-	<p>{L_613}</p>
-	<div style="overflow:hidden; border:#000000 double; {THUMBWH}">
-		<img src="{IMGPATH}" style="position: relative;" alt="Thumbnail Preview" id="thumbprev">
+<body>
+<div class="padding">
+<!-- IF ERROR ne '' -->
+	<div class="error-box">
+		{ERROR}
 	</div>
-	<form name="thumbnail" action="?action=crop&img={IMAGE}" method="post">
-    	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-		<input type="hidden" name="x1" value="0" id="x1">
-		<input type="hidden" name="y1" value="0" id="y1">
-		<input type="hidden" name="x2" value="{STARTX}" id="x2">
-		<input type="hidden" name="y2" value="{STARTY}" id="y2">
-		<input type="hidden" name="w" value="50" id="w">
-		<input type="hidden" name="h" value="50" id="h">
-		<input type="submit" class="button" name="upload_thumbnail" value="{L_616}" id="save_thumb"><input type="submit" class="button" name="upload_thumbnail" value="{L_618}" >
-	</form>
-	<span class="smallspan">{L_629}</span>
-</div>
-<!-- ELSE -->
-	<!-- IF ERROR ne '' -->
-		<div class="error-box">
-			{ERROR}
-		</div>
-	<!-- ENDIF -->
-<form name="upload" action="" method="post" enctype="multipart/form-data">
-<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-<table cellpadding="3" cellspacing="0" border="0" align="center" width="90%">
-	<tr>
-		<td bgcolor="{HEADERCOLOUR}" colspan="2">
-			<b>{L_663}</b>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			{L_673} {MAXIMAGES} {L_674}<br>
-			{L_679}
-		</td>
-	</tr>
-	<!-- IF B_CANUPLOAD -->
-	<tr>
-		<td>
-			1. {L_680}<br>
-			<input type="file" name="userfile" size="15">
-		</td>
-	</tr>
-	<tr>
-		<td>
-			2. {L_681}<br>
-			<input type="submit" name="uploadpicture" value="{L_681}">
-		</td>
-	</tr>
-	<tr>
-		<td>
-			{L_682}
-		</td>
-	</tr>
-</table>
-	<!-- ELSE -->
-</table>
-<div class="warning-box">
-    {L_688} {MAXIMAGES} {L_689}
-</div>
-	<!-- ENDIF -->
 <!-- ENDIF -->
-<br style="clear:both;">
-<br>
-<center>
-<b>{L_687}</b>
-</center>
-<table cellpadding="3" cellspacing="0" border="0" align="center" width="90%">
-	<tr bgcolor="{HEADERCOLOUR}">
-		<td width="46%">
-			<b>{L_684}</b>
-		</td>
-		<td width="30%">
-			<b>{L_685}</b>
-		</td>
-		<td width="12%" align="center">
-			<b>{L_008}</b>
-		</td>
-		<td width="12%" align="center">
-			<b>{L_686}</b>
-		</td>
-	</tr>
-	<!-- BEGIN images -->
-	<tr>
-		<td>
-			{images.IMGNAME}
-		</td>
-		<td>
-			{images.IMGSIZE}
-		</td>
-		<td align="center">
-			<a href="?action=delete&img={images.ID}"><IMG SRC="images/trash.gif" border="0"></a>
-		</td>
-		<td align="center">
-			<a href="?action=makedefault&img={images.IMGNAME}"><img src="images/{images.DEFAULT}" border="0"></a>
-		</td>
-	</tr>
-	<!-- END images -->
-</table>
-<br><br>
-<center>
-	<input type="submit" name="creategallery" value="{L_683}">
-</center>
-</form>
-<br><br>
-<center>
-	<a href="javascript: window.close()">{L_678}</a>
-</center>
+	<div class="titTable2">
+		{L_663}
+	</div>
+
+	<table cellpadding="3" cellspacing="0" border="0" align="center" width="90%">
+		<tr bgcolor="{HEADERCOLOUR}">
+			<td width="76%" colspan="2">
+				<b>{L_684}</b>
+			</td>
+			<td width="12%" align="center">
+				<b>{L_008}</b>
+			</td>
+			<td width="12%" align="center">
+				<b>{L_686}</b>
+			</td>
+		</tr>
+<!-- BEGIN images -->
+		<tr>
+			<td>
+				<img src="{images.IMAGE}" width="60" border="0">
+			</td>
+			<td width="46%">
+				{images.IMGNAME}
+			</td>
+			<td align="center">
+				<a href="?action=delete&img={images.ID}"><IMG SRC="images/trash.gif" border="0"></a>
+			</td>
+			<td align="center">
+				<a href="?action=makedefault&img={images.IMGNAME}"><img src="images/{images.DEFAULT}" border="0"></a>
+			</td>
+		</tr>
+<!-- END images -->
+	</table>
+	<p>{PICINFO}</p>
+	<p>{IMAGE_COST}</p>
+	<div id="uploader">
+		<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+	</div>
+
+	<br style="clear:both;">
+	<center>
+		<a href="javascript: window.close()">{L_678}</a>
+	</center>
 </div>
 </body>
 </html>

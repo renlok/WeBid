@@ -156,6 +156,11 @@ input, textarea, select {
 	border-radius: 3px;
 }
 
+input[type="radio"] {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
 input:focus, textarea:focus, select:focus {
 	border: 2px solid #6F8BA1;
 }
@@ -172,6 +177,7 @@ table, td {
 
 table.blank, table.blank td {
 	border: none;
+	padding: 3px;
 }
 
 table {

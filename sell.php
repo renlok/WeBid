@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2012 WeBid
+ *   copyright				: (C) 2008 - 2013 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -83,7 +83,7 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'recall')
 
 switch ($_SESSION['action'])
 {
-	case 4:
+	case 4: // finalise auction (submit to db)
 		if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 		{
 			$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
@@ -334,7 +334,7 @@ switch ($_SESSION['action'])
 					));
 			break;
 		}
-	case 3:
+	case 3: // confirm auction
 		$noerror = true;
 		// check for errors
 		if ($ERR == 'ERR_')
@@ -443,74 +443,7 @@ switch ($_SESSION['action'])
 					));
 			break;
 		}
-	case 2:
-		$noerror = true;
-		if ($with_reserve == 'no') $reserve_price = 0;
-		if ($buy_now == 'no') $buy_now_price = 0;
-		// run the word filter
-		if ($system->SETTINGS['wordsfilter'] == 'y')
-		{
-			$title = $system->filter($title);
-			$description = $system->filter($description);
-		}
-		// check for errors
-		if ($ERR == 'ERR_')
-		{
-			$ERR = 'ERR_' . CheckSellData();
-			if ($ERR != 'ERR_')
-			{
-				$_SESSION['action'] = 1;
-				$noerror = false;
-			}
-		}
-		if ($noerror)
-		{
-			// built gallery
-			foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
-			{
-				$template->assign_block_vars('images', array(
-						'IMGNAME' => $v,
-						'ID' => $k,
-						'DEFAULT' => ($v == $_SESSION['SELL_pict_url_temp']) ? 'selected.gif' : 'unselected.gif',
-						'IMAGE' => $uploaded_path . session_id() . '/' . $v
-						));
-			}
-
-			if ($system->SETTINGS['fees'] == 'y')
-			{
-				$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'picture_fee'";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$image_fee = mysql_result($res, 0);
-			}
-			else
-			{
-				$image_fee = 0;
-			}
-
-			$template->assign_vars(array(
-					'TITLE' => $MSG['663'],
-					'ERROR' => ($ERR == 'ERR_') ? '' : $ERR,
-					'PAGE' => 1,
-					'IMAGE_COST' => ($image_fee != 0) ? sprintf($MSG['675'], $image_fee) : '',
-					'PICINFO' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']),
-					'ERRORMSG' => sprintf($MSG['674'], $system->SETTINGS['maxpictures']),
-					'MAXPICS' => $system->SETTINGS['maxpictures'],
-					'MAXPICSIZE' => $system->SETTINGS['maxuploadsize'],
-					'SESSION_ID' => session_id()
-					));
-			break;
-		}
-		if (!(strpos($a_starts, '-') === false))
-		{
-			$a_starts = _gmmktime(substr($a_starts, 11, 2),
-				substr($a_starts, 14, 2),
-				substr($a_starts, 17, 2),
-				substr($a_starts, 0, 2),
-				substr($a_starts, 3, 2),
-				substr($a_starts, 6, 4), 0);
-		}
-	case 1:
+	case 1:  // enter auction details
 		$category_string1 = get_category_string($sellcat1);
 		$category_string2 = get_category_string($sellcat2);
 
@@ -658,7 +591,7 @@ switch ($_SESSION['action'])
 		}
 		$fee_javascript .= 'var current_fee = ' . ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0') . ';';
 		$relist_options = '<select name="autorelist" id="autorelist">';
-		for ($i = 0; $i < $system->SETTINGS['maxpictures']; $i++)
+		for ($i = 0; $i < $system->SETTINGS['autorelist_max']; $i++)
 		{
 			$relist_options .= '<option value="' . $i . '">' . $i . '</option>';
 		}

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2012 WeBid
+ *   copyright				: (C) 2008 - 2013 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -260,7 +260,7 @@ $MSG['098'] = "Registration Confirmation";
 $MSG['099'] = "Your Auction Has Been Confirmed";
 $MSG['100'] = "<h3>Your auction has been setup. A confirmation e-mail will been sent to you.</h3>";
 $MSG['101'] = "View your auction";
-$MSG['102'] = 'Auction Number - %s, your auction will close %s';
+$MSG['102'] = 'Auction ID:%s, your auction will close %s';
 $MSG['103'] = " Search ";
 $MSG['104'] = "Browse ";
 $MSG['105'] = "View history";

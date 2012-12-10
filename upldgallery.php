@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2012 WeBid
+ *   copyright				: (C) 2008 - 2013 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -243,13 +243,14 @@ else
 			));
 }
 
+// built gallery
 foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
 {
 	$template->assign_block_vars('images', array(
 			'IMGNAME' => $v,
-			'IMGSIZE' => $_SESSION['UPLOADED_PICTURES_SIZE'][$k],
 			'ID' => $k,
-			'DEFAULT' => ($v == $_SESSION['SELL_pict_url_temp']) ? 'selected.gif' : 'unselected.gif'
+			'DEFAULT' => ($v == $_SESSION['SELL_pict_url_temp']) ? 'selected.gif' : 'unselected.gif',
+			'IMAGE' => $uploaded_path . session_id() . '/' . $v
 			));
 }
 
@@ -275,11 +276,14 @@ for ($i = 0; $i < $system->SETTINGS['moneydecimals']; $i++)
 $template->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'THEME' => $system->SETTINGS['theme'],
-		'NUMIMAGES' => count($_SESSION['UPLOADED_PICTURES']),
-		'IMAGE_COST' => $image_fee,
-		'FEE_DECIMALS' => $decimals,
-
-		'B_CROPSCREEN' => $cropdefault
+		'ERROR' => ($ERR == 'ERR_') ? '' : $ERR,
+		'IMAGE_COST' => ($image_fee != 0) ? sprintf($MSG['675'], $image_fee) : '',
+		'PICINFO' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']),
+		'ERRORMSG' => sprintf($MSG['674'], $system->SETTINGS['maxpictures']),
+		'MAXPICS' => $system->SETTINGS['maxpictures'],
+		'MAXPICSIZE' => $system->SETTINGS['maxuploadsize'],
+		'SESSION_ID' => session_id(),
+		'UPLOADED' => count($_SESSION['UPLOADED_PICTURES'])
 		));
 $template->set_filenames(array(
 		'body' => 'upldgallery.tpl'

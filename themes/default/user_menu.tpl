@@ -7,18 +7,20 @@
 <!-- ENDIF -->
 	<div class="padding">
 <!-- IF THISPAGE eq 'account' -->
-		<ul>
-			<li><a href="edit_data.php">{L_621}</a></li>
+		<ul class="padding">
 			<li><a href="yourfeedback.php">{L_208}</a></li>
 			<li><a href="buysellnofeedback.php">{L_207}</a> {FBTOLEAVE}</li>
 			<li><a href="mail.php">{L_623}</a> {NEWMESSAGES}</li>
 			<li><a href="outstanding.php">{L_422}</a></li>
 		</ul>
+		<div class="bigfont underline padding">{L_244}</div>
+		<ul class="padding">
+			<li><a href="selleremails.php">{L_25_0188}</a></li>
+			<li><a href="edit_data.php">{L_621}</a></li>
+		</ul>
 <!-- ELSEIF THISPAGE eq 'selling' -->
 	<!-- IF B_CANSELL -->
-		<ul>
-				<li><a href="select_category.php">{L_028}</a></li>
-				<li><a href="selleremails.php">{L_25_0188}</a></li>
+		<ul class="padding">
 				<li><a href="yourauctions_p.php">{L_25_0115}</a></li>
 				<li><a href="yourauctions.php">{L_203}</a></li>
 				<li><a href="yourauctions_c.php">{L_204}</a></li>
@@ -50,7 +52,7 @@
 		</tr>
 		</table>
 <!-- ELSE -->
-		<ul>
+		<ul class="padding">
 			<li><a href="auction_watch.php">{L_471}</a></li>
 			<li><a href="item_watch.php">{L_472}</a></li>
 			<li><a href="yourbids.php">{L_620}</a></li>

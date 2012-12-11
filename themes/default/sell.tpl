@@ -22,15 +22,11 @@ $(document).ready(function(){
 		$("#bn_yes").attr("checked", "checked");
 	});
 	$("#bn_no").click(function(){
-		$("#bn").attr("disabled","disabled");
 		$("#bn_only_no").attr("checked", "checked");
 		$("#min_bid").removeAttr("disabled");
 		$("#reserve_price").removeAttr("disabled");
 		$("#iqty").attr("disabled","disabled");
 		$("#iqty").val("1");
-	});
-	$("#bn_yes").click(function(){
-		$("#bn").removeAttr("disabled");
 	});
 	$("#custominc").focus(function(){
 		$("#inc2").attr("checked", "checked");
@@ -317,7 +313,7 @@ $(document).ready(function(){
 						<td class="rightpan">
 							<input type="radio" name="buy_now_only" value="n" {BN_ONLY_N} id="bn_only_no">
 							{L_029}
-							<input type="radio" name="buy_now_only" value="y" {BN_ONLY_Y}  id="bn_only_yes">
+							<input type="radio" name="buy_now_only" value="y" {BN_ONLY_Y} id="bn_only_yes">
 							{L_030}
 						</td>
 					</tr>
@@ -332,7 +328,7 @@ $(document).ready(function(){
 							{L_029}
 							<input type="radio" name="buy_now" id="bn_yes" value="yes" {BN_Y}>
 							{L_030}
-							<input type="text" name="buy_now_price" id="bn" size="10" value="{BN_PRICE}" {BN}>
+							<input type="text" name="buy_now_price" id="bn" size="10" value="{BN_PRICE}">
 							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>) </td>
 					</tr>
 	<!-- ENDIF -->

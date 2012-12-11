@@ -342,6 +342,7 @@ switch ($_SESSION['action'])
 		if ($system->SETTINGS['wordsfilter'] == 'y')
 		{
 			$title = $system->filter($title);
+			$subtitle = $system->filter($subtitle);
 			$description = $system->filter($description);
 		}
 		// check for errors
@@ -620,8 +621,8 @@ switch ($_SESSION['action'])
 				'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 				'FEE_JS' => $fee_javascript,
 				// auction details
-				'AUC_TITLE' => $title,
-				'AUC_SUBTITLE' => $subtitle,
+				'AUC_TITLE' => htmlentities($title, ENT_COMPAT),
+				'AUC_SUBTITLE' => htmlentities($subtitle, ENT_COMPAT),
 				'AUC_DESCRIPTION' => $CKEditor->editor('description', stripslashes($description)),
 				'ITEMQTY' => $iquantity,
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid, false),
@@ -635,7 +636,6 @@ switch ($_SESSION['action'])
 				'BN_ONLY_N' => ($buy_now_only == 'y') ? '' : 'checked',
 				'BN_Y' => ($buy_now == 'yes') ? 'checked' : '',
 				'BN_N' => ($buy_now == 'yes') ? '' : 'checked',
-				'BN' => ($buy_now == 'yes') ? '' : 'disabled',
 				'BN_PRICE' => $system->print_money_nosymbol($buy_now_price, false),
 				'INCREMENTS1' => ($increments == 1 || empty($increments)) ? 'checked' : '',
 				'INCREMENTS2' => ($increments == 2) ? 'checked' : '',
@@ -651,6 +651,7 @@ switch ($_SESSION['action'])
 				'IS_FEATURED' => ($is_featured == 'y') ? 'checked' : '',
 				'NUMIMAGES' => count($_SESSION['UPLOADED_PICTURES']),
 				'RELIST' => $relist_options,
+				'MAXRELIST' => $system->SETTINGS['autorelist_max'],
 
 				'FEE_VALUE' => get_fee($minimum_bid),
 				'FEE_VALUE_F' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
@@ -685,7 +686,7 @@ $template->set_filenames(array(
 $template->display('body');
 include 'footer.php';
 
-if ($_SESSION['action'] != 3)
+//if ($_SESSION['action'] != 3)
 	makesessions();
 
 ?>

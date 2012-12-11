@@ -95,7 +95,7 @@ $template->assign_vars(array(
 		));
 
 include 'header.php';
-$TMP_usmenutitle = $MSG['453'];
+$TMP_usmenutitle = $MSG['422'];
 include $include_path . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'outstanding.tpl'

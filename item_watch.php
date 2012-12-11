@@ -65,7 +65,6 @@ if (isset($_GET['delete']) && !empty($_GET['delete']))
 }
 
 // Show results
-$TPL_auctions_list_value = array();
 $items = trim($user->user_data['item_watch']);
 
 if ($items != '' && $items != null)

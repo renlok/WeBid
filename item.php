@@ -328,8 +328,8 @@ if ($customincrement == 0)
 {
 	// Get bid increment for current bid and calculate minimum bid
 	$query = "SELECT increment FROM " . $DBPrefix . "increments WHERE
-	((low <= " . $high_bid . " AND high >= " . $high_bid . ") OR
-	(low < " . $high_bid . " AND high < " . $high_bid . ")) ORDER BY increment DESC";
+			((low <= " . $high_bid . " AND high >= " . $high_bid . ") OR
+			(low < " . $high_bid . " AND high < " . $high_bid . ")) ORDER BY increment DESC";
 	$result_incr = mysql_query($query);
 	$system->check_mysql($result_incr, $query, __LINE__, __FILE__);
 	if (mysql_num_rows($result_incr) != 0)
@@ -546,7 +546,7 @@ $template->assign_vars(array(
 		'SELLER_TOTALFB' => $total_rate,
 		'SELLER_FBICON' => (!empty($seller_rate_icon) && $seller_rate_icon != 'transparent.gif') ? '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $seller_rate_icon . '" alt="' . $seller_rate_icon . '" class="fbstar">' : '',
 		'SELLER_NUMFB' => $num_feedbacks,
-		'SELLER_FBPOS' => ($num_feedbacks > 0) ? '(' . ceil($fb_pos * 100 / $num_feedbacks) . '%)' : '100%',
+		'SELLER_FBPOS' => ($num_feedbacks > 0) ? '(' . ceil($fb_pos * 100 / $num_feedbacks) . '%)' : $MSG['000'],
 		'SELLER_FBNEG' => ($fb_neg > 0) ? $MSG['5507'] . ' (' . ceil($fb_neg * 100 / $total_rate) . '%)' : '0',
 
 		'WATCH_VAR' => $watch_var,

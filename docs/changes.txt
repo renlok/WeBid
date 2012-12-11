@@ -10,5 +10,9 @@
 - Fixed max autorelist limit bug (Bug #391)
 - Removed highest bidders proxy bid from yourbids page (Bug #275 #351)
 - Reorganised auction ilsting pages
+- Corrected the subtitle on the outstanding payments page
+- When a user has 0 feedback it will show n/a instead of 100% (Bug #390)
+- Added wordfilter to subtitle
+- Bug fixed when using " in titles/subtitle clicking make edits it will break title/subtitle (Bug #382)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -14,5 +14,6 @@
 - When a user has 0 feedback it will show n/a instead of 100% (Bug #390)
 - Added wordfilter to subtitle
 - Bug fixed when using " in titles/subtitle clicking make edits it will break title/subtitle (Bug #382)
+- Fixed Buyer Fee when set to a percentage (Bug #374)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

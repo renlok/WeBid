@@ -189,13 +189,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			// work out & add fee
 			if ($system->SETTINGS['fees'] == 'y')
 			{
-				$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
+				$query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$fee = mysql_result($res, 0);
-				if ($system->SETTINGS['fee_type'] == 1 || $fee <= 0)
+				$row = mysql_result($res, 0);
+				$fee_type = $row['fee_type'];
+				if ($row['fee_type'] == 'flat')
 				{
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee . " WHERE id = " . $user->user_data['id'];
+					$fee_value = $row['value'];
+				}
+				else
+				{
+					$fee_value = ($row['value'] / 100) * floatval($Auction['buy_now']);
+				}
+				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
+				{
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $user->user_data['id'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 				else

@@ -94,10 +94,18 @@ function sendWatchEmails($id)
 function sortFees()
 {
 	global $DBPrefix, $system, $Winner, $Seller, $Auction, $buyer_emails;
-	global $endauc_fee, $buyer_fee, $bf_paid, $ff_paid;
+	global $endauc_fee, $buyer_fee, $buyer_fee_type, $bf_paid, $ff_paid;
 
 	if ($system->SETTINGS['fee_type'] == 1 || $buyer_fee <= 0)
 	{
+		if ($buyer_fee_type == 'flat')
+		{
+			$fee_value = $buyer_fee;
+		}
+		else
+		{
+			$fee_value = ($buyer_fee / 100) * floatval($Auction['current_bid']);
+		}
 		$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $buyer_fee . " WHERE id = " . $Winner['id'];
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}

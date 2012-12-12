@@ -159,10 +159,22 @@ switch($_GET['a'])
 		$wp_paytoid = $gateway_data['worldpay_id'];
 		$tc_paytoid = $gateway_data['toocheckout_id'];
 		$mb_paytoemail = $gateway_data['moneybookers_address'];
-		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
+		$query = "SELECT current_bid FROM " . $DBPrefix . "auctions WHERE id = " . $_SESSION['auction_id'];
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$payvalue = mysql_result($res, 0);
+		$final_value = mysql_result($res, 0);
+		$query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$row = mysql_result($res, 0);
+		if ($row['fee_type'] == 'flat')
+		{
+			$fee_value = $row['value'];
+		}
+		else
+		{
+			$fee_value = ($row['value'] / 100) * floatval($final_value);
+		}
 		$custoncode = $_SESSION['auction_id'] . 'WEBID6';
 		$message = sprintf($MSG['776'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['775'];

@@ -195,9 +195,10 @@ if (isset($_POST['action']))
 	}
 }
 
+$auc_id = intval($_REQUEST['id']);
 $query =   "SELECT u.nick, a.* FROM " . $DBPrefix . "auctions a
 			LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-			WHERE a.id = " . intval($_REQUEST['id']);
+			WHERE a.id = " . $auc_id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
@@ -258,30 +259,30 @@ $categories_list2 .= '</select>' . "\n";
 // Pictures Gellery
 $K = 0;
 $UPLOADED_PICTURES = array();
-if (file_exists($uploaded_path . $id))
+if (file_exists('../' . $uploaded_path . $auc_id))
 {
-	$dir = @opendir($uploaded_path . $id);
+	$dir = @opendir('../' . $uploaded_path . $auc_id);
 	if ($dir)
 	{
 		while ($file = @readdir($dir))
 		{
 			if ($file != '.' && $file != '..' && strpos($file, 'thumb-') === false)
 			{
-				$UPLOADED_PICTURES[$K] = $file;
+				$UPLOADED_PICTURES[$K] = $uploaded_path . $auc_id . '/' . $file;
 				$K++;
 			}
 		}
 		@closedir($dir);
 	}
-	$GALLERY_DIR = $id;
 
 	if (is_array($UPLOADED_PICTURES))
 	{
 		foreach ($UPLOADED_PICTURES as $k => $v)
 		{
-			$TMP = @getimagesize($uploaded_path . $id . '/' . $v);
+			$TMP = @getimagesize('../' . $v);
 			if ($TMP[2] >= 1 && $TMP[2] <= 3)
 			{
+			echo $v;
 				$template->assign_block_vars('gallery', array(
 						'V' => $v
 						));

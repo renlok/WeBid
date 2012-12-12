@@ -100,19 +100,23 @@ if (isset($_GET['action']))
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			while ($row = mysql_fetch_assoc($res))
 			{
-				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['category'];
-				$res_ = mysql_query($query);
-				$system->check_mysql($res_, $query, __LINE__, __FILE__);
-				$parent_node = mysql_fetch_assoc($res_);
-
-				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
-				for ($i = 0; $i < count($crumbs); $i++)
+				$row['COUNT'] = $row['COUNT'] * 1; // force it to be a number
+				if ($row['COUNT'] > 0 && !empty($row['category'])) // avoid some errors
 				{
-					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $crumbs[$i]['cat_id'];
+					$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['category'];
+					$res_ = mysql_query($query);
+					$system->check_mysql($res_, $query, __LINE__, __FILE__);
+					$parent_node = mysql_fetch_assoc($res_);
+
+					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+					for ($i = 0; $i < count($crumbs); $i++)
+					{
+						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $crumbs[$i]['cat_id'];
+						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					}
+					$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $row['category'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
-				$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $row['category'];
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			}
 
 			if ($system->SETTINGS['extra_cat'] == 'y')

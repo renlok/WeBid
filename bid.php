@@ -337,7 +337,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 2)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($cbid) . ", num_bids = num_bids + 1 WHERE id = " . $id;
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($cbid) . ", num_bids = num_bids + 2 WHERE id = " . $id;
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					if ($customincrement == 0)
 					{
@@ -378,7 +378,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 2)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($cbid) . ", num_bids = num_bids + 1 WHERE id = " . $id;
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . floatval($cbid) . ", num_bids = num_bids + 2 WHERE id = " . $id;
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 					if ($customincrement == 0)
 					{

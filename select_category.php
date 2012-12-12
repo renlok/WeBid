@@ -74,7 +74,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'process' && $_POST['box'] ==
 	}
 	else
 	{
-		$_POST['box'] = $IDX + 1;
 		$ERR = $ERR_25_0001;
 	}
 }

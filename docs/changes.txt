@@ -15,5 +15,8 @@
 - Added wordfilter to subtitle
 - Bug fixed when using " in titles/subtitle clicking make edits it will break title/subtitle (Bug #382)
 - Fixed Buyer Fee when set to a percentage (Bug #374)
+- Fixed issue where number of bids are being counter incorrectly (Bug #402) (Thanks to pani100)
+- Fixed gallery in editauction (Bug #381)
+- Rewrote installation complete text now more obvious what you need to do next
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

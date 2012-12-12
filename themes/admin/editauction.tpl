@@ -58,8 +58,8 @@
                         <td>&nbsp;</td>
                         <td>
 <!-- BEGIN gallery -->
-                            <a href="{SITEURL}{UPLOADEDPATH}{ID}/{gallery.V}" title="{gallery.V}" class="padding">
-                                <img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}" border="0" width="{THUMBWIDTH}" hspace="10">
+                            <a href="{SITEURL}/{gallery.V}" title="{gallery.V}" class="padding">
+                                <img src="{SITEURL}getthumb.php?fromfile={gallery.V}" border="0" hspace="10">
                             </a>
 <!-- END gallery -->
                         </td>

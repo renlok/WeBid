@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2012 WeBid
+ *   copyright				: (C) 2008 - 2013 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -11,7 +11,8 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-
+ 
+session_start();
 include 'functions.php';
 define('InInstaller', 1);
 
@@ -51,7 +52,14 @@ switch($step)
 		}
 		else
 		{
-			echo 'Installation complete now set-up your admin account <a href="' . $_GET['URL'] . 'admin/">here</a> and remove the install folder from your server';
+			echo '<p>Installation complete.</p>
+				<p>What do I do now?</p>
+				<ul>
+					<li>Your WeBid password salt: <span style="color: #FF0000; font-weight:bold;">' . $_SESSION['hash'] . '</span> You should make note of this random code, it is used to secure your users passwords. It is stored in your config file if you accidently delete this file and don\'t have this code all your users will have to reset their passwords</li>
+					<li>Remove the install folder from your server. You will not be able to use WeBid until you do this.</li>
+					<li>Finally set-up your admin account <a href="' . $_GET['URL'] . 'admin/" style="font-weight:bold;">here</a></li>
+					<li>Maybe check out our <a href="http://www.webidsupport.com/forums/">support forum</a></li>
+				</ul>';
 		}
 		break;
 	case 1:
@@ -66,6 +74,8 @@ switch($step)
 		$cats = (isset($_POST['importcats'])) ? 1 : 0;
 		echo '<b>Step 1:</b> Writing config file...<br>';
 		$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
+		$hash = md5(microtime() . rand(0,50));
+		$_SESSION['hash'] = $hash;
 		// generate config file
 		$content = '<?php' . "\n";
 		$content .= '$DbHost	 = "' . $_POST['DBHost'] . '";' . "\n";
@@ -74,7 +84,7 @@ switch($step)
 		$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
 		$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
 		$content .= '$main_path	= "' . $path . '";' . "\n";
-		$content .= '$MD5_PREFIX = "' . md5(microtime() . rand(0,50)) . '";' . "\n";
+		$content .= '$MD5_PREFIX = "' . $hash . '";' . "\n";
 		$content .= '?>';
 		$output = makeconfigfile($content, $path);
 		if ($output)

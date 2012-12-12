@@ -200,7 +200,7 @@ switch($_GET['a'])
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$final_value = mysql_result($res, 0);
-		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";
+		$query = "SELECT * FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		while ($row = mysql_fetch_assoc($res))

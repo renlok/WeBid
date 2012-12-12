@@ -282,7 +282,6 @@ if (file_exists('../' . $uploaded_path . $auc_id))
 			$TMP = @getimagesize('../' . $v);
 			if ($TMP[2] >= 1 && $TMP[2] <= 3)
 			{
-			echo $v;
 				$template->assign_block_vars('gallery', array(
 						'V' => $v
 						));

@@ -16,6 +16,7 @@ define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
 include $include_path . 'functions_admin.php';
+include $include_path . 'htmLawed.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -29,7 +30,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
-		$query = "INSERT INTO " . $DBPrefix . "news VALUES (NULL, '" . $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]) . "','" . $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']]) . "'," . time() . "," . intval($_POST['suspended']) . ")";
+		// clean up everything
+		$conf = array();
+		$conf['safe'] = 1;
+		foreach ($_POST['title'] as $k => $v)
+		{
+			$_POST['title'][$k] = htmLawed($v, $conf);
+			$_POST['content'][$k] = htmLawed($_POST['content'][$k], $conf);
+		}
+
+		$query = "INSERT INTO " . $DBPrefix . "news VALUES (NULL, '" . mysql_real_escape_string($_POST['title'][$system->SETTINGS['defaultlanguage']]) . "','" . mysql_real_escape_string($_POST['content'][$system->SETTINGS['defaultlanguage']]) . "'," . time() . "," . intval($_POST['suspended']) . ")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		$news_id = mysql_insert_id();
 
@@ -37,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		foreach ($LANGUAGES as $k => $v)
 		{
 			$query = "INSERT INTO " . $DBPrefix . "news_translated VALUES
-			(" . $news_id . ", '" . $k . "', '" . $system->cleanvars($_POST['title'][$k]) . "', '" . $system->cleanvars($_POST['content'][$k]) . "')";
+			(" . $news_id . ", '" . $k . "', '" . mysql_real_escape_string($_POST['title'][$k]) . "', '" . mysql_real_escape_string($_POST['content'][$k]) . "')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
 		header('location: news.php');

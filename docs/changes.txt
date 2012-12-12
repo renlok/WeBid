@@ -18,5 +18,10 @@
 - Fixed issue where number of bids are being counter incorrectly (Bug #402) (Thanks to pani100)
 - Fixed gallery in editauction (Bug #381)
 - Rewrote installation complete text now more obvious what you need to do next
+- Spelling mistake 'Lastest Auctions' corrected to 'Latest Auctions' (Bug #339)
+- Link to 404 page when trying to pay fee (Bug #338) (Thanks to drgonzo3000)
+- Fixed end auction fee for when using live payments (Thanks to drgonzo3000)
+- Fixed no winners E-mail to now show auction image (Bug #330)
+- Changed admin news editor to parse code through htmLawed instead of cleanvars so admin can add HTML to news (Bug #347)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

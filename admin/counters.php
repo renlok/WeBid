@@ -34,13 +34,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['counter_auctions'] = $_POST['auctions'];
 	$system->SETTINGS['counter_users'] = $_POST['users'];
 	$system->SETTINGS['counter_online'] = $_POST['online'];
-	$ERR = $MGS_2__0063;
+	$ERR = $MSG['2__0063'];
 }
 
-loadblock($MGS_2__0062, $MGS_2__0058);
-loadblock($MGS_2__0060, '', 'checkbox', 'auctions', $system->SETTINGS['counter_auctions']);
-loadblock($MGS_2__0061, '', 'checkbox', 'users', $system->SETTINGS['counter_users']);
-loadblock($MGS_2__0059, '', 'checkbox', 'online', $system->SETTINGS['counter_online']);
+loadblock($MSG['2__0062'], $MSG['2__0058']);
+loadblock($MSG['2__0060'], '', 'checkbox', 'auctions', $system->SETTINGS['counter_auctions']);
+loadblock($MSG['2__0061'], '', 'checkbox', 'users', $system->SETTINGS['counter_users']);
+loadblock($MSG['2__0058'], '', 'checkbox', 'online', $system->SETTINGS['counter_online']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

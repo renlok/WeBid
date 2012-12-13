@@ -165,7 +165,7 @@ if (isset($_POST['uploadpicture']) && $_POST['uploadpicture'] == $MSG['681'])
 		}
 		elseif (in_array($newname, $_SESSION['UPLOADED_PICTURES']))
 		{
-			$ERR = $MGS_2__0054 . ' (' . $_FILES['userfile']['name'] . ')';
+			$ERR = $MSG['2__0054'] . ' (' . $_FILES['userfile']['name'] . ')';
 		}
 		else
 		{

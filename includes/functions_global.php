@@ -186,6 +186,7 @@ class global_class
 	{
 		if (empty($str))
 			return 0;
+
 		$str = preg_replace("/[^0-9\.\,]/", '', $str);
 		if ($this->SETTINGS['moneyformat'] == 1)
 		{
@@ -200,7 +201,7 @@ class global_class
 			// Change decimals separator
 			$str = str_replace(',', '.', $str);
 		}
-		
+
 		return floatval($str);
 	}
 

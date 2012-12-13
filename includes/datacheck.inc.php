@@ -119,7 +119,11 @@ function CheckSellData()
 		return '058';
 	}
 
-	if ((empty($minimum_bid) || floatval($system->input_money($minimum_bid)) <= 0) && ($buy_now_only == 'n' || !$buy_now_only))
+	// format the info correctly
+	$clean_minimum_bid = $system->input_money($minimum_bid);
+	$clean_reserve_price = $system->input_money($reserve_price);
+	$clean_buy_now_price = $system->input_money($buy_now_price);
+	if ((empty($minimum_bid) || floatval($clean_minimum_bid) <= 0) && ($buy_now_only == 'n' || !$buy_now_only))
 	{
 		return '019';
 	}
@@ -196,14 +200,14 @@ function CheckSellData()
 		}
 	}
 
-	if ($with_reserve == 'yes' && $reserve_price <= $minimum_bid)
+	if ($with_reserve == 'yes' && $clean_reserve_price <= $clean_minimum_bid)
 	{
 		return '5045';
 	}
 
 	if ($buy_now == 'yes' && $buy_now_only == 'n')
 	{
-		if (($with_reserve == 'yes' && $buy_now_price <= $reserve_price) || $buy_now_price <= $minimum_bid)
+		if (($with_reserve == 'yes' && $clean_buy_now_price <= $clean_reserve_price) || $clean_buy_now_price <= $clean_minimum_bid)
 		{
 			return '5046';
 		}

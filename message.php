@@ -46,7 +46,7 @@ elseif ($user->logged_in && $user->user_data['suspended'] == 5)
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$auction_data = mysql_fetch_assoc($res);
 	$title = $MSG['753'];
-	$url = $system->SETTINGS['sitename'] . 'pay.php?a=7&auction_id=' . $auction_data['id'];
+	$url = $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $auction_data['id'];
 	$body = sprintf($MSG['796'], $auction_data['title'], $url);
 }
 else

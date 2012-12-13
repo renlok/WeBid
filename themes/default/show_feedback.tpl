@@ -16,34 +16,34 @@
 						<br>
 					</td>
 				</tr>
-				<tr>
-					<td width="5%" class="titTable2">&nbsp;</td>
-					<td width="40%" class="titTable2">{L_503}</td>
-					<td width="15%" class="titTable2">{L_240}</td>
-					<td width="15%" class="titTable2">{L_259}</td>
-					<td width="15%" class="titTable2">{L_364}</td>
+				<tr class="titTable2">
+					<td width="5%">&nbsp;</td>
+					<td width="40%">{L_503}</td>
+					<td width="15%">{L_240}</td>
+					<td width="15%">{L_259}</td>
+					<td width="15%">{L_364}</td>
 				</tr>
 <!-- BEGIN fbs -->
 				<tr {fbs.BGCOLOUR}>
-					<td valign="top" width="5%">
+					<td>
 						<img src="{fbs.IMG}" align="middle" alt="">
 					</td>
-					<td valign="top" width="40%">
+					<td>
 						{fbs.FEEDBACK}
 					</td>
-					<td valign="top" width="15%">
+					<td>
 						<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) {fbs.USICON}
 					</td>
-					<td valign="top" width="15%">
+					<td>
 						{fbs.AUCTIONURL}
 					</td>
-					<td valign="top" width="15%">
+					<td>
 						{fbs.FBDATE}
 					</td>
 				</tr>
 <!-- END fbs -->
 				<tr>
-					<td align="right" width="5%">{PAGENATION}</td>
+					<td align="center" colspan="5">{PAGENATION}</td>
 				</tr>
 			</table>
 		</div>

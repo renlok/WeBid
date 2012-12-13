@@ -101,7 +101,7 @@ loadblock($MSG['851'], $MSG['852'], 'days', 'autorelist_max', $system->SETTINGS[
 
 // auction extension options
 loadblock($MSG['2_0032'], '', '', '', '', array(), true); // :O
-loadblock($MSG['2_0034'], $_CUSTOM_0032, 'yesno', 'status', (($system->SETTINGS['ae_status'] == 'enabled') ? 'y' : 'n'), array($MSG['030'], $MSG['029']));
+loadblock($MSG['2_0034'], $MSG['2_0039'], 'yesno', 'status', (($system->SETTINGS['ae_status'] == 'enabled') ? 'y' : 'n'), array($MSG['030'], $MSG['029']));
 $string = $MSG['2_0035'] . '<input type="text" name="extend" value="' . $system->SETTINGS['ae_extend'] . '" size="5">' . $MSG['2_0036'] . '<input type="text" name="timebefore" value="' . $system->SETTINGS['ae_timebefore'] . '" size="5">' . $MSG['2_0037'];
 loadblock('', $string, '');
 
@@ -110,7 +110,7 @@ loadblock($MSG['663'], '', '', '', '', array(), true);
 loadblock($MSG['665'], $MSG['664'], 'batch', 'picturesgallery', $system->SETTINGS['picturesgallery'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['666'], '', 'days', 'maxpictures', $system->SETTINGS['maxpictures']);
 loadblock($MSG['671'], $MSG['25_0187'], 'days', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), array($MSG['672']));
-loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], array($MGS_2__0045));
+loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], array($MSG['2__0045']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

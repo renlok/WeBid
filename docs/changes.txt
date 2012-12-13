@@ -23,5 +23,10 @@
 - Fixed end auction fee for when using live payments (Thanks to drgonzo3000)
 - Fixed no winners E-mail to now show auction image (Bug #330)
 - Changed admin news editor to parse code through htmLawed instead of cleanvars so admin can add HTML to news (Bug #347)
+- Fixed show feedback template where table was being squashed to one side
+- Fixed feedback from when feedback has linebreaks no longer adds <br> (Bug #293) (Thanks to pani100)
+- Fixed pagnation in admin/accounts (Bug #329)
+- Fixed link to pay auction final fee in message.php (Bug #298 #257)
+- Fix sell datachecker so WeBid can deal with BIN values over 1,000 correctly (Bug #268)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

@@ -39,7 +39,7 @@ if (is_array($LANGUAGES))
 	}
 }
 
-loadblock($MGS_2__0004, $MGS_2__0003, $html);
+loadblock($MSG['2__0004'], $MSG['2__0003'], $html);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

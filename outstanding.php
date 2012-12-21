@@ -40,7 +40,7 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
-$query = "SELECT w.auction As id, a.title, a.shipping_cost, w.bid, w.qty FROM " . $DBPrefix . "winners w
+$query = "SELECT w.auction As id, w.id As winid, a.title, a.shipping_cost, w.bid, w.qty FROM " . $DBPrefix . "winners w
 		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 		WHERE w.paid = 0 AND w.winner = " . $user->user_data['id'] . "
 		LIMIT " . intval($OFFSET) . "," . $system->SETTINGS['perpage'];
@@ -56,6 +56,7 @@ while ($row = mysql_fetch_assoc($res))
 			'BID' => $system->print_money($row['bid'] * $row['qty']),
 			'TOTAL' => $system->print_money($row['shipping_cost'] + ($row['bid'] * $row['qty'])),
 			'ID' => $row['id'],
+			'WINID'=> $row['winid'],
 
 			'B_NOTITLE' => (empty($row['title']))
 			));
@@ -76,6 +77,48 @@ if ($PAGES > 1)
 				));
 		$COUNTER++;
 	}
+}
+
+$query = "SELECT a.id, a.auc_id, a.date, a.setup, a.featured, a.bold, a.highlighted, a.subtitle, a.relist, a.reserve, a.buynow, a.image, a.extcat, a.total, u.paid
+	FROM " . $DBPrefix . "useraccounts a
+    LEFT JOIN " . $DBPrefix . "userfees u ON (u.auc_id = a.auc_id)
+    WHERE a.user_id = " . $user->user_data['id'];
+$res_ = mysql_query($query);
+$system->check_mysql($res_, $query, __LINE__, __FILE__);
+
+while ($row = mysql_fetch_assoc($res_))
+{
+	$DATE = $row['date'] + $system->tdiff;
+	if ($row['paid'] == 0)
+	{
+		$paid = "NOT PAID";
+		$tick = "<img src='images/niezap.png'>";
+	}
+	if ($row['paid'] == 1)
+	{
+		$paid = "PAID";
+		$tick = "<img src='images/zaplac.png'>";
+	}
+
+	$template->assign_block_vars('topay', array(
+	'INVOICE' => $row['id'],
+	'ID' => $row['auc_id'],
+	'DATE' => ArrangeDateNoCorrection($DATE),
+	'FEE_SETUP' => ($row['setup'] == 0) ? ' - ' : $system->print_money($row['setup']),
+	'FEE_FEATURED' => ($row['featured'] == 0) ? ' - ' : $system->print_money($row['featured']),
+	'FEE_BOLD_ITEM' => ($row['bold'] == 0) ? ' - ' : $system->print_money($row['bold']),
+	'FEE_HIGHLITED' => ($row['highlighted'] == 0) ? ' - ' : $system->print_money($row['highlighted']),
+	'FEE_SUBTITLE' => ($row['subtitle'] == 0) ? ' - ' : $system->print_money($row['subtitle']),
+	'RELIST_TOTAL' => ($row['relist'] == 0) ? ' - ' : $system->print_money($row['relist']),
+	'FEE_RP' => ($row['reserve'] == 0) ? ' - ' : $system->print_money($row['reserve']),
+	'FEE_BN' => ($row['buynow'] == 0) ? ' - ' : $system->print_money($row['buynow']),
+	'PIC_TOTAL' => ($row['image'] == 0) ? ' - ' : $system->print_money($row['image']),
+	'EXTRA_CAT_FEE' => ($row['extcat'] == 0) ? ' - ' : $system->print_money($row['extcat']),
+	'FEE_VALUE_F' => $system->print_money($row['total']),
+	'PAID' => $paid,
+	'TICK' => $tick,
+	'PDF' => $system->SETTINGS['siteurl'] . 'item_invoice.php?id=' . $row['auc_id'],
+	));
 }
 
 $query = "SELECT balance FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];

@@ -112,7 +112,9 @@ switch ($_SESSION['action'])
 			$a_starts = (empty($start_now) || $_SESSION['SELL_action'] == 'edit') ? ($a_starts - $system->tdiff) : time();
 			$a_ends = $a_starts + ($duration * 24 * 60 * 60);
 			// get fee
-			$fee = get_fee($minimum_bid);
+			$fee_data = get_fee($minimum_bid, false);
+			$fee = $fee_data[0];
+			$fee_data = $fee_data[1];
 			// insert auction
 			$query = addauction();
 			if ($_SESSION['SELL_action'] == 'edit')
@@ -157,19 +159,25 @@ switch ($_SESSION['action'])
 				}
 				if (!$feeupdate)
 				{
+					// attach the new fees to users account
 					$query = "INSERT INTO " . $DBPrefix . "userfees VALUES (NULL, " . $auction_id . ", " . $user->user_data['id'] . ", " . $fee . ", 0)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				}
-				if ($system->SETTINGS['fee_type'] == 2 && $fee > 0)
-				{
-					$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$addcounter = false;
-				}
-				else
-				{
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee . " WHERE id = " . $user->user_data['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = addoutstanding(); // add user invoice
+					$res = mysql_query($query);
+					$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+					// deal with the auction
+					if ($system->SETTINGS['fee_type'] == 2 && $fee > 0)
+					{
+						$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
+						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						$addcounter = false;
+					}
+					else
+					{
+						$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee . " WHERE id = " . $user->user_data['id'];
+						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					}
 				}
 			}
 

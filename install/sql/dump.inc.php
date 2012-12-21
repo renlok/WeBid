@@ -1681,6 +1681,37 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
 # ############################
 
 # 
+# Table structure for table `" . $DBPrefix . "useraccounts`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "useraccounts`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `auc_id` int(15) NOT NULL,
+  `user_id` int(15) NOT NULL,
+  `date` int(15) NOT NULL,
+  `setup` double(8,2) NOT NULL,
+  `featured` double(8,2) NOT NULL,
+  `bold` double(8,2) NOT NULL,
+  `highlighted` double(8,2) NOT NULL,
+  `subtitle` double(8,2) NOT NULL,
+  `relist` double(8,2) NOT NULL,
+  `reserve` double(8,2) NOT NULL,
+  `buynow` double(8,2) NOT NULL,
+  `image` double(8,2) NOT NULL,
+  `extcat` double(8,2) NOT NULL,
+  `total` double(8,2) NOT NULL,
+  `paid` varchar(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);";
+
+# 
+# Dumping data for table `" . $DBPrefix . "useraccounts`
+# 
+
+# ############################
+
+# 
 # Table structure for table `" . $DBPrefix . "userfees`
 # 
 

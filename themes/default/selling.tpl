@@ -38,6 +38,13 @@
 <!-- ELSE -->
 			<a href="{SITEURL}selling.php?paid={a.w.ID}{AUCID}">{L_899}</a>
 <!-- ENDIF -->
+			<form name="" method="post" action="{SITEURL}order_packingslip.php" id="fees" target="_blank">
+				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+				<input type="hidden" name="pfval" value="{a.AUCTIONID}">
+				<input type="hidden" name="pfwon" value="{a.w.ID}">
+				<input type="hidden" name="user_id" value="{SELLER_ID}">
+				<input type="submit" type="button" value="Print Packingslip">
+			</form>
 		</td>
 	</tr>
 	<!-- END w -->

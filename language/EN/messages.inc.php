@@ -1020,6 +1020,36 @@ $MSG['1029'] = "Counters updated";
 $MSG['1030'] = "Re-sync the user, auction and bid counters";
 $MSG['1031'] = "Re-sync Counters";
 $MSG['1032'] = "no winner";
+
+// Invoices
+$MSG['1033']      = 'Packingslip';
+$MSG['1034']         = 'Auction ID';
+$MSG['1035']         = 'Order/Invoice';
+$MSG['1036']       = 'Order Date';
+$MSG['1037']               = 'BUYER';
+$MSG['1038']          = 'SHIP TO';
+$MSG['1039']            = 'Order Information';
+$MSG['1040']     = 'Order Details';
+$MSG['1041']       = 'Invoice No.:';
+$MSG['1042']         = 'Order ID:';
+$MSG['1043']         = 'Invoice Date:';
+$MSG['1044']        = 'Product';
+$MSG['1045']            = 'Tax';
+$MSG['1046']          = 'Unit Price (excl.)';
+$MSG['1047'] = 'Unit Price (incl.)';
+$MSG['1048']          = 'Total (excl.)';
+$MSG['1049'] = 'Total (incl.)';
+$MSG['1050']         = 'Sub-Total:';
+$MSG['1051']          = 'UK Shipping:';
+$MSG['1052']        = 'VAT 20%:';
+$MSG['1053']             = 'Total:';
+$MSG['1054'] = 'Shipping Method';
+$MSG['1055']  = 'Payment Method';
+$MSG['1056'] = 'You didn\'t select any order to print Packingslip.';
+// Stick these in the admin
+$MSG['entry_yellow_line']        = 'Yellow line text. It is in the language file.';
+$MSG['entry_thankyou']           = 'Thank you for shopping with us and we hope to see you return soon!';
+
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";
 $MSG['5005'] = "General Layout Settings";

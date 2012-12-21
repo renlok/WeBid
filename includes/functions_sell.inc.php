@@ -200,6 +200,12 @@ function addauction()
 	return "INSERT INTO " . $DBPrefix . "auctions VALUES (NULL, " . $user->user_data['id'] . ", '" . $system->cleanvars($_SESSION['SELL_title']) . "', '" . $system->cleanvars($_SESSION['SELL_subtitle']) . "', '" .  $a_starts . "', '" . addslashes($_SESSION['SELL_description']) . "', '" . $system->cleanvars($_SESSION['SELL_pict_url']) . "', " . $_SESSION['SELL_sellcat1'] . ", " . intval($_SESSION['SELL_sellcat2']) . ", '" . $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']) . "', '" . $system->input_money($_SESSION['SELL_shipping_cost']) . "', '" . $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0) . "', '" . $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0) . "', '" . $_SESSION['SELL_atype'] . "', '" . $_SESSION['SELL_duration'] . "', '" . $system->input_money($_SESSION['SELL_customincrement']) . "', '" . $_SESSION['SELL_shipping'] . "', '" . $payment_text . "', " . (($_SESSION['SELL_international']) ? 1 : 0) . ", '" . $a_ends . "', 0, 0, " . (($_SESSION['SELL_file_uploaded']) ? 1 : 0) . ", " . $_SESSION['SELL_iquantity'] . ", 0, " . intval($_SESSION['SELL_relist']) . ", 0, 0, 'n', '" . $system->cleanvars($_SESSION['SELL_shipping_terms']) . "', '" . $_SESSION['SELL_buy_now_only'] . "', '" . $_SESSION['SELL_is_bold'] . "', '" . $_SESSION['SELL_is_highlighted'] . "', '" . $_SESSION['SELL_is_featured'] . "', " . $fee . ")";
 }
 
+function addoutstanding()
+{
+	global $DBPrefix, $fee_data, $user, $system, $fee, $_SESSION;
+	return "INSERT INTO " . $DBPrefix . "useraccounts VALUES (NULL, '" . $_SESSION['SELL_auction_id'] . "','" . $user->user_data['id'] . "', '" . time() . "', '" . $fee_data['setup'] . "', '" . $fee_data['hpfeat_fee'] . "', '" . $fee_data['bolditem_fee'] . "', '" . $fee_data['hlitem_fee'] . "', '" . $fee_data['subtitle_fee'] . "', '" . $fee_data['relist_fee'] . "', '" . $fee_data['rp_fee'] . "', '" . $fee_data['buyout_fee'] . "', '" . $fee_data['picture_fee'] . "', '" . $fee_data['excat_fee'] . "', '" . $fee . "')";
+}
+
 function remove_bids($auction_id)
 {
 	global $DBPrefix, $system;
@@ -207,7 +213,7 @@ function remove_bids($auction_id)
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 }
 
-function get_fee($minimum_bid)
+function get_fee($minimum_bid, $just_fee = true)
 {
 	global $system, $DBPrefix, $buy_now_price, $reserve_price, $is_bold, $is_highlighted, $is_featured, $_SESSION, $subtitle, $sellcat2, $relist;
 
@@ -216,56 +222,68 @@ function get_fee($minimum_bid)
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 	$fee_value = 0;
+	$fee_data = array();
 	while ($row = mysql_fetch_assoc($res))
 	{
 		if ($minimum_bid >= $row['fee_from'] && $minimum_bid <= $row['fee_to'] && $row['type'] == 'setup')
 		{
 			if ($row['fee_type'] == 'flat')
 			{
+				$fee_data['setup'] = $row['value'];
 				$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 			}
 			else
 			{
 				$tmp = bcdiv($row['value'], '100', $system->SETTINGS['moneydecimals']);
 				$tmp = bcmul($tmp, $minimum_bid, $system->SETTINGS['moneydecimals']);
+				$fee_data['setup'] = $tmp;
 				$fee_value = bcadd($fee_value, $tmp, $system->SETTINGS['moneydecimals']);
 			}
 		}
 		if ($row['type'] == 'buyout_fee' && $buy_now_price > 0)
 		{
+			$fee_data['buyout_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'rp_fee' && $reserve_price > 0)
 		{
+			$fee_data['rp_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'bolditem_fee' && $is_bold == 'y')
 		{
+			$fee_data['bolditem_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'hlitem_fee' && $is_highlighted == 'y')
 		{
+			$fee_data['hlitem_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'hpfeat_fee' && $is_featured == 'y')
 		{
+			$fee_data['hpfeat_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'picture_fee' && count($_SESSION['UPLOADED_PICTURES']) > 0)
 		{
 			$tmp = bcmul(count($_SESSION['UPLOADED_PICTURES']), $row['value'], $system->SETTINGS['moneydecimals']);
+			$fee_data['picture_fee'] = $tmp;
 			$fee_value = bcadd($fee_value, $tmp, $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'subtitle_fee' && !empty($subtitle))
 		{
+			$fee_data['subtitle_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'excat_fee' && $sellcat2 > 0)
 		{
+			$fee_data['excat_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'relist_fee' && $relist > 0)
 		{
+			$fee_data['relist_fee'] = ($row['value'] * $relist);
 			$fee_value = bcadd($fee_value, ($row['value'] * $relist), $system->SETTINGS['moneydecimals']);
 		}
 	}
@@ -274,17 +292,45 @@ function get_fee($minimum_bid)
 	{
 		global $user;
 
-		$query = "SELECT current_fee FROM " . $DBPrefix . "auctions WHERE id = " . $_SESSION['SELL_auction_id'] . " AND user = " . $user->user_data['id'];
+		$query = "SELECT * FROM " . $DBPrefix . "useraccounts WHERE auc_id = " . $_SESSION['SELL_auction_id'] . " AND user_id = " . $user->user_data['id'];
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$fee_value = bcsub($fee_value, mysql_result($res, 0), $system->SETTINGS['moneydecimals']);
+		$row = mysql_result($res, 0);
+		if ($row['setup'] == $fee_data['setup'])
+			$fee_data['setup'] = 0;
+		if ($row['bold'] == $fee_data['bolditem_fee'])
+			$fee_data['bolditem_fee'] = 0;
+		if ($row['highlighted'] == $fee_data['hlitem_fee'])
+			$fee_data['hlitem_fee'] = 0;
+		if ($row['subtitle'] == $fee_data['subtitle_fee'])
+			$fee_data['subtitle_fee'] = 0;
+		if ($row['relist'] == $fee_data['relist_fee'])
+			$fee_data['relist_fee'] = 0;
+		if ($row['reserve'] == $fee_data['rp_fee'])
+			$fee_data['rp_fee'] = 0;
+		if ($row['buynow'] == $fee_data['buyout_fee'])
+			$fee_data['buyout_fee'] = 0;
+		if ($row['image'] == $fee_data['picture_fee'])
+			$fee_data['picture_fee'] = 0;
+		if ($row['extcat'] == $fee_data['excat_fee'])
+			$fee_data['excat_fee'] = 0;
+		$fee_value = bcsub($fee_value, $row['total'], $system->SETTINGS['moneydecimals']);
 		if ($fee_value < 0)
 		{
 			$fee_value = 0;
 		}
 	}
 
-	return $fee_value;
+	if ($just_fee)
+	{
+		$return = $fee_value;
+	}
+	else
+	{
+		$return = array($fee_value, $fee_data);
+	}
+
+	return $return;
 }
 
 function update_cat_counters($add, $category)

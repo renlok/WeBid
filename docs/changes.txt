@@ -28,5 +28,6 @@
 - Fixed pagnation in admin/accounts (Bug #329)
 - Fixed link to pay auction final fee in message.php (Bug #298 #257)
 - Fix sell datachecker so WeBid can deal with BIN values over 1,000 correctly (Bug #268)
+- Added user invoices (Thanks to Xeonn)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

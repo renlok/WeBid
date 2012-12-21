@@ -76,7 +76,8 @@ while ($row = mysql_fetch_array($res))
 
 $template->assign_vars(array(
 		'NUM_WINNERS' => $i,
-		'AUCID' => (!empty($searchid)) ? '&id=' . $searchid : ''
+		'AUCID' => (!empty($searchid)) ? '&id=' . $searchid : '',
+		'SELLER_ID' => $user->user_data['id']
 		));
 
 include 'header.php';

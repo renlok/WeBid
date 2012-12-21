@@ -6,6 +6,7 @@
                         	<li><a href="{SITEURL}admin/fee_gateways.php">{L_445}</a></li>
                         	<li><a href="{SITEURL}admin/enablefees.php">{L_395}</a></li>
                         	<li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
+							<li><a href="{SITEURL}admin/invoice.php">{L_766}</a></li>
                         </ul>
                     </div>
                 </div>

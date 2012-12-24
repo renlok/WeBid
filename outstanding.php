@@ -79,10 +79,8 @@ if ($PAGES > 1)
 	}
 }
 
-$query = "SELECT a.id, a.auc_id, a.date, a.setup, a.featured, a.bold, a.highlighted, a.subtitle, a.relist, a.reserve, a.buynow, a.image, a.extcat, a.total, u.paid
-	FROM " . $DBPrefix . "useraccounts a
-    LEFT JOIN " . $DBPrefix . "userfees u ON (u.auc_id = a.auc_id)
-    WHERE a.user_id = " . $user->user_data['id'];
+$query = "SELECT * FROM " . $DBPrefix . "useraccounts
+    WHERE user_id = " . $user->user_data['id'];
 $res_ = mysql_query($query);
 $system->check_mysql($res_, $query, __LINE__, __FILE__);
 

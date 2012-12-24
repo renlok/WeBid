@@ -203,7 +203,7 @@ function addauction()
 function addoutstanding()
 {
 	global $DBPrefix, $fee_data, $user, $system, $fee, $_SESSION;
-	return "INSERT INTO " . $DBPrefix . "useraccounts VALUES (NULL, '" . $_SESSION['SELL_auction_id'] . "','" . $user->user_data['id'] . "', '" . time() . "', '" . $fee_data['setup'] . "', '" . $fee_data['hpfeat_fee'] . "', '" . $fee_data['bolditem_fee'] . "', '" . $fee_data['hlitem_fee'] . "', '" . $fee_data['subtitle_fee'] . "', '" . $fee_data['relist_fee'] . "', '" . $fee_data['rp_fee'] . "', '" . $fee_data['buyout_fee'] . "', '" . $fee_data['picture_fee'] . "', '" . $fee_data['excat_fee'] . "', '" . $fee . "')";
+	return "INSERT INTO " . $DBPrefix . "useraccounts VALUES (NULL, '" . $_SESSION['SELL_auction_id'] . "','" . $user->user_data['id'] . "', '" . time() . "', '" . $fee_data['setup'] . "', '" . $fee_data['hpfeat_fee'] . "', '" . $fee_data['bolditem_fee'] . "', '" . $fee_data['hlitem_fee'] . "', '" . $fee_data['subtitle_fee'] . "', '" . $fee_data['relist_fee'] . "', '" . $fee_data['rp_fee'] . "', '" . $fee_data['buyout_fee'] . "', '" . $fee_data['picture_fee'] . "', '" . $fee_data['excat_fee'] . "', '" . $fee . "', 0)";
 }
 
 function remove_bids($auction_id)
@@ -296,25 +296,50 @@ function get_fee($minimum_bid, $just_fee = true)
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$row = mysql_result($res, 0);
-		if ($row['setup'] == $fee_data['setup'])
-			$fee_data['setup'] = 0;
+		$diff = 0; // difference from last payment
+		$fee_data['setup'] = 0; // shouldn't have to pay setup for an edit...
+		$diff = bcadd($diff, $row['setup'], $system->SETTINGS['moneydecimals']);
 		if ($row['bold'] == $fee_data['bolditem_fee'])
+		{
+			$diff = bcadd($diff, $row['bolditem_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['bolditem_fee'] = 0;
+		}
 		if ($row['highlighted'] == $fee_data['hlitem_fee'])
+		{
+			$diff = bcadd($diff, $row['hlitem_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['hlitem_fee'] = 0;
+		}
 		if ($row['subtitle'] == $fee_data['subtitle_fee'])
+		{
+			$diff = bcadd($diff, $row['subtitle_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['subtitle_fee'] = 0;
+		}
 		if ($row['relist'] == $fee_data['relist_fee'])
+		{
+			$diff = bcadd($diff, $row['relist_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['relist_fee'] = 0;
+		}
 		if ($row['reserve'] == $fee_data['rp_fee'])
+		{
+			$diff = bcadd($diff, $row['rp_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['rp_fee'] = 0;
+		}
 		if ($row['buynow'] == $fee_data['buyout_fee'])
+		{
+			$diff = bcadd($diff, $row['buyout_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['buyout_fee'] = 0;
+		}
 		if ($row['image'] == $fee_data['picture_fee'])
+		{
+			$diff = bcadd($diff, $row['picture_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['picture_fee'] = 0;
+		}
 		if ($row['extcat'] == $fee_data['excat_fee'])
+		{
+			$diff = bcadd($diff, $row['excat_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['excat_fee'] = 0;
-		$fee_value = bcsub($fee_value, $row['total'], $system->SETTINGS['moneydecimals']);
+		}
+		$fee_value = bcsub($fee_value, $diff, $system->SETTINGS['moneydecimals']);
 		if ($fee_value < 0)
 		{
 			$fee_value = 0;

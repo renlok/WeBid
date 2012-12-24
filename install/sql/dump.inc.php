@@ -1701,32 +1701,12 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   `image` double(8,2) NOT NULL,
   `extcat` double(8,2) NOT NULL,
   `total` double(8,2) NOT NULL,
-  `paid` varchar(11) NOT NULL,
+  `paid` int(1) NOT NULL default '0',
   PRIMARY KEY (`id`)
 );";
 
 # 
 # Dumping data for table `" . $DBPrefix . "useraccounts`
-# 
-
-# ############################
-
-# 
-# Table structure for table `" . $DBPrefix . "userfees`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userfees`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "userfees` (
-  `id` INT(15) NOT NULL AUTO_INCREMENT ,
-  `auc_id` int(15) NOT NULL,
-  `user_id` int(15) NOT NULL,
-  `amt` double(6,4) NOT NULL default '0',
-  `paid` int(1) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-);";
-
-# 
-# Dumping data for table `" . $DBPrefix . "userfees`
 # 
 
 # ############################

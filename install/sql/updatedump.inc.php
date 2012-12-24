@@ -157,6 +157,7 @@ if ($myversion == '1.0.5')
 {
 	//1.0.5 to 1.1.0
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.1.0';";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userfees`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `auc_id` int(15) NOT NULL,
@@ -173,7 +174,7 @@ if ($myversion == '1.0.5')
 	  `image` double(8,2) NOT NULL,
 	  `extcat` double(8,2) NOT NULL,
 	  `total` double(8,2) NOT NULL,
-	  `paid` varchar(11) NOT NULL,
+	  `paid` int(1) NOT NULL default '0',
 	  PRIMARY KEY (`id`)
 	);";
 }

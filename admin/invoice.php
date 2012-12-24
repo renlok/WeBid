@@ -31,16 +31,14 @@ $query_1 = '';
 
 
 
-$query = "SELECT a.*, u.paid
-	FROM " . $DBPrefix . "useraccounts a
-	LEFT JOIN " . $DBPrefix . "userfees u ON (u.auc_id = a.auc_id)";
+$query = "SELECT * FROM " . $DBPrefix . "useraccounts";
 
-if ($group == 'g') {$query .= " GROUP BY a.user_id ";}
+if ($group == 'g') {$query .= " GROUP BY user_id ";}
 
 $where_sql = '';
 if ($from_date != 0)
 {
-	$where_sql = 'a.date > ' . strtotime($from_date) . '';
+	$where_sql = 'date > ' . strtotime($from_date) . '';
 }
 if ($to_date != 0)
 {
@@ -48,7 +46,7 @@ if ($to_date != 0)
 	{
 		$where_sql .= ' AND ';
 	}
-	$where_sql .= 'a.date < ' . strtotime($to_date) . '';
+	$where_sql .= 'date < ' . strtotime($to_date) . '';
 }
 
 
@@ -63,7 +61,7 @@ if ($list_type == 'year' || $list_type == 'm' || $list_type == 'w' || $list_type
 		$end_date = strtotime("1 year ago +1 year -1 day", strtotime(date('Y-m-01 01:00:00'))); 	
         $start_date	= strtotime("1 year ago", strtotime(date('Y-m-01 01:00:00')));
 		
-		$query .= $query_1 = ((!empty($where_sql)) ? ' WHERE ' . $where_sql : ' WHERE a.date > ('.$start_date.') AND a.date < ('.$end_date.')') . " ";
+		$query .= $query_1 = ((!empty($where_sql)) ? ' WHERE ' . $where_sql : ' WHERE date > ('.$start_date.') AND date < ('.$end_date.')') . " ";
 		
 	}
 	elseif ($list_type == 'm')
@@ -72,7 +70,7 @@ if ($list_type == 'year' || $list_type == 'm' || $list_type == 'w' || $list_type
 		$end_date = strtotime("-1 month +1 month -1 day",strtotime(date('Y-m-01 01:00:00'))); 
         $start_date	= strtotime("-1 month",strtotime(date('Y-m-01 01:00:00')));	
 		
-		$query .= $query_1 = ((!empty($where_sql)) ? ' WHERE ' . $where_sql : ' WHERE a.date > ('.$start_date.') AND a.date < ('.$end_date.')') . " ";
+		$query .= $query_1 = ((!empty($where_sql)) ? ' WHERE ' . $where_sql : ' WHERE date > ('.$start_date.') AND date < ('.$end_date.')') . " ";
 		
 	}
 	elseif ($list_type == 'w')
@@ -80,7 +78,7 @@ if ($list_type == 'year' || $list_type == 'm' || $list_type == 'w' || $list_type
 		$end_date = strtotime("-1 week +1 week",strtotime(date('Y-m-d 01:00:00')));	
         $start_date	= strtotime("-1 week",strtotime(date('Y-m-d 01:00:00')));		
 		
-		$query .= $query_1 = ((!empty($where_sql)) ? ' WHERE ' . $where_sql : ' WHERE a.date > ('.$start_date.') AND a.date < ('.$end_date.')') . " ";
+		$query .= $query_1 = ((!empty($where_sql)) ? ' WHERE ' . $where_sql : ' WHERE date > ('.$start_date.') AND date < ('.$end_date.')') . " ";
 		
 	}
 	else
@@ -88,7 +86,7 @@ if ($list_type == 'year' || $list_type == 'm' || $list_type == 'w' || $list_type
 		$end_date = strtotime("-1 day +1 day");	
         $start_date	= strtotime("-1 day");
 		
-		$query .= $query_1 = ((!empty($where_sql)) ? ' WHERE ' . $where_sql : ' WHERE a.date > ('.$start_date.') AND a.date < ('.$end_date.')') . " ";
+		$query .= $query_1 = ((!empty($where_sql)) ? ' WHERE ' . $where_sql : ' WHERE date > ('.$start_date.') AND date < ('.$end_date.')') . " ";
 				
 	}
 }
@@ -114,8 +112,7 @@ $show_pagnation = true;
 
 }
 
-$query1 = "SELECT COUNT(a.id) As COUNT, SUM(a.total) As TOTAL_VAL FROM " . $DBPrefix . "useraccounts a
-    LEFT JOIN " . $DBPrefix . "userfees u ON (u.auc_id = a.auc_id)";
+$query1 = "SELECT COUNT(id) As COUNT, SUM(total) As TOTAL_VAL FROM " . $DBPrefix . "useraccounts";
   $query1 .= $query_1;
 
 $result = mysql_query($query1);
@@ -125,11 +122,6 @@ $TOTAL_VALUE = mysql_result($result, 0, 'TOTAL_VAL');
 
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
-
-//-------------------invoice mod start
-   //if ($show_pagnation == true){
-	//$query .= "LIMIT " . intval($OFFSET) . "," . $system->SETTINGS['perpage'];
- // }
     $res_ = mysql_query($query);
     $system->check_mysql($res_, $query, __LINE__, __FILE__);
     $total_all = 0;

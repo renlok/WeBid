@@ -145,39 +145,22 @@ switch ($_SESSION['action'])
 			if ($system->SETTINGS['fees'] == 'y')
 			{
 				$feeupdate = false;
-				if ($_SESSION['SELL_action'] == 'edit')
-				{
-					$query = "SELECT id FROM " . $DBPrefix . "userfees WHERE auc_id = " . $auction_id;
-					$res = mysql_query($query);
-					$system->check_mysql($res, $query, __LINE__, __FILE__);
-					if (mysql_num_rows($res) == 1)
-					{
-						$feeupdate = true;
-						$query = "UPDATE " . $DBPrefix . "userfees SET amt = amt + " . $fee . " WHERE auc_id = " . $auction_id;
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					}
-				}
-				if (!$feeupdate)
-				{
-					// attach the new fees to users account
-					$query = "INSERT INTO " . $DBPrefix . "userfees VALUES (NULL, " . $auction_id . ", " . $user->user_data['id'] . ", " . $fee . ", 0)";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$query = addoutstanding(); // add user invoice
-					$res = mysql_query($query);
-					$system->check_mysql($res, $query, __LINE__, __FILE__);
+				// attach the new invoice to users account
+				$query = addoutstanding();
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-					// deal with the auction
-					if ($system->SETTINGS['fee_type'] == 2 && $fee > 0)
-					{
-						$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-						$addcounter = false;
-					}
-					else
-					{
-						$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee . " WHERE id = " . $user->user_data['id'];
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					}
+				// deal with the auction
+				if ($system->SETTINGS['fee_type'] == 2 && $fee > 0)
+				{
+					$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$addcounter = false;
+				}
+				else
+				{
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee . " WHERE id = " . $user->user_data['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 			}
 

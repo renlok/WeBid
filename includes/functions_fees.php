@@ -233,6 +233,10 @@ class fees
 				}
 				$query = "UPDATE " . $DBPrefix . "users SET balance = balance + " . $payment_amount . $addquery . " WHERE id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				// add invoice
+				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, date, balance, total, paid) VALUES
+						(" . $custom_id . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 2: // pay for an item
 				$query = "UPDATE " . $DBPrefix . "winners SET paid = 1 WHERE id = " . $custom_id;
@@ -241,26 +245,36 @@ class fees
 			case 3: // pay signup fee (live mode)
 				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				// add invoice
+				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, date, signup, total, paid) VALUES
+						(" . $custom_id . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 4: // pay auction fee (live mode)
 				global $user, $MSG;
 				$catscontrol = new MPTTcategories();
 
-				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $custom_id;
+				$query = "SELECT auc_id FROM " . $DBPrefix . "useraccounts WHERE id = " . $custom_id;
+				$res = mysql_query($query);
+				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$auc_id = mysql_result($res, 0, 'auc_id');
+				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $auc_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				$query = "UPDATE " . $DBPrefix . "useraccounts SET paid = 1 WHERE auc_id = " . $custom_id . " AND setup > 0";
+				$query = "UPDATE " . $DBPrefix . "useraccounts SET paid = 1 WHERE auc_id = " . $auc_id . " AND setup > 0";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$query = "UPDATE " . $DBPrefix . "useraccounts SET paid = 1 WHERE id = " . $custom_id;
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				$query = "SELECT category, title, minimum_bid, pict_url, buy_now, reserve_price, auction_type, ends
-						FROM " . $DBPrefix . "auctions WHERE id = " . $custom_id;
+						FROM " . $DBPrefix . "auctions WHERE id = " . $auc_id;
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$auc_data = mysql_fetch_assoc($res);
 
 				// auction data
-				$auction_id = $custom_id;
+				$auction_id = $auc_id;
 				$title = $auc_data['title'];
 				$atype = $auc_data['auction_type'];
 				$pict_url = $auc_data['pict_url'];
@@ -290,17 +304,29 @@ class fees
 			case 5: // pay relist fee (live mode)
 				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				// add invoice
+				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, date, relist, total, paid) VALUES
+						(" . $custom_id . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 6:  // pay buyer fee (live mode)
 				$query = "UPDATE " . $DBPrefix . "winners SET bf_paid = 1 WHERE bf_paid = 0 AND auction = " . $custom_id . " AND winner = " . $user->user_data['id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $user->user_data['id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				// add invoice
+				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, date, buyer, total, paid) VALUES
+						(" . $user->user_data['id'] . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 7: // pay final value fee (live mode)
 				$query = "UPDATE " . $DBPrefix . "winners SET ff_paid = 1 WHERE ff_paid = 0 AND auction = " . $custom_id . " AND seller = " . $user->user_data['id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $user->user_data['id'];
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				// add invoice
+				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, date, finalval, total, paid) VALUES
+						(" . $user->user_data['id'] . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			

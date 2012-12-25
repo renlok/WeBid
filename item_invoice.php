@@ -9,8 +9,9 @@ class PDF extends FPDF
 // Page header
 function Header()
 {
+	global $system;
     // Logo
-    $this->Image('logo.png',10,6,50);
+    $this->Image('themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'], 10, 6, 50);
     // Arial bold 15
     $this->SetFont('Arial','B',15);
     // Move to the right
@@ -62,7 +63,7 @@ $pdf->SetX(5);
 $y_axis_initial = 25;
 $y_axis = $y_axis_initial + $row_height;
 //Select the Products you want to show in your PDF file
-$query="SELECT ID, auction, user, date, featured, bold, highlighted, subtitle, relist, reserve, buynow, image, extcat, total FROM " . $DBPrefix . "invoice WHERE auction =" . $_GET['id'];
+$query="SELECT id, auc_id, user_id, date, featured, bold, highlighted, subtitle, relist, reserve, buynow, image, extcat, total FROM " . $DBPrefix . "useraccounts WHERE auc_id =" . $_GET['id'];
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
 
@@ -89,9 +90,9 @@ while($row = mysql_fetch_array($result))
         $i = 0;
     }
 
-    $ID = $row['ID'];
-    $auction = $row['auction'];
-    $user = $row['user'];
+    $ID = $row['id'];
+    $auction = $row['auc_id'];
+    $user = $row['user_id'];
 	$date = ArrangeDateNoCorrection($row['date']);
 	$setup = $row['setup'];
 	$featured = $row['featured'];

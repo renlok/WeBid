@@ -79,51 +79,12 @@ if ($PAGES > 1)
 	}
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "useraccounts
-    WHERE user_id = " . $user->user_data['id'];
-$res_ = mysql_query($query);
-$system->check_mysql($res_, $query, __LINE__, __FILE__);
-
-while ($row = mysql_fetch_assoc($res_))
-{
-	$DATE = $row['date'] + $system->tdiff;
-	if ($row['paid'] == 0)
-	{
-		$paid = "NOT PAID";
-		$tick = "<img src='images/niezap.png'>";
-	}
-	if ($row['paid'] == 1)
-	{
-		$paid = "PAID";
-		$tick = "<img src='images/zaplac.png'>";
-	}
-
-	$template->assign_block_vars('topay', array(
-			'INVOICE' => $row['id'],
-			'ID' => $row['auc_id'],
-			'DATE' => ArrangeDateNoCorrection($DATE),
-			'FEE_SETUP' => ($row['setup'] == 0) ? ' - ' : $system->print_money($row['setup']),
-			'FEE_FEATURED' => ($row['featured'] == 0) ? ' - ' : $system->print_money($row['featured']),
-			'FEE_BOLD_ITEM' => ($row['bold'] == 0) ? ' - ' : $system->print_money($row['bold']),
-			'FEE_HIGHLITED' => ($row['highlighted'] == 0) ? ' - ' : $system->print_money($row['highlighted']),
-			'FEE_SUBTITLE' => ($row['subtitle'] == 0) ? ' - ' : $system->print_money($row['subtitle']),
-			'RELIST_TOTAL' => ($row['relist'] == 0) ? ' - ' : $system->print_money($row['relist']),
-			'FEE_RP' => ($row['reserve'] == 0) ? ' - ' : $system->print_money($row['reserve']),
-			'FEE_BN' => ($row['buynow'] == 0) ? ' - ' : $system->print_money($row['buynow']),
-			'PIC_TOTAL' => ($row['image'] == 0) ? ' - ' : $system->print_money($row['image']),
-			'EXTRA_CAT_FEE' => ($row['extcat'] == 0) ? ' - ' : $system->print_money($row['extcat']),
-			'FEE_VALUE_F' => $system->print_money($row['total']),
-			'PAID' => $paid,
-			'TICK' => $tick,
-			'PDF' => $system->SETTINGS['siteurl'] . 'item_invoice.php?id=' . $row['auc_id'],
-			));
-}
-
 $query = "SELECT balance FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $user_balance = mysql_result($res, 0);
 
+$_SESSION['INVOICE_RETURN'] = 'outstanding.php';
 $template->assign_vars(array(
 		'USER_BALANCE' => $system->print_money($user_balance),
 		'PAY_BALANCE' => $system->print_money_nosymbol(($user_balance < 0) ? 0 - $user_balance : 0),

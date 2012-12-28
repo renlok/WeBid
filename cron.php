@@ -204,7 +204,7 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 
 				// Add winner's data to "winners" table
 				$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-				(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
+						(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			}
 			if ($items_count == 0)

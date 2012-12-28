@@ -67,7 +67,14 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 // check its real
 if (mysql_num_rows($res) < 1)
 {
-	header('location: outstanding.php');
+	if (isset($_SESSION['INVOICE_RETURN']))
+	{
+		header('location: ' . $_SESSION['INVOICE_RETURN']);
+	}
+	else
+	{
+		header('location: invoices.php');
+	}
 	exit;
 }
 

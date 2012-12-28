@@ -204,7 +204,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				}
 				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
 				{
+					// add balance & invoice
 					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $user->user_data['id'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
+							(" . $user->user_data['id'] . ", " . $id . ", " . time() . ", " . $fee_value . ", " . $fee_value . ", 1)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 				else
@@ -234,7 +238,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				}
 				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
 				{
+					// add user balance & invoice
 					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Auction['user'];
+					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, finalval, total, paid) VALUES
+							(" . $Auction['user'] . ", " . $id . ", " . time() . ", " . $fee_value . ", " . $fee_value . ", 1)";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}
 				else

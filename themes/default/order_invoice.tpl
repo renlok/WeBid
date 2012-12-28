@@ -44,7 +44,7 @@
           <td valign="top" width="350" align="right">
             <table class="pageHeading-invoice2" width="200" border="0">
               <tbody><tr>
-                <td><b>{L_1041} AUC{SALE_ID}</b></td>
+                <td><b>{L_1041}: AUC{SALE_ID}</b></td>
               </tr>
               <tr>
                 <td><b>{L_1043}</b>&nbsp;{INVOICE_DATE}</td>
@@ -109,7 +109,7 @@
   <tr>
     <td><table width="100%" border="0" cellpadding="2" cellspacing="0">
         <tbody><tr>
-          <td class="main-payment"><b>{L_1042}</b><br>Auction ID: {AUCTION_ID}/ {L_1041} AUC{SALE_ID}</td>
+          <td class="main-payment"><b>{L_1042}</b><br>Auction ID: {AUCTION_ID}/ {L_1041}: AUC{SALE_ID}</td>
           <td class="main-payment"><b>{L_1036}</b><br>{INVOICE_DATE}</td>
           <td class="main-payment"><b>{L_1055}</b><br>{PAYMENT_METHOD}</td>
           <td class="main-payment"><b>{L_1054}</b><br>{SHIPPING_METHOD}</td>

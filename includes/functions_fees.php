@@ -305,8 +305,8 @@ class fees
 				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				// add invoice
-				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, date, relist, total, paid) VALUES
-						(" . $custom_id . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
+				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, relist, total, paid) VALUES
+						(" . $custom_id . ", " . $custom_id . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 6:  // pay buyer fee (live mode)
@@ -315,8 +315,8 @@ class fees
 				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $user->user_data['id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				// add invoice
-				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, date, buyer, total, paid) VALUES
-						(" . $user->user_data['id'] . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
+				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
+						(" . $user->user_data['id'] . ", " . $custom_id . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			case 7: // pay final value fee (live mode)
@@ -325,8 +325,8 @@ class fees
 				$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $user->user_data['id'];
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				// add invoice
-				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, date, finalval, total, paid) VALUES
-						(" . $user->user_data['id'] . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
+				$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, finalval, total, paid) VALUES
+						(" . $user->user_data['id'] . ", " . $custom_id . ", " . time() . ", " . $payment_amount . ", " . $payment_amount . ", 1)";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			break;
 			

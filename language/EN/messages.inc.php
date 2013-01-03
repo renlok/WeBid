@@ -1049,6 +1049,7 @@ $MSG['1056'] = 'You didn\'t select any order to print Packingslip.';
 $MSG['1057'] = 'List invoices';
 $MSG['1058'] = 'View invoice';
 $MSG['1059'] = 'Invoice List';
+$MSG['1060'] = 'Invalid Invoice.';
 // Stick these in the admin
 $MSG['entry_yellow_line']        = 'Yellow line text. It is in the language file.';
 $MSG['entry_thankyou']           = 'Thank you for shopping with us and we hope to see you return soon!';

@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
+include $include_path . 'functions_invoices.php';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())
@@ -22,152 +22,138 @@ if (!$user->is_logged_in())
 	exit;
 }
 
-function getSeller($user_id)
+// is this an auction invoice or fee invoice
+$auction = false;
+if (isset($_POST['pfval']) && isset($_POST['pfwon']))
 {
-	global $system, $DBPrefix;
-
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $user_id;
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$seller_nick = mysql_result($result, 0);
-
-	return $seller_nick;
-}	
-function getAddressWinner($user_id)
+	$auction = true;
+	// check input data
+	if (intval($_POST['pfval']) == 0 || intval($_POST['pfwon']) == 0)
+	{
+		invaildinvoice();
+	}
+}
+else
 {
-	global $system, $DBPrefix;
-
-	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = '" . (int)$user_id . "'";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$result = mysql_fetch_array($result);
-	$address_data = array(
-		//'user_id'   => $result['id'],
-		'nick'      => $result['nick'],
-		'name'      => $result['name'],
-		'company'   => (isset($result['company'])) ? $result['company'] : '',
-		'address'   => $result['address'],
-		'city'      => $result['city'],
-		'prov'      => $result['prov'],
-		'postcode'  => $result['zip'],
-		'country'   => $result['country'],
-		//'email'     => $result['email'],
-	);
-	return $address_data;
+	// check input data
+	if (intval($_GET['id']) == 0 || !isset($_GET['id']))
+	{
+		invaildinvoice();
+	}
 }
 
-$query = "SELECT w.id, w.winner, w.closingdate, a.id AS auctid, a.title, a.subtitle, a.shipping_cost, a.shipping, w.bid, w.qty,	u.id As seller_id, u.rate_sum 
-		FROM " . $DBPrefix . "auctions a
-		LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
-		WHERE a.id = " . intval($_POST['pfval']) . " AND w.id = " . intval($_POST['pfwon']) ;
+if ($auction)
+{
+	// get auction data
+	$query = "SELECT w.id, w.winner, w.closingdate As date, a.id AS auc_id, a.title, a.shipping_cost, a.shipping, w.bid, w.qty,	a.user As seller_id
+			FROM " . $DBPrefix . "auctions a
+			LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
+			WHERE a.id = " . intval($_POST['pfval']) . " AND w.id = " . intval($_POST['pfwon']);
+}
+else
+{
+	// get fee data
+	$query = "SELECT * FROM " . $DBPrefix . "useraccounts WHERE id = " . intval($_GET['id']);
+}
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 
 // check its real
 if (mysql_num_rows($res) < 1)
 {
-	if (isset($_SESSION['INVOICE_RETURN']))
-	{
-		header('location: ' . $_SESSION['INVOICE_RETURN']);
-	}
-	else
-	{
-		header('location: invoices.php');
-	}
-	exit;
+	invaildinvoice();
 }
 
 $data = mysql_fetch_assoc($res);
-$seller = getSeller($data['seller_id']);
-$winner = getAddressWinner($data['winner']);
-$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
-$payvalue = ($data['shipping'] == 1) ? $data['shipping_cost'] + ($data['bid']* $data['qty']) : ($data['bid']* $data['qty']);
-$payvalueperitem = $data['bid'];
-$paysubtotal = ($data['bid']* $data['qty']);
-$shipping_cost = ($data['shipping'] == 1) ? $data['shipping_cost'] : '0';
-//-----------rating	start	
-foreach ($membertypes as $idm => $memtypearr)
-{$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;}
-ksort($memtypesarr, SORT_NUMERIC);
-$TPL_rate_ratio_value = '';
-	foreach ($memtypesarr as $k => $l)
+
+if ($auction)
+{
+	// sort out auction data
+	$seller = getSeller($data['seller_id']);
+	$winner = getAddressWinner($data['winner']);
+	$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
+	$payvalue = ($data['shipping'] == 1) ? $data['shipping_cost'] + ($data['bid'] * $data['qty']) : ($data['bid']* $data['qty']);
+	$payvalueperitem = $data['bid'];
+	$paysubtotal = ($data['bid']* $data['qty']);
+	$shipping_cost = ($data['shipping'] == 1) ? $data['shipping_cost'] : 0;
+
+	// build winners address
+	$winner_address = '';
+	$winner_address .= (!empty($winner['address'])) ? '<br>' . $winner['address'] : '';
+	$winner_address .= (!empty($winner['city'])) ? '<br>' . $winner['city'] : '';
+	$winner_address .= (!empty($winner['prov'])) ? '<br>' . $winner['prov'] : '';
+	$winner_address .= (!empty($winner['country'])) ? '<br>' . $winner['country'] : '';
+	$winner_address .= (!empty($winner['zip'])) ? '<br>' . $winner['zip'] : '';
+
+	$data['shippingtaxable'] = 'n'; // NEEDS TO BE SET TO AN ADMIN OPTION
+	// ------------------ NEEDS CLEANING
+	if ($data['shippingtaxable'] == 'y')
 	{
-		if ($k >= $data['rate_sum'] || $l++ == (count($memtypesarr) - 1))
-		{
-			$TPL_rate_ratio_value = "images/icons/" . $l['icon'] ."";
-			break;
-		}
-	} 
-//------------rating end	
+		$potageinclvat = vat($shipping_cost);
+		$postagevat = $potageinclvat - $shipping_cost;
+		$postageexclvat = $shipping_cost;
+	}
+	else
+	{
+		$potageinclvat = $shipping_cost;
+		$postagevat =  0;
+	}
+	$totalvat = $payvalue / 6;
+	$vattotalinc = $totalvat - $postagevat;
+	$subtotal = $payvalue - $vattotalinc - $potageinclvat;
+	$totalinc = vat($subtotal);
+	$unitpriceincl = $totalinc / $data['qty'];
+	$unitexcl = $subtotal / $data['qty'];
+	// ------------------ NEEDS CLEANING
 
-$vat = 20; // NEEDS TO BE SET TO AN ADMIN OPTION
-function vat($price)
-{
-	global $system, $vat;
-    $price_with_vat = $price + ($vat * ($price / 100));
-    $price_with_vat = round($price_with_vat, $system->SETTINGS['moneydecimals']);
-    return $price_with_vat;
-}
+	// auction specific details
+	$template->assign_vars(array(
+			'AUCTION_TITLE' => strtoupper($title),
+			'ITEM_QUANTITY' => $data['qty'],
 
-function vatexcluding($gross)
-{
-	global $system, $vat;
-	$multiplier = ($vat + 100) / 100;
-	$net = $gross / $multiplier;
-	return number_format($net, $system->SETTINGS['moneydecimals']);
-}
-
-$data['shippingtaxable'] = 'n'; // NEEDS TO BE SET TO AN ADMIN OPTION
-
-if ($data['shippingtaxable'] == 'y')
-{
-	$potageinclvat = vat($shipping_cost);
-	$postagevat = $potageinclvat - $shipping_cost;
-	$postageexclvat = $shipping_cost;
+			'UNIT_PRICE' => $system->print_money($unitexcl), // auction price
+			'UNIT_PRICE_WITH_TAX' => $system->print_money($unitpriceincl),// auction price & tax
+			'TOTAL' => $system->print_money($subtotal), // total invoice
+			'TOTAL_WITH_TAX' => $system->print_money($totalinc) // total invoice & tax
+			));
 }
 else
-{ 
-	$potageinclvat = $shipping_cost;
-	$postagevat =  0;
+{
+	$seller = getSeller($user->user_data['id']); // used as user: ??
+	$winner_address = '';
+	$shipping_cost = 0;
+	$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['766'] . '#' . $data['id'];
+	$payvalue = $data['total'];
+	// create fee data ready for template & get totals
+	$totals = setfeetemplate($data);
+
+	// fee specific details
+	$template->assign_vars(array(
+			'TOTAL' => $system->print_money($totals[1]),
+			'TOTAL_WITH_TAX' => $system->print_money($totals[0])
+			));
 }
-$totalvat = $payvalue / 6;
-$vattotalinc = $totalvat - $postagevat;
-$subtotal = $payvalue - $vattotalinc - $potageinclvat;
-$totalinc = vat($subtotal);
-$unitpriceincl = $totalinc / $data['qty'];
-$unitexcl = $subtotal / $data['qty'];
 
 $template->assign_vars(array(
 		'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'],
 		'LANGUAGE' => $language,
 		'SENDER' => $seller,
-		'WINNER' => $winner['nick'],
-		'AUCTION_TITLE' => strtoupper($title),
-		'AUCTION_ID' => $data['auctid'],
-		'RATE_SUM' => $data['rate_sum'],
-		'RATE_RATIO' => $TPL_rate_ratio_value,
+		'WINNER_NICK' => $winner['nick'],
+		'WINNER_ADDRESS' => $winner_address,
+		'AUCTION_ID' => $data['auc_id'],
 		'SHIPPING_METHOD' => "N/A", // NEEDS FIXING
-		'PAYMENT_METHOD' => "N/A", // NEEDS FIXING
-		'SALE_DATE' => "N/A", // NEEDS FIXING
-		'SUBTITLE' => $data['subtitle'],
-		'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate']),
-		'INVOICE_DATE' => gmdate('d/m/Y', $data['closingdate'] + $system->tdiff),
-		'ITEM_QUANTITY' => $data['qty'],
-		'SALE_ID' => $data['id'],
-		'BIDSINGLE' => $system->print_money($data['bid']),
+		'INVOICE_DATE' => gmdate('d/m/Y', $data['date'] + $system->tdiff),
+		'SALE_ID' => (($auction) ? 'AUC' : 'FEE') . $data['id'],
 		// tax start
-		'TAX' => "20%",    
-		'UNIT_PRICE' => $system->print_money($unitexcl),
-		'UNIT_PRICE_WITH_TAX' => $system->print_money($unitpriceincl),
-		'TOTAL' => $system->print_money($subtotal),
-		'TOTAL_WITH_TAX' => $system->print_money($totalinc),
+		'TAX' => "20%", // NEEDS FIXING
 		'SHIPPING_COST' => $system->print_money($shipping_cost),
 		'VAT_TOTAL' => $system->print_money($totalvat),
 		'TOTAL_SUM' => $system->print_money($payvalue),
 		// tax end
-		'ORDERS' => 1,   //can link to an if statment or something to show else part in html
-));
+		'B_INVOICE' => true,
+
+		'B_IS_AUCTION' => $auction
+		));
 
 $template->set_filenames(array(
 		'body' => 'order_invoice.tpl'

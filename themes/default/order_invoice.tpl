@@ -18,7 +18,7 @@
 </style>
 </head>
 <body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#ffffff" marginheight="0" marginwidth="0">
-<!-- IF ORDERS ne '' --> 
+<!-- IF B_INVOICE --> 
 
 <table width="830px" border="0">
   <tbody><tr>
@@ -32,7 +32,7 @@
               <tr>
                 <td class="pageHeading-invoice" valign="top" align="left">
 <!-- IF SENDER ne '' -->
-          <b>Seller:</b> {SENDER} <span>({RATE_SUM}) <img src="{RATE_RATIO}" class="fbstar" valign="-30%"></span>
+          <b><!-- IF B_IS_AUCTION -->{L_125}<!-- ELSE -->{L_313}<!-- ENDIF -->:</b> {SENDER}
 <!-- ELSE -->
 			&nbsp;
 <!-- ENDIF -->
@@ -44,7 +44,7 @@
           <td valign="top" width="350" align="right">
             <table class="pageHeading-invoice2" width="200" border="0">
               <tbody><tr>
-                <td><b>{L_1041}: AUC{SALE_ID}</b></td>
+                <td><b>{L_1041}: {SALE_ID}</b></td>
               </tr>
               <tr>
                 <td><b>{L_1043}</b>&nbsp;{INVOICE_DATE}</td>
@@ -74,7 +74,7 @@
                       <td valign="bottom" align="left">&nbsp;</td>
                     </tr>
                     <tr>
-                      <td>{WINNER}</td>
+                      <td>{WINNER_NICK}<br>{WINNER_ADDRESS}</td>
                     </tr>
                     
                     <tr>
@@ -95,7 +95,7 @@
                       <td valign="bottom" align="left">&nbsp;</td>
                     </tr>
                     <tr>
-                      <td valign="bottom" align="left">{WINNER}</td>
+                      <td valign="bottom" align="left">{WINNER_NICK}<br>{WINNER_ADDRESS}</td>
                     </tr>
                     <tr>
                       <td valign="bottom" align="left">&nbsp;</td>
@@ -109,9 +109,8 @@
   <tr>
     <td><table width="100%" border="0" cellpadding="2" cellspacing="0">
         <tbody><tr>
-          <td class="main-payment"><b>{L_1042}</b><br>Auction ID: {AUCTION_ID}/ {L_1041}: AUC{SALE_ID}</td>
+          <td class="main-payment"><b>{L_1042}</b><br>{L_113}: {AUCTION_ID}/ {L_1041}: {SALE_ID}</td>
           <td class="main-payment"><b>{L_1036}</b><br>{INVOICE_DATE}</td>
-          <td class="main-payment"><b>{L_1055}</b><br>{PAYMENT_METHOD}</td>
           <td class="main-payment"><b>{L_1054}</b><br>{SHIPPING_METHOD}</td>
         </tr>
       </tbody></table></td>
@@ -122,29 +121,37 @@
   <tr>
     <td><table width="100%" border="0" cellpadding="2" cellspacing="0">
       <tbody><tr class="dataTableHeadingRow">
-        <td class="dataTableHeadingContent-invoice" colspan="2">{L_1044}</td>
-        <td class="dataTableHeadingContent-invoice" align="right">{L_1045}</td>
+        <td class="dataTableHeadingContent-invoice">{L_1044}</td>
         <td class="dataTableHeadingContent-invoice" align="right">{L_1046}</td>
         <td class="dataTableHeadingContent-invoice" align="right">{L_1047}</td>
         <td class="dataTableHeadingContent-invoice" align="right">{L_1048}</td>
         <td class="dataTableHeadingContent-invoice" align="right">{L_1049}</td>
       </tr>
-      
-      <tr class="dataTableRow">
-        <td class="dataTableContent" valign="top" align="right">{ITEM_QUANTITY}&nbsp;x</td>
-        <td class="dataTableContent" valign="top">{AUCTION_TITLE}
-        <!-- IF SUBTITLE ne '' -->
-        <br><nobr>&nbsp;<i> - {SUBTITLE}</i></nobr>
-		<!-- ENDIF -->
-       </td>
-        <td class="dataTableContent" valign="top" align="right">{TAX}</td>
-        <td class="dataTableContent" valign="top" align="right"><b>{UNIT_PRICE}</b></td>
-        <td class="dataTableContent" valign="top" align="right"><b>{UNIT_PRICE_WITH_TAX}</b></td>
-        <td class="dataTableContent" valign="top" align="right"><b>{TOTAL}</b></td>
-        <td class="dataTableContent" valign="top" align="right"><b>{TOTAL_WITH_TAX}</b></td>
-      </tr>
+	<!-- IF B_IS_AUCTION -->
+		<tr class="dataTableRow">
+			<td class="dataTableContent" valign="top">
+				{ITEM_QUANTITY} x {AUCTION_TITLE}
+			</td>
+			<td class="dataTableContent" valign="top" align="right"><b>{UNIT_PRICE}</b></td>
+			<td class="dataTableContent" valign="top" align="right"><b>{UNIT_PRICE_WITH_TAX}</b></td>
+			<td class="dataTableContent" valign="top" align="right"><b>{TOTAL}</b></td>
+			<td class="dataTableContent" valign="top" align="right"><b>{TOTAL_WITH_TAX}</b></td>
+		</tr>
+	<!-- ELSE -->
+	<!-- BEGIN fees -->
+		<tr class="dataTableRow">
+			<td class="dataTableContent" valign="top">
+				{fees.FEE}
+			</td>
+			<td class="dataTableContent" valign="top" align="right"><b>{fees.UNIT_PRICE}</b></td>
+			<td class="dataTableContent" valign="top" align="right"><b>{fees.UNIT_PRICE_WITH_TAX}</b></td>
+			<td class="dataTableContent" valign="top" align="right"><b>{fees.TOTAL}</b></td>
+			<td class="dataTableContent" valign="top" align="right"><b>{fees.TOTAL_WITH_TAX}</b></td>
+		</tr>
+	<!-- END fees -->
+	<!-- ENDIF -->
      <tr>
-        <td colspan="8" align="right"><br> <table border="0" cellpadding="2" cellspacing="0">
+        <td colspan="5" align="right"><br> <table border="0" cellpadding="2" cellspacing="0">
           <tbody>
           <tr>
 		    <td class="smallText" align="right">{L_1050}</td>
@@ -188,7 +195,7 @@
 
 <!-- ELSE -->
 <div style="position: absolute; top: 15%; left: 40%;">
-<h4>{L_1056}</h4>
+<h4>{L_1060}</h4>
 </div>
 <!-- ENDIF -->
 

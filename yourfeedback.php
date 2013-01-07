@@ -120,7 +120,7 @@ for ($ind2 = $firstpage; $ind2 <= $lastpage; $ind2++)
 		$echofeed .= ' | ';
 	}
 }
-$echofeed .= ($thispage == $pages || $pages == 0) ? '' : ' <a href="yourfeedback.php?pg=' . $nextpage . '">></a> <a href="feedback.php?pg=' . $pages . '">&raquo;</a>';
+$echofeed .= ($thispage == $pages || $pages == 0) ? '' : ' <a href="yourfeedback.php?pg=' . $nextpage . '">></a> <a href="yourfeedback.php?pg=' . $pages . '">&raquo;</a>';
 
 $template->assign_vars(array(
 		'USERNICK' => $user->user_data['nick'],

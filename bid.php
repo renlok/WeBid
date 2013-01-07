@@ -69,7 +69,7 @@ function extend_auction($id, $ends)
 {
 	global $system, $DBPrefix;
 
-	if ($system->SETTINGS['ae_status'] == 'enabled' && ($ends - $system->SETTINGS['ae_timebefore']) < time())
+	if ($system->SETTINGS['ae_status'] == 'y' && ($ends - $system->SETTINGS['ae_timebefore']) < time())
 	{
 		$query = "UPDATE " . $DBPrefix . "auctions SET ends = ends + " . $system->SETTINGS['ae_extend'] . " WHERE id = " . $id;
 		$res = mysql_query($query);

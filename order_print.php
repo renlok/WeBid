@@ -42,10 +42,11 @@ else
 	}
 }
 
+$vat = 20; // NEEDS TO BE SET TO AN ADMIN OPTION
 if ($auction)
 {
 	// get auction data
-	$query = "SELECT w.id, w.winner, w.closingdate As date, a.id AS auc_id, a.title, a.shipping_cost, a.shipping, w.bid, w.qty,	a.user As seller_id
+	$query = "SELECT w.id, w.winner, w.closingdate As date, a.id AS auc_id, a.title, a.shipping_cost, a.shipping, w.bid, w.qty,	a.user As seller_id, a.tax, a.taxinc
 			FROM " . $DBPrefix . "auctions a
 			LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 			WHERE a.id = " . intval($_POST['pfval']) . " AND w.id = " . intval($_POST['pfwon']);
@@ -71,6 +72,7 @@ if ($auction)
 	// sort out auction data
 	$seller = getSeller($data['seller_id']);
 	$winner = getAddressWinner($data['winner']);
+	$vat = getTax(true, $winner['country'], $seller['country']);
 	$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
 	$payvalue = ($data['shipping'] == 1) ? $data['shipping_cost'] + ($data['bid'] * $data['qty']) : ($data['bid']* $data['qty']);
 	$payvalueperitem = $data['bid'];
@@ -85,26 +87,33 @@ if ($auction)
 	$winner_address .= (!empty($winner['country'])) ? '<br>' . $winner['country'] : '';
 	$winner_address .= (!empty($winner['zip'])) ? '<br>' . $winner['zip'] : '';
 
-	$data['shippingtaxable'] = 'n'; // NEEDS TO BE SET TO AN ADMIN OPTION
-	// ------------------ NEEDS CLEANING
-	if ($data['shippingtaxable'] == 'y')
+	if ($data['tax'] == 'n') // no tax
 	{
-		$potageinclvat = vat($shipping_cost);
-		$postagevat = $potageinclvat - $shipping_cost;
-		$postageexclvat = $shipping_cost;
+		$unitexcl = $unitpriceincl = $paysubtotal;
+		$subtotal = $totalinc = $payvalue;
+		$vat = 0;
 	}
 	else
 	{
-		$potageinclvat = $shipping_cost;
-		$postagevat =  0;
+		if ($data['taxinc'] == 'y') // tax is included in price
+		{
+			$unitexcl = vatexcluding($paysubtotal); // auction price - tax
+			$unitpriceincl = $paysubtotal; // auction price & tax
+			$subtotal = vatexcluding($payvalue); // total invoice - tax
+			$totalinc = $payvalue; // total invoice & tax
+		}
+		else
+		{
+			$unitexcl = $paysubtotal; // auction price - tax
+			$unitpriceincl = vat($paysubtotal); // auction price & tax
+			$subtotal = $payvalue; // total invoice - tax
+			$totalinc = vat($payvalue); // total invoice & tax
+		}
 	}
-	$totalvat = $payvalue / 6;
-	$vattotalinc = $totalvat - $postagevat;
-	$subtotal = $payvalue - $vattotalinc - $potageinclvat;
-	$totalinc = vat($subtotal);
+
+	$totalvat = $totalinc - $subtotal;
 	$unitpriceincl = $totalinc / $data['qty'];
 	$unitexcl = $subtotal / $data['qty'];
-	// ------------------ NEEDS CLEANING
 
 	// auction specific details
 	$template->assign_vars(array(
@@ -120,6 +129,7 @@ if ($auction)
 else
 {
 	$seller = getSeller($user->user_data['id']); // used as user: ??
+	$vat = getTax(true, $seller['country']);
 	$winner_address = '';
 	$shipping_cost = 0;
 	$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['766'] . '#' . $data['id'];
@@ -137,7 +147,7 @@ else
 $template->assign_vars(array(
 		'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'],
 		'LANGUAGE' => $language,
-		'SENDER' => $seller,
+		'SENDER' => $seller['nick'],
 		'WINNER_NICK' => $winner['nick'],
 		'WINNER_ADDRESS' => $winner_address,
 		'AUCTION_ID' => $data['auc_id'],
@@ -145,13 +155,15 @@ $template->assign_vars(array(
 		'INVOICE_DATE' => gmdate('d/m/Y', $data['date'] + $system->tdiff),
 		'SALE_ID' => (($auction) ? 'AUC' : 'FEE') . $data['id'],
 		// tax start
-		'TAX' => "20%", // NEEDS FIXING
+		'TAX' => $vat . '%',
 		'SHIPPING_COST' => $system->print_money($shipping_cost),
 		'VAT_TOTAL' => $system->print_money($totalvat),
 		'TOTAL_SUM' => $system->print_money($payvalue),
 		// tax end
-		'B_INVOICE' => true,
+		'YELLOW_LINE' => $system->SETTINGS['invoice_yellow_line'],
+		'THANKYOU' => $system->SETTINGS['invoice_thankyou'],
 
+		'B_INVOICE' => true,
 		'B_IS_AUCTION' => $auction
 		));
 

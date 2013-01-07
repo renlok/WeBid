@@ -29,5 +29,12 @@
 - Fixed link to pay auction final fee in message.php (Bug #298 #257)
 - Fix sell datachecker so WeBid can deal with BIN values over 1,000 correctly (Bug #268)
 - Added a complete user invoice system (Based on the mod by Xeonn)
+- Added a tax system
+- Fixed issues with added slashes in copyright message (Bug #350)
+- Fixed wordfilter no longer loses theme on submission (Bug #292)
+- Fixed issues with yourfeedback pagenation takin you to incorrect page (Bug #290)
+- Fixed the auto-relist dropdown now showing correct max relist value (Bug #207)
+- Fixed editing a user feedback in admin it now updates the users rating total correctly
+- Fixed relist selection not being remember when editing an auction
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

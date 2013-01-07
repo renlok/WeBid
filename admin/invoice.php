@@ -77,7 +77,7 @@ else
 	$pull_sql .= ', u.nick';
 }
 
-$query = "SELECT COUNT(id) As COUNT, SUM(total) As TOTAL_VAL FROM " . $DBPrefix . "useraccounts" . ((!empty($join_sql)) ? $join_sql : '') . " " . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '');
+$query = "SELECT COUNT(" . $DBPrefix . "useraccounts.id) As COUNT, SUM(total) As TOTAL_VAL FROM " . $DBPrefix . "useraccounts" . ((!empty($join_sql)) ? $join_sql : '') . " " . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '');
 
 $result = mysql_query($query);
 $system->check_mysql($result, $query, __LINE__, __FILE__);
@@ -86,7 +86,7 @@ $TOTAL_VALUE = mysql_result($result, 0, 'TOTAL_VAL');
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 $query = "SELECT * " . $pull_sql . " FROM " . $DBPrefix . "useraccounts
-		" . ((!empty($join_sql)) ? ' WHERE ' . $join_sql : '') . "
+		" . ((!empty($join_sql)) ? $join_sql : '') . "
 		" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . " ORDER BY date LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);

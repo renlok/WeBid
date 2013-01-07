@@ -53,7 +53,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  extra_cat = '" . $_POST['extra_cat'] . "',
 				  autorelist = '" . $_POST['autorelist'] . "',
 				  autorelist_max = '" . $_POST['autorelist_max'] . "',
-				  ae_status = '" . (($_POST['status'] == 'y') ? 'enabled' : 'disabled') . "',
+				  ae_status = '" . $_POST['status'] . "',
 				  ae_timebefore = " . intval($_POST['timebefore']) . ",
 				  ae_extend = " . intval($_POST['extend']) . ",
 				  picturesgallery = " . $_POST['picturesgallery'] . ",
@@ -75,7 +75,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['autorelist'] = $_POST['autorelist'];
 	$system->SETTINGS['autorelist_max'] = $_POST['autorelist_max'];
 
-	$system->SETTINGS['ae_status'] = ($_POST['status'] == 'y') ? 'enabled' : 'disabled';
+	$system->SETTINGS['ae_status'] = $_POST['status'];
 	$system->SETTINGS['ae_timebefore'] = $_POST['timebefore'];
 	$system->SETTINGS['ae_extend'] = $_POST['extend'];
 
@@ -101,7 +101,7 @@ loadblock($MSG['851'], $MSG['852'], 'days', 'autorelist_max', $system->SETTINGS[
 
 // auction extension options
 loadblock($MSG['2_0032'], '', '', '', '', array(), true); // :O
-loadblock($MSG['2_0034'], $MSG['2_0039'], 'yesno', 'status', (($system->SETTINGS['ae_status'] == 'enabled') ? 'y' : 'n'), array($MSG['030'], $MSG['029']));
+loadblock($MSG['2_0034'], $MSG['2_0039'], 'yesno', 'status', $system->SETTINGS['ae_status'], array($MSG['030'], $MSG['029']));
 $string = $MSG['2_0035'] . '<input type="text" name="extend" value="' . $system->SETTINGS['ae_extend'] . '" size="5">' . $MSG['2_0036'] . '<input type="text" name="timebefore" value="' . $system->SETTINGS['ae_timebefore'] . '" size="5">' . $MSG['2_0037'];
 loadblock('', $string, '');
 

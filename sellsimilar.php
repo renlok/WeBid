@@ -54,6 +54,8 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_is_bold']			= $RELISTEDAUCTION['bold'];
 	$_SESSION['SELL_is_highlighted']	= $RELISTEDAUCTION['highlighted'];
 	$_SESSION['SELL_is_featured']		= $RELISTEDAUCTION['featured'];
+	$_SESSION['SELL_is_taxed']			= $RELISTEDAUCTION['tax'];
+	$_SESSION['SELL_tax_included']		= $RELISTEDAUCTION['taxinc'];
 
 	if (floatval($RELISTEDAUCTION['reserve_price']) > 0)
 	{

@@ -35,10 +35,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update data
 		$query = "UPDATE " . $DBPrefix . "settings SET
-				sitename = '" . addslashes($_POST['sitename']) . "',
-				adminmail = '" . addslashes($_POST['adminmail']) . "',
-				siteurl = '" . addslashes($_POST['siteurl']) . "',
-				copyright = '" . addslashes($_POST['copyright']) . "',
+				sitename = '" . $system->cleanvars($_POST['sitename']) . "',
+				adminmail = '" . mysql_real_escape_string($_POST['adminmail']) . "',
+				siteurl = '" . mysql_real_escape_string($_POST['siteurl']) . "',
+				copyright = '" . $system->cleanvars($_POST['copyright']) . "',
 				cron = " . intval($_POST['cron']) . ",
 				archiveafter = " . intval($_POST['archiveafter']) . ",
 				cache_theme = '" . $_POST['cache_theme'] . "',

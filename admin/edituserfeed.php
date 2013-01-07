@@ -42,7 +42,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['183'];
 }
 
-$query = "SELECT u.nick, f.rater_user_nick, f.feedback, f.rate FROM " . $DBPrefix . "feedbacks f
+$query = "SELECT u.nick, u.id, f.rater_user_nick, f.feedback, f.rate FROM " . $DBPrefix . "feedbacks f
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id) WHERE f.id = " . $id;
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -51,6 +51,7 @@ $feedback = mysql_fetch_assoc($res);
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'RATED_USER' => $feedback['nick'],
+		'RATED_USER_ID' => $feedback['id'],
 		'RATER_USER' => $feedback['rater_user_nick'],
 		'FEEDBACK' => $feedback['feedback'],
 		'SEL1' => ($feedback['rate'] == 1),

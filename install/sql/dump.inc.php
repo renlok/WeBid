@@ -124,6 +124,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `highlighted` enum('y','n') NOT NULL default 'n',
   `featured` enum('y','n') NOT NULL default 'n',
   `current_fee` double(16,4) default '0.00',
+  `tax`  enum('y','n') NOT NULL default 'n',
+  `taxinc`  enum('y','n') NOT NULL default 'y',
   PRIMARY KEY  (`id`),
   KEY `id` (`id`)
 );";
@@ -1481,7 +1483,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `fee_max_debt` double(16,4) NOT NULL default '25.00',
   `fee_signup_bonus` double(16,4) NOT NULL default '0.00',
   `fee_disable_acc` enum('y','n') NOT NULL default 'y',
-  `ae_status` enum('enabled','disabled') NOT NULL default 'disabled',
+  `tax` enum('y','n') NOT NULL default 'n',
+  `taxuser` enum('y','n') NOT NULL default 'n',
+  `ae_status` enum('y','n') NOT NULL default 'n',
   `ae_timebefore` int(11) NOT NULL default '120',
   `ae_extend` int(11) NOT NULL default '300',
   `cache_theme` ENUM('y','n') NOT NULL default 'y',
@@ -1506,7 +1510,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `mod_queue` enum('y','n') NOT NULL default 'n',
   `payment_options` text NOT NULL,
   `autorelist` ENUM('y','n') NOT NULL default 'y',
-  `autorelist_max` int(3) NOT NULL default '10'
+  `autorelist_max` int(3) NOT NULL default '10',
+  `invoice_yellow_line` varchar(255) NOT NULL default '',
+  `invoice_thankyou` varchar(255) NOT NULL default ''
 );";
 
 # 
@@ -1579,7 +1585,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 '25.00',
 '0.00',
 'y',
-'disabled',
+'n',
+'n',
+'n',
 120,
 300,
 'y',
@@ -1604,7 +1612,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 'n',
 'a:2:{i:0;s:13:\"Wire Transfer\";i:1;s:6:\"Cheque\";}',
 'y',
-10);";
+10,
+'',
+'Thank you for shopping with us and we hope to see you return soon!');";
 
 
 # ############################
@@ -1626,6 +1636,29 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "statssettings` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('n', 'y', 'y', 'y');";
+
+
+# ############################
+
+# 
+# Table structure for table `" . $DBPrefix . "tax`
+# 
+
+$query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
+	  `id` INT( 2 ) NOT NULL AUTO_INCREMENT,
+	  `tax_name` VARCHAR( 30 ) NOT NULL ,
+	  `tax_rate` DOUBLE( 16, 4 ) NOT NULL ,
+	  `countries_seller` TEXT NOT NULL ,
+	  `countries_buyer` TEXT NOT NULL ,
+	  `fee_tax` INT( 1 ) NOT NULL DEFAULT  '0',
+	  PRIMARY KEY (`id`)
+	);";
+
+# 
+# Dumping data for table `" . $DBPrefix . "tax`
+# 
+
+$query[] = "INSERT INTO `" . $DBPrefix . "tax` VALUES (NULL, 'Site Fees', '0', '', '', '1');";
 
 # ############################
 

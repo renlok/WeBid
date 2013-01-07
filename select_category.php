@@ -125,6 +125,8 @@ elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 	$_SESSION['SELL_is_bold'] = 'n';
 	$_SESSION['SELL_is_highlighted'] = 'n';
 	$_SESSION['SELL_is_featured'] = 'n';
+	$_SESSION['SELL_is_taxed'] = 'n';
+	$_SESSION['SELL_tax_included'] = 'y';
 	$_SESSION['SELL_start_now'] = '1';
 }
 

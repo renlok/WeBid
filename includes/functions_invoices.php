@@ -13,18 +13,20 @@
  ***************************************************************************/
 
 if (!defined('InWeBid')) exit('Access denied');
-$vat = 20; // NEEDS TO BE SET TO AN ADMIN OPTION
 
 function getSeller($user_id)
 {
 	global $system, $DBPrefix;
 
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $user_id;
+	$query = "SELECT nick, country FROM " . $DBPrefix . "users WHERE id = " . $user_id;
 	$result = mysql_query($query);
 	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$seller_nick = mysql_result($result, 0);
-
-	return $seller_nick;
+	$result = mysql_fetch_array($result);
+	$address_data = array(
+		'nick'      => $result['nick'],
+		'country'   => $result['country'],
+	);
+	return $address_data;
 }
 
 function getAddressWinner($user_id)
@@ -48,6 +50,28 @@ function getAddressWinner($user_id)
 		//'email'     => $result['email'],
 	);
 	return $address_data;
+}
+
+function getTax($is_auction, $buyer_from, $seller_from = '')
+{
+	global $system, $DBPrefix;
+
+	// build the query
+	$query = "SELECT tax_rate FROM " . $DBPrefix . "tax WHERE countries_buyer LIKE '" . $buyer_from . "'";
+	$query .= ($is_auction) ? " AND fee_tax = 0" : " AND fee_tax = 1";
+	$query .= (!empty($seller_from)) ? " AND countries_seller LIKE '" . $seller_from . "'" : '';
+	$res = mysql_query($query);
+	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	if (mysql_num_rows($res) == 0)
+	{
+		$tax_rate = 0;
+	}
+	else
+	{
+		$tax_rate = mysql_result($res, 0);
+	}
+
+	return $tax_rate;
 }
 
 function setfeetemplate($data)
@@ -112,7 +136,7 @@ function vatexcluding($gross)
 	return number_format($net, $system->SETTINGS['moneydecimals']);
 }
 
-function invaildinvoice()
+function invaildinvoice($packingslip = false)
 {
 	global $template, $system;
 
@@ -123,8 +147,10 @@ function invaildinvoice()
 			'B_INVOICE' => false
 			));
 
+	$file = ($packingslip) ? 'order_packingslip.tpl' : 'order_invoice.tpl';
+
 	$template->set_filenames(array(
-			'body' => 'order_invoice.tpl'
+			'body' => $file
 			));
 	$template->display('body');
 	exit;

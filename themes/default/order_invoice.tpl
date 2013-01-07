@@ -174,22 +174,26 @@
         </tr>
       </tbody></table></td>
   </tr>
+<!-- IF YELLOW_LINE ne '' -->
   <tr>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td><table width="100%" border="0" cellpadding="2" cellspacing="0">
         <tbody><tr>
-          <td class="main-payment2">{L_entry_yellow_line}</td>
+          <td class="main-payment2">{YELLOW_LINE}</td>
         </tr>
       </tbody></table></td>
   </tr>
+<!-- ENDIF -->
+<!-- IF THANKYOU ne '' -->
   <tr>
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td colspan="2" class="main" align="center"><b>{L_entry_thankyou}</b></td>
+    <td colspan="2" class="main" align="center"><b>{THANKYOU}</b></td>
   </tr>
+<!-- ENDIF -->
 </tbody>
 </table>
 

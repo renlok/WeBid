@@ -45,7 +45,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 	}
 	$ERR = $MSG['5073'];
-	$system->SETTINGS = $_POST;
+	$system->SETTINGS['wordsfilter'] = $_POST['wordsfilter'];
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "filterwords";

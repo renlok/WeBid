@@ -592,9 +592,9 @@ switch ($_SESSION['action'])
 		}
 		$fee_javascript .= 'var current_fee = ' . ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0') . ';';
 		$relist_options = '<select name="autorelist" id="autorelist">';
-		for ($i = 0; $i < $system->SETTINGS['autorelist_max']; $i++)
+		for ($i = 0; $i <= $system->SETTINGS['autorelist_max']; $i++)
 		{
-			$relist_options .= '<option value="' . $i . '">' . $i . '</option>';
+			$relist_options .= '<option value="' . $i . '"' . (($relist == $i) ? ' selected="selected"' : '') . '>' . $i . '</option>';
 		}
 		$relist_options .= '</select>';
 

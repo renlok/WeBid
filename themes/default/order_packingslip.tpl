@@ -18,9 +18,7 @@
 </style>
 </head>
 <body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#ffffff" marginheight="0" marginwidth="0">
-<!-- IF ORDERS ne '' --> 
-
-
+<!-- IF B_INVOICE -->
 
 <table width="830px" border="0">
   <tbody><tr>
@@ -29,11 +27,11 @@
           <td width="350">
 <table width="100%" border="0" cellpadding="0" cellspacing="0" height="100%">
               <tbody><tr>
-                <td valign="top" align="center"><img src="images/logo44.gif" alt="" border="0"></td>
+                <td valign="top" align="center"><img src="{LOGO}" alt="" border="0"></td>
               </tr>
               <tr>
                 <td class="pageHeading-invoice" valign="top" align="left">
-          <b>Seller:</b> {SENDER} <span>({RATE_SUM}) <img src="{RATE_RATIO}" class="fbstar" valign="-30%"></span>
+          <b>Seller:</b> {SENDER}
            </td>
 		  
               </tr>
@@ -65,7 +63,7 @@
                       <td valign="bottom" align="left">&nbsp;</td>
                     </tr>
                     <tr>
-                      <td>{WINNER}</td>
+                      <td>{WINNER_NICK}<br>{WINNER_ADDRESS}</td>
                     </tr>
                     <tr>
                       <td>&nbsp;</td>
@@ -87,7 +85,7 @@
                       <td valign="bottom" align="left">&nbsp;</td>
                     </tr>
                     <tr>
-                      <td valign="bottom" align="left">{WINNER}</td>
+                      <td valign="bottom" align="left">{WINNER_NICK}<br>{WINNER_ADDRESS}</td>
                     </tr>
                     <tr>
                       <td valign="bottom" align="left">&nbsp;</td>
@@ -108,47 +106,27 @@
       </tbody></table></td>
   </tr>
   <tr>
-    <td><img src="view/osc_invoice/pixel_trans.gif" alt="" width="1" border="0" height="5"></td>
+    <td>&nbsp;</td>
   </tr>
   <tr>
-    <td><table width="100%" border="0" cellpadding="2" cellspacing="0">
+    <td>
+	<table width="100%" border="0" cellpadding="2" cellspacing="0">
       <tbody><tr class="dataTableHeadingRow">
-        <td class="dataTableHeadingContent-invoice" colspan="2">{L_1044}</td>
-        
+        <td class="dataTableHeadingContent-invoice">{L_1044}</td>
       </tr>
-      
       <tr class="dataTableRow">
-        <td class="dataTableContent" valign="top" align="right">{ITEM_QUANTITY}&nbsp;x</td>
-        <td class="dataTableContent" valign="top">{AUCTION_TITLE}
-        
-        <br><nobr>&nbsp;<i> - {SUBTITLE}</i></nobr>
-       </td>
-        
+        <td class="dataTableContent" valign="top">
+				{ITEM_QUANTITY} x {AUCTION_TITLE}
+		</td>
       </tr>
-     
-      </tbody></table></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><table width="100%" border="0" cellpadding="2" cellspacing="0">
-        <tbody><tr>
-          <td class="main-payment2">{L_entry_yellow_line}</td>
-        </tr>
-      </tbody></table></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="main" align="center"><b>{L_entry_thankyou}</b></td>
+      </tbody>
+	  </table>
+	  </td>
   </tr>
 </tbody>
 </table>
 
 <!-- ELSE -->
-
 <div style="position: absolute; top: 15%; left: 40%;">
 <h4>{L_1056}</h4>
 </div>

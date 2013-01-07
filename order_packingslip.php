@@ -1,7 +1,19 @@
 <?php 
+/***************************************************************************
+ *   copyright				: (C) 2008 - 2013 WeBid
+ *   site					: http://www.webidsupport.com/
+ ***************************************************************************/
 
-include 'includes/common.inc.php';
-include $main_path . 'language/' . $language . '/mods/packingslip.php';
+/***************************************************************************
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version. Although none of the code may be
+ *   sold. If you have been sold this script, get a refund.
+ ***************************************************************************/
+
+include 'common.php';
+include $include_path . 'functions_invoices.php';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())
@@ -10,130 +22,51 @@ if (!$user->is_logged_in())
 	exit;
 }
 
-function getAddressseller($user_id) {
+$sender = getSeller($user->user_data['id']);
+$query = "SELECT w.id, w.winner, w.closingdate, a.id AS auc_id, a.title, w.qty,	w.seller As uid 
+		FROM " . $DBPrefix . "auctions a
+		LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
+		WHERE a.id = " . intval($_POST['pfval']) . " AND w.id =". intval($_POST['pfwon']) ;
+$res = mysql_query($query);
+$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-global $_SESSION, $system, $DBPrefix;
-		$address_data = array();
-		
-		$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = '" . (int)$user_id . "'";
-		$result = mysql_query($query);
-		$system->check_mysql($result, $query, __LINE__, __FILE__);
-		$result = mysql_fetch_array($result); 
-	//print_r($result);
-		$address_data = array(
-		        //Just remove the  // to enable to show on page
-				//'user_id'   => $result['id'],
-				'nick'      => $result['nick'],
-				//'name'      => $result['name'],
-				//'company'   => (isset($result['company'])) ? $result['company'] : '',
-				//'address'   => $result['address'],
-				//'city'      => $result['city'],
-				//'prov'      => $result['prov'],
-				//'postcode'  => $result['zip'],
-				//'country'   => $result['country'],
-				//'email'     => $result['email'],
-			);
-			return $address_data;
-}	
-function getAddresswinner($user_id) {
-
-global $_SESSION, $system, $DBPrefix;
-		$address_data = array();
-		
-		$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = '" . (int)$user_id . "'";
-		$result = mysql_query($query);
-		$system->check_mysql($result, $query, __LINE__, __FILE__);
-		$result = mysql_fetch_array($result); 
-	//print_r($result);
-		$address_data = array(
-		        //Just remove the  // to enable to show on page
-				//'user_id'   => $result['id'],
-				//'nick'      => $result['nick'],
-				'name'      => $result['name'],
-				'company'   => (isset($result['company'])) ? $result['company'] : '',
-				'address'   => $result['address'],
-				'city'      => $result['city'],
-				'prov'      => $result['prov'],
-				'postcode'  => $result['zip'],
-				'country'   => $result['country'],
-				//'email'     => $result['email'],
-			);
-			return $address_data;
-}	
-
-
-$sender = getAddressseller(intval($_POST['user_id']));
-foreach($sender as $k => $v)
+// check its real
+if (mysql_num_rows($res) < 1)
 {
-if ($v !== ''){
-$sendadd .= "$v<br />";}
+	invaildinvoice(true);
 }
 
-$query = "SELECT w.id, w.winner, w.closingdate, a.id AS auctid, a.title, a.subtitle, w.qty,	u.id As uid, u.rate_sum 
-				FROM " . $DBPrefix . "auctions a
-				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
-				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
-				WHERE a.id = " . intval($_POST['pfval']) . " AND w.id =". intval($_POST['pfwon']) ;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+$data = mysql_fetch_assoc($res);
+$winner = getAddresswinner($data['winner']);
 
-		// check its real
-//		if (mysql_num_rows($res) < 1)
-	//	{
-	//		header('location: selling.php');
-	//		exit;
-	//	}
-        $data = mysql_fetch_assoc($res);
-        $winner = getAddresswinner(intval($data['winner']));
-		foreach($winner as $k => $v)
-        {
-        if ($v !== ''){
-        $winneradd .= "$v<br />";}
-        }
-		$item_quantity = $data['qty'];
-		$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
-		$sale = intval($_POST['pfwon']);
-//-----rating		
-include 'includes/' . 'membertypes.inc.php';
-foreach ($membertypes as $idm => $memtypearr)
-{$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;}
-ksort($memtypesarr, SORT_NUMERIC);
-$TPL_rate_ratio_value = '';
-	foreach ($memtypesarr as $k => $l)
-	{
-		if ($k >= $data['rate_sum'] || $l++ == (count($memtypesarr) - 1))
-		{
-			$TPL_rate_ratio_value = "images/icons/" . $l['icon'] ."";
-			break;
-		}
-	} 
-//----------rating end	
+// build winners address
+$winner_address = '';
+$winner_address .= (!empty($winner['address'])) ? '<br>' . $winner['address'] : '';
+$winner_address .= (!empty($winner['city'])) ? '<br>' . $winner['city'] : '';
+$winner_address .= (!empty($winner['prov'])) ? '<br>' . $winner['prov'] : '';
+$winner_address .= (!empty($winner['country'])) ? '<br>' . $winner['country'] : '';
+$winner_address .= (!empty($winner['zip'])) ? '<br>' . $winner['zip'] : '';
+
+$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
+
 $template->assign_vars(array(
-         'LANGUAGE' => $language,
-		 'SENDER' => $sendadd,
-		 'WINNER' => $winneradd,
-		 'AUCTION_TITLE' => strtoupper($title),
-		 'AUCTION_ID' => $data['auctid'],
-		 'RATE_SUM' => $data['rate_sum'],
-		 'RATE_RATIO' => $TPL_rate_ratio_value,
-		 'SHIPPING_METHOD' => "N/A",
-		 'PAYMENT_METHOD' => "N/A",
-		 'SALE_DATE' => "N/A",
-		 'SUBTITLE' => $data['subtitle'],
-		 'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate']),
-		 'PAYMENT' => $data['payment'],
-		 'ITEM_QUANTITY' => $data['qty'],
-		 'ORDERS' => 1,  //can link to an if statment or something to show else part in html
-
-));
-
-
+		'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'],
+		'LANGUAGE' => $language,
+		'SENDER' => $sender['nick'],
+		'WINNER_NICK' => $winner['nick'],
+		'WINNER_ADDRESS' => $winner_address,
+		'AUCTION_TITLE' => strtoupper($title),
+		'AUCTION_ID' => $data['auc_id'],
+		'SHIPPING_METHOD' => "N/A", // NEEEDS FIXING
+		'PAYMENT_METHOD' => "N/A", // NEEEDS FIXING
+		'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate']),
+		'PAYMENT' => $data['payment'],
+		'ITEM_QUANTITY' => $data['qty'],
+		'B_INVOICE' => true
+		));
 
 $template->set_filenames(array(
 		'body' => 'order_packingslip.tpl'
 		));
 $template->display('body');
-
-  
-?> 
-
+?>

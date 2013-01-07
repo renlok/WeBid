@@ -397,7 +397,7 @@ $MSG['230'] = "View all feedback";
 $MSG['231'] = "REGISTERED USERS";
 $MSG['232'] = "AUCTIONS ";
 $MSG['233'] = "More";
-$MSG['234'] = "Back &gt;&gt;";
+$MSG['234'] = "&lt;&lt; Back";
 $MSG['235'] = "Register now";
 $MSG['236'] = "Bidder Privacy";
 $MSG['237'] = "Activate Bidder Privacy?";
@@ -891,7 +891,7 @@ $MSG['844'] = 'Some categories selected to move could not be processed as no val
 $MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_blue.png"> Shows a category that contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_red.png"> Shows a category that contains auctions</p>';
 $MSG['846'] = 'Account Balance';
 $MSG['847'] = 'Price';
-$MSG['848'] = 'Are you sure you want to delete the user feedback (ID: %s)';
+$MSG['848'] = 'Are you sure you want to delete this user feedback (ID: %s)';
 $MSG['849'] = 'Enable Auto-Relist';
 $MSG['850'] = 'Allow users to automatically relist auctions if they end without a winner';
 $MSG['851'] = 'Max Relists';
@@ -1050,9 +1050,6 @@ $MSG['1057'] = 'List invoices';
 $MSG['1058'] = 'View invoice';
 $MSG['1059'] = 'Invoice List';
 $MSG['1060'] = 'Invalid Invoice.';
-// Stick these in the admin
-$MSG['entry_yellow_line']        = 'Yellow line text. It is in the language file.';
-$MSG['entry_thankyou']           = 'Thank you for shopping with us and we hope to see you return soon!';
 
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";

@@ -44,5 +44,6 @@
 - Fixed missing language string $MSG['25_0155'] added (Bug #286)
 - Fixed bug if you contact a user through winners details page the message title would be the last auction you viewed not the one the user won (Bug #278)
 - Fixed js bug if you tab out of the subtitle box but leave it blank it will add the fee anyway (Bug #400)
+- Moved from PHP's fairly outdated mysql connection to a PDO connection to the database
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

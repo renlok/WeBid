@@ -95,7 +95,7 @@ class user
 		global $system, $DBPrefix, $MSG;
 
 		// check if user needs to be suspended
-		if ($system->SETTINGS['fee_type'] == 1 && $this->logged_in && $this->user_data['suspended'] != 7)
+		if ($system->SETTINGS['fee_type'] == 1 && $this->logged_in && $this->user_data['suspended'] != 7 && $system->SETTINGS['fee_disable_acc'] == 'y')
 		{
 			if ($system->SETTINGS['fee_max_debt'] <= (-1 * $this->user_data['balance']))
 			{

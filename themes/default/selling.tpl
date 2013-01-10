@@ -24,7 +24,7 @@
 			<span class="smallspan">(ID: <a href="{SITEURL}item.php?id={a.AUCTIONID}" target="_blank">{a.AUCTIONID}</a> - {L_25_0121} {a.ENDS})</span>
 		</td>
 		<td width="33%">
-			<a href="{SITEURL}profile.php?user_id={a.w.WINNERID}">{a.w.NICK}</a> {a.w.FB}
+			<a href="{SITEURL}profile.php?user_id={a.w.WINNERID}&auction_id={a.AUCTIONID}">{a.w.NICK}</a> {a.w.FB}
 		</td>
 		<td width="17%" align="right">
 			{a.w.BIDF}

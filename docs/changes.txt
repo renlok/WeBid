@@ -39,5 +39,10 @@
 - Replaced the 'Something' box in the admin sidebar with a block to allow admins to add notes
 - Made the admin help page less terrible and more informative
 - Started work on tidying the language page by grouping language strings together based on where they are used
+- Fixed bug where if a users account was previously disabled due to a low balance and the option to disable user accounts was disabled the users account is still disabled (Bug #248) (Thanks to CHBIE)
+- Fixed you can no longer delete the admin account you are logged in with (Bug #410)
+- Fixed missing language string $MSG['25_0155'] added (Bug #286)
+- Fixed bug if you contact a user through winners details page the message title would be the last auction you viewed not the one the user won (Bug #278)
+- Fixed js bug if you tab out of the subtitle box but leave it blank it will add the fee anyway (Bug #400)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

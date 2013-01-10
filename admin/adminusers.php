@@ -22,17 +22,25 @@ unset($ERR);
 
 if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
-	$delete = '';
-	$i = 0;
-	foreach ($_POST['delete'] as $id)
+	if (in_array($_SESSION['WEBID_ADMIN_IN'], $_POST['delete']))
 	{
-		if ($i != 0) $delete .= ', ';
-		$delete .= $id;
-		$i++;
+		$ERR = $MSG['1100'];
 	}
-	$query = "DELETE FROM " . $DBPrefix . "adminusers WHERE id IN (" . $delete . ")";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	else
+	{
+		$delete = '';
+		$i = 0;
+		foreach ($_POST['delete'] as $id)
+		{
+			if ($i != 0) $delete .= ', ';
+			$delete .= $id;
+			$i++;
+		}
+		$query = "DELETE FROM " . $DBPrefix . "adminusers WHERE id IN (" . $delete . ")";
+		$res = mysql_query($query);
+		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$ERR = $MSG['1100'];
+	}
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "adminusers ORDER BY username";

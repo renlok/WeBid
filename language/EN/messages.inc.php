@@ -1090,12 +1090,17 @@ $MSG['1091'] = 'Global setting to enable or disable tax';
 $MSG['1092'] = 'Users can charge tax';
 $MSG['1093'] = 'Enable to give users an option to tax thier items';
 
+// admin invoice settings
 $MSG['1094'] = 'Invoice Settings';
 $MSG['1095'] = 'Invoice settings updated';
 $MSG['1096'] = 'Invoice Notice';
 $MSG['1097'] = 'This will show in a yellow box above the end message on users invoices';
 $MSG['1098'] = 'Invoice End Message';
 $MSG['1099'] = 'This will show at the end of every users invoice';
+
+// list admin users
+$MSG['1100'] = 'You cannot delete the account you are currently logged in from';
+$MSG['1101'] = 'Admin accounts deleted';
 
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";
@@ -1528,6 +1533,7 @@ $MSG['25_0152_a'] = "On WeBid each users account must be activated before it can
 $MSG['25_0152_b'] = "The admin must activate each account.";
 $MSG['25_0152_c'] = "User must activate their own account";
 $MSG['25_0152_d'] = "Users account is automatically activated on registration (not recommended)";
+$MSG['25_0155'] = "Contact seller Updated";
 $MSG['25_0157'] = "Your background image";
 $MSG['25_0166'] = "Back to auction";
 $MSG['25_0167'] = "icon";

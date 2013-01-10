@@ -11,7 +11,7 @@
 			<a href="{SITEURL}active_auctions.php?user_id={USER_ID}">{L_213}</a> | 
 			<a href="{SITEURL}closed_auctions.php?user_id={USER_ID}">{L_214}</a> | 
 <!-- IF B_CONTACT -->
-			<a href="{SITEURL}email_request.php?user_id={USER_ID}&amp;username={USER}">{L_210}{USER}</a> | 
+			<a href="{SITEURL}email_request.php?user_id={USER_ID}&amp;username={USER}&amp;auction_id={AUCTION_ID}">{L_210}{USER}</a> | 
 <!-- ENDIF -->
 			<a href="{SITEURL}feedback.php?id={USER_ID}&amp;faction=show">{L_208}</a>
 		</div>

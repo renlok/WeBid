@@ -142,10 +142,15 @@ $(document).ready(function(){
 		<!-- IF B_SUBTITLE -->
 	$("#subtitle").blur(function(){
 		if (st > 0 && $("#subtitle").val().length == 0)
+		{
 			updatefee(subtitle_fee * -1);
-		else
+			st = 0;
+		}
+		elseif (st == 0 && $("#subtitle").val().length != 0)
+		{
 			updatefee(subtitle_fee);
-		st = $("#subtitle").val().length;
+			st = subtitle_fee;
+		}
 	});
 		<!-- ENDIF -->
 		<!-- IF B_AUTORELIST -->

@@ -15,13 +15,13 @@
 include 'common.php';
 
 // Get auction_id from sessions variables
-if (isset($_SESSION['CURRENT_ITEM']))
-{
-	$auction_id = $_SESSION['CURRENT_ITEM'];
-}
-elseif (isset($_REQUEST['auction_id']))
+if (isset($_REQUEST['auction_id']))
 {
 	$auction_id = $_SESSION['CURRENT_ITEM'] = intval($_REQUEST['auction_id']);
+}
+elseif (isset($_SESSION['CURRENT_ITEM']))
+{
+	$auction_id = $_SESSION['CURRENT_ITEM'];
 }
 
 if (!$user->is_logged_in())

@@ -46,7 +46,7 @@ $vat = 20; // NEEDS TO BE SET TO AN ADMIN OPTION
 if ($auction)
 {
 	// get auction data
-	$query = "SELECT w.id, w.winner, w.closingdate As date, a.id AS auc_id, a.title, a.shipping_cost, a.shipping, w.bid, w.qty,	a.user As seller_id, a.tax, a.taxinc
+	$query = "SELECT w.id, w.winner, w.closingdate As date, a.id AS auc_id, a.title, a.shipping_cost, a.shipping, a.shipping_terms, w.bid, w.qty,	a.user As seller_id, a.tax, a.taxinc
 			FROM " . $DBPrefix . "auctions a
 			LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 			WHERE a.id = " . intval($_POST['pfval']) . " AND w.id = " . intval($_POST['pfwon']);
@@ -131,6 +131,7 @@ else
 	$seller = getSeller($user->user_data['id']); // used as user: ??
 	$vat = getTax(true, $seller['country']);
 	$winner_address = '';
+	$data['shipping_terms'] = '';
 	$shipping_cost = 0;
 	$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['766'] . '#' . $data['id'];
 	$payvalue = $data['total'];
@@ -151,7 +152,7 @@ $template->assign_vars(array(
 		'WINNER_NICK' => $winner['nick'],
 		'WINNER_ADDRESS' => $winner_address,
 		'AUCTION_ID' => $data['auc_id'],
-		'SHIPPING_METHOD' => "N/A", // NEEDS FIXING
+		'SHIPPING_METHOD' => (empty($data['shipping_terms'])) ? strtoupper($MSG['000']) : $data['shipping_terms'],
 		'INVOICE_DATE' => gmdate('d/m/Y', $data['date'] + $system->tdiff),
 		'SALE_ID' => (($auction) ? 'AUC' : 'FEE') . $data['id'],
 		// tax start

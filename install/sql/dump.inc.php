@@ -56,6 +56,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `created` varchar(8) NOT NULL default '',
   `lastlogin` varchar(14) NOT NULL default '',
   `status` int(2) NOT NULL default '0',
+  `notes` text,
   KEY `id` (`id`)
 ) ;";
 

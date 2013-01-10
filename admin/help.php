@@ -1,23 +1,27 @@
-<div style="margin-bottom:20px;">
-    <b>Get help</b>
-    <ul>
-        <li><a href="http://www.webidsupport.com/forums/" target="_blank">Support forums</a></li>
-        <li><a href="http://www.webidsupport.com/wiki/Category:Documentation" target="_blank">Online documentation</a></li>
-        <li><a href="http://www.webidsupport.com/wiki/IRC" target="_blank">IRC Support</a></li>
-    </ul>
-</div>
+<?php
+/***************************************************************************
+ *   copyright				: (C) 2008 - 2013 WeBid
+ *   site					: http://www.webidsupport.com/
+ ***************************************************************************/
 
-<div style="margin-bottom:20px;">
-    <b>Edit WeBid</b>
-    <ul>
-        <li><a href="http://www.webidsupport.com/mods.php?do=themes" target="_blank">Download Themes</a></li>
-        <li><a href="http://www.webidsupport.com/mods.php?do=mods" target="_blank">Download Mods</a></li>
-    </ul>
-</div>
+/***************************************************************************
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version. Although none of the code may be
+ *   sold. If you have been sold this script, get a refund.
+ ***************************************************************************/
 
-<b>Support WeBid</b>
-<ul>
-    <li><a href="http://www.webidsupport.com/forums/project.php?do=issuelist&projectid=1&issuetypeid=bug" target="_blank">Submit a bug</a></li>
-    <li><a href="http://www.webidsupport.com/forums/project.php?do=issuelist&projectid=1&issuetypeid=feature" target="_blank">Suggest a feature</a></li>
-    <li><a href="http://www.webidsupport.com/donate.php" target="_blank">Donate</a></li>
-</ul>
+define('InAdmin', 1);
+$current_page = 'help';
+include '../common.php';
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
+
+$template->assign_vars(array());
+
+$template->set_filenames(array(
+		'body' => 'help.tpl'
+		));
+$template->display('body');
+?>

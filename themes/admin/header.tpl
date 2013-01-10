@@ -49,16 +49,16 @@
 
 <div class="wrapper" style="margin:40px 50px;">
     <ul id="tabnav">
-        <li class="home"><a href="index.php">{L_166}</a></li>
-        <li class="settings"><a href="settings.php">{L_5142}</a></li>
-        <li class="fees"><a href="fees.php">{L_25_0012}</a></li>
-        <li class="interface"><a href="theme.php">{L_25_0009}</a></li>
-        <li class="banners"><a href="managebanners.php">{L_25_0011}</a></li>
-        <li class="users"><a href="listusers.php">{L_25_0010}</a></li>
-        <li class="auctions"><a href="listauctions.php">{L_239}</a></li>
-        <li class="contents"><a href="news.php">{L_25_0018}</a></li>
-        <li class="stats"><a href="viewaccessstats.php">{L_25_0023}</a></li>
-        <li class="tools"><a href="errorlog.php">{L_5436}</a></li>
-        <li class="help"><a href="help.php" class="new-window" alt="{L_148}">{L_148}</a></li>
+        <li class="home"><a href="index.php" alt="{L_166}">{L_166}</a></li>
+        <li class="settings"><a href="settings.php" alt="{L_5142}">{L_5142}</a></li>
+        <li class="fees"><a href="fees.php" alt="{L_25_0012}">{L_25_0012}</a></li>
+        <li class="interface"><a href="theme.php" alt="{L_25_0009}">{L_25_0009}</a></li>
+        <li class="banners"><a href="managebanners.php" alt="{L_25_0011}">{L_25_0011}</a></li>
+        <li class="users"><a href="listusers.php" alt="{L_25_0010}">{L_25_0010}</a></li>
+        <li class="auctions"><a href="listauctions.php" alt="{L_239}">{L_239}</a></li>
+        <li class="contents"><a href="news.php" alt="{L_25_0018}">{L_25_0018}</a></li>
+        <li class="stats"><a href="viewaccessstats.php" alt="{L_25_0023}">{L_25_0023}</a></li>
+        <li class="tools"><a href="errorlog.php" alt="{L_5436}">{L_5436}</a></li>
+        <li class="help"><a href="help.php" alt="{L_148}">{L_148}</a></li>
     </ul>
     <div id="wrapper" class="clearfix">

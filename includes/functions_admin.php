@@ -39,6 +39,24 @@ if (!defined('AdminFuncCall'))
 		return true;
 	}
 
+	function getAdminNotes()
+	{
+		global $_SESSION, $system, $DBPrefix;
+
+		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS']))
+		{
+			$query = "SELECT notes FROM " . $DBPrefix . "adminusers WHERE password = '" . $_SESSION['WEBID_ADMIN_PASS'] . "' AND id = " . $_SESSION['WEBID_ADMIN_IN'];
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+
+			if (mysql_num_rows($res) > 0)
+			{
+				return mysql_result($res, 0);
+			}
+		}
+		return '';
+	}
+
 	function loadblock($title = '', $description = '', $type = '', $name = '', $default = '', $tagline = array(), $header = false)
 	{
 		global $template;

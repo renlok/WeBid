@@ -155,7 +155,13 @@ if ($myversion == '1.0.4')
 
 if ($myversion == '1.0.5')
 {
-	//1.0.5 to 1.1.0
+	//1.0.5 to 1.0.6
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.6';";
+}
+
+if ($myversion == '1.0.6')
+{
+	//1.0.6 to 1.1.0
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.1.0';";
 	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `tax` enum('y','n') NOT NULL default 'n' AFTER `current_fee`;";
 	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `taxinc` enum('y','n') NOT NULL default 'y' AFTER `tax`;";
@@ -164,6 +170,7 @@ if ($myversion == '1.0.5')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `taxuser` enum('y','n') NOT NULL default 'n' AFTER `tax`;"; // can the user tax his buyers
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `invoice_yellow_line` varchar(255) NOT NULL default '';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `invoice_thankyou` varchar(255) NOT NULL default 'Thank you for shopping with us and we hope to see you return soon!';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD `notes` text;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userfees`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,

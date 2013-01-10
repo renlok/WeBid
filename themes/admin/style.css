@@ -21,6 +21,8 @@ body {
 	border-bottom: 1px solid #A1A177;
 	padding: 10px;
 	background: #FFF;
+	width: 100%;
+	min-height: 1em;
 }
 
 .clearfix {
@@ -135,6 +137,10 @@ ul#tabnav a:hover {
 form {
 	margin:0;
 	padding:0
+}
+
+textarea {
+	margin: 5px;
 }
 
 div {

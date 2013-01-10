@@ -35,6 +35,9 @@
 - Fixed issues with yourfeedback pagenation takin you to incorrect page (Bug #290)
 - Fixed the auto-relist dropdown now showing correct max relist value (Bug #207)
 - Fixed editing a user feedback in admin it now updates the users rating total correctly
-- Fixed relist selection not being remember when editing an auction
+- Fixed relist selection not being remembered when editing an auction
+- Replaced the 'Something' box in the admin sidebar with a block to allow admins to add notes
+- Made the admin help page less terrible and more informative
+- Started work on tidying the language page by grouping language strings together based on where they are used
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

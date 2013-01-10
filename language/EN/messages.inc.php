@@ -1021,7 +1021,7 @@ $MSG['1030'] = "Re-sync the user, auction and bid counters";
 $MSG['1031'] = "Re-sync Counters";
 $MSG['1032'] = "no winner";
 
-// Invoices
+// Invoices & tax system
 $MSG['1033'] = 'Packingslip';
 $MSG['1034'] = 'Auction ID';
 $MSG['1035'] = 'Order/Invoice';
@@ -1050,6 +1050,52 @@ $MSG['1057'] = 'List invoices';
 $MSG['1058'] = 'View invoice';
 $MSG['1059'] = 'Invoice List';
 $MSG['1060'] = 'Invalid Invoice.';
+
+// admin general
+$MSG['1061'] = 'Notes';
+
+// admin help page
+$MSG['1062'] = 'Get Support';
+$MSG['1063'] = 'Support forums';
+$MSG['1064'] = 'If you any problems or questions head over our great support forum and get help from one of our many active users.';
+$MSG['1065'] = 'Online documentation';
+$MSG['1066'] = 'Unsure of how something works or where something is check out WeBids online documentation';
+$MSG['1067'] = 'Commonly Asked Questions and Their Solutions';
+$MSG['1068'] = 'Modify WeBid';
+$MSG['1069'] = 'Download Themes';
+$MSG['1070'] = 'Browse the large collection of user submitted themes that can instantly spruce up any site';
+$MSG['1071'] = 'Download Mods';
+$MSG['1072'] = 'Browse the large collection of user submitted mods that can add or almost anything to get your site working just how you want it to';
+$MSG['1073'] = 'Download Language Pack';
+$MSG['1074'] = 'Browse the collection of user submitted translations';
+$MSG['1075'] = 'Support WeBid';
+$MSG['1076'] = 'Submit a bug';
+$MSG['1077'] = 'Found something functioning funny? Tell us about it, it will help others out too';
+$MSG['1078'] = 'Suggest a feature';
+$MSG['1079'] = 'Got a great idea of what could improve WeBid tell us about it we alwayss want good ideas';
+$MSG['1080'] = 'Donate';
+$MSG['1081'] = 'Help keep us online and keep future developments coming';
+
+// tax admin
+$MSG['1082'] = 'Tax Name';
+$MSG['1083'] = 'Tax Rates';
+$MSG['1084'] = 'Sellers from';
+$MSG['1085'] = 'Buyers from';
+$MSG['1086'] = 'Site Tax';
+$MSG['1087'] = 'Are you sre you want to delete this tax rate';
+$MSG['1088'] = 'Tax Settings';
+$MSG['1089'] = 'Tax settings updated';
+$MSG['1090'] = 'Tax Enabled';
+$MSG['1091'] = 'Global setting to enable or disable tax';
+$MSG['1092'] = 'Users can charge tax';
+$MSG['1093'] = 'Enable to give users an option to tax thier items';
+
+$MSG['1094'] = 'Invoice Settings';
+$MSG['1095'] = 'Invoice settings updated';
+$MSG['1096'] = 'Invoice Notice';
+$MSG['1097'] = 'This will show in a yellow box above the end message on users invoices';
+$MSG['1098'] = 'Invoice End Message';
+$MSG['1099'] = 'This will show at the end of every users invoice';
 
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";

@@ -22,7 +22,7 @@ if (!$user->is_logged_in())
 	exit;
 }
 
-// Auction id is present, now update table
+// insert a new watch item
 if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add']))
 {
 	$requestadd = $system->cleanvars($_REQUEST['add']);
@@ -45,8 +45,12 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 	if (!isset($match) || empty($match))
 	{
 		$auction_watch = trim($auctions . ' ' . $requestadd);
-		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = '" . $auction_watch . "' WHERE id = " . $user->user_data['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = :auc_watch WHERE id = :id";
+		$params = array(
+			array(':auc_watch', $auction_watch, PDO::PARAM_STR),
+			array(':id', $user->user_data['id'], PDO::PARAM_INT),
+		);
+		$db->query($query, $params);
 		$user->user_data['auc_watch'] = $auction_watch;
 	}
 }
@@ -70,8 +74,12 @@ if (isset($_GET['delete']))
 		}
 	}
 	$auction_watch = trim($auction_watch);
-	$query = "UPDATE " . $DBPrefix . "users SET auc_watch = '" . $auction_watch . "' WHERE id = " . $user->user_data['id'];
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = :auc_watch WHERE id = :id";
+		$params = array(
+			array(':auc_watch', $auction_watch, PDO::PARAM_STR),
+			array(':id', $user->user_data['id'], PDO::PARAM_INT),
+		);
+		$db->query($query, $params);
 	$user->user_data['auc_watch'] = $auction_watch;
 }
 

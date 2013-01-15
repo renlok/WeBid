@@ -20,6 +20,7 @@ class db_handle
 	private     $pdo;
 	private		$DBPrefix;
 	private		$lastquery;
+	private		$error;
 
     public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix)
     {
@@ -29,54 +30,134 @@ class db_handle
 			$this->pdo = new PDO("mysql:host=$DbHost;dbname=$DbDatabase", $DbUser, $DbPassword);
 			// set error reporting up
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			// actually use prepared statements
+			$this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		}
 		catch(PDOException $e) {
-			echo $e->getMessage();
+			$this->error_handler($e->getMessage());
 		}
     }
 
 	// to run a direct query
 	public function direct_query($query)
 	{
-		$this->lastquery = $this->pdo->query(query);
+		try {
+			$this->lastquery = $this->pdo->query($query);
+		}
+		catch(PDOException $e) {
+			$this->error_handler($e->getMessage());
+		}
 	}
 
 	// put together the quert ready for running
-	public function query($type, $table, $params, $select = '*')
+	/*
+	$query must be given like SELECT * FROM table WHERE this = :that AND where = :here
+	then $params would holds the values for :that and :here, $table would hold the vlue for :table
+	$params = array(
+		array(':that', 'that value', PDO::PARAM_STR),
+		array(':here', 'here value', PDO::PARAM_INT),
+	);
+	last value can be left blank more info http://php.net/manual/en/pdostatement.bindparam.php
+	*/
+	public function query($query, $params = array())
 	{
-		$this->build_query($type, $table, $params, $select);
+		try {
+			//$query = $this->build_query($query, $table);
+			$params = $this->clean_params($query, $params);
+			$this->lastquery = $this->pdo->prepare($query);
+			//$this->lastquery->bindParam(':table', $this->DBPrefix . $table, PDO::PARAM_STR); // must always be set
+			foreach ($params as $val)
+			{
+				$this->lastquery->bindParam($val[0], $val[1], @$val[2], @$val[3], @$val[4]);
+			}
+			$this->lastquery->execute();
+			//$this->lastquery->debugDumpParams();
+		}
+		catch(PDOException $e) {
+			//$this->lastquery->debugDumpParams();
+			$this->error_handler($e->getMessage());
+		}
+
+		//$this->lastquery->rowCount(); // rows affected
 	}
 
 	// put together the quert ready for running
 	public function fetch($method = 'FETCH_ASSOC')
 	{
-		if ('FETCH_ASSOC') $result = $this->lastquery->fetch(PDO::FETCH_ASSOC);
-		if ('FETCH_BOTH') $result = $this->lastquery->fetch(PDO::FETCH_BOTH);
-		if ('FETCH_NUM') $result = $this->lastquery->fetch(PDO::FETCH_NUM);
-		return $result;
+		try {
+			if ($method == 'FETCH_ASSOC') $result = $this->lastquery->fetch(PDO::FETCH_ASSOC);
+			if ($method == 'FETCH_BOTH') $result = $this->lastquery->fetch(PDO::FETCH_BOTH);
+			if ($method == 'FETCH_NUM') $result = $this->lastquery->fetch(PDO::FETCH_NUM);
+			return $result;
+		}
+		catch(PDOException $e) {
+			$this->error_handler($e->getMessage());
+		}
+	}
+
+	public function result($column = NULL)
+	{
+		$data = $this->lastquery->fetch(PDO::FETCH_BOTH);
+		if (empty($column) || $column == NULL)
+		{
+			return $data;
+		}
+		else
+		{
+			return $data[$column];
+		}
 	}
 
 	public function lastInsertId()
 	{
-		return $this->pdo->lastInsertId();
+		try {
+			return $this->pdo->lastInsertId();
+		}
+		catch(PDOException $e) {
+			$this->error_handler($e->getMessage());
+		}
 	}
 
-	// build the query to be run
-	private function build_query($type, $table, $params, $select)
+	private function clean_params($query, $params)
 	{
-		if ($type == 'INSERT')
+		// find the vars set in the query
+		preg_match_all("(:[a-zA-Z_]+)", $query, $set_params);
+		//print_r("params" . $query);
+		//print_r($params);
+		//print_r("set_params");
+		//print_r($set_params);
+		$new_params = array();
+		foreach ($set_params[0] as $val)
 		{
-		
+			$key = $this->find_key($params, $val);
+			$new_params[] = $params[$key];
 		}
-		if ($type == 'UPDATE')
+		//print_r("new_params");
+		//print_r($new_params);
+		return $new_params;
+	}
+
+	private function find_key($params, $val)
+	{
+		foreach ($params as $k => $v)
 		{
-		
+			if ($v[0] == $val)
+				return $k;
 		}
-		if ($type == 'SELECT')
-		{
-		
-		}
-		$this->pdo->prepare();
+	}
+
+	private function build_query($query, $table)
+	{
+		// needs some security
+		return str_replace(':table', $this->DBPrefix . $table, $query);
+	}
+
+	private function error_handler($error)
+	{
+		// DO SOMETHING
+		//$this->error = $error;
+		$this->error = debug_backtrace();
+		//print_r($this->error);
 	}
 
 	// close everything down

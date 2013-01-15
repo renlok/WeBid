@@ -9,7 +9,7 @@
             <div class="main-box">
             	<h4 class="rounded-top rounded-bottom">{L_854}&nbsp;&gt;&gt;&nbsp;{L_854}</h4>
 				<div class="plain-box">
-                	<form action="" method="post">
+                	<form action="" method="get">
                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                 	<table cellpadding="0" cellspacing="0" width="100%" class="blank">
                     <tr>
@@ -63,7 +63,7 @@
 					<td>{invoices.INFO}</td>
 					<td align="center">{invoices.TOTAL}</td>
 					<td align="center">
-						<!-- IF invoices.PAID -->{L_898}<!-- ENDIF --><a href="{SITEURL}order_print.php?id={invoices.INVOICE}" tagret="_blank">{L_1058}</a>
+						<!-- IF invoices.PAID --><p>{L_898}</p><!-- ENDIF --><a href="{SITEURL}order_print.php?id={invoices.INVOICE}" tagret="_blank">{L_1058}</a>
 					</td>
 				</tr>
 <!-- END invoices -->

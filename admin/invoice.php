@@ -25,7 +25,8 @@ unset($ERR);
 $group = isset($_GET['group']) ? $_GET['group'] : 'i';
 $from_date = isset($_GET['from_date']) ? $_GET['from_date'] : 0;
 $to_date = isset($_GET['to_date']) ? $_GET['to_date'] : 0;
-$username = isset($_GET['username']) ? $_GET['username'] : 0;
+$username = isset($_GET['username']) ? $_GET['username'] : '';
+$searchuser = (isset($_GET['username']) && !empty($_GET['username'])) ? true : false;
 $date = date('Y-m');
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)
@@ -42,10 +43,29 @@ else
 $where_sql = '';
 $join_sql = '';
 $pull_sql = '';
+$group_sql = '';
 $pagenation_link = '';
+$params = array();
+// if we are searching for a user get their id
+if ($searchuser)
+{
+	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = :nick";
+	$params[] = array(':nick', $username, PDO::PARAM_STR);
+	$db->query($query, $params);
+	$user_id = $db->result('id');
+	$where_sql .= 'user_id = :user_id';
+	$params[] = array(':user_id', $user_id, PDO::PARAM_INT);
+	$pagenation_link .= '&username=' . $username;
+}
+// within a timeframe?
 if ($from_date != 0)
 {
-	$where_sql = 'date > ' . strtotime($from_date);
+	if (!empty($where_sql))
+	{
+		$where_sql .= ' AND ';
+	}
+	$where_sql = 'date > :from_date';
+	$params[] = array(':from_date', strtotime($from_date), PDO::PARAM_INT);
 	$pagenation_link .= '&from_date=' . $from_date;
 }
 if ($to_date != 0)
@@ -54,45 +74,36 @@ if ($to_date != 0)
 	{
 		$where_sql .= ' AND ';
 	}
-	$where_sql .= 'date < ' . strtotime($to_date);
+	$where_sql .= 'date < :to_date';
+	$params[] = array(':to_date', strtotime($to_date), PDO::PARAM_INT);
 	$pagenation_link .= '&to_date=' . $to_date;
-}
-if ($username != '')
-{
-	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . mysql_escape_real_string($username) . "'";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$user_id = mysql_result($result, 0);
-	$where_sql .= 'user_id = ' . $user_id;
-	$pagenation_link .= '&username=' . $username;
 }
 if ($group == 'g')
 {
-	$query .= " GROUP BY user_id ";
+	$group_sql = " GROUP BY user_id ";
 	$pagenation_link .= '&group=' . $group;
 }
-else
-{
-	$join_sql .= " LEFT JOIN " . $DBPrefix . "users u ON (u.id = " . $DBPrefix . "useraccounts.user_id) ";
-	$pull_sql .= ', u.nick';
-}
 
-$query = "SELECT COUNT(" . $DBPrefix . "useraccounts.id) As COUNT, SUM(total) As TOTAL_VAL FROM " . $DBPrefix . "useraccounts" . ((!empty($join_sql)) ? $join_sql : '') . " " . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '');
+$join_sql .= " LEFT JOIN " . $DBPrefix . "users u ON (u.id = " . $DBPrefix . "useraccounts.user_id) ";
+$pull_sql .= ', u.nick';
 
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$TOTALAUCTIONS = mysql_result($result, 0, 'COUNT');
-$TOTAL_VALUE = mysql_result($result, 0, 'TOTAL_VAL');
+$query = "SELECT COUNT(" . $DBPrefix . "useraccounts.id) As COUNT, SUM(total) As TOTAL_VAL FROM " . $DBPrefix . "useraccounts" . ((!empty($join_sql)) ? $join_sql : '') . " " . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . " " . ((!empty($group_sql)) ? $group_sql : '');
+
+$db->query($query, $params);
+$TOTALAUCTIONS = $db->result('COUNT');
+$TOTAL_VALUE = $db->result('TOTAL_VAL');
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 $query = "SELECT * " . $pull_sql . " FROM " . $DBPrefix . "useraccounts
 		" . ((!empty($join_sql)) ? $join_sql : '') . "
-		" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . " ORDER BY date LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . "
+		" . ((!empty($group_sql)) ? $group_sql : '') . " ORDER BY date LIMIT :OFFSET , :perpage";
+$params[] = array(':OFFSET', $OFFSET, PDO::PARAM_INT);
+$params[] = array(':perpage', $system->SETTINGS['perpage'], PDO::PARAM_INT);
+$db->query($query, $params);
 $total_all = 0;
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$DATE = $row['date'] + $system->tdiff;
 
@@ -176,7 +187,7 @@ while ($row = mysql_fetch_assoc($res))
 	$template->assign_block_vars('invoices', array(
 			'INVOICE' => $row['id'],
 			'AUC_ID' => $row['auc_id'],
-			'USER' => ($username != '') ? $row['nick'] : '',
+			'USER' => (!$searchuser) ? $row['nick'] : '',
 			'DATE' => ArrangeDateNoCorrection($DATE),
 			'INFO' => $info,
 			'TOTAL' => $system->print_money($row['total']),
@@ -211,8 +222,8 @@ $template->assign_vars(array(
 		'GROUP' => isset($_GET['group']) ? $_GET['group'] : 'i',
 		'FROM_DATE' => ($from_date == 0) ? '' : $from_date,
 		'TO_DATE' => ($to_date == 0) ? '' : $to_date,
-		'USER_SEARCH' => ($username == '') ? '' : $username,
-		'NO_USER_SEARCH' => ($username != ''),
+		'USER_SEARCH' => (!$searchuser) ? '' : $username,
+		'NO_USER_SEARCH' => (!$searchuser),
 
 		'PAGNATION' => ($PAGES > 1),
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/invoice.php?PAGE=' . $PREV . $pagenation_link . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',

@@ -35,6 +35,7 @@ include $include_path . 'errors.inc.php'; //error handler functions
 include $include_path . 'dates.inc.php';
 
 // classes
+include $include_path . 'class_db_handle.php';
 include $include_path . 'functions_global.php';
 include $include_path . 'functions_email.php';
 include $include_path . 'functions_categories.php';
@@ -42,10 +43,14 @@ include $include_path . 'functions_fees.php';
 include $include_path . 'functions_user.php';
 include $include_path . 'template.php';
 
+$db = new db_handle();
 $system = new global_class();
 $template = new template();
 $user = new user();
 set_error_handler('WeBidErrorHandler', $error_reporting);
+
+// connect to the database
+$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
 
 include $include_path . 'messages.inc.php';
 

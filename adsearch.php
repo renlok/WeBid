@@ -17,8 +17,9 @@ include $include_path . 'countries.inc.php';
 include $include_path . 'dates.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
-// set default variables
 unset($ERR);
+
+// set default variables
 $catscontrol = new MPTTcategories();
 $NOW = time();
 $searching = false;

@@ -213,7 +213,8 @@ function addauction()
 function addoutstanding()
 {
 	global $DBPrefix, $fee_data, $user, $system, $fee, $_SESSION;
-	return "INSERT INTO " . $DBPrefix . "useraccounts VALUES (NULL, '" . $_SESSION['SELL_auction_id'] . "','" . $user->user_data['id'] . "', '" . time() . "', '" . $fee_data['setup'] . "', '" . $fee_data['hpfeat_fee'] . "', '" . $fee_data['bolditem_fee'] . "', '" . $fee_data['hlitem_fee'] . "', '" . $fee_data['subtitle_fee'] . "', '" . $fee_data['relist_fee'] . "', '" . $fee_data['rp_fee'] . "', '" . $fee_data['buyout_fee'] . "', '" . $fee_data['picture_fee'] . "', '" . $fee_data['excat_fee'] . "', '" . $fee . "', 0)";
+	return "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,date,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,image,extcat,total,paid) VALUES
+	('" . $_SESSION['SELL_auction_id'] . "','" . $user->user_data['id'] . "', '" . time() . "', '" . $fee_data['setup'] . "', '" . $fee_data['hpfeat_fee'] . "', '" . $fee_data['bolditem_fee'] . "', '" . $fee_data['hlitem_fee'] . "', '" . $fee_data['subtitle_fee'] . "', '" . $fee_data['relist_fee'] . "', '" . $fee_data['rp_fee'] . "', '" . $fee_data['buyout_fee'] . "', '" . $fee_data['picture_fee'] . "', '" . $fee_data['excat_fee'] . "', '" . $fee . "', 0)";
 }
 
 function remove_bids($auction_id)

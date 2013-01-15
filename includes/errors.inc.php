@@ -52,8 +52,8 @@ if (!function_exists('MySQLError'))
 {
 	function MySQLError($Q, $line = '', $page = '')
 	{
-		global 	$SESSION_ERROR, $ERR_001, $system, $_SESSION;
-		
+		global 	$ERR_001, $system, $_SESSION;
+
 		$SESSION_ERROR = $ERR_001 . "\t" . $Q . "\n\t" . mysql_error() . "\n\tpage:" . $page . " line:" . $line;
 		if (!isset($_SESSION['SESSION_ERROR']) || !is_array($_SESSION['SESSION_ERROR']))
 		{

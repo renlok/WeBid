@@ -12,7 +12,11 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
  
-session_start();
+$step = (isset($_GET['step'])) ? $_GET['step'] : 0;
+if ($step != 3)
+{
+	session_start();
+}
 include 'functions.php';
 define('InInstaller', 1);
 
@@ -28,7 +32,6 @@ in package config.inc.php will be named config.inc.php.new so it cannot be overw
 5. update langauge files
 */
 
-$step = (isset($_GET['step'])) ? $_GET['step'] : 0;
 if ($step == 0)
 {
 	if (!file_exists($main_path . 'includes/config.inc.php'))
@@ -117,7 +120,7 @@ if ($step == 2)
 		exit;
 	}
 	include 'sql/updatedump.inc.php';
-	for ($i = 0; $i < count($query); $i++)
+	for ($i = 0; $i < @count($query); $i++)
 	{
 		mysql_query($query[$i]) or print(mysql_error() . '<br>' . $query[$i] . '<br>');
 		echo '<b>' . $query[$i] . '</b><br>';
@@ -137,13 +140,14 @@ if ($step == 3)
 	$check = check_installation();
 	$thisversion = this_version();
 	$myversion = check_version();
-	echo print_header(true);
 	if (!$check)
 	{
+		echo print_header(true);
 		echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
 		exit;
 	}
-	include $main_path . 'includes/common.inc.php';
+	include $main_path . 'common.php';
+	echo print_header(true);
 	include $include_path . 'functions_rebuild.inc.php';
 	echo 'Rebuilding membertypes...<br>';
 	rebuild_table_file('membertypes');

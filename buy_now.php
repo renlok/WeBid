@@ -249,7 +249,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				{
 					$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Auction['user'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-					$emailer = new email_class();
+					$emailer = new email_handler();
 					$emailer->assign_vars(array(
 							'ID' => $Auction['id'],
 							'TITLE' => $Auction['title'],
@@ -270,7 +270,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$month = gmdate('m', $Auction['ends'] + $system->tdiff);
 			$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
-			include $include_path . 'endauction_youwin_nodutch.inc.php';
+			include $include_path . 'email_endauction_youwin_nodutch.php';
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{

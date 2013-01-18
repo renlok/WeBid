@@ -290,20 +290,20 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 	if ($winner_present)
 	{
 		// Send mail to the seller
-		include $include_path . 'endauction_winner.inc.php';
+		include $include_path . 'email_endauction_winner.php';
 		if (isset($winner_array) && is_array($winner_array) && count($winner_array) > 0)
 		{
 			for ($i = 0, $count = count($winner_array); $i < $count; $i++)
 			{
 				// Send mail to the buyer
 				$Winner = $winner_array[$i];
-				include $include_path . 'endauction_youwin.inc.php';
+				include $include_path . 'email_endauction_youwin.php';
 			}
 		}
 		elseif (is_array($Winner))
 		{
 			// Send mail to the buyer
-			include $include_path . 'endauction_youwin_nodutch.inc.php';
+			include $include_path . 'email_endauction_youwin_nodutch.php';
 		}
 	}
 	else
@@ -311,7 +311,7 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 		// Send mail to the seller if no winner
 		if ($Seller['endemailmode'] != 'cum')
 		{
-			include $include_path . 'endauction_nowinner.inc.php';
+			include $include_path . 'email_endauction_nowinner.php';
 		}
 		else
 		{
@@ -429,7 +429,7 @@ while($row = mysql_fetch_assoc($res))
 			$query = "DELETE FROM " . $DBPrefix . "pendingnotif WHERE id = " . $pending['id'];
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
-		include $include_path . "endauction_cumulative.inc.php";
+		include $include_path . 'email_endauction_cumulative.php';
 	}
 }
 
@@ -438,7 +438,7 @@ if ($buyer_fee > 0)
 {
 	for ($i = 0; $i < count($buyer_emails); $i++)
 	{
-		$emailer = new email_class();
+		$emailer = new email_handler();
 		$emailer->assign_vars(array(
 				'ID' => $buyer_emails[$i]['id'],
 				'TITLE' => $buyer_emails[$i]['title'],
@@ -451,7 +451,7 @@ if ($buyer_fee > 0)
 }
 for ($i = 0; $i < count($seller_emails); $i++)
 {
-	$emailer = new email_class();
+	$emailer = new email_handler();
 	$emailer->assign_vars(array(
 			'ID' => $seller_emails[$i]['id'],
 			'TITLE' => $seller_emails[$i]['title'],

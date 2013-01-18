@@ -16,7 +16,7 @@ define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
 include $include_path . 'functions_admin.php';
-include $include_path . 'functions_rebuild.inc.php';
+include $include_path . 'functions_rebuild.php';
 include $include_path . 'membertypes.inc.php';
 include 'loggedin.inc.php';
 

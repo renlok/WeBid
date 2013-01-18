@@ -14,35 +14,24 @@
 
 if (!defined('InWeBid')) exit();
 
-if(strlen(strip_tags($Auction['description'])) > 60)
-{
-	$description = substr(strip_tags($Auction['description']), 0, 50) . '...';
-}
-else
-{
-	$description = $Auction['description'];
-}
+$item_title = $system->uncleanvars($Auction['title']);
 
-$emailer = new email_class();
+$emailer = new email_handler();
 $emailer->assign_vars(array(
 		'W_NAME' => $Winner['name'],
-		'W_WANTED' => $Winner['wanted'],
-		'W_GOT' => $Winner['quantity'],
-		
+
+		'A_PICURL' => ($Auction['pict_url'] != '') ? $uploaded_path . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
 		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
 		'A_TITLE' => $Auction['title'],
-		'A_DESCRIPTION' => $description,
-		'A_CURRENTBID' => $system->print_money($WINNERS_BID[$Winner['current_bid']], true, false),
+		'A_CURRENTBID' => $system->print_money($Auction['current_bid'], true, false),
 		'A_ENDS' => $ends_string,
-		
+
 		'S_NICK' => $Seller['nick'],
 		'S_EMAIL' => $Seller['email'],
-		'S_PAYMENT' => $Seller['payment_details'],
-		
+
 		'SITE_URL' => $system->SETTINGS['siteurl'],
-		'SITENAME' => $system->SETTINGS['sitename'],
-		'ADMINEMAIL' => $system->SETTINGS['adminmail']
+		'SITENAME' => $system->SETTINGS['sitename']
 		));
 $emailer->email_uid = $Winner['id'];
-$emailer->email_sender($Winner['email'], 'endauction_youwin.inc.php', $MSG['909']);
+$emailer->email_sender($Winner['email'], 'endauction_youwin_nodutch.inc.php', $system->SETTINGS['sitename'] . $MSG['909'] . ': ' . $item_title);
 ?>

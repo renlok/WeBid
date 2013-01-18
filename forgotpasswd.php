@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'ok')
 			$name = mysql_result($res, 0, 'name');
 			$newpass = substr(uniqid(md5(time())), 0, 6);
 			// send message
-			$emailer = new email_class();
+			$emailer = new email_handler();
 			$emailer->assign_vars(array(
 					'REALNAME' => $name,
 					'NEWPASS' => $newpass,

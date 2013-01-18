@@ -65,7 +65,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 			// Send e-mail message
 			$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
 			$message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $user->user_data['email'] . "\n\n" . $_POST['TPL_text'];
-			$emailer = new email_class();
+			$emailer = new email_handler();
 			$emailer->email_uid = $user_id;
 			$emailer->email_basic($subject, $email, nl2br($message), $user->user_data['name'] . '<'. $user->user_data['email'] . '>'); //send the email :D
 			// send a copy to their mesasge box

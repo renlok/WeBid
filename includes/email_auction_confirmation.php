@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 if ($user->user_data['startemailmode'] == 'yes')
 {
-	$emailer = new email_class();
+	$emailer = new email_handler();
 	$emailer->assign_vars(array(
 			'SITE_URL' => $system->SETTINGS['siteurl'],
 			'SITENAME' => $system->SETTINGS['sitename'],

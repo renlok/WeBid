@@ -78,6 +78,6 @@ if ($cat > 0)
 }
 else
 {
-	header('location: faqs.php');
+	header('location: help.php');
 }
 ?>

@@ -20,6 +20,7 @@ class db_handle
 	private     $pdo;
 	private		$DBPrefix;
 	private		$lastquery;
+	private		$fetchquery;
 	private		$error;
 
     public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix)
@@ -85,9 +86,19 @@ class db_handle
 	public function fetch($method = 'FETCH_ASSOC')
 	{
 		try {
-			if ($method == 'FETCH_ASSOC') $result = $this->lastquery->fetch(PDO::FETCH_ASSOC);
-			if ($method == 'FETCH_BOTH') $result = $this->lastquery->fetch(PDO::FETCH_BOTH);
-			if ($method == 'FETCH_NUM') $result = $this->lastquery->fetch(PDO::FETCH_NUM);
+			// set fetchquery
+			if ($this->fetchquery == NULL)
+			{
+				$this->fetchquery = $this->lastquery;
+			}
+			if ($method == 'FETCH_ASSOC') $result = $this->fetchquery->fetch(PDO::FETCH_ASSOC);
+			if ($method == 'FETCH_BOTH') $result = $this->fetchquery->fetch(PDO::FETCH_BOTH);
+			if ($method == 'FETCH_NUM') $result = $this->fetchquery->fetch(PDO::FETCH_NUM);
+			// clear fetch query
+			if ($result == false)
+			{
+				$this->fetchquery = NULL;
+			}
 			return $result;
 		}
 		catch(PDOException $e) {

@@ -14,14 +14,23 @@
 
 if (!defined('InWeBid')) exit();
 
-$emailer = new email_class();
+$item_title = $system->uncleanvars($item_title);
+
+$emailer = new email_handler();
 $emailer->assign_vars(array(
+		'SITE_URL' => $system->SETTINGS['siteurl'],
 		'SITENAME' => $system->SETTINGS['sitename'],
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ADMINMAIL' => $system->SETTINGS['adminmail'],
-		'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($MD5_PREFIX . $TPL_nick_hidden),
-		'C_NAME' => $TPL_name_hidden
+
+		'C_NAME' => $OldWinner_name,
+		'C_BID' => $OldWinner_bid,
+
+		'N_BID' => $new_bid,
+
+		'A_TITLE' => $item_title,
+		'A_ENDS' => $ends_string,
+		'A_PICURL' => ($pict_url_plain != '') ? $uploaded_path . $item_id . '/' . $pict_url_plain : 'images/email_alerts/default_item_img.jpg',
+		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $item_id
 		));
-$emailer->email_uid = $TPL_id_hidden;
-$emailer->email_sender($TPL_email_hidden, 'usermail.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['098']);
+$emailer->email_uid = $OldWinner_id;
+$emailer->email_sender($OldWinner_email, 'no_longer_winner.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['906'] . ': ' . $item_title);
 ?>

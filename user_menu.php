@@ -80,7 +80,7 @@ function get_reminders($secid)
 // Send buyer's request to the administrator
 if (isset($_POST['requesttoadmin']))
 {
-	$emailer = new email_class();
+	$emailer = new email_handler();
 	$emailer->assign_vars(array(
 			'NAME' => $user->user_data['name'],
 			'NICK' => $user->user_data['nick'],

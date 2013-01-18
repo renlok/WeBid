@@ -14,13 +14,16 @@
 
 if (!defined('InWeBid')) exit();
 
-$emailer = new email_class();
+$emailer = new email_handler();
 $emailer->assign_vars(array(
 		'SITE_URL' => $system->SETTINGS['siteurl'],
 		'SITENAME' => $system->SETTINGS['sitename'],
+		'ADMINMAIL' => $system->SETTINGS['adminmail'],
 
-		'C_NAME' => $USER['name']
+		'REPORT' => $report,
+
+		'S_NAME' => $row['name']
 		));
-$emailer->userlang = $language;
-$emailer->email_sender(array($USER['email'], $system->SETTINGS['adminmail']), 'user_approved.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['095']);
+$emailer->email_uid = $row['id'];
+$emailer->email_sender($row['email'], 'endauction_cumulative.inc.php', $MSG['25_0199']);
 ?>

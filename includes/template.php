@@ -215,7 +215,7 @@ class template
 
 		if (!class_exists('template_compile'))
 		{
-			include($include_path . 'functions_template.php');
+			include($include_path . 'class_template_compile.php');
 		}
 		$compile = new template_compile($this);
 

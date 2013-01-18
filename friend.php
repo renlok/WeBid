@@ -80,7 +80,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 	else
 	{
 		$emailsent = 0;
-		$emailer = new email_class();
+		$emailer = new email_handler();
 		$emailer->assign_vars(array(
 				'S_NAME' => $_POST['sender_name'],
 				'S_EMAIL' => $_POST['sender_email'],

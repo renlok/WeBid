@@ -14,7 +14,7 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-class email_class
+class email_handler
 {
 	var $from, $message, $subject, $headers, $email_uid, $userlang;
 	

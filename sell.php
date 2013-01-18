@@ -15,7 +15,7 @@
 include 'common.php';
 include $include_path . 'dates.inc.php';
 include $include_path . 'datacheck.inc.php';
-include $include_path . 'functions_sell.inc.php';
+include $include_path . 'functions_sell.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 include $main_path . 'ckeditor/ckeditor.php';
 include $include_path . 'htmLawed.php';
@@ -262,7 +262,7 @@ switch ($_SESSION['action'])
 							$v = trim(strtolower($v));
 							if ((in_array($v, $w_title) || in_array($v, $w_descr) || $v == $w_nick) && !in_array($row['id'], $sent_to))
 							{
-								$emailer = new email_class();
+								$emailer = new email_handler();
 								$emailer->assign_vars(array(
 										'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $_SESSION['SELL_auction_id'],
 										'SITENAME' =>  $system->SETTINGS['sitename'],
@@ -280,7 +280,7 @@ switch ($_SESSION['action'])
 
 				if ($user->user_data['startemailmode'] == 'yes')
 				{
-					include $include_path . 'auction_confirmation.inc.php';
+					include $include_path . 'email_auction_confirmation.php';
 				}
 				if ($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
 				{
@@ -469,6 +469,19 @@ switch ($_SESSION['action'])
 		}
 		$TPL_durations_list .= '</select>' . "\n";
 
+		// can seller charge tax
+		$can_tax = false;
+		if (!empty($user->user_data['country']))
+		{
+			$query = "SELECT id FROM " . $DBPrefix . "tax WHERE countries_seller LIKE '" . $user->user_data['country'] . "'";
+			$res = mysql_query($query);
+			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			if (mysql_num_rows($res) > 0)
+			{
+				$can_tax = true;
+			}
+		}
+
 		// payments
 		$payment_methods = '';
 		$query = "SELECT * FROM " . $DBPrefix . "gateways";
@@ -643,6 +656,10 @@ switch ($_SESSION['action'])
 				'NUMIMAGES' => count($_SESSION['UPLOADED_PICTURES']),
 				'RELIST' => $relist_options,
 				'MAXRELIST' => $system->SETTINGS['autorelist_max'],
+				'TAX_Y' => (intval($is_taxed) == 'y') ? 'checked' : '',
+				'TAX_N' => (intval($is_taxed) == 'n' || empty($is_taxed)) ? 'checked' : '',
+				'TAXINC_Y' => (intval($tax_included) == 1 || empty($tax_included)) ? 'checked' : '',
+				'TAXINC_N' => (intval($tax_included) == 2) ? 'checked' : '',
 
 				'FEE_VALUE' => get_fee($minimum_bid),
 				'FEE_VALUE_F' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
@@ -653,6 +670,7 @@ switch ($_SESSION['action'])
 				'FEE_RELIST' => $relist_fee,
 				'FEE_DECIMALS' => $system->SETTINGS['moneydecimals'],
 
+				'B_CAN_TAX' => $can_tax,
 				'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),
 				'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] == 'y' && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only'] == 'y') || $system->SETTINGS['bn_only_disable'] == 'n')),
 				'B_BN' => ($system->SETTINGS['buy_now'] == 2),

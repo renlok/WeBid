@@ -78,7 +78,7 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	else
 	{
 		// send the email
-		$emailer = new email_class();
+		$emailer = new email_handler();
 		$emailer->email_basic($subject, $sendto, $nowmessage, $user->user_data['email']);
 	}
 

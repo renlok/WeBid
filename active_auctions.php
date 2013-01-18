@@ -146,7 +146,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'auctions_active.tpl'
+		'body' => 'active_auctions.tpl'
 		));
 $template->display('body');
 include 'footer.php';

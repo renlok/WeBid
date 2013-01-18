@@ -14,7 +14,7 @@
 
 if (!defined('InWeBid')) exit();
 
-$emailer = new email_class();
+$emailer = new email_handler();
 $emailer->assign_vars(array(
 		'C_ID' => addslashes($TPL_id_hidden),
 		'C_NAME' => addslashes($TPL_name_hidden),

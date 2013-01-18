@@ -245,7 +245,7 @@ $template->assign_vars(array(
 		'ZIP' => $USER['zip'],
 		'PHONE' => $USER['phone'],
 		'DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
-		'TOMEZONE' => $time_correction,
+		'TIMEZONE' => $time_correction,
 
 		//payment stuff
 		'PP_EMAIL' => $USER['paypal_email'],
@@ -272,7 +272,7 @@ $TMP_usmenutitle = $MSG['509'];
 include 'header.php';
 include $include_path . 'user_cp.php';
 $template->set_filenames(array(
-		'body' => 'edit_details.tpl'
+		'body' => 'edit_data.tpl'
 		));
 $template->display('body');
 include 'footer.php';

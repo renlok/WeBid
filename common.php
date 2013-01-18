@@ -37,10 +37,10 @@ include $include_path . 'dates.inc.php';
 // classes
 include $include_path . 'class_db_handle.php';
 include $include_path . 'functions_global.php';
-include $include_path . 'functions_email.php';
-include $include_path . 'functions_categories.php';
-include $include_path . 'functions_fees.php';
-include $include_path . 'functions_user.php';
+include $include_path . 'class_email_handler.php';
+include $include_path . 'class_MPTTcategories.php';
+include $include_path . 'class_fees.php';
+include $include_path . 'class_user.php';
 include $include_path . 'template.php';
 
 $db = new db_handle();

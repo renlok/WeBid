@@ -35,7 +35,7 @@ while ($cat = mysql_fetch_array($res))
 }
 
 $template->set_filenames(array(
-		'body' => 'faqs.tpl'
+		'body' => 'help.tpl'
 		));
 $template->display('body');
 ?>

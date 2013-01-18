@@ -122,7 +122,7 @@
     <div class="smallpadding">
         <ul>
         <!-- BEGIN helpbox -->
-            <li><a href="{SITEURL}viewfaqs.php?cat={helpbox.ID}" alt="faqs"  class="new-window">{helpbox.TITLE}</a></li>
+            <li><a href="{SITEURL}viewhelp.php?cat={helpbox.ID}" alt="faqs"  class="new-window">{helpbox.TITLE}</a></li>
         <!-- END helpbox -->
         </ul>
     </div>
@@ -134,7 +134,7 @@
     <div class="smallpadding">
         <ul>
         <!-- BEGIN newsbox -->
-            <li>{newsbox.DATE} - <a href="viewnew.php?id={newsbox.ID}">{newsbox.TITLE}</a></li>
+            <li>{newsbox.DATE} - <a href="viewnews.php?id={newsbox.ID}">{newsbox.TITLE}</a></li>
         <!-- END newsbox -->
         </ul>
     </div>   

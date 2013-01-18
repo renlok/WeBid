@@ -28,7 +28,7 @@
 						<td align="right"><b>{L_503}:</b> </td>
 						<td>
 							<input type="radio" name="TPL_rate" value="1" {RATE1}>
-							<img src="{SITEURL}images/positive.png"border="0" alt="+1"> 
+							<img src="{SITEURL}images/positive.png" border="0" alt="+1"> 
 							<input type="radio" name="TPL_rate" value="0" {RATE2}>
 							<img src="{SITEURL}images/neutral.png" border="0" alt="0">
 							<input type="radio" name="TPL_rate" value="-1" {RATE3}>

@@ -79,7 +79,7 @@ function sendWatchEmails($id)
 		// If keyword matches with opened auction title or/and desc send user a mail
 		if (in_array($id, $keys))
 		{
-			$emailer = new email_class();
+			$emailer = new email_handler();
 			$emailer->assign_vars(array(
 					'URL' => $system->SETTINGS['siteurl'] . 'item.php?mode=1&id=' . $id,
 					'TITLE' => $Auction['title'],

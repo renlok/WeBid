@@ -29,7 +29,7 @@ if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
 	{
 		$USER = mysql_fetch_assoc($res);
 
-		$emailer = new email_class();
+		$emailer = new email_handler();
 		$emailer->assign_vars(array(
 				'SITENAME' => $system->SETTINGS['sitename'],
 				'SITEURL' => $system->SETTINGS['siteurl'],
@@ -52,7 +52,7 @@ if (isset($_GET['payreminder']) && isset($_GET['id']) && is_numeric($_GET['id'])
 	{
 		$USER = mysql_fetch_assoc($res);
 
-		$emailer = new email_class();
+		$emailer = new email_handler();
 		$emailer->assign_vars(array(
 				'SITENAME' => $system->SETTINGS['sitename'],
 				'LINK' => $system->SETTINGS['siteurl'] . 'outstanding.php',

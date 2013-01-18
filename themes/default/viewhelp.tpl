@@ -17,7 +17,7 @@
 				{L_5236}
 			</div>
 			<div class="padding">
-			<form name="faqsindex" action="viewfaqs.php" method="post">
+			<form name="faqsindex" action="viewhelp.php" method="post">
             	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                 <select name="cat" onChange="document.faqsindex.submit()">
                     <option value="">- {FNAME} -</option>
@@ -26,7 +26,7 @@
 <!-- END cats -->
 				</select>
                 <div style="text-align:right">
-                    <a href="faqs.php">{L_5243}</a> | <a href="javascript:window.close()">{L_678}</a>
+                    <a href="help.php">{L_5243}</a> | <a href="javascript:window.close()">{L_678}</a>
                 </div>
 			</form>
 			<h1>{FNAME}</h1>

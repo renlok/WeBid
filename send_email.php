@@ -82,7 +82,7 @@ if (isset($_POST['action']) || !empty($_POST['action']))
 	if (empty($TPL_error_text))
 	{
 		$mes = $MSG['337'] . ': <i>' . $seller_nick . '</i><br><br>';
-		$emailer = new email_class();
+		$emailer = new email_handler();
 		$emailer->assign_vars(array(
 				'SENDER_NAME' => $_POST['sender_name'],
 				'SENDER_QUESTION' => $cleaned_question,

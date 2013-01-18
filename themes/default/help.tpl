@@ -22,7 +22,7 @@
 				</div>
 				<ul>
 <!-- BEGIN cats -->
-					<li><a href="viewfaqs.php?cat={cats.ID}">{cats.CAT}</a></li>
+					<li><a href="viewhelp.php?cat={cats.ID}">{cats.CAT}</a></li>
 <!-- END cats -->
 				</ul>
 			</div>

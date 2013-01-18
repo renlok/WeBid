@@ -45,5 +45,6 @@
 - Fixed bug if you contact a user through winners details page the message title would be the last auction you viewed not the one the user won (Bug #278)
 - Fixed js bug if you tab out of the subtitle box but leave it blank it will add the fee anyway (Bug #400)
 - Moved from a mysql connection to a PDO connection to the database
+- Edited the names of a lot of the files to try to make it more obvious what they are for
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

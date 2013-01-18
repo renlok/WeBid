@@ -453,7 +453,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 			$query = "SELECT title, current_bid FROM " . $DBPrefix . "auctions WHERE id = " . intval($id);
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$emailer = new email_class();
+			$emailer = new email_handler();
 			$emailer->assign_vars(array(
 					'REALNAME' => $row['name'],
 					'TITLE' => mysql_result($res, 0, 'title'),
@@ -471,7 +471,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $c + $system->tdiff);
 		$new_bid = $system->print_money($next_bid);
 		// Send e-mail message
-		include $include_path . 'no_longer_winner.inc.php';
+		include $include_path . 'email_outbid.php';
 	}
 	$template->assign_vars(array(
 			'PAGE' => 2,

@@ -117,7 +117,7 @@
 					<tr>
 						<td valign="top" align="right">{L_346}</td>
 						<td>
-							{TOMEZONE}
+							{TIMEZONE}
 						</td>
 					</tr>
         <!-- IF B_NLETTER -->

@@ -103,7 +103,7 @@ class user
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				// send email
-				$emailer = new email_class();
+				$emailer = new email_handler();
 				$emailer->assign_vars(array(
 						'SITENAME' => $system->SETTINGS['sitename'],
 

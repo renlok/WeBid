@@ -357,18 +357,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 
 				if ($system->SETTINGS['activationtype'] == 0)
 				{
-					include $include_path . 'user_confirmation_needapproval.inc.php';
+					include $include_path . 'email_user_needapproval.php';
 					$TPL_message = $MSG['016_a'];
 				}
 				elseif ($system->SETTINGS['activationtype'] == 1)
 				{
-					include $include_path . 'user_confirmation.inc.php';
+					include $include_path . 'email_user_confirmation.php';
 					$TPL_message = sprintf($MSG['016'], $TPL_email_hidden, $system->SETTINGS['sitename']);
 				}
 				else
 				{
 					$USER = array('name' => $TPL_name_hidden, 'email' => $_POST['TPL_email']);
-					include $include_path . 'user_approved.inc.php';
+					include $include_path . 'email_user_approved.php';
 					$TPL_message = $MSG['016_b'];
 				}
 
@@ -442,7 +442,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'L_COUNTRIES' => $country,
 		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
-		'TOMEZONE' => $time_correction,
+		'TIMEZONE' => $time_correction,
 		'TERMSTEXT' => $system->SETTINGS['termstext'],
 
 		//payment stuff

@@ -1102,6 +1102,11 @@ $MSG['1099'] = 'This will show at the end of every users invoice';
 $MSG['1100'] = 'You cannot delete the account you are currently logged in from';
 $MSG['1101'] = 'Admin accounts deleted';
 
+// sell.php tax
+$MSG['1102'] = 'Charge Tax';
+$MSG['1103'] = 'Include tax in final sell price';
+
+
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";
 $MSG['5005'] = "General Layout Settings";

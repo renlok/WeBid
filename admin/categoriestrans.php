@@ -36,7 +36,7 @@ function search_cats($parent_id, $level)
 function rebuild_cat_file($cats)
 {
 	global $language, $main_path;
-	$output = "<?\n";
+	$output = "<?php\n";
 	$output.= "$" . "category_names = array(\n";
 
 	$num_rows = count($cats);

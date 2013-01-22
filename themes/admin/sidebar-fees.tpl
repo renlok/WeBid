@@ -17,7 +17,7 @@
                 	<h4 class="rounded-top">{L_1061}</h4>
                     <div class="rounded-bottom">
                     	<form name="wordlist" action="" method="post">
-							<textarea rows=15" cols="35" name="anotes">{ADMIN_NOTES}</textarea>
+							<textarea rows="15" cols="35" name="anotes">{ADMIN_NOTES}</textarea>
 							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 							<input type="submit" name="act" class="centre" value="{L_007}">
 						</form>

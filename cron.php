@@ -19,7 +19,6 @@ if (!isset($_SERVER['SCRIPT_NAME'])) $_SERVER['SCRIPT_NAME'] = 'cron.php';
 include $include_path . 'functions_cron.php';
 
 // initialize cron script
-openLogFile();
 printLog('=============== STARTING CRON SCRIPT: ' . gmdate('F d, Y H:i:s'));
 
 $categories = constructCategories();
@@ -122,8 +121,12 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 		// Standard auction
 		if ($winner_present)
 		{
-			$report_text = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)' . "\n";
-			if ($system->SETTINGS['winner_address'] == 'y' && $Winner['address'] != '')
+			$report_text = $Winner['nick'] . "\n";
+			if ($system->SETTINGS['users_email'] == 'n')
+			{
+				$report_text .= ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)' . "\n";
+			}
+			if ($Winner['address'] != '')
 			{
 				$report_text .= $MSG['30_0086'] . $Winner['address'] . ' ' . $Winner['city'] . ' ' . $Winner['prov'] . ' ' . $Winner['zip'] . ', ' . $Winner['country'];
 			}
@@ -189,10 +192,13 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 				$Winner['quantity'] = $items_got;
 				$Winner['wanted'] = $items_wanted;
 				$winner_array[] = $Winner; // set array ready for emails
-				$report_text .= ' ' . $MSG['159'] . ' ' . $Winner['nick'] . ' (' . $Winner['email'] . ') ' . $items_got . ' ' . $MSG['5492'] . ', ' . $MSG['5493'] . ' ' . $system->print_money($row['bid']) . ' ' . $MSG['5495'] . ' - (' . $MSG['5494'] . ' ' . $items_wanted . ' ' . $MSG['5492'] . ')' . "\n";
-				if ($system->SETTINGS['winner_address'] == 'y') {
-					$report_text .= ' ' . $MSG['30_0086'] . $ADDRESS . "\n";
+				$report_text .= ' ' . $MSG['159'] . ' ' . $Winner['nick'];
+				if ($system->SETTINGS['users_email'] == 'n')
+				{
+					$report_text .= ' (' . $Winner['email'] . ')';
 				}
+				$report_text .= ' ' . $items_got . ' ' . $MSG['5492'] . ', ' . $MSG['5493'] . ' ' . $system->print_money($row['bid']) . ' ' . $MSG['5495'] . ' - (' . $MSG['5494'] . ' ' . $items_wanted . ' ' . $MSG['5492'] . ')' . "\n";
+				$report_text .= ' ' . $MSG['30_0086'] . $ADDRESS . "\n";
 
 				$bf_paid = 1;
 				$ff_paid = 1;
@@ -491,6 +497,5 @@ if ((time() - $purgecachetime) > 86400)
 
 // finish cron script
 printLog ("=========================== ENDING CRON: " . gmdate('F d, Y H:i:s') . "\n");
-closeLogFile();
 
 ?>

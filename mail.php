@@ -79,7 +79,8 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	{
 		// send the email
 		$emailer = new email_handler();
-		$emailer->email_basic($subject, $sendto, $nowmessage, $user->user_data['email']);
+		$from_email = ($system->SETTINGS['users_email'] == 'n') ? $user->user_data['email'] : $system->SETTINGS['adminmail'];
+		$emailer->email_basic($subject, $sendto, $nowmessage, $from_email);
 	}
 
 	// send message

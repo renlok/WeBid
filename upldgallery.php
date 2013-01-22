@@ -24,6 +24,7 @@ if (!$user->is_logged_in())
 $cropdefault = false;
 $width = $system->SETTINGS['thumb_show'];
 $height = $width / 1.2;
+unset($ERR);
 
 function resizeThumbnailImage($thumb_image_name, $image, $width, $height, $start_width, $start_height, $scale)
 {
@@ -276,14 +277,15 @@ for ($i = 0; $i < $system->SETTINGS['moneydecimals']; $i++)
 $template->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'THEME' => $system->SETTINGS['theme'],
-		'ERROR' => ($ERR == 'ERR_') ? '' : $ERR,
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'IMAGE_COST' => ($image_fee != 0) ? sprintf($MSG['675'], $image_fee) : '',
+		'IMAGE_COST_PLAIN' => ($image_fee != 0) ? $image_fee : 0,
 		'PICINFO' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']),
 		'ERRORMSG' => sprintf($MSG['674'], $system->SETTINGS['maxpictures']),
 		'MAXPICS' => $system->SETTINGS['maxpictures'],
 		'MAXPICSIZE' => $system->SETTINGS['maxuploadsize'],
 		'SESSION_ID' => session_id(),
-		'UPLOADED' => count($_SESSION['UPLOADED_PICTURES'])
+		'UPLOADED' => intval(count($_SESSION['UPLOADED_PICTURES']))
 		));
 $template->set_filenames(array(
 		'body' => 'upldgallery.tpl'

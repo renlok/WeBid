@@ -205,5 +205,15 @@ if ($myversion == '1.0.6')
 	  PRIMARY KEY (`id`)
 	);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "tax` VALUES (NULL, 'Site Fees', '0', '', '', '1');";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `winner_address`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `users_email` enum('y','n') NOT NULL default 'y';";
+	$query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
+	  `id` INT( 25 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	  `type` VARCHAR( 5 ) NOT NULL ,
+	  `message` TEXT NOT NULL ,
+	  `user` INT( 32 ) NOT NULL DEFAULT  '0',
+	  `ip` VARCHAR( 45 ) NOT NULL,
+	  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
+	);";
 }
 ?>

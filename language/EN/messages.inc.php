@@ -1580,6 +1580,7 @@ $MSG['25_0218'] = "Any visitor can contact the seller (the ability to contact th
 $MSG['25_0219'] = "Only logged in users can contact the seller (the ability to contact the seller will be shown only to other users of your site if logged in)";
 $MSG['25_0220'] = "Nobody can contact the seller (the ability to contact the seller will NEVER be shown)";
 $MSG['25_0223'] = "Feedback you've received";
+$MSG['25_0224'] = "Preview";
 
 // multi-language months
 $MSG['MON_001'] = "Jan";
@@ -1658,8 +1659,8 @@ $MSG['30_0069'] = "Seller: edit this auction";
 $MSG['30_0070'] = "Search only in this category";
 $MSG['30_0080'] = "Payment Options";
 $MSG['30_0081'] = "Viewed ";
-$MSG['30_0084'] = "You can decide to have the winners address included in the notification e-mail sent to the seller when an auction closes. Just enable or disable this option below.";
-$MSG['30_0085'] = "Include winners' address in e-mails?";
+$MSG['30_0084'] = "You can decide to allow users to see each others E-Mail addresses or to hide them and all communication must be done via PMs";
+$MSG['30_0085'] = "Hide user E-Mails";
 $MSG['30_0086'] = "Address: ";
 $MSG['30_0087'] = "Are you sure you want to process the selected auctions?";
 $MSG['30_0098'] = "&nbsp; = Outbid";

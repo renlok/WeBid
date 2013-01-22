@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'convert')
 	$amount = $_POST['amount'];
 	$conversion = ConvertCurrency($from, $to, $amount);
 	// construct string
-	$conversion = $amount . ' ' . $CURRENCIES[$from] . ' = ' . number_format($conversion, 2, '.', ',') . ' ' . $CURRENCIES[$to];
+	$conversion = $system->print_money_nosymbol($amount) . ' ' . $CURRENCIES[$from] . ' = ' . $system->print_money_nosymbol($conversion, true) . ' |' . $CURRENCIES[$to];
 }
 
 foreach ($CURRENCIES as $k => $v)

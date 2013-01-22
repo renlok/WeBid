@@ -62,12 +62,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 		{
 			$item_title = mysql_result($res, 0, 'title');
 			$item_title = $system->uncleanvars($item_title);
+			$from_email = ($system->SETTINGS['users_email'] == 'n') ? $user->user_data['email'] : $system->SETTINGS['adminmail'];
 			// Send e-mail message
 			$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
-			$message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $user->user_data['email'] . "\n\n" . $_POST['TPL_text'];
+			$message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $from_email . "\n\n" . $_POST['TPL_text'];
 			$emailer = new email_handler();
 			$emailer->email_uid = $user_id;
-			$emailer->email_basic($subject, $email, nl2br($message), $user->user_data['name'] . '<'. $user->user_data['email'] . '>'); //send the email :D
+			$emailer->email_basic($subject, $email, nl2br($message), $user->user_data['name'] . '<'. $from_email . '>'); //send the email :D
 			// send a copy to their mesasge box
 			$nowmessage = nl2br($system->cleanvars($message));
 			$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject)
@@ -89,7 +90,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'email_request_form.tpl'
+		'body' => 'email_request.tpl'
 		));
 $template->display('body');
 include 'footer.php';

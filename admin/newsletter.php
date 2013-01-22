@@ -23,8 +23,9 @@ unset($ERR);
 
 $subject = (isset($_POST['subject'])) ? stripslashes($_POST['subject']) : '';
 $content = (isset($_POST['content'])) ? stripslashes($_POST['content']) : '';
+$is_preview = false;
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
+if (isset($_POST['action']) && $_POST['action'] == 'submit')
 {
 	if (empty($subject) || empty($content))
 	{
@@ -62,6 +63,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$ERR = $COUNTER . $MSG['5300'];
 	}
 }
+elseif (isset($_POST['action']) && $_POST['action'] == 'preview')
+{
+	$is_preview = true;
+}
 
 $USERSFILTER = array('all' => $MSG['5296'],
 	'active' => $MSG['5291'],
@@ -70,8 +75,6 @@ $USERSFILTER = array('all' => $MSG['5296'],
 	'confirmed' => $MSG['5292']);
 
 $selectsetting = (isset($_POST['usersfilter'])) ? $_POST['usersfilter'] : '';
-loadblock($MSG['5299'], '', generateSelect('usersfilter', $USERSFILTER));
-loadblock($MSG['332'], '', 'text', 'subject', $subject, array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
 $CKEditor->basePath = $main_path . 'ckeditor/';
@@ -79,18 +82,19 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['605'], $MSG['30_0055'], $CKEditor->editor('content', stripslashes($content)));
-loadblock('', '', $MSG['606']);
-
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['25_0010'],
-		'PAGENAME' => $MSG['607']
+		'SELECTBOX' => generateSelect('usersfilter', $USERSFILTER),
+		'SUBJECT' => $subject,
+		'EDITOR' => $CKEditor->editor('content', stripslashes($content)),
+		'PREVIEW' => $content,
+
+		'B_PREVIEW' => $is_preview
 		));
 
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
+		'body' => 'newsletter.tpl'
 		));
 $template->display('body');
 ?>

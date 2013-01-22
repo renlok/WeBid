@@ -20,7 +20,7 @@
 $(function() {
 	$("#uploader").pluploadQueue({
 		// General settings
-		runtimes : 'flash,gears,flash,silverlight,browserplus,html5',
+		runtimes : 'html5,gears,flash,silverlight,browserplus',
 		url : '{SITEURL}ajax.php?do=uploadaucimages',
 		max_file_size : '{MAXPICSIZE}kb',
 		chunk_size : '1mb',
@@ -94,8 +94,8 @@ $(function() {
 <script type="text/javascript">
 $(document).ready(function () {
 	var num_images = $('#numimages', window.opener.document).val();
-	var now_images = {NUMIMAGES};
-	var image_cost = {IMAGE_COST};
+	var now_images = {UPLOADED};
+	var image_cost = {IMAGE_COST_PLAIN};
 	if (num_images != now_images) {
 		var fee_diff = (now_images - num_images) * image_cost;
 		var nowfee = $("#fee_exact", window.opener.document).val() + fee_diff;

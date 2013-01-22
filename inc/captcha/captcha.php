@@ -281,13 +281,11 @@ class easy_captcha
 	#-- noteworthy stuff goes here
 	function log($error, $category, $message)
 	{
-		global $logPath;
+		global $system;
 		// append to text file
-		if (CAPTCHA_LOG && ($log = @fopen($logPath . 'error.log', 'a+')))
+		if (CAPTCHA_LOG)
 		{
-			flock($log, LOCK_EX);
-			fwrite($log, "[$error] -$category- \"$message\" $_SERVER[REMOTE_ADDR] id={$this->id} tries={$this->tries} failures={$this->failures} created/time/expires=$this->created/" . time() . "/$this->expires \n");
-			fclose($log);
+			$system->log('misc', "[$error] -$category- \"$message\" $_SERVER[REMOTE_ADDR] id={$this->id} tries={$this->tries} failures={$this->failures} created/time/expires=$this->created/" . time() . "/$this->expires \n");
 		}
 		return true;	// for if-chaining
 	}

@@ -46,5 +46,10 @@
 - Fixed js bug if you tab out of the subtitle box but leave it blank it will add the fee anyway (Bug #400)
 - Moved from a mysql connection to a PDO connection to the database
 - Edited the names of a lot of the files to try to make it more obvious what they are for
+- Small Bug in converter (Bug #315)
+- Removed the 'Include winners' address in e-mails?' option as it seemed pretty pointless
+- Added option for admin to universally hide users emails from each other
+- Moved logs to database
+- Added preview to newsletters
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

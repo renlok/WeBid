@@ -22,7 +22,7 @@ if(isset($_SESSION['csrftoken']))
 	if(!$valid_req) 
 	{ 
 		global $MSG, $ERR_077; 
-		 
+
 		$_SESSION['msg_title'] = $MSG['936']; 
 		$_SESSION['msg_body'] = $ERR_077; 
 		header('location: ../message.php');

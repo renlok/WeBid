@@ -1147,6 +1147,27 @@ $query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 500.0000, 99
 # ############################
 
 # 
+# Table structure for table `" . $DBPrefix . "logs`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "logs`;";
+$query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
+  `id` INT( 25 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `type` VARCHAR( 5 ) NOT NULL ,
+  `message` TEXT NOT NULL ,
+  `user` INT( 32 ) NOT NULL DEFAULT  '0',
+  `ip` VARCHAR( 45 ) NOT NULL,
+  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
+);";
+
+# 
+# Dumping data for table `" . $DBPrefix . "logs`
+# 
+
+
+# ############################
+
+# 
 # Table structure for table `" . $DBPrefix . "maintainance`
 # 
 
@@ -1468,7 +1489,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `theme` tinytext,
   `catstoshow` int(11) NOT NULL default '0',
   `bn_only` enum('y','n') NOT NULL default 'n',
-  `winner_address` enum('y','n') NOT NULL default 'n',
+  `users_email` enum('y','n') NOT NULL default 'y',
   `boardsmsgs` int(11) NOT NULL default '0',
   `activationtype` INT(1) NOT NULL DEFAULT '1',
   `https` enum('y','n') NOT NULL default 'n',

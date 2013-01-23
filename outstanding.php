@@ -52,7 +52,7 @@ while ($row = mysql_fetch_assoc($res))
 	$template->assign_block_vars('to_pay', array(
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'],
 			'TITLE' => $row['title'],
-			'SHIPPING' => $system->print_money($row['shipping_cost']),
+			'SHIPPING' => ($row['shipping'] == 2) ? $system->print_money($row['shipping_cost']) : $system->print_money(0),
 			'BID' => $system->print_money($row['bid'] * $row['qty']),
 			'TOTAL' => $system->print_money($row['shipping_cost'] + ($row['bid'] * $row['qty'])),
 			'ID' => $row['id'],

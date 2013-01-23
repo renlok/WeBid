@@ -78,7 +78,7 @@ class user
 			else
 				$valid_req = true;		# Neither GET nor POST params exist => permit
 			if(!$valid_req) 
-            { 
+            {
                 global $MSG, $ERR_077; 
                  
                 $_SESSION['msg_title'] = $MSG['936']; 

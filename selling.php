@@ -49,6 +49,7 @@ while ($row = mysql_fetch_array($res))
 			'ENDS' => FormatDate($row['ends']),
 			'AUCTIONID' => $row['auction']
 			));
+
 	// Build winners array
 	$query = "SELECT w.*, u.nick, u.email FROM " . $DBPrefix . "winners w
 			LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)

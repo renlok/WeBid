@@ -15,39 +15,6 @@
 if (!defined('InWeBid')) exit();
 
 // Errors handling functions
-if (!function_exists('openeLogFile'))
-{
-	function openeLogFile()
-	{
-		global $logFileHandle, $logPath;
-		$logFileHandle = @fopen($logPath . 'error.log', 'a');
-	}
-}
-
-if (!function_exists('closeeLogFile'))
-{
-	function closeeLogFile()
-	{
-		global $logFileHandle;
-		if ($logFileHandle)
-			fclose ($logFileHandle);
-	}
-}
-
-if (!function_exists('printeLog'))
-{
-	function printeLog ($str)
-	{
-		global $logFileHandle;
-		if ($logFileHandle)
-		{
-			if (substr($str, strlen($str)-1, 1) != "\n")
-				$str .= "\n";
-			fwrite ($logFileHandle, $str);
-		}
-	}
-}
-	
 if (!function_exists('MySQLError'))
 {
 	function MySQLError($Q, $line = '', $page = '')
@@ -60,9 +27,7 @@ if (!function_exists('MySQLError'))
 			$_SESSION['SESSION_ERROR'] = array();
 		}
 		$_SESSION['SESSION_ERROR'][] = $SESSION_ERROR;
-		openeLogFile();
-		printeLog(gmdate('d-m-Y, H:i:s', $system->ctime) . ':: ' . $SESSION_ERROR);
-		closeeLogFile();
+		$system->log('error', $SESSION_ERROR);
 	}
 }
 
@@ -97,9 +62,8 @@ if (!function_exists('WeBidErrorHandler'))
 			$_SESSION['SESSION_ERROR'] = array();
 		}
 		$_SESSION['SESSION_ERROR'][] = $error;
-		openeLogFile();
-		printeLog(gmdate('d-m-Y, H:i:s', $system->ctime) . ':: ' . $error);
-		closeeLogFile();
+		// log the error
+		$system->log('error', $error);
 		if ($errno == E_USER_ERROR)
 			exit(1);
 		return true;

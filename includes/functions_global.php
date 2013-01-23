@@ -82,6 +82,16 @@ class global_class
 		}
 	}
 
+	/* possible types cron, error, admin, user, mod */
+	function log($type, $message, $user = 0)
+	{
+		global $DBPrefix;
+		$query = "INSERT INTO " . $DBPrefix . "logs (type, message, ip, user, timestamp) VALUES
+				('" . $type . "', '" . mysql_real_escape_string($message) . "', '" . $_SERVER['REMOTE_ADDR'] . "', " . $user . ", " . time() . ")";
+		$res = mysql_query($query);
+		$this->check_mysql($res, $query, __LINE__, __FILE__);
+	}
+
 	function check_maintainance_mode()
 	{
 		global $DBPrefix, $user;

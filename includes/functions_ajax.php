@@ -23,10 +23,10 @@ function converter_call($post_data = true, $data = array())
 	// get convertion data
 	if ($post_data)
 	{
-		global $_POST;
-		$amount = $_POST['amount'];
-		$from = $_POST['from'];
-		$to = $_POST['to'];
+		global $_REQUEST;
+		$amount = $_REQUEST['amount'];
+		$from = $_REQUEST['from'];
+		$to = $_REQUEST['to'];
 	}
 	else
 	{
@@ -40,6 +40,6 @@ function converter_call($post_data = true, $data = array())
 
 	$conversion = ConvertCurrency($from, $to, $amount);
 	// construct string
-	echo $amount . ' ' . $CURRENCIES[$from] . ' = ' . $system->print_money($conversion, true, false, false) . ' ' . $CURRENCIES[$to];
+	echo $amount . ' ' . $CURRENCIES[$from] . ' = ' . $system->print_money_nosymbol($conversion, true) . ' ' . $CURRENCIES[$to];
 }
 ?>

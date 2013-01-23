@@ -144,7 +144,7 @@ function unsetsessions()
 	$_SESSION['SELL_relist'] = '';
 	$_SESSION['SELL_increments'] = '';
 	$_SESSION['SELL_customincrement'] = 0;
-	$_SESSION['SELL_shipping'] = '';
+	$_SESSION['SELL_shipping'] = 1;
 	$_SESSION['SELL_shipping_terms'] = '';
 	$_SESSION['SELL_payment'] = array();
 	$_SESSION['SELL_international'] = '';

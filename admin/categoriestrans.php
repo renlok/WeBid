@@ -28,7 +28,8 @@ function search_cats($parent_id, $level)
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
 	foreach ($tree as $k => $v)
 	{
-		$catstr .= ",\n" . $k . " => '" . $v . "'";
+		$v = str_replace("'", "\'", $v);
+		$catstr .= ",\n" . $k . " => '" . addslashes($v) . "'";
 	}
 	return $catstr;
 }
@@ -42,7 +43,9 @@ function rebuild_cat_file($cats)
 	$num_rows = count($cats);
 
 	$i = 0;
-	foreach ($cats as $k => $v) {
+	foreach ($cats as $k => $v)
+	{
+		$v = str_replace("'", "\'", $v);
 		$output .= "$k => '$v'";
 		$i++;
 		if ($i < $num_rows)

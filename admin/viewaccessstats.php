@@ -46,10 +46,12 @@ elseif ($listby == 'w')
 else
 {
 	$month = gmdate('m');
-	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = " . $month . " ORDER BY day ASC";
+	$year = gmdate('Y');
+	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = " . $month . " AND year = " . $year . " ORDER BY day ASC";
 	$statsview = gmdate('F Y');
 	$statstext = $MSG['109'];
 }
+
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

@@ -15,7 +15,7 @@
 if (!defined('InWeBid')) exit();
 
 include $include_path . 'maintainance.php';
-include $include_path . 'banners.inc.php';
+include $include_path . 'functions_banners.php';
 if (basename($_SERVER['PHP_SELF']) != 'error.php')
 	include $include_path . 'stats.inc.php';
 

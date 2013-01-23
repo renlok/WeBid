@@ -14,30 +14,13 @@
 
 if (!defined('InWeBid')) exit();
 
-function openLogFile()
-{
-	global $logFileHandle, $logPath;
-
-	$logFileHandle = fopen($logPath . 'cron.log', 'a');
-}
-
-function closeLogFile()
-{
-	global $logFileHandle;
-
-	if ($logFileHandle)
-		fclose ($logFileHandle);
-}
-
 function printLog($str)
 {
-	global $logFileHandle;
+	global $system;
 
-	if ($logFileHandle)
+	if (defined('LogCron') && LogCron == true)
 	{
-		if (substr($str, strlen($str) - 1, 1) != "\n")
-			$str .= "\n";
-		fwrite ($logFileHandle, $str);
+		$system->log('cron', $str);
 	}
 }
 

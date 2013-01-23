@@ -104,7 +104,7 @@ switch ($_SESSION['action'])
 			// clean up sell description
 			$conf = array();
 			$conf['safe'] = 1;
-			$conf['deny_attribute'] ='style';
+			$conf['deny_attribute'] = 'style';
 			$_SESSION['SELL_description'] = htmLawed($_SESSION['SELL_description'], $conf);
 
 			$payment_text = implode(', ', $payment);
@@ -644,8 +644,8 @@ switch ($_SESSION['action'])
 				'INCREMENTS1' => ($increments == 1 || empty($increments)) ? 'checked' : '',
 				'INCREMENTS2' => ($increments == 2) ? 'checked' : '',
 				'CUSTOM_INC' => ($customincrement > 0) ? $system->print_money_nosymbol($customincrement, false) : '',
-				'SHIPPING1' => (intval($shipping) == 1 || empty($shipping)) ? 'checked' : '',
-				'SHIPPING2' => (intval($shipping) == 2) ? 'checked' : '',
+				'SHIPPING1' => (intval($shipping) == 1) ? 'checked' : '',
+				'SHIPPING2' => (intval($shipping) == 2 || empty($shipping)) ? 'checked' : '',
 				'INTERNATIONAL' => (!empty($international)) ? 'checked' : '',
 				'SHIPPING_TERMS' => $shipping_terms,
 				'ITEMQTYD' => ($atype == 2 || $buy_now_only == 'y') ? '' : 'disabled',

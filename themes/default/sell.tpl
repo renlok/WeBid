@@ -53,6 +53,7 @@ $(document).ready(function(){
 	});
 	$("#sps").click(function(){
 		$("#shipping_cost").attr("disabled","disabled");
+		$("#shipping_cost").val("0.00");
 	});
 	<!-- IF B_FEES -->
 	{FEE_JS}
@@ -387,7 +388,7 @@ $(document).ready(function(){
 							<b>{L_023}</b>
 						</td>
 						<td class="rightpan">
-							<input type="text" size="10" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}">
+							<input type="text" size="10" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- ENDIF -->>
 							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>)
 						</td>
 					</tr>

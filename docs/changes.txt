@@ -51,5 +51,9 @@
 - Added option for admin to universally hide users emails from each other
 - Moved logs to database
 - Added preview to newsletters
+- Fixed the banners now the keyword/category limits actually work (Bug #167)
+- Fixed when auction set to seller pays shipping so the shipping cost no longer shows on outstanding.php
+- Fixed bug in admin/categoriestrans.php when adding a ' to a category name it would break everything (Bug #299)
+- Fixed a bug in admin/viewaccessstats.php if site has run for over a year the listings will mess up (Bug #412) (Thanks to andre88uk)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

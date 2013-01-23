@@ -25,21 +25,51 @@ if (!function_exists('view'))
 		$extra = '';
 		$BANNERSARRAY = array();
 
-		if (strstr($_SERVER['SCRIPT_FILENAME'], 'browse.php'))
+		if (strstr($_SERVER['SCRIPT_FILENAME'], 'browse.php')) // check categories
 		{
 			global $id;
 			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerscategories c ON (c.banner = b.id)';
 			$extra .=  ' AND c.category = ' . $id;
 		}
-		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'item.php'))
+		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'item.php')) // check categories & item title
 		{
-			global $title, $description, $category;
+			global $auction_data;
 			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerskeywords k ON (k.banner = b.id)';
-			$extra .=  " AND k.keyword LIKE '%" . $title . "%' OR k.keyword LIKE '%" . mysql_escape_string($description) . "%'";
+			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerscategories c ON (c.banner = b.id)';
+			$extra .=  " AND (k.keyword LIKE '%" . $auction_data['title'] . "%'
+						 OR c.category = " . $auction_data['category'] . " OR c.category = " . $auction_data['secondcat'] . ")";
+		}
+		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'adsearch.php')) // check search terms
+		{
+			global $_SESSION;
+			// check title search
+			if (isset($_SESSION['advs']['title']) && !empty($_SESSION['advs']['title']))
+			{
+				$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerskeywords k ON (k.banner = b.id)';
+				$tmp = explode(' ', $_SESSION['advs']['title']);
+				$extra .= build_keyword_sql($tmp);
+			}
+			// check category search
+			if (isset($_SESSION['advs']['category']) && !empty($_SESSION['advs']['category']))
+			{
+				$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerscategories c ON (c.banner = b.id)';
+				$extra .=  " OR c.category = " . $_SESSION['advs']['category'];
+			}
+			if ($extra != '')
+			{
+				$extra = ' AND (' . $extra . ')';
+			}
+		}
+		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'search.php')) // check search terms
+		{
+			global $term;
+			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerskeywords k ON (k.banner = b.id)';
+			$tmp = explode(' ', $term);
+			$extra .= ' AND ' . build_keyword_sql($tmp);
 		}
 
 		$query = "SELECT b.id FROM " . $DBPrefix . "banners b " . $joinings . "
-				WHERE b.views < b.purchased OR b.purchased = 0" . $extra;
+				WHERE (b.views < b.purchased OR b.purchased = 0)" . $extra;
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$CKcount = false;
@@ -52,6 +82,7 @@ if (!function_exists('view'))
 					LEFT JOIN " . $DBPrefix . "bannerscategories c ON (c.banner = b.id)
 					LEFT JOIN " . $DBPrefix . "bannerskeywords k ON (k.banner = b.id)
 					WHERE (b.views < b.purchased OR b.purchased = 0)
+					AND k.keyword = NULL AND c.category = NULL
 					GROUP BY k.banner, c.banner";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -105,5 +136,27 @@ if (!function_exists('view'))
 		}
 		return $return;
 	}
+}
+
+function build_keyword_sql($array)
+{
+	$query = '(';
+	if (is_array($array))
+	{
+		$i = 0;
+		foreach($array as $val)
+		{
+			if ($i > 0)
+				$query .= ' OR ';
+			$query .= "k.keyword LIKE '%" . $val . "%'";
+			$i++;
+		}
+	}
+	else
+	{
+		$query .= "k.keyword LIKE '%" . $array . "%'";
+	}
+	$query .= ')';
+	return $query;
 }
 ?>

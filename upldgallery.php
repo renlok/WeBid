@@ -146,8 +146,8 @@ if (isset($_POST['uploadpicture']) && $_POST['uploadpicture'] == $MSG['681'])
 		$filename = $_FILES['userfile']['name'];
 		$nameparts = explode('.', $filename);
 		$ext_key = count($nameparts) - 1;
-		$file_ext = $nameparts[$ext_key];
-		$file_types = array('gif', 'jpg', 'jpeg', 'png', 'GIF', 'JPG', 'JPEG', 'PNG');
+		$file_ext = strtolower($nameparts[$ext_key]);
+		$file_types = array('gif', 'jpg', 'jpeg', 'png');
 
 		// clean the name
 		unset($nameparts[$ext_key]);

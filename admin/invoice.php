@@ -87,7 +87,7 @@ if ($group == 'g')
 $join_sql .= " LEFT JOIN " . $DBPrefix . "users u ON (u.id = " . $DBPrefix . "useraccounts.user_id) ";
 $pull_sql .= ', u.nick';
 
-$query = "SELECT COUNT(" . $DBPrefix . "useraccounts.id) As COUNT, SUM(total) As TOTAL_VAL FROM " . $DBPrefix . "useraccounts" . ((!empty($join_sql)) ? $join_sql : '') . " " . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . " " . ((!empty($group_sql)) ? $group_sql : '');
+$query = "SELECT COUNT(" . $DBPrefix . "useraccounts.useracc_id) As COUNT, SUM(total) As TOTAL_VAL FROM " . $DBPrefix . "useraccounts" . ((!empty($join_sql)) ? $join_sql : '') . " " . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . " " . ((!empty($group_sql)) ? $group_sql : '');
 
 $db->query($query, $params);
 $TOTALAUCTIONS = $db->result('COUNT');
@@ -185,7 +185,7 @@ while ($row = $db->fetch())
 	}
 
 	$template->assign_block_vars('invoices', array(
-			'INVOICE' => $row['id'],
+			'INVOICE' => $row['useracc_id'],
 			'AUC_ID' => $row['auc_id'],
 			'USER' => (!$searchuser) ? $row['nick'] : '',
 			'DATE' => ArrangeDateNoCorrection($DATE),

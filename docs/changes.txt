@@ -55,5 +55,8 @@
 - Fixed when auction set to seller pays shipping so the shipping cost no longer shows on outstanding.php
 - Fixed bug in admin/categoriestrans.php when adding a ' to a category name it would break everything (Bug #299)
 - Fixed a bug in admin/viewaccessstats.php if site has run for over a year the listings will mess up (Bug #412) (Thanks to andre88uk)
+- In admin you can now set max image upload size of up to ~97656249kb instead of 9999kb
+- Rewrote language string 640 to make more sence
+- Fixed missing word in language string 778
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

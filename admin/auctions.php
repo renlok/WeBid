@@ -109,7 +109,7 @@ loadblock('', $string, '');
 loadblock($MSG['663'], '', '', '', '', array(), true);
 loadblock($MSG['665'], $MSG['664'], 'batch', 'picturesgallery', $system->SETTINGS['picturesgallery'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['666'], '', 'days', 'maxpictures', $system->SETTINGS['maxpictures']);
-loadblock($MSG['671'], $MSG['25_0187'], 'days', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), array($MSG['672']));
+loadblock($MSG['671'], $MSG['25_0187'], 'decimals', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), array($MSG['672']));
 loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], array($MSG['2__0045']));
 
 $template->assign_vars(array(

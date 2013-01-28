@@ -85,6 +85,11 @@ body {
 	padding: 5px;
 }
 
+.anotes {
+	margin-top: 10px;
+	width: 90%;
+}
+
 /* begin css tabs */
 ul#tabnav {
 	text-align: left;

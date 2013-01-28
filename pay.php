@@ -111,11 +111,11 @@ switch($_GET['a'])
 		$wp_paytoid = $gateway_data['worldpay_id'];
 		$tc_paytoid = $gateway_data['toocheckout_id'];
 		$mb_paytoemail = $gateway_data['moneybookers_address'];
-		$query = "SELECT total, id FROM " . $DBPrefix . "useraccounts WHERE auc_id = " . $_SESSION['auction_id'] . " AND user_id = " . $user->user_data['id'];
+		$query = "SELECT total, useracc_id FROM " . $DBPrefix . "useraccounts WHERE auc_id = " . $_SESSION['auction_id'] . " AND user_id = " . $user->user_data['id'];
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$payvalue = mysql_result($res, 0, 'total');
-		$invoice_id = mysql_result($res, 0, 'id');
+		$invoice_id = mysql_result($res, 0, 'useracc_id');
 		$custoncode = $invoice_id . 'WEBID4';
 		$message = sprintf($MSG['590'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['432'];

@@ -34,7 +34,7 @@ else
 }
 
 // count the pages
-$query = "SELECT COUNT(id) As COUNT  FROM " . $DBPrefix . "useraccounts
+$query = "SELECT COUNT(useracc_id) As COUNT  FROM " . $DBPrefix . "useraccounts
     WHERE user_id = " . $user->user_data['id'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -132,7 +132,7 @@ while ($row = mysql_fetch_assoc($res))
 		}
 
 		$template->assign_block_vars('topay', array(
-				'INVOICE' => $row['id'],
+				'INVOICE' => $row['useracc_id'],
 				'AUC_ID' => $row['auc_id'],
 				'DATE' => ArrangeDateNoCorrection($DATE),
 				'INFO' => $info,

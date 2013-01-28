@@ -72,7 +72,7 @@ if ($cat > 0)
 	}
 
 	$template->set_filenames(array(
-			'body' => 'viewfaq.tpl'
+			'body' => 'viewhelp.tpl'
 			));
 	$template->display('body');
 }

@@ -28,7 +28,7 @@ $(function() {
 
 		// Specify what files to browse for
 		filters : [
-			{title : "Image files", extensions : "jpg,gif,png"},
+			{title : "Image files", extensions : "jpg,jpeg,gif,png"},
 		],
 
 		// Flash settings

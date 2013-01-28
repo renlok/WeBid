@@ -254,7 +254,7 @@ class fees
 				global $user, $MSG;
 				$catscontrol = new MPTTcategories();
 
-				$query = "SELECT auc_id FROM " . $DBPrefix . "useraccounts WHERE id = " . $custom_id;
+				$query = "SELECT auc_id FROM " . $DBPrefix . "useraccounts WHERE useracc_id = " . $custom_id;
 				$res = mysql_query($query);
 				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$auc_id = mysql_result($res, 0, 'auc_id');
@@ -264,7 +264,7 @@ class fees
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				$query = "UPDATE " . $DBPrefix . "useraccounts SET paid = 1 WHERE id = " . $custom_id;
+				$query = "UPDATE " . $DBPrefix . "useraccounts SET paid = 1 WHERE useracc_id = " . $custom_id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				$query = "SELECT category, title, minimum_bid, pict_url, buy_now, reserve_price, auction_type, ends

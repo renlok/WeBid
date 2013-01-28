@@ -1,6 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html dir="ltr" lang="{LANGUAGE}"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!DOCTYPE html>
+<html dir="{DOCDIR}" lang="{LANGUAGE}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
 
 <title>{L_1033}</title>
 

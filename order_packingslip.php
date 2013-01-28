@@ -50,7 +50,9 @@ $winner_address .= (!empty($winner['zip'])) ? '<br>' . $winner['zip'] : '';
 $title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
 
 $template->assign_vars(array(
+		'DOCDIR' => $DOCDIR,
 		'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'],
+		'CHARSET' => $CHARSET,
 		'LANGUAGE' => $language,
 		'SENDER' => $sender['nick'],
 		'WINNER_NICK' => $winner['nick'],

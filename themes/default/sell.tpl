@@ -62,6 +62,7 @@ $(document).ready(function(){
 	var bn = {FEE_BN};
 	var rp = {FEE_RP};
 	var st = {FEE_SUBTITLE};
+	st = st * 1;
 	var rl = {FEE_RELIST};
 	$("#min_bid").blur(function(){
 		var min_bid = parseFloat($("#min_bid").val());
@@ -147,7 +148,7 @@ $(document).ready(function(){
 			updatefee(subtitle_fee * -1);
 			st = 0;
 		}
-		elseif (st == 0 && $("#subtitle").val().length != 0)
+		if (st == 0 && $("#subtitle").val().length > 0)
 		{
 			updatefee(subtitle_fee);
 			st = subtitle_fee;

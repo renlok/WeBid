@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="{DOCDIR}">
+<html dir="{DOCDIR}" lang="{LANGUAGE}">
 <head>
 <title>{PAGE_TITLE}</title>
 <meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">

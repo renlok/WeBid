@@ -163,6 +163,12 @@ $(document).ready(function() {
 						  <td width="50%" align="left">{L_023}: </td>
 						  <td align="left">{SHIPPING_COST}</td>
 						</tr>
+<!-- IF B_ADDITIONAL_SHIPPING_COST or B_BUY_NOW_ONLY-->
+						<tr>
+						  <td width="50%" align="left">{L_350_1008}: </td>
+						  <td align="left">{ADDITIONAL_SHIPPING_COST}</td>
+						</tr>
+<!-- ENDIF -->
 <!-- IF B_BUY_NOW -->
 						<tr>
 						  <td width="50%" align="left">{L_496}:</td>

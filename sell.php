@@ -408,6 +408,14 @@ switch ($_SESSION['action'])
 					substr($a_starts, 6, 4), 0);
 			}
 
+			$shippingtext = '';
+			if ($shipping == 1)
+				$shippingtext = $MSG['033'];
+			elseif ($shipping == 2)
+				$shippingtext = $MSG['032'];
+			elseif ($shipping == 3)
+				$shippingtext = $MSG['867'];
+
 			$template->assign_vars(array(
 					'TITLE' => $title,
 					'SUBTITLE' => $subtitle,
@@ -421,12 +429,13 @@ switch ($_SESSION['action'])
 					'RESERVE' => $system->print_money($reserve_price, false),
 					'BN_PRICE' => $system->print_money($buy_now_price, false),
 					'SHIPPING_COST' => $system->print_money($shipping_cost, false),
+					'ADDITIONAL_SHIPPING_COST' => $system->print_money($additional_shipping_cost, false),
 					'STARTDATE' => (empty($start_now)) ? FormatDate($a_starts) : FormatDate($system->ctime),
 					'DURATION' => mysql_result($res, 0, 'description'),
 					'INCREMENTS' => ($increments == 1) ? $MSG['614'] : $system->print_money($customincrement, false),
 					'ATYPE' => $system->SETTINGS['auction_types'][$atype],
 					'ATYPE_PLAIN' => $atype,
-					'SHIPPING' => (intval($shipping) == 1) ? $MSG['031'] : $MSG['032'],
+					'SHIPPING' => $shippingtext,
 					'INTERNATIONAL' => ($international) ? $MSG['033'] : $MSG['043'],
 					'SHIPPING_TERMS' => nl2br(stripslashes($shipping_terms)),
 					'PAYMENTS_METHODS' => $payment_methods,
@@ -632,6 +641,7 @@ switch ($_SESSION['action'])
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid, false),
 				'BN_ONLY' => ($buy_now_only == 'y') ? 'disabled' : '',
 				'SHIPPING_COST' => $system->print_money_nosymbol($shipping_cost, false),
+				'ADDITIONAL_SHIPPING_COST' => $system->print_money_nosymbol($additional_shipping_cost, false),
 				'RESERVE_Y' => ($with_reserve == 'yes') ? 'checked' : '',
 				'RESERVE_N' => ($with_reserve == 'yes') ? '' : 'checked',
 				'RESERVE' => $system->print_money_nosymbol($reserve_price, false),
@@ -646,6 +656,7 @@ switch ($_SESSION['action'])
 				'CUSTOM_INC' => ($customincrement > 0) ? $system->print_money_nosymbol($customincrement, false) : '',
 				'SHIPPING1' => (intval($shipping) == 1) ? 'checked' : '',
 				'SHIPPING2' => (intval($shipping) == 2 || empty($shipping)) ? 'checked' : '',
+				'SHIPPING3' => (intval($shipping) == 3) ? 'checked' : '',
 				'INTERNATIONAL' => (!empty($international)) ? 'checked' : '',
 				'SHIPPING_TERMS' => $shipping_terms,
 				'ITEMQTYD' => ($atype == 2 || $buy_now_only == 'y') ? '' : 'disabled',

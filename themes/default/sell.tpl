@@ -1,14 +1,20 @@
 <!-- IF PAGE eq 0 -->
 <script type="text/javascript">
 $(document).ready(function(){
+	// set up the page
+	// do something
 	//sell javascript
 	$("#bn_only_no").click(function(){
+		$(".additional_shipping_costhide").hide();
+		$("#additional_shipping_cost").attr("disabled","disabled");
 		$("#min_bid").removeAttr("disabled");
 		$("#reserve_price").removeAttr("disabled");
 		$("#iqty").attr("disabled","disabled");
 		$("#iqty").val("1");
 	});
 	$("#bn_only_yes").click(function(){
+		$(".additional_shipping_costhide").show();
+		$("#additional_shipping_cost").removeAttr("disabled","disabled");
 		$("#min_bid").attr("disabled","disabled");
 		$("#reserve_price").attr("disabled","disabled");
 		$("#iqty").removeAttr("disabled");
@@ -33,6 +39,8 @@ $(document).ready(function(){
 	});
 	$("#atype").change(function(){
 		if ($(this).find(':selected').val() == 2) { //dutch auction
+			$("#additional_shipping_cost").attr("disabled","disabled");
+			$("#additional_shipping_cost").removeAttr("disabled","disabled");
 			$("#with_reserve_no").attr("checked", "checked");
 			$("#bn_only_no").attr("checked", "checked");
 			$("#bn_no").attr("checked", "checked");
@@ -42,6 +50,8 @@ $(document).ready(function(){
 			$(".dutchhide").hide();
 			$("#minval_text").text("{L_038}");
 		} else { //normal auction
+			$("#additional_shipping_cost").removeAttr("disabled","disabled");
+			$(".additional_shipping_costhide").hide();
 			$(".dutchhide").show();
 			$("#iqty").attr("disabled","disabled");
 			$("#iqty").val("1");
@@ -51,7 +61,9 @@ $(document).ready(function(){
 	$("#bps").click(function(){
 		$("#shipping_cost").removeAttr("disabled");
 	});
-	$("#sps").click(function(){
+	$(".sps").click(function(){
+		$("#additional_shipping_cost").removeAttr("disabled","disabled");
+		$(".additional_shipping_costhide").hide();
 		$("#shipping_cost").attr("disabled","disabled");
 		$("#shipping_cost").val("0.00");
 	});
@@ -393,6 +405,15 @@ $(document).ready(function(){
 							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>)
 						</td>
 					</tr>
+					<tr class="additional_shipping_costhide">
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L_350_1008}</b>
+						</td>
+						<td class="rightpan" style="width: 293px">
+							<input type="text" size="10" name="additional_shipping_cost" id="additional_shipping_cost" value="{ADDITIONAL_SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- ENDIF -->>
+							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>)
+						</td>
+					</tr>
 					<tr>
 						<td align="right" width="25%" valign="top" class="leftpan">
 							<b>{L_025}</b>
@@ -402,6 +423,8 @@ $(document).ready(function(){
 							{L_031}<br>
 							<input type="radio" name="shipping" id="sps" value="2" {SHIPPING2}>
 							{L_032}<br>
+							<input type="radio" name="shipping" id="sps" value="3" {SHIPPING3}>
+							{L_867}<br>
 							<input type="checkbox" name="international" value="1" {INTERNATIONAL}>
 							{L_033}
 						</td>
@@ -545,6 +568,10 @@ $(document).ready(function(){
 			<tr>
 				<td valign="top" align="right"><b>{L_023}</b></td>
 				<td>{SHIPPING_COST}</td>
+			</tr>
+			<tr>
+				<td valign="top" align="right"><b>{L_350_1008}</b></td>
+				<td>{ADDITIONAL_SHIPPING_COST}</td>
 			</tr>
 			<tr>
 				<td valign="top" align="right"><b>{L_2__0016}</b></td>

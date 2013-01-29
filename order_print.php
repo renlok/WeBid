@@ -46,7 +46,7 @@ $vat = 20; // NEEDS TO BE SET TO AN ADMIN OPTION
 if ($auction)
 {
 	// get auction data
-	$query = "SELECT w.id, w.winner, w.closingdate As date, a.id AS auc_id, a.title, a.shipping_cost, a.shipping, a.shipping_terms, w.bid, w.qty,	a.user As seller_id, a.tax, a.taxinc
+	$query = "SELECT w.id, w.winner, w.closingdate As date, a.id AS auc_id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, a.shipping_terms, w.bid, w.qty, a.user As seller_id, a.tax, a.taxinc
 			FROM " . $DBPrefix . "auctions a
 			LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 			WHERE a.id = " . intval($_POST['pfval']) . " AND w.id = " . intval($_POST['pfwon']);
@@ -74,7 +74,9 @@ if ($auction)
 	$winner = getAddressWinner($data['winner']);
 	$vat = getTax(true, $winner['country'], $seller['country']);
 	$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
-	$payvalue = ($data['shipping'] == 1) ? $data['shipping_cost'] + ($data['bid'] * $data['qty']) : ($data['bid']* $data['qty']);
+	$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
+	$shipping_cost = ($shipping == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
+	$payvalue = ($data['bid'] * $data['qty']) + $shipping_cost;
 	$payvalueperitem = $data['bid'];
 	$paysubtotal = ($data['bid']* $data['qty']);
 	$shipping_cost = ($data['shipping'] == 1) ? $data['shipping_cost'] : 0;
@@ -120,10 +122,10 @@ if ($auction)
 			'AUCTION_TITLE' => strtoupper($title),
 			'ITEM_QUANTITY' => $data['qty'],
 
-			'UNIT_PRICE' => $system->print_money($unitexcl), // auction price
-			'UNIT_PRICE_WITH_TAX' => $system->print_money($unitpriceincl),// auction price & tax
-			'TOTAL' => $system->print_money($subtotal), // total invoice
-			'TOTAL_WITH_TAX' => $system->print_money($totalinc) // total invoice & tax
+			'UNIT_PRICE' => $system->print_money($unitexcl, true, false), // auction price
+			'UNIT_PRICE_WITH_TAX' => $system->print_money($unitpriceincl, true, false),// auction price & tax
+			'TOTAL' => $system->print_money($subtotal, true, false), // total invoice
+			'TOTAL_WITH_TAX' => $system->print_money($totalinc, true, false) // total invoice & tax
 			));
 }
 else
@@ -140,8 +142,8 @@ else
 
 	// fee specific details
 	$template->assign_vars(array(
-			'TOTAL' => $system->print_money($totals[1]),
-			'TOTAL_WITH_TAX' => $system->print_money($totals[0])
+			'TOTAL' => $system->print_money($totals[1], true, false),
+			'TOTAL_WITH_TAX' => $system->print_money($totals[0], true, false)
 			));
 }
 
@@ -159,9 +161,9 @@ $template->assign_vars(array(
 		'SALE_ID' => (($auction) ? 'AUC' : 'FEE') . $data['id'],
 		// tax start
 		'TAX' => $vat . '%',
-		'SHIPPING_COST' => $system->print_money($shipping_cost),
-		'VAT_TOTAL' => $system->print_money($totalvat),
-		'TOTAL_SUM' => $system->print_money($payvalue),
+		'SHIPPING_COST' => $system->print_money($shipping_cost, true, false),
+		'VAT_TOTAL' => $system->print_money($totalvat, true, false),
+		'TOTAL_SUM' => $system->print_money($payvalue, true, false),
 		// tax end
 		'YELLOW_LINE' => $system->SETTINGS['invoice_yellow_line'],
 		'THANKYOU' => $system->SETTINGS['invoice_thankyou'],

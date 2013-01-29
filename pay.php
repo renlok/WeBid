@@ -44,7 +44,7 @@ switch($_GET['a'])
 		$fees->add_to_account($MSG['935'], 'balance', $payvalue);
 		break;
 	case 2: // pay for an item
-		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
+		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
 				u.id As uid, u.nick, a.payment, u.worldpay_id, u.toocheckout_id, u.moneybookers_email, w.qty
 				FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
@@ -69,7 +69,9 @@ switch($_GET['a'])
 		$wp_paytoid = (in_array('worldpay', $payment)) ? $data['worldpay_id'] : '';
 		$tc_paytoid = (in_array('toocheckout', $payment)) ? $data['toocheckout_id'] : '';
 		$mb_paytoemail = (in_array('moneybookers', $payment)) ? $data['moneybookers_email'] : '';
-		$payvalue = ($data['shipping'] == 1) ? $data['shipping_cost'] + ($data['bid'] * $data['qty']) : ($data['bid'] * $data['qty']);
+		$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
+		$shipping_cost = ($shipping == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
+		$payvalue = ($data['bid'] * $data['qty']) + $shipping_cost;
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];

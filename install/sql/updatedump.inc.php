@@ -165,6 +165,9 @@ if ($myversion == '1.0.6')
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.1.0';";
 	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `tax` enum('y','n') NOT NULL default 'n' AFTER `current_fee`;";
 	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `taxinc` enum('y','n') NOT NULL default 'y' AFTER `tax`;";
+	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `shipping_cost_additional` double(16,4) default '0' AFTER `shipping_cost`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `current_bid` double(16,4) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `closed` int(1) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `ae_status` enum('y','n') NOT NULL default 'n';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `tax` enum('y','n') NOT NULL default 'n' AFTER `fee_disable_acc`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `taxuser` enum('y','n') NOT NULL default 'n' AFTER `tax`;"; // can the user tax his buyers

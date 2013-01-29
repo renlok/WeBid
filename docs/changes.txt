@@ -58,5 +58,8 @@
 - In admin you can now set max image upload size of up to ~97656249kb instead of 9999kb
 - Rewrote language string 640 to make more sence
 - Fixed missing word in language string 778
+- Made some fixes to the paypal IPN (Thanks to jjjason84)
+- Added option for users to charge shipping fee per additional item when they are selling multiple items (Thanks to jjjason84)
+- Added shipping option 'pickup only'
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

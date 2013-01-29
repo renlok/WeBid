@@ -75,6 +75,7 @@ class fees
 	{
 		global $system, $_POST;
 
+		$sandbox = false; // set to true to enabled sandbox mode
 		// we ensure that the txn_id (transaction ID) contains only ASCII chars...
 		$pos = strspn($_POST['txn_id'], $this->ASCII_RANGE);
 		$len = strlen($_POST['txn_id']);
@@ -89,18 +90,54 @@ class fees
 
 		foreach ($this->data as $key => $value)
 		{
-			$value = urlencode(stripslashes($value));
+			// Handle escape characters, which depends on setting of magic quotes  
+			if(get_magic_quotes_gpc())
+				$value = urlencode(stripslashes($value));
+			else
+				$value = urlencode($value);
 			$req .= '&' . $key . '=' . $value;
 		}
 
-		$header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
+		// Post back to PayPal system to validate
+		$header = "POST /cgi-bin/webscr HTTP/1.1\r\n";
 		$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-		$header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
+		if (!$sandbox)
+		{
+			$header .= "Host: www.paypal.com\r\n";
+		}
+		else
+		{
+			$header .= "Host: www.sandbox.paypal.com\r\n";
+		}
+		$header .= "Content-Length: " . strlen($req) . "\r\n";
+		$header .= "Connection: close\r\n\r\n";  
 
-		$fp = fsockopen ('www.paypal.com', 80, $errno, $errstr, 30);
-
-		$payment_amount = $_POST['mc_gross'];
-		list($custom_id, $fee_type) = explode('WEBID', $_POST['custom']);
+		if (!$sandbox)
+		{
+			if (!empty($system->SETTINGS['https_url']))
+			{
+				// connect via SSL
+				$fp = fsockopen ('ssl://www.paypal.com', 443, $errno, $errstr, 30);
+			}
+			else
+			{
+				// connect via HTTP
+				$fp = fsockopen ('www.paypal.com', 80, $errno, $errstr, 30);
+			}
+		}
+		else
+		{
+			if (!empty($system->SETTINGS['https_url']))
+			{
+				// connect via SSL
+				$fp = fsockopen ('ssl://www.sandbox.paypal.com', 443, $errno, $errstr, 30);
+			}
+			else
+			{
+				// connect via HTTP
+				$fp = fsockopen ('www.sandbox.paypal.com', 443, $errno, $errstr, 30);
+			}
+		}
 
 		if (!$fp)
 		{
@@ -108,15 +145,31 @@ class fees
 		}
 		else
 		{
+			// Assign posted variables to local variables
+			$payment_status = $_POST['payment_status'];
+			$payment_amount = $_POST['mc_gross'];
+			list($custom_id, $fee_type) = explode('WEBID', $_POST['custom']);
+
 			fputs ($fp, $header . $req);
 
 			while (!feof($fp))
 			{
-				$res = fgets ($fp, 1024);
+				$resl = trim(fgets ($fp, 1024));
 
-				if (strcmp ($res, 'VERIFIED') == 0)
+				if (strcmp ($resl, 'VERIFIED') == 0)
 				{
-					$this->callback_process($custom_id, $fee_type, $payment_amount);
+					// We can do various checks to make sure nothing is wrong  
+					// Check that receiver_email is your Primary PayPal email and   
+					// that txn_id has not been previously processed
+					if ($payment_status == 'Completed')
+					{
+						// everything seems to be OK
+						$this->callback_process($custom_id, $fee_type, $payment_amount);
+					}
+				}
+				else if (strcmp ($resl, 'INVALID') == 0)
+				{
+					// payment failed
 				}
 			}
 			fclose ($fp);

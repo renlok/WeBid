@@ -31,7 +31,7 @@ function generate_id()
 
 function setvars()
 {
-	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $description, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included;
+	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $description, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sellcat1, $sellcat2, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now;
 	global $_POST, $_SESSION, $system;
 
@@ -42,6 +42,8 @@ function setvars()
 	$minimum_bid = (empty($minimum_bid)) ? $default_minbid : $minimum_bid;
 	$shipping_cost = (isset($_POST['shipping_cost'])) ? $_POST['shipping_cost'] : $_SESSION['SELL_shipping_cost'];
 	$shipping_cost = (empty($shipping_cost)) ? 0 : $shipping_cost;
+	$additional_shipping_cost = (isset($_POST['additional_shipping_cost'])) ? $_POST['additional_shipping_cost'] : $_SESSION['SELL_additional_shipping_cost'];
+	$additional_shipping_cost = (empty($additional_shipping_cost)) ? 0 : $additional_shipping_cost;
 	$imgtype = (isset($_POST['imgtype'])) ? $_POST['imgtype'] : $_SESSION['SELL_file_uploaded'];
 	$title = (isset($_POST['title'])) ? $_POST['title'] : $_SESSION['SELL_title'];
 	$subtitle = (isset($_POST['subtitle'])) ? $_POST['subtitle'] : $_SESSION['SELL_subtitle'];
@@ -88,13 +90,14 @@ function setvars()
 
 function makesessions()
 {
-	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $description, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included;
+	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $description, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sendemail, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now, $_SESSION;
 
 	$_SESSION['SELL_with_reserve'] = $with_reserve;
 	$_SESSION['SELL_reserve_price'] = $reserve_price;
 	$_SESSION['SELL_minimum_bid'] = $minimum_bid;
 	$_SESSION['SELL_shipping_cost'] = $shipping_cost;
+	$_SESSION['SELL_additional_shipping_cost'] = $additional_shipping_cost;
 	$_SESSION['SELL_file_uploaded'] = $imgtype;
 	$_SESSION['SELL_title'] = $title;
 	$_SESSION['SELL_subtitle'] = $subtitle;
@@ -130,6 +133,7 @@ function unsetsessions()
 	$_SESSION['SELL_reserve_price'] = '';
 	$_SESSION['SELL_minimum_bid'] = ($system->SETTINGS['moneyformat'] == 1) ? 0.99 : '0,99';
 	$_SESSION['SELL_shipping_cost'] = 0;
+	$_SESSION['SELL_additional_shipping_cost'] = 0;
 	$_SESSION['SELL_file_uploaded'] = '';
 	$_SESSION['SELL_title'] = '';
 	$_SESSION['SELL_subtitle'] = '';
@@ -177,6 +181,7 @@ function updateauction($type)
 		secondcat = " . intval($_SESSION['SELL_sellcat2']) . ",
 		minimum_bid = '" . $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']) . "',
 		shipping_cost = '" . $system->input_money($_SESSION['SELL_shipping_cost']) . "',
+		shipping_cost_additional = '" . $system->input_money($_SESSION['SELL_additional_shipping_cost']) . "',
 		reserve_price = '" . $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0) . "',
 		buy_now = '" . $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0) . "',
 		bn_only = '" . $_SESSION['SELL_buy_now_only'] . "',
@@ -207,7 +212,12 @@ function addauction()
 {
 	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee;
 
-	return "INSERT INTO " . $DBPrefix . "auctions VALUES (NULL, " . $user->user_data['id'] . ", '" . $system->cleanvars($_SESSION['SELL_title']) . "', '" . $system->cleanvars($_SESSION['SELL_subtitle']) . "', '" .  $a_starts . "', '" . addslashes($_SESSION['SELL_description']) . "', '" . $system->cleanvars($_SESSION['SELL_pict_url']) . "', " . $_SESSION['SELL_sellcat1'] . ", " . intval($_SESSION['SELL_sellcat2']) . ", '" . $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']) . "', '" . $system->input_money($_SESSION['SELL_shipping_cost']) . "', '" . $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0) . "', '" . $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0) . "', '" . $_SESSION['SELL_atype'] . "', '" . $_SESSION['SELL_duration'] . "', '" . $system->input_money($_SESSION['SELL_customincrement']) . "', '" . $_SESSION['SELL_shipping'] . "', '" . $payment_text . "', " . (($_SESSION['SELL_international']) ? 1 : 0) . ", '" . $a_ends . "', 0, 0, " . (($_SESSION['SELL_file_uploaded']) ? 1 : 0) . ", " . $_SESSION['SELL_iquantity'] . ", 0, " . intval($_SESSION['SELL_relist']) . ", 0, 0, 'n', '" . $system->cleanvars($_SESSION['SELL_shipping_terms']) . "', '" . $_SESSION['SELL_buy_now_only'] . "', '" . $_SESSION['SELL_is_bold'] . "', '" . $_SESSION['SELL_is_highlighted'] . "', '" . $_SESSION['SELL_is_featured'] . "', " . $fee . ", '" . $_SESSION['SELL_is_taxed'] . "', '" . $_SESSION['SELL_tax_included'] . "')";
+	// set values
+	$min_bid = $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']);
+	$reserve_price = $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0);
+	$bn_price = $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0);
+	return "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,shipping_cost_additional,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
+	(" . $user->user_data['id'] . ", '" . $system->cleanvars($_SESSION['SELL_title']) . "', '" . $system->cleanvars($_SESSION['SELL_subtitle']) . "', '" .  $a_starts . "', '" . addslashes($_SESSION['SELL_description']) . "', '" . $system->cleanvars($_SESSION['SELL_pict_url']) . "', " . $_SESSION['SELL_sellcat1'] . ", " . intval($_SESSION['SELL_sellcat2']) . ", '" . $min_bid . "', '" . $system->input_money($_SESSION['SELL_shipping_cost']) . "', '" . $system->input_money($_SESSION['SELL_additional_shipping_cost']) . "', '" . $reserve_price . "', '" . $bn_price . "', '" . $_SESSION['SELL_atype'] . "', '" . $_SESSION['SELL_duration'] . "', '" . $system->input_money($_SESSION['SELL_customincrement']) . "', '" . $_SESSION['SELL_shipping'] . "', '" . $payment_text . "', " . (($_SESSION['SELL_international']) ? 1 : 0) . ", '" . $a_ends . "', " . (($_SESSION['SELL_file_uploaded']) ? 1 : 0) . ", " . $_SESSION['SELL_iquantity'] . ", " . intval($_SESSION['SELL_relist']) . ", '" . $system->cleanvars($_SESSION['SELL_shipping_terms']) . "', '" . $_SESSION['SELL_buy_now_only'] . "', '" . $_SESSION['SELL_is_bold'] . "', '" . $_SESSION['SELL_is_highlighted'] . "', '" . $_SESSION['SELL_is_featured'] . "', " . $fee . ", '" . $_SESSION['SELL_is_taxed'] . "', '" . $_SESSION['SELL_tax_included'] . "')";
 }
 
 function addoutstanding()

@@ -18,6 +18,7 @@
 <tr style="background-color:{TBLHEADERCOLOUR}">
     <td style="width: 45%; text-align: center;">{L_018}</td>
     <td style="width: 10%; text-align: center;">{L_847}</td>
+	<td style="width: 10%; text-align: center;">{L_350_1004}</td>
     <td style="width: 10%; text-align: center;">{L_319}</td>
     <td style="width: 10%; text-align: center;">{L_189}</td>
     <td style="text-align: center;">&nbsp;</td>
@@ -32,8 +33,13 @@
     <!-- ENDIF -->
     </td>
     <td style="text-align: center;">{to_pay.BID}</td>
+	<td style="text-align: center;">{to_pay.QUANTITY}</td>
     <td style="text-align: center;">{to_pay.SHIPPING}</td>
-    <td style="text-align: center;">{to_pay.TOTAL}</td>
+	<td style="text-align: center;">
+		{to_pay.SHIPPING} X 1 =<br>{to_pay.SHIPPING}
+		<br><br><b>{L_350_1009}</b><br>{to_pay.ADDITIONAL_SHIPPING} X {to_pay.ADDITIONAL_SHIPPING_QUANTITYS} =<br>{to_pay.ADDITIONAL_SHIPPING_COST}</td> 
+		<td style="text-align: center;">{to_pay.TOTAL}
+	</td>
     <td style="text-align: center; background-color: #FFFFaa;">
     	<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
         <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

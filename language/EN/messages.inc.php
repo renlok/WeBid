@@ -926,6 +926,7 @@ $MSG['863'] = '<h2>Not a Member yet?</h2>
         </ul>';
 $MSG['864'] = 'Shipping Details';
 $MSG['865'] = 'Listing Details';
+$MSG['867'] = 'Pick up only';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";
@@ -1680,4 +1681,8 @@ $MSG['30_0211'] = "You are running an old version you can download the latest ve
 $MSG['30_0212'] = "You are running the latest version";
 $MSG['30_0213'] = "No feedback needs leaving";
 $MSG['30_0214'] = "WeBid Version";
+$MSG['30_0110'] = "Shipping";
+$MSG['350_1004'] = "Quantity";
+$MSG['350_1008'] = "Additional Shipping";
+$MSG['350_1009'] = "Additional Shipping Cost";
 ?>

@@ -503,13 +503,22 @@ $page_title = $auction_data['title'];
 $sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
 $sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
 
+$shipping = '';
+if ($auction_data['shipping'] == 1)
+	$shipping = $MSG['033'];
+elseif ($auction_data['shipping'] == 2)
+	$shipping = $MSG['032'];
+elseif ($auction_data['shipping'] == 3)
+	$shipping = $MSG['867'];
+
 $template->assign_vars(array(
 		'ID' => $auction_data['id'],
 		'TITLE' => $auction_data['title'],
 		'SUBTITLE' => $auction_data['subtitle'],
 		'AUCTION_DESCRIPTION' => stripslashes($auction_data['description']),
 		'PIC_URL' => $uploaded_path . $id . '/' . $auction_data['pict_url'],
-		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $system->print_money($auction_data['shipping_cost']),
+		'SHIPPING_COST' => $system->print_money($auction_data['shipping_cost']),
+		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['shipping_cost_additional']),
 		'COUNTRY' => $auction_data['country'],
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
@@ -524,7 +533,7 @@ $template->assign_vars(array(
 		'MAXBID' => $high_bid,
 		'NEXTBID' => $next_bid,
 		'INTERNATIONAL' => ($auction_data['international'] == 1) ? $MSG['033'] : $MSG['043'],
-		'SHIPPING' => ($auction_data['shipping'] == 1) ? $MSG['031'] : $MSG['032'],
+		'SHIPPING' => $shipping,
 		'SHIPPINGTERMS' => nl2br($auction_data['shipping_terms']),
 		'PAYMENTS' => $payment_methods,
 		'AUCTION_VIEWS' => $auction_data['counter'],
@@ -567,6 +576,7 @@ $template->assign_vars(array(
 		'B_SHOWHISTORY' => (isset($_GET['history']) && $num_bids > 0),
 		'B_BUY_NOW' => ($auction_data['buy_now'] > 0 && ($auction_data['bn_only'] == 'y' || $auction_data['bn_only'] == 'n' && ($auction_data['num_bids'] == 0 || ($auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])))),
 		'B_BUY_NOW_ONLY' => ($auction_data['bn_only'] == 'y'),
+		'B_ADDITIONAL_SHIPPING_COST' => ($auction_data['auction_type'] == '2'),
 		'B_USERBID' => $userbid,
 		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && (!$user->logged_in || ($user->logged_in && $user->user_data['id'] != $auction_data['user']))),
 		'B_HASBUYER' => (count($hbidder_data) > 0),

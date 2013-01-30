@@ -424,7 +424,7 @@ switch ($_SESSION['action'])
 					'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 
 					'AUC_DESCRIPTION' => stripslashes($description),
-					'PIC_URL' => (empty($pict_url)) ? $MSG['114'] : '<img src="' . $uploaded_path . session_id() . '/' . $pict_url . '" />',
+					'PIC_URL' => (empty($pict_url)) ? $MSG['114'] : '<img src="' . $uploaded_path . session_id() . '/' . $pict_url . '" style="max-width:100%; max-height:100%;">',
 					'MIN_BID' => $system->print_money($minimum_bid, false),
 					'RESERVE' => $system->print_money($reserve_price, false),
 					'BN_PRICE' => $system->print_money($buy_now_price, false),
@@ -671,6 +671,7 @@ switch ($_SESSION['action'])
 				'TAX_N' => (intval($is_taxed) == 'n' || empty($is_taxed)) ? 'checked' : '',
 				'TAXINC_Y' => (intval($tax_included) == 1 || empty($tax_included)) ? 'checked' : '',
 				'TAXINC_N' => (intval($tax_included) == 2) ? 'checked' : '',
+				'MAXPICS' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']),
 
 				'FEE_VALUE' => get_fee($minimum_bid),
 				'FEE_VALUE_F' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),

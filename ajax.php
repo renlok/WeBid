@@ -21,7 +21,10 @@ switch ($_GET['do'])
 		converter_call();
 		break;
 	case 'uploadaucimages':
-		include $include_path . 'plupload/examples/upload.php';
+		include $main_path . 'inc/plupload/examples/upload.php';
+		break;
+	case 'getupldtable':
+		getupldtable();
 		break;
 }
 ?>

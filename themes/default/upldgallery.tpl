@@ -77,6 +77,9 @@ $(function() {
 
 			FileUploaded: function(up, file, info) {
 				// Called when a file has finished uploading
+				$.get('{SITEURL}ajax.php?do=getupldtable', function(data) {
+					$('#uploaded').html(data);
+				});
 			},
 
 			ChunkUploaded: function(up, file, info) {
@@ -130,6 +133,7 @@ $(document).ready(function () {
 				<b>{L_686}</b>
 			</td>
 		</tr>
+		<tbody id="uploaded">
 <!-- BEGIN images -->
 		<tr>
 			<td>
@@ -146,6 +150,7 @@ $(document).ready(function () {
 			</td>
 		</tr>
 <!-- END images -->
+		</tbody>
 	</table>
 	<p>{PICINFO}</p>
 	<p>{IMAGE_COST}</p>

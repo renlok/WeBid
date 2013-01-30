@@ -61,5 +61,6 @@
 - Made some fixes to the paypal IPN (Thanks to jjjason84)
 - Added option for users to charge shipping fee per additional item when they are selling multiple items (Thanks to jjjason84)
 - Added shipping option 'pickup only'
+- Fixed sell preview page large images wont break the page
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

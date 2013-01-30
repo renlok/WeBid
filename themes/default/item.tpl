@@ -296,7 +296,7 @@ $(document).ready(function() {
 		<div class="titTable4">
 			<a name="gallery"></a>{L_663}
 		</div>
-		<div class="table2" style="text-align:center" id="gallery">
+		<div class="table2" style="text-align:center; overflow-y:auto;" id="gallery">
 		<table>
 			<tr>
 		<!-- BEGIN gallery -->

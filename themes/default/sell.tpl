@@ -261,7 +261,7 @@ $(document).ready(function(){
 						<td align="right" width="25%" valign="middle" class="leftpan">&nbsp;</td>
 						<td valign="top" class="rightpan">
 							<h3>{L_663}</h3>
-							{L_673} {MAXPICS} {L_674}<br>
+							<p>{MAXPICS}</p>
 							[<a href="upldgallery.php" alt="gallery" class="new-window">{L_677}</a>]
                             <input type="hidden" name="numimages" value="{NUMIMAGES}" id="numimages">
                         </td>

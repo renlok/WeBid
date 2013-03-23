@@ -301,7 +301,7 @@ $(document).ready(function() {
 			<tr>
 		<!-- BEGIN gallery -->
 				<td>
-				<a href="{SITEURL}{UPLOADEDPATH}{ID}/{gallery.V}" title="{gallery.V}">
+				<a href="{SITEURL}{UPLOADEDPATH}{ID}/{gallery.V}" title="">
 					<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}" border="0" width="{THUMBWIDTH}" hspace="10">
 				</a>
 				</td>

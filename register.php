@@ -19,11 +19,11 @@ include $include_path . 'banemails.inc.php';
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
 {
-	include $include_path . 'captcha/recaptchalib.php';
+	include $main_path . 'inc/captcha/recaptchalib.php';
 }
 elseif ($system->SETTINGS['spam_register'] == 1)
 {
-	include $include_path . 'captcha/securimage.php';
+	include $main_path . 'inc/captcha/securimage.php';
 }
 
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')

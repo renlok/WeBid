@@ -55,8 +55,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 	// If a new membertype was added, insert it into database
 	if (!empty($new_membertype['feedbacks']))
 	{
-		$query = "INSERT INTO " . $DBPrefix . "membertypes VALUES (NULL, '" . $new_membertype['feedbacks'] . "', '"
-				. $new_membertype['membertype'] . "', '" . "', '" . $system->cleanvars($new_membertype['icon']) . "');";
+		$query = "INSERT INTO " . $DBPrefix . "membertypes VALUES (NULL, '" . $new_membertype['feedbacks'] . "', '" . $system->cleanvars($new_membertype['icon']) . "');";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	}
 	rebuild_table_file('membertypes');

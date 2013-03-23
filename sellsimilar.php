@@ -33,6 +33,7 @@ if (!isset($_POST['action']))
 	$RELISTEDAUCTION = mysql_fetch_assoc($result);
 
 	$_SESSION['SELL_starts']		= '';
+	$_SESSION['SELL_start_now'] 	= '1';
 	$_SESSION['SELL_title']			= $RELISTEDAUCTION['title'];
 	$_SESSION['SELL_subtitle']		= $RELISTEDAUCTION['subtitle'];
 	$_SESSION['SELL_description']	= $RELISTEDAUCTION['description'];

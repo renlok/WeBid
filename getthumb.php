@@ -15,6 +15,7 @@
 include 'common.php';
 
 $w = (isset($_GET['w'])) ? intval($_GET['w']) : '';
+$_w = $w;
 $fromfile = (isset($_GET['fromfile'])) ? $_GET['fromfile'] : '';
 $nomanage = false;
 
@@ -130,7 +131,7 @@ else
 	$funcall = "imagecreatefrom$imtype";
 	imagecopyresampled($ou, $funcall($fromfile), 0, 0, 0, 0, $w, $h, $img[0], $img[1]);
 	$funcall = "image$outype";
-	$funcall($ou, $upload_path . 'cache/' . $w . '-' . md5($fromfile));
+	$funcall($ou, $upload_path . 'cache/' . $_w . '-' . md5($fromfile));
 	header('Content-type: ' . $img['mime']);
 	$funcall($ou);
 }

@@ -505,7 +505,7 @@ $sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_ur
 
 $shipping = '';
 if ($auction_data['shipping'] == 1)
-	$shipping = $MSG['033'];
+	$shipping = $MSG['031'];
 elseif ($auction_data['shipping'] == 2)
 	$shipping = $MSG['032'];
 elseif ($auction_data['shipping'] == 3)

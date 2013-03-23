@@ -196,7 +196,7 @@ if ($myversion == '1.0.6')
 	  `balance` double(8,2) NOT NULL default '0',
 	  `total` double(8,2) NOT NULL,
 	  `paid` int(1) NOT NULL default '0',
-	  PRIMARY KEY (`id`)
+	  PRIMARY KEY (`useracc_id`)
 	);";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
 	  `id` INT( 2 ) NOT NULL AUTO_INCREMENT,
@@ -210,6 +210,8 @@ if ($myversion == '1.0.6')
 	$query[] = "INSERT INTO `" . $DBPrefix . "tax` VALUES (NULL, 'Site Fees', '0', '', '', '1');";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `winner_address`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `users_email` enum('y','n') NOT NULL default 'y';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "membertypes` DROP `membertype`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "membertypes` DROP `discount`;";
 	$query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
 	  `id` INT( 25 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	  `type` VARCHAR( 5 ) NOT NULL ,

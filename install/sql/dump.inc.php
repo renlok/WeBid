@@ -1197,8 +1197,6 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "membertypes`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "membertypes` (
   `id` int(11) NOT NULL auto_increment,
   `feedbacks` int(11) NOT NULL default '0',
-  `membertype` varchar(30) NOT NULL default '',
-  `discount` tinyint(4) NOT NULL default '0',
   `icon` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`id`)
 ) ;";
@@ -1207,16 +1205,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "membertypes` (
 # Dumping data for table `" . $DBPrefix . "membertypes`
 # 
 
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (24, 9, '', 0, 'transparent.gif');";
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (22, 999999, '100000', 0, 'starFR.gif');";
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (21, 99999, '50000', 0, 'starFV.gif');";
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (20, 49999, '25000', 0, 'starFT.gif');";
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (19, 24999, '10000', 0, 'starFY.gif');";
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (23, 9999, '5000', 0, 'starG.gif');";
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (17, 4999, '1000', 0, 'starR.gif');";
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (16, 999, '100', 0, 'starT.gif');";
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (15, 99, '50', 0, 'starB.gif');";
-$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (14, 49, '10', 0, 'starY.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (24, 9, 'transparent.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (22, 999999, 'starFR.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (21, 99999, 'starFV.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (20, 49999, 'starFT.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (19, 24999, 'starFY.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (23, 9999, 'starG.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (17, 4999, 'starR.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (16, 999, 'starT.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (15, 99, 'starB.gif');";
+$query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (14, 49, 'starY.gif');";
 
 # ############################
 
@@ -1762,7 +1760,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   `balance` double(8,2) NOT NULL default '0',
   `total` double(8,2) NOT NULL,
   `paid` int(1) NOT NULL default '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`useracc_id`)
 );";
 
 # 

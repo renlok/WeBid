@@ -37,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 	$increments = $_POST['increments'];
 	$lows = $_POST['lows'];
 	$highs = $_POST['highs'];
-	$delete = $_POST['delete'];
+	$delete = (isset($_POST['delete'])) ? $_POST['delete'] : array();
 
 	for ($i = 0; $i < count($increments); $i++)
 	{
@@ -60,18 +60,21 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 		{
 			if (!ToBeDeleted($ids[$i]))
 			{
-				if (!isset($ids[$i]) || empty($ids[$i]))
+				if (!(intval($lows[$i]) == 0 && intval($highs[$i]) == 0 && intval($increments[$i]) == 0))
 				{
-					$query = "INSERT INTO " . $DBPrefix . "increments VALUES
-							('NULL', " . $system->input_money($lows[$i]) . ", " . $system->input_money($highs[$i]) . ", " . $system->input_money($increments[$i]) . ")";
-				}
-				else
-				{
-					$query = "UPDATE " . $DBPrefix . "increments SET
-							low = " . $system->input_money($lows[$i]) . ",
-							high = " . $system->input_money($highs[$i]) . ",
-							increment = " . $system->input_money($increments[$i]) . "
-							WHERE id = " . $ids[$i];
+					if (!isset($ids[$i]) || empty($ids[$i]))
+					{
+						$query = "INSERT INTO " . $DBPrefix . "increments VALUES
+								('NULL', " . $system->input_money($lows[$i]) . ", " . $system->input_money($highs[$i]) . ", " . $system->input_money($increments[$i]) . ")";
+					}
+					else
+					{
+						$query = "UPDATE " . $DBPrefix . "increments SET
+								low = " . $system->input_money($lows[$i]) . ",
+								high = " . $system->input_money($highs[$i]) . ",
+								increment = " . $system->input_money($increments[$i]) . "
+								WHERE id = " . $ids[$i];
+					}
 				}
 			}
 			else

@@ -418,12 +418,12 @@ class Securimage {
 	 */
 	function Securimage()
 	{
-		global $include_path;
+		global $main_path;
 		if ( session_id() == '' ) { // no session has been started yet, which is needed for validation
 			session_start();
 		}
-		$this->gd_font_file = $include_path . 'captcha/gdfonts/bubblebath.gdf';
-		$this->ttf_file = $include_path . 'captcha/elephant.ttf';
+		$this->gd_font_file = $main_path . 'inc/captcha/gdfonts/bubblebath.gdf';
+		$this->ttf_file = $main_path . 'inc/captcha/elephant.ttf';
 	}
 
 	/**

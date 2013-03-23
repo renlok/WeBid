@@ -28,8 +28,7 @@ if(!@include('includes/config.inc.php'))
 $MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didnt set a code
 $include_path = $main_path . 'includes/'; 
 $uploaded_path = 'uploaded/';
-$upload_path = $main_path . $uploaded_path; 
-$logPath = $main_path . 'logs/';
+$upload_path = $main_path . $uploaded_path;
 
 include $include_path . 'errors.inc.php'; //error handler functions
 include $include_path . 'dates.inc.php';
@@ -49,10 +48,13 @@ $template = new template();
 $user = new user();
 set_error_handler('WeBidErrorHandler', $error_reporting);
 
-// connect to the database
-$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
-
 include $include_path . 'messages.inc.php';
+
+// connect to the database
+$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET);
+
+// set DB charset
+mysql_set_charset($CHARSET); # TEMP WHILE STILL USING MYSQL_
 
 // add auction types
 $system->SETTINGS['auction_types'] = array (

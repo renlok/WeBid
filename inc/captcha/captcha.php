@@ -78,7 +78,7 @@ define('CAPTCHA_PARAM_INPUT', '__ec_s');
 define('CAPTCHA_BGCOLOR', 0xFFFFFF);	// initial background color (non-inverse, white)
 define('CAPTCHA_SALT', ',e?c:7<');
 define('CAPTCHA_FONT_DIR', dirname(__FILE__));
-define('CAPTCHA_BASE_URL', $system->SETTINGS['siteurl'] . $include_path . 'captcha/captcha.php');
+define('CAPTCHA_BASE_URL', $system->SETTINGS['siteurl'] . 'inc/captcha/captcha.php');
 
 /* simple API */
 class captcha

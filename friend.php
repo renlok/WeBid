@@ -15,8 +15,8 @@
 include 'common.php';
 
 // check recaptcha is enabled
-include $include_path . 'captcha/recaptchalib.php';
-include $include_path . 'captcha/securimage.php';
+include $main_path . 'inc/captcha/recaptchalib.php';
+include $main_path . 'inc/captcha/securimage.php';
 
 if (isset($_REQUEST['id']))
 {

@@ -22,9 +22,9 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if ($_POST['auctions'] != 'y') $_POST['auctions'] = 'n';
-	if ($_POST['users'] != 'y') $_POST['users'] = 'n';
-	if ($_POST['online'] != 'y') $_POST['online'] = 'n';
+	if (isset($_POST['auctions']) && $_POST['auctions'] != 'y') $_POST['auctions'] = 'n';
+	if (isset($_POST['users']) && $_POST['users'] != 'y') $_POST['users'] = 'n';
+	if (isset($_POST['online']) && $_POST['online'] != 'y') $_POST['online'] = 'n';
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			  counter_auctions = '" . $_POST['auctions'] . "',

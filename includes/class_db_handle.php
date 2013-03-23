@@ -19,16 +19,18 @@ class db_handle
 	// database
 	private     $pdo;
 	private		$DBPrefix;
+	private		$CHARSET;
 	private		$lastquery;
 	private		$fetchquery;
 	private		$error;
 
-    public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix)
+    public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET)
     {
         $this->DBPrefix = $DBPrefix;
+        $this->CHARSET = $CHARSET;
 		try {
 			// MySQL with PDO_MYSQL
-			$this->pdo = new PDO("mysql:host=$DbHost;dbname=$DbDatabase", $DbUser, $DbPassword);
+			$this->pdo = new PDO("mysql:host=$DbHost;dbname=$DbDatabase", $DbUser, $DbPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES $CHARSET"));
 			// set error reporting up
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// actually use prepared statements

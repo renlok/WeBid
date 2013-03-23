@@ -96,7 +96,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 				$ID = mysql_insert_id();
 
 				// Handle filters
-				if (is_array($_POST['category']))
+				if (isset($_POST['category']) && is_array($_POST['category']))
 				{
 					foreach ($_POST['category'] as $k => $v)
 					{

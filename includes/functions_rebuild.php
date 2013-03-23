@@ -21,7 +21,7 @@ function rebuild_table_file($table)
 	{
 		case 'membertypes':
 			$output_filename = $include_path . 'membertypes.inc.php';
-			$field_name = array('id', 'feedbacks', 'membertype', 'icon');
+			$field_name = array('id', 'feedbacks', 'icon');
 			$sort_field = 1;
 			$array_name = 'membertypes';
 			$output = '<?php' . "\n";

@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'captcha/securimage.php';
+include $main_path . 'inc/captcha/securimage.php';
 
 $img = new Securimage();
 

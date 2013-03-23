@@ -14,7 +14,6 @@
 
 include 'common.php';
 include $include_path . 'countries.inc.php';
-include $include_path . 'banemails.inc.php';
 
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
@@ -256,10 +255,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		elseif (!empty($birth_month) && !empty($birth_day) && !empty($birth_year) && !checkdate($birth_month, $birth_day, $birth_year))
 		{
 			$ERR = $ERR_117;
-		}
-		elseif (BannedEmail($_POST['TPL_email'], $BANNEDDOMAINS))
-		{
-			$ERR = sprintf($MSG['30_0053'], $TPL_domains_alert);
 		}
 		else
 		{

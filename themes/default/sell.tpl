@@ -97,6 +97,11 @@ $(document).ready(function(){
 			}
 		}
 	});
+	$("#resetbt").click(function(){
+		current_fee = current_fee.toFixed({FEE_DECIMALS});
+		$("#fee_exact").val(current_fee);
+		$("#to_pay").text(current_fee);
+	});
 	$("#bn").blur(function(){
 		bn();
 	});
@@ -506,7 +511,7 @@ $(document).ready(function(){
 				
 				<div style="text-align:center">
 					<input type="hidden" value="3" name="action">
-					<input type="submit" name="" value="{L_5189}"  class="button">&nbsp;&nbsp;&nbsp;<input type="reset" name="" value="{L_5190}" class="button">
+					<input type="submit" name="" value="{L_5189}" class="button">&nbsp;&nbsp;&nbsp;<input type="reset" id="resetbt" value="{L_5190}" class="button">
 				</div>
 			</form>
 <!-- ELSEIF PAGE eq 2 -->

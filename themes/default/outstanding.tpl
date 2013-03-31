@@ -7,7 +7,7 @@
     <td style="text-align:center; width: 200px;">
     	<form name="" method="post" action="pay.php" id="fees">
 <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-        {CURRENCY} <input type="text" name="pfval" value="{PAY_BALANCE}" size="7">&nbsp;<input type="submit" name="Pay" value="Pay" class="pay">
+        {CURRENCY} <input type="text" name="pfval" value="{PAY_BALANCE}" size="7">&nbsp;<input type="submit" name="{L_1104}" value="{L_1104}" class="pay">
         </form>
     </td>
     <td><a href="{SITEURL}invoices.php">{L_1057}</a></td>

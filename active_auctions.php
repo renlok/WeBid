@@ -37,12 +37,13 @@ $NOW = time();
 
 // get number of active auctions for this user
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
-		  WHERE user = " . $user_id . "
+		  WHERE user = :user_id
 		  AND closed = 0
-		  AND starts <= '" . $NOW . "'";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auctions = mysql_result($res, 0, 'auctions');
+		  AND starts <= :time";
+$params[] = array(':user_id', $user_id, PDO::PARAM_INT);
+$params[] = array(':time', $NOW, PDO::PARAM_INT);
+$db->query($query, $params);
+$num_auctions = $db->result('auctions');
 
 // Handle pagination
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '' || $_GET['PAGE'] < 1)
@@ -59,15 +60,18 @@ $PAGES = ceil($num_auctions / $system->SETTINGS['perpage']);
 if (!isset($PAGES) || $PAGES < 1) $PAGES = 1;
 
 $query = "SELECT * FROM " . $DBPrefix . "auctions
-		WHERE user = " . $user_id . "
+		WHERE user = :user_id
 		AND closed = 0
-		AND starts <= '" . $NOW . "'
-		ORDER BY ends ASC LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		AND starts <= :time
+		ORDER BY ends ASC LIMIT :offset, :perpage";
+$params[] = array(':user_id', $user_id, PDO::PARAM_INT);
+$params[] = array(':time', $NOW, PDO::PARAM_INT);
+$params[] = array(':offset', $OFFSET, PDO::PARAM_INT);
+$params[] = array(':perpage', $system->SETTINGS['perpage'], PDO::PARAM_INT);
+$db->query($query, $params);
 
 $k = 0;
-while ($row = mysql_fetch_array($res))
+while ($row = $db->fetch())
 {
 	if (strlen($row['pict_url']) > 0)
 	{
@@ -79,10 +83,10 @@ while ($row = mysql_fetch_array($res))
 	}
 
 	// number of bids for this auction
-	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction=" . $row['id'];
-	$tmp_res = mysql_query($query);
-	$system->check_mysql($tmp_res, $query, __LINE__, __FILE__);
-	$num_bids = mysql_num_rows($tmp_res);
+	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :id";
+	$params[] = array(':id', $row['id'], PDO::PARAM_INT);
+	$db->query($query, $params);
+	$num_bids = $db->numrows();
 
 	$difference = $row['ends'] - time();
 
@@ -106,10 +110,10 @@ while ($row = mysql_fetch_array($res))
 }
 
 // get this user's nick
-$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $user_id;
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$TPL_user_nick = mysql_result($result, 0);
+$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params[] = array(':user_id', $user_id, PDO::PARAM_INT);
+$db->query($query, $params);
+$TPL_user_nick = $db->result('nick');
 
 $LOW = $PAGE - 5;
 if ($LOW <= 0) $LOW = 1;

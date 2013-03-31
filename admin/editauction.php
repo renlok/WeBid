@@ -38,6 +38,28 @@ if (!isset($_REQUEST['id']))
 	exit;
 }
 
+function load_gallery($uploaded_path, $auc_id)
+{
+	$UPLOADED_PICTURES = array();
+	if (file_exists('../' . $uploaded_path . $auc_id))
+	{
+		$dir = @opendir('../' . $uploaded_path . $auc_id);
+		if ($dir)
+		{
+			while ($file = @readdir($dir))
+			{
+				if ($file != '.' && $file != '..' && strpos($file, 'thumb-') === false)
+				{
+					$UPLOADED_PICTURES[$K] = $uploaded_path . $auc_id . '/' . $file;
+					$K++;
+				}
+			}
+			@closedir($dir);
+		}
+	}
+	return $UPLOADED_PICTURES;
+}
+
 if (isset($_POST['action']))
 {
 	// Check that all the fields are not NULL
@@ -158,6 +180,19 @@ if (isset($_POST['action']))
 				}
 			}
 
+			// clean unwanted images
+			if (isset($_POST['gallery']) && is_array($_POST['gallery']))
+			{
+				$uploaded = load_gallery($uploaded_path, $_POST['id']);
+				foreach ($uploaded as $img)
+				{
+					if (in_array($img, $_POST['gallery']))
+					{
+						unlink($main_path . $img);
+					}
+				}
+			}
+
 			$query = "UPDATE " . $DBPrefix . "auctions SET
 					title = '" . $system->cleanvars($_POST['title']) . "',
 					subtitle = '" . $system->cleanvars($_POST['subtitle']) . "',
@@ -261,19 +296,8 @@ $K = 0;
 $UPLOADED_PICTURES = array();
 if (file_exists('../' . $uploaded_path . $auc_id))
 {
-	$dir = @opendir('../' . $uploaded_path . $auc_id);
-	if ($dir)
-	{
-		while ($file = @readdir($dir))
-		{
-			if ($file != '.' && $file != '..' && strpos($file, 'thumb-') === false)
-			{
-				$UPLOADED_PICTURES[$K] = $uploaded_path . $auc_id . '/' . $file;
-				$K++;
-			}
-		}
-		@closedir($dir);
-	}
+	// load dem pictures
+	$UPLOADED_PICTURES = load_gallery($uploaded_path, $auc_id);
 
 	if (is_array($UPLOADED_PICTURES))
 	{

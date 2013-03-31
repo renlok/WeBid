@@ -30,7 +30,7 @@ class db_handle
         $this->CHARSET = $CHARSET;
 		try {
 			// MySQL with PDO_MYSQL
-			$this->pdo = new PDO("mysql:host=$DbHost;dbname=$DbDatabase", $DbUser, $DbPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES $CHARSET"));
+			$this->pdo = new PDO("mysql:host=$DbHost;dbname=$DbDatabase;charset=$CHARSET", $DbUser, $DbPassword);
 			// set error reporting up
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// actually use prepared statements
@@ -118,6 +118,16 @@ class db_handle
 		else
 		{
 			return $data[$column];
+		}
+	}
+
+	public function numrows()
+	{
+		try {
+			return $this->lastquery->rowCount();
+		}
+		catch(PDOException $e) {
+			$this->error_handler($e->getMessage());
 		}
 	}
 

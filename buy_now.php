@@ -178,6 +178,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET quantity = quantity - " . $qty . " WHERE id = " . $id;
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			// force close if all items sold
+			if (($Auction['quantity'] - $qty) == 0)
+			{
+				$query = "UPDATE " . $DBPrefix . "auctions SET ends = '" . $NOW . "' WHERE id = " . $id;
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			}
 			// do stuff that is important
 			$query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
 			$res = mysql_query($query);

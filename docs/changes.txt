@@ -62,5 +62,9 @@
 - Added option for users to charge shipping fee per additional item when they are selling multiple items (Thanks to jjjason84)
 - Added shipping option 'pickup only'
 - Fixed sell preview page large images wont break the page
+- Added the option to delete auction images via admin
+- Buy now only items auto close when all items are bought
+- Highest bidder isn't shown for BIN only auctions
+- Reset fields button on sell page also resets fee counter
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

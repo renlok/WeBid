@@ -57,10 +57,14 @@
                     <tr>
                         <td>&nbsp;</td>
                         <td>
+							<div>{L_1105}</div>
 <!-- BEGIN gallery -->
-                            <a href="{SITEURL}/{gallery.V}" title="{gallery.V}" class="padding">
-                                <img src="{SITEURL}getthumb.php?fromfile={gallery.V}" border="0" hspace="10">
-                            </a>
+							<div style="width:50px; float: left;">
+								<a href="{SITEURL}/{gallery.V}" title="{gallery.V}" target="_blank">
+									<img src="{SITEURL}getthumb.php?fromfile={gallery.V}" border="0" hspace="10">
+								</a>
+								<input type="checkbox" name="gallery[]" value="{gallery.V}">
+							</div>
 <!-- END gallery -->
                         </td>
                     </tr>

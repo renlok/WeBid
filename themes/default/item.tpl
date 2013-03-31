@@ -102,7 +102,7 @@ $(document).ready(function() {
 						  <td align="left">{AUCTION_TYPE}</td>
 						</tr>
 						<!-- higher bidder -->
-<!-- IF B_HASBUYER -->
+<!-- IF B_HASBUYER AND B_NOTBNONLY -->
 						<tr>
 						  <td width='50%' style="leftpan" valign="top">
 							{L_117}:

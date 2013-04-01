@@ -40,8 +40,8 @@ $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
 		  WHERE user = :user_id
 		  AND closed = 0
 		  AND starts <= :time";
-$params[] = array(':user_id', $user_id, PDO::PARAM_INT);
-$params[] = array(':time', $NOW, PDO::PARAM_INT);
+$params[] = array(':user_id', $user_id, 'int');
+$params[] = array(':time', $NOW, 'int');
 $db->query($query, $params);
 $num_auctions = $db->result('auctions');
 
@@ -64,10 +64,10 @@ $query = "SELECT * FROM " . $DBPrefix . "auctions
 		AND closed = 0
 		AND starts <= :time
 		ORDER BY ends ASC LIMIT :offset, :perpage";
-$params[] = array(':user_id', $user_id, PDO::PARAM_INT);
-$params[] = array(':time', $NOW, PDO::PARAM_INT);
-$params[] = array(':offset', $OFFSET, PDO::PARAM_INT);
-$params[] = array(':perpage', $system->SETTINGS['perpage'], PDO::PARAM_INT);
+$params[] = array(':user_id', $user_id, 'int');
+$params[] = array(':time', $NOW, 'int');
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
 
 $k = 0;
@@ -84,7 +84,7 @@ while ($row = $db->fetch())
 
 	// number of bids for this auction
 	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :id";
-	$params[] = array(':id', $row['id'], PDO::PARAM_INT);
+	$params[] = array(':id', $row['id'], 'int');
 	$db->query($query, $params);
 	$num_bids = $db->numrows();
 
@@ -111,7 +111,7 @@ while ($row = $db->fetch())
 
 // get this user's nick
 $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
-$params[] = array(':user_id', $user_id, PDO::PARAM_INT);
+$params[] = array(':user_id', $user_id, 'int');
 $db->query($query, $params);
 $TPL_user_nick = $db->result('nick');
 

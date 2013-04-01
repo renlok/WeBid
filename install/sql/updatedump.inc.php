@@ -216,7 +216,8 @@ if ($myversion == '1.0.6')
 	  `id` INT( 25 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	  `type` VARCHAR( 5 ) NOT NULL ,
 	  `message` TEXT NOT NULL ,
-	  `user` INT( 32 ) NOT NULL DEFAULT  '0',
+	  `action_id` INT( 11 ) NOT NULL DEFAULT  '0',
+	  `user_id` INT( 32 ) NOT NULL DEFAULT  '0',
 	  `ip` VARCHAR( 45 ) NOT NULL,
 	  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
 	);";

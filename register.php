@@ -350,6 +350,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$_SESSION['language'] = $language;
 				$first = false;
 
+				if (defined('TrackUserIPs'))
+				{
+					// log registration IP
+					$system->log('user', 'Regestered User', $TPL_id_hidden);
+				}
+
 				if ($system->SETTINGS['activationtype'] == 0)
 				{
 					include $include_path . 'email_user_needapproval.php';

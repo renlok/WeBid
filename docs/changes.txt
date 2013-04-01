@@ -66,5 +66,6 @@
 - Buy now only items auto close when all items are bought
 - Highest bidder isn't shown for BIN only auctions
 - Reset fields button on sell page also resets fee counter
+- Added option to log users IPs when they post auctions, register, bid or post messages
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

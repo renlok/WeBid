@@ -83,11 +83,11 @@ class global_class
 	}
 
 	/* possible types cron, error, admin, user, mod */
-	function log($type, $message, $user = 0)
+	function log($type, $message, $user = 0, $action_id = 0)
 	{
 		global $DBPrefix;
-		$query = "INSERT INTO " . $DBPrefix . "logs (type, message, ip, user, timestamp) VALUES
-				('" . $type . "', '" . mysql_real_escape_string($message) . "', '" . $_SERVER['REMOTE_ADDR'] . "', " . $user . ", " . time() . ")";
+		$query = "INSERT INTO " . $DBPrefix . "logs (type, message, ip, action_id, user_id, timestamp) VALUES
+				('" . $type . "', '" . mysql_real_escape_string($message) . "', '" . $_SERVER['REMOTE_ADDR'] . "', " . $action_id . ", " . $user . ", " . time() . ")";
 		$res = mysql_query($query);
 		$this->check_mysql($res, $query, __LINE__, __FILE__);
 	}

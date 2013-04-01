@@ -473,6 +473,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 		// Send e-mail message
 		include $include_path . 'email_outbid.php';
 	}
+
+	if (defined('TrackUserIPs'))
+	{
+		// log auction bid IP
+		$system->log('user', 'Bid on Item', $bidder_id, $id);
+	}
 	$template->assign_vars(array(
 			'PAGE' => 2,
 			'BID_HISTORY' => (isset($ARETHEREBIDS)) ? $ARETHEREBIDS : '',
@@ -480,6 +486,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 			'BID' => $system->print_money($bid)
 			));
 }
+
 if (!isset($_POST['action']) || isset($errmsg))
 {
 	// just set the needed template variables

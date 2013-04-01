@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008, 2009 WeBid
+ *   copyright				: (C) 2008 - 2013 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -50,11 +50,11 @@ $params = array();
 if ($searchuser)
 {
 	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = :nick";
-	$params[] = array(':nick', $username, PDO::PARAM_STR);
+	$params[] = array(':nick', $username, 'str');
 	$db->query($query, $params);
 	$user_id = $db->result('id');
 	$where_sql .= 'user_id = :user_id';
-	$params[] = array(':user_id', $user_id, PDO::PARAM_INT);
+	$params[] = array(':user_id', $user_id, 'int');
 	$pagenation_link .= '&username=' . $username;
 }
 // within a timeframe?
@@ -65,7 +65,7 @@ if ($from_date != 0)
 		$where_sql .= ' AND ';
 	}
 	$where_sql = 'date > :from_date';
-	$params[] = array(':from_date', strtotime($from_date), PDO::PARAM_INT);
+	$params[] = array(':from_date', strtotime($from_date), 'int');
 	$pagenation_link .= '&from_date=' . $from_date;
 }
 if ($to_date != 0)
@@ -75,7 +75,7 @@ if ($to_date != 0)
 		$where_sql .= ' AND ';
 	}
 	$where_sql .= 'date < :to_date';
-	$params[] = array(':to_date', strtotime($to_date), PDO::PARAM_INT);
+	$params[] = array(':to_date', strtotime($to_date), 'int');
 	$pagenation_link .= '&to_date=' . $to_date;
 }
 if ($group == 'g')
@@ -98,8 +98,8 @@ $query = "SELECT * " . $pull_sql . " FROM " . $DBPrefix . "useraccounts
 		" . ((!empty($join_sql)) ? $join_sql : '') . "
 		" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . "
 		" . ((!empty($group_sql)) ? $group_sql : '') . " ORDER BY date LIMIT :OFFSET , :perpage";
-$params[] = array(':OFFSET', $OFFSET, PDO::PARAM_INT);
-$params[] = array(':perpage', $system->SETTINGS['perpage'], PDO::PARAM_INT);
+$params[] = array(':OFFSET', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
 $total_all = 0;
 

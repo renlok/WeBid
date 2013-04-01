@@ -159,8 +159,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	if (!isset($ERR))
 	{
 		$query = "INSERT INTO " . $DBPrefix . "bids VALUES
-				(NULL, " . $id . ", " . intval($user->user_data['id']) . ", " . floatval($Auction['buy_now']) . ", '" . $NOW . "', 1)";
+				(NULL, " . $id . ", " . $user->user_data['id'] . ", " . floatval($Auction['buy_now']) . ", '" . $NOW . "', 1)";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		if (defined('TrackUserIPs'))
+		{
+			// log auction BIN IP
+			$system->log('user', 'BIN on Item', $user->user_data['id'], $id);
+		}
 		if ($Auction['quantity'] == 1)
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET ends = '" . $NOW . "', num_bids = num_bids + 1, current_bid = " . floatval($Auction['buy_now']) . "

@@ -311,6 +311,11 @@ switch ($_SESSION['action'])
 				}
 			}
 			unsetsessions();
+			if (defined('TrackUserIPs'))
+			{
+				// log auction setup IP
+				$system->log('user', 'List Item', $user->user_data['id'], $auction_id);
+			}
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{
 				$_SESSION['auction_id'] = $auction_id;

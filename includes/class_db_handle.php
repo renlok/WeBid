@@ -66,6 +66,7 @@ class db_handle
 	{
 		try {
 			//$query = $this->build_query($query, $table);
+			$params = $this->build_params($params);
 			$params = $this->clean_params($query, $params);
 			$this->lastquery = $this->pdo->prepare($query);
 			//$this->lastquery->bindParam(':table', $this->DBPrefix . $table, PDO::PARAM_STR); // must always be set
@@ -169,10 +170,19 @@ class db_handle
 		}
 	}
 
-	private function build_query($query, $table)
+	private function build_params($params)
 	{
-		// needs some security
-		return str_replace(':table', $this->DBPrefix . $table, $query);
+		$PDO_constants = array(
+			'int' => PDO::PARAM_INT,
+			'str' => PDO::PARAM_STR,
+			'bool' => PDO::PARAM_BOOL
+			);
+		// set PDO values to params
+		for ($i = 0; $i < count($params); $i++)
+		{
+			$params[$i][2] = $PDO_constants[$params[$i][2]];
+		}
+		return $params;
 	}
 
 	private function error_handler($error)

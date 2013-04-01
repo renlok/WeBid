@@ -90,6 +90,12 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 			VALUES ('" . $to_id . "', " . $user->user_data['id'] . ", " . time() . ", '" . $nowmessage . "', '" . $subject . "', " . $_SESSION['reply_of' . $_POST['hash']] . ", " . $_SESSION['question' . $_POST['hash']] . ")";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
+	// Track IP
+	if (defined('TrackUserIPs'))
+	{
+		$system->log('user', 'Post Private Message', $user->user_data['id'], mysql_insert_id());
+	}
+
 	if (isset($_POST['is_question']) && isset($_SESSION['reply_of' . $_POST['hash']]) && $_SESSION['reply_of' . $_POST['hash']] > 0)
 	{
 		$public = (isset($_POST['public'])) ? 1 : 0;

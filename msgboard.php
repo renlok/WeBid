@@ -69,6 +69,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_P
 			(NULL, " . intval($_POST['board_id']) . ", '$NOW', " . $user->user_data['id'] . ",
 			'" . $user->user_data['nick'] . "', '" . $system->cleanvars($message) . "')";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	// Track IP
+	if (defined('TrackUserIPs'))
+	{
+		$system->log('user', 'Post Public Message', $user->user_data['id'], mysql_insert_id());
+	}
 	// Update messages counter and lastmessage date
 	$query = "UPDATE " . $DBPrefix . "community
 			SET messages = messages + 1, lastmessage = '$NOW' WHERE id = " . $board_id;

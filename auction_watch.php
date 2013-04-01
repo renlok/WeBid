@@ -47,8 +47,8 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 		$auction_watch = trim($auctions . ' ' . $requestadd);
 		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = :auc_watch WHERE id = :id";
 		$params = array(
-			array(':auc_watch', $auction_watch, PDO::PARAM_STR),
-			array(':id', $user->user_data['id'], PDO::PARAM_INT),
+			array(':auc_watch', $auction_watch, 'str'),
+			array(':id', $user->user_data['id'], 'int'),
 		);
 		$db->query($query, $params);
 		$user->user_data['auc_watch'] = $auction_watch;
@@ -76,8 +76,8 @@ if (isset($_GET['delete']))
 	$auction_watch = trim($auction_watch);
 		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = :auc_watch WHERE id = :id";
 		$params = array(
-			array(':auc_watch', $auction_watch, PDO::PARAM_STR),
-			array(':id', $user->user_data['id'], PDO::PARAM_INT),
+			array(':auc_watch', $auction_watch, 'str'),
+			array(':id', $user->user_data['id'], 'int'),
 		);
 		$db->query($query, $params);
 	$user->user_data['auc_watch'] = $auction_watch;

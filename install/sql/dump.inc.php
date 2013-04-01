@@ -541,7 +541,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
 # Dumping data for table `" . $DBPrefix . "community`
 
 $query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (1, 'Selling', 0, '', 30, 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (2, 'Buying', 0, '20050823103800', 30, 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (2, 'Buying', 0, '', 30, 1);";
 
 # ############################
 
@@ -1156,7 +1156,8 @@ $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
   `id` INT( 25 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   `type` VARCHAR( 5 ) NOT NULL ,
   `message` TEXT NOT NULL ,
-  `user` INT( 32 ) NOT NULL DEFAULT  '0',
+  `action_id` INT( 11 ) NOT NULL DEFAULT  '0',
+  `user_id` INT( 32 ) NOT NULL DEFAULT  '0',
   `ip` VARCHAR( 45 ) NOT NULL,
   `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
 );";

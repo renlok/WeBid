@@ -41,7 +41,7 @@ $NOWB = gmdate('Ymd');
 $query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
-$row = mysql_result($res, 0);
+$row = @mysql_result($res, 0);
 $buyer_fee = $row['value'];
 $buyer_fee = (empty($buyer_fee)) ? 0 : $buyer_fee;
 $buyer_fee_type = $row['fee_type'];

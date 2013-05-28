@@ -113,7 +113,7 @@ function sortFees()
 	$fee_value = 0;
 	for ($i = 0; $i < count($endauc_fee); $i++)
 	{
-		if ($Auction['current_bid'] > $endauc_fee[$i]['fee_from'] && $Auction['current_bid'] < $endauc_fee[$i]['fee_to'])
+		if ($Auction['current_bid'] >= $endauc_fee[$i]['fee_from'] && $Auction['current_bid'] <= $endauc_fee[$i]['fee_to'])
 		{
 			if ($endauc_fee[$i]['fee_type'] == 'flat')
 			{

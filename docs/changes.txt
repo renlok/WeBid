@@ -67,5 +67,8 @@
 - Highest bidder isn't shown for BIN only auctions
 - Reset fields button on sell page also resets fee counter
 - Added option to log users IPs when they post auctions, register, bid or post messages
+- Added total sale price to buy it now page
+- Fixed not including max/min values in fee range brackets (Bug #425) (Thanks to linux4me)
+- Fixed Auction Invalid Error When Logged-in User Clicks Buy It Now (Bug #426) (Thanks to linux4me)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

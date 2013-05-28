@@ -45,7 +45,7 @@ if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' &
 {
 	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
 	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('location: ' . $sslurl . 'buy_now.php');
+	header('location: ' . $sslurl . 'buy_now.php?id=' . $id);
 	exit;
 }
 
@@ -235,7 +235,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				$fee_value = 0;
 				while ($row = mysql_fetch_assoc($res))
 				{
-					if (floatval($Auction['buy_now']) > $row['fee_from'] && floatval($Auction['buy_now']) < $row['fee_to'])
+					if (floatval($Auction['buy_now']) >= $row['fee_from'] && floatval($Auction['buy_now']) <= $row['fee_to'])
 					{
 						if ($row['fee_type'] == 'flat')
 						{
@@ -295,11 +295,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	}
 }
 
+$additional_shipping = $Auction['additional_shipping_cost'] * ($qty - 1);
+$shipping_cost = ($shipping == 1) ? ($Auction['shipping_cost'] + $additional_shipping) : 0;
+$BN_total = ($Auction['bid'] * $qty) + $shipping_cost;
+
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_REQUEST['id'],
 		'TITLE' => $Auction['title'],
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),
+		'BN_TOTAL' => $system->print_money($BN_total),
 		'SELLER' => ' <a href="profile.php?user_id=' . $Auction['user'] . '"><b>' . $Seller['nick'] . '</b></a>',
 		'SELLERNUMFBS' => '<b>(' . $total_rate . ')</b>',
 		'FBICON' => $TPL_rate_radio,

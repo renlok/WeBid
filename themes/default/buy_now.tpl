@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <td align="right" width="40%"><b>{L_497}:</b></td>
-                    <td>{BN_PRICE}</td>
+                    <td>{BN_PRICE}<!-- IF B_QTY -->{L_868}<!-- ENDIF --></td>
                 </tr>
                 <tr>
                     <td colspan=2 align="center">&nbsp;</td>
@@ -61,16 +61,20 @@
             </div>
             </form>
 <!-- ELSE -->
-            <tr>
-                <td colspan="2" align="center">
-                    {L_498}
-                    <form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
-                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                    <input type="hidden" name="pfval" value="{ID}">
-                    <input type="submit" name="Pay" value="{L_756}" class="pay">
-                    </form>
-                </td>
-            </tr>
+				<tr>
+					<td align="right" width="40%"><b>{L_893}:</b></td>
+					<td>{BN_TOTAL}</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						{L_498}
+						<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
+						<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+						<input type="hidden" name="pfval" value="{ID}">
+						<input type="submit" name="Pay" value="{L_756}" class="pay">
+						</form>
+					</td>
+				</tr>
             </table>
 <!-- ENDIF -->
 		</div>

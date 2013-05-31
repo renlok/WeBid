@@ -79,6 +79,7 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 	}
 	elseif($fees[$_GET['type']] == 1)
 	{
+		$level_added = false;
 		if(isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			for($i = 0; $i < count($_POST['tier_id']); $i++)
@@ -117,6 +118,7 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 					$query = "INSERT INTO " . $DBPrefix . "fees VALUES
 							(NULL, '" . $system->input_money($_POST['new_fee_from']) . "', '" . $system->input_money($_POST['new_fee_to']) . "', '" . $_POST['new_type'] . "', '" . $value . "', '" . $_GET['type'] . "')";
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$level_added = true;
 				}
 				else
 				{
@@ -141,10 +143,10 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 
 		$template->assign_vars(array(
 				'CURRENCY' => $system->SETTINGS['currency'],
-				'FEE_FROM' => isset($_POST['new_fee_from']) ? $_POST['new_fee_from'] : '',
-				'FEE_TO' => isset($_POST['new_fee_to']) ? $_POST['new_fee_to'] : '',
-				'FEE_VALUE' => isset($_POST['new_value']) ? $_POST['new_value'] : '',
-				'FEE_TYPE' => isset($_POST['new_type']) ? $_POST['new_type'] : ''
+				'FEE_FROM' => (isset($_POST['new_fee_from']) && !$level_added) ? $_POST['new_fee_from'] : '',
+				'FEE_TO' => (isset($_POST['new_fee_to']) && !$level_added) ? $_POST['new_fee_to'] : '',
+				'FEE_VALUE' => (isset($_POST['new_value']) && !$level_added) ? $_POST['new_value'] : '',
+				'FEE_TYPE' => (isset($_POST['new_type']) && !$level_added) ? $_POST['new_type'] : ''
 				));
 	}
 }

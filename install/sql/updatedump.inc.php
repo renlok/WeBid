@@ -165,8 +165,8 @@ if ($myversion == '1.0.6')
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.1.0';";
 	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `tax` enum('y','n') NOT NULL default 'n' AFTER `current_fee`;";
 	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `taxinc` enum('y','n') NOT NULL default 'y' AFTER `tax`;";
-	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `shipping_cost_additional` double(16,4) default '0' AFTER `shipping_cost`;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `current_bid` double(16,4) default '0';";
+	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `shipping_cost_additional` double(16,2) default '0' AFTER `shipping_cost`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `current_bid` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `closed` int(1) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `ae_status` enum('y','n') NOT NULL default 'n';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `tax` enum('y','n') NOT NULL default 'n' AFTER `fee_disable_acc`;";
@@ -199,12 +199,12 @@ if ($myversion == '1.0.6')
 	  PRIMARY KEY (`useracc_id`)
 	);";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
-	  `id` INT( 2 ) NOT NULL AUTO_INCREMENT,
-	  `tax_name` VARCHAR( 30 ) NOT NULL ,
-	  `tax_rate` DOUBLE( 16, 4 ) NOT NULL ,
+	  `id` INT(2) NOT NULL AUTO_INCREMENT,
+	  `tax_name` VARCHAR(30) NOT NULL ,
+	  `tax_rate` DOUBLE(16, 2) NOT NULL ,
 	  `countries_seller` TEXT NOT NULL ,
 	  `countries_buyer` TEXT NOT NULL ,
-	  `fee_tax` INT( 1 ) NOT NULL DEFAULT  '0',
+	  `fee_tax` INT(1) NOT NULL DEFAULT  '0',
 	  PRIMARY KEY (`id`)
 	);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "tax` VALUES (NULL, 'Site Fees', '0', '', '', '1');";
@@ -221,5 +221,27 @@ if ($myversion == '1.0.6')
 	  `ip` VARCHAR( 45 ) NOT NULL,
 	  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
 	);";
+	
+	
+	$query[] = "ALTER TABLE `" . $DBPrefix . "accounts` MODIFY `amount` DOUBLE(6,2) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `minimum_bid` double(16,2) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_cost` double(16,2) default NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_cost_additional` double(16,2) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `reserve_price` double(16,2) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `buy_now` double(16,2) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `increment` double(8,2) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `current_fee` double(16,2) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "bids` MODIFY `bid` double(16,2) default NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "fees` MODIFY `fee_from` double(16,2) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "fees` MODIFY `fee_to` double(16,2) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "fees` MODIFY `value` double(8,2) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "increments` MODIFY `low` double(16,2) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "increments` MODIFY `high` double(16,2) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "increments` MODIFY `increment` double(16,2) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "proxybid` MODIFY `bid` double(16,2) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `fee_max_debt` double(16,2) NOT NULL default '25.00';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `fee_signup_bonus` double(16,2) NOT NULL default '0.00';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `balance` double(16,2) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `bid` double(16,2) NOT NULL default '0';";
 }
 ?>

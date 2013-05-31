@@ -30,7 +30,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 	`text` TEXT NOT NULL,
 	`type` VARCHAR(15) NOT NULL,
 	`paid_date` VARCHAR(16) NOT NULL,
-	`amount` DOUBLE(6, 4) NOT NULL,
+	`amount` DOUBLE(6,2) NOT NULL,
 	`day` INT(3) NOT NULL,
 	`week` INT(2) NOT NULL,
 	`month` INT(2) NOT NULL,
@@ -99,19 +99,19 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `pict_url` tinytext,
   `category` int(11) default NULL,
   `secondcat` int(11) default NULL,
-  `minimum_bid` double(16,4) default '0',
-  `shipping_cost` double(16,4) default NULL,
-  `shipping_cost_additional` double(16,4) default '0',
-  `reserve_price` double(16,4) default NULL,
-  `buy_now` double(16,4) default NULL,
+  `minimum_bid` double(16,2) default '0',
+  `shipping_cost` double(16,2) default '0',
+  `shipping_cost_additional` double(16,2) default '0',
+  `reserve_price` double(16,2) default '0',
+  `buy_now` double(16,2) default '0',
   `auction_type` char(1) default NULL,
   `duration` varchar(7) default NULL,
-  `increment` double(8,4) NOT NULL default '0',
+  `increment` double(8,2) NOT NULL default '0',
   `shipping` char(1) default NULL,
   `payment` tinytext,
   `international` char(1) default NULL,
   `ends` varchar(14) default NULL,
-  `current_bid` double(16,4) default '0',
+  `current_bid` double(16,2) default '0',
   `closed` int(1) default '0',
   `photo_uploaded` tinyint(1) default NULL,
   `quantity` int(11) default NULL,
@@ -125,7 +125,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `bold` enum('y','n') NOT NULL default 'n',
   `highlighted` enum('y','n') NOT NULL default 'n',
   `featured` enum('y','n') NOT NULL default 'n',
-  `current_fee` double(16,4) default '0',
+  `current_fee` double(16,2) default '0',
   `tax`  enum('y','n') NOT NULL default 'n',
   `taxinc`  enum('y','n') NOT NULL default 'y',
   PRIMARY KEY  (`id`),
@@ -250,7 +250,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bids` (
   `id` int(11) NOT NULL auto_increment,
   `auction` int(32) default NULL,
   `bidder` int(32) default NULL,
-  `bid` double(16,4) default NULL,
+  `bid` double(16,2) default NULL,
   `bidwhen` varchar(14) default NULL,
   `quantity` int(11) default '0',
   PRIMARY KEY  (`id`)
@@ -1018,10 +1018,10 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fees`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
-  `fee_from` double(16, 4) NOT NULL default '0',
-  `fee_to` double(16, 4) NOT NULL default '0',
+  `fee_from` double(16,2) NOT NULL default '0',
+  `fee_to` double(16,2) NOT NULL default '0',
   `fee_type` enum('flat', 'perc') NOT NULL default 'flat',
-  `value` double(8,4) NOT NULL,
+  `value` double(8,2) NOT NULL default '0',
   `type` varchar(15) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ;";
@@ -1127,9 +1127,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "increments`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "increments` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
-  `low` double(16,4) default NULL,
-  `high` double(16,4) default NULL,
-  `increment` double(16,4) default NULL,
+  `low` double(16,2) default '0',
+  `high` double(16,2) default '0',
+  `increment` double(16,2) default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1332,7 +1332,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "proxybid`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "proxybid` (
   `itemid` int(32) default NULL,
   `userid` int(32) default NULL,
-  `bid` double(16,4) default NULL
+  `bid` double(16,2) default '0'
 ) ;";
 
 # 
@@ -1502,8 +1502,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `extra_cat` ENUM('y','n') NOT NULL default 'n',
   `fees` ENUM('y','n') NOT NULL default 'n',
   `fee_type` int(1) NOT NULL default '1',
-  `fee_max_debt` double(16,4) NOT NULL default '25.00',
-  `fee_signup_bonus` double(16,4) NOT NULL default '0.00',
+  `fee_max_debt` double(16,2) NOT NULL default '25.00',
+  `fee_signup_bonus` double(16,2) NOT NULL default '0.00',
   `fee_disable_acc` enum('y','n') NOT NULL default 'y',
   `tax` enum('y','n') NOT NULL default 'n',
   `taxuser` enum('y','n') NOT NULL default 'n',
@@ -1667,12 +1667,12 @@ $query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('n', 'y', 'y', 
 # 
 
 $query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
-	  `id` INT( 2 ) NOT NULL AUTO_INCREMENT,
-	  `tax_name` VARCHAR( 30 ) NOT NULL ,
-	  `tax_rate` DOUBLE( 16, 4 ) NOT NULL ,
+	  `id` INT(2) NOT NULL AUTO_INCREMENT,
+	  `tax_name` VARCHAR(30) NOT NULL ,
+	  `tax_rate` DOUBLE(16, 2) NOT NULL ,
 	  `countries_seller` TEXT NOT NULL ,
 	  `countries_buyer` TEXT NOT NULL ,
-	  `fee_tax` INT( 1 ) NOT NULL DEFAULT  '0',
+	  `fee_tax` INT(1) NOT NULL DEFAULT  '0',
 	  PRIMARY KEY (`id`)
 	);";
 
@@ -1708,7 +1708,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `birthdate` int(8) default '0',
   `suspended` int(1) default '0',
   `nletter` int(1) NOT NULL default '0',
-  `balance` double NOT NULL default '0',
+  `balance` double(16,2) NOT NULL default '0',
   `auc_watch` text,
   `item_watch` text,
   `endemailmode` enum('one','cum','none') NOT NULL default 'one',
@@ -1800,7 +1800,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `auction` int(32) NOT NULL default '0',
   `seller` int(32) NOT NULL default '0',
   `winner` int(32) NOT NULL default '0',
-  `bid` double NOT NULL default '0',
+  `bid` double(16,2) NOT NULL default '0',
   `closingdate` int(15) NOT NULL default '0',
   `feedback_win` tinyint(1) NOT NULL default '0',
   `feedback_sel` tinyint(1) NOT NULL default '0',

@@ -23,7 +23,7 @@
 	<tr {fbs.ROWCOLOUR}>
 		<td>
 			<b><a href="item.php?id={fbs.ID}" target="_blank">{fbs.TITLE}</a></b><br />
-			<b>Sale Date:</b> {fbs.CLOSINGDATE}
+			<b>{L_869}:</b> {fbs.CLOSINGDATE}
 		</td>	   	
 		<td>
 			{fbs.WINORSELLNICK} , {fbs.WINORSELL} ( <a href="{ASSLURL}feedback.php?auction_id={fbs.ID}&wid={fbs.WINNER}&sid={fbs.SELLER}&ws={fbs.WS}">{L_207}</a> )

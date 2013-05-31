@@ -70,5 +70,8 @@
 - Added total sale price to buy it now page
 - Fixed not including max/min values in fee range brackets (Bug #425) (Thanks to linux4me)
 - Fixed Auction Invalid Error When Logged-in User Clicks Buy It Now (Bug #426) (Thanks to linux4me)
+- Fixed missing language string in sellbuyfeedback.tpl
+- Fixed sale date in view feedback page to show actual sale date not when the auction ends (Bug #432)
+- Changed all money instances in the database from 4 decimal places to 2 decimal places
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

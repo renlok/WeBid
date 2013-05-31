@@ -928,6 +928,7 @@ $MSG['864'] = 'Shipping Details';
 $MSG['865'] = 'Listing Details';
 $MSG['867'] = 'Pick up only';
 $MSG['868'] = ' each';
+$MSG['869'] = 'Sale Date';
 
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";

@@ -22,7 +22,7 @@ if (!$user->is_logged_in())
 	exit;
 }
 
-$query = "SELECT DISTINCT a.auction, a.seller, a.winner, a.bid, b.id, b.current_bid, b.title, a.qty, b.ends
+$query = "SELECT DISTINCT a.auction, a.seller, a.winner, a.bid, b.id, b.current_bid, b.title, a.qty, a.closingdate
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
@@ -54,7 +54,7 @@ while ($row = mysql_fetch_array($res))
 			'QTY' => ($row['qty'] == 0) ? 1 : $row['qty'],
 			'WINNER' => $row['winner'],
 			'SELLER' => $row['seller'],
-			'CLOSINGDATE' => FormatDate($row['ends']),
+			'CLOSINGDATE' => FormatDate($row['closingdate']),
 			'WS' => ($row['winner'] == $user->user_data['id']) ? 'w' : 's'
 			));
 	$k++;

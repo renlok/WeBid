@@ -48,7 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$PASS = md5($MD5_PREFIX . $_POST['password']);
 			$query = "INSERT INTO " . $DBPrefix . "adminusers VALUES
-					(NULL, '" . addslashes($_POST['username']) . "', '" . $PASS . "', '" . get_hash() . "', '" . gmdate('Ymd') . "', '0', " . intval($_POST['status']) . ")";
+					(NULL, '" . addslashes($_POST['username']) . "', '" . $PASS . "', '" . get_hash() . "', '" . gmdate('Ymd') . "', '0', " . intval($_POST['status']) . ", '')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			header('location: adminusers.php');
 			exit;

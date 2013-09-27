@@ -30,7 +30,7 @@ if (isset($_GET['js']))
 		}
 		elseif ($ext == 'js' || $ext == 'css')
 		{
-			if (is_file($val))
+			if (check_file($val) && is_file($val))
 			{
 				echo file_get_contents($val);
 				echo "\n";

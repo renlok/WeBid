@@ -66,7 +66,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 	{
 		foreach ($_POST['startnow'] as $k => $v)
 		{
-			$query = "SELECT duration FROM " . $DBPrefix . "auctions WHERE id = " . $v;
+			$query = "SELECT duration FROM " . $DBPrefix . "auctions WHERE id = " . intval($v);
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$data = mysql_fetch_assoc($res);

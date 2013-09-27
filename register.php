@@ -129,7 +129,7 @@ if ($system->SETTINGS['spam_register'] == 1)
 
 // missing check bools
 $missing = array();
-$missing['birthday'] = $missing['address'] = $missing['city'] = $missing['prov'] = $missing['country'] = $missing['zip'] = $missing['tel'] = $missing['paypal'] = $missing['authnet'] = $missing['worldpay'] = $missing['toocheckout'] = $missing['moneybookers'] = $missing['name'] = $missing['nick'] = $missing['password'] = $missing['repeat_password'] = $missing['email_missing'] = false;
+$missing['birthday'] = $missing['address'] = $missing['city'] = $missing['prov'] = $missing['country'] = $missing['zip'] = $missing['tel'] = $missing['paypal'] = $missing['authnet'] = $missing['worldpay'] = $missing['toocheckout'] = $missing['moneybookers'] = $missing['name'] = $missing['nick'] = $missing['password'] = $missing['repeat_password'] = $missing['email'] = false;
 if (isset($_POST['action']) && $_POST['action'] == 'first')
 {
 	if (!isset($_POST['terms_check']))
@@ -411,7 +411,7 @@ foreach ($countries as $key => $name)
 	}
 	$country .= '>' . $name . '</option>' . "\n";
 }
-$dobclass = ($birthday_missing) ? ' class="missing"' : '';
+$dobclass = ($missing['birthday']) ? ' class="missing"' : '';
 $dobmonth = '<select name="TPL_month"' . $dobclass . '>
 		<option value="00"></option>
 		<option value="01"' . ((isset($_POST['TPL_month']) && $_POST['TPL_month'] == '01') ? ' selected' : '') . '>' . $MSG['MON_001E'] . '</option>

@@ -27,7 +27,6 @@ $from_date = isset($_GET['from_date']) ? $_GET['from_date'] : 0;
 $to_date = isset($_GET['to_date']) ? $_GET['to_date'] : 0;
 $username = isset($_GET['username']) ? $_GET['username'] : '';
 $searchuser = (isset($_GET['username']) && !empty($_GET['username'])) ? true : false;
-$date = date('Y-m');
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)
 {

@@ -452,7 +452,7 @@ class Securimage {
 	{
 		global $system, $MSG;
 		return '
-<div style="width: 550px; display:block; margin-left:auto; margin-right:auto; margin-top:15px;">
+<div style="width: 550px; display:block; margin-left:333px; margin-right:auto; margin-top:15px;">
 	<div style="width: 120px; float: left; height: 55px;  display:block;">' . $MSG['757'] . ':</div> 
 	<div style="width: 430px; float: left; height: 55px; display: block;"> 
 		<img id="siimage" align="left" style="padding-right: 5px; border: 0" src="' . $system->SETTINGS['siteurl'] . 'captcha.php?sid=' . md5(uniqid(time())) . '" /> 

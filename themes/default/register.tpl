@@ -133,11 +133,11 @@
         <!-- ENDIF -->
 				</table>
 
-				<div class="padding">
-					<h2>{L_719}</h2>
-				</div>
-
 				<table width="90%" border="0" cellpadding="4" cellspacing="0">
+				<tr>
+					<td width="40%" valign="top" align="right"></td>
+					<td width="60%" ><h2>{L_719}</h2></td>
+				</tr>
 				<!-- IF B_PAYPAL -->
 					<tr>
 						<td align="right" width="30%">{L_720}{REQUIRED(7)}</td>

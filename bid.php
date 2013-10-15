@@ -264,18 +264,15 @@ if (isset($_POST['action']) && !isset($errmsg))
 			$system->check_mysql($result, $query, __LINE__, __FILE__);
 			if (mysql_num_rows($result) == 0) // First bid
 			{
-				if ($next_bid < $bid)
-				{
-					$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (" . intval($id) . "," . intval($bidder_id) . "," . floatval($bid) . ")";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				}
+				$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (" . intval($id) . "," . intval($bidder_id) . "," . floatval($bid) . ")";
+				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 				if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve)
 				{
 					$next_bid = $reserve;
 				}
 				// Only updates current bid if it is a new bidder, not the current one
-				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = $next_bid, num_bids = num_bids + 1 WHERE id = " . $id;
+				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = " . $next_bid . ", num_bids = num_bids + 1 WHERE id = " . $id;
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				// Also update bids table
 				$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, " . $id . ", " . $bidder_id . ", " . floatval($next_bid) . ", '" . $NOW . "', " . $qty . ")";

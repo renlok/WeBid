@@ -63,17 +63,25 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $user_data = mysql_fetch_assoc($res);
 
-$birth_day = substr($user_data['birthdate'], 6, 2);
-$birth_month = substr($user_data['birthdate'], 4, 2);
-$birth_year = substr($user_data['birthdate'], 0, 4);
-
-if ($system->SETTINGS['datesformat'] == 'USA')
+// create tidy DOB string
+if ($user_data['birthdate'] == 0)
 {
-	$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
+	$birthdate = '';
 }
 else
 {
-	$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
+	$birth_day = substr($user_data['birthdate'], 6, 2);
+	$birth_month = substr($user_data['birthdate'], 4, 2);
+	$birth_year = substr($user_data['birthdate'], 0, 4);
+
+	if ($system->SETTINGS['datesformat'] == 'USA')
+	{
+		$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
+	}
+	else
+	{
+		$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
+	}
 }
 
 $mode = 'activate';

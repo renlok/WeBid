@@ -1666,6 +1666,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('n', 'y', 'y', 
 # Table structure for table `" . $DBPrefix . "tax`
 # 
 
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "tax`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
 	  `id` INT(2) NOT NULL AUTO_INCREMENT,
 	  `tax_name` VARCHAR(30) NOT NULL ,

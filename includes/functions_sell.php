@@ -73,8 +73,15 @@ function setvars()
 	$is_bold = (isset($_POST['is_bold'])) ? 'y' : $_SESSION['SELL_is_bold'];
 	$is_featured = (isset($_POST['is_featured'])) ? 'y' : $_SESSION['SELL_is_featured'];
 	$is_highlighted = (isset($_POST['is_highlighted'])) ? 'y' : $_SESSION['SELL_is_highlighted'];
-	$start_now = (isset($_POST['start_now'])) ? $_POST['start_now'] : '';
-	$start_now = (isset($_SESSION['SELL_start_now']) && (!isset($_POST['action']) || $_POST['action'] != 2)) ? $_SESSION['SELL_start_now'] : $start_now;
+	if (isset($_POST['a_starts'])) {
+		if (isset($_POST['start_now'])) {
+			$start_now = 1;
+		} else {
+			$start_now = 0;
+		}
+	} else {
+		$start_now = $_SESSION['SELL_start_now'];
+	}
 	$is_taxed = (isset($_POST['is_taxed'])) ? 'y' : $_SESSION['SELL_is_taxed'];
 	$tax_included = (isset($_POST['tax_included'])) ? 'y' : $_SESSION['SELL_tax_included'];
 	if (isset($_POST['action']) && $_POST['action'] == 2)

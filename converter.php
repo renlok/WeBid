@@ -21,9 +21,9 @@ $conversion = '&nbsp;';
 if (isset($_POST['action']) && $_POST['action'] == 'convert')
 {
 	// Convert
-	$from = $_POST['from'];
-	$to = $_POST['to'];
-	$amount = $_POST['amount'];
+	$from = is_numeric($_POST['from']) ? $_POST['from'] : 0;
+	$to = is_numeric($_POST['to']) ? $_POST['to'] : 0;
+	$amount = is_numeric($_POST['amount']) ? $_POST['amount'] : 0;
 	$conversion = ConvertCurrency($from, $to, $amount);
 	// construct string
 	$conversion = $system->print_money_nosymbol($amount) . ' ' . $CURRENCIES[$from] . ' = ' . $system->print_money_nosymbol($conversion, true) . ' |' . $CURRENCIES[$to];

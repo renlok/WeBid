@@ -30,10 +30,10 @@ if (isset($_GET['fail']) || isset($_GET['completed']))
 }
 
 $fees = new fees;
+$fees->data = $_POST;
 
 if (isset($_GET['paypal']))
 {
-	$fees->data = $_POST;
 	$fees->paypal_validate();
 }
 if (isset($_GET['authnet']))

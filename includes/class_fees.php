@@ -73,12 +73,12 @@ class fees
 
 	function paypal_validate()
 	{
-		global $system, $_POST;
+		global $system;
 
 		$sandbox = false; // set to true to enabled sandbox mode
 		// we ensure that the txn_id (transaction ID) contains only ASCII chars...
-		$pos = strspn($_POST['txn_id'], $this->ASCII_RANGE);
-		$len = strlen($_POST['txn_id']);
+		$pos = strspn($this->data['txn_id'], $this->ASCII_RANGE);
+		$len = strlen($this->data['txn_id']);
 
 		if ($pos != $len)
 		{
@@ -146,9 +146,9 @@ class fees
 		else
 		{
 			// Assign posted variables to local variables
-			$payment_status = $_POST['payment_status'];
-			$payment_amount = $_POST['mc_gross'];
-			list($custom_id, $fee_type) = explode('WEBID', $_POST['custom']);
+			$payment_status = $this->data['payment_status'];
+			$payment_amount = floatval ($this->data['mc_gross']);
+			list($custom_id, $fee_type) = explode('WEBID', $this->data['custom']);
 
 			fputs ($fp, $header . $req);
 
@@ -178,13 +178,13 @@ class fees
 
 	function authnet_validate()
 	{
-		global $system, $_POST;
+		global $system;
 
-		$payment_amount = $_POST['x_amount'];
+		$payment_amount = floatval ($this->data['x_amount']);
 
-		list($custom_id, $fee_type) = explode('WEBID', $_POST['custom']);
+		list($custom_id, $fee_type) = explode('WEBID', $this->data['custom']);
 
-		if ($_POST['x_response_code'] == 1)
+		if ($this->data['x_response_code'] == 1)
 		{
 			$this->callback_process($custom_id, $fee_type, $payment_amount);
 			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?completed';
@@ -200,13 +200,13 @@ class fees
 
 	function worldpay_validate()
 	{
-		global $system, $_POST;
+		global $system;
 
-		$payment_amount = $_POST['amount'];
+		$payment_amount = floatval ($this->data['amount']);
 
-		list($custom_id, $fee_type) = explode('WEBID',$_POST['cartId']);
+		list($custom_id, $fee_type) = explode('WEBID',$this->data['cartId']);
 
-		if ($_POST['transStatus'] == 'Y')
+		if ($this->data['transStatus'] == 'Y')
 		{
 			$this->callback_process($custom_id, $fee_type, $payment_amount);
 			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?completed';
@@ -222,13 +222,13 @@ class fees
 
 	function moneybookers_validate()
 	{
-		global $system, $_POST;
+		global $system;
 
-		$payment_amount = $_POST['amount'];
+		$payment_amount = floatval ($this->data['amount']);
 
-		list($custom_id, $fee_type) = explode('WEBID',$_POST['trans_id']);
+		list($custom_id, $fee_type) = explode('WEBID',$this->data['trans_id']);
 
-		if ($_POST['status'] == 2)
+		if ($this->data['status'] == 2)
 		{
 			$this->callback_process($custom_id, $fee_type, $payment_amount);
 			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?completed';
@@ -244,13 +244,13 @@ class fees
 
 	function toocheckout_validate()
 	{
-		global $system, $_POST;
+		global $system;
 
-		$payment_amount = $_POST['total'];
+		$payment_amount = floatval ($this->data['total']);
 
-		list($custom_id, $fee_type) = explode('WEBID',$_POST['cart_order_id']);
+		list($custom_id, $fee_type) = explode('WEBID',$this->data['cart_order_id']);
 
-		if ($_POST['cart_order_id'] != '' && $_POST['credit_card_processed'] == 'Y')
+		if ($this->data['cart_order_id'] != '' && $this->data['credit_card_processed'] == 'Y')
 		{
 			$this->callback_process($custom_id, $fee_type, $payment_amount);
 			$redirect_url = $system->SETTINGS['siteurl'] . 'validate.php?completed';

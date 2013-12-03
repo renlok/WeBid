@@ -69,7 +69,7 @@ if (isset($_POST['action']))
 					$_SESSION['WEBID_ADMIN_PASS'] = $password;
 					$_SESSION['WEBID_ADMIN_IN'] = $admin['id'];
 					$_SESSION['WEBID_ADMIN_USER'] = $_POST['username'];
-					$_SESSION['WEBID_ADMIN_TIME'] = time();
+					$_SESSION['WEBID_ADMIN_TIME'] = time() + (($system->SETTINGS['timecorrection'] + gmdate('I')) * 3600);
 					// Update last login information for this user
 					$query = "UPDATE " . $DBPrefix . "adminusers SET lastlogin = '" . time() . "' WHERE id = " . $admin['id'];
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

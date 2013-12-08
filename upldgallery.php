@@ -101,6 +101,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img'])
 if (isset($_GET['action']) && $_GET['action'] == 'makedefault')
 {
 	$cropdefault = true;
+	$image = $_GET['img'];
 	$_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $_GET['img'];
 }
 

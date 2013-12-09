@@ -15,11 +15,18 @@
 
 include 'common.php';
 
+if (!$user->is_logged_in())
+{
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourbids.php';
+	header('location: user_login.php');
+	exit;
+}
+
 // get active bids for this user
 $query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid, b.quantity FROM " . $DBPrefix . "bids b
 		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
 		WHERE a.closed = 0 AND b.bidder = " . $user->user_data['id'] . "
-		AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bidwhen DESC";
+		AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bid DESC";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 

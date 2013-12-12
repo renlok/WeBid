@@ -72,7 +72,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 			// send a copy to their mesasge box
 			$nowmessage = nl2br($system->cleanvars($message));
 			$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject)
-					VALUES (" . $user_id . ", " . $user->user_data['id'] . ", '" . time() . "', '" . mysql_real_escape_string($nowmessage) . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "')";
+					VALUES (" . $user_id . ", " . $user->user_data['id'] . ", '" . time() . "', '" . mysql_real_escape_string($nowmessage) . "', '" . mysql_real_escape_string($system->cleanvars(sprintf($MSG['651'], $item_title))) . "')";
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$sent = true;
 		}

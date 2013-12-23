@@ -64,6 +64,7 @@ $query = "SELECT * FROM " . $DBPrefix . "auctions
 		AND closed = 0
 		AND starts <= :time
 		ORDER BY ends ASC LIMIT :offset, :perpage";
+$params = array();
 $params[] = array(':user_id', $user_id, 'int');
 $params[] = array(':time', $NOW, 'int');
 $params[] = array(':offset', $OFFSET, 'int');

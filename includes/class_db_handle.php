@@ -109,6 +109,30 @@ class db_handle
 		}
 	}
 
+	// put together the quert ready for running + get all results
+	public function fetchall($method = 'FETCH_ASSOC')
+	{
+		try {
+			// set fetchquery
+			if ($this->fetchquery == NULL)
+			{
+				$this->fetchquery = $this->lastquery;
+			}
+			if ($method == 'FETCH_ASSOC') $result = $this->fetchquery->fetchAll(PDO::FETCH_ASSOC);
+			if ($method == 'FETCH_BOTH') $result = $this->fetchquery->fetchAll(PDO::FETCH_BOTH);
+			if ($method == 'FETCH_NUM') $result = $this->fetchquery->fetchAll(PDO::FETCH_NUM);
+			// clear fetch query
+			if ($result == false)
+			{
+				$this->fetchquery = NULL;
+			}
+			return $result;
+		}
+		catch(PDOException $e) {
+			$this->error_handler($e->getMessage());
+		}
+	}
+
 	public function result($column = NULL)
 	{
 		$data = $this->lastquery->fetch(PDO::FETCH_BOTH);
@@ -175,7 +199,8 @@ class db_handle
 		$PDO_constants = array(
 			'int' => PDO::PARAM_INT,
 			'str' => PDO::PARAM_STR,
-			'bool' => PDO::PARAM_BOOL
+			'bool' => PDO::PARAM_BOOL,
+			'float' => PDO::PARAM_STR
 			);
 		// set PDO values to params
 		for ($i = 0; $i < count($params); $i++)

@@ -380,4 +380,11 @@ function alphanumeric($str)
 	$str = preg_replace("/[^a-zA-Z0-9\s]/", '', $str);
 	return $str;
 }
+
+// this is a stupid way of doing things these need to be changed to bools
+function ynbool($str)
+{
+	$str = preg_replace("/[^yn]/", '', $str);
+	return $str;
+}
 ?>

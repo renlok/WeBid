@@ -118,24 +118,19 @@ switch ($_SESSION['action'])
 			// insert auction
 			$query = addauction();
 			if ($_SESSION['SELL_action'] == 'edit')
-				$query = updateauction(1);
+				updateauction(1);
 			if ($_SESSION['SELL_action'] == 'relist')
 			{
 				remove_bids($_SESSION['SELL_auction_id']); // incase they've not already been removed
-				$query = updateauction(2);
+				updateauction(2);
 			}
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			if ($_SESSION['SELL_action'] == 'edit' || $_SESSION['SELL_action'] == 'relist')
 			{
 				$auction_id = $_SESSION['SELL_auction_id'];
 			}
 			else
 			{
-				$query = "SELECT LAST_INSERT_ID() as id";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$auction_id = mysql_result($res, 0, 'id');
+				$auction_id = $db->lastInsertId();
 				$_SESSION['SELL_auction_id'] = $auction_id;
 			}
 
@@ -153,26 +148,31 @@ switch ($_SESSION['action'])
 				// deal with the auction
 				if ($system->SETTINGS['fee_type'] == 2 && $fee > 0)
 				{
-					$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = " . $auction_id;
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 9 WHERE id = :auction_id";
+					$params = array();
+					$params[] = array(':auction_id', $auction_id, 'int');
+					$db->query($query, $params);
 					$addcounter = false;
 				}
 				else
 				{
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee . " WHERE id = " . $user->user_data['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee WHERE id = :user_id";
+					$params = array();
+					$params[] = array(':fee', $fee, 'float');
+					$params[] = array(':user_id', $user->user_data['id'], 'int');
+					$db->query($query, $params);
 				}
 			}
 
 			if ($addcounter && $_SESSION['SELL_action'] != 'edit')
 			{
 				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$db->direct_query($query);
 			}
 			elseif (!$addcounter && $_SESSION['SELL_action'] == 'edit')
 			{
 				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions - 1";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$db->direct_query($query);
 			}
 
 			if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit')
@@ -244,11 +244,12 @@ switch ($_SESSION['action'])
 			if (!isset($_SESSION['SELL_action']) || empty($_SESSION['SELL_action']))
 			{
 				// Send notification if users keyword matches (Auction Watch)
-				$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != '' AND id != " . $user->user_data['id'];
-				$result = mysql_query($query);
-				$system->check_mysql($result, $query, __LINE__, __FILE__);
+				$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != '' AND id != :user_id";
+				$params = array();
+				$params[] = array(':user_id', $user->user_data['id'], 'int');
+				$db->query($query, $params);
 				$sent_to = array();
-				while ($row = mysql_fetch_assoc($result))
+				while ($row = $db->fetch())
 				{
 					if (isset($match)) unset($match);
 					$w_title = explode(' ', strtolower($_SESSION['SELL_title']));
@@ -284,28 +285,34 @@ switch ($_SESSION['action'])
 				}
 				if ($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
 				{
-					$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions
-						 WHERE closed = 0 AND suspended = 0 AND user = " . $user->user_data['id'];
-					$result = mysql_query($query);
-					$system->check_mysql($result, $query, __LINE__, __FILE__);
-					$totalaucs = mysql_result($result, 0);
+					$query = "SELECT COUNT(*) as count FROM " . $DBPrefix . "auctions
+						 WHERE closed = 0 AND suspended = 0 AND user = :user_id";
+					$params = array();
+					$params[] = array(':user_id', $user->user_data['id'], 'int');
+					$db->query($query, $params);
+					$totalaucs = $db->result('count');
 					if ($totalaucs > 0)
 					{
-						$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions
-							 WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = " . $user->user_data['id'];
-						$result = mysql_query($query);
-						$system->check_mysql($result, $query, __LINE__, __FILE__);
-						$totalbnaucs = mysql_result($result, 0);
+						$query = "SELECT COUNT(*) as count FROM " . $DBPrefix . "auctions
+							 WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = :user_id";
+						$params = array();
+						$params[] = array(':user_id', $user->user_data['id'], 'int');
+						$db->query($query, $params);
+						$totalbnaucs = $db->result('count');
 						$percent = ($totalbnaucs * 100) / $totalaucs;
 						if ($user->user_data['bn_only'] == 'y' && $system->SETTINGS['bn_only_percent'] <= $percent)
 						{
-							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'n' WHERE id = " . $user->user_data['id'];
-							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'n' WHERE id = :user_id";
+							$params = array();
+							$params[] = array(':user_id', $user->user_data['id'], 'int');
+							$db->query($query, $params);
 						}
 						if ($user->user_data['bn_only'] == 'n' && $system->SETTINGS['bn_only_percent'] > $percent)
 						{
-							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE id = " . $user->user_data['id'];
-							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE id = :user_id";
+							$params = array();
+							$params[] = array(':user_id', $user->user_data['id'], 'int');
+							$db->query($query, $params);
 						}
 					}
 				}
@@ -360,9 +367,8 @@ switch ($_SESSION['action'])
 			// payment methods
 			$payment_methods = '';
 			$query = "SELECT * FROM " . $DBPrefix . "gateways";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$gateways_data = mysql_fetch_assoc($res);
+			$db->direct_query($query);
+			$gateways_data = $db->fetchall();
 			$gateway_list = explode(',', $gateways_data['gateways']);
 			foreach ($gateway_list as $v)
 			{
@@ -386,9 +392,11 @@ switch ($_SESSION['action'])
 			$category_string1 = get_category_string($sellcat1);
 			$category_string2 = get_category_string($sellcat2);
 
-			$query = "SELECT description FROM " . $DBPrefix . "durations WHERE days = " . $duration;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$query = "SELECT description FROM " . $DBPrefix . "durations WHERE days = :duration";
+			$params = array();
+			$params[] = array(':duration', $duration, 'int');
+			$db->query($query, $params);
+			$duration_desc = $db->result('description');
 			// built gallery
 			if ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0)
 			{
@@ -436,7 +444,7 @@ switch ($_SESSION['action'])
 					'SHIPPING_COST' => $system->print_money($shipping_cost, false),
 					'ADDITIONAL_SHIPPING_COST' => $system->print_money($additional_shipping_cost, false),
 					'STARTDATE' => (empty($start_now)) ? FormatDate($a_starts) : FormatDate($system->ctime),
-					'DURATION' => mysql_result($res, 0, 'description'),
+					'DURATION' => $duration_desc,
 					'INCREMENTS' => ($increments == 1) ? $MSG['614'] : $system->print_money($customincrement, false),
 					'ATYPE' => $system->SETTINGS['auction_types'][$atype],
 					'ATYPE_PLAIN' => $atype,
@@ -472,11 +480,12 @@ switch ($_SESSION['action'])
 
 		// duration
 		$time_passed = ($_SESSION['SELL_action'] != 'edit') ? 0 : (time() - $a_starts) / (3600 * 24); // get time passed in days
-		$query = "SELECT * FROM " . $DBPrefix . "durations WHERE days > " . floor($time_passed) . " ORDER BY days";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "SELECT * FROM " . $DBPrefix . "durations WHERE days > :days ORDER BY days";
+		$params = array();
+		$params[] = array(':days', floor($time_passed), 'int');
+		$db->query($query, $params);
 		$TPL_durations_list = '<select name="duration">' . "\n";
-		while ($row = mysql_fetch_assoc($res))
+		while ($row = $db->fetch())
 		{
 			$selected = ($row['days'] == $duration) ? 'selected="true"' : '';
 			$TPL_durations_list .= "\t" . '<option value="' . $row['days'] . '" ' . $selected . '>' . $row['description'] . '</option>' . "\n";
@@ -487,10 +496,11 @@ switch ($_SESSION['action'])
 		$can_tax = false;
 		if (!empty($user->user_data['country']))
 		{
-			$query = "SELECT id FROM " . $DBPrefix . "tax WHERE countries_seller LIKE '" . $user->user_data['country'] . "'";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0)
+			$query = "SELECT id FROM " . $DBPrefix . "tax WHERE countries_seller LIKE :country";
+			$params = array();
+			$params[] = array(':country', $user->user_data['country'], 'str');
+			$db->query($query, $params);
+			if ($db->numrows() > 0)
 			{
 				$can_tax = true;
 			}
@@ -499,9 +509,8 @@ switch ($_SESSION['action'])
 		// payments
 		$payment_methods = '';
 		$query = "SELECT * FROM " . $DBPrefix . "gateways";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$gateways_data = mysql_fetch_assoc($res);
+		$db->direct_query($query);
+		$gateways_data = $db->fetchall();
 		$gateway_list = explode(',', $gateways_data['gateways']);
 		foreach ($gateway_list as $v)
 		{
@@ -554,9 +563,6 @@ switch ($_SESSION['action'])
 		$CKEditor->returnOutput = true;
 
 		// build the fees javascript
-		$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type, fee_from ASC";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
 		$fees = array( //0 = single value, 1 = staged fees
 			'setup' => 1,
 			'hpfeat_fee' => 0,
@@ -571,7 +577,9 @@ switch ($_SESSION['action'])
 		$feevarsset = array();
 		$fee_javascript = '';
 		$relist_fee = $subtitle_fee = $fee_rp = $fee_bn = $fee_min_bid = 0;
-		while ($row = mysql_fetch_assoc($res))
+		$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY type, fee_from ASC";
+		$db->direct_query($query);
+		while ($row = $db->fetch())
 		{
 			if (isset($fees[$row['type']]) && $fees[$row['type']] == 0)
 				$fee_javascript .= 'var ' . $row['type'] . ' = ' . $row['value'] . ';' . "\n";

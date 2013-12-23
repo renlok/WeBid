@@ -227,7 +227,7 @@ if ($system->SETTINGS['newsbox'] == 1)
 		$template->assign_block_vars('newsbox', array(
 				'ID' => $new['id'],
 				'DATE' => FormatDate($new['new_date']),
-				'TITLE' => (!empty($new['title'])) ? $new['title'] : $new['t']
+				'TITLE' => (!empty($new['title'])) ? $system->uncleanvars($new['title']) : $system->uncleanvars($new['t'])
 				));
 	}
 }

@@ -15,14 +15,13 @@
 include 'common.php';
 
 $query = "SELECT id, title FROM " . $DBPrefix . "news WHERE suspended = 0 ORDER BY new_date";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
-while ($new = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('news', array(
-			'TITLE' => stripslashes($new['title']),
-			'ID' => $new['id']
+			'TITLE' => $system->uncleanvars($row['title']),
+			'ID' => $row['id']
 			));
 }
 

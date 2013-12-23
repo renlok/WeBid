@@ -27,13 +27,13 @@ if ($id > 0)
 	$new = mysql_fetch_array($res);
 	if (!empty($new['title']) && !empty($new['content']))
 	{
-		$title = stripslashes($new['title']);
-		$content = stripslashes($new['content']);
+		$title = $system->uncleanvars($new['title']);
+		$content = $system->uncleanvars($new['content']);
 	}
 	else
 	{
-		$title = stripslashes($new['t']);
-		$content = stripslashes($new['c']);
+		$title = $system->uncleanvars($new['t']);
+		$content = $system->uncleanvars($new['c']);
 	}
 	$template->assign_block_vars('news', array(
 			'CONT' => nl2br($content)
@@ -52,11 +52,11 @@ else
 	{
 		if (!empty($row['title']))
 		{
-			$title = stripslashes($row['title']);
+			$title = $system->uncleanvars($row['title']);
 		}
 		else
 		{
-			$title = stripslashes($row['t']);
+			$title = $system->uncleanvars($row['t']);
 		}
 		$template->assign_block_vars('list', array(
 				'TITLE' => $title,
@@ -67,7 +67,7 @@ else
 }
 
 $template->assign_vars(array(
-		'TITLE' => ($id > 0) ? stripslashes($new['title']) . ' ' . FormatDate($new['new_date']) : $MSG['282']
+		'TITLE' => ($id > 0) ? $title . ' ' . FormatDate($new['new_date']) : $MSG['282']
 		));
 
 include 'header.php';

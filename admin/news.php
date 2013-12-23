@@ -40,25 +40,25 @@ $_SESSION['RETURN_LIST'] = 'news.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(id) As news FROM " . $DBPrefix . "news";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$new_count = mysql_result($res, 0);
+$db->direct_query($query);
+$new_count = $db->result('news');
 $PAGES = ($new_count == 0) ? 1 : ceil($new_count / $system->SETTINGS['perpage']);
 
-$query = "SELECT * FROM " . $DBPrefix . "news ORDER BY new_date LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$bg = '';
-while ($row = mysql_fetch_assoc($res))
+$query = "SELECT * FROM " . $DBPrefix . "news ORDER BY new_date LIMIT :offset, :perpage";
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
+$k = 0;
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('news', array(
 			'ID' => $row['id'],
-			'TITLE' => $row['title'],
+			'TITLE' => $system->uncleanvars($row['title']),
 			'DATE' => FormatDate($row['new_date']),
 			'SUSPENDED' => $row['suspended'],
-			'BG' => $bg
+			'BG' => (!($k % 2)) ? '' : 'class="bg"'
 			));
-	$bg = ($bg == '') ? 'class="bg"' : '';
+	$k++;
 }
 
 // get pagenation
@@ -92,5 +92,4 @@ $template->set_filenames(array(
 		'body' => 'news.tpl'
 		));
 $template->display('body');
-
 ?>

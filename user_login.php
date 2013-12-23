@@ -85,7 +85,7 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 			// delete your old session
 			if (isset($_COOKIE['WEBID_ONLINE']))
 			{
-				$query = "DELETE from " . $DBPrefix . "online WHERE SESSION = '" . strip_non_an_chars($_COOKIE['WEBID_ONLINE']) . "'";
+				$query = "DELETE from " . $DBPrefix . "online WHERE SESSION = '" . alphanumeric($_COOKIE['WEBID_ONLINE']) . "'";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			}
 

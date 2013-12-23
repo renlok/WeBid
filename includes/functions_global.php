@@ -320,7 +320,7 @@ function load_counters()
 			}
 			else
 			{
-				$s = strip_non_an_chars($_COOKIE['WEBID_ONLINE']);
+				$s = alphanumeric($_COOKIE['WEBID_ONLINE']);
 				setcookie('WEBID_ONLINE', $s, time() + 900);
 			}
 		}
@@ -375,7 +375,7 @@ function _in_array($needle, $haystack)
 }
 
 // strip none alpha-numeric characters
-function strip_non_an_chars($str)
+function alphanumeric($str)
 {
 	$str = preg_replace("/[^a-zA-Z0-9\s]/", '', $str);
 	return $str;

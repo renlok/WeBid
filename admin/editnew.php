@@ -45,30 +45,30 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 		$news_id = intval($_POST['id']);
 		$query = "UPDATE " . $DBPrefix . "news SET
-				title = '" . mysql_real_escape_string($_POST['title'][$system->SETTINGS['defaultlanguage']]) . "',
-				content='" . mysql_real_escape_string($_POST['content'][$system->SETTINGS['defaultlanguage']]) . "',
+				title = '" . $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]) . "',
+				content='" . $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']]) . "',
 				suspended=" . intval($_POST['suspended']) . "
 				WHERE id = " . $news_id;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
 		foreach ($LANGUAGES as $k => $v)
 		{
-			$query = "SELECT id FROM " . $DBPrefix . "news_translated WHERE lang='" . $k . "' AND id = " . $news_id;
+			$query = "SELECT id FROM " . $DBPrefix . "news_translated WHERE lang = '" . $k . "' AND id = " . $news_id;
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 			if (mysql_num_rows($res) > 0)
 			{
 				$query = "UPDATE " . $DBPrefix . "news_translated SET 
-						title = '" . mysql_real_escape_string($_POST['title'][$k]) . "',
-						content = '" . mysql_real_escape_string($_POST['content'][$k]) . "'
+						title = '" . $system->cleanvars($_POST['title'][$k]) . "',
+						content = '" . $system->cleanvars($_POST['content'][$k]) . "'
 						WHERE  lang = '" . $k . "' AND id = " . $news_id;
 			}
 			else
 			{
 				$query = "INSERT INTO " . $DBPrefix . "news_translated VALUES
-						(" . $news_id . ", '" . $k . "', '" . mysql_real_escape_string($_POST['title'][$k]) . "',
-						'" . mysql_real_escape_string($_POST['content'][$k]) . "')";
+						(" . $news_id . ", '" . $k . "', '" . $system->cleanvars($_POST['title'][$k]) . "',
+						'" . $system->cleanvars($_POST['content'][$k]) . "')";
 			}
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}
@@ -90,8 +90,8 @@ while ($arr = mysql_fetch_assoc($res))
 	$suspended = $arr['suspended'];
 	$template->assign_block_vars('lang', array(
 			'LANG' => $arr['lang'],
-			'TITLE' => $arr['title'],
-			'CONTENT' => $arr['content']
+			'TITLE' => $system->uncleanvars($arr['title']),
+			'CONTENT' => $system->uncleanvars($arr['content'])
 			));
 }
 

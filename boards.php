@@ -28,16 +28,14 @@ if (!$user->is_logged_in())
 
 // Retrieve message boards from the database
 $query = "SELECT * FROM " . $DBPrefix . "community WHERE active = 1 ORDER BY name";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-
-while ($board = mysql_fetch_array($res))
+$db->direct_query($query);
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('boards', array(
-			'NAME' => $board['name'],
-			'ID' => $board['id'],
-			'NUMMSG' => $board['messages'],
-			'LASTMSG' => (!empty($board['lastmessage'])) ? FormatDate($board['lastmessage']) : '--'
+			'NAME' => $row['name'],
+			'ID' => $row['id'],
+			'NUMMSG' => $row['messages'],
+			'LASTMSG' => (!empty($row['lastmessage'])) ? FormatDate($row['lastmessage']) : '--'
 			));
 }
 

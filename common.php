@@ -66,20 +66,22 @@ $system->SETTINGS['auction_types'] = array (
 // Atuomatically login user is necessary "Remember me" option
 if (!$user->logged_in && isset($_COOKIE['WEBID_RM_ID']))
 {
-	$query = "SELECT userid FROM " . $DBPrefix . "rememberme WHERE hashkey = '" . mysql_escape_string($_COOKIE['WEBID_RM_ID']) . "'";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) > 0)
+	$query = "SELECT userid FROM " . $DBPrefix . "rememberme WHERE hashkey = :RM_ID";
+	$params = array();
+	$params[] = array(':RM_ID', alphanumeric($_COOKIE['WEBID_RM_ID']), 'str');
+	$db->query($query, $params);
+	if ($db->numrows() > 0)
 	{
 		// generate a random unguessable token
 		$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
 		$id = mysql_result($res, 0, 'userid');
-		$query = "SELECT hash, password FROM " . $DBPrefix . "users WHERE id = " . $id;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$password = mysql_result($res, 0, 'password');
+		$query = "SELECT hash, password FROM " . $DBPrefix . "users WHERE id = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $id, 'int');
+		$db->query($query, $params);
+		$password = $db->result('password');
 		$_SESSION['WEBID_LOGGED_IN'] 		= $id;
-		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, mysql_result($res, 0, 'hash'));
+		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $db->result('hash'));
 		$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
 	}
 }

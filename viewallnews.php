@@ -20,7 +20,7 @@ $db->direct_query($query);
 while ($row = $db->fetch())
 {
 	$template->assign_block_vars('news', array(
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => $row['title'],
 			'ID' => $row['id']
 			));
 }

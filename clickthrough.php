@@ -15,14 +15,17 @@
 include 'common.php';
 
 // Handle banners clickthrough
-$query = "SELECT url FROM " . $DBPrefix . "banners WHERE id = " . intval($_GET['banner']);
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$URL = mysql_result($res, 0);
+$query = "SELECT url FROM " . $DBPrefix . "banners WHERE id = :banner_id";
+$params = array();
+$params[] = array(':banner_id', $_GET['banner'], 'int');
+$db->query($query, $params);
+$URL = $db->result('url');
 
 // Update clickthrough counter in the database
-$query = "UPDATE " . $DBPrefix . "banners set clicks = clicks + 1 WHERE id = " . intval($_GET['banner']);
-$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+$query = "UPDATE " . $DBPrefix . "banners set clicks = clicks + 1 WHERE id = :banner_id";
+$params = array();
+$params[] = array(':banner_id', $_GET['banner'], 'int');
+$db->query($query, $params);
 
 // Redirect
 header('location: ' . $URL);

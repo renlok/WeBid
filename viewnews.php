@@ -27,13 +27,13 @@ if ($id > 0)
 	$new = mysql_fetch_array($res);
 	if (!empty($new['title']) && !empty($new['content']))
 	{
-		$title = $system->uncleanvars($new['title']);
-		$content = $system->uncleanvars($new['content']);
+		$title = $new['title'];
+		$content = $new['content'];
 	}
 	else
 	{
-		$title = $system->uncleanvars($new['t']);
-		$content = $system->uncleanvars($new['c']);
+		$title = $new['t'];
+		$content = $new['c'];
 	}
 	$template->assign_block_vars('news', array(
 			'CONT' => nl2br($content)
@@ -52,11 +52,11 @@ else
 	{
 		if (!empty($row['title']))
 		{
-			$title = $system->uncleanvars($row['title']);
+			$title = $row['title'];
 		}
 		else
 		{
-			$title = $system->uncleanvars($row['t']);
+			$title = $row['t'];
 		}
 		$template->assign_block_vars('list', array(
 				'TITLE' => $title,

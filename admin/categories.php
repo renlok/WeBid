@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -85,7 +85,7 @@ if (isset($_POST['action']))
 				if (!isset($_POST['delete'][$k]))
 				{
 					$query = "UPDATE " . $DBPrefix . "categories SET cat_name = '" . $system->cleanvars($_POST['categories'][$k]) . "',
-							cat_colour = '" . mysql_escape_string($_POST['colour'][$k]) . "', cat_image = '" . mysql_escape_string($_POST['image'][$k]) . "'
+							cat_colour = '" . mysql_real_escape_string($_POST['colour'][$k]) . "', cat_image = '" . mysql_real_escape_string($_POST['image'][$k]) . "'
 							WHERE cat_id = " . intval($k);
 					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 				}

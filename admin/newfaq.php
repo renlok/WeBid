@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -31,8 +31,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$query = "INSERT INTO " . $DBPrefix . "faqs values (NULL,
-			   '" . mysql_escape_string($_POST['question'][$system->SETTINGS['defaultlanguage']]) . "',
-			   '" . mysql_escape_string($_POST['answer'][$system->SETTINGS['defaultlanguage']]) . "',
+			   '" . mysql_real_escape_string($_POST['question'][$system->SETTINGS['defaultlanguage']]) . "',
+			   '" . mysql_real_escape_string($_POST['answer'][$system->SETTINGS['defaultlanguage']]) . "',
 			   " . $_POST['category'] . ")";
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
@@ -44,8 +44,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$query = "INSERT INTO ".$DBPrefix."faqs_translated VALUES (
 					" . $id . ",
 					'" . $k . "',
-					'" . mysql_escape_string($_POST['question'][$k]) . "',
-					'" . mysql_escape_string($_POST['answer'][$k]) . "')";
+					'" . mysql_real_escape_string($_POST['question'][$k]) . "',
+					'" . mysql_real_escape_string($_POST['answer'][$k]) . "')";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 		}

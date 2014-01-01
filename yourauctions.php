@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -97,8 +97,8 @@ if (!isset($_SESSION['oa_ord']) && empty($_GET['oa_ord']))
 }
 elseif (!empty($_GET['oa_ord']))
 {
-	$_SESSION['oa_ord'] = mysql_escape_string($_GET['oa_ord']);
-	$_SESSION['oa_type'] = mysql_escape_string($_GET['oa_type']);
+	$_SESSION['oa_ord'] = mysql_real_escape_string($_GET['oa_ord']);
+	$_SESSION['oa_type'] = mysql_real_escape_string($_GET['oa_type']);
 }
 elseif (isset($_SESSION['oa_ord']) && empty($_GET['oa_ord']))
 {

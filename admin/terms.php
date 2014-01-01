@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			terms = '" . $_POST['terms'] . "',
-			termstext = '" . mysql_escape_string($_POST['termstext']) . "'";
+			termstext = '" . mysql_real_escape_string($_POST['termstext']) . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['terms'] = $_POST['terms'];
 	$system->SETTINGS['termstext'] = $_POST['termstext'];

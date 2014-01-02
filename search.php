@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,7 +18,7 @@ include $include_path . 'dates.inc.php';
 
 $NOW = time();
 
-$term = $system->cleanvars(trim($_GET['q']));
+$term = trim($_GET['q']);
 $cat_id = intval($_GET['id']);
 
 if (strlen($term) == 0)
@@ -35,10 +35,11 @@ else
 	if ($cat_id > 0)
 	{
 		$catscontrol = new MPTTcategories();
-		$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $cat_id;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$parent_node = mysql_fetch_assoc($res);
+		$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+		$params = array();
+		$params[] = array(':cat_id', $cat_id, 'int');
+		$db->query($query, $params);
+		$parent_node = $db->fetchall();
 		$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);
 		$childarray = array($cat_id);
 		foreach ($children as $k => $v)
@@ -56,9 +57,17 @@ else
 		$catSQL .= ")";
 	}
 	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE
-			(title LIKE '%" . $term . "%' OR id = " . intval($term) . ")
+			(title LIKE :title OR id = :auc_id)
 			" . $catSQL . "
-			AND closed = 0 AND suspended = 0 AND starts <= " . $NOW . " AND ends > " . $NOW;
+			AND closed = 0 AND suspended = 0 AND starts <= :time AND ends > :time";
+	$params = array();
+	$params[] = array(':title', '%' . $system->cleanvars($term) . '%', 'str');
+	$params[] = array(':auc_id', $term, 'int');
+	$params[] = array(':time', $NOW, 'int');
+	$db->query($query, $params);
+
+	// get total number of records
+	$total = $db->numrows();
 
 	// retrieve records corresponding to passed page number
 	$PAGE = isset($_GET['PAGE']) ? intval($_GET['PAGE']) : 1;
@@ -67,25 +76,20 @@ else
 	// determine limits for SQL query
 	$left_limit = ($PAGE - 1) * $system->SETTINGS['perpage'];
 
-	// get total number of records
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$total = mysql_num_rows($res);
-
 	// get number of pages
 	$PAGES = ceil($total / $system->SETTINGS['perpage']);
 
-	$query_ = $query . " ORDER BY ends LIMIT " . $left_limit . ", " . $system->SETTINGS['perpage'];
-	$res = mysql_query($query_);
-	$system->check_mysql($res, $query_, __LINE__, __FILE__);
+	$query_feat = $query . " AND featured = 'y' ORDER BY ends LIMIT :offset, 5";
+	$params_feat = $params;
+	$params_feat[] = array(':offset', intval(($PAGE - 1) * 5), 'int');
 
-	$query_ = $query . " AND featured = 'y' ORDER BY ends LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
-	$feat_res = mysql_query($query_);
-	$system->check_mysql($feat_res, $query_, __LINE__, __FILE__);
+	$query = $query . " ORDER BY ends LIMIT :offset, :perpage";
+	$params[] = array(':offset', $left_limit, 'int');
+	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 
 	// to be sure about items format, I've unified the call
 	include $include_path . 'browseitems.inc.php';
-	browseItems($res, $feat_res, $total, 'search.php', 'q=' . $term . '&id=' . $cat_id);
+	browseItems($query, $params, $query_feat, $params_feat, $total, 'search.php', 'q=' . $term . '&id=' . $cat_id);
 }
 
 include 'header.php';

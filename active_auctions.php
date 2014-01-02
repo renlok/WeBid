@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -37,9 +37,10 @@ $NOW = time();
 
 // get number of active auctions for this user
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
-		  WHERE user = :user_id
-		  AND closed = 0
-		  AND starts <= :time";
+		WHERE user = :user_id
+		AND closed = 0
+		AND starts <= :time";
+$params = array();
 $params[] = array(':user_id', $user_id, 'int');
 $params[] = array(':time', $NOW, 'int');
 $db->query($query, $params);

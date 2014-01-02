@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -33,8 +33,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$query = "UPDATE " . $DBPrefix . "faqs SET category=" . $_POST['category'] . ",
-			question='" . mysql_escape_string($_POST['question'][$system->SETTINGS['defaultlanguage']]) . "',
-			answer='" . mysql_escape_string($_POST['answer'][$system->SETTINGS['defaultlanguage']]) . "'
+			question='" . mysql_real_escape_string($_POST['question'][$system->SETTINGS['defaultlanguage']]) . "',
+			answer='" . mysql_real_escape_string($_POST['answer'][$system->SETTINGS['defaultlanguage']]) . "'
 			WHERE id = " . $_POST['id'];
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		reset($LANGUAGES);
@@ -46,8 +46,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			if (mysql_num_rows($res) > 0)
 			{
 				$query = "UPDATE " . $DBPrefix . "faqs_translated SET 
-						question = '" . mysql_escape_string($_POST['question'][$k]) . "',
-						answer = '" . mysql_escape_string($_POST['answer'][$k]) . "'
+						question = '" . mysql_real_escape_string($_POST['question'][$k]) . "',
+						answer = '" . mysql_real_escape_string($_POST['answer'][$k]) . "'
 						WHERE id = '" . $_POST['id'] . "' AND lang = '" . $k . "'";
 			}
 			else
@@ -55,8 +55,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$query = "INSERT INTO " . $DBPrefix . "faqs_translated VALUES(
 						'" . $_POST['id'] . "',
 						'" . $k . "',
-						'" . mysql_escape_string($_POST['question'][$k]) . "',
-						'" . mysql_escape_string($_POST['answer'][$k]) . "')";
+						'" . mysql_real_escape_string($_POST['question'][$k]) . "',
+						'" . mysql_real_escape_string($_POST['answer'][$k]) . "')";
 			}
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		}  

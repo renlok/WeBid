@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -32,14 +32,14 @@ if (isset($_POST['action']))
 		else
 		{
 			$query = "INSERT INTO " . $DBPrefix . "faqscategories values (NULL,
-				'" . mysql_escape_string($_POST['cat_name'][$system->SETTINGS['defaultlanguage']]) . "')";
+				'" . mysql_real_escape_string($_POST['cat_name'][$system->SETTINGS['defaultlanguage']]) . "')";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$id = mysql_insert_id();
 			reset($LANGUAGES);
 			foreach ($LANGUAGES as $k => $v)
 			{
-				$query = "INSERT INTO " . $DBPrefix . "faqscat_translated VALUES (" . $id . ", '" . $k . "','" . mysql_escape_string($_POST['cat_name'][$k]) . "')";
+				$query = "INSERT INTO " . $DBPrefix . "faqscat_translated VALUES (" . $id . ", '" . $k . "','" . mysql_real_escape_string($_POST['cat_name'][$k]) . "')";
 				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			}
 		}

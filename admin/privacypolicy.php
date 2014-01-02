@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			privacypolicy = '" . $_POST['privacypolicy'] . "',
-			privacypolicytext = '" . mysql_escape_string($_POST['privacypolicytext']) . "'";
+			privacypolicytext = '" . mysql_real_escape_string($_POST['privacypolicytext']) . "'";
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$system->SETTINGS['privacypolicy'] = $_POST['privacypolicy'];
 	$system->SETTINGS['privacypolicytext'] = $_POST['privacypolicytext'];

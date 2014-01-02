@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$user = intval($_POST['user']);
 	$query = "UPDATE " . $DBPrefix . "feedbacks SET 
 		  rate = '" . $_POST['aTPL_rate'] . "', 
-		  feedback = '" . mysql_escape_string($_POST['TPL_feedback']) . "'
+		  feedback = '" . mysql_real_escape_string($_POST['TPL_feedback']) . "'
 		  WHERE id = " . $id;
 	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -35,8 +35,11 @@ if (isset($_GET['add']) && !empty($_GET['add']))
 	{
 		$item_watch = trim($items . ' ' . $add_id);
 		$item_watch_new = trim($item_watch);
-		$query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . $item_watch_new . "' WHERE id = " . $user->user_data['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "users SET item_watch = :item_watch_new WHERE id = :user_id";
+		$params = array();
+		$params[] = array(':item_watch_new', $system->cleanvars($item_watch_new), 'str');
+		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$db->query($query, $params);
 		$user->user_data['item_watch'] = $item_watch_new;
 	}
 }
@@ -59,8 +62,11 @@ if (isset($_GET['delete']) && !empty($_GET['delete']))
 		}
 	}
 	$item_watch_new = trim($item_watch);
-	$query = "UPDATE " . $DBPrefix . "users SET item_watch = '" . $item_watch_new . "' WHERE id = " . $user->user_data['id'];
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "UPDATE " . $DBPrefix . "users SET item_watch = :item_watch_new WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':item_watch_new', $system->cleanvars($item_watch_new), 'str');
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$db->query($query, $params);
 	$user->user_data['item_watch'] = $item_watch_new;
 }
 
@@ -76,13 +82,12 @@ if ($items != '' && $items != null)
 	{
 		$itemids .= ',' . $item[$j];
 	}
-	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id IN ($itemids)";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($result) > 0)
-	{
-		browseItems($result, false, $total, 'item_watch.php');
-	}
+	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id IN (:itemids)";
+	$params = array();
+	$params[] = array(':itemids', $itemids, 'str');
+	$db->query($query, $params);
+	$total = $db->numrows();
+	browseItems($query, $params, '', '', $total, 'item_watch.php');
 }
 
 include 'header.php';

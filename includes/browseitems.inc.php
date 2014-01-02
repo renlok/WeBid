@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,16 +14,17 @@
 
 if (!defined('InWeBid')) exit();
 
-function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
+function browseItems($query, $params, $query_feat, $params_feat, $total, $current_page, $extravar = '')
 {
-	global $system, $uploaded_path, $DBPrefix, $MSG, $ERR_114;
+	global $system, $uploaded_path, $MSG, $ERR_114, $db;
 	global $template, $PAGES, $PAGE;
 
 	$feat_items = false;
-	if ($feat_res != false)
+	if ($query_feat != '')
 	{
+		$db->query($query_feat, $params_feat);
 		$k = 0;
-		while ($row = mysql_fetch_assoc($feat_res))
+		while ($row = $db->fetch())
 		{
 			// get the data we need
 			$row = build_items($row);
@@ -51,8 +52,9 @@ function browseItems($result, $feat_res, $total, $current_page, $extravar = '')
 		}
 	}
 
+	$db->query($query, $params);
 	$k = 0;
-	while ($row = mysql_fetch_assoc($result))
+	while ($row = $db->fetch())
 	{
 		// get the data we need
 		$row = build_items($row);

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -25,7 +25,8 @@ $NOW = time();
 $searching = false;
 $userjoin = '';
 $ora = '';
-$wher = '';
+$wher = ''; // added to search query - defines what to search for
+$asparams = array(); // the browse query parameters
 $payment = (isset($_POST['payment'])) ? $_POST['payment'] : array();
 
 // so paginations work
@@ -55,21 +56,25 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$wher .= '(';
 		if (isset($_SESSION['advs']['desc']))
 		{
-			$wher .= "(au.description like '%" . $system->cleanvars($_SESSION['advs']['title']) . "%') OR ";
+			$wher .= "(au.description LIKE :liketitle) OR ";
 		}
-		$wher .= "(au.title like '%" . $system->cleanvars($_SESSION['advs']['title']) . "%' OR au.id = " . intval($_SESSION['advs']['title']) . ")) AND ";
+		$wher .= "(au.title like :liketitle OR au.id = :idtitle)) AND ";
+		$asparams[] = array(':idtitle', intval($_SESSION['advs']['title']), 'int');
+			$asparams[] = array(':liketitle', '%' . $system->cleanvars($_SESSION['advs']['title']) . '%', 'str');
 	}
 
 	if (!empty($_SESSION['advs']['seller']))
 	{
-		$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_SESSION['advs']['seller']) . "'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = :seller_nick";
+		$params = array();
+		$params[] = array(':seller_nick', $system->cleanvars($_SESSION['advs']['seller']), 'str');
+		$db->query($query, $params);
 	
-		if (mysql_num_rows($res) > 0)
+		if ($db->numrows() > 0)
 		{
-			$SELLER_ID = mysql_result($res, 0, 'id');
-			$wher .= "(au.user = '" . $SELLER_ID . "') AND ";
+			$SELLER_ID = $db->result('id');
+			$wher .= "(au.user = :seller_id) AND ";
+			$asparams[] = array(':seller_id', $SELLER_ID, 'int');
 		}
 		else
 		{
@@ -90,7 +95,8 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 	if (!empty($_SESSION['advs']['zipcode']))
 	{
 		$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
-		$wher .= "(u.zip LIKE '%" . $system->cleanvars($_SESSION['advs']['zipcode']) . "%') AND ";
+		$wher .= "(u.zip LIKE :user_zip) AND ";
+		$asparams[] = array(':user_zip', $system->cleanvars($_SESSION['advs']['zipcode']), 'str');
 	}
 
 	if (!isset($_SESSION['advs']['closed']))
@@ -100,15 +106,17 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 
 	if (!empty($_SESSION['advs']['type']))
 	{
-		$wher .= "(au.auction_type = " . intval($_SESSION['advs']['type']) . ") AND ";
+		$wher .= "(au.auction_type = :auc_type) AND ";
+		$asparams[] = array(':auc_type', $_SESSION['advs']['type'], 'int');
 	}
 
 	if (!empty($_SESSION['advs']['category']))
 	{
 		$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_SESSION['advs']['category']);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$parent_node = mysql_fetch_assoc($res);
+		$params = array();
+		$params[] = array(':cat_id', $_SESSION['advs']['category'], 'int');
+		$db->query($query, $params);
+		$parent_node = $db->fetchall();
 		$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);
 		$childarray = array($_SESSION['advs']['category']);
 		foreach ($children as $k => $v)
@@ -126,19 +134,28 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$wher .= ") AND ";
 	}
 
-	if (!empty($_SESSION['advs']['maxprice'])) $wher .= "(au.minimum_bid <= " . $system->input_money($_SESSION['advs']['maxprice']) . ") AND ";
-	if (!empty($_SESSION['advs']['minprice'])) $wher .= "(au.minimum_bid >= " . $system->input_money($_SESSION['advs']['minprice']) . ") AND ";
+	if (!empty($_SESSION['advs']['maxprice']))
+	{
+		$wher .= "(au.minimum_bid <= :max_price) AND ";
+		$asparams[] = array(':max_price', $system->input_money($_SESSION['advs']['maxprice']), 'float');
+	}
+	if (!empty($_SESSION['advs']['minprice']))
+	{
+		$wher .= "(au.minimum_bid >= :min_price) AND ";
+		$asparams[] = array(':min_price', $system->input_money($_SESSION['advs']['minprice']), 'float');
+	}
 
 	if (!empty($_SESSION['advs']['ending']) && ($_SESSION['advs']['ending'] == '1' || $_SESSION['advs']['ending'] == '2' || $_SESSION['advs']['ending'] == '4' || $_SESSION['advs']['ending'] == '6'))
 	{
-		$data = time() + ($ending * 86400);
-		$wher .= "(au.ends <= $data) AND ";
+		$wher .= "(au.ends <= :auc_ending) AND ";
+		$asparams[] = array(':auc_ending', time() + ($ending * 86400), 'int');
 	}
 
 	if (!empty($_SESSION['advs']['country']))
 	{
 		$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
-		$wher .= "(u.country = '" . $system->cleanvars($_SESSION['advs']['country']) . "') AND ";
+		$wher .= "(u.country = :user_country) AND ";
+		$asparams[] = array(':user_country', $system->cleanvars($_SESSION['advs']['country']), 'str');
 	}
 
 	if (isset($_SESSION['advs']['payment']))
@@ -150,11 +167,13 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 			{
 				if (!$pri)
 				{
-					$ora = "((au.payment LIKE '%" . $system->cleanvars($val) . "%')";
+					$ora = "((au.payment LIKE :payment" . $val . ")";
+					$asparams[] = array(':payment' . $val, '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				else
 				{
-					$ora .= " OR (au.payment LIKE '%" . $system->cleanvars($val) . "%') AND ";
+					$ora .= " OR (au.payment LIKE :payment" . $val . ") AND ";
+					$asparams[] = array(':payment' . $val, '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				$pri = true;
 			}
@@ -162,7 +181,8 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		}
 		else
 		{
-			$ora = "(au.payment LIKE '%" . $system->cleanvars($_SESSION['advs']['payment'][0]) . "%') AND ";
+			$ora = "(au.payment LIKE :payment) AND ";
+			$asparams[] = array(':payment', '%' . $system->cleanvars($_SESSION['advs']['payment'][0]) . '%', 'str');
 		}
 	}
 
@@ -191,19 +211,18 @@ if ($searching && !isset($ERR))
 
 	// determine limits for SQL query
 	$left_limit = ($PAGE - 1) * $system->SETTINGS['perpage'];
+	$asparams[] = array(':sort_by', $by, 'str');
+	$asparams[] = array(':time', $NOW, 'int');
 
 	// get total number of records
 	$query = "SELECT count(*) AS total FROM " . $DBPrefix . "auctions au
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			au.starts <= " . $NOW . "
-			ORDER BY " . $by;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-
-	$hash = mysql_fetch_assoc($res);
-	$total = $hash['total'];
+			au.starts <= :time
+			ORDER BY :sort_by";
+	$db->query($query, $asparams);
+	$total = $db->result('total');
 
 	// get number of pages
 	$PAGES = intval($total / $system->SETTINGS['perpage']);
@@ -215,26 +234,27 @@ if ($searching && !isset($ERR))
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			au.starts <= " . $NOW . "
-			ORDER BY " . $by . " LIMIT " . intval($left_limit) . ", " . $system->SETTINGS['perpage'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+			au.starts <= :time
+			ORDER BY :sort_by LIMIT :offset, :perpage";
+	$params = $asparams;
+	$params[] = array(':offset', $left_limit, 'int');
+	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 	
 	// get featured items
-	$query = "SELECT au.* FROM " . $DBPrefix . "auctions au
+	$query_feat = "SELECT au.* FROM " . $DBPrefix . "auctions au
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
 			featured = 'y'
-			AND	au.starts <= " . $NOW . "
-			ORDER BY " . $by . " LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
-	$feat_res = mysql_query($query);
-	$system->check_mysql($feat_res, $query, __LINE__, __FILE__);
+			AND	au.starts <= :time
+			ORDER BY :sort_by LIMIT :offset, 5";
+	$params_feat = $asparams;
+	$params_feat[] = array(':offset', intval(($PAGE - 1) * 5), 'int');
 
-	if (mysql_num_rows($res) > 0)
+	if ($total > 0)
 	{
 		include $include_path . 'browseitems.inc.php';
-		browseItems($res, $feat_res, $total, 'adsearch.php');
+		browseItems($query, $params, $query_feat, $params_feat, $total, 'adsearch.php');
 
 		include 'header.php';
 		$template->set_filenames(array(
@@ -253,9 +273,8 @@ if ($searching && !isset($ERR))
 // payments
 $payment_methods = '';
 $query = "SELECT * FROM " . $DBPrefix . "gateways";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateways_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$gateways_data = $db->fetchall();
 $gateway_list = explode(',', $gateways_data['gateways']);
 foreach ($gateway_list as $v)
 {

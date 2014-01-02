@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -205,6 +205,11 @@ class db_handle
 		// set PDO values to params
 		for ($i = 0; $i < count($params); $i++)
 		{
+			// force float
+			if ($params[$i][2] == 'float')
+			{
+				$params[$i][1] = floatval($params[$i][1]);
+			}
 			$params[$i][2] = $PDO_constants[$params[$i][2]];
 		}
 		return $params;

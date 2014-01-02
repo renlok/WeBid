@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -22,18 +22,19 @@ $id = (isset($_GET['id'])) ? intval($_GET['id']) : 0;
 $_SESSION['browse_id'] = $id;
 $all_items = true;
 
+$params = array();
 if ($id != 0)
 {
-	$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
+	$query = "SELECT right_id, left_id FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+	$params[] = array(':cat_id', $id, 'int');
 }
 else
 {
 	$query = "SELECT right_id, left_id, cat_id FROM " . $DBPrefix . "categories WHERE left_id = 1";
 }
 
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$parent_node = mysql_fetch_assoc($res);
+$db->query($query, $params);
+$parent_node = $db->fetchall();
 $id = (isset($parent_node['cat_id'])) ? $parent_node['cat_id'] : $id;
 $catalist = '';
 if ($parent_node['left_id'] != 1)
@@ -56,12 +57,13 @@ $NOW = time();
 specified category number
 look into table - and if we don't have such category - redirect to full list
 */
-$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$category = mysql_fetch_assoc($result);
+$query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+$params = array();
+$params[] = array(':cat_id', $id, 'int');
+$db->query($query, $params);
+$category = $db->fetchall();
 
-if (mysql_num_rows($result) == 0)
+if ($db->numrows() == 0)
 {
 	// redirect to global categories list
 	header ('location: browse.php?id=0');
@@ -87,14 +89,15 @@ else
 
 	// get list of subcategories of this category
 	$subcat_count = 0;
-	$query = "SELECT * FROM " . $DBPrefix . "categories WHERE parent_id = " . $id . " ORDER BY cat_name";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
+	$query = "SELECT * FROM " . $DBPrefix . "categories WHERE parent_id = :parent_id ORDER BY cat_name";
+	$params = array();
+	$params[] = array(':parent_id', $id, 'int');
+	$db->query($query, $params);
 	$need_to_continue = 1;
 	$cycle = 1;
 
 	$TPL_main_value = '';
-	while ($row = mysql_fetch_array($result))
+	while ($row = $db->fetch())
 	{
 		++$subcat_count;
 		if ($cycle == 1)
@@ -158,16 +161,18 @@ else
 
 	// get total number of records
 	$query = "SELECT count(*) as COUNT FROM " . $DBPrefix . "auctions
-			WHERE " . $insql . " starts <= " . $NOW . "
+			WHERE " . $insql . " starts <= :time
 			AND closed = 0
 			AND suspended = 0";
+	$params = array();
+	$params[] = array(':time', $NOW, 'int');
 	if (!empty($_POST['catkeyword']))
 	{
-		$query .= " AND title like '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
+		$query .= " AND title LIKE :title";
+		$params[] = array(':title', '%' . $system->cleanvars($_POST['catkeyword']) . '%', 'str');
 	}
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$TOTALAUCTIONS = mysql_result($res, 0);
+	$db->query($query, $params);
+	$TOTALAUCTIONS = $db->result('COUNT');
 
 	// Handle pagination
 	if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)
@@ -183,33 +188,38 @@ else
 	$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 	$query = "SELECT * FROM " . $DBPrefix . "auctions
-			WHERE " . $insql . " starts <= " . $NOW . "
+			WHERE " . $insql . " starts <= :time
 			AND closed = 0
 			AND suspended = 0";
+	$params = array();
+	$params[] = array(':time', $NOW, 'int');
 	if (!empty($_POST['catkeyword']))
 	{
-		$query .= " AND title LIKE '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
+		$query .= " AND title LIKE :title";
+		$params[] = array(':title', '%' . $system->cleanvars($_POST['catkeyword']) . '%', 'str');
 	}
-	$query .= " ORDER BY ends ASC LIMIT " . intval($OFFSET) . "," . $system->SETTINGS['perpage'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$query .= " ORDER BY ends ASC LIMIT :offset, :perpage";
+	$params[] = array(':offset', $OFFSET, 'int');
+	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 
 	// get featured items
-	$query = "SELECT * FROM " . $DBPrefix . "auctions
-			WHERE " . $insql . " starts <= " . $NOW . "
+	$query_feat = "SELECT * FROM " . $DBPrefix . "auctions
+			WHERE " . $insql . " starts <= :time
 			AND closed = 0
 			AND suspended = 0
 			AND featured = 'y'";
+	$params_feat = array();
+	$params_feat[] = array(':time', $NOW, 'int');
 	if (!empty($_POST['catkeyword']))
 	{
-		$query .= " AND title LIKE '%" . $system->cleanvars($_POST['catkeyword']) . "%'";
+		$query_feat .= " AND title LIKE :title";
+		$params_feat[] = array(':title', '%' . $system->cleanvars($_POST['catkeyword']) . '%', 'str');
 	}
-	$query .= " ORDER BY ends ASC LIMIT " . intval(($PAGE - 1) * 5) . ", 5";
-	$feat_res = mysql_query($query);
-	$system->check_mysql($feat_res, $query, __LINE__, __FILE__);
+	$query_feat .= " ORDER BY ends ASC LIMIT :offset, 5";
+	$params_feat[] = array(':offset', intval(($PAGE - 1) * 5), 'int');
 
 	include $include_path . 'browseitems.inc.php';
-	browseItems($res, $feat_res, $TOTALAUCTIONS, 'browse.php', 'id=' . $id);
+	browseItems($query, $params, $query_feat, $params_feat, $TOTALAUCTIONS, 'browse.php', 'id=' . $id);
 
 	$template->assign_vars(array(
 			'ID' => $id,

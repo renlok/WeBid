@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2013 WeBid
+ *   copyright				: (C) 2008 - 2014 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -37,9 +37,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "bannersusers SET
-				  name = '" . mysql_escape_string($_POST['name']) . "',
-				  company = '" . mysql_escape_string($_POST['company']) . "',
-				  email = '" . mysql_escape_string($_POST['email']) . "'
+				  name = '" . mysql_real_escape_string($_POST['name']) . "',
+				  company = '" . mysql_real_escape_string($_POST['company']) . "',
+				  email = '" . mysql_real_escape_string($_POST['email']) . "'
 				  WHERE id = " . $id;
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 		header('location: managebanners.php');

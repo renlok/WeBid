@@ -65,32 +65,43 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 					if (!isset($ids[$i]) || empty($ids[$i]))
 					{
 						$query = "INSERT INTO " . $DBPrefix . "increments VALUES
-								('NULL', " . $system->input_money($lows[$i]) . ", " . $system->input_money($highs[$i]) . ", " . $system->input_money($increments[$i]) . ")";
+								(NULL, :low, :high, :inc)";
+						$params = array();
+						$params[] = array(':low', $system->input_money($lows[$i]), 'float');
+						$params[] = array(':high', $system->input_money($highs[$i]), 'float');
+						$params[] = array(':inc', $system->input_money($increments[$i]), 'float');
 					}
 					else
 					{
 						$query = "UPDATE " . $DBPrefix . "increments SET
-								low = " . $system->input_money($lows[$i]) . ",
-								high = " . $system->input_money($highs[$i]) . ",
-								increment = " . $system->input_money($increments[$i]) . "
-								WHERE id = " . $ids[$i];
+								low = :low,
+								high = :high,
+								increment = :inc
+								WHERE id = :inc_id";
+						$params = array();
+						$params[] = array(':low', $system->input_money($lows[$i]), 'float');
+						$params[] = array(':high', $system->input_money($highs[$i]), 'float');
+						$params[] = array(':inc', $system->input_money($increments[$i]), 'float');
+						$params[] = array(':inc_id', $ids[$i], 'int');
 					}
 				}
 			}
 			else
 			{
-				$query = "DELETE FROM " . $DBPrefix . "increments WHERE id = " . $ids[$i];
+				$query = "DELETE FROM " . $DBPrefix . "increments WHERE id = :inc_id";
+				$params = array();
+				$params[] = array(':inc_id', $ids[$i], 'int');
 			}
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->query($query, $params);
 		}
 		$ERR = $MSG['160'];
 	}
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "increments ORDER BY low";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-while ($row = mysql_fetch_array($res))
+$db->direct_query($query);
+
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('increments', array(
 			'ID' => $row['id'],

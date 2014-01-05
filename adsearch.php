@@ -60,7 +60,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		}
 		$wher .= "(au.title like :liketitle OR au.id = :idtitle)) AND ";
 		$asparams[] = array(':idtitle', intval($_SESSION['advs']['title']), 'int');
-			$asparams[] = array(':liketitle', '%' . $system->cleanvars($_SESSION['advs']['title']) . '%', 'str');
+		$asparams[] = array(':liketitle', '%' . $system->cleanvars($_SESSION['advs']['title']) . '%', 'str');
 	}
 
 	if (!empty($_SESSION['advs']['seller']))

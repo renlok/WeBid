@@ -59,7 +59,7 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 if (isset($_GET['delete']))
 {
 	$auctions = trim($user->user_data['auc_watch']);
-	$auc_id = split(' ', $auctions);
+	$auc_id = preg_split('/ /', $auctions);
 	$auction_watch = '';
 	for ($j = 0; $j < count($auc_id); $j++)
 	{

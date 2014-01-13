@@ -75,7 +75,7 @@ $items = trim($user->user_data['item_watch']);
 
 if ($items != '' && $items != null)
 {
-	$item = split(' ', $items);
+	$item = preg_split('/ /', $items);
 	$itemids = '0';
 	$total = count($item);
 	for ($j = 0; $j < $total; $j++)

@@ -91,9 +91,16 @@ switch ($_SESSION['action'])
 			header('location: ' . $sslurl . 'sell.php');
 			exit;
 		}
-		if ($system->SETTINGS['usersauth'] == 'y' && (md5($MD5_PREFIX . $_POST['password']) != $user->user_data['password']))
+		// does the user need to login before they can submit the auction?
+		if ($system->SETTINGS['usersauth'] == 'y')
 		{
-			$ERR = 'ERR_026';
+			// hash and check the password
+			include $include_path . 'PasswordHash.php';
+			$phpass = new PasswordHash(8, false);
+			if ($phpass->HashPassword($_POST['password']) != $user->user_data['password'])
+			{
+				$ERR = 'ERR_026';
+			}
 		}
 		if ($ERR != 'ERR_')
 		{

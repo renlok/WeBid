@@ -37,19 +37,28 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// Check if "username" already exists in the database
-		$query = "SELECT id FROM " . $DBPrefix . "adminusers WHERE username = '" . $_POST['username'] . "'";
+		$query = "SELECT id FROM " . $DBPrefix . "adminusers WHERE username = :username";
 		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) > 0)
+		$params = array();
+		$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
+		$db->query($query, $params);
+		if ($db->numrows() > 0)
 		{
 			$ERR = sprintf($ERR_055, $_POST['username']);
 		}
 		else
 		{
-			$PASS = md5($MD5_PREFIX . $_POST['password']);
+			include $include_path . 'PasswordHash.php';
+			$phpass = new PasswordHash(8, false);
 			$query = "INSERT INTO " . $DBPrefix . "adminusers VALUES
-					(NULL, '" . addslashes($_POST['username']) . "', '" . $PASS . "', '" . get_hash() . "', '" . gmdate('Ymd') . "', '0', " . intval($_POST['status']) . ", '')";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					(NULL, :username, :password, :hash, :created, '0', :status, '')";
+			$params = array();
+			$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
+			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
+			$params[] = array(':hash', get_hash(), 'str');
+			$params[] = array(':created', gmdate('Ymd'), 'str');
+			$params[] = array(':status', $_POST['status'], 'int');
+			$db->query($query, $params);
 			header('location: adminusers.php');
 			exit;
 		}

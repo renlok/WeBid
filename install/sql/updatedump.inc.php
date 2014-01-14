@@ -244,4 +244,12 @@ if ($myversion == '1.0.6')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `balance` double(16,2) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `bid` double(16,2) NOT NULL default '0';";
 }
+
+if ($myversion == '1.1.0')
+{
+	//1.1.0 to 1.2.0
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.2.0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `password` varchar(60) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password` varchar(60) NOT NULL;";
+}
 ?>

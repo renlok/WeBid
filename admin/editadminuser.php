@@ -36,22 +36,28 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{ 
 		// Update
 		$query = "UPDATE " . $DBPrefix . "adminusers SET";
+		$params = array();
 		if (!empty($_POST['password']))
 		{
-			$query .= " password = '" . md5($MD5_PREFIX . $_POST['password']) . "', ";
+			include $include_path . 'PasswordHash.php';
+			$phpass = new PasswordHash(8, false);
+			$query .= " password = :password, ";
+			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 		}
-		$query .= " status = " . intval($_POST['status']) . "	WHERE id = " . $id;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query .= " status = :status WHERE id = :admin_id";
+		$params[] = array(':status', $_POST['status'], 'int');
+		$params[] = array(':admin_id', $id, 'int');
+		$db->query($query, $params);
 		header('location: adminusers.php');
 		exit;
 	}
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "adminusers WHERE id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$user_data = mysql_fetch_assoc($res);
+$query = "SELECT * FROM " . $DBPrefix . "adminusers WHERE id = :admin_id";
+$params = array();
+$params[] = array(':admin_id', $id, 'int');
+$db->query($query, $params);
+$user_data = $db->fetchall();
 
 if ($system->SETTINGS['datesformat'] == 'USA')
 {

@@ -193,10 +193,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 		{
 			$errmsg = $ERR_004;
 		}
+		include $include_path . 'PasswordHash.php';
+		$phpass = new PasswordHash(8, false);
 		$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id AND password = :password";
 		$params = array();
 		$params[] = array(':user_id', $user->user_data['id'], 'int');
-		$params[] = array(':password', md5($MD5_PREFIX . $_POST['password']), 'str');
+		$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 		$db->query($query, $params);
 		if ($db->numrows() == 0)
 		{

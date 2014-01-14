@@ -26,7 +26,9 @@ if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 
 if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password']))
 {
-	$password = md5($MD5_PREFIX . $_POST['password']);
+	include $include_path . 'PasswordHash.php';
+	$phpass = new PasswordHash(8, false);
+	$password = $phpass->HashPassword($_POST['password']);
 	$query = "SELECT id, hash, suspended FROM " . $DBPrefix . "users WHERE
 			nick = '" . $system->cleanvars($_POST['username']) . "'
 			AND password = '" . $password . "'";

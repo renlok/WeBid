@@ -114,24 +114,38 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 
 			$query = "UPDATE " . $DBPrefix . "users SET 
-				  name = '" . $system->cleanvars($_POST['name']) . "',
-				  email = '" . $system->cleanvars($_POST['email']) . "',
-				  address = '" . $system->cleanvars($_POST['address']) . "',
-				  city = '" . $system->cleanvars($_POST['city']) . "',
-				  prov = '" . $system->cleanvars($_POST['prov']) . "',
-				  country = '" . $system->cleanvars($_POST['country']) . "',
-				  zip = '" . $system->cleanvars($_POST['zip']) . "',
-				  phone = '" . $system->cleanvars($_POST['phone']) . "',
-				  birthdate = '" . $system->cleanvars($birthdate) . "',
-				  groups = '" . implode(',', $_POST['group']) . "',
-				  balance = '" . $system->input_money($_POST['balance']) . "'";
+				  name = :name,
+				  email = :email,
+				  address = :address,
+				  city = :city,
+				  prov = :prov,
+				  country = :country,
+				  zip = :zip,
+				  phone = :phone,
+				  birthdate = :birthdate,
+				  groups = :groups,
+				  balance = :balance";
+			$params = array();
+			$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
+			$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');
+			$params[] = array(':birthdate', $birthdate, 'int');
+			$params[] = array(':address', $system->cleanvars($_POST['address']), 'str');
+			$params[] = array(':city', $system->cleanvars($_POST['city']), 'str');
+			$params[] = array(':prov', $system->cleanvars($_POST['prov']), 'str');
+			$params[] = array(':country', $system->cleanvars($_POST['country']), 'str');
+			$params[] = array(':zip', $system->cleanvars($_POST['zip']), 'str');
+			$params[] = array(':groups', implode(',', $_POST['group']), 'str');
+			$params[] = array(':balance', $system->input_money($_POST['balance']), 'float');
 			if (strlen($_POST['password']) > 0)
 			{
-				$query .=  ", password = '" . md5($MD5_PREFIX . $_POST['password']) . "'";
+				include $include_path . 'PasswordHash.php';
+				$phpass = new PasswordHash(8, false);
+				$query .=  ", password = :password";
+				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 			}
-			$query .=  " WHERE id = " . $userid;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$query .=  " WHERE id = :user_id";
+			$params[] = array(':user_id', $userid, 'int');
+			$db->query($query, $params);
 
 			header('location: listusers.php?PAGE=' . intval($_POST['offset']));
 			exit;
@@ -144,10 +158,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 
 // load the page
-$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $userid;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$user_data = mysql_fetch_assoc($res);
+$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $userid, 'int');
+$db->query($query, $params);
+$user_data = $db->fetchall();
 
 if ($user_data['birthdate'] != 0)
 {
@@ -181,11 +196,10 @@ foreach ($countries as $code => $descr)
 }
 
 $query = "SELECT id, group_name FROM ". $DBPrefix . "groups";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $usergroups = '';
 $groups = explode(',', $user_data['groups']);
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$member = (in_array($row['id'], $groups)) ? ' checked' : '';
 	$usergroups .= '<p><input type="checkbox" name="group[]" value="' . $row['id'] . '"' . $member . '> ' . $row['group_name'] . '</p>';

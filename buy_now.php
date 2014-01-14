@@ -140,7 +140,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$ERR = $ERR_610;
 		}
 		// check if password is correct
-		if ($user->user_data['password'] != md5($MD5_PREFIX . $_POST['password']))
+		include $include_path . 'PasswordHash.php';
+		$phpass = new PasswordHash(8, false);
+		if ($user->user_data['password'] != $phpass->HashPassword($_POST['password']))
 		{
 			$ERR = $ERR_611;
 		}

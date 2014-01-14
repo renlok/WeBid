@@ -15,23 +15,39 @@
 include 'common.php';
 include $include_path . 'countries.inc.php';
 
+function generatePassword($length = 8)
+{
+	// all possible characters to put in password
+    $chars = 'abcdfghjklmnpqrstvwxyzABCDFGHJKLMNPQRSTVWXYZ0123456789';
+    $count = mb_strlen($chars);
+
+    for ($i = 0, $result = ''; $i < $length; $i++)
+	{
+        $index = rand(0, $count - 1);
+        $result .= mb_substr($chars, $index, 1);
+    }
+
+    return $result;
+}
+
 if (isset($_POST['action']) && $_POST['action'] == 'ok')
 {
 	if (isset($_POST['TPL_username']) && isset($_POST['TPL_email']))
 	{
-		$username = $system->cleanvars($_POST['TPL_username']);
-		$email = $system->cleanvars($_POST['TPL_email']);
-		$query = "SELECT email, id, name FROM " . $DBPrefix . "users WHERE nick = '" . $username . "' AND email = '" . $email . "' LIMIT 1";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "SELECT email, id, name FROM " . $DBPrefix . "users WHERE nick = :username AND email = :email LIMIT 1";
+		$params = array();
+		$params[] = array(':username', $system->cleanvars($_POST['TPL_username']), 'str');
+		$params[] = array(':email', $system->cleanvars($_POST['TPL_email']), 'str');
+		$db->query($query, $params);
 
-		if (mysql_num_rows($res) > 0)
+		if ($db->numrows() > 0)
 		{
 			// Generate a new random password and mail it to the user
-			$email = mysql_result($res, 0, 'email');
-			$id = mysql_result($res, 0, 'id');
-			$name = mysql_result($res, 0, 'name');
-			$newpass = substr(uniqid(md5(time())), 0, 6);
+			$user_data = $db->fetchall();
+			$email = $user_data['email'];
+			$id = $user_data['id'];
+			$name = $user_data['name'];
+			$newpass = generatePassword();
 			// send message
 			$emailer = new email_handler();
 			$emailer->assign_vars(array(
@@ -42,8 +58,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'ok')
 			$emailer->email_uid = $id;
 			$emailer->email_sender($email, 'newpasswd.inc.php', $MSG['024']);
 			// Update database
-			$query = "UPDATE " . $DBPrefix . "users SET password = '" . md5($MD5_PREFIX . $newpass) . "' WHERE id = " . $id;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "users SET password = :password WHERE id = :user_id";
+			// hash password
+			include $include_path . 'PasswordHash.php';
+			$phpass = new PasswordHash(8, false);
+			$params = array();
+			$params[] = array(':password', $phpass->HashPassword($newpass), 'str');
+			$params[] = array(':user_id', $id, 'int');
+			$db->query($query, $params);
 		}
 		else
 		{

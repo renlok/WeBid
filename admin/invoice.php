@@ -49,7 +49,8 @@ $params = array();
 if ($searchuser)
 {
 	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = :nick";
-	$params[] = array(':nick', $username, 'str');
+	$params = array();
+	$params[] = array(':nick', $system->cleanvars($username), 'str');
 	$db->query($query, $params);
 	$user_id = $db->result('id');
 	$where_sql .= 'user_id = :user_id';

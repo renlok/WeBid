@@ -50,8 +50,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "adminusers`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `id` int(11) NOT NULL auto_increment,
-  `username` varchar(32) NOT NULL default '',
-  `password` varchar(32) NOT NULL default '',
+  `username` varchar(32) NOT NULL,
+  `password` varchar(60) NOT NULL,
   `hash` varchar(5) NOT NULL default '',
   `created` varchar(8) NOT NULL default '',
   `lastlogin` varchar(14) NOT NULL default '',
@@ -1693,7 +1693,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "users`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `id` int(32) NOT NULL auto_increment,
   `nick` varchar(20) NOT NULL,
-  `password` varchar(32) default '',
+  `password` varchar(60) NOT NULL,
   `hash` varchar(5) default '',
   `name` tinytext,
   `address` tinytext,

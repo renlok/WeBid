@@ -52,9 +52,8 @@ for ($i = 12; $i > -13; $i--)
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateway_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$gateway_data = $db->fetchall();
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -124,51 +123,74 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$TPL_birthdate = '';
 			}
 
-			$query = "UPDATE " . $DBPrefix . "users SET email='" . $system->cleanvars($_POST['TPL_email']) . "',
-					birthdate = '" . ((empty($TPL_birthdate)) ? 0 : $TPL_birthdate) . "',
-					address = '" . $system->cleanvars($_POST['TPL_address']) . "',
-					city = '" . $system->cleanvars($_POST['TPL_city']) . "',
-					prov = '" . $system->cleanvars($_POST['TPL_prov']) . "',
-					country = '" . $system->cleanvars($_POST['TPL_country']) . "',
-					zip = '" . $system->cleanvars($_POST['TPL_zip']) . "',
-					phone = '" . $system->cleanvars($_POST['TPL_phone']) . "',
-					timecorrection = '" . $system->cleanvars($_POST['TPL_timezone']) . "',
-					emailtype = '" . $system->cleanvars($_POST['TPL_emailtype']) . "',
-					nletter = '" . $system->cleanvars($_POST['TPL_nletter']) . "'";
+			$query = "UPDATE " . $DBPrefix . "users SET email = :email,
+					birthdate = :birthdate,
+					address = :address,
+					city = :city,
+					prov = :prov,
+					country = :country,
+					zip = :zip,
+					phone = :phone,
+					timecorrection = :timecorrection,
+					emailtype = :emailtype,
+					nletter = :nletter";
+			$params = array();
+			$params[] = array(':email', $system->cleanvars($_POST['TPL_email']), 'str');
+			$params[] = array(':birthdate', ((empty($TPL_birthdate)) ? 0 : $TPL_birthdate), 'int');
+			$params[] = array(':address', $system->cleanvars($_POST['TPL_address']), 'str');
+			$params[] = array(':city', $system->cleanvars($_POST['TPL_city']), 'str');
+			$params[] = array(':prov', $system->cleanvars($_POST['TPL_prov']), 'str');
+			$params[] = array(':country', $system->cleanvars($_POST['TPL_country']), 'str');
+			$params[] = array(':zip', $system->cleanvars($_POST['TPL_zip']), 'str');
+			$params[] = array(':phone', $system->cleanvars($_POST['TPL_phone']), 'str');
+			$params[] = array(':timecorrection', $system->cleanvars($_POST['TPL_timezone']), 'str');
+			$params[] = array(':emailtype', $system->cleanvars($_POST['TPL_emailtype']), 'str');
+			$params[] = array(':nletter', $system->cleanvars($_POST['TPL_nletter']), 'str');
 
 			if ($gateway_data['paypal_active'] == 1)
 			{
-				$query .= ", paypal_email = '" . $system->cleanvars($_POST['TPL_pp_email']) . "'";
+				$query .= ", paypal_email = :paypal_email";
+				$params[] = array(':paypal_email', $system->cleanvars($_POST['TPL_pp_email']), 'str');
 			}
 
 			if ($gateway_data['authnet_active'] == 1)
 			{
-				$query .= ", authnet_id = '" . $system->cleanvars($_POST['TPL_authnet_id']) . "',
-							authnet_pass = '" . $system->cleanvars($_POST['TPL_authnet_pass']) . "'";
+				$query .= ", authnet_id = :authnet_id,
+							authnet_pass = :authnet_pass";
+				$params[] = array(':authnet_id', $system->cleanvars($_POST['TPL_authnet_id']), 'str');
+				$params[] = array(':authnet_pass', $system->cleanvars($_POST['TPL_authnet_pass']), 'str');
 			}
 
 			if ($gateway_data['worldpay_active'] == 1)
 			{
-				$query .= ", worldpay_id = '" . $system->cleanvars($_POST['TPL_worldpay_id']) . "'";
+				$query .= ", worldpay_id = :worldpay_id";
+				$params[] = array(':worldpay_id', $system->cleanvars($_POST['TPL_worldpay_id']), 'str');
 			}
 
 			if ($gateway_data['moneybookers_active'] == 1)
 			{
-				$query .= ", moneybookers_email = '" . $system->cleanvars($_POST['TPL_moneybookers_email']) . "'";
+				$query .= ", moneybookers_email = :moneybookers_email";
+				$params[] = array(':moneybookers_email', $system->cleanvars($_POST['TPL_moneybookers_email']), 'str');
 			}
 
 			if ($gateway_data['toocheckout_active'] == 1)
 			{
-				$query .= ", toocheckout_id = '" . $system->cleanvars($_POST['TPL_toocheckout_id']) . "'";
+				$query .= ", toocheckout_id = :toocheckout_id";
+				$params[] = array(':toocheckout_id', $system->cleanvars($_POST['TPL_toocheckout_id']), 'str');
 			}
 
 			if (strlen($_POST['TPL_password']) > 0)
 			{
-				$query .= ", password = '" . md5($MD5_PREFIX . $_POST['TPL_password']) . "'";
+				// hash the password
+				include $include_path . 'PasswordHash.php';
+				$phpass = new PasswordHash(8, false);
+				$query .= ", password = :password";
+				$params[] = array(':password', $phpass->HashPassword($_POST['TPL_password']), 'str');
 			}
 
-			$query .= " WHERE id = " . $user->user_data['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query .= " WHERE id = :user_id";
+			$params[] = array(':user_id', $user->user_data['id'], 'int');
+			$db->query($query, $params);
 			$ERR = $MSG['183'];
 		}
 	}
@@ -179,10 +201,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 
 // Retrieve user's data
-$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$USER = mysql_fetch_assoc($result);
+$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$USER = $db->fetchall();
 if ($USER['birthdate'] != 0)
 {
 	$TPL_day = substr($USER['birthdate'], 6, 2);

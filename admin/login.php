@@ -23,17 +23,23 @@ if (isset($_POST['action']))
 		case 'insert':
 			// Additional security check
 			$query = "SELECT id FROM " . $DBPrefix . "adminusers";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0)
+			$db->direct_query($query);
+			if ($db->numrows() > 0)
 			{
 				header('location: login.php');
 				exit;
 			}
-			$md5_pass = md5($MD5_PREFIX . $_POST['password']);
+			include $include_path . 'PasswordHash.php';
+			$phpass = new PasswordHash(8, false);
 			$query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, created, lastlogin, status) VALUES
-					('" . $system->cleanvars($_POST['username']) . "', '" . $md5_pass . "', '" . get_hash() . "', '" . gmdate('Ymd') . "', '" . time() . "', 1)";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					(:username, :password, :hash, :created, :lastlogin, 1)";
+			$params = array();
+			$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
+			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
+			$params[] = array(':hash', get_hash(), 'str');
+			$params[] = array(':created', gmdate('Ymd'), 'str');
+			$params[] = array(':lastlogin', time(), 'int');
+			$db->query($query, $params);
 			// Redirect
 			header('location: login.php');
 			exit;
@@ -50,12 +56,16 @@ if (isset($_POST['action']))
 			}
 			else
 			{
-				$password = md5($MD5_PREFIX . $_POST['password']);
-				$query = "SELECT id, hash FROM " . $DBPrefix . "adminusers WHERE username = '" . $system->cleanvars($_POST['username']) . "' and password = '" . $password . "'";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				include $include_path . 'PasswordHash.php';
+				$phpass = new PasswordHash(8, false);
+				$password = $phpass->HashPassword($_POST['password'])
+				$query = "SELECT id, hash FROM " . $DBPrefix . "adminusers WHERE username = :username AND password = :password";
+				$params = array();
+				$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
+				$params[] = array(':password', $password, 'str');
+				$db->query($query, $params);
 
-				if (mysql_num_rows($res) == 0)
+				if ($db->numrows() == 0)
 				{
 					$ERR = $ERR_048;
 				}
@@ -63,7 +73,7 @@ if (isset($_POST['action']))
 				{
 					// generate a random unguessable token
 					$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
-					$admin = mysql_fetch_array($res);
+					$admin = $db->fetchall();
 					// Set sessions vars
 					$_SESSION['WEBID_ADMIN_NUMBER'] = strspn($password, $admin['hash']);
 					$_SESSION['WEBID_ADMIN_PASS'] = $password;
@@ -71,8 +81,11 @@ if (isset($_POST['action']))
 					$_SESSION['WEBID_ADMIN_USER'] = $_POST['username'];
 					$_SESSION['WEBID_ADMIN_TIME'] = time() + (($system->SETTINGS['timecorrection'] + gmdate('I')) * 3600);
 					// Update last login information for this user
-					$query = "UPDATE " . $DBPrefix . "adminusers SET lastlogin = '" . time() . "' WHERE id = " . $admin['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "adminusers SET lastlogin = :lastlogin WHERE id = :admin_id";
+					$params = array();
+					$params[] = array(':lastlogin', time(), 'int');
+					$params[] = array(':admin_id', $admin['id'], 'int');
+					$db->query($query, $params);
 					// Redirect
 					print '<script type="text/javascript">parent.location.href = \'index.php\';</script>';
 					exit;
@@ -83,14 +96,13 @@ if (isset($_POST['action']))
 }
 
 $query = "SELECT id FROM " . $DBPrefix . "adminusers LIMIT 1";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'THEME' => $system->SETTINGS['theme'],
-		'PAGE' => (mysql_num_rows($res) == 0) ? 1 : 2
+		'PAGE' => ($db->numrows() == 0) ? 1 : 2
 		));
 
 $template->set_filenames(array(

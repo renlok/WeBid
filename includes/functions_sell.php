@@ -303,16 +303,16 @@ function addoutstanding()
 
 	$params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
 	$params[] = array(':time', time(), 'int');
-	$params[] = array(':setup', $fee_data['setup'], 'str');
-	$params[] = array(':hpfeat_fee', $fee_data['hpfeat_fee'], 'str');
-	$params[] = array(':bolditem_fee', $fee_data['bolditem_fee'], 'str');
-	$params[] = array(':hlitem_fee', $fee_data['hlitem_fee'], 'str');
-	$params[] = array(':subtitle_fee', $fee_data['subtitle_fee'], 'str');
-	$params[] = array(':relist_fee', $fee_data['relist_fee'], 'str');
-	$params[] = array(':rp_fee', $fee_data['rp_fee'], 'str');
-	$params[] = array(':buyout_fee', $fee_data['buyout_fee'], 'str');
-	$params[] = array(':picture_fee', $fee_data['picture_fee'], 'str');
-	$params[] = array(':excat_fee', $fee_data['excat_fee'], 'str');
+	$params[] = array(':setup', $fee_data['setup'], 'float');
+	$params[] = array(':hpfeat_fee', $fee_data['hpfeat_fee'], 'float');
+	$params[] = array(':bolditem_fee', $fee_data['bolditem_fee'], 'float');
+	$params[] = array(':hlitem_fee', $fee_data['hlitem_fee'], 'float');
+	$params[] = array(':subtitle_fee', $fee_data['subtitle_fee'], 'float');
+	$params[] = array(':relist_fee', $fee_data['relist_fee'], 'float');
+	$params[] = array(':rp_fee', $fee_data['rp_fee'], 'float');
+	$params[] = array(':buyout_fee', $fee_data['buyout_fee'], 'float');
+	$params[] = array(':picture_fee', $fee_data['picture_fee'], 'float');
+	$params[] = array(':excat_fee', $fee_data['excat_fee'], 'float');
 	$params[] = array(':fee', $fee, 'float');
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);

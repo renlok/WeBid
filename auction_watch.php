@@ -25,7 +25,7 @@ if (!$user->is_logged_in())
 // insert a new watch item
 if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add']))
 {
-	$requestadd = $system->cleanvars($_REQUEST['add']);
+	$requestadd = $_REQUEST['add'];
 	// Check if this keyword is not already added
 	$auctions = trim($user->user_data['auc_watch']);
 	unset($match); // just incase
@@ -47,7 +47,7 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 		$auction_watch = trim($auctions . ' ' . $requestadd);
 		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = :auc_watch WHERE id = :id";
 		$params = array(
-			array(':auc_watch', $auction_watch, 'str'),
+			array(':auc_watch', $system->cleanvars($auction_watch), 'str'),
 			array(':id', $user->user_data['id'], 'int'),
 		);
 		$db->query($query, $params);
@@ -76,7 +76,7 @@ if (isset($_GET['delete']))
 	$auction_watch = trim($auction_watch);
 		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = :auc_watch WHERE id = :id";
 		$params = array(
-			array(':auc_watch', $auction_watch, 'str'),
+			array(':auc_watch', $system->cleanvars($auction_watch), 'str'),
 			array(':id', $user->user_data['id'], 'int'),
 		);
 		$db->query($query, $params);

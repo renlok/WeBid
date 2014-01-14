@@ -313,11 +313,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					$groups[] = $row['id'];
 				}
 				$hash = get_hash();
+				// prepare to hash the password
+				include $include_path . 'PasswordHash.php';
+				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
 						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, 
 						birthdate, suspended, language, groups, balance, timecorrection, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
 						VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
-						'" . md5($MD5_PREFIX . $TPL_password_hidden) . "',
+						'" . $phpass->HashPassword($TPL_password_hidden) . "',
 						'" . $hash . "',
 						'" . $system->cleanvars($TPL_name_hidden) . "',
 						'" . $system->cleanvars($_POST['TPL_address']) . "',

@@ -30,7 +30,7 @@ if (isset($_POST['pfval']) && isset($_POST['pfwon']))
 	// check input data
 	if (intval($_POST['pfval']) == 0 || intval($_POST['pfwon']) == 0)
 	{
-		invaildinvoice();
+		invalidinvoice();
 	}
 }
 else
@@ -38,7 +38,7 @@ else
 	// check input data
 	if (intval($_GET['id']) == 0 || !isset($_GET['id']))
 	{
-		invaildinvoice();
+		invalidinvoice();
 	}
 }
 
@@ -62,7 +62,7 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 // check its real
 if (mysql_num_rows($res) < 1)
 {
-	invaildinvoice();
+	invalidinvoice();
 }
 
 $data = mysql_fetch_assoc($res);

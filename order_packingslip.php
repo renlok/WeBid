@@ -33,7 +33,7 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 // check its real
 if (mysql_num_rows($res) < 1)
 {
-	invaildinvoice(true);
+	invalidinvoice(true);
 }
 
 $data = mysql_fetch_assoc($res);

@@ -136,7 +136,7 @@ function vatexcluding($gross)
 	return number_format($net, $system->SETTINGS['moneydecimals']);
 }
 
-function invaildinvoice($packingslip = false)
+function invalidinvoice($packingslip = false)
 {
 	global $template, $system;
 

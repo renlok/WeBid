@@ -103,16 +103,16 @@ $(document).ready(function(){
 		$("#to_pay").text(current_fee);
 	});
 	$("#bn").blur(function(){
-		bn();
+		bin();
 	});
 	$("#bn_yes").click(function(){
-		bn();
+		bin();
 	});
 	$("#bn_no").click(function(){
 		$("#bn").val(0);
-		bn();
+		bin();
 	});
-	function bn(){
+	function bin(){
 		if (bn != parseInt($("#bn").val())){
 			if (parseInt($("#bn").val()) > 0)
 				updatefee(buyout_fee);

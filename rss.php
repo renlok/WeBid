@@ -147,8 +147,12 @@ $template->assign_vars(array(
 		'XML' => '<?xml version="1.0" encoding="' . $CHARSET . '"?>', //as the template parser doesnt like <? tags
 		'PAGE_TITLE' => $system->SETTINGS['sitename'],
 		'SITEURL' => $system->SETTINGS['siteurl'],
+		'DESCRIPTIONTAG' => $system->SETTINGS['descriptiontag'],
+		'FEED' => $feed, 
 		'RSSTITLE' => $RSStitle
 		));
+		
+header('Content-Type: application/rss+xml;charset= ' . $CHARSET);
 
 $template->set_filenames(array(
 		'body' => 'rss.tpl'

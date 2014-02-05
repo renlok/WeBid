@@ -18,7 +18,7 @@
 <tr style="background-color:{TBLHEADERCOLOUR}">
     <td style="width: 45%; text-align: center;">{L_018}</td>
     <td style="width: 10%; text-align: center;">{L_847}</td>
-	<td style="width: 10%; text-align: center;">{L_350_1004}</td>
+	<td style="width: 10%; text-align: center;">{L_284}</td>
     <td style="width: 10%; text-align: center;">{L_319}</td>
     <td style="width: 10%; text-align: center;">{L_189}</td>
     <td style="text-align: center;">&nbsp;</td>

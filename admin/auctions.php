@@ -44,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$query = "UPDATE ". $DBPrefix . "settings SET
 				  proxy_bidding = '" . $_POST['proxy_bidding'] . "',
 				  edit_starttime = '" . $_POST['edit_starttime'] . "',
-				  cust_increment = " . $_POST['cust_increment'] . ",
+				  cust_increment = '" . $_POST['cust_increment'] . "',
 				  hours_countdown = '" . $_POST['hours_countdown'] . "',
 				  ao_hpf_enabled = '" . $_POST['ao_hpf_enabled'] . "',
 				  ao_hi_enabled = '" . $_POST['ao_hi_enabled'] . "',

@@ -48,7 +48,7 @@ if (isset($_GET['add']) && !empty($_GET['add']))
 if (isset($_GET['delete']) && !empty($_GET['delete']))
 {
 	$items = trim($user->user_data['item_watch']);
-	$auc_id = split(' ', $items);
+	$auc_id = explode(' ', $items);
 	for ($j = 0; $j < count($auc_id); $j++)
 	{
 		$match = strstr($auc_id[$j], $_GET['delete']);

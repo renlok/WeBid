@@ -550,7 +550,7 @@ function check_gateway($gateway)
 		return true;
 	if ($gateway == 'moneybookers' && !empty($user->user_data['moneybookers_email']))
 		return true;
-	if ($gateway == 'toocheckout_id' && !empty($user->user_data['toocheckout_id']))
+	if ($gateway == 'toocheckout' && !empty($user->user_data['toocheckout_id']))
 		return true;
 	return false;
 }

@@ -22,17 +22,22 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['invoice_yellow_line'] = $system->cleanvars($_POST['invoice_yellow_line']);
+	$system->SETTINGS['invoice_thankyou'] = $system->cleanvars($_POST['invoice_thankyou']);
+	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
-				invoice_yellow_line = '" . $_POST['invoice_yellow_line'] . "',
-				invoice_thankyou = '" . $_POST['invoice_thankyou'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['invoice_yellow_line'] = $_POST['invoice_yellow_line'];
-	$system->SETTINGS['invoice_thankyou'] = $_POST['invoice_thankyou'];
+				invoice_yellow_line = :invoice_yellow_line,
+				invoice_thankyou = :invoice_thankyou";
+	$params = array();
+	$params[] = array(':invoice_yellow_line', $system->SETTINGS['terms'], 'str');
+	$params[] = array(':invoice_thankyou', $system->SETTINGS['termstext'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['1095'];
 }
 
-loadblock($MSG['1096'], $MSG['1097'], 'text', 'invoice_yellow_line', $system->SETTINGS['invoice_yellow_line']);
-loadblock($MSG['1098'], $MSG['1099'], 'text', 'invoice_thankyou', $system->SETTINGS['invoice_thankyou']);
+loadblock($MSG['1096'], $MSG['1097'], 'text', 'invoice_yellow_line', $system->uncleanvars($system->SETTINGS['invoice_yellow_line']));
+loadblock($MSG['1098'], $MSG['1099'], 'text', 'invoice_thankyou', $system->uncleanvars($system->SETTINGS['invoice_thankyou']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

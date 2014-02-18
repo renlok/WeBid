@@ -22,11 +22,14 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['buyerprivacy'] = ynbool($_POST['buyerprivacy']);
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  buyerprivacy = '" . $_POST['buyerprivacy'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['buyerprivacy'] = $_POST['buyerprivacy'];
+			  buyerprivacy = :buyerprivacy";
+	$params = array();
+	$params[] = array(':buyerprivacy', $system->SETTINGS['buyerprivacy'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['247'];
 }
 

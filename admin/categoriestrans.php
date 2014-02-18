@@ -77,10 +77,9 @@ if (isset($_POST['categories']))
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
 $query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories ORDER BY cat_name";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	// set category data
 	$template->assign_block_vars('cats', array(

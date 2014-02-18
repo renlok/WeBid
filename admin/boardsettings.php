@@ -20,12 +20,15 @@ include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['boards'] = ynbool($_POST['boards']);
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings set
-			boards = '" . $_POST['boards'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			boards = :boards";
+	$params = array();
+	$params[] = array(':boards', $system->SETTINGS['boards'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['5051'];
-	$system->SETTINGS['boards'] = $_POST['boards'];
 }
 
 loadblock($MSG['5048'], '', 'yesno', 'boards', $system->SETTINGS['aboutus'], array($MSG['030'], $MSG['029']));

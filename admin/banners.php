@@ -22,9 +22,13 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	$query = "UPDATE ".$DBPrefix."settings SET banners = '" . $system->cleanvars($_POST['banners']) . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['banners'] = $_POST['banners'];
+	// clean submission
+	$system->SETTINGS['banners'] = intval($_POST['banners']);
+	// Update database
+	$query = "UPDATE " . $DBPrefix . "settings SET banners = :banners";
+	$params = array();
+	$params[] = array(':banners', $system->SETTINGS['banners'], 'int');
+	$db->query($query, $params);
 	$ERR = $MSG['600'];
 }
 

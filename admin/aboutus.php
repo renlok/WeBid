@@ -23,13 +23,17 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['aboutus'] = ynbool($_POST['aboutus']);
+	$system->SETTINGS['aboutustext'] = $system->cleanvars($_POST['aboutustext']);
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  aboutus = '" . $_POST['aboutus'] . "',
-			  aboutustext = '" . mysql_real_escape_string($_POST['aboutustext']) . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['aboutus'] = $_POST['aboutus'];
-	$system->SETTINGS['aboutustext'] = $_POST['aboutustext'];
+			  aboutus = :aboutus,
+			  aboutustext = :aboutustext";
+	$params = array();
+	$params[] = array(':aboutus', $system->SETTINGS['aboutus'], 'str');
+	$params[] = array(':aboutustext', $system->SETTINGS['aboutustext'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['5079'];
 }
 
@@ -41,7 +45,7 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['5078'], $MSG['5080'], $CKEditor->editor('aboutustext', stripslashes($system->SETTINGS['aboutustext'])));
+loadblock($MSG['5078'], $MSG['5080'], $CKEditor->editor('aboutustext', $system->uncleanvars($system->SETTINGS['aboutustext'])));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

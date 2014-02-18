@@ -22,10 +22,15 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	$query = "UPDATE " . $DBPrefix . "settings SET contactseller = '" . $_POST['contactseller'] . "', users_email = '" . $_POST['users_email'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['contactseller'] = $_POST['contactseller'];
-	$system->SETTINGS['users_email'] = $_POST['users_email'];
+	// clean submission
+	$system->SETTINGS['contactseller'] = $system->cleanvars($_POST['contactseller']);
+	$system->SETTINGS['users_email'] = ynbool($_POST['users_email']);
+	// Update database
+	$query = "UPDATE " . $DBPrefix . "settings SET contactseller = :contactseller, users_email = :users_email";
+	$params = array();
+	$params[] = array(':contactseller', $system->SETTINGS['contactseller'], 'str');
+	$params[] = array(':users_email', $system->SETTINGS['users_email'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['25_0155'];
 }
 

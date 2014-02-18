@@ -18,15 +18,15 @@ switch ($_GET['show'])
 {
 	case 'aboutus':
 		$TITLE = $MSG['5085'];
-		$CONTENT = stripslashes($system->SETTINGS['aboutustext']);
+		$CONTENT = $system->uncleanvars($system->SETTINGS['aboutustext']);
 		break;
 	case 'terms':
 		$TITLE = $MSG['5086'];
-		$CONTENT = stripslashes($system->SETTINGS['termstext']);
+		$CONTENT = $system->uncleanvars($system->SETTINGS['termstext']);
 		break;
 	case 'priv':
 		$TITLE = $MSG['401'];
-		$CONTENT = stripslashes($system->SETTINGS['privacypolicytext']);
+		$CONTENT = $system->uncleanvars($system->SETTINGS['privacypolicytext']);
 		break;
 }
 

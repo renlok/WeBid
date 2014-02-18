@@ -22,12 +22,17 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['catsorting'] = $system->cleanvars($_POST['catsorting']);
+	$system->SETTINGS['catstoshow'] = intval($_POST['catstoshow']);
+	// Update database
 	$query = " UPDATE " . $DBPrefix . "settings SET
-			   catsorting = '" . $_POST['catsorting'] . "',
-			   catstoshow = '" . intval($_POST['catstoshow']) . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['catsorting'] = $_POST['catsorting'];
-	$system->SETTINGS['catstoshow'] = $_POST['catstoshow'];
+			   catsorting = :catsorting,
+			   catstoshow = :catstoshow";
+	$params = array();
+	$params[] = array(':catsorting', $system->SETTINGS['catsorting'], 'str');
+	$params[] = array(':catstoshow', $system->SETTINGS['catstoshow'], 'int');
+	$db->query($query, $params);
 	$ERR = $MSG['25_0150'];
 }
 

@@ -24,11 +24,13 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['errortext'] = htmLawed($_POST['errortext'], array('safe'=>1));
 	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			  errortext = '" . htmLawed($_POST['errortext'], array('safe'=>1)) . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['errortext'] = $_POST['errortext'];
+	$query = "UPDATE " . $DBPrefix . "settings SET errortext = :errortext";
+	$params = array();
+	$params[] = array(':errortext', $system->SETTINGS['errortext'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['413'];
 }
 
@@ -38,7 +40,7 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['411'], $MSG['410'], $CKEditor->editor('errortext', stripslashes($system->SETTINGS['errortext'])));
+loadblock($MSG['411'], $MSG['410'], $CKEditor->editor('errortext', $system->uncleanvars($system->SETTINGS['errortext'])));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

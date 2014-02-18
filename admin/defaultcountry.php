@@ -23,10 +23,13 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['defaultcountry'] = $system->cleanvars($_POST['country']);
 	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET defaultcountry = '" . $_POST['country'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['defaultcountry'] = $_POST['country'];
+	$query = "UPDATE " . $DBPrefix . "settings SET defaultcountry = :defaultcountry";
+	$params = array();
+	$params[] = array(':defaultcountry', $system->SETTINGS['defaultcountry'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['5323'];
 }
 

@@ -20,7 +20,7 @@ if(isset($_SESSION['csrftoken']))
 	else
 		$valid_req = true;		# Neither GET nor POST params exist => permit
 	if(!$valid_req) 
-	{ 
+	{
 		global $MSG, $ERR_077; 
 
 		$_SESSION['msg_title'] = $MSG['936']; 
@@ -45,8 +45,11 @@ else
 	// update admin notes
 	if (isset($_POST['anotes']) && !empty($_POST['anotes']))
 	{
-		$query = "UPDATE " . $DBPrefix . "adminusers SET notes = '" . $system->cleanvars($_POST['anotes']) . "' WHERE id = " . $_SESSION['WEBID_ADMIN_IN'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "adminusers SET notes = :admin_note WHERE id = :admin_id";
+		$params = array();
+		$params[] = array(':admin_note', $system->cleanvars($_POST['anotes']), 'str');
+		$params[] = array(':admin_id', $_SESSION['WEBID_ADMIN_IN'], 'int');
+		$db->query($query, $params);
 	}
 
 	$mth = 'MON_0' . gmdate('m', $_SESSION['WEBID_ADMIN_TIME']);

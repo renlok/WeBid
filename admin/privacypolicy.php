@@ -23,13 +23,17 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['privacypolicy'] = ynbool($_POST['privacypolicy']);
+	$system->SETTINGS['privacypolicytext'] = $system->cleanvars($_POST['privacypolicytext']);
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			privacypolicy = '" . $_POST['privacypolicy'] . "',
-			privacypolicytext = '" . mysql_real_escape_string($_POST['privacypolicytext']) . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['privacypolicy'] = $_POST['privacypolicy'];
-	$system->SETTINGS['privacypolicytext'] = $_POST['privacypolicytext'];
+			privacypolicy = :privacypolicy,
+			privacypolicytext = :privacypolicytext";
+	$params = array();
+	$params[] = array(':privacypolicy', $system->SETTINGS['privacypolicy'], 'str');
+	$params[] = array(':privacypolicytext', $system->SETTINGS['privacypolicytext'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['406'];
 }
 loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['030'], $MSG['029']));
@@ -40,7 +44,7 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['404'], $MSG['5080'], $CKEditor->editor('privacypolicytext', stripslashes($system->SETTINGS['privacypolicytext'])));
+loadblock($MSG['404'], $MSG['5080'], $CKEditor->editor('privacypolicytext', $system->uncleanvars($system->SETTINGS['privacypolicytext'])));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

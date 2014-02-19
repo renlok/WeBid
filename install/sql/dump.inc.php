@@ -762,6 +762,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('San Marino');";
 $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Sao Tome and Principe');";
 $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Saudi Arabia');";
 $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Senegal');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Serbia');";
 $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Seychelles');";
 $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Sierra Leone');";
 $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Singapore');";

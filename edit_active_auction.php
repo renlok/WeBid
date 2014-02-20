@@ -15,6 +15,7 @@
 include 'common.php';
 
 $NOW = time();
+$id = intval($_GET['id']);
 
 // Is the seller logged in?
 if (!$user->logged_in)
@@ -24,10 +25,12 @@ if (!$user->logged_in)
 	exit;
 }
 
-$query = "SELECT id FROM " . $DBPrefix . "bids WHERE auction = " . intval($_GET['id']);
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0) {
+$query = "SELECT id FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
+$params = array();
+$params[] = array(':auc_id', $id, 'int');
+$db->query($query, $params);
+if ($db->numrows() > 0)
+{
 	header('location: index.php');
 	exit;
 }
@@ -37,11 +40,12 @@ if (!isset($_POST['action'])) // already closed auctions
 	// Get Closed auctions data
 	unset($_SESSION['UPLOADED_PICTURES']);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE']);
-	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . intval($_GET['id']) . " AND user = " . $user->user_data['id'];
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-
-	$RELISTEDAUCTION = mysql_fetch_array($result);
+	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = :auc_id AND user = :user_id";
+	$params = array();
+	$params[] = array(':auc_id', $id, 'int');
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$db->query($query, $params);
+	$RELISTEDAUCTION = $db->fetchall();
 	$difference = $RELISTEDAUCTION['ends'] - time();
 
 	if ($user->user_data['id'] == $RELISTEDAUCTION['user'] && $difference > 0)

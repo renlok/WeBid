@@ -33,14 +33,13 @@ function printLogL($str, $level)
 
 function constructCategories()
 {
-	global $DBPrefix, $system;
+	global $DBPrefix, $system, $db;
 
 	$query = "SELECT cat_id, parent_id, sub_counter, counter
 			 FROM " . $DBPrefix . "categories ORDER BY cat_id";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 
-	while ($row = mysql_fetch_array($res))
+	while ($row = $db->fetch())
 	{
 		$row['updated'] = false;
 		$categories[$row['cat_id']] = $row;
@@ -50,13 +49,14 @@ function constructCategories()
 
 function sendWatchEmails($id)
 {
-	global $DBPrefix, $system;
+	global $DBPrefix, $system, $db;
 
-	$query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE '% " . $id . " %'";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE :item_watch";
+	$params = array();
+	$params[] = array(':item_watch', '% ' . $id . ' %', 'str');
+	$db->query($query, $params);
 
-	while ($watchusers = mysql_fetch_array($res))
+	while ($watchusers = $db->fetch())
 	{
 		$keys = explode(' ', $watchusers['item_watch']);
 		// If keyword matches with opened auction title or/and desc send user a mail
@@ -77,7 +77,7 @@ function sendWatchEmails($id)
 function sortFees()
 {
 	global $DBPrefix, $system, $Winner, $Seller, $Auction, $buyer_emails;
-	global $endauc_fee, $buyer_fee, $buyer_fee_type, $bf_paid, $ff_paid;
+	global $endauc_fee, $buyer_fee, $buyer_fee_type, $bf_paid, $ff_paid, $NOW, $db;
 
 	if ($system->SETTINGS['fee_type'] == 1 || $buyer_fee <= 0)
 	{
@@ -90,17 +90,27 @@ function sortFees()
 			$fee_value = ($buyer_fee / 100) * floatval($Auction['current_bid']);
 		}
 		// add balance & invoice
-		$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $buyer_fee . " WHERE id = " . $Winner['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :buyer_fee WHERE id = :winner_id";
+		$params = array();
+		$params[] = array(':buyer_fee', $buyer_fee, 'float');
+		$params[] = array(':winner_id', $Winner['id'], 'int');
+		$db->query($query, $params);
 		$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
-				(" . $Winner['id'] . ", " . $Auction['id'] . ", " . time() . ", " . $buyer_fee . ", " . $buyer_fee . ", 1)";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				(:winner_id, :auc_id, :time, :buyer_fee, :buyer_fee, 1)";
+		$params = array();
+		$params[] = array(':buyer_fee', $buyer_fee, 'float');
+		$params[] = array(':winner_id', $Winner['id'], 'int');
+		$params[] = array(':auc_id', $user_id, 'int');
+		$params[] = array(':time', $NOW, 'int');
+		$db->query($query, $params);
 	}
 	else
 	{
 		$bf_paid = 0;
-		$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $Winner['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = :winner_id";
+		$params = array();
+		$params[] = array(':winner_id', $Winner['id'], 'int');
+		$db->query($query, $params);
 		$buyer_emails[] = array(
 			'name' => $Winner['name'],
 			'email' => $Winner['email'],
@@ -130,17 +140,27 @@ function sortFees()
 	if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
 	{
 		// add balance & invoice
-		$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Seller['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :seller_id";
+		$params = array();
+		$params[] = array(':fee_value', $fee_value, 'float');
+		$params[] = array(':seller_id', $Seller['id'], 'int');
+		$db->query($query, $params);
 		$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, finalval, total, paid) VALUES
-				(" . $Seller['id'] . ", " . $Auction['id'] . ", " . time() . ", " . $fee_value . ", " . $fee_value . ", 1)";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				(:seller_id, :auc_id, :time, :fee_value, :fee_value, 1)";
+		$params = array();
+		$params[] = array(':fee_value', $fee_value, 'float');
+		$params[] = array(':seller_id', $Seller['id'], 'int');
+		$params[] = array(':auc_id', $user_id, 'int');
+		$params[] = array(':time', $NOW, 'int');
+		$db->query($query, $params);
 	}
 	else
 	{
 		$ff_paid = 0;
-		$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Seller['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = :seller_id";
+		$params = array();
+		$params[] = array(':seller_id', $Seller['id'], 'int');
+		$db->query($query, $params);
 		$seller_emails[] = array(
 			'name' => $Seller['name'],
 			'email' => $Seller['email'],

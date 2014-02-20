@@ -37,42 +37,47 @@ $categories = constructCategories();
 printLog('++++++ Closing expired auctions');
 $NOW = time();
 $NOWB = gmdate('Ymd');
-
-$query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$row = @mysql_result($res, 0);
-$buyer_fee = $row['value'];
-$buyer_fee = (empty($buyer_fee)) ? 0 : $buyer_fee;
-$buyer_fee_type = $row['fee_type'];
 $buyer_emails = array();
 $seller_emails = array();
 
+// get buyer fee
+$query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
+$db->direct_query($query);
+$row = $db->fetchall();
+$buyer_fee = $row['value'];
+$buyer_fee = (empty($buyer_fee)) ? 0 : $buyer_fee;
+$buyer_fee_type = $row['fee_type'];
+
+// get closed auction fee
 $query = "SELECT * FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $endauc_fee = array();
-while($row = mysql_fetch_assoc($res))
+while($row = $db->fetch())
 {
 	$endauc_fee[] = $row;
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "auctions
-		 WHERE ends <= '" . $NOW . "'
-		 AND ((closed = 0)
-		 OR (closed = 1
-		 AND reserve_price > 0
-		 AND num_bids > 0
-		 AND current_bid < reserve_price
-		 AND sold = 's'))";
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
+// get a list of all ended auctions
+$query = "SELECT a.*, u.email, u.endemailmode, u.nick, u.payment_details, u.name
+		FROM " . $DBPrefix . "auctions a
+		LEFT JOIN " . $DBPrefix . "users u ON (a.user = u.id)
+		WHERE a.ends <= :time
+		AND ((a.closed = 0)
+		OR (a.closed = 1
+		AND a.reserve_price > 0
+		AND a.num_bids > 0
+		AND a.current_bid < a.reserve_price
+		AND a.sold = 's'))";
+$params = array();
+$params[] = array(':time', $NOW, 'int');
+$db->query($query, $params);
 
-$count_auctions = $num = mysql_num_rows($result);
+$count_auctions = $num = $db->numrows();
 printLog($num . ' auctions to close');
 
 $n = 1;
-while ($Auction = mysql_fetch_assoc($result)) // loop auctions
+$auction_data = $db->fetchall();
+foreach ($auction_data as $Auction) // loop auctions
 {
 	$n++;
 	$report_text = '';
@@ -82,37 +87,33 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 	// Send notification to all users watching this auction
 	sendWatchEmails($Auction['id']);
 
-	// RETRIEVE SELLER INFO FROM DATABASE
-	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $Auction['user'] . " LIMIT 1";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) > 0)
-	{
-		$Seller = mysql_fetch_assoc($res);
-	}
-	else
-	{
-		$Seller = array();
-	}
+	// set seller array
+	$Seller = array(
+		'id' => $Auction['user'],
+		'email' => $Auction['email'],
+		'endemailmode' => $Auction['endemailmode'],
+		'nick' => $Auction['nick'],
+		'payment_details' => $Auction['payment_details'],
+		'name' => $Auction['name']);
 
 	// get an order list of bids of the item (high to low)
 	$winner_present = false;
 	$query = "SELECT u.* FROM " . $DBPrefix . "bids b
 			LEFT JOIN " . $DBPrefix . "users u ON (b.bidder = u.id)
-			WHERE auction = '" . $Auction['id'] . "' ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$decrem = mysql_num_rows($res);
+			WHERE auction = :auc_id ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
+	$params = array();
+	$params[] = array(':auc_id', $Auction['id'], 'int');
+	$db->query($query, $params);
+	$num_bids = $db->numrows();
 
 	// send email to seller - to notify him
 	// create a "report" to seller depending of what kind auction is
 	$atype = intval($Auction['auction_type']);
 	if ($atype == 1)
 	{
-		if ($decrem > 0 && ($Auction['current_bid'] >= $Auction['reserve_price'] || $Auction['sold'] == 's'))
+		if ($num_bids > 0 && ($Auction['current_bid'] >= $Auction['reserve_price'] || $Auction['sold'] == 's'))
 		{
-			mysql_data_seek($res, 0); // load row 0
-			$Winner = mysql_fetch_assoc($res);
+			$Winner = $db->fetch();
 			$Winner['quantity'] = $Auction['quantity'];
 			$WINNING_BID = $Auction['current_bid'];
 			$winner_present = true;
@@ -130,8 +131,8 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 			{
 				$report_text .= $MSG['30_0086'] . $Winner['address'] . ' ' . $Winner['city'] . ' ' . $Winner['prov'] . ' ' . $Winner['zip'] . ', ' . $Winner['country'];
 			}
-			$bf_paid = 1;
-			$ff_paid = 1;
+			$bf_paid = 1; // buyer fee payed?
+			$ff_paid = 1; // auction end fee payed?
 			// work out & add fee
 			if ($system->SETTINGS['fees'] == 'y')
 			{
@@ -140,8 +141,16 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-			(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $Winner['id'] . "', " . $Auction['current_bid'] . ", '" . $NOW . "', 0, 0, 1, 0, " . $bf_paid . ", " . $ff_paid . ")";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			(NULL, :auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, 1, 0, :bf_paid, :ff_paid)";
+			$params = array();
+			$params[] = array(':auc_id', $Auction['id'], 'int');
+			$params[] = array(':seller_id', $Seller['id'], 'int');
+			$params[] = array(':winner_id', $Winner['id'], 'int');
+			$params[] = array(':time', $NOW, 'int');
+			$params[] = array(':current_bid', $Auction['current_bid'], 'float');
+			$params[] = array(':bf_paid', $bf_paid, 'int');
+			$params[] = array(':ff_paid', $ff_paid, 'int');
+			$db->query($query, $params);
 		}
 		else
 		{
@@ -153,17 +162,19 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 		// Dutch Auction
 		// find out winners sorted by bid
 		$query = "SELECT *, MAX(bid) AS maxbid
-				FROM " . $DBPrefix . "bids WHERE auction = " . $Auction['id'] . " GROUP BY bidder
+				FROM " . $DBPrefix . "bids WHERE auction = :auc_id GROUP BY bidder
 				ORDER BY maxbid DESC, quantity DESC, id DESC";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$params = array();
+		$params[] = array(':auc_id', $Auction['id'], 'int');
+		$db->query($query, $params);
 
-		$decrem = $decrem + mysql_num_rows($res);
+		$num_bids = $num_bids + $db->numrows();
 		$WINNERS_ID = array();
 		$winner_array = array();
 		$items_count = $Auction['quantity'];
 		$items_sold = 0;
-		while($row = mysql_fetch_assoc($res))
+		$bidder_data = $db->fetchall(); // load every bid
+		foreach ($bidder_data as $row)
 		{
 			if (!in_array($row['bidder'], $WINNERS_ID))
 			{
@@ -182,10 +193,11 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 
 				// Retrieve winner nick from the database
 				$query = "SELECT id, nick, email, name, address, city, zip, prov, country
-						FROM " . $DBPrefix . "users WHERE id = " . $row['bidder'] . " LIMIT 1";
-				$res_n = mysql_query($query);
-				$system->check_mysql($res_n, $query, __LINE__, __FILE__);
-				$Winner = mysql_fetch_assoc($res_n);
+						FROM " . $DBPrefix . "users WHERE id = :bidder LIMIT 1";
+				$params = array();
+				$params[] = array(':bidder', $row['bidder'], 'int');
+				$db->query($query, $params);
+				$Winner = $db->fetch();
 				// set arrays
 				$WINNERS_ID[] = $row['bidder'];
 				$Winner['maxbid'] = $row['maxbid'];
@@ -210,8 +222,17 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 
 				// Add winner's data to "winners" table
 				$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-						(NULL, '" . $Auction['id'] . "', '" . $Seller['id'] . "', '" . $row['bidder'] . "', " . $row['maxbid'] . ", '" . $NOW . "', 0, 0, " . $items_got . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						(NULL, :auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, :items_got, 0, :bf_paid, :ff_paid)";
+				$params = array();
+				$params[] = array(':auc_id', $Auction['id'], 'int');
+				$params[] = array(':seller_id', $Seller['id'], 'int');
+				$params[] = array(':winner_id', $row['bidder'], 'int');
+				$params[] = array(':time', $NOW, 'int');
+				$params[] = array(':items_got', $items_got, 'int');
+				$params[] = array(':current_bid', $row['maxbid'], 'float');
+				$params[] = array(':bf_paid', $bf_paid, 'int');
+				$params[] = array(':ff_paid', $ff_paid, 'int');
+				$db->query($query, $params);
 			}
 			if ($items_count == 0)
 			{
@@ -225,26 +246,36 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 	$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);
 
 	$close_auction = true;
+	// deal with the automatic relists find which auctions are to be relisted
 	if ($Auction['relist'] > 0 && ($Auction['relist'] - $Auction['relisted']) > 0 && $Auction['suspended'] == 0)
 	{
-		// Auctomatic relisting
-		$query = "SELECT id FROM " . $DBPrefix . "bids WHERE auction = '" . $Auction['id'] . "'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$_BIDSNUM = mysql_num_rows($res);
+		$query = "SELECT id FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $Auction['id'], 'int');
+		$db->query($query, $params);
+		$_BIDSNUM = $db->numrows();
 
+		// noone won the auction so remove bids and start it again
 		if ($_BIDSNUM == 0 || ($_BIDSNUM > 0 && $Auction['reserve_price'] > 0 && !$winner_present))
 		{
 			// Calculate end time
 			$_ENDS = $NOW + $Auction['duration'] * 24 * 60 * 60;
 
-			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $Auction['id']; 
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__); 
-			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $Auction['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			$query = "UPDATE " . $DBPrefix . "auctions SET starts = '" . $NOW . "', ends = '" . $_ENDS . "',
-					current_bid = 0, num_bids = 0, relisted = relisted + 1 WHERE id = " . $Auction['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $Auction['id'], 'int');
+			$db->query($query, $params);
+			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $Auction['id'], 'int');
+			$db->query($query, $params);
+			$query = "UPDATE " . $DBPrefix . "auctions SET starts = :time, ends = :ends,
+					current_bid = 0, num_bids = 0, relisted = relisted + 1 WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':time', $NOW, 'int');
+			$params[] = array(':ends', $_ENDS, 'int');
+			$params[] = array(':auc_id', $Auction['id'], 'int');
+			$db->query($query, $params);
 			$close_auction = false;
 			$count_auctions--;
 		}
@@ -288,8 +319,10 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 		}
 
 		// Close auction
-		$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'y' WHERE id = " . $Auction['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'y' WHERE id = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $Auction['id'], 'int');
+		$db->query($query, $params);
 	}
 
 	// WINNER PRESENT
@@ -323,17 +356,27 @@ while ($Auction = mysql_fetch_assoc($result)) // loop auctions
 		{
 			// Save in the database to send later
 			$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
-			(NULL, " . $Auction['id'] . ", " . $Seller['id'] . ", '', '" . serialize($Auction) . "', '" . serialize($Seller) . "', '" . gmdate('Ymd') . "')";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			(NULL, :auc_id, :seller_id, '', :auction_data, :seller_data, :date)";
+			$params = array();
+			$params[] = array(':auc_id', $Auction['id'], 'int');
+			$params[] = array(':seller_id', $Auction['id'], 'int');
+			$params[] = array(':auction_data', serialize($Auction), 'str');
+			$params[] = array(':seller_data', serialize($Seller), 'str');
+			$params[] = array(':date', gmdate('Ymd'), 'int');
+			$db->query($query, $params);
 		}
 	}
 	// Update bid counter
-	$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids - " . $decrem . ")";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids - :num_bids)";
+	$params = array();
+	$params[] = array(':num_bids', $num_bids, 'int');
+	$db->query($query, $params);
 }
 
-$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - " . $count_auctions . "), closedauctions = (closedauctions + " . $count_auctions . ")";
-$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - :num_aucs), closedauctions = (closedauctions + :num_aucs)";
+$params = array();
+$params[] = array(':num_aucs', $count_auctions, 'int');
+$db->query($query, $params);
 
 if (count($categories) > 0)
 {
@@ -342,10 +385,14 @@ if (count($categories) > 0)
 		if ($category['updated'])
 		{
 			$query = "UPDATE " . $DBPrefix . "categories SET
-					 counter = " . $category['counter'] . ",
-					 sub_counter = " . $category['sub_counter'] . "
-					 WHERE cat_id = " . $cat_id;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					 counter = :counter,
+					 sub_counter = :sub_counter
+					 WHERE cat_id = :cat_id";
+			$params = array();
+			$params[] = array(':counter', $category['counter'], 'int');
+			$params[] = array(':sub_counter', $category['sub_counter'], 'int');
+			$params[] = array(':cat_id', $cat_id, 'int');
+			$db->query($query, $params);
 		}
 	}
 }
@@ -357,33 +404,43 @@ printLog("++++++ Archiving old auctions");
 $expireAuction = 60 * 60 * 24 * $system->SETTINGS['archiveafter']; // time of auction expiration (in seconds)
 $expiredTime = time() - $expireAuction;
 
-$query = "SELECT id FROM " . $DBPrefix . "auctions WHERE ends <= '" . $expiredTime . "'";
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
+$query = "SELECT id FROM " . $DBPrefix . "auctions WHERE ends <= :expiredTime";
+$params = array();
+$params[] = array(':expiredTime', $expiredTime, 'int');
+$db->query($query, $params);
 
-$num = mysql_num_rows($result);
+$num = $db->numrows();
 printLog($num . " auctions to archive");
 if ($num > 0)
 {
-	while ($AuctionInfo = mysql_fetch_assoc($result))
+	$auction_data = $db->fetchall();
+	foreach ($auction_data as $AuctionInfo)
 	{
 		printLogL("Processing auction: " . $AuctionInfo['id'], 0);
 
 		// delete auction
-		$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = '" . $AuctionInfo['id'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $AuctionInfo['id'], 'int');
+		$db->query($query, $params);
 
 		// delete bids for this auction
-		$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction='" . $AuctionInfo['id'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $AuctionInfo['id'], 'int');
+		$db->query($query, $params);
 
 		// Delete proxybid entries
-		$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $AuctionInfo['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $AuctionInfo['id'], 'int');
+		$db->query($query, $params);
 
 		// Delete counter entries
-		$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $AuctionInfo['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $AuctionInfo['id'], 'int');
+		$db->query($query, $params);
 
 		// Delete all images
 		if (file_exists($upload_path . $AuctionInfo['id']))
@@ -406,18 +463,21 @@ if ($num > 0)
 
 // send cumulative emails
 $query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE endemailmode = 'cum'";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
-while($row = mysql_fetch_assoc($res))
+$user_data = $db->fetchall();
+foreach ($auction_data as $row)
 {
-	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < '" . gmdate('Ymd') . "' AND seller_id = " . $row['id'];
-	$res_ = mysql_query($query);
-	$system->check_mysql($res_, $query, __LINE__, __FILE__);
+	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < '" . gmdate('Ymd') . "' AND seller_id = :seller_id";
+	$params = array();
+	$params[] = array(':seller_id', $row['id'], 'int');
+	$params[] = array(':date', gmdate('Ymd'), 'int');
+	$db->query($query, $params);
 
-	if (mysql_num_rows($res_) > 0)
+	if ($db->numrows() > 0)
 	{
-		while($pending = mysql_fetch_assoc($res_))
+		$pending_data = $db->fetchall();
+		foreach ($pending_data as $pending)
 		{
 			$Auction = unserialize($pending['auction']);
 			$Seller = unserialize($pending['seller']);
@@ -432,8 +492,10 @@ while($row = mysql_fetch_assoc($res))
 			{
 				$report .= $MSG['1032']."\n\n";
 			}
-			$query = "DELETE FROM " . $DBPrefix . "pendingnotif WHERE id = " . $pending['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "pendingnotif WHERE id = :pending_id";
+			$params = array();
+			$params[] = array(':pending_id', $pending['id'], 'int');
+			$db->query($query, $params);
 		}
 		include $include_path . 'email_endauction_cumulative.php';
 	}

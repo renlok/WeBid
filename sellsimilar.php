@@ -27,10 +27,12 @@ if (!isset($_POST['action']))
 	// Get Closed auctions data
 	unset($_SESSION['UPLOADED_PICTURES']);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE']);
-	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . $id . " AND user = " . $user->user_data['id'];
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$RELISTEDAUCTION = mysql_fetch_assoc($result);
+	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = :auc_id AND user = :user_id";
+	$params = array();
+	$params[] = array(':auc_id', $id, 'int');
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$db->query($query, $params);
+	$RELISTEDAUCTION = $db->fetchall();
 
 	$_SESSION['SELL_starts']		= '';
 	$_SESSION['SELL_start_now'] 	= '1';

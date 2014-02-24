@@ -215,7 +215,7 @@ else
 $query = "SELECT *  FROM " . $DBPrefix . "auctions
 	WHERE user = " . $user->user_data['id'] . "
 	AND closed = 1 AND suspended = 0
-	AND (num_bids = 0 OR (num_bids > 0 AND reserve_price > 0 AND current_bid < reserve_price AND sold = 'n'))
+	AND (num_bids > 0 OR (num_bids > 0 AND reserve_price > 0 AND current_bid < reserve_price AND sold = 'n'))
 	ORDER BY " . $_SESSION['ca_ord'] . " " . $_SESSION['ca_type'] . " LIMIT $OFFSET, " . $system->SETTINGS['perpage'];
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);

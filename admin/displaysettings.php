@@ -22,25 +22,35 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['perpage'] = intval($_POST['perpage']);
+	$system->SETTINGS['thumb_list'] = intval($_POST['thumb_list']);
+	$system->SETTINGS['loginbox'] = intval($_POST['loginbox']);
+	$system->SETTINGS['newsbox'] = intval($_POST['newsbox']);
+	$system->SETTINGS['newstoshow'] = intval($_POST['newstoshow']);
+	$system->SETTINGS['lastitemsnumber'] = intval($_POST['lastitemsnumber']);
+	$system->SETTINGS['hotitemsnumber'] = intval($_POST['hotitemsnumber']);
+	$system->SETTINGS['endingsoonnumber'] = intval($_POST['endingsoonnumber']);
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  perpage = '" . $_POST['perpage'] . "',
-			  thumb_list = " . intval($_POST['thumb_list']) . ",
-			  lastitemsnumber = " . intval($_POST['lastitemsnumber']) . ",
-			  hotitemsnumber = " . intval($_POST['hotitemsnumber']) . ",
-			  endingsoonnumber = " . intval($_POST['endingsoonnumber']) . ",
-			  loginbox = " . intval($_POST['loginbox']) . ",
-			  newsbox = " . intval($_POST['newsbox']) . ",
-			  newstoshow = " . intval($_POST['newstoshow']);
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['perpage'] = $_POST['perpage'];
-	$system->SETTINGS['thumb_list'] = $_POST['thumb_list'];
-	$system->SETTINGS['loginbox'] = $_POST['loginbox'];
-	$system->SETTINGS['newsbox'] = $_POST['newsbox'];
-	$system->SETTINGS['newstoshow'] = $_POST['newstoshow'];
-	$system->SETTINGS['lastitemsnumber'] = $_POST['lastitemsnumber'];
-	$system->SETTINGS['hotitemsnumber'] = $_POST['hotitemsnumber'];
-	$system->SETTINGS['endingsoonnumber'] = $_POST['endingsoonnumber'];
+			  perpage = :perpage,
+			  thumb_list = :thumb_list,
+			  lastitemsnumber = :lastitemsnumber,
+			  hotitemsnumber = :hotitemsnumber,
+			  endingsoonnumber = :endingsoonnumber,
+			  loginbox = :loginbox,
+			  newsbox = :newsbox,
+			  newstoshow = :newstoshow";
+	$params = array();
+	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+	$params[] = array(':thumb_list', $system->SETTINGS['thumb_list'], 'int');
+	$params[] = array(':lastitemsnumber', $system->SETTINGS['lastitemsnumber'], 'int');
+	$params[] = array(':hotitemsnumber', $system->SETTINGS['hotitemsnumber'], 'int');
+	$params[] = array(':endingsoonnumber', $system->SETTINGS['endingsoonnumber'], 'int');
+	$params[] = array(':loginbox', $system->SETTINGS['loginbox'], 'int');
+	$params[] = array(':newsbox', $system->SETTINGS['newsbox'], 'int');
+	$params[] = array(':newstoshow', $system->SETTINGS['newstoshow'], 'int');
+	$db->query($query, $params);
 	$ERR = $MSG['795'];
 }
 

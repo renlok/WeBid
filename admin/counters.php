@@ -22,18 +22,23 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
 	if (isset($_POST['auctions']) && $_POST['auctions'] != 'y') $_POST['auctions'] = 'n';
 	if (isset($_POST['users']) && $_POST['users'] != 'y') $_POST['users'] = 'n';
 	if (isset($_POST['online']) && $_POST['online'] != 'y') $_POST['online'] = 'n';
+	$system->SETTINGS['counter_auctions'] = ynbool($_POST['auctions']);
+	$system->SETTINGS['counter_users'] = ynbool($_POST['users']);
+	$system->SETTINGS['counter_online'] = ynbool($_POST['online']);
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			  counter_auctions = '" . $_POST['auctions'] . "',
-			  counter_users = '" . $_POST['users'] . "',
-			  counter_online = '" . $_POST['online'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['counter_auctions'] = $_POST['auctions'];
-	$system->SETTINGS['counter_users'] = $_POST['users'];
-	$system->SETTINGS['counter_online'] = $_POST['online'];
+			  counter_auctions = :counter_auctions,
+			  counter_users = :counter_users,
+			  counter_online = :counter_online";
+	$params = array();
+	$params[] = array(':counter_auctions', $system->SETTINGS['counter_auctions'], 'str');
+	$params[] = array(':counter_users', $system->SETTINGS['counter_users'], 'str');
+	$params[] = array(':counter_online', $system->SETTINGS['counter_online'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['2__0063'];
 }
 

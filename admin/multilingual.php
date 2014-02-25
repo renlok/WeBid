@@ -22,10 +22,13 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['defaultlanguage']))
 {
-	$query = "UPDATE " . $DBPrefix . "settings SET defaultlanguage = '" . $_POST['defaultlanguage'] . "'";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$system->SETTINGS['defaultlanguage'] = $_POST['defaultlanguage'];
+	// clean submission
+	$system->SETTINGS['defaultlanguage'] = $system->cleanvars($_POST['defaultlanguage']);
+	// Update database
+	$query = "UPDATE " . $DBPrefix . "settings SET defaultlanguage = :defaultlanguage";
+	$params = array();
+	$params[] = array(':defaultlanguage', $system->SETTINGS['defaultlanguage'], 'str');
+	$db->query($query, $params);
 }
 
 $html = '';

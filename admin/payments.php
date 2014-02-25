@@ -49,8 +49,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	$system->SETTINGS['payment_options'] = serialize($rebuilt_array);
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			payment_options = '" . $system->SETTINGS['payment_options'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			payment_options = :payment_options";
+	$params = array();
+	$params[] = array(':payment_options', $system->cleanvars($system->SETTINGS['payment_options']), 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['093'];
 }
 

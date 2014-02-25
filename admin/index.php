@@ -41,105 +41,131 @@ if (isset($_GET['action']))
 		case 'updatecounters':
 			//update users counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "users WHERE suspended = 0";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$USERS = mysql_result($res, 0);
-			$query = "UPDATE " . $DBPrefix . "counters SET users = " . $USERS;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
+			$USERS = $db->result();
+			$query = "UPDATE " . $DBPrefix . "counters SET users = :USERS";
+			$params = array();
+			$params[] = array(':USERS', $USERS, 'int');
+			$db->query($query, $params);
 
 			//update suspended users counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "users WHERE suspended != 0";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$USERS = mysql_result($res, 0);
-			$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = " . $USERS;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
+			$USERS = $db->result();
+			$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = :USERS";
+			$params = array();
+			$params[] = array(':USERS', $USERS, 'int');
+			$db->query($query, $params);
 
 			//update auction counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed = 0 AND suspended = 0";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$AUCTIONS = mysql_result($res, 0);
-			$query = "UPDATE " . $DBPrefix . "counters SET auctions = " . $AUCTIONS;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
+			$AUCTIONS = $db->result();
+			$query = "UPDATE " . $DBPrefix . "counters SET auctions = :AUCTIONS";
+			$params = array();
+			$params[] = array(':AUCTIONS', $AUCTIONS, 'int');
+			$db->query($query, $params);
 
 			//update closed auction counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed != 0";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$AUCTIONS = mysql_result($res, 0);
-			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = " . $AUCTIONS;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
+			$AUCTIONS = $db->result();
+			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = :AUCTIONS";
+			$params = array();
+			$params[] = array(':AUCTIONS', $AUCTIONS, 'int');
+			$db->query($query, $params);
 
 			//update suspended auctions counter
 			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed = 0 and suspended != 0";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$AUCTIONS = mysql_result($res, 0);
-			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = " . $AUCTIONS;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
+			$AUCTIONS = $db->result();
+			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = :AUCTIONS";
+			$params = array();
+			$params[] = array(':AUCTIONS', $AUCTIONS, 'int');
+			$db->query($query, $params);
 
 			//update bids
 			$query = "SELECT COUNT(b.id) FROM " . $DBPrefix . "bids b
 					LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
 					WHERE a.closed = 0 AND a.suspended = 0";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$BIDS = mysql_result($res, 0);
-			$query = "UPDATE " . $DBPrefix . "counters SET bids = " . $BIDS;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
+			$BIDS = $db->result();
+			$query = "UPDATE " . $DBPrefix . "counters SET bids = :BIDS";
+			$params = array();
+			$params[] = array(':BIDS', $BIDS, 'int');
+			$db->query($query, $params);
 
 			// update categories
 			$catscontrol = new MPTTcategories();
 			$query = "UPDATE " . $DBPrefix . "categories set counter = 0, sub_counter = 0";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 
 			$query = "SELECT COUNT(*) AS COUNT, category FROM " . $DBPrefix . "auctions
-					WHERE closed = 0 AND starts <= " . time() . " AND suspended = 0 GROUP BY category";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			while ($row = mysql_fetch_assoc($res))
+					WHERE closed = 0 AND starts <= :time AND suspended = 0 GROUP BY category";
+			$params = array();
+			$params[] = array(':time', time(), 'int');
+			$db->query($query, $params);
+
+			$cat_data = $db->fetchall();
+			foreach ($cat_data as $row)
 			{
 				$row['COUNT'] = $row['COUNT'] * 1; // force it to be a number
 				if ($row['COUNT'] > 0 && !empty($row['category'])) // avoid some errors
 				{
-					$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['category'];
-					$res_ = mysql_query($query);
-					$system->check_mysql($res_, $query, __LINE__, __FILE__);
-					$parent_node = mysql_fetch_assoc($res_);
+					$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+					$params = array();
+					$params[] = array(':cat_id', $row['category'], 'int');
+					$db->query($query, $params);
+					$parent_node = $db->fetch();
 
 					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 					for ($i = 0; $i < count($crumbs); $i++)
 					{
-						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $crumbs[$i]['cat_id'];
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + :COUNT WHERE cat_id = :cat_id";
+						$params = array();
+						$params[] = array(':COUNT', $row['COUNT'], 'int');
+						$params[] = array(':cat_id', $crumbs[$i]['cat_id'], 'int');
+						$db->query($query, $params);
 					}
-					$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $row['category'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + :COUNT WHERE cat_id = :cat_id";
+					$params = array();
+					$params[] = array(':COUNT', $row['COUNT'], 'int');
+					$params[] = array(':cat_id', $row['category'], 'int');
+					$db->query($query, $params);
 				}
 			}
 
 			if ($system->SETTINGS['extra_cat'] == 'y')
 			{
 				$query = "SELECT COUNT(*) AS COUNT, secondcat FROM " . $DBPrefix . "auctions
-						WHERE closed = 0 AND starts <= " . time() . " AND suspended = 0 AND secondcat != 0 GROUP BY secondcat";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				while ($row = mysql_fetch_assoc($res))
+						WHERE closed = 0 AND starts <= :time AND suspended = 0 AND secondcat != 0 GROUP BY secondcat";
+				$params = array();
+				$params[] = array(':time', time(), 'int');
+				$db->query($query, $params);
+
+				$cat_data = $db->fetchall();
+				foreach ($cat_data as $row)
 				{
-					$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $row['secondcat'];
-					$res_ = mysql_query($query);
-					$system->check_mysql($res_, $query, __LINE__, __FILE__);
-					$parent_node = mysql_fetch_assoc($res_);
+					$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+					$params = array();
+					$params[] = array(':cat_id', $row['secondcat'], 'int');
+					$db->query($query, $params);
+					$parent_node = $db->fetch();
 	
 					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 					for ($i = 0; $i < count($crumbs); $i++)
 					{
-						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $crumbs[$i]['cat_id'];
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + :COUNT WHERE cat_id = :cat_id";
+						$params = array();
+						$params[] = array(':COUNT', $row['COUNT'], 'int');
+						$params[] = array(':cat_id', $crumbs[$i]['cat_id'], 'int');
+						$db->query($query, $params);
 					}
-					$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + '" . $row['COUNT'] . "' WHERE cat_id = " . $row['secondcat'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + :COUNT WHERE cat_id = :cat_id";
+					$params = array();
+					$params[] = array(':COUNT', $row['COUNT'], 'int');
+					$params[] = array(':cat_id', $row['secondcat'], 'int');
+					$db->query($query, $params);
 				}
 			}
 
@@ -149,14 +175,16 @@ if (isset($_GET['action']))
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "counters";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$COUNTERS = mysql_fetch_array($res);
+$db->direct_query($query);
+$COUNTERS = $db->fetch();
 
-$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE year = " . gmdate('Y') . " AND month = " . gmdate('m') . " AND day = " . gmdate('d');
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$ACCESS = mysql_fetch_array($res);
+$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE year = :year AND month = :month AND day = :day";
+$params = array();
+$params[] = array(':year', gmdate('Y'), 'str');
+$params[] = array(':month', gmdate('m'), 'str');
+$params[] = array(':day', gmdate('d'), 'str');
+$db->query($query, $params);
+$ACCESS = $db->fetch();
 $ACCESS['pageviews'] = (!isset($ACCESS['pageviews']) || empty($ACCESS['pageviews'])) ? 0 : $ACCESS['pageviews'];
 $ACCESS['uniquevisitors'] = (!isset($ACCESS['uniquevisitors']) || empty($ACCESS['uniquevisitors'])) ? 0 : $ACCESS['uniquevisitors'];
 $ACCESS['usersessions'] = (!isset($ACCESS['usersessions']) || empty($ACCESS['usersessions'])) ? 0 : $ACCESS['usersessions'];
@@ -164,9 +192,8 @@ $ACCESS['usersessions'] = (!isset($ACCESS['usersessions']) || empty($ACCESS['use
 if ($system->SETTINGS['activationtype'] == 0)
 {
 	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE suspended = 10";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$uuser_count = mysql_result($res, 0);
+	$db->direct_query($query);
+	$uuser_count = $db->result();
 }
 
 // version check

@@ -59,10 +59,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$mdata = serialize($MANDATORY_FIELDS);
 		$sdata = serialize($DISPLAYED_FIELDS);
-		$query = "UPDATE ".$DBPrefix."settings SET
-				  mandatory_fields = '" . $mdata . "',
-				  displayed_feilds = '" . $sdata . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "settings SET
+				  mandatory_fields = :mandatory_fields,
+				  displayed_feilds = :displayed_feilds";
+		$params = array();
+		$params[] = array(':mandatory_fields', $mdata, 'str');
+		$params[] = array(':displayed_feilds', $sdata, 'str');
+		$db->query($query, $params);
 		$ERR = $MSG['779'];
 	}
 }

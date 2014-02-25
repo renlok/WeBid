@@ -33,10 +33,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 	else
 	{
 		// Update database
-		$query = "INSERT INTO " . $DBPrefix . "bannersusers VALUES
-		(NULL, '" . mysql_real_escape_string($_POST['name']) . "', '" . mysql_real_escape_string($_POST['company']) . "', '" . $_POST['email'] . "')";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$ID = mysql_insert_id();
+		$query = "INSERT INTO " . $DBPrefix . "bannersusers VALUES (NULL, :name, :company, :email)";
+		$params = array();
+		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
+		$params[] = array(':company', $system->cleanvars($_POST['company']), 'str');
+		$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');
+		$db->query($query, $params);
+		$ID = $db->lastInsertId();
 		header('location: userbanners.php?id=' . $ID);
 		exit;
 	}

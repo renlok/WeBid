@@ -38,7 +38,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Check if "username" already exists in the database
 		$query = "SELECT id FROM " . $DBPrefix . "adminusers WHERE username = :username";
-		$res = mysql_query($query);
 		$params = array();
 		$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
 		$db->query($query, $params);

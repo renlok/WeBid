@@ -18,13 +18,12 @@ include $include_path . 'currencies.php';
 
 function CurrenciesList()
 {
-	global $system, $DBPrefix;
+	global $system, $DBPrefix, $db;
 
 	$query = "SELECT * FROM " . $DBPrefix . "rates";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$res = $db->direct_query($query);
 	$CURRENCIES = array();
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
 		$CURRENCIES[$row['symbol']] = $row['valuta'];
 	}

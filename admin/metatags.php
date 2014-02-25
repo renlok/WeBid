@@ -22,13 +22,18 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	// clean submission
+	$system->SETTINGS['descriptiontag'] = $system->cleanvars($_POST['descriptiontag']);
+	$system->SETTINGS['keywordstag'] = $system->cleanvars($_POST['keywordstag']);
+	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			 descriptiontag = '" . $system->cleanvars($_POST['descriptiontag']) . "',
-			 keywordstag = '" . $system->cleanvars($_POST['keywordstag']) . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			 descriptiontag = :descriptiontag,
+			 keywordstag = :keywordstag";
+	$params = array();
+	$params[] = array(':descriptiontag', $system->SETTINGS['descriptiontag'], 'str');
+	$params[] = array(':keywordstag', $system->SETTINGS['keywordstag'], 'str');
+	$db->query($query, $params);
 	$ERR = $MSG['25_0185'];
-	$system->SETTINGS['descriptiontag'] = $_POST['descriptiontag'];
-	$system->SETTINGS['keywordstag'] = $_POST['keywordstag'];
 }
 
 loadblock($MSG['25_0180'], $MSG['25_0182'], 'textarea', 'descriptiontag', $system->SETTINGS['descriptiontag']);

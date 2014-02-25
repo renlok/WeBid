@@ -37,9 +37,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 	}
 	else
 	{
-		$query = "INSERT INTO " . $DBPrefix . "community VALUES
-		(NULL, '" . $system->cleanvars($_POST['name']) . "', 0, 0, " . intval($_POST['msgstoshow']) . ", " . intval($_POST['active']) . " )";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "INSERT INTO " . $DBPrefix . "community VALUES (NULL, :name, 0, 0, :msgstoshow, :active)";
+		$params = array();
+		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
+		$params[] = array(':msgstoshow', intval($_POST['msgstoshow']) 'int');
+		$params[] = array(':active', intval($_POST['active']), 'int');
+		$db->query($query, $params);
 		header('location: boards.php');
 		exit;
 	}

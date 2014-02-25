@@ -148,9 +148,7 @@ switch ($_SESSION['action'])
 			{
 				$feeupdate = false;
 				// attach the new invoice to users account
-				$query = addoutstanding();
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				addoutstanding();
 
 				// deal with the auction
 				if ($system->SETTINGS['fee_type'] == 2 && $fee > 0)

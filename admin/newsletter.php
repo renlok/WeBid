@@ -51,9 +51,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'submit')
 				break;
 		}
 		$headers = 'From:' . $system->SETTINGS['sitename'] . ' <' . $system->SETTINGS['adminmail'] . '>' . "\n" . 'Content-Type: text/html; charset=' . $CHARSET;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		while ($row = mysql_fetch_assoc($res))
+		$res = $db->direct_query($query);
+		while ($row = $db->fetch())
 		{
 			if (mail($row['email'], $subject, $content, $headers))
 			{

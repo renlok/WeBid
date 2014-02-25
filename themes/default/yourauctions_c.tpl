@@ -3,6 +3,12 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	var relist_fee = {RELIST_FEE_NO};
+	$("#relistall").click(function() {
+		var checked_status = this.checked;
+		$("input[name='relist[]']").each(function() {
+			this.checked = checked_status;
+		});
+	});
 	$("#sellall").click(function() {
 		var checked_status = this.checked;
 		$("input[name='sell[]']").each(function() {
@@ -50,7 +56,7 @@ $(document).ready(function() {
 
 <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
 	<tr>
-		<td class="titTable1" width="40%">
+		<td class="titTable1" width="20%">
 			<a href="yourauctions_c.php?ca_ord=title&ca_type={ORDERNEXT}">{L_624}</a>
 <!-- IF ORDERCOL eq 'title' -->
 			<a href="yourauctions_c.php?ca_ord=title&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
@@ -83,7 +89,7 @@ $(document).ready(function() {
 		<td class="titTable1" width="10%" align="center">
 			{L_630}
 		</td>
-		<td class="titTable1" width="10%" align="center">
+		<td class="titTable1" width="30%" align="center">
 			{L_25_0209}
 		</td>
 		<td class="titTable1" width="9%" align="center" bgcolor=>
@@ -93,49 +99,40 @@ $(document).ready(function() {
 <!-- IF B_AREITEMS -->
 	<!-- BEGIN items -->
 	<tr {items.BGCOLOUR}>
-		<td width="40%">
-			<a href="item.php?id={items.ID}">{items.TITLE}</a>
-		</td>
-		<td width="10%">
-			{items.STARTS}
-		</td>
-		<td width="10%">
-			{items.ENDS}
-		</td>
-		<td width="10%"  align="center">
-			{items.BIDS}
-		</td>
-		<td width="11%"  align="center">
-			{items.BID}
-		</td>
-		<td width="10%"  align="center">
+		<td width="40%"><a href="item.php?id={items.ID}">{items.TITLE}</a> </td>
+        <td width="10%"><small>{items.STARTS}</small> </td>
+        <td class="hidden-phone" width="10%"><small>{items.ENDS}</small> </td>
+        <td class="hidden-phone" width="10%"  align="center"><small>{items.BIDS}</small> </td>
+        <td width="11%"  align="center"><small>{items.BID}</small> </td>
+        <td width="10%"  align="center">
 		<!-- IF items.B_CANRELIST and B_AUTORELIST -->
 			<input type="checkbox" name="relist[]" value="{items.ID}" class="relistid">
-		<!-- ELSE -->
-        	<!-- IF items.B_CANRELIST -->
-            <a href="sellsimilar.php?id={items.ID}&relist=1">{L_2__0051}</a>
-            <!-- ELSE -->
-            <a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
-            <!-- ENDIF -->
-		<!-- ENDIF -->
-		</td>
-		<td width="10%"  align="center">
-		<!-- IF items.B_CANSSELL -->
-			<input type="checkbox" name="sell[]" value="{items.ID}">
-		<!-- ENDIF -->
-		</td>
-		<td width="9%"  align="center">
-		<!-- IF items.B_HASNOBIDS -->
-			<input type="checkbox" name="delete[]" value="{items.ID}">
-		<!-- ENDIF -->
-		</td>
-	</tr>
-	<!-- END items -->
-<!-- ENDIF -->
+          <!-- ELSE -->
+          <!-- IF items.B_CANRELIST -->
+          <a href="sellsimilar.php?id={items.ID}&relist=1">{L_2__0051}</a>
+          <!-- ELSE -->
+          <a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
+          <!-- ENDIF -->
+          <!-- ENDIF -->
+        </td>
+        <td width="10%"  align="center"><!-- IF items.B_CANSSELL -->
+          <input type="checkbox" name="sell[]" value="{items.ID}">
+          <!-- ENDIF -->
+        </td>
+        <td width="9%"  align="center"><!-- IF items.B_HASNOBIDS -->
+          <input type="checkbox" name="delete[]" value="{items.ID}">
+          <!-- ENDIF -->
+        </td>
+      </tr>
+      <!-- END items -->
+      <!-- ENDIF -->
 	<tr {BGCOLOUR}>
-	  <td colspan="6" align="right">{L_30_0102}</td>
+	  <td colspan="5" align="right">{L_30_0102}</td>
+	  <td align="center"><input type="checkbox" id="relistall"></td>
 	  <td align="center"><input type="checkbox" id="sellall"></td>
 	  <td align="center"><input type="checkbox" id="deleteall"></td>
+	  
+	  
 	</tr>
 		<tr>
 			<td colspan="10" align="center">

@@ -58,7 +58,7 @@ if (isset($_POST['action']))
 			{
 				include $include_path . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
-				$password = $phpass->HashPassword($_POST['password'])
+				$password = $phpass->HashPassword($_POST['password']);
 				$query = "SELECT id, hash FROM " . $DBPrefix . "adminusers WHERE username = :username AND password = :password";
 				$params = array();
 				$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');

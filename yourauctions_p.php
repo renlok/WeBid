@@ -48,42 +48,54 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 				@rmdir($upload_path . '/' . $v);
 			}
 
-			// Delete Invited Users List and Black Lists associated with this auction
-			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-			// Auction
-			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
+
+			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 			$removed++;
 		}
 
-		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - " . $removed . ")";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - :removed)";
+		$params = array();
+		$params[] = array(':removed', $removed, 'int');
+		$db->query($query, $params);
 	}
 
 	if (is_array($_POST['startnow']))
 	{
 		foreach ($_POST['startnow'] as $k => $v)
 		{
-			$query = "SELECT duration FROM " . $DBPrefix . "auctions WHERE id = " . intval($v);
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$data = mysql_fetch_assoc($res);
+			$query = "SELECT duration FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 
-			$ends = $NOW + ($data['duration'] * 24 * 60 * 60);
+			$aucdata = $db->result();
+
+			$ends = $NOW + ($aucdata['duration'] * 24 * 60 * 60);
 
 			// Update end time to "now"
-			$query = "UPDATE " . $DBPrefix . "auctions SET starts = '" . $NOW . "', ends = '" . $ends . "' WHERE id = " . intval($v);
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "auctions SET starts = :time, ends = :ends WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':time', $NOW, 'int');
+			$params[] = array(':ends', $ends, 'int');
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 		}
 	}
 }
 // Retrieve active auctions from the database
-$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . " and starts > " . $NOW . " AND suspended = 0";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
+$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = :user_id and starts > :time AND suspended = 0";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$params[] = array(':time', $NOW, 'int');
+$db->query($query, $params);
+$TOTALAUCTIONS = $db->result();
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] < 0 || empty($_GET['PAGE']))
 {
@@ -105,8 +117,8 @@ if (!isset($_SESSION['pa_ord']) && empty($_GET['pa_ord']))
 }
 elseif (!empty($_GET['pa_ord']))
 {
-	$_SESSION['pa_ord'] = mysql_real_escape_string($_GET['pa_ord']);
-	$_SESSION['pa_type'] = mysql_real_escape_string($_GET['pa_type']);
+	$_SESSION['pa_ord'] = $_GET['pa_ord'];
+	$_SESSION['pa_type'] = $_GET['pa_type'];
 }
 elseif (isset($_SESSION['pa_ord']) && empty($_GET['pa_ord']))
 {
@@ -131,13 +143,19 @@ else
 	$_SESSION['pa_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0" />';
 }
 $query = "SELECT * FROM " . $DBPrefix . "auctions au
-			WHERE user = " . $user->user_data['id'] . " AND starts > '" . $NOW . "' AND suspended = 0
-			ORDER BY " . $_SESSION['pa_ord'] . " " . $_SESSION['pa_type'] . " LIMIT $OFFSET, " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+	WHERE user = :user_id AND starts > :time AND suspended = 0
+	ORDER BY :pa_order :pa_type LIMIT :offset, :perpage";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$params[] = array(':time', $NOW, 'int');
+$params[] = array(':pa_order', $system->cleanvars($_SESSION['pa_ord']), 'str');
+$params[] = array(':pa_type', $system->cleanvars($_SESSION['pa_type']), 'str');
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
 
 $i = 0;
-while ($item = mysql_fetch_array($res))
+while ($item = $db->fetch())
 {
 	$template->assign_block_vars('items', array(
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',

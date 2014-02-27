@@ -47,18 +47,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 				@rmdir($upload_path . $v);
 			}
 
-			// Delete Invited Users List and Black Lists associated with this auction
-			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			// Delete auction views
+			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 
 			// Auction
-			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 			$removed++;
 		}
 
-		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - " . $removed . ")";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - :removed)";
+		$params = array();
+		$params[] = array(':removed', $removed, 'int');
+		$db->query($query, $params);
 	}
 
 	if (is_array($_POST['closenow']))
@@ -66,17 +72,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 		foreach ($_POST['closenow'] as $k => $v)
 		{
 			// Update end time to the current time
-			$query = "UPDATE " . $DBPrefix . "auctions SET ends = '" . $NOW . "', relist = relisted WHERE id = " . intval($v);
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, relist = relisted WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':time', $NOW, 'int');
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 		}
 		include 'cron.php';
 	}
 }
 // Retrieve active auctions from the database
-$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . " AND closed = 0 AND starts <= " . $NOW . " AND suspended = 0";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
+$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = :user_id AND closed = 0 AND starts <= :time AND suspended = 0";
+$params = array();
+$params[] = array(':time', $NOW, 'int');
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$TOTALAUCTIONS = $db->result();
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] <= 1 || $_GET['PAGE'] == '')
 {
@@ -97,8 +108,8 @@ if (!isset($_SESSION['oa_ord']) && empty($_GET['oa_ord']))
 }
 elseif (!empty($_GET['oa_ord']))
 {
-	$_SESSION['oa_ord'] = mysql_real_escape_string($_GET['oa_ord']);
-	$_SESSION['oa_type'] = mysql_real_escape_string($_GET['oa_type']);
+	$_SESSION['oa_ord'] = $_GET['oa_ord'];
+	$_SESSION['oa_type'] = $_GET['oa_type'];
 }
 elseif (isset($_SESSION['oa_ord']) && empty($_GET['oa_ord']))
 {
@@ -121,32 +132,41 @@ else
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "auctions
-		WHERE user = " . $user->user_data['id'] . " AND closed = 0
-		AND starts <= '" . $NOW . "' AND suspended = 0
-		ORDER BY " . $_SESSION['oa_ord'] . " " . $_SESSION['oa_type'] . " LIMIT " . intval($OFFSET) . "," . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+	WHERE user = :user_id AND closed = 0
+	AND starts <= :time AND suspended = 0
+	ORDER BY :oa_order :oa_type LIMIT :offset, :perpage";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$params[] = array(':time', $NOW, 'int');
+$params[] = array(':oa_order', $system->cleanvars($_SESSION['oa_ord']), 'str');
+$params[] = array(':oa_type', $system->cleanvars($_SESSION['oa_type']), 'str');
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
 
 $i = 0;
-while ($item = mysql_fetch_array($res))
+$itemdata = $db->fetchall();
+foreach ($itemdata as $item)
 {
 	if ($item['num_bids'] > 0)
 	{
-		$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . intval($item['id']) . " ORDER BY bid DESC, id DESC LIMIT 1";
-		$result_ = mysql_query($query) ;
-		$system->check_mysql($result_, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($result_) > 0)
+		$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :auc_id ORDER BY bid DESC, id DESC LIMIT 1";
+		$params = array();
+		$params[] = array(':auc_id', $item['id'], 'int');
+		$db->query($query, $params);
+		if ($db->numrows() > 0)
 		{
-			$high_bid = mysql_result($result_, 0, 'bid');
+			$high_bid = $db->result();
 		}
 	}
 	// Retrieve counter
-	$query = "SELECT counter FROM " . $DBPrefix . "auccounter WHERE auction_id = " . intval($item['id']);
-	$res_c = mysql_query($query);
-	$system->check_mysql($res_c, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res_c) > 0)
+	$query = "SELECT counter FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
+	$params = array();
+	$params[] = array(':auc_id', $item['id'], 'int');
+	$db->query($query, $params);
+	if ($db->numrows() > 0)
 	{
-		$viewcounter = mysql_result($res_c, 0, 'counter');
+		$viewcounter = $db->result();
 	}
 	else
 	{

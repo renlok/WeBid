@@ -495,21 +495,8 @@ else
 # ############################
 
 # 
-# Table structure for table `" . $DBPrefix . "closedrelisted`
-# 
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "closedrelisted`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "closedrelisted` (
-  `auction` int(32) default '0',
-  `relistdate` varchar(8) NOT NULL default '',
-  `newauction` int(32) NOT NULL default '0'
-) ;";
-
-# 
-# Dumping data for table `" . $DBPrefix . "closedrelisted`
-# 
-
 # Table structure for table `" . $DBPrefix . "comm_messages`
+# 
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "comm_messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "comm_messages` (
@@ -522,10 +509,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "comm_messages` (
   KEY `msg_id` (`id`)
 );";
 
+# 
 # Dumping data for table `" . $DBPrefix . "comm_messages`
+# 
 
+# ############################
 
+# 
 # Table structure for table `" . $DBPrefix . "community`
+# 
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "community`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
@@ -538,7 +530,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
   KEY `msg_id` (`id`)
 );";
 
+# 
 # Dumping data for table `" . $DBPrefix . "community`
+# 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (1, 'Selling', 0, '', 30, 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (2, 'Buying', 0, '', 30, 1);";

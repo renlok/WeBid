@@ -259,7 +259,7 @@ foreach ($auction_data as $Auction) // loop auctions
 		if ($_BIDSNUM == 0 || ($_BIDSNUM > 0 && $Auction['reserve_price'] > 0 && !$winner_present))
 		{
 			// Calculate end time
-			$_ENDS = $NOW + $Auction['duration'] * 24 * 60 * 60;
+			$_ENDS = $NOW + ($Auction['duration'] * 24 * 60 * 60);
 
 			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
 			$params = array();

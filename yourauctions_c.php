@@ -28,9 +28,8 @@ $NOWB = gmdate('Ymd');
 $catscontrol = new MPTTcategories();
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$relist_fee = mysql_result($res, 0);
+$db->direct_query($query);
+$relist_fee = $db->result();
 
 // Update
 if (isset($_POST['action']) && $_POST['action'] == 'update')
@@ -56,27 +55,37 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 
 			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = closedauctions - 1";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 
-			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 
-			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 
-			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 
-			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 		}
 	}
 	if (is_array($_POST['sell']))
 	{
 		foreach ($_POST['sell'] as $v)
 		{
-			$query = "UPDATE " . $DBPrefix . "auctions SET sold = 's' WHERE id = " . intval($v);
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "auctions SET sold = 's' WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 		}
 		include 'cron.php';
 	}
@@ -86,10 +95,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		foreach ($_POST['relist'] as $k)
 		{
 			$k = intval($k);
-			$query = "SELECT duration, category FROM " . $DBPrefix . "auctions WHERE id = " . $k;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$AUCTION = mysql_fetch_assoc($res);
+			$query = "SELECT duration, category FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $k, 'int');
+			$db->query($query, $params);
+			$AUCTION = $db->fetch();
 
 			// auction ends
 			$WILLEND = time() + ($AUCTION['duration'] * 24 * 60 * 60);
@@ -100,8 +110,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				if ($system->SETTINGS['fee_type'] == 1)
 				{
 					// charge relist fee
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $relist_fee . " WHERE id = " . $user->user_data['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :relist_fee WHERE id = :user_id";
+					$params = array();
+					$params[] = array(':relist_fee', $relist_fee, 'float');
+					$params[] = array(':user_id', $user->user_data['id'], 'int');
+					$db->query($query, $params);
 				}
 				else
 				{
@@ -110,43 +123,59 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 
 			$query = "UPDATE " . $DBPrefix . "auctions
-				  SET starts = '" . $NOW . "',
-				  ends = '" . $WILLEND . "',
+				  SET starts = :starts,
+				  ends = :ends,
 				  closed = 0,
 				  num_bids = 0,
 				  relisted = relisted + 1,
 				  current_bid = 0,
 				  sold = 'n',
-				  suspended = " . $suspend . "
-				  WHERE id = " . $k;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				  suspended = :suspended
+				  WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':starts', $NOW, 'int');
+			$params[] = array(':ends', $WILLEND, 'int');
+			$params[] = array(':suspended', $suspend, 'int');
+			$params[] = array(':auc_id', $k, 'int');
+			$db->query($query, $params);
 
-			// Insert into relisted table
-			$query = "INSERT INTO " . $DBPrefix . "closedrelisted VALUES (" . $k . ", '" . $NOWB . "', '" . $k . "')";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			// delete bids
-			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $k;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $k, 'int');
+			$db->query($query, $params);
+
 			// Proxy Bids
-			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $k;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $k, 'int');
+			$db->query($query, $params);
+
 			// Winners: only in case of reserve not reached
-			$query = "DELETE FROM " . $DBPrefix . "winners WHERE auction = " . $k;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "winners WHERE auction = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $k, 'int');
+			$db->query($query, $params);
+
 			// Update COUNTERS table
 			$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 
-			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $AUCTION['category'];
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$parent_node = mysql_fetch_assoc($res);
+			// get category data to update it
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+			$params = array();
+			$params[] = array(':cat_id', $AUCTION['category'], 'int');
+			$db->query($query, $params);
+	
+			$parent_node = $db->fetch();
 			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 			// update recursive categories
 			for ($i = 0; $i < count($crumbs); $i++)
 			{
-				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = :cat_id";
+				$params = array();
+				$params[] = array(':cat_id', $crumbs[$i]['cat_id'], 'int');
+				$db->query($query, $params);
 			}
 			if ($system->SETTINGS['fee_type'] == 2 && isset($relist_fee) && $relist_fee > 0)
 			{
@@ -159,12 +188,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 // Retrieve closed auction data from the database
 $query = "SELECT COUNT(id) AS COUNT FROM " . $DBPrefix . "auctions
-		WHERE user = " . $user->user_data['id'] . "
+		WHERE user = :user_id
 		AND closed = 1 AND suspended = 0
 		AND (num_bids = 0 OR (num_bids > 0 AND current_bid < reserve_price AND sold = 'n'))";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$TOTALAUCTIONS = $db->result();
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)
 {
@@ -186,8 +216,8 @@ if (!isset($_SESSION['ca_ord']) && empty($_GET['ca_ord']))
 }
 elseif (!empty($_GET['ca_ord']))
 {
-	$_SESSION['ca_ord'] = mysql_real_escape_string($_GET['ca_ord']);
-	$_SESSION['ca_type'] = mysql_real_escape_string($_GET['ca_type']);
+	$_SESSION['ca_ord'] = $_GET['ca_ord'];
+	$_SESSION['ca_type'] = $_GET['ca_type'];
 }
 elseif (isset($_SESSION['ca_ord']) && empty($_GET['ca_ord']))
 {
@@ -213,15 +243,20 @@ else
 }
 
 $query = "SELECT *  FROM " . $DBPrefix . "auctions
-	WHERE user = " . $user->user_data['id'] . "
+	WHERE user = :user_id
 	AND closed = 1 AND suspended = 0
 	AND (num_bids = 0 OR (num_bids > 0 AND reserve_price > 0 AND current_bid < reserve_price AND sold = 'n'))
-	ORDER BY " . $_SESSION['ca_ord'] . " " . $_SESSION['ca_type'] . " LIMIT $OFFSET, " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+	ORDER BY :ca_order :ca_type LIMIT :offset, :perpage";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$params[] = array(':ca_order', $system->cleanvars($_SESSION['ca_ord']), 'str');
+$params[] = array(':ca_type', $system->cleanvars($_SESSION['ca_type']), 'str');
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
 
 $i = 0;
-while ($item = mysql_fetch_array($res))
+while ($item = $db->fetch())
 {
 	$canrelist = false;
 	if (($item['current_bid'] > $item['reserve_price']))

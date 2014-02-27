@@ -49,21 +49,26 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 			}
 
 			// remove auction
-			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $v, 'int');
+			$db->query($query, $params);
 			$removed++;
 		}
 
-		$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions - " . $removed . ")";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - :removed)";
+		$params = array();
+		$params[] = array(':removed', $removed, 'int');
+		$db->query($query, $params);
 	}
 }
 
 // Retrieve active auctions from the database
-$query = "SELECT count(id) as COUNT FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . " AND suspended != 0";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
+$query = "SELECT count(id) as COUNT FROM " . $DBPrefix . "auctions WHERE user = :user_id AND suspended != 0";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$TOTALAUCTIONS = $db->result();
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] < 0 || empty($_GET['PAGE']))
 {
@@ -84,8 +89,8 @@ if (!isset($_SESSION['sa_ord']) && empty($_GET['sa_ord']))
 }
 elseif (!empty($_GET['sa_ord']))
 {
-	$_SESSION['sa_ord'] = mysql_real_escape_string($_GET['sa_ord']);
-	$_SESSION['sa_type'] = mysql_real_escape_string($_GET['sa_type']);
+	$_SESSION['sa_ord'] = $_GET['sa_ord'];
+	$_SESSION['sa_type'] = $_GET['sa_type'];
 }
 elseif (isset($_SESSION['sa_ord']) && empty($_GET['sa_ord']))
 {
@@ -110,13 +115,20 @@ else
 	$_SESSION['sa_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0" />';
 }
 $query = "SELECT id, title, current_bid, num_bids, relist, relisted, current_bid, suspended
-		FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . "
-		AND suspended != 0 ORDER BY " . $_SESSION['sa_ord'] . " " . $_SESSION['sa_type'] . " LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+	FROM " . $DBPrefix . "auctions
+	WHERE user = :user_id
+	AND suspended != 0
+	ORDER BY :sa_order :sa_type LIMIT :offset, :perpage";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$params[] = array(':sa_order', $system->cleanvars($_SESSION['sa_ord']), 'str');
+$params[] = array(':sa_type', $system->cleanvars($_SESSION['sa_type']), 'str');
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
 
 $i = 0;
-while ($item = mysql_fetch_array($res))
+while ($item = $db->fetch())
 {
 	$template->assign_block_vars('items', array(
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',

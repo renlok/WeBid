@@ -3,6 +3,12 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	var relist_fee = {RELIST_FEE_NO};
+	$("#relistall").click(function() {
+		var checked_status = this.checked;
+		$("input[name='relist[]']").each(function() {
+			this.checked = checked_status;
+		});
+	});
 	$("#sellall").click(function() {
 		var checked_status = this.checked;
 		$("input[name='sell[]']").each(function() {
@@ -133,7 +139,8 @@ $(document).ready(function() {
 	<!-- END items -->
 <!-- ENDIF -->
 	<tr {BGCOLOUR}>
-	  <td colspan="6" align="right">{L_30_0102}</td>
+	  <td colspan="5" align="right">{L_30_0102}</td>
+	  <td align="center"><input type="checkbox" id="relistall"></td>
 	  <td align="center"><input type="checkbox" id="sellall"></td>
 	  <td align="center"><input type="checkbox" id="deleteall"></td>
 	</tr>

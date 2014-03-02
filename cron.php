@@ -319,7 +319,14 @@ foreach ($auction_data as $Auction) // loop auctions
 		}
 
 		// Close auction
-		$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'y' WHERE id = :auc_id";
+		if ($Auction['sold'] != 's' AND $Auction['num_bids'] > 0 AND $Auction['reserve_price'] > 0 AND $Auction['current_bid'] < $Auction['reserve_price'])
+		{
+			$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'n' WHERE id = :auc_id";
+        }
+		else
+		{
+			$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'y' WHERE id = :auc_id";
+        }
 		$params = array();
 		$params[] = array(':auc_id', $Auction['id'], 'int');
 		$db->query($query, $params);

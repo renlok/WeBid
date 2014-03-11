@@ -41,7 +41,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 		$params = array();
 		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 		$params[] = array(':msgstoshow', intval($_POST['msgstoshow']) 'int');
-		$params[] = array(':active', intval($_POST['active']), 'int');
+		$params[] = array(':active', $_POST['active'], 'int');
 		$db->query($query, $params);
 		header('location: boards.php');
 		exit;

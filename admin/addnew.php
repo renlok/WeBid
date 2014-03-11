@@ -39,16 +39,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$_POST['content'][$k] = htmLawed($_POST['content'][$k], $conf);
 		}
 
-		$query = "INSERT INTO " . $DBPrefix . "news VALUES (NULL, '" . $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]) . "','" . $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']]) . "'," . time() . "," . intval($_POST['suspended']) . ")";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$news_id = mysql_insert_id();
+		$query = "INSERT INTO " . $DBPrefix . "news VALUES (NULL, :title, :content, :time, :suspended)";
+		$params = array();
+		$params[] = array(':title', $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]), 'str');
+		$params[] = array(':content', $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']]), 'str');
+		$params[] = array(':time', time(), 'int');
+		$params[] = array(':suspended', $_POST['suspended'], 'int');
+		$db->query($query, $params);
+		$news_id = $db->lastInsertId();
 
 		// Insert into translation table
 		foreach ($LANGUAGES as $k => $v)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "news_translated VALUES
-			(" . $news_id . ", '" . $k . "', '" . $system->cleanvars($_POST['title'][$k]) . "', '" . $system->cleanvars($_POST['content'][$k]) . "')";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "INSERT INTO " . $DBPrefix . "news_translated VALUES (:news_id, :lang, :title, :content)";
+			$params = array();
+			$params[] = array(':title', $system->cleanvars($_POST['title'][$k]), 'str');
+			$params[] = array(':content', $system->cleanvars($_POST['content'][$k]), 'str');
+			$params[] = array(':lang', $k, 'str');
+			$params[] = array(':news_id', $news_id, 'int');
+			$db->query($query, $params);
 		}
 		header('location: news.php');
 		exit;

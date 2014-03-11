@@ -81,7 +81,7 @@ else
 
 	$query_feat = $query . " AND featured = 'y' ORDER BY ends LIMIT :offset, 5";
 	$params_feat = $params;
-	$params_feat[] = array(':offset', intval(($PAGE - 1) * 5), 'int');
+	$params_feat[] = array(':offset', (($PAGE - 1) * 5), 'int');
 
 	$query = $query . " ORDER BY ends LIMIT :offset, :perpage";
 	$params[] = array(':offset', $left_limit, 'int');

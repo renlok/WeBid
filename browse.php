@@ -216,7 +216,7 @@ else
 		$params_feat[] = array(':title', '%' . $system->cleanvars($_POST['catkeyword']) . '%', 'str');
 	}
 	$query_feat .= " ORDER BY ends ASC LIMIT :offset, 5";
-	$params_feat[] = array(':offset', intval(($PAGE - 1) * 5), 'int');
+	$params_feat[] = array(':offset', (($PAGE - 1) * 5), 'int');
 
 	include $include_path . 'browseitems.inc.php';
 	browseItems($query, $params, $query_feat, $params_feat, $TOTALAUCTIONS, 'browse.php', 'id=' . $id);

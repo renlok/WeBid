@@ -249,7 +249,7 @@ if ($searching && !isset($ERR))
 			AND	au.starts <= :time
 			ORDER BY :sort_by LIMIT :offset, 5";
 	$params_feat = $asparams;
-	$params_feat[] = array(':offset', intval(($PAGE - 1) * 5), 'int');
+	$params_feat[] = array(':offset',(($PAGE - 1) * 5), 'int');
 
 	if ($total > 0)
 	{

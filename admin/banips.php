@@ -23,40 +23,48 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if (!empty($_POST['ip']))
 	{
 		$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-				(NULL, 'NOUSER',  '" . $_POST['ip'] . "', 'next',  'deny')";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				(NULL, 'NOUSER',  :user_ip, 'next',  'deny')";
+		$params = array();
+		$params[] = array(':user_ip', $system->cleanvars($_POST['ip']), 'str');
+		$db->query($query, $params);
 	}
 	if (is_array($_POST['delete']))
 	{
 		foreach ($_POST['delete'] as $k => $v)
 		{
-			$query = "DELETE FROM " . $DBPrefix . "usersips WHERE id = " . intval($v);
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "usersips WHERE id = :ip_id";
+			$params = array();
+			$params[] = array(':ip_id', $v, 'int');
+			$db->query($query, $params);
 		}
 	}
 	if (is_array($_POST['accept']))
 	{
 		foreach ($_POST['accept'] as $k => $v)
 		{
-			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'accept' WHERE id = " . intval($v);
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'accept' WHERE id = :ip_id";
+			$params = array();
+			$params[] = array(':ip_id', $v, 'int');
+			$db->query($query, $params);
 		}
 	}
 	if (is_array($_POST['deny']))
 	{
 		foreach ($_POST['deny'] as $k => $v)
 		{
-			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'deny' WHERE id = " . intval($v);
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'deny' WHERE id = :ip_id";
+			$params = array();
+			$params[] = array(':ip_id', $v, 'int');
+			$db->query($query, $params);
 		}
 	}
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "usersips WHERE user = 'NOUSER'";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
+
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('ips', array(
 			'ID' => $row['id'],

@@ -36,16 +36,16 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 			$delete .= $id;
 			$i++;
 		}
-		$query = "DELETE FROM " . $DBPrefix . "adminusers WHERE id IN (" . $delete . ")";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "DELETE FROM " . $DBPrefix . "adminusers WHERE id IN (:delete)";
+		$params = array();
+		$params[] = array(':delete', $delete, 'str');
+		$db->query($query, $params);
 		$ERR = $MSG['1100'];
 	}
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "adminusers ORDER BY username";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$res = $db->direct_query($query);
 
 $STATUS = array(
 	1 => '<span style="color:#00AF33"><b>Active</b></span>',
@@ -53,7 +53,7 @@ $STATUS = array(
 );
 
 $bg = '';
-while ($User = mysql_fetch_assoc($res))
+while ($User = $db->direct_query($query))
 {
     $created = substr($User['created'], 4, 2) . '/' . substr($User['created'], 6, 2) . '/' . substr($User['created'], 0, 4);
     if ($User['lastlogin'] == 0)

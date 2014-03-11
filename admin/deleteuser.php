@@ -35,10 +35,11 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	$catscontrol = new MPTTcategories();
 
 	// Check if the users has some auction
-	$query = "SELECT id, title FROM " . $DBPrefix . "auctions WHERE user = " . $id;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$num_auctions = mysql_num_rows($res);
+	$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE user = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $id, 'int');
+	$db->query($query, $params);
+	$num_auctions = $db->result('COUNT');
 
 	if ($num_auctions > 0)
 	{
@@ -46,10 +47,11 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	}
 
 	// Check if the user is BIDDER in some auction
-	$query = "SELECT * FROM " . $DBPrefix . "bids WHERE bidder = " . $id;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$num_bids = mysql_num_rows($res);
+	$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "bids WHERE bidder = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $id, 'int');
+	$db->query($query, $params);
+	$num_bids = $db->result('COUNT');
 
 	if ($num_bids > 0)
 	{
@@ -57,37 +59,45 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	}
 
 	// check if user is suspended or not
-	$query = "SELECT suspended FROM " . $DBPrefix . "users WHERE id = " . $id;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$myrow = mysql_fetch_assoc($res);
-	$suspended = $myrow['suspended'];
+	$query = "SELECT suspended FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $id, 'int');
+	$db->query($query, $params);
+	$suspended = $db->result('suspended');
 
 	// delete user
-	$query = "DELETE FROM " . $DBPrefix . "users WHERE id = " . $id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "DELETE FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $id, 'int');
+	$db->query($query, $params);
 
 	if ($has_auctions)
 	{
 		// update categories table
 		$query = "SELECT c.level, c.left_id, c.right_id FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "categories c ON (a.category = c.cat_id)
-				WHERE a.user = " . $id;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		while ($row = mysql_fetch_array($res))
+				WHERE a.user = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $id, 'int');
+		$db->query($query, $params);
+		$auction_data = $db->fetchall();
+		foreach ($auction_data as $row)
 		{
 			$crumbs = $catscontrol->get_bread_crumbs($row['left_id'], $row['right_id']);
 			for ($i = 0; $i < count($crumbs); $i++)
 			{
-				$query = "UPDATE " . $DBPrefix . "categories SET counter = counter - 1, sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$query = "UPDATE " . $DBPrefix . "categories SET counter = counter - 1, sub_counter = sub_counter - 1 WHERE cat_id = :cat_id";
+				$params = array();
+				$params[] = array(':cat_id', $crumbs[$i]['cat_id'], 'int');
+				$db->query($query, $params);
 			}
 		}
 
 		// delete user's auctions
-		$query = "DELETE FROM " . $DBPrefix . "auctions WHERE user = " . $id;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "DELETE FROM " . $DBPrefix . "auctions WHERE user = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $id, 'int');
+		$db->query($query, $params);
 	}
 
 	if ($has_bids)
@@ -95,40 +105,51 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 		// update auctions table
 		$query = "SELECT a.id, a.current_bid, b.bid FROM " . $DBPrefix . "bids b
 				LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
-				WHERE b.bidder = " . $id . " ORDER BY b.bid DESC";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		while ($row = mysql_fetch_array($res))
+				WHERE b.bidder = :user_id ORDER BY b.bid DESC";
+		$params = array();
+		$params[] = array(':user_id', $id, 'int');
+		$db->query($query, $params);
+		$bid_data = $db->fetchall();
+		foreach ($bid_data as $row)
 		{
+			$params = array();
 			// check if user is highest bidder
 			if ($row['current_bid'] == $row['bid'])
 			{
-				$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . $row['id'] . " ORDER BY bid DESC LIMIT 1, 1";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$next_bid = mysql_fetch_assoc($res);
+				$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :auc_id ORDER BY bid DESC LIMIT 1, 1";
+				$params[] = array(':auc_id', $row['id'], 'int');
+				$db->query($query, $params);
+				$next_bid = $db->result('bid');
 				// set new highest bid
-				$extra = ", current_bid = '" . $next_bid['bid'] . "'";
+				$params = array();
+				$extra = ", current_bid = :next_bid";
+				$params[] = array(':next_bid', $next_bid, 'float');
 			}
-			$query = "UPDATE " . $DBPrefix . "auctions SET num_bids = num_bids - 1" . $extra . " WHERE id = " . $row['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "auctions SET num_bids = num_bids - 1" . $extra . " WHERE id = :auc_id";
+			$params[] = array(':auc_id', $row['id'], 'int');
+			$db->query($query, $params);
 		}
 
 		// delete bids
-		$query = "DELETE FROM " . $DBPrefix . "bids WHERE bidder = " . $id;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "DELETE FROM " . $DBPrefix . "bids WHERE bidder = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $id, 'int');
+		$db->query($query, $params);
 	}
 
 	// Update user counters
 	if ($suspended == 0)
 	{
-		$query = "UPDATE " . $DBPrefix . "counters set users = users - 1, bids = bids - " . $num_bids . ", auctions = auctions - " . $num_auctions;
+		$query = "UPDATE " . $DBPrefix . "counters set users = users - 1, bids = bids - :num_bids, auctions = auctions - :num_auctions";
 	}
 	else
 	{
-		$query = "UPDATE " . $DBPrefix . "counters set inactiveusers = inactiveusers - 1, bids = bids - " . $num_bids . ", auctions = auctions - " . $num_auctions;
+		$query = "UPDATE " . $DBPrefix . "counters set inactiveusers = inactiveusers - 1, bids = bids - :num_bids, auctions = auctions - :num_auctions";
 	}
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$params = array();
+	$params[] = array(':num_bids', $num_bids, 'int');
+	$params[] = array(':num_auctions', $num_auctions, 'int');
+	$db->query($query, $params);
 
 	header('location: listusers.php');
 	exit;
@@ -140,16 +161,17 @@ elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
 }
 
 // Check if the users has some auction
-$query = "SELECT id, title FROM " . $DBPrefix . "auctions WHERE user = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auctions = mysql_num_rows($res);
+$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE user = :user_id";
+$params = array();
+$params[] = array(':user_id', $id, 'int');
+$db->query($query, $params);
+$num_auctions = $db->result('COUNT');
 
 if ($num_auctions > 0)
 {
 	$ERR = $MSG['420'];
 	$i = 0;
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
 		if ($i >= 10)
 			break;
@@ -164,21 +186,23 @@ if ($num_auctions > 0)
 }
 
 // Check if the user is BIDDER in some auction
-$query = "SELECT * FROM " . $DBPrefix . "bids WHERE bidder = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_bids = mysql_num_rows($res);
+$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "bids WHERE bidder = :user_id";
+$params = array();
+$params[] = array(':user_id', $id, 'int');
+$db->query($query, $params);
+$num_bids = $db->result('COUNT');
 
 if ($num_bids > 0)
 {
 	$has_bids = true;
-	$ERR .= sprintf($MSG['421'], $num_auctions);
+	$ERR .= sprintf($MSG['421'], $num_bids);
 }
 
-$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$username = mysql_result($res,0);
+$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $id, 'int');
+$db->query($query, $params);
+$username = $db->result('nick');
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

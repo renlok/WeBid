@@ -7,5 +7,7 @@
 - Added Serbia to countries list closedrelisted table
 - Added relistall check box to close auctions page (Thanks david62311)
 - Fixed reserve not met Items being incorrectly marked as sold in the database (Bug #464) (Thanks pani100)
+- Fixed shipping fee not being added to cost of item (Bug #454)
+- Fixed link in pay.php to contact seller (Bug #445) (Thanks pani100)
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

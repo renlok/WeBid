@@ -63,14 +63,14 @@ switch($_GET['a'])
 		$data = mysql_fetch_assoc($res);
 		$payment = explode(', ', $data['payment']);
 		$pp_paytoemail = (in_array('paypal', $payment)) ? $data['paypal_email'] : '';
-		$extrastring = sprintf($MSG['778'], $data['uid'], $data['nick']);
+		$extrastring = sprintf($MSG['778'], $data['uid'], $_POST['pfval'], $data['nick']);
 		$an_paytoid = (in_array('authnet', $payment)) ? $data['authnet_id'] : '';
 		$an_paytopass = (in_array('authnet', $payment)) ? $data['authnet_pass'] : '';
 		$wp_paytoid = (in_array('worldpay', $payment)) ? $data['worldpay_id'] : '';
 		$tc_paytoid = (in_array('toocheckout', $payment)) ? $data['toocheckout_id'] : '';
 		$mb_paytoemail = (in_array('moneybookers', $payment)) ? $data['moneybookers_email'] : '';
 		$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
-		$shipping_cost = ($shipping == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
+		$shipping_cost = ($data['shipping'] == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
 		$payvalue = ($data['bid'] * $data['qty']) + $shipping_cost;
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money($payvalue));

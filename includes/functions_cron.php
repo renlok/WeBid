@@ -79,7 +79,7 @@ function sortFees()
 	global $DBPrefix, $system, $Winner, $Seller, $Auction, $buyer_emails;
 	global $endauc_fee, $buyer_fee, $buyer_fee_type, $bf_paid, $ff_paid, $NOW, $db;
 
-	if ($system->SETTINGS['fee_type'] == 1 || $buyer_fee <= 0)
+	if ($system->SETTINGS['fee_type'] == 1 && $buyer_fee > 0)
 	{
 		if ($buyer_fee_type == 'flat')
 		{
@@ -92,19 +92,19 @@ function sortFees()
 		// add balance & invoice
 		$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :buyer_fee WHERE id = :winner_id";
 		$params = array();
-		$params[] = array(':buyer_fee', $buyer_fee, 'float');
+		$params[] = array(':buyer_fee', $fee_value, 'float');
 		$params[] = array(':winner_id', $Winner['id'], 'int');
 		$db->query($query, $params);
 		$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
 				(:winner_id, :auc_id, :time, :buyer_fee, :buyer_fee, 1)";
 		$params = array();
-		$params[] = array(':buyer_fee', $buyer_fee, 'float');
+		$params[] = array(':buyer_fee', $fee_value, 'float');
 		$params[] = array(':winner_id', $Winner['id'], 'int');
 		$params[] = array(':auc_id', $user_id, 'int');
 		$params[] = array(':time', $NOW, 'int');
 		$db->query($query, $params);
 	}
-	else
+	elseif ($system->SETTINGS['fee_type'] == 2)
 	{
 		$bf_paid = 0;
 		$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = :winner_id";
@@ -137,7 +137,7 @@ function sortFees()
 	}
 
 	// insert final value fees
-	if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
+	if ($system->SETTINGS['fee_type'] == 1 && $fee_value > 0)
 	{
 		// add balance & invoice
 		$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :seller_id";
@@ -154,7 +154,7 @@ function sortFees()
 		$params[] = array(':time', $NOW, 'int');
 		$db->query($query, $params);
 	}
-	else
+	elseif ($system->SETTINGS['fee_type'] == 2)
 	{
 		$ff_paid = 0;
 		$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = :seller_id";

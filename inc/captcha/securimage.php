@@ -418,9 +418,17 @@ class Securimage {
 	 */
 	function Securimage()
 	{
-		global $main_path;
+		global $main_path, $language;
 		if ( session_id() == '' ) { // no session has been started yet, which is needed for validation
 			session_start();
+		}
+		if (is_dir($main_path . 'inc/captcha/audio/' . $language . '/'))
+		{	
+			$this->audio_path = $main_path . 'inc/captcha/audio/' . $language . '/';
+		}
+		else
+		{
+			$this->audio_path = $main_path . 'inc/captcha/audio/EN/';
 		}
 		$this->gd_font_file = $main_path . 'inc/captcha/gdfonts/bubblebath.gdf';
 		$this->ttf_file = $main_path . 'inc/captcha/elephant.ttf';

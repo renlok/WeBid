@@ -67,7 +67,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 					// load hashing class to check password
 					include $include_path . 'PasswordHash.php';
 					$phpass = new PasswordHash(8, false);
-					if ($system->SETTINGS['usersauth'] == 'n' || $user->user_data['password'] == $phpass->HashPassword($_POST['TPL_password']))
+					if ($system->SETTINGS['usersauth'] == 'n' || $phpass->CheckPassword($_POST['TPL_password'], $user->user_data['password']))
 					{
 						$secTPL_feedback = $system->cleanvars($_POST['TPL_feedback']);
 						$uid = ($ws == 'w') ? $_REQUEST['sid'] : $_REQUEST['wid'];

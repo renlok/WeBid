@@ -58,14 +58,13 @@ if (isset($_POST['action']))
 			{
 				include $include_path . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
-				$password = $phpass->HashPassword($_POST['password']);
-				$query = "SELECT id, hash FROM " . $DBPrefix . "adminusers WHERE username = :username AND password = :password";
+				$query = "SELECT id, hash, password FROM " . $DBPrefix . "adminusers WHERE username = :username";
 				$params = array();
 				$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
-				$params[] = array(':password', $password, 'str');
 				$db->query($query, $params);
+				$admin = $db->fetchall();
 
-				if ($db->numrows() == 0)
+				if ($db->numrows() == 0 || !($phpass->CheckPassword($_POST['password'], $admin['password'])))
 				{
 					$ERR = $ERR_048;
 				}
@@ -73,10 +72,9 @@ if (isset($_POST['action']))
 				{
 					// generate a random unguessable token
 					$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
-					$admin = $db->fetchall();
 					// Set sessions vars
-					$_SESSION['WEBID_ADMIN_NUMBER'] = strspn($password, $admin['hash']);
-					$_SESSION['WEBID_ADMIN_PASS'] = $password;
+					$_SESSION['WEBID_ADMIN_NUMBER'] = strspn($admin['password'], $admin['hash']);
+					$_SESSION['WEBID_ADMIN_PASS'] = $admin['password'];
 					$_SESSION['WEBID_ADMIN_IN'] = $admin['id'];
 					$_SESSION['WEBID_ADMIN_USER'] = $_POST['username'];
 					$_SESSION['WEBID_ADMIN_TIME'] = time() + (($system->SETTINGS['timecorrection'] + gmdate('I')) * 3600);

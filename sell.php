@@ -97,7 +97,7 @@ switch ($_SESSION['action'])
 			// hash and check the password
 			include $include_path . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
-			if ($phpass->HashPassword($_POST['password']) != $user->user_data['password'])
+			if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 			{
 				$ERR = 'ERR_026';
 			}

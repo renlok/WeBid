@@ -162,7 +162,7 @@ $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
 $params = array();
 $params[] = array(':user_id', $userid, 'int');
 $db->query($query, $params);
-$user_data = $db->fetchall();
+$user_data = $db->result();
 
 if ($user_data['birthdate'] != 0)
 {

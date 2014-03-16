@@ -39,7 +39,7 @@ else
 		$params = array();
 		$params[] = array(':cat_id', $cat_id, 'int');
 		$db->query($query, $params);
-		$parent_node = $db->fetchall();
+		$parent_node = $db->result();
 		$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);
 		$childarray = array($cat_id);
 		foreach ($children as $k => $v)

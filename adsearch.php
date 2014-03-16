@@ -116,7 +116,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$params = array();
 		$params[] = array(':cat_id', $_SESSION['advs']['category'], 'int');
 		$db->query($query, $params);
-		$parent_node = $db->fetchall();
+		$parent_node = $db->result();
 		$children = $catscontrol->get_children_list($parent_node['left_id'], $parent_node['right_id']);
 		$childarray = array($_SESSION['advs']['category']);
 		foreach ($children as $k => $v)
@@ -272,9 +272,9 @@ if ($searching && !isset($ERR))
 
 // payments
 $payment_methods = '';
-$query = "SELECT * FROM " . $DBPrefix . "gateways";
+$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
 $db->direct_query($query);
-$gateways_data = $db->fetchall();
+$gateways_data = $db->result();
 $gateway_list = explode(',', $gateways_data['gateways']);
 foreach ($gateway_list as $v)
 {

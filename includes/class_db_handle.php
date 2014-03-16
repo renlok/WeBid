@@ -31,6 +31,7 @@ class db_handle
 		try {
 			// MySQL with PDO_MYSQL
 			$this->pdo = new PDO("mysql:host=$DbHost;dbname=$DbDatabase;charset=$CHARSET", $DbUser, $DbPassword);
+			//$this->pdo = new PDO("mysql:host=$DbHost;dbname=$DbDatabase;charset =$CHARSET", $DbUser, $DbPassword); 
 			// set error reporting up
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// actually use prepared statements

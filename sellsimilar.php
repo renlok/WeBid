@@ -32,7 +32,7 @@ if (!isset($_POST['action']))
 	$params[] = array(':auc_id', $id, 'int');
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
-	$RELISTEDAUCTION = $db->fetchall();
+	$RELISTEDAUCTION = $db->result();
 
 	$_SESSION['SELL_starts']		= '';
 	$_SESSION['SELL_start_now'] 	= '1';

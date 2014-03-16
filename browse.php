@@ -34,7 +34,7 @@ else
 }
 
 $db->query($query, $params);
-$parent_node = $db->fetchall();
+$parent_node = $db->result();
 $id = (isset($parent_node['cat_id'])) ? $parent_node['cat_id'] : $id;
 $catalist = '';
 if ($parent_node['left_id'] != 1)
@@ -61,7 +61,7 @@ $query = "SELECT * FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
 $params = array();
 $params[] = array(':cat_id', $id, 'int');
 $db->query($query, $params);
-$category = $db->fetchall();
+$category = $db->result();
 
 if ($db->numrows() == 0)
 {

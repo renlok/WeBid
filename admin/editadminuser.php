@@ -57,7 +57,7 @@ $query = "SELECT * FROM " . $DBPrefix . "adminusers WHERE id = :admin_id";
 $params = array();
 $params[] = array(':admin_id', $id, 'int');
 $db->query($query, $params);
-$user_data = $db->fetchall();
+$user_data = $db->result();
 
 if ($system->SETTINGS['datesformat'] == 'USA')
 {

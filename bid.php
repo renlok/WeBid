@@ -118,7 +118,7 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 // reformat bid to valid number
 $bid = $system->input_money($bid);
 
-$Data = $db->fetchall();
+$Data = $db->result();
 $item_title = $Data['title'];
 $item_id = $Data['id'];
 $seller_name = $Data['nick']; 
@@ -498,7 +498,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
-			$PREVIOUSBID = fetchall();
+			$PREVIOUSBID = result();
 			if (($bid * $qty) <= ($PREVIOUSBID['bid'] * $PREVIOUSBID['quantity']))
 			{
 				$errmsg = $ERR_059;
@@ -540,7 +540,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$params = array();
 		$params[] = array(':user_id', $OldWinner_id, 'int');
 		$db->query($query, $params);
-		$OldWinner = $db->fetchall();
+		$OldWinner = $db->result();
 
 		$OldWinner_nick = $OldWinner['nick'];
 		$OldWinner_name = $OldWinner['name'];

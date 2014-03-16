@@ -32,7 +32,7 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 	$params = array();
 	$params[] = array(':user_nick', $system->cleanvars($_POST['username']), 'str');
 	$db->query($query, $params);
-	$user_data = $db->fetchall();
+	$user_data = $db->result();
 	if ($phpass->CheckPassword($_POST['password'], $user_data['password']))
 	{
 		// generate a random unguessable token

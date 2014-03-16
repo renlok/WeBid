@@ -497,7 +497,7 @@ function update_cat_counters($add, $category)
 	$params = array();
 	$params[] = array(':cat_id', $user_id, 'int');
 	$db->query($query, $params);
-	$parent_node = $db->fetchall();
+	$parent_node = $db->result();
 	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 	$addsub = ($add) ? '+' : '-';
@@ -521,7 +521,7 @@ function get_category_string($sellcat)
 	$params = array();
 	$params[] = array(':cat_id', $sellcat, 'int');
 	$db->query($query, $params);
-	$parent_node = $db->fetchall($res);
+	$parent_node = $db->result();
 
 	$TPL_categories_list = '';
 	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);

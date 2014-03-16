@@ -62,8 +62,7 @@ if (isset($_POST['action']))
 				$params = array();
 				$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
 				$db->query($query, $params);
-				$admin = $db->fetchall();
-
+				$admin = $db->result();
 				if ($db->numrows() == 0 || !($phpass->CheckPassword($_POST['password'], $admin['password'])))
 				{
 					$ERR = $ERR_048;

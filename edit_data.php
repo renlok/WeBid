@@ -53,7 +53,7 @@ for ($i = 12; $i > -13; $i--)
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
 $db->direct_query($query);
-$gateway_data = $db->fetchall();
+$gateway_data = $db->result();
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -205,7 +205,7 @@ $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
-$USER = $db->fetchall();
+$USER = $db->result();
 if ($USER['birthdate'] != 0)
 {
 	$TPL_day = substr($USER['birthdate'], 6, 2);

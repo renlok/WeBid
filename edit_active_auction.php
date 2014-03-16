@@ -45,7 +45,7 @@ if (!isset($_POST['action'])) // already closed auctions
 	$params[] = array(':auc_id', $id, 'int');
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
-	$RELISTEDAUCTION = $db->fetchall();
+	$RELISTEDAUCTION = $db->result();
 	$difference = $RELISTEDAUCTION['ends'] - time();
 
 	if ($user->user_data['id'] == $RELISTEDAUCTION['user'] && $difference > 0)

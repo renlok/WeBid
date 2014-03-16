@@ -373,7 +373,7 @@ switch ($_SESSION['action'])
 			$payment_methods = '';
 			$query = "SELECT * FROM " . $DBPrefix . "gateways";
 			$db->direct_query($query);
-			$gateways_data = $db->fetchall();
+			$gateways_data = $db->result();
 			$gateway_list = explode(',', $gateways_data['gateways']);
 			foreach ($gateway_list as $v)
 			{
@@ -515,7 +515,7 @@ switch ($_SESSION['action'])
 		$payment_methods = '';
 		$query = "SELECT * FROM " . $DBPrefix . "gateways";
 		$db->direct_query($query);
-		$gateways_data = $db->fetchall();
+		$gateways_data = $db->result();
 		$gateway_list = explode(',', $gateways_data['gateways']);
 		foreach ($gateway_list as $v)
 		{

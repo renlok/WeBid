@@ -43,7 +43,7 @@ $seller_emails = array();
 // get buyer fee
 $query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
 $db->direct_query($query);
-$row = $db->fetchall();
+$row = $db->result();
 $buyer_fee = $row['value'];
 $buyer_fee = (empty($buyer_fee)) ? 0 : $buyer_fee;
 $buyer_fee_type = $row['fee_type'];

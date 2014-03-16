@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'ok')
 		if ($db->numrows() > 0)
 		{
 			// Generate a new random password and mail it to the user
-			$user_data = $db->fetchall();
+			$user_data = $db->result();
 			$email = $user_data['email'];
 			$id = $user_data['id'];
 			$name = $user_data['name'];

@@ -182,7 +182,7 @@ else
 	}
 	else
 	{
-		$PAGE = $_REQUEST['PAGE'];
+		$PAGE = intval($_REQUEST['PAGE']);
 		$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 	}
 	$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);

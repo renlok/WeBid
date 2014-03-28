@@ -111,11 +111,11 @@ $template->assign_vars(array(
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
 		'CAPCHA' => (isset($capcha_text)) ? $capcha_text : '',
 		'TITLE' => $TPL_item_title,
-		'FRIEND_NAME' => (isset($_POST['friend_name'])) ? $_POST['friend_name'] : '',
-		'FRIEND_EMAIL' => (isset($_POST['friend_email'])) ? $_POST['friend_email'] : '',
-		'YOUR_NAME' => ($user->logged_in) ? $user->user_data['name'] : '',
-		'YOUR_EMAIL' => ($user->logged_in) ? $user->user_data['email'] : '',
-		'COMMENT' => (isset($_POST['sender_comment'])) ? $_POST['sender_comment'] : '',
+		'FRIEND_NAME' => (isset($_POST['friend_name'])) ? $system->cleanvars($_POST['friend_name']) : '',
+		'FRIEND_EMAIL' => (isset($_POST['friend_email'])) ?  $system->cleanvars($_POST['friend_email']) : '',
+		'YOUR_NAME' => ($user->logged_in) ? $system->cleanvars($user->user_data['name']) : '',
+		'YOUR_EMAIL' => ($user->logged_in) ? $system->cleanvars($user->user_data['email']) : '',
+		'COMMENT' => (isset($_POST['sender_comment'])) ? $system->cleanvars($_POST['sender_comment']) : '',
 		'EMAILSENT' => $emailsent
 		));
 

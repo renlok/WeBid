@@ -1113,6 +1113,7 @@ $MSG['1103'] = 'Include tax in final sell price';
 
 $MSG['1104'] = 'Add to balance';
 $MSG['1105'] = 'Select the images you wish to delete <strong>(This cannot be undone)</strong>';
+$MSG['1106'] = 'Print packing slip';
 
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";

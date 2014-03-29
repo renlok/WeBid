@@ -24,60 +24,67 @@ if (!$user->is_logged_in())
 
 if (isset($_GET['paid']))
 {
-	$query = "UPDATE " . $DBPrefix . "winners SET paid = 1 WHERE id = " . intval($_GET['paid']) . " AND seller = " . $user->user_data['id'];
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "UPDATE " . $DBPrefix . "winners SET paid = 1 WHERE id = :winner_id AND seller = :seller_id";
+	$params = array();
+	$params[] = array(':winner_id', $_GET['paid'], 'int');
+	$params[] = array(':seller_id', $user->user_data['id'], 'int');
+	$db->query($query, $params);
 }
 
-$searchid = (isset($_GET['id'])) ? ' AND b.id = ' . intval($_GET['id']) : '';
-
 // Get closed auctions with winners
-$query = "SELECT a.auction, b.title, b.ends
-		 FROM " . $DBPrefix . "winners a, " . $DBPrefix . "auctions b
-		 WHERE a.auction = b.id AND (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0 AND b.user = " . $user->user_data['id'] . $searchid . "
-		 GROUP BY b.id ORDER BY a.closingdate DESC";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$params = array();
+// a specific auction?
+$auc_id = (isset($_GET['id'])) ? $_GET['id'] : 0;
+if ($auc_id > 0)
+{
+	$searchid = ' AND a.id = :auc_id';
+	$params[] = array(':auc_id', $_GET['id'], 'int');
+}
+else
+{
+	$searchid = '';
+}
+
+$query = "SELECT a.title, a.ends, w.id, w.auction, w.bid, w.qty, w.winner, w.seller, w.paid, w.feedback_sel, u.nick
+		FROM " . $DBPrefix . "auctions a
+		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
+		WHERE (a.closed = 1 OR a.bn_only = 'y') AND a.suspended = 0 AND a.user = :seller_id
+		" . $searchid . "
+		ORDER BY w.closingdate DESC";
+$params[] = array(':seller_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
 
 $sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
 $sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
 
 $i = 0;
-while ($row = mysql_fetch_array($res))
+$winner_data = $db->fetchall();
+foreach ($winner_data as $row)
 {
+	$fblink = ($row['feedback_sel'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $row['winner'] . '&sid=' . $row['seller'] . '&ws=s">' . $MSG['207'] . '</a>)' : '';
 	$template->assign_block_vars('a', array(
-			'TITLE' => $row['title'],
-			'ENDS' => FormatDate($row['ends']),
-			'AUCTIONID' => $row['auction']
-			));
+		'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
+		'TITLE' => $row['title'],
+		'ENDS' => FormatDate($row['ends']),
+		'AUCTIONID' => $row['auction'],
 
-	// Build winners array
-	$query = "SELECT w.*, u.nick, u.email FROM " . $DBPrefix . "winners w
-			LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
-			WHERE w.auction = " . $row['auction'];
-	$rr = mysql_query($query);
-	$system->check_mysql($rr, $query, __LINE__, __FILE__);
-	while ($winner = mysql_fetch_array($rr))
-	{
-		$fblink = ($winner['feedback_sel'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $winner['winner'] . '&sid=' . $winner['seller'] . '&ws=s">' . $MSG['207'] . '</a>)' : '';
-		$template->assign_block_vars('a.w', array(
-				'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
-				'ID' => $winner['id'],
-				'BID' => $winner['bid'],
-				'BIDF' => $system->print_money($winner['bid']),
-				'QTY' => $winner['qty'],
-				'NICK' => $winner['nick'],
-				'WINNERID' => $winner['winner'],
-				'FB' => $fblink,
+		'ID' => $row['id'],
+		'BID' => $row['bid'],
+		'BIDF' => $system->print_money($row['bid']),
+		'QTY' => $row['qty'],
+		'NICK' => $row['nick'],
+		'WINNERID' => $row['winner'],
+		'FB' => $fblink,
 
-				'B_PAID' => ($winner['paid'] == 1)
-				));
-		$i++;
-	}
+		'B_PAID' => ($row['paid'] == 1)
+		));
+	$i++;
 }
 
 $template->assign_vars(array(
 		'NUM_WINNERS' => $i,
-		'AUCID' => (!empty($searchid)) ? '&id=' . $searchid : '',
+		'AUCID' => ($auc_id > 0) ? '&id=' . $auc_id : '',
 		'SELLER_ID' => $user->user_data['id']
 		));
 

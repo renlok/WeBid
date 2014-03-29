@@ -17,14 +17,13 @@
 		<th>&nbsp;</th>
 	</tr>
 <!-- BEGIN a -->
-	<!-- BEGIN w -->
-	<tr valign="top" {a.w.BGCOLOUR}>
+	<tr valign="top" {a.BGCOLOUR}>
 		<td nowrap="nowrap">
 			<b><a href="{SITEURL}item.php?id={a.AUCTIONID}" target="_blank">{a.TITLE}</a></b><br>
 			<span class="smallspan">(ID: <a href="{SITEURL}item.php?id={a.AUCTIONID}" target="_blank">{a.AUCTIONID}</a> - {L_25_0121} {a.ENDS})</span>
 		</td>
 		<td width="33%">
-			<a href="{SITEURL}profile.php?user_id={a.w.WINNERID}&auction_id={a.AUCTIONID}">{a.w.NICK}</a> {a.w.FB}
+			<a href="{SITEURL}profile.php?user_id={a.WINNERID}&auction_id={a.AUCTIONID}">{a.NICK}</a> {a.FB}
 		</td>
 		<td width="17%" align="right">
 			{a.w.BIDF}
@@ -33,21 +32,20 @@
 			{a.w.QTY}
 		</td>
 		<td width="10%" nowrap="nowrap">
-<!-- IF a.w.B_PAID -->
+<!-- IF a.B_PAID -->
 			{L_898}
 <!-- ELSE -->
-			<a href="{SITEURL}selling.php?paid={a.w.ID}{AUCID}">{L_899}</a>
+			<a href="{SITEURL}selling.php?paid={a.ID}{AUCID}">{L_899}</a>
 <!-- ENDIF -->
 			<form name="" method="post" action="{SITEURL}order_packingslip.php" id="fees" target="_blank">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<input type="hidden" name="pfval" value="{a.AUCTIONID}">
-				<input type="hidden" name="pfwon" value="{a.w.ID}">
+				<input type="hidden" name="pfwon" value="{a.ID}">
 				<input type="hidden" name="user_id" value="{SELLER_ID}">
-				<input type="submit" type="button" value="Print Packingslip">
+				<input type="submit" type="button" value="{L_1106}">
 			</form>
 		</td>
 	</tr>
-	<!-- END w -->
 <!-- END a -->
 <!-- IF NUM_WINNERS eq 0 -->
 	<tr>

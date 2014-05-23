@@ -38,7 +38,7 @@ $auc_id = (isset($_GET['id'])) ? $_GET['id'] : 0;
 if ($auc_id > 0)
 {
 	$searchid = ' AND a.id = :auc_id';
-	$params[] = array(':auc_id', $_GET['id'], 'int');
+	$params[] = array(':auc_id', $auc_id, 'int');
 }
 else
 {

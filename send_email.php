@@ -38,18 +38,19 @@ $_SESSION['CURRENT_ITEM'] = $auction_id;
 
 // Get item description
 $query = "SELECT a.user, a.title, u.nick, u.email FROM " . $DBPrefix . "auctions a
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		WHERE a.id = " . intval($auction_id);
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
+	LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+	WHERE a.id = :auc_id";
+$params = array();
+$params[] = array(':auc_id', $auction_id, 'int');
+$db->query($query, $params);
 
-if (mysql_num_rows($result) == 0)
+if ($db->numrows() == 0)
 {
 	$TPL_error_text = $ERR_606;
 }
 else
 {
-	$auction_data = mysql_fetch_assoc($result);
+	$auction_data = $db->result();
 	$seller_id = $auction_data['user'];
 	$item_title = $auction_data['title'];
 	$seller_nick = $auction_data['nick'];
@@ -99,9 +100,17 @@ if (isset($_POST['action']) || !empty($_POST['action']))
 		$id_type = (!$user->logged_in) ? 'fromemail' : 'sentfrom';
 		$emailer->email_uid = $seller_id;
 		$emailer->email_sender($seller_email, 'send_email.inc.php', $subject);
+
 		$query = "INSERT INTO " . $DBPrefix . "messages (sentto, " . $id_type . ", sentat, message, subject, question)
-				VALUES (" . $seller_id . ", '" . $from_id . "', '" . time() . "', '" . $cleaned_question . "', '" . $system->cleanvars(sprintf($MSG['651'], $item_title)) . "', " . $auction_id . ")";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			VALUES (:seller_id, :from_id, :timer, :question, :title, :auc_id)";
+		$params = array();
+		$params[] = array(':seller_id', $seller_id, 'int');
+		$params[] = array(':from_id', $from_id, 'int');
+		$params[] = array(':timer', time(), 'int');
+		$params[] = array(':question', $cleaned_question, 'str');
+		$params[] = array(':title', $system->cleanvars(sprintf($MSG['651'], $item_title)), 'str');
+		$params[] = array(':auc_id', $auction_id, 'int');
+		$db->query($query, $params);
 	}
 }
 

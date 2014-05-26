@@ -24,15 +24,16 @@ if (!$user->is_logged_in())
 
 // get active bids for this user
 $query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid, b.quantity FROM " . $DBPrefix . "bids b
-		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
-		WHERE a.closed = 0 AND b.bidder = " . $user->user_data['id'] . "
-		AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bid DESC";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+	LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
+	WHERE a.closed = 0 AND b.bidder = :user_id
+	AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bid DESC";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
 
 $idcheck = array();
 $auctions_count = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	if (!in_array($row['id'], $idcheck))
 	{

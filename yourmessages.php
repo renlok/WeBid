@@ -26,10 +26,12 @@ $messageid = intval($_GET['id']);
 // check message is to user
 $query = "SELECT m.*, u.nick FROM " . $DBPrefix . "messages m
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = m.sentfrom)
-		WHERE m.sentto = " . $user->user_data['id'] . " AND m.id = " . $messageid;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$check = mysql_num_rows($res);
+		WHERE m.sentto = :user_id AND m.id = :message_id";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$params[] = array(':message_id', $messageid, 'int');
+$db->query($query, $params);
+$check = $db->numrows();
 
 if ($check == 0)
 {
@@ -37,7 +39,7 @@ if ($check == 0)
 	header('location: mail.php');
 }
 
-$array = mysql_fetch_array($res);
+$array = $db->fetch();
 $sent = gmdate('M d, Y H:ia', $array['sentat'] + $system->tdiff);
 $subject = $array['subject'];
 $message = $array['message'];
@@ -61,8 +63,11 @@ else
 }
 
 // Update message
-$query = "UPDATE " . $DBPrefix . "messages SET isread = 1 WHERE id = " . $messageid;
-$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+$query = "UPDATE " . $DBPrefix . "messages SET isread = :read WHERE id = :message_id";
+$params = array();
+$params[] = array(':read', 1, 'int');
+$params[] = array(':message_id', $messageid, 'int');
+$db->query($query, $params);
 
 // set session for reply
 $_SESSION['subject' . $hash] = (substr($subject, 0, 3) == 'Re:') ? $subject : 'Re: ' . $subject;

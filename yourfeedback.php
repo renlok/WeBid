@@ -41,36 +41,36 @@ foreach ($memtypesarr as $k => $l)
 $page = (!isset($_GET['pg']) || $_GET['pg'] == 0) ? $_GET['pg'] : 1;
 $left_limit = ($page - 1) * $system->SETTINGS['perpage'];
 
-$query = "SELECT count(*) FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user->user_data['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$total = mysql_result($res, 0);
+$query = "SELECT count(*) As COUNT FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$total = $db->result('COUNT');
 // get number of pages
 $pages = ceil($total / $system->SETTINGS['perpage']);
 
 $left_limit = ($left_limit < 0) ? 0 : $left_limit;
 
-$query = "SELECT f.*, a.title FROM " . $DBPrefix . "feedbacks f
-		LEFT OUTER JOIN " . $DBPrefix . "auctions a
-		ON a.id = f.auction_id
-		WHERE rated_user_id = " . $user->user_data['id'] . "
-		ORDER by feedbackdate DESC
-		LIMIT $left_limit, " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$query = "SELECT f.*, a.title, u.rate_sum FROM " . $DBPrefix . "feedbacks f
+	LEFT OUTER JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
+	LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id)
+	WHERE rated_user_id = :user_id
+	ORDER by feedbackdate DESC
+	LIMIT :left_limit, :perpage";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$params[] = array(':left_limit', $left_limit, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
 
 $i = 0;
 $feed_disp = array();
-while ($arrfeed = mysql_fetch_assoc($res))
+while ($arrfeed = $db->fetch())
 {
-	$query = "SELECT id, rate_num, rate_sum FROM " . $DBPrefix . "users WHERE nick = '" . $arrfeed['rater_user_nick'] . "'";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$usarr = mysql_fetch_array($result);
 	$j = 0;
 	foreach ($memtypesarr as $k => $l)
 	{
-		if ($k >= $usarr['rate_sum'] || $j++ == (count($memtypesarr) - 1))
+		if ($k >= $arrfeed['rate_sum'] || $j++ == (count($memtypesarr) - 1))
 		{
 			$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 			break;
@@ -88,9 +88,9 @@ while ($arrfeed = mysql_fetch_assoc($res))
 	$template->assign_block_vars('fbs', array(
 			'BGCOLOUR' => (!(($i + 1) % 2)) ? '' : 'class="alt-row"',
 			'IMG' => $uimg,
-			'USFLINK' => 'profile.php?user_id=' . $usarr['id'] . '&auction_id=' . $arrfeed['auction_id'],
+			'USFLINK' => 'profile.php?user_id=' . $arrfeed['rated_user_id'] . '&auction_id=' . $arrfeed['auction_id'],
 			'USERNAME' => $arrfeed['rater_user_nick'],
-			'USFEED' => $usarr['rate_sum'],
+			'USFEED' => $arrfeed['rate_sum'],
 			'USICON' => (isset($usicon)) ? $usicon : '',
 			'FBDATE' => FormatDate($arrfeed['feedbackdate']),
 			'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $arrfeed['title'] . '</a>' : $MSG['113'] . $arrfeed['auction_id'],

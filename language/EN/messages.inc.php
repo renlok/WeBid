@@ -903,7 +903,7 @@ $MSG['854'] = 'Accounts';
 $MSG['855'] = 'Choose View';
 $MSG['856'] = 'Select Period';
 $MSG['857'] = 'Total Invoiced';
-$MSG['858'] = 'I have read and agree to the <a href="' . $system->SETTINGS['siteurl'] . 'contents.php?show=terms">Terms and Conditions</a>';
+$MSG['858'] = 'I have read and agree to the <a href="' . $system->SETTINGS['siteurl'] . 'contents.php?show=terms" target="_blank">Terms and Conditions</a>';
 $MSG['859'] = 'Thank you %s for Registering.';
 $MSG['016'] = 'We have sent a confirmation email to %s. This email contains an activation link to confirm your email address, simply click on the link to activate your %s account.';
 $MSG['016_a'] = "The site admin will shortly review your account, once your account has been accepted by the admin you will be able to login";

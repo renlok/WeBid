@@ -18,11 +18,12 @@ $cat = (isset($_GET['cat'])) ? intval($_GET['cat']) : intval($_POST['cat']);
 if ($cat > 0)
 {
 	// Retrieve category's name
-	$query = "SELECT category FROM " . $DBPrefix . "faqscategories WHERE id = " . $cat;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$query = "SELECT category FROM " . $DBPrefix . "faqscategories WHERE id = :cats";
+	$params = array();
+	$params[] = array(':cats', $cat, 'int');
+	$db->query($query, $params);
+	$FAQ_ctitle = $db->result('category');
 
-	$FAQ_ctitle = stripslashes(mysql_result($res, 0));
 	$template->assign_vars(array(
 			'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl
 			'PAGE_TITLE' => $system->SETTINGS['sitename'] . ' ' . $MSG['5236'] . ' - ' . $FAQ_ctitle,
@@ -32,36 +33,38 @@ if ($cat > 0)
 
 			'FNAME' => $FAQ_ctitle
 			));
+
 	// Retrieve FAQs categories from the database
 	$query = "SELECT * FROM " . $DBPrefix . "faqscategories ORDER BY category ASC";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-
-	while ($cats = mysql_fetch_array($res))
+	$db->direct_query($query);
+	while ($cats = $db->result())
 	{
 		$template->assign_block_vars('cats', array(
-				'CAT' => stripslashes($cats['category']),
+				'CAT' => $cats['category'],
 				'ID' => $cats['id']
 				));
 	}
+
 	// Retrieve FAQs from the database
 	$query = "SELECT f.question As q, f.answer As a, t.* FROM " . $DBPrefix . "faqs f
 			LEFT JOIN " . $DBPrefix . "faqs_translated t ON (t.id = f.id)
-			WHERE f.category = " . $cat . " AND t.lang = '" . $language . "'";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+			WHERE f.category = :cat AND t.lang = :languages";
+	$params = array();
+	$params[] = array(':cat', $cat, 'int');
+	$params[] = array(':languages', $language, 'int');
+	$db->query($query, $params);
 
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
 		if (!empty($row['question']) && !empty($row['answer']))
 		{
-			$question = stripslashes($row['question']);
-			$answer = stripslashes($row['answer']);
+			$question = $row['question'];
+			$answer = $row['answer'];
 		}
 		else
 		{
-			$question = stripslashes($row['q']);
-			$answer = stripslashes($row['a']);
+			$question = $row['q'];
+			$answer = $row['a'];
 		}
 
 		$template->assign_block_vars('faqs', array(

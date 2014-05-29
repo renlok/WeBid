@@ -24,46 +24,59 @@ if (!$user->is_logged_in())
 
 function get_reminders($secid)
 {
-	global $DBPrefix, $system;
+	global $DBPrefix, $system, $db;
 	$data = array();
+
 	// get number of new messages
 	$query = "SELECT COUNT(*) AS total FROM " . $DBPrefix . "messages
-			WHERE isread = 0 AND sentto = " . $secid;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data[] = mysql_result($res, 0, 'total');
+			WHERE isread = 0 AND sentto = :sec_id";
+	$params = array();
+	$params[] = array(':sec_id', $secid, 'int');
+	$db->query($query, $params);
+	$data[] = $db->result('total');
+
 	// get number of pending feedback
 	$query = "SELECT COUNT(DISTINCT a.auction) AS total FROM " . $DBPrefix . "winners a
 			LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 			WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
-			AND ((a.seller = " . $secid . " AND a.feedback_sel = 0)
-			OR (a.winner = " . $secid . " AND a.feedback_win = 0))";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data[] = mysql_result($res, 0, 'total');
+			AND ((a.seller = :seller AND a.feedback_sel = 0)
+			OR (a.winner = :winner AND a.feedback_win = 0))";
+	$params = array();
+	$params[] = array(':seller', $secid, 'int');
+	$params[] = array(':winner', $secid, 'int');
+	$db->query($query, $params);
+	$data[] = $db->result('total');
+
 	// get auctions still requiring payment
 	$query = "SELECT COUNT(DISTINCT id) AS total FROM " . $DBPrefix . "winners
-			WHERE paid = 0 AND winner = " . $secid;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data[] = mysql_result($res, 0, 'total');
+			WHERE paid = 0 AND winner = :winner_id";
+	$params = array();
+	$params[] = array(':winner_id', $secid, 'int');
+	$db->query($query, $params);
+	$data[] = $db->result('total');
+
 	// get auctions ending soon
 	$query = "SELECT COUNT(DISTINCT b.auction) AS total FROM " . $DBPrefix . "bids b
 			LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
-			WHERE b.bidder = " . $secid . " AND a.ends <= " . (time() + (3600 * 24)) . "
+			WHERE b.bidder = :bidder AND a.ends <= :timer
 			AND a.closed = 0 GROUP BY b.auction";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data[] = (mysql_num_rows($res) > 0) ? mysql_result($res, 0, 'total') : 0;
+	$params = array();
+	$params[] = array(':bidder', $secid, 'int');
+	$params[] = array(':timer', (time() + (3600 * 24)), 'int');
+	$db->query($query, $params);
+	$data[] = ($db->numrows() > 0) ? $db->result('total') : 0;
+
 	// get outbid auctions
-	$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
-			WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = " . $secid . "
+	$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid
+			FROM " . $DBPrefix . "auctions a, " . $DBPrefix . "bids b
+			WHERE a.id = b.auction AND a.closed = 0 AND b.bidder = :bidder
 			AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bidwhen DESC";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$params = array();
+	$params[] = array(':bidder', $secid, 'int');
+	$db->query($query, $params);
 	$idcheck = array();
 	$auctions_count = 0;
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
 		if (!in_array($row['id'], $idcheck))
 		{
@@ -73,6 +86,15 @@ function get_reminders($secid)
 		}
 	}
 	$data[] = $auctions_count;
+
+	// get auctions sold item
+	$query = "SELECT COUNT(DISTINCT a.id) AS total FROM " . $DBPrefix . "winners a
+		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
+		WHERE b.closed = 1 AND a.seller = :sellers AND a.is_read = 0";
+	$params = array();
+	$params[] = array(':sellers', $secid, 'int');
+	$db->query($query, $params);
+	$data[] =  $db->result('total');
 
 	return $data;
 }
@@ -121,7 +143,9 @@ switch ($_SESSION['cptab'])
 				'TO_PAY' => ($reminders[2] > 0) ? sprintf($MSG['792'], $reminders[2]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'outstanding.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'BENDING_SOON' => ($reminders[3] > 0) ? $reminders[3] . $MSG['793'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourbids.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'BOUTBID' => ($reminders[4] > 0) ? sprintf($MSG['794'], $reminders[4]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourbids.php">' . $MSG['5295'] . '</a>)<br>' : '',
-				'NO_REMINDERS' => (($reminders[0] + $reminders[1] + $reminders[2] + $reminders[3] + $reminders[4]) == 0) ? $MSG['510'] : '',
+				'SOLD_ITEMS' => ($reminders[5] > 0) ? sprintf($MSG['870'], $reminders[5]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_sold.php">' . $MSG['5295'] . '</a>)<br>' : '',
+				'NO_REMINDERS' => (($reminders[0] + $reminders[1] + $reminders[2] + $reminders[3] + $reminders[4] + $reminders[5]) == 0) ? $MSG['510'] : '',
+				
 				));
 		break;
 	case 'account':

@@ -49,6 +49,7 @@
                 {TO_PAY}
                 {BENDING_SOON}
                 {BOUTBID}
+                {SOLD_ITEMS}
 			</td>
 		</tr>
 		</table>

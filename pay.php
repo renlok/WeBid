@@ -49,7 +49,7 @@ switch($_GET['a'])
 				FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
-				WHERE a.id = " . intval($_POST['pfval']);
+				WHERE w.id = " . intval($_POST['pfval']);
 		$res = mysql_query($query);
 		$system->check_mysql($res, $query, __LINE__, __FILE__);
 

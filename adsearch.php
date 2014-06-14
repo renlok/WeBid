@@ -167,13 +167,13 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 			{
 				if (!$pri)
 				{
-					$ora = "((au.payment LIKE :payment{$val})";
-					$asparams[] = array(":payment{$val}", '%' . $system->cleanvars($val) . '%', 'str');
+					$ora = "((au.payment LIKE :payment)";
+					$asparams[] = array(":payment", '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				else
 				{
-					$ora .= " OR (au.payment LIKE :payment{$val}) AND ";
-					$asparams[] = array(":payment{$val}", '%' . $system->cleanvars($val) . '%', 'str');
+					$ora .= " OR (au.payment LIKE :payment) AND ";
+					$asparams[] = array(":payment", '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				$pri = true;
 			}
@@ -290,6 +290,12 @@ foreach ($payment_options as $k => $v)
 {
 	$checked = (in_array($k, $payment)) ? 'checked' : '';
 	$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
+}
+$payment_options = unserialize($system->SETTINGS['payment_options']);
+foreach ($payment_options as $k => $v)
+{
+    $checked = (array_key_exists($k, array_flip($payment))) ? 'checked' : '';
+    $payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
 }
 
 // category

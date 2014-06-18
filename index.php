@@ -90,6 +90,8 @@ $query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, 
         ORDER BY RAND() DESC LIMIT 12";
 $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
+
+$i = 0;
 while($row = mysql_fetch_assoc($res))
 {
 	$ends = $row['ends'];
@@ -111,7 +113,10 @@ while($row = mysql_fetch_assoc($res))
 			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
 			'TITLE' => $row['title']
 			));
+ 	$i++;
 }
+
+$featured_items = ($i > 0) ? true : false;
 
 // get last created auctions
 $query = "SELECT id, title, starts from " . $DBPrefix . "auctions
@@ -234,7 +239,7 @@ if ($system->SETTINGS['newsbox'] == 1)
 
 $template->assign_vars(array(
 		'FLAGS' => ShowFlags(),
-
+		'B_FEATURED_ITEMS' => $featured_items,
 		'B_AUC_LAST' => $auc_last,
 		'B_HOT_ITEMS' => $hot_items,
 		'B_AUC_ENDSOON' => $end_soon,

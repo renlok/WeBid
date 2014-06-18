@@ -19,6 +19,10 @@
 </td>
 <td valign="top">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="maincolum">
+    <!-- IF B_FEATURED_ITEMS -->
+    <tr>
+        <td class="titTable4">{L_NAY_01}</td>
+    </tr>
     <tr>
         <td class="table2">
         <!-- BEGIN featured -->
@@ -28,7 +32,8 @@
             </div>
         <!-- END featured -->
         </td>
-    </tr>  
+    </tr>
+    <!-- ENDIF -->  
     <!-- IF B_HOT_ITEMS -->
     <tr>
         <td class="titTable4">{L_279}</td>

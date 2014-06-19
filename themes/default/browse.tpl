@@ -1,6 +1,10 @@
+<br>
 <!-- IF B_FEATURED_ITEMS -->
 	<table width="99%" border="0" cellspacing="1" cellpadding="4">
     <!-- BEGIN featured_items -->
+		<tr>
+			<td class="titTable4" colspan="4">{L_NAY_01}</td>
+		</tr>
 		<tr align="center">
 			<td align="center" width="15%">
 				<a href="{SITEURL}item.php?id={featured_items.ID}"><img src="{featured_items.IMAGE}" border="0"></a>
@@ -29,6 +33,9 @@
 
 	<table width="99%" border="0" cellspacing="1" cellpadding="4">
 <!-- BEGIN items -->
+		<tr>
+			<td class="titTable4" colspan="4">{L_NAY_02}</td>
+		</tr>
 		<tr align="center" {items.ROWCOLOUR}>
 			<td align="center" width="15%">
 				<a href="{SITEURL}item.php?id={items.ID}"><img src="{items.IMAGE}" border="0"></a>

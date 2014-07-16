@@ -63,7 +63,7 @@ function setvars()
 	$payment = (isset($_POST['payment'])) ? $_POST['payment'] : $_SESSION['SELL_payment'];
 	$payment = (is_array($payment)) ? $payment : array();
 	$international = (isset($_POST['international'])) ? $_POST['international'] : ''; 
-	$international = (isset($_SESSION['SELL_international']) && (!isset($_POST['action']) || $_POST['action'] != 2)) ? $_SESSION['SELL_international'] : $international; 
+	$international = (isset($_SESSION['SELL_international']) && (!isset($_POST['action']) && $_POST['action'] != 2)) ? $_SESSION['SELL_international'] : $international; 
 	$sellcat1 = $_SESSION['SELL_sellcat1'];
 	$_SESSION['SELL_sellcat2'] = (isset($_SESSION['SELL_sellcat2'])) ? $_SESSION['SELL_sellcat2'] : '';
 	$sellcat2 = $_SESSION['SELL_sellcat2'];

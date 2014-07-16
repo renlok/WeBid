@@ -43,15 +43,15 @@ switch($_GET['a'])
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['935'];
 		$fees->add_to_account($MSG['935'], 'balance', $payvalue);
 		break;
-	case 2: // pay for an item
-		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
-				u.id As uid, u.nick, a.payment, u.worldpay_id, u.toocheckout_id, u.moneybookers_email, w.qty
-				FROM " . $DBPrefix . "auctions a
-				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
-				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
-				WHERE a.id = " . intval($_POST['pfval']);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+	case 2: // pay for an item 
+        $query = "SELECT w.id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
+                u.id As uid, u.nick, a.payment, u.worldpay_id, u.toocheckout_id, u.moneybookers_email, w.qty
+                FROM " . $DBPrefix . "auctions a 
+                LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction) 
+                LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller) 
+                WHERE w.id = " . intval($_POST['pfval']); 
+        $res = mysql_query($query); 
+        $system->check_mysql($res, $query, __LINE__, __FILE__); 
 
 		// check its real
 		if (mysql_num_rows($res) < 1)

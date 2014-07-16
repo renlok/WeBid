@@ -36,8 +36,9 @@ if (!function_exists('view'))
 			global $auction_data;
 			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerskeywords k ON (k.banner = b.id)';
 			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerscategories c ON (c.banner = b.id)';
+			$extra_cat = (!empty($auction_data['secondcat'])) ?  "OR c.category = " . $auction_data['secondcat'] : '';
 			$extra .=  " AND (k.keyword LIKE '%" . $auction_data['title'] . "%'
-						 OR c.category = " . $auction_data['category'] . " OR c.category = " . $auction_data['secondcat'] . ")";
+						 OR c.category = " . $auction_data['category'] . $extra_cat . ")";
 		}
 		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'adsearch.php')) // check search terms
 		{

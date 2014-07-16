@@ -253,5 +253,6 @@ if ($myversion == '1.1.0')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password` varchar(60) NOT NULL;";
 	$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Serbia');";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "closedrelisted`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_terms` tinytext;";
 }
 ?>

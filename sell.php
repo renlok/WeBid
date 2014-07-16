@@ -122,8 +122,7 @@ switch ($_SESSION['action'])
 			$fee_data = get_fee($minimum_bid, false);
 			$fee = $fee_data[0];
 			$fee_data = $fee_data[1];
-			// insert auction
-			$query = addauction();
+
 			if ($_SESSION['SELL_action'] == 'edit')
 				updateauction(1);
 			if ($_SESSION['SELL_action'] == 'relist')
@@ -137,7 +136,10 @@ switch ($_SESSION['action'])
 			}
 			else
 			{
+				// insert auction
+				addauction();
 				$auction_id = $db->lastInsertId();
+				//print_r($db);
 				$_SESSION['SELL_auction_id'] = $auction_id;
 			}
 

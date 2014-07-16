@@ -380,9 +380,10 @@ foreach ($auction_data as $Auction) // loop auctions
 	$db->query($query, $params);
 }
 
-$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - :num_aucs), closedauctions = (closedauctions + :num_aucs)";
+$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - :num_aucsa), closedauctions = (closedauctions + :num_aucsb)";
 $params = array();
-$params[] = array(':num_aucs', $count_auctions, 'int');
+$params[] = array(':num_aucsa', $count_auctions, 'int');
+$params[] = array(':num_aucsb', $count_auctions, 'int');
 $db->query($query, $params);
 
 if (count($categories) > 0)

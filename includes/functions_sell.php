@@ -193,8 +193,8 @@ function updateauction($type)
 		subtitle = :subtitle,
 		description = :description,
 		pict_url = :pict_url,
-		category = :cat1,
-		secondcat = :cat2,
+		category = :catone,
+		secondcat = :cattwo,
 		minimum_bid = :min_bid,
 		shipping_cost = :shipping_cost,
 		shipping_cost_additional = :shipping_cost_additional,
@@ -221,12 +221,13 @@ function updateauction($type)
 		current_fee = current_fee + :fee";
 		$query .= $extraquery;
 		$query .= " WHERE id = :auction_id";
+	$params = array();
 	$params[] = array(':title', $system->cleanvars($_SESSION['SELL_title']), 'str');
 	$params[] = array(':subtitle', $system->cleanvars($_SESSION['SELL_subtitle']), 'str');
 	$params[] = array(':description', $_SESSION['SELL_description'], 'str');
 	$params[] = array(':pict_url', $system->cleanvars($_SESSION['SELL_pict_url']), 'str');
-	$params[] = array(':cat1', $_SESSION['SELL_sellcat1'], 'int');
-	$params[] = array(':cat2', $_SESSION['SELL_sellcat2'], 'int');
+	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
+	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
 	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
 	$params[] = array(':shipping_cost', $system->input_money($_SESSION['SELL_shipping_cost']), 'float');
 	$params[] = array(':shipping_cost_additional', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
@@ -238,9 +239,9 @@ function updateauction($type)
 	$params[] = array(':increment', $system->input_money($_SESSION['SELL_customincrement']), 'float');
 	$params[] = array(':shipping', $_SESSION['SELL_shipping'], 'int');
 	$params[] = array(':payment', $payment_text, 'str');
-	$params[] = array(':international', (($_SESSION['SELL_international']) ? 1 : 0), 'bool');
+	$params[] = array(':international', (($_SESSION['SELL_international']) ? true : false), 'bool');
 	$params[] = array(':ends', $a_ends, 'int');
-	$params[] = array(':photo_uploaded', (($_SESSION['SELL_file_uploaded'])? 1 : 0), 'bool');
+	$params[] = array(':photo_uploaded', (($_SESSION['SELL_file_uploaded'])? true : false), 'bool');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
@@ -258,47 +259,49 @@ function addauction()
 {
 	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee, $db;
 
-	return "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,shipping_cost_additional,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
-	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :cat1, :cat2, :min_bid, :shipping_cost, :shipping_cost_additional, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
+	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,shipping_cost_additional,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
+	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :shipping_cost_additional, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
 	
+	$params = array();
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$params[] = array(':title', $system->cleanvars($_SESSION['SELL_title']), 'str');
 	$params[] = array(':subtitle', $system->cleanvars($_SESSION['SELL_subtitle']), 'str');
 	$params[] = array(':starts', $a_starts, 'int');
 	$params[] = array(':description', $_SESSION['SELL_description'], 'str');
 	$params[] = array(':pict_url', $system->cleanvars($_SESSION['SELL_pict_url']), 'str');
-	$params[] = array(':cat1', $_SESSION['SELL_sellcat1'], 'int');
-	$params[] = array(':cat2', $_SESSION['SELL_sellcat2'], 'int');
+	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
+	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
 	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
 	$params[] = array(':shipping_cost', $system->input_money($_SESSION['SELL_shipping_cost']), 'float');
 	$params[] = array(':shipping_cost_additional', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
 	$params[] = array(':reserve_price', $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0), 'float');
 	$params[] = array(':buy_now', $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0), 'float');
-	$params[] = array(':bn_only', ynbool($_SESSION['SELL_buy_now_only']), 'str');
 	$params[] = array(':auction_type', $_SESSION['SELL_atype'], 'int');
 	$params[] = array(':duration', $_SESSION['SELL_duration'], 'int');
 	$params[] = array(':increment', $system->input_money($_SESSION['SELL_customincrement']), 'float');
 	$params[] = array(':shipping', $_SESSION['SELL_shipping'], 'int');
 	$params[] = array(':payment', $payment_text, 'str');
-	$params[] = array(':international', (($_SESSION['SELL_international']) ? 1 : 0), 'bool');
+	$params[] = array(':international', (($_SESSION['SELL_international']) ? true : false), 'bool');
 	$params[] = array(':ends', $a_ends, 'int');
-	$params[] = array(':photo_uploaded', (($_SESSION['SELL_file_uploaded'])? 1 : 0), 'bool');
+	$params[] = array(':photo_uploaded', (($_SESSION['SELL_file_uploaded'])? true : false), 'bool');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
+	$params[] = array(':bn_only', ynbool($_SESSION['SELL_buy_now_only']), 'str');
 	$params[] = array(':bold', ynbool($_SESSION['SELL_is_bold']), 'str');
 	$params[] = array(':highlighted', ynbool($_SESSION['SELL_is_highlighted']), 'str');
 	$params[] = array(':featured', ynbool($_SESSION['SELL_is_featured']), 'str');
+	$params[] = array(':fee', $fee, 'float');
 	$params[] = array(':tax', ynbool($_SESSION['SELL_is_taxed']), 'str');
 	$params[] = array(':taxinc', ynbool($_SESSION['SELL_tax_included']), 'str');
-	$params[] = array(':fee', $fee, 'float');
-	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
 }
 
 function addoutstanding()
 {
 	global $DBPrefix, $fee_data, $user, $system, $fee, $_SESSION, $db;
-	return "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,date,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,image,extcat,total,paid) VALUES
+
+	$query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,date,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,image,extcat,total,paid) VALUES
 	(:auction_id, :user_id, :time, :setup, :hpfeat_fee, :bolditem_fee, :hlitem_fee, :subtitle_fee, :relist_fee, :rp_fee, :buyout_fee, :picture_fee, :excat_fee, :fee, 0)";
 
 	$params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
@@ -495,7 +498,7 @@ function update_cat_counters($add, $category)
 
 	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
 	$params = array();
-	$params[] = array(':cat_id', $user_id, 'int');
+	$params[] = array(':cat_id', $category, 'int');
 	$db->query($query, $params);
 	$parent_node = $db->result();
 	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);

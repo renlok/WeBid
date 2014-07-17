@@ -36,7 +36,7 @@ if ($system->SETTINGS['https'] == 'y')
 $incurl = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on') ? $system->SETTINGS['siteurl'] : $sslurl;
 
 $template->assign_vars(array(
-		'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl
+		'DOCDIR' => $DOCDIR, // Set document direction
 		'THEME' => $system->SETTINGS['theme'],
 		'PAGE_TITLE' => $system->SETTINGS['sitename'] . $page_title,
 		'CHARSET' => $CHARSET,

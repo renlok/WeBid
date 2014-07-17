@@ -474,6 +474,16 @@ switch ($_SESSION['action'])
 			break;
 		}
 	case 1:  // enter auction details
+		// check time format is timestamp. If not change to timestamp
+        if (!(strpos($a_starts, '-') === false))
+		{
+			$a_starts = _gmmktime(substr($a_starts, 11, 2),
+				substr($a_starts, 14, 2),
+				substr($a_starts, 17, 2),
+				substr($a_starts, 0, 2),
+				substr($a_starts, 3, 2),
+				substr($a_starts, 6, 4), 0);
+		}
 		$category_string1 = get_category_string($sellcat1);
 		$category_string2 = get_category_string($sellcat2);
 

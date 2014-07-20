@@ -197,7 +197,7 @@ class global_class
 		if (empty($str))
 			return 0;
 
-		$str = preg_replace("/[^0-9\.\,]/", '', $str);
+		$str = preg_replace("/[^0-9\.\,\-]/", '', $str);
 		if ($this->SETTINGS['moneyformat'] == 1)
 		{
 			// Drop thousands separator

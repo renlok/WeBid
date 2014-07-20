@@ -21,7 +21,7 @@ if ($system->SETTINGS['fees'] == 'n')
 }
 
 // get fees
-$query = "SELECT * FROM " . $DBPrefix . "fees";
+$query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY fee_from ASC";
 $res = $db->direct_query($query);
 $setup = $buyer_fee = $endauc_fee = false;
 

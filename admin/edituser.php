@@ -143,6 +143,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$query .=  ", password = :password";
 				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 			}
+			if ($_POST['balance'] >= -$system->SETTINGS['fee_max_debt'])
+			{
+				$balance .=  ", suspended = 0";
+			}
+			elseif ($_POST['balance'] < -$system->SETTINGS['fee_max_debt'])
+			{
+				$balance .=  ", suspended = 7";
+			}
 			$query .=  " WHERE id = :user_id";
 			$params[] = array(':user_id', $userid, 'int');
 			$db->query($query, $params);
@@ -157,7 +165,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
-// load the page
+// load the user data
 $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
 $params = array();
 $params[] = array(':user_id', $userid, 'int');

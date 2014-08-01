@@ -86,14 +86,14 @@ class Securimage {
 	 *
 	 * @var int
 	 */
-	var $image_width = 175;
+	var $image_width = 268;
 
 	/**
 	 * The desired width of the CAPTCHA image.
 	 *
 	 * @var int
 	 */
-	var $image_height = 45;
+	var $image_height = 50;
 
 	/**
 	 * The image format for output.<br />
@@ -108,8 +108,7 @@ class Securimage {
 	 *
 	 * @var int
 	 */
-	var $code_length = 4;
-
+	var $code_length = 8;
 	/**
 	 * The character set for individual characters in the image.<br />
 	 * Letters are converted to uppercase.<br />
@@ -140,7 +139,7 @@ class Securimage {
 	 *
 	 * @var boolean
 	 */
-	var $use_gd_font = true;
+	var $use_gd_font = false;
 
 	/**
 	 * The GD font to use.<br />
@@ -332,7 +331,7 @@ class Securimage {
 	 *
 	 * @var boolean
 	 */
-	var $draw_lines_over_text = false;
+	var $draw_lines_over_text = true;
 
 	/**
 	 * For added security, it is a good idea to draw arced lines over the letters to make it harder for bots to segment the letters.<br />
@@ -341,8 +340,7 @@ class Securimage {
 	 *
 	 * @var boolean
 	 */
-	var $arc_linethrough = true;
-
+	var $arc_linethrough = false;
 	/**
 	 * The colors or color of the arced lines.<br />
 	 * Use HTML hex notation with preceding # sign, and separate each value with a comma.<br />
@@ -470,7 +468,7 @@ class Securimage {
 	<div style="clear: both; line-height: 5px; display: block;"></div>
 	<div style="width: 120px; float: left; height: 25px; display:block;">' . $MSG['758'] . ':</div> 
 	<div style="width: 430px; float: left; height: 25px; display:block;"> 
-		<input type="text" name="captcha_code" size="5" maxlength="4" />
+		<input type="text" name="captcha_code" size="9" maxlength="8" />
 	</div>
 </div>';
 	}

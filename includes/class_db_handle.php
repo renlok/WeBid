@@ -28,9 +28,11 @@ class db_handle
     {
         $this->DBPrefix = $DBPrefix;
         $this->CHARSET = $CHARSET;
+
 		try {
 			// MySQL with PDO_MYSQL
 			$this->pdo = new PDO("mysql:host=$DbHost;dbname=$DbDatabase;charset =$CHARSET", $DbUser, $DbPassword);
+
 			// set error reporting up
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// actually use prepared statements
@@ -62,13 +64,14 @@ class db_handle
 	);
 	last value can be left blank more info http://php.net/manual/en/pdostatement.bindparam.php
 	*/
+
 	public function query($query, $params = array())
 	{
 		try {
 			//$query = $this->build_query($query, $table);
 			$params = $this->build_params($params);
 			$params = $this->clean_params($query, $params);
-			$this->lastquery = $this->pdo->prepare($query);
+			$this->lastquery = $this->pdo->prepare($query, $params);
 			//$this->lastquery->bindParam(':table', $this->DBPrefix . $table, PDO::PARAM_STR); // must always be set
 			foreach ($params as $val)
 			{
@@ -90,12 +93,13 @@ class db_handle
 	{
 		try {
 			// set fetchquery
+			
 			if ($this->fetchquery == NULL)
 			{
 				$this->fetchquery = $this->lastquery;
 			}
 			if ($method == 'FETCH_ASSOC') $result = $this->fetchquery->fetch(PDO::FETCH_ASSOC);
-			if ($method == 'FETCH_BOTH') $result = $this->fetchquery->fetch(PDO::FETCH_BOTH);
+			//if ($method == 'FETCH_BOTH') $result = $this->fetchquery->fetch(PDO::FETCH_BOTH);
 			if ($method == 'FETCH_NUM') $result = $this->fetchquery->fetch(PDO::FETCH_NUM);
 			// clear fetch query
 			if ($result == false)
@@ -138,14 +142,16 @@ class db_handle
 		$data = $this->lastquery->fetch(PDO::FETCH_BOTH);
 		if (empty($column) || $column == NULL)
 		{
-			return $data;
+			$result = $data;
 		}
 		else
 		{
-			return $data[$column];
+			$result = $data[$column];
 		}
+		return $result;
 	}
 
+	
 	public function numrows()
 	{
 		try {

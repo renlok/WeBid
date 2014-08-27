@@ -297,3 +297,12 @@ a:hover {
 .grayfont {
 	color: #dcdcdc;
 }
+
+/* Browse page alternat background colors higlighted or non highlighted */
+
+.nonhilighted {
+background: #FFFEEE;
+}
+.hilighted {
+background: #FEA100;
+}

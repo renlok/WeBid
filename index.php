@@ -77,7 +77,6 @@ while ($row = mysql_fetch_assoc($res))
 			'CATAUCNUM' => ($row['sub_counter'] != 0) ? '(' . $row['sub_counter'] . ')' : '',
 			'ID' => $row['cat_id'],
 			'IMAGE' => (!empty($row['cat_image'])) ? '<img src="' . $row['cat_image'] . '" border=0>' : '',
-			'COLOUR' => (empty($row['cat_colour'])) ? '#FFFFFF' : $row['cat_colour'],
 			'NAME' => $category_names[$row['cat_id']]
 			));
 }

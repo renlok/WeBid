@@ -18,17 +18,19 @@ if (!defined('AdminFuncCall'))
 {
 	function checklogin()
 	{
-		global $_SESSION, $system, $DBPrefix;
+		global $_SESSION, $system, $DBPrefix, $db;
 
 		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS']))
 		{
 			$query = "SELECT hash, password FROM " . $DBPrefix . "adminusers WHERE password = '" . $_SESSION['WEBID_ADMIN_PASS'] . "' AND id = " . $_SESSION['WEBID_ADMIN_IN'];
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$params = array();
+			$params[] = array(':admin_pass', $_SESSION['WEBID_ADMIN_PASS'], 'str');
+			$params[] = array(':admin_id', $_SESSION['WEBID_ADMIN_IN'], 'int');
+			$db->query($query, $params);
 
-			if (mysql_num_rows($res) > 0)
+			if ($db->numrows() > 0)
 			{
-				$user_data = mysql_fetch_array($res);
+				$user_data = $db->fetch();
 
 				if (strspn($user_data['password'], $user_data['hash']) == $_SESSION['WEBID_ADMIN_NUMBER'])
 				{
@@ -41,17 +43,19 @@ if (!defined('AdminFuncCall'))
 
 	function getAdminNotes()
 	{
-		global $_SESSION, $system, $DBPrefix;
+		global $_SESSION, $system, $DBPrefix, $db;
 
 		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS']))
 		{
 			$query = "SELECT notes FROM " . $DBPrefix . "adminusers WHERE password = '" . $_SESSION['WEBID_ADMIN_PASS'] . "' AND id = " . $_SESSION['WEBID_ADMIN_IN'];
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$params = array();
+			$params[] = array(':admin_pass', $_SESSION['WEBID_ADMIN_PASS'], 'str');
+			$params[] = array(':admin_id', $_SESSION['WEBID_ADMIN_IN'], 'int');
+			$db->query($query, $params);
 
-			if (mysql_num_rows($res) > 0)
+			if ($db->numrows() > 0)
 			{
-				return mysql_result($res, 0);
+				return $db->result();
 			}
 		}
 		return '';
@@ -78,6 +82,7 @@ if (!defined('AdminFuncCall'))
 	function generateSelect($name = '', $options = array(), $usekey = true)
 	{
 		global $selectsetting;
+
 		$html = '<select name="' . $name . '">';
 		foreach ($options as $option => $value)
 		{

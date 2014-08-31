@@ -23,12 +23,14 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET wordsfilter = '" . $_POST['wordsfilter'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "UPDATE " . $DBPrefix . "settings SET wordsfilter = :wordsfilter";
+	$params = array();
+	$params[] = array(':wordsfilter', ynbool($_POST['wordsfilter']), 'str');
+	$db->query($query, $params);
 
 	//purge the old wordlist
 	$query = "DELETE FROM " . $DBPrefix . "filterwords";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 	
 	//rebuild the wordlist
 	$TMP = explode("\n", $_POST['filtervalues']);
@@ -39,8 +41,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$v = trim($v);
 			if (!empty($v))
 			{
-				$query = "INSERT INTO " . $DBPrefix . "filterwords VALUES ('" . $v . "')";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$query = "INSERT INTO " . $DBPrefix . "filterwords VALUES (:word)";
+				$params = array();
+				$params[] = array(':word', $v, 'str');
+				$db->query($query, $params);
 			}
 		}
 	}
@@ -49,11 +53,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "filterwords";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
 $WORDSLIST = '';
-while ($word = mysql_fetch_assoc($res))
+while ($word = $db->fetch())
 {
 	$WORDSLIST .= $word['word'] . "\n";
 }

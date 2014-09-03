@@ -8,7 +8,7 @@
         <ul>
 <!-- BEGIN cat_list -->
             <li>
-                <span style="background-color:{cat_list.COLOUR}">
+                <span>
                 <a href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}</a> {cat_list.CATAUCNUM}
                 </span>
             </li>

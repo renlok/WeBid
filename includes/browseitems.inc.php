@@ -31,11 +31,11 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 
 			// time left till the end of this auction
 			$difference = $row['ends'] - time();
-			$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
+			$cssClass = ($k % 2 == 0 && $row['highlighted'] != 'y') ? 'nonhilighted' : 'highlighted';
 
 			$template->assign_block_vars('featured_items', array(
 				'ID' => $row['id'],
-				'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
+				'ROWCOLOUR' => 'class="' . $cssClass . '"',
 				'IMAGE' => $row['pict_url'],
 				'TITLE' => $row['title'],
 				'SUBTITLE' => $row['subtitle'],
@@ -61,11 +61,11 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 
 		// time left till the end of this auction 
 		$difference = $row['ends'] - time();
-		$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
+		$cssClass = ($k % 2 == 0 && $row['highlighted'] != 'y') ? 'nonhilighted' : 'highlighted';
 
 		$template->assign_block_vars('items', array(
 			'ID' => $row['id'],
-			'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
+			'ROWCOLOUR' => 'class="' . $cssClass . '"',
 			'IMAGE' => $row['pict_url'],
 			'TITLE' => $row['title'],
 			'SUBTITLE' => $row['subtitle'],

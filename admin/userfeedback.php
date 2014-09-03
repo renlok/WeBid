@@ -27,14 +27,15 @@ foreach ($membertypes as $idm => $memtypearr)
 ksort($memtypesarr, SORT_NUMERIC);
 
 $secid = intval($_GET['id']);
-$query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = " . $secid;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $secid, 'int');
+$db->query($query, $params);
 $bg = '';
 
-if (mysql_num_rows($res) > 0)
+if ($db->numrows() > 0)
 {
-	$arr = mysql_fetch_array($res);
+	$arr = $db->fetch();
 	$num_fbs = $arr['rate_num'];
 	// get page limits
 	if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
@@ -60,9 +61,10 @@ if (mysql_num_rows($res) > 0)
 	}
 
 	$query = "SELECT * FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $secid . " ORDER by feedbackdate DESC";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	while ($arrfeed = mysql_fetch_array($res))
+	$params = array();
+	$params[] = array(':user_id', $secid, 'int');
+	$db->query($query, $params);
+	while ($arrfeed = $db->fetch())
 	{
 		switch($arrfeed['rate'])
 		{

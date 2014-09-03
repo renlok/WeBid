@@ -25,28 +25,40 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$user = intval($_POST['user']);
 	$query = "UPDATE " . $DBPrefix . "feedbacks SET 
-		  rate = '" . $_POST['aTPL_rate'] . "', 
-		  feedback = '" . mysql_real_escape_string($_POST['TPL_feedback']) . "'
-		  WHERE id = " . $id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		  rate = :rate, 
+		  feedback = :feedback
+		  WHERE id = :feedback_id";
+	$params = array();
+	$params[] = array(':rate', $_POST['aTPL_rate'], 'int');
+	$params[] = array(':feedback', $_POST['TPL_feedback'], 'str');
+	$params[] = array(':feedback_id', $id, 'int');
+	$db->query($query, $params);
 
 	// Update user's record
 	$query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks
-			  WHERE rated_user_id = " . $user;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$SUM = mysql_result($res, 0, 'FSUM');
-	$NUM = mysql_result($res, 0, 'FNUM');
+			  WHERE rated_user_id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $user, 'int');
+	$db->query($query, $params);
+	$SUM = $db->result('FSUM');
+	$NUM = $db->result('FNUM');
 
-	$query = "UPDATE " . $DBPrefix . "users SET rate_sum = " . $SUM . ", rate_num = " . $NUM . " WHERE id = " . $user;
+	$query = "UPDATE " . $DBPrefix . "users SET rate_sum = :SUM, rate_num = :NUM WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':SUM', $SUM, 'int');
+	$params[] = array(':NUM', $NUM, 'int');
+	$params[] = array(':user_id', $user, 'int');
+	$db->query($query, $params);
 	$ERR = $MSG['183'];
 }
 
 $query = "SELECT u.nick, u.id, f.rater_user_nick, f.feedback, f.rate FROM " . $DBPrefix . "feedbacks f
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id) WHERE f.id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$feedback = mysql_fetch_assoc($res);
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id) WHERE f.id = :feedback_id";
+$params = array();
+$params[] = array(':feedback_id', $id, 'int');
+$db->query($query, $params);
+
+$feedback = $db->fetch();
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

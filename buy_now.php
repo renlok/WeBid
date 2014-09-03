@@ -52,12 +52,15 @@ if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' &
 unset($ERR);
 ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
-$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$Auction = mysql_fetch_assoc($res);
+
+$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+$params = array();
+$params[] = array(':auc_id', $id, 'int');
+$db->query($query, $params);
+
+$Auction = $db->fetch();
 // such auction does not exist
-if (mysql_num_rows($res) == 0)
+if ($db->numrows() == 0)
 {
 	$template->assign_vars(array(
 			'TITLE_MESSAGE' => $MSG['415'],
@@ -91,10 +94,11 @@ if ($Auction['bn_only'] == 'n')
 	}
 	else
 	{
-		$query = "SELECT MAX(bid) AS maxbid FROM " . $DBPrefix . "proxybid WHERE itemid = " . $id;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$maxbid = mysql_result($res, 0, 'maxbid');
+		$query = "SELECT MAX(bid) AS maxbid FROM " . $DBPrefix . "proxybid WHERE itemid = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $id, 'int');
+		$db->query($query, $params);
+		$maxbid = $db->result('maxbid');
 		if (($maxbid > 0 && $maxbid >= $Auction['reserve_price']))
 		{
 			$ERR = $ERR_712;
@@ -103,16 +107,11 @@ if ($Auction['bn_only'] == 'n')
 }
 
 // get user's nick
-$query = "SELECT nick, email, rate_sum FROM " . $DBPrefix . "users WHERE id = " . $Auction['user'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$Seller = mysql_fetch_assoc($res);
-
-// Get current number of feedbacks
-$query = "SELECT rated_user_id FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $Auction['user'];
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$num_feedbacks = mysql_num_rows($result);
+$query = "SELECT nick, email, rate_sum FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $Auction['user'], 'int');
+$db->query($query, $params);
+$Seller = $db->fetch();
 
 // Get current total rate value for user
 $total_rate = $Seller['rate_sum'];
@@ -160,9 +159,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	// perform final actions
 	if (!isset($ERR))
 	{
-		$query = "INSERT INTO " . $DBPrefix . "bids VALUES
-				(NULL, " . $id . ", " . $user->user_data['id'] . ", " . floatval($Auction['buy_now']) . ", '" . $NOW . "', 1)";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :user_id, :buy_now, :time, 1)";
+		$params = array();
+		$params[] = array(':auc_id', $id, 'int');
+		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$params[] = array(':buy_now', $Auction['buy_now'], 'float');
+		$params[] = array(':time', $NOW, 'int');
+		$db->query($query, $params);
 		if (defined('TrackUserIPs'))
 		{
 			// log auction BIN IP
@@ -170,11 +173,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		}
 		if ($Auction['quantity'] == 1)
 		{
-			$query = "UPDATE " . $DBPrefix . "auctions SET ends = '" . $NOW . "', num_bids = num_bids + 1, current_bid = " . floatval($Auction['buy_now']) . "
-					WHERE id = " . $id;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, num_bids = num_bids + 1, current_bid = :buy_now WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':auc_id', $id, 'int');
+			$params[] = array(':buy_now', $Auction['buy_now'], 'float');
+			$params[] = array(':time', $NOW, 'int');
+			$db->query($query, $params);
 			$query = "UPDATE " . $DBPrefix . "counters SET bids = bids + 1";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 			// so its not over written by the cron
 			$tmpauc = $Auction;
 			include 'cron.php';
@@ -183,19 +189,26 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		}
 		else
 		{
-			$query = "UPDATE " . $DBPrefix . "auctions SET quantity = quantity - " . $qty . " WHERE id = " . $id;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "auctions SET quantity = quantity - :quantity WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':quantity', $qty, 'int');
+			$params[] = array(':auc_id', $id, 'int');
+			$db->query($query, $params);
 			// force close if all items sold
 			if (($Auction['quantity'] - $qty) == 0)
 			{
-				$query = "UPDATE " . $DBPrefix . "auctions SET ends = '" . $NOW . "' WHERE id = " . $id;
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time WHERE id = :auc_id";
+				$params = array();
+				$params[] = array(':time', $NOW, 'int');
+				$params[] = array(':auc_id', $id, 'int');
+				$db->query($query, $params);
 			}
 			// do stuff that is important
-			$query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$Winner = mysql_fetch_assoc($res);
+			$query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE id = :user_id";
+			$params = array();
+			$params[] = array(':user_id', $user->user_data['id'], 'int');
+			$db->query($query, $params);
+			$Winner = $db->fetch();
 			$bf_paid = 1;
 			$ff_paid = 1;
 
@@ -203,9 +216,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			if ($system->SETTINGS['fees'] == 'y')
 			{
 				$query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$row = mysql_result($res, 0);
+				$db->direct_query($query);
+				$row = $db->fetch();
 				$fee_type = $row['fee_type'];
 				if ($row['fee_type'] == 'flat')
 				{
@@ -218,24 +230,34 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
 				{
 					// add balance & invoice
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $user->user_data['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :user_id";
+					$params = array();
+					$params[] = array(':fee_value', $fee_value, 'int');
+					$params[] = array(':user_id', $user->user_data['id'], 'int');
+					$db->query($query, $params);
 					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
-							(" . $user->user_data['id'] . ", " . $id . ", " . time() . ", " . $fee_value . ", " . $fee_value . ", 1)";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+							(:user_id, :auc_id, :time, :buyer, :total, 1)";
+					$params = array();
+					$params[] = array(':user_id', $user->user_data['id'], 'int');
+					$params[] = array(':auc_id', $id, 'int');
+					$params[] = array(':time', $NOW, 'int');
+					$params[] = array(':buyer', $fee_value, 'int');
+					$params[] = array(':total', $fee_value, 'int');
+					$db->query($query, $params);
 				}
 				else
 				{
 					$bf_paid = 0;
-					$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = " . $user->user_data['id'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = :user_id";
+					$params = array();
+					$params[] = array(':user_id', $user->user_data['id'], 'int');
+					$db->query($query, $params);
 				}
 				// do the final value fees
 				$query = "SELECT value, fee_type, fee_from, fee_to FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$db->direct_query($query);
 				$fee_value = 0;
-				while ($row = mysql_fetch_assoc($res))
+				while ($row = $db->fetch())
 				{
 					if (floatval($Auction['buy_now']) >= $row['fee_from'] && floatval($Auction['buy_now']) <= $row['fee_to'])
 					{
@@ -252,16 +274,27 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
 				{
 					// add user balance & invoice
-					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - " . $fee_value . " WHERE id = " . $Auction['user'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :user_id";
+					$params = array();
+					$params[] = array(':fee_value', $fee_value, 'int');
+					$params[] = array(':user_id', $Auction['user'], 'int');
+					$db->query($query, $params);
 					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, finalval, total, paid) VALUES
-							(" . $Auction['user'] . ", " . $id . ", " . time() . ", " . $fee_value . ", " . $fee_value . ", 1)";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+							(:user_id, :auc_id, :time, :finalval, :total, 1)";
+					$params = array();
+					$params[] = array(':user_id', $Auction['user'], 'int');
+					$params[] = array(':auc_id', $id, 'int');
+					$params[] = array(':time', $NOW, 'int');
+					$params[] = array(':finalval', $fee_value, 'int');
+					$params[] = array(':total', $fee_value, 'int');
+					$db->query($query, $params);
 				}
 				else
 				{
-					$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = " . $Auction['user'];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = :user_id";
+					$params = array();
+					$params[] = array(':user_id', $Auction['user'], 'int');
+					$db->query($query, $params);
 					$emailer = new email_handler();
 					$emailer->assign_vars(array(
 							'ID' => $Auction['id'],
@@ -276,8 +309,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			}
 
 			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, " . $id . ", " . $Auction['user'] . ", " . $Winner['id'] . ", " . $Auction['buy_now'] . ", '" . $NOW . "', 0, 0, " . $qty . ", 0, " . $bf_paid . ", " . $ff_paid . ")";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					(NULL, :auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid)";
+			$params = array();
+			$params[] = array(':auc_id', $id, 'int');
+			$params[] = array(':seller_id', $Auction['user'], 'int');
+			$params[] = array(':winner_id', $Winner['id'], 'int');
+			$params[] = array(':buy_now', $Auction['buy_now'], 'float');
+			$params[] = array(':time', $NOW, 'int');
+			$params[] = array(':quantity', $qty, 'int');
+			$params[] = array(':bf_paid', $bf_paid, 'float');
+			$params[] = array(':ff_paid', $ff_paid, 'float');
+			$db->query($query, $params);
 
 			// get end string
 			$month = gmdate('m', $Auction['ends'] + $system->tdiff);

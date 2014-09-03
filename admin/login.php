@@ -38,7 +38,7 @@ if (isset($_POST['action']))
 			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 			$params[] = array(':hash', get_hash(), 'str');
 			$params[] = array(':created', gmdate('Ymd'), 'str');
-			$params[] = array(':lastlogin', time(), 'int');
+			$params[] = array(':lastlogin', time() + (($system->SETTINGS['timecorrection'] + gmdate('I')) * 3600), 'int');
 			$db->query($query, $params);
 			// Redirect
 			header('location: login.php');

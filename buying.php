@@ -39,7 +39,8 @@ $sslurl = ($system->SETTINGS['usersauth'] == 'y' && !empty($system->SETTINGS['ht
 while ($row = $db->fetch())
 {
 	$totalcost = ($row['qty'] > 1) ? ($row['bid'] * $row['qty']) : $row['bid'];
-	$totalcost = ($row['shipping'] == 2) ? $totalcost : ($totalcost + $row['shipping_cost']);
+	$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
+	$totalcost = ($row['shipping'] == 2) ? $totalcost : ($totalcost + $row['shipping_cost'] + $additional_shipping);
 
 	$template->assign_block_vars('items', array(
 			'AUC_ID' => $row['auction'],

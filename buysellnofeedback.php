@@ -26,29 +26,34 @@ $query = "SELECT DISTINCT a.auction, a.seller, a.winner, a.bid, b.id, b.current_
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
-		AND ((a.seller = " . $user->user_data['id'] . " AND a.feedback_sel = 0)
-		OR (a.winner = " . $user->user_data['id'] . " AND a.feedback_win = 0))";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		AND ((a.seller = :user_ids AND a.feedback_sel = 0)
+		OR (a.winner = :user_idw AND a.feedback_win = 0))";
+$params = array();
+$params[] = array(':user_ids', $user->user_data['id'], 'int');
+$params[] = array(':user_idw', $user->user_data['id'], 'int');
+$db->query($query, $params);
 
 $k = 0;
-while ($row = mysql_fetch_array($res))
+$feedback_data = $db->fetchall();
+foreach ($feedback_data as $row)
 {
 	$them = ($row['winner'] == $user->user_data['id']) ? $row['seller'] : $row['winner'];
 	// Get details
 	$query = "SELECT u.nick, u.email
 			FROM " . $DBPrefix . "users u
-			WHERE u.id = " . $them;
-	$re_ = mysql_query($query);
-	$system->check_mysql($re_, $query, __LINE__, __FILE__);
+			WHERE u.id = :them";
+	$params = array();
+	$params[] = array(':them', $them, 'int');
+	$db->query($query, $params);
+	$info = $db->result();
 
 	$template->assign_block_vars('fbs', array(
 			'ID' => $row['id'],
 			'ROWCOLOUR' => ($k % 2) ? 'bgcolor="#FFFEEE"' : '',
 			'TITLE' => $row['title'],
-			'WINORSELLNICK' => mysql_result($re_, 0, 'nick'),
+			'WINORSELLNICK' => $info['nick'],
 			'WINORSELL' => ($row['winner'] == $user->user_data['id']) ? $MSG['25_0002'] : $MSG['25_0001'],
-			'WINORSELLEMAIL' => mysql_result($re_, 0, 'email'),
+			'WINORSELLEMAIL' => $info['email'],
 			'BID' => $row['bid'],
 			'BIDFORM' => $system->print_money($row['bid']),
 			'QTY' => ($row['qty'] == 0) ? 1 : $row['qty'],

@@ -23,7 +23,7 @@ if (!$user->logged_in)
 }
 
 // Get closed auctions with winners
-$query = "SELECT DISTINCT a.id, a.qty, a.seller, a.paid, a.feedback_win, a.bid, a.auction, b.title, b.ends, b.shipping_cost, b.shipping, u.nick, u.email
+$query = "SELECT DISTINCT a.qty, a.seller, a.paid, a.feedback_win, a.bid, a.auction, b.title, b.ends, b.shipping_cost, b.shipping, u.nick, u.email
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.seller)
@@ -44,7 +44,6 @@ while ($row = $db->fetch())
 	$template->assign_block_vars('items', array(
 			'AUC_ID' => $row['auction'],
 			'TITLE' => $row['title'],
-			'ID' => $row['id'],
 			'ENDS' => FormatDate($row['ends']),
 			'BID' => $row['bid'],
 			'FBID' => $system->print_money($row['bid']),

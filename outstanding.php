@@ -40,7 +40,7 @@ $system->check_mysql($res, $query, __LINE__, __FILE__);
 $TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
-$query = "SELECT w.id, w.winner, a.title, a.shipping_cost, w.bid, w.qty, a.shipping_cost_additional, a.shipping FROM " . $DBPrefix . "winners w
+$query = "SELECT w.auction As id, w.id As winid, a.title, a.shipping_cost, w.bid, w.qty, a.shipping_cost_additional, a.shipping FROM " . $DBPrefix . "winners w
 		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 		WHERE w.paid = 0 AND w.winner = " . $user->user_data['id'] . "
 		LIMIT " . intval($OFFSET) . "," . $system->SETTINGS['perpage'];
@@ -61,7 +61,7 @@ while ($row = mysql_fetch_assoc($res))
 			'BID' => $system->print_money($row['bid'] * $row['qty']),
 			'TOTAL' => $system->print_money($row['shipping_cost'] + ($row['bid'] * $row['qty']) + ($row['additional_shipping_cost'] * ($row['qty'] - 1))),
 			'ID' => $row['id'],
-			'WINID'=> $row['winner'],
+			'WINID'=> $row['winid'],
 
 			'B_NOTITLE' => (empty($row['title']))
 			));

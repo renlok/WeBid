@@ -301,14 +301,8 @@ $additional_shipping = $Auction['additional_shipping_cost'] * ($qty - 1);
 $shipping_cost = ($Auction['shipping'] == 1) ? ($Auction['shipping_cost'] + $additional_shipping) : 0;
 $BN_total = ($Auction['bid'] * $qty) + $shipping_cost;
 
-$query = "SELECT LAST_INSERT_ID() as id"; 
-                $res = mysql_query($query); 
-                $system->check_mysql($res, $query, __LINE__, __FILE__); 
-                $winner_id = mysql_result($res, 0, 'id');
-
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'WINID' => $winner_id,
 		'ID' => $_REQUEST['id'],
 		'TITLE' => $Auction['title'],
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),

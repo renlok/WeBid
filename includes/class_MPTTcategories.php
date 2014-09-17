@@ -19,21 +19,22 @@ class MPTTcategories
 	// Add an element to the tree as a child of $parent and as $child_num'th child. If $data is not supplied the insert id will be returned.
 	function add($parent_id, $child_num = 0, $misc_data = false)
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 		if(!is_numeric($parent_id) || $parent_id < 0)
 		{
 			return false;
 		}
 		if($parent_id != 0)
 		{
-			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent_id;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($res) != 1)
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :parent_id";
+			$params = array();
+			$params[] = array(':parent_id', $parent_id, 'int');
+			$db->query($query, $params);
+			if($db->numrows() != 1)
 			{ // Row must exist.
 				return false;
 			}
-			$parent = mysql_fetch_assoc($res);
+			$parent = $db->fetch();
 		}
 		else
 		{
@@ -70,9 +71,9 @@ class MPTTcategories
 
 		// Make a hole for the new element.
 		$query = "UPDATE " . $DBPrefix . "categories SET left_id = left_id + 2 WHERE " . $boundry[0] . " > " . $boundry[2] . " AND " . $boundry[1] . " > " . $boundry[2];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$query = "UPDATE " . $DBPrefix . "categories SET right_id = right_id + 2 WHERE " . $boundry[1] . " > " . $boundry[2];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 
 		// Insert the new element.
 		$data = array(
@@ -87,11 +88,11 @@ class MPTTcategories
 		}
 		$data = $this->build_sql($data);
 		$query = "INSERT INTO " . $DBPrefix . "categories SET " . $data;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 
 		if(!$misc_data)
 		{
-			return mysql_insert_id();
+			return $db->lastInsertId();
 		}
 		return true;
 	}
@@ -99,83 +100,90 @@ class MPTTcategories
 	// Deletes element $id with or without children. If children should be kept they will become children of $id's parent.
 	function delete($id, $keep_children = false)
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 		if(!is_numeric($id) || $id <= 0 || !is_bool($keep_children))
 		{
 			return false;
 		}
-		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if(mysql_num_rows($res) != 1)
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+		$params = array();
+		$params[] = array(':cat_id', $id, 'int');
+		$db->query($query, $params);
+		if($db->numrows() != 1)
 		{ // Row must exist.
 			return false;
 		}
-		$a = mysql_fetch_assoc($res);
+		$a = $db->fetch();
 
 		if(!$keep_children)
 		{
 			// Delete the element with children.
 			$query = "DELETE FROM " . $DBPrefix . "categories WHERE left_id >= " . $a['left_id'] . " AND right_id <= " . $a['right_id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 			// Remove the hole.
 			$diff = $a['right_id'] - $a['left_id'] + 1;
 			$query = "UPDATE " . $DBPrefix . "categories SET left_id = left_id - " . $diff . " WHERE right_id > " . $a['right_id'] . " AND left_id > " . $a['right_id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 			$query = "UPDATE " . $DBPrefix . "categories SET right_id = right_id - " . $diff . " WHERE right_id > " . $a['right_id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 			// No level cahnges needed.
 		}
 		else
 		{
 			// Delete ONLY the element.
-			$query = "DELETE FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "DELETE FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+			$params = array();
+			$params[] = array(':cat_id', $id, 'int');
+			$db->query($query, $params);
 			// Fix children.
 			$query = "UPDATE " . $DBPrefix . "categories SET left_id = left_id - 1, right_id = right_id - 1, level = level - 1 WHERE left_id >= " . $a['left_id'] . " AND right_id <= " . $a['right_id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 			// Remove hole.
 			$query = "UPDATE " . $DBPrefix . "categories SET left_id = left_id - 2 WHERE right_id > " . ($a['right_id'] - 1) . " AND left_id > " . ($a['right_id'] - 1);
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 			$query = "UPDATE " . $DBPrefix . "categories SET right_id = right_id - 2 WHERE right_id > " . ($a['right_id'] - 1);
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 		}
 	}
 
 	// Move an element (with children) $id, under element $target_id as the $child_num'th child of that element
 	function move($id, $target_id, $child_num = 0)
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 		if(!is_numeric($id) || !is_numeric($target_id) || !is_numeric($child_num))
 		{
 			return false;
 		}
 		if($target_id != 0)
 		{
-			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $id . " OR cat_id = " . $target_id;
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id OR cat_id = :target_id";
 			// I want the to be returned in order.
 			$query .= ' ORDER BY cat_id ' . (($id < $target_id) ? 'ASC' : 'DESC');
 
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($res) != 2)
+			$params = array();
+			$params[] = array(':cat_id', $id, 'int');
+			$params[] = array(':target_id', $target_id, 'int');
+			$db->query($query, $params);
+			if($db->numrows() != 2)
 			{ // Both rows must exist.
 				return false;
 			}
-			$a = mysql_fetch_assoc($res); // This is being moved.
-			$b = mysql_fetch_assoc($res); // This is the target.
+			$data = $db->fetchall();
+			$a = $data[0]; // This is being moved.
+			$b = $data[1]; // This is the target.
 		}
 		else
 		{
-			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+			$params = array();
+			$params[] = array(':cat_id', $id, 'int');
+			$db->query($query, $params);
 
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if(mysql_num_rows($res) != 1)
+			if($db->numrows() != 1)
 			{ // Row must exist.
 				return false;
 			}
-			$a = mysql_fetch_assoc($res); // This is being moved.
+			$a = $db->fetch(); // This is being moved.
 
 			// Virtual root element.
 			$b = $this->get_virtual_root();
@@ -232,60 +240,62 @@ class MPTTcategories
 
 		// Give the needed rows negative id's.
 		$query = "UPDATE " . $DBPrefix . "categories SET left_id = left_id * -1, right_id = right_id * -1 WHERE left_id >= " . $a['left_id'] . " AND right_id <= " . $a['right_id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		// Remove the hole.
 		$query = "UPDATE " . $DBPrefix . "categories SET left_id = left_id - " . $diff . " WHERE right_id > " . $a['right_id'] . " AND left_id > " . $a['right_id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$query = "UPDATE " . $DBPrefix . "categories SET right_id = right_id - " . $diff . " WHERE right_id > " . $a['right_id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		// Add hole
 		$query = "UPDATE " . $DBPrefix . "categories SET left_id = left_id + " . $diff . " WHERE " . $boundry[0] . " > " . $size . " AND " . $boundry[1] . " > " . $size;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$query = "UPDATE " . $DBPrefix . "categories SET right_id = right_id + " . $diff . " WHERE " . $boundry[2] . " > " . $size;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		// Fill hole & update rows & multiply by -1
 		$query = "UPDATE " . $DBPrefix . "categories SET left_id = (left_id - (" . $dist . ")) * -1, right_id = (right_id - (" . $dist . ")) * -1, level = level + (" . $ldiff . ") WHERE left_id < 0";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		return true;
 	}
 
 	// Copies element $id (with children) to $parent as the $child_mun'th child.
 	function copy($id, $parent, $child_num = 0)
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 		if(!is_numeric($id) || $id < 0 ||!is_numeric($parent) || $parent < 0)
 		{
 			return false;
 		}
 		// Get branch left & right id's.
-		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $id;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if(mysql_num_rows($res) != 1)
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+		$params = array();
+		$params[] = array(':cat_id', $id, 'int');
+		$db->query($query, $params);
+
+		if($db->numrows() != 1)
 		{ // Row must Exist.
 			return false;
 		}
-		$a = mysql_fetch_assoc($res);
+		$a = $db->fetch();
 		// Get child data.
 		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id >= " . $a['left_id'] . " AND right_id <= " . $a['right_id'];
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		while($row = mysql_fetch_assoc($res))
+		$db->direct_query($query);
+		while($row = $db->fetch())
 		{
 			$data[] = $row;
 		}
 
 		if($parent != 0)
 		{
-			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :parent_id";
+			$params = array();
+			$params[] = array(':parent_id', $parent, 'int');
+			$db->query($query, $params);
 
-			if(mysql_num_rows($res) != 1)
+			if($db->numrows() != 1)
 			{ // Row must exist.
 				return false;
 			}
-			$b = mysql_fetch_assoc($res);
+			$b = $db->fetch();
 		}
 		else
 		{
@@ -330,9 +340,9 @@ class MPTTcategories
 
 		// Add hole.
 		$query = "UPDATE " . $DBPrefix . "categories SET left_id = left_id + " . $diff . " WHERE " . $boundry[0] . " > " . $boundry[3] . " AND " . $boundry[1] . " > " . $boundry[3];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$query = "UPDATE " . $DBPrefix . "categories SET right_id = right_id + " . $diff . " WHERE " . $boundry[2] . " > " . $boundry[3];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 
 		// Now we have to insert all the new elements.
 		for($i = 0, $n = count($data); $i< $n; $i++)
@@ -347,7 +357,7 @@ class MPTTcategories
 
 			$data[$i] = $this->build_sql($data[$i]);
 			$query = "INSERT INTO " . $DBPrefix . "categories SET " . $data[$i];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 		}
 		return true;
 	}
@@ -355,12 +365,15 @@ class MPTTcategories
 	// get a nodes children
 	function get_children($left_id, $right_id, $level)
 	{
-		global $system, $DBPrefix;
-		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id > " . $left_id . " AND right_id < " . $right_id . " AND level = " . ($level + 1) . " ORDER BY cat_name";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		global $system, $DBPrefix, $db;
+		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id > :left_id AND right_id < :right_id AND level = :level ORDER BY cat_name";
+		$params = array();
+		$params[] = array(':left_id', $left_id, 'int');
+		$params[] = array(':right_id', $right_id, 'int');
+		$params[] = array(':level', ($level + 1), 'int');
+		$db->query($query, $params);
 		$children = array();
-		while($child = mysql_fetch_assoc($res))
+		while($child = $db->fetch())
 		{
 			$children[] = $child;
 		}
@@ -371,17 +384,19 @@ class MPTTcategories
 	// return a list of every child node of a given parent node
 	function get_children_list($left_id, $right_id, $return = 'cat_id')
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 
 		if (empty($left_id) || empty($right_id))
 		{
 			return array();
 		}
-		$query = "SELECT " . $return . " FROM " . $DBPrefix . "categories WHERE left_id > " . $left_id . " AND right_id < " . $right_id;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "SELECT " . $return . " FROM " . $DBPrefix . "categories WHERE left_id > :left_id AND right_id < :right_id";
+		$params = array();
+		$params[] = array(':left_id', $left_id, 'int');
+		$params[] = array(':right_id', $right_id, 'int');
+		$db->query($query, $params);
 		$children = array();
-		while($child = mysql_fetch_assoc($res))
+		while($child = $db->fetch())
 		{
 			$children[] = $child;
 		}
@@ -392,18 +407,20 @@ class MPTTcategories
 	//returns an ordered list of categories
 	function display_tree($left_id, $right_id, $indent = "\t")
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 		// start with an empty $right stack
 		$right = array();
 		$return = array();
 
 		// now, retrieve all descendants of the $root node
-		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id > " . $left_id . " AND right_id < " . $right_id . " ORDER BY left_id ASC";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id > :left_id AND right_id < :right_id ORDER BY left_id ASC";
+		$params = array();
+		$params[] = array(':left_id', $left_id, 'int');
+		$params[] = array(':right_id', $right_id, 'int');
+		$db->query($query, $params);
 
 		// display each row
-		while ($row = mysql_fetch_array($res))
+		while ($row = $db->fetch())
 		{
 			// only check stack if there is one
 			if (count($right) > 0)
@@ -425,30 +442,31 @@ class MPTTcategories
 	// Return the left_id, right_id and level for the virtual root node.
 	function get_virtual_root()
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 		// Virtual root element as parent.
 		$query = "SELECT right_id FROM " . $DBPrefix . "categories ORDER BY right_id DESC LIMIT 1";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$row = mysql_fetch_assoc($res);
+		$db->direct_query($query);
+		$row = $db->fetch();
 		$root = array('left_id' => 1, 'right_id' => $row['right_id'], 'level' => -1);
 		return $root;
 	}
 	
 	function get_bread_crumbs($left_id, $right_id)
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 
 		if (empty($left_id) || empty($right_id))
 		{
 			return array();
 		}
 		// return an array of all parent nodes
-		$query = "SELECT cat_name, cat_id FROM " . $DBPrefix . "categories WHERE left_id <= " . $left_id . " AND right_id >= " . $right_id . " ORDER BY left_id ASC";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "SELECT cat_name, cat_id FROM " . $DBPrefix . "categories WHERE left_id <= :left_id AND right_id >= :right_id ORDER BY left_id ASC";
+		$params = array();
+		$params[] = array(':left_id', $left_id, 'int');
+		$params[] = array(':right_id', $right_id, 'int');
+		$db->query($query, $params);
 		$array = array();
-		while ($row = mysql_fetch_assoc($res))
+		while ($row = $db->fetch())
 		{
 			$array[] = $row;
 		}
@@ -474,12 +492,13 @@ class MPTTcategories
 
 	function check_category($id)
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 
-		$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE cat_id = " . $id . " LIMIT 1";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) > 0)
+		$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id LIMIT 1";
+		$params = array();
+		$params[] = array(':cat_id', $id, 'int');
+		$db->query($query, $params);
+		if ($db->numrows() > 0)
 		{
 			return true;
 		}

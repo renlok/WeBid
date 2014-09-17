@@ -15,11 +15,15 @@
 include 'common.php';
 include $include_path . 'functions_invoices.php';
 
-// If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+// first chanck if from admin
+if (!(isset($_GET['hash']) && $_SESSION['INVOICE_RETURN'] == 'admin/invoice.php' && $_GET['hash'] == $_SESSION['WEBID_ADMIN_NUMBER']))
 {
-	header('location: user_login.php');
-	exit;
+	// If user is not logged in redirect to login page
+	if (!$user->is_logged_in())
+	{
+		header('location: user_login.php');
+		exit;
+	}
 }
 
 // is this an auction invoice or fee invoice
@@ -49,23 +53,28 @@ if ($auction)
 	$query = "SELECT w.id, w.winner, w.closingdate As date, a.id AS auc_id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, a.shipping_terms, w.bid, w.qty, a.user As seller_id, a.tax, a.taxinc
 			FROM " . $DBPrefix . "auctions a
 			LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
-			WHERE a.id = " . intval($_POST['pfval']) . " AND w.id = " . intval($_POST['pfwon']);
+			WHERE a.id = :auc_id AND w.id = :winner_id";
+	$params = array();
+	$params[] = array(':auc_id', $_POST['pfval'], 'int');
+	$params[] = array(':winner_id', $_POST['pfwon'], 'int');
+	$db->query($query, $params);
 }
 else
 {
 	// get fee data
-	$query = "SELECT * FROM " . $DBPrefix . "useraccounts WHERE useracc_id = " . intval($_GET['id']);
+	$query = "SELECT * FROM " . $DBPrefix . "useraccounts WHERE useracc_id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_GET['id'], 'int');
+	$db->query($query, $params);
 }
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
 
 // check its real
-if (mysql_num_rows($res) < 1)
+if ($db->numrows() < 1)
 {
 	invalidinvoice();
 }
 
-$data = mysql_fetch_assoc($res);
+$data = $db->fetch();
 
 if ($auction)
 {

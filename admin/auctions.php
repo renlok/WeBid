@@ -60,7 +60,26 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  maxpictures = " . $_POST['maxpictures'] . ",
 				  maxuploadsize = " . ($_POST['maxpicturesize'] * 1024) . ",
 				  thumb_show = " . intval($_POST['thumb_show']);
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$params = array();
+		$params[] = array(':proxy_bidding', ynbool($_POST['proxy_bidding']), 'str');
+		$params[] = array(':edit_starttime', $_POST['edit_starttime'], 'int');
+		$params[] = array(':cust_increment', $_POST['cust_increment'], 'int');
+		$params[] = array(':hours_countdown', $_POST['hours_countdown'], 'int');
+		$params[] = array(':ao_hpf_enabled', ynbool($_POST['ao_hpf_enabled']), 'str');
+		$params[] = array(':ao_hi_enabled', ynbool($_POST['ao_hi_enabled']), 'str');
+		$params[] = array(':ao_bi_enabled', ynbool($_POST['ao_bi_enabled']), 'str');
+		$params[] = array(':subtitle', ynbool($_POST['subtitle']), 'str');
+		$params[] = array(':extra_cat', ynbool($_POST['extra_cat']), 'str');
+		$params[] = array(':autorelist', ynbool($_POST['autorelist']), 'str');
+		$params[] = array(':autorelist_max', $_POST['autorelist_max'], 'int');
+		$params[] = array(':ae_status', ynbool($_POST['status']), 'str');
+		$params[] = array(':ae_timebefore', $_POST['timebefore'], 'int');
+		$params[] = array(':ae_extend', $_POST['extend'], 'int');
+		$params[] = array(':picturesgallery', $_POST['picturesgallery'], 'int');
+		$params[] = array(':maxpictures', $_POST['maxpictures'], 'int');
+		$params[] = array(':maxuploadsize', $_POST['maxpicturesize'], 'int');
+		$params[] = array(':thumb_show', $_POST['thumb_show'], 'int');
+		$db->query($query, $params);
 		$ERR = $MSG['5088'];
 	}
 	$system->SETTINGS['edit_starttime'] = $_POST['edit_starttime'];

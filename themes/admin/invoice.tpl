@@ -63,7 +63,7 @@
 					<td>{invoices.INFO}</td>
 					<td align="center">{invoices.TOTAL}</td>
 					<td align="center">
-						<!-- IF invoices.PAID --><p>{L_898}</p><!-- ENDIF --><a href="{SITEURL}order_print.php?id={invoices.INVOICE}" tagret="_blank">{L_1058}</a>
+						<!-- IF invoices.PAID --><p>{L_898}</p><!-- ENDIF --><a href="{SITEURL}order_print.php?id={invoices.INVOICE}&hash={HASH}" tagret="_blank">{L_1058}</a>
 					</td>
 				</tr>
 <!-- END invoices -->

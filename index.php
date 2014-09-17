@@ -61,17 +61,19 @@ else
 }
 
 $query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE parent_id = -1";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
+$parent_id = $db->result('cat_id');
 
 $query = "SELECT * FROM " . $DBPrefix . "categories
-		  WHERE parent_id = " . mysql_result($res, 0) . "
+		  WHERE parent_id = :parent_id
 		  " . $catsorting . "
-		  LIMIT " . $system->SETTINGS['catstoshow'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		  LIMIT :limit";
+$params = array();
+$params[] = array(':parent_id', $parent_id, 'int');
+$params[] = array(':limit', $system->SETTINGS['catstoshow'], 'int');
+$db->query($query, $params);
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('cat_list', array(
 			'CATAUCNUM' => ($row['sub_counter'] != 0) ? '(' . $row['sub_counter'] . ')' : '',
@@ -85,14 +87,15 @@ while ($row = mysql_fetch_assoc($res))
 // get featured items
 $query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, bn_only, buy_now
         FROM " . $DBPrefix . "auctions
-        WHERE closed = 0 AND suspended = 0 AND starts <= " . $NOW . "
+        WHERE closed = 0 AND suspended = 0 AND starts <= :time
 		AND featured = 'y'
         ORDER BY RAND() DESC LIMIT 12";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$params = array();
+$params[] = array(':time', $NOW, 'int');
+$db->query($query, $params);
 
 $i = 0;
-while($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$ends = $row['ends'];
 	$difference = $ends - time();
@@ -121,14 +124,16 @@ $featured_items = ($i > 0) ? true : false;
 // get last created auctions
 $query = "SELECT id, title, starts from " . $DBPrefix . "auctions
 		 WHERE closed = 0 AND suspended = 0
-		 AND starts <= " . $NOW . "
+		 AND starts <= :time
 		 ORDER BY starts DESC
-		 LIMIT " . $system->SETTINGS['lastitemsnumber'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		 LIMIT :limit";
+$params = array();
+$params[] = array(':time', $NOW, 'int');
+$params[] = array(':limit', $system->SETTINGS['lastitemsnumber'], 'int');
+$db->query($query, $params);
 
 $i = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('auc_last', array(
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
@@ -142,13 +147,15 @@ while ($row = mysql_fetch_assoc($res))
 $auc_last = ($i > 0) ? true : false;
 // get ending soon auctions
 $query = "SELECT ends, id, title FROM " . $DBPrefix . "auctions
-		 WHERE closed = 0 AND suspended = 0 AND starts <= " . $NOW . "
-		 ORDER BY ends LIMIT " . $system->SETTINGS['endingsoonnumber'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		 WHERE closed = 0 AND suspended = 0 AND starts <= :time
+		 ORDER BY ends LIMIT :limit";
+$params = array();
+$params[] = array(':time', $NOW, 'int');
+$params[] = array(':limit', $system->SETTINGS['endingsoonnumber'], 'int');
+$db->query($query, $params);
 
 $i = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$difference = $row['ends'] - time();
 	if ($difference > 0)
@@ -173,13 +180,15 @@ $end_soon = ($i > 0) ? true : false;
 $query = "SELECT a.id, a.title, a.current_bid, a.pict_url, a.ends, a.num_bids, a.minimum_bid 
         FROM " . $DBPrefix . "auctions a 
         LEFT JOIN " . $DBPrefix . "auccounter c ON (a.id = c.auction_id) 
-        WHERE closed = 0 AND suspended = 0 AND starts <= " . $NOW . " 
-        ORDER BY c.counter DESC LIMIT " . $system->SETTINGS['hotitemsnumber'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+        WHERE closed = 0 AND suspended = 0 AND starts <= :time
+        ORDER BY c.counter DESC LIMIT :limit";
+$params = array();
+$params[] = array(':time', $NOW, 'int');
+$params[] = array(':limit', $system->SETTINGS['hotitemsnumber'], 'int');
+$db->query($query, $params);
 
 $i = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$i++;
 	$ends = $row['ends'];
@@ -204,11 +213,13 @@ while ($row = mysql_fetch_assoc($res))
 $hot_items = ($i > 0) ? true : false;
 
 // Build list of help topics
-$query = "SELECT id, category FROM " . $DBPrefix . "faqscat_translated WHERE lang = '" . $language . "' ORDER BY category ASC";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$query = "SELECT id, category FROM " . $DBPrefix . "faqscat_translated WHERE lang = :language ORDER BY category ASC";
+$params = array();
+$params[] = array(':language', $language, 'str');
+$db->query($query, $params);
+
 $i = 0;
-while ($faqscat = mysql_fetch_assoc($res))
+while ($faqscat = $db->fetch())
 {
 	$template->assign_block_vars('helpbox', array(
 			'ID' => $faqscat['id'],
@@ -223,11 +234,13 @@ if ($system->SETTINGS['newsbox'] == 1)
 {
 	$query = "SELECT n.title As t, n.new_date, t.* FROM " . $DBPrefix . "news n
 			LEFT JOIN " . $DBPrefix . "news_translated t ON (t.id = n.id)
-			WHERE t.lang = '" . $language . "' AND n.suspended = 0
-			ORDER BY new_date DESC, id DESC LIMIT " . $system->SETTINGS['newstoshow'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	while ($new = mysql_fetch_assoc($res))
+			WHERE t.lang = :language AND n.suspended = 0
+			ORDER BY new_date DESC, id DESC LIMIT :limit";
+	$params = array();
+	$params[] = array(':language', $language, 'str');
+	$params[] = array(':limit', $system->SETTINGS['newstoshow'], 'int');
+	$db->query($query, $params);
+	while ($new = $db->fetch())
 	{
 		$template->assign_block_vars('newsbox', array(
 				'ID' => $new['id'],

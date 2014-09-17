@@ -224,6 +224,7 @@ $template->assign_vars(array(
 		'TO_DATE' => ($to_date == 0) ? '' : $to_date,
 		'USER_SEARCH' => (!$searchuser) ? '' : $username,
 		'NO_USER_SEARCH' => (!$searchuser),
+		'HASH' => $_SESSION['WEBID_ADMIN_NUMBER'],
 
 		'PAGNATION' => ($PAGES > 1),
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/invoice.php?PAGE=' . $PREV . $pagenation_link . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',

@@ -26,17 +26,19 @@ $sender = getSeller($user->user_data['id']);
 $query = "SELECT w.id, w.winner, w.closingdate, a.id AS auc_id, a.title, w.qty,	w.seller As uid 
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
-		WHERE a.id = " . intval($_POST['pfval']) . " AND w.id =". intval($_POST['pfwon']) ;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		WHERE a.id = :auc_id AND w.id = :winner_id";
+$params = array();
+$params[] = array(':auc_id', $_POST['pfval'], 'int');
+$params[] = array(':winner_id', $_POST['pfwon'], 'int');
+$db->query($query, $params);
 
 // check its real
-if (mysql_num_rows($res) < 1)
+if ($db->numrows() < 1)
 {
 	invalidinvoice(true);
 }
 
-$data = mysql_fetch_assoc($res);
+$data = $db->fetch();
 $winner = getAddresswinner($data['winner']);
 
 // build winners address

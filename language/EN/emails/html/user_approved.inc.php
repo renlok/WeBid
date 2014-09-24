@@ -1,6 +1,6 @@
 <table border="0" width="100%">
 	<tr>
-		<td colspan="2" height="35"><div style="font-size: 14px; font-weight: bold;">Congratulations, Your now a member of {SITENAME}!</div></td>
+		<td colspan="2" height="35"><div style="font-size: 14px; font-weight: bold;">Congratulations, You're now a member of {SITENAME}!</div></td>
 	</tr>
 	<tr>
 		<td colspan="2" style="font-size: 12px;">Hello <b>{C_NAME}</b>,</td>

@@ -101,6 +101,9 @@ $ERR_075 = 'No bids';
 $ERR_076 = 'Invalid Username/E-mail combination';
 $ERR_077 = 'Valid Token Expired';
 $ERR_078 = 'You must agree to the Terms and Conditions';
+$ERR_079 = 'The Shipping fee price you inserted is not correct';
+$ERR_080 = 'Additional Shipping price you inserted is not correct';
+$ERR_081 = 'The Balance value is not correct';
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";

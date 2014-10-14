@@ -103,6 +103,7 @@ function CheckSellData()
 	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
 	global $payments, $num, $nnum, $a_starts, $start_now, $relist;
+	global $additional_shipping_cost, $shipping_cost;
 
 	if (empty($title))
 	{
@@ -156,6 +157,17 @@ function CheckSellData()
 	if ($buy_now == 'yes' && (!$system->CheckMoney($buy_now_price) || empty($buy_now_price)  || floatval($buy_now_price) == 0))
 	{
 		return '061';
+	}
+	if (isset($shipping_cost) && !$system->CheckMoney($shipping_cost)) {
+	
+	return '079';
+	
+	}
+	if (isset($additional_shipping_cost) && !$system->CheckMoney($additional_shipping_cost)) {
+	
+	
+	return '080';
+	
 	}
 
 	$numpay = count($payment);

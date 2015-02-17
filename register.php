@@ -111,9 +111,8 @@ if (empty($_POST['action']))
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateway_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$gateway_data = $db->fetch();
 
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
@@ -258,17 +257,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		}
 		else
 		{
-			$sql = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_POST['TPL_nick']) . "'";
-			$res = mysql_query($sql);
-			$system->check_mysql($res, $sql, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0)
+			// check username is unique
+			$query = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = :name";
+			$params = array();
+			$params[] = array(':name', $system->cleanvars($_POST['TPL_nick']), 'str');
+			$db->query($query, $params);
+			if ($db->numrows('nick') > 0)
 			{
 				$ERR = $ERR_111; // Selected user already exists
 			}
-			$query = "SELECT email FROM " . $DBPrefix . "users WHERE email = '" . $system->cleanvars($_POST['TPL_email']) . "'";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0)
+			// check email is unique
+			$query = "SELECT email FROM " . $DBPrefix . "users WHERE email = :email";
+			$params = array();
+			$params[] = array(':email', $system->cleanvars($_POST['TPL_email']), 'str');
+			$db->query($query, $params);
+			if ($db->numrows('email') > 0)
 			{
 				$ERR = $ERR_115; // E-mail already used
 			}
@@ -283,32 +286,30 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 0) ? 10 : $SUSPENDED;
 
 				$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$signup_fee = mysql_result($res, 0);
+				$db->direct_query($query);
+				$signup_fee = $db->result('value');
 				if ($system->SETTINGS['fee_type'] == 2 && $signup_fee > 0)
 				{
 					$SUSPENDED = 9;
 					$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$db->direct_query($query);
 				}
 				elseif ($system->SETTINGS['activationtype'] == 1 || $system->SETTINGS['activationtype'] == 0)
 				{
 					$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$db->direct_query($query);
 				}
 				else
 				{
 					$query = "UPDATE " . $DBPrefix . "counters SET users = users + 1";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$db->direct_query($query);
 				}
 				$balance = ($system->SETTINGS['fee_type'] == 2) ? 0 : ($system->SETTINGS['fee_signup_bonus'] - $signup_fee);
 
 				$query = "SELECT id FROM " . $DBPrefix . "groups WHERE auto_join = 1";
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
+				$db->direct_query($query);
 				$groups = array();
-				while ($row = mysql_fetch_assoc($res))
+				while ($row = $db->fetch())
 				{
 					$groups[] = $row['id'];
 				}
@@ -317,38 +318,46 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				include $include_path . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, 
-						birthdate, suspended, language, groups, balance, timecorrection, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
-						VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
-						'" . $phpass->HashPassword($TPL_password_hidden) . "',
-						'" . $hash . "',
-						'" . $system->cleanvars($TPL_name_hidden) . "',
-						'" . $system->cleanvars($_POST['TPL_address']) . "',
-						'" . $system->cleanvars($_POST['TPL_city']) . "',
-						'" . $system->cleanvars($_POST['TPL_prov']) . "',
-						'" . $system->cleanvars($_POST['TPL_country']) . "',
-						'" . $system->cleanvars($_POST['TPL_zip']) . "',
-						'" . $system->cleanvars($_POST['TPL_phone']) . "',
-						'" . intval($_POST['TPL_nletter']) . "',
-						'" . $system->cleanvars($_POST['TPL_email']) . "',
-						'" . time() . "',
-						'" . ((!empty($DATE)) ? $DATE : 0) . "',
-						'" . $SUSPENDED . "',
-						'" . $language . "',
-						'" . implode(',', $groups) . "',
-						'" . $balance . "',
-						" . intval($_POST['TPL_timezone']) . ",
-						'" . ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : '') . "',
-						'" . ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : '') . "',
-						'" . ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']) : '') . "',
-						'" . ((isset($_POST['toocheckout_id'])) ? $system->cleanvars($_POST['toocheckout_id']) : '') . "',
-						'" . ((isset($_POST['TPL_authnet_id'])) ? $system->cleanvars($_POST['TPL_authnet_id']) : '') . "',
-						'" . ((isset($_POST['TPL_authnet_pass'])) ? $system->cleanvars($_POST['TPL_authnet_pass']) : '') . "')";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				$TPL_id_hidden = mysql_insert_id();
+						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate, 
+						suspended, language, groups, balance, timecorrection, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
+						VALUES
+						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :reg_date, :birthdate,
+						:suspended, :language, :groups, :balance, :timecorrection, :paypal_email, :worldpay_id, :moneybookers_email, :toocheckout_id, :authnet_id, :authnet_pass)";
+				$params = array(
+					array(':nick', $system->cleanvars($TPL_nick_hidden), 'str'),
+					array(':password', $phpass->HashPassword($TPL_password_hidden), 'str'),
+					array(':hash', $hash, 'str'),
+					array(':name', $system->cleanvars($TPL_name_hidden), 'str'),
+					array(':address', $system->cleanvars($_POST['TPL_address']), 'str'),
+					array(':city', $system->cleanvars($_POST['TPL_city']), 'str'),
+					array(':prov', $system->cleanvars($_POST['TPL_prov']), 'str'),
+					array(':country', $system->cleanvars($_POST['TPL_country']), 'str'),
+					array(':zip', $system->cleanvars($_POST['TPL_zip']), 'str'),
+					array(':phone', $system->cleanvars($_POST['TPL_phone']), 'str'),
+					array(':nletter', $_POST['TPL_nletter'], 'int'),
+					array(':email', $system->cleanvars($_POST['TPL_email']), 'str'),
+					array(':reg_date', time(), 'int'),
+					array(':birthdate', ((!empty($DATE)) ? $DATE : 0), 'str'),
+					array(':suspended', $SUSPENDED, 'int'),
+					array(':language', $language, 'str'),
+					array(':groups', implode(',', $groups), 'str'),
+					array(':balance', $balance, 'bool'),
+					array(':timecorrection', $_POST['TPL_timezone'], 'int'),
+					array(':paypal_email', ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : ''), 'str'),
+					array(':worldpay_id', ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : ''), 'str'),
+					array(':moneybookers_email', ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']), 'str'),
+					array(':toocheckout_id', ((isset($_POST['toocheckout_id'])) ? $system->cleanvars($_POST['toocheckout_id']) : ''), 'str'),
+					array(':authnet_id', ((isset($_POST['TPL_authnet_id'])) ? $system->cleanvars($_POST['TPL_authnet_id']) : ''), 'str'),
+					array(':authnet_pass', ((isset($_POST['TPL_authnet_pass'])) ? $system->cleanvars($_POST['TPL_authnet_pass']) : ''), 'str'),
+				);
+				$db->query($query, $params);
+				$TPL_id_hidden = $db->lastInsertId();
 				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-						  (NULL, " . intval($TPL_id_hidden) . ", '" . $_SERVER['REMOTE_ADDR'] . "', 'first','accept')";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						  (NULL, :id_hidden, :remote_addr, 'first', 'accept')";
+				$params = array();
+				$params[] = array(':id_hidden', $TPL_id_hidden, 'int');
+				$params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'int');
+				$db->query($query, $params);
 
 				$_SESSION['language'] = $language;
 				$first = false;
@@ -391,6 +400,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		}
 	}
 }
+
+$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
+$db->direct_query($query);
+$signup_fee = $db->result();
 
 $country = '';
 
@@ -465,6 +478,7 @@ $template->assign_vars(array(
 		'B_WORLDPAY' => ($gateway_data['worldpay_active'] == 1),
 		'B_TOOCHECKOUT' => ($gateway_data['toocheckout_active'] == 1),
 		'B_MONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1),
+		'B_FEES' => ($signup_fee['value'] > 0),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
 		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
@@ -506,6 +520,7 @@ $template->assign_vars(array(
 		'MISSING14' => ($missing['worldpay']) ? 1 : 0,
 		'MISSING15' => ($missing['toocheckout']) ? 1 : 0,
 		'MISSING16' => ($missing['moneybookers']) ? 1 : 0,
+		'FEES'=> $system->print_money($signup_fee['value']),
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
 		'V_NNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 2) ? 'checked=true' : '',

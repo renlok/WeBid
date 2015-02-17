@@ -29,36 +29,39 @@ if(!isset($_GET['user_id']))
 
 if (!empty($_GET['user_id']) && is_string($_GET['user_id']))
 {
-	$sql = "SELECT * FROM " . $DBPrefix . "users WHERE nick = '" . $system->cleanvars($_GET['user_id']) . "'";
-	$res = mysql_query($sql);
-	$system->check_mysql($res, $sql, __LINE__, __FILE__);
+	$query = "SELECT * FROM " . $DBPrefix . "users WHERE nick = :user";
+	$params = array();
+	$params[] = array(':user', $system->cleanvars($_GET['user_id']), 'str');
+	$db->query($query, $params);
 }
 
 if (!empty($_GET['user_id']))
 {
-	$sql = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . intval($_GET['user_id']);
-	$res = mysql_query($sql);
-	$system->check_mysql($res, $sql, __LINE__, __FILE__);
+	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_GET['user_id'], 'int');
+	$db->query($query, $params);
 }
 
-if (@mysql_num_rows($res) == 1)
+if (@$db->numrows() == 1)
 {
-	$arr = mysql_fetch_assoc($res);
-	$TPL_user_id = $arr['id'];
+	$user_data = $db->result();
+	$TPL_user_id = $user_data['id'];
 	$TPL_rate_ratio_value = '';
 	foreach ($memtypesarr as $k => $l)
 	{
-		if ($k >= $arr['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+		if ($k >= $user_data['rate_sum'] || $i++ == (count($memtypesarr) - 1))
 		{
 			$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 			break;
 		}
 	}
-	$sql = "SELECT f.*, a.user FROM " . $DBPrefix . "feedbacks f
-			LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
-			WHERE f.rated_user_id = " . $TPL_user_id;
-	$res_ = mysql_query($sql);
-	$system->check_mysql($res_, $sql, __LINE__, __FILE__);
+	$query = "SELECT f.*, a.user FROM " . $DBPrefix . "feedbacks f
+		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
+		WHERE f.rated_user_id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $TPL_user_id, 'int');
+	$db->query($query, $params);
 
 	$total_fb = 0;
 	$fb = array(-1 => 0, 0 => 0, 1 => 0);
@@ -67,9 +70,9 @@ if (@mysql_num_rows($res) == 1)
 	$fb_last_year = array(-1 => 0, 0 => 0, 1 => 0);
 	$fb_last_3month = array(-1 => 0, 0 => 0, 1 => 0);
 	$fb_last_month = array(-1 => 0, 0 => 0, 1 => 0);
-	if (mysql_num_rows($res_) > 0)
+	if ($db->numrows() > 0)
 	{
-		while ($ratesum = mysql_fetch_array($res_))
+		while ($ratesum = $db->result())
 		{
 			$fb[$ratesum['rate']]++;
 			$total_fb++;
@@ -96,16 +99,16 @@ if (@mysql_num_rows($res) == 1)
 		}
 	}
 
-	$DATE = $arr['reg_date'] + $system->tdiff;
+	$DATE = $user_data['reg_date'] + $system->tdiff;
 	$mth = 'MON_0'.gmdate('m', $DATE);
 
-	$feedback_rate = ($arr['rate_sum'] == 0) ? 1 : $arr['rate_sum'];
+	$feedback_rate = ($user_data['rate_sum'] == 0) ? 1 : $user_data['rate_sum'];
 	$feedback_rate = ($feedback_rate < 0) ? $feedback_rate * - 1 : $feedback_rate;
 	$total_fb = ($total_fb < 1) ? 1 : $total_fb;
 	$variables = array(
 		'RATE_VAL' => $TPL_rate_ratio_value,
-		'NUM_FB' => $arr['rate_num'],
-		'SUM_FB' => $arr['rate_sum'],
+		'NUM_FB' => $user_data['rate_num'],
+		'SUM_FB' => $user_data['rate_sum'],
 		'FB_POS' => (isset($fb[1])) ? $MSG['500'] . $fb[1] . ' (' . ceil($fb[1] * 100 / $total_fb) . '%)<br>' : '',
 		'FB_NEUT' => (isset($fb[0])) ? $MSG['499'] . $fb[0] . ' (' . ceil($fb[0] * 100 / $total_fb) . '%)<br>' : '',
 		'FB_NEG' => (isset($fb[ - 1])) ? '<span style="color:red">' . $MSG['501'] . $fb[ - 1] . ' (' . ceil($fb[ - 1] * 100 / $total_fb) . '%)</span>' : '',
@@ -125,9 +128,9 @@ if (@mysql_num_rows($res) == 1)
 		'FB_LAST3MONTH_NEG' => $fb_last_3month[-1],
 		'FB_LASTMONTH_NEG' => $fb_last_month[-1],
 		'REGSINCE' => $MSG[$mth].' '.gmdate('d, Y', $DATE),
-		'COUNTRY' => $arr['country'],
+		'COUNTRY' => $user_data['country'],
 		'AUCTION_ID' => (isset($_GET['auction_id'])) ? $_GET['auction_id'] : '',
-		'USER' => $arr['nick'],
+		'USER' => $user_data['nick'],
 		'USER_ID' => $TPL_user_id,
 		'B_VIEW' => true,
 		'B_AUCID' => (isset($_GET['auction_id'])),

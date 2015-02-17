@@ -22,8 +22,9 @@ if (!$user->is_logged_in())
 	exit;
 }
 
+$mailbox_space = 60; // how many messages you can have
 $x = (isset($_GET['x']))? $_GET['x'] : '';
-$u = (isset($_GET['u']))? (int)$_GET['u'] : 0;
+$user_id = (isset($_GET['u']))? intval($_GET['u']) : 0; // user_id
 $replymessage = (isset($_GET['message']))? $_GET['message'] : '';
 $order = (isset($_GET['order']))? $_GET['order'] : '';
 $action = (isset($_GET['action']))? $_GET['action'] : '';
@@ -34,18 +35,16 @@ $email = false;
 if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message']))
 {
 	// get message info + set cookies for if an error occours
-	$sendto = $system->cleanvars($_POST['sendto']);
-	$_SESSION['sendto'] = $sendto;
-	$subject = $system->cleanvars($_POST['subject']);
-	$_SESSION['subject'] = $subject;
-	$message = $system->cleanvars($_POST['message']);
-	$_SESSION['messagecont'] = $message;
+	$_SESSION['sendto'] = $sendto = $system->cleanvars($_POST['sendto']);
+	$_SESSION['subject'] = $subject = $system->cleanvars($_POST['subject']);
+	$_SESSION['messagecont'] = $message = $system->cleanvars($_POST['message']);
+
 	// check user exists
-	$query = "SELECT * FROM " . $DBPrefix . "users WHERE nick = '" . $sendto . "'";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$usercheck = mysql_num_rows($res);
-	if ($usercheck == 0) // no such user
+	$query = "SELECT * FROM " . $DBPrefix . "users WHERE nick = :sendtouser";
+	$params = array();
+	$params[] = array(':sendtouser', $sendto, 'str');
+	$db->query($query, $params);
+	if ($db->numrows() == 0) // no such user
 	{
 		if (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $sendto))
 		{
@@ -62,13 +61,14 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	$nowmessage = nl2br($message);
 	if (!$email)
 	{
-		$userarray = mysql_fetch_array($res);
+		$userarray = $db->result();
 
 		// check use mailbox insnt full
-		$query = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = " . $userarray['id'];
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$mailboxsize = mysql_num_rows($res);
-		if ($mailboxsize >= 30)
+		$query = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $userarray['id'], 'int');
+		$db->query($query, $params);
+		if ($db->numrows() >= $mailbox_space)
 		{
 			$_SESSION['message'] = sprintf($MSG['443'], $sendto);
 			header('location: mail.php');
@@ -84,30 +84,42 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 	}
 
 	// send message
-	$to_id = ($email) ? $sendto : $userarray['id'];
 	$id_type = ($email) ? 'fromemail' : 'sentto';
-	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, sentat, message, subject, reply_of, question)
-			VALUES ('" . $to_id . "', " . $user->user_data['id'] . ", " . time() . ", '" . $nowmessage . "', '" . $subject . "', " . $_SESSION['reply_of' . $_POST['hash']] . ", " . $_SESSION['question' . $_POST['hash']] . ")";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, sentat, message, subject, reply_of, question) 
+			VALUES (:to_ids, :sender_id, :times, :nowmessages, :subjects, :reply_of_hash, :question_hash)";
+	$params = array();
+	$params[] = array(':to_ids', ($email) ? $sendto : $userarray['id'], 'bool');
+	$params[] = array(':sender_id', $user->user_data['id'], 'int');
+	$params[] = array(':times', time(), 'int');
+	$params[] = array(':nowmessages', $nowmessage, 'str');
+	$params[] = array(':subjects', $subject, 'str');
+	$params[] = array(':reply_of_hash', $_SESSION['reply_of' . $_POST['hash']], 'int');
+	$params[] = array(':question_hash', $_SESSION['question' . $_POST['hash']], 'int');
+	$db->query($query, $params);
 
 	// Track IP
 	if (defined('TrackUserIPs'))
 	{
-		$system->log('user', 'Post Private Message', $user->user_data['id'], mysql_insert_id());
+		$system->log('user', 'Post Private Message', $user->user_data['id'], $db->lastInsertId());
 	}
 
 	if (isset($_POST['is_question']) && isset($_SESSION['reply_of' . $_POST['hash']]) && $_SESSION['reply_of' . $_POST['hash']] > 0)
 	{
 		$public = (isset($_POST['public'])) ? 1 : 0;
-		$query = "UPDATE " . $DBPrefix . "messages SET public = " . $public . " WHERE id = " . $_SESSION['reply_of' . $_POST['hash']];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "messages SET public = :public_mes WHERE id = :mes_id";
+		$params = array();
+		$params[] = array(':public_mes', $public, 'int');
+		$params[] = array(':mes_id', $_SESSION['reply_of' . $_POST['hash']], 'str');
+		$db->query($query, $params);
 	}
 
 	if (isset($_SESSION['reply' . $_POST['hash']]))
 	{
 		$reply = $_SESSION['reply' . $_POST['hash']];
-		$query = "UPDATE " . $DBPrefix . "messages SET replied = 1 WHERE id = " . $reply;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "messages SET replied = 1 WHERE id = :message_id";
+		$params = array();
+		$params[] = array(':message_id', $reply, 'int');
+		$db->query($query, $params);
 		unset($_SESSION['reply' . $_POST['hash']]);
 	}
 	// delete session of sent message
@@ -126,7 +138,7 @@ if (isset($_REQUEST['deleteid']) && is_array($_REQUEST['deleteid']))
 		$message_id .= ',' . intval($temparr[$i]);
 	}
 	$query = "DELETE FROM " . $DBPrefix . "messages WHERE id IN (" . $message_id . ")";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 	$ERR = $MSG['444'];
 }
 
@@ -137,34 +149,37 @@ if ($x == 1)
 	$sendto = $_SESSION['sendto' . $replymessage];
 	$question = false;
 	// if sent from userpage
-	if ($u > 0)
+	if ($user_id > 0)
 	{
-		$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . intval($u);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$array = mysql_fetch_assoc($res);
-		$sendto = $array['nick'];
+		$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $u, 'int');
+		$db->query($query, $params);
+		$sendto = $db->result('nick');
 	}
 
 	// get convo
 	if (isset($_SESSION['reply_of' . $_GET['message']]) && $_SESSION['reply_of' . $_GET['message']] != 0)
 	{
 		$tid = $_SESSION['reply_of' . $_GET['message']];
-		$query = "SELECT sentfrom, question, public FROM " . $DBPrefix . "messages WHERE id = " . $tid;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$array = mysql_fetch_assoc($res);
-		$reply_public = $array['public'];
-		if ($array['question'] > 0 && $user->user_data['id'] != $array['sentfrom'])
+		$query = "SELECT sentfrom, question, public FROM " . $DBPrefix . "messages WHERE id = :message_id";
+		$params = array();
+		$params[] = array(':message_id', $tid, 'int');
+		$db->query($query, $params);
+		$message_data = $db->result();
+		$reply_public = $message_data['public'];
+		if ($message_data['question'] > 0 && $user->user_data['id'] != $message_data['sentfrom'])
 		{
 			$question = true;
 		}
 
-		$query = "SELECT sentfrom, message, question FROM " . $DBPrefix . "messages WHERE reply_of = " . $tid . " OR id = " . $tid . " ORDER BY id DESC";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "SELECT sentfrom, message, question FROM " . $DBPrefix . "messages WHERE reply_of = :message_id1 OR id = :message_id2 ORDER BY id DESC";
+		$params = array();
+		$params[] = array(':message_id1', $tid, 'int');
+		$params[] = array(':message_id2', $tid, 'int');
+		$db->query($query, $params);
 		$oid = 0;
-		while ($row = mysql_fetch_assoc($res))
+		while ($row = $db->result())
 		{
 			$oid = ($oid == 0) ? $row['sentfrom'] : $oid;
 			$template->assign_block_vars('convo', array(
@@ -214,15 +229,16 @@ switch ($order)
 
 $query = "SELECT m.*, u.nick FROM " . $DBPrefix . "messages m
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = m.sentfrom)
-		WHERE sentto = '" . $user->user_data['id'] . "' " . $orderby;
+		WHERE sentto = :user_id " . $orderby;
 // get users messages
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$messages = mysql_num_rows($res);
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$messages = $db->numrows();
 // display number of messages
 $messagespaceused = ($messages * 4) + 1;
-$messagespaceleft = (30 - $messages) * 4;
-$messagesleft = 30 - $messages;
+$messagespaceleft = ($mailbox_space - $messages) * 4;
+$messagesleft = $mailbox_space - $messages;
 
 $ERR = (isset($_SESSION['message'])) ? $_SESSION['message'] : $ERR;
 unset($_SESSION['message']);
@@ -242,7 +258,7 @@ $template->assign_vars(array(
 		'B_CONVO' => (isset($_SESSION['reply_of' . $_GET['message']]))
 		));
 
-while ($array = mysql_fetch_array($res))
+while ($array = $db->fetch())
 {
 	$sender = ($array['sentfrom'] == 0) ? 'Admin' : '<a href="profile.php?user_id=' . $array['sentfrom'] . '">' . $array['nick'] . '</a>';
 	$sender = (!empty($array['fromemail'])) ? $array['fromemail'] : $sender;

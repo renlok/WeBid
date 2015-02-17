@@ -194,6 +194,12 @@
 					</tr>
 				</table>
 
+				<!-- IF B_FEES -->
+				<div style="text-align:center">
+					<p>{L_430}: {FEES}</p>
+				</div>
+				<!-- ENDIF -->
+
 				<div style="text-align:center">
 					<p><input type="checkbox" name="terms_check" id="terms_check"> {L_858}</p>
 					<input type="hidden" name="action" value="first">

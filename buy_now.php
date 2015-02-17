@@ -338,7 +338,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		$buy_done = 1;
 	}
 }
-$id = $db->lastInsertId();
+$winner_id = $db->lastInsertId();
 
 $additional_shipping = $Auction['additional_shipping_cost'] * ($qty - 1);
 $shipping_cost = ($Auction['shipping'] == 1) ? ($Auction['shipping_cost'] + $additional_shipping) : 0;
@@ -347,7 +347,7 @@ $BN_total = ($Auction['bid'] * $qty) + $shipping_cost;
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_REQUEST['id'],
-		'WINID' => $id,
+		'WINID' => $winner_id,
 		'TITLE' => $Auction['title'],
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),
 		'BN_TOTAL' => $system->print_money($BN_total),

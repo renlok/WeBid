@@ -44,9 +44,8 @@ $seller_emails = array();
 $query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
 $db->direct_query($query);
 $row = $db->result();
-$buyer_fee = $row['value'];
-$buyer_fee = (empty($buyer_fee)) ? 0 : $buyer_fee;
-$buyer_fee_type = $row['fee_type'];
+$buyer_fee = (isset($row['value'])) ? $row['value'] : 0;
+$buyer_fee_type = (isset($row['fee_type'])) ? $row['fee_type'] : 'flat';
 
 // get closed auction fee
 $query = "SELECT * FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";

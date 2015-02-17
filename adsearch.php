@@ -163,19 +163,21 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		if (is_array($_SESSION['advs']['payment']) && count($_SESSION['advs']['payment']) > 1)
 		{
 			$pri = false;
+			$i = 0;
 			foreach ($payment as $key => &$val)
 			{
 				if (!$pri)
 				{
-					$ora = "((au.payment LIKE :payment)";
-					$asparams[] = array(":payment", '%' . $system->cleanvars($val) . '%', 'str');
+					$ora = "((au.payment LIKE :payment" . get_param_number($i) . ")";
+					$asparams[] = array(":payment" . get_param_number($i), '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				else
 				{
-					$ora .= " OR (au.payment LIKE :payment) AND ";
-					$asparams[] = array(":payment", '%' . $system->cleanvars($val) . '%', 'str');
+					$ora .= " OR (au.payment LIKE :payment" . get_param_number($i) . ") AND ";
+					$asparams[] = array(":payment" . get_param_number($i), '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				$pri = true;
+				$i++;
 			}
 			$ora .= ") ";
 		}

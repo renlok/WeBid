@@ -62,15 +62,19 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 			}
 			else
 			{
-				$query = "UPDATE " . $DBPrefix . "fees SET value = '" . $system->input_money($_POST['value']) . "' WHERE type = '" . $_GET['type'] . "'";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$query = "UPDATE " . $DBPrefix . "fees SET value = :value WHERE type = :type";
+				$params = array();
+				$params[] = array(':value', $system->input_money($_POST['value']), 'float');
+				$params[] = array(':type', $_GET['type'], 'str');
+				$db->query($query, $params);
 				$errmsg = $feenames[$_GET['type']] . $MSG['359'];
 			}
 		}
-		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = '" . $_GET['type'] . "'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$value = mysql_result($res, 0);
+		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = :type";
+		$params = array();
+		$params[] = array(':type', $_GET['type'], 'str');
+		$db->query($query, $params);
+		$value = $db->result('value');
 
 		$template->assign_vars(array(
 				'VALUE' => $system->print_money_nosymbol($value),
@@ -90,20 +94,28 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 					$value = $system->input_money($value);
 				}
 				$query = "UPDATE " . $DBPrefix . "fees SET
-						fee_from = '" . $system->input_money($_POST['fee_from'][$i]) . "',
-						fee_to = '" . $system->input_money($_POST['fee_to'][$i]) . "',
-						value = '" . $value . "',
-						fee_type = '" . $_POST['type'][$i] . "'
-						WHERE id = " . $_POST['tier_id'][$i];
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						fee_from = :fee_from,
+						fee_to = :fee_to,
+						value = :value,
+						fee_type = :fee_type
+						WHERE id = :fee_id";
+				$params = array();
+				$params[] = array(':fee_from', $system->input_money($_POST['fee_from'][$i]), 'float');
+				$params[] = array(':fee_to', $system->input_money($_POST['fee_to'][$i]), 'float');
+				$params[] = array(':value', $value, 'float');
+				$params[] = array(':fee_type', $_POST['type'][$i], 'str');
+				$params[] = array(':fee_id', $_POST['tier_id'][$i], 'int');
+				$db->query($query, $params);
 				$errmsg = $feenames[$_GET['type']] . $MSG['359'];
 			}
 			if (isset($_POST['fee_delete']))
 			{
 				for($i = 0; $i < count($_POST['fee_delete']); $i++)
 				{
-					$query = "DELETE FROM " . $DBPrefix . "fees WHERE id = " . $_POST['fee_delete'][$i];
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "DELETE FROM " . $DBPrefix . "fees WHERE id = :fee_id";
+					$params = array();
+					$params[] = array(':fee_id', $_POST['fee_delete'][$i], 'int');
+					$db->query($query, $params);
 				}
 			}
 			if(!empty($_POST['new_fee_from']) && !empty($_POST['new_fee_to']) && !empty($_POST['new_value']) && !empty($_POST['new_type']))
@@ -116,8 +128,14 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 						$value = $system->input_money($value);
 					}
 					$query = "INSERT INTO " . $DBPrefix . "fees VALUES
-							(NULL, '" . $system->input_money($_POST['new_fee_from']) . "', '" . $system->input_money($_POST['new_fee_to']) . "', '" . $_POST['new_type'] . "', '" . $value . "', '" . $_GET['type'] . "')";
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+							(NULL, :fee_from, :fee_to, :new_type, :value, :type)";
+					$params = array();
+					$params[] = array(':fee_from', $system->input_money($_POST['new_fee_from']), 'float');
+					$params[] = array(':fee_to', $system->input_money($_POST['new_fee_to']), 'float');
+					$params[] = array(':new_type', $_POST['new_type'], 'str');
+					$params[] = array(':value', $value, 'float');
+					$params[] = array(':type', $_GET['type'], 'str');
+					$db->query($query, $params);
 					$level_added = true;
 				}
 				else
@@ -126,10 +144,11 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 				}
 			}
 		}
-		$query = "SELECT * FROM " . $DBPrefix . "fees WHERE type = '" . $_GET['type'] . "' ORDER BY fee_from ASC";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		while($row = mysql_fetch_assoc($res))
+		$query = "SELECT * FROM " . $DBPrefix . "fees WHERE type = :type ORDER BY fee_from ASC";
+		$params = array();
+		$params[] = array(':type', $_GET['type'], 'str');
+		$db->query($query, $params);
+		while($row = $db->fetch())
 		{
 			$template->assign_block_vars('fees', array(
 					'ID' => $row['id'],

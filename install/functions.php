@@ -303,9 +303,9 @@ function show_config_table($fresh = true)
 		$data .= '</tr>';
 
 		$directories = array(
-			'includes/countries.inc.php',
 			'includes/currencies.php',
 			'includes/membertypes.inc.php',
+			'language/EN/countries.inc.php',
 			'language/EN/categories.inc.php',
 			'language/EN/categories_select_box.inc.php'
 			);

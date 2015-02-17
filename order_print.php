@@ -83,7 +83,7 @@ if ($auction)
 	$winner = getAddressWinner($data['winner']);
 	$vat = getTax(true, $winner['country'], $seller['country']);
 	$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
-	$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
+	$additional_shipping = $data['shipping_cost_additional'] * ($data['qty'] - 1);
 	$shipping_cost = ($data['shipping'] == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
 	$paysubtotal = ($data['bid']* $data['qty']);
 	$payvalue = $paysubtotal + $shipping_cost;

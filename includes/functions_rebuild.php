@@ -81,17 +81,11 @@ function rebuild_html_file($table)
 	$num_rows = mysql_num_rows($res);
 
 	$output = '<?php' . "\n";
-	$output.= '$' . $array_name . ' = array(\'\', ' . "\n";
+	$output.= '$' . $array_name . ' = array(' . "\n";
 
-	$i = 0;
 	while ($row = mysql_fetch_assoc($res))
 	{
-		$output .= '\'' . $row[$field_name] . '\'';
-		$i++;
-		if ($i < $num_rows)
-			$output .= ',' . "\n";
-		else
-			$output .= "\n";
+		$output .= '\'' . $row[$field_name] . '\' => \'' . $row[$field_name] . '\',' . "\n";
 	}
 
 	$output .= ');' . "\n" . '?>';

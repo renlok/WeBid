@@ -16,13 +16,12 @@ if (!defined('InWeBid')) exit('Access denied');
 
 class user
 {
-	var $user_data, $numbers, $logged_in;
+	var $user_data, $logged_in;
 
 	function user()
 	{
 		global $_SESSION, $system, $DBPrefix;
 
-		$this->numbers = '1234567890';
 		$this->logged_in = false;
 		$this->can_sell = false;
 		$this->can_buy = false;

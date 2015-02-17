@@ -58,6 +58,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 		}
 
+		if (isset($_POST['balance']))
+		{
+			$balance_clean = str_replace('-', '', $_POST['balance']);
+        }
+
 		if (strlen($_POST['password']) > 0 && ($_POST['password'] != $_POST['repeat_password']))
 		{
 			$ERR = $ERR_006;
@@ -102,6 +107,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$ERR = $ERR_044;
 		}
+        elseif (empty($_POST['balance']))
+        {
+            $ERR = $ERR_112;
+        }
+        elseif (!$system->CheckMoney($balance_clean))
+        {
+            $ERR = $ERR_081;
+        }
 		else
 		{
 			if (!empty($_POST['birthdate']))
@@ -111,6 +124,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			else
 			{
 				$birthdate = 0;
+			}
+			
+			// process balance positive and negative allowed and compare to max allowed credit before it is marked/unmarked as suspended
+			if ($_POST['balance'] >= -$system->SETTINGS['fee_max_debt'])
+			{
+				$balance_sql =  ", suspended = 0";
+			}
+			elseif ($_POST['balance'] < -$system->SETTINGS['fee_max_debt'])
+			{
+				$balance_sql =  ", suspended = 7";
 			}
 
 			$query = "UPDATE " . $DBPrefix . "users SET 
@@ -124,7 +147,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  phone = :phone,
 				  birthdate = :birthdate,
 				  groups = :groups,
-				  balance = :balance";
+				  balance = :balance" . $balance_sql;
 			$params = array();
 			$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 			$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');
@@ -224,7 +247,7 @@ $template->assign_vars(array(
 		'ZIP' => $user_data['zip'],
 		'COUNTRY' => $user_data['country'],
 		'PHONE' => $user_data['phone'],
-		'BALANCE' => $user_data['balance'],
+		'BALANCE' => $system->print_money_nosymbol($user_data['balance']),
 		'DOB' => $birthdate,
 		'COUNTRY_LIST' => $country_list,
 		'ID' => $userid,

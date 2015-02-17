@@ -49,7 +49,7 @@
 	<!-- ELSEIF block.TYPE eq 'textarea' -->
 				<textarea name="{block.NAME}" cols="65" rows="10">{block.DEFAULT}</textarea>
 	<!-- ELSEIF block.TYPE eq 'days' -->
-				<input type="text" name="{block.NAME}" value="{block.DEFAULT}" size="4" maxlength="4"> {block.TAGLINE1}
+				<input type="text" name="{block.NAME}" value="{block.DEFAULT}" size="6" maxlength="6"> {block.TAGLINE1}
 	<!-- ELSEIF block.TYPE eq 'percent' -->
 				<input type="text" name="{block.NAME}" value="{block.DEFAULT}" size="3" maxlength="3"> {block.TAGLINE1}
 	<!-- ELSEIF block.TYPE eq 'decimals' -->

@@ -20,7 +20,11 @@ if (isset($_GET['lan']) && !empty($_GET['lan']))
 	$language = preg_replace("/[^a-zA-Z\s]/", '', $_GET['lan']);
 	if ($user->logged_in)
 	{
-		$query = "UPDATE " . $DBPrefix . "users SET language = '" . $language . "' WHERE id = " . $user->user_data['id'];
+		$query = "UPDATE " . $DBPrefix . "users SET language = :language WHERE id = :user_id";
+		$params = array();
+		$params[] = array(':language', $language, 'str');
+		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$db->query($query, $params);
 	}
 	else
 	{

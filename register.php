@@ -262,7 +262,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 			$params = array();
 			$params[] = array(':name', $system->cleanvars($_POST['TPL_nick']), 'str');
 			$db->query($query, $params);
-			if ($db->numrows('nick') > 0)
+			if ($db->numrows() > 0)
 			{
 				$ERR = $ERR_111; // Selected user already exists
 			}
@@ -271,7 +271,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 			$params = array();
 			$params[] = array(':email', $system->cleanvars($_POST['TPL_email']), 'str');
 			$db->query($query, $params);
-			if ($db->numrows('email') > 0)
+			if ($db->numrows() > 0)
 			{
 				$ERR = $ERR_115; // E-mail already used
 			}

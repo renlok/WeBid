@@ -122,10 +122,7 @@ class db_handle
 			if ($method == 'FETCH_BOTH') $result = $this->fetchquery->fetchAll(PDO::FETCH_BOTH);
 			if ($method == 'FETCH_NUM') $result = $this->fetchquery->fetchAll(PDO::FETCH_NUM);
 			// clear fetch query
-			if ($result == false)
-			{
-				$this->fetchquery = NULL;
-			}
+			$this->fetchquery = NULL;
 			return $result;
 		}
 		catch(PDOException $e) {

@@ -142,6 +142,7 @@
             <li>{newsbox.DATE} - <a href="viewnews.php?id={newsbox.ID}">{newsbox.TITLE}</a></li>
         <!-- END newsbox -->
         </ul>
+		<a href="{SITEURL}viewallnews.php">{L_341}</a>
     </div>   
 <!-- ENDIF -->
 	</td>

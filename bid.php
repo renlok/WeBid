@@ -214,7 +214,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 				$params = array();
 				$params[] = array(':auc_id', $id, 'int');
 				$db->query($query, $params);
-				if ($db->numrows() == 0 || $db->result('id') != $bidder_id)
+				// send outbid email if there are previous bidders and they where not you
+				if ($db->numrows() > 0 && $db->result('id') != $bidder_id)
 				{
 					$send_email = true;
 				}

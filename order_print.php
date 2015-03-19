@@ -15,9 +15,11 @@
 include 'common.php';
 include $include_path . 'functions_invoices.php';
 
-// first chanck if from admin
+$fromadmin = true;
+// first check if from admin
 if (!(isset($_GET['hash']) && $_SESSION['INVOICE_RETURN'] == 'admin/invoice.php' && $_GET['hash'] == $_SESSION['WEBID_ADMIN_NUMBER']))
 {
+	$fromadmin = false;
 	// If user is not logged in redirect to login page
 	if (!$user->is_logged_in())
 	{
@@ -58,26 +60,21 @@ if ($auction)
 	$params[] = array(':auc_id', $_POST['pfval'], 'int');
 	$params[] = array(':winner_id', $_POST['pfwon'], 'int');
 	$db->query($query, $params);
-}
-else
-{
-	// get fee data
-	$query = "SELECT * FROM " . $DBPrefix . "useraccounts WHERE useracc_id = :user_id";
-	$params = array();
-	$params[] = array(':user_id', $_GET['id'], 'int');
-	$db->query($query, $params);
-}
 
-// check its real
-if ($db->numrows() < 1)
-{
-	invalidinvoice();
-}
+	// check its real
+	if ($db->numrows() < 1)
+	{
+		invalidinvoice();
+	}
 
-$data = $db->fetch();
+	$data = $db->fetch();
 
-if ($auction)
-{
+	// do you have permission to view this?
+	if (!$fromadmin && $data['seller_id'] != $user->user_data['id'])
+	{
+		invalidinvoice();
+	}
+
 	// sort out auction data
 	$seller = getSeller($data['seller_id']);
 	$winner = getAddressWinner($data['winner']);
@@ -137,7 +134,28 @@ if ($auction)
 }
 else
 {
-	$seller = getSeller($user->user_data['id']); // used as user: ??
+	// get fee data
+	$query = "SELECT * FROM " . $DBPrefix . "useraccounts WHERE useracc_id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_GET['id'], 'int');
+	$db->query($query, $params);
+
+	// check its real
+	if ($db->numrows() < 1)
+	{
+		invalidinvoice();
+	}
+
+	$data = $db->fetch();
+
+	// do you have permission to view this?
+	if (!$fromadmin && $data['user_id'] != $user->user_data['id'])
+	{
+		invalidinvoice();
+	}
+
+	//$seller = getSeller($user->user_data['id']); // used as user: ??
+	$seller = getSeller($data['user_id']);
 	$vat = getTax(true, $seller['country']);
 	$winner_address = '';
 	$data['shipping_terms'] = '';

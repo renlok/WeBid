@@ -154,7 +154,7 @@ function CheckSellData()
 		$buy_now = 'yes';
 	}
 
-	if ($buy_now == 'yes' && (!$system->CheckMoney($buy_now_price) || empty($buy_now_price)  || floatval($buy_now_price) == 0))
+	if ($buy_now == 'yes' && (!$system->CheckMoney($buy_now_price) || empty($buy_now_price)  || floatval($clean_buy_now_price) == 0))
 	{
 		return '061';
 	}
@@ -281,6 +281,11 @@ function CheckBidData()
 	}
 	else //dutch auction
 	{
+		// cannot bid below min price
+		if (bccomp($bid, $Data['minimum_bid'], $system->SETTINGS['moneydecimals']) == -1)
+		{
+			return '607';
+		}
 		if (($qty == 0) || ($qty > $Data['quantity']))
 		{
 			return '608';

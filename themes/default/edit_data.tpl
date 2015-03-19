@@ -16,18 +16,18 @@
 	</tr>
 	<tr>
 		<td valign="top" class="errfont" style="text-align:right !important;">{L_004}</td>
-		<td align="left"><input type="password" name="TPL_password" size=20 maxlength="20"> {L_050}</td>
+		<td align="left"><input type="password" name="TPL_password" size="20"> {L_050}</td>
 	</tr>
 	<tr>
 		<td valign="top" class="errfont" style="text-align:right !important;">{L_005}</td>
 		<td align="left">
-			<input type="password" name="TPL_repeat_password" size=20 maxlength=20 />
+			<input type="password" name="TPL_repeat_password" size="20">
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" align="right">{L_006}</td>
 		<td>
-			<input type="email" name="TPL_email" size=50 maxlength=50 value="{EMAIL}">
+			<input type="email" name="TPL_email" size="20" maxlength="50" value="{EMAIL}">
 		</td>
 	</tr>
 	<tr>
@@ -39,19 +39,19 @@
 	<tr>
 		<td valign="top" align="right">{L_009}</td>
 		<td>
-			<input type="text" name="TPL_address" size=40 maxlength=255 value="{ADDRESS}">
+			<input type="text" name="TPL_address" size="40" maxlength="255" value="{ADDRESS}">
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" align="right">{L_010}</td>
 		<td>
-			<input type="text" name="TPL_city" size=25 maxlength=25 value="{CITY}">
+			<input type="text" name="TPL_city" size="25" maxlength="25" value="{CITY}">
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" align="right">{L_011}</td>
 		<td>
-			<input type="text" name="TPL_prov" size=10 maxlength=10 value="{PROV}">
+			<input type="text" name="TPL_prov" size="20" maxlength="20" value="{PROV}">
 		</td>
 	</tr>
 	<tr>
@@ -65,7 +65,7 @@
 	<tr>
 		<td valign="top" align="right">{L_012}</td>
 		<td>
-			<input type="text" name="TPL_zip" size=8 value="{ZIP}">
+			<input type="text" name="TPL_zip" size="8" value="{ZIP}">
 		</td>
 	</tr>
 	<tr>

@@ -30,6 +30,13 @@ if (isset($_GET['paid']))
 	$params[] = array(':seller_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
 }
+if (isset($_GET['shipped']))
+{
+	$query = "UPDATE " . $DBPrefix . "winners SET shipped = 1 WHERE id = :get_shipped AND seller = :user_id";
+	$params[] = array(':get_shipped', $_GET['shipped'], 'int');
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$db->query($query, $params);
+}
 
 // Get closed auctions with winners
 $params = array();
@@ -45,7 +52,7 @@ else
 	$searchid = '';
 }
 
-$query = "SELECT a.title, a.ends, w.id, w.auction, w.bid, w.qty, w.winner, w.seller, w.paid, w.feedback_sel, u.nick
+$query = "SELECT a.title, a.ends, w.id, w.auction, w.bid, w.qty, w.winner, w.seller, w.paid, w.shipped, w.feedback_sel, u.nick
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
@@ -77,7 +84,8 @@ foreach ($winner_data as $row)
 		'WINNERID' => $row['winner'],
 		'FB' => $fblink,
 
-		'B_PAID' => ($row['paid'] == 1)
+		'B_PAID' => ($row['paid'] == 1),
+		'SHIPPED' => $row['shipped']
 		));
 	$i++;
 }

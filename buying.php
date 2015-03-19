@@ -22,8 +22,17 @@ if (!$user->logged_in)
 	exit;
 }
 
+// the user has received the item
+if (isset($_GET['shipped']))
+{
+	$query = "UPDATE " . $DBPrefix . "winners SET shipped = 2 WHERE id = :get_shipped AND winner = :user_id";
+	$params[] = array(':get_shipped', $_GET['shipped'], 'int');
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$db->query($query, $params);
+}
+
 // Get closed auctions with winners
-$query = "SELECT DISTINCT a.id, a.qty, a.seller, a.paid, a.feedback_win, a.bid, a.auction, b.title, b.ends, b.shipping_cost, b.shipping, u.nick, u.email
+$query = "SELECT DISTINCT a.id, a.qty, a.seller, a.paid, a.feedback_win, a.bid, a.auction, a.shipped, b.title, b.ends, b.shipping_cost, b.shipping, u.nick, u.email
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.seller)
@@ -37,7 +46,7 @@ $sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] =
 $sslurl = ($system->SETTINGS['usersauth'] == 'y' && !empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
 
 while ($row = $db->fetch())
-{
+{	
 	$totalcost = ($row['qty'] > 1) ? ($row['bid'] * $row['qty']) : $row['bid'];
 	$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
 	$totalcost = ($row['shipping'] == 2) ? $totalcost : ($totalcost + $row['shipping_cost'] + $additional_shipping);
@@ -52,6 +61,7 @@ while ($row = $db->fetch())
 			'QTY' => ($row['qty'] > 0) ? $row['qty'] : 1,
 			'TOTAL' => $system->print_money($totalcost),
 			'B_PAID' => ($row['paid'] == 1),
+			'SHIPPED' => $row['shipped'],
 
 			'SELLNICK' => $row['nick'],
 			'SELLEMAIL' => $row['email'],

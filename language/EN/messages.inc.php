@@ -1119,6 +1119,19 @@ $MSG['1104'] = 'Add to balance';
 $MSG['1105'] = 'Select the images you wish to delete <strong>(This cannot be undone)</strong>';
 $MSG['1106'] = 'Print packing slip';
 
+$MSG['1107'] = 'Item has not been shipped';
+$MSG['1108'] = 'Set as Received';
+$MSG['1109'] = 'Item Received';
+
+$MSG['1110'] = 'Cookies Policy';
+$MSG['1111'] = "Activate Cookies Policy Page?";
+$MSG['1112'] = "Activate this option if you want a Cookies Policy link to appear in the footer of your pages.";
+$MSG['1113'] = "Cookies Policy content<br>(HTML allowed)";
+$MSG['1114'] = "Cookies Policy Page";
+$MSG['1115'] = "Cookies Policy Settings Updated";
+$MSG['1116'] = 'Set as Shipped';
+$MSG['1117'] = 'Shipped';
+
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";
 $MSG['5005'] = "General Layout Settings";

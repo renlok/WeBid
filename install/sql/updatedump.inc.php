@@ -254,5 +254,8 @@ if ($myversion == '1.1.0')
 	$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Serbia');";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "closedrelisted`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_terms` tinytext;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `shipped` INT(1) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `cookiespolicy` enum('y','n') NOT NULL default 'y';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `cookiespolicytext` text NOT NULL;";
 }
 ?>

@@ -1529,7 +1529,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `autorelist` ENUM('y','n') NOT NULL default 'y',
   `autorelist_max` int(3) NOT NULL default '10',
   `invoice_yellow_line` varchar(255) NOT NULL default '',
-  `invoice_thankyou` varchar(255) NOT NULL default ''
+  `invoice_thankyou` varchar(255) NOT NULL default '',
+  `cookiespolicy` enum('y','n') NOT NULL default 'y',
+  `cookiespolicytext` text NOT NULL,
 );";
 
 # 
@@ -1631,7 +1633,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 'y',
 10,
 '',
-'Thank you for shopping with us and we hope to see you return soon!');";
+'Thank you for shopping with us and we hope to see you return soon!',
+'y',
+'');";
 
 
 # ############################
@@ -1804,6 +1808,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `paid` int(1) NOT NULL default '0',
   `bf_paid` INT(1) NOT NULL DEFAULT  '0',
   `ff_paid` INT(1) NOT NULL DEFAULT '1',
+  `shipped` INT(1) NOT NULL DEFAULT '0',
   KEY `id` (`id`)
 ) ;";
 

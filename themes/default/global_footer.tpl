@@ -24,6 +24,9 @@
 <!-- IF B_VIEW_TERMS -->
 		| <a href="{SITEURL}contents.php?show=terms">{L_5086}</a> 
 <!-- ENDIF -->
+<!-- IF B_VIEW_COOKIES -->
+		| <a href="{SITEURL}contents.php?show=cookies">{L_1110}</a> 
+<!-- ENDIF -->
 		<br>
 	</div>
 	<div class="copyright">

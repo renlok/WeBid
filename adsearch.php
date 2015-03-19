@@ -20,6 +20,7 @@ include $main_path . 'language/' . $language . '/categories.inc.php';
 unset($ERR);
 
 // set default variables
+$page_title = $MSG['464'];
 $catscontrol = new MPTTcategories();
 $NOW = time();
 $searching = false;

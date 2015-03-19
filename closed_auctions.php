@@ -34,11 +34,12 @@ $user->is_valid_user($user_id);
 
 // get number of closed auctions for this user
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
-	  WHERE user = " . intval($user_id) . "
+	  WHERE user = :user_id
 	  AND closed = 1";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALAUCTIONS = mysql_result($res, 0, 'auctions');
+$params = array();
+$params[] = array(':user_id', $user_id, 'int');
+$db->query($query, $params);
+$TOTALAUCTIONS = $db->result('auctions');
 
 // Handle pagination
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1 || $_GET['PAGE'] == '')
@@ -55,13 +56,17 @@ $PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 if ($PAGES < 1) $PAGES = 1;
 
 $query = "SELECT * FROM " . $DBPrefix . "auctions
-		WHERE user = " . intval($user_id) . "
+		WHERE user = :user_id
 		AND closed = 1
-		ORDER BY ends ASC LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		ORDER BY ends ASC LIMIT :offset, :perpage";
+$params = array();
+$params[] = array(':user_id', $user_id, 'int');
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
+$auction_data = $db->fetchall();
 
-while ($row = mysql_fetch_assoc($res))
+foreach ($auction_data as $row)
 {
 	$bid = $row['current_bid'];
 	$starting_price = $row['current_bid'];
@@ -76,10 +81,11 @@ while ($row = mysql_fetch_assoc($res))
 	}
 
 	// number of bids for this auction
-	$query_ = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction=" . $row['id'];
-	$tmp_res = mysql_query($query_);
-	$system->check_mysql($tmp_res, $query_, __LINE__, __FILE__);
-	$num_bids = mysql_num_rows($tmp_res);
+	$query_ = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $row['id'], 'int');
+	$db->query($query, $params);
+	$num_bids = $db->numrows();
 
 	$difference = time() - $row['ends'];
 	$days_difference = intval($difference / 86400);
@@ -113,10 +119,11 @@ if ($auctions_count == 0)
 }
 
 // get this user's nick
-$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $user_id;
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$TPL_user_nick = mysql_result($result, 0);
+$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $user_id, 'int');
+$db->query($query, $params);
+$TPL_user_nick = $db->result('nick');
 
 $LOW = $PAGE - 5;
 if ($LOW <= 0) $LOW = 1;

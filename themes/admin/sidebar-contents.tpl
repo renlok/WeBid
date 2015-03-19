@@ -6,6 +6,7 @@
                         	<li><a href="{SITEURL}admin/aboutus.php">{L_5074}</a></li>
                         	<li><a href="{SITEURL}admin/terms.php">{L_5075}</a></li>
                         	<li><a href="{SITEURL}admin/privacypolicy.php">{L_402}</a></li>
+                        	<li><a href="{SITEURL}admin/cookiespolicy.php">{L_1110}</a></li>
                         </ul>
                     </div>
                 </div>

@@ -1,0 +1,58 @@
+<?php
+/***************************************************************************
+ *   copyright				: (C) 2008 - 2014 WeBid
+ *   site					: http://www.webidsupport.com/
+ ***************************************************************************/
+
+/***************************************************************************
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version. Although none of the code may be
+ *   sold. If you have been sold this script, get a refund.
+ ***************************************************************************/
+
+define('InAdmin', 1);
+$current_page = 'contents';
+include '../common.php';
+include $include_path . 'functions_admin.php';
+include 'loggedin.inc.php';
+include $main_path . 'ckeditor/ckeditor.php';
+
+unset($ERR);
+
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	// Update database
+	$system->SETTINGS['cookiespolicy'] = ynbool($_POST['cookiespolicy']);
+	$system->SETTINGS['cookiespolicytext'] = $system->cleanvars($_POST['cookiespolicytext']);
+	$query = "UPDATE " . $DBPrefix . "settings SET cookiespolicy = :policy, cookiespolicytext = :cookiespolicy";
+	$params = array();
+	$params[] = array(':policy', $system->SETTINGS['cookiespolicy'], 'str');
+	$params[] = array(':cookiespolicy', $system->SETTINGS['cookiespolicytext'], 'str');
+	$db->query($query, $params);
+
+	$ERR = $MSG['1115'];
+}
+loadblock($MSG['1111'], $MSG['1112'], 'yesno', 'cookiespolicy', $system->SETTINGS['cookiespolicy'], array($MSG['030'], $MSG['029']));
+
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
+
+loadblock($MSG['1113'], $MSG['5080'], $CKEditor->editor('cookiespolicytext', $system->uncleanvars($system->SETTINGS['cookiespolicytext'])));
+
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'TYPENAME' => $MSG['25_0236'],
+		'PAGENAME' => $MSG['1114']
+		));
+
+$template->set_filenames(array(
+		'body' => 'adminpages.tpl'
+		));
+$template->display('body');
+?>

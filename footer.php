@@ -18,6 +18,7 @@ $template->assign_vars(array(
 		'B_VIEW_TERMS' => ($system->SETTINGS['terms'] == 'y'),
 		'B_VIEW_PRIVPOL' => ($system->SETTINGS['privacypolicy'] == 'y'),
 		'B_VIEW_ABOUTUS' => ($system->SETTINGS['aboutus'] == 'y'),
+		'B_VIEW_COOKIES' => ($system->SETTINGS['cookiespolicy'] == 'y'),
 		'B_FEES' => ($system->SETTINGS['fees'] == 'y')
 		));
 

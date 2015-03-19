@@ -116,6 +116,7 @@ $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
 $params[] = array(':user_id', $user_id, 'int');
 $db->query($query, $params);
 $TPL_user_nick = $db->result('nick');
+$page_title = $MSG['219'] . ': ' . $TPL_user_nick;
 
 $LOW = $PAGE - 5;
 if ($LOW <= 0) $LOW = 1;

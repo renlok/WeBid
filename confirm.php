@@ -14,24 +14,27 @@
 
 include 'common.php';
 
-if (isset($_GET['id']) && !isset($_POST['action']))
+if (isset($_GET['id']) && isset($_GET['hash']) && !isset($_POST['action']))
 {
-	$query = "SELECT suspended, nick FROM " . $DBPrefix . "users WHERE id = " . intval($_GET['id']);
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($result) == 0)
+    $query = "SELECT suspended, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+    $params = array();
+    $params[] = array(':user_id', $_GET['id'], 'int');
+    $db->query($query, $params);
+    $user_data = $db->result();
+
+	if ($db->numrows() == 0)
 	{
 		$errmsg = $ERR_025;
 	}
-	elseif (!isset($_GET['hash']) || md5($MD5_PREFIX . $system->uncleanvars(mysql_result($result, 0, 'nick'))) != $_GET['hash'])
+	elseif (!isset($_GET['hash']) || md5($MD5_PREFIX . $system->uncleanvars($user_data['nick'])) != $_GET['hash'])
 	{
 		$errmsg = $ERR_033;
 	}
-	elseif (mysql_result($result, 0, 'suspended') == 0)
+	elseif ($user_data['suspended'] == 0)
 	{
 		$errmsg = $ERR_039;
 	}
-	elseif (mysql_result($result, 0, 'suspended') == 2)
+	elseif ($user_data['suspended'] == 2)
 	{
 		$errmsg = $ERR_039;
 	}
@@ -54,41 +57,56 @@ if (!isset($_GET['id']) && !isset($_POST['action']))
 
 if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 {
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']);
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (md5($MD5_PREFIX . mysql_result($res, 0, 'nick')) == $_POST['hash'])
+    $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+    $params = array();
+    $params[] = array(':user_id', $_POST['id'], 'int');
+    $db->query($query, $params);
+    $user_data = $db->result();
+
+	if (md5($MD5_PREFIX . $user_data['nick']) == $_POST['hash'])
 	{
 		// User wants to confirm his/her registration
-		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . intval($_POST['id']) . " AND suspended = 8";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = :user_id AND suspended = 8";
+		$params = array();
+		$params[] = array(':user_id', $_POST['id'], 'int');
+		$db->query($query, $params);
 
 		$query = "UPDATE " . $DBPrefix . "counters SET users = users + 1, inactiveusers = inactiveusers - 1";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 
 		// login user
-		$query = "SELECT id, hash, password FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) > 0)
+		$query = "SELECT id, hash, password FROM " . $DBPrefix . "users WHERE id = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $_POST['id'], 'int');
+		$db->query($query, $params);
+		if ($db->numrows() > 0)
 		{
-			$password = mysql_result($res, 0, 'password');
-			$_SESSION['WEBID_LOGGED_IN'] 		= mysql_result($res, 0, 'id');
-			$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, mysql_result($res, 0, 'hash'));
+		    $login_data = $db->result();
+			$password = $login_data['password'];
+			$_SESSION['WEBID_LOGGED_IN'] 		= $login_data['id'];
+			$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $login_data['hash']);
 			$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
-			// Update "last login" fields in users table
-			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = '" . gmdate("Y-m-d H:i:s") . "' WHERE id = " . $_SESSION['WEBID_LOGGED_IN'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 
-			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = " . $_SESSION['WEBID_LOGGED_IN'] . " AND ip = '" . $_SERVER['REMOTE_ADDR'] . "'";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) == 0)
+			// Update "last login" fields in users table
+			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = :lastlogin WHERE id = :user_id";
+			$params = array();
+			$params[] = array(':lastlogin', gmdate("Y-m-d H:i:s"), 'int');
+			$params[] = array(':user_id', $_SESSION['WEBID_LOGGED_IN'], 'int');
+			$db->query($query, $params);
+
+			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE USER = :user_id AND ip = :ip";
+			$params = array();
+			$params[] = array(':user_id', $_SESSION['WEBID_LOGGED_IN'], 'int');
+			$params[] = array(':ip', $_SERVER['REMOTE_ADDR'], 'str');
+			$db->query($query, $params);
+			if ($db->numrows() == 0)
 			{
 				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-						(NULL, '" . $_SESSION['WEBID_LOGGED_IN'] . "', '" . $_SERVER['REMOTE_ADDR'] . "', 'after', 'accept')";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						(NULL, :user_id, :ip, 'after', 'accept')";
+				$params = array();
+				$params[] = array(':user_id', $_SESSION['WEBID_LOGGED_IN'], 'int');
+				$params[] = array(':ip', $_SERVER['REMOTE_ADDR'], 'int');
+				$db->query($query, $params);
 			}
 		}
 
@@ -108,13 +126,14 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['250'])
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	if (md5($MD5_PREFIX . mysql_result($res, 0, 'nick')) == $_POST['hash'])
 	{
-		// User doesn't want to confirm hid/her registration
-		$query = "DELETE FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']) . " AND suspended = 8";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		// User doesn't want to confirm the registration
+		$query = "DELETE FROM " . $DBPrefix . "users WHERE id = :user_id AND suspended = 8";
+		$params = array();
+		$params[] = array(':user_id', $_POST['id'], 'int');
+		$db->query($query, $params);
 
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - 1";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$page = 'refused';
 	}
 	else

@@ -31,12 +31,14 @@ if (!$user->is_logged_in())
 	exit;
 }
 
-$query = "SELECT id, email, nick FROM " . $DBPrefix . "users WHERE id = " . intval($_REQUEST['user_id']);
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$user_id = mysql_result($result, 0, 'id');
-$email = mysql_result($result, 0, 'email');
-$username = mysql_result($result, 0, 'nick');
+$query = "SELECT id, email, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $_REQUEST['user_id'], 'int');
+$db->query($query, $params);
+$user_info = $db->result();
+$user_id = $user_info['id'];
+$email = $user_info['email'];
+$username = $user_info['nick'];
 
 $sent = false;
 if (isset($_POST['action']) && $_POST['action'] == 'proceed')
@@ -51,16 +53,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 	}
 	else
 	{
-		$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = " . $auction_id;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0)
+		$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = :auction_id";
+		$params = array();
+		$params[] = array(':auction_id', $auction_id, 'int');
+		$db->query($query, $params);
+		if ($db->numrows() == 0)
 		{
 			$ERR = $ERR_622;
 		}
 		else
 		{
-			$item_title = mysql_result($res, 0, 'title');
+			$item_title = $db->result('title');
 			$item_title = $system->uncleanvars($item_title);
 			$from_email = ($system->SETTINGS['users_email'] == 'n') ? $user->user_data['email'] : $system->SETTINGS['adminmail'];
 			// Send e-mail message
@@ -72,8 +75,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 			// send a copy to their mesasge box
 			$nowmessage = nl2br($system->cleanvars($message));
 			$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject)
-					VALUES (" . $user_id . ", " . $user->user_data['id'] . ", '" . time() . "', '" . mysql_real_escape_string($nowmessage) . "', '" . mysql_real_escape_string($system->cleanvars(sprintf($MSG['651'], $item_title))) . "')";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					VALUES (:id, :user_id, :times, :nowmessage, :msg)";
+			$params = array();
+			$params[] = array(':id', $user_id, 'int');
+			$params[] = array(':user_id', $user->user_data['id'], 'int');
+			$params[] = array(':times', time(), 'int');
+			$params[] = array(':nowmessage', $nowmessage, 'str');
+			$params[] = array(':msg', $system->cleanvars(sprintf($MSG['651'], $item_title)), 'str');
+			$db->query($query, $params);
 			$sent = true;
 		}
 	}

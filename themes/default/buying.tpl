@@ -44,6 +44,13 @@
 		</td>
 		<td align="right">
 			{items.TOTAL}
+	<!-- IF items.SHIPPED eq 0 -->
+	        <img src="{SITEURL}images/clock.png"> <span class="smallspan">{L_1107}</span>
+	<!-- ELSEIF items.SHIPPED eq 1 -->
+	        <img src="{SITEURL}images/lorry_go.png" border="0"> <span class="smallspan"><a href="{SITEURL}buying.php?shipped={items.ID}">{L_1108}</a></span>
+	<!-- ELSEIF items.SHIPPED eq 2 -->
+	        <img src="{SITEURL}images/box.png" border="0"> <span class="smallspan">{L_1109}</span>
+    <!-- ENDIF -->
 		</td>
 		<td>
 	<!-- IF items.B_PAID -->

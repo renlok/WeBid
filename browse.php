@@ -73,6 +73,7 @@ else
 {
 	// Retrieve the translated category name
 	$par_id = $category['parent_id'];
+	$current_cat_name = $category_names[$par_id];
 	$TPL_categories_string = '';
 	$crumbs = $catscontrol->get_bread_crumbs($category['left_id'], $category['right_id']);
 	for ($i = 0; $i < count($crumbs); $i++)
@@ -229,6 +230,7 @@ else
 			));
 }
 
+$page_title = $current_cat_name;
 include 'header.php';
 $template->set_filenames(array(
 		'body' => 'browsecats.tpl'

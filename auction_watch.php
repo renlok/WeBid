@@ -59,7 +59,7 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 if (isset($_GET['delete']))
 {
 	$auctions = trim($user->user_data['auc_watch']);
-	$auc_id = preg_split('/ /', $auctions);
+	$auc_id = explode(' ', $auctions);
 	$auction_watch = '';
 	for ($j = 0; $j < count($auc_id); $j++)
 	{
@@ -87,7 +87,7 @@ $auctions = trim($user->user_data['auc_watch']);
 
 if ($auctions != '')
 {
-	$auction = split(' ', $auctions);
+	$auction = explode(' ', $auctions);
 	for ($j = 0; $j < count($auction); $j++)
 	{
 		$template->assign_block_vars('items', array(

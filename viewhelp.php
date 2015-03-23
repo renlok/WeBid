@@ -30,6 +30,7 @@ if ($cat > 0)
 			'CHARSET' => $CHARSET,
 			'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : "&nbsp;",
 			'SITEURL' => $system->SETTINGS['siteurl'],
+			'THEME' => $system->SETTINGS['theme'],
 
 			'FNAME' => $FAQ_ctitle
 			));

@@ -3,7 +3,7 @@
 <html lang="en" dir="{DOCDIR}">
 <head>
 <title>{PAGE_TITLE}</title>
-<link rel='stylesheet' type='text/css' href='{SITEURL}themes/default/style.css'>
+<link rel='stylesheet' type='text/css' href='{SITEURL}themes/{THEME}/style.css'>
 <meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
 </head>
 <body>

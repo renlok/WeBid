@@ -265,7 +265,7 @@ function recaptcha_mailhide_url($pubkey, $privkey, $email)
  */
 function _recaptcha_mailhide_email_parts ($email)
 {
-	$arr = preg_split("/@/", $email );
+	$arr = explode("@", $email );
 
 	if (strlen ($arr[0]) <= 4)
 	{

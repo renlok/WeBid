@@ -107,14 +107,13 @@ function findconversionrate($FROM, $INTO)
 
 function googleconvert($amount, $fromCurrency , $toCurrency)
 {
-	//Call Google API
-	$google_url = "http://www.google.com/ig/calculator?hl=en&q=1" . $fromCurrency . "=?" . $toCurrency;
-	//Get and Store API results into a variable
-	$result = file_get_contents($google_url);
-	//Explode result to convert into an array
-	$result = explode('"', $result);
-	// get value
-	$converted_amount = explode(' ', $result[3]);
-	return $converted_amount[0];
+	//Call Google API 
+    $fromCurrency = urlencode($fromCurrency); 
+    $toCurrency = urlencode($toCurrency); 
+    $get = file_get_contents("https://www.google.com/finance/converter?a=1&from=$fromCurrency&to=$toCurrency"); 
+    $get = explode("<span class=bld>",$get); 
+    $get = explode("</span>",$get[1]);   
+    $converted_amount = preg_replace("/[^0-9\.]/", null, $get[0]);     
+    return $converted_amount;
 }
 ?>

@@ -45,7 +45,7 @@ function getAddressWinner($user_id)
 		'address'   => $result['address'],
 		'city'      => $result['city'],
 		'prov'      => $result['prov'],
-		'postcode'  => $result['zip'],
+		'zip'  		=> $result['zip'],
 		'country'   => $result['country'],
 		//'email'     => $result['email'],
 	);

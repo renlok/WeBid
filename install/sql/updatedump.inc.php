@@ -257,5 +257,14 @@ if ($myversion == '1.1.0')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `shipped` INT(1) NOT NULL DEFAULT '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `cookiespolicy` enum('y','n') NOT NULL default 'y';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `cookiespolicytext` text NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `mail_protocol` VARCHAR(128) NOT NULL DEFAULT 0;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `mail_parameter` VARCHAR(128) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_authentication`  enum('y', 'n') NOT NULL DEFAULT 'n';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_security` enum('none', 'tls', 'ssl') NOT NULL DEFAULT 'none';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_port`  VARCHAR(128) NOT NULL DEFAULT 25;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_host` VARCHAR(128) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_username`  VARCHAR(128) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_password`  VARCHAR(128) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `alert_emails`  VARCHAR(128) NOT NULL;";
 }
 ?>

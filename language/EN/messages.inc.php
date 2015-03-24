@@ -1132,6 +1132,33 @@ $MSG['1115'] = "Cookies Policy Settings Updated";
 $MSG['1116'] = 'Set as Shipped';
 $MSG['1117'] = 'Shipped';
 
+// email settings
+$MSG['1118'] = 'Email Settings';
+$MSG['1119'] = 'Mail Protocol:';
+$MSG['1120'] = 'Webid Mail Parameters:';
+$MSG['1121'] = '*When using \'Webid Mail\', additional mail parameters can be added here (e.g. "-femail@yourwebid.com").';
+$MSG['1122'] = 'SMTP Host:';
+$MSG['1123'] = '*For Gmail accounts. Set the encryption system using a prefix of [<b>ssl://</b>] or [<b>tls://</b>] Examples:<br>[ ssl://smtp.googlemail.com ], [ tls://smtp.googlemail.com ]';
+$MSG['1124'] = 'SMTP Username:';
+$MSG['1125'] = 'SMTP Password:';
+$MSG['1126'] = 'SMTP Port:';
+$MSG['1127'] = 'SMTP Security:';
+$MSG['1128'] = 'SMTP Authentication';
+$MSG['1129'] = 'Additional Admin E-Mails:';
+$MSG['1130'] = 'Additional email accounts you want to receive admin related email, in addition to the main site email address of %s. (comma separated)';
+$MSG['1131'] = 'Email Settings';
+$MSG['1132'] = 'Please enter missing or incorrect SMTP settings'; 
+$MSG['1133'] = "SMTP Specific Options:";
+// modal and js
+$MSG['1134'] = "Email Test and Response";
+$MSG['1135'] = "Enter a message for the test email.";
+$MSG['1136'] = "Send Test Email";
+$MSG['1137'] = "Email Test";
+$MSG['1138'] = "Test email from Admin";
+$MSG['1139'] = "Admin";
+$MSG['1140'] = "I have finished testing";
+$MSG['1141'] = 'Used <b>only</b> for SMTP mail';
+
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";
 $MSG['5005'] = "General Layout Settings";

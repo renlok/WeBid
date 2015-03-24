@@ -6,6 +6,7 @@
                         	<li><a href="{SITEURL}admin/auctions.php">{L_5087}</a></li>
                         	<li><a href="{SITEURL}admin/displaysettings.php">{L_788}</a></li>
                         	<li><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
+							<li><a href="{SITEURL}admin/emailsettings.php">{L_1118}</a></li>
                         	<li><a href="{SITEURL}admin/usersettings.php">{L_894}</a></li>
                         	<li><a href="{SITEURL}admin/errorhandling.php">{L_409}</a></li>
                         	<li><a href="{SITEURL}admin/countries.php">{L_081}</a></li>

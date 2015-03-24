@@ -14,9 +14,11 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
+require 'PHPMailerAutoload.php';
+
 class email_handler
 {
-	var $from, $message, $subject, $headers, $email_uid, $userlang;
+	var $from, $message, $subject, $headers, $email_uid, $userlang, $errors;
 	
 	function build_header()
 	{
@@ -337,20 +339,171 @@ class email_handler
 
 		return 'html';
 	}
-	
+
+	function add_error($error)
+	{
+		array_push($this->errors, $error);
+	}
+
 	function sendmail()
 	{
-		if (is_array($this->to))
+		global $CHARSET, $system;
+		$this->errors = array();
+		// from has not been set send email via admin
+		if (!isset($this->from) || empty($this->from))
 		{
+			$this->from = $system->SETTINGS['adminmail'];
+		}
+
+		// if sending to admin, send to all linked admin emails
+		if ($system->SETTINGS['adminmail'] == $this->to)
+		{
+			$emails = array_filter(explode(',', $system->SETTINGS['alert_emails']));
+
+			if (!empty($emails))
+			{
+				if (!is_array($this->to))
+				{
+					$to_start = $this->to;
+					$this->to = array();
+					$this->to[] = $to_start;
+				}
+				foreach ($emails as $email)
+				{
+					if (strlen($email) > 0 && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email))
+					{
+						$this->to[] = $email;
+					}
+				}
+			}
+		}
+
+		// deal with sending the emails
+		switch ($system->SETTINGS['mail_protocol'])
+		{
+			case '5':
+				$mail = new PHPMailer(true);
+				$mail->isQmail();
+			break;
+			case '4':
+				$mail = new PHPMailer(true);
+				$mail->isSendmail();
+			break;
+			case '3':
+				// do not send email
+				return 'No email sent. You have selected to disable all emails';
+			break;
+			case '2':
+				$mail = new PHPMailer(true);
+				$mail->isSMTP();
+				$mail->SMTPDebug = 0;
+				$mail->Debugoutput = 'html';
+				$mail->Host = $system->SETTINGS['smtp_host'];
+				$mail->Port = (integer)$system->SETTINGS['smtp_port'];
+				if ($system->SETTINGS['smtp_security'] != 'none')
+				{
+					$mail->SMTPSecure = strtolower($_POST['smtp_security']);
+				}
+				if ($system->SETTINGS['smtp_authentication'] == 'y')
+				{
+					$mail->SMTPAuth = true;
+					$mail->Username = $system->SETTINGS['smtp_username'];
+					$mail->Password = $system->SETTINGS['smtp_password'];
+				}
+				else
+				{
+					$mail->SMTPAuth = false;
+				}
+			break;
+			case '1':
+				$mail = new PHPMailer(true);
+				$mail->isMail();
+			break;
+			default: // just use php mail function
+				if (is_array($this->to))
+				{
+					for ($i = 0; $i < count($this->to); $i++)
+					{
+						if (!empty($system->SETTINGS['mail_parameter']))
+							$sent = mail($this->to[$i], $this->subject, $this->message, $this->headers, $system->SETTINGS['mail_parameter']);
+						else
+							$sent = mail($this->to[$i], $this->subject, $this->message, $this->headers);
+					}
+				}
+				else
+				{
+					if (!empty($system->SETTINGS['mail_parameter']))
+						$sent = mail($this->to, $this->subject, $this->message, $this->headers, $system->SETTINGS['mail_parameter']);
+					else
+						$sent = mail($this->to, $this->subject, $this->message, $this->headers);
+				}
+
+				if ($sent)
+					return false;
+				else
+					return true;
+			break;
+		}
+
+		if (is_array($this->to)) {
 			for ($i = 0; $i < count($this->to); $i++)
 			{
-				mail($this->to[$i], $this->subject, $this->message, $this->headers);
+				try {
+					$mail->setFrom($this->from, $system->SETTINGS['adminmail']);
+					$mail->addAddress($this->to[$i]);
+					$mail->addReplyTo($this->from, $system->SETTINGS['adminmail']);
+					$mail->Subject = $this->subject;
+					$mail->msgHTML($this->message);
+					//$mail->addAttachment('images/phpmailer_mini.png');
+					$mail->CharSet = $CHARSET;
+					$mail->Send();
+				}
+				catch (phpmailerException $e)
+				{
+					trigger_error('---->PHPMailer error: ' . $e->errorMessage());
+					$this->add_error($e->errorMessage());
+				}
+				catch (Exception $e)
+				{
+					trigger_error('---->PHPMailer error2: ' . $e->getMessage());
+					$this->add_error($e->getMessage());
+				}
+				$mail->clearAddresses();
 			}
 		}
 		else
 		{
-			mail($this->to, $this->subject, $this->message, $this->headers);
+			try {
+				$mail->setFrom($this->from, $system->SETTINGS['adminmail']);
+				if (is_array($this->to))
+				{
+					for ($i = 0; $i < count($this->to); $i++)
+					{
+						$mail->addAddress($this->to[$i]); 
+					}
+				}
+				else
+				{
+					$mail->addAddress($this->to);
+				}
+				$mail->addReplyTo($this->from, $system->SETTINGS['adminmail']);
+				$mail->Subject = $this->subject;
+				$mail->msgHTML($this->message);
+				$mail->CharSet = $CHARSET;
+				$mail->Send();
+			}
+			catch (phpmailerException $e)
+			{
+				trigger_error('---->PHPMailer error: ' . $e->errorMessage());
+				$this->add_error($e->errorMessage());
+			}
+			catch (Exception $e)
+			{
+				trigger_error('---->PHPMailer error: ' . $e->getMessage());
+				$this->add_error($e->getMessage());
+			}
 		}
+		return implode('<br/>',$this->errors);
 	}
 	
 	function email_basic($subject, $to, $message, $from = '')

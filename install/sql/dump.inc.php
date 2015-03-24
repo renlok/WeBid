@@ -1532,6 +1532,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `invoice_thankyou` varchar(255) NOT NULL default '',
   `cookiespolicy` enum('y','n') NOT NULL default 'y',
   `cookiespolicytext` text NOT NULL,
+  `mail_protocol` VARCHAR(128) NOT NULL DEFAULT 0,
+  `mail_parameter` VARCHAR(128) NOT NULL,
+  `smtp_authentication`  enum('y', 'n') NOT NULL DEFAULT 'n',
+  `smtp_security` enum('none', 'tls', 'ssl') NOT NULL DEFAULT 'none',
+  `smtp_port`  VARCHAR(128) NOT NULL DEFAULT 25,
+  `smtp_host` VARCHAR(128) NOT NULL,
+  `smtp_username`  VARCHAR(128) NOT NULL,
+  `smtp_password`  VARCHAR(128) NOT NULL,
+  `alert_emails`  VARCHAR(128) NOT NULL
 );";
 
 # 
@@ -1635,6 +1644,15 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 '',
 'Thank you for shopping with us and we hope to see you return soon!',
 'y',
+'',
+'',
+'',
+'n',
+'none',
+'25',
+'',
+'',
+'',
 '');";
 
 

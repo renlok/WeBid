@@ -1,4 +1,3 @@
-<select name="id">
 	<option value="0">All categories</option>
 	<option value="0">----------------------</option>
 	<option value="2">Art &amp; Antiques</option>
@@ -16,4 +15,3 @@
 	<option value="162">Other Goods &amp; Services</option>
 	<option value="170">Sports &amp; Recreation</option>
 	<option value="174">Toys &amp; Games</option>
-</select>

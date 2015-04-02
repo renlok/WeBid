@@ -55,9 +55,7 @@ $(document).ready(function() {
 <div class="wrapper rounded-top rounded-bottom">
 	<div class="splitbox">
     	<div class="leftside">
-    		<a class="" href="' . $system->SETTINGS['siteurl'] . 'index.php?">
-        		{LOGO}
-        	</a>
+    		<a class="" href="{SITEURL}index.php">{LOGO}</a>
         </div>
     	<div class="rightside">
         	{BANNER}

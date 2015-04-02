@@ -55,7 +55,9 @@ $(document).ready(function() {
 <div class="wrapper rounded-top rounded-bottom">
 	<div class="splitbox">
     	<div class="leftside">
-        	{LOGO}
+    		<a class="" href="' . $system->SETTINGS['siteurl'] . 'index.php?">
+        		{LOGO}
+        	</a>
         </div>
     	<div class="rightside">
         	{BANNER}
@@ -87,7 +89,9 @@ $(document).ready(function() {
 	<div class="navbar">
     	<div>
             <form name="search" action="{SITEURL}search.php" method="get">
-                {SELECTION_BOX}
+            	<select class="" name="id">
+					{SELECTION_BOX}
+            	</select>
                 <input type="search" name="q" size="50" value="{Q}" placeholder="{L_861}">
                 <input type="submit" name="sub" value="{L_399}" class="button">
                 <a href="{SITEURL}adsearch.php">{L_464}</a>

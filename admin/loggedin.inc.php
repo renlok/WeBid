@@ -64,7 +64,8 @@ else
 			'ADMIN_ID' => $_SESSION['WEBID_ADMIN_IN'],
 			'CURRENT_PAGE' => $current_page,
 			'LAST_LOGIN' => $return,
-			'ADMIN_NOTES' => getAdminNotes()
+			'ADMIN_NOTES' => getAdminNotes(),
+			'L_COPY_YEAR' => date("Y")
 			));
 	foreach ($LANGUAGES as $lang => $value)
 	{

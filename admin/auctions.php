@@ -42,24 +42,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update database
 		$query = "UPDATE ". $DBPrefix . "settings SET
-				  proxy_bidding = '" . $_POST['proxy_bidding'] . "',
-				  edit_starttime = '" . $_POST['edit_starttime'] . "',
-				  cust_increment = '" . $_POST['cust_increment'] . "',
-				  hours_countdown = '" . $_POST['hours_countdown'] . "',
-				  ao_hpf_enabled = '" . $_POST['ao_hpf_enabled'] . "',
-				  ao_hi_enabled = '" . $_POST['ao_hi_enabled'] . "',
-				  ao_bi_enabled = '" . $_POST['ao_bi_enabled'] . "',
-				  subtitle = '" . $_POST['subtitle'] . "',
-				  extra_cat = '" . $_POST['extra_cat'] . "',
-				  autorelist = '" . $_POST['autorelist'] . "',
-				  autorelist_max = '" . $_POST['autorelist_max'] . "',
-				  ae_status = '" . $_POST['status'] . "',
-				  ae_timebefore = " . intval($_POST['timebefore']) . ",
-				  ae_extend = " . intval($_POST['extend']) . ",
-				  picturesgallery = " . $_POST['picturesgallery'] . ",
-				  maxpictures = " . $_POST['maxpictures'] . ",
-				  maxuploadsize = " . ($_POST['maxpicturesize'] * 1024) . ",
-				  thumb_show = " . intval($_POST['thumb_show']);
+				  proxy_bidding = :proxy_bidding,
+				  edit_starttime = :edit_starttime,
+				  cust_increment = :cust_increment,
+				  hours_countdown = :hours_countdown,
+				  ao_hpf_enabled = :ao_hpf_enabled,
+				  ao_hi_enabled = :ao_hi_enabled,
+				  ao_bi_enabled = :ao_bi_enabled,
+				  subtitle = :subtitle,
+				  extra_cat = :extra_cat,
+				  autorelist = :autorelist,
+				  autorelist_max = :autorelist_max,
+				  ae_status = :ae_status,
+				  ae_timebefore = :ae_timebefore,
+				  ae_extend = :ae_extend,
+				  picturesgallery = :picturesgallery,
+				  maxpictures = :maxpictures,
+				  maxuploadsize = :maxuploadsize,
+				  thumb_show = :thumb_show");
 		$params = array();
 		$params[] = array(':proxy_bidding', ynbool($_POST['proxy_bidding']), 'str');
 		$params[] = array(':edit_starttime', $_POST['edit_starttime'], 'int');
@@ -77,7 +77,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params[] = array(':ae_extend', $_POST['extend'], 'int');
 		$params[] = array(':picturesgallery', $_POST['picturesgallery'], 'int');
 		$params[] = array(':maxpictures', $_POST['maxpictures'], 'int');
-		$params[] = array(':maxuploadsize', $_POST['maxpicturesize'], 'int');
+		$params[] = array(':maxuploadsize', ($_POST['maxpicturesize'] * 1024), 'int');
 		$params[] = array(':thumb_show', $_POST['thumb_show'], 'int');
 		$db->query($query, $params);
 		$ERR = $MSG['5088'];

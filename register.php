@@ -345,7 +345,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':timecorrection', $_POST['TPL_timezone'], 'int'),
 					array(':paypal_email', ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : ''), 'str'),
 					array(':worldpay_id', ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : ''), 'str'),
-					array(':moneybookers_email', ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']), 'str'),
+					array(':moneybookers_email', ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']) : ''), 'str'),
 					array(':toocheckout_id', ((isset($_POST['toocheckout_id'])) ? $system->cleanvars($_POST['toocheckout_id']) : ''), 'str'),
 					array(':authnet_id', ((isset($_POST['TPL_authnet_id'])) ? $system->cleanvars($_POST['TPL_authnet_id']) : ''), 'str'),
 					array(':authnet_pass', ((isset($_POST['TPL_authnet_pass'])) ? $system->cleanvars($_POST['TPL_authnet_pass']) : ''), 'str'),

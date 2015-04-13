@@ -164,7 +164,7 @@ class global_class
 		switch ($upload_mode)
 		{
 			case 'copy':
-				if (!@copy($from, $to))
+				if (@copy($from, $to))
 				{
 					if (!@move_uploaded_file($from, $to))
 					{

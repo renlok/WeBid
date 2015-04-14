@@ -64,7 +64,7 @@ if (isset($_POST['act']))
 	$ERR = $MSG['1028'];
 }
 
-include $include_path . 'countries.inc.php';
+include $main_path . 'language/' . $language . '/countries.inc.php';
 
 $i = 1;
 while ($i < count($countries))

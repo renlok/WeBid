@@ -17,7 +17,7 @@ $current_page = 'settings';
 include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path . 'countries.inc.php';
+include $main_path . 'language/' . $language . '/countries.inc.php';
 
 unset($ERR);
 

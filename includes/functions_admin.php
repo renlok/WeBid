@@ -47,7 +47,7 @@ if (!defined('AdminFuncCall'))
 
 		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS']))
 		{
-			$query = "SELECT notes FROM " . $DBPrefix . "adminusers WHERE password = '" . $_SESSION['WEBID_ADMIN_PASS'] . "' AND id = " . $_SESSION['WEBID_ADMIN_IN'];
+			$query = "SELECT notes FROM " . $DBPrefix . "adminusers WHERE password = '" . $_SESSION['WEBID_ADMIN_PASS'] . "' AND id = " . $_SESSION['WEBID_ADMIN_IN'] . " LIMIT 1";
 			$params = array();
 			$params[] = array(':admin_pass', $_SESSION['WEBID_ADMIN_PASS'], 'str');
 			$params[] = array(':admin_id', $_SESSION['WEBID_ADMIN_IN'], 'int');
@@ -55,7 +55,7 @@ if (!defined('AdminFuncCall'))
 
 			if ($db->numrows() > 0)
 			{
-				return $db->result();
+				return $db->result('notes');
 			}
 		}
 		return '';

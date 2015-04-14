@@ -44,7 +44,7 @@ class user
 					if ($this->user_data['suspended'] != 7)
 					{
 						// check if user can sell or buy
-						if (count($user_data['groups']) < 1)
+						if (strlen($user_data['groups']) < 1)
 							$user_data['groups'] = 0; // just in case
 						$query = "SELECT can_sell, can_buy FROM " . $DBPrefix . "groups WHERE id IN (" . $user_data['groups'] . ") AND (can_sell = 1 OR can_buy = 1)";
 						$res = mysql_query($query);

@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'countries.inc.php';
 
 function generatePassword($length = 8)
 {

@@ -65,11 +65,11 @@ function rebuild_table_file($table)
 
 function rebuild_html_file($table)
 {
-	global $DBPrefix, $system, $include_path;
+	global $DBPrefix, $system, $main_path, $language;
 	switch($table)
 	{
 		case 'countries':
-			$output_filename = $include_path . 'countries.inc.php';
+			$output_filename = $main_path . 'language/' . $language . '/countries.inc.php';
 			$field_name = 'country';
 			$array_name = 'countries';
 		break;

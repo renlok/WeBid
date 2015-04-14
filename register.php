@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'countries.inc.php';
+include $main_path . 'language/' . $language . '/countries.inc.php';
 
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)

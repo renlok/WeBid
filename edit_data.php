@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'countries.inc.php';
+include $main_path . 'language/' . $language . '/countries.inc.php';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())

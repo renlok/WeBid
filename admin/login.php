@@ -29,20 +29,27 @@ if (isset($_POST['action']))
 				header('location: login.php');
 				exit;
 			}
-			include $include_path . 'PasswordHash.php';
-			$phpass = new PasswordHash(8, false);
-			$query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, created, lastlogin, status) VALUES
-					(:username, :password, :hash, :created, :lastlogin, 1)";
-			$params = array();
-			$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
-			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
-			$params[] = array(':hash', get_hash(), 'str');
-			$params[] = array(':created', gmdate('Ymd'), 'str');
-			$params[] = array(':lastlogin', time() + (($system->SETTINGS['timecorrection'] + gmdate('I')) * 3600), 'int');
-			$db->query($query, $params);
-			// Redirect
-			header('location: login.php');
-			exit;
+			if ($_POST['password'] != $_POST['repeat_password'])
+			{
+				$ERR = $ERR_006;
+			}
+			else
+			{
+				include $include_path . 'PasswordHash.php';
+				$phpass = new PasswordHash(8, false);
+				$query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, created, lastlogin, status) VALUES
+						(:username, :password, :hash, :created, :lastlogin, 1)";
+				$params = array();
+				$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
+				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
+				$params[] = array(':hash', get_hash(), 'str');
+				$params[] = array(':created', date('Ymd'), 'str');
+				$params[] = array(':lastlogin', time(), 'int');
+				$db->query($query, $params);
+				// Redirect
+				header('location: login.php');
+				exit;
+			}
 		break;
 
 		case 'login':
@@ -76,7 +83,7 @@ if (isset($_POST['action']))
 					$_SESSION['WEBID_ADMIN_PASS'] = $admin['password'];
 					$_SESSION['WEBID_ADMIN_IN'] = $admin['id'];
 					$_SESSION['WEBID_ADMIN_USER'] = $_POST['username'];
-					$_SESSION['WEBID_ADMIN_TIME'] = time() + (($system->SETTINGS['timecorrection'] + gmdate('I')) * 3600);
+					$_SESSION['WEBID_ADMIN_TIME'] = $system->ctime;
 					// Update last login information for this user
 					$query = "UPDATE " . $DBPrefix . "adminusers SET lastlogin = :lastlogin WHERE id = :admin_id";
 					$params = array();

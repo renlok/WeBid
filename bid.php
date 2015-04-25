@@ -579,8 +579,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 	// End of Item watch
 	if ($send_email)
 	{
-		$month = gmdate('m', $c + $system->tdiff);
-		$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $c + $system->tdiff);
+		$month = date('m', $c + $system->tdiff);
+		$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $c + $system->tdiff);
 		$new_bid = $system->print_money($next_bid);
 		// Send e-mail message
 		include $include_path . 'email_outbid.php';

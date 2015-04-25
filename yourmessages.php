@@ -39,8 +39,8 @@ if ($check == 0)
 	header('location: mail.php');
 }
 
-$array = $db->fetch();
-$sent = gmdate('M d, Y H:ia', $array['sentat'] + $system->tdiff);
+$array = $db->result();
+$sent = date('M d, Y H:ia', $array['sentat'] + $system->tdiff);
 $subject = $array['subject'];
 $message = $array['message'];
 $hash = md5(rand(1, 9999));

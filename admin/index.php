@@ -116,7 +116,7 @@ if (isset($_GET['action']))
 					$params = array();
 					$params[] = array(':cat_id', $row['category'], 'int');
 					$db->query($query, $params);
-					$parent_node = $db->fetch();
+					$parent_node = $db->result();
 
 					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 					for ($i = 0; $i < count($crumbs); $i++)
@@ -150,7 +150,7 @@ if (isset($_GET['action']))
 					$params = array();
 					$params[] = array(':cat_id', $row['secondcat'], 'int');
 					$db->query($query, $params);
-					$parent_node = $db->fetch();
+					$parent_node = $db->result();
 	
 					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 					for ($i = 0; $i < count($crumbs); $i++)
@@ -176,15 +176,15 @@ if (isset($_GET['action']))
 
 $query = "SELECT * FROM " . $DBPrefix . "counters";
 $db->direct_query($query);
-$COUNTERS = $db->fetch();
+$COUNTERS = $db->result();
 
 $query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE year = :year AND month = :month AND day = :day";
 $params = array();
-$params[] = array(':year', gmdate('Y'), 'str');
-$params[] = array(':month', gmdate('m'), 'str');
-$params[] = array(':day', gmdate('d'), 'str');
+$params[] = array(':year', date('Y'), 'str');
+$params[] = array(':month', date('m'), 'str');
+$params[] = array(':day', date('d'), 'str');
 $db->query($query, $params);
-$ACCESS = $db->fetch();
+$ACCESS = $db->result();
 $ACCESS['pageviews'] = (!isset($ACCESS['pageviews']) || empty($ACCESS['pageviews'])) ? 0 : $ACCESS['pageviews'];
 $ACCESS['uniquevisitors'] = (!isset($ACCESS['uniquevisitors']) || empty($ACCESS['uniquevisitors'])) ? 0 : $ACCESS['uniquevisitors'];
 $ACCESS['usersessions'] = (!isset($ACCESS['usersessions']) || empty($ACCESS['usersessions'])) ? 0 : $ACCESS['usersessions'];

@@ -15,7 +15,7 @@
 include 'common.php';
 
 $NOW = time();
-$NOWB = gmdate('Ymd');
+$NOWB = date('Ymd');
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())

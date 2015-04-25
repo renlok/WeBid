@@ -44,7 +44,7 @@ class fees
 	{
 		global $system, $DBPrefix, $user;
 
-		$date_values = date('z|W|m|Y', $system->ctime);
+		$date_values = date('z|W|m|Y');
 		$date_values = explode('|', $date_values);
 		$query = "INSERT INTO " . $DBPrefix . "accounts VALUES (NULL, '" . $user->user_data['nick'] . "', '" . $user->user_data['name'] . "', '" . $text . "', '" . $type . "', " . time() . ", '" . $amount . "', " . $date_values[0] . ", " . $date_values[1] . ", " . $date_values[2] . ", " . $date_values[3] . ")";
 		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);

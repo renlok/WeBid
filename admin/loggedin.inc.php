@@ -52,8 +52,8 @@ else
 		$db->query($query, $params);
 	}
 
-	$mth = 'MON_0' . gmdate('m', $_SESSION['WEBID_ADMIN_TIME']);
-	$return = gmdate('d', $_SESSION['WEBID_ADMIN_TIME']) . ' ' . $MSG[$mth] . ', ' . gmdate('Y - H:i', $_SESSION['WEBID_ADMIN_TIME']);
+	$mth = 'MON_0' . date('m', $_SESSION['WEBID_ADMIN_TIME']);
+	$return = date('d', $_SESSION['WEBID_ADMIN_TIME']) . ' ' . $MSG[$mth] . ', ' . date('Y - H:i', $_SESSION['WEBID_ADMIN_TIME']);
 	$template->assign_vars(array(
 			'DOCDIR' => $DOCDIR,
 			'THEME' => $system->SETTINGS['theme'],

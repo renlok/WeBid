@@ -90,7 +90,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 			// Update "last login" fields in users table
 			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = :lastlogin WHERE id = :user_id";
 			$params = array();
-			$params[] = array(':lastlogin', gmdate("Y-m-d H:i:s"), 'int');
+			$params[] = array(':lastlogin', date("Y-m-d H:i:s"), 'int');
 			$params[] = array(':user_id', $_SESSION['WEBID_LOGGED_IN'], 'int');
 			$db->query($query, $params);
 

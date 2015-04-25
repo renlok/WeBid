@@ -239,7 +239,7 @@ function CheckSellData()
 
 	if (!(strpos($a_starts, '-') === false) && empty($start_now) && $_SESSION['SELL_action'] != 'edit')
 	{
-		$a_starts = _gmmktime(substr($a_starts, 11, 2),
+		$a_starts = _mktime(substr($a_starts, 11, 2),
 			substr($a_starts, 14, 2),
 			substr($a_starts, 17, 2),
 			substr($a_starts, 0, 2),

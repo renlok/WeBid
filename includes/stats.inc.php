@@ -22,9 +22,9 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 $STATSSETTINGS = mysql_fetch_array($res);
 
-$THISDAY	= gmdate('d');
-$THISMONTH	= gmdate('m');
-$THISYEAR	= gmdate('Y');
+$THISDAY	= date('d');
+$THISMONTH	= date('m');
+$THISYEAR	= date('Y');
 
 if ($STATSSETTINGS['activate'] == 'y')
 {

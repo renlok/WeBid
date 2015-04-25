@@ -36,7 +36,7 @@ class email_handler
 		$headers[] = 'Return-Path: <' . $this->from . '>';
 		$headers[] = 'Sender: <' . $system->SETTINGS['adminmail'] . '>';
 		$headers[] = 'MIME-Version: 1.0';
-		$headers[] = 'Date: ' . gmdate('r', time());
+		$headers[] = 'Date: ' . date('r');
 		//$headers[] = 'Content-Type: text/plain; charset=' . $CHARSET;
 		$headers[] = 'Content-Type: text/html; charset=' . $CHARSET;
 		$headers[] = 'Content-Transfer-Encoding: 8bit';

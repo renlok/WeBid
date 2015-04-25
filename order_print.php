@@ -67,7 +67,7 @@ if ($auction)
 		invalidinvoice();
 	}
 
-	$data = $db->fetch();
+	$data = $db->result();
 
 	// do you have permission to view this?
 	if (!$fromadmin && $data['seller_id'] != $user->user_data['id'])
@@ -146,7 +146,7 @@ else
 		invalidinvoice();
 	}
 
-	$data = $db->fetch();
+	$data = $db->result();
 
 	// do you have permission to view this?
 	if (!$fromadmin && $data['user_id'] != $user->user_data['id'])
@@ -182,7 +182,7 @@ $template->assign_vars(array(
 		'WINNER_ADDRESS' => $winner_address,
 		'AUCTION_ID' => $data['auc_id'],
 		'SHIPPING_METHOD' => (empty($data['shipping_terms'])) ? strtoupper($MSG['000']) : $data['shipping_terms'],
-		'INVOICE_DATE' => gmdate('d/m/Y', $data['date'] + $system->tdiff),
+		'INVOICE_DATE' => date('d/m/Y', $data['date'] + $system->tdiff),
 		'SALE_ID' => (($auction) ? 'AUC' : 'FEE') . $data['id'],
 		// tax start
 		'TAX' => $vat . '%',

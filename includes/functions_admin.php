@@ -30,7 +30,7 @@ if (!defined('AdminFuncCall'))
 
 			if ($db->numrows() > 0)
 			{
-				$user_data = $db->fetch();
+				$user_data = $db->result();
 
 				if (strspn($user_data['password'], $user_data['hash']) == $_SESSION['WEBID_ADMIN_NUMBER'])
 				{

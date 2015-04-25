@@ -59,7 +59,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  picturesgallery = :picturesgallery,
 				  maxpictures = :maxpictures,
 				  maxuploadsize = :maxuploadsize,
-				  thumb_show = :thumb_show");
+				  thumb_show = :thumb_show";
 		$params = array();
 		$params[] = array(':proxy_bidding', ynbool($_POST['proxy_bidding']), 'str');
 		$params[] = array(':edit_starttime', $_POST['edit_starttime'], 'int');

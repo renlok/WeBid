@@ -23,7 +23,7 @@ if (!$user->is_logged_in())
 }
 
 $NOW = time();
-$NOWB = gmdate('Ymd');
+$NOWB = date('Ymd');
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 {

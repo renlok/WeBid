@@ -175,7 +175,7 @@ $MSG['001'] = "New user registration";
 $MSG['002'] = "Your name";
 $MSG['003'] = "Username";
 $MSG['004'] = "Password";
-$MSG['005'] = "Please, repeat your password";
+$MSG['005'] = "Confirm password";
 $MSG['006'] = "Your e-mail address";
 $MSG['007'] = "Submit";
 $MSG['008'] = "Delete";
@@ -1158,6 +1158,10 @@ $MSG['1138'] = "Test email from Admin";
 $MSG['1139'] = "Admin";
 $MSG['1140'] = "I have finished testing";
 $MSG['1141'] = 'Used <b>only</b> for SMTP mail';
+// fee gateway
+$MSG['1142'] = "Before you can set up any fees you must set up at least one account where the fees can be paid to, to do so simply add your payment info into the corresponding boxes below";
+$MSG['1143'] = "Here you setup which payment gateways you want to allow users to use";
+$MSG['1144'] = "Before you can set fees you need to of set up at least one method of payment. You can do this via <a href=\"fee_gateways.php\">payment gateways</a>.";
 
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";

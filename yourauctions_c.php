@@ -24,7 +24,7 @@ if (!$user->logged_in)
 
 // DELETE OPEN AUCTIONS
 $NOW = time();
-$NOWB = gmdate('Ymd');
+$NOWB = date('Ymd');
 $catscontrol = new MPTTcategories();
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
@@ -99,7 +99,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params = array();
 			$params[] = array(':auc_id', $k, 'int');
 			$db->query($query, $params);
-			$AUCTION = $db->fetch();
+			$AUCTION = $db->result();
 
 			// auction ends
 			$WILLEND = time() + ($AUCTION['duration'] * 24 * 60 * 60);
@@ -167,7 +167,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':cat_id', $AUCTION['category'], 'int');
 			$db->query($query, $params);
 	
-			$parent_node = $db->fetch();
+			$parent_node = $db->result();
 			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 			// update recursive categories
 			for ($i = 0; $i < count($crumbs); $i++)

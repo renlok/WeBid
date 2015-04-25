@@ -38,17 +38,17 @@ if ($listby == 'm')
 }
 elseif ($listby == 'w')
 {
-	$year = gmdate('Y');
+	$year = date('Y');
 	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE year = " . $year . " ORDER BY day ASC";
 	$statsview = $MSG['827'];
 	$statstext = $MSG['828'];
 }
 else
 {
-	$month = gmdate('m');
-	$year = gmdate('Y');
+	$month = date('m');
+	$year = date('Y');
 	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = " . $month . " AND year = " . $year . " ORDER BY day ASC";
-	$statsview = gmdate('F Y');
+	$statsview = date('F Y');
 	$statstext = $MSG['109'];
 }
 
@@ -64,7 +64,7 @@ while ($row = mysql_fetch_assoc($res))
 	if ($listby == 'w')
 	{
 		$date = $row['year'] . '/' . $row['month'] . '/' . $row['day'];
-		$weekno = date('W', strtotime($date));
+		$weekno = date('W', strtotime($date) + $system->tdiff);
 		if (!isset($data_line[$weekno]))
 		{
 			$data_line[$weekno] = array();

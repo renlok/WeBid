@@ -85,9 +85,7 @@ if (isset($_POST['action']))
 			$system->check_mysql($res, $query, __LINE__, __FILE__);
 			$AUCTION = mysql_fetch_array($res);
 
-			$start = gmdate('H i s n j Y', $AUCTION['starts']);
-			$start = explode(' ', $start);
-			$a_start = gmmktime($start[0], $start[1], $start[2], $start[3], $start[4], $start[5]);
+			$a_start = $AUCTION['starts'];
 			$a_ends = $a_start + ($_POST['duration'] * 24 * 60 * 60);
 
 			if ($AUCTION['category'] != $_POST['category'])

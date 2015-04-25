@@ -65,7 +65,7 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 			// Update "last login" fields in users table
 			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = :date WHERE id = :user_id";
 			$params = array();
-			$params[] = array(':date', gmdate("Y-m-d H:i:s"), 'str');
+			$params[] = array(':date', date("Y-m-d H:i:s"), 'str');
 			$params[] = array(':user_id', $user_data['id'], 'int');
 			$db->query($query, $params);
 			// Remember me option

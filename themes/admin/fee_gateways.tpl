@@ -11,6 +11,8 @@
 <!-- IF ERROR ne '' -->
 					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
+					<div class="info-box">{L_1142}</div>
+					<p>{L_1143}</p>
                     <table width="98%" cellpadding="0" cellspacing="0" class="blank">
 <!-- BEGIN gateways -->
                         <tr>

@@ -34,7 +34,7 @@ $res = mysql_query($query);
 $system->check_mysql($res, $query, __LINE__, __FILE__);
 while ($row = mysql_fetch_assoc($res))
 {
-	$data .= '<strong>' . date('d-m-Y, H:i:s', $row['timestamp']) . '</strong>: ' . $row['message'] . '<br>';
+	$data .= '<strong>' . date('d-m-Y, H:i:s', $row['timestamp'] + $system->tdiff) . '</strong>: ' . $row['message'] . '<br>';
 }
 
 if ($data == '')

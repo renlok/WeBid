@@ -137,8 +137,8 @@ while ($auction_data = mysql_fetch_assoc($res))
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $auction_data['id'],
 			'DESC' => $auction_data['description'],
 			'USER' => $auction_data['nick'],
-			'POSTED' => gmdate('Y-m-d\TH:i:s-00:00', $auction_data['starts']),
-			//'POSTED' => gmdate('D, j M Y H:i:s \G\M\T', $auction_data['starts']),
+			'POSTED' => date('Y-m-d\TH:i:s-00:00', $auction_data['starts'] + $system->tdiff),
+			//'POSTED' => date('D, j M Y H:i:s \G\M\T', $auction_data['starts']),
 			'CAT' => $cat_value
 			));
 }

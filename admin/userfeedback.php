@@ -35,7 +35,7 @@ $bg = '';
 
 if ($db->numrows() > 0)
 {
-	$arr = $db->fetch();
+	$arr = $db->result();
 	$num_fbs = $arr['rate_num'];
 	// get page limits
 	if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')

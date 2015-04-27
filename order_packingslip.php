@@ -38,7 +38,7 @@ if ($db->numrows() < 1)
 	invalidinvoice(true);
 }
 
-$data = $db->fetch();
+$data = $db->result();
 $winner = getAddresswinner($data['winner']);
 
 // build winners address

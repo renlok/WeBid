@@ -28,8 +28,8 @@ class global_class
 
 		// Load settings
 		$this->loadsettings();
-		$this->ctime = time() + (($this->SETTINGS['timecorrection'] + gmdate('I')) * 3600);
-		$this->tdiff = ($this->SETTINGS['timecorrection'] + gmdate('I')) * 3600;
+		$this->tdiff = ($this->SETTINGS['timecorrection'] + date('I')) * 3600;
+		$this->ctime = time() + $this->tdiff;
 		// check install directory
 		if (is_dir($main_path . 'install'))
 		{
@@ -272,7 +272,7 @@ class global_class
 }
 
 // global functions
-function _gmmktime($hr, $min, $sec, $mon, $day, $year)
+function _mktime($hr, $min, $sec, $mon, $day, $year)
 {
 	global $system;
 	if ($system->SETTINGS['datesformat'] != 'USA')
@@ -282,18 +282,7 @@ function _gmmktime($hr, $min, $sec, $mon, $day, $year)
 		$day = $mon_;
 	}
 
-	if (@phpversion() >= '5.1.0')
-	{
-		return gmmktime($hr, $min, $sec, $mon, $day, $year); // is_dst is deprecated
-	}
-
-    if (gmmktime(0,0,0,6,1,2008, 0) == 1212282000)
-    {
-        //Seems to be running PHP (like 4.3.11).
-        //At least if current local timezone is Europe/Stockholm with DST in effect, skipping the ,0 helps:
-        return gmmktime($hr, $min, $sec, $mon, $day, $year); //without is_dst-parameter at the end
-    }
-    return gmmktime($hr, $min, $sec, $mon, $day, $year, 0);
+	return mktime($hr, $min, $sec, $mon, $day, $year);
 }
 
 function load_counters()
@@ -357,9 +346,9 @@ function load_counters()
 	}
 
 	// Display current Date/Time
-	$mth = 'MON_0' . gmdate('m', $system->ctime);
-	$date = $MSG[$mth] . gmdate(' j, Y', $system->ctime);
-	$counters .= $date . ' <span id="servertime">' . gmdate('H:i:s', $system->ctime) . '</span>';
+	$mth = 'MON_0' . date('m', $system->ctime);
+	$date = $MSG[$mth] . date(' j, Y', $system->ctime);
+	$counters .= $date . ' <span id="servertime">' . date('H:i:s', $system->ctime) . '</span>';
 	return $counters;
 }
 

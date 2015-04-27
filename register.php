@@ -35,9 +35,9 @@ if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 
 function CheckAge($day, $month, $year) // check if the users > 18
 {
-	$NOW_year = gmdate('Y');
-	$NOW_month = gmdate('m');
-	$NOW_day = gmdate('d');
+	$NOW_year = date('Y');
+	$NOW_month = date('m');
+	$NOW_day = date('d');
 
 	if (($NOW_year - $year) > 18)
 	{
@@ -112,7 +112,7 @@ if (empty($_POST['action']))
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
 $db->direct_query($query);
-$gateway_data = $db->fetch();
+$gateway_data = $db->fetchall();
 
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);

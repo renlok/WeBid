@@ -62,7 +62,7 @@ while ($User = $db->direct_query($query))
     }
     else
     {
-		$lastlogin = date('d/m/Y H:i:s', $User['lastlogin']);
+		$lastlogin = date('d/m/Y H:i:s', $User['lastlogin'] + $system->tdiff);
     }
 
     $template->assign_block_vars('users', array(

@@ -17,6 +17,7 @@ $error_reporting = E_ALL^E_NOTICE;
 $error_reporting = E_ALL; // use this for debugging
 define('InWeBid', 1);
 define('TrackUserIPs', 1);
+date_default_timezone_set('UTC'); // to make times more consistant
 
 // file check & 
 if(!@include('includes/config.inc.php'))
@@ -88,8 +89,8 @@ if (!$user->logged_in && isset($_COOKIE['WEBID_RM_ID']))
 
 if($user->logged_in)
 {
-	$system->ctime = time() + (($user->user_data['timecorrection'] + gmdate('I')) * 3600);
-	$system->tdiff = ($user->user_data['timecorrection'] + gmdate('I')) * 3600;
+	$system->tdiff = ($user->user_data['timecorrection'] + date('I')) * 3600;
+	$system->ctime = time() + $system->tdiff;
 }
 
 $template->set_template();

@@ -18,7 +18,7 @@ if (!function_exists('GetLeftSeconds'))
 {
 	function GetLeftSeconds()
 	{
-		$today = explode('|', gmdate('j|n|Y|G|i|s'));
+		$today = explode('|', date('j|n|Y|G|i|s'));
 		$month = $today[1];
 		$mday = $today[0];
 		$year = $today[2];
@@ -29,7 +29,7 @@ if (!function_exists('GetLeftSeconds'))
 			$lday--;
 		}
 		// Days left t the end of the month
-		$daysleft = intval($lday - gmdate('d'));
+		$daysleft = intval($lday - date('d'));
 		$hoursleft = 24 - $today[3];
 		$minsleft = 60 - $today[4];
 		$secsleft = 60 - $today[5];
@@ -52,11 +52,11 @@ if (!function_exists('FormatDate'))
 
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
-			$F_date = gmdate('m' . $spacer . 'd' . $spacer . 'Y', $DATE);
+			$F_date = date('m' . $spacer . 'd' . $spacer . 'Y', $DATE);
 		}
 		else
 		{
-			$F_date = gmdate('d' . $spacer . 'm' . $spacer . 'Y', $DATE);
+			$F_date = date('d' . $spacer . 'm' . $spacer . 'Y', $DATE);
 		}
 		return $F_date;
 	}
@@ -71,11 +71,11 @@ if (!function_exists('FormatTimeStamp'))
 		$DATE = explode($spacer, $DATE);
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
-			$F_date = _gmmktime(0, 0, 0, $DATE[0], $DATE[1], $DATE[2]);
+			$F_date = _mktime(0, 0, 0, $DATE[0], $DATE[1], $DATE[2]);
 		}
 		else
 		{
-			$F_date = _gmmktime(0, 0, 0, $DATE[1], $DATE[0], $DATE[2]);
+			$F_date = _mktime(0, 0, 0, $DATE[1], $DATE[0], $DATE[2]);
 		}
 		return $F_date;
 	}
@@ -139,7 +139,7 @@ if (!function_exists('ActualDate'))
 	function ActualDate()
 	{
 		global $system;
-		return gmdate('M d, Y H:i:s', $system->ctime);
+		return date('M d, Y H:i:s', $system->ctime);
 	}
 }
 
@@ -148,14 +148,14 @@ if (!function_exists('ArrangeDateNoCorrection'))
 	function ArrangeDateNoCorrection($DATE)
 	{
 		global $MSG, $system;
-		$mth = 'MON_0' . gmdate('m', $DATE);
+		$mth = 'MON_0' . date('m', $DATE);
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
-			$return = $MSG[$mth] . ' ' . gmdate('d, Y - H:i', $DATE);
+			$return = $MSG[$mth] . ' ' . date('d, Y - H:i', $DATE);
 		}
 		else
 		{
-			$return = gmdate('d', $DATE) . ' ' . $MSG[$mth] . ', ' . gmdate('Y - H:i', $DATE);
+			$return = date('d', $DATE) . ' ' . $MSG[$mth] . ', ' . date('Y - H:i', $DATE);
 		}
 		return $return;
 	}

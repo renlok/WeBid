@@ -124,11 +124,11 @@ $auc_data = mysql_fetch_assoc($res);
 
 if ($system->SETTINGS['datesformat'] == 'USA')
 {
-	$date = gmdate('m/d/Y', $auc_data['starts']);
+	$date = date('m/d/Y', $auc_data['starts'] + $system->tdiff);
 }
 else
 {
-	$date = gmdate('d/m/Y', $auc_data['starts']);
+	$date = date('d/m/Y', $auc_data['starts'] + $system->tdiff);
 }
 
 $template->assign_vars(array(

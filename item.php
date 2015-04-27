@@ -263,7 +263,7 @@ while ($bidrec = mysql_fetch_assoc($result_numbids))
 			'ID' => $bidrec['bidder'],
 			'NAME' => $bidderarray[$bidrec['nick']],
 			'BID' => $system->print_money($bidrec['bid']),
-			'WHEN' => ArrangeDateNoCorrection($bidrec['bidwhen'] + $system->tdiff) . ':' . gmdate('s', $bidrec['bidwhen']),
+			'WHEN' => ArrangeDateNoCorrection($bidrec['bidwhen'] + $system->tdiff) . ':' . date('s', $bidrec['bidwhen']),
 			'QTY' => $bidrec['quantity']
 			));
 	$left -= $bidrec['quantity'];

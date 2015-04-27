@@ -33,6 +33,16 @@
 				<input type="password" name="password" size="20">
 			</td>
 		</tr>
+<!-- IF PAGE eq 1 -->
+		<tr>
+			<td align="right">
+				{L_005}
+			</td>
+			<td style="padding:10px;">
+				<input type="password" name="repeat_password" size="20">
+			</td>
+		</tr>
+<!-- ENDIF -->
 		<tr>
 			<td align="center" colspan="2">
 <!-- IF PAGE eq 1 -->

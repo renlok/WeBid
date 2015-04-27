@@ -170,8 +170,13 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 	}
 }
 
+$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$db->direct_query($query);
+$gateway_data = $db->result();
+
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
+		'B_NOT_SETUP_CORRECTLY' => (strlen($gateway_data['paypal_address'] . $gateway_data['worldpay_id'] . $gateway_data['toocheckout_id'] . $gateway_data['moneybookers_address']) == 0 && (strlen($gateway_data['authnet_address']) == 0 || strlen($gateway_data['authnet_password']) == 0)),
 		'B_SINGLE' => (isset($_GET['type']) && isset($fees[$_GET['type']]) && $fees[$_GET['type']] == 0) ? true : false,
 		'FEETYPE' => (isset($_GET['type']) && isset($feenames[$_GET['type']])) ? $feenames[$_GET['type']] : '',
 		'ERROR' => (isset($errmsg)) ? $errmsg : ''

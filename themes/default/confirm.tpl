@@ -4,11 +4,11 @@
 			{L_248}
 		</div>
 		<div class="table2" style="text-align:center">
-<!-- IF PAGE eq error -->
+<!-- IF PAGE eq 'error' -->
 			<div class="error-box">
             	{ERROR}
             </div>
-<!-- ELSEIF PAGE eq confirm -->
+<!-- ELSEIF PAGE eq 'confirm' -->
 			<form name="registration" action="{SITEURL}confirm.php" method="post">
 				<p>{L_267}</p>
 				<input type="hidden" name="id" value="{USERID}">
@@ -17,9 +17,9 @@
 				<input type="submit" name="action" value="{L_249}" class="button">
 				<input type="submit" name="action" value="{L_250}" class="button">
 			</form>
-<!-- ELSEIF PAGE eq confirmed -->
+<!-- ELSEIF PAGE eq 'confirmed' -->
 			{L_330}
-<!-- ELSEIF PAGE eq refused -->
+<!-- ELSEIF PAGE eq 'refused' -->
 			{L_331}
 <!-- ENDIF -->
 		</div>

@@ -19,7 +19,7 @@ if (!isset($_SERVER['SCRIPT_NAME'])) $_SERVER['SCRIPT_NAME'] = 'cron.php';
 include $include_path . 'functions_cron.php';
 
 // initialize cron script
-printLog('=============== STARTING CRON SCRIPT: ' . gmdate('F d, Y H:i:s'));
+printLog('=============== STARTING CRON SCRIPT: ' . date('F d, Y H:i:s'));
 
 $categories = constructCategories();
 
@@ -36,7 +36,7 @@ $categories = constructCategories();
  */
 printLog('++++++ Closing expired auctions');
 $NOW = time();
-$NOWB = gmdate('Ymd');
+$NOWB = date('Ymd');
 $buyer_emails = array();
 $seller_emails = array();
 
@@ -112,7 +112,7 @@ foreach ($auction_data as $Auction) // loop auctions
 	{
 		if ($num_bids > 0 && ($Auction['current_bid'] >= $Auction['reserve_price'] || $Auction['sold'] == 's'))
 		{
-			$Winner = $db->fetch();
+			$Winner = $db->result();
 			$Winner['quantity'] = $Auction['quantity'];
 			$WINNING_BID = $Auction['current_bid'];
 			$winner_present = true;
@@ -196,7 +196,7 @@ foreach ($auction_data as $Auction) // loop auctions
 				$params = array();
 				$params[] = array(':bidder', $row['bidder'], 'int');
 				$db->query($query, $params);
-				$Winner = $db->fetch();
+				$Winner = $db->result();
 				// set arrays
 				$WINNERS_ID[] = $row['bidder'];
 				$Winner['maxbid'] = $row['maxbid'];
@@ -241,8 +241,8 @@ foreach ($auction_data as $Auction) // loop auctions
 	} // end auction ends
 	printLogL ('mail to seller: ' . $Seller['email'], 1);
 
-	$month = gmdate('m', $Auction['ends'] + $system->tdiff);
-	$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);
+	$month = date('m', $Auction['ends'] + $system->tdiff);
+	$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 
 	$close_auction = true;
 	// deal with the automatic relists find which auctions are to be relisted
@@ -368,7 +368,7 @@ foreach ($auction_data as $Auction) // loop auctions
 			$params[] = array(':seller_id', $Auction['id'], 'int');
 			$params[] = array(':auction_data', serialize($Auction), 'str');
 			$params[] = array(':seller_data', serialize($Seller), 'str');
-			$params[] = array(':date', gmdate('Ymd'), 'int');
+			$params[] = array(':date', date('Ymd'), 'int');
 			$db->query($query, $params);
 		}
 	}
@@ -475,10 +475,10 @@ $db->direct_query($query);
 $user_data = $db->fetchall();
 foreach ($auction_data as $row)
 {
-	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < '" . gmdate('Ymd') . "' AND seller_id = :seller_id";
+	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < '" . date('Ymd') . "' AND seller_id = :seller_id";
 	$params = array();
 	$params[] = array(':seller_id', $row['id'], 'int');
-	$params[] = array(':date', gmdate('Ymd'), 'int');
+	$params[] = array(':date', date('Ymd'), 'int');
 	$db->query($query, $params);
 
 	if ($db->numrows() > 0)
@@ -565,6 +565,6 @@ if ((time() - $purgecachetime) > 86400)
 }
 
 // finish cron script
-printLog ("=========================== ENDING CRON: " . gmdate('F d, Y H:i:s') . "\n");
+printLog ("=========================== ENDING CRON: " . date('F d, Y H:i:s') . "\n");
 
 ?>

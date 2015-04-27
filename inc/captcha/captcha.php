@@ -133,7 +133,7 @@ class easy_captcha
 		
 		#-- meta informations
 		$this->created = time();
-		$this->{'created$'} = gmdate("r", $this->created);
+		$this->{'created$'} = date("r", $this->created);
 		$this->expires = $this->created + CAPTCHA_TIMEOUT;
 		//$this->tries = 0;
 		$this->passed = 0;
@@ -970,7 +970,7 @@ class easy_captcha_utility {
 					}
 					header("Pragma: no-cache");
 					header("Cache-Control: no-cache, no-store, must-revalidate, private");
-					header("Expires: " . gmdate("r", time()));
+					header("Expires: " . date("r"));
 					header("Content-Length: " . strlen($bin));
 					header("Content-Type: $type");
 					print $bin;

@@ -100,7 +100,7 @@ if (@$db->numrows() == 1)
 	}
 
 	$DATE = $user_data['reg_date'] + $system->tdiff;
-	$mth = 'MON_0'.gmdate('m', $DATE);
+	$mth = 'MON_0'.date('m', $DATE);
 
 	$feedback_rate = ($user_data['rate_sum'] == 0) ? 1 : $user_data['rate_sum'];
 	$feedback_rate = ($feedback_rate < 0) ? $feedback_rate * - 1 : $feedback_rate;
@@ -127,7 +127,7 @@ if (@$db->numrows() == 1)
 		'FB_LASTYEAR_NEG' => $fb_last_year[-1],
 		'FB_LAST3MONTH_NEG' => $fb_last_3month[-1],
 		'FB_LASTMONTH_NEG' => $fb_last_month[-1],
-		'REGSINCE' => $MSG[$mth].' '.gmdate('d, Y', $DATE),
+		'REGSINCE' => $MSG[$mth].' '.date('d, Y', $DATE),
 		'COUNTRY' => $user_data['country'],
 		'AUCTION_ID' => (isset($_GET['auction_id'])) ? $_GET['auction_id'] : '',
 		'USER' => $user_data['nick'],

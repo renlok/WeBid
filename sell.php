@@ -340,7 +340,7 @@ switch ($_SESSION['action'])
 					'TITLE' => $MSG['028'],
 					'PAGE' => 3,
 					'AUCTION_ID' => $auction_id,
-					'MESSAGE' => sprintf($MSG['102'], $auction_id, date('D j M \a\t g:ia', $a_ends))
+					'MESSAGE' => sprintf($MSG['102'], $auction_id, date('D j M \a\t g:ia', $a_ends + $system->tdiff))
 					));
 			break;
 		}
@@ -420,7 +420,7 @@ switch ($_SESSION['action'])
 
 			if (!(strpos($a_starts, '-') === false))
 			{
-				$a_starts = _gmmktime(substr($a_starts, 11, 2),
+				$a_starts = _mktime(substr($a_starts, 11, 2),
 					substr($a_starts, 14, 2),
 					substr($a_starts, 17, 2),
 					substr($a_starts, 0, 2),
@@ -477,7 +477,7 @@ switch ($_SESSION['action'])
 		// check time format is timestamp. If not change to timestamp
         if (!(strpos($a_starts, '-') === false))
 		{
-			$a_starts = _gmmktime(substr($a_starts, 11, 2),
+			$a_starts = _mktime(substr($a_starts, 11, 2),
 				substr($a_starts, 14, 2),
 				substr($a_starts, 17, 2),
 				substr($a_starts, 0, 2),
@@ -559,20 +559,20 @@ switch ($_SESSION['action'])
 		{
 			if (empty($a_starts))
 			{
-				$TPL_start_date = gmdate($gmdate_string, $system->ctime);
+				$TPL_start_date = date($gmdate_string, $system->ctime);
 			}
 			else
 			{
 				if (strpos($a_starts, '-') === false)
 				{
-					$a_starts = gmdate($gmdate_string, $a_starts);
+					$a_starts = date($gmdate_string, $a_starts);
 				}
 				$TPL_start_date = $a_starts;
 			}
 		}
 		else
 		{
-			$TPL_start_date = gmdate($gmdate_string, $a_starts);
+			$TPL_start_date = date($gmdate_string, $a_starts);
 		}
 
 		$CKEditor = new CKEditor();

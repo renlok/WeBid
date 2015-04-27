@@ -51,7 +51,7 @@ if (is_array($BROWSERS))
 
 $template->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
-		'STATSMONTH' => date('F Y')
+		'STATSMONTH' => date('F Y', $system->ctime)
 		));
 
 $template->set_filenames(array(

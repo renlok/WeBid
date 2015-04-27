@@ -11,6 +11,9 @@
 <!-- IF ERROR ne '' -->
 					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
+<!-- IF B_NOT_SETUP_CORRECTLY -->
+					<div class="error-box"><b>{L_1144}</b></div>
+<!-- ENDIF -->
 <!-- IF FEETYPE ne '' -->
                     <table width="98%" cellpadding="0" cellspacing="0">
                         <tr>

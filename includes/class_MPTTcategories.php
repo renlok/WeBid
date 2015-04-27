@@ -34,7 +34,7 @@ class MPTTcategories
 			{ // Row must exist.
 				return false;
 			}
-			$parent = $db->fetch();
+			$parent = $db->result();
 		}
 		else
 		{
@@ -113,7 +113,7 @@ class MPTTcategories
 		{ // Row must exist.
 			return false;
 		}
-		$a = $db->fetch();
+		$a = $db->result();
 
 		if(!$keep_children)
 		{
@@ -183,7 +183,7 @@ class MPTTcategories
 			{ // Row must exist.
 				return false;
 			}
-			$a = $db->fetch(); // This is being moved.
+			$a = $db->result(); // This is being moved.
 
 			// Virtual root element.
 			$b = $this->get_virtual_root();
@@ -275,7 +275,7 @@ class MPTTcategories
 		{ // Row must Exist.
 			return false;
 		}
-		$a = $db->fetch();
+		$a = $db->result();
 		// Get child data.
 		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id >= " . $a['left_id'] . " AND right_id <= " . $a['right_id'];
 		$db->direct_query($query);
@@ -295,7 +295,7 @@ class MPTTcategories
 			{ // Row must exist.
 				return false;
 			}
-			$b = $db->fetch();
+			$b = $db->result();
 		}
 		else
 		{
@@ -446,7 +446,7 @@ class MPTTcategories
 		// Virtual root element as parent.
 		$query = "SELECT right_id FROM " . $DBPrefix . "categories ORDER BY right_id DESC LIMIT 1";
 		$db->direct_query($query);
-		$row = $db->fetch();
+		$row = $db->result();
 		$root = array('left_id' => 1, 'right_id' => $row['right_id'], 'level' => -1);
 		return $root;
 	}

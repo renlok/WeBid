@@ -263,7 +263,7 @@ while ($array = $db->fetch())
 	$sender = ($array['sentfrom'] == 0) ? 'Admin' : '<a href="profile.php?user_id=' . $array['sentfrom'] . '">' . $array['nick'] . '</a>';
 	$sender = (!empty($array['fromemail'])) ? $array['fromemail'] : $sender;
 	$template->assign_block_vars('msgs', array(
-			'SENT' => gmdate('M d, Y H:ia', $array['sentat'] + $system->tdiff),
+			'SENT' => date('M d, Y H:ia', $array['sentat'] + $system->tdiff),
 			'ID' => $array['id'],
 			'SENDER' => $sender,
 			'SUBJECT' => ($array['isread'] == 0) ? '<b>' . $array['subject'] . '</b>' : $array['subject']

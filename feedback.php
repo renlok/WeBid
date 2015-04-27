@@ -58,7 +58,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 		{
 			if ($user->user_data['nick'] != $_POST['TPL_nick_hidden'])
 			{
-				$wsell = $db->fetch();
+				$wsell = $db->result();
 				// winner/seller check
 				$ws = ($user->user_data['id'] == $wsell['winner']) ? 'w' : 's';
 				if ((intval($_REQUEST['sid']) == $user->user_data['id'] && $wsell['feedback_sel'] == 1) || (intval($_REQUEST['wid']) == $user->user_data['id'] && $wsell['feedback_win'] == 1))
@@ -180,7 +180,7 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 
 	if ($db->numrows() > 0)
 	{
-		$arr = $db->fetch();
+		$arr = $db->result();
 		$TPL_nick = $arr['nick'];
 		$i = 0;
 		foreach ($memtypesarr as $k => $l)

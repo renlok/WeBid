@@ -58,7 +58,7 @@ $params = array();
 $params[] = array(':auc_id', $id, 'int');
 $db->query($query, $params);
 
-$Auction = $db->fetch();
+$Auction = $db->result();
 // such auction does not exist
 if ($db->numrows() == 0)
 {
@@ -111,7 +111,7 @@ $query = "SELECT nick, email, rate_sum FROM " . $DBPrefix . "users WHERE id = :u
 $params = array();
 $params[] = array(':user_id', $Auction['user'], 'int');
 $db->query($query, $params);
-$Seller = $db->fetch();
+$Seller = $db->result();
 
 // Get current total rate value for user
 $total_rate = $Seller['rate_sum'];
@@ -208,7 +208,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$params = array();
 			$params[] = array(':user_id', $user->user_data['id'], 'int');
 			$db->query($query, $params);
-			$Winner = $db->fetch();
+			$Winner = $db->result();
 			$bf_paid = 1;
 			$ff_paid = 1;
 
@@ -217,7 +217,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			{
 				$query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
 				$db->direct_query($query);
-				$row = $db->fetch();
+				$row = $db->result();
 				$fee_type = $row['fee_type'];
 				if ($row['fee_type'] == 'flat')
 				{
@@ -322,8 +322,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$db->query($query, $params);
 
 			// get end string
-			$month = gmdate('m', $Auction['ends'] + $system->tdiff);
-			$ends_string = $MSG['MON_0' . $month] . ' ' . gmdate('d, Y H:i', $Auction['ends'] + $system->tdiff);
+			$month = date('m', $Auction['ends'] + $system->tdiff);
+			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
 			include $include_path . 'email_endauction_youwin_nodutch.php';
 

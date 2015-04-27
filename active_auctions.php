@@ -90,7 +90,7 @@ while ($row = $db->fetch())
 	$db->query($query, $params);
 	$num_bids = $db->numrows();
 
-	$difference = $row['ends'] - time();
+	$difference = $row['ends'] - $NOW;
 
 	$template->assign_block_vars('auctions', array(
 			'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',

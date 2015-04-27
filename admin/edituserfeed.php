@@ -58,7 +58,7 @@ $params = array();
 $params[] = array(':feedback_id', $id, 'int');
 $db->query($query, $params);
 
-$feedback = $db->fetch();
+$feedback = $db->result();
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

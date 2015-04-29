@@ -7,8 +7,17 @@
 # disable directory browsing
 Options All -Indexes
 
-# disabel access to logs/template files
+# disable access to logs/template files
 <Files ~ "\.(log|tpl)$">
  order allow,deny
  deny from all
 </files>
+
+# only images can be accessed in the uploaded folder
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/uploaded [NC]
+RewriteCond %{REQUEST_URI} !\.(jpe?g|png|gif)$ [NC]
+RewriteRule .* - [F,L]
+
+# If you are getting 500 errors try setting this to your charset
+# AddDefaultCharset utf-8

@@ -33,21 +33,53 @@ function ErrorPNG($err)
 // control parameters and file existence
 if (!isset($_GET['fromfile']) || $fromfile == '')
 {
-	ErrorPNG('params empty');
+	ErrorPNG($ERR_716);
 	exit;
 }
 elseif (!file_exists($_GET['fromfile']) && !fopen($_GET['fromfile'], 'r'))
 {
-	ErrorPNG('img does not exist');
+	ErrorPNG($ERR_716);
 	exit;
 }
 
 if (file_exists($upload_path . 'cache/' . $w . '-' . md5($fromfile)))
 {
 	$img = getimagesize($fromfile);
-	if ($img[2] == 1)
+	switch ($img[2])
 	{
-		$img['mime'] = 'image/png';
+		case IMAGETYPE_GIF:
+			if (!(imagetypes() &IMG_GIF))
+			{
+				if (!function_exists('imagecreatefromgif'))
+				{
+					$nomanage = true;
+				}
+				else
+				{
+					$img['mime'] = 'image/png';
+				}
+			}
+			else
+			{
+				$img['mime'] = 'image/gif';
+			}
+			break;
+		case IMAGETYPE_JPEG:
+			if (!(imagetypes() &IMG_JPG)) $nomanage = true;
+			$img['mime'] = 'image/jpeg';
+			break;
+		case IMAGETYPE_PNG:
+			if (!(imagetypes() &IMG_PNG)) $nomanage = true;
+			$img['mime'] = 'image/png';
+			break;
+		default :
+			$nomanage = true;
+			break;
+	}
+	if ($nomanage)
+	{
+		ErrorPNG($ERR_710);
+		exit;
 	}
 	header('Content-type: ' . $img['mime']);
 	echo file_get_contents($upload_path . 'cache/' . $w . '-' . md5($fromfile));
@@ -64,7 +96,7 @@ else
 		{
 			switch ($img[2])
 			{
-				case 1 :
+				case IMAGETYPE_GIF:
 					if (!(imagetypes() &IMG_GIF))
 					{
 						if (!function_exists('imagecreatefromgif'))
@@ -80,21 +112,24 @@ else
 					else
 					{
 						$outype = 'gif';
+						$img['mime'] = 'image/gif';
 					}
 					$imtype = 'gif';
 					break;
-				case 2 :
+				case IMAGETYPE_JPEG:
 					if (!(imagetypes() &IMG_JPG)) $nomanage = true;
 					$outype = 'jpeg';
+					$img['mime'] = 'image/jpeg';
 					$imtype = 'jpeg';
 					break;
-				case 3 :
+				case IMAGETYPE_PNG:
 					if (!(imagetypes() &IMG_PNG)) $nomanage = true;
 					$imtype = 'png';
+					$img['mime'] = 'image/png';
 					$outype = 'png';
 					break;
 				default :
-					ErrorPNG('wrong img type');
+					ErrorPNG($ERR_710);
 					exit;
 			}
 			// check image orientation
@@ -112,7 +147,7 @@ else
 		}
 		else
 		{
-			ErrorPNG('not image type');
+			ErrorPNG($ERR_710);
 			exit;
 		}
 	}
@@ -122,7 +157,7 @@ else
 	}
 	if ($nomanage)
 	{
-		ErrorPNG('image type not supported');
+		ErrorPNG($ERR_710);
 		exit;
 	}
 

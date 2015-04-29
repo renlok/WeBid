@@ -140,9 +140,9 @@ The Install.php script included with WeBid will:
 
 	> /cache/ 777
 
-	> /uploaded/ 777
+	> /uploaded/ 644
 
-	> /uploaded/cache/ 777
+	> /uploaded/cache/ 644
 
 
 6. Executing the WeBid Installation script using your internet browser: 

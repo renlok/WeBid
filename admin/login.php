@@ -106,6 +106,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'THEME' => $system->SETTINGS['theme'],
+           'L_COPY_YEAR' => date("Y"),
 		'PAGE' => ($db->numrows() == 0) ? 1 : 2
 		));
 

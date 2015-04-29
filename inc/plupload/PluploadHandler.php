@@ -111,6 +111,9 @@ class PluploadHandler {
 				$file_name = $conf['file_name'];
 			}
 
+			$file_path = rtrim($conf['target_dir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file_name;
+			$tmp_path = $file_path . ".part";
+
 			// Check if file type is allowed
 			if ($conf['allow_extensions']) {
 				if (is_string($conf['allow_extensions'])) {
@@ -120,10 +123,16 @@ class PluploadHandler {
 				if (!in_array(strtolower(pathinfo($file_name, PATHINFO_EXTENSION)), $conf['allow_extensions'])) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-			}
 
-			$file_path = rtrim($conf['target_dir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file_name;
-			$tmp_path = $file_path . ".part";
+				$mime_types = $conf['allow_extensions'];
+				array_walk($mime_types, function(&$value, $key) { $value = 'image/' . $value; });
+				// check mime type
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				if (!in_array(finfo_file($finfo, $file_path)) {
+					throw new Exception('', PLUPLOAD_TYPE_ERR);
+				}
+				finfo_close($finfo);
+			}
 
 			// Write file or chunk to appropriate temp location
 			if ($conf['chunks']) {				

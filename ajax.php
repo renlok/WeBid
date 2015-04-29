@@ -23,7 +23,7 @@ switch ($do)
 		converter_call();
 		break;
 	case 'uploadaucimages':
-		include $main_path . 'inc/plupload/examples/upload.php';
+		include $main_path . 'inc/plupload/upload.php';
 		break;
 	case 'getupldtable':
 		getupldtable();

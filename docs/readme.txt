@@ -14,7 +14,7 @@ ask you at least leave in place the "Powered by WeBid" line, with "WeBid" linked
 INSTALLATION
 --------------------------------------------------------
 1. Upload all the files except the docs directory
-2. CHMOD the uploaded directory to 0777
+2. CHMOD the uploaded directory to 0644
 3. CHMOD the includes/config.inc.php.new to 0777
 4. CHMOD the language/EN/countries.inc.php to 0777
 5. CHMOD the includes/membertypes.inc.php to 0777

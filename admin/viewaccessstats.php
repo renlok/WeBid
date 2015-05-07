@@ -32,14 +32,14 @@ if (isset($_GET['type']) && in_array($_GET['type'], array('d','w', 'm')))
 if ($listby == 'm')
 {
 	$query = "SELECT SUM(pageviews) as pageviews, SUM(uniquevisitors) as uniquevisitors, SUM(usersessions) as usersessions, month, year
-			FROM " . $DBPrefix . "currentaccesses GROUP BY month ORDER BY month ASC";
+			FROM " . $DBPrefix . "currentaccesses GROUP BY month ORDER BY LENGTH(month), month ASC";
 	$statsview = $MSG['5281'];
 	$statstext = $MSG['5280'];
 }
 elseif ($listby == 'w')
 {
 	$year = date('Y');
-	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE year = " . $year . " ORDER BY day ASC";
+	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE year = " . $year . " ORDER BY LENGTH(day), day ASC";
 	$statsview = $MSG['827'];
 	$statstext = $MSG['828'];
 }
@@ -47,7 +47,7 @@ else
 {
 	$month = date('m');
 	$year = date('Y');
-	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = " . $month . " AND year = " . $year . " ORDER BY day ASC";
+	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = " . $month . " AND year = " . $year . " ORDER BY LENGTH(day), day ASC";
 	$statsview = date('F Y');
 	$statstext = $MSG['109'];
 }

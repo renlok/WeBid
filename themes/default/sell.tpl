@@ -222,7 +222,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_287}</b>
 						</td>
 						<td class="rightpan">
@@ -234,7 +234,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_017}</b>
 						</td>
 						<td class="rightpan">
@@ -243,7 +243,7 @@ $(document).ready(function(){
 					</tr>
 	<!-- IF B_SUBTITLE -->
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_806}</b>
 						</td>
 						<td class="rightpan">
@@ -263,7 +263,7 @@ $(document).ready(function(){
 					</tr>
 	<!-- IF B_GALLERY -->
 					<tr>
-						<td align="right" width="25%" valign="middle" class="leftpan">&nbsp;</td>
+						<td align="right" width="25%" valign="middle">&nbsp;</td>
 						<td valign="top" class="rightpan">
 							<h3>{L_663}</h3>
 							<p>{MAXPICS}</p>
@@ -273,18 +273,18 @@ $(document).ready(function(){
 					</tr>
 	<!-- ENDIF -->
 					<tr>
-						<th colspan="2" align="center" valign="middle" class="leftpan">
+						<th colspan="2" align="center" valign="middle">
 							{L_640}
 						</th>
 					</tr>
 					<tr>
-						<td align="right" width="25%" valign="middle" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_257}</b>
 						</td>
 						<td class="rightpan">{ATYPE}</td>
 					</tr>
 					<tr>
-						<td align="right" width="25%" valign="middle" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_258}</b>
 						</td>
 						<td class="rightpan">
@@ -292,7 +292,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b id="minval_text">{MINTEXT}</b>
 						</td>
 						<td class="rightpan">
@@ -302,7 +302,7 @@ $(document).ready(function(){
 					</tr>
 	<!-- IF B_CUSINC -->
 					<tr class="dutchhide">
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_120}</b>
 						</td>
 						<td class="rightpan">
@@ -318,7 +318,7 @@ $(document).ready(function(){
 					<input type="hidden" name="increments" id="inc1" value="1">
 	<!-- ENDIF -->
 					<tr class="dutchhide">
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_021}</b>
 						</td>
 						<td class="rightpan">
@@ -331,7 +331,7 @@ $(document).ready(function(){
 					</tr>
 	<!-- IF B_BN_ONLY -->
 					<tr class="dutchhide">
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_30_0063}</b>
 						</td>
 						<td class="rightpan">
@@ -344,7 +344,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 	<!-- IF B_BN -->
 					<tr class="dutchhide">
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_496}</b>
 						</td>
 						<td class="rightpan">
@@ -358,7 +358,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
     <!-- IF B_EDIT_STARTTIME -->
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_2__0016}</b>
 						</td>
 						<td class="rightpan">
@@ -378,7 +378,7 @@ $(document).ready(function(){
     				<input type="hidden" name="start_now" value="1">
     <!-- ENDIF -->
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_022}</b>
 						</td>
 						<td class="rightpan">
@@ -387,7 +387,7 @@ $(document).ready(function(){
 					</tr>
 	<!-- IF B_AUTORELIST -->
                     <tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L__0161}</b>
 						</td>
 						<td class="rightpan">
@@ -402,7 +402,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_023}</b>
 						</td>
 						<td class="rightpan">
@@ -411,7 +411,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 					<tr class="additional_shipping_costhide">
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_350_1008}</b>
 						</td>
 						<td class="rightpan" style="width: 293px">
@@ -420,7 +420,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_025}</b>
 						</td>
 						<td valign="top" class="rightpan">
@@ -435,7 +435,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_25_0215}</b>
 						</td>
 						<td>
@@ -448,7 +448,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 					<tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_026}</b>
 						</td>
 						<td class="rightpan">
@@ -478,7 +478,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 	<!-- IF B_CAN_TAX -->
                     <tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_1102}</b>
 						</td>
 						<td class="rightpan">
@@ -487,7 +487,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
                     <tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_1103}</b>
 						</td>
 						<td class="rightpan">
@@ -498,7 +498,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 	<!-- IF B_FEES -->
                     <tr>
-						<td align="right" width="25%" valign="top" class="leftpan">
+						<td align="right" width="25%" valign="middle">
 							<b>{L_263}</b>
 						</td>
 						<td class="rightpan">

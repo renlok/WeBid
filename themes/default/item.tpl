@@ -104,7 +104,7 @@ $(document).ready(function() {
 						<!-- higher bidder -->
 <!-- IF B_HASBUYER and B_NOTBNONLY -->
 						<tr>
-						  <td width='50%' style="leftpan" valign="top">
+						  <td width='50%' valign="top">
 							{L_117}:
 						  </td>
 						  <td>

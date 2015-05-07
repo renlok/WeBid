@@ -54,10 +54,9 @@ h4 { font-size: 1.4em; line-height: 1; margin-bottom: 1em;  font-weight:700; }
 h5 { font-size: 1.2em; font-weight: bold; margin-bottom:1em; font-weight:200 }
 h6 { font-size: 1.1em; font-weight: bold; margin:0 0 1em 0;}
 
-input {
+input, select, textarea {
 	margin: 3px;
-	padding-left: 2px;
-	padding-right: 2px;
+	padding: 4px;
 }
 
 td {
@@ -262,6 +261,8 @@ a:hover {
 
 .centre {
 	padding: 0 auto;
+	margin-left: auto;
+	margin-right: auto;
 	text-align: center;
 }
 

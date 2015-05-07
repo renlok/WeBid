@@ -101,7 +101,7 @@ elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
     $_SESSION['SELL_with_reserve'] = '';
     $_SESSION['SELL_reserve_price'] = '';
     $_SESSION['SELL_minimum_bid'] = '';
-    $_SESSION['SELL_file_uploaded'] = '';
+    $_SESSION['SELL_file_uploaded'] = false;
     $_SESSION['SELL_title'] = '';
     $_SESSION['SELL_subtitle'] = '';
     $_SESSION['SELL_description'] = '';
@@ -118,7 +118,7 @@ elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
     $_SESSION['SELL_shipping'] = 1;
     $_SESSION['SELL_shipping_terms'] = '';
     $_SESSION['SELL_payment'] = '';
-    $_SESSION['SELL_international'] = '';
+    $_SESSION['SELL_international'] = false;
     $_SESSION['SELL_buy_now_only'] = '';
     $_SESSION['SELL_action'] = '';
     $_SESSION['SELL_shipping_cost'] = 0;

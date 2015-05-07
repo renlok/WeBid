@@ -190,7 +190,8 @@ class db_handle
 		$PDO_constants = array(
 			'int' => PDO::PARAM_INT,
 			'str' => PDO::PARAM_STR,
-			'bool' => PDO::PARAM_BOOL,
+			//'bool' => PDO::PARAM_BOOL, doesn't work, php bug
+			'bool' => PDO::PARAM_INT,
 			'float' => PDO::PARAM_STR
 			);
 		// set PDO values to params
@@ -200,6 +201,11 @@ class db_handle
 			if ($params[$i][2] == 'float')
 			{
 				$params[$i][1] = floatval($params[$i][1]);
+			}
+			// to fix php bug
+			if ($params[$i][2] == 'bool' && $params[$i][1] > 1)
+			{
+				$params[$i][1] = 1;
 			}
 			$params[$i][2] = $PDO_constants[$params[$i][2]];
 		}

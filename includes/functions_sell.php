@@ -62,10 +62,10 @@ function setvars()
 	$shipping_terms = (isset($_POST['shipping_terms'])) ? $_POST['shipping_terms'] : $_SESSION['SELL_shipping_terms'];
 	$payment = (isset($_POST['payment'])) ? $_POST['payment'] : $_SESSION['SELL_payment'];
 	$payment = (is_array($payment)) ? $payment : array();
-	$international = (isset($_POST['international'])) ? $_POST['international'] : ''; 
+	$international = (isset($_POST['international'])) ? $_POST['international'] : false; 
 	$international = (isset($_SESSION['SELL_international']) && !isset($_POST['action'])) ? $_SESSION['SELL_international'] : $international; 
 	$sellcat1 = $_SESSION['SELL_sellcat1'];
-	$_SESSION['SELL_sellcat2'] = (isset($_SESSION['SELL_sellcat2'])) ? $_SESSION['SELL_sellcat2'] : '';
+	$_SESSION['SELL_sellcat2'] = (isset($_SESSION['SELL_sellcat2'])) ? $_SESSION['SELL_sellcat2'] : 0;
 	$sellcat2 = $_SESSION['SELL_sellcat2'];
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
 	$buy_now_only = (empty($buy_now_only)) ? 'n' : $buy_now_only;
@@ -141,7 +141,7 @@ function unsetsessions()
 	$_SESSION['SELL_minimum_bid'] = ($system->SETTINGS['moneyformat'] == 1) ? 0.99 : '0,99';
 	$_SESSION['SELL_shipping_cost'] = 0;
 	$_SESSION['SELL_additional_shipping_cost'] = 0;
-	$_SESSION['SELL_file_uploaded'] = '';
+	$_SESSION['SELL_file_uploaded'] = false;
 	$_SESSION['SELL_title'] = '';
 	$_SESSION['SELL_subtitle'] = '';
 	$_SESSION['SELL_description'] = '';
@@ -158,7 +158,7 @@ function unsetsessions()
 	$_SESSION['SELL_shipping'] = 1;
 	$_SESSION['SELL_shipping_terms'] = '';
 	$_SESSION['SELL_payment'] = array();
-	$_SESSION['SELL_international'] = '';
+	$_SESSION['SELL_international'] = false;
 	$_SESSION['SELL_sendemail'] = '';
 	$_SESSION['SELL_starts'] = '';
 	$_SESSION['SELL_action'] = '';
@@ -239,9 +239,9 @@ function updateauction($type)
 	$params[] = array(':increment', $system->input_money($_SESSION['SELL_customincrement']), 'float');
 	$params[] = array(':shipping', $_SESSION['SELL_shipping'], 'int');
 	$params[] = array(':payment', $payment_text, 'str');
-	$params[] = array(':international', (($_SESSION['SELL_international']) ? true : false), 'bool');
+	$params[] = array(':international', $_SESSION['SELL_international'], 'bool');
 	$params[] = array(':ends', $a_ends, 'int');
-	$params[] = array(':photo_uploaded', (($_SESSION['SELL_file_uploaded'])? true : false), 'bool');
+	$params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
@@ -261,7 +261,7 @@ function addauction()
 
 	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,shipping_cost_additional,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
 	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :shipping_cost_additional, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
-	
+
 	$params = array();
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$params[] = array(':title', $system->cleanvars($_SESSION['SELL_title']), 'str');
@@ -281,9 +281,9 @@ function addauction()
 	$params[] = array(':increment', $system->input_money($_SESSION['SELL_customincrement']), 'float');
 	$params[] = array(':shipping', $_SESSION['SELL_shipping'], 'int');
 	$params[] = array(':payment', $payment_text, 'str');
-	$params[] = array(':international', (($_SESSION['SELL_international']) ? true : false), 'bool');
+	$params[] = array(':international', $_SESSION['SELL_international'], 'bool');
 	$params[] = array(':ends', $a_ends, 'int');
-	$params[] = array(':photo_uploaded', (($_SESSION['SELL_file_uploaded'])? true : false), 'bool');
+	$params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');

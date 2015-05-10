@@ -481,7 +481,7 @@ $template->assign_vars(array(
 		'B_FEES' => ($signup_fee['value'] > 0),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
+		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public'], ($system->SETTINGS['https'] == 'y')) : $spam_html,
 		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 'y'),
 		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 'y'),
 		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 'y'),

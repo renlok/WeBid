@@ -98,7 +98,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 
 if ($system->SETTINGS['spam_sendtofriend'] == 2)
 {
-	$capcha_text = recaptcha_get_html($system->SETTINGS['recaptcha_public']);
+	$capcha_text = recaptcha_get_html($system->SETTINGS['recaptcha_public'], ($system->SETTINGS['https'] == 'y'));
 }
 elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
 {

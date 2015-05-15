@@ -368,6 +368,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					$system->log('user', 'Regestered User', $TPL_id_hidden);
 				}
 
+				// send emails
 				if ($system->SETTINGS['activationtype'] == 0)
 				{
 					include $include_path . 'email_user_needapproval.php';

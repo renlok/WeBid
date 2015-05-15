@@ -168,11 +168,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 			if ($_POST['balance'] >= -$system->SETTINGS['fee_max_debt'])
 			{
-				$balance .=  ", suspended = 0";
+				$query .=  ", suspended = 0";
 			}
 			elseif ($_POST['balance'] < -$system->SETTINGS['fee_max_debt'])
 			{
-				$balance .=  ", suspended = 7";
+				$query .=  ", suspended = 7";
 			}
 			$query .=  " WHERE id = :user_id";
 			$params[] = array(':user_id', $userid, 'int');

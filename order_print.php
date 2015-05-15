@@ -157,11 +157,14 @@ else
 	//$seller = getSeller($user->user_data['id']); // used as user: ??
 	$seller = getSeller($data['user_id']);
 	$vat = getTax(true, $seller['country']);
+	$winner['nick'] = '';
 	$winner_address = '';
 	$data['shipping_terms'] = '';
+	$data['id'] = $data['useracc_id'];
 	$shipping_cost = 0;
 	$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['766'] . '#' . $data['id'];
 	$payvalue = $data['total'];
+	$totalvat = 0;
 	// create fee data ready for template & get totals
 	$totals = setfeetemplate($data);
 

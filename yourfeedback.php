@@ -38,7 +38,7 @@ foreach ($memtypesarr as $k => $l)
 	}
 }
 
-$page = (!isset($_GET['pg']) || $_GET['pg'] == 0) ? $_GET['pg'] : 1;
+$page = (isset($_GET['pg']) && $_GET['pg'] > 0) ? $_GET['pg'] : 1;
 $left_limit = ($page - 1) * $system->SETTINGS['perpage'];
 
 $query = "SELECT count(*) As COUNT FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
@@ -120,7 +120,7 @@ for ($ind2 = $firstpage; $ind2 <= $lastpage; $ind2++)
 		$echofeed .= ' | ';
 	}
 }
-$echofeed .= ($thispage == $pages || $pages == 0) ? '' : ' <a href="yourfeedback.php?pg=' . $nextpage . '">></a> <a href="yourfeedback.php?pg=' . $pages . '">&raquo;</a>';
+$echofeed .= ($page == $pages || $pages == 0) ? '' : ' <a href="yourfeedback.php?pg=' . $nextpage . '">></a> <a href="yourfeedback.php?pg=' . $pages . '">&raquo;</a>';
 
 $template->assign_vars(array(
 		'USERNICK' => $user->user_data['nick'],

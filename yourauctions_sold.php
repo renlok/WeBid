@@ -27,7 +27,7 @@ $NOWB = date('Ymd');
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
 $db->direct_query($query);
-$relist_fee = $db->result();
+$relist_fee = $db->result('value');
 
 // Update
 if (isset($_POST['action']) && $_POST['action'] == 'update')

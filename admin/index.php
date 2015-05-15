@@ -40,56 +40,56 @@ if (isset($_GET['action']))
 
 		case 'updatecounters':
 			//update users counter
-			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "users WHERE suspended = 0";
+			$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "users WHERE suspended = 0";
 			$db->direct_query($query);
-			$USERS = $db->result();
+			$USERS = $db->result('COUNT');
 			$query = "UPDATE " . $DBPrefix . "counters SET users = :USERS";
 			$params = array();
 			$params[] = array(':USERS', $USERS, 'int');
 			$db->query($query, $params);
 
 			//update suspended users counter
-			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "users WHERE suspended != 0";
+			$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "users WHERE suspended != 0";
 			$db->direct_query($query);
-			$USERS = $db->result();
+			$USERS = $db->result('COUNT');
 			$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = :USERS";
 			$params = array();
 			$params[] = array(':USERS', $USERS, 'int');
 			$db->query($query, $params);
 
 			//update auction counter
-			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed = 0 AND suspended = 0";
+			$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE closed = 0 AND suspended = 0";
 			$db->direct_query($query);
-			$AUCTIONS = $db->result();
+			$AUCTIONS = $db->result('COUNT');
 			$query = "UPDATE " . $DBPrefix . "counters SET auctions = :AUCTIONS";
 			$params = array();
 			$params[] = array(':AUCTIONS', $AUCTIONS, 'int');
 			$db->query($query, $params);
 
 			//update closed auction counter
-			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed != 0";
+			$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE closed != 0";
 			$db->direct_query($query);
-			$AUCTIONS = $db->result();
+			$AUCTIONS = $db->result('COUNT');
 			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = :AUCTIONS";
 			$params = array();
 			$params[] = array(':AUCTIONS', $AUCTIONS, 'int');
 			$db->query($query, $params);
 
 			//update suspended auctions counter
-			$query = "SELECT COUNT(id) FROM " . $DBPrefix . "auctions WHERE closed = 0 and suspended != 0";
+			$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE closed = 0 and suspended != 0";
 			$db->direct_query($query);
-			$AUCTIONS = $db->result();
+			$AUCTIONS = $db->result('COUNT');
 			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = :AUCTIONS";
 			$params = array();
 			$params[] = array(':AUCTIONS', $AUCTIONS, 'int');
 			$db->query($query, $params);
 
 			//update bids
-			$query = "SELECT COUNT(b.id) FROM " . $DBPrefix . "bids b
+			$query = "SELECT COUNT(b.id) As COUNT FROM " . $DBPrefix . "bids b
 					LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
 					WHERE a.closed = 0 AND a.suspended = 0";
 			$db->direct_query($query);
-			$BIDS = $db->result();
+			$BIDS = $db->result('COUNT');
 			$query = "UPDATE " . $DBPrefix . "counters SET bids = :BIDS";
 			$params = array();
 			$params[] = array(':BIDS', $BIDS, 'int');
@@ -193,7 +193,7 @@ if ($system->SETTINGS['activationtype'] == 0)
 {
 	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE suspended = 10";
 	$db->direct_query($query);
-	$uuser_count = $db->result();
+	$uuser_count = $db->result('COUNT');
 }
 
 // version check

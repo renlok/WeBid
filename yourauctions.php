@@ -87,7 +87,7 @@ $params = array();
 $params[] = array(':time', $NOW, 'int');
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
-$TOTALAUCTIONS = $db->result();
+$TOTALAUCTIONS = $db->result('COUNT');
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] <= 1 || $_GET['PAGE'] == '')
 {
@@ -166,7 +166,7 @@ foreach ($itemdata as $item)
 	$db->query($query, $params);
 	if ($db->numrows() > 0)
 	{
-		$viewcounter = $db->result();
+		$viewcounter = $db->result('counter');
 	}
 	else
 	{

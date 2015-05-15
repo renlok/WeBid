@@ -68,7 +68,7 @@ $query = "SELECT count(id) as COUNT FROM " . $DBPrefix . "auctions WHERE user = 
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
-$TOTALAUCTIONS = $db->result();
+$TOTALAUCTIONS = $db->result('COUNT');
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] < 0 || empty($_GET['PAGE']))
 {

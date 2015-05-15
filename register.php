@@ -342,7 +342,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':language', $language, 'str'),
 					array(':groups', implode(',', $groups), 'str'),
 					array(':balance', $balance, 'bool'),
-					array(':timecorrection', $_POST['TPL_timezone'], 'int'),
+					array(':timecorrection', $_POST['TPL_timezone'], 'float'),
 					array(':paypal_email', ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : ''), 'str'),
 					array(':worldpay_id', ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : ''), 'str'),
 					array(':moneybookers_email', ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']) : ''), 'str'),

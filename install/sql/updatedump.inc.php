@@ -266,5 +266,7 @@ if ($myversion == '1.1.0')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_username`  VARCHAR(128) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_password`  VARCHAR(128) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `alert_emails`  VARCHAR(128) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `timecorrection` decimal(3,1) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `timecorrection` decimal(3,1) NOT NULL default '0';";
 }
 ?>

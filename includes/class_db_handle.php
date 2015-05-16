@@ -169,7 +169,8 @@ class db_handle
 		foreach ($set_params[0] as $val)
 		{
 			$key = $this->find_key($params, $val);
-			$new_params[] = $params[$key];
+			if (isset($key))
+				$new_params[] = $params[$key];
 		}
 		//print_r("new_params");
 		//print_r($new_params);

@@ -98,7 +98,7 @@ function setfeetemplate($data)
 	$total_exculding = 0;
 	foreach ($data as $k => $v)
 	{
-		if (in_array($k, array('setup', 'featured', 'bold', 'highlighted', 'subtitle', 'relist', 'reserve', 'buynow', 'image', 'extcat', 'signup', 'buyer', 'finalval', 'balance')))
+		if (isset($feenames[$k]))
 		{
 			if ($v > 0)
 			{

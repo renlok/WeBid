@@ -95,7 +95,7 @@ $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $params[] = array(':time', $NOW, 'int');
 $db->query($query, $params);
-$TOTALAUCTIONS = $db->result();
+$TOTALAUCTIONS = $db->result('COUNT');
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] < 0 || empty($_GET['PAGE']))
 {

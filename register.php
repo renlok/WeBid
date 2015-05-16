@@ -342,7 +342,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':language', $language, 'str'),
 					array(':groups', implode(',', $groups), 'str'),
 					array(':balance', $balance, 'bool'),
-					array(':timecorrection', $_POST['TPL_timezone'], 'int'),
+					array(':timecorrection', $_POST['TPL_timezone'], 'float'),
 					array(':paypal_email', ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : ''), 'str'),
 					array(':worldpay_id', ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : ''), 'str'),
 					array(':moneybookers_email', ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']) : ''), 'str'),
@@ -368,6 +368,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					$system->log('user', 'Regestered User', $TPL_id_hidden);
 				}
 
+				// send emails
 				if ($system->SETTINGS['activationtype'] == 0)
 				{
 					include $include_path . 'email_user_needapproval.php';
@@ -481,7 +482,7 @@ $template->assign_vars(array(
 		'B_FEES' => ($signup_fee['value'] > 0),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
+		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public'], ($system->SETTINGS['https'] == 'y')) : $spam_html,
 		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 'y'),
 		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 'y'),
 		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 'y'),

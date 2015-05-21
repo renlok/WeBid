@@ -128,7 +128,7 @@ class PluploadHandler {
 				if (!in_array(strtolower(pathinfo($file_name, PATHINFO_EXTENSION)), $conf['allow_extensions'])) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-
+/*WHY THIS NO WORK
 				$mime_types = $conf['allow_extensions'];
 				array_walk($mime_types, function(&$value, $key) { $value = 'image/' . $value; });
 				// check mime type
@@ -136,7 +136,7 @@ class PluploadHandler {
 				if (!in_array(finfo_file($finfo, $_FILES[$conf['file_data_name']]['tmp_name'])) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-				finfo_close($finfo);
+				finfo_close($finfo);*/
 			}
 
 			$file_path = rtrim($conf['target_dir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file_name;

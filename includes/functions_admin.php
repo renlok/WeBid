@@ -109,7 +109,7 @@ if (!defined('AdminFuncCall'))
 		$hash = '';
 		for ($i = 0; $i < 5; $i++)
 		{
-			$rand = rand(0, 35);
+			$rand = rand(0, 34 - $i);
 			$hash .= $string[$rand];
 			$string = str_replace($string[$rand], '', $string);
 		}

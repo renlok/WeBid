@@ -112,7 +112,7 @@ if (empty($_POST['action']))
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
 $db->direct_query($query);
-$gateway_data = $db->fetchall();
+$gateway_data = $db->fetch();
 
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
@@ -328,12 +328,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':password', $phpass->HashPassword($TPL_password_hidden), 'str'),
 					array(':hash', $hash, 'str'),
 					array(':name', $system->cleanvars($TPL_name_hidden), 'str'),
-					array(':address', $system->cleanvars($_POST['TPL_address']), 'str'),
-					array(':city', $system->cleanvars($_POST['TPL_city']), 'str'),
-					array(':prov', $system->cleanvars($_POST['TPL_prov']), 'str'),
-					array(':country', $system->cleanvars($_POST['TPL_country']), 'str'),
-					array(':zip', $system->cleanvars($_POST['TPL_zip']), 'str'),
-					array(':phone', $system->cleanvars($_POST['TPL_phone']), 'str'),
+					array(':address', $system->cleanvars((isset($_POST['TPL_address'])) ? $_POST['TPL_address'] : ''), 'str'),
+					array(':city', $system->cleanvars((isset($_POST['TPL_city'])) ? $_POST['TPL_city'] : ''), 'str'),
+					array(':prov', $system->cleanvars((isset($_POST['TPL_prov'])) ? $_POST['TPL_prov'] : ''), 'str'),
+					array(':country', $system->cleanvars((isset($_POST['TPL_country'])) ? $_POST['TPL_country'] : ''), 'str'),
+					array(':zip', $system->cleanvars((isset($_POST['TPL_zip'])) ? $_POST['TPL_zip'] : ''), 'str'),
+					array(':phone', $system->cleanvars((isset($_POST['TPL_phone'])) ? $_POST['TPL_phone'] : ''), 'str'),
 					array(':nletter', $_POST['TPL_nletter'], 'int'),
 					array(':email', $system->cleanvars($_POST['TPL_email']), 'str'),
 					array(':reg_date', time(), 'int'),

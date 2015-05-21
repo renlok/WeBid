@@ -27,6 +27,7 @@ $db->query($query, $params);
 
 $MAX = 0;
 $TOTAL = 0;
+$BROWSERS = array();
 while ($row = fetch())
 {
 	$BROWSERS[$row['browser']] = $row['counter'];
@@ -38,17 +39,14 @@ while ($row = fetch())
 	}
 }
 
-if (is_array($BROWSERS))
+foreach ($BROWSERS as $k => $v)
 {
-	foreach ($BROWSERS as $k => $v)
-	{
-		$template->assign_block_vars('sitestats', array(
-			'BROWSER' => $k,
-			'NUM' => $BROWSERS[$k],
-			'WIDTH' => ($BROWSERS[$k] * 100) / $MAX,
-			'PERCENTAGE' => ceil(intval($BROWSERS[$k] * 100 / $TOTAL))
-			));
-	}
+	$template->assign_block_vars('sitestats', array(
+		'BROWSER' => $k,
+		'NUM' => $BROWSERS[$k],
+		'WIDTH' => ($BROWSERS[$k] * 100) / $MAX,
+		'PERCENTAGE' => ceil(intval($BROWSERS[$k] * 100 / $TOTAL))
+		));
 }
 
 $template->assign_vars(array(

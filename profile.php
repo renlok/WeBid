@@ -24,7 +24,16 @@ ksort($memtypesarr, SORT_NUMERIC);
 
 if(!isset($_GET['user_id']))
 {
-	$_GET['user_id'] = $user->user_data['id'];
+	if (!$user->is_logged_in())
+	{
+		$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions.php';
+		header('location: user_login.php');
+		exit;
+	}
+	else
+	{
+		$_GET['user_id'] = $user->user_data['id'];
+	}
 }
 
 if (!empty($_GET['user_id']) && is_string($_GET['user_id']))

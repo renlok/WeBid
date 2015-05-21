@@ -269,7 +269,7 @@ a:hover {
 .error-box {
 	color: #B01717;
 	border-bottom: 1px solid #F6ABAB;
-	background: #FAD0D0 url(img/exclamation.png) no-repeat 3px;
+	background: #FAD0D0 url(img/exclamation.png) no-repeat 3px !important;
 }
 
 .warning-box {

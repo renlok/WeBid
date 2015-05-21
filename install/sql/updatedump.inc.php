@@ -245,10 +245,9 @@ if ($myversion == '1.0.6')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `bid` double(16,2) NOT NULL default '0';";
 }
 
-if ($myversion == '1.1.0')
+if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2')))
 {
 	//1.1.0 to 1.2.0
-	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.2.0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `password` varchar(60) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password` varchar(60) NOT NULL;";
 	$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Serbia');";
@@ -268,5 +267,6 @@ if ($myversion == '1.1.0')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `alert_emails`  VARCHAR(128) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `timecorrection` decimal(3,1) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `timecorrection` decimal(3,1) NOT NULL default '0';";
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.2.0';";
 }
 ?>

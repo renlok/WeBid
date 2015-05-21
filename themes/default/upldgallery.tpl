@@ -1,75 +1,119 @@
 <html>
 <head>
 <title>{SITENAME}</title>
-<link rel="stylesheet" type="text/css" href="themes/{THEME}/style.css">
-<script type="text/javascript" src="js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/style.css">
+<link type="text/css" rel="stylesheet" href="{SITEURL}js/pluploadjs/jquery.plupload.queue/css/jquery.plupload.queue.css" media="screen">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 
-<!-- Load Queue widget CSS and jQuery -->
-<style type="text/css">@import url({SITEURL}inc/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-
-<!-- Third party script for BrowserPlus runtime (Google Gears included in Gears runtime now) -->
-<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
-
-<!-- Load plupload and all it's runtimes and finally the jQuery queue widget -->
-<script type="text/javascript" src="{SITEURL}inc/plupload/js/plupload.full.js"></script>
-<script type="text/javascript" src="{SITEURL}inc/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+<script type="text/javascript" src="{SITEURL}js/pluploadjs/plupload.full.min.js"></script>
+<script type="text/javascript" src="{SITEURL}js/pluploadjs/jquery.plupload.queue/jquery.plupload.queue.min.js"></script>
 
 <script type="text/javascript">
 // Convert divs to queue widgets when the DOM is ready
 $(function() {
+	// Setup html5 version
 	$("#uploader").pluploadQueue({
 		// General settings
-		runtimes : 'html5,gears,flash,silverlight,browserplus',
+		runtimes : 'html5,flash,silverlight,html4',
 		url : '{SITEURL}ajax.php?do=uploadaucimages',
-		max_file_size : '{MAXPICSIZE}kb',
 		chunk_size : '1mb',
 		unique_names : true,
-
+		dragdrop: true,
+		multiple_queues: {MAXPICS} < {UPLOADED} ? "true" : "false",
+		
 		// Specify what files to browse for
-		filters : [
-			{title : "Image files", extensions : "jpg,jpeg,gif,png"},
-		],
-
-		// Flash settings
-		flash_swf_url : '{SITEURL}inc/plupload/js/plupload.flash.swf',
+		filters : {
+		    // Maximum file size
+			max_file_size : "{MAXPICSIZE_MB}mb",
+			// Specify what files to browse for
+			mime_types: [
+			{title : "Image files", extensions : "jpg,jpeg,gif,png"}
+		    ]
+		},
+		multipart_params : {
+        "csrftoken" : "{_CSRFTOKEN}"
+       },
+	   
+	   // Resize images on clientside if we can
+		resize: {
+			width : 600, 
+			height : 600, 
+			quality : 90,
+			crop: false // crop to exact dimensions
+		},
+	   
+        // Flash settings
+		flash_swf_url : '{SITEURL}js/pluploadjs/Moxie.swf',
 
 		// Silverlight settings
-		silverlight_xap_url : '{SITEURL}inc/plupload/js/plupload.silverlight.xap',
+		silverlight_xap_url : '{SITEURL}js/pluploadjs/Moxie.xap',
 
 		// Post init events, bound after the internal events
 		init : {
 			Refresh: function(up) {
-				// Called when upload shim is moved
-			},
+				// Called when the position or dimensions of the picker change
+            },
 
 			StateChanged: function(up) {
 				// Called when the state of the queue is changed
 			},
 
 			QueueChanged: function(up) {
-				// Called when the files in queue are changed by adding/removing files
+				// Called when queue is changed by adding or removing files
+				
 				if (up.files.length > ({MAXPICS} - {UPLOADED}))
 				{
+					
 					for (var key in up.files) {
 						if (up.files.length > ({MAXPICS} - {UPLOADED})) {
 							up.removeFile(up.files[key]);
+							if ($('#uploader_browse').is(":visible")) {
+				             alert('You have reached the max  allowed of ' + {MAXPICS} + ' files.');	
+				            }
+							$('#uploader_browse').hide();
+							
 						}
 					}
+				
+				
 				}
-				up.refresh();
 			},
 
 			UploadProgress: function(up, file) {
 				// Called while a file is being uploaded
+				
 			},
+			
+			FileFiltered: function(up, file) {
+				// Called when file successfully files all the filters
+            },
 
-			FilesAdded: function(up, files) {
+            FilesAdded: function(up, files) {
 				// Callced when files are added to queue
+				var max_files = {MAXPICS};
+				plupload.each(files, function (file) {
+				
+                    if (up.files.length > max_files) {
+                        // alert('You are allowed to add only ' + max_files + ' files.');
+                         up.removeFile(file);
+						 
+                    }
+               });
+				
+                if (files.length >= max_files) {
+                 $('#uploader_browse').hide('slow');
+				  
+                }
+				
 			},
 
 			FilesRemoved: function(up, files) {
-				// Called when files where removed from queue
+				// Called when files are removed from queue
+				var max_files = {MAXPICS};
+				if (files.length < max_files) {
+                 $('#uploader_browse').fadeIn('slow');
+				 
+                }
 
 				plupload.each(files, function(file) {
 				});
@@ -80,14 +124,30 @@ $(function() {
 				$.get('{SITEURL}ajax.php?do=getupldtable', function(data) {
 					$('#uploaded').html(data);
 				});
+				if (up.files.length < ({MAXPICS} - {UPLOADED})) {
+                // $('.plupload_buttons').fadeIn('slow'); $('.plupload_upload_status').hide();
+				
+                }
 			},
+			
+            ChunkUploaded: function(up, file, info) {
+				// Called when file chunk has finished uploading
+			},
+			
+			UploadComplete: function(up, files) {
+				// Called when all files are either uploaded or failed
+				window.location = window.location.pathname;
+				
+				
+            },
 
-			ChunkUploaded: function(up, file, info) {
-				// Called when a file chunk has finished uploading
-			},
+			Destroy: function(up) {
+				// Called when uploader is destroyed
+            },
 
 			Error: function(up, args) {
 				// Called when a error has occured
+				console.log(args);
 			}
 		}
 	});
@@ -96,7 +156,10 @@ $(function() {
 
 <script type="text/javascript">
 $(document).ready(function () {
-	var num_images = $('#numimages', window.opener.document).val();
+    
+	if ( {MAXPICS} == {UPLOADED}) {$('.plupload_file_name').hide('slow'); $('.moxie-shim-html5').hide();}
+
+   var num_images = $('#numimages', window.opener.document).val();
 	var now_images = {UPLOADED};
 	var image_cost = {IMAGE_COST_PLAIN};
 	if (num_images != now_images) {
@@ -155,7 +218,7 @@ $(document).ready(function () {
 	<p>{PICINFO}</p>
 	<p>{IMAGE_COST}</p>
 	<div id="uploader">
-		<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+		<p>You browser doesn't have Flash, Silverlight or HTML5 support.</p>
 	</div>
 
 	<br style="clear:both;">

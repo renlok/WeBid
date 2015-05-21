@@ -108,7 +108,7 @@ class Securimage {
 	 *
 	 * @var int
 	 */
-	var $code_length = 4;
+	var $code_length = 8;
 
 	/**
 	 * The character set for individual characters in the image.<br />
@@ -470,7 +470,7 @@ class Securimage {
 	<div style="clear: both; line-height: 5px; display: block;"></div>
 	<div style="width: 120px; float: left; height: 25px; display:block;">' . $MSG['758'] . ':</div> 
 	<div style="width: 430px; float: left; height: 25px; display:block;"> 
-		<input type="text" name="captcha_code" size="5" maxlength="4" />
+		<input type="text" name="captcha_code" size="9" maxlength="8" />
 	</div>
 </div>';
 	}

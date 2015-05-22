@@ -112,7 +112,7 @@ if (empty($_POST['action']))
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
 $db->direct_query($query);
-$gateway_data = $db->fetch();
+$gateway_data = $db->result();
 
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);

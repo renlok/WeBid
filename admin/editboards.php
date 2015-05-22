@@ -37,11 +37,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$query = "UPDATE " . $DBPrefix . "community
-				  SET name = '" . $system->cleanvars($_POST['name']) . "',
-				  msgstoshow = " . intval($_POST['msgstoshow']) . ",
-				  active = " . intval($_POST['active']) . "
-				  WHERE id = " . intval($_POST['id']);
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				  SET name = :name,
+				  msgstoshow = :msgstoshow,
+				  active = :active
+				  WHERE id = :id";
+		$params = array();
+		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
+		$params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');
+		$params[] = array(':active', $_POST['active'], 'int');
+		$params[] = array(':id', $_POST['id'], 'int');
+		$db->query($query, $params);
 		header('location: boards.php');
 		exit;
 	}
@@ -50,10 +55,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 $id = intval($_GET['id']);
 
 // Retrieve board's data from the database
-$query = "SELECT * FROM " . $DBPrefix . "community WHERE id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$board_data = mysql_fetch_assoc($res);
+$query = "SELECT * FROM " . $DBPrefix . "community WHERE id = :id";
+$params = array();
+$params[] = array(':id', $id, 'int');
+$db->query($query, $params);
+$board_data = $db->result();
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

@@ -109,11 +109,9 @@ foreach ($auction_data as $row)
 			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] == 'y' || $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),
 			'B_BNONLY' => ($row['bn_only'] == 'y')
 			));
-
-	$auctions_count++;
 }
 
-if ($auctions_count == 0)
+if (TOTALAUCTIONS == 0)
 {
 	$template->assign_block_vars('no_auctions', array());
 }

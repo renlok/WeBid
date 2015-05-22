@@ -1492,7 +1492,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `bn_only_disable` enum('y','n') NOT NULL default 'n',
   `bn_only_percent` int(3) NOT NULL default '50',
   `buyerprivacy` ENUM('y','n') NOT NULL default 'n',
-  `cust_increment` INT(1) NOT NULL DEFAULT '0',
+  `cust_increment` INT(1) NOT NULL DEFAULT '2',
   `subtitle` ENUM('y','n') NOT NULL default 'y',
   `extra_cat` ENUM('y','n') NOT NULL default 'n',
   `fees` ENUM('y','n') NOT NULL default 'n',

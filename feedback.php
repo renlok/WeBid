@@ -28,8 +28,7 @@ if (isset($_REQUEST['auction_id']))
 	$_SESSION['CURRENT_ITEM'] = intval($_REQUEST['auction_id']);
 }
 
-$auction_id = $_SESSION['CURRENT_ITEM'];
-$pg = (empty($_REQUEST['pg'])) ? 1 : $_REQUEST['pg'];
+$auction_id = (isset($_SESSION['CURRENT_ITEM']) && intval($_SESSION['CURRENT_ITEM']) > 0) ? $_SESSION['CURRENT_ITEM'] : 0;
 $ws = (isset($_GET['ws'])) ? $_GET['ws'] : 'w';
 
 if (isset($_POST['addfeedback'])) // submit the feedback
@@ -204,70 +203,85 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 {
 	// determine limits for SQL query
-	$secid = $_GET['id'];
-	if ($pg == 0) $pg = 1;
-	$left_limit = ($pg - 1) * $system->SETTINGS['perpage'];
-
-	$query = "SELECT rate_sum, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
-	$params = array();
-	$params[] = array(':user_id', $secid, 'int');					
-	$db->query($query, $params);
-
-	$hash = $db->result();
-	$total = $hash['rate_sum'];
-	$TPL_nick = $hash['nick'];
-	$TPL_feedbacks_num = $total;
-	// get number of pages
-	$pages = ceil($total / $system->SETTINGS['perpage']);
-
-	$sql = "SELECT f.*, a.title, u.id As uId, u.rate_num, u.rate_sum
-		FROM " . $DBPrefix . "feedbacks f
-		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
-		LEFT JOIN " . $DBPrefix . "users u ON (u.nick = f.rater_user_nick)
-		WHERE rated_user_id = :user_id
-		ORDER by feedbackdate DESC LIMIT :left_limit, :perpage";
-	$params = array();
-	$params[] = array(':user_id', $secid, 'int');
-	$params[] = array(':left_limit', $left_limit, 'int');
-	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');					
-	$db->query($query, $params);
-	$i = 0;
-	$feed_disp = array();
-	while ($arrfeed = $db->fetch())
+	if (!isset($_GET['id']))
 	{
-		$j = 0;
-		foreach ($memtypesarr as $k => $l)
+		$TPL_err = 1;
+		$TPL_errmsg = $ERR_106;
+	}
+	else
+	{
+		$secid = intval($_GET['id']);
+		$thispage = (isset($_GET['pg'])) ? $_GET['pg'] : 1;
+		if ($thispage == 0) $thispage = 1;
+		$left_limit = ($thispage - 1) * $system->SETTINGS['perpage'];
+
+		$query = "SELECT rate_sum, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $secid, 'int');					
+		$db->query($query, $params);
+		if ($db->numrows() > 0)
 		{
-			if ($k >= $arrfeed['rate_sum'] || $j++ == (count($memtypesarr) - 1))
+			$user_data = $db->result();
+			$total = $user_data['rate_sum'];
+			$TPL_nick = $user_data['nick'];
+			$TPL_feedbacks_num = $total;
+			// get number of pages
+			$pages = ceil($total / $system->SETTINGS['perpage']);
+
+			$sql = "SELECT f.*, a.title, u.id As uId, u.rate_num, u.rate_sum
+				FROM " . $DBPrefix . "feedbacks f
+				LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
+				LEFT JOIN " . $DBPrefix . "users u ON (u.nick = f.rater_user_nick)
+				WHERE rated_user_id = :user_id
+				ORDER by feedbackdate DESC LIMIT :left_limit, :perpage";
+			$params = array();
+			$params[] = array(':user_id', $secid, 'int');
+			$params[] = array(':left_limit', $left_limit, 'int');
+			$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');					
+			$db->query($query, $params);
+			$i = 0;
+			$feed_disp = array();
+			while ($arrfeed = $db->fetch())
 			{
-				$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
-				break;
+				$j = 0;
+				foreach ($memtypesarr as $k => $l)
+				{
+					if ($k >= $arrfeed['rate_sum'] || $j++ == (count($memtypesarr) - 1))
+					{
+						$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
+						break;
+					}
+				}
+				switch ($arrfeed['rate'])
+				{
+					case 1: $uimg = $system->SETTINGS['siteurl'] . 'images/positive.png';
+						break;
+					case - 1: $uimg = $system->SETTINGS['siteurl'] . 'images/negative.png';
+						break;
+					case 0 : $uimg = $system->SETTINGS['siteurl'] . 'images/neutral.png';
+						break;
+				}
+				$template->assign_block_vars('fbs', array(
+						'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
+						'IMG' => $uimg,
+						'USFLINK' => 'profile.php?user_id=' . $arrfeed['uId'] . '&auction_id=' . $arrfeed['auction_id'],
+						'USERID' => $arrfeed['uId'],
+						'USERNAME' => $arrfeed['rater_user_nick'],
+						'USFEED' => $arrfeed['rate_sum'],
+						'USICON' => (isset($usicon)) ? $usicon : '',
+						'FBDATE' => FormatDate($arrfeed['feedbackdate']),
+						'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $arrfeed['title'] . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
+						'FEEDBACK' => nl2br($arrfeed['feedback'])
+						));
+				$i++;
+			}
+			else
+			{
+				$TPL_err = 1;
+				$TPL_errmsg = $ERR_105;
 			}
 		}
-		switch ($arrfeed['rate'])
-		{
-			case 1: $uimg = $system->SETTINGS['siteurl'] . 'images/positive.png';
-				break;
-			case - 1: $uimg = $system->SETTINGS['siteurl'] . 'images/negative.png';
-				break;
-			case 0 : $uimg = $system->SETTINGS['siteurl'] . 'images/neutral.png';
-				break;
-		}
-		$template->assign_block_vars('fbs', array(
-				'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
-				'IMG' => $uimg,
-				'USFLINK' => 'profile.php?user_id=' . $arrfeed['uId'] . '&auction_id=' . $arrfeed['auction_id'],
-				'USERID' => $arrfeed['uId'],
-				'USERNAME' => $arrfeed['rater_user_nick'],
-				'USFEED' => $arrfeed['rate_sum'],
-				'USICON' => (isset($usicon)) ? $usicon : '',
-				'FBDATE' => FormatDate($arrfeed['feedbackdate']),
-				'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $arrfeed['title'] . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
-				'FEEDBACK' => nl2br($arrfeed['feedback'])
-				));
-		$i++;
 	}
-	$thispage = (isset($_GET['pg'])) ? $_GET['pg'] : 1;
 	$firstpage = (($thispage - 5) <= 0) ? 1 : ($thispage - 5);
 	$lastpage = (($thispage + 5) > $pages) ? $pages : ($thispage + 5);
 	$backpage = (($thispage - 1) <= 0) ? 1 : ($thispage - 1);
@@ -275,7 +289,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	$echofeed = ($thispage == 1) ? '' : '<a href="feedback.php?id=' . $_GET['id'] . '&faction=show">&laquo;</a> <a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $backpage . '&faction=show"><</a> ';
 	for ($ind2 = $firstpage; $ind2 <= $lastpage; $ind2++)
 	{
-		if ($pg != $ind2)
+		if ($thispage != $ind2)
 		{
 			$echofeed .= '<a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $ind2 . '&faction=show">' . $ind2 . '</a>';
 		}
@@ -290,6 +304,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	}
 	$echofeed .= ($thispage == $pages || $pages == 0) ? '' : ' <a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $nextpage . '&faction=show">></a> <a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $pages . '&faction=show">&raquo;</a>';
 }
+
 // Calls the appropriate templates/templates
 if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 {

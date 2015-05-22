@@ -86,16 +86,26 @@ function resizeThumbnailImage($thumb_image_name, $image, $width, $height, $start
 }
 
 // Process delete
+$default_deleted = false;
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img']))
 {
-	if ($_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])])
+	if (isset($_SESSION['SELL_pict_url_temp']) && isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && $_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) 
 	{
-		unlink($upload_path . session_id() . '/' . $_SESSION['SELL_pict_url']);
-		unset($_SESSION['SELL_pict_url']);
+		if (isset($_SESSION['SELL_pict_url']) && !empty($_SESSION['SELL_pict_url']) ) unlink($upload_path . session_id() . '/' . $_SESSION['SELL_pict_url']);
+		  unset($_SESSION['SELL_pict_url']);
+		  $default_deleted = true; // a selected as default has just been deleted.
+	} else {
+		if(isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && is_writable($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])])){
+            unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]); 
+        }
 	}
-	unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
 	unset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE'][intval($_GET['img'])]);
+	
+	//if default deleted search $_SESSION['UPLOADED_PICTURES'] and make first one found default
+	if ($default_deleted)
+		{$first_value = reset($_SESSION['UPLOADED_PICTURES']);
+	    $_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $first_value;}
 }
 
 if (isset($_GET['action']) && $_GET['action'] == 'makedefault')
@@ -284,6 +294,7 @@ $template->assign_vars(array(
 		'ERRORMSG' => sprintf($MSG['674'], $system->SETTINGS['maxpictures']),
 		'MAXPICS' => $system->SETTINGS['maxpictures'],
 		'MAXPICSIZE' => $system->SETTINGS['maxuploadsize'],
+		'MAXPICSIZE_MB' => $system->SETTINGS['maxuploadsize']/(1024*1024),  //kb to mb convertion
 		'SESSION_ID' => session_id(),
 		'UPLOADED' => intval(count($_SESSION['UPLOADED_PICTURES']))
 		));

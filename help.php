@@ -24,11 +24,11 @@ $template->assign_vars(array(
 		));
 
 // Retrieve FAQs categories from the database
-$query = "SELECT * FROM " . $DBPrefix . "faqscat_translated WHERE lang = :languages ORDER BY category ASC";
+$query = "SELECT * FROM " . $DBPrefix . "faqscat_translated WHERE lang = :language ORDER BY category ASC";
 $params = array();
-$params[] = array(':languages', $language, 'str');
+$params[] = array(':language', $language, 'str');
 $db->query($query, $params);
-while ($cat = $db->result())
+while ($cat = $db->fetch())
 {
 	$template->assign_block_vars('cats', array(
 			'CAT' => stripslashes($cat['category']),

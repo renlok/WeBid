@@ -341,7 +341,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	$params = array();
 	$params[] = array(':user_id', $_REQUEST['id'], 'int');				
 	$db->query($query, $params);
-	if ($arr = $db->result())
+	if ($arr = $db->fetch())
 	{
 		$TPL_rate_ratio_value = '';
 		foreach ($memtypesarr as $k => $l)

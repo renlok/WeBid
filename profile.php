@@ -81,7 +81,7 @@ if (@$db->numrows() == 1)
 	$fb_last_month = array(-1 => 0, 0 => 0, 1 => 0);
 	if ($db->numrows() > 0)
 	{
-		while ($ratesum = $db->result())
+		while ($ratesum = $db->fetch())
 		{
 			$fb[$ratesum['rate']]++;
 			$total_fb++;

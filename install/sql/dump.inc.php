@@ -492,6 +492,25 @@ else
 	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, -1, 1, 2, -1, 'All', 0, 0, '', '');";
 }
 
+
+# ############################
+
+# 
+# Table structure for table `" . $DBPrefix . "categories_translated`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories_translated`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (
+  `cat_id` int(4) NOT NULL,
+  `lang` char(2) NOT NULL default '',
+  `category` varchar(200) NOT NULL default '',
+);";
+
+# 
+# Dumping data for table `" . $DBPrefix . "categories_translated`
+# 
+
+
 # ############################
 
 # 
@@ -537,6 +556,25 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
 $query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (1, 'Selling', 0, '', 30, 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (2, 'Buying', 0, '', 30, 1);";
 
+
+# ############################
+
+# 
+# Table structure for table `" . $DBPrefix . "community_translated`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "community_translated`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "community_translated` (
+  `id` int(4) NOT NULL,
+  `lang` char(2) NOT NULL default '',
+  `name` varchar(255) NOT NULL default '',
+);";
+
+# 
+# Dumping data for table `" . $DBPrefix . "community_translated`
+# 
+
+
 # ############################
 
 # 
@@ -567,6 +605,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0);";
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "countries`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "countries` (
+  `country_id` int(4) NOT NULL auto_increment,
   `country` varchar(40) NOT NULL default '',
   PRIMARY KEY  (`country`)
 ) ;";
@@ -575,236 +614,254 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "countries` (
 # Dumping data for table `" . $DBPrefix . "countries`
 # 
 
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Afghanistan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Albania');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Algeria');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('American Samoa');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Andorra');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Angola');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Anguilla');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Antarctica');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Antigua And Barbuda');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Argentina');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Armenia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Aruba');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Australia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Austria');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Azerbaijan Republic');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Bahamas');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Bahrain');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Bangladesh');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Barbados');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Belarus');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Belgium');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Belize');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Benin');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Bermuda');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Bhutan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Bolivia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Bosnia and Herzegowina');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Botswana');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Bouvet Island');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Brazil');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('British Indian Ocean Territory');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Brunei Darussalam');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Bulgaria');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Burkina Faso');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Burma');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Burundi');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Cambodia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Cameroon');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Canada');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Cape Verde');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Cayman Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Central African Republic');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Chad');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Chile');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('China');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Christmas Island');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Cocos &#40;Keeling&#41; Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Colombia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Comoros');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Congo');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Congo, the Democratic Republic');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Cook Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Costa Rica');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Cote d&#39;Ivoire');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Croatia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Cyprus');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Czech Republic');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Denmark');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Djibouti');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Dominica');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Dominican Republic');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('East Timor');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Ecuador');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Egypt');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('El Salvador');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Equatorial Guinea');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Eritrea');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Estonia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Ethiopia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Falkland Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Faroe Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Fiji');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Finland');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('France');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('French Guiana');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('French Polynesia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('French Southern Territories');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Gabon');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Gambia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Georgia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Germany');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Ghana');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Gibraltar');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Great Britain');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Greece');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Greenland');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Grenada');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Guadeloupe');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Guam');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Guatemala');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Guinea');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Guinea-Bissau');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Guyana');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Haiti');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Heard and Mc Donald Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Honduras');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Hong Kong');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Hungary');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Iceland');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('India');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Indonesia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Ireland');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Israel');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Italy');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Jamaica');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Japan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Jordan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Kazakhstan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Kenya');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Kiribati');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Korea &#40;South&#41;');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Kuwait');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Kyrgyzstan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Lao People&#39;s Democratic Republic');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Latvia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Lebanon');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Lesotho');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Liberia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Liechtenstein');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Lithuania');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Luxembourg');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Macau');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Macedonia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Madagascar');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Malawi');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Malaysia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Maldives');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Mali');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Malta');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Marshall Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Martinique');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Mauritania');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Mauritius');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Mayotte');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Mexico');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Micronesia, Federated States of');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Moldova, Republic of');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Monaco');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Mongolia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Montserrat');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Morocco');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Mozambique');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Namibia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Nauru');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Nepal');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Netherlands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Netherlands Antilles');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('New Caledonia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('New Zealand');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Nicaragua');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Niger');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Nigeria');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Niuev');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Norfolk Island');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Northern Mariana Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Norway');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Oman');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Pakistan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Palau');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Panama');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Papua New Guinea');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Paraguay');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Peru');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Philippines');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Pitcairn');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Poland');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Portugal');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Puerto Rico');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Qatar');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Reunion');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Romania');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Russian Federation');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Rwanda');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Saint Kitts and Nevis');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Saint Lucia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Saint Vincent and the Grenadin');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Samoa &#40;Independent&#41;');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('San Marino');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Sao Tome and Principe');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Saudi Arabia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Senegal');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Serbia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Seychelles');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Sierra Leone');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Singapore');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Slovakia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Slovenia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Solomon Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Somalia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('South Africa');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('South Georgia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Spain');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Sri Lanka');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('St. Helena');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('St. Pierre and Miquelon');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Suriname');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Svalbard and Jan Mayen Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Swaziland');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Sweden');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Switzerland');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Taiwan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Tajikistan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Tanzania');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Thailand');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Togo');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Tokelau');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Tonga');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Trinidad and Tobago');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Tunisia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Turkey');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Turkmenistan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Turks and Caicos Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Tuvalu');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Uganda');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Ukraine');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('United Arab Emiratesv');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('United Kingdom');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('United States');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Uruguay');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Uzbekistan');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Vanuatu');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Venezuela');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Viet Nam');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Virgin Islands &#40;British&#41;');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Virgin Islands &#40;U.S.&#41;');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Wallis and Futuna Islands');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Western Sahara');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Yemen');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Zambia');";
-$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Zimbabwe');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Afghanistan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Albania');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Algeria');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'American Samoa');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Andorra');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Angola');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Anguilla');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Antarctica');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Antigua And Barbuda');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Argentina');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Armenia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Aruba');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Australia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Austria');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Azerbaijan Republic');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Bahamas');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Bahrain');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Bangladesh');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Barbados');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Belarus');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Belgium');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Belize');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Benin');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Bermuda');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Bhutan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Bolivia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Bosnia and Herzegowina');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Botswana');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Bouvet Island');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Brazil');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'British Indian Ocean Territory');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Brunei Darussalam');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Bulgaria');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Burkina Faso');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Burma');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Burundi');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Cambodia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Cameroon');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Canada');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Cape Verde');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Cayman Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Central African Republic');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Chad');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Chile');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'China');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Christmas Island');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Cocos &#40;Keeling&#41; Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Colombia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Comoros');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Congo');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Congo, the Democratic Republic');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Cook Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Costa Rica');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Cote d&#39;Ivoire');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Croatia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Cyprus');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Czech Republic');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Denmark');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Djibouti');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Dominica');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Dominican Republic');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'East Timor');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Ecuador');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Egypt');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'El Salvador');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Equatorial Guinea');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Eritrea');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Estonia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Ethiopia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Falkland Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Faroe Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Fiji');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Finland');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'France');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'French Guiana');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'French Polynesia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'French Southern Territories');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Gabon');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Gambia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Georgia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Germany');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Ghana');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Gibraltar');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Great Britain');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Greece');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Greenland');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Grenada');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Guadeloupe');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Guam');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Guatemala');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Guinea');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Guinea-Bissau');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Guyana');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Haiti');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Heard and Mc Donald Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Honduras');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Hong Kong');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Hungary');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Iceland');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'India');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Indonesia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Ireland');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Israel');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Italy');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Jamaica');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Japan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Jordan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Kazakhstan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Kenya');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Kiribati');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Korea &#40;South&#41;');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Kuwait');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Kyrgyzstan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Lao People&#39;s Democratic Republic');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Latvia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Lebanon');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Lesotho');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Liberia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Liechtenstein');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Lithuania');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Luxembourg');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Macau');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Macedonia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Madagascar');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Malawi');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Malaysia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Maldives');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Mali');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Malta');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Marshall Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Martinique');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Mauritania');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Mauritius');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Mayotte');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Mexico');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Micronesia, Federated States of');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Moldova, Republic of');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Monaco');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Mongolia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Montserrat');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Morocco');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Mozambique');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Namibia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Nauru');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Nepal');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Netherlands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Netherlands Antilles');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'New Caledonia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'New Zealand');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Nicaragua');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Niger');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Nigeria');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Niuev');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Norfolk Island');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Northern Mariana Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Norway');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Oman');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Pakistan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Palau');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Panama');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Papua New Guinea');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Paraguay');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Peru');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Philippines');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Pitcairn');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Poland');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Portugal');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Puerto Rico');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Qatar');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Reunion');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Romania');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Russian Federation');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Rwanda');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Saint Kitts and Nevis');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Saint Lucia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Saint Vincent and the Grenadin');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Samoa &#40;Independent&#41;');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'San Marino');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Sao Tome and Principe');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Saudi Arabia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Senegal');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Serbia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Seychelles');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Sierra Leone');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Singapore');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Slovakia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Slovenia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Solomon Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Somalia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'South Africa');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'South Georgia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Spain');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Sri Lanka');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'St. Helena');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'St. Pierre and Miquelon');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Suriname');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Svalbard and Jan Mayen Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Swaziland');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Sweden');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Switzerland');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Taiwan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Tajikistan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Tanzania');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Thailand');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Togo');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Tokelau');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Tonga');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Trinidad and Tobago');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Tunisia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Turkey');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Turkmenistan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Turks and Caicos Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Tuvalu');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Uganda');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Ukraine');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'United Arab Emiratesv');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'United Kingdom');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'United States');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Uruguay');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Uzbekistan');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Vanuatu');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Venezuela');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Viet Nam');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Virgin Islands &#40;British&#41;');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Virgin Islands &#40;U.S.&#41;');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Wallis and Futuna Islands');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Western Sahara');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Yemen');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Zambia');";
+$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Zimbabwe');";
+
+# ############################
+
+# 
+# Table structure for table `" . $DBPrefix . "countries_translated`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "countries_translated`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "countries_translated` (
+  `country_id` int(4) NOT NULL,
+  `lang` char(2) NOT NULL default '',
+  `country` varchar(255) NOT NULL default '',
+);";
+
+# 
+# Dumping data for table `" . $DBPrefix . "countries_translated`
+# 
+
 
 # ############################
 
@@ -892,6 +949,24 @@ $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (30, '1 month');";
 # ############################
 
 # 
+# Table structure for table `" . $DBPrefix . "durations_translated`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "durations_translated`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "durations_translated` (
+  `days` int(4) NOT NULL,
+  `lang` char(2) NOT NULL default '',
+  `description` varchar(255) NOT NULL default '',
+);";
+
+# 
+# Dumping data for table `" . $DBPrefix . "durations_translated`
+# 
+
+
+# ############################
+
+# 
 # Table structure for table `" . $DBPrefix . "faqs`
 # 
 
@@ -920,11 +995,10 @@ $query[] = "INSERT INTO `" . $DBPrefix . "faqs` VALUES (5, 'What is a Dutch auct
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "faqs_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "faqs_translated` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   `lang` char(2) NOT NULL default '',
   `question` varchar(200) NOT NULL default '',
   `answer` text NOT NULL,
-  KEY `id` (`id`)
 ) ;";
 
 # 
@@ -1112,6 +1186,24 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
 
 $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0, 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0, 1);";
+
+# ############################
+
+# 
+# Table structure for table `" . $DBPrefix . "groups_translated`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups_translated`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "groups_translated` (
+  `id` int(5) NOT NULL,
+  `lang` char(2) NOT NULL default '',
+  `group_name` varchar(255) NOT NULL default '',
+);";
+
+# 
+# Dumping data for table `" . $DBPrefix . "groups_translated`
+# 
+
 
 # ############################
 

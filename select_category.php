@@ -92,10 +92,12 @@ if (isset($_GET['change']) && $_GET['change'] == 'yes')
 	{
 		$POST['cat' . ($i - 1)] = $crumbs[$i]['cat_id'];
 	}
+	$_SESSION['SELL_editing_category'] = true;
 }
 elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 {
     unset($_SESSION['UPLOADED_PICTURES_SIZE']);
+	$_SESSION['SELL_editing_category'] = false;
 	$_SESSION['SELL_starts'] = '';
 	$_SESSION['UPLOADED_PICTURES'] = array();
     $_SESSION['SELL_with_reserve'] = '';
@@ -202,6 +204,7 @@ if ($cat_no == 2)
 
 $template->assign_vars(array(
         'B_SHOWBUTTON' => $SHOWBUTTON,
+        'B_EDITING' => $_SESSION['SELL_editing_category'],
 		'CAT_NO' => $cat_no,
 		'COST' => ($extra_cat > 0) ? $system->print_money($extra_cat) : '',
         'ERROR' => (isset($ERR)) ? $ERR : ''

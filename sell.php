@@ -23,6 +23,7 @@ include $include_path . 'htmLawed.php';
 $_SESSION['action'] = (!isset($_SESSION['action'])) ? 1 : $_SESSION['action'];
 $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST['action'];
 $ERR = 'ERR_';
+$_SESSION['SELL_editing_category'] = false;
 $catscontrol = new MPTTcategories();
 
 if (!isset($_SESSION['SELL_sellcat1']) || !is_numeric($_SESSION['SELL_sellcat1']))

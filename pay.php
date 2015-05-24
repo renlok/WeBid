@@ -48,18 +48,20 @@ switch($_GET['a'])
 				FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
-				WHERE w.id = " . intval($_POST['pfval']);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+				WHERE WHERE w.id = :pfval AND w.winner = :user_id";
+		$params = array();
+		$params[] = array(':pfval', $_POST['pfval'], 'int');
+		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$db->query($query, $params);
 
 		// check its real
-		if (mysql_num_rows($res) < 1)
+		if ($db->numrows() < 1)
 		{
 			header('location: outstanding.php');
 			exit;
 		}
 
-		$data = mysql_fetch_assoc($res);
+		$data = $db->result();
 		$payment = explode(', ', $data['payment']);
 		$pp_paytoemail = (in_array('paypal', $payment)) ? $data['paypal_email'] : '';
 		$extrastring = sprintf($MSG['778'], $data['uid'], $_POST['pfval'], $data['nick']);
@@ -88,9 +90,8 @@ switch($_GET['a'])
 		$tc_paytoid = $gateway_data['toocheckout_id'];
 		$mb_paytoemail = $gateway_data['moneybookers_address'];
 		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$payvalue = mysql_result($res, 0);
+		$db->direct_query($query);
+		$payvalue = $db->result('value');
 		$custoncode = $_SESSION['signup_id'] . 'WEBID3';
 		$message = sprintf($MSG['583'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['430'];
@@ -112,11 +113,13 @@ switch($_GET['a'])
 		$wp_paytoid = $gateway_data['worldpay_id'];
 		$tc_paytoid = $gateway_data['toocheckout_id'];
 		$mb_paytoemail = $gateway_data['moneybookers_address'];
-		$query = "SELECT total, useracc_id FROM " . $DBPrefix . "useraccounts WHERE auc_id = " . $_SESSION['auction_id'] . " AND user_id = " . $user->user_data['id'];
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$payvalue = mysql_result($res, 0, 'total');
-		$invoice_id = mysql_result($res, 0, 'useracc_id');
+		$query = "SELECT total, useracc_id FROM " . $DBPrefix . "useraccounts WHERE auc_id = :auc_id AND user_id = :user_id";
+		$params = array();
+		$params[] = array(':auc_id', $_SESSION['auction_id'], 'int');
+		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$db->query($query, $params);
+		$payvalue = $db->result('total');
+		$invoice_id = $db->result('useracc_id');
 		$custoncode = $invoice_id . 'WEBID4';
 		$message = sprintf($MSG['590'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $MSG['432'];
@@ -129,16 +132,18 @@ switch($_GET['a'])
 		$wp_paytoid = $gateway_data['worldpay_id'];
 		$tc_paytoid = $gateway_data['toocheckout_id'];
 		$mb_paytoemail = $gateway_data['moneybookers_address'];
+
 		// number of auctions to relist
-		$query = "SELECT COUNT(*) FROM " . $DBPrefix . "auctions WHERE suspended = 8 AND user = " . $user->user_data['id'];
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$count = mysql_result($res, 0);
+		$query = "SELECT COUNT(*) As COUNT FROM " . $DBPrefix . "auctions WHERE suspended = 8 AND user = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$db->query($query, $params);
+		$count = $db->result('COUNT');
+
 		// get relist fee
 		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$relist_fee = mysql_result($res, 0);
+		$db->direct_query($query);
+		$relist_fee = $db->result('value');
 		$payvalue = $relist_fee * $count;
 		$custoncode = $user->user_data['id'] . 'WEBID5';
 		$message = sprintf($MSG['591'], $system->print_money($payvalue));
@@ -161,21 +166,22 @@ switch($_GET['a'])
 		$wp_paytoid = $gateway_data['worldpay_id'];
 		$tc_paytoid = $gateway_data['toocheckout_id'];
 		$mb_paytoemail = $gateway_data['moneybookers_address'];
-		$query = "SELECT current_bid FROM " . $DBPrefix . "auctions WHERE id = " . $_SESSION['auction_id'];
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$final_value = mysql_result($res, 0);
+		$query = "SELECT current_bid FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $user->user_data['id'], 'int');
+		$db->query($query, $params);
+		$final_value = $db->result('current_bid');
+
 		$query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$row = mysql_result($res, 0);
-		if ($row['fee_type'] == 'flat')
+		$db->direct_query($query);
+		$fee_data = $db->result();
+		if ($fee_data['fee_type'] == 'flat')
 		{
-			$fee_value = $row['value'];
+			$fee_value = $fee_data['value'];
 		}
 		else
 		{
-			$fee_value = ($row['value'] / 100) * floatval($final_value);
+			$fee_value = ($fee_data['value'] / 100) * floatval($final_value);
 		}
 		$custoncode = $_SESSION['auction_id'] . 'WEBID6';
 		$message = sprintf($MSG['776'], $system->print_money($payvalue));
@@ -198,14 +204,18 @@ switch($_GET['a'])
 		$wp_paytoid = $gateway_data['worldpay_id'];
 		$tc_paytoid = $gateway_data['toocheckout_id'];
 		$mb_paytoemail = $gateway_data['moneybookers_address'];
-		$query = "SELECT current_bid FROM " . $DBPrefix . "auctions WHERE user = " . $user->user_data['id'] . " AND id = " . $_SESSION['auction_id'];
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$final_value = mysql_result($res, 0);
+
+		// get final sell price
+		$query = "SELECT current_bid FROM " . $DBPrefix . "auctions WHERE user = :user_id AND id = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $_SESSION['auction_id'], 'int');
+		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$db->query($query, $params);
+		$final_value = $db->result('current_bid');
+
 		$query = "SELECT * FROM " . $DBPrefix . "fees WHERE type = 'endauc_fee' ORDER BY value ASC";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		while ($row = mysql_fetch_assoc($res))
+		$db->direct_query($query);
+		while ($row = $db->fetch())
 		{
 			if ($final_value > $row['fee_from'] && $final_value < $row['fee_to'])
 			{

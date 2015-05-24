@@ -58,7 +58,7 @@ switch($step)
 					<li>Your WeBid password salt: <span style="color: #FF0000; font-weight:bold;">' . $_SESSION['hash'] . '</span> You should make note of this random code, it is used to secure your users passwords. It is stored in your config file if you accidently delete this file and don\'t have this code all your users will have to reset their passwords</li>
 					<li>Remove the install folder from your server. You will not be able to use WeBid until you do this.</li>
 					<li>Finally set-up your admin account <a href="' . $_GET['URL'] . 'admin/" style="font-weight:bold;">here</a></li>
-					<li>Maybe check out our <a href="http://www.webidsupport.com/forums/">support forum</a></li>
+					<li>And don\'t forget to check out our <a href="http://www.webidsupport.com/forums/">support forum</a></li>
 				</ul>';
 		}
 		break;
@@ -72,7 +72,7 @@ switch($step)
 			die('<p>Cannot select database ' . $_POST['DBName'] . '. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
 		}
 		$cats = (isset($_POST['importcats'])) ? 1 : 0;
-		echo '<b>Step 1:</b> Writing config file...<br>';
+		echo '<p><b>Step 1:</b> Writing config file...</p>';
 		$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
 		$hash = md5(microtime() . rand(0,50));
 		$_SESSION['hash'] = $hash;
@@ -94,15 +94,15 @@ switch($step)
 			{
 				echo '<p>You appear to already have an installation on WeBid running would you like to do a <a href="update.php">upgrade instead?</a></p>';
 			}
-			echo 'Complete, now to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '&n=1">step 2</a></b>';
+			echo '<p>Complete, now to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '&n=1">step 2</a></b></p>';
 		}
 		else
 		{
-			echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the includes directory)';
+			echo '<p>WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the includes directory)</p>';
 			echo '<p><textarea style="width:500px; height:500px;">
 '.$content.'
 			</textarea></p>';
-			echo 'Once you\'ve done this, you can continue to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '&n=1">step 2</a></b>';
+			echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '&n=1">step 2</a></b></p>';
 		}
 		break;
 	default:

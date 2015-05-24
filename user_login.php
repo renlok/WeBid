@@ -28,9 +28,10 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 {
 	include $include_path . 'PasswordHash.php';
 	$phpass = new PasswordHash(8, false);
-	$query = "SELECT id, hash, suspended, password FROM " . $DBPrefix . "users WHERE nick = :user_nick";
+	$query = "SELECT id, hash, suspended, password FROM " . $DBPrefix . "users WHERE nick = :nick OR email = :email";
 	$params = array();
-	$params[] = array(':user_nick', $system->cleanvars($_POST['username']), 'str');
+	$params[] = array(':nick', $system->cleanvars($_POST['username']), 'str');
+	$params[] = array(':email', $system->cleanvars($_POST['username']), 'str');
 	$db->query($query, $params);
 	$user_data = $db->result();
 	if ($phpass->CheckPassword($_POST['password'], $user_data['password']))

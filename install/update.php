@@ -29,7 +29,7 @@ in package config.inc.php will be named config.inc.php.new so it cannot be overw
 3. with database details check theres actually an installation of webid if not show link to make fresh install
 	- if there is but no config write config file
 4. collect query needed to run for version in use
-5. update langauge files
+5. update language files
 */
 
 if ($step == 0)
@@ -49,11 +49,11 @@ if ($step == 0)
 		echo print_header(true);
 		if (!$check)
 		{
-			echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
+			echo '<p>It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b></p>';
 		}
 		else
 		{
-			echo 'Now to <b><a href="?step=2">step 1</a></b>';
+			echo '<p>Now to <b><a href="?step=2">step 1</a></b></p>';
 		}
 	}
 }
@@ -67,7 +67,7 @@ if ($step == 1)
 	{
 		die('<p>Cannot select database ' . $_POST['DBName'] . '. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
 	}
-	$toecho = '<p><b>Step 1:</b> Writting config file...</p>';
+	$toecho = '<p><b>Step 1:</b> Writing the config file...</p>';
 	$toecho .= '<p>As you are missing your old random security code all your users will have to reset their passwords after this update</p>';
 	$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
 	// generate config file
@@ -90,11 +90,11 @@ if ($step == 1)
 		echo $toecho;
 		if (!$check)
 		{
-			echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
+			echo '<p>It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b></p>';
 		}
 		else
 		{
-			echo 'Complete, now to <b><a href="?step=2">step 2</a></b>';
+			echo '<p>Complete, now to <b><a href="?step=2">step 2</a></b></p>';
 		}
 	}
 	else
@@ -103,9 +103,9 @@ if ($step == 1)
 		$myversion = check_version();
 		echo print_header(true);
 		echo $toecho;
-		echo 'WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)';
+		echo '<p>WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)</p>';
 		echo '<p><textarea style="width:500px; height:500px;">' . $content . '</textarea></p>';
-		echo 'Once you\'ve done this, you can continue to <b><a href="?step=2">step 2</a></b>';
+		echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2">step 2</a></b></p>';
 	}
 }
 if ($step == 2)
@@ -116,7 +116,7 @@ if ($step == 2)
 	echo print_header(true);
 	if (!$check)
 	{
-		echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
+		echo '<p>It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b></p>';
 		exit;
 	}
 	include 'sql/updatedump.inc.php';
@@ -143,24 +143,26 @@ if ($step == 3)
 	if (!$check)
 	{
 		echo print_header(true);
-		echo 'It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b>';
+		echo '<p>It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b></p>';
 		exit;
 	}
 	include $main_path . 'common.php';
 	echo print_header(true);
+
 	include $include_path . 'functions_rebuild.inc.php';
-	echo 'Rebuilding membertypes...<br>';
+	echo '<p>Rebuilding membertypes...</p>';
 	rebuild_table_file('membertypes');
-	echo 'Rebuilding countries...<br>';
+
+	echo '<p>Rebuilding countries...</p>';
 	rebuild_html_file('countries');
 
-	echo 'Rebuilding categories...<br>';
+	echo '<p>Rebuilding categories...</p>';
 	$catscontrol = new MPTTcategories();
 	rebuild_cat_file();
 
 	include $main_path . 'admin/util_cc1.php';
 
-	echo 'Update complete now remove the install folder from your server';
+	echo '<p>Update almost complete, remove the install folder from your server to complete the upgrade</p>';
 }
 
 ?>

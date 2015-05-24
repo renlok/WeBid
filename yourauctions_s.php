@@ -118,11 +118,9 @@ $query = "SELECT id, title, current_bid, num_bids, relist, relisted, current_bid
 	FROM " . $DBPrefix . "auctions
 	WHERE user = :user_id
 	AND suspended != 0
-	ORDER BY :sa_order :sa_type LIMIT :offset, :perpage";
+	ORDER BY " . $_SESSION['sa_ord'] . " " . $_SESSION['sa_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
-$params[] = array(':sa_order', $system->cleanvars($_SESSION['sa_ord']), 'str');
-$params[] = array(':sa_type', $system->cleanvars($_SESSION['sa_type']), 'str');
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);

@@ -29,7 +29,7 @@ $catscontrol = new MPTTcategories();
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
 $db->direct_query($query);
-$relist_fee = $db->result();
+$relist_fee = $db->result('value');
 
 // Update
 if (isset($_POST['action']) && $_POST['action'] == 'update')
@@ -246,11 +246,9 @@ $query = "SELECT *  FROM " . $DBPrefix . "auctions
 	WHERE user = :user_id
 	AND closed = 1 AND suspended = 0
 	AND (num_bids = 0 OR (num_bids > 0 AND reserve_price > 0 AND current_bid < reserve_price AND sold = 'n'))
-	ORDER BY :ca_order :ca_type LIMIT :offset, :perpage";
+	ORDER BY " . $_SESSION['ca_ord'] . " " . $_SESSION['ca_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
-$params[] = array(':ca_order', $system->cleanvars($_SESSION['ca_ord']), 'str');
-$params[] = array(':ca_type', $system->cleanvars($_SESSION['ca_type']), 'str');
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);

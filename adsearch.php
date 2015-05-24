@@ -214,7 +214,6 @@ if ($searching && !isset($ERR))
 
 	// determine limits for SQL query
 	$left_limit = ($PAGE - 1) * $system->SETTINGS['perpage'];
-	$asparams[] = array(':sort_by', $by, 'str');
 	$asparams[] = array(':time', $NOW, 'int');
 
 	// get total number of records
@@ -223,7 +222,7 @@ if ($searching && !isset($ERR))
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
 			au.starts <= :time
-			ORDER BY :sort_by";
+			ORDER BY ". $by;
 	$db->query($query, $asparams);
 	$total = $db->result('total');
 
@@ -238,7 +237,7 @@ if ($searching && !isset($ERR))
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
 			au.starts <= :time
-			ORDER BY :sort_by LIMIT :offset, :perpage";
+			ORDER BY " . $by . " LIMIT :offset, :perpage";
 	$params = $asparams;
 	$params[] = array(':offset', $left_limit, 'int');
 	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
@@ -250,7 +249,7 @@ if ($searching && !isset($ERR))
 			AND " . $wher . $ora . "
 			featured = 'y'
 			AND	au.starts <= :time
-			ORDER BY :sort_by LIMIT :offset, 5";
+			ORDER BY " . $by . " LIMIT :offset, 5";
 	$params_feat = $asparams;
 	$params_feat[] = array(':offset',(($PAGE - 1) * 5), 'int');
 

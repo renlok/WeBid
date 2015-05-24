@@ -190,11 +190,9 @@ $query = "SELECT a.* FROM " . $DBPrefix . "auctions, " . $DBPrefix . "winners w
 	AND a.suspended = 0
 	AND a.id = w.auction
 	GROUP BY w.auction
-	ORDER BY :solda_order :solda_type LIMIT :offset, :perpage";
+	ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
-$params[] = array(':solda_order', $system->cleanvars($_SESSION['solda_ord']), 'str');
-$params[] = array(':solda_type', $system->cleanvars($_SESSION['solda_type']), 'str');
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);

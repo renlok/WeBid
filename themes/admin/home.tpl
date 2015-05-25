@@ -87,7 +87,7 @@
 					<tr>
 						<td width="25%"><strong>{L_25_0055}</strong></td>
                         <td width="25%">{C_USERS}</td>
-                        <td width="25%"><strong>{L_25_0055}</strong></td>
+                        <td width="25%"><strong>{L_25_0056}</strong></td>
 						<td width="25%">
 <!-- IF USERCONF eq 0 -->
                         <strong>{L_893}</strong>: {C_IUSERS}<br>

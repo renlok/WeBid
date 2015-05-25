@@ -38,7 +38,7 @@ if ($cat > 0)
 	// Retrieve FAQs categories from the database
 	$query = "SELECT * FROM " . $DBPrefix . "faqscategories ORDER BY category ASC";
 	$db->direct_query($query);
-	while ($cats = $db->result())
+	while ($cats = $db->fetch())
 	{
 		$template->assign_block_vars('cats', array(
 				'CAT' => $cats['category'],

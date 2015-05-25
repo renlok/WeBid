@@ -47,7 +47,7 @@ function SubmitBoxes(N)
 		<tr>
 		  <td align="center" colspan="3" >
 <!-- IF B_SHOWBUTTON -->
-	  <input type="submit" name="submitit" value="{L_2__0047}" class="button">
+	  <input type="submit" name="submitit" value="<!-- IF B_EDITING -->{L_25_0168}<!-- ELSE -->{L_2__0047}<!-- ENDIF -->" class="button">
 <!-- ENDIF -->
 		  </td>
 		</tr>

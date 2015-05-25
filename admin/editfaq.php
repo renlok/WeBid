@@ -67,9 +67,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 // load categories
 $query = "SELECT * FROM " . $DBPrefix . "faqscategories ORDER BY category";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-while ($row = mysql_fetch_assoc($res))
+$db->direct_query($query);
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('cats', array(
 			'ID' => $row['id'],

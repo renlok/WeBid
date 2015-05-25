@@ -144,12 +144,10 @@ else
 }
 $query = "SELECT * FROM " . $DBPrefix . "auctions au
 	WHERE user = :user_id AND starts > :time AND suspended = 0
-	ORDER BY :pa_order :pa_type LIMIT :offset, :perpage";
+	ORDER BY " . $_SESSION['pa_ord'] . " " . $_SESSION['pa_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $params[] = array(':time', $NOW, 'int');
-$params[] = array(':pa_order', $system->cleanvars($_SESSION['pa_ord']), 'str');
-$params[] = array(':pa_type', $system->cleanvars($_SESSION['pa_type']), 'str');
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);

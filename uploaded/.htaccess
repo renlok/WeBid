@@ -1,5 +1,6 @@
-deny from all
-<Files ~ “^w+.(gif|jpe?g|png)$”>
-order deny,allow
-allow from all
-</Files>
+Order Allow,Deny
+Deny from all
+<FilesMatch "\.(jpe?g|gif|png)$">
+Order Deny,Allow
+Allow from all
+</FilesMatch>

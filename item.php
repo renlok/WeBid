@@ -84,12 +84,13 @@ else
 if ($user->logged_in)
 {
 	// Check if this item is not already added
-	$query = "SELECT item_watch FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-
-	$watcheditems = trim(mysql_result($result, 0, 'item_watch'));
+	$query = "SELECT item_watch FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$db->query($query, $params);
+	$watcheditems = trim($db->result('item_watch'));
 	$auc_ids = explode(' ', $watcheditems);
+
 	if (in_array($id, $auc_ids))
 	{
 		$watch_var = 'delete';
@@ -493,10 +494,7 @@ foreach ($payment_options as $k => $v)
 	}
 }
 
-if (!$has_ended)
-{
-	$bn_link = ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $id . '"><img border="0" align="absbottom" alt="' . $MSG['496'] . '" src="' . get_lang_img('buy_it_now.gif') . '"></a>';
-}
+$bn_link = (!$has_ended) ? ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $id . '"><img border="0" align="absbottom" alt="' . $MSG['496'] . '" src="' . get_lang_img('buy_it_now.gif') . '"></a>' : '';
 
 $page_title = $auction_data['title'];
 

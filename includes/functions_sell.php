@@ -414,7 +414,18 @@ function get_fee($minimum_bid, $just_fee = true)
 		$params[] = array(':user_id', $user->user_data['id'], 'int');
 		$db->query($query, $params);
 		// build an array full of everything the user has been charged for the auction do far
-		$past_fees = array();
+		// set defaults
+		$past_fees = array(
+			'setup' => 0,
+			'bold' => 0,
+			'highlighted' => 0,
+			'subtitle' => 0,
+			'relist' => 0,
+			'reserve' => 0,
+			'buynow' => 0,
+			'image' => 0,
+			'extcat' => 0,
+			);
 		while ($row = $db->fetch())
 		{
 			foreach ($row as $k => $v)

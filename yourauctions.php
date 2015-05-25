@@ -134,19 +134,16 @@ else
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 	WHERE user = :user_id AND closed = 0
 	AND starts <= :time AND suspended = 0
-	ORDER BY :oa_order :oa_type LIMIT :offset, :perpage";
+	ORDER BY " . $_SESSION['ca_ord'] . " " . $_SESSION['ca_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $params[] = array(':time', $NOW, 'int');
-$params[] = array(':oa_order', $system->cleanvars($_SESSION['oa_ord']), 'str');
-$params[] = array(':oa_type', $system->cleanvars($_SESSION['oa_type']), 'str');
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
 
 $i = 0;
-$itemdata = $db->fetchall();
-foreach ($itemdata as $item)
+while ($item = $db->fetch())
 {
 	if ($item['num_bids'] > 0)
 	{
@@ -156,7 +153,7 @@ foreach ($itemdata as $item)
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
-			$high_bid = $db->result();
+			$high_bid = $db->result('bid');
 		}
 	}
 	// Retrieve counter

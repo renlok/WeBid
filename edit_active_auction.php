@@ -86,8 +86,8 @@ if (!isset($_POST['action'])) // already closed auctions
 			$_SESSION['SELL_with_reserve'] 	= 'no';
 		}
 
-		$_SESSION['SELL_sellcat1']	= $RELISTEDAUCTION['category'];
-		$_SESSION['SELL_sellcat2']	= $RELISTEDAUCTION['secondcat'];
+		$_SESSION['SELL_original_sellcat1'] = $_SESSION['SELL_sellcat1'] = $RELISTEDAUCTION['category'];
+		$_SESSION['SELL_original_sellcat2'] = $_SESSION['SELL_sellcat2'] = $RELISTEDAUCTION['secondcat'];
 
 		if (floatval($RELISTEDAUCTION['buy_now']) > 0)
 		{

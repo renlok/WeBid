@@ -125,16 +125,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			{
 				$birthdate = 0;
 			}
-			
-			// process balance positive and negative allowed and compare to max allowed credit before it is marked/unmarked as suspended
-			if ($_POST['balance'] >= -$system->SETTINGS['fee_max_debt'])
-			{
-				$balance_sql =  ", suspended = 0";
-			}
-			elseif ($_POST['balance'] < -$system->SETTINGS['fee_max_debt'])
-			{
-				$balance_sql =  ", suspended = 7";
-			}
 
 			$query = "UPDATE " . $DBPrefix . "users SET 
 				  name = :name,
@@ -147,7 +137,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  phone = :phone,
 				  birthdate = :birthdate,
 				  groups = :groups,
-				  balance = :balance" . $balance_sql;
+				  balance = :balance";
 			$params = array();
 			$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 			$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');
@@ -166,6 +156,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$query .=  ", password = :password";
 				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 			}
+			// process balance positive and negative allowed and compare to max allowed credit before it is marked/unmarked as suspendeds
 			if ($_POST['balance'] >= -$system->SETTINGS['fee_max_debt'])
 			{
 				$query .=  ", suspended = 0";

@@ -34,20 +34,24 @@ else
 }
 
 $query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "winners
-		WHERE paid = 0 AND winner = " . $user->user_data['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALAUCTIONS = mysql_result($res, 0, 'COUNT');
+		WHERE paid = 0 AND winner = :winner_id";
+$params = array();
+$params[] = array(':winner_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$TOTALAUCTIONS = $db->result('COUNT');
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 $query = "SELECT w.id, w.winner, a.title, a.shipping_cost, w.bid, w.qty, a.shipping_cost_additional, a.shipping FROM " . $DBPrefix . "winners w
 		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
-		WHERE w.paid = 0 AND w.winner = " . $user->user_data['id'] . "
-		LIMIT " . intval($OFFSET) . "," . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		WHERE w.paid = 0 AND w.winner = :user_id
+		LIMIT :OFFSET, :per_page";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$params[] = array(':OFFSET', $OFFSET, 'int');
+$params[] = array(':per_page', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('to_pay', array(
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'],
@@ -84,10 +88,11 @@ if ($PAGES > 1)
 	}
 }
 
-$query = "SELECT balance FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$user_balance = mysql_result($res, 0);
+$query = "SELECT balance FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$user_balance = $db->result('balance');
 
 $_SESSION['INVOICE_RETURN'] = 'outstanding.php';
 $template->assign_vars(array(

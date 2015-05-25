@@ -179,7 +179,7 @@ if ($x == 1)
 		$params[] = array(':message_id2', $tid, 'int');
 		$db->query($query, $params);
 		$oid = 0;
-		while ($row = $db->result())
+		while ($row = $db->fetch())
 		{
 			$oid = ($oid == 0) ? $row['sentfrom'] : $oid;
 			$template->assign_block_vars('convo', array(

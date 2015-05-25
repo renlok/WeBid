@@ -32,10 +32,10 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 }
 
 // Get data from the database
-$query = "SELECT id, category FROM " . $DBPrefix . "faqscategories";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-while ($row = mysql_fetch_assoc($res))
+$query = "SELECT * FROM " . $DBPrefix . "faqscategories  ORDER BY category";
+$db->direct_query($query);
+$faq_cats = $db->fetchall();
+foreach ($faq_cats as $row)
 {
 	$template->assign_block_vars('cats', array(
 			'CAT' => $row['category']

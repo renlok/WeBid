@@ -23,7 +23,8 @@ if (!$user->is_logged_in())
 }
 
 // get active bids for this user
-$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid, b.quantity FROM " . $DBPrefix . "bids b
+$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid, b.quantity, p.bid As proxybid FROM " . $DBPrefix . "bids b
+	LEFT JOIN " . $DBPrefix . "proxybid p ON (p.itemid = b.auction)
 	LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
 	WHERE a.closed = 0 AND b.bidder = :user_id
 	AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bid DESC";
@@ -51,6 +52,7 @@ while ($row = $db->fetch())
 				'ID' => $row['id'],
 				'TITLE' => $row['title'],
 				'BID' => $system->print_money($row['bid']),
+				'PROXYBID' => (intval($row['proxybid']) > 0) ? $system->print_money($row['proxybid']) : '',
 				'QTY' => $row['quantity'],
 				'TIMELEFT' => FormatTimeLeft($row['ends'] - time()),
 				'CBID' => $system->print_money($row['current_bid'])

@@ -69,7 +69,7 @@
     <!-- ELSE -->
                 <tr {accounts.BG}>
                     <td>{accounts.DATE}</td>
-                    <td align="center">{accounts.AMOUNT}</td>
+                    <td align="center">{accounts.TOTAL}</td>
                 </tr>
     <!-- ENDIF -->
 <!-- END accounts -->

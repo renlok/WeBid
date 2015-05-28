@@ -44,16 +44,16 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 	}
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "adminusers ORDER BY username";
-$res = $db->direct_query($query);
-
 $STATUS = array(
-	1 => '<span style="color:#00AF33"><b>Active</b></span>',
-	2 => '<span style="color:#FF0000"><b>Not active</b></span>'
+	1 => '<span style="color:#00AF33"><b>' . $MSG['566'] . '</b></span>',
+	2 => '<span style="color:#FF0000"><b>' . $MSG['567'] . '</b></span>'
 );
 
+$query = "SELECT * FROM " . $DBPrefix . "adminusers ORDER BY username";
+$db->direct_query($query);
+
 $bg = '';
-while ($User = $db->direct_query($query))
+while ($User = $db->fetch())
 {
     $created = substr($User['created'], 4, 2) . '/' . substr($User['created'], 6, 2) . '/' . substr($User['created'], 0, 4);
     if ($User['lastlogin'] == 0)

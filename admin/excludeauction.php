@@ -34,37 +34,35 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 
 	// get auction data
 	$query = "SELECT category, closed, suspended FROM " . $DBPrefix . "auctions WHERE id = " . $id;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$auc_data = mysql_fetch_assoc($res);
+	$db->direct_query($query);
+	$auc_data = $db->fetch();
 
 	if ($auc_data['suspended'] > 0)
 	{
 		// update auction table
 		$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = " . $id;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 
 		if ($auc_data['closed'] == 1)
 		{
 			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions - 1), closedauctions = (closedauctions + 1)";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 		}
 		else
 		{
 			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions - 1), auctions = (auctions + 1)";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 
 			// update recursive categories
 			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auc_data['category'];
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$parent_node = mysql_fetch_assoc($res);
+			$db->direct_query($query);
+			$parent_node = $db->fetch();
 			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 			for ($i = 0; $i < count($crumbs); $i++)
 			{
 				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$db->direct_query($query);
 			}
 		}
 	}
@@ -72,29 +70,28 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	{
 		// suspend auction
 		$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 1 WHERE id = " . $id;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 
 		if ($auc_data['closed'] == 1)
 		{
 			$query ="UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions + 1), closedauctions = (closedauctions - 1)";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 		}
 		else
 		{
 			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions + 1), auctions = (auctions - 1)";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 
 			// update recursive categories
 			$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auc_data['category'];
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$parent_node = mysql_fetch_assoc($res);
+			$db->direct_query($query);
+			$parent_node = $db->fetch();
 			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 			for ($i = 0; $i < count($crumbs); $i++)
 			{
 				$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$db->direct_query($query);
 			}
 		}
 	}
@@ -118,9 +115,8 @@ $query = "SELECT u.nick, a.title, a.starts, a.description, a.category, d.descrip
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "durations d ON (d.days = a.duration)
 		WHERE a.id = " . $_GET['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$auc_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$auc_data = $db->fetch();
 
 if ($system->SETTINGS['datesformat'] == 'USA')
 {

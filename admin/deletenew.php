@@ -21,7 +21,7 @@ include 'loggedin.inc.php';
 if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 {
 	$query = "DELETE FROM " . $DBPrefix . "news WHERE id = " . intval($_POST['id']);
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 	header('location: news.php');
 	exit;
 }
@@ -32,9 +32,8 @@ elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
 }
 
 $query = "SELECT title FROM " . $DBPrefix . "news WHERE id = " . intval($_GET['id']);
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$title = mysql_result($res, 0);
+$db->direct_query($query);
+$title = $db->result('title');
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

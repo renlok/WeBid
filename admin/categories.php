@@ -37,9 +37,9 @@ function rebuild_cat_file()
 {
 	global $system, $main_path, $DBPrefix;
 	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
-	$result = mysql_query($query);
+	$db->direct_query($query);
 	$cats = array();
-	while ($catarr = mysql_fetch_array($result))
+	while ($catarr = $db->result())
 	{
 		$cats[$catarr['cat_id']] = $catarr['cat_name'];
 		$allcats[] = $catarr;
@@ -85,9 +85,9 @@ if (isset($_POST['action']))
 				if (!isset($_POST['delete'][$k]))
 				{
 					$query = "UPDATE " . $DBPrefix . "categories SET cat_name = '" . $system->cleanvars($_POST['categories'][$k]) . "',
-							cat_colour = '" . mysql_real_escape_string($_POST['colour'][$k]) . "', cat_image = '" . mysql_real_escape_string($_POST['image'][$k]) . "'
+							cat_colour = '" . $system->cleanvars($_POST['colour'][$k]) . "', cat_image = '" . $system->cleanvars($_POST['image'][$k]) . "'
 							WHERE cat_id = " . intval($k);
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$db->direct_query($query);
 				}
 			}
 		}
@@ -120,12 +120,11 @@ if (isset($_POST['action']))
 						LEFT JOIN " . $DBPrefix . "auctions a ON ( a.category = c.cat_id )
 						WHERE c.cat_id IN (" . implode(',', $_POST['delete']) . ")
 						GROUP BY c.cat_id ORDER BY cat_name";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 			$message = $MSG['843'] . '<table cellpadding="0" cellspacing="0">';
 			$names = array();
 			$counter = 0;
-			while ($row = mysql_fetch_assoc($res))
+			while ($row = $db->fetch())
 			{
 				if ($row['COUNT'] > 0 || $row['left_id'] != ($row['right_id'] - 1))
 				{
@@ -188,7 +187,7 @@ if (isset($_POST['action']))
 						// remove the parent and raise the children up a level
 						$catscontrol->delete($k, true);
 						$query = "UPDATE " . $DBPrefix . "auctions SET category = " . $_POST['moveid'][$k] . " WHERE category = " . $k;
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						$db->direct_query($query);
 					}
 					else
 					{
@@ -212,9 +211,8 @@ else
 	$parent = intval($_GET['parent']);
 	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_GET['parent']);
 }
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$parent_node = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$parent_node = $db->fetch();
 
 if (!isset($_GET['parent']))
 {

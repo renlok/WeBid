@@ -37,11 +37,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "bannersusers SET
-				  name = '" . mysql_real_escape_string($_POST['name']) . "',
-				  company = '" . mysql_real_escape_string($_POST['company']) . "',
-				  email = '" . mysql_real_escape_string($_POST['email']) . "'
+				  name = '" . $system->cleanvars($_POST['name']) . "',
+				  company = '" . $system->cleanvars($_POST['company']) . "',
+				  email = '" . $system->cleanvars($_POST['email']) . "'
 				  WHERE id = " . $id;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		header('location: managebanners.php');
 		exit;
 	}
@@ -49,11 +49,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 else
 {
 	$query = "SELECT * FROM " . $DBPrefix . "bannersusers WHERE id=$id";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) > 0)
+	$db->direct_query($query);
+	if ($db->numrows() > 0)
 	{
-		$USER = mysql_fetch_assoc($res);
+		$USER = $db->fetch();
 	}
 }
 

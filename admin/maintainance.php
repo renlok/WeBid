@@ -27,9 +27,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Check if the specified user exists
 	$superuser = $system->cleanvars($_POST['superuser']);
 	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $superuser . "'";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) == 0 && $_POST['active'] == 'y')
+	$db->direct_query($query);
+	if ($db->numrows() == 0 && $_POST['active'] == 'y')
 	{
 		$ERR = $ERR_025;
 	}
@@ -40,7 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				superuser = '" . $superuser . "',
 				maintainancetext = '" . htmLawed($_POST['maintainancetext'], array('safe'=>1)) . "',
 				active = '" . $_POST['active'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$ERR = $MSG['_0005'];
 	}
 	$system->SETTINGS['superuser'] = $_POST['superuser'];
@@ -50,9 +49,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 else
 {
 	$query = "SELECT * FROM " . $DBPrefix . "maintainance LIMIT 1";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data = mysql_fetch_assoc($res);
+	$db->direct_query($query);
+	$data = $db->fetch();
 	$system->SETTINGS['superuser'] = $data['superuser'];
 	$system->SETTINGS['maintainancetext'] = $data['maintainancetext'];		
 	$system->SETTINGS['active'] = $data['active'];

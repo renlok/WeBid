@@ -37,9 +37,8 @@ $varialbes = array(
 	);
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateway_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$gateway_data = $db->fetch();
 
 $gateways = explode(',', $gateway_data['gateways']);
 
@@ -64,7 +63,7 @@ if (isset($_POST['action']))
 		$gateway_data[$gateway . '_required'] = (isset($_POST[$gateway . '_required']) ? 1 : 0);
 		$gateway_data[$gateway . '_address'] = $_POST[$gateway . '_address'];
 	}
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 	$ERR = $MSG['762'];
 }
 

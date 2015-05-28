@@ -42,9 +42,8 @@ $_SESSION['RETURN_LIST'] = 'listclosedauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(id) As auctions FROM " . $DBPrefix . "auctions WHERE closed = 1 AND suspended = 0";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auctions = mysql_result($res, 0, 'auctions');
+$db->direct_query($query);
+$num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(w.id) as winners FROM " . $DBPrefix . "auctions a
@@ -52,10 +51,9 @@ $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_nam
 		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
 		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
 		WHERE a.closed = 1 AND a.suspended = 0 GROUP BY a.id ORDER BY nick LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],

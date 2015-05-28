@@ -53,7 +53,7 @@ $STATUS = array(
 );
 
 $bg = '';
-while ($User = $db->direct_query($query))
+while ($User = $db->fetch())
 {
     $created = substr($User['created'], 4, 2) . '/' . substr($User['created'], 6, 2) . '/' . substr($User['created'], 0, 4);
     if ($User['lastlogin'] == 0)

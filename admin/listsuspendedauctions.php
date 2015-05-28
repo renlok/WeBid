@@ -42,19 +42,17 @@ $_SESSION['RETURN_LIST'] = 'listsuspendedauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(id) As auctions FROM " . $DBPrefix . "auctions WHERE suspended != 0";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auctions = mysql_result($res, 0, 'auctions');
+$db->direct_query($query);
+$num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
 		WHERE a.suspended != 0 ORDER BY nick LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],

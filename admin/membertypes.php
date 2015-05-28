@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 	{
 		$idslist = implode(',', $_POST['delete']);
 		$query = "DELETE FROM " . $DBPrefix . "membertypes WHERE id IN (" . $idslist . ")";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 	}
 
 	// now update everything else
@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 						feedbacks = '" . $new_membertypes[$id]['feedbacks'] . "', 
 						icon = '" . $system->cleanvars($new_membertypes[$id]['icon']) . "' 
 						WHERE id = " . $id;
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				$db->direct_query($query);
 			}
 		}
 	}
@@ -56,7 +56,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 	if (!empty($new_membertype['feedbacks']))
 	{
 		$query = "INSERT INTO " . $DBPrefix . "membertypes VALUES (NULL, '" . $new_membertype['feedbacks'] . "', '" . $system->cleanvars($new_membertype['icon']) . "');";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 	}
 	rebuild_table_file('membertypes');
 	$ERR = $MSG['836'];

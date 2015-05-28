@@ -26,18 +26,17 @@ if (!isset($_GET['banner']) || empty($_GET['banner']))
 $banner = $_GET['banner'];
 
 $query = "SELECT name, user FROM " . $DBPrefix . "banners WHERE id = " . $banner;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$bannername = mysql_result($res, 0, 'name');
-$banneruser = mysql_result($res, 0, 'user');
+$db->direct_query($query);
+$bannername = $db->result('name');
+$banneruser = $db->result('user');
 
 
 $query = "DELETE FROM " . $DBPrefix . "banners WHERE id = " . $banner;
-$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $query = "DELETE FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $banner;
-$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $query = "DELETE FROM " . $DBPrefix . "bannerskeywords WHERE banner = " . $banner;
-$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+$db->direct_query($query);
 @unlink($upload_path . 'banners/' . $banneruser . '/' . $bannername);
 
 // Redirect

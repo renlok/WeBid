@@ -81,9 +81,8 @@ if (isset($_POST['action']))
 		{
 			// Retrieve auction data
 			$query = "SELECT * from " . $DBPrefix . "auctions WHERE id = " . intval($_POST['id']);
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$AUCTION = mysql_fetch_array($res);
+			$db->direct_query($query);
+			$AUCTION = $db->result();
 
 			$a_start = $AUCTION['starts'];
 			$a_ends = $a_start + ($_POST['duration'] * 24 * 60 * 60);
@@ -93,9 +92,8 @@ if (isset($_POST['action']))
 				// and increase new category counters
 				$ct = intval($_POST['category']);
 				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $ct;
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$parent_node = mysql_fetch_assoc($res);
+				$db->direct_query($query);
+				$parent_node = $db->fetch();
 				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 				for ($i = 0; $i < count($crumbs); $i++)
@@ -108,15 +106,14 @@ if (isset($_POST['action']))
 					{
 						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
 					}
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$db->direct_query($query);
 				}
 
 				// and decrease old category counters
 				$cta = intval($AUCTION['category']);
 				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $cta;
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$parent_node = mysql_fetch_assoc($res);
+				$db->direct_query($query);
+				$parent_node = $db->fetch();
 				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 				for ($i = 0; $i < count($crumbs); $i++)
@@ -129,7 +126,7 @@ if (isset($_POST['action']))
 					{
 						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
 					}
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$db->direct_query($query);
 				}
 			}
 
@@ -138,9 +135,8 @@ if (isset($_POST['action']))
 				// and increase new category counters
 				$ct = intval($_POST['secondcat']);
 				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $ct;
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$parent_node = mysql_fetch_assoc($res);
+				$db->direct_query($query);
+				$parent_node = $db->fetch();
 				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 				for ($i = 0; $i < count($crumbs); $i++)
@@ -153,15 +149,14 @@ if (isset($_POST['action']))
 					{
 						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
 					}
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$db->direct_query($query);
 				}
 
 				// and decrease old category counters
 				$cta = intval($AUCTION['secondcat']);
 				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $cta;
-				$res = mysql_query($query);
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
-				$parent_node = mysql_fetch_assoc($res);
+				$db->direct_query($query);
+				$parent_node = $db->fetch();
 				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 				for ($i = 0; $i < count($crumbs); $i++)
@@ -174,7 +169,7 @@ if (isset($_POST['action']))
 					{
 						$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
 					}
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$db->direct_query($query);
 				}
 			}
 
@@ -198,7 +193,7 @@ if (isset($_POST['action']))
 					duration = '" . $system->cleanvars($_POST['duration']) . "',
 					category = '" . intval($_POST['category']) . "',
 					secondcat = '" . intval($_POST['secondcat']) . "',
-					description = '" . mysql_real_escape_string($_POST['description']) . "',
+					description = '" . $system->cleanvars($_POST['description']) . "',
 					quantity = '" . intval($_POST['quantity']) . "',
 					minimum_bid = '" . $system->input_money($_POST['min_bid']) . "',
 					shipping_cost = '" . $system->input_money($_POST['shipping_cost']) . "',
@@ -214,7 +209,7 @@ if (isset($_POST['action']))
 					highlighted = '" . ((isset($_POST['is_highlighted'])) ? 'y' : 'n') . "',
 					featured = '" . ((isset($_POST['is_featured'])) ? 'y' : 'n') . "'
 					WHERE id = " . $_POST['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 
 			$URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
 			unset($_SESSION['RETURN_LIST'], $_SESSION['RETURN_LIST_OFFSET']);
@@ -232,10 +227,9 @@ $auc_id = intval($_REQUEST['id']);
 $query =   "SELECT u.nick, a.* FROM " . $DBPrefix . "auctions a
 			LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 			WHERE a.id = " . $auc_id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
-if (mysql_num_rows($res) == 0)
+if ($db->numrows() == 0)
 {
 	if (!isset($_SESSION['RETURN_LIST']))
 	{
@@ -250,15 +244,14 @@ if (mysql_num_rows($res) == 0)
 	exit;
 }
 
-$auction_data = mysql_fetch_assoc($res);
+$auction_data = $db->fetch();
 
 // DURATIONS
 $dur_list = ''; // empty string to begin HTML list
 $query = "SELECT days, description FROM " . $DBPrefix . "durations";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$dur_list .= '<option value="' . $row['days'] . '"';
 	if ($row['days'] == $auction_data['duration'])
@@ -316,9 +309,8 @@ if (file_exists('../' . $uploaded_path . $auc_id))
 $payment = explode(', ', $auction_data['payment']);
 $payment_methods = '';
 $query = "SELECT * FROM " . $DBPrefix . "gateways";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateways_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$gateways_data = $db->fetch();
 $gateway_list = explode(',', $gateways_data['gateways']);
 foreach ($gateway_list as $v)
 {

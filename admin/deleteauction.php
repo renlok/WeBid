@@ -33,43 +33,41 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 
 	// get auction data
 	$query = "SELECT category, num_bids, suspended, closed FROM " . $DBPrefix . "auctions WHERE id = " . $auc_id;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$auc_data = mysql_fetch_assoc($res);
+	$db->direct_query($query);
+	$auc_data = $db->result();
 
 	// Delete related values
 	$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = " . $auc_id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 
 	// delete bids
 	$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = " . $auc_id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 
 	// Delete proxybids
 	$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = " . $auc_id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 
 	// Delete file in counters
 	$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = " . $auc_id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 
 	if ($auc_data['suspended'] == 0 && $auc_data['closed'] == 0)
 	{
 		// update main counters
 		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - 1), bids = (bids - " . $auc_data['num_bids'] . ")";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 
 		// update recursive categories
 		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auc_data['category'];
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$parent_node = mysql_fetch_assoc($res);
+		$db->direct_query($query);
+		$parent_node = $db->result();
 		$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 		for ($i = 0; $i < count($crumbs); $i++)
 		{
 			$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = " . $crumbs[$i]['cat_id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 		}
 	}
 
@@ -101,9 +99,8 @@ elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
 }
 
 $query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = " . $_GET['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$title = mysql_result($res, 0);
+$db->direct_query($query);
+$title = $db->result('title');
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

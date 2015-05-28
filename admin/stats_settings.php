@@ -37,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					activate = '" . $_POST['activate'] . "',
 					accesses = '" . $_POST['accesses'] . "',
 					browsers = '" . $_POST['browsers'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$ERR = $MSG['5148'];
 		$statssettings = $_POST;
 	}
@@ -45,9 +45,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 else
 {
 	$query = "SELECT * FROM " . $DBPrefix . "statssettings";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$statssettings = mysql_fetch_assoc($res);
+	$db->direct_query($query);
+	$statssettings = $db->fetch();
 }
 
 loadblock('', $MSG['5144']);

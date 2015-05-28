@@ -23,11 +23,10 @@ $html = '';
 
 // Create currencies array
 $query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY ime";
-$res_ = mysql_query($query);
-$system->check_mysql($res_, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res_) > 0)
+$db->direct_query($query);
+if ($db->numrows() > 0)
 {
-	while ($row = mysql_fetch_array($res_))
+	while ($row = $db->result())
 	{
 		$CURRENCIES[$row['id']] = $row['symbol'] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
 		$CURRENCIES_SYMBOLS[$row['id']] = $row['symbol'];
@@ -53,8 +52,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				moneyformat = " . intval($_POST['moneyformat']) . ",
 				moneydecimals = " . intval($_POST['moneydecimals']) . ",
 				moneysymbol = " . intval($_POST['moneysymbol']);
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
+		$db->direct_query($query);
 		$system->SETTINGS['moneyformat'] = $_POST['moneyformat'];
 		$system->SETTINGS['moneydecimals'] = $_POST['moneydecimals'];
 		$system->SETTINGS['moneysymbol'] = $_POST['moneysymbol'];

@@ -503,7 +503,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (
   `cat_id` int(4) NOT NULL,
   `lang` char(2) NOT NULL default '',
-  `category` varchar(200) NOT NULL default '',
+  `category` varchar(200) NOT NULL default ''
 );";
 
 # 
@@ -567,7 +567,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "community_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "community_translated` (
   `id` int(4) NOT NULL,
   `lang` char(2) NOT NULL default '',
-  `name` varchar(255) NOT NULL default '',
+  `name` varchar(255) NOT NULL default ''
 );";
 
 # 
@@ -607,7 +607,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "countries`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "countries` (
   `country_id` int(4) NOT NULL auto_increment,
   `country` varchar(40) NOT NULL default '',
-  PRIMARY KEY  (`country`)
+  PRIMARY KEY  (`country_id`)
 ) ;";
 
 # 
@@ -855,7 +855,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "countries_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "countries_translated` (
   `country_id` int(4) NOT NULL,
   `lang` char(2) NOT NULL default '',
-  `country` varchar(255) NOT NULL default '',
+  `country` varchar(255) NOT NULL default ''
 );";
 
 # 
@@ -956,7 +956,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "durations_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "durations_translated` (
   `days` int(4) NOT NULL,
   `lang` char(2) NOT NULL default '',
-  `description` varchar(255) NOT NULL default '',
+  `description` varchar(255) NOT NULL default ''
 );";
 
 # 
@@ -998,7 +998,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqs_translated` (
   `id` int(11) NOT NULL,
   `lang` char(2) NOT NULL default '',
   `question` varchar(200) NOT NULL default '',
-  `answer` text NOT NULL,
+  `answer` text NOT NULL
 ) ;";
 
 # 
@@ -1197,7 +1197,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "groups_translated` (
   `id` int(5) NOT NULL,
   `lang` char(2) NOT NULL default '',
-  `group_name` varchar(255) NOT NULL default '',
+  `group_name` varchar(255) NOT NULL default ''
 );";
 
 # 

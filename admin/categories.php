@@ -84,10 +84,18 @@ if (isset($_POST['action']))
 			{
 				if (!isset($_POST['delete'][$k]))
 				{
-					$query = "UPDATE " . $DBPrefix . "categories SET cat_name = '" . $system->cleanvars($_POST['categories'][$k]) . "',
-							cat_colour = '" . $system->cleanvars($_POST['colour'][$k]) . "', cat_image = '" . $system->cleanvars($_POST['image'][$k]) . "'
-							WHERE cat_id = " . intval($k);
-					$db->direct_query($query);
+					$query = "UPDATE " . $DBPrefix . "categories SET
+								cat_name = :cat_name,
+								cat_colour = :cat_colour,
+								cat_image = :cat_image
+								WHERE cat_id = :cat_id";
+					$params = array(
+					array(':cat_name', $_POST['categories'][$k] , 'str'),
+					array(':cat_colour', $_POST['colour'][$k] , 'str'),
+					array(':cat_image', $_POST['image'][$k] , 'str'),
+					array(':cat_id', intval($k) , 'int'),
+					);
+					$db->query($query,$params);
 				}
 			}
 		}
@@ -118,9 +126,12 @@ if (isset($_POST['action']))
 			// Get data from the database
 			$query = "SELECT COUNT(a.id) as COUNT, c.* FROM " . $DBPrefix . "categories c
 						LEFT JOIN " . $DBPrefix . "auctions a ON ( a.category = c.cat_id )
-						WHERE c.cat_id IN (" . implode(',', $_POST['delete']) . ")
+						WHERE c.cat_id IN (:delete_list)
 						GROUP BY c.cat_id ORDER BY cat_name";
-			$db->direct_query($query);
+			$params = array(
+			array(':delete_list', implode(',', $_POST['delete']) , 'str'),
+			);
+			$db->query($query, $params);
 			$message = $MSG['843'] . '<table cellpadding="0" cellspacing="0">';
 			$names = array();
 			$counter = 0;
@@ -186,8 +197,12 @@ if (isset($_POST['action']))
 						$catscontrol->move($k, $_POST['moveid'][$k]);
 						// remove the parent and raise the children up a level
 						$catscontrol->delete($k, true);
-						$query = "UPDATE " . $DBPrefix . "auctions SET category = " . $_POST['moveid'][$k] . " WHERE category = " . $k;
-						$db->direct_query($query);
+						$query = "UPDATE " . $DBPrefix . "auctions SET category = :new_cat WHERE category = :old_cat";
+						$params = array(
+						array(':new_cat', $_POST['moveid'][$k] , 'int'),
+						array(':old_cat', $k , 'int'),
+						);
+						$db->query($query, $params);
 					}
 					else
 					{
@@ -209,7 +224,7 @@ if (!isset($_GET['parent']))
 else
 {
 	$parent = intval($_GET['parent']);
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_GET['parent']);
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $parent;
 }
 $db->direct_query($query);
 $parent_node = $db->fetch();

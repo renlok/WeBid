@@ -20,12 +20,11 @@ include 'loggedin.inc.php';
 
 // Retrieve data
 $query = "SELECT * FROM " . $DBPrefix . "currentplatforms WHERE month = " . date('n') . " AND year = " . date('Y') . " ORDER BY counter DESC";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
 $MAX = 0;
 $TOTAL = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$PLATFORMS[$row['platform']] = $row['counter'];
 	$TOTAL = $TOTAL + $row['counter'];

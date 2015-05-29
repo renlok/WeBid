@@ -49,15 +49,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				content='" . $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']]) . "',
 				suspended=" . intval($_POST['suspended']) . "
 				WHERE id = " . $news_id;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 
 		foreach ($LANGUAGES as $k => $v)
 		{
 			$query = "SELECT id FROM " . $DBPrefix . "news_translated WHERE lang = '" . $k . "' AND id = " . $news_id;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 
-			if (mysql_num_rows($res) > 0)
+			if ($db->numrows() > 0)
 			{
 				$query = "UPDATE " . $DBPrefix . "news_translated SET 
 						title = '" . $system->cleanvars($_POST['title'][$k]) . "',
@@ -70,7 +69,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 						(" . $news_id . ", '" . $k . "', '" . $system->cleanvars($_POST['title'][$k]) . "',
 						'" . $system->cleanvars($_POST['content'][$k]) . "')";
 			}
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 		}
 		header('location: news.php');
 		exit;
@@ -80,12 +79,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 // get news story
 $query = "SELECT t.*, n.suspended FROM " . $DBPrefix . "news_translated t
 		LEFT JOIN " . $DBPrefix . "news n ON (n.id = t.id) WHERE t.id = " . intval($_GET['id']);
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
 $CONT_tr = array();
 $TIT_tr = array();
-while ($arr = mysql_fetch_assoc($res))
+while ($arr = $db->fetch())
 {
 	$suspended = $arr['suspended'];
 	$template->assign_block_vars('lang', array(

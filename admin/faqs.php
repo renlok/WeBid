@@ -25,9 +25,9 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 	foreach ($_POST['delete'] as $val)
 	{
 		$query = "DELETE FROM " . $DBPrefix . "faqs WHERE id = " . $val;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$query = "DELETE FROM " . $DBPrefix . "faqs_translated WHERE id = " . $val;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 	}
 }
 
@@ -42,9 +42,8 @@ foreach ($faq_cats as $row)
 			));
 
 	$query = "SELECT id, question FROM " . $DBPrefix . "faqs WHERE category = " . $row['id'];
-	$cat_res = mysql_query($query);
-	$system->check_mysql($cat_res, $query, __LINE__, __FILE__);
-	while ($cat_row = mysql_fetch_assoc($cat_res))
+	$db->direct_query($query);
+	while ($cat_row = $db->result())
 	{
 		$template->assign_block_vars('cats.faqs', array(
 				'ID' => $cat_row['id'],

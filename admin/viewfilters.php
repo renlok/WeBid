@@ -21,31 +21,28 @@ $banner = $_GET['banner'];
 
 // Retrieve filters
 $query = "SELECT * FROM " . $DBPrefix . "bannerscategories WHERE banner=$banner";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
+$res = $db->fetchall('FETCH_BOTH'); //puttng data into an array to free up the $db object for next loop
 
-if (mysql_num_rows($res) > 0)
+if (count($res) > 0)
 {
-	while ($row = mysql_fetch_array($res))
+	foreach ($res as $k => $v)
 	{
-		$query = "SELECT cat_name FROM " . $DBPrefix . "categories WHERE cat_id=$row[category]";
-		$res_ = @mysql_query($query);
-		if ($res_ && @mysql_num_rows($res_) > 0)
+		$query = "SELECT cat_name FROM " . $DBPrefix . "categories WHERE cat_id=" . $v['category'];
+		$db->direct_query($query);
+		if ($db->numrows() > 0)
 		{
-			$CATEGORIES .= mysql_result($res_,0,"cat_name")."<BR>";
+			$CATEGORIES .= $db->result('cat_name')."<BR>";
 		}
 	}
 }
 $query = "SELECT * FROM " . $DBPrefix . "bannerskeywords WHERE banner=$banner";
-$rr = mysql_query($query);
-$system->check_mysql($rr, $query, __LINE__, __FILE__);
-if (mysql_num_rows($rr) > 0)
+$db->direct_query($query);
+if ($db->numrows() > 0)
 {
-	$i = 0;
-	while ($i < mysql_num_rows($rr))
+	while ($row = $db->fetch())
 	{
-		$KEYWORDS .= mysql_result($rr,$i,"keyword")."<BR>";
-		$i++;
+		$KEYWORDS .= $row['keyword']."<BR>";
 	}
 }
 ?>

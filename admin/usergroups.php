@@ -26,9 +26,8 @@ if (isset($_GET['action']) && !isset($_POST['action']))
 	if ($_GET['action'] == 'edit' && isset($_GET['id']))
 	{
 		$query = "SELECT * FROM ". $DBPrefix . "groups WHERE id = " . intval($_GET['id']);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$group = mysql_fetch_assoc($res);
+		$db->direct_query($query);
+		$group = $db->fetch();
 		$template->assign_vars(array(
 				'GROUP_ID' => $group['id'],
 				'EDIT_NAME' => $group['group_name'],
@@ -58,10 +57,9 @@ if (isset($_POST['action']))
 	if ($_POST['auto_join'] == 0)
 	{
 		$query = "SELECT * FROM ". $DBPrefix . "groups WHERE auto_join = 1";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$auto_join = false;
-		while ($row = mysql_fetch_assoc($res))
+		while ($row = $db->fetch())
 		{
 			if ($row['id'] != $_POST['id'])
 			{
@@ -85,14 +83,13 @@ if (isset($_POST['action']))
 		$query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy, auto_join) VALUES
 				('" . $system->cleanvars($_POST['group_name']) . "', " . intval($_POST['user_count']) . ", " . intval($_POST['can_sell']) . ", " . intval($_POST['can_buy']) . ", " . intval($_POST['auto_join']) . ")";
 	}
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 }
 
 $query = "SELECT * FROM ". $DBPrefix . "groups";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('groups', array(
 			'ID' => $row['id'],

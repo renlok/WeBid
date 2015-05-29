@@ -24,10 +24,10 @@ $board_id = intval($_REQUEST['board_id']);
 if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 {
 	$query = "DELETE FROM " . $DBPrefix . "comm_messages WHERE id = " . $msg;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->result('name');
 	// Update messages counter
 	$query = "UPDATE " . $DBPrefix . "community SET messages = messages - 1 WHERE id = " . $board_id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->result('name');
 	header('location: editmessages.php?id=' . $board_id);
 	exit;
 }

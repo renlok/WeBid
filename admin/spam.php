@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					recaptcha_private = '" . $_POST['recaptcha_private'] . "',
 					spam_sendtofriend = " . $_POST['spam_sendtofriend'] . ",
 					spam_register = " . $_POST['spam_register'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$system->SETTINGS['recaptcha_public'] = $_POST['recaptcha_public'];
 		$system->SETTINGS['recaptcha_private'] = $_POST['recaptcha_private'];
 		$system->SETTINGS['spam_sendtofriend'] = $_POST['spam_sendtofriend'];

@@ -23,11 +23,10 @@ unset($ERR);
 if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
 {
 	$query = "SELECT id, nick, name, email FROM " . $DBPrefix . "users WHERE id = " . $_GET['id'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) > 0)
+	$db->direct_query($query);
+	if ($db->numrows() > 0)
 	{
-		$USER = mysql_fetch_assoc($res);
+		$USER = $db->fetch();
 
 		$emailer = new email_handler();
 		$emailer->assign_vars(array(
@@ -46,11 +45,10 @@ if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
 if (isset($_GET['payreminder']) && isset($_GET['id']) && is_numeric($_GET['id']))
 {
 	$query = "SELECT id, name, email, balance FROM " . $DBPrefix . "users WHERE id = " . $_GET['id'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) > 0)
+	$db->direct_query($query);
+	if ($db->numrows() > 0)
 	{
-		$USER = mysql_fetch_assoc($res);
+		$USER = $db->fetch();
 
 		$emailer = new email_handler();
 		$emailer->assign_vars(array(
@@ -133,9 +131,8 @@ else
 {
 	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users";
 }
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALUSERS = mysql_result($res, 0);
+$db->direct_query($query);
+$TOTALUSERS = $db->result('COUNT');
 
 // get page limits
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
@@ -173,10 +170,9 @@ else
 }
 $query .= " ORDER BY nick"; // ordered by
 $query .= " LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('users', array(
 			'ID' => $row['id'],

@@ -24,13 +24,12 @@ $user_id = intval($_REQUEST['user']);
 if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 {
 	$query = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id = " . $id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 	$query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user_id;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$fb_data = mysql_fetch_assoc($res);
+	$db->direct_query($query);
+	$fb_data = $db->fetch();
 	$query = "UPDATE " . $DBPrefix . "users SET rate_sum = " . $fb_data['SUM'] . ", rate_num = " . $fb_data['NUM'] . " WHERE id = " . $user_id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 	header('location: userfeedback.php?id=' . $user_id);
 	exit;
 }

@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
 				theme = '" . $_POST['dtheme'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$system->SETTINGS['theme'] = $_POST['dtheme'];
 		$ERR = $MSG['26_0005'];
 	}

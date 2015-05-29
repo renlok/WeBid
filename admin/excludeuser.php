@@ -29,21 +29,20 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	if ($_POST['mode'] == 'activate')
 	{
 		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = " . $_POST['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - 1, users = users + 1";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$query = "SELECT name, email FROM " . $DBPrefix . "users WHERE id = " . $_POST['id'];
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$USER = mysql_fetch_assoc($res);
+		$db->direct_query($query);
+		$USER = $db->fetch();
 		include $include_path . 'email_user_approved.php';
 	}
 	else
 	{
 		$query = "UPDATE " . $DBPrefix . "users SET suspended = 1 WHERE id = " . $_POST['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1, users = users - 1";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 	}
 
 	header('location: listusers.php?PAGE=' . intval($_POST['offset']));
@@ -57,9 +56,8 @@ elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
 
 // load the page
 $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . intval($_GET['id']);
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$user_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$user_data = $db->fetch();
 
 // create tidy DOB string
 if ($user_data['birthdate'] == 0)

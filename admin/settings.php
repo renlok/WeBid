@@ -36,15 +36,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		// Update data
 		$query = "UPDATE " . $DBPrefix . "settings SET
 				sitename = '" . $system->cleanvars($_POST['sitename']) . "',
-				adminmail = '" . mysql_real_escape_string($_POST['adminmail']) . "',
-				siteurl = '" . mysql_real_escape_string($_POST['siteurl']) . "',
+				adminmail = '" . $system->cleanvars($_POST['adminmail']) . "',
+				siteurl = '" . $system->cleanvars($_POST['siteurl']) . "',
 				copyright = '" . $system->cleanvars($_POST['copyright']) . "',
 				cron = " . intval($_POST['cron']) . ",
 				archiveafter = " . intval($_POST['archiveafter']) . ",
 				cache_theme = '" . $_POST['cache_theme'] . "',
 				https = '" . $_POST['https'] . "',
 				https_url = '" . $_POST['https_url'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$ERR = $MSG['542'];
 	}
 

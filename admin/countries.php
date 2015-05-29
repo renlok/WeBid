@@ -39,7 +39,7 @@ if (isset($_POST['act']))
 			}
 			$query .= "country = '" . $system->cleanvars($_POST['delete'][$i]) . "'";
 		}
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 	}
 
 	//update countries with new names
@@ -50,7 +50,7 @@ if (isset($_POST['act']))
 			$query = "UPDATE " . $DBPrefix . "countries SET
 					country = '" .  $system->cleanvars($_POST['new_countries'][$i]) . "'
 					WHERE country = '" . $system->cleanvars($_POST['old_countries'][$i]) . "'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 		}
 	}
 
@@ -58,7 +58,7 @@ if (isset($_POST['act']))
 	if (!empty($_POST['new_countries'][(count($_POST['new_countries']) - 1)]))
 	{
 		$query = "INSERT INTO " . $DBPrefix . "countries (country) VALUES ('" . $system->cleanvars($_POST['new_countries'][(count($_POST['new_countries']) - 1)]) . "')";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 	}
 	rebuild_html_file('countries');
 	$ERR = $MSG['1028'];
@@ -72,9 +72,8 @@ while ($i < count($countries))
 	$j = $i - 1;
 	// check if the country is being used by a user
 	$query = "SELECT id FROM " . $DBPrefix . "users WHERE country = '" . $countries[$i] . "' LIMIT 1";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$USEDINUSERS = mysql_num_rows($res);
+	$db->direct_query($query);
+	$USEDINUSERS = $db->numrows();
 	
 	$template->assign_block_vars('countries', array(
 			'COUNTRY' => $countries[$i],

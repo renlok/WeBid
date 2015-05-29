@@ -27,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		foreach ($_POST['accept'] as $v)
 		{
 			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'accept' WHERE id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 		}
 	}
 	if (is_array($_POST['deny']))
@@ -35,15 +35,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		foreach ($_POST['deny'] as $v)
 		{
 			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'deny' WHERE id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 		}
 	}
 }
 
 $query = "SELECT COUNT(*) As ips FROM " . $DBPrefix . "usersips WHERE user = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_ips = mysql_result($res, 0, 'ips');
+$db->direct_query($query);
+$num_ips = $db->result('ips');
 
 // Handle pagination
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
@@ -59,21 +58,19 @@ else
 $PAGES = ($num_ips == 0) ? 1 : ceil($num_ips / $system->SETTINGS['perpage']);
 
 $query = "SELECT nick, lastlogin FROM " . $DBPrefix . "users WHERE id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0)
+$db->direct_query($query);
+if ($db->numrows() > 0)
 {
-	$USER = mysql_fetch_array($res);
+	$USER = $db->fetch();
 }
 
 $query = "SELECT id, type, ip, action FROM " . $DBPrefix . "usersips WHERE user = " . $id .
 		" LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0)
+$db->direct_query($query);
+if ($db->numrows() > 0)
 {
 	$bg = '';
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
 		$bgcolour = ($bgcolour == '#FFFFFF') ? '#EEEEEE' : '#FFFFFF';
 		$template->assign_block_vars('ips', array(

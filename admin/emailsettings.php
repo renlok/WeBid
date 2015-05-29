@@ -45,7 +45,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					mail_protocol = " . intval($_POST['mail_protocol']) . ",
 					mail_parameter = '" . $_POST['mail_parameter'] . "',
 					alert_emails = '" . $_POST['alert_emails'] . "'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 	    }
 		else
 		{
@@ -58,7 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					smtp_password = '" . (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : '') . "',
 					smtp_host = '" . (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : '') . "',
 					alert_emails = '" . $_POST['alert_emails'] . "'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);		  
+			$db->direct_query($query);
 	    }
 	  $ERR = $MSG['895'];
 	} 

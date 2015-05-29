@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$query = "UPDATE " . $DBPrefix . "settings set 
 			 timecorrection = " . floatval($_POST['timecorrection']) . ",
 			 datesformat = '" . $_POST['datesformat'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 	$system->SETTINGS['timecorrection'] = floatval($_POST['timecorrection']);
 	$system->SETTINGS['datesformat'] = $_POST['datesformat'];
 	$ERR = $MSG['347'];

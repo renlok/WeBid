@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if ($system->SETTINGS['fee_max_debt'] < $_POST['fee_max_debt'])
 	{
 		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE suspended = 7 AND balance > " . $_POST['fee_max_debt'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 	}
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
@@ -35,7 +35,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			  fee_max_debt = '" . $system->input_money($_POST['fee_max_debt']) . "',
 			  fee_signup_bonus = '" . $system->input_money($_POST['fee_signup_bonus']) . "',
 			  fee_disable_acc = '" . $_POST['fee_disable_acc'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 	$system->SETTINGS['fees'] = $_POST['fees'];
 	$system->SETTINGS['fee_type'] = $_POST['fee_type'];
 	$system->SETTINGS['fee_max_debt'] = $_POST['fee_max_debt'];

@@ -26,15 +26,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// reset the bn_only blockers
 	if ($bn_only_percent > $system->SETTINGS['bn_only_percent'])
 	{
-		$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE id = bn_only = 'n'";
+		$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE bn_only = 'n'";
 		$db->direct_query($query);
 	}
 	$query = "UPDATE " . $DBPrefix . "settings SET
-				buy_now = " . intval($_POST['buy_now']) . ",
-				bn_only = '" . $_POST['bn_only'] . "',
-				bn_only_disable = '" . $_POST['bn_only_disable'] . "',
-				bn_only_percent = " . $bn_only_percent;
-	$db->direct_query($query);
+				buy_now = :buy_now,
+				bn_only = :bn_only,
+				bn_only_disable = :bn_only_disable,
+				bn_only_percent = :bn_only_percent";
+	$params = array(
+	array(':buy_now', intval($_POST['buy_now']) , 'int'),
+	array(':bn_only', $_POST['bn_only'] , 'str'),
+	array(':bn_only_disable', $_POST['bn_only_disable'] , 'str'),
+	array(':bn_only_percent', $bn_only_percent , 'int'),
+	);
+	$db->query($query, $params);
 	$system->SETTINGS['buy_now'] = $_POST['buy_now'];
 	$system->SETTINGS['bn_only'] = $_POST['bn_only'];
 	$system->SETTINGS['bn_only_disable'] = $_POST['bn_only_disable'];

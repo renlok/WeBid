@@ -69,15 +69,7 @@ if (!function_exists('FormatTimeStamp'))
 		global $system;
 
 		$DATE = explode($spacer, $DATE);
-		if ($system->SETTINGS['datesformat'] == 'USA')
-		{
-			$F_date = _mktime(0, 0, 0, $DATE[0], $DATE[1], $DATE[2]);
-		}
-		else
-		{
-			$F_date = _mktime(0, 0, 0, $DATE[1], $DATE[0], $DATE[2]);
-		}
-		return $F_date;
+		return _mktime(0, 0, 0, $DATE[0], $DATE[1], $DATE[2]);
 	}
 }
 

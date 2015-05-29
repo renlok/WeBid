@@ -24,8 +24,14 @@ unset($ERR);
 
 // get form variables
 $list_type = isset($_POST['type']) ? ($_POST['type']) : 'a';
-$from_date = isset($_POST['from_date']) ? intval($_POST['from_date']) : 0;
-$to_date = isset($_POST['to_date']) ? intval($_POST['to_date']) : 0;
+$from_date = isset($_POST['from_date']) ? ($_POST['from_date']) : 0;
+$to_date = isset($_POST['to_date']) ? ($_POST['to_date']) : 0;
+
+// make parameter array of sort dates for use in all db queries on this page
+$params = array(
+	array(':from_date', FormatTimeStamp($from_date, '-') , 'str'),
+	array(':to_date', FormatTimeStamp($to_date, '-') , 'str'),
+	);
 
 // Set offset and limit for pagination
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
@@ -47,7 +53,7 @@ else
 $where_sql = '';
 if ($from_date != 0)
 {
-	$where_sql = 'paid_date > \'' . FormatTimeStamp($from_date, '-') . '\'';
+	$where_sql = 'paid_date > :from_date';
 }
 if ($to_date != 0)
 {
@@ -55,7 +61,7 @@ if ($to_date != 0)
 	{
 		$where_sql .= ' AND ';
 	}
-	$where_sql .= 'paid_date < \'' . FormatTimeStamp($to_date, '-') . '\'';
+	$where_sql .= 'paid_date < :to_date';
 }
 
 if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
@@ -82,7 +88,7 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
 				" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . "
 				GROUP BY day, year ORDER BY year, day";
 	}
-	$db->direct_query($query);
+	$db->query($query,$params);
 
 	$bg = '';
 	while ($row = $db->fetch())
@@ -115,12 +121,12 @@ else
 	$show_pagnation = true;
 
 	$query = "SELECT COUNT(id) As accounts FROM " . $DBPrefix . "accounts" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '');
-	$db->direct_query($query);
+	$db->query($query, $params);
 	$num_accounts = $db->numrows();
 	$PAGES = ($num_accounts == 0) ? 1 : ceil($num_accounts / $system->SETTINGS['perpage']);
 	$query = "SELECT * FROM " . $DBPrefix . "accounts
 			" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . " ORDER BY paid_date LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-	$db->direct_query($query);
+	$db->query($query, $params);
 
 	$bg = '';
 	while ($row = $db->fetch())

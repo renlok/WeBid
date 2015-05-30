@@ -45,9 +45,11 @@ else
 }
 
 $where_sql = '';
+$params = array();
 if ($from_date != 0)
 {
 	$where_sql = 'paid_date > \'' . FormatTimeStamp($from_date, '-') . '\'';
+	$params[] = array(':from_date', FormatTimeStamp($from_date, '-') , 'str');
 }
 if ($to_date != 0)
 {
@@ -56,6 +58,7 @@ if ($to_date != 0)
 		$where_sql .= ' AND ';
 	}
 	$where_sql .= 'paid_date < \'' . FormatTimeStamp($to_date, '-') . '\'';
+	$params[] = array(':to_date', FormatTimeStamp($to_date, '-') , 'str');
 }
 
 if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
@@ -82,7 +85,7 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
 				" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . "
 				GROUP BY day, year ORDER BY year, day";
 	}
-	$db->direct_query($query);
+	$db->query($query, $params);
 
 	$bg = '';
 	while ($row = $db->fetch())

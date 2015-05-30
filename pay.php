@@ -75,7 +75,7 @@ switch($_GET['a'])
 		$payvalue = ($data['bid'] * $data['qty']) + $shipping_cost;
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money($payvalue));
-		$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
+		$title = $system->SETTINGS['sitename'] . ' - ' . $system->uncleanvars($data['title']);
 		break;
 	case 3: // pay signup fee (live mode)
 		if (!isset($_SESSION['signup_id']) || !is_int($_SESSION['signup_id']) || $_SESSION['signup_id'] < 1 || $system->SETTINGS['fee_type'] != 2)

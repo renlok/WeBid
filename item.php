@@ -496,7 +496,7 @@ foreach ($payment_options as $k => $v)
 
 $bn_link = (!$has_ended) ? ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $id . '"><img border="0" align="absbottom" alt="' . $MSG['496'] . '" src="' . get_lang_img('buy_it_now.gif') . '"></a>' : '';
 
-$page_title = $auction_data['title'];
+$page_title = $system->uncleanvars($auction_data['title']);
 
 $sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
 $sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
@@ -511,9 +511,9 @@ elseif ($auction_data['shipping'] == 3)
 
 $template->assign_vars(array(
 		'ID' => $auction_data['id'],
-		'TITLE' => $auction_data['title'],
-		'SUBTITLE' => $auction_data['subtitle'],
-		'AUCTION_DESCRIPTION' => stripslashes($auction_data['description']),
+		'TITLE' => $system->uncleanvars($auction_data['title']),
+		'SUBTITLE' => $system->uncleanvars($auction_data['subtitle']),
+		'AUCTION_DESCRIPTION' => $auction_data['description'],
 		'PIC_URL' => $uploaded_path . $id . '/' . $auction_data['pict_url'],
 		'SHIPPING_COST' => $system->print_money($auction_data['shipping_cost']),
 		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['shipping_cost_additional']),
@@ -532,7 +532,7 @@ $template->assign_vars(array(
 		'NEXTBID' => $next_bid,
 		'INTERNATIONAL' => ($auction_data['international'] == 1) ? $MSG['033'] : $MSG['043'],
 		'SHIPPING' => $shipping,
-		'SHIPPINGTERMS' => nl2br($auction_data['shipping_terms']),
+		'SHIPPINGTERMS' => nl2br($system->uncleanvars($auction_data['shipping_terms'])),
 		'PAYMENTS' => $payment_methods,
 		'AUCTION_VIEWS' => $auction_data['counter'],
 		'AUCTION_TYPE' => ($auction_data['bn_only'] == 'n') ? $system->SETTINGS['auction_types'][$auction_type] : $MSG['933'],

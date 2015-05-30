@@ -270,7 +270,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 						'USFEED' => $arrfeed['rate_sum'],
 						'USICON' => (isset($usicon)) ? $usicon : '',
 						'FBDATE' => FormatDate($arrfeed['feedbackdate']),
-						'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $arrfeed['title'] . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
+						'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $system->uncleanvars($arrfeed['title']) . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
 						'FEEDBACK' => nl2br($arrfeed['feedback'])
 						));
 				$i++;

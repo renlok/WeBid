@@ -516,7 +516,7 @@ if ($buyer_fee > 0)
 		$emailer = new email_handler();
 		$emailer->assign_vars(array(
 				'ID' => $buyer_emails[$i]['id'],
-				'TITLE' => $buyer_emails[$i]['title'],
+				'TITLE' => $system->uncleanvars($buyer_emails[$i]['title']),
 				'NAME' => $buyer_emails[$i]['name'],
 				'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=6&auction_id=' . $Auction['id']
 				));
@@ -529,7 +529,7 @@ for ($i = 0; $i < count($seller_emails); $i++)
 	$emailer = new email_handler();
 	$emailer->assign_vars(array(
 			'ID' => $seller_emails[$i]['id'],
-			'TITLE' => $seller_emails[$i]['title'],
+			'TITLE' => $system->uncleanvars($seller_emails[$i]['title']),
 			'NAME' => $seller_emails[$i]['name'],
 			'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $Auction['id']
 			));

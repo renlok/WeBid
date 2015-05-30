@@ -298,7 +298,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					$emailer = new email_handler();
 					$emailer->assign_vars(array(
 							'ID' => $Auction['id'],
-							'TITLE' => $Auction['title'],
+							'TITLE' => $system->uncleanvars($Auction['title']),
 							'NAME' => $Seller['name'],
 							'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $Auction['id']
 							));
@@ -348,7 +348,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_REQUEST['id'],
 		'WINID' => $winner_id,
-		'TITLE' => $Auction['title'],
+		'TITLE' => $system->uncleanvars($Auction['title']),
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),
 		'BN_TOTAL' => $system->print_money($BN_total),
 		'SELLER' => ' <a href="profile.php?user_id=' . $Auction['user'] . '"><b>' . $Seller['nick'] . '</b></a>',

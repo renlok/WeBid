@@ -225,7 +225,7 @@ function updateauction($type)
 	$params[] = array(':title', $system->cleanvars($_SESSION['SELL_title']), 'str');
 	$params[] = array(':subtitle', $system->cleanvars($_SESSION['SELL_subtitle']), 'str');
 	$params[] = array(':description', $_SESSION['SELL_description'], 'str');
-	$params[] = array(':pict_url', $system->cleanvars($_SESSION['SELL_pict_url']), 'str');
+	$params[] = array(':pict_url', $_SESSION['SELL_pict_url'], 'str');
 	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
 	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
 	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');

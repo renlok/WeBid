@@ -55,7 +55,7 @@ while ($row = $db->fetch())
 {
 	$template->assign_block_vars('to_pay', array(
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'],
-			'TITLE' => $row['title'],
+			'TITLE' => $system->uncleanvars($row['title']),
 			'PAY_SHIPPING' => ($row['shipping'] == 1),
 			'SHIPPING' => ($row['shipping'] == 1) ? $system->print_money($row['shipping_cost']) : $system->print_money(0),
 			'ADDITIONAL_SHIPPING_COST' => $system->print_money($row['additional_shipping_cost'] * ($row['qty'] - 1)),

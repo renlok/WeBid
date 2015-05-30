@@ -36,8 +36,8 @@ if (!isset($_POST['action']))
 
 	$_SESSION['SELL_starts']		= '';
 	$_SESSION['SELL_start_now'] 	= '1';
-	$_SESSION['SELL_title']			= $RELISTEDAUCTION['title'];
-	$_SESSION['SELL_subtitle']		= $RELISTEDAUCTION['subtitle'];
+	$_SESSION['SELL_title']			= $system->uncleanvars($RELISTEDAUCTION['title']);
+	$_SESSION['SELL_subtitle']		= $system->uncleanvars($RELISTEDAUCTION['subtitle']);
 	$_SESSION['SELL_description']	= $RELISTEDAUCTION['description'];
 	$_SESSION['SELL_atype']			= $RELISTEDAUCTION['auction_type'];
 	$_SESSION['SELL_iquantity']		= $RELISTEDAUCTION['quantity'];
@@ -54,7 +54,7 @@ if (!isset($_POST['action']))
 	$_SESSION['SELL_imgtype']		= $RELISTEDAUCTION['imgtype'];
 	$_SESSION['SELL_file_uploaded']	= $RELISTEDAUCTION['photo_uploaded'];
 	$_SESSION['SELL_pict_url']		= '';
-	$_SESSION['SELL_shipping_terms'] = $RELISTEDAUCTION['shipping_terms'];
+	$_SESSION['SELL_shipping_terms'] = $system->uncleanvars($RELISTEDAUCTION['shipping_terms']);
 	$_SESSION['SELL_is_bold']			= $RELISTEDAUCTION['bold'];
 	$_SESSION['SELL_is_highlighted']	= $RELISTEDAUCTION['highlighted'];
 	$_SESSION['SELL_is_featured']		= $RELISTEDAUCTION['featured'];

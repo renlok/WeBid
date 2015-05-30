@@ -60,7 +60,7 @@ while ($row = mysql_fetch_assoc($res))
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],
 			'ID' => $row['id'],
-			'TITLE' => $row['title'],
+			'TITLE' => $system->uncleanvars($row['title']),
 			'START_TIME' => ArrangeDateNoCorrection($row['starts']),
 			'END_TIME' => ArrangeDateNoCorrection($row['ends']),
 			'USERNAME' => $row['nick'],

@@ -50,7 +50,7 @@ while ($row = $db->fetch())
 		$template->assign_block_vars('bids', array(
 				'BGCOLOUR' => $bgColor,
 				'ID' => $row['id'],
-				'TITLE' => $row['title'],
+				'TITLE' => $system->uncleanvars($row['title']),
 				'BID' => $system->print_money($row['bid']),
 				'PROXYBID' => (intval($row['proxybid']) > 0) ? $system->print_money($row['proxybid']) : '',
 				'QTY' => $row['quantity'],

@@ -158,7 +158,7 @@ while ($item = $db->fetch())
 	$template->assign_block_vars('items', array(
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
-			'TITLE' => $item['title'],
+			'TITLE' => $system->uncleanvars($item['title']),
 			'STARTS' => FormatDate($item['starts']),
 			'ENDS' => FormatDate($item['ends']),
 

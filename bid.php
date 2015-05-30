@@ -119,7 +119,7 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 $bid = $system->input_money($bid);
 
 $Data = $db->result();
-$item_title = $Data['title'];
+$item_title = $system->uncleanvars($Data['title']);
 $item_id = $Data['id'];
 $seller_name = $Data['nick']; 
 $seller_email = $Data['email'];

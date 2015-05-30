@@ -47,7 +47,7 @@ loadblock($MSG['1113'], $MSG['5080'], $CKEditor->editor('cookiespolicytext', $sy
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['25_0236'],
+		'TYPENAME' => $MSG['25_0018'],
 		'PAGENAME' => $MSG['1114']
 		));
 

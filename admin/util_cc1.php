@@ -31,13 +31,11 @@ foreach ($LANGUAGES as $k => $v)
 
 	$num_rows = mysql_num_rows($res);
 
-	$i = 0;
 	while ($row = mysql_fetch_assoc($res))
 	{
 		$category_id = $row['cat_id'];
 		$cat_name = $category_names[$category_id];
 		$output .= "\t" . '<option value="' . $category_id . '">' . $cat_name . '</option>' . "\n";
-		$i++;
 	}
 
 	$handle = fopen ($main_path . 'language/' . $k . '/categories_select_box.inc.php', 'w');

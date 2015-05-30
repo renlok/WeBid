@@ -23,9 +23,9 @@ include 'loggedin.inc.php';
 unset($ERR);
 
 // get form variables
-$list_type = isset($_GET['type']) ? intval($_GET['type']) : 'a';
-$from_date = isset($_GET['from_date']) ? intval($_GET['from_date']) : 0;
-$to_date = isset($_GET['to_date']) ? intval($_GET['to_date']) : 0;
+$list_type = isset($_POST['type']) ? ($_POST['type']) : 'a';
+$from_date = isset($_POST['from_date']) ? intval($_POST['from_date']) : 0;
+$to_date = isset($_POST['to_date']) ? intval($_POST['to_date']) : 0;
 
 // Set offset and limit for pagination
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
@@ -45,9 +45,11 @@ else
 }
 
 $where_sql = '';
+$params = array();
 if ($from_date != 0)
 {
 	$where_sql = 'paid_date > \'' . FormatTimeStamp($from_date, '-') . '\'';
+	$params[] = array(':from_date', FormatTimeStamp($from_date, '-') , 'str');
 }
 if ($to_date != 0)
 {
@@ -56,6 +58,7 @@ if ($to_date != 0)
 		$where_sql .= ' AND ';
 	}
 	$where_sql .= 'paid_date < \'' . FormatTimeStamp($to_date, '-') . '\'';
+	$params[] = array(':to_date', FormatTimeStamp($to_date, '-') , 'str');
 }
 
 if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
@@ -82,15 +85,14 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
 				" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . "
 				GROUP BY day, year ORDER BY year, day";
 	}
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$db->query($query, $params);
 
 	$bg = '';
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
 		if ($list_type == 'm')
 		{
-			$date = $MSG['MON_0' . $row['month'] . 'E'] . ', ' . $row['year'];
+			$date = $MSG['MON_00' . $row['month'] . 'E'] . ', ' . $row['year'];
 		}
 		elseif ($list_type == 'w')
 		{
@@ -103,7 +105,8 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
 		$template->assign_block_vars('accounts', array(
 				'DATE' => $date,
 				'AMOUNT' => $system->print_money($row['amount'], true, false),
-				'BG' => $bg
+				'BG' => $bg,
+				'TOTAL' => ((!empty($row['total'])) ? $row['total'] : '')
 				));
 		$bg = ($bg == '') ? 'class="bg"' : '';
 	}
@@ -115,17 +118,15 @@ else
 	$show_pagnation = true;
 
 	$query = "SELECT COUNT(id) As accounts FROM " . $DBPrefix . "accounts" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '');
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$num_accounts = mysql_result($res, 0, 'accounts');
+	$db->direct_query($query);
+	$num_accounts = $db->numrows();
 	$PAGES = ($num_accounts == 0) ? 1 : ceil($num_accounts / $system->SETTINGS['perpage']);
 	$query = "SELECT * FROM " . $DBPrefix . "accounts
 			" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . " ORDER BY paid_date LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 
 	$bg = '';
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
 		$template->assign_block_vars('accounts', array(
 				'ID' => $row['id'],

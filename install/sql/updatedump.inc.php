@@ -273,31 +273,31 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	$query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (
 	  `cat_id` int(4) NOT NULL,
 	  `lang` char(2) NOT NULL default '',
-	  `category` varchar(200) NOT NULL default '',
+	  `category` varchar(200) NOT NULL default ''
 	);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "community_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "community_translated` (
 	  `id` int(4) NOT NULL,
 	  `lang` char(2) NOT NULL default '',
-	  `name` varchar(255) NOT NULL default '',
+	  `name` varchar(255) NOT NULL default ''
 	);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "countries_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "countries_translated` (
 	  `country_id` int(4) NOT NULL,
 	  `lang` char(2) NOT NULL default '',
-	  `country` varchar(255) NOT NULL default '',
+	  `country` varchar(255) NOT NULL default ''
 	);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "durations_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "durations_translated` (
 	  `country_id` int(4) NOT NULL,
 	  `lang` char(2) NOT NULL default '',
-	  `description` varchar(255) NOT NULL default '',
+	  `description` varchar(255) NOT NULL default ''
 	);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "groups_translated` (
 	  `id` int(5) NOT NULL,
 	  `lang` char(2) NOT NULL default '',
-	  `group_name` varchar(255) NOT NULL default '',
+	  `group_name` varchar(255) NOT NULL default ''
 	);";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.2.0';";
 }

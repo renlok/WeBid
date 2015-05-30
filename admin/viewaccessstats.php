@@ -21,6 +21,7 @@ include 'loggedin.inc.php';
 $TOTAL_PAGEVIEWS = 0;
 $TOTAL_UNIQUEVISITORS = 0;
 $TOTAL_USERSESSIONS = 0;
+$params = array();
 
 $listby = 'd';
 if (isset($_GET['type']) && in_array($_GET['type'], array('d','w', 'm')))
@@ -39,7 +40,8 @@ if ($listby == 'm')
 elseif ($listby == 'w')
 {
 	$year = date('Y');
-	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE year = " . $year . " ORDER BY LENGTH(day), day ASC";
+	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE year = :year ORDER BY LENGTH(day), day ASC";
+	$params[] = array(':year', $year, 'int');
 	$statsview = $MSG['827'];
 	$statstext = $MSG['828'];
 }
@@ -47,19 +49,18 @@ else
 {
 	$month = date('m');
 	$year = date('Y');
-	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = " . $month . " AND year = " . $year . " ORDER BY LENGTH(day), day ASC";
+	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = :month AND year = :year ORDER BY LENGTH(day), day ASC";
+	$params[] = array(':month', $month, 'int');
+	$params[] = array(':year', $year, 'int');
 	$statsview = date('F Y');
 	$statstext = $MSG['109'];
 }
-
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->query($query, $params);
 
 // set the arrays up
 $data_line = array();
 $data_max = array();
-$data_max[] = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	if ($listby == 'w')
 	{
@@ -71,6 +72,10 @@ while ($row = mysql_fetch_assoc($res))
 			$data_line[$weekno]['pageviews'] = 0;
 			$data_line[$weekno]['uniquevisitors'] = 0;
 			$data_line[$weekno]['usersessions'] = 0;
+		}
+		if (!isset($data_max[$weekno]))
+		{
+			$data_max[$weekno] = 0;
 		}
 		$data_line[$weekno]['pageviews'] += $row['pageviews'];
 		$data_line[$weekno]['uniquevisitors'] += $row['uniquevisitors'];
@@ -89,6 +94,10 @@ while ($row = mysql_fetch_assoc($res))
 			$data_line[$monthno]['uniquevisitors'] = 0;
 			$data_line[$monthno]['usersessions'] = 0;
 		}
+		if (!isset($data_max[$monthno]))
+		{
+			$data_max[$monthno] = 0;
+		}
 		$data_line[$monthno]['pageviews'] += $row['pageviews'];
 		$data_line[$monthno]['uniquevisitors'] += $row['uniquevisitors'];
 		$data_line[$monthno]['usersessions'] += $row['usersessions'];
@@ -97,7 +106,7 @@ while ($row = mysql_fetch_assoc($res))
 	else
 	{
 		$data_line[] = $row;
-	$data_max[] = $row['pageviews'];
+		$data_max[] = $row['pageviews'];
 	}
 	$TOTAL_PAGEVIEWS += $row['pageviews'];
 	$TOTAL_UNIQUEVISITORS += $row['uniquevisitors'];

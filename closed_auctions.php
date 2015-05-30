@@ -111,7 +111,7 @@ foreach ($auction_data as $row)
 			));
 }
 
-if (TOTALAUCTIONS == 0)
+if ($TOTALAUCTIONS == 0)
 {
 	$template->assign_block_vars('no_auctions', array());
 }

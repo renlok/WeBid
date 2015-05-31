@@ -1082,7 +1082,7 @@ $MSG['1075'] = 'Support WeBid';
 $MSG['1076'] = 'Submit a bug';
 $MSG['1077'] = 'Found something functioning funny? Tell us about it, it will help others out too';
 $MSG['1078'] = 'Suggest a feature';
-$MSG['1079'] = 'Got a great idea of what could improve WeBid tell us about it we always want good ideas';
+$MSG['1079'] = 'Have a great idea of what could improve WeBid? Tell us about it we\'re always looking for good ideas';
 $MSG['1080'] = 'Donate';
 $MSG['1081'] = 'Help keep us online and keep future developments coming';
 

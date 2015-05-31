@@ -22,7 +22,7 @@ unset($ERR);
 
 if ($_POST['action'] == 'update')
 {
-	if (strlen($_POST['category']) == 0)
+	if (count($_POST['category']) == 0)
 	{
 		$ERR = $ERR_049;
 	}

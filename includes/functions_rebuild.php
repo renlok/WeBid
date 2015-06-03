@@ -72,10 +72,11 @@ function rebuild_html_file($table)
 			$output_filename = $main_path . 'language/' . $language . '/countries.inc.php';
 			$field_name = 'country';
 			$array_name = 'countries';
+			$index_name = 'country_id';
 		break;
 	}
 
-	$query = "SELECT " . $field_name . " FROM " . $DBPrefix . $table . " ORDER BY " . $field_name . ";";
+	$query = "SELECT " . $field_name . "," . $index_name . " FROM " . $DBPrefix . $table . " ORDER BY " . $field_name;
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$num_rows = mysql_num_rows($res);
@@ -85,7 +86,7 @@ function rebuild_html_file($table)
 
 	while ($row = mysql_fetch_assoc($res))
 	{
-		$output .= '\'' . $row[$field_name] . '\' => \'' . $row[$field_name] . '\',' . "\n";
+		$output .= '\'' . $row[$index_name] . '\' => \'' . $row[$field_name] . '\',' . "\n";
 	}
 
 	$output .= ');' . "\n" . '?>';

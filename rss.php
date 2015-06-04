@@ -21,9 +21,10 @@ $m24h = time() - (24 * 60 * 60);
 $catscontrol = new MPTTcategories();
 
 $user_id = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['user_id']) : 0;
-$limit = ' LIMIT ' . $system->SETTINGS['perpage'];
 
 $feed = (isset($_GET['feed'])) ? intval($_GET['feed']) : '';
+$params = array();
+$params[] = array(':NOW', $NOW, 'int');
 
 switch ($feed)
 {
@@ -31,75 +32,78 @@ switch ($feed)
 		$RSStitle = $MSG['924']; // items listed in the last 24 hours
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND a.starts > ' . $m24h;
+		$subquery = 'a.starts <= :NOW AND a.starts > :starts';
+		$params[] = array(':starts', $m24h, 'int');
 		break;
 
 	case 2: 
 		$RSStitle = $MSG['925']; // items closing in 24 hours or less
 		$postdate = 'ends';
 		$sort = 'ASC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND a.ends <= ' . $p24h;
+		$subquery = 'a.starts <= :NOW AND a.ends <= :ends';
+		$params[] = array(':ends', $p24h, 'int');
 		break;
 
 	case 3: 
 		$RSStitle = $MSG['926']; // items over 300.00
 		$postdate = 'ends';
 		$sort = 'ASC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND (a.current_bid >= 300 OR a.minimum_bid >= 300 OR a.buy_now >= 300)';
+		$subquery = 'a.starts <= :NOW AND (a.current_bid >= 300 OR a.minimum_bid >= 300 OR a.buy_now >= 300)';
 		break;
 
 	case 4: 
 		$RSStitle = $MSG['927']; // items over 1000.00
 		$postdate = 'ends';
 		$sort = 'ASC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND (a.current_bid >= 1000 OR a.minimum_bid >= 1000 OR a.buy_now >= 1000)';
+		$subquery = 'a.starts <= :NOW AND (a.current_bid >= 1000 OR a.minimum_bid >= 1000 OR a.buy_now >= 1000)';
 		break;
 
 	case 5: 
 		$RSStitle = $MSG['928'];
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND (a.current_bid <= 10 OR a.buy_now <= 10)';
+		$subquery = 'a.starts <= :NOW AND (a.current_bid <= 10 OR a.buy_now <= 10)';
 		break;
 
 	case 6: 
 		$RSStitle = $MSG['929']; // items with 10 or more bids
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND a.num_bids >= 10';
+		$subquery = 'a.starts <= :NOW AND a.num_bids >= 10';
 		break;
 
 	case 7: 
 		$RSStitle = $MSG['930']; // items with 25 or more bids
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND a.num_bids >= 25';
+		$subquery = 'a.starts <= :NOW AND a.num_bids >= 25';
 		break;
 
 	case 8: 
 		$RSStitle = $MSG['931']; // item with a Buy Now
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= ' . $NOW . ' AND a.buy_now > 0';
+		$subquery = 'a.starts <= :NOW AND a.buy_now > 0';
 		break;
 
 	default:
 		$postdate = 'starts';
 		if ($user_id > 0)
 		{
-			$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $user_id;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$username = mysql_result($res, 0, 'nick');
+			$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+			$db->query($query, array(array(':user_id', $user_id, 'int')));
+			$username = $db->result('nick');
 			$sort = 'DESC';
-			$subquery = 'a.starts <= ' . $NOW . ' AND a.ends > ' . $NOW . ' AND a.user = ' . $user_id;
+			$subquery = 'a.starts <= :NOW AND a.ends > :NOW AND a.user = :user_id';
+			$params[] = array(':user_id', $user_id, 'int');
 			$RSStitle = sprintf($MSG['932'], $username);
 		}
 		else
 		{
 			$RSStitle = $MSG['924'];
 			$sort = 'DESC';
-			$subquery = 'a.starts <= ' . $NOW . ' AND a.starts > ' . $m24h;
+			$subquery = 'a.starts <= :NOW AND a.starts > :starts';
+			$params[] = array(':starts', $m24h, 'int');
 		}
 		break;
 }
@@ -107,15 +111,19 @@ switch ($feed)
 $query = "SELECT a.*, u.nick from " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		WHERE a.closed = 0 AND a.suspended = 0 AND " . $subquery . "
-		ORDER BY " . $postdate . " " . $sort . " " . $limit;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-while ($auction_data = mysql_fetch_assoc($res))
+		ORDER BY " . $postdate . " " . $sort . " LIMIT :perpage";
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
+$aution_data_all = $db->fetchall();
+
+foreach ($aution_data_all as $auction_data)
 {
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['category'];
-	$res_ = mysql_query($query);
-	$system->check_mysql($res_, $query, __LINE__, __FILE__);
-	$parent_node = mysql_fetch_assoc($res_);
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+	$params = array(
+		array(':cat_id', $auction_data['category'], 'int'),
+	);
+	$db->query($query, $params);
+	$parent_node = $db->result();
 
 	$cat_value = '';
 	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);

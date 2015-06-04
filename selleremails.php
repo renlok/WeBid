@@ -24,12 +24,22 @@ if (!$user->is_logged_in())
 // Create new list
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	$query = "UPDATE " . $DBPrefix . "users SET endemailmode = '" . $system->cleanvars($_POST['endemailmod']) . "',
-			  startemailmode = '" . $system->cleanvars($_POST['startemailmod']) . "',
-			  emailtype = '" . $system->cleanvars($_POST['emailtype']) . "'  WHERE id = " . $user->user_data['id'];
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$ERR = $MSG['25_0192'];
-	$user->user_data = array_merge($user->user_data, $_POST); //update the array
+	// check values
+	if (in_array($_POST['endemailmod'], array('one', 'cum', 'none')) && in_array($_POST['startemailmod'], array('yes', 'no')) && in_array($_POST['emailtype'], array('html', 'text')))
+	{
+		$query = "UPDATE " . $DBPrefix . "users SET endemailmode = :endemailmod,
+				  startemailmode = :startemailmod,
+				  emailtype = :emailtype WHERE id = :user_id";
+		$params = array(
+			array(':endemailmod', $_POST['endemailmod'], 'str'),
+			array(':startemailmod', $_POST['startemailmod'], 'str'),
+			array(':emailtype', $_POST['emailtype'], 'str'),
+			array(':user_id', $user->user_data['id'], 'int'),
+		);
+		$db->query($query, $params);
+		$ERR = $MSG['25_0192'];
+		$user->user_data = array_merge($user->user_data, $_POST); //update the array
+	}
 }
 
 $template->assign_vars(array(

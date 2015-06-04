@@ -94,7 +94,7 @@ if($user->logged_in)
 }
 
 // delete REDIRECT_AFTER_LOGIN value automatically so you are never forwarded to an old page
-if(isset($_SESSION['REDIRECT_AFTER_LOGIN']) && !defined('AtLoggin'))
+if(isset($_SESSION['REDIRECT_AFTER_LOGIN']) && !defined('AtLogin'))
 {
 	unset($_SESSION['REDIRECT_AFTER_LOGIN']);
 }

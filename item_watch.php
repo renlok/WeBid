@@ -29,7 +29,7 @@ if (isset($_GET['add']) && !empty($_GET['add']))
 	$add_id = intval($_GET['add']);
 	// Check if this item is not already added
 	$items = trim($user->user_data['item_watch']);
-	$match = strstr($items, $add_id);
+	$match = strstr($items, strval($add_id));
 
 	if (!$match)
 	{
@@ -51,7 +51,7 @@ if (isset($_GET['delete']) && !empty($_GET['delete']))
 	$auc_id = explode(' ', $items);
 	for ($j = 0; $j < count($auc_id); $j++)
 	{
-		$match = strstr($auc_id[$j], $_GET['delete']);
+		$match = strstr($auc_id[$j], strval($_GET['delete']));
 		if ($match)
 		{
 			$item_watch = $item_watch;

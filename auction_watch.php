@@ -63,7 +63,7 @@ if (isset($_GET['delete']))
 	$auction_watch = '';
 	for ($j = 0; $j < count($auc_id); $j++)
 	{
-		$match = strstr($auc_id[$j], $_GET['delete']);
+		$match = strstr($auc_id[$j], strval($_GET['delete']));
 		if ($match)
 		{
 			$auction_watch = $auction_watch;

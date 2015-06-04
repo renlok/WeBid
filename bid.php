@@ -56,9 +56,10 @@ function get_increment($val, $input_check = true)
 
 	if ($input_check)
 		$val = $system->input_money($val);
+	// get the increment value for the current bid
 	$query = "SELECT increment FROM " . $DBPrefix . "increments 
-			WHERE ((low <= :val AND high >= :val)
-			OR (low < :val AND high < :val)) ORDER BY increment DESC";
+			WHERE low <= :val AND high >= :val
+			ORDER BY increment DESC";
 	$params = array();
 	$params[] = array(':val', $val, 'float');
 	$db->query($query, $params);

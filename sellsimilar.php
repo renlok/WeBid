@@ -138,8 +138,7 @@ if (!isset($_POST['action']))
 			}
 		}
 	}
-
-	if (isset($_GET['sellsimilar']))
+	else
 	{
 		$_SESSION['SELL_auction_id']	= '';
 		$_SESSION['SELL_action']	= '';

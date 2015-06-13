@@ -139,6 +139,13 @@ if (!isset($_POST['action']))
 		}
 	}
 
+	if (isset($_GET['sellsimilar']))
+	{
+		$_SESSION['SELL_auction_id']	= '';
+		$_SESSION['SELL_action']	= '';
+		$_SESSION['action']		= '';
+	}
+
 	header('location: sell.php?mode=recall');
 }
 ?>

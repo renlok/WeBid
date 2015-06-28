@@ -16,6 +16,7 @@ include 'common.php';
 
 $NOW = time();
 $NOWB = date('Ymd');
+$user_message = '';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())
@@ -60,6 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 		$params = array();
 		$params[] = array(':removed', $removed, 'int');
 		$db->query($query, $params);
+		$user_message .= sprintf($MSG['1145'], count($_POST['O_delete']));
 	}
 }
 
@@ -164,6 +166,7 @@ $template->assign_vars(array(
 		'ORDERCOL' => $_SESSION['sa_ord'],
 		'ORDERNEXT' => $_SESSION['sa_nexttype'],
 		'ORDERTYPEIMG' => $_SESSION['sa_type_img'],
+		'USER_MESSAGE' => $user_message,
 
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_s.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_s.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',

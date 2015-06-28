@@ -684,8 +684,8 @@ switch ($_SESSION['action'])
 				'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 				'FEE_JS' => $fee_javascript,
 				// auction details
-				'AUC_TITLE' => htmlentities($title, ENT_COMPAT, $CHARSET),
-				'AUC_SUBTITLE' => htmlentities($subtitle, ENT_COMPAT, $CHARSET),
+				'AUC_TITLE' => $title,
+				'AUC_SUBTITLE' => $subtitle,
 				'AUC_DESCRIPTION' => $CKEditor->editor('description', stripslashes($description)),
 				'ITEMQTY' => $iquantity,
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid, false),

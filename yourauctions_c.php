@@ -26,6 +26,7 @@ if (!$user->logged_in)
 $NOW = time();
 $NOWB = date('Ymd');
 $catscontrol = new MPTTcategories();
+$user_message = '';
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
 $db->direct_query($query);
@@ -35,7 +36,7 @@ $relist_fee = $db->result('value');
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Delete auction
-	if (is_array($_POST['delete']))
+	if (is_array($_POST['delete']) && count($_POST['delete']) > 0)
 	{
 		foreach ($_POST['delete'] as $k => $v)
 		{
@@ -77,8 +78,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':auc_id', $v, 'int');
 			$db->query($query, $params);
 		}
+		$user_message .= sprintf($MSG['1145'], count($_POST['delete']));
 	}
-	if (is_array($_POST['sell']))
+	if (is_array($_POST['sell']) && count($_POST['sell']) > 0)
 	{
 		foreach ($_POST['sell'] as $v)
 		{
@@ -88,9 +90,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$db->query($query, $params);
 		}
 		include 'cron.php';
+		$user_message .= sprintf($MSG['1147'], count($_POST['sell']));
 	}
 	// Re-list auctions
-	if (is_array($_POST['relist']))
+	if (is_array($_POST['relist']) && count($_POST['relist']) > 0)
 	{
 		foreach ($_POST['relist'] as $k)
 		{
@@ -182,6 +185,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				header('location: pay.php?a=5');
 				exit;
 			}
+		}
+		$user_message .= sprintf($MSG['1146'], count($_POST['relist']));
+		if ($relist_fee > 0)
+		{
+			$user_message .= sprintf($MSG['1148'], $system->print_money((count($_POST['relist']) * $relist_fee), true, false));
 		}
 	}
 }
@@ -318,6 +326,7 @@ $template->assign_vars(array(
 		'ORDERTYPEIMG' => $_SESSION['ca_type_img'],
 		'RELIST_FEE' => $system->print_money($relist_fee),
 		'RELIST_FEE_NO' => $system->print_money_nosymbol($relist_fee),
+		'USER_MESSAGE' => $user_message,
 
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_c.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_c.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',

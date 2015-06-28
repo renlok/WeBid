@@ -72,8 +72,8 @@ if ($db->numrows() == 0)
 else
 {
 	// Retrieve the translated category name
-	$par_id = $category['parent_id'];
-	$current_cat_name = $category_names[$par_id];
+	$cat_id = $category['cat_id'];
+	$current_cat_name = $category_names[$cat_id];
 	$TPL_categories_string = '';
 	$crumbs = $catscontrol->get_bread_crumbs($category['left_id'], $category['right_id']);
 	for ($i = 0; $i < count($crumbs); $i++)

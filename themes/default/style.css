@@ -68,7 +68,7 @@ td {
 }
 
 .padding {
-	margin: 15px;
+	margin: 15px 15px 15px 30px;
 }
 
 .padtb {
@@ -278,6 +278,12 @@ a:hover {
 	background: #FFF6BF url(img/error.png) no-repeat 3px;
 }
 
+.success-box {
+	color: #62B548;
+	border-bottom: 1px solid #D0F1A6;
+	background: #E5F8CE url(images/accept.png) no-repeat 3px;
+}
+
 .info-box, .error-box, .warning-box, .success-box {
 	padding: 4px 0 4px 22px;
 	margin: 3px 0;
@@ -297,4 +303,8 @@ a:hover {
 
 .grayfont {
 	color: #dcdcdc;
+}
+
+.content {
+	margin-bottom:25px;
 }

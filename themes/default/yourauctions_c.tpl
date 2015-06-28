@@ -34,26 +34,20 @@ $(document).ready(function() {
 	});
 });
 </script>
+<!-- IF USER_MESSAGE ne '' -->
+<div class="success-box">{USER_MESSAGE}</div>
+<!-- ENDIF -->
+<!-- IF B_RELIST_FEE -->
+<div class="plain-box">{L_437}: {RELIST_FEE} - {L_189}: <span id="to_pay">0.00</span></div>
+<!-- ENDIF -->
 <form name="closed" method="post" action="" id="processdel">
 <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td align="right">
-			<dl class="tabs">
-				<dd><a href="yourauctions_p.php">{L_25_0115}</a></dd>
-				<dd><a href="yourauctions.php">{L_619}</a></dd>
-				<dd><a href="yourauctions_s.php">{L_2__0056}</a></dd>
-				<dd><a href="yourauctions_sold.php">{L_25_0119}</a></dd>
-			</dl>
-		</td>
-        <td>
-<!-- IF B_RELIST_FEE -->
-            {L_437}: {RELIST_FEE} - {L_189}: <span id="to_pay">0.00</span>
-<!-- ENDIF -->
-        </td>
-	</tr>
-</table>
-
+<dl class="tabs">
+	<dd><a href="yourauctions_p.php">{L_25_0115}</a></dd>
+	<dd><a href="yourauctions.php">{L_619}</a></dd>
+	<dd><a href="yourauctions_s.php">{L_2__0056}</a></dd>
+	<dd><a href="yourauctions_sold.php">{L_25_0119}</a></dd>
+</dl>
 <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
 	<tr>
 		<td class="titTable1" width="40%">

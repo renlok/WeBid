@@ -86,7 +86,7 @@ class Securimage {
 	 *
 	 * @var int
 	 */
-	var $image_width = 175;
+	var $image_width = 250;
 
 	/**
 	 * The desired width of the CAPTCHA image.

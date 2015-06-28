@@ -166,7 +166,7 @@ $ERR_5001 = "Messages to show cannot be zero";
 $ERR_5002 = "You must select at least one statistic type (accesses, browsers &amp; platforms, by country)";
 $ERR_5014 = "Subject or message missing";
 $ERR_5045 = "The reserve price cannot be less than the minimum bid";
-$ERR_5046 = "The buy now price cannot be less than the minimum bid and/or the reserve price";
+$ERR_5046 = "The buy now price must be greater than the minimum bid and/or the reserve price";
 $ERR_25_0001 = "Please choose a sub-category";
 $ERR_25_0002 = "<p>URL file-access is disabled on your server so WeBid is unable to run the version check</p>";
 
@@ -1163,6 +1163,17 @@ $MSG['1141'] = 'Used <b>only</b> for SMTP mail';
 $MSG['1142'] = "Before you can set up any fees you must set up at least one account where the fees can be paid to, to do so simply add your payment info into the corresponding boxes below";
 $MSG['1143'] = "Here you setup which payment gateways you want to allow users to use";
 $MSG['1144'] = "Before you can set fees you need to of set up at least one method of payment. You can do this via <a href=\"fee_gateways.php\">payment gateways</a>.";
+
+// yourauctions pages
+$MSG['1145'] = "<p>You have successfully deleted %s auction(s)</p>";
+$MSG['1146'] = "<p>You have successfully re-listed %s auction(s)</p>";
+$MSG['1147'] = "<p>You have successfully sold %s auction(s)</p>";
+$MSG['1148'] = "<p>A charge of %s has been made to your account</p>";
+$MSG['1149'] = "<p>You have successfully closed %s auction(s)</p>";
+$MSG['1150'] = "<p>You have successfully started %s auction(s)</p>";
+
+// sell item page
+$MSG['1151'] = "Auction fee";
 
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";

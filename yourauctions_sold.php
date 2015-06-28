@@ -24,6 +24,7 @@ if (!$user->is_logged_in())
 
 $NOW = time();
 $NOWB = date('Ymd');
+$user_message = '';
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
 $db->direct_query($query);
@@ -125,6 +126,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				header('location: pay.php?a=5');
 				exit;
 			}
+		}
+		$user_message .= sprintf($MSG['1146'], count($_POST['relist']));
+		if ($relist_fee > 0)
+		{
+			$user_message .= sprintf($MSG['1148'], $system->print_money((count($_POST['relist']) * $relist_fee), true, false));
 		}
 	}
 }
@@ -236,6 +242,7 @@ $template->assign_vars(array(
 		'ORDERCOL' => $_SESSION['solda_ord'],
 		'ORDERNEXT' => $_SESSION['solda_nexttype'],
 		'ORDERTYPEIMG' => $_SESSION['solda_type_img'],
+		'USER_MESSAGE' => $user_message,
 
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_sold.php?PAGE=' . $PREV . '&id=' . $id . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_sold.php?PAGE=' . $NEXT . '&id=' . $id . '"><u>' . $MSG['5120'] . '</u></a>' : '',

@@ -499,7 +499,7 @@ $(document).ready(function(){
 	<!-- IF B_FEES -->
                     <tr>
 						<td align="right" width="25%" valign="middle">
-							<b>{L_263}</b>
+							<b>{L_1151}</b>
 						</td>
 						<td class="rightpan">
                         	<input type="hidden" name="fee_exact" id="fee_exact" value="{FEE_VALUE}">
@@ -619,7 +619,7 @@ $(document).ready(function(){
 			</tr>
 	<!-- IF B_FEES -->
 			<tr>
-				<td valign="top" align="right"><b>{L_263}</b> </td>
+				<td valign="top" align="right"><b>{L_1151}</b> </td>
 				<td>{FEE}</td>
 			</tr>
 	<!-- ENDIF -->

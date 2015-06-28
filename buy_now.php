@@ -151,7 +151,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	{
 		$ERR = $ERR_711;
 	}
-	// check qty
+	// check auction still has items left to buy
 	if (isset($qty) && $qty > $Auction['quantity'])
 	{
 		$ERR = $ERR_608;

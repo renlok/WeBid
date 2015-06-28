@@ -484,7 +484,7 @@ class MPTTcategories
 			}
 			else
 			{
-				$data[$k] = '`' . $k . '` = \'' . mysql_real_escape_string($v) . '\'';
+				$data[$k] = '`' . $k . '` = \'' . $v . '\'';
 			}
 		}
 		return implode(', ', $data);

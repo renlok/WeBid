@@ -59,6 +59,7 @@ $params[] = array(':auc_id', $id, 'int');
 $db->query($query, $params);
 
 $Auction = $db->result();
+
 // such auction does not exist
 if ($db->numrows() == 0)
 {
@@ -308,8 +309,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				}
 			}
 
-			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, :auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid)";
+			$query = "INSERT INTO " . $DBPrefix . "winners
+					(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped)VALUES
+					(\:auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0)";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
 			$params[] = array(':seller_id', $Auction['user'], 'int');
@@ -320,6 +322,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$params[] = array(':bf_paid', $bf_paid, 'float');
 			$params[] = array(':ff_paid', $ff_paid, 'float');
 			$db->query($query, $params);
+			$winner_id = $db->lastInsertId();
 
 			// get end string
 			$month = date('m', $Auction['ends'] + $system->tdiff);
@@ -338,7 +341,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		$buy_done = 1;
 	}
 }
-$winner_id = $db->lastInsertId();
 
 $additional_shipping = $Auction['shipping_cost_additional'] * ($qty - 1);
 $shipping_cost = ($Auction['shipping'] == 1) ? ($Auction['shipping_cost'] + $additional_shipping) : 0;

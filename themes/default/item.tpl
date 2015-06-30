@@ -163,7 +163,7 @@ $(document).ready(function() {
 						  <td width="50%" align="left">{L_023}: </td>
 						  <td align="left">{SHIPPING_COST}</td>
 						</tr>
-<!-- IF B_ADDITIONAL_SHIPPING_COST or B_BUY_NOW_ONLY-->
+<!-- IF (B_ADDITIONAL_SHIPPING_COST or B_BUY_NOW_ONLY) and B_SHOW_ADDITIONAL_SHIPPING_COST -->
 						<tr>
 						  <td width="50%" align="left">{L_350_1008}: </td>
 						  <td align="left">{ADDITIONAL_SHIPPING_COST}</td>

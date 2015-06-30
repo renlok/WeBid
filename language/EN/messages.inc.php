@@ -1174,6 +1174,7 @@ $MSG['1150'] = "<p>You have successfully started %s auction(s)</p>";
 
 // sell item page
 $MSG['1151'] = "Auction fee";
+$MSG['1152'] = "Free";
 
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";

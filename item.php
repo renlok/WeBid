@@ -515,7 +515,7 @@ $template->assign_vars(array(
 		'SUBTITLE' => $system->uncleanvars($auction_data['subtitle']),
 		'AUCTION_DESCRIPTION' => $auction_data['description'],
 		'PIC_URL' => $uploaded_path . $id . '/' . $auction_data['pict_url'],
-		'SHIPPING_COST' => $system->print_money($auction_data['shipping_cost']),
+		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $MSG['1152'],
 		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['shipping_cost_additional']),
 		'COUNTRY' => $auction_data['country'],
 		'ZIP' => $auction_data['zip'],
@@ -581,7 +581,8 @@ $template->assign_vars(array(
 		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
 		'B_HAS_QUESTIONS' => ($num_questions > 0),
 		'B_CAN_BUY' => $user->can_buy && !($start > time()),
-		'B_SHOWENDTIME' => $showendtime
+		'B_SHOWENDTIME' => $showendtime,
+		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['shipping_cost_additional'] > 0)
 		));
 
 include 'header.php';

@@ -17,7 +17,8 @@ include $include_path . 'datacheck.inc.php';
 
 $NOW = time();
 $id = intval($_REQUEST['id']);
-$bid = $_POST['bid'];
+// reformat bid to valid number
+$bid = round($system->input_money($_POST['bid']), 2);
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
 $bidder_id = $user->user_data['id'];
 $bidding_ended = false;
@@ -52,7 +53,7 @@ if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' &
 
 function get_increment($val, $input_check = true)
 {
-	global $db, $DBPrefix;
+	global $db, $DBPrefix, $system;
 
 	if ($input_check)
 		$val = $system->input_money($val);
@@ -115,9 +116,6 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 {
 	$errmsg = $ERR_058;
 }
-
-// reformat bid to valid number
-$bid = $system->input_money($bid);
 
 $Data = $db->result();
 $item_title = $system->uncleanvars($Data['title']);
@@ -291,7 +289,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		}
 		if (!$bidding_ended && !isset($errmsg) && $system->SETTINGS['proxy_bidding'] == 'y')
 		{
-			$query = "SELECT * FROM " . $DBPrefix . "proxybid p, " . $DBPrefix . "users u WHERE itemid = :item_id AND p.userid = u.id and u.suspended = 0 ORDER by bid DESC";
+			$query = "SELECT p.userid, p.bid FROM " . $DBPrefix . "proxybid p, " . $DBPrefix . "users u WHERE itemid = :item_id AND p.userid = u.id and u.suspended = 0 ORDER by bid DESC LIMIT 1";
 			$params = array();
 			$params[] = array(':item_id', $id, 'int');
 			$db->query($query, $params);
@@ -328,8 +326,9 @@ if (isset($_POST['action']) && !isset($errmsg))
 			}
 			else // This is not the first bid
 			{
-				$proxy_bidder_id = $db->result('userid');
-				$proxy_max_bid = $db->result('bid');
+				$proxy_bid_data = $db->result();
+				$proxy_bidder_id = $proxy_bid_data['userid'];
+				$proxy_max_bid = $proxy_bid_data['bid'];
 
 				if ($proxy_max_bid < $bid)
 				{
@@ -391,8 +390,9 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$params[] = array(':auc_id', $id, 'int');
 					$db->query($query, $params);
 				}
-				if ($proxy_max_bid == $bid)
+				elseif ($proxy_max_bid == $bid)
 				{
+					echo 0;
 					$cbid = $proxy_max_bid;
 					$errmsg = $MSG['701'];
 					// Update bids table
@@ -430,7 +430,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 					}
 					$next_bid = $cbid + $increment;
 				}
-				if ($proxy_max_bid > $bid)
+				elseif ($proxy_max_bid > $bid)
 				{
 					// Update bids table
 					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";

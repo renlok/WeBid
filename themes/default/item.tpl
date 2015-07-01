@@ -27,7 +27,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 <div class="content">
 	<div class="tableContent2">
-	 <br><b>{L_041}:</b> {TOPCATSPATH}<br><br>
+	 <div class="padding"><b>{L_041}:</b> {TOPCATSPATH}</div>
 	 <div class="titTable2 rounded-top rounded-bottom">
 	  <table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>

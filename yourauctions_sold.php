@@ -141,7 +141,7 @@ $query = "SELECT COUNT(a.id) AS COUNT FROM " . $DBPrefix . "auctions a, " . $DBP
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
-$TOTALAUCTIONS = $db->result();
+$TOTALAUCTIONS = $db->result('COUNT');
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] < 0 || empty($_GET['PAGE']))
 {
@@ -190,11 +190,11 @@ else
 	$_SESSION['solda_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0" alt="down"/>';
 }
 
-$query = "SELECT a.* FROM " . $DBPrefix . "auctions, " . $DBPrefix . "winners w
+$query = "SELECT a.* FROM " . $DBPrefix . "auctions a
+	LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 	WHERE a.user = :user_id
 	AND a.closed = 1
 	AND a.suspended = 0
-	AND a.id = w.auction
 	GROUP BY w.auction
 	ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT :offset, :perpage";
 $params = array();

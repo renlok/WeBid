@@ -172,6 +172,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			// log auction BIN IP
 			$system->log('user', 'BIN on Item', $user->user_data['id'], $id);
 		}
+		echo $Auction['quantity'];
 		if ($Auction['quantity'] == 1)
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, num_bids = num_bids + 1, current_bid = :buy_now WHERE id = :auc_id";
@@ -198,10 +199,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			// force close if all items sold
 			if (($Auction['quantity'] - $qty) == 0)
 			{
-				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time WHERE id = :auc_id";
+				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, current_bid = :current_bid, sold = 'y', num_bids = num_bids + 1, closed = 1 WHERE id = :auc_id";
 				$params = array();
 				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':auc_id', $id, 'int');
+				$params[] = array(':current_bid', $Auction['buy_now'], 'int');
 				$db->query($query, $params);
 			}
 			// do stuff that is important
@@ -310,8 +312,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			}
 
 			$query = "INSERT INTO " . $DBPrefix . "winners
-					(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped)VALUES
-					(\:auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0)";
+					(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped) VALUES
+					(:auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0)";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
 			$params[] = array(':seller_id', $Auction['user'], 'int');

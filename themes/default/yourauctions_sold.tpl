@@ -23,10 +23,11 @@ $(document).ready(function() {
 <div class="success-box">{USER_MESSAGE}</div>
 <!-- ENDIF -->
 <dl class="tabs">
-	<dd><a href="yourauctions_p.php">{L_25_0115}</a></dd>
 	<dd><a href="yourauctions.php">{L_619}</a></dd>
+	<dd><a href="yourauctions_p.php">{L_25_0115}</a></dd>
 	<dd><a href="yourauctions_c.php">{L_204}</a></dd>
 	<dd><a href="yourauctions_s.php">{L_2__0056}</a></dd>
+	<dd class="active"><a href="yourauctions_sold.php">{L_25_0119}</a></dd>
 </dl>
 <table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
 	<tr>

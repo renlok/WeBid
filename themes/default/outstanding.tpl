@@ -21,7 +21,7 @@
 	<td style="width: 10%; text-align: center;">{L_284}</td>
     <td style="width: 10%; text-align: center;">{L_319}</td>
     <td style="width: 10%; text-align: center;">{L_189}</td>
-    <td style="text-align: center;">&nbsp;</td>
+    <td style="text-align: center;" colspan="2">&nbsp;</td>
 </tr>
 <!-- BEGIN to_pay -->
 <tr>
@@ -34,15 +34,12 @@
     </td>
     <td style="text-align: center;">{to_pay.BID}</td>
 	<td style="text-align: center;">{to_pay.QUANTITY}</td>
-    <td style="text-align: center;">{to_pay.SHIPPING}</td>
-	<td style="text-align: center;">
-	<!-- IF to_pay.PAY_SHIPPING -->
-		{to_pay.SHIPPING} X 1 =<br>{to_pay.SHIPPING}
-		<br><br><b>{L_350_1009}</b><br>{to_pay.ADDITIONAL_SHIPPING} X {to_pay.ADDITIONAL_SHIPPING_QUANTITYS} =<br>{to_pay.ADDITIONAL_SHIPPING_COST}
-    <!-- ELSE -->
-		{to_pay.SHIPPING}
+    <td style="text-align: center;">
+		{to_pay.TOTAL_SHIPPING_COST}
+	<!-- IF to_pay.PAY_SHIPPING and to_pay.ADDITIONAL_SHIPPING_QUANTITYS ne 0 and to_pay.ADDITIONAL_SHIPPING_PLAIN ne 0 -->
+		<span class="smallspan">({to_pay.SHIPPING} X 1) + ({to_pay.ADDITIONAL_SHIPPING} X {to_pay.ADDITIONAL_SHIPPING_QUANTITYS})</span>
     <!-- ENDIF -->
-	</td> 
+	</td>
 	<td style="text-align: center;">{to_pay.TOTAL}</td>
     <td style="text-align: center; background-color: #FFFFaa;">
     	<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
@@ -52,11 +49,10 @@
         </form>
     </td>
     <td style="text-align: center; background-color: #FFFFaa;">
-    <form name="" method="post" action="{SITEURL}order_print.php" id="fees" title="Print Invoice" target="_blank">
+    <form name="" method="post" action="{SITEURL}order_print.php" id="fees" title="{L_1153}" target="_blank">
         <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-    	<input type="hidden" name="pfval" value="{to_pay.ID}">
+    	<input type="hidden" name="pfval" value="{to_pay.AUC_ID}">
 		<input type="hidden" name="pfwon" value="{to_pay.WINID}">
-		<input type="hidden" name="user_id" value="{ID}">
         <input type="submit" type="button" value="{L_1058}">
         </form>
 </td>

@@ -70,7 +70,7 @@ if ($auction)
 	$data = $db->result();
 
 	// do you have permission to view this?
-	if (!$fromadmin && $data['seller_id'] != $user->user_data['id'])
+	if (!$fromadmin && $data['seller_id'] != $user->user_data['id'] && $data['winner'] != $user->user_data['id'])
 	{
 		invalidinvoice();
 	}

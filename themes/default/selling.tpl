@@ -25,11 +25,11 @@
 		<td width="33%">
 			<a href="{SITEURL}profile.php?user_id={a.WINNERID}&auction_id={a.AUCTIONID}">{a.NICK}</a> {a.FB}
 		</td>
-		<td width="17%" align="right">
-			{a.w.BIDF}
+		<td width="17%" align="center">
+			{a.BIDF}
 		</td>
-		<td width="10%">
-			{a.w.QTY}
+		<td width="10%" align="center">
+			{a.QTY}
 		</td>
 		<td width="10%" nowrap="nowrap">
 	<!-- IF a.B_PAID -->

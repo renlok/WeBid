@@ -48,7 +48,7 @@ switch($_GET['a'])
 				FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
-				WHERE WHERE w.id = :pfval AND w.winner = :user_id";
+				WHERE w.id = :pfval AND w.winner = :user_id";
 		$params = array();
 		$params[] = array(':pfval', $_POST['pfval'], 'int');
 		$params[] = array(':user_id', $user->user_data['id'], 'int');

@@ -29,6 +29,7 @@ $(document).ready(function() {
 <form name="auctions" method="post" action="" id="processdel">
 <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <dl class="tabs">
+	<dd class="active"><a href="yourauctions.php">{L_619}</a></dd>
 	<dd><a href="yourauctions_p.php">{L_25_0115}</a></dd>
 	<dd><a href="yourauctions_c.php">{L_204}</a></dd>
 	<dd><a href="yourauctions_s.php">{L_2__0056}</a></dd>

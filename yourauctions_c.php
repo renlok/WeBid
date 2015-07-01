@@ -130,7 +130,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  ends = :ends,
 				  closed = 0,
 				  num_bids = 0,
-				  quantity = :quantity,
 				  relisted = relisted + 1,
 				  current_bid = 0,
 				  sold = 'n',
@@ -139,7 +138,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params = array();
 			$params[] = array(':starts', $NOW, 'int');
 			$params[] = array(':ends', $WILLEND, 'int');
-			$params[] = array(':quantity', $AUCTION['quantity'], 'int');
 			$params[] = array(':suspended', $suspend, 'int');
 			$params[] = array(':auc_id', $k, 'int');
 			$db->query($query, $params);

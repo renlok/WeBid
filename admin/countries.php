@@ -66,21 +66,17 @@ if (isset($_POST['act']))
 
 include $main_path . 'language/' . $language . '/countries.inc.php';
 
-$i = 1;
-while ($i < count($countries))
-{
-	$j = $i - 1;
-	// check if the country is being used by a user
-	$query = "SELECT id FROM " . $DBPrefix . "users WHERE country = '" . $countries[$i] . "' LIMIT 1";
+foreach($countries as $country) {
+    // check if the country is being used by a user
+	$query = "SELECT id FROM " . $DBPrefix . "users WHERE country = '" . $country . "' LIMIT 1";
 	$res = mysql_query($query);
 	$system->check_mysql($res, $query, __LINE__, __FILE__);
 	$USEDINUSERS = mysql_num_rows($res);
 	
 	$template->assign_block_vars('countries', array(
-			'COUNTRY' => $countries[$i],
-			'SELECTBOX' => ($USEDINUSERS == 0) ? '<input type="checkbox" name="delete[]" value="' . $countries[$i] . '">' : '<img src="../images/nodelete.gif" alt="You cannot delete this">'
+			'COUNTRY' => $country,
+			'SELECTBOX' => ($USEDINUSERS == 0) ? '<input type="checkbox" name="delete[]" value="' . $country . '">' : '<img src="../images/nodelete.gif" alt="You cannot delete this">'
 			));
-	$i++;
 }
 
 $template->assign_vars(array(

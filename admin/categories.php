@@ -198,7 +198,7 @@ if (!isset($_GET['parent']))
 else
 {
 	$parent = intval($_GET['parent']);
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = = :parent_id";
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :parent_id";
 	$params = array();
 	$params[] = array(':parent_id', $parent, 'int');
 }

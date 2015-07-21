@@ -46,19 +46,20 @@ $_SESSION['RETURN_LIST'] = 'listauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(a.id) As auctions FROM " . $DBPrefix . "auctions a WHERE a.closed = 0 " . $user_sql;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auctions = mysql_result($res, 0, 'auctions');
+$db->direct_query($query);
+$num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
-		WHERE a.closed = 0 " . $user_sql . " ORDER BY nick LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		WHERE a.closed = 0 " . $user_sql . " ORDER BY nick LIMIT :offset, :perpage";
+$params = array();
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
 $username = $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],
@@ -78,10 +79,11 @@ while ($row = mysql_fetch_assoc($res))
 // this is used when viewing a users auctions
 if ((!isset($username) || empty($username)) && $uid > 0)
 {
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . $uid;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$username = mysql_result($res, 0);
+	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $uid, 'int');
+	$db->query($query, $params);
+	$username = $db->result('nick');
 }
 
 // get pagenation

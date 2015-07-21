@@ -22,12 +22,13 @@ unset($ERR);
 
 if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
 {
-	$query = "SELECT id, nick, name, email FROM " . $DBPrefix . "users WHERE id = " . $_GET['id'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) > 0)
+	$query = "SELECT id, nick, name, email FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_GET['id'], 'int');
+	$db->query($query, $params);
+	if ($db->numrows() > 0)
 	{
-		$USER = mysql_fetch_assoc($res);
+		$USER = $db->result();
 
 		$emailer = new email_handler();
 		$emailer->assign_vars(array(
@@ -45,12 +46,13 @@ if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
 
 if (isset($_GET['payreminder']) && isset($_GET['id']) && is_numeric($_GET['id']))
 {
-	$query = "SELECT id, name, email, balance FROM " . $DBPrefix . "users WHERE id = " . $_GET['id'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) > 0)
+	$query = "SELECT id, name, email, balance FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_GET['id'], 'int');
+	$db->query($query, $params);
+	if ($db->numrows() > 0)
 	{
-		$USER = mysql_fetch_assoc($res);
+		$USER = $db->result();
 
 		$emailer = new email_handler();
 		$emailer->assign_vars(array(
@@ -119,6 +121,7 @@ else
 }
 
 // Retrieve active auctions from the database
+$params = array();
 if (isset($Q))
 {
 	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE suspended = " . $Q;
@@ -127,15 +130,17 @@ elseif (isset($_POST['keyword']))
 {
 	$keyword = $system->cleanvars($_POST['keyword']);
 	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users
-			WHERE name LIKE '%" . $keyword . "%' OR nick LIKE '%" . $keyword . "%' OR email LIKE '%" . $keyword . "%'";
+			WHERE name LIKE :name OR nick LIKE :nick OR email LIKE :email";
+	$params[] = array(':name', '%' . $keyword . '%', 'str');
+	$params[] = array(':nick', '%' . $keyword . '%', 'str');
+	$params[] = array(':email', '%' . $keyword . '%', 'str');
 }
 else
 {
 	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users";
 }
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALUSERS = mysql_result($res, 0);
+$db->query($query, $params);
+$TOTALUSERS = $db->result('COUNT');
 
 // get page limits
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
@@ -158,6 +163,7 @@ $_SESSION['RETURN_LIST'] = 'listusers.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 $PAGES = ($TOTALUSERS == 0) ? 1 : ceil($TOTALUSERS / $system->SETTINGS['perpage']);
 
+$params = array();
 if (isset($Q))
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE suspended = " . $Q;
@@ -165,18 +171,21 @@ if (isset($Q))
 elseif (isset($_POST['keyword']))
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users
-			WHERE name LIKE '%" . $keyword . "%' OR nick LIKE '%" . $keyword . "%' OR email LIKE '%" . $keyword . "%'";
+			WHERE name LIKE :name OR nick LIKE :nick OR email LIKE :email";
+	$params[] = array(':name', '%' . $keyword . '%', 'str');
+	$params[] = array(':nick', '%' . $keyword . '%', 'str');
+	$params[] = array(':email', '%' . $keyword . '%', 'str');
 }
 else
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users";
 }
 $query .= " ORDER BY nick"; // ordered by
-$query .= " LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$query .= " LIMIT :offset, :perpage";
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->result())
 {
 	$template->assign_block_vars('users', array(
 			'ID' => $row['id'],

@@ -86,9 +86,18 @@ class MPTTcategories
 		{
 			$data = array_merge($misc_data, $data);
 		}
-		$data = $this->build_sql($data);
-		$query = "INSERT INTO " . $DBPrefix . "categories SET " . $data;
-		$db->direct_query($query);
+
+		$query = "INSERT INTO " . $DBPrefix . "categories (parent_id, left_id, right_id, level, cat_name, cat_colour, cat_image)
+				VALUES (:parent, :left, :right, :level, :name, :colour, :image)";
+		$params = array();
+		$params[] = array(':parent', $data['parent_id'], 'str');
+		$params[] = array(':left', $data['left_id'], 'str');
+		$params[] = array(':right', $data['right_id'], 'str');
+		$params[] = array(':level', $data['level'], 'str');
+		$params[] = array(':name', $data['cat_name'], 'str');
+		$params[] = array(':colour', $data['cat_colour'], 'str');
+		$params[] = array(':image', $data['cat_image'], 'str');
+		$db->query($query, $params);
 
 		if(!$misc_data)
 		{

@@ -31,6 +31,13 @@
 			});
 		});
 	</script>
+    <script type="text/javascript">
+        function window_open(url,title,width,height,x,y)
+        {   
+            var window_= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+width+',height='+height;
+            open(url,title,window_);
+        }
+    </script>
 </head>
 
 <body id="{CURRENT_PAGE}">

@@ -26,11 +26,7 @@ function search_cats($parent_id, $level)
 	$catstr = '';
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
-	foreach ($tree as $k => $v)
-	{
-		$catstr .= ",\n" . $k . " => '" . $v . "'";
-	}
-	return $catstr;
+	return $tree;
 }
 
 function rebuild_cat_file()
@@ -46,28 +42,9 @@ function rebuild_cat_file()
 	}
 
 	$output = "<?php\n";
-	$output.= "$" . "category_names = array(\n";
-
-	$num_rows = count($cats);
-
-	$i = 0;
-	foreach ($cats as $k => $v)
-	{
-		$output .= "$k => '$v'";
-		$i++;
-		if ($i < $num_rows)
-			$output .= ",\n";
-		else
-			$output .= "\n";
-	}
-
-	$output .= ");\n\n";
-
-	$output .= "$" . "category_plain = array(\n0 => ''";
-
-	$output .= search_cats(0, 0);
-
-	$output .= ");\n?>";
+	$output .= "$" . "category_names = " . var_export($cats, true) . ";\n\n";
+	$output .= "$" . "category_plain = " . var_export(search_cats(0, 0), true) . ";\n";
+	$output .= "?>";
 
 	$handle = fopen ($main_path . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
@@ -90,7 +67,7 @@ if (isset($_POST['action']))
 							cat_image = :image
 							WHERE cat_id = :cat_id";
 					$params = array();
-					$params[] = array(':name', $system->cleanvars($_POST['categories'][$k]), 'str');
+					$params[] = array(':name', $_POST['categories'][$k], 'str');
 					$params[] = array(':colour', $_POST['colour'][$k], 'str');
 					$params[] = array(':image', $_POST['image'][$k], 'str');
 					$params[] = array(':cat_id', $k, 'int');
@@ -102,7 +79,7 @@ if (isset($_POST['action']))
 		if (!empty($_POST['new_category']) && isset($_POST['parent']))
 		{
 			$add_data = array(
-				'cat_name' => $system->cleanvars($_POST['new_category']),
+				'cat_name' => $_POST['new_category'],
 				'cat_colour' => $_POST['cat_colour'],
 				'cat_image' => $_POST['cat_image']
 				);
@@ -115,7 +92,7 @@ if (isset($_POST['action']))
 			{
 				foreach ($add as $v)
 				{
-					$add_data = array('cat_name' => $system->cleanvars($v));
+					$add_data = array('cat_name' => $v);
 					$catscontrol->add($_POST['parent'], 0, $add_data);
 				}
 			}
@@ -132,7 +109,7 @@ if (isset($_POST['action']))
 			$message = $MSG['843'] . '<table cellpadding="0" cellspacing="0">';
 			$names = array();
 			$counter = 0;
-			while ($row = mysql_fetch_assoc($res))
+			while ($row = $db->fetch())
 			{
 				if ($row['COUNT'] > 0 || $row['left_id'] != ($row['right_id'] - 1))
 				{
@@ -221,7 +198,7 @@ if (!isset($_GET['parent']))
 else
 {
 	$parent = intval($_GET['parent']);
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = = :parent_id";
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :parent_id";
 	$params = array();
 	$params[] = array(':parent_id', $parent, 'int');
 }

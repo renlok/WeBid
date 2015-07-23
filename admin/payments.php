@@ -51,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			payment_options = :payment_options";
 	$params = array();
-	$params[] = array(':payment_options', $system->cleanvars($system->SETTINGS['payment_options']), 'str');
+	$params[] = array(':payment_options', $system->SETTINGS['payment_options'], 'str');
 	$db->query($query, $params);
 	$ERR = $MSG['093'];
 }

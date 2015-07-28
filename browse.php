@@ -133,7 +133,7 @@ else
 		// Retrieve the translated category name
 		$row['cat_name'] = $category_names[$row['cat_id']];
 		$catimage = (!empty($row['cat_image'])) ? '<img src="' . $row['cat_image'] . '" border=0>' : '';
-		$TPL_main_value .= "\t" . '<td ' . $BG . ' WIDTH="33%">' . $catimage . '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $row['cat_id'] . '">' . $row['cat_name'] . $count_string . '</a></td>' . "\n";
+		$TPL_main_value .= "\t" . '<td ' . $BG . ' WIDTH="33%">' . $catimage . '<a class="catclass" href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $row['cat_id'] . '">' . $row['cat_name'] . $count_string . '</a></td>' . "\n";
 
 		++$cycle;
 		if ($cycle == 4)

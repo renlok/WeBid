@@ -180,12 +180,12 @@ color: #ffffff;
 display: block;
 }
 
-.catclass a:visited {
+a.catclass:visited {
   color: #ffffff;
 }
 
 
-.catclass a {
+a.catclass {
 color: #ffffff;
 }
 

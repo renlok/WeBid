@@ -21,7 +21,9 @@ include 'loggedin.inc.php';
 unset($ERR);
 
 if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
+
 {
+
 	$query = "SELECT id, nick, name, email FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $_GET['id'], 'int');
@@ -69,6 +71,7 @@ if (isset($_GET['payreminder']) && isset($_GET['id']) && is_numeric($_GET['id'])
 
 if (isset($_GET['usersfilter']))
 {
+
 	$_SESSION['usersfilter'] = $_GET['usersfilter'];
 	switch($_GET['usersfilter'])
 	{
@@ -120,7 +123,7 @@ else
 	unset($Q);
 }
 
-// Retrieve active auctions from the database
+// Retrieve active users from the database
 $params = array();
 if (isset($Q))
 {
@@ -141,7 +144,6 @@ else
 }
 $db->query($query, $params);
 $TOTALUSERS = $db->result('COUNT');
-
 // get page limits
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
 {
@@ -185,6 +187,10 @@ $query .= " LIMIT :offset, :perpage";
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $bg = '';
+
+
+$db->query($query, $params);
+
 while ($row = $db->result())
 {
 	$template->assign_block_vars('users', array(

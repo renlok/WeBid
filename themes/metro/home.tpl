@@ -7,8 +7,8 @@
     <div>
         <!-- BEGIN cat_list -->
            
-                <span class="text-shadow minor-header fg-white"  style="background-color:{cat_list.COLOUR}; width:100%;">
-                <a class="catclass fg-white" style="margin-top:10px;" href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME} {cat_list.CATAUCNUM}</a>
+                <span class="text-shadow minor-header fg-white"  width:100%;">
+                <a class="catclass fg-white" style="margin-top:10px; background-color:{cat_list.COLOUR};" href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME} {cat_list.CATAUCNUM}</a>
                 </span>
            
 <!-- END cat_list -->
@@ -19,12 +19,23 @@
 <td valign="top">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="maincolum">
     <tr>
+  <tr>
+
+   <!-- BEGIN featured -->
+ <!-- IF B_FEATURED_ITEMS -->
+        <td class="titTable4">{L_NAY_01}</td>
+    </tr>
+ <!-- ENDIF -->
+
         <td class="table2">
-        <!-- BEGIN featured -->
+ <!-- IF B_FEATURED_ITEMS -->
+
             <div style="float:left;display:block;width:180px;margin:5px;background-color:#FFFEEE;border:#CCCCCC 1px solid;padding:5px;min-height:150px;">
                 <div style="display:block;" align="center"><img src="{featured.IMAGE}"></div>
                 <div style="display:block;" align="center"><a href="{SITEURL}item.php?id={featured.ID}">{featured.TITLE}</a><br>{featured.BID}</div>
             </div>
+<!-- ENDIF -->
+
         <!-- END featured -->
         </td>
     </tr>  

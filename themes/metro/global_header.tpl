@@ -86,10 +86,13 @@ $(document).ready(function() {
 
 	<div class="app-bar bg-grayDarker" style="margin-bottom: 10px;" >
 		<form name="search" action="{SITEURL}search.php" method="get" style="padding-left: 20px;">
-			<div class="input-control"> {SELECTION_BOX}</div>
+			<select class="input-control"> {SELECTION_BOX} </select>
 				<div class="input-control text" data-role="input">
 					<input type="text" name="q" size="100">
 					<button class="button"><span class="mif-search" type="submit"></span></button>
 				</div>&nbsp;&nbsp;<a href="{SITEURL}adsearch.php" style="color:#ffffff;">{L_464}</a>
+
+
+
         </form>
 	</div>

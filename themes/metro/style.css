@@ -168,10 +168,14 @@ td {
 	clear: both;
 	visibility: hidden;
 }
+
+.cattd{
+	border:10px solid white;
+}
+
 .catclass{
 font-family: 'Segoe UI', 'Open Sans', sans-serif, serif;
 font-size: 16.8000011444092px;
-background-color: #3399ff;
 font-style: normal;
 font-weight: normal;
 padding: 10px;

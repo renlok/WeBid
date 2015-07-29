@@ -1,7 +1,0 @@
-#################
-cache/
-includes/
-themes/metro/img/site_logo.png
-themes/metro/img/site*.jpg
-themes/metro/img/logo.png
-.gitignore

@@ -57,13 +57,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params[] = array(':moneyformat', $_POST['moneyformat'], 'int');
 		$params[] = array(':moneydecimals', $_POST['moneydecimals'], 'int');
 		$params[] = array(':moneysymbol', $_POST['moneysymbol'], 'int');
+		$db->query($query,$params);
 
 		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
 		$system->SETTINGS['moneyformat'] = $_POST['moneyformat'];
 		$system->SETTINGS['moneydecimals'] = $_POST['moneydecimals'];
 		$system->SETTINGS['moneysymbol'] = $_POST['moneysymbol'];
 		$ERR = $MSG['553'];
+
 	}
+
 }
 
 $link = "javascript:window_open('" . $system->SETTINGS['siteurl'] . "converter.php','incre',650,250,30,30)";

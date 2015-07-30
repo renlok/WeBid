@@ -12,6 +12,15 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
+/*
+modifications 2015-07-29 - Nozlaf
+added option to hide shipping because I dont need it and I am sure others wont
+
+requires modification to the database
+
+*/
+
+
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
@@ -59,7 +68,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				  picturesgallery = :picturesgallery,
 				  maxpictures = :maxpictures,
 				  maxuploadsize = :maxuploadsize,
-				  thumb_show = :thumb_show";
+				  thumb_show = :thumb_show,
+				  shipping = :shipping";
+		
 		$params = array();
 		$params[] = array(':proxy_bidding', ynbool($_POST['proxy_bidding']), 'str');
 		$params[] = array(':edit_starttime', $_POST['edit_starttime'], 'int');
@@ -79,6 +90,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params[] = array(':maxpictures', $_POST['maxpictures'], 'int');
 		$params[] = array(':maxuploadsize', ($_POST['maxpicturesize'] * 1024), 'int');
 		$params[] = array(':thumb_show', $_POST['thumb_show'], 'int');
+	        $params[] = array(':shipping', $_POST['shipping'], 'int');
+
 		$db->query($query, $params);
 		$ERR = $MSG['5088'];
 	}
@@ -93,6 +106,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['extra_cat'] = $_POST['extra_cat'];
 	$system->SETTINGS['autorelist'] = $_POST['autorelist'];
 	$system->SETTINGS['autorelist_max'] = $_POST['autorelist_max'];
+        $system->SETTINGS['shipping'] = $_POST['shipping'];
 
 	$system->SETTINGS['ae_status'] = $_POST['status'];
 	$system->SETTINGS['ae_timebefore'] = $_POST['timebefore'];
@@ -117,6 +131,9 @@ loadblock($MSG['797'], $MSG['798'], 'yesno', 'subtitle', $system->SETTINGS['subt
 loadblock($MSG['799'], $MSG['800'], 'yesno', 'extra_cat', $system->SETTINGS['extra_cat'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['849'], $MSG['850'], 'yesno', 'autorelist', $system->SETTINGS['autorelist'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['851'], $MSG['852'], 'days', 'autorelist_max', $system->SETTINGS['autorelist_max']);
+loadblock($MSG['SDF_01'], $MSG['SDF_02'], 'batch', 'shipping', $system->SETTINGS['shipping'], array($MSG['030'], $MSG['029']));
+
+
 
 // auction extension options
 loadblock($MSG['2_0032'], '', '', '', '', array(), true); // :O

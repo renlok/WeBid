@@ -102,6 +102,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `minimum_bid` double(16,2) default '0',
   `shipping_cost` double(16,2) default '0',
   `shipping_cost_additional` double(16,2) default '0',
+  `shipping` char(1) default NULL,
   `reserve_price` double(16,2) default '0',
   `buy_now` double(16,2) default '0',
   `auction_type` char(1) default NULL,
@@ -127,7 +128,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `current_fee` double(16,2) default '0',
   `tax`  enum('y','n') NOT NULL default 'n',
   `taxinc`  enum('y','n') NOT NULL default 'y',
-  `shipping` tinyint(1) default NULL,
   PRIMARY KEY  (`id`),
   KEY `id` (`id`)
 );";
@@ -1006,7 +1006,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqs_translated` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (2, 'EN', 'Registering', 'To register as a new user, click on Register at the top of the window. You will be asked for your name, a username and password, and contact information, including your email address.\r\n\r\n<B>You must be at least 18 years of age to register.</B>!');";
-$query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (2, 'ES', 'Registrarse', 'Para registrar un nuevo usuario, haz click en <B>Reg&iacute;Â­strate</B> en la parte superior de la pantalla. Se te preguntar&aacute;n tus datos personales, un nombre de usuario, una contrase&ntilde;a e informacion de contacto como la direccion e-mail.\r\n\r\n<B>�Tienes que ser mayor de edad para poder registrarte!</B>');";
+$query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (2, 'ES', 'Registrarse', 'Para registrar un nuevo usuario, haz click en <B>Reg&iacute;ÃÂ­strate</B> en la parte superior de la pantalla. Se te preguntar&aacute;n tus datos personales, un nombre de usuario, una contrase&ntilde;a e informacion de contacto como la direccion e-mail.\r\n\r\n<B>¡Tienes que ser mayor de edad para poder registrarte!</B>');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (4, 'EN', 'Item Watch', '<b>Item watch</b> notifies you when someone bids on the auctions that you have added to your Item Watch. ');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (4, 'ES', 'En la Mira', '<i><b>En la Mira</b></i> te env&iacute;a una notificacion por e-mail, cada vez que alguien puja en una de las subastas que has a&ntilde;adido a tu lista <i>En la Mira</i>. ');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (6, 'ES', 'Auction Watch', '<i><B>Auction Watch</b></i> es tu asistente para saber cuando se abre una subasta cuya descripcion contiene palabras clave de tu interes.\r\n\r\nPara usar esta opcion inserta las palabras clave en las que est&aacute;s interesado en la lista de <i>Auction Watch</i>. Todas las palabras claves deben estar separadas por un espacio. Cuando estas palabras claves aparezcan en alg&uacute;n t&iacute;tulo o descripcion de subasta, recibir&aacute;s un e-mail con la informacion de que una subasta que contiene tus palabras claves ha sido creada. Tambi&aacute;n puedas agregar el nombre del usuario como palabra clave. ');";

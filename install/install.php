@@ -16,6 +16,9 @@ session_start();
 include 'functions.php';
 define('InInstaller', 1);
 
+if (!extension_loaded('pdo_mysql')){
+echo 'Sorry mysql support is not enabled please ensure php5 mysql pdo is loaded before proceeding';
+}
 $main_path = getmainpath();
 $thisversion = this_version();
 echo print_header(false);

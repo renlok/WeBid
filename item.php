@@ -582,6 +582,7 @@ $template->assign_vars(array(
 		'B_HAS_QUESTIONS' => ($num_questions > 0),
 		'B_CAN_BUY' => $user->can_buy && !($start > time()),
 		'B_SHOWENDTIME' => $showendtime,
+		 'B_SHIPPING' => ($system->SETTINGS['shipping'] == 1),
 		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['shipping_cost_additional'] > 0)
 		));
 

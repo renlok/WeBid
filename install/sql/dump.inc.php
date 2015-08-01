@@ -107,7 +107,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `auction_type` char(1) default NULL,
   `duration` varchar(7) default NULL,
   `increment` double(8,2) NOT NULL default '0',
-  `shipping` char(1) default NULL,
   `payment` tinytext,
   `international` char(1) default NULL,
   `ends` varchar(14) default NULL,
@@ -128,6 +127,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `current_fee` double(16,2) default '0',
   `tax`  enum('y','n') NOT NULL default 'n',
   `taxinc`  enum('y','n') NOT NULL default 'y',
+  `shipping` tinyint(1) default NULL,
   PRIMARY KEY  (`id`),
   KEY `id` (`id`)
 );";

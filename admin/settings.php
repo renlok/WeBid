@@ -39,6 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				adminmail = '" . mysql_real_escape_string($_POST['adminmail']) . "',
 				siteurl = '" . mysql_real_escape_string($_POST['siteurl']) . "',
 				copyright = '" . $system->cleanvars($_POST['copyright']) . "',
+				logo = '" . mysql_real_escape_string($_POST['logo']) . "',
 				cron = " . intval($_POST['cron']) . ",
 				archiveafter = " . intval($_POST['archiveafter']) . ",
 				cache_theme = '" . $_POST['cache_theme'] . "',
@@ -52,7 +53,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['adminmail'] = $_POST['adminmail'];
 	$system->SETTINGS['siteurl'] = $_POST['siteurl'];
 	$system->SETTINGS['copyright'] = $_POST['copyright'];
-
+	$system->SETTINGS['logo'] = $_POST['logo'];
 	$system->SETTINGS['cron'] = $_POST['cron'];
 	$system->SETTINGS['archiveafter'] = $_POST['archiveafter'];
 
@@ -67,6 +68,7 @@ loadblock($MSG['527'], $MSG['535'], 'text', 'sitename', $system->SETTINGS['siten
 loadblock($MSG['528'], $MSG['536'], 'text', 'siteurl', $system->SETTINGS['siteurl']);
 loadblock($MSG['540'], $MSG['541'], 'text', 'adminmail', $system->SETTINGS['adminmail']);
 loadblock($MSG['191'], $MSG['192'], 'text', 'copyright', $system->SETTINGS['copyright']);
+loadblock($MSG['531'], $MSG['556'], 'text', 'logo', $system->SETTINGS['logo']);
 
 // batch settings
 loadblock($MSG['348'], '', '', '', '', array(), true);

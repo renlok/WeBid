@@ -357,6 +357,8 @@ switch ($_SESSION['action'])
 				exit;
 			}
 			$template->assign_vars(array(
+					'ATYPE_PLAIN' => '', // to suppress an error
+					'ERROR' => '', // to suppress an error
 					'TITLE' => $MSG['028'],
 					'PAGE' => 3,
 					'AUCTION_ID' => $auction_id,

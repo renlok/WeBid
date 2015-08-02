@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// reset the bn_only blockers
 	if ($bn_only_percent > $system->SETTINGS['bn_only_percent'])
 	{
-		$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE id = bn_only = 'n'";
+		$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE bn_only = 'n'";
 		$db->direct_query($query);
 	}
 	$query = "UPDATE " . $DBPrefix . "settings SET

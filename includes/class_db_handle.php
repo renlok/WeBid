@@ -160,7 +160,7 @@ class db_handle
 	private function clean_params($query, $params)
 	{
 		// find the vars set in the query
-		preg_match_all("(:[a-zA-Z_]+)", $query, $set_params);
+		preg_match_all("(:[a-zA-Z0-9_]+)", $query, $set_params);
 		//print_r("params" . $query);
 		//print_r($params);
 		//print_r("set_params");

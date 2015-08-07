@@ -1,32 +1,3 @@
-<?php
-/***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
- *   site					: http://www.webidsupport.com/
- ***************************************************************************/
-
-/***************************************************************************
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version. Although none of the code may be
- *   sold. If you have been sold this script, get a refund.
- ***************************************************************************/
-
-if (!defined('InWeBid')) exit();
-
-// CHARSET ENCODING
-// Change the charset according to the language used in this file.
-$CHARSET = "ISO-8859-1";
-// DOCUMENT DIRECTION
-// Change the $DOCDIR variable below according to the document direction needed
-// by the language you are using.
-// Possible values are:
-// - ltr (default) - means left-to-right document (almost any language)
-// - rtl - means right-to-left document (i.e. arabic, hebrew, ect).
-$DOCDIR = "ltr";
-// Error messages and user interface messages are below. Translate them taking care of leaving
-// The PHP and HTML tags unchanged.
-// Error messages =============================================================
 $ERR_001 = "Database access error. Please contact the site administrator.";
 $ERR_002 = "Name missing";
 $ERR_003 = "Username missing";
@@ -104,7 +75,6 @@ $ERR_078 = 'You must agree to the Terms and Conditions';
 $ERR_079 = 'The Shipping fee price you inserted is not correct';
 $ERR_080 = 'Additional Shipping price you inserted is not correct';
 $ERR_081 = "The balance you entered is not valid";
-
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
 $ERR_102 = "User does not exist";
@@ -938,7 +908,6 @@ $MSG['867'] = 'Pick up only';
 $MSG['868'] = ' each';
 $MSG['869'] = 'Sale Date';
 $MSG['870'] = 'You have sold %s items';
-
 $MSG['888'] = 'Error log is currently empty';
 $MSG['889'] = "Error Log Purged";
 $MSG['890'] = "Purge Log";
@@ -1032,8 +1001,6 @@ $MSG['1029'] = "Counters updated";
 $MSG['1030'] = "Re-sync the user, auction and bid counters";
 $MSG['1031'] = "Re-sync Counters";
 $MSG['1032'] = "no winner";
-
-// Invoices & tax system
 $MSG['1033'] = 'Packing Slip';
 $MSG['1034'] = 'Auction ID';
 $MSG['1035'] = 'Order/Invoice';
@@ -1062,11 +1029,7 @@ $MSG['1057'] = 'List invoices';
 $MSG['1058'] = 'View invoice';
 $MSG['1059'] = 'Invoice List';
 $MSG['1060'] = 'Invalid Invoice.';
-
-// admin general
 $MSG['1061'] = 'Notes';
-
-// admin help page
 $MSG['1062'] = 'Get Support';
 $MSG['1063'] = 'Support forums';
 $MSG['1064'] = 'If you any problems or questions head over our great support forum and get help from one of our many active users.';
@@ -1750,8 +1713,8 @@ $MSG['30_0181'] = "Message Board";
 $MSG['30_0208'] = "Place bid >>";
 $MSG['30_0209'] = "Meet the seller";
 $MSG['30_0210'] = "*When items relating to these key words are listed you will be notified via email";
-$MSG['30_0211'] = "You are running an old version you can download the latest version from <a href='http://sourceforge.net/project/showfiles.php?group_id=181393'>here</a>";
-$MSG['30_0212'] = "You are running the latest version";
+$MSG['30_0211'] = "You are not running the current stable version you can download the latest stable version from <a href='http://sourceforge.net/project/showfiles.php?group_id=181393'>here</a>";
+$MSG['30_0212'] = "You are running the latest stable version";
 $MSG['30_0213'] = "No feedback needs leaving";
 $MSG['30_0214'] = "WeBid Version";
 $MSG['30_0110'] = "Shipping";
@@ -1760,7 +1723,5 @@ $MSG['350_1008'] = "Additional Shipping";
 $MSG['350_1009'] = "Additional Shipping Cost";
 $MSG['RPT_22'] = 'User ID'; 
 $MSG['RPT_23'] = '(leave blank for all)';
-
 $MSG['NAY_01'] = 'Featured Items';
 $MSG['NAY_02'] = 'All Items';
-?>

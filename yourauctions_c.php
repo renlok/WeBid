@@ -36,7 +36,7 @@ $relist_fee = $db->result('value');
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Delete auction
-	if (is_array($_POST['delete']) && count($_POST['delete']) > 0)
+	if (isset($_POST['delete']) && is_array($_POST['delete']) && count($_POST['delete']) > 0)
 	{
 		foreach ($_POST['delete'] as $k => $v)
 		{
@@ -80,7 +80,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		$user_message .= sprintf($MSG['1145'], count($_POST['delete']));
 	}
-	if (is_array($_POST['sell']) && count($_POST['sell']) > 0)
+	if (isset($_POST['sell']) && is_array($_POST['sell']) && count($_POST['sell']) > 0)
 	{
 		foreach ($_POST['sell'] as $v)
 		{
@@ -93,7 +93,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$user_message .= sprintf($MSG['1147'], count($_POST['sell']));
 	}
 	// Re-list auctions
-	if (is_array($_POST['relist']) && count($_POST['relist']) > 0)
+	if (isset($_POST['relist']) && is_array($_POST['relist']) && count($_POST['relist']) > 0)
 	{
 		foreach ($_POST['relist'] as $k)
 		{

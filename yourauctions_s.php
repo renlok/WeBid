@@ -29,7 +29,7 @@ if (!$user->is_logged_in())
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 {
-	if (is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
+	if (isset($_POST['O_delete']) && is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
 	{
 		foreach ($_POST['O_delete'] as $k => $v)
 		{

@@ -318,7 +318,7 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 			'WID' => $_GET['wid'],
 			'SID' => $_GET['sid'],
 			'WS' => $ws,
-			'FEEDBACK' => $secTPL_feedback,
+			'FEEDBACK' => (isset($secTPL_feedback)) ? $secTPL_feedback : '',
 			'RATE1' => (!isset($_POST['TPL_rate']) || $_POST['TPL_rate'] == 1) ? ' checked="true"' : '',
 			'RATE2' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == 0) ? ' checked="true"' : '',
 			'RATE3' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == -1) ? ' checked="true"' : '',

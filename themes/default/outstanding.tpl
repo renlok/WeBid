@@ -15,7 +15,7 @@
 </table>
 
 <table style="width: 100%; border: 0; text-align:center;" cellspacing="1" cellpadding="4">
-<tr style="background-color:{TBLHEADERCOLOUR}">
+<tr>
     <td style="width: 45%; text-align: center;">{L_018}</td>
     <td style="width: 10%; text-align: center;">{L_847}</td>
 	<td style="width: 10%; text-align: center;">{L_284}</td>

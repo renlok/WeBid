@@ -6,20 +6,22 @@ $(document).ready(function(){
 	//sell javascript
 	$("#bn_only_no").click(function(){
 		$(".additional_shipping_costhide").hide();
-		$("#additional_shipping_cost").attr("disabled","disabled");
-		$("#min_bid").removeAttr("disabled");
-		$("#reserve_price").removeAttr("disabled");
-		$("#iqty").attr("disabled","disabled");
-		$("#iqty").val("1");
+	        $("#additional_shipping_cost").attr("disabled","disabled");
+	        $("#min_bid").removeAttr("disabled");
+	        $("#reserve_price").removeAttr("disabled");
+	        $("#with_reserve_yes").attr("checked", "checked");
+	        $("#iqty").attr("disabled","disabled");
+	        $("#iqty").val("1");
 	});
 	$("#bn_only_yes").click(function(){
 		$(".additional_shipping_costhide").show();
-		$("#additional_shipping_cost").removeAttr("disabled","disabled");
-		$("#min_bid").attr("disabled","disabled");
-		$("#reserve_price").attr("disabled","disabled");
-		$("#iqty").removeAttr("disabled");
-		$("#bn_yes").attr("checked", "checked");
-		$("#bn").removeAttr("disabled");
+	        $("#additional_shipping_cost").removeAttr("disabled","disabled");
+	        $("#min_bid").attr("disabled","disabled");
+	        $("#reserve_price").attr("disabled","disabled");
+	        $("#with_reserve_no").attr("checked", "checked");
+	        $("#iqty").removeAttr("disabled");
+	        $("#bn_yes").attr("checked", "checked");
+	        $("#bn").removeAttr("disabled");
 	});
 	$("#reserve_price").focus(function(){
 		$("#with_reserve_yes").attr("checked", "checked");

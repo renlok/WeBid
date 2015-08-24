@@ -9,7 +9,6 @@ $(document).ready(function(){
 	        $("#additional_shipping_cost").attr("disabled","disabled");
 	        $("#min_bid").removeAttr("disabled");
 	        $("#reserve_price").removeAttr("disabled");
-	        $("#with_reserve_yes").attr("checked", "checked");
 	        $("#iqty").attr("disabled","disabled");
 	        $("#iqty").val("1");
 	});

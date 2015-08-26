@@ -133,10 +133,9 @@
 </div>
 <!-- ENDIF -->
 
-<br>
-<div style="position: absolute; right: 20%;">
-        <form><input id="printpagebutton" type="button" value="Print this page" onclick="printpage()"/></form>
-		</div>
+<div style="position: absolute; right: 20%; margin-top:15px;">
+	<form><input id="printpagebutton" type="button" value="{L_1060a}" onclick="printpage()"/></form>
+</div>
 
 
 <script type="text/javascript">

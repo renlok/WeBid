@@ -1062,6 +1062,7 @@ $MSG['1057'] = 'List invoices';
 $MSG['1058'] = 'View invoice';
 $MSG['1059'] = 'Invoice List';
 $MSG['1060'] = 'Invalid Invoice.';
+$MSG['1060a'] = 'Print this page';
 
 // admin general
 $MSG['1061'] = 'Notes';

@@ -204,5 +204,20 @@
 </div>
 <!-- ENDIF -->
 
+<br>
+<div style="position: absolute; right: 20%;">
+        <form><input id="printpagebutton" type="button" value="Print this page" onclick="printpage()"/></form>
+		</div>
+
+
+<script type="text/javascript">
+    function printpage() {        
+        var printButton = document.getElementById("printpagebutton");         
+        printButton.style.visibility = 'hidden';        
+        window.print()
+        printButton.style.visibility = 'visible';
+    }
+</script>
+
 </body>
 </html>

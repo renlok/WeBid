@@ -148,7 +148,7 @@ $ERR_624 = "No message to post";
 $ERR_700 = "Incorrect date format";
 $ERR_701 = "Invalid quantity (must be >0).";
 $ERR_702 = "Current Bid must be greater than minimum bid.";
-$ERR_704 = "<br>You may not leave feedback about this user! <br>This auction is not closed!";
+$ERR_704 = "You may not leave feedback about this user! <br>This auction is not closed!";
 $ERR_705 = "You may only leave feedback, if you have a closed transaction with this user!";
 $ERR_706 = "<i>Max. number of pictures</i> must be numeric.";
 $ERR_707 = "<i>Max picture size</i> cannot be zero.";
@@ -1369,7 +1369,7 @@ $MSG['5495'] = "for each ";
 $MSG['5506'] = "Positive feedback: ";
 $MSG['5507'] = '<span style="color:#CD0000;">Negative feedback:</span> ';
 $MSG['5508'] = "Member since ";
-$MSG['5509'] = "Feedback times ";
+$MSG['5509'] = "Feedback received ";
 $MSG['_0001'] = "Under Maintenance Page";
 $MSG['_0002'] = "You can temporary disable the access to your site if necessary.<br>
 			In Maintenance mode only one user will have access to it. After you registered a user via <a target=\"_new\" href=\"../register.php\">the usual users registration page</a>

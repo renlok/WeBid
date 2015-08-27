@@ -45,9 +45,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 else
 {
 	$query = "SELECT * FROM " . $DBPrefix . "statssettings";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$statssettings = mysql_fetch_assoc($res);
+	$db->direct_query($query);
+	$statssettings = $db->result();
 }
 
 loadblock('', $MSG['5144']);

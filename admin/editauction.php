@@ -271,10 +271,9 @@ $auction_data = mysql_fetch_assoc($res);
 // DURATIONS
 $dur_list = ''; // empty string to begin HTML list
 $query = "SELECT days, description FROM " . $DBPrefix . "durations";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$dur_list .= '<option value="' . $row['days'] . '"';
 	if ($row['days'] == $auction_data['duration'])
@@ -332,9 +331,8 @@ if (file_exists('../' . $uploaded_path . $auc_id))
 $payment = explode(', ', $auction_data['payment']);
 $payment_methods = '';
 $query = "SELECT * FROM " . $DBPrefix . "gateways";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateways_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$gateways_data = $db->result();
 $gateway_list = explode(',', $gateways_data['gateways']);
 foreach ($gateway_list as $v)
 {

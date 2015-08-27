@@ -23,14 +23,24 @@ $user_id = intval($_REQUEST['user']);
 
 if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 {
-	$query = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id = " . $id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user_id;
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$fb_data = mysql_fetch_assoc($res);
-	$query = "UPDATE " . $DBPrefix . "users SET rate_sum = " . $fb_data['SUM'] . ", rate_num = " . $fb_data['NUM'] . " WHERE id = " . $user_id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	// delete the feedback entry
+	$query = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id = :feedback_id";
+	$params = array();
+	$params[] = array(':feedback_id', $id, 'int');
+	$db->query($query, $params);
+	// get the current feedback count
+	$query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $user_id, 'int');
+	$db->query($query, $params);
+	$fb_data = $db->result();
+	// update feedback count
+	$query = "UPDATE " . $DBPrefix . "users SET rate_sum = :rate_sum, rate_num = :rate_num WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':rate_sum', $fb_data['SUM'], 'int');
+	$params[] = array(':rate_num', $fb_data['NUM'], 'int');
+	$params[] = array(':user_id', $user_id, 'int');
+	$db->query($query, $params);
 	header('location: userfeedback.php?id=' . $user_id);
 	exit;
 }

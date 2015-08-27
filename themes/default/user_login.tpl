@@ -9,7 +9,7 @@
 		</div>
 <!-- ENDIF -->
 		<div class="padding centre">
-        <table width="676" border="0" cellpadding="6">
+        <table width="676" border="0" cellpadding="6" class="centre">
             <tr>
                 <td width="301">
                     <h2>{L_862}</h2>

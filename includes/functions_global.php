@@ -267,7 +267,7 @@ class global_class
 			$str = $this->input_money($str, $from_database);
 		}
 
-		return number_format($str, $this->SETTINGS['moneydecimals'], $a, $b);
+		return number_format(floatval($str), $this->SETTINGS['moneydecimals'], $a, $b);
 	}
 }
 

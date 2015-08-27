@@ -96,7 +96,7 @@ while ($row = $db->fetch())
 			'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
-			'TITLE' => $row['title'],
+			'TITLE' => $system->uncleanvars($row['title']),
 			'BNIMG' => get_lang_img(($row['bn_only'] == 'n') ? 'buy_it_now.gif' : 'bn_only.png'),
 			'BNVALUE' => $row['buy_now'],
 			'BNFORMAT' => $system->print_money($row['buy_now']),

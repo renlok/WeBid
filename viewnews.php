@@ -20,11 +20,14 @@ if ($id > 0)
 {
 	$query = "SELECT n.title As t, n.content As c, n.new_date, t.* FROM " . $DBPrefix . "news n
 			LEFT JOIN " . $DBPrefix . "news_translated t ON (t.id = n.id)
-			WHERE n.id = " . $id . " AND t.lang = '" . $language . "' AND n.suspended != 1";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+			WHERE n.id = :news_id AND t.lang = :language AND n.suspended != 1";
+	$params = array(
+		array(':news_id', $id, 'int'),
+		array(':language', $language, 'str'),
+	);
+	$db->query($query, $params);
 
-	$new = mysql_fetch_array($res);
+	$new = $db->result();
 	if (!empty($new['title']) && !empty($new['content']))
 	{
 		$title = $new['title'];
@@ -44,11 +47,13 @@ else
 	// Build news index
 	$query = "SELECT n.title As t, n.new_date, t.* FROM " . $DBPrefix . "news n
 			LEFT JOIN " . $DBPrefix . "news_translated t ON (t.id = n.id)
-			WHERE t.lang = '" . $language . "' AND n.suspended != 1 ORDER BY n.new_date DESC, n.id DESC";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+			WHERE t.lang = :language AND n.suspended != 1 ORDER BY n.new_date DESC, n.id DESC";
+	$params = array(
+		array(':language', $language, 'str'),
+	);
+	$db->query($query, $params);
 
-	while ($row = mysql_fetch_array($res))
+	while ($row = $db->fetch())
 	{
 		if (!empty($row['title']))
 		{

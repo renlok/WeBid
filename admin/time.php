@@ -23,10 +23,13 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings set 
-			 timecorrection = " . floatval($_POST['timecorrection']) . ",
-			 datesformat = '" . $_POST['datesformat'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "UPDATE " . $DBPrefix . "settings SET
+			timecorrection = :timecorrection,
+			datesformat = :datesformat";
+	$params = array();
+	$params[] = array(':timecorrection', $_POST['timecorrection'], 'int');
+	$params[] = array(':datesformat', $_POST['datesformating'], 'str');
+	$db->query($query, $params);
 	$system->SETTINGS['timecorrection'] = floatval($_POST['timecorrection']);
 	$system->SETTINGS['datesformat'] = $_POST['datesformat'];
 	$ERR = $MSG['347'];

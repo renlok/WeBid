@@ -290,10 +290,10 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'IMAGE_COST' => ($image_fee != 0) ? sprintf($MSG['675'], $image_fee) : '',
 		'IMAGE_COST_PLAIN' => ($image_fee != 0) ? $image_fee : 0,
-		'PICINFO' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']),
+		'PICINFO' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']/1024),
 		'ERRORMSG' => sprintf($MSG['674'], $system->SETTINGS['maxpictures']),
 		'MAXPICS' => $system->SETTINGS['maxpictures'],
-		'MAXPICSIZE' => $system->SETTINGS['maxuploadsize'],
+		'MAXPICSIZE' => $system->SETTINGS['maxuploadsize']/1024,
 		'MAXPICSIZE_MB' => $system->SETTINGS['maxuploadsize']/(1024*1024),  //kb to mb convertion
 		'SESSION_ID' => session_id(),
 		'UPLOADED' => intval(count($_SESSION['UPLOADED_PICTURES']))

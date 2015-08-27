@@ -38,7 +38,7 @@ foreach ($memtypesarr as $k => $l)
 	}
 }
 
-$page = (isset($_GET['pg']) && $_GET['pg'] > 0) ? $_GET['pg'] : 1;
+$page = (isset($_GET['pg']) && intval($_GET['pg']) > 0) ? $_GET['pg'] : 1;
 $left_limit = ($page - 1) * $system->SETTINGS['perpage'];
 
 $query = "SELECT count(*) As COUNT FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
@@ -93,7 +93,7 @@ while ($arrfeed = $db->fetch())
 			'USFEED' => $arrfeed['rate_sum'],
 			'USICON' => (isset($usicon)) ? $usicon : '',
 			'FBDATE' => FormatDate($arrfeed['feedbackdate']),
-			'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $arrfeed['title'] . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
+			'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $system->uncleanvars($arrfeed['title']) . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
 			'FEEDBACK' => nl2br(stripslashes($arrfeed['feedback']))
 			));
 

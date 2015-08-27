@@ -357,6 +357,8 @@ switch ($_SESSION['action'])
 				exit;
 			}
 			$template->assign_vars(array(
+					'ATYPE_PLAIN' => '', // to suppress an error
+					'ERROR' => '', // to suppress an error
 					'TITLE' => $MSG['028'],
 					'PAGE' => 3,
 					'AUCTION_ID' => $auction_id,
@@ -684,8 +686,8 @@ switch ($_SESSION['action'])
 				'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 				'FEE_JS' => $fee_javascript,
 				// auction details
-				'AUC_TITLE' => htmlentities($title, ENT_COMPAT, $CHARSET),
-				'AUC_SUBTITLE' => htmlentities($subtitle, ENT_COMPAT, $CHARSET),
+				'AUC_TITLE' => $title,
+				'AUC_SUBTITLE' => $subtitle,
 				'AUC_DESCRIPTION' => $CKEditor->editor('description', stripslashes($description)),
 				'ITEMQTY' => $iquantity,
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid, false),
@@ -721,7 +723,7 @@ switch ($_SESSION['action'])
 				'TAX_N' => ($is_taxed == 'n' ) ? 'checked' : '',
 				'TAXINC_Y' => ($tax_included == 'y') ? 'checked' : '',
 				'TAXINC_N' => ($tax_included == 'n') ? 'checked' : '',
-				'MAXPICS' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']),
+				'MAXPICS' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']/1024),
 
 				'FEE_VALUE' => get_fee($minimum_bid),
 				'FEE_VALUE_F' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),

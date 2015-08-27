@@ -23,11 +23,10 @@ $html = '';
 
 // Create currencies array
 $query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY ime";
-$res_ = mysql_query($query);
-$system->check_mysql($res_, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res_) > 0)
+$db->direct_query($query);
+if ($db->numrows() > 0)
 {
-	while ($row = mysql_fetch_array($res_))
+	while ($row = $db->result())
 	{
 		$CURRENCIES[$row['id']] = $row['symbol'] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
 		$CURRENCIES_SYMBOLS[$row['id']] = $row['symbol'];
@@ -49,17 +48,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
-				currency = '" . $system->cleanvars($CURRENCIES_SYMBOLS[$_POST['currency']]) . "',
-				moneyformat = " . intval($_POST['moneyformat']) . ",
-				moneydecimals = " . intval($_POST['moneydecimals']) . ",
-				moneysymbol = " . intval($_POST['moneysymbol']);
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				currency = :currency,
+				moneyformat = :moneyformat,
+				moneydecimals = :moneydecimals,
+				moneysymbol = :moneysymbol";
+		$params = array();
+		$params[] = array(':currency', $system->cleanvars($CURRENCIES_SYMBOLS[$_POST['currency']]), 'str');
+		$params[] = array(':moneyformat', $_POST['moneyformat'], 'int');
+		$params[] = array(':moneydecimals', $_POST['moneydecimals'], 'int');
+		$params[] = array(':moneysymbol', $_POST['moneysymbol'], 'int');
+		$db->query($query,$params);
+
 		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
 		$system->SETTINGS['moneyformat'] = $_POST['moneyformat'];
 		$system->SETTINGS['moneydecimals'] = $_POST['moneydecimals'];
 		$system->SETTINGS['moneysymbol'] = $_POST['moneysymbol'];
 		$ERR = $MSG['553'];
+
 	}
+
 }
 
 $link = "javascript:window_open('" . $system->SETTINGS['siteurl'] . "converter.php','incre',650,250,30,30)";

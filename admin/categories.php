@@ -26,48 +26,25 @@ function search_cats($parent_id, $level)
 	$catstr = '';
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
-	foreach ($tree as $k => $v)
-	{
-		$catstr .= ",\n" . $k . " => '" . $v . "'";
-	}
-	return $catstr;
+	return $tree;
 }
 
 function rebuild_cat_file()
 {
-	global $system, $main_path, $DBPrefix;
+	global $system, $main_path, $DBPrefix, $db;
 	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
-	$result = mysql_query($query);
+	$db->direct_query($query);
 	$cats = array();
-	while ($catarr = mysql_fetch_array($result))
+	while ($catarr = $db->result())
 	{
 		$cats[$catarr['cat_id']] = $catarr['cat_name'];
 		$allcats[] = $catarr;
 	}
 
 	$output = "<?php\n";
-	$output.= "$" . "category_names = array(\n";
-
-	$num_rows = count($cats);
-
-	$i = 0;
-	foreach ($cats as $k => $v)
-	{
-		$output .= "$k => '$v'";
-		$i++;
-		if ($i < $num_rows)
-			$output .= ",\n";
-		else
-			$output .= "\n";
-	}
-
-	$output .= ");\n\n";
-
-	$output .= "$" . "category_plain = array(\n0 => ''";
-
-	$output .= search_cats(0, 0);
-
-	$output .= ");\n?>";
+	$output .= "$" . "category_names = " . var_export($cats, true) . ";\n\n";
+	$output .= "$" . "category_plain = " . var_export(search_cats(0, 0), true) . ";\n";
+	$output .= "?>";
 
 	$handle = fopen ($main_path . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
@@ -84,10 +61,17 @@ if (isset($_POST['action']))
 			{
 				if (!isset($_POST['delete'][$k]))
 				{
-					$query = "UPDATE " . $DBPrefix . "categories SET cat_name = '" . $system->cleanvars($_POST['categories'][$k]) . "',
-							cat_colour = '" . mysql_real_escape_string($_POST['colour'][$k]) . "', cat_image = '" . mysql_real_escape_string($_POST['image'][$k]) . "'
-							WHERE cat_id = " . intval($k);
-					$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					$query = "UPDATE " . $DBPrefix . "categories SET
+							cat_name = :name,
+							cat_colour = :colour,
+							cat_image = :image
+							WHERE cat_id = :cat_id";
+					$params = array();
+					$params[] = array(':name', $_POST['categories'][$k], 'str');
+					$params[] = array(':colour', $_POST['colour'][$k], 'str');
+					$params[] = array(':image', $_POST['image'][$k], 'str');
+					$params[] = array(':cat_id', $k, 'int');
+					$db->query($query, $params);
 				}
 			}
 		}
@@ -95,7 +79,7 @@ if (isset($_POST['action']))
 		if (!empty($_POST['new_category']) && isset($_POST['parent']))
 		{
 			$add_data = array(
-				'cat_name' => $system->cleanvars($_POST['new_category']),
+				'cat_name' => $_POST['new_category'],
 				'cat_colour' => $_POST['cat_colour'],
 				'cat_image' => $_POST['cat_image']
 				);
@@ -108,7 +92,7 @@ if (isset($_POST['action']))
 			{
 				foreach ($add as $v)
 				{
-					$add_data = array('cat_name' => $system->cleanvars($v));
+					$add_data = array('cat_name' => $v);
 					$catscontrol->add($_POST['parent'], 0, $add_data);
 				}
 			}
@@ -120,12 +104,12 @@ if (isset($_POST['action']))
 						LEFT JOIN " . $DBPrefix . "auctions a ON ( a.category = c.cat_id )
 						WHERE c.cat_id IN (" . implode(',', $_POST['delete']) . ")
 						GROUP BY c.cat_id ORDER BY cat_name";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$db->direct_query($query);
+
 			$message = $MSG['843'] . '<table cellpadding="0" cellspacing="0">';
 			$names = array();
 			$counter = 0;
-			while ($row = mysql_fetch_assoc($res))
+			while ($row = $db->fetch())
 			{
 				if ($row['COUNT'] > 0 || $row['left_id'] != ($row['right_id'] - 1))
 				{
@@ -187,8 +171,11 @@ if (isset($_POST['action']))
 						$catscontrol->move($k, $_POST['moveid'][$k]);
 						// remove the parent and raise the children up a level
 						$catscontrol->delete($k, true);
-						$query = "UPDATE " . $DBPrefix . "auctions SET category = " . $_POST['moveid'][$k] . " WHERE category = " . $k;
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						$query = "UPDATE " . $DBPrefix . "auctions SET category = :cat_new WHERE category = :cat_old";
+						$params = array();
+						$params[] = array(':cat_new', $_POST['moveid'][$k], 'str');
+						$params[] = array(':cat_old', $k, 'int');
+						$db->query($query, $params);
 					}
 					else
 					{
@@ -206,15 +193,17 @@ if (isset($_POST['action']))
 if (!isset($_GET['parent']))
 {
 	$query = "SELECT left_id, right_id, level, cat_id FROM " . $DBPrefix . "categories WHERE parent_id = -1";
+	$params = array();
 }
 else
 {
 	$parent = intval($_GET['parent']);
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_GET['parent']);
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :parent_id";
+	$params = array();
+	$params[] = array(':parent_id', $parent, 'int');
 }
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$parent_node = mysql_fetch_assoc($res);
+$db->query($query, $params);
+$parent_node = $db->result();
 
 if (!isset($_GET['parent']))
 {

@@ -59,6 +59,7 @@ $params[] = array(':auc_id', $id, 'int');
 $db->query($query, $params);
 
 $Auction = $db->result();
+
 // such auction does not exist
 if ($db->numrows() == 0)
 {
@@ -151,7 +152,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	{
 		$ERR = $ERR_711;
 	}
-	// check qty
+	// check auction still has items left to buy
 	if (isset($qty) && $qty > $Auction['quantity'])
 	{
 		$ERR = $ERR_608;
@@ -171,6 +172,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			// log auction BIN IP
 			$system->log('user', 'BIN on Item', $user->user_data['id'], $id);
 		}
+		echo $Auction['quantity'];
 		if ($Auction['quantity'] == 1)
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, num_bids = num_bids + 1, current_bid = :buy_now WHERE id = :auc_id";
@@ -197,10 +199,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			// force close if all items sold
 			if (($Auction['quantity'] - $qty) == 0)
 			{
-				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time WHERE id = :auc_id";
+				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, current_bid = :current_bid, sold = 'y', num_bids = num_bids + 1, closed = 1 WHERE id = :auc_id";
 				$params = array();
 				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':auc_id', $id, 'int');
+				$params[] = array(':current_bid', $Auction['buy_now'], 'int');
 				$db->query($query, $params);
 			}
 			// do stuff that is important
@@ -298,7 +301,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					$emailer = new email_handler();
 					$emailer->assign_vars(array(
 							'ID' => $Auction['id'],
-							'TITLE' => $Auction['title'],
+							'TITLE' => $system->uncleanvars($Auction['title']),
 							'NAME' => $Seller['name'],
 							'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $Auction['id']
 							));
@@ -308,8 +311,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				}
 			}
 
-			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-					(NULL, :auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid)";
+			$query = "INSERT INTO " . $DBPrefix . "winners
+					(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped) VALUES
+					(:auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0)";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
 			$params[] = array(':seller_id', $Auction['user'], 'int');
@@ -320,6 +324,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$params[] = array(':bf_paid', $bf_paid, 'float');
 			$params[] = array(':ff_paid', $ff_paid, 'float');
 			$db->query($query, $params);
+			$winner_id = $db->lastInsertId();
 
 			// get end string
 			$month = date('m', $Auction['ends'] + $system->tdiff);
@@ -338,7 +343,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		$buy_done = 1;
 	}
 }
-$winner_id = $db->lastInsertId();
 
 $additional_shipping = $Auction['shipping_cost_additional'] * ($qty - 1);
 $shipping_cost = ($Auction['shipping'] == 1) ? ($Auction['shipping_cost'] + $additional_shipping) : 0;
@@ -348,7 +352,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_REQUEST['id'],
 		'WINID' => $winner_id,
-		'TITLE' => $Auction['title'],
+		'TITLE' => $system->uncleanvars($Auction['title']),
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),
 		'BN_TOTAL' => $system->print_money($BN_total),
 		'SELLER' => ' <a href="profile.php?user_id=' . $Auction['user'] . '"><b>' . $Seller['nick'] . '</b></a>',

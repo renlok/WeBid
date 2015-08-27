@@ -30,7 +30,7 @@ $emailer->assign_vars(array(
 		'W_GOT' => $Winner['quantity'],
 
 		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
-		'A_TITLE' => $Auction['title'],
+		'A_TITLE' => $system->uncleanvars($Auction['title']),
 		'A_DESCRIPTION' => $description,
 		'A_CURRENTBID' => $system->print_money($WINNERS_BID[$Winner['current_bid']], true, false),
 		'A_ENDS' => $ends_string,

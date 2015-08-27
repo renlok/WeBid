@@ -42,9 +42,8 @@ $_SESSION['RETURN_LIST'] = 'listclosedauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(id) As auctions FROM " . $DBPrefix . "auctions WHERE closed = 1 AND suspended = 0";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auctions = mysql_result($res, 0, 'auctions');
+$db->direct_query($query);
+$num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(w.id) as winners FROM " . $DBPrefix . "auctions a
@@ -60,7 +59,7 @@ while ($row = mysql_fetch_assoc($res))
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],
 			'ID' => $row['id'],
-			'TITLE' => $row['title'],
+			'TITLE' => $system->uncleanvars($row['title']),
 			'START_TIME' => ArrangeDateNoCorrection($row['starts']),
 			'END_TIME' => ArrangeDateNoCorrection($row['ends']),
 			'USERNAME' => $row['nick'],

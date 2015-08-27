@@ -42,7 +42,7 @@
                     </form>
                 </div>
                 <table width="98%" cellpadding="0" cellspacing="0">
-                <tr style="background-color:{TBLHEADERCOLOUR}">
+                <tr>
 					<th align="center">{L_1041}</th>
 <!-- IF NO_USER_SEARCH -->
 					<th align="center">{L_313}</th>

@@ -52,7 +52,7 @@ else
 {
 	$auction_data = $db->result();
 	$seller_id = $auction_data['user'];
-	$item_title = $auction_data['title'];
+	$item_title = $system->uncleanvars($auction_data['title']);
 	$seller_nick = $auction_data['nick'];
 	$seller_email = $auction_data['email'];
 }

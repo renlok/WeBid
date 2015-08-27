@@ -48,7 +48,7 @@ switch($_GET['a'])
 				FROM " . $DBPrefix . "auctions a
 				LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
-				WHERE WHERE w.id = :pfval AND w.winner = :user_id";
+				WHERE w.id = :pfval AND w.winner = :user_id";
 		$params = array();
 		$params[] = array(':pfval', $_POST['pfval'], 'int');
 		$params[] = array(':user_id', $user->user_data['id'], 'int');
@@ -75,7 +75,7 @@ switch($_GET['a'])
 		$payvalue = ($data['bid'] * $data['qty']) + $shipping_cost;
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money($payvalue));
-		$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
+		$title = $system->SETTINGS['sitename'] . ' - ' . $system->uncleanvars($data['title']);
 		break;
 	case 3: // pay signup fee (live mode)
 		if (!isset($_SESSION['signup_id']) || !is_int($_SESSION['signup_id']) || $_SESSION['signup_id'] < 1 || $system->SETTINGS['fee_type'] != 2)

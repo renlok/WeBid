@@ -70,7 +70,7 @@ if ($auction)
 	$data = $db->result();
 
 	// do you have permission to view this?
-	if (!$fromadmin && $data['seller_id'] != $user->user_data['id'])
+	if (!$fromadmin && $data['seller_id'] != $user->user_data['id'] && $data['winner'] != $user->user_data['id'])
 	{
 		invalidinvoice();
 	}
@@ -79,7 +79,7 @@ if ($auction)
 	$seller = getSeller($data['seller_id']);
 	$winner = getAddressWinner($data['winner']);
 	$vat = getTax(true, $winner['country'], $seller['country']);
-	$title = $system->SETTINGS['sitename'] . ' - ' . $data['title'];
+	$title = $system->SETTINGS['sitename'] . ' - ' . $system->uncleanvars($data['title']);
 	$additional_shipping = $data['shipping_cost_additional'] * ($data['qty'] - 1);
 	$shipping_cost = ($data['shipping'] == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
 	$paysubtotal = ($data['bid']* $data['qty']);

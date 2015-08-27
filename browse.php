@@ -72,8 +72,8 @@ if ($db->numrows() == 0)
 else
 {
 	// Retrieve the translated category name
-	$par_id = $category['parent_id'];
-	$current_cat_name = $category_names[$par_id];
+	$cat_id = $category['cat_id'];
+	$current_cat_name = $category_names[$cat_id];
 	$TPL_categories_string = '';
 	$crumbs = $catscontrol->get_bread_crumbs($category['left_id'], $category['right_id']);
 	for ($i = 0; $i < count($crumbs); $i++)
@@ -133,7 +133,7 @@ else
 		// Retrieve the translated category name
 		$row['cat_name'] = $category_names[$row['cat_id']];
 		$catimage = (!empty($row['cat_image'])) ? '<img src="' . $row['cat_image'] . '" border=0>' : '';
-		$TPL_main_value .= "\t" . '<td ' . $BG . ' WIDTH="33%">' . $catimage . '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $row['cat_id'] . '">' . $row['cat_name'] . $count_string . '</a></td>' . "\n";
+		$TPL_main_value .= "\t" . '<td class="cattd" ' . $BG . ' WIDTH="33%">' . $catimage . '<a class="catclass" href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $row['cat_id'] . '">' . $row['cat_name'] . $count_string . '</a></td>' . "\n";
 
 		++$cycle;
 		if ($cycle == 4)

@@ -83,7 +83,7 @@ if (!function_exists('view'))
 					LEFT JOIN " . $DBPrefix . "bannerscategories c ON (c.banner = b.id)
 					LEFT JOIN " . $DBPrefix . "bannerskeywords k ON (k.banner = b.id)
 					WHERE (b.views < b.purchased OR b.purchased = 0)
-					AND k.keyword = NULL AND c.category = NULL
+					AND k.keyword IS NULL AND c.category IS NULL
 					GROUP BY k.banner, c.banner";
 			$res = mysql_query($query);
 			$system->check_mysql($res, $query, __LINE__, __FILE__);

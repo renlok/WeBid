@@ -139,7 +139,7 @@ if (isset($_REQUEST['deleteid']) && is_array($_REQUEST['deleteid']))
 	}
 	$query = "DELETE FROM " . $DBPrefix . "messages WHERE id IN (" . $message_id . ")";
 	$db->direct_query($query);
-	$ERR = $MSG['444'];
+	$_SESSION['message'] = $MSG['444'];
 }
 
 // if sending a message
@@ -240,7 +240,7 @@ $messagespaceused = ($messages * 4) + 1;
 $messagespaceleft = ($mailbox_space - $messages) * 4;
 $messagesleft = $mailbox_space - $messages;
 
-$ERR = (isset($_SESSION['message'])) ? $_SESSION['message'] : $ERR;
+$ERR = (isset($_SESSION['message'])) ? $_SESSION['message'] : '';
 unset($_SESSION['message']);
 
 $template->assign_vars(array(
@@ -255,7 +255,7 @@ $template->assign_vars(array(
 		'REPLY_PUBLIC' => (isset($reply_public) && $reply_public == 1) ? ' checked="checked"' : '',
 
 		'B_QMKPUBLIC' => (isset($question)) ? $question : false,
-		'B_CONVO' => (isset($_SESSION['reply_of' . $_GET['message']]))
+		'B_CONVO' => (isset($_SESSION['reply_of' . $replymessage]))
 		));
 
 while ($array = $db->fetch())

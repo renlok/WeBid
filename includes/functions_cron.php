@@ -65,7 +65,7 @@ function sendWatchEmails($id)
 			$emailer = new email_handler();
 			$emailer->assign_vars(array(
 					'URL' => $system->SETTINGS['siteurl'] . 'item.php?mode=1&id=' . $id,
-					'TITLE' => $Auction['title'],
+					'TITLE' => $system->uncleanvars($Auction['title']),
 					'NAME' => $watchusers['name']
 					));
 			$emailer->email_uid = $watchusers['id'];
@@ -116,7 +116,7 @@ function sortFees()
 			'email' => $Winner['email'],
 			'uid' => $Winner['id'],
 			'id' => $Auction['id'],
-			'title' => $Auction['title']
+			'title' => $system->uncleanvars($Auction['title'])
 			);
 	}
 
@@ -166,7 +166,7 @@ function sortFees()
 			'email' => $Seller['email'],
 			'uid' => $Seller['id'],
 			'id' => $Auction['id'],
-			'title' => $Auction['title']
+			'title' => $system->uncleanvars($Auction['title'])
 			);
 	}	
 }

@@ -35,20 +35,26 @@ else
 
 // count the pages
 $query = "SELECT COUNT(useracc_id) As COUNT  FROM " . $DBPrefix . "useraccounts
-    WHERE user_id = " . $user->user_data['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$TOTALINVOICES = mysql_result($res, 0, 'COUNT');
+		WHERE user_id = :user_id";
+$params = array(
+	array(':user_id', $user->user_data['id'], 'int'),
+);
+$db->query($query, $params);
+$TOTALINVOICES = $db->result('COUNT');
 $PAGES = ($TOTALINVOICES == 0) ? 1 : ceil($TOTALINVOICES / $system->SETTINGS['perpage']);
 
 // get this page of data
 $query = "SELECT * FROM " . $DBPrefix . "useraccounts
-    WHERE user_id = " . $user->user_data['id'] . "
-	LIMIT " . intval($OFFSET) . "," . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		WHERE user_id = :user_id
+		LIMIT :OFFSET, :perpage";
+$params = array(
+	array(':user_id', $user->user_data['id'], 'int'),
+	array(':OFFSET', $OFFSET, 'int'),
+	array(':perpage', $system->SETTINGS['perpage'], 'int'),
+);
+$db->query($query, $params);
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	if ($row['total'] > 0)
 	{

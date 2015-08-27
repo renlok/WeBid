@@ -148,7 +148,7 @@ $ERR_624 = "No message to post";
 $ERR_700 = "Incorrect date format";
 $ERR_701 = "Invalid quantity (must be >0).";
 $ERR_702 = "Current Bid must be greater than minimum bid.";
-$ERR_704 = "<br>You may not leave feedback about this user! <br>This auction is not closed!";
+$ERR_704 = "You may not leave feedback about this user! <br>This auction is not closed!";
 $ERR_705 = "You may only leave feedback, if you have a closed transaction with this user!";
 $ERR_706 = "<i>Max. number of pictures</i> must be numeric.";
 $ERR_707 = "<i>Max picture size</i> cannot be zero.";
@@ -166,7 +166,7 @@ $ERR_5001 = "Messages to show cannot be zero";
 $ERR_5002 = "You must select at least one statistic type (accesses, browsers &amp; platforms, by country)";
 $ERR_5014 = "Subject or message missing";
 $ERR_5045 = "The reserve price cannot be less than the minimum bid";
-$ERR_5046 = "The buy now price cannot be less than the minimum bid and/or the reserve price";
+$ERR_5046 = "The buy now price must be greater than the minimum bid and/or the reserve price";
 $ERR_25_0001 = "Please choose a sub-category";
 $ERR_25_0002 = "<p>URL file-access is disabled on your server so WeBid is unable to run the version check</p>";
 
@@ -260,6 +260,8 @@ $MSG['092'] = 'Edit, delete or add payment methods using the form below. These a
 $MSG['093'] = "Payment methods table updated";
 $MSG['094'] = "Edit, delete or add countries using the form below.";
 $MSG['095'] = "Welcome, You're Now A Member!";
+$MSG['095a'] = "Your account has been suspended.";
+$MSG['095b'] = "Your account has been re-activated.";
 $MSG['096'] = "Actual language";
 $MSG['097'] = "Days";
 $MSG['098'] = "Registration Confirmation";
@@ -343,7 +345,7 @@ $MSG['171a'] = "Ended";
 $MSG['172'] = "No active auctions in this category";
 $MSG['173'] = "Search result: ";
 $MSG['174'] = "Enable Bold Items";
-$MSG['175'] = "Date and hour";
+$MSG['175'] = "Time";
 $MSG['176'] = "Bidder";
 $MSG['177'] = "Categories index";
 $MSG['178'] = "Contact the bidder";
@@ -738,7 +740,7 @@ $MSG['646'] = "You must be logged in to ask questions to the seller";
 $MSG['647'] = "Ask";
 $MSG['648'] = "Reply to questions";
 $MSG['649'] = "Answer:";
-$MSG['650'] = "Question:";
+$MSG['650'] = "Question";
 $MSG['651'] = "Question about your auction: %s";
 $MSG['661'] = "Add Photo Gallery";
 $MSG['662'] = "<h2>Create thumbnail</h2>";
@@ -750,7 +752,7 @@ $MSG['667'] = "Viewing user: ";
 $MSG['668'] = "This auction has not yet started.";
 $MSG['671'] = "Max. pictures size";
 $MSG['672'] = "Kbytes";
-$MSG['673'] = "You can upload up to %s photos. Each photo must be smaller than %s bytes.";
+$MSG['673'] = "You can upload up to %s photos. Each photo must be smaller than %s KB.";
 $MSG['674'] = "You can only upload %s photos. Please remove some from the queue.";
 $MSG['675'] = "You will be charged %s for each picture you upload.";
 $MSG['677'] = "Upload Pictures";
@@ -1060,6 +1062,7 @@ $MSG['1057'] = 'List invoices';
 $MSG['1058'] = 'View invoice';
 $MSG['1059'] = 'Invoice List';
 $MSG['1060'] = 'Invalid Invoice.';
+$MSG['1060a'] = 'Print this page';
 
 // admin general
 $MSG['1061'] = 'Notes';
@@ -1082,7 +1085,7 @@ $MSG['1075'] = 'Support WeBid';
 $MSG['1076'] = 'Submit a bug';
 $MSG['1077'] = 'Found something functioning funny? Tell us about it, it will help others out too';
 $MSG['1078'] = 'Suggest a feature';
-$MSG['1079'] = 'Got a great idea of what could improve WeBid tell us about it we always want good ideas';
+$MSG['1079'] = 'Have a great idea of what could improve WeBid? Tell us about it we\'re always looking for good ideas';
 $MSG['1080'] = 'Donate';
 $MSG['1081'] = 'Help keep us online and keep future developments coming';
 
@@ -1163,6 +1166,20 @@ $MSG['1141'] = 'Used <b>only</b> for SMTP mail';
 $MSG['1142'] = "Before you can set up any fees you must set up at least one account where the fees can be paid to, to do so simply add your payment info into the corresponding boxes below";
 $MSG['1143'] = "Here you setup which payment gateways you want to allow users to use";
 $MSG['1144'] = "Before you can set fees you need to of set up at least one method of payment. You can do this via <a href=\"fee_gateways.php\">payment gateways</a>.";
+
+// yourauctions pages
+$MSG['1145'] = "<p>You have successfully deleted %s auction(s)</p>";
+$MSG['1146'] = "<p>You have successfully re-listed %s auction(s)</p>";
+$MSG['1147'] = "<p>You have successfully sold %s auction(s)</p>";
+$MSG['1148'] = "<p>A charge of %s has been made to your account</p>";
+$MSG['1149'] = "<p>You have successfully closed %s auction(s)</p>";
+$MSG['1150'] = "<p>You have successfully started %s auction(s)</p>";
+
+// sell item page
+$MSG['1151'] = "Auction fee";
+$MSG['1152'] = "Free";
+
+$MSG['1153'] = 'Print Invoice';
 
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";
@@ -1353,7 +1370,7 @@ $MSG['5495'] = "for each ";
 $MSG['5506'] = "Positive feedback: ";
 $MSG['5507'] = '<span style="color:#CD0000;">Negative feedback:</span> ';
 $MSG['5508'] = "Member since ";
-$MSG['5509'] = "Feedback times ";
+$MSG['5509'] = "Feedback received ";
 $MSG['_0001'] = "Under Maintenance Page";
 $MSG['_0002'] = "You can temporary disable the access to your site if necessary.<br>
 			In Maintenance mode only one user will have access to it. After you registered a user via <a target=\"_new\" href=\"../register.php\">the usual users registration page</a>

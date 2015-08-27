@@ -10,7 +10,7 @@
 <!-- IF ERROR ne '' -->
 				<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
-                <div class="plain-box">{NEWS_COUNT}{L_517} <a href="addnew.php">{L_518}</a></div>
+                <div class="plain-box">{NEWS_COUNT}{L_517}</div>
                 <table width="98%" cellpadding="0" cellspacing="0">
                 <tr>
                 	<th width="20%">{L_314}</th>
@@ -28,6 +28,7 @@
                 </tr>
 <!-- END news -->
                 </table>
+				<div class="plain-box"><a href="addnew.php" class="button">{L_518}</a></div>
                 <table width="98%" cellpadding="0" cellspacing="0" class="blank">
                     <tr>
                         <td align="center">

@@ -157,7 +157,7 @@ img {
 	border:none;
 }
 
-input, textarea, select {
+input, textarea, select, .button {
 	border: 2px solid #CCCCCC;
 	padding: 4px;
 	background: #F7F7F7;
@@ -246,6 +246,7 @@ ul.menu li {
 .plain-box {
  	background-color: #FFFFFF;
 	border-bottom: 1px solid #F4F4F4;
+	margin-left: 15px;
 }
 
 .info-box {
@@ -276,4 +277,9 @@ ul.menu li {
 	padding: 4px 0 4px 22px;
 	margin: 3px 0;
 	font-size: 1.1em;
+}
+
+.button {
+    display: inline-block;
+    height: 20px;
 }

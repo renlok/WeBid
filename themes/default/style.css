@@ -17,6 +17,7 @@
 p	{ margin: 0px 0px 5px 0px; }
 dl.tabs	{ margin: 0 0 0 5px; padding: 0; width: 100%; font-size: 13px; }
 dl.tabs dd	{ margin: 1px; padding: 5px; float: left; background: transparent url(img/bot_deg.gif) repeat; border-top: 1px solid #AEACAC; border-right: 1px solid #AEACAC; border-bottom: 0px; border-left: 1px solid #AEACAC; }
+dl.tabs dd.active { background: transparent url(img/bot_rev.gif) repeat !important; }
 li	{ padding-bottom: 5px; }
 table.container	{ float: none; }
 th	{ color: #787878; font-size: 12px; background-color: #c2e5ff; font-weight: bold; text-transform: capitalize; padding: 0.3ex; }
@@ -68,7 +69,7 @@ td {
 }
 
 .padding {
-	margin: 15px;
+	margin: 15px 15px 15px 30px;
 }
 
 .padtb {
@@ -278,6 +279,12 @@ a:hover {
 	background: #FFF6BF url(img/error.png) no-repeat 3px;
 }
 
+.success-box {
+	color: #62B548;
+	border-bottom: 1px solid #D0F1A6;
+	background: #E5F8CE url(images/accept.png) no-repeat 3px;
+}
+
 .info-box, .error-box, .warning-box, .success-box {
 	padding: 4px 0 4px 22px;
 	margin: 3px 0;
@@ -297,4 +304,8 @@ a:hover {
 
 .grayfont {
 	color: #dcdcdc;
+}
+
+.content {
+	margin-bottom:25px;
 }

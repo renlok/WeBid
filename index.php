@@ -114,7 +114,7 @@ while ($row = $db->fetch())
 			'ID' => $row['id'],
 			'BID' => $system->print_money($high_bid),
 			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
-			'TITLE' => $row['title']
+			'TITLE' => $system->uncleanvars($row['title'])
 			));
  	$i++;
 }
@@ -139,7 +139,7 @@ while ($row = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'DATE' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
 			'ID' => $row['id'],
-			'TITLE' => $row['title']
+			'TITLE' => $system->uncleanvars($row['title'])
 			));
 	$i++;
 }
@@ -170,7 +170,7 @@ while ($row = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'DATE' => $ends_string,
 			'ID' => $row['id'],
-			'TITLE' => $row['title']
+			'TITLE' => $system->uncleanvars($row['title'])
 			));
 	$i++;
 }
@@ -207,7 +207,7 @@ while ($row = $db->fetch())
             'ID' => $row['id'],
             'BID' => $system->print_money($high_bid),
             'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
-            'TITLE' => $row['title']
+            'TITLE' => $system->uncleanvars($row['title'])
             ));
 }
 $hot_items = ($i > 0) ? true : false;

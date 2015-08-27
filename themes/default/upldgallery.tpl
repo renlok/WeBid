@@ -24,7 +24,7 @@ $(function() {
 		// Specify what files to browse for
 		filters : {
 		    // Maximum file size
-			max_file_size : "{MAXPICSIZE_MB}mb",
+			max_file_size : "{MAXPICSIZE}kb",
 			// Specify what files to browse for
 			mime_types: [
 			{title : "Image files", extensions : "jpg,jpeg,gif,png"}

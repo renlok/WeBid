@@ -28,7 +28,7 @@ $db->query($query, $params);
 $MAX = 0;
 $TOTAL = 0;
 $BROWSERS = array();
-while ($row = fetch())
+while ($row = $db->fetch())
 {
 	$BROWSERS[$row['browser']] = $row['counter'];
 	$TOTAL = $TOTAL + $row['counter'];

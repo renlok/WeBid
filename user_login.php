@@ -12,6 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
+define('AtLogin', 1);
 include 'common.php';
 
 $NOW = time();

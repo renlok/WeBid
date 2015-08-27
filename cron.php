@@ -108,6 +108,7 @@ foreach ($auction_data as $Auction) // loop auctions
 	// send email to seller - to notify him
 	// create a "report" to seller depending of what kind auction is
 	$atype = intval($Auction['auction_type']);
+	// Standard auction
 	if ($atype == 1)
 	{
 		if ($num_bids > 0 && ($Auction['current_bid'] >= $Auction['reserve_price'] || $Auction['sold'] == 's'))
@@ -118,7 +119,6 @@ foreach ($auction_data as $Auction) // loop auctions
 			$winner_present = true;
 		}
 
-		// Standard auction
 		if ($winner_present)
 		{
 			$report_text = $Winner['nick'] . "\n";
@@ -139,8 +139,9 @@ foreach ($auction_data as $Auction) // loop auctions
 			}
 
 			// Add winner's data to "winners" table
-			$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-			(NULL, :auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, 1, 0, :bf_paid, :ff_paid)";
+			$query = "INSERT INTO " . $DBPrefix . "winners
+				(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped) VALUES
+				(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, 1, 0, :bf_paid, :ff_paid, 0)";
 			$params = array();
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$params[] = array(':seller_id', $Seller['id'], 'int');
@@ -156,9 +157,9 @@ foreach ($auction_data as $Auction) // loop auctions
 			$report_text = $MSG['429'];
 		}
 	}
-	else
+	// Dutch Auction
+	elseif ($atype == 2)
 	{
-		// Dutch Auction
 		// find out winners sorted by bid
 		$query = "SELECT *, MAX(bid) AS maxbid
 				FROM " . $DBPrefix . "bids WHERE auction = :auc_id GROUP BY bidder
@@ -220,8 +221,9 @@ foreach ($auction_data as $Auction) // loop auctions
 				}
 
 				// Add winner's data to "winners" table
-				$query = "INSERT INTO " . $DBPrefix . "winners VALUES
-						(NULL, :auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, :items_got, 0, :bf_paid, :ff_paid)";
+				$query = "INSERT INTO " . $DBPrefix . "winners
+						(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped) VALUES
+						(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, :items_got, 0, :bf_paid, :ff_paid, 0)";
 				$params = array();
 				$params[] = array(':auc_id', $Auction['id'], 'int');
 				$params[] = array(':seller_id', $Seller['id'], 'int');
@@ -516,7 +518,7 @@ if ($buyer_fee > 0)
 		$emailer = new email_handler();
 		$emailer->assign_vars(array(
 				'ID' => $buyer_emails[$i]['id'],
-				'TITLE' => $buyer_emails[$i]['title'],
+				'TITLE' => $system->uncleanvars($buyer_emails[$i]['title']),
 				'NAME' => $buyer_emails[$i]['name'],
 				'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=6&auction_id=' . $Auction['id']
 				));
@@ -529,7 +531,7 @@ for ($i = 0; $i < count($seller_emails); $i++)
 	$emailer = new email_handler();
 	$emailer->assign_vars(array(
 			'ID' => $seller_emails[$i]['id'],
-			'TITLE' => $seller_emails[$i]['title'],
+			'TITLE' => $system->uncleanvars($seller_emails[$i]['title']),
 			'NAME' => $seller_emails[$i]['name'],
 			'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $Auction['id']
 			));

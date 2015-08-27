@@ -24,6 +24,7 @@ if (!$user->is_logged_in())
 
 $NOW = time();
 $NOWB = date('Ymd');
+$user_message = '';
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
 $db->direct_query($query);
@@ -33,7 +34,7 @@ $relist_fee = $db->result('value');
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Re-list auctions
-	if (is_array($_POST['relist']))
+	if (isset($_POST['relist']) && is_array($_POST['relist']) && count($_POST['relist']) > 0)
 	{
 		foreach ($_POST['relist'] as $k)
 		{
@@ -126,6 +127,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				exit;
 			}
 		}
+		$user_message .= sprintf($MSG['1146'], count($_POST['relist']));
+		if ($relist_fee > 0)
+		{
+			$user_message .= sprintf($MSG['1148'], $system->print_money((count($_POST['relist']) * $relist_fee), true, false));
+		}
 	}
 }
 
@@ -135,7 +141,7 @@ $query = "SELECT COUNT(a.id) AS COUNT FROM " . $DBPrefix . "auctions a, " . $DBP
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
-$TOTALAUCTIONS = $db->result();
+$TOTALAUCTIONS = $db->result('COUNT');
 
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] < 0 || empty($_GET['PAGE']))
 {
@@ -184,11 +190,11 @@ else
 	$_SESSION['solda_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0" alt="down"/>';
 }
 
-$query = "SELECT a.* FROM " . $DBPrefix . "auctions, " . $DBPrefix . "winners w
+$query = "SELECT a.* FROM " . $DBPrefix . "auctions a
+	LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 	WHERE a.user = :user_id
 	AND a.closed = 1
 	AND a.suspended = 0
-	AND a.id = w.auction
 	GROUP BY w.auction
 	ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT :offset, :perpage";
 $params = array();
@@ -203,7 +209,7 @@ while ($item = $db->fetch())
 	$template->assign_block_vars('items', array(
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
-			'TITLE' => $item['title'],
+			'TITLE' => $system->uncleanvars($item['title']),
 			'STARTS' => FormatDate($item['starts']),
 			'ENDS' => FormatDate($item['ends']),
 			'BID' => ($item['current_bid'] == 0) ? '-' : $system->print_money($item['current_bid']),
@@ -236,6 +242,7 @@ $template->assign_vars(array(
 		'ORDERCOL' => $_SESSION['solda_ord'],
 		'ORDERNEXT' => $_SESSION['solda_nexttype'],
 		'ORDERTYPEIMG' => $_SESSION['solda_type_img'],
+		'USER_MESSAGE' => $user_message,
 
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_sold.php?PAGE=' . $PREV . '&id=' . $id . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_sold.php?PAGE=' . $NEXT . '&id=' . $id . '"><u>' . $MSG['5120'] . '</u></a>' : '',

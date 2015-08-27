@@ -27,7 +27,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 <div class="content">
 	<div class="tableContent2">
-	 <br><b>{L_041}:</b> {TOPCATSPATH}<br><br>
+	 <div class="padding"><b>{L_041}:</b> {TOPCATSPATH}</div>
 	 <div class="titTable2 rounded-top rounded-bottom">
 	  <table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
@@ -163,7 +163,7 @@ $(document).ready(function() {
 						  <td width="50%" align="left">{L_023}: </td>
 						  <td align="left">{SHIPPING_COST}</td>
 						</tr>
-<!-- IF B_ADDITIONAL_SHIPPING_COST or B_BUY_NOW_ONLY-->
+<!-- IF (B_ADDITIONAL_SHIPPING_COST or B_BUY_NOW_ONLY) and B_SHOW_ADDITIONAL_SHIPPING_COST -->
 						<tr>
 						  <td width="50%" align="left">{L_350_1008}: </td>
 						  <td align="left">{ADDITIONAL_SHIPPING_COST}</td>
@@ -311,49 +311,6 @@ $(document).ready(function() {
 		</div>
 	</div>
 <!-- ENDIF -->
-	<br>
-	<div class="titTable4">
-	  {L_724}
-	</div>
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
-	  <tr>
-		<td>
-		  <div class="tableContent2">
-			<div class="table2">
-<!-- IF COUNTRY ne '' or ZIP ne '' -->
-			  <b>{L_014}:</b> {COUNTRY} ({ZIP})<br>
-<!-- ENDIF -->
-			  <b>{L_025}:</b> {SHIPPING}, {INTERNATIONAL}<br>
-<!-- IF SHIPPINGTERMS ne '' -->
-			  <table border="0" cellpadding="0" cellspacing="0">
-				<tr>
-				  <td valign="top"><b>{L_25_0215}:</b>&nbsp;</td>
-				  <td valign="top">{SHIPPINGTERMS}</td>
-				</tr>
-			  </table>
-<!-- ENDIF -->
-			  <br>
-			  <b>{L_026}:</b> {PAYMENTS}<br>
-<!-- IF ! B_BUY_NOW_ONLY -->
-			  <b><!-- IF ATYPE eq 1 -->{L_127}<!-- ELSE -->{L_038}<!-- ENDIF -->:</b> {MINBID}<br>
-<!-- ENDIF -->
-			  <br>
-			  <b>{L_111}:</b> {STARTTIME}<br>
-			  <b>{L_112}:</b> {ENDTIME}<br>
-			  <b>{L_113}:</b> {ID}<br>
-			  <br>
-			  <b>{L_041}:</b> {CATSPATH}<br>
-              <!-- IF SECCATSPATH ne '' --><b>{L_814}:</b> {SECCATSPATH}<!-- ENDIF -->
-			</div>
-		  </div>
-		</td>
-	  </tr>
-	</table>
-	<br>
-  </div>
-  </div>
-</div>
-
 <!-- IF B_SHOWHISTORY -->
 <div class="tableContent2">
 	<div class="titTable4">
@@ -396,3 +353,45 @@ $(document).ready(function() {
 	</div>
 </div>
 <!-- ENDIF -->
+	<br>
+	<div class="titTable4">
+	  {L_724}
+	</div>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	  <tr>
+		<td>
+		  <div class="tableContent2">
+			<div class="table2">
+<!-- IF COUNTRY ne '' or ZIP ne '' -->
+			  <b>{L_014}:</b> {COUNTRY} ({ZIP})<br>
+<!-- ENDIF -->
+			  <b>{L_025}:</b> {SHIPPING}, {INTERNATIONAL}<br>
+<!-- IF SHIPPINGTERMS ne '' -->
+			  <table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+				  <td valign="top"><b>{L_25_0215}:</b>&nbsp;</td>
+				  <td valign="top">{SHIPPINGTERMS}</td>
+				</tr>
+			  </table>
+<!-- ENDIF -->
+			  <br>
+			  <b>{L_026}:</b> {PAYMENTS}<br>
+<!-- IF ! B_BUY_NOW_ONLY -->
+			  <b><!-- IF ATYPE eq 1 -->{L_127}<!-- ELSE -->{L_038}<!-- ENDIF -->:</b> {MINBID}<br>
+<!-- ENDIF -->
+			  <br>
+			  <b>{L_111}:</b> {STARTTIME}<br>
+			  <b>{L_112}:</b> {ENDTIME}<br>
+			  <b>{L_113}:</b> {ID}<br>
+			  <br>
+			  <b>{L_041}:</b> {CATSPATH}<br>
+              <!-- IF SECCATSPATH ne '' --><b>{L_814}:</b> {SECCATSPATH}<!-- ENDIF -->
+			</div>
+		  </div>
+		</td>
+	  </tr>
+	</table>
+	<br>
+  </div>
+  </div>
+</div>

@@ -58,10 +58,9 @@ if (isset($_POST['action']))
 	if ($_POST['auto_join'] == 0)
 	{
 		$query = "SELECT * FROM ". $DBPrefix . "groups WHERE auto_join = 1";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$db->direct_query($query);
 		$auto_join = false;
-		while ($row = mysql_fetch_assoc($res))
+		while ($row = $db->fetch())
 		{
 			if ($row['id'] != $_POST['id'])
 			{
@@ -89,10 +88,9 @@ if (isset($_POST['action']))
 }
 
 $query = "SELECT * FROM ". $DBPrefix . "groups";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('groups', array(
 			'ID' => $row['id'],

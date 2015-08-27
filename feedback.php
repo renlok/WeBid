@@ -270,7 +270,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 						'USFEED' => $arrfeed['rate_sum'],
 						'USICON' => (isset($usicon)) ? $usicon : '',
 						'FBDATE' => FormatDate($arrfeed['feedbackdate']),
-						'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $arrfeed['title'] . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
+						'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $system->uncleanvars($arrfeed['title']) . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
 						'FEEDBACK' => nl2br($arrfeed['feedback'])
 						));
 				$i++;
@@ -318,7 +318,7 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 			'WID' => $_GET['wid'],
 			'SID' => $_GET['sid'],
 			'WS' => $ws,
-			'FEEDBACK' => $TPL_feedback,
+			'FEEDBACK' => (isset($secTPL_feedback)) ? $secTPL_feedback : '',
 			'RATE1' => (!isset($_POST['TPL_rate']) || $_POST['TPL_rate'] == 1) ? ' checked="true"' : '',
 			'RATE2' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == 0) ? ' checked="true"' : '',
 			'RATE3' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == -1) ? ' checked="true"' : '',

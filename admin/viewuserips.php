@@ -26,24 +26,29 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		foreach ($_POST['accept'] as $v)
 		{
-			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'accept' WHERE id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'accept' WHERE id = :ip_id";
+			$params = array();
+			$params[] = array(':ip_id', $v, 'int');
+			$db->query($query, $params);
 		}
 	}
 	if (is_array($_POST['deny']))
 	{
 		foreach ($_POST['deny'] as $v)
 		{
-			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'deny' WHERE id = " . $v;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'deny' WHERE id = :ip_id";
+			$params = array();
+			$params[] = array(':ip_id', $v, 'int');
+			$db->query($query, $params);
 		}
 	}
 }
 
-$query = "SELECT COUNT(*) As ips FROM " . $DBPrefix . "usersips WHERE user = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_ips = mysql_result($res, 0, 'ips');
+$query = "SELECT COUNT(*) As ips FROM " . $DBPrefix . "usersips WHERE user = :user_id";
+$params = array();
+$params[] = array(':user_id', $id, 'int');
+$db->query($query, $params);
+$num_ips = $db->result('ips');
 
 // Handle pagination
 if (!isset($_GET['PAGE']) || $_GET['PAGE'] == '')
@@ -58,24 +63,32 @@ else
 }
 $PAGES = ($num_ips == 0) ? 1 : ceil($num_ips / $system->SETTINGS['perpage']);
 
-$query = "SELECT nick, lastlogin FROM " . $DBPrefix . "users WHERE id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0)
+$query = "SELECT nick, lastlogin FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $id, 'int');
+$db->query($query, $params);
+if ($db->numrows() > 0)
 {
-	$USER = mysql_fetch_array($res);
+	$USER = $db->result();
+}
+else
+{
+	// no such user
+	header('location: listusers.php');
+	exit;
 }
 
-$query = "SELECT id, type, ip, action FROM " . $DBPrefix . "usersips WHERE user = " . $id .
-		" LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) > 0)
+$query = "SELECT id, type, ip, action FROM " . $DBPrefix . "usersips WHERE user = :user_id LIMIT :OFFSET, :perpage";
+$params = array();
+$params[] = array(':user_id', $id, 'int');
+$params[] = array(':OFFSET', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
+if ($db->numrows() > 0)
 {
 	$bg = '';
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
-		$bgcolour = ($bgcolour == '#FFFFFF') ? '#EEEEEE' : '#FFFFFF';
 		$template->assign_block_vars('ips', array(
 				'TYPE' => $row['type'],
 				'ID' => $row['id'],

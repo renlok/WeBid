@@ -1,7 +1,7 @@
 <!-- INCLUDE user_menu_header.tpl -->
 
 <table width="100%" cellspacing="3" cellpadding="4">
-<tr style="background-color:{TBLHEADERCOLOUR}">
+<tr>
 	<th style="width: 10%; text-align: center;" class="titTable7">{L_1041}</th>
 	<th class="titTable7">{L_1039}</th>
 	<th style="width: 10%; text-align: center;" class="titTable7">{L_1053}</th>
@@ -16,7 +16,7 @@
 	<td>{topay.INFO}</td>
 	<td style="text-align: center;">{topay.TOTAL}</td>
 	<td style="text-align: center;">
-		<!-- IF topay.PAID -->{L_898}<br><!-- ENDIF --><a href="{SITEURL}order_print.php?id={topay.INVOICE}">{L_1058}</a>
+		<!-- IF topay.PAID -->{L_898}<br><!-- ENDIF --><a href="{SITEURL}order_print.php?id={topay.INVOICE}" tagret="_blank">{L_1058}</a>
 	</td>
 </tr>
 <!-- END topay -->

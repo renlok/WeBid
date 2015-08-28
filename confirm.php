@@ -121,10 +121,11 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 
 if (isset($_POST['action']) && $_POST['action'] == $MSG['250'])
 {
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']);
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (md5($MD5_PREFIX . mysql_result($res, 0, 'nick')) == $_POST['hash'])
+	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_POST['id'], 'int');
+	$db->query($query, $params);
+	if (md5($MD5_PREFIX . $db->result('nick')) == $_POST['hash'])
 	{
 		// User doesn't want to confirm the registration
 		$query = "DELETE FROM " . $DBPrefix . "users WHERE id = :user_id AND suspended = 8";

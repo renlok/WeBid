@@ -28,12 +28,13 @@ $id = intval($_SESSION['CURRENT_ITEM']);
 $TPL_error_text = '';
 $emailsent = 1;
 // Get item data
-$query = "SELECT title, category FROM " . $DBPrefix . "auctions WHERE id = " . $id;
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-if (mysql_num_rows($result) > 0)
+$query = "SELECT title, category FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+$params = array();
+$params[] = array(':auc_id', $id, 'int');
+$db->query($query, $params);
+if ($db->numrows() > 0)
 {
-	$TPL_item_title = mysql_result($result, 0, 'title');
+	$TPL_item_title = $db->result('title');
 }
 
 $spam_html = '';

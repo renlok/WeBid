@@ -247,11 +247,12 @@ if (isset($_POST['action']))
 $auc_id = intval($_REQUEST['id']);
 $query =   "SELECT u.nick, a.* FROM " . $DBPrefix . "auctions a
 			LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-			WHERE a.id = " . $auc_id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+			WHERE a.id = :auc_id";
+$params = array();
+$params[] = array(':auc_id', $auc_id, 'int');
+$db->query($query, $params);
 
-if (mysql_num_rows($res) == 0)
+if ($db->numrows() == 0)
 {
 	if (!isset($_SESSION['RETURN_LIST']))
 	{
@@ -266,7 +267,7 @@ if (mysql_num_rows($res) == 0)
 	exit;
 }
 
-$auction_data = mysql_fetch_assoc($res);
+$auction_data = $db->result();
 
 // DURATIONS
 $dur_list = ''; // empty string to begin HTML list

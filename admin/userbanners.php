@@ -88,20 +88,33 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 
 				// Update database
 				$query = "INSERT INTO " . $DBPrefix . "banners VALUES
-						(NULL, '" . mysql_real_escape_string($_FILES['bannerfile']['name']) . "',
-						'" . $FILETYPE . "', 0, 0, '" . $_POST['url'] . "',
-						'" . mysql_real_escape_string($_POST['sponsortext']) . "', '" . mysql_real_escape_string($_POST['alt']) . "',
-						" . intval($_POST['purchased']) . ", " . $imagewidth . ", " . $imageheight . ", " . $id . ")";
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-				$ID = mysql_insert_id();
+						(NULL, :name,
+						:filetype, 0, 0, :url,
+						:sponsortext, :alttext,
+						:purchased, :imagewidth, :imageheight, :id)";
+				$params = array();
+				$params[] = array(':name', $_FILES['bannerfile']['name'], 'str');
+				$params[] = array(':filetype', $FILETYPE, 'str');
+				$params[] = array(':url', $_POST['url'], 'str');
+				$params[] = array(':sponsortext', $_POST['sponsortext'], 'str');
+				$params[] = array(':alttext', $_POST['alt'], 'str');
+				$params[] = array(':purchased', $_POST['purchased'], 'int');
+				$params[] = array(':imagewidth', $imagewidth, 'int');
+				$params[] = array(':imageheight', $imageheight, 'int');
+				$params[] = array(':id', $id, 'int');
+				$db->query($query, $params);
+				$ID = $db->lastInsertId();
 
 				// Handle filters
 				if (isset($_POST['category']) && is_array($_POST['category']))
 				{
 					foreach ($_POST['category'] as $k => $v)
 					{
-						$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES (" . $ID . ", " . $v . ")";
-						$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						$query = "INSERT INTO " . $DBPrefix . "bannerscategories VALUES (:id, :category)";
+						$params = array();
+						$params[] = array(':id', $ID, 'int');
+						$params[] = array(':category', $v, 'int');
+						$db->query($query, $params);
 					}
 				}
 				if (!empty($_POST['keywords']))
@@ -112,8 +125,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 					{
 						if (!empty($v))
 						{
-							$query = "INSERT INTO " . $DBPrefix . "bannerskeywords VALUES (" . $ID . ",'" . $system->cleanvars(trim($v)) . "')";
-							$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+							$query = "INSERT INTO " . $DBPrefix . "bannerskeywords VALUES (:id, :keyword)";
+							$params = array();
+							$params[] = array(':id', $ID, 'int');
+							$params[] = array(':keyword', $system->cleanvars(trim($v)), 'str');
+							$db->query($query, $params);
 						}
 					}
 				}
@@ -126,17 +142,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 
 $BANNERS = array();
 // Retrieve user's information
-$query = "SELECT id, name, company, email FROM " . $DBPrefix . "bannersusers WHERE id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$USER = mysql_fetch_assoc($res);
+$query = "SELECT id, name, company, email FROM " . $DBPrefix . "bannersusers WHERE id = :id";
+$params = array();
+$params[] = array(':id', $id, 'int');
+$db->query($query, $params);
+$USER = $db->result();
 	
-// REtrieve user's banners
-$query = "SELECT * FROM " . $DBPrefix . "banners WHERE user = " . $USER['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+// retrieve user's banners
+$query = "SELECT * FROM " . $DBPrefix . "banners WHERE user = :user_id";
+$params = array();
+$params[] = array(':user_id', $USER['id'], 'int');
+$db->query($query, $params);
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('banners', array(
 			'ID' => $row['id'],

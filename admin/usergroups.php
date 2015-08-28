@@ -25,10 +25,11 @@ if (isset($_GET['action']) && !isset($_POST['action']))
 {
 	if ($_GET['action'] == 'edit' && isset($_GET['id']))
 	{
-		$query = "SELECT * FROM ". $DBPrefix . "groups WHERE id = " . intval($_GET['id']);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$group = mysql_fetch_assoc($res);
+		$query = "SELECT * FROM ". $DBPrefix . "groups WHERE id = :groupid";
+		$params = array();
+		$params[] = array(':groupid', $_GET['id'], 'int');
+		$db->query($query, $params);
+		$group = $db->result();
 		$template->assign_vars(array(
 				'GROUP_ID' => $group['id'],
 				'EDIT_NAME' => $group['group_name'],

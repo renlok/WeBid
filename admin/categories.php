@@ -52,7 +52,7 @@ function rebuild_cat_file()
 
 if (isset($_POST['action']))
 {
-	if ($_POST['action'] == $MSG['089'])
+	if ($_POST['action'] == "Process")
 	{
 		//update all categories that arnt being deleted
 		if (isset($_POST['categories']) && is_array($_POST['categories']))
@@ -149,7 +149,7 @@ if (isset($_POST['action']))
 		include 'util_cc1.php';
 	}
 
-	if ($_POST['action'] == $MSG['030'])
+	if ($_POST['action'] == "Yes")
 	{
 		//delete categories that are selected
 		if (isset($_POST['delete']) && is_array($_POST['delete']))

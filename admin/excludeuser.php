@@ -24,7 +24,7 @@ if (!isset($_REQUEST['id']))
 	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
 {
 	$query = "SELECT name, email, suspended FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
@@ -67,7 +67,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	header('location: listusers.php?PAGE=' . intval($_POST['offset']));
 	exit;
 }
-elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	header('location: listusers.php?PAGE=' . intval($_POST['offset']));
 	exit;

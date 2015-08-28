@@ -27,7 +27,7 @@ if (!isset($_REQUEST['id']))
 	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
 {
 	$catscontrol = new MPTTcategories();
 	$id = intval($_POST['id']);
@@ -117,7 +117,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	header('location: ' . $URL);
 	exit;
 }
-elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	$URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
 	unset($_SESSION['RETURN_LIST']);

@@ -55,7 +55,7 @@ if (!isset($_GET['id']) && !isset($_POST['action']))
 	$page = 'error';
 }
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
+if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 {
     $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
     $params = array();
@@ -119,7 +119,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 	}
 }
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['250'])
+if (isset($_POST['action']) && $_POST['action'] == "Refuse")
 {
 	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();

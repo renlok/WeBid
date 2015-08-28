@@ -14,13 +14,13 @@
         <div class="break">&nbsp;</div>
 <!-- IF TYPE eq 1 -->
         <input type="hidden" name="id" value="{ID}">
-        <input type="submit" name="action" value="{L_030}">
-        <input type="submit" name="action" value="{L_029}">
+		<button type="submit" name="action" value="Yes">{L_030}</button>
+		<button type="submit" name="action" value="No">{L_029}</button>
 <!-- ELSEIF TYPE eq 2 -->
         <input type="hidden" name="id" value="{ID}">
         <input type="hidden" name="user" value="{USERID}">
-        <input type="submit" name="action" value="{L_030}">
-        <input type="submit" name="action" value="{L_029}">
+		<button type="submit" name="action" value="Yes">{L_030}</button>
+		<button type="submit" name="action" value="No">{L_029}</button>
 <!-- ENDIF -->
 	</form>
     </div>

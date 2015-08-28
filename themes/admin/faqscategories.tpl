@@ -19,7 +19,7 @@
 	<!-- BEGIN lang -->
                                 <p>{lang.LANG}:&nbsp;<input type="text" name="cat_name[{lang.LANG}]" size="25" maxlength="200"></p>
 	<!-- END lang -->
-                                <input type="submit" name="action" value="{L_5204}">
+								<button type="submit" name="action" value="Insert">{L_5204}</button>
                             </td>
                         </tr>
 <!-- ELSE -->
@@ -42,6 +42,7 @@
                     </table>
                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="action" class="centre" value="{L_008}">
+					<button type="submit" name="action" value="Delete">{L_008}</button>
 				</form>
             </div>
         </div>

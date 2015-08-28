@@ -21,7 +21,7 @@ $msg_id = intval($_REQUEST['id']);
 $board_id = intval($_REQUEST['board_id']);
 
 // Insert new currency
-if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
 {
 	$query = "DELETE FROM " . $DBPrefix . "comm_messages WHERE id = :msg_id";
 	$params = array();
@@ -35,7 +35,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	header('location: editmessages.php?id=' . $board_id);
 	exit;
 }
-elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	header('location: editmessages.php?id=' . $board_id);
 	exit;

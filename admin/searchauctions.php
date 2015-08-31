@@ -20,18 +20,36 @@ include $include_path . 'dates.inc.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+$extra_sql = '';
 
 // Get the posted variables if this is a new search.
-if (isset($_POST['auctionid'])) { $_SESSION['searchauctionsauctionid'] = filter_input(INPUT_POST, 'auctionid', FILTER_SANITIZE_NUMBER_INT); }
+if (isset($_POST['auctionid']))
+{
+	$_SESSION['searchauctionsauctionid'] = intval($_POST['auctionid']);
+}
+if (isset($_POST['usernick']))
+{
+	$_SESSION['usernick'] = $_POST['usernick'];
+}
+if (isset($_POST['userid']))
+{
+	$_SESSION['searchauctionsuid'] = intval($_POST['userid']);
+}
+if (isset($_POST['titlekeywords']))
+{
+	$_SESSION['searchauctionstitlekeywords'] = $_POST['titlekeywords']);
+}
+if (isset($_POST['auctiontype']))
+{
+	$_SESSION['searchauctionsauctiontype'] = intval($_POST['auctiontype']);
+}
 $auction_sql = $_SESSION['searchauctionsauctionid'] > 0 ? " AND a.id = " . $_SESSION['searchauctionsauctionid'] : '';
-if (isset($_POST['usernick'])) { $_SESSION['usernick'] = filter_input(INPUT_POST, 'usernick', FILTER_SANITIZE_STRING); }
 $usernick_sql = $_SESSION['usernick'] != '' ? " AND u.nick = '" . $_SESSION['usernick'] . "'" : '';
-if (isset($_POST['userid'])) { $_SESSION['searchauctionsuid'] = filter_input(INPUT_POST, 'userid', FILTER_SANITIZE_NUMBER_INT); }
 $user_sql = $_SESSION['searchauctionsuid'] > 0 ? " AND a.user = " . $_SESSION['searchauctionsuid'] : '';
-if (isset($_POST['titlekeywords'])) { $_SESSION['searchauctionstitlekeywords'] = filter_input(INPUT_POST, 'titlekeywords', FILTER_SANITIZE_STRING); }
 $titlekeywords_sql = $_SESSION['searchauctionstitlekeywords'] != '' ? " AND INSTR(LCASE(a.title), '" . strtolower($_SESSION['searchauctionstitlekeywords']) . "') > 0" : '';
-if (isset($_POST['auctiontype'])) { $_SESSION['searchauctionsauctiontype'] = filter_input(INPUT_POST, 'auctiontype', FILTER_SANITIZE_NUMBER_INT); }
-switch ($_SESSION['searchauctionsauctiontype']) {
+
+switch ($_SESSION['searchauctionsauctiontype'])
+{
 	case 1:	// open auctions
 		$auctiontype_sql = "a.closed = 0";
 	break;
@@ -46,7 +64,8 @@ switch ($_SESSION['searchauctionsauctiontype']) {
 } 
 
 // If a new search is posted, you need to unset $_SESSION['RETURN_LIST_OFFSET'] to get page 1.
-if (isset($_POST['auctionid'])) {
+if (isset($_POST['auctionid']))
+{
 	unset($_SESSION['RETURN_LIST_OFFSET']);
 }
 
@@ -72,22 +91,22 @@ $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(a.id) As auctions FROM " . $DBPrefix . "auctions a INNER JOIN " . $DBPrefix . "users u 
 	ON (u.id = a.user) WHERE " . $auctiontype_sql . $auction_sql . $usernick_sql . $user_sql . $titlekeywords_sql;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auctions = mysql_result($res, 0, 'auctions');
+$db->direct_query($query);
+$num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name FROM " . $DBPrefix . "auctions a
 		INNER JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
 		WHERE " . $auctiontype_sql . $auction_sql . $usernick_sql . $user_sql . $titlekeywords_sql . 
-		" ORDER BY nick, starts, title LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
+		" ORDER BY nick, starts, title LIMIT :offset, :perpage";
 //echo $query;
-
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$params = array();
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],
@@ -114,7 +133,7 @@ if ($PAGES > 1)
 	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
 	{
 		$template->assign_block_vars('pages', array(
-				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'a7iGX46hGrT/searchauctions.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'admin/searchauctions.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
 				));
 		$COUNTER++;
 	}
@@ -129,10 +148,14 @@ if ($PAGES > 1)
 	3 = suspended auctions
 */
 $types = array(0=>'619a', 1=>619, 2=>204, 3=>'2__0056');
-foreach ($types as $key => $val) {
-	if ($key == $_SESSION['searchauctionsauctiontype']) {
+foreach ($types as $key => $val)
+{
+	if ($key == $_SESSION['searchauctionsauctiontype'])
+	{
 		$auctiontypeshtml .= '<input type="radio" name="auctiontype" value="' . $key . '" checked="checked"> ' . str_ireplace('auctions', '', $MSG[$val]) . ' ';
-	} else {
+	}
+	else
+	{
 		$auctiontypeshtml .= '<input type="radio" name="auctiontype" value="' . $key . '"> ' . str_ireplace('auctions', '', $MSG[$val]) . ' ';
 	}
 }
@@ -146,8 +169,8 @@ $template->assign_vars(array(
 		'USERID' => $_SESSION['searchauctionsuid'], 
 		'TITLEKEYWORDS' => $_SESSION['searchauctionstitlekeywords'], 
 		'AUCTIONTYPE' => $auctiontypeshtml, 
-		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'a7iGX46hGrT/searchauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
-		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'a7iGX46hGrT/searchauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/searchauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/searchauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES
 		));

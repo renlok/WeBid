@@ -69,16 +69,6 @@ class global_class
 			);
 	}
 
-	function check_mysql($result, $query, $line, $page)
-	{
-		if (!$result)
-		{
-			MySQLError($query, $line, $page);
-			header('location: ' . $this->SETTINGS['siteurl'] . 'error.php');
-			exit;
-		}
-	}
-
 	/* possible types cron, error, admin, user, mod */
 	function log($type, $message, $user = 0, $action_id = 0)
 	{

@@ -97,14 +97,14 @@ function print_header($update)
 
 function check_version()
 {
-	global $DBPrefix, $settings_version;
+	global $DBPrefix, $settings_version, $db;
 
 	// check if using an old version
 	if (!isset($settings_version) || empty($settings_version))
 	{
 		$version = file_get_contents('../includes/version.txt') or die('error');
 		$query = "ALTER TABLE `" . $DBPrefix . "settings` ADD `version` varchar(10) NOT NULL default '" . $version . "'";
-		$res = @mysql_query($query);
+		@$db->direct_query($query);
 		return $version;
 	}
 
@@ -113,18 +113,17 @@ function check_version()
 
 function check_installation()
 {
-	global $DBPrefix, $settings_version, $main_path;
+	global $DBPrefix, $settings_version, $main_path, $db;
 
 	@include '../includes/config.inc.php';
-	@mysql_connect($DbHost, $DbUser, $DbPassword);
-	@mysql_select_db($DbDatabase);
 	$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
+	$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
 	// check webid install...
-	$query = "SELECT * FROM `" . $DBPrefix . "settings`";
-	$res = @mysql_query($query);
+	$query = "SELECT version FROM `" . $DBPrefix . "settings`";
+	$res = $db->direct_query($query);
 	if ($res != false)
 	{
-		$settings_version = @mysql_result($res, 0, 'version');
+		$settings_version = $db->result('version');
 		return true;
 	}
 	else
@@ -344,6 +343,14 @@ function show_config_table($fresh = true)
 		$data .= (extension_loaded('bcmath')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 
+		$data .= '<tr><td colspan="2">BC Math Support:</td><td colspan="2">';
+		$data .= (extension_loaded('bcmath')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+		$data .= '</tr>';
+		
+		$data .= '<tr><td colspan="2">PHP Data Objects Support:</td><td colspan="2">';
+		$data .= (extension_loaded('pdo')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+		$data .= '</tr>';
+
 		$data .= '</table>';
 	}
 
@@ -371,11 +378,11 @@ function search_cats($parent_id, $level)
 
 function rebuild_cat_file()
 {
-	global $system, $main_path, $DBPrefix;
+	global $system, $main_path, $DBPrefix, $db;
 	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
-	$result = mysql_query($query);
+	$db->direct_query($query);
 	$cats = array();
-	while ($catarr = mysql_fetch_array($result))
+	while ($catarr = $db->fetch())
 	{
 		$cats[$catarr['cat_id']] = $catarr['cat_name'];
 		$allcats[] = $catarr;

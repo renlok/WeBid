@@ -18,27 +18,36 @@ if (!function_exists('view'))
 {
 	function view()
 	{
-		global $system, $DBPrefix, $uploaded_path;
+		global $system, $DBPrefix, $uploaded_path, $db;
 
 		$return = '';
 		$joinings = '';
 		$extra = '';
 		$BANNERSARRAY = array();
+		$params = array();
 
 		if (strstr($_SERVER['SCRIPT_FILENAME'], 'browse.php')) // check categories
 		{
 			global $id;
 			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerscategories c ON (c.banner = b.id)';
-			$extra .=  ' AND c.category = ' . $id;
+			$extra .=  ' AND c.category = :cat_id';
+			$params[] = array(':cat_id', $id, 'int');
 		}
 		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'item.php')) // check categories & item title
 		{
 			global $auction_data;
 			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerskeywords k ON (k.banner = b.id)';
 			$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerscategories c ON (c.banner = b.id)';
-			$extra_cat = (!empty($auction_data['secondcat'])) ?  "OR c.category = " . $auction_data['secondcat'] : '';
-			$extra .=  " AND (k.keyword LIKE '%" . $auction_data['title'] . "%'
-						 OR c.category = " . $auction_data['category'] . $extra_cat . ")";
+			$extra_cat = '';
+			if (!empty($auction_data['secondcat']))
+			{
+				$extra_cat = " OR c.category = :second_cat_id";
+				$params[] = array(':second_cat_id', $auction_data['secondcat'], 'int');
+			}
+			$extra .=  " AND (k.keyword LIKE :title
+						OR c.category = :cat_id" . $extra_cat . ")";
+			$params[] = array(':cat_id', $auction_data['category'], 'int');
+			$params[] = array(':title', '%' . $auction_data['title'] . '%', 'str');
 		}
 		elseif (strstr($_SERVER['SCRIPT_FILENAME'], 'adsearch.php')) // check search terms
 		{
@@ -54,7 +63,8 @@ if (!function_exists('view'))
 			if (isset($_SESSION['advs']['category']) && !empty($_SESSION['advs']['category']))
 			{
 				$joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerscategories c ON (c.banner = b.id)';
-				$extra .=  " OR c.category = " . $_SESSION['advs']['category'];
+				$extra .=  " OR c.category = :cat_id";
+				$params[] = array(':cat_id', $_SESSION['advs']['category'], 'int');
 			}
 			if ($extra != '')
 			{
@@ -71,11 +81,10 @@ if (!function_exists('view'))
 
 		$query = "SELECT b.id FROM " . $DBPrefix . "banners b " . $joinings . "
 				WHERE (b.views < b.purchased OR b.purchased = 0)" . $extra;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$db->query($query, $params);
 		$CKcount = false;
 
-		if (mysql_num_rows($res) == 0)
+		if ($db->numrows() == 0)
 		{
 			/*$query = "SELECT b.id FROM " . $DBPrefix . "banners b " . $joinings . "
 					WHERE b.views < b.purchased OR b.purchased = 0";*/
@@ -85,13 +94,12 @@ if (!function_exists('view'))
 					WHERE (b.views < b.purchased OR b.purchased = 0)
 					AND k.keyword IS NULL AND c.category IS NULL
 					GROUP BY k.banner, c.banner";
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 			$CKcount = false;
 		}
 
 		// We have at least one banners to show
-		while ($row = mysql_fetch_assoc($res))
+		while ($row = $db->fetch())
 		{
 			if ($CKcount && $row['Kcount'] == 0 && $row['Ccount'] == 0)
 			{
@@ -109,10 +117,12 @@ if (!function_exists('view'))
 			$RAND_IDX = array_rand($BANNERSARRAY);
 			$BANNERTOSHOW = $BANNERSARRAY[$RAND_IDX]['id'];
 
-			$query = "SELECT * FROM " . $DBPrefix . "banners WHERE id = " . $BANNERTOSHOW;
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			$THISBANNER = mysql_fetch_array($res);
+			$query = "SELECT * FROM " . $DBPrefix . "banners WHERE id = :banner_id";
+			$params = array();
+			$params[] = array(':banner_id', $BANNERTOSHOW, 'int');
+			$params[] = array(':time', $NOW, 'int');
+			$db->query($query, $params);
+			$THISBANNER = $db->result();
 			if ($THISBANNER['type'] == 'swf')
 			{
 				$return .= '

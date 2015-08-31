@@ -57,7 +57,6 @@ if (isset($_POST['action']))
 			if ($v == 'delete')
 			{
 				// get a list of all faqs within the category
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$query = "SELECT id FROM " . $DBPrefix . "faqs WHERE category = :cat_id";
 				$params = array();
 				$params[] = array(':cat_id', $k, 'int');

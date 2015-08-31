@@ -15,10 +15,11 @@
 if (!defined('InWeBid')) exit();
 
 // Check if the e-mail has to be sent or not
-$query = "SELECT endemailmode FROM " . $DBPrefix . "users WHERE id = " . $Seller['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$emailmode = mysql_result($res, 0, 'endemailmode');
+$query = "SELECT endemailmode FROM " . $DBPrefix . "users WHERE id = :seller_id";
+$params = array();
+$params[] = array(':seller_id', $Seller['id'], 'int');
+$db->query($query, $params);
+$emailmode = $db->result('endemailmode');
 
 if ($emailmode == 'one')
 {

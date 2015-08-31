@@ -132,8 +132,10 @@ if (!function_exists('view'))
 				$return .= '<br><a href="' . $system->SETTINGS['siteurl'] . 'clickthrough.php?banner=' . $THISBANNER['id'] . '" target="_blank">' . $THISBANNER['sponsortext'] . '</a>';
 			}
 			// Update views
-			$query = "UPDATE " . $DBPrefix . "banners set views = views + 1 WHERE id = " . $THISBANNER['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "banners set views = views + 1 WHERE id = :banner_id";
+			$params = array();
+			$params[] = array(':banner_id', $THISBANNER['id'], 'int');
+			$db->query($query, $params);
 		}
 		return $return;
 	}

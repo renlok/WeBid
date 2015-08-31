@@ -16,5 +16,6 @@
 - Moved the add new news button in admin so its visable
 - Fixed buy it now not setting an auction to close if all item have been purchased
 - Cleaned up outstanding page
+- Added option to enable payment sandboxes to test the IPN
 
 for older changes check out http://www.webidsupport.com/wiki/Change_Log

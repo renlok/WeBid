@@ -19,19 +19,20 @@ foreach ($LANGUAGES as $k => $v)
 	include $main_path . 'language/' . $k . '/categories.inc.php';
 
 	$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE parent_id = -1";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$db->direct_query($query);
+	$parent_cat_id = $db->result('cat_id');
 
-	$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE parent_id = " . mysql_result($res, 0) . " ORDER BY cat_name";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE parent_id = :parent_cat_id ORDER BY cat_name";
+	$params = array();
+	$params[] = array(':parent_cat_id', $parent_cat_id, 'int');
+	$db->query($query, $params);
 
 	$output = "\t" . '<option value="0">' . $MSG['277'] . '</option>' . "\n";
 	$output.= "\t" . '<option value="0">----------------------</option>' . "\n";
 
-	$num_rows = mysql_num_rows($res);
+	$num_rows = $db->numrows();
 
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
 		$category_id = $row['cat_id'];
 		$cat_name = $category_names[$category_id];

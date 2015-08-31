@@ -20,11 +20,7 @@ class global_class
 
 	function global_class()
 	{
-		global $DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $main_path;
-
-		// Database connection
-		if (!mysql_connect($DbHost,$DbUser,$DbPassword)) die();
-		if (!mysql_select_db($DbDatabase)) die();
+		global $DBPrefix, $main_path, $db;
 
 		// Load settings
 		$this->loadsettings();
@@ -43,10 +39,11 @@ class global_class
 		// Check ip
 		if (!defined('ErrorPage') && !defined('InAdmin'))
 		{
-			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE ip = '" . $_SERVER['REMOTE_ADDR'] . "' AND action = 'deny'";
-			$result = mysql_query($query);
-			$this->check_mysql($result, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($result) > 0)
+			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE ip = :user_ip AND action = 'deny'";
+			$params = array();
+			$params[] = array(':user_ip', $_SERVER['REMOTE_ADDR'], 'str');
+			$db->query($query, $params);
+			if ($db->numrows() > 0)
 			{
 				$_SESSION['msg_title'] = $MSG['2_0027'];
 				$_SESSION['msg_body'] = $MSG['2_0026'];
@@ -58,11 +55,11 @@ class global_class
 
 	function loadsettings()
 	{
-		global $DBPrefix;
+		global $DBPrefix, $db;
 		$query = "SELECT * FROM " . $DBPrefix . "settings";
-		$result = mysql_query($query);
-		$this->check_mysql($result, $query, __LINE__, __FILE__);
-		$this->SETTINGS = mysql_fetch_assoc($result);
+		$db->direct_query($query);
+		
+		$this->SETTINGS = $db->result();
 		$this->SETTINGS['gatways'] = array(
 			'paypal' => 'PayPal',
 			'authnet' => 'Authorize.net',
@@ -85,26 +82,31 @@ class global_class
 	/* possible types cron, error, admin, user, mod */
 	function log($type, $message, $user = 0, $action_id = 0)
 	{
-		global $DBPrefix;
+		global $DBPrefix, $db;
 		$query = "INSERT INTO " . $DBPrefix . "logs (type, message, ip, action_id, user_id, timestamp) VALUES
-				('" . $type . "', '" . mysql_real_escape_string($message) . "', '" . $_SERVER['REMOTE_ADDR'] . "', " . $action_id . ", " . $user . ", " . time() . ")";
-		$res = mysql_query($query);
-		$this->check_mysql($res, $query, __LINE__, __FILE__);
+				(:type, :message, :user_ip, :action_id, :user_id, :time)";
+		$params = array();
+		$params[] = array(':type', $type, 'str');
+		$params[] = array(':message', $message, 'str');
+		$params[] = array(':user_ip', $_SERVER['REMOTE_ADDR'], 'str');
+		$params[] = array(':action_id', $action_id, 'int');
+		$params[] = array(':user_id', $user, 'int');
+		$params[] = array(':time', time(), 'int');
+		$db->query($query, $params);
 	}
 
 	function check_maintainance_mode()
 	{
-		global $DBPrefix, $user;
+		global $DBPrefix, $user, $db;
 
 		if (!isset($this->SETTINGS['MAINTAINANCE']))
 		{
 			$query = "SELECT * FROM " . $DBPrefix . "maintainance";
-			$res = mysql_query($query);
-			$this->check_mysql($res, $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 
-			if (mysql_num_rows($res) > 0)
+			if ($db->numrows() > 0)
 			{
-				$this->SETTINGS['MAINTAINANCE'] = mysql_fetch_assoc($res);
+				$this->SETTINGS['MAINTAINANCE'] = $db->result();
 			}
 			else
 			{
@@ -147,11 +149,10 @@ class global_class
 
 	function filter($txt)
 	{
-		global $DBPrefix;
+		global $DBPrefix, $db;
 		$query = "SELECT * FROM " . $DBPrefix . "filterwords";
-		$res = mysql_query($query);
-		$this->check_mysql($res, $query, __LINE__, __FILE__);
-		while ($word = mysql_fetch_array($res))
+		$db->direct_query($query);
+		while ($word = $db->fetch())
 		{
 			$txt = preg_replace('(' . $word['word'] . ')', '', $txt); //best to use str_ireplace but not avalible for PHP4
 		}
@@ -287,11 +288,10 @@ function _mktime($hr, $min, $sec, $mon, $day, $year)
 
 function load_counters()
 {
-	global $system, $DBPrefix, $MSG, $_COOKIE, $user;
+	global $system, $DBPrefix, $MSG, $_COOKIE, $user, $db;
 	$query = "SELECT * FROM " . $DBPrefix . "counters";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$counter_data = mysql_fetch_assoc($res);
+	$db->direct_query($query);
+	$counter_data = $db->result();
 	$counters = '';
 
 	if ($system->SETTINGS['counter_auctions'] == 'y')
@@ -318,29 +318,38 @@ function load_counters()
 			$s = 'uId-' . $user->user_data['id'];
 		}
 		$uxtime = time();
-		$query = "SELECT id FROM " . $DBPrefix . "online WHERE SESSION = '$s'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "SELECT ID FROM " . $DBPrefix . "online WHERE SESSION = :user";
+		$params = array();
+		$params[] = array(':user', $s, 'str');
+		$db->query($query, $params);
 
-		if (mysql_num_rows($res) == 0)
+		if ($db->numrows() == 0)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES ('$s', " . $uxtime . ")";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES (:user, :timer)";
+			$params = array();
+			$params[] = array(':user', $s, 'str');
+			$params[] = array(':timer', $uxtime, 'int');
+			$db->query($query, $params);
 		}
 		else
 		{
-			$oID = mysql_result($res, 0, 'ID');
-			$query = "UPDATE " . $DBPrefix . "online SET time = " . $uxtime . " WHERE ID = '$oID'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$oID = $db->result('ID');
+			$query = "UPDATE " . $DBPrefix . "online SET time = :timer WHERE ID = :online_id";
+			$params = array();
+			$params[] = array(':timer', $uxtime, 'int');
+			$params[] = array(':online_id', $oID, 'int');
+			$db->query($query, $params);
 		}
 		$deltime = $uxtime - 900;
-		$query = "DELETE from " . $DBPrefix . "online WHERE time < " . $deltime;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$query = "SELECT * FROM " . $DBPrefix . "online";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "DELETE from " . $DBPrefix . "online WHERE time <= :timer";
+		$params = array();
+		$params[] = array(':timer', $deltime, 'int');
+		$db->query($query, $params);
+		
+		$query = "SELECT id FROM " . $DBPrefix . "online";
+		$db->direct_query($query);
 
-		$count15min = mysql_num_rows($res);
+		$count15min = $db->numrows('id');
 
 		$counters .= '<b>' . $count15min . '</b> ' . $MSG['2__0064'] . ' | ';
 	}

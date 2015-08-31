@@ -1632,7 +1632,12 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `smtp_host` VARCHAR(128) NOT NULL,
   `smtp_username`  VARCHAR(128) NOT NULL,
   `smtp_password`  VARCHAR(128) NOT NULL,
-  `alert_emails`  VARCHAR(128) NOT NULL
+  `alert_emails`  VARCHAR(128) NOT NULL,
+  `paypal_sandbox` INT(1) default 0,
+  `authnet_sandbox` INT(1) default 0,
+  `worldpay_sandbox` INT(1) default 0,
+  `checkout_sandbox` INT(1) default 0,
+  `moneybookers_sandbox` INT(1) default 0
 );";
 
 # 
@@ -1745,7 +1750,12 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 '',
 '',
 '',
-'');";
+'',
+0,
+0,
+0,
+0,
+0);";
 
 
 # ############################

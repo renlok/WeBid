@@ -249,17 +249,22 @@ $template->assign_vars(array(
 		'B_ENMONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1 && !empty($mb_paytoemail)),
 		// paypal
 		'PP_PAYTOEMAIL' => $pp_paytoemail,
+		'PP_SANDBOX' => $system->SETTINGS['paypal_sandbox'],
 		// authorize.net
 		'AN_PAYTOID' => $an_paytoid,
 		'AN_PAYTOPASS' => $an_paytopass,
 		'AN_KEY' => ($gateway_data['authnet_active'] == 1) ? $fees->hmac($an_paytopass, $an_paytoid . "^" . $sequence . "^" . $timestamp . "^" . $pay_val . "^" . $system->SETTINGS['currency']) : '',
 		'AN_SEQUENCE' => $sequence,
+		'AN_SANDBOX' => $system->SETTINGS['authnet_sandbox'],
 		// worldpay
 		'WP_PAYTOID' => $wp_paytoid,
+		'WP_SANDBOX' => $system->SETTINGS['worldpay_sandbox'],
 		// 2checkout
 		'TC_PAYTOID' => $tc_paytoid,
+		'TC_SANDBOX' => $system->SETTINGS['checkout_sandbox'],
 		// moneybookers
 		'MB_PAYTOEMAIL' => $mb_paytoemail,
+		'MB_SANDBOX' => $system->SETTINGS['moneybookers_sandbox'],
 		// item values
 		'PAY_VAL' => $pay_val,
 		'CURRENCY' => $system->SETTINGS['currency'],

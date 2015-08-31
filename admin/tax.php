@@ -23,9 +23,12 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$query = "UPDATE " . $DBPrefix . "settings SET
-				taxuser = '" . $_POST['taxuser'] . "',
-				tax = '" . $_POST['tax'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				taxuser = :taxuser,
+				tax = :tax";
+	$params = array();
+	$params[] = array(':taxuser', $_POST['taxuser'], 'str');
+	$params[] = array(':tax', $_POST['tax'], 'str');
+	$db->query($query, $params);
 	$system->SETTINGS['taxuser'] = $_POST['taxuser'];
 	$system->SETTINGS['tax'] = $_POST['tax'];
 	$ERR = $MSG['1089'];

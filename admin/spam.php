@@ -29,11 +29,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$query = "UPDATE " . $DBPrefix . "settings SET
-					recaptcha_public = '" . $_POST['recaptcha_public'] . "',
-					recaptcha_private = '" . $_POST['recaptcha_private'] . "',
-					spam_sendtofriend = " . $_POST['spam_sendtofriend'] . ",
-					spam_register = " . $_POST['spam_register'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					recaptcha_public = :recaptcha_public,
+					recaptcha_private = :recaptcha_private,
+					spam_sendtofriend = :spam_sendtofriend,
+					spam_register = :spam_register" ;
+		$params = array();
+		$params[] = array(':recaptcha_public', $_POST['recaptcha_public'], 'str');
+		$params[] = array(':recaptcha_private', $_POST['recaptcha_private'], 'str');
+		$params[] = array(':spam_sendtofriend', $_POST['spam_sendtofriend'], 'int');
+		$params[] = array(':spam_register', $_POST['spam_register'], 'int');
+		$db->query($query, $params);
 		$system->SETTINGS['recaptcha_public'] = $_POST['recaptcha_public'];
 		$system->SETTINGS['recaptcha_private'] = $_POST['recaptcha_private'];
 		$system->SETTINGS['spam_sendtofriend'] = $_POST['spam_sendtofriend'];

@@ -35,16 +35,26 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update data
 		$query = "UPDATE " . $DBPrefix . "settings SET
-				sitename = '" . $system->cleanvars($_POST['sitename']) . "',
-				adminmail = '" . mysql_real_escape_string($_POST['adminmail']) . "',
-				siteurl = '" . mysql_real_escape_string($_POST['siteurl']) . "',
-				copyright = '" . $system->cleanvars($_POST['copyright']) . "',
-				cron = " . intval($_POST['cron']) . ",
-				archiveafter = " . intval($_POST['archiveafter']) . ",
-				cache_theme = '" . $_POST['cache_theme'] . "',
-				https = '" . $_POST['https'] . "',
-				https_url = '" . $_POST['https_url'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				sitename = :name,
+				adminmail = :email,
+				siteurl = :url,
+				copyright = :copy,
+				cron = :cronjob,
+				archiveafter = :delete_auctions,
+				cache_theme = :cache,
+				https = :https,
+				https_url = :https_url";
+		$params = array();
+		$params[] = array(':name', $_POST['sitename'], 'str');
+		$params[] = array(':email', $_POST['adminmail'], 'str');
+		$params[] = array(':url', $_POST['siteurl'], 'str');
+		$params[] = array(':copy', $_POST['copyright'], 'str');
+		$params[] = array(':cronjob', $_POST['cron'], 'int');
+		$params[] = array(':delete_auctions', $_POST['archiveafter'], 'int');
+		$params[] = array(':cache', $_POST['cache_theme'], 'str');
+		$params[] = array(':https', $_POST['https'], 'str');
+		$params[] = array(':https_url', $_POST['https_url'], 'str');
+		$db->query($query, $params);
 		$ERR = $MSG['542'];
 	}
 

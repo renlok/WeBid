@@ -247,11 +247,12 @@ if (isset($_POST['action']))
 $auc_id = intval($_REQUEST['id']);
 $query =   "SELECT u.nick, a.* FROM " . $DBPrefix . "auctions a
 			LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-			WHERE a.id = " . $auc_id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+			WHERE a.id = :auc_id";
+$params = array();
+$params[] = array(':auc_id', $auc_id, 'int');
+$db->query($query, $params);
 
-if (mysql_num_rows($res) == 0)
+if ($db->numrows() == 0)
 {
 	if (!isset($_SESSION['RETURN_LIST']))
 	{
@@ -266,15 +267,14 @@ if (mysql_num_rows($res) == 0)
 	exit;
 }
 
-$auction_data = mysql_fetch_assoc($res);
+$auction_data = $db->result();
 
 // DURATIONS
 $dur_list = ''; // empty string to begin HTML list
 $query = "SELECT days, description FROM " . $DBPrefix . "durations";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$dur_list .= '<option value="' . $row['days'] . '"';
 	if ($row['days'] == $auction_data['duration'])
@@ -332,9 +332,8 @@ if (file_exists('../' . $uploaded_path . $auc_id))
 $payment = explode(', ', $auction_data['payment']);
 $payment_methods = '';
 $query = "SELECT * FROM " . $DBPrefix . "gateways";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateways_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$gateways_data = $db->result();
 $gateway_list = explode(',', $gateways_data['gateways']);
 foreach ($gateway_list as $v)
 {

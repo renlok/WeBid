@@ -50,9 +50,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 else
 {
 	$query = "SELECT * FROM " . $DBPrefix . "maintainance LIMIT 1";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data = mysql_fetch_assoc($res);
+	$db->direct_query($query);
+	$data = $db->result();
 	$system->SETTINGS['superuser'] = $data['superuser'];
 	$system->SETTINGS['maintainancetext'] = $data['maintainancetext'];		
 	$system->SETTINGS['active'] = $data['active'];

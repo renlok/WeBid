@@ -30,7 +30,7 @@ $user_message = '';
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 {
-	if (is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
+	if (isset($_POST['O_delete']) && is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
 	{
 		$removed = 0;
 		foreach ($_POST['O_delete'] as $k => $v)
@@ -69,7 +69,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 		$user_message .= sprintf($MSG['1145'], count($_POST['O_delete']));
 	}
 
-	if (is_array($_POST['startnow']) && count($_POST['startnow']) > 0)
+	if (isset($_POST['startnow']) && is_array($_POST['startnow']) && count($_POST['startnow']) > 0)
 	{
 		foreach ($_POST['startnow'] as $k => $v)
 		{

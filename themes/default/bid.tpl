@@ -70,7 +70,7 @@ $(document).ready(function(){
 			</form>
 <!-- ELSE -->
 			{L_272}&nbsp;
-			<a href="{SITEURL}item.php?id={ID}">{SITEURL}item.php?id={ID}</a><br>
+			<a href="{SITEURL}item.php?id={ID}"><b>{TITLE}</b></a><br>
 			{L_699} {BID} {L_700}
 <!-- ENDIF -->
 		</div>

@@ -114,7 +114,7 @@
             </tr>
             </table>
             <p><input type="checkbox" name="rememberme" id="rememberme" value="1"><label for="rememberme">&nbsp;{L_25_0085}</label></p>
-            <p align="center"><input type="submit" name="action" value="{L_275}" class="button"></p>
+            <p align="center"><button type="submit" name="action" class="button" value="Go">{L_275}</button></p>
             <p><a href="{SITEURL}forgotpasswd.php">{L_215}</a></p>
         </form>
     </div>

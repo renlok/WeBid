@@ -37,9 +37,8 @@ $varialbes = array(
 	);
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateway_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$gateway_data = $db->result();
 
 $gateways = explode(',', $gateway_data['gateways']);
 

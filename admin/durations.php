@@ -36,23 +36,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 
 	$query = "DELETE FROM " . $DBPrefix . "durations";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->direct_query($query);
 
 	for ($i = 0; $i < count($rebuilt_durations); $i++)
 	{
-		$query = "INSERT INTO " . $DBPrefix . "durations VALUES (" . $rebuilt_days[$i] . ", '" . $system->cleanvars($rebuilt_durations[$i]) . "')";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "INSERT INTO " . $DBPrefix . "durations VALUES (:day_count, :day_string)";
+		$params = array();
+		$params[] = array(':day_count', $rebuilt_days[$i], 'int');
+		$params[] = array(':day_string', $system->cleanvars($rebuilt_durations[$i]), 'str');
+		$db->query($query, $params);
 	}
 
 	$ERR = $MSG['123'];
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "durations ORDER BY days";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
 $i = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('dur', array(
 			'ID' => $i,

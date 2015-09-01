@@ -1,7 +1,7 @@
 <!-- INCLUDE user_menu_header.tpl -->
 
 <table width="100%" cellspacing="3" cellpadding="4">
-<tr style="background-color:{TBLHEADERCOLOUR}">
+<tr>
 	<th style="width: 10%; text-align: center;" class="titTable7">{L_1041}</th>
 	<th class="titTable7">{L_1039}</th>
 	<th style="width: 10%; text-align: center;" class="titTable7">{L_1053}</th>

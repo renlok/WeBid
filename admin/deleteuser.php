@@ -30,7 +30,7 @@ if (empty($id) || $id <= 0)
 
 $has_auctions = false;
 $has_bids = false;
-if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
 {
 	$catscontrol = new MPTTcategories();
 
@@ -154,7 +154,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	header('location: listusers.php');
 	exit;
 }
-elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	header('location: listusers.php');
 	exit;

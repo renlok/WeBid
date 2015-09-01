@@ -477,7 +477,7 @@ $db->direct_query($query);
 $user_data = $db->fetchall();
 foreach ($auction_data as $row)
 {
-	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < '" . date('Ymd') . "' AND seller_id = :seller_id";
+	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < :date AND seller_id = :seller_id";
 	$params = array();
 	$params[] = array(':seller_id', $row['id'], 'int');
 	$params[] = array(':date', date('Ymd'), 'int');

@@ -45,25 +45,30 @@ $gateways = explode(',', $gateway_data['gateways']);
 if (isset($_POST['action']))
 {
 	// build the sql
+	$params = array();
 	$query = 'UPDATE ' . $DBPrefix . 'gateways SET ';
 	for ($i = 0; $i < count($gateways); $i++)
 	{
 		if ($i != 0)
 			$query .= ', ';
 		$gateway = $gateways[$i];
-		$query .= $gateway . '_active = ' . (isset($_POST[$gateway . '_active']) ? 1 : 0) . ', ';
-		$query .= $gateway . '_required = ' . (isset($_POST[$gateway . '_required']) ? 1 : 0) . ', ';
-		$query .= $gateway . "_address = '" . $_POST[$gateway . '_address'] . "'";
+		$query .= $gateway . '_active = :active' . $gateway . ', ';
+		$query .= $gateway . '_required = :required' . $gateway . ', ';
+		$query .= $gateway . "_address = :address" . $gateway;
+		$params[] = array(':active' . $gateway, (isset($_POST[$gateway . '_active']) ? 1 : 0), 'int');
+		$params[] = array(':required' . $gateway, (isset($_POST[$gateway . '_required']) ? 1 : 0), 'int');
+		$params[] = array(':address' . $gateway, $_POST[$gateway . '_address'], 'str');
 		if (isset($_POST[$gateway . '_password']))
 		{
-			$query .= ', ' . $gateway . "_password = '" . $_POST[$gateway . '_password'] . "'";
+			$query .= ', ' . $gateway . "_password = :password" . $gateway;
+			$params[] = array(':password' . $gateway, $_POST[$gateway . '_password'], 'str');
 			$gateway_data[$gateway . '_password'] = $_POST[$gateway . '_password'];
 		}
 		$gateway_data[$gateway . '_active'] = (isset($_POST[$gateway . '_active']) ? 1 : 0);
 		$gateway_data[$gateway . '_required'] = (isset($_POST[$gateway . '_required']) ? 1 : 0);
 		$gateway_data[$gateway . '_address'] = $_POST[$gateway . '_address'];
 	}
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$db->query($query, $params);
 	$ERR = $MSG['762'];
 }
 

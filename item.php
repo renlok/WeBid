@@ -38,17 +38,18 @@ $_SESSION['REDIRECT_AFTER_LOGIN'] = $system->SETTINGS['siteurl'] . 'item.php?id=
 $query = "SELECT a.*, ac.counter, u.nick, u.reg_date, u.country, u.zip FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "auccounter ac ON (ac.auction_id = a.id)
-		WHERE a.id = " . $id . " LIMIT 1";
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-if (mysql_num_rows($result) == 0)
+		WHERE a.id = :auction_id LIMIT 1";
+$params = array();
+$params[] = array(':auction_id', $id, 'int');
+$db->query($query, $params);
+if ($db->numrows() == 0)
 {
 	$_SESSION['msg_title'] = $ERR_622;
 	$_SESSION['msg_body'] = $ERR_623;
 	header('location: message.php');
 	exit;
 }
-$auction_data = mysql_fetch_assoc($result);
+$auction_data = $db->result();
 $category = $auction_data['category'];
 $auction_type = $auction_data['auction_type'];
 $ends = $auction_data['ends'];
@@ -62,8 +63,10 @@ $seller_reg = FormatDate($auction_data['reg_date'], '/', false);
 // sort out counter
 if (empty($auction_data['counter']))
 {
-	$query = "INSERT INTO " . $DBPrefix . "auccounter VALUES (" . $id . ", 1)";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "INSERT INTO `" . $DBPrefix . "auccounter` (`auction_id`, `counter`) VALUES (:counter, 1)";
+	$params = array();
+	$params[] = array(':counter', $id, 'int');
+	$db->query($query, $params);
 	$auction_data['counter'] = 1;
 }
 else
@@ -74,8 +77,10 @@ else
 	}
 	if (!in_array($id, $_SESSION['WEBID_VIEWED_AUCTIONS']))
 	{
-		$query = "UPDATE " . $DBPrefix . "auccounter set counter = counter + 1 WHERE auction_id = " . $id;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "auccounter set counter = counter + 1 WHERE auction_id = :auction_id";
+		$params = array();
+		$params[] = array(':auction_id', $id, 'int');
+		$db->query($query, $params);
 		$_SESSION['WEBID_VIEWED_AUCTIONS'][] = $id;
 	}
 }
@@ -155,10 +160,11 @@ else
 }
 
 // build bread crumbs
-$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['category'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$parent_node = mysql_fetch_assoc($res);
+$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+$params = array();
+$params[] = array(':cat_id', $auction_data['category'], 'int');
+$db->query($query, $params);
+$parent_node = $db->result();
 
 $cat_value = '';
 $crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
@@ -177,10 +183,11 @@ for ($i = 0; $i < count($crumbs); $i++)
 $secondcat_value = '';
 if ($system->SETTINGS['extra_cat'] == 'y' && intval($auction_data['secondcat']) > 0)
 {
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['secondcat'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$parent_node = mysql_fetch_assoc($res);
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :sec_cat_id";
+	$params = array();
+	$params[] = array(':sec_cat_id', $auction_data['secondcat'], 'int');
+	$db->query($query, $params);
+	$parent_node = $db->result();
 
 	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 	for ($i = 0; $i < count($crumbs); $i++)
@@ -198,15 +205,16 @@ if ($system->SETTINGS['extra_cat'] == 'y' && intval($auction_data['secondcat']) 
 
 // history
 $query = "SELECT b.*, u.nick, u.rate_sum FROM " . $DBPrefix . "bids b
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-		WHERE b.auction = " . $id . " ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
-$result_numbids = mysql_query($query);
-$system->check_mysql($result_numbids, $query, __LINE__, __FILE__);
-$num_bids = mysql_num_rows($result_numbids);
+LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
+WHERE b.auction = :auc_id ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
+$params = array();
+$params[] = array(':auc_id', $id, 'int');
+$db->query($query, $params);
+$num_bids = $db->numrows();
 $i = 0;
 $left = $auction_data['quantity'];
 $hbidder_data = array();
-while ($bidrec = mysql_fetch_assoc($result_numbids))
+foreach ($db->fetchall() as $bidrec)
 {
 	if (!isset($bidderarray[$bidrec['nick']]))
 	{
@@ -225,12 +233,13 @@ while ($bidrec = mysql_fetch_assoc($result_numbids))
 		$hbidder_data[] = $bidrec['bidder'];
 		$fb_pos = $fb_neg = 0;
 		// get seller feebacks
-		$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $bidrec['bidder'];
-		$result = mysql_query($query);
-		$system->check_mysql($result, $query, __LINE__, __FILE__);
+		$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :rate_users_id";
+		$params = array();
+		$params[] = array(':rate_users_id', $bidrec['bidder'], 'int');
+		$db->query($query, $params);
 		// count numbers
 		$fb_pos = $fb_neg = 0;
-		while ($fb_arr = mysql_fetch_assoc($result))
+		while ($fb_arr = $db->fetch())
 		{
 			if ($fb_arr['rate'] == 1)
 			{
@@ -275,10 +284,12 @@ $userbid = false;
 if ($user->logged_in && $num_bids > 0)
 {
 	// check if youve bid on this before
-	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . $id . " AND bidder = " . $user->user_data['id'] . " LIMIT 1";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($result) > 0)
+	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :auction AND bidder = :bidder LIMIT 1";
+	$params = array();
+	$params[] = array(':auction', $id, 'int');
+	$params[] = array(':bidder', $user->user_data['id'], 'int');
+	$db->query($query, $params);
+	if ($db->numrows() > 0)
 	{
 		if (in_array($user->user_data['id'], $hbidder_data))
 		{
@@ -304,17 +315,21 @@ if ($user->logged_in && $num_bids > 0)
 }
 
 // sort out user questions
-$query = "SELECT id FROM " . $DBPrefix . "messages WHERE reply_of = 0 AND public = 1 AND question = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_questions = mysql_num_rows($res);
-while ($row = mysql_fetch_assoc($res))
+$query = "SELECT id FROM " . $DBPrefix . "messages WHERE reply_of = 0 AND public = 1 AND question = :question_id";
+$params = array();
+$params[] = array(':question_id', $id, 'int');
+$db->query($query, $params);
+$num_questions = $db->numrows();
+foreach ($db->fetchall() as $row)
 {
 	$template->assign_block_vars('questions', array()); // just need to create the block
-	$query = "SELECT sentfrom, message FROM " . $DBPrefix . "messages WHERE question = " . $id . " AND reply_of = " . $row['id'] . " OR id = " . $row['id'] . " ORDER BY sentat ASC";
-	$res_ = mysql_query($query);
-	$system->check_mysql($res_, $query, __LINE__, __FILE__);
-	while ($row_ = mysql_fetch_assoc($res_))
+	$query = "SELECT sentfrom, message FROM " . $DBPrefix . "messages WHERE question = :id AND reply_of = :reply_of OR id = :message_id ORDER BY sentat ASC";
+	$params = array();
+	$params[] = array(':id', $id, 'int');
+	$params[] = array(':reply_of', $row['id'], 'int');
+	$params[] = array(':message_id', $row['id'], 'int');
+	$db->query($query, $params);
+	while ($row_ = $db->fetch())
 	{
 		$template->assign_block_vars('questions.conv', array(
 				'MESSAGE' => $row_['message'],
@@ -329,13 +344,17 @@ if ($customincrement == 0)
 {
 	// Get bid increment for current bid and calculate minimum bid
 	$query = "SELECT increment FROM " . $DBPrefix . "increments WHERE
-			((low <= " . $high_bid . " AND high >= " . $high_bid . ") OR
-			(low < " . $high_bid . " AND high < " . $high_bid . ")) ORDER BY increment DESC";
-	$result_incr = mysql_query($query);
-	$system->check_mysql($result_incr, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($result_incr) != 0)
+			((low <= :val0 AND high >= :val1) OR
+			(low < :val2 AND high < :val3)) ORDER BY increment DESC";
+	$params = array();
+	$params[] = array(':val0', $high_bid, 'float');
+	$params[] = array(':val1', $high_bid, 'float');
+	$params[] = array(':val2', $high_bid, 'float');
+	$params[] = array(':val3', $high_bid, 'float');
+	$db->query($query, $params);
+	if ($db->numrows() != 0)
 	{
-		$increment = mysql_result($result_incr, 0, 'increment');
+		$increment = $db->result('increment');
 	}
 }
 else
@@ -383,13 +402,14 @@ else
 }
 
 // get seller feebacks
-$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user_id;
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$num_feedbacks = mysql_num_rows($result);
+$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
+$params = array();
+$params[] = array(':user_id', $user_id, 'int');	
+$db->query($query, $params);
+$num_feedbacks = $db->numrows();
 // count numbers
 $fb_pos = $fb_neg = 0;
-while ($fb_arr = mysql_fetch_assoc($result))
+while ($fb_arr = $db->fetch())
 {
 	if ($fb_arr['rate'] == 1)
 	{
@@ -455,9 +475,8 @@ if (file_exists($uploaded_path . $id))
 $payment = explode(', ', $auction_data['payment']);
 $payment_methods = '';
 $query = "SELECT * FROM " . $DBPrefix . "gateways";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateways_data = mysql_fetch_assoc($res);
+$db->direct_query($query);
+$gateways_data = $db->result();
 $gateway_list = explode(',', $gateways_data['gateways']);
 $p_first = true;
 foreach ($gateway_list as $v)

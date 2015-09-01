@@ -21,7 +21,7 @@ include 'loggedin.inc.php';
 $id = intval($_REQUEST['id']);
 $user_id = intval($_REQUEST['user']);
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
 {
 	// delete the feedback entry
 	$query = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id = :feedback_id";
@@ -44,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	header('location: userfeedback.php?id=' . $user_id);
 	exit;
 }
-elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	header('location: userfeedback.php?id=' . $user_id);
 	exit;

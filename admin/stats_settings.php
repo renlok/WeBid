@@ -34,10 +34,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		if (!isset($_POST['domains'])) $_POST['domains'] = 'n';
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "statssettings SET
-					activate = '" . $_POST['activate'] . "',
-					accesses = '" . $_POST['accesses'] . "',
-					browsers = '" . $_POST['browsers'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				activate = :activate,
+				accesses = :accesses,
+				browsers = :browsers";
+		$params = array();
+		$params[] = array(':activate', $_POST['activate'], 'str');
+		$params[] = array(':accesses', $_POST['accesses'], 'str');
+		$params[] = array(':browsers', $_POST['browsers'], 'str');
+		$db->query($query, $params);
 		$ERR = $MSG['5148'];
 		$statssettings = $_POST;
 	}

@@ -32,7 +32,7 @@ function CheckFirstRegData()
 	010 = nick too short
 	011 = password too short
 	*/
-	global $name, $nick, $password, $repeat_password, $email;
+	global $name, $nick, $password, $repeat_password, $email, $db;
 	if (!isset($name) || empty($name))
 	{
 		return '002';
@@ -69,9 +69,11 @@ function CheckFirstRegData()
 	{
 		return '011';
 	}
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = '" . $nick . "'";
-	$result = mysql_query($query);
-	if (mysql_num_rows($result))
+	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = :user_nick";
+	$params = array();
+	$params[] = array(':user_nick', $nick, 'str');
+	$db->query($query, $params);
+	if ($db->numrows() == 0)
 	{
 		return '009';
 	}

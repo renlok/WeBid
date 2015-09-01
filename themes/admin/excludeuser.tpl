@@ -62,8 +62,8 @@
                             <input type="hidden" name="offset" value="{OFFSET}">
                             <input type="hidden" name="mode" value="{MODE}">
                             <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                            <input type="submit" name="action" value="{L_030}">
-                            <input type="submit" name="action" value="{L_029}">
+							<button type="submit" name="action" value="Yes">{L_030}</button>
+							<button type="submit" name="action" value="No">{L_029}</button>
                         </form>
                     </td>
                 </tr>

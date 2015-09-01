@@ -23,7 +23,7 @@ unset($ERR);
 if (isset($_POST['action']))
 {
 	// add category
-	if ($_POST['action'] == $MSG['5204'])
+	if ($_POST['action'] == "Insert")
 	{
 		if (empty($_POST['cat_name'][$system->SETTINGS['defaultlanguage']]))
 		{
@@ -50,14 +50,13 @@ if (isset($_POST['action']))
 	}
 
 	// Delete categories
-	if ($_POST['action'] == $MSG['030'] && isset($_POST['delete']) && is_array($_POST['delete']))
+	if ($_POST['action'] == "Yes" && isset($_POST['delete']) && is_array($_POST['delete']))
 	{
 		foreach ($_POST['delete'] as $k => $v)
 		{
 			if ($v == 'delete')
 			{
 				// get a list of all faqs within the category
-				$system->check_mysql($res, $query, __LINE__, __FILE__);
 				$query = "SELECT id FROM " . $DBPrefix . "faqs WHERE category = :cat_id";
 				$params = array();
 				$params[] = array(':cat_id', $k, 'int');
@@ -101,7 +100,7 @@ if (isset($_POST['action']))
 	}
 
 	// delete check
-	if ($_POST['action'] == $MSG['008'] && isset($_POST['delete']) && is_array($_POST['delete']))
+	if ($_POST['action'] == "Delete" && isset($_POST['delete']) && is_array($_POST['delete']))
 	{
 		// get cats FAQs can be moved to		
 		$delete = implode(',', $_POST['delete']);

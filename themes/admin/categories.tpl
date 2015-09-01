@@ -67,7 +67,7 @@
                     </table>
                     <input type="hidden" name="parent" value="{PARENT}">
                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                    <input type="submit" name="action" class="centre" value="{L_089}">
+                    <button type="submit" name="action" class="centre" value="Process">{L_089}</button>
 				</form>
             </div>
         </div>

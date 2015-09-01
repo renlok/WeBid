@@ -30,24 +30,29 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
-		$query = "UPDATE " . $DBPrefix . "comm_messages SET message = '" . $system->cleanvars($_POST['message'])."' WHERE id = " . $_POST['msg'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "comm_messages SET message = :message WHERE id = :id";
+		$params = array();
+		$params[] = array(':message', $system->cleanvars($_POST['message']), 'str');
+		$params[] = array(':id', $_POST['msg'], 'int');
+		$db->query($query, $params);
 		header("Location: editmessages.php?id=" . $_POST['id']);
 		exit;
 	}
 }
 
 // Retrieve board name for breadcrumbs
-$query = "SELECT name FROM " . $DBPrefix . "community WHERE id = " . $board_id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$board_name = mysql_result($res, 0);
+$query = "SELECT name FROM " . $DBPrefix . "community WHERE id = :board_id";
+$params = array();
+$params[] = array(':board_id', $board_id, 'int');
+$db->query($query, $params);
+$board_name = $db->result('name');
 
 // Retrieve message from the database
-$query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE id = " . $msg;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$data = mysql_fetch_array($res);
+$query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE id = :id";
+$params = array();
+$params[] = array(':id', $msg, 'int');
+$db->query($query, $params);
+$data = $db->result();
 
 $template->assign_vars(array(
 		'BOARD_NAME' => $board_name,

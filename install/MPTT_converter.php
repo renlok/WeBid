@@ -17,14 +17,7 @@ define('InWeBid', 1);
 $step = (!isset($_GET['step'])) ? 1 : $_GET['step'];
 
 include '../includes/config.inc.php';
-if (!mysql_connect($DbHost, $DbUser, $DbPassword))
-{
-	die('<p>Cannot connect to '.$DbHost.'</p>');
-}
-if (!mysql_select_db($DbDatabase))
-{
-	die('<p>Cannot select database</p>');
-}
+$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
 
 function search($id, $tmp, $tid, $searching)
 {
@@ -77,10 +70,10 @@ switch($step)
 		unset($_SESSION['import_cats']);
 		unset($_SESSION['cats_lftrgt']);
 		$query = "SELECT cat_id, parent_id, cat_name FROM `" . $DBPrefix . "categories` WHERE parent_id != -1 ORDER BY parent_id ASC, cat_name ASC";
-		$res = mysql_query($query) or die(mysql_error());
+		$db->direct_query($query);
 		$_SESSION['import_cats'] = array();
-		$count = mysql_num_rows($res);
-		while ($row = mysql_fetch_assoc($res))
+		$count = $db->numrows();
+		while ($row = $db->fetch())
 		{
 			$_SESSION['import_cats'][] = $row;
 		}
@@ -200,10 +193,10 @@ switch($step)
 		{
 			$query = "INSERT INTO `" . $DBPrefix . "categories` (left_id, right_id, level, cat_name, parent_id) VALUES
 			(" . $_SESSION['cats_lftrgt'][0]['left'] . ", " . $_SESSION['cats_lftrgt'][0]['right'] . ", -1, 'All', -1)";
-			$res = mysql_query($query) or die(mysql_error());
-			$top_id = mysql_insert_id();
+			$res = $db->direct_query($query);
+			$top_id = $db->lastInsertId();
 			$query = "UPDATE `" . $DBPrefix . "categories` SET parent_id = " . $top_id . " WHERE parent_id = 0";
-			$res = mysql_query($query) or die(mysql_error());
+			$res = $db->direct_query($query);
 			$newfrom = $from = 1;
 		}
 		else
@@ -222,7 +215,7 @@ switch($step)
 					left_id = " . $_SESSION['cats_lftrgt'][$i]['left'] . ", right_id = " . $_SESSION['cats_lftrgt'][$i]['right'] . ",
 					level = " . $_SESSION['cats_lftrgt'][$i]['level'] . "
 					WHERE cat_id = " . $_SESSION['cats_lftrgt'][$i]['id'];
-			$res = mysql_query($query) or die(mysql_error());
+			$res = $db->direct_query($query);
 		}
 		if ($newfrom >= $_GET['count'])
 		{

@@ -55,9 +55,6 @@ include $include_path . 'messages.inc.php';
 // connect to the database
 $db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET);
 
-// set DB charset
-mysql_set_charset($CHARSET); # TEMP WHILE STILL USING MYSQL_
-
 // add auction types
 $system->SETTINGS['auction_types'] = array (
 	1 => $MSG['1021'],
@@ -75,7 +72,7 @@ if (!$user->logged_in && isset($_COOKIE['WEBID_RM_ID']))
 	{
 		// generate a random unguessable token
 		$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
-		$id = mysql_result($res, 0, 'userid');
+		$id = $db->result('userid');
 		$query = "SELECT hash, password FROM " . $DBPrefix . "users WHERE id = :user_id";
 		$params = array();
 		$params[] = array(':user_id', $id, 'int');

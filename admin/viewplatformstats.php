@@ -19,13 +19,15 @@ include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Retrieve data
-$query = "SELECT * FROM " . $DBPrefix . "currentplatforms WHERE month = " . date('n') . " AND year = " . date('Y') . " ORDER BY counter DESC";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$query = "SELECT * FROM " . $DBPrefix . "currentplatforms WHERE month = :month AND year = :year ORDER BY counter DESC";
+$params = array();
+$params[] = array(':month', date('n'), 'int');
+$params[] = array(':year', date('Y'), 'int');
+$db->query($query, $params);
 
 $MAX = 0;
 $TOTAL = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$PLATFORMS[$row['platform']] = $row['counter'];
 	$TOTAL = $TOTAL + $row['counter'];

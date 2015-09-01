@@ -17,42 +17,45 @@ include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+if (!isset($_GET['banner']))
+	exit();
+
 $banner = $_GET['banner'];
+$CATEGORIES = $KEYWORDS = '';
 
 // Retrieve filters
-$query = "SELECT * FROM " . $DBPrefix . "bannerscategories WHERE banner=$banner";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$query = "SELECT c.cat_name FROM " . $DBPrefix . "bannerscategories b
+		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = b.category)
+		WHERE banner = :banner";
+$params = array();
+$params[] = array(':banner', $banner, 'int');
+$db->query($query, $params);
 
-if (mysql_num_rows($res) > 0)
+if ($db->numrows() > 0)
 {
-	while ($row = mysql_fetch_array($res))
+	while ($row = $db->fetch())
 	{
-		$query = "SELECT cat_name FROM " . $DBPrefix . "categories WHERE cat_id=$row[category]";
-		$res_ = @mysql_query($query);
-		if ($res_ && @mysql_num_rows($res_) > 0)
-		{
-			$CATEGORIES .= mysql_result($res_,0,"cat_name")."<BR>";
-		}
+		$CATEGORIES .= '<p>' . $row['cat_name'] . '</p>';
 	}
 }
-$query = "SELECT * FROM " . $DBPrefix . "bannerskeywords WHERE banner=$banner";
-$rr = mysql_query($query);
-$system->check_mysql($rr, $query, __LINE__, __FILE__);
-if (mysql_num_rows($rr) > 0)
+$query = "SELECT keyword FROM " . $DBPrefix . "bannerskeywords WHERE banner = :banner";
+$params = array();
+$params[] = array(':banner', $banner, 'int');
+$db->query($query, $params);
+$count = $db->numrows();
+
+if ($count > 0)
 {
-	$i = 0;
-	while ($i < mysql_num_rows($rr))
+	while ($row = $db->fetch())
 	{
-		$KEYWORDS .= mysql_result($rr,$i,"keyword")."<BR>";
-		$i++;
+		$KEYWORDS .= '<p>' . $row['keyword'] . '</p>';
 	}
 }
 ?>
 
 <html><head>
 
-<title>Untitled Document</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Banner filters</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body bgcolor="#ffffff">

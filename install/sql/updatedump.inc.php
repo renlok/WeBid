@@ -268,6 +268,11 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `timecorrection` decimal(3,1) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `timecorrection` decimal(3,1) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "countries` ADD `country_id` int(4) NOT NULL auto_increment;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `paypal_sandbox` INT(1) default 0;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `authnet_sandbox` INT(1) default 0;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `worldpay_sandbox` INT(1) default 0;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `checkout_sandbox` INT(1) default 0;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `moneybookers_sandbox` INT(1) default 0;";
 	// add translation tables
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (

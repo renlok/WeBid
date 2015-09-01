@@ -14,11 +14,11 @@
  
 session_start();
 include 'functions.php';
+include '../includes/class_db_handle.php';
 define('InInstaller', 1);
 
-if (!extension_loaded('pdo_mysql')){
-echo 'Sorry mysql support is not enabled please ensure php5 mysql pdo is loaded before proceeding';
-}
+$db = new db_handle();
+
 $main_path = getmainpath();
 $thisversion = this_version();
 echo print_header(false);
@@ -32,21 +32,14 @@ switch($step)
 		include '../includes/config.inc.php';
 		include 'sql/dump.inc.php';
 		$queries = count($query);
-		if (!mysql_connect($DbHost, $DbUser, $DbPassword))
-		{
-			die('<p>Cannot connect to ' . $DbHost . '</p>');
-		}
-		if (!mysql_select_db($DbDatabase))
-		{
-			die('<p>Cannot select database</p>');
-		}
+		$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
 		echo ($_GET['n'] * 25) . '% Complete<br>';
 		$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
 		$fourth = floor($queries/4);
 		$to = ($_GET['n'] == 4) ? $queries : ($fourth * $_GET['n']);
 		for ($i = $from; $i < $to; $i++)
 		{
-			mysql_query($query[$i]) or die(mysql_error() . "\n\t" . $query[$i]);
+			$db->direct_query($query[$i]);
 		}
 		flush();
 		if ($i < $queries)
@@ -66,14 +59,7 @@ switch($step)
 		}
 		break;
 	case 1:
-		if (!mysql_connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass']))
-		{
-			die('<p>Cannot connect to ' . $DbHost . ' with the supplied username and password. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
-		}
-		if (!mysql_select_db($_POST['DBName']))
-		{
-			die('<p>Cannot select database ' . $_POST['DBName'] . '. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
-		}
+		$db->connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass'], $_POST['DBName'], $_POST['DBPrefix']);
 		$cats = (isset($_POST['importcats'])) ? 1 : 0;
 		echo '<p><b>Step 1:</b> Writing config file...</p>';
 		$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];

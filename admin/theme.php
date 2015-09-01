@@ -25,8 +25,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "settings SET
-				theme = '" . $_POST['dtheme'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				theme = :theme";
+		$params = array();
+		$params[] = array(':theme', $_POST['dtheme'], 'str');
+		$db->query($query, $params);
 		$system->SETTINGS['theme'] = $_POST['dtheme'];
 		$ERR = $MSG['26_0005'];
 	}
@@ -39,7 +41,7 @@ elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'
 {
 	$filename = ($_POST['action'] == 'add') ? $_POST['new_filename'] : $_POST['filename'];
 	$fh = fopen($theme_root . $_POST['theme'] . '/' . $filename, 'w') or die("can't open file " . $theme_root . $_POST['theme'] . '/' . $filename);
-	fwrite($fh, stripslashes($_POST['content']));
+	fwrite($fh, $_POST['content']);
 	fclose($fh);
 }
 

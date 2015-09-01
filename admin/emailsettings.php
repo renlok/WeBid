@@ -41,24 +41,36 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	  if  (intval($_POST['mail_protocol']) !== 2)
 	  {
 	   // Update database
-			$query = "UPDATE ". $DBPrefix . "settings SET
-					mail_protocol = " . intval($_POST['mail_protocol']) . ",
-					mail_parameter = '" . $_POST['mail_parameter'] . "',
-					alert_emails = '" . $_POST['alert_emails'] . "'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	    	$query = "UPDATE ". $DBPrefix . "settings SET
+					mail_protocol = :protocol,
+					mail_parameter = :parameter,
+					alert_emails = :emails";  
+	    	$params = array();
+			$params[] = array(':protocol', $_POST['mail_protocol'], 'int');
+			$params[] = array(':parameter', $_POST['mail_parameter'], 'str');
+			$params[] = array(':emails', $_POST['alert_emails'], 'str');
+			$db->query($query, $params);
 	    }
 		else
 		{
-			$query = "UPDATE ". $DBPrefix . "settings SET
+	    	$query = "UPDATE ". $DBPrefix . "settings SET
 					mail_protocol = 2,
-					smtp_authentication = '" . $_POST['smtp_authentication'] . "',
-					smtp_security = '" . $_POST['smtp_security'] . "',
-					smtp_port = " . intval($_POST['smtp_port']) . ",
-					smtp_username = '" . (!empty($_POST['smtp_username'])? $_POST['smtp_username'] : '') . "',
-					smtp_password = '" . (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : '') . "',
-					smtp_host = '" . (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : '') . "',
-					alert_emails = '" . $_POST['alert_emails'] . "'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);		  
+					smtp_authentication = :authentication,
+					smtp_security = :security,
+					smtp_port = :port,
+					smtp_username = :username,
+					smtp_password = :password,
+					smtp_host = :host,
+					alert_emails = :emails";
+	    	$params = array();
+			$params[] = array(':authentication', $_POST['smtp_authentication'], 'str');
+			$params[] = array(':security', $_POST['smtp_security'], 'str');
+			$params[] = array(':port', $_POST['smtp_port'], 'int');
+			$params[] = array(':username', (!empty($_POST['smtp_username'])? $_POST['smtp_username'] : ''), 'str');
+			$params[] = array(':password', (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : ''), 'str');
+			$params[] = array(':host', (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
+			$params[] = array(':emails', $_POST['alert_emails'], 'str');
+			$db->query($query, $params);	  
 	    }
 	  $ERR = $MSG['895'];
 	} 

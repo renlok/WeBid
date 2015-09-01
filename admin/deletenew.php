@@ -18,7 +18,7 @@ include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
 {
 	$query = "DELETE FROM " . $DBPrefix . "news WHERE id = :news_id";
 	$params = array();
@@ -27,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	header('location: news.php');
 	exit;
 }
-elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	header('location: news.php');
 	exit;

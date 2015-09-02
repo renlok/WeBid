@@ -23,6 +23,7 @@ $template->assign_vars(array(
 		'THEME' => $system->SETTINGS['theme']
 		));
 
+	include 'header.php';
 // Retrieve FAQs categories from the database
 $query = "SELECT * FROM " . $DBPrefix . "faqscat_translated WHERE lang = :language ORDER BY category ASC";
 $params = array();
@@ -40,4 +41,6 @@ $template->set_filenames(array(
 		'body' => 'help.tpl'
 		));
 $template->display('body');
+  include 'footer.php';
+
 ?>

@@ -17,21 +17,25 @@ include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$msg = intval($_REQUEST['id']);
+$msg_id = intval($_REQUEST['id']);
 $board_id = intval($_REQUEST['board_id']);
 
 // Insert new currency
-if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
 {
-	$query = "DELETE FROM " . $DBPrefix . "comm_messages WHERE id = " . $msg;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "DELETE FROM " . $DBPrefix . "comm_messages WHERE id = :msg_id";
+	$params = array();
+	$params[] = array(':msg_id', $msg_id, 'int');
+	$db->query($query, $params);
 	// Update messages counter
-	$query = "UPDATE " . $DBPrefix . "community SET messages = messages - 1 WHERE id = " . $board_id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "UPDATE " . $DBPrefix . "community SET messages = messages - 1 WHERE id = :board_id";
+	$params = array();
+	$params[] = array(':board_id', $board_id, 'int');
+	$db->query($query, $params);
 	header('location: editmessages.php?id=' . $board_id);
 	exit;
 }
-elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	header('location: editmessages.php?id=' . $board_id);
 	exit;
@@ -39,8 +43,8 @@ elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'ID' => $msg,
-		'MESSAGE' => sprintf($MSG['834'], $msg),
+		'ID' => $msg_id,
+		'MESSAGE' => sprintf($MSG['834'], $msg_id),
 		'TYPE' => 1
 		));
 

@@ -595,6 +595,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 	$template->assign_vars(array(
 			'PAGE' => 2,
 			'BID_HISTORY' => (isset($ARETHEREBIDS)) ? $ARETHEREBIDS : '',
+			'TITLE' => $item_title,
 			'ID' => $id,
 			'BID' => $system->print_money($bid)
 			));

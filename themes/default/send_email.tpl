@@ -55,13 +55,13 @@ function ResetFriendForm(){
 		</TR>
 		<!-- comment -->
 		<TR> 
-		<TD ALIGN=right VALIGN=TOP> <B>{L_650}</B> 
+		<TD ALIGN="right" VALIGN="TOP"> <B>{L_650}</B> 
 		</TD>
 		<TD ><TEXTAREA NAME="sender_question" COLS="35" ROWS="6">{SELLER_QUESTION}</TEXTAREA> 
 		<BR> <BR> <INPUT TYPE="hidden" NAME="seller_email" VALUE="{SELLER_EMAIL}"> 
         <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 		<INPUT TYPE="hidden" NAME="id" VALUE="{AUCT_ID}"> 
-		<INPUT TYPE="hidden" NAME="action" VALUE="{L_106}"> <INPUT TYPE=submit NAME="" VALUE="{L_5201}"  class=button /> 
+		<INPUT TYPE="hidden" NAME="action" VALUE="{L_106}"> <INPUT TYPE="submit" NAME="" VALUE="{L_5201}"  class="button"> 
 	<!-- IF B_LOGGED_IN -->
 		<INPUT TYPE="hidden" NAME="sender_email" SIZE="25" VALUE="{EMAIL}">
 	<!-- ENDIF -->

@@ -45,16 +45,17 @@ if (!isset($board_id) || is_array($board_id) || empty($board_id) || $board_id ==
 
 $NOW = time();
 
-$query = "SELECT id FROM " . $DBPrefix . "comm_messages WHERE boardid = " . $board_id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$query = "SELECT id FROM " . $DBPrefix . "comm_messages WHERE boardid = :board_id";
+$params = array();
+$params[] = array(':board_id', $board_id, 'int');
+$db->query($query, $params);
+$TOTALMSGS = $db->numrows();
 
 if (isset($_POST['action']) && empty($_POST['newmessage']))
 {
 	$ERR = $ERR_624;
 }
 
-$TOTALMSGS = mysql_num_rows($res);
 // Insert new message in the database
 if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_POST['newmessage'])) {
 	if ($system->SETTINGS['wordsfilter'] == 'y')
@@ -65,30 +66,40 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_P
 	{
 		$message = strip_tags($_POST['newmessage']);
 	}
-	$query = "INSERT INTO " . $DBPrefix . "comm_messages VALUES
-			(NULL, " . intval($_POST['board_id']) . ", '$NOW', " . $user->user_data['id'] . ",
-			'" . $user->user_data['nick'] . "', '" . $system->cleanvars($message) . "')";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "INSERT INTO " . $DBPrefix . "comm_messages VALUES 	
+			(NULL, :board_id, :now, :user_id, :user_nick, :message)";
+	$params = array();
+	$params[] = array(':board_id', $_POST['board_id'], 'int');
+	$params[] = array(':now', $NOW, 'int');
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$params[] = array(':user_nick', $user->user_data['nick'], 'str');
+	$params[] = array(':message', $system->cleanvars($message), 'str');
+	$db->query($query, $params);
+
 	// Track IP
 	if (defined('TrackUserIPs'))
 	{
-		$system->log('user', 'Post Public Message', $user->user_data['id'], mysql_insert_id());
+		$system->log('user', 'Post Public Message', $user->user_data['id'], $db->lastInsertId());
 	}
 	// Update messages counter and lastmessage date
 	$query = "UPDATE " . $DBPrefix . "community
-			SET messages = messages + 1, lastmessage = '$NOW' WHERE id = " . $board_id;
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			SET messages = messages + 1, lastmessage = :lastmessage WHERE id = :board_id";
+	$params = array();
+	$params[] = array(':lastmessage', $NOW, 'int');
+	$params[] = array(':board_id', $board_id, 'int');
+	$db->query($query, $params);
 	header('location: ' . $_SERVER['HTTP_REFERER']);
 }
 
 // retrieve message board title
-$query = "SELECT name, active, msgstoshow FROM " . $DBPrefix . "community WHERE id = " . $board_id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-
-$BOARD_TITLE = mysql_result($res, 0, 'name');
-$BOARD_ACTIVE = mysql_result($res, 0, 'active');
-$BOARD_LIMIT = mysql_result($res, 0, 'msgstoshow');
+$query = "SELECT name, active, msgstoshow FROM " . $DBPrefix . "community WHERE id = :board_id";
+$params = array();
+$params[] = array(':board_id', $board_id, 'int');
+$db->query($query, $params);
+$info = $db->result();
+$BOARD_TITLE = $info['name'];
+$BOARD_ACTIVE = $info['active'];
+$BOARD_LIMIT = $info['msgstoshow'];
 
 if (!isset($_GET['PAGE']))
 {
@@ -117,15 +128,17 @@ else
 {
 	$SQL_LIMIT = " LIMIT $OFFSET, $BOARD_LIMIT";
 }
-// Retrieve messages for this message board
-$query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE boardid = " . $board_id . " ORDER BY msgdate DESC $SQL_LIMIT";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
 
-if (mysql_num_rows($res) > 0)
+// Retrieve messages for this message board
+$query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE boardid = :board_id ORDER BY msgdate DESC $SQL_LIMIT";
+$params = array();
+$params[] = array(':board_id', $board_id, 'int');
+$db->query($query, $params);
+
+if ($db->numrows() > 0)
 {
 	$k = 0;
-	while ($messages = mysql_fetch_array($res))
+	while ($messages = $db->result())
 	{
 		$template->assign_block_vars('msgs', array(
 				'MSG' => nl2br(stripslashes($messages['message'])),
@@ -154,9 +167,8 @@ if ($PAGES > 1)
 }
 // Count message
 $query = "SELECT id FROM " . $DBPrefix . "comm_messages";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$COUNT = mysql_num_rows($res);
+$db->direct_query($query);
+$COUNT = $db->numrows();
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

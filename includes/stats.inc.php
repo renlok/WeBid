@@ -18,9 +18,8 @@ include $include_path . 'useragent.inc.php';
 
 // Retrieve stats settings
 $query = "SELECT * FROM " . $DBPrefix . "statssettings";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$STATSSETTINGS = mysql_fetch_array($res);
+$db->direct_query($query);
+$STATSSETTINGS = $db->result();
 
 $THISDAY	= date('d');
 $THISMONTH	= date('m');
@@ -57,14 +56,19 @@ if ($STATSSETTINGS['activate'] == 'y')
 			$UPDATECOOKIE = TRUE;
 		}
 		
-		$query = "SELECT day, month FROM " . $DBPrefix . "currentaccesses WHERE day = " . $THISDAY . " AND month = " . $THISMONTH;
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0)
+		$query = "SELECT day, month FROM " . $DBPrefix . "currentaccesses WHERE day = :day AND month = :month";
+		$params = array();
+		$params[] = array(':day', $THISDAY, 'int');
+		$params[] = array(':month', $THISMONTH, 'str');
+		$db->query($query, $params);
+		if ($db->numrows() == 0)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "currentaccesses VALUES (
-					  " . $THISDAY . ", " . $THISMONTH . ", " . $THISYEAR . ", 0, 0, 0)";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "INSERT INTO " . $DBPrefix . "currentaccesses VALUES (:day, :month, :year, 0, 0, 0)";
+			$params = array();
+			$params[] = array(':day', $THISDAY, 'int');
+			$params[] = array(':month', $THISMONTH, 'str');
+			$params[] = array(':year', $THISYEAR, 'int');
+			$db->query($query, $params);
 		}
 		
 		$query = "UPDATE " . $DBPrefix . "currentaccesses SET pageviews = pageviews + 1";
@@ -76,8 +80,12 @@ if ($STATSSETTINGS['activate'] == 'y')
 		{
 			$query .= ", uniquevisitors = uniquevisitors + 1";
 		}
-		$query .= " WHERE day = " . $THISDAY . " AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query .= " WHERE day = :day AND month = :month AND year = :year";
+		$params = array();
+		$params[] = array(':day', $THISDAY, 'int');
+		$params[] = array(':month', $THISMONTH, 'str');
+		$params[] = array(':year', $THISYEAR, 'int');
+		$db->query($query, $params);
 		// End users accesses
 	}
 
@@ -179,38 +187,59 @@ if ($STATSSETTINGS['activate'] == 'y')
 	if ($STATSSETTINGS['browsers'] == 'y' && !(isset($browser_info[8]) && $browser_info[8] == 'bot'))
 	{
 		// Update the browser stats
-		$query = "SELECT month FROM " . $DBPrefix . "currentbrowsers WHERE month = " . $THISMONTH . " AND year = " . $THISYEAR . " AND browser = '" . $browser . "'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0)
+		$query = "SELECT month FROM " . $DBPrefix . "currentbrowsers WHERE month = :month AND year = :year AND browser = :browser";
+		$params = array();
+		$params[] = array(':month', $THISMONTH, 'str');
+		$params[] = array(':year', $THISYEAR, 'int');
+		$params[] = array(':browser', $browser, 'str');
+		$db->query($query, $params);
+		if ($db->numrows() == 0)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "currentbrowsers VALUES (" . $THISMONTH . ", " . $THISYEAR . ", '" . $browser . "', 1)";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "INSERT INTO " . $DBPrefix . "currentbrowsers VALUES (:month, :year, :browser, 1)";
+			$params = array();
+			$params[] = array(':month', $THISMONTH, 'str');
+			$params[] = array(':year', $THISYEAR, 'int');
+			$params[] = array(':browser', $browser, 'str');
+			$db->query($query, $params);
 		}
 		else
 		{
 			$query = "UPDATE " . $DBPrefix . "currentbrowsers SET
 					 counter = counter + 1
-					 WHERE browser = '" . $browser . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					 WHERE browser = :browser AND month = :month AND year = :year";
+			$params = array();
+			$params[] = array(':browser', $browser, 'str');
+			$params[] = array(':month', $THISMONTH, 'str');
+			$params[] = array(':year', $THISYEAR, 'int');
+			$db->query($query, $params);
 		}
 		
 		// Update the platfom stats
-		$query = "SELECT month FROM " . $DBPrefix . "currentplatforms WHERE month = " . $THISMONTH . " AND year = " . $THISYEAR . " AND platform = '" . $os . "'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		if (mysql_num_rows($res) == 0)
+		$query = "SELECT month FROM " . $DBPrefix . "currentplatforms WHERE month = :month AND year = :year AND platform = :OS";
+		$params = array();
+		$params[] = array(':month', $THISMONTH, 'str');
+		$params[] = array(':year', $THISYEAR, 'int');
+		$params[] = array(':OS', $os, 'str');
+		$db->query($query, $params);
+		if ($db->numrows() == 0)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "currentplatforms VALUES (
-					" . $THISMONTH . ",  " . $THISYEAR . ", '" . $os . "', 1)";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "INSERT INTO " . $DBPrefix . "currentplatforms VALUES (:month, :year, :OS, 1)";
+			$params = array();
+			$params[] = array(':month', $THISMONTH, 'str');
+			$params[] = array(':year', $THISYEAR, 'int');
+			$params[] = array(':OS', $os, 'str');
+			$db->query($query, $params);
 		}
 		else
 		{
-			$query = "UPDATE " . $DBPrefix . "currentplatforms SET
-					counter = counter + 1
-					WHERE platform = '" . $os . "' AND month = " . $THISMONTH . " AND year = " . $THISYEAR;
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "UPDATE " . $DBPrefix . "currentplatforms
+					SET counter = counter + 1
+					WHERE platform = :OS AND month = :month AND year = :year";
+			$params = array();
+			$params[] = array(':OS', $os, 'str');
+			$params[] = array(':month', $THISMONTH, 'str');
+			$params[] = array(':year', $THISYEAR, 'int');
+			$db->query($query, $params);
 		}
 	}
 }

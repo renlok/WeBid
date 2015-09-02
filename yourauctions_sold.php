@@ -34,7 +34,7 @@ $relist_fee = $db->result('value');
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Re-list auctions
-	if (is_array($_POST['relist']))
+	if (isset($_POST['relist']) && is_array($_POST['relist']) && count($_POST['relist']) > 0)
 	{
 		foreach ($_POST['relist'] as $k)
 		{

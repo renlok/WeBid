@@ -453,13 +453,7 @@ for ($i = 1; $i <= 31; $i++)
 }
 $dobday .= '</select>';
 
-if (isset($_POST['TPL_timezone'])) {
-        $selectsetting = (isset($_POST['TPL_timezone'])) ? $_POST['TPL_timezone'] : '';
-          }
-        else
-          {
-        $selectsetting = $system->SETTINGS['timecorrection'];
-          }
+$selectsetting = (isset($_POST['TPL_timezone'])) ? $_POST['TPL_timezone'] : $system->SETTINGS['timecorrection'];
 
 $time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
 

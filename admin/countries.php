@@ -28,6 +28,7 @@ if (isset($_POST['act']))
 	{
 		// we use a single SQL query to quickly do ALL our deletes
 		$query = "DELETE FROM " . $DBPrefix . "countries WHERE ";
+		$params = array();
 
 		// if this is the first country being deleted it don't
 		// precede it with an " or " in the SQL string
@@ -37,9 +38,10 @@ if (isset($_POST['act']))
 			{
 				$query .= " OR ";
 			}
-			$query .= "country = '" . $system->cleanvars($_POST['delete'][$i]) . "'";
+			$query .= "country = :country";
+			$params[] = array(':country', $system->cleanvars($_POST['delete'][$i], 'str');
 		}
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$db->query($query, $params);
 	}
 
 	//update countries with new names
@@ -48,17 +50,22 @@ if (isset($_POST['act']))
 		if ($_POST['old_countries'][$i] != $_POST['new_countries'][$i])
 		{
 			$query = "UPDATE " . $DBPrefix . "countries SET
-					country = '" .  $system->cleanvars($_POST['new_countries'][$i]) . "'
-					WHERE country = '" . $system->cleanvars($_POST['old_countries'][$i]) . "'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					country = :country_new
+					WHERE country = :country_old";
+			$params = array();
+			$params[] = array(':country_new', $system->cleanvars($_POST['new_countries'][$i]), 'str');
+			$params[] = array(':country_old', $system->cleanvars($_POST['old_countries'][$i]), 'str');
+			$db->query($query, $params);
 		}
 	}
 
 	// If a new country was added, insert it into database
 	if (!empty($_POST['new_countries'][(count($_POST['new_countries']) - 1)]))
 	{
-		$query = "INSERT INTO " . $DBPrefix . "countries (country) VALUES ('" . $system->cleanvars($_POST['new_countries'][(count($_POST['new_countries']) - 1)]) . "')";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "INSERT INTO " . $DBPrefix . "countries (country) VALUES (:country)";
+		$params = array();
+		$params[] = array(':country', $system->cleanvars($_POST['new_countries'][(count($_POST['new_countries']) - 1)]), 'str');
+		$db->query($query, $params);
 	}
 	rebuild_html_file('countries');
 	$ERR = $MSG['1028'];
@@ -68,10 +75,11 @@ include $main_path . 'language/' . $language . '/countries.inc.php';
 
 foreach($countries as $country) {
     // check if the country is being used by a user
-	$query = "SELECT id FROM " . $DBPrefix . "users WHERE country = '" . $country . "' LIMIT 1";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$USEDINUSERS = mysql_num_rows($res);
+	$query = "SELECT id FROM " . $DBPrefix . "users WHERE country = :country LIMIT 1";
+	$params = array();
+	$params[] = array(':country', $country, 'str');
+	$db->query($query, $params);
+	$USEDINUSERS = $db->numrows();
 	
 	$template->assign_block_vars('countries', array(
 			'COUNTRY' => $country,

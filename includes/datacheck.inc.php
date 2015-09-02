@@ -100,7 +100,7 @@ function CheckSellData()
 	601 = wrong quantity of items
 	*/
 
-	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
+	global $title, $sdescription, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
 	global $payments, $num, $nnum, $a_starts, $start_now, $relist;
 	global $additional_shipping_cost, $shipping_cost;
@@ -110,7 +110,7 @@ function CheckSellData()
 		return '017';
 	}
 
-	if (empty($description))
+	if (empty($sdescription))
 	{
 		return '018';
 	}

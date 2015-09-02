@@ -172,7 +172,7 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 	$db->query($query, $params);
 	$item_title = $db->result('title');
 
-	$sql = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $secid, 'int');						
 	$db->query($query, $params);
@@ -275,11 +275,6 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 						));
 				$i++;
 			}
-			else
-			{
-				$TPL_err = 1;
-				$TPL_errmsg = $ERR_105;
-			}
 		}
 	}
 	$firstpage = (($thispage - 5) <= 0) ? 1 : ($thispage - 5);
@@ -318,7 +313,7 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 			'WID' => $_GET['wid'],
 			'SID' => $_GET['sid'],
 			'WS' => $ws,
-			'FEEDBACK' => $secTPL_feedback,
+			'FEEDBACK' => (isset($secTPL_feedback)) ? $secTPL_feedback : '',
 			'RATE1' => (!isset($_POST['TPL_rate']) || $_POST['TPL_rate'] == 1) ? ' checked="true"' : '',
 			'RATE2' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == 0) ? ' checked="true"' : '',
 			'RATE3' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == -1) ? ' checked="true"' : '',

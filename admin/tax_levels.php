@@ -28,20 +28,29 @@ if (isset($_POST['action']) && $_POST['action'] == 'add')
 	if ($_POST['tax_id'] != '')
 	{
 		$query = "UPDATE " . $DBPrefix . "tax SET
-				tax_name = '" . $system->cleanvars($_POST['tax_name']) . "',
-				tax_rate = '" . $system->cleanvars($_POST['tax_rate']) . "',
-				countries_seller = '" . $system->cleanvars($seller_countries) . "',
-				countries_buyer = '" . $system->cleanvars($buyer_countries) . "'
-				WHERE id = " . intval($_POST['tax_id']);
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+				tax_name = :tax_name,
+				tax_rate = :tax_rate,
+				countries_seller = :countries_seller,
+				countries_buyer = :countries_buyer
+				WHERE id = :tax_id";
+		$params = array();
+		$params[] = array(':tax_name', $system->cleanvars($_POST['tax_name']), 'str');
+		$params[] = array(':tax_rate', $system->cleanvars($_POST['tax_rate']), 'str');
+		$params[] = array(':countries_seller', $system->cleanvars($seller_countries), 'str');
+		$params[] = array(':countries_buyer', $system->cleanvars($buyer_countries), 'str');
+		$params[] = array(':tax_id', $_POST['tax_id'], 'int');
+		$db->query($query, $params);
 	}
 	else
 	{
 		$query = "INSERT INTO " . $DBPrefix . "tax (tax_name, tax_rate, countries_seller, countries_buyer) VALUES
-				('" . $system->cleanvars($_POST['tax_name']) . "', '" . $system->cleanvars($_POST['tax_rate']) . "', '" . $system->cleanvars($seller_countries) . "', '" . $system->cleanvars($buyer_countries) . "')";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+				(:tax_name, :tax_rate, :countries_seller, :countries_buyer)";
+		$params = array();
+		$params[] = array(':tax_name', $system->cleanvars($_POST['tax_name']), 'str');
+		$params[] = array(':tax_rate', $system->cleanvars($_POST['tax_rate']), 'str');
+		$params[] = array(':countries_seller', $system->cleanvars($seller_countries), 'str');
+		$params[] = array(':countries_buyer', $system->cleanvars($buyer_countries), 'str');
+		$db->query($query, $params);
 	}
 }
 
@@ -49,38 +58,39 @@ if (isset($_POST['action']) && $_POST['action'] == 'add')
 if (isset($_POST['action']) && $_POST['action'] == 'sitefee')
 {
 	$query = "UPDATE " . $DBPrefix . "tax SET fee_tax = 0";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$query = "UPDATE " . $DBPrefix . "tax SET fee_tax = 1 WHERE id = " . $_POST['site_fee'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$db->direct_query($query);
+	$query = "UPDATE " . $DBPrefix . "tax SET fee_tax = 1 WHERE id = :tax_id";
+	$params = array();
+	$params[] = array(':tax_id', $_POST['site_fee'], 'int');
+	$db->query($query, $params);
 }
 
 $tax_seller_data = array();
 $tax_buyer_data = array();
 if (isset($_GET['type']) && $_GET['type'] == 'edit')
 {
-	$query = "SELECT * FROM " . $DBPrefix . "tax WHERE id = " . intval($_GET['id']);
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$data = mysql_fetch_assoc($res);
+	$query = "SELECT * FROM " . $DBPrefix . "tax WHERE id = :tax_id";
+	$params = array();
+	$params[] = array(':tax_id', $_GET['id'], 'int');
+	$db->query($query, $params);
+	$data = $db->result();
 	$tax_seller_data = explode(' ', $data['countries_seller']);
 	$tax_buyer_data = explode(' ', $data['countries_buyer']);
 }
 
 if (isset($_GET['type']) && $_GET['type'] == 'delete')
 {
-	$query = "DELETE FROM " . $DBPrefix . "tax WHERE id = " . intval($_GET['id']);
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
+	$query = "DELETE FROM " . $DBPrefix . "tax WHERE id = :tax_id";
+	$params = array();
+	$params[] = array(':tax_id', $_GET['id'], 'int');
+	$db->query($query, $params);
 	header('location: tax_levels.php');
 }
 
 // get tax levels
 $query = "SELECT * FROM " . $DBPrefix . "tax";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-while($row = mysql_fetch_assoc($res))
+$db->direct_query($query);
+while($row = $db->fetch())
 {
 	$template->assign_block_vars('tax_rates', array(
 			'ID' => $row['id'],
@@ -94,11 +104,10 @@ while($row = mysql_fetch_assoc($res))
 
 // get countries and make a list
 $query = "SELECT * FROM " . $DBPrefix . "countries";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $tax_seller = '';
 $tax_buyer = '';
-while($row = mysql_fetch_assoc($res))
+while($row = $db->fetch())
 {
 	if (in_array($row['country'], $tax_seller_data))
 		$tax_seller .= '<option value="' . $row['country'] . '" selected="selected">' . $row['country'] . '</option>';

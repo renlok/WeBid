@@ -55,10 +55,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'process' && $_POST['box'] ==
     $_SESSION['action'] = 1;
 	$VARNAME = 'cat' . (count($POST) - 1);
 	$_SESSION['SELL_sellcat' . $cat_no] = $POST[$VARNAME];
-	$query = "SELECT left_id, right_id FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_POST[$VARNAME]);
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$lft_rgt = mysql_fetch_assoc($res);
+	$query = "SELECT left_id, right_id FROM " . $DBPrefix . "categories WHERE cat_id = :sellcat";
+	$params = array();
+	$params[] = array(':sellcat', $_POST[$VARNAME], 'int');
+	$db->query($query, $params);
+	$lft_rgt = $db->result();
 	if ($lft_rgt['left_id'] + 1 == $lft_rgt['right_id'])
 	{
 		if ($system->SETTINGS['extra_cat'] == 'n' || ($cat_no == 2 && $system->SETTINGS['extra_cat'] == 'y'))
@@ -81,10 +82,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'process' && $_POST['box'] ==
 // Process change mode
 if (isset($_GET['change']) && $_GET['change'] == 'yes')
 {
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($_SESSION['SELL_sellcat' . $cat_no]);
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$cat = mysql_fetch_assoc($res);
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :sellcat_id";
+	$params = array();
+	$params[] = array(':sellcat_id', $_SESSION['SELL_sellcat' . $cat_no], 'int');
+	$db->query($query, $params);
+	$cat = $db->result();
     $crumbs = $catscontrol->get_bread_crumbs($cat['left_id'], $cat['right_id']);
 	$count = count($crumbs);
 	$box = $count - 1;
@@ -141,6 +143,7 @@ for ($i = 0; $i <= $box; $i++)
 {
 	$parent = (isset($POST['cat' . ($i - 1)])) ? $POST['cat' . ($i - 1)] : 0;
 	$safe_box = true;
+	$cat_params = array();
 	if ($parent == 0)
 	{
 		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE parent_id = -1";
@@ -152,13 +155,13 @@ for ($i = 0; $i <= $box; $i++)
 	}
 	else
 	{
-		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . intval($parent);
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :parent";
+		$cat_params[] = array(':parent', $parent, 'int');
 	}
 	if ($safe_box)
 	{
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
-		$cat = mysql_fetch_assoc($res);
+		$db->query($query, $cat_params);
+		$cat = $db->result();
 		$temparray = $catscontrol->get_children($cat['left_id'], $cat['right_id'], $cat['level']);
 		if (count($temparray) > 0)
 		{
@@ -197,9 +200,8 @@ $extra_cat = 0;
 if ($cat_no == 2)
 {
 	$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'excat_fee'";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$extra_cat = mysql_result($res, 0);
+	$db->direct_query($query);
+	$extra_cat = $db->result('value');
 }
 
 $template->assign_vars(array(

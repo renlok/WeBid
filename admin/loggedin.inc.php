@@ -43,7 +43,7 @@ if (checklogin())
 else
 {
 	// update admin notes
-	if (isset($_POST['anotes']) && !empty($_POST['anotes']))
+	if (isset($_POST['anotes']))
 	{
 		$query = "UPDATE " . $DBPrefix . "adminusers SET notes = :admin_note WHERE id = :admin_id";
 		$params = array();

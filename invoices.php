@@ -160,7 +160,7 @@ if ($PAGES > 1)
 	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
 	{
 		$template->assign_block_vars('pages', array(
-				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'outstanding.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'invoices.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
 				));
 		$COUNTER++;
 	}
@@ -170,8 +170,8 @@ $_SESSION['INVOICE_RETURN'] = 'invoices.php';
 $template->assign_vars(array(
 		'CURRENCY' => $system->SETTINGS['currency'],
 
-		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'outstanding.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
-		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'outstanding.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'invoices.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'invoices.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES
 		));

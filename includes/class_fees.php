@@ -81,7 +81,7 @@ class fees
 	{
 		global $system;
 
-		$sandbox = ($system->SETTINGS['paypal_sandbox'] == 'y') ? true : false;
+		$sandbox = ($system->SETTINGS['paypal_sandbox']);
 		$https = ($system->SETTINGS['https'] == 'y') ? true : false; 
 		// we ensure that the txn_id (transaction ID) contains only ASCII chars...
 		$pos = strspn($this->data['txn_id'], $this->ASCII_RANGE);

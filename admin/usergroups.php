@@ -73,19 +73,33 @@ if (isset($_POST['action']))
 	if ($_GET['action'] == 'edit' || is_numeric($_GET['id']))
 	{
 		$query = "UPDATE ". $DBPrefix . "groups SET
-				group_name = '" . $system->cleanvars($_POST['group_name']) . "',
-				count = " . intval($_POST['user_count']) . ",
-				can_sell = " . intval($_POST['can_sell']) . ",
-				can_buy = " . intval($_POST['can_buy']) . ",
-				auto_join = " . (($auto_join) ? intval($_POST['auto_join']) : 1) . "
-				WHERE id = " . intval($_POST['id']);
+				group_name = :group_name,
+				count = :count,
+				can_sell = :can_sell,
+				can_buy = :can_buy,
+				auto_join = :auto_join
+				WHERE id = :group_id";
+		$params = array();
+		$params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
+		$params[] = array(':count', $_POST['user_count'], 'int');
+		$params[] = array(':can_sell', $_POST['can_sell'], 'int');
+		$params[] = array(':can_buy', $_POST['can_buy'], 'int');
+		$params[] = array(':auto_join', (($auto_join) ? $_POST['auto_join'] : 1), 'int');
+		$params[] = array(':group_id', $_POST['id'], 'int');
+		$db->query($query, $params);
 	}
 	if ($_GET['action'] == 'new' || empty($_GET['id']))
 	{
 		$query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy, auto_join) VALUES
-				('" . $system->cleanvars($_POST['group_name']) . "', " . intval($_POST['user_count']) . ", " . intval($_POST['can_sell']) . ", " . intval($_POST['can_buy']) . ", " . intval($_POST['auto_join']) . ")";
+				(:group_name, :count, :can_sell, :can_buy, :auto_join)";
+		$params = array();
+		$params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
+		$params[] = array(':count', $_POST['user_count'], 'int');
+		$params[] = array(':can_sell', $_POST['can_sell'], 'int');
+		$params[] = array(':can_buy', $_POST['can_buy'], 'int');
+		$params[] = array(':auto_join', (($auto_join) ? $_POST['auto_join'] : 1), 'int');
+		$db->query($query, $params);
 	}
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 }
 
 $query = "SELECT * FROM ". $DBPrefix . "groups";

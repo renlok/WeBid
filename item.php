@@ -39,7 +39,6 @@ $query = "SELECT a.*, ac.counter, u.nick, u.reg_date, u.country, u.zip FROM " . 
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "auccounter ac ON (ac.auction_id = a.id)
 		WHERE a.id = :auction_id LIMIT 1";
-if (mysql_num_rows($result) == 0)
 $params = array();
 $params[] = array(':auction_id', $id, 'int');
 $db->query($query, $params);

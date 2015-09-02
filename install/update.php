@@ -18,7 +18,10 @@ if ($step != 3)
 	session_start();
 }
 include 'functions.php';
+include '../includes/class_db_handle.php';
 define('InInstaller', 1);
+
+$db = new db_handle();
 
 $main_path = getmainpath();
 /*
@@ -59,14 +62,7 @@ if ($step == 0)
 }
 if ($step == 1)
 {
-	if (!mysql_connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass']))
-	{
-		die('<p>Cannot connect to ' . $DbHost . ' with the supplied username and password. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
-	}
-	if (!mysql_select_db($_POST['DBName']))
-	{
-		die('<p>Cannot select database ' . $_POST['DBName'] . '. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
-	}
+	$db->connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass'], $_POST['DBName'], $_POST['DBPrefix']);
 	$toecho = '<p><b>Step 1:</b> Writing the config file...</p>';
 	$toecho .= '<p>As you are missing your old random security code all your users will have to reset their passwords after this update</p>';
 	$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
@@ -122,7 +118,7 @@ if ($step == 2)
 	include 'sql/updatedump.inc.php';
 	for ($i = 0; $i < @count($query); $i++)
 	{
-		mysql_query($query[$i]) or print(mysql_error() . '<br>' . $query[$i] . '<br>');
+		$db->direct_query($query[$i]);
 		echo '<b>' . $query[$i] . '</b><br>';
 	}
 	if ($myversion == $thisversion)

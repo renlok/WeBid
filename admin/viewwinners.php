@@ -33,10 +33,11 @@ $id = intval($_GET['id']);
 // Retrieve auction's data
 $query = "SELECT a.title, a.minimum_bid, a.starts, a.ends, a.auction_type, u.name, u.nick FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		WHERE a.id = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-if (mysql_num_rows($res) == 0)
+		WHERE a.id = :id";
+$params = array();
+$params[] = array(':id', $id, 'int');
+$db->query($query, $params);
+if ($db->numrows() == 0)
 {
 	$URL = $_SESSION['RETURN_LIST'];
 	unset($_SESSION['RETURN_LIST']);
@@ -44,16 +45,17 @@ if (mysql_num_rows($res) == 0)
 	exit;
 }
 
-$AUCTION = mysql_fetch_assoc($res);
+$AUCTION = $db->result();
 
 // Retrieve winners
 $query = "SELECT w.bid, w.qty, u.name, u.nick FROM " . $DBPrefix . "winners w
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
-		WHERE w.auction = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		WHERE w.auction = :id";
+$params = array();
+$params[] = array(':id', $id, 'int');
+$db->query($query, $params);
 $winners = false;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$winners = true;
 	$template->assign_block_vars('winners', array(
@@ -67,11 +69,12 @@ while ($row = mysql_fetch_assoc($res))
 // Retrieve bids
 $query = "SELECT b.bid, b.quantity, u.name, u.nick FROM " . $DBPrefix . "bids b
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-		WHERE b.auction = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		WHERE b.auction = :id";
+$params = array();
+$params[] = array(':id', $id, 'int');
+$db->query($query, $params);
 $bids = false;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$bids = true;
 	$template->assign_block_vars('bids', array(

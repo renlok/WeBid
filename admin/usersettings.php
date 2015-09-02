@@ -25,9 +25,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  usersauth = '" . $_POST['usersauth'] . "',
-			  activationtype = " . intval($_POST['usersconf']) . "";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			  usersauth = :usersauth,
+			  activationtype = :usersconf";
+	$params = array();
+	$params[] = array(':usersauth', $_POST['usersauth'], 'str');
+	$params[] = array(':usersconf', $_POST['usersconf'], 'int');
+	$db->query($query, $params);
 	$ERR = $MSG['895'];
 
 	$system->SETTINGS['usersauth'] = $_POST['usersauth'];

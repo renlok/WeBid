@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'purge')
 // Retrieve board name for breadcrumbs
 $query = "SELECT name FROM " . $DBPrefix . "community WHERE id = :id";
 $db->query($query, $gparams);
-$board_name = mysql_result($res, 0);
+$board_name = $db->result('name');
 
 // Retrieve board's messages from the database
 $query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE boardid = :id";

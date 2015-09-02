@@ -26,10 +26,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Check if the specified user exists
 	$superuser = $system->cleanvars($_POST['superuser']);
-	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = '" . $superuser . "'";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) == 0 && $_POST['active'] == 'y')
+	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = :nick";
+	$params = array();
+	$params[] = array(':nick', $superuser, 'str');
+	$db->query($query, $params);
+	if ($db->numrows() == 0 && $_POST['active'] == 'y')
 	{
 		$ERR = $ERR_025;
 	}
@@ -37,10 +38,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "maintainance SET
-				superuser = '" . $superuser . "',
-				maintainancetext = '" . htmLawed($_POST['maintainancetext'], array('safe'=>1)) . "',
-				active = '" . $_POST['active'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+				superuser = :superuser,
+				maintainancetext = :maintainancetext,
+				active = :active";
+		$params = array();
+		$params[] = array(':superuser', $superuser, 'str');
+		$params[] = array(':maintainancetext', htmLawed($_POST['maintainancetext'], array('safe' => 1)), 'str');
+		$params[] = array(':active', $_POST['active'], 'str');
+		$db->query($query, $params);
 		$ERR = $MSG['_0005'];
 	}
 	$system->SETTINGS['superuser'] = $_POST['superuser'];

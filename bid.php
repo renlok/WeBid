@@ -566,11 +566,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
 			$db->query($query, $params);
+			$auction_data = $db->result();
 			$emailer = new email_handler();
 			$emailer->assign_vars(array(
 					'REALNAME' => $row['name'],
-					'TITLE' => mysql_result($res, 0, 'title'),
-					'BID' => $system->print_money(mysql_result($res, 0, 'current_bid'), false),
+					'TITLE' => $auction_data['title'],
+					'BID' => $system->print_money($auction_data['current_bid'], false),
 					'AUCTION_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $id
 					));
 			$emailer->email_uid = $row['id'];

@@ -298,7 +298,7 @@ class email_handler
 
 	function getuserlang()
 	{
-		global $system, $DBPrefix, $language;
+		global $system, $DBPrefix, $language, $db;
 
 		if (isset($this->email_uid) && $this->email_uid > 0)
 		{
@@ -323,7 +323,7 @@ class email_handler
 	
 	function getusermailtype()
 	{
-		global $system, $DBPrefix;
+		global $system, $DBPrefix, $db;
 
 		if (isset($this->email_uid) && $this->email_uid > 0)
 		{

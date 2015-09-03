@@ -97,7 +97,7 @@ function setvars()
 
 function makesessions()
 {
-	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $description, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
+	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $sdescription, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sendemail, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now, $_SESSION;
 
 	$_SESSION['SELL_with_reserve'] = $with_reserve;
@@ -108,7 +108,7 @@ function makesessions()
 	$_SESSION['SELL_file_uploaded'] = $imgtype;
 	$_SESSION['SELL_title'] = $title;
 	$_SESSION['SELL_subtitle'] = $subtitle;
-	$_SESSION['SELL_description'] = $description;
+	$_SESSION['SELL_description'] = $sdescription;
 	$_SESSION['SELL_pict_url'] = $pict_url;
 	$_SESSION['SELL_atype'] = $atype;
 	$_SESSION['SELL_iquantity'] = $iquantity;

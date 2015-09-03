@@ -44,16 +44,23 @@ include $include_path . 'class_fees.php';
 include $include_path . 'class_user.php';
 include $include_path . 'template.php';
 
+// connect to the database
 $db = new db_handle();
+if (isset($CHARSET))
+{
+	$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET);
+}
+else
+{
+	$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
+}
+
 $system = new global_class();
 $template = new template();
 $user = new user();
 set_error_handler('WeBidErrorHandler', $error_reporting);
 
 include $include_path . 'messages.inc.php';
-
-// connect to the database
-$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET);
 
 // add auction types
 $system->SETTINGS['auction_types'] = array (

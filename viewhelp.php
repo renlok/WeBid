@@ -45,6 +45,8 @@ if ($cat > 0)
 				'ID' => $cats['id']
 				));
 	}
+        include 'header.php';
+
 
 	// Retrieve FAQs from the database
 	$query = "SELECT f.question As q, f.answer As a, t.* FROM " . $DBPrefix . "faqs f
@@ -84,4 +86,7 @@ else
 {
 	header('location: help.php');
 }
+ include 'footer.php';
+
+
 ?>

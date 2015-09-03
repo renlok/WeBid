@@ -172,7 +172,7 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 	$db->query($query, $params);
 	$item_title = $db->result('title');
 
-	$sql = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $secid, 'int');						
 	$db->query($query, $params);
@@ -274,11 +274,6 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 						'FEEDBACK' => nl2br($arrfeed['feedback'])
 						));
 				$i++;
-			}
-			else
-			{
-				$TPL_err = 1;
-				$TPL_errmsg = $ERR_105;
 			}
 		}
 	}

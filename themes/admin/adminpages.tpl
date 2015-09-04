@@ -25,7 +25,7 @@
 	<!-- IF block.TYPE eq 'yesno' -->
 				<input type="radio" name="{block.NAME}" value="y"<!-- IF block.DEFAULT eq 'y' --> checked<!-- ENDIF -->> {block.TAGLINE1}
 				<input type="radio" name="{block.NAME}" value="n"<!-- IF block.DEFAULT eq 'n' --> checked<!-- ENDIF -->> {block.TAGLINE2}
-	<!-- IF block.TYPE eq 'bool' -->
+	<!-- ELSEIF block.TYPE eq 'bool' -->
 				<input type="radio" name="{block.NAME}" value="1"<!-- IF block.DEFAULT eq '1' --> checked<!-- ENDIF -->> {block.TAGLINE1}
 				<input type="radio" name="{block.NAME}" value="0"<!-- IF block.DEFAULT eq '0' --> checked<!-- ENDIF -->> {block.TAGLINE2}
 	<!-- ELSEIF block.TYPE eq 'batch' -->

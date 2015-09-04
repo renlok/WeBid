@@ -13,6 +13,7 @@
  ***************************************************************************/
  
 session_start();
+define('InWeBid', 1);
 include 'functions.php';
 include '../includes/class_db_handle.php';
 define('InInstaller', 1);

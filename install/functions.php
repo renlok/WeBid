@@ -117,14 +117,21 @@ function check_installation()
 
 	@include '../includes/config.inc.php';
 	$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
-	$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
-	// check webid install...
-	$query = "SELECT version FROM `" . $DBPrefix . "settings`";
-	$res = $db->direct_query($query);
-	if ($res != false)
+	$db->error_supress(true); // we dont want errors returned for now
+	if($db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix))
 	{
-		$settings_version = $db->result('version');
-		return true;
+		// check webid install...
+		$query = "SELECT version FROM `" . $DBPrefix . "settings`";
+		$res = $db->direct_query($query);
+		if ($res != false)
+		{
+			$settings_version = $db->result('version');
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	else
 	{

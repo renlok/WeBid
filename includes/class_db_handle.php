@@ -23,6 +23,7 @@ class db_handle
 	private		$lastquery;
 	private		$fetchquery;
 	private		$error;
+	private		$error_supress = false;
 
     public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
     {
@@ -35,11 +36,19 @@ class db_handle
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// actually use prepared statements
 			$this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			return true;
 		}
 		catch(PDOException $e) {
 			$this->error_handler($e->getMessage());
+			return false;
 		}
     }
+
+	// to run a direct query
+	public function error_supress($state = true)
+	{
+		$this->error_supress = $state;
+	}
 
 	// to run a direct query
 	public function direct_query($query)
@@ -215,10 +224,13 @@ class db_handle
 
 	private function error_handler($error)
 	{
-		// DO SOMETHING
-		//$this->error = $error;
-		$this->error = debug_backtrace();
-		//print_r($this->error);
+		if (!$this->error_supress)
+		{
+			// DO SOMETHING
+			//$this->error = $error;
+			$this->error = debug_backtrace();
+			//print_r($this->error);
+		}
 	}
 
 	// close everything down

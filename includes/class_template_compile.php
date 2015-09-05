@@ -447,6 +447,11 @@ class template_compile
 					$token = '%';
 				break;
 
+				case 'NULL':
+				case 'null':
+					$token = 'NULL';
+				break;
+
 				case '(':
 					array_push($is_arg_stack, $i);
 				break;

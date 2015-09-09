@@ -7,7 +7,7 @@
     	<div style="width:75%; float:right;">
             <div class="main-box">
             	<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</h4>
-				<div class="plain-box">{NUM_AUCTIONS} {L_311}<!-- IF B_SEARCHUSER --> {L_934}{USERNAME}<!-- ENDIF --></div>
+				<div class="plain-box">{NUM_AUCTIONS} {L_311}</div>
                 <table width="98%" cellpadding="0" cellspacing="0">
                 <tr>
                     <th align="center"><b>{L_017}</b></th>

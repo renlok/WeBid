@@ -41,7 +41,7 @@
 <!-- END cats -->
                     </table>
                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                    <input type="submit" name="action" class="centre" value="{L_008}">
+                    
 					<button type="submit" name="action" value="Delete">{L_008}</button>
 				</form>
             </div>

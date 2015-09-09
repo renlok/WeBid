@@ -18,7 +18,7 @@ include $main_path . 'language/' . $language . '/countries.inc.php';
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
 {
-	include $main_path . 'inc/captcha/recaptchalib.php';
+	include $include_path . 'recaptcha/recaptcha.php';
 }
 elseif ($system->SETTINGS['spam_register'] == 1)
 {
@@ -216,10 +216,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 
 		if ($system->SETTINGS['spam_register'] == 2)
 		{
-			$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
+			$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_POST['g-recaptcha-response']);
 		}
 
-		if ($system->SETTINGS['spam_register'] == 2 && !$resp->is_valid)
+		if ($system->SETTINGS['spam_register'] == 2 && !$resp)
 		{
 			$ERR = $MSG['752'];
 		}
@@ -483,7 +483,7 @@ $template->assign_vars(array(
 		'B_FEES' => ($signup_fee['value'] > 0),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public'], ($system->SETTINGS['https'] == 'y')) : $spam_html,
+		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
 		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 'y'),
 		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 'y'),
 		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 'y'),

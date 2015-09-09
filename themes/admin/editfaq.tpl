@@ -25,7 +25,7 @@
                     </tr>
 <!-- BEGIN qs -->
                     <tr>
-	<!-- IF qs.S_FIRST_ROW -->
+	<!-- IF qs.S_ROW_COUNT eq 0 -->
     					<td>{L_5239}:</td>
     <!-- ELSE -->
     					<td>&nbsp;</td>
@@ -36,7 +36,7 @@
 <!-- END qs -->
 <!-- BEGIN as -->
                     <tr>
-	<!-- IF as.S_FIRST_ROW -->
+	<!-- IF as.S_ROW_COUNT eq 0 -->
     					<td valign="top">{L_5240}:</td>
     <!-- ELSE -->
     					<td>&nbsp;</td>

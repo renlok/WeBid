@@ -80,7 +80,7 @@ foreach ($LANGUAGES as $k => $v)
 	$k = trim($k);
 	$template->assign_block_vars('flangs', array(
 			'LANGUAGE' => $k,
-			'TRANSLATION' => $tr[$k]
+			'TRANSLATION' => isset($tr[$k])? $tr[$k] : ''
 			));
 }
 

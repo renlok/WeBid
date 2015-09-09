@@ -36,7 +36,7 @@
 <!-- END lang -->
 <!-- BEGIN lang -->
 						<tr>
-	<!-- IF lang.S_FIRST_ROW -->
+	<!-- IF lang.S_ROW_COUNT eq 0 -->
     						<td valign="top" align="right">{L_5240}:</td>
     <!-- ELSE -->
     						<td>&nbsp;</td>

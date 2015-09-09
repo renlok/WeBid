@@ -64,10 +64,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
-loadblock($MSG['003'], '', 'text', 'username', $system->SETTINGS['username']);
-loadblock($MSG['004'], '', 'password', 'password', $system->SETTINGS['password']);
-loadblock($MSG['564'], '', 'password', 'repeatpassword', $system->SETTINGS['repeatpassword']);
-loadblock('', '', 'batch', 'status', $system->SETTINGS['status'], array($MSG['566'], $MSG['567']));
+loadblock($MSG['003'], '', 'text', 'username', '');
+loadblock($MSG['004'], '', 'password', 'password', '');
+loadblock($MSG['564'], '', 'password', 'repeatpassword', '');
+loadblock('', '', 'batch', 'status', '1', array($MSG['566'], $MSG['567']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

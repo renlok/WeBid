@@ -14,7 +14,7 @@
                     <table width="98%" cellpadding="2" class="blank">
 <!-- BEGIN lang -->
 						<tr valign="top">
-	<!-- IF lang.S_FIRST_ROW -->
+	<!-- IF lang.S_ROW_COUNT eq 0 -->
     						<td align="right">{L_519}:</td>
     <!-- ELSE -->
     						<td>&nbsp;</td>
@@ -25,7 +25,7 @@
 <!-- END lang -->
 <!-- BEGIN lang -->
 						<tr>
-	<!-- IF lang.S_FIRST_ROW -->
+	<!-- IF lang.S_ROW_COUNT eq 0 -->
     						<td valign="top" align="right">{L_520}:</td>
     <!-- ELSE -->
     						<td>&nbsp;</td>
@@ -44,9 +44,7 @@
                             </td>
                         </tr>
                     </table>
-<!-- IF ID ne '' -->
-                    <input type="hidden" name="id" value="{ID}">
-<!-- ENDIF -->
+
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" class="centre" value="{BUTTON}">

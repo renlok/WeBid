@@ -38,7 +38,7 @@ while ($row = $db->fetch())
 	}
 }
 
-if (is_array($PLATFORMS))
+if (isset($PLATFORMS) && is_array($PLATFORMS))
 {
 	foreach ($PLATFORMS as $k => $v)
 	{

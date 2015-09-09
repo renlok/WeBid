@@ -25,7 +25,7 @@
                         </tr>
 <!-- BEGIN lang -->
 						<tr valign="top">
-	<!-- IF lang.S_FIRST_ROW -->
+	<!-- IF lang.S_ROW_COUNT eq 0 -->
     						<td align="right">{L_5239}:</td>
     <!-- ELSE -->
     						<td>&nbsp;</td>

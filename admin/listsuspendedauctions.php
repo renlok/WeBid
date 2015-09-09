@@ -43,7 +43,7 @@ $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(id) As auctions FROM " . $DBPrefix . "auctions WHERE suspended != 0";
 $db->direct_query($query);
-$num_auctions = db->result('auctions');
+$num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name FROM " . $DBPrefix . "auctions a

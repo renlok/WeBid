@@ -37,7 +37,7 @@ if (isset($_POST['userid']))
 }
 if (isset($_POST['titlekeywords']))
 {
-	$_SESSION['searchauctionstitlekeywords'] = $_POST['titlekeywords']);
+	$_SESSION['searchauctionstitlekeywords'] = $_POST['titlekeywords'];
 }
 if (isset($_POST['auctiontype']))
 {

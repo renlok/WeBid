@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-if ($_POST['action'] == 'update')
+if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (strlen($_POST['category'][$system->SETTINGS['defaultlanguage']]) == 0)
 	{
@@ -80,7 +80,7 @@ foreach ($LANGUAGES as $k => $v)
 	$k = trim($k);
 	$template->assign_block_vars('flangs', array(
 			'LANGUAGE' => $k,
-			'TRANSLATION' => $tr[$k]
+			'TRANSLATION' => isset($tr[$k])? $tr[$k] : ''
 			));
 }
 

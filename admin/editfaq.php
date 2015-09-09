@@ -91,7 +91,7 @@ $query = "SELECT * FROM " . $DBPrefix . "faqs_translated WHERE id = :faq_id";
 $params = array();
 $params[] = array(':faq_id', $_GET['id'], 'int');
 $db->query($query, $params);
-while ($row = $db->fetch()))
+while ($row = $db->fetch())
 {
 	$QUESTION_tr[$row['lang']] = $row['question'];
 	$ANSWER_tr[$row['lang']] = $row['answer'];

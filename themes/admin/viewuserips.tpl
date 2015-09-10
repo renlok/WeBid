@@ -23,7 +23,7 @@
                         <th width="17%"><b>{L_5028}</b></th>
                     </tr>
 <!-- BEGIN ips -->
-                    <tr {users.BG}>
+                    <tr {ips.BG}>
                         <td>
 	<!-- IF ips.TYPE eq 'first' -->
     						{L_2_0005}

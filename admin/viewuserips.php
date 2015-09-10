@@ -22,7 +22,7 @@ $id = intval($_REQUEST['id']);
 $uloffset = intval($_REQUEST['offset']);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (is_array($_POST['accept']))
+	if (isset($_POST['deny']) && is_array($_POST['accept']))
 	{
 		foreach ($_POST['accept'] as $v)
 		{
@@ -32,7 +32,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$db->query($query, $params);
 		}
 	}
-	if (is_array($_POST['deny']))
+	if (isset($_POST['deny']) && is_array($_POST['deny']))
 	{
 		foreach ($_POST['deny'] as $v)
 		{

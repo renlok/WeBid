@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'banners';
 include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -23,15 +24,14 @@ if (!isset($_GET['banner']) || empty($_GET['banner']))
 	exit;
 }
 
-$banner = $_GET['banner'];
-$params = array();
-$params[] = array(':banner_id', banner, 'int');
-
+$banner = intval($_GET['banner']);
 $query = "SELECT name, user FROM " . $DBPrefix . "banners WHERE id = :banner_id";
+$params = array();
+$params[] = array(':banner_id', $banner, 'int');
 $db->query($query, $params);
-$bannername = $db->result('name');
-$banneruser = $db->result('user');
-
+$banner_ = $db->result();
+$bannername = $banner_['name'];
+$banneruser = $banner_['user'];
 
 $query = "DELETE FROM " . $DBPrefix . "banners WHERE id = :banner_id";
 $db->query($query, $params);

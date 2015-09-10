@@ -28,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params[] = array(':user_ip', $system->cleanvars($_POST['ip']), 'str');
 		$db->query($query, $params);
 	}
-	if (is_array($_POST['delete']))
+	if (!empty($_POST['delete']) && is_array($_POST['delete']))
 	{
 		foreach ($_POST['delete'] as $k => $v)
 		{
@@ -38,7 +38,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$db->query($query, $params);
 		}
 	}
-	if (is_array($_POST['accept']))
+	if (!empty($_POST['accept']) && is_array($_POST['accept']))
 	{
 		foreach ($_POST['accept'] as $k => $v)
 		{
@@ -48,7 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$db->query($query, $params);
 		}
 	}
-	if (is_array($_POST['deny']))
+	if (!empty($_POST['deny']) && is_array($_POST['deny']))
 	{
 		foreach ($_POST['deny'] as $k => $v)
 		{
@@ -75,6 +75,10 @@ while ($row = $db->fetch())
 	$bg = ($bg == '') ? 'class="bg"' : '';
 }
 
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		));
+		
 $template->set_filenames(array(
 		'body' => 'banips.tpl'
 		));

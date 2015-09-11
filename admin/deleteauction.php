@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'auctions';
 include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -21,7 +22,7 @@ include 'loggedin.inc.php';
 if (!isset($_REQUEST['id']))
 {
 	$URL = $_SESSION['RETURN_LIST'];
-	unset($_SESSION['RETURN_LIST']);
+	//unset($_SESSION['RETURN_LIST']);
 	header('location: ' . $URL);
 	exit;
 }
@@ -96,14 +97,14 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 	}
 
 	$URL = $_SESSION['RETURN_LIST'];
-	unset($_SESSION['RETURN_LIST']);
+	//unset($_SESSION['RETURN_LIST']);
 	header('location: ' . $URL);
 	exit;
 }
 elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	$URL = $_SESSION['RETURN_LIST'];
-	unset($_SESSION['RETURN_LIST']);
+	//unset($_SESSION['RETURN_LIST']);
 	header('location: ' . $URL);
 	exit;
 }

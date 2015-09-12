@@ -77,6 +77,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TITLE' => $MSG['518'],
 		'BUTTON' => $MSG['518'],
+		'ID' => '', // inserting new user so needs to be blank
 
 		'B_ACTIVE' => ((isset($_POST['suspended']) && $_POST['suspended'] == 0) || !isset($_POST['suspended'])),
 		'B_INACTIVE' => (isset($_POST['suspended']) && $_POST['suspended'] == 1)

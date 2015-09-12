@@ -113,7 +113,7 @@ while ($row = $db->fetch())
 	$TOTAL_USERSESSIONS += $row['usersessions'];
 }
 
-$MAX = max($data_max);
+$MAX = (count($data_max) > 0) ? max($data_max) : 0;
 foreach ($data_line as $k => $v)
 {
 	if ($listby == 'w')

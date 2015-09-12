@@ -102,11 +102,11 @@ foreach ($LANGUAGES as $k => $v)
 {
 	$template->assign_block_vars('qs', array(
 			'LANG' => $k,
-			'QUESTION' => (isset($_POST['question'][$k])) ? $_POST['question'][$k] : $QUESTION_tr[$k]
+			'QUESTION' => (isset($_POST['question'][$k])) ? $_POST['question'][$k] : (isset($QUESTION_tr[$k])? $QUESTION_tr[$k] : '')
 			));
 	$template->assign_block_vars('as', array(
 			'LANG' => $k,
-			'ANSWER' => (isset($_POST['answer'][$k])) ? $_POST['answer'][$k] : $ANSWER_tr[$k]
+			'ANSWER' => (isset($_POST['answer'][$k])) ? $_POST['answer'][$k] : (isset($ANSWER_tr[$k])? $ANSWER_tr[$k] : '')
 			));
 }
 

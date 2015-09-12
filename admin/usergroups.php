@@ -70,7 +70,7 @@ if (isset($_POST['action']))
 		}
 		$ERR = $ERR_050;
 	}
-	if ($_GET['action'] == 'edit' || is_numeric($_GET['id']))
+	if ($_GET['action'] == 'edit' || (isset($_GET['id']) && is_numeric($_GET['id'])))
 	{
 		$query = "UPDATE ". $DBPrefix . "groups SET
 				group_name = :group_name,

@@ -24,8 +24,26 @@ unset($ERR);
 
 // get form variables
 $list_type = isset($_POST['type']) ? ($_POST['type']) : 'a';
-$from_date = isset($_POST['from_date']) ? intval($_POST['from_date']) : 0;
-$to_date = isset($_POST['to_date']) ? intval($_POST['to_date']) : 0;
+$from_date = !empty($_POST['from_date']) ? $_POST['from_date'] : 0;
+$to_date = !empty($_POST['to_date']) ? $_POST['to_date'] : 0;
+
+
+// check date format
+if ($from_date !== 0) {
+    $d_from = explode("-"  , $from_date);
+    if(count($d_from) != 3 || !is_numeric($d_from[0]) || !is_numeric($d_from[1]) || !is_numeric($d_from[2]) || !checkdate($d_from[1], $d_from[0], $d_from[2]) ) {
+        $ERR = $ERR_700;
+        $from_date = 0;
+    }
+}
+
+if ($to_date !== 0) {
+    $d_to = explode("-"  , $to_date);
+    if(count($d_to) != 3 || !is_numeric($d_to[0]) || !is_numeric($d_to[1]) || !is_numeric($d_to[2]) ||  !checkdate($d_to[1], $d_to[0], $d_to[2]) ){
+        $ERR = $ERR_700;
+        $to_date = 0;
+    }
+}
 
 // Set offset and limit for pagination
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
@@ -162,7 +180,7 @@ $template->assign_vars(array(
 		'TYPE' => $list_type,
 		'FROM_DATE' => ($from_date == 0) ? '' : $from_date,
 		'TO_DATE' => ($to_date == 0) ? '' : $to_date,
-
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'PAGNATION' => $show_pagnation,
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/accounts.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/accounts.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',

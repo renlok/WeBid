@@ -25,7 +25,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (empty($_POST['question'][$system->SETTINGS['defaultlanguage']]) || empty($_POST['answer'][$system->SETTINGS['defaultlanguage']]))
 	{
-		$system->SETTINGS = $_POST;
 		$ERR = $ERR_067;
 	}
 	else

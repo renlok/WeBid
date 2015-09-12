@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2015 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'inc/captcha/securimage.php';
+include $main_path . 'includes/captcha/securimage.php';
 
 $img = new Securimage();
 

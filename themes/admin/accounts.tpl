@@ -1,5 +1,5 @@
 <!-- INCLUDE header.tpl -->
-<link rel="stylesheet" type="text/css" href="{SITEURL}inc/calendar.css">
+<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
     	<div style="width:25%; float:left;">
             <div style="margin-left:auto; margin-right:auto;">
             	<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
@@ -8,6 +8,9 @@
     	<div style="width:75%; float:right;">
             <div class="main-box">
             	<h4 class="rounded-top rounded-bottom">{L_854}&nbsp;&gt;&gt;&nbsp;{L_854}</h4>
+<!-- IF ERROR ne '' -->
+					<div class="error-box"><b>{ERROR}</b></div>
+<!-- ENDIF -->				
 				<div class="plain-box">
                 	<form action="" method="post">
                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

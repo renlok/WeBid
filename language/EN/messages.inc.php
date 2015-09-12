@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2015 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -1494,10 +1494,10 @@ $MSG['2__0003'] = "<br>The default language is English.<br>
 				Once changed <i>\$CHARSET</i> and <i>\$DOCDIR</i> according to the language you are translating into,
 				 you will have to translate all the error messages and user interface messages contained in the messages file.
 				
-				<li>You will then need the flag(s) GIFs for the languages you are going to use, in the inc/flags directory. 
+				<li>You will then need the flag(s) GIFs for the languages you are going to use, in the includes/flags directory. 
 				Get the flag(s) you need and change the file name(s) to be XX.gif, where XX is the language code for your country language.
-				<br>Copy the renamed flag file(s) in the inc/flags/ directory.
-				<br><b>Note:</b> for each translation, you need the corresponding XX.gif file in inc/flags/
+				<br>Copy the renamed flag file(s) in the includes/flags/ directory.
+				<br><b>Note:</b> for each translation, you need the corresponding XX.gif file in includes/flags/
 				<li>Select the default language below. All the other available languages will be available in the home page (the corresponding flags will be shown).
 				</ul>
 				";

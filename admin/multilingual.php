@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2015 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -37,7 +37,7 @@ if (is_array($LANGUAGES))
 	reset($LANGUAGES);
 	foreach ($LANGUAGES as $k => $v){
 		$html .= '<input type="radio" name="defaultlanguage" value="' . $k . '"' . (($system->SETTINGS['defaultlanguage'] == $k) ? ' checked="checked"' : '') . '>
-	<img src="../inc/flags/' . $k . '.gif" hspace="2">
+	<img src="../includes/flags/' . $k . '.gif" hspace="2">
 	' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MSG['2__0005'] : '') . '<br>';
 	}
 }

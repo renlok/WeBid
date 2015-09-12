@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2015 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -21,7 +21,7 @@ if ($system->SETTINGS['spam_sendtofriend'] == 2)
 }
 elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
 {
-	include $main_path . 'inc/captcha/securimage.php';
+	include $main_path . 'includes/captcha/securimage.php';
 }
 
 if (isset($_REQUEST['id']))

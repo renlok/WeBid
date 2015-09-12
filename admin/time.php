@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2015 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -28,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			datesformat = :datesformat";
 	$params = array();
 	$params[] = array(':timecorrection', $_POST['timecorrection'], 'int');
-	$params[] = array(':datesformat', $_POST['datesformating'], 'str');
+	$params[] = array(':datesformat', $_POST['datesformat'], 'str');
 	$db->query($query, $params);
 	$system->SETTINGS['timecorrection'] = floatval($_POST['timecorrection']);
 	$system->SETTINGS['datesformat'] = $_POST['datesformat'];

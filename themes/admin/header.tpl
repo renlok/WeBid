@@ -47,7 +47,7 @@
     <p style="float:right; width: 250px; text-align: right; margin:5px 0 0 0; line-height: 15px;">
 <!-- BEGIN langs -->
 	<!-- IF ! langs.B_DEFAULT -->
-        <a href="index.php?lan={langs.LANG}"><img src="{SITEURL}inc/flags/{langs.LANG}.gif"></a>
+        <a href="index.php?lan={langs.LANG}"><img src="{SITEURL}includes/flags/{langs.LANG}.gif"></a>
 	<!-- ENDIF -->
 <!-- END langs -->
         {L_592} {ADMIN_USER} | <a href="editadminuser.php?id={ADMIN_ID}">{L_5142}</a> | <a href="logout.php">{L_245}</a><br /><small>{L_559}: {LAST_LOGIN}</small>

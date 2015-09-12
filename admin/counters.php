@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2015 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -23,12 +23,9 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission
-	if (isset($_POST['auctions']) && $_POST['auctions'] != 'y') $_POST['auctions'] = 'n';
-	if (isset($_POST['users']) && $_POST['users'] != 'y') $_POST['users'] = 'n';
-	if (isset($_POST['online']) && $_POST['online'] != 'y') $_POST['online'] = 'n';
-	$system->SETTINGS['counter_auctions'] = ynbool($_POST['auctions']);
-	$system->SETTINGS['counter_users'] = ynbool($_POST['users']);
-	$system->SETTINGS['counter_online'] = ynbool($_POST['online']);
+	$system->SETTINGS['counter_auctions'] = isset($_POST['auctions'])? 'y' : 'n';
+	$system->SETTINGS['counter_users']    = isset($_POST['users'])? 'y' : 'n';
+	$system->SETTINGS['counter_online']   = isset($_POST['online'])? 'y' : 'n';
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
 			  counter_auctions = :counter_auctions,

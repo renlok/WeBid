@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2015 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -27,7 +27,7 @@ var A_TCALDEF = {
 	'yearscroll': true, // show year scroller
 	'weekstart': 1, // first day of week: 0-Su or 1-Mo
 	'centyear'  : 70, // 2 digit years less than 'centyear' are in 20xx, othewise in 19xx.
-	<?php echo "'imgpath' : '" . $system->SETTINGS['siteurl'] . "inc/img/'"; // directory with calendar images ?>
+	<?php echo "'imgpath' : '" . $system->SETTINGS['siteurl'] . "includes/img/'"; // directory with calendar images ?>
 }
 // date parsing function
 function f_tcalParseDate (s_date) {

@@ -422,16 +422,16 @@ class Securimage {
 		if ( session_id() == '' ) { // no session has been started yet, which is needed for validation
 			session_start();
 		}
-		if (is_dir($main_path . 'inc/captcha/audio/' . $language . '/'))
+		if (is_dir($main_path . 'includes/captcha/audio/' . $language . '/'))
 		{	
-			$this->audio_path = $main_path . 'inc/captcha/audio/' . $language . '/';
+			$this->audio_path = $main_path . 'includes/captcha/audio/' . $language . '/';
 		}
 		else
 		{
-			$this->audio_path = $main_path . 'inc/captcha/audio/EN/';
+			$this->audio_path = $main_path . 'includes/captcha/audio/EN/';
 		}
-		$this->gd_font_file = $main_path . 'inc/captcha/gdfonts/bubblebath.gdf';
-		$this->ttf_file = $main_path . 'inc/captcha/elephant.ttf';
+		$this->gd_font_file = $main_path . 'includes/captcha/gdfonts/bubblebath.gdf';
+		$this->ttf_file = $main_path . 'includes/captcha/elephant.ttf';
 	}
 
 	/**
@@ -464,8 +464,8 @@ class Securimage {
 	<div style="width: 120px; float: left; height: 55px;  display:block;">' . $MSG['757'] . ':</div> 
 	<div style="width: 430px; float: left; height: 55px; display: block;"> 
 		<img id="siimage" align="left" style="padding-right: 5px; border: 0" src="' . $system->SETTINGS['siteurl'] . 'captcha.php?sid=' . md5(uniqid(time())) . '" /> 
-		<a tabindex="-1" style="border-style: none" href="' . $system->SETTINGS['siteurl'] . 'captcha_play.php" title="Audible Version of CAPTCHA"><img src="' . $system->SETTINGS['siteurl'] . 'inc/captcha/images/audio_icon.gif" alt="Audio Version" align="top" border="0" onclick="this.blur()" /></a><br /> 
-		<a tabindex="-1" style="border-style: none" href="#" title="Refresh Image" onclick="document.getElementById(\'siimage\').src = \'' . $system->SETTINGS['siteurl'] . 'captcha.php?sid=\' + Math.random(); return false"><img src="' . $system->SETTINGS['siteurl'] . 'inc/captcha/images/refresh.gif" alt="Reload Image" border="0" onclick="this.blur()" align="bottom" /></a>
+		<a tabindex="-1" style="border-style: none" href="' . $system->SETTINGS['siteurl'] . 'captcha_play.php" title="Audible Version of CAPTCHA"><img src="' . $system->SETTINGS['siteurl'] . 'includes/captcha/images/audio_icon.gif" alt="Audio Version" align="top" border="0" onclick="this.blur()" /></a><br /> 
+		<a tabindex="-1" style="border-style: none" href="#" title="Refresh Image" onclick="document.getElementById(\'siimage\').src = \'' . $system->SETTINGS['siteurl'] . 'captcha.php?sid=\' + Math.random(); return false"><img src="' . $system->SETTINGS['siteurl'] . 'includes/captcha/images/refresh.gif" alt="Reload Image" border="0" onclick="this.blur()" align="bottom" /></a>
 	</div>
 	<div style="clear: both; line-height: 5px; display: block;"></div>
 	<div style="width: 120px; float: left; height: 25px; display:block;">' . $MSG['758'] . ':</div> 

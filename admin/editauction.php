@@ -50,8 +50,8 @@ function load_gallery($uploaded_path, $auc_id)
 			{
 				if ($file != '.' && $file != '..' && strpos($file, 'thumb-') === false)
 				{
-					$UPLOADED_PICTURES[$K] = $uploaded_path . $auc_id . '/' . $file;
-					$K++;
+					$UPLOADED_PICTURES[] = $uploaded_path . $auc_id . '/' . $file;
+					
 				}
 			}
 			@closedir($dir);
@@ -73,7 +73,7 @@ if (isset($_POST['action']))
 		{
 			$ERR = $ERR_701;
 		}
-		elseif ($_POST['current_bid'] < $_POST['min_bid'] && $_POST['current_bid'] != 0) // bid > min_bid
+		elseif (isset($_POST['current_bid']) && $_POST['current_bid'] < $_POST['min_bid'] && $_POST['current_bid'] != 0) // bid > min_bid
 		{
 			$ERR = $ERR_702;
 		}

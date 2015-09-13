@@ -70,6 +70,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 						$params[] = array(':low', $system->input_money($lows[$i]), 'float');
 						$params[] = array(':high', $system->input_money($highs[$i]), 'float');
 						$params[] = array(':inc', $system->input_money($increments[$i]), 'float');
+						$db->query($query, $params);
 					}
 					else
 					{
@@ -83,6 +84,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 						$params[] = array(':high', $system->input_money($highs[$i]), 'float');
 						$params[] = array(':inc', $system->input_money($increments[$i]), 'float');
 						$params[] = array(':inc_id', $ids[$i], 'int');
+						$db->query($query, $params);
 					}
 				}
 			}
@@ -91,8 +93,9 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 				$query = "DELETE FROM " . $DBPrefix . "increments WHERE id = :inc_id";
 				$params = array();
 				$params[] = array(':inc_id', $ids[$i], 'int');
+				$db->query($query, $params);
 			}
-			$db->query($query, $params);
+			
 		}
 		$ERR = $MSG['160'];
 	}

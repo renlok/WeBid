@@ -93,8 +93,8 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'PAGE_TITLE' => $MSG['214'],
 		'NUM_AUCTIONS' => $num_auctions,
-
-		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'B_SEARCHUSER' => false, // needs decaring as listauctions.tpl is shared and expects B_SEARCHUSER to be declared. Used in users->view actions link
+        'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES

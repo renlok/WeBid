@@ -64,19 +64,20 @@ if (!function_exists('FormatDate'))
 
 if (!function_exists('FormatTimeStamp'))
 {
-	function FormatTimeStamp($DATE, $spacer = '/')
+	function FormatTimeStamp($DATE, $spacer = '-')
 	{
 		global $system;
 
 		$DATE = explode($spacer, $DATE);
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
-			$F_date = _mktime(0, 0, 0, $DATE[0], $DATE[1], $DATE[2]);
+			$F_date = mktime(0, 0, 0, $DATE[0], $DATE[1], $DATE[2]);
 		}
 		else
 		{
-			$F_date = _mktime(0, 0, 0, $DATE[1], $DATE[0], $DATE[2]);
+			$F_date = mktime(0, 0, 0, $DATE[1], $DATE[0], $DATE[2]);
 		}
+		//echo ArrangeDateNoCorrection($F_date) .'<br>'; // enable to view finalized date 
 		return $F_date;
 	}
 }

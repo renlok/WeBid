@@ -49,7 +49,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 
 			$TARGET = $upload_path . 'banners/' . $id . '/' . $_FILES['bannerfile']['name'];
 			list($imagewidth, $imageheight, $imageType) = getimagesize($_FILES['bannerfile']['tmp_name']);
-			$filename = basename($_FILES['bannerfile']['tmp_name']);
+			$filename = basename($_FILES['bannerfile']['name']);
 			$file_ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
 			$file_types = array('gif', 'jpg', 'jpeg', 'png', 'swf');
 			if (!in_array($file_ext, $file_types))
@@ -95,7 +95,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 					width = :imagewidth,
 					height = :imageheight,";
 			$params[] = array(':bannerfile', $_FILES['bannerfile']['name'], 'str');
-			$params[] = array(':type', $FILETYPE, 'bool');
+			$params[] = array(':type', $FILETYPE, 'str');
 			$params[] = array(':imagewidth', $imagewidth, 'int');
 			$params[] = array(':imageheight', $imageheight, 'int');
 		}
@@ -125,7 +125,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 		$db->query($query, $params);
 
 		// Handle filters
-		if (is_array($_POST['category']))
+		if (isset($_POST['category']) && is_array($_POST['category']))
 		{
 			foreach ($_POST['category'] as $k => $v)
 			{

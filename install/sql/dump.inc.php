@@ -1742,7 +1742,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 'Thank you for shopping with us and we hope to see you return soon!',
 'y',
 '',
-'',
+0,
 '',
 'n',
 'none',

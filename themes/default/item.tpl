@@ -261,6 +261,11 @@ $(document).ready(function() {
 				{BUYNOW} <a href="{BIDURL}buy_now.php?id={ID}"><img border="0" align="absbottom" alt="{L_496}" src="{BNIMG}"></a>
 	<!-- ENDIF -->
 <!-- ENDIF -->
+<!-- IF B_CAN_BUY eq false -->
+				<p>{L_5002}</p>
+				<p><a href="{SITEURL}user_login.php?">{L_221}</a></p>
+<!-- ENDIF -->
+
 		  </div>
 		</td>
 	  </tr>

@@ -9,7 +9,8 @@
 <!-- BEGIN cat_list -->
             <li>
                 <span style="background-color:{cat_list.COLOUR}">
-                <a href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}</a> {cat_list.CATAUCNUM}
+                <a href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}</a> <!-- IF cat_list.CATAUCNUM neq '' -->
+({cat_list.CATAUCNUM})<!-- ENDIF -->
                 </span>
             </li>
 <!-- END cat_list -->

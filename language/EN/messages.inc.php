@@ -448,6 +448,7 @@ $MSG['272'] = "Auction:";
 $MSG['273'] = "Make featured";
 $MSG['274'] = "Make bold";
 $MSG['275'] = "Go!";
+$MSG['275a'] = "Login";
 $MSG['276'] = "Categories";
 $MSG['277'] = "All categories";
 $MSG['278'] = "Latest Auctions";

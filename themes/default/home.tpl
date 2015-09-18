@@ -9,7 +9,8 @@
 <!-- BEGIN cat_list -->
             <li>
                 <span style="background-color:{cat_list.COLOUR}">
-                <a href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}</a> {cat_list.CATAUCNUM}
+                <a href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}</a> <!-- IF cat_list.CATAUCNUM neq '' -->
+({cat_list.CATAUCNUM})<!-- ENDIF -->
                 </span>
             </li>
 <!-- END cat_list -->
@@ -114,7 +115,7 @@
             </tr>
             </table>
             <p><input type="checkbox" name="rememberme" id="rememberme" value="1"><label for="rememberme">&nbsp;{L_25_0085}</label></p>
-            <p align="center"><button type="submit" name="action" class="button" value="Go">{L_275}</button></p>
+            <p align="center"><button type="submit" name="action" class="button" value="Go">{L_275a}</button></p>
             <p><a href="{SITEURL}forgotpasswd.php">{L_215}</a></p>
         </form>
     </div>

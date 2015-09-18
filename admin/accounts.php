@@ -28,22 +28,10 @@ $from_date = !empty($_POST['from_date']) ? $_POST['from_date'] : 0;
 $to_date = !empty($_POST['to_date']) ? $_POST['to_date'] : 0;
 
 
-// check date format
-if ($from_date !== 0) {
-    $d_from = explode("-"  , $from_date);
-    if(count($d_from) != 3 || !is_numeric($d_from[0]) || !is_numeric($d_from[1]) || !is_numeric($d_from[2]) || !checkdate($d_from[1], $d_from[0], $d_from[2]) ) {
-        $ERR = $ERR_700;
-        $from_date = 0;
-    }
-}
+// filter date and date format
+$from_date = filter_date($from_date);
+$to_date = filter_date($to_date);
 
-if ($to_date !== 0) {
-    $d_to = explode("-"  , $to_date);
-    if(count($d_to) != 3 || !is_numeric($d_to[0]) || !is_numeric($d_to[1]) || !is_numeric($d_to[2]) ||  !checkdate($d_to[1], $d_to[0], $d_to[2]) ){
-        $ERR = $ERR_700;
-        $to_date = 0;
-    }
-}
 
 // Set offset and limit for pagination
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
@@ -66,8 +54,8 @@ $where_sql = '';
 $params = array();
 if ($from_date != 0)
 {
-	$where_sql = 'paid_date > \'' . FormatTimeStamp($from_date, '-') . '\'';
-	$params[] = array(':from_date', FormatTimeStamp($from_date, '-') , 'str');
+	$where_sql = 'paid_date > \'' . FormatTimeStamp($from_date) . '\'';
+	$params[] = array(':from_date', FormatTimeStamp($from_date) , 'str');
 }
 if ($to_date != 0)
 {
@@ -75,8 +63,8 @@ if ($to_date != 0)
 	{
 		$where_sql .= ' AND ';
 	}
-	$where_sql .= 'paid_date < \'' . FormatTimeStamp($to_date, '-') . '\'';
-	$params[] = array(':to_date', FormatTimeStamp($to_date, '-') , 'str');
+	$where_sql .= 'paid_date < \'' . FormatTimeStamp($to_date) . '\'';
+	$params[] = array(':to_date', FormatTimeStamp($to_date) , 'str');
 }
 
 if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')

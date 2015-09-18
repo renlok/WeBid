@@ -448,6 +448,7 @@ $MSG['272'] = "Auction:";
 $MSG['273'] = "Make featured";
 $MSG['274'] = "Make bold";
 $MSG['275'] = "Go!";
+$MSG['275a'] = "Login";
 $MSG['276'] = "Categories";
 $MSG['277'] = "All categories";
 $MSG['278'] = "Latest Auctions";
@@ -1194,6 +1195,8 @@ $MSG['1162'] = "You can turn on the authorize sandbox to test the authorize IPN"
 $MSG['1163'] = "2checkout Sandbox";
 $MSG['1164'] = "You can turn on the 2checkout sandbox to test the 2checkout IPN";
 
+
+$MSG['5002'] = "You must be logged in the bid";
 $MSG['5003'] = "Site Settings";
 $MSG['5004'] = "Currencies Settings";
 $MSG['5005'] = "General Layout Settings";

@@ -48,7 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				title = :title,
 				content = :content,
 				suspended = :suspended
-				WHERE id = :id"
+				WHERE id = :id";
 		$params = array();
 		$params[] = array(':title', $_POST['title'][$system->SETTINGS['defaultlanguage']], 'str');
 		$params[] = array(':content', $_POST['content'][$system->SETTINGS['defaultlanguage']], 'str');

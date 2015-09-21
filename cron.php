@@ -387,6 +387,10 @@ $params[] = array(':num_aucsa', $count_auctions, 'int');
 $params[] = array(':num_aucsb', $count_auctions, 'int');
 $db->query($query, $params);
 
+// TODO needs rewriting
+/*
+	
+*/
 if (count($categories) > 0)
 {
 	foreach ($categories as $cat_id => $category)

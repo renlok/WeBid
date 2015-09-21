@@ -187,38 +187,24 @@ switch ($_SESSION['action'])
 			if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit')
 			{
 				// update recursive categories
-				update_cat_counters(true, $_SESSION['SELL_sellcat1']);
-				if (isset($_SESSION['SELL_sellcat2']) && !empty($_SESSION['SELL_sellcat2']))
-				{
-					update_cat_counters(true, $_SESSION['SELL_sellcat2']);
-				}
+				update_cat_counters(true, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
 			}
 
 			// fees are due and you are editing the auction so remove the auction count
 			if (!$addcounter && $_SESSION['SELL_action'] == 'edit')
 			{
 				// update recursive categories
-				update_cat_counters(false, $_SESSION['SELL_sellcat1']);
-				if (isset($_SESSION['SELL_sellcat2']) && !empty($_SESSION['SELL_sellcat2']))
-				{
-					update_cat_counters(false, $_SESSION['SELL_sellcat2']);
-				}
+				update_cat_counters(false, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
 			}
 			
 			// if editing the auction and the categories have been changed
 			if ($_SESSION['SELL_action'] == 'edit' && ($_SESSION['SELL_sellcat1'] != $_SESSION['SELL_original_sellcat1'] || $_SESSION['SELL_sellcat2'] != $_SESSION['SELL_original_sellcat2']))
 			{
-				if ($_SESSION['SELL_sellcat1'] != $_SESSION['SELL_original_sellcat1'])
+				if ($_SESSION['SELL_sellcat1'] != $_SESSION['SELL_original_sellcat1'] || $_SESSION['SELL_sellcat2'] != $_SESSION['SELL_original_sellcat2'])
 				{
 					// remove the old category count and add to the new one
-					update_cat_counters(false, $_SESSION['SELL_sellcat1']);
-					update_cat_counters(true, $_SESSION['SELL_original_sellcat1']);
-				}
-				if ($_SESSION['SELL_sellcat2'] != $_SESSION['SELL_original_sellcat2'])
-				{
-					// remove the old category count and add to the new one
-					update_cat_counters(false, $_SESSION['SELL_sellcat1']);
-					update_cat_counters(true, $_SESSION['SELL_original_sellcat2']);
+					update_cat_counters(false, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
+					update_cat_counters(true, $_SESSION['SELL_original_sellcat1'], $_SESSION['SELL_original_sellcat2']);
 				}
 			}
 

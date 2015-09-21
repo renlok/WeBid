@@ -24,6 +24,8 @@ if (!$user->is_logged_in())
 	header('location: user_login.php');
 	exit;
 }
+// check if the user can access this page
+$user->check_suspended();
 
 $user_message = '';
 

@@ -122,7 +122,7 @@
 					</tr>
         <!-- IF B_NLETTER -->
 					<tr>
-						<td width="40%" align=right><b>{L_608}</b></td>
+						<td width="40%" align="right"><b>{L_608}</b></td>
 						<td width="60%">
 							<input type="radio" name="TPL_nletter" value="1" {V_YNEWSL}>
 							{L_030}

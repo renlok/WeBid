@@ -21,7 +21,7 @@ if ($system->SETTINGS['spam_sendtofriend'] == 2)
 }
 elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
 {
-	include $main_path . 'includes/captcha/securimage.php';
+	include $include_path . 'captcha/securimage.php';
 }
 
 if (isset($_REQUEST['id']))

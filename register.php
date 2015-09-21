@@ -22,7 +22,7 @@ if ($system->SETTINGS['spam_register'] == 2)
 }
 elseif ($system->SETTINGS['spam_register'] == 1)
 {
-	include $main_path . 'includes/captcha/securimage.php';
+	include $include_path . 'captcha/securimage.php';
 }
 
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')

@@ -503,16 +503,35 @@ function get_fee($minimum_bid, $just_fee = true)
 	return $return;
 }
 
-function update_cat_counters($add, $category)
+function update_cat_counters($add, $category, $second_category = 0)
 {
 	global $_SESSION, $DBPrefix, $system, $catscontrol, $db;
 
+	// get the category crumbs
 	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
 	$params = array();
 	$params[] = array(':cat_id', $category, 'int');
 	$db->query($query, $params);
 	$parent_node = $db->result();
-	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+	$category_crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+	if ($second_category > 0)
+	{
+		// get the second category crumbs
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+		$params = array();
+		$params[] = array(':cat_id', $second_category, 'int');
+		$db->query($query, $params);
+		$parent_node = $db->result();
+		$second_category_crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+		
+		// merge the arrays
+		$crumbs = array_merge($category_crumbs, $second_category_crumbs);
+	}
+	else
+	{
+		$crumbs = $category_crumbs;
+	}
 
 	$addsub = ($add) ? '+' : '-';
 	for ($i = 0; $i < count($crumbs); $i++)

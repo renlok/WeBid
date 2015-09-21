@@ -22,12 +22,7 @@ if (!$user->is_logged_in())
 	header('location: user_login.php');
 	exit;
 }
-
-if (in_array($user->user_data['suspended'], array(5, 6, 7)))
-{
-	header('location: message.php');
-	exit;
-}
+$user->check_suspended();
 
 if (!$user->can_sell)
 {
@@ -100,6 +95,8 @@ elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 {
     unset($_SESSION['UPLOADED_PICTURES_SIZE']);
 	$_SESSION['SELL_editing_category'] = false;
+	$_SESSION['SELL_sellcat1'] = 0;
+	$_SESSION['SELL_sellcat2'] = 0;
 	$_SESSION['SELL_starts'] = '';
 	$_SESSION['UPLOADED_PICTURES'] = array();
     $_SESSION['SELL_with_reserve'] = '';

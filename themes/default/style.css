@@ -309,3 +309,29 @@ a:hover {
 .content {
 	margin-bottom:25px;
 }
+
+.itembox {
+	float:left;
+	display:block;
+	width:180px;
+	margin:5px;
+	background-color:#FFFEEE;
+	border:#CCCCCC 1px solid;
+	padding:5px;
+	min-height:164px;
+}
+
+.itembox div {
+	display:block;
+	text-align:center;
+}
+
+.itembox div a {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   line-height: 16px;     /* fallback */
+   max-height: 32px;      /* fallback */
+   -webkit-line-clamp: 2; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}

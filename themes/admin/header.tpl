@@ -50,7 +50,7 @@
         <a href="index.php?lan={langs.LANG}"><img src="{SITEURL}includes/flags/{langs.LANG}.gif"></a>
 	<!-- ENDIF -->
 <!-- END langs -->
-        {L_592} {ADMIN_USER} | <a href="editadminuser.php?id={ADMIN_ID}">{L_5142}</a> | <a href="logout.php">{L_245}</a><br /><small>{L_559}: {LAST_LOGIN}</small>
+        {L_592} {ADMIN_USER} | <a href="editadminuser.php?id={ADMIN_ID}">{L_5142}</a> | <a href="{SITEURL}" target="_blank">{L_5001}</a> | <a href="logout.php">{L_245}</a><br /><small>{L_559}: {LAST_LOGIN}</small>
     </p>
 </div>
 

@@ -90,6 +90,15 @@ class user
 		return $this->logged_in;
 	}
 
+	function check_suspended()
+	{
+		if (in_array($this->user_data['suspended'], array(5, 6, 7)))
+		{
+			header('location: message.php');
+			exit;
+		}
+	}
+
 	function check_balance()
 	{
 		global $system, $DBPrefix, $MSG, $db;

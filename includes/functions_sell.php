@@ -209,6 +209,7 @@ function updateauction($type)
 		international = :international,
 		ends = :ends,
 		photo_uploaded = :photo_uploaded,
+		initial_quantity = :initial_quantity,
 		quantity = :quantity,
 		relist = :relist,
 		shipping_terms = :shipping_terms,
@@ -242,6 +243,7 @@ function updateauction($type)
 	$params[] = array(':international', $_SESSION['SELL_international'], 'bool');
 	$params[] = array(':ends', $a_ends, 'int');
 	$params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
+	$params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
@@ -259,8 +261,8 @@ function addauction()
 {
 	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee, $db;
 
-	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,shipping_cost_additional,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
-	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :shipping_cost_additional, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
+	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,shipping_cost_additional,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,initial_quantity,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
+	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :shipping_cost_additional, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :initial_quantity, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
 
 	$params = array();
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
@@ -284,6 +286,7 @@ function addauction()
 	$params[] = array(':international', $_SESSION['SELL_international'], 'bool');
 	$params[] = array(':ends', $a_ends, 'int');
 	$params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
+	$params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');

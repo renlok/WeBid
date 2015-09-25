@@ -218,7 +218,10 @@ while ($item = $db->fetch())
 			'BIDS' => $item['num_bids'],
 
 			'B_CLOSED' => ($item['closed'] == 1),
-			'B_HASNOBIDS' => ($item['current_bid'] == 0)
+			'B_HASNOBIDS' => ($item['current_bid'] == 0),
+			'B_BUY_NOW_ONLY' => ($item['bn_only'] == 'y'),
+			'B_BUY_NOW' => ($item['bn_sale'] == 1),
+			'B_DUTCH' => ($item['auction_type'] == 2)
 			));
 	$i++;
 }

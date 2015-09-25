@@ -34,7 +34,7 @@
                     <td align="right"><b>{L_284}:</b></td>
                     <td>
     <!-- IF B_QTY -->
-    					<input type="text" name="qty" size="15" maxlength="15">{LEFT} {L_5408}
+						<input type="number" name="qty" id="qty" value="1" min="1" max="{LEFT}" step="1" size="15" maxlength="15">{LEFT} {L_5408}
     <!-- ELSE -->
     					<input type="hidden" name="qty" value="1">1
     <!-- ENDIF -->
@@ -65,6 +65,12 @@
 					<td align="right" width="40%"><b>{L_893}:</b></td>
 					<td>{BN_TOTAL}</td>
 				</tr>
+	<!-- IF SHIPPINGCOST ne 0 -->
+				<tr> 
+                    <td align="right" width="40%"><b>{L_023}:</b></td> 
+                    <td>{SHIPPINGCOST}</td> 
+                </tr>
+	<!-- ENDIF -->
 				<tr>
 					<td colspan="2" align="center">
 						{L_498}

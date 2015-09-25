@@ -1780,4 +1780,10 @@ $MSG['RPT_23'] = '(leave blank for all)';
 
 $MSG['NAY_01'] = 'Featured Items';
 $MSG['NAY_02'] = 'All Items';
+
+$MSG['AUCTIONS_401'] = "Bid";
+$MSG['AUCTIONS_402'] = "Bids";
+$MSG['AUCTIONS_404'] = "Sold";
+$MSG['AUCTIONS_405'] = "Winning Bid";
+$MSG['AUCTIONS_406'] = "Winners";
 ?>

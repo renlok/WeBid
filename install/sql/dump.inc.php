@@ -114,12 +114,13 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `current_bid` double(16,2) default '0',
   `closed` int(1) default '0',
   `photo_uploaded` tinyint(1) default NULL,
-  `quantity` int(11) default NULL,
+  `initial_quantity` int(11) default '1',
+  `quantity` int(11) default '1',
   `suspended` int(1) default '0',
   `relist` int(11) NOT NULL default '0',
   `relisted` int(11) NOT NULL default '0',
   `num_bids` int(11) NOT NULL default '0',
-  `sold` enum('y','n','s') NOT NULL default 'n',
+  `sold` enum('y', 'n', 's') NOT NULL default 'n',
   `shipping_terms` tinytext,
   `bn_only` enum('y','n') NOT NULL default 'n',
   `bold` enum('y','n') NOT NULL default 'n',
@@ -128,6 +129,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `current_fee` double(16,2) default '0',
   `tax`  enum('y','n') NOT NULL default 'n',
   `taxinc`  enum('y','n') NOT NULL default 'y',
+  `bn_sale` int(1) default 0,
   PRIMARY KEY  (`id`),
   KEY `id` (`id`)
 );";

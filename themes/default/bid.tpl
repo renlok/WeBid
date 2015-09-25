@@ -1,11 +1,18 @@
 <!-- IF TQTY gt 1 -->
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#qty").keydown(function(){
-		$("#bidcost").text(($("#qty").val())*($("#bid").val()) + ' {CURRENCY}');
+	$("#qty").keyup(function(){
+		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) +" <a href={SITEURL}converter.php?AMOUNT="+(parseFloat(($("#qty").val())* ($("#bid").val()))).toFixed(2)+">{CURRENCY}</a>");
 	});
-	$("#bid").keydown(function(){
-		$("#bidcost").text(($("#qty").val())*($("#bid").val()) + ' {CURRENCY}');
+	$("#qty").click(function(){
+		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) +" <a href={SITEURL}converter.php?AMOUNT="+(parseFloat(($("#qty").val())* ($("#bid").val()))).toFixed(2)+">{CURRENCY}</a>");
+	});
+	$("#bid").keyup(function(){
+		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) +" <a href={SITEURL}converter.php?AMOUNT="+(parseFloat(($("#qty").val())* ($("#bid").val()))).toFixed(2)+">{CURRENCY}</a>");
+	});
+	<!-- ELSE -->
+	$("#bid").keyup(function(){
+		$("#bidcost").html((parseFloat({QTY} * ($("#bid").val()))).toFixed(2) +" <a href={SITEURL}converter.php?AMOUNT="+(parseFloat({QTY} * ($("#bid").val()))).toFixed(2)+">{CURRENCY}</a>");
 	});
 });
 </script>

@@ -1786,4 +1786,9 @@ $MSG['AUCTIONS_402'] = "Bids";
 $MSG['AUCTIONS_404'] = "Sold";
 $MSG['AUCTIONS_405'] = "Winning Bid";
 $MSG['AUCTIONS_406'] = "Winners";
+
+$MSG['BUY_NOW_ONLY_TPL_0100'] = "Recently Closed Auction Report"; 
+
+$MSG['communative_report_winner_yes'] = 'An email has been sent to the any winner(s) with your email address.';
+$MSG['communative_report_winner_no'] = 'Sorry, no auction winner(s) this time.';
 ?>

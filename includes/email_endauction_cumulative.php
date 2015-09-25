@@ -21,6 +21,7 @@ $emailer->assign_vars(array(
 		'ADMINMAIL' => $system->SETTINGS['adminmail'],
 
 		'REPORT' => $report,
+		'REPORT_WINNER' => (isset($report_winner))?  $MSG['communative_report_winner_yes'] : $MSG['communative_report_winner_no'],
 
 		'S_NAME' => $row['name']
 		));

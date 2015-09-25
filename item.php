@@ -305,6 +305,11 @@ if ($user->logged_in && $num_bids > 0)
 				$yourbidmsg = $MSG['25_0089'];
 			}
 		}
+		elseif ($auction_data['bn_only'] == 'y') 
+		{ 
+			$yourbidmsg = $MSG['25_0089']; 
+			$yourbidclass = 'yourbidwin'; 
+		}
 		else
 		{
 			$yourbidmsg = $MSG['25_0087'];

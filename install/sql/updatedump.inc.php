@@ -273,6 +273,8 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `worldpay_sandbox` INT(1) default 0;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `checkout_sandbox` INT(1) default 0;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `moneybookers_sandbox` INT(1) default 0;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `initial_quantity` int(11) default 1;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `bn_sale` int(1) default 0;";
 	// add translation tables
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (

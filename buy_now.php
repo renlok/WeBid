@@ -107,8 +107,8 @@ if ($Auction['bn_only'] == 'n')
 	}
 }
 
-// get user's nick
-$query = "SELECT nick, email, rate_sum FROM " . $DBPrefix . "users WHERE id = :user_id";
+// get user's details
+$query = "SELECT id, name, nick, email, rate_sum FROM " . $DBPrefix . "users WHERE id = :user_id";
 $params = array();
 $params[] = array(':user_id', $Auction['user'], 'int');
 $db->query($query, $params);
@@ -157,25 +157,29 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	{
 		$ERR = $ERR_608;
 	}
+	else if (!isset($qty) || $qty < 1) 
+	{ 
+		$ERR = $ERR_601;  
+	}
 	// perform final actions
 	if (!isset($ERR))
 	{
-		$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :user_id, :buy_now, :time, 1)";
+		$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :user_id, :buy_now, :time, :qty)";
 		$params = array();
 		$params[] = array(':auc_id', $id, 'int');
 		$params[] = array(':user_id', $user->user_data['id'], 'int');
 		$params[] = array(':buy_now', $Auction['buy_now'], 'float');
 		$params[] = array(':time', $NOW, 'int');
+		$params[] = array(':qty', $qty, 'int');
 		$db->query($query, $params);
 		if (defined('TrackUserIPs'))
 		{
 			// log auction BIN IP
 			$system->log('user', 'BIN on Item', $user->user_data['id'], $id);
 		}
-		echo $Auction['quantity'];
-		if ($Auction['quantity'] == 1)
+		if ($Auction['bn_only'] != 'y')
 		{
-			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, num_bids = num_bids + 1, current_bid = :buy_now WHERE id = :auc_id";
+			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, bn_sale = 1, num_bids = num_bids + 1, current_bid = :buy_now WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
 			$params[] = array(':buy_now', $Auction['buy_now'], 'float');
@@ -199,7 +203,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			// force close if all items sold
 			if (($Auction['quantity'] - $qty) == 0)
 			{
-				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, current_bid = :current_bid, sold = 'y', num_bids = num_bids + 1, closed = 1 WHERE id = :auc_id";
+				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, bn_sale = 1, current_bid = :current_bid, sold = 'y', num_bids = num_bids + 1, closed = 1 WHERE id = :auc_id";
 				$params = array();
 				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':auc_id', $id, 'int');
@@ -207,7 +211,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				$db->query($query, $params);
 			}
 			// do stuff that is important
-			$query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE id = :user_id";
+			$query = "SELECT id, name, nick, email, address, city, prov, zip, country FROM " . $DBPrefix . "users WHERE id = :user_id";
 			$params = array();
 			$params[] = array(':user_id', $user->user_data['id'], 'int');
 			$db->query($query, $params);
@@ -224,11 +228,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				$fee_type = $row['fee_type'];
 				if ($row['fee_type'] == 'flat')
 				{
-					$fee_value = $row['value'];
+					$fee_value = $row['value'] * $qty;
 				}
 				else
 				{
-					$fee_value = ($row['value'] / 100) * floatval($Auction['buy_now']);
+					$fee_value = ($row['value'] / 100) * floatval($Auction['buy_now']) * $qty;
 				}
 				if ($system->SETTINGS['fee_type'] == 1 || $fee_value <= 0)
 				{
@@ -266,11 +270,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					{
 						if ($row['fee_type'] == 'flat')
 						{
-							$fee_value = $row['value'];
+							$fee_value = $row['value'] * $qty;
 						}
 						else
 						{
-							$fee_value = ($row['value'] / 100) * floatval($Auction['buy_now']);
+							$fee_value = ($row['value'] / 100) * floatval($Auction['buy_now']) * $qty;
 						}
 					}
 				}
@@ -330,7 +334,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$month = date('m', $Auction['ends'] + $system->tdiff);
 			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
-			include $include_path . 'email_endauction_youwin_nodutch.php';
+			include $include_path . 'endauction_mutli_item_win.php'; 
+            include $include_path . 'email_seller_partial_winner.php';
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{
@@ -338,6 +343,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 				header('location: pay.php?a=6');
 				exit;
 			}
+
+			if ($Auction['initial_quantity'] == 1 || ($Auction['quantity'] - $qty) == 0)
+			{ 
+				$tmpauc = $Auction;
+				include 'cron.php';
+				$Auction = $tmpauc;
+				unset($tmpauc); 
+            } 
 		}
 
 		$buy_done = 1;
@@ -354,6 +367,7 @@ $template->assign_vars(array(
 		'WINID' => $winner_id,
 		'TITLE' => $system->uncleanvars($Auction['title']),
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),
+		'SHIPPINGCOST' => ($shipping_cost >  0) ? $system->print_money($shipping_cost) : 0,
 		'BN_TOTAL' => $system->print_money($BN_total),
 		'SELLER' => ' <a href="profile.php?user_id=' . $Auction['user'] . '"><b>' . $Seller['nick'] . '</b></a>',
 		'SELLERNUMFBS' => '<b>(' . $total_rate . ')</b>',

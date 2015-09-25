@@ -77,12 +77,34 @@ $(document).ready(function() {
 		</td>
 		<td width="10%" align="center">
 			{items.BIDS}
+	<!-- IF items.B_BUY_NOW_ONLY -->
+			{L_AUCTIONS_404}
+	<!-- ELSEIF items.BIDS eq 1 -->
+		<!-- IF items.B_DUTCH -->
+			{L_455}
+		<!-- ELSE -->
+			{L_AUCTIONS_401}
+		<!-- ENDIF -->
+	<!-- ELSE -->
+		<!-- IF items.B_DUTCH -->
+			{L_AUCTIONS_406}
+		<!-- ELSE -->
+			{L_AUCTIONS_402}
+		<!-- ENDIF -->
+	<!-- ENDIF -->
 		</td>
 		<td align="center">
 	<!-- IF items.B_HASNOBIDS -->
 			-
 	<!-- ELSE -->
 			{items.BID}
+		<!-- IF items.B_BUY_NOW_ONLY -->
+			<br>[ {L_933} {L_259} ]
+		<!-- ELSEIF items.B_BUY_NOW -->
+			<br>[ {L_496} {L_259} ]
+		<!-- ELSEIF items.B_DUTCH -->
+			<br>[ {L_641} ]
+		<!-- ENDIF -->
 	<!-- ENDIF -->
 		</td>
 		<td width="10%" align="center">

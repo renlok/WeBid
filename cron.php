@@ -599,27 +599,30 @@ foreach ($auction_data as $row)
 	if ($db->numrows() > 0)
 	{
 		$pending_data = $db->fetchall();
-		$report = '';
+		$report_winner = 0;
+        $report = "<table cellspacing='0' cellpadding='10' border='1'>"; 
+        $report .= "<tr><th colspan='2'><h4><br>" . $MSG['BUY_NOW_ONLY_TPL_0100'] . "</h4></th></tr>"; 
+        $report .= "<tr><th>" . $MSG['168'] . "</th><th>" . $MSG['453'] . "</th></tr>"; 
 		foreach ($pending_data as $pending)
 		{
 			$Auction = unserialize($pending['auction']);
 			$Seller = unserialize($pending['seller']);
-			$report .= "-------------------------------------------------------------------------\n" . 
-						$Auction['title'] . "\n" . 
-						"-------------------------------------------------------------------------\n";
+			$report .= "<tr><td width='250'>" . $Auction['title'] . "<br>(ID: " . $Auction['id'] . ")</td>";
 			if(strlen($pending['winners']) > 0)
 			{
-				$report .= $MSG['453'] . ':' . "\n" . $pending['winners'] . "\n\n";
+				$report .= "<td width='250'>" . $pending['winners'] . "</td></tr>";
+				$report_winner = 1;
 			}
 			else
 			{
-				$report .= $MSG['1032']."\n\n";
+				$report .= "<td width='280'>" . $MSG['1032'] . "</td></tr>";
 			}
 			$query = "DELETE FROM " . $DBPrefix . "pendingnotif WHERE id = :pending_id";
 			$params = array();
 			$params[] = array(':pending_id', $pending['id'], 'int');
 			$db->query($query, $params);
 		}
+		$report .= "</table>";
 		include $include_path . 'email_endauction_cumulative.php';
 	}
 }

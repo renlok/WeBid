@@ -103,7 +103,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$ERR = $ERR_5037;
 		}
-		elseif (count($_POST['group']) == 0)
+		elseif (empty($_POST['group']))
 		{
 			$ERR = $ERR_044;
 		}
@@ -147,6 +147,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':prov', $system->cleanvars($_POST['prov']), 'str');
 			$params[] = array(':country', $system->cleanvars($_POST['country']), 'str');
 			$params[] = array(':zip', $system->cleanvars($_POST['zip']), 'str');
+			$params[] = array(':phone', $system->cleanvars($_POST['phone']), 'str');
 			$params[] = array(':groups', implode(',', $_POST['group']), 'str');
 			$params[] = array(':balance', $system->input_money($_POST['balance']), 'float');
 			if (strlen($_POST['password']) > 0)

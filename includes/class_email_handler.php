@@ -404,7 +404,7 @@ class email_handler
 				$mail->Port = (integer)$system->SETTINGS['smtp_port'];
 				if ($system->SETTINGS['smtp_security'] != 'none')
 				{
-					$mail->SMTPSecure = strtolower($_POST['smtp_security']);
+					$mail->SMTPSecure = strtolower($system->SETTINGS['smtp_security']);
 				}
 				if ($system->SETTINGS['smtp_authentication'] == 'y')
 				{

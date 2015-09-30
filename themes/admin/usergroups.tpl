@@ -47,7 +47,12 @@
                                 <option value="0" {AUTO_JOIN_N}>{L_029}</option>
                             </select>
                         </td>
-                        <td><input type="hidden" name="id" value="{GROUP_ID}"></td>
+                        <td>
+							<input type="hidden" name="id" value="{GROUP_ID}">
+							<!-- IF NOT_DEFAULT_GROUP --> 
+							<input type="checkbox" name="remove" value="y">{L_008}
+							<!-- ENDIF --> 
+						</td>
                     </tr>
                     <tr>
                         <th colspan="7">&nbsp;</th>
@@ -68,6 +73,38 @@
                         <td colspan="7"><a href="usergroups.php?action=new">{L_518}</a></td>
                     </tr>
                     </table>
+
+<!-- IF .groups_unknown -->
+                   <p class="error"><h4><b>{L_warning}</b></h4></p>
+				   <table width="98%" cellpadding="0" cellspacing="0">
+				   <tr>
+                        <th><b>{L_449}</b></th>
+                        <th><b>{L_450}</b></th>
+                        <th><b>{L_451}</b></th>
+                        <th><b>{L_045}</b> {L_text_update_users_group}</th>
+                    </tr>
+<!-- BEGIN groups_unknown -->
+                    <tr>
+                        <td>{groups_unknown.ID}</td>
+                        <td>{groups_unknown.NAME}</td>
+                        <td>{groups_unknown.USER_COUNT}</td>
+						<td>
+						<!-- BEGIN list_users -->
+						<!-- IF groups_unknown.list_users.TYPE eq 1 -->
+						<p>{L_313} <a href="edituser.php?userid={groups_unknown.list_users.ID}&offset=1">{groups_unknown.list_users.NAME}</a> {L_error_no_user_group}
+						</p>
+						<!-- ENDIF -->
+						<!-- IF groups_unknown.list_users.TYPE eq 2 -->
+						<p>{L_313} <a href="edituser.php?userid={groups_unknown.list_users.ID}&offset=1">{groups_unknown.list_users.NAME}</a> {L_error_no_user_group_id}
+						</p>
+						<!-- ENDIF -->
+						<!-- END list_users -->
+						</td>
+                    </tr>
+<!-- END groups_unknown -->	
+				   </table>
+<!-- ENDIF -->
+
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                     <input type="submit" name="act" class="centre" value="{L_530}">

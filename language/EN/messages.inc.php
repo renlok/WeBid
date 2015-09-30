@@ -1791,4 +1791,16 @@ $MSG['BUY_NOW_ONLY_TPL_0100'] = "Recently Closed Auction Report";
 
 $MSG['communative_report_winner_yes'] = 'An email has been sent to the any winner(s) with your email address.';
 $MSG['communative_report_winner_no'] = 'Sorry, no auction winner(s) this time.';
+
+// usergroups.php
+$MSG['cannot_delete_default_user_groups'] = 'Default User Groups (Sellers & Buyers) cannot be removed';
+$MSG['user_group_deleted'] = 'User Group Deleted';
+$MSG['user_group_name_empty_update'] = 'Group name cannot be empty. User Group was not updated';
+$MSG['user_group_name_empty_new'] = 'Group name cannot be empty. The new User Group was not created';
+$MSG['text_unknown'] = 'Unknown';
+$MSG['empty_line'] = '-----';
+$MSG['error_no_user_group'] = 'has not been assigned to any User Groups';
+$MSG['error_no_user_group_id'] = 'has been assigned to a Group ID which does not exist any more';
+$MSG['text_update_users_group'] = '[Please View and Update each user\'s details]';
+$MSG['warning'] = 'Warning';;
 ?>

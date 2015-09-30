@@ -72,35 +72,96 @@ if (isset($_POST['action']))
 	}
 	if ($_GET['action'] == 'edit' || (isset($_GET['id']) && is_numeric($_GET['id'])))
 	{
-		$query = "UPDATE ". $DBPrefix . "groups SET
-				group_name = :group_name,
-				count = :count,
-				can_sell = :can_sell,
-				can_buy = :can_buy,
-				auto_join = :auto_join
-				WHERE id = :group_id";
-		$params = array();
-		$params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
-		$params[] = array(':count', $_POST['user_count'], 'int');
-		$params[] = array(':can_sell', $_POST['can_sell'], 'int');
-		$params[] = array(':can_buy', $_POST['can_buy'], 'int');
-		$params[] = array(':auto_join', (($auto_join) ? $_POST['auto_join'] : 1), 'int');
-		$params[] = array(':group_id', $_POST['id'], 'int');
-		$db->query($query, $params);
+		if ($_GET['action'] == 'edit' && isset($_POST['remove']) && $_POST['remove'] == 'y')
+		{
+			// prevent removal of webid default Group 1 or Group 2
+			if(intval($_POST['id']) == 1 || intval($_POST['id']) == 2)
+			{
+				$ERR = $MSG['cannot_delete_default_user_groups']; 
+			}
+			else
+			{
+				$query = "DELETE FROM " . $DBPrefix . "groups WHERE id = :group_id";
+				$params = array();
+				$params[] = array(':group_id', $_POST['id'], 'int');
+				$db->query($query, $params);
+				$ERR = $MSG['user_group_deleted'];
+		    }
+		}
+		else
+		{
+		    if (empty($_POST['group_name']))
+			{
+				$ERR = $MSG['user_group_name_empty_update'];
+			}
+			else
+			{
+				$query = "UPDATE ". $DBPrefix . "groups SET
+						group_name = :group_name,
+						count = :count,
+						can_sell = :can_sell,
+						can_buy = :can_buy,
+						auto_join = :auto_join
+						WHERE id = :group_id";
+				$params = array();
+				$params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
+				$params[] = array(':count', $_POST['user_count'], 'int');
+				$params[] = array(':can_sell', $_POST['can_sell'], 'int');
+				$params[] = array(':can_buy', $_POST['can_buy'], 'int');
+				$params[] = array(':auto_join', (($auto_join) ? $_POST['auto_join'] : 1), 'int');
+				$params[] = array(':group_id', $_POST['id'], 'int');
+				$db->query($query, $params);
+			}
+		}
 	}
 	if ($_GET['action'] == 'new' || empty($_GET['id']))
 	{
-		$query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy, auto_join) VALUES
-				(:group_name, :count, :can_sell, :can_buy, :auto_join)";
-		$params = array();
-		$params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
-		$params[] = array(':count', $_POST['user_count'], 'int');
-		$params[] = array(':can_sell', $_POST['can_sell'], 'int');
-		$params[] = array(':can_buy', $_POST['can_buy'], 'int');
-		$params[] = array(':auto_join', (($auto_join) ? $_POST['auto_join'] : 1), 'int');
-		$db->query($query, $params);
+		if (empty($_POST['group_name']))
+		{
+			$ERR = $MSG['user_group_name_empty_new'];
+		}
+		else
+		{
+			$query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy, auto_join) VALUES
+					(:group_name, :count, :can_sell, :can_buy, :auto_join)";
+			$params = array();
+			$params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
+			$params[] = array(':count', $_POST['user_count'], 'int');
+			$params[] = array(':can_sell', $_POST['can_sell'], 'int');
+			$params[] = array(':can_buy', $_POST['can_buy'], 'int');
+			$params[] = array(':auto_join', (($auto_join) ? $_POST['auto_join'] : 1), 'int');
+			$db->query($query, $params);
+		}
+		
 	}
 }
+
+$groups_array = array();
+$groups_unknown = array();
+$query = "SELECT groups, id, nick FROM ". $DBPrefix . "users";
+$db->direct_query();
+
+while ($row = $db->fetch())
+{
+    if (!empty($row['groups']))
+	{
+        if (!empty($groups_array))
+		{
+           $groups_array = $groups_array .','. $row['groups'];
+		}
+        else 
+		{
+           $groups_array = $row['groups'];
+		}
+    }
+	else
+	{
+	    $groups_array = $groups_array . ',unknown';
+        $groups_unknown[] = $row;
+    }
+}
+$groups_array = explode(',', $groups_array);
+$groups_array = array_count_values($groups_array);
 
 $query = "SELECT * FROM ". $DBPrefix . "groups";
 $db->direct_query($query);
@@ -113,8 +174,57 @@ while ($row = $db->fetch())
 			'CAN_SELL' => ($row['can_sell'] == 1) ? $MSG['030'] : $MSG['029'],
 			'CAN_BUY' => ($row['can_buy'] == 1) ? $MSG['030'] : $MSG['029'],
 			'AUTO_JOIN' => ($row['auto_join'] == 1) ? $MSG['030'] : $MSG['029'],
-			'USER_COUNT' => $row['count']
+			'USER_COUNT' => !empty($groups_array[$row['id']])? $groups_array[$row['id']] : 0 // $row['count']
 			));
+	unset($groups_array[$row['id']]);
+	// TODO: automatically control user group count when users join/leave groups
+}
+
+// non assigned users
+if (!empty($groups_unknown))
+{
+	$template->assign_block_vars('groups_unknown', array(
+			'ID' => $MSG['empty_line'],
+			'NAME' => $MSG['empty_line'],
+			'USER_COUNT' => !empty($groups_array['unknown']) ? $groups_array['unknown']  : 0
+			));
+	unset($groups_array['unknown']);
+
+	foreach ($groups_unknown as $k => $v)
+	{
+		$template->assign_block_vars('groups_unknown.list_users', array(
+				'ID' =>  $v['id'],
+				'NAME' => $v['nick'],
+				'TYPE' => 1
+				));
+	}		
+}
+
+// assigned to non existstant groups
+if (!empty($groups_array))
+{
+	foreach ($groups_array as $k => $v)
+	{
+	    $template->assign_block_vars('groups_unknown', array(
+				'ID' => $k,
+				'NAME' => $MSG['text_unknown'],
+				'USER_COUNT' => $v 
+				));
+	    $query = "SELECT groups, id, nick FROM ". $DBPrefix . "users WHERE groups LIKE :group_name";
+		$params = array();
+		$params[] = array(':group_name', '%' . $k . '%', 'str');
+		$db->query($query, $params);
+		// TODO: automatically remove users from groups when the group is deleted
+
+        while ($row = $db->fetch())
+		{
+			$template->assign_block_vars('groups_unknown.list_users', array(
+					'ID' =>  $row['id'],
+					'NAME' => $row['nick'],
+					'TYPE' => 2
+					));
+		}
+	}
 }
 
 $template->assign_vars(array(

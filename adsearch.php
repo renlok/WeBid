@@ -83,6 +83,13 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		}
 	}
 
+	if (!empty($_SESSION['advs']['groups']))
+	{
+		$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
+		$wher .= "(u.groups RLIKE :user_group) AND ";
+			$asparams[] = array(':user_group', '[[:<:]]' . $system->cleanvars($_SESSION['advs']['groups']) . '[[:>:]]', 'str');
+	}
+
 	if (isset($_SESSION['advs']['buyitnow']))
 	{
 		$wher .= "(au.buy_now > 0 AND (au.bn_only = 'y' OR au.bn_only = 'n' && (au.num_bids = 0 OR (au.reserve_price > 0 AND au.current_bid < au.reserve_price)))) AND ";
@@ -323,12 +330,23 @@ foreach ($countries as $key => $val)
 }
 $TPL_countries_list .= '</select>' . "\n";
 
+// user groups
+$TPL_user_group_list = '';
+$user_group = (isset($_SESSION['advs']['groups'])) ? $_SESSION['advs']['groups'] : '';
+$query = "SELECT id, group_name  FROM ". $DBPrefix . "groups";
+$db->direct_query($query);
+while ($row = $db->fetch())
+{
+    $TPL_user_group_list .= "\t" . '<option value="' . $row['id'] . '"' . (($row['id'] == $user_group) ? ' selected' : '') . '>' . $row['group_name'] . '</option>' . "\n";
+}
+
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'CATEGORY_LIST' => $TPL_categories_list,
 		'CURRENCY' => $system->SETTINGS['currency'],
 		'PAYMENTS_LIST' => $payment_methods,
-		'COUNTRY_LIST' => $TPL_countries_list
+		'COUNTRY_LIST' => $TPL_countries_list,
+		'USER_GROUP_LIST' => $TPL_user_group_list,
 		));
 
 include 'header.php';

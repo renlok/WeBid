@@ -1802,5 +1802,7 @@ $MSG['empty_line'] = '-----';
 $MSG['error_no_user_group'] = 'has not been assigned to any User Groups';
 $MSG['error_no_user_group_id'] = 'has been assigned to a Group ID which does not exist any more';
 $MSG['text_update_users_group'] = '[Please View and Update each user\'s details]';
-$MSG['warning'] = 'Warning';;
+$MSG['warning'] = 'Warning';
+
+$MSG['all_user_groups'] = 'All User Groups';
 ?>

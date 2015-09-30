@@ -896,7 +896,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentbrowsers`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "currentbrowsers` (
   `month` char(2) NOT NULL default '0',
   `year` varchar(4) NOT NULL default '0',
-  `browser` varchar(50) NOT NULL default '0',
+  `browser` varchar(255) NOT NULL default '0',
   `counter` int(11) NOT NULL default '0'
 ) ;";
 

@@ -39,14 +39,14 @@
 						<input maxlength="12" name="minprice" size="5"> {CURRENCY}{L_1005} <input maxlength="12" name="maxprice" size="5"> {CURRENCY}
 					</td>
 				</tr>
-				<tr valign=top>
+				<tr valign="top">
 					<td align="right">{L_2__0025}</td>
 					<td>
 						<INPUT TYPE="checkbox" name="buyitnow" value="y"> {L_30_0100}
 						<INPUT TYPE="checkbox" name="buyitnowonly" value="y"> {L_30_0101}
 					</td>
 				</tr>
-				<tr valign=top>
+				<tr valign="top">
 					<td align="right">{L_1006}</td>
 					<td>{PAYMENTS_LIST}</td>
 				</tr>
@@ -54,6 +54,15 @@
 					<td align="right">{L_125}</td>
 					<td>
 						<input type="text" name="seller">
+					</td>
+				</tr>
+				<tr>
+					<td align="right">{L_448}</td>
+					<td>
+						<select name="adv[groups]">
+						<option value="">{L_all_user_groups}</option>
+						{USER_GROUP_LIST}
+						</select>
 					</td>
 				</tr>
 				<tr>

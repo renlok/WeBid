@@ -62,8 +62,8 @@ function setvars()
 	$shipping_terms = (isset($_POST['shipping_terms'])) ? $_POST['shipping_terms'] : $_SESSION['SELL_shipping_terms'];
 	$payment = (isset($_POST['payment'])) ? $_POST['payment'] : $_SESSION['SELL_payment'];
 	$payment = (is_array($payment)) ? $payment : array();
-	$international = (isset($_POST['international'])) ? $_POST['international'] : false; 
-	$international = (isset($_SESSION['SELL_international']) && !isset($_POST['action'])) ? $_SESSION['SELL_international'] : $international; 
+	$international = (isset($_POST['international'])) ? $_POST['international'] : false;
+	$international = (isset($_SESSION['SELL_international']) && !isset($_POST['action'])) ? $_SESSION['SELL_international'] : $international;
 	$sellcat1 = $_SESSION['SELL_sellcat1'];
 	$_SESSION['SELL_sellcat2'] = (isset($_SESSION['SELL_sellcat2'])) ? $_SESSION['SELL_sellcat2'] : 0;
 	$sellcat2 = $_SESSION['SELL_sellcat2'];
@@ -186,7 +186,7 @@ function updateauction($type)
 	{
 		$extraquery = '';
 	}
-	
+
 	$query =
 		"UPDATE " . $DBPrefix . "auctions SET
 		title = :title,
@@ -447,42 +447,42 @@ function get_fee($minimum_bid, $just_fee = true)
 		$diff = 0; // difference from last payment
 		$fee_data['setup'] = 0; // shouldn't have to pay setup for an edit...
 		$diff = bcadd($diff, $past_fees['setup'], $system->SETTINGS['moneydecimals']);
-		if ($past_fees['bold'] == $fee_data['bolditem_fee'])
+		if (isset($fee_data['bolditem_fee']) && $past_fees['bold'] == $fee_data['bolditem_fee'])
 		{
 			$diff = bcadd($diff, $fee_data['bolditem_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['bolditem_fee'] = 0;
 		}
-		if ($past_fees['highlighted'] == $fee_data['hlitem_fee'])
+		if (isset($fee_data['hlitem_fee']) && $past_fees['highlighted'] == $fee_data['hlitem_fee'])
 		{
 			$diff = bcadd($diff, $fee_data['hlitem_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['hlitem_fee'] = 0;
 		}
-		if ($past_fees['subtitle'] == $fee_data['subtitle_fee'])
+		if (isset($fee_data['subtitle_fee']) && $past_fees['subtitle'] == $fee_data['subtitle_fee'])
 		{
 			$diff = bcadd($diff, $fee_data['subtitle_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['subtitle_fee'] = 0;
 		}
-		if ($past_fees['relist'] == $fee_data['relist_fee'])
+		if (isset($fee_data['relist_fee']) && $past_fees['relist'] == $fee_data['relist_fee'])
 		{
 			$diff = bcadd($diff, $fee_data['relist_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['relist_fee'] = 0;
 		}
-		if ($past_fees['reserve'] == $fee_data['rp_fee'])
+		if (isset($fee_data['rp_fee']) && $past_fees['reserve'] == $fee_data['rp_fee'])
 		{
 			$diff = bcadd($diff, $fee_data['rp_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['rp_fee'] = 0;
 		}
-		if ($past_fees['buynow'] == $fee_data['buyout_fee'])
+		if (isset($fee_data['buyout_fee']) && $past_fees['buynow'] == $fee_data['buyout_fee'])
 		{
 			$diff = bcadd($diff, $fee_data['buyout_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['buyout_fee'] = 0;
 		}
-		if ($past_fees['image'] == $fee_data['picture_fee'])
+		if (isset($fee_data['picture_fee']) && $past_fees['image'] == $fee_data['picture_fee'])
 		{
 			$diff = bcadd($diff, $fee_data['picture_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['picture_fee'] = 0;
 		}
-		if ($past_fees['extcat'] == $fee_data['excat_fee'])
+		if (isset($fee_data['excat_fee']) && $past_fees['extcat'] == $fee_data['excat_fee'])
 		{
 			$diff = bcadd($diff, $fee_data['excat_fee'], $system->SETTINGS['moneydecimals']);
 			$fee_data['excat_fee'] = 0;
@@ -527,7 +527,7 @@ function update_cat_counters($add, $category, $second_category = 0)
 		$db->query($query, $params);
 		$parent_node = $db->result();
 		$second_category_crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
-		
+
 		// merge the arrays
 		$crumbs = array_merge($category_crumbs, $second_category_crumbs);
 	}

@@ -61,9 +61,9 @@ $template->assign_vars(array(
 		'WINNER_ADDRESS' => $winner_address,
 		'AUCTION_TITLE' => strtoupper($title),
 		'AUCTION_ID' => $data['auc_id'],
-		'SHIPPING_METHOD' => "N/A", // NEEEDS FIXING
-		'PAYMENT_METHOD' => "N/A", // NEEEDS FIXING
-		'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate']),
+		'SHIPPING_METHOD' => "N/A", // TODO: NEEDS FIXING
+		'PAYMENT_METHOD' => "N/A", // TODO: NEEDS FIXING
+		'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate'] + $system->tdiff),
 		'PAYMENT' => $data['payment'],
 		'ITEM_QUANTITY' => $data['qty'],
 		'B_INVOICE' => true

@@ -1148,13 +1148,13 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
   `authnet_password` varchar(50) NOT NULL default '',
   `authnet_required` int(1) NOT NULL default '0',
   `authnet_active` int(1) NOT NULL default '0',
-  `worldpay_address` varchar(50) NOT NULL default '',
+  `worldpay_id` varchar(50) NOT NULL default '',
   `worldpay_required` int(1) NOT NULL default '0',
   `worldpay_active` int(1) NOT NULL default '0',
   `moneybookers_address` varchar(50) NOT NULL default '',
   `moneybookers_required` int(1) NOT NULL default '0',
   `moneybookers_active` int(1) NOT NULL default '0',
-  `toocheckout_address` varchar(50) NOT NULL default '',
+  `toocheckout_id` varchar(50) NOT NULL default '',
   `toocheckout_required` int(1) NOT NULL default '0',
   `toocheckout_active` int(1) NOT NULL default '0'
 ) ;";

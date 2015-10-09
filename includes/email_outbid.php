@@ -22,7 +22,6 @@ $emailer->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 
 		'C_NAME' => $OldWinner_name,
-		'C_BID' => $OldWinner_bid,
 
 		'N_BID' => $new_bid,
 

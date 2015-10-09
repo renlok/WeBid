@@ -126,10 +126,10 @@ if ($auction)
 			'AUCTION_TITLE' => strtoupper($title),
 			'ITEM_QUANTITY' => $data['qty'],
 
-			'UNIT_PRICE' => $system->print_money($unitexcl, true, false), // auction price
-			'UNIT_PRICE_WITH_TAX' => $system->print_money($unitpriceincl, true, false),// auction price & tax
-			'TOTAL' => $system->print_money($subtotal, true, false), // total invoice
-			'TOTAL_WITH_TAX' => $system->print_money($totalinc, true, false) // total invoice & tax
+			'UNIT_PRICE' => $system->print_money($unitexcl), // auction price
+			'UNIT_PRICE_WITH_TAX' => $system->print_money($unitpriceincl),// auction price & tax
+			'TOTAL' => $system->print_money($subtotal), // total invoice
+			'TOTAL_WITH_TAX' => $system->print_money($totalinc) // total invoice & tax
 			));
 }
 else
@@ -170,8 +170,8 @@ else
 
 	// fee specific details
 	$template->assign_vars(array(
-			'TOTAL' => $system->print_money($totals[1], true, false),
-			'TOTAL_WITH_TAX' => $system->print_money($totals[0], true, false)
+			'TOTAL' => $system->print_money($totals[1]),
+			'TOTAL_WITH_TAX' => $system->print_money($totals[0])
 			));
 }
 
@@ -189,9 +189,9 @@ $template->assign_vars(array(
 		'SALE_ID' => (($auction) ? 'AUC' : 'FEE') . $data['id'],
 		// tax start
 		'TAX' => $vat . '%',
-		'SHIPPING_COST' => $system->print_money($shipping_cost, true, false),
-		'VAT_TOTAL' => $system->print_money($totalvat, true, false),
-		'TOTAL_SUM' => $system->print_money($payvalue, true, false),
+		'SHIPPING_COST' => $system->print_money($shipping_cost),
+		'VAT_TOTAL' => $system->print_money($totalvat),
+		'TOTAL_SUM' => $system->print_money($payvalue),
 		// tax end
 		'YELLOW_LINE' => $system->SETTINGS['invoice_yellow_line'],
 		'THANKYOU' => $system->SETTINGS['invoice_thankyou'],

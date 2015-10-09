@@ -132,7 +132,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$user_message .= sprintf($MSG['1146'], count($_POST['relist']));
 		if ($relist_fee > 0)
 		{
-			$user_message .= sprintf($MSG['1148'], $system->print_money((count($_POST['relist']) * $relist_fee), true, false));
+			$user_message .= sprintf($MSG['1148'], $system->print_money(count($_POST['relist']) * $relist_fee);
 		}
 	}
 }

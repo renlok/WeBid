@@ -119,7 +119,7 @@ class user
 						'SITENAME' => $system->SETTINGS['sitename'],
 
 						'NAME' => $this->user_data['name'],
-						'BALANCE' => $system->print_money($this->user_data['balance'], true, false),
+						'BALANCE' => $system->print_money($this->user_data['balance']),
 						'OUTSTANDING' => $system->SETTINGS['siteurl'] . 'outstanding.php'
 						));
 				$emailer->email_uid = $this->user_data['id'];

@@ -72,9 +72,7 @@
 				<input type="file" name="{block.NAME}" size="25" maxlength="100">
 				<input type="hidden" name="MAX_FILE_SIZE" value="51200">
 	<!-- ELSEIF block.TYPE eq 'image' -->
-				<img src="{IMAGEURL}">{block.TAGLINE1}<br>
-	<!-- ELSEIF block.TYPE eq 'link' -->
-				<a href="{LINKURL}">{block.TAGLINE1}</a>
+				<img src="{IMAGEURL}">{block.TAGLINE1}
 	<!-- ELSE -->
 				{block.TYPE}
 	<!-- ENDIF -->

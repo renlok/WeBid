@@ -128,7 +128,8 @@ class PluploadHandler {
 				if (!in_array(strtolower(pathinfo($file_name, PATHINFO_EXTENSION)), $conf['allow_extensions'])) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-/*WHY THIS NO WORK
+				/* TODO: Fix this
+				WHY THIS NO WORK
 				$mime_types = $conf['allow_extensions'];
 				array_walk($mime_types, function(&$value, $key) { $value = 'image/' . $value; });
 				// check mime type
@@ -161,12 +162,13 @@ class PluploadHandler {
 					throw new Exception('', PLUPLOAD_SECURITY_ERR);
 				}
 
-				rename($tmp_path, $file_path);
+				$final_file_path = strtolower($file_path);
+				rename($tmp_path, strtolower($final_file_path));
 
 				return array(
-					'name' => $file_name,
-					'path' => $file_path,
-					'size' => filesize($file_path)
+					'name' => strtolower($file_name),
+					'path' => $final_file_path,
+					'size' => filesize($final_file_path)
 				);
 			} 
 

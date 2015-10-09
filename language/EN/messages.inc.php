@@ -1805,4 +1805,6 @@ $MSG['text_update_users_group'] = '[Please View and Update each user\'s details]
 $MSG['warning'] = 'Warning';
 
 $MSG['all_user_groups'] = 'All User Groups';
+
+$MSG['login_required_text'] = "Login required";
 ?>

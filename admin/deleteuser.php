@@ -123,8 +123,9 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 				$next_bid = $db->result('bid');
 				// set new highest bid
 				$params = array();
-				$extra = ", current_bid = :next_bid";
+				$extra = ", current_bid = :next_bid, current_bid_id = :current_bid_id";
 				$params[] = array(':next_bid', $next_bid, 'float');
+				$params[] = array(':current_bid_id', $row['id'], 'int');
 			}
 			$query = "UPDATE " . $DBPrefix . "auctions SET num_bids = num_bids - 1" . $extra . " WHERE id = :auc_id";
 			$params[] = array(':auc_id', $row['id'], 'int');

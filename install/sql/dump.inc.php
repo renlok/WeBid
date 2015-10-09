@@ -112,6 +112,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `international` char(1) default NULL,
   `ends` varchar(14) default NULL,
   `current_bid` double(16,2) default '0',
+  `current_bid_id` int(11) default '0',
   `closed` int(1) default '0',
   `photo_uploaded` tinyint(1) default NULL,
   `initial_quantity` int(11) default '1',

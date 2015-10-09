@@ -361,27 +361,54 @@ function alphanumeric($str)
 	return $str;
 }
 
-// this is a stupid way of doing things these need to be changed to bools
+// $auction_data sould come straight from the database
+function calculate_shipping_data($auction_data, $total = true)
+{
+	$shipping_cost = ($auction_data['shipping'] == 1) ? $auction_data['shipping_cost'] : 0;
+	$additional_shipping_cost = $auction_data['additional_shipping_cost'] * ($auction_data['qty'] - 1);
+	
+	if ($total)
+	{
+		return ($shipping_cost + $additional_shipping_cost);
+	}
+	else
+	{
+		$shipping_data = array();
+		$shipping_data['shipping_cost'] = $shipping_cost;
+		$shipping_data['additional_shipping_cost'] = $additional_shipping_cost;
+		$shipping_data['shipping_total'] = ($shipping_cost + $additional_shipping_cost);
+		return $shipping_data;
+	}
+}
+
+// TODO: this is a stupid way of doing things these need to be changed to bools
 function ynbool($str)
 {
 	$str = preg_replace("/[^yn]/", '', $str);
 	return $str;
 }
+
+
 // filters date format and date. Changes dd.mm.yyyy or dd/mm/yyyy to dd-mm-yyyy and validates date. 
 // Throws $ERR_700 if $dt is not a valid date or not 0. Returns valid and formatted date or 0.
-function filter_date($dt, $separator = "-") {
+function filter_date($dt, $separator = "-")
+{
    global $system, $ERR, $ERR_700;
     
-	if ($dt != 0) {
+	if ($dt != 0)
+	{
         $dt = preg_replace("([.]+)", $separator, $dt);
         $date = str_replace("/", $separator, $dt); 
-        if ($system->SETTINGS['datesformat'] == 'USA') {
+        if ($system->SETTINGS['datesformat'] == 'USA')
+		{
             list($m, $d, $y) = array_pad(explode($separator, $date, 3), 3, 0);
-		} else {
+		}
+		else
+		{
             list($d, $m, $y) = array_pad(explode($separator, $date, 3), 3, 0);
 		}
-        if (ctype_digit("$m$d$y") && checkdate($m, $d, $y)) {
-            
+        if (ctype_digit("$m$d$y") && checkdate($m, $d, $y))
+		{
 		    return $date;
 		}
 		$ERR = $ERR_700;

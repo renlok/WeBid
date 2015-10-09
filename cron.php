@@ -140,8 +140,8 @@ foreach ($auction_data as $Auction) // loop auctions
 
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners
-				(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped) VALUES
-				(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, 1, 0, :bf_paid, :ff_paid, 0)";
+				(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+				(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, 1, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
 			$params = array();
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$params[] = array(':seller_id', $Seller['id'], 'int');
@@ -150,6 +150,9 @@ foreach ($auction_data as $Auction) // loop auctions
 			$params[] = array(':current_bid', $Auction['current_bid'], 'float');
 			$params[] = array(':bf_paid', $bf_paid, 'int');
 			$params[] = array(':ff_paid', $ff_paid, 'int');
+			$params[] = array(':auc_title', $Auction['title'], 'str');
+			$params[] = array(':auc_shipping_cost', calculate_shipping_data($Auction), 'float');
+			$params[] = array(':auc_payment', $Auction['payment'], 'str');
 			$db->query($query, $params);
 		}
 		else if ($winner_present && $Auction['bn_only'] == 'y') 
@@ -263,8 +266,8 @@ foreach ($auction_data as $Auction) // loop auctions
 
 				// Add winner's data to "winners" table
 				$query = "INSERT INTO " . $DBPrefix . "winners
-						(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped) VALUES
-						(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, :items_got, 0, :bf_paid, :ff_paid, 0)";
+						(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+						(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, :items_got, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
 				$params = array();
 				$params[] = array(':auc_id', $Auction['id'], 'int');
 				$params[] = array(':seller_id', $Seller['id'], 'int');
@@ -274,6 +277,9 @@ foreach ($auction_data as $Auction) // loop auctions
 				$params[] = array(':current_bid', $row['maxbid'], 'float');
 				$params[] = array(':bf_paid', $bf_paid, 'int');
 				$params[] = array(':ff_paid', $ff_paid, 'int');
+				$params[] = array(':auc_title', $Auction['title'], 'str');
+				$params[] = array(':auc_shipping_cost', calculate_shipping_data($Auction), 'float');
+				$params[] = array(':auc_payment', $Auction['payment'], 'str');
 				$db->query($query, $params);
 			}
 			if ($items_count == 0)

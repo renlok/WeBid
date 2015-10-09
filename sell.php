@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'dates.inc.php';
 include $include_path . 'datacheck.inc.php';
 include $include_path . 'functions_sell.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';

@@ -16,7 +16,6 @@ define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
 include $include_path . 'functions_admin.php';
-include $include_path . 'dates.inc.php';
 include 'loggedin.inc.php';
 
 unset($ERR);

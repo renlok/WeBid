@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'dates.inc.php';
 include $main_path . 'language/' . $language . '/countries.inc.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 

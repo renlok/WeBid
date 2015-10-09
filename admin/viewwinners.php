@@ -15,7 +15,6 @@
 define('InAdmin', 1);
 $current_page = 'auctions';
 include '../common.php';
-include $include_path . 'dates.inc.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
 

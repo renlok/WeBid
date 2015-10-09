@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'dates.inc.php';
 
 if (isset($_GET['user_id']) && !empty($_GET['user_id']))
 {

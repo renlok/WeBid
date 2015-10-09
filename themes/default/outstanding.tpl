@@ -27,7 +27,7 @@
 <tr>
     <td style="text-align: center;">
     <!-- IF to_pay.B_NOTITLE -->
-    	{L_113} {to_pay.ID}
+    	{L_113} {to_pay.AUC_ID}
     <!-- ELSE -->
     	<a href="{to_pay.URL}" target="_blank">{to_pay.TITLE}</a>
     <!-- ENDIF -->

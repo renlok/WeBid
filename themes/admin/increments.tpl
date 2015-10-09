@@ -13,7 +13,6 @@
 <!-- ENDIF -->
 					<div class="plain-box">
                     	{L_135}
-                        <p>[&nbsp;<a href="javascript:window_open('{SITEURL}converter.php','incre',650,250,30,30);">{L_5010}</a>&nbsp;]</p>
                     </div>
                     <table width="98%" cellpadding="0" cellspacing="0" class="blank">
                         <tr>

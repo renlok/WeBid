@@ -69,8 +69,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 }
 
-$link = "javascript:window_open('" . $system->SETTINGS['siteurl'] . "converter.php','incre',650,250,30,30)";
-
 foreach ($CURRENCIES_SYMBOLS as $k => $v)
 {
 	if ($v == $system->SETTINGS['currency'])
@@ -78,7 +76,7 @@ foreach ($CURRENCIES_SYMBOLS as $k => $v)
 }
 
 loadblock($MSG['5008'], '', generateSelect('currency', $CURRENCIES));
-loadblock('', $MSG['5138'], 'link', 'currenciesconverter', '', array($MSG['5010']));
+loadblock('', $MSG['5138']);
 loadblock($MSG['544'], '', 'batchstacked', 'moneyformat', $system->SETTINGS['moneyformat'], array($MSG['545'], $MSG['546']));
 loadblock($MSG['548'], $MSG['547'], 'decimals', 'moneydecimals', $system->SETTINGS['moneydecimals']);
 loadblock($MSG['549'], '', 'batchstacked', 'moneysymbol', $system->SETTINGS['moneysymbol'], array($MSG['550'], $MSG['551']));
@@ -86,7 +84,6 @@ loadblock($MSG['549'], '', 'batchstacked', 'moneysymbol', $system->SETTINGS['mon
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'LINKURL' => $link,
 		'OPTIONHTML' => $html,
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['5004']

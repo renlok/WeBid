@@ -35,7 +35,7 @@ if ($emailmode == 'one')
             'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'], 
             'A_PICURL' => ($Auction['pict_url'] != '') ? $uploaded_path . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg', 
             'A_TITLE' => $Auction['title'], 
-            'A_CURRENTBID' => $system->print_money($Auction['buy_now'], true, false), 
+            'A_CURRENTBID' => $system->print_money($Auction['buy_now']), 
             'A_QTY_SOLD' => $qty_sold, 
             'A_QTY_LEFT' => $qty_left, 
             'A_QTY_INITIAL' => $qty_initial, 

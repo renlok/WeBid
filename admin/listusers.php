@@ -201,7 +201,7 @@ while ($row = $db->result())
 			'EMAIL' => $row['email'],
 			'NEWSLETTER' => ($row['nletter'] == 1) ? $MSG['030'] : $MSG['029'],
 			'SUSPENDED' => $row['suspended'],
-			'BALANCE' => $system->print_money($row['balance'], true, false),
+			'BALANCE' => $system->print_money($row['balance']),
 			'BALANCE_CLEAN' => $row['balance'],
 			'BG' => $bg
 			));

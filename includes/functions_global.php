@@ -221,18 +221,10 @@ class global_class
 		return true;
 	}
 
-	function print_money($str, $from_database = true, $link = true, $bold = true)
+	function print_money($str, $from_database = true, $bold = true)
 	{
 		$str = $this->print_money_nosymbol($str, $from_database);
-
-		if ($link)
-		{
-			$currency = '<a href="' . $this->SETTINGS['siteurl'] . 'converter.php?AMOUNT=' . $str . '" alt="converter" class="new-window">' . $this->SETTINGS['currency'] . '</a>';
-		}
-		else
-		{
-			$currency = $this->SETTINGS['currency'];
-		}
+		$currency = $this->SETTINGS['currency'];
 
 		if ($bold)
 		{

@@ -1202,7 +1202,6 @@ $MSG['5004'] = "Currencies Settings";
 $MSG['5005'] = "General Layout Settings";
 $MSG['5006'] = "Picture Gallery Settings Updated";
 $MSG['5008'] = "Site Currency";
-$MSG['5010'] = "Currencies Converter";
 $MSG['5011'] = "Home Page Featured Items";
 $MSG['5012'] = "This is the number of featured items to show in the Home Page (NOTE: ONLY <b>featured</b> items will be displayed).<br>0 (zero) is permitted.";
 $MSG['5013'] = "Last Created Items";

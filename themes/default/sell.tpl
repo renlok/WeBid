@@ -298,7 +298,7 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan">
 							<input type="text" size="10" name="minimum_bid" id="min_bid" value="{MIN_BID}" {BN_ONLY}>
-							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>)
+							{CURRENCY}
 						</td>
 					</tr>
 	<!-- IF B_CUSINC -->
@@ -313,7 +313,8 @@ $(document).ready(function(){
 							<input type="radio" name="increments" id="inc2" value="2" {INCREMENTS2}>
 							{L_615}
 							<input type="text" name="customincrement" id="custominc" size="10" value="{CUSTOM_INC}">
-							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>) </td>
+							{CURRENCY}
+						</td>
 					</tr>
 	<!-- ELSE -->
 					<input type="hidden" name="increments" id="inc1" value="1">
@@ -328,7 +329,8 @@ $(document).ready(function(){
 							<input type="radio" name="with_reserve" id="with_reserve_yes" value="yes" {RESERVE_Y}>
 							{L_030}
 							<input type="text" name="reserve_price" id="reserve_price" size="10" value="{RESERVE}" {BN_ONLY}>
-							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>) </td>
+							{CURRENCY}
+						</td>
 					</tr>
 	<!-- IF B_BN_ONLY -->
 					<tr class="dutchhide">
@@ -354,7 +356,8 @@ $(document).ready(function(){
 							<input type="radio" name="buy_now" id="bn_yes" value="yes" {BN_Y}>
 							{L_030}
 							<input type="text" name="buy_now_price" id="bn" size="10" value="{BN_PRICE}">
-							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>) </td>
+							{CURRENCY}
+						</td>
 					</tr>
 	<!-- ENDIF -->
     <!-- IF B_EDIT_STARTTIME -->
@@ -408,7 +411,7 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan">
 							<input type="text" size="10" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- ENDIF -->>
-							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>)
+							{CURRENCY}
 						</td>
 					</tr>
 					<tr class="additional_shipping_costhide">
@@ -417,7 +420,7 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan" style="width: 293px">
 							<input type="text" size="10" name="additional_shipping_cost" id="additional_shipping_cost" value="{ADDITIONAL_SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- ENDIF -->>
-							{CURRENCY}&nbsp;&nbsp;(<a href="converter.php" alt="converter" class="new-window">{L_5010}</a>)
+							{CURRENCY}
 						</td>
 					</tr>
 					<tr>

@@ -19,9 +19,6 @@ $do = alphanumeric($_GET['do']);
 
 switch ($do)
 {
-	case 'converter':
-		converter_call();
-		break;
 	case 'uploadaucimages':
 		upload_images();
 		break;

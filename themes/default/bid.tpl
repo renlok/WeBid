@@ -2,17 +2,17 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#qty").keyup(function(){
-		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) +" <a href={SITEURL}converter.php?AMOUNT="+(parseFloat(($("#qty").val())* ($("#bid").val()))).toFixed(2)+">{CURRENCY}</a>");
+		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) + ">{CURRENCY}</a>");
 	});
 	$("#qty").click(function(){
-		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) +" <a href={SITEURL}converter.php?AMOUNT="+(parseFloat(($("#qty").val())* ($("#bid").val()))).toFixed(2)+">{CURRENCY}</a>");
+		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) + ">{CURRENCY}</a>");
 	});
 	$("#bid").keyup(function(){
-		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) +" <a href={SITEURL}converter.php?AMOUNT="+(parseFloat(($("#qty").val())* ($("#bid").val()))).toFixed(2)+">{CURRENCY}</a>");
+		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) + ">{CURRENCY}</a>");
 	});
 	<!-- ELSE -->
 	$("#bid").keyup(function(){
-		$("#bidcost").html((parseFloat({QTY} * ($("#bid").val()))).toFixed(2) +" <a href={SITEURL}converter.php?AMOUNT="+(parseFloat({QTY} * ($("#bid").val()))).toFixed(2)+">{CURRENCY}</a>");
+		$("#bidcost").html((parseFloat({QTY} * ($("#bid").val()))).toFixed(2) + ">{CURRENCY}</a>");
 	});
 });
 </script>

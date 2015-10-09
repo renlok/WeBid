@@ -10,10 +10,6 @@ $(document).ready(function(){
 	$("#bid").keyup(function(){
 		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) + ">{CURRENCY}</a>");
 	});
-	<!-- ELSE -->
-	$("#bid").keyup(function(){
-		$("#bidcost").html((parseFloat({QTY} * ($("#bid").val()))).toFixed(2) + ">{CURRENCY}</a>");
-	});
 });
 </script>
 <!-- ENDIF -->

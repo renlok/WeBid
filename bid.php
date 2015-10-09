@@ -149,10 +149,12 @@ $query = "SELECT bid, bidder FROM " . $DBPrefix . "bids WHERE auction = :auc_id 
 $params = array();
 $params[] = array(':auc_id', $id, 'int');
 $db->query($query, $params);
+$last_highest_bid = array();
 if ($db->numrows() > 0)
 {
-	$high_bid = $db->result('bid');
-	$WINNING_BIDDER = $db->result('bidder');
+	$last_highest_bid = $db->result();
+	$high_bid = $last_highest_bid['bid'];
+	$WINNING_BIDDER = $last_highest_bid['bidder'];
 	$ARETHEREBIDS = ' | <a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $id . '&history=view#history">' . $MSG['105'] . '</a>';
 }
 else
@@ -525,18 +527,11 @@ if (isset($_POST['action']) && !isset($errmsg))
 			$db->query($query, $params);
 		}
 	}
-	// send emails where needed
-	$query = "SELECT bidder, bid FROM " . $DBPrefix . "bids WHERE auction = :auc_id ORDER BY bid DESC";
-	$params = array();
-	$params[] = array(':auc_id', $id, 'int');
-	$db->query($query, $params);
 
 	// if there was a previous bidder tell them they have been outbid
-	if ($db->numrows() > 1)
+	if (count($last_highest_bid) > 0)
 	{
-		$OldWinner_id = $db->result('bidder');
-		$new_bid = $next_bid;
-		$OldWinner_bid = $system->print_money($new_bid - $increment);
+		$OldWinner_id = $last_highest_bid['bidder'];
 
 		$query = "SELECT nick, name, email FROM " . $DBPrefix . "users WHERE id = :user_id";
 		$params = array();

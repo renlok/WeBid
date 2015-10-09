@@ -7,7 +7,7 @@
 	</tr>
 	<tr>
 		<td colspan="3" height="50" style="font-size: 12px; padding-right: 6px;">
-			Your bid of {C_BID} is no longer the leading bid on the following:  
+			You have been outbid on the following:  
 	  </td>
 	</tr>
 	<tr>

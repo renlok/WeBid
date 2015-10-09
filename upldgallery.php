@@ -91,11 +91,17 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img'])
 {
 	if (isset($_SESSION['SELL_pict_url_temp']) && isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && $_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) 
 	{
-		if (isset($_SESSION['SELL_pict_url']) && !empty($_SESSION['SELL_pict_url']) ) unlink($upload_path . session_id() . '/' . $_SESSION['SELL_pict_url']);
-		  unset($_SESSION['SELL_pict_url']);
-		  $default_deleted = true; // a selected as default has just been deleted.
-	} else {
-		if(isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && is_writable($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])])){
+		if (isset($_SESSION['SELL_pict_url']) && !empty($_SESSION['SELL_pict_url']) )
+		{
+			unlink($upload_path . session_id() . '/' . $_SESSION['SELL_pict_url']);
+		}
+		unset($_SESSION['SELL_pict_url']);
+		$default_deleted = true; // a selected as default has just been deleted.
+	}
+	else
+	{
+		if(isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && is_writable($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]))
+		{
             unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]); 
         }
 	}
@@ -145,64 +151,6 @@ if (!empty($_POST['creategallery']))
 {
 	echo '<script type="text/javascript">window.close()</script>';
 	exit;
-}
-
-// PROCESS UPLOADED FILE
-if (isset($_POST['uploadpicture']) && $_POST['uploadpicture'] == $MSG['681'])
-{
-	if (!empty($_FILES['userfile']['tmp_name']) && $_FILES['userfile']['tmp_name'] != 'none')
-	{
-		if (!isset($_SESSION['UPLOADED_PICTURES']) || !is_array($_SESSION['UPLOADED_PICTURES'])) $_SESSION['UPLOADED_PICTURES'] = array();
-		if (!isset($_SESSION['UPLOADED_PICTURES_SIZE']) || !is_array($_SESSION['UPLOADED_PICTURES_SIZE'])) $_SESSION['UPLOADED_PICTURES_SIZE'] = array();
-		$filename = $_FILES['userfile']['name'];
-		$nameparts = explode('.', $filename);
-		$ext_key = count($nameparts) - 1;
-		$file_ext = strtolower($nameparts[$ext_key]);
-		$file_types = array('gif', 'jpg', 'jpeg', 'png');
-
-		// clean the name
-		unset($nameparts[$ext_key]);
-		$newname = implode('_', $nameparts);
-
-		$newname = preg_replace('/[^a-zA-Z0-9_]/', '', $newname);
-		$newname .= '.' . $file_ext;
-
-		if ($_FILES['userfile']['size'] > $system->SETTINGS['maxuploadsize'])
-		{
-			$ERR = $ERR_709 . '&nbsp;' . ($system->SETTINGS['maxuploadsize'] / 1024) . '&nbsp;' . $MSG['672'];
-		}
-		elseif (!in_array($file_ext, $file_types))
-		{
-			$ERR = $ERR_710 . ' (' . $file_ext . ')';
-		}
-		elseif (in_array($newname, $_SESSION['UPLOADED_PICTURES']))
-		{
-			$ERR = $MSG['2__0054'] . ' (' . $_FILES['userfile']['name'] . ')';
-		}
-		else
-		{
-			// Create a TMP directory for this session (if not already created)
-			if (!file_exists($upload_path . session_id()))
-			{
-				umask(0);
-				mkdir($upload_path . session_id(), 0777);
-				chmod($upload_path . session_id(), 0777); //incase mkdir fails
-			}
-			// Move uploaded file into TMP directory & rename
-			if ($system->move_file($_FILES['userfile']['tmp_name'], $upload_path . session_id() . '/' . $newname))
-			{
-				// Populate arrays
-				array_push($_SESSION['UPLOADED_PICTURES'], $newname);
-				$fname = $upload_path . session_id() . '/' . $newname;
-				array_push($_SESSION['UPLOADED_PICTURES_SIZE'], filesize($fname));
-				if (count($_SESSION['UPLOADED_PICTURES']) == 1)
-				{
-					$cropdefault = true;
-					$image = $newname;
-				}
-			}
-		}
-	}
 }
 
 if ($cropdefault)

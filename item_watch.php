@@ -14,7 +14,6 @@
 
 include 'common.php';
 include $include_path . 'browseitems.inc.php';
-include $include_path . 'dates.inc.php';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())

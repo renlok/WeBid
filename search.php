@@ -14,7 +14,6 @@
 
 include 'common.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
-include $include_path . 'dates.inc.php';
 
 $NOW = time();
 

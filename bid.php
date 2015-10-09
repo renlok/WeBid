@@ -220,11 +220,6 @@ if (isset($_POST['action']) && !isset($errmsg))
 				{
 					$send_email = true;
 				}
-				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 1 WHERE id = :auc_id";
-				$params = array();
-				$params[] = array(':bid', $bid, 'float');
-				$params[] = array(':auc_id', $id, 'int');
-				$db->query($query, $params);
 				// Also update bids table
 				$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
 				$params = array();
@@ -233,6 +228,13 @@ if (isset($_POST['action']) && !isset($errmsg))
 				$params[] = array(':bidder_id', $bidder_id, 'int');
 				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':qty', $qty, 'int');
+				$db->query($query, $params);
+				$current_bid_id = $db->lastInsertId();
+				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 1 WHERE id = :auc_id";
+				$params = array();
+				$params[] = array(':bid', $bid, 'float');
+				$params[] = array(':current_bid_id', $current_bid_id, 'int');
+				$params[] = array(':auc_id', $id, 'int');
 				$db->query($query, $params);
 				extend_auction($item_id, $c);
 				$bidding_ended = true;
@@ -269,11 +271,6 @@ if (isset($_POST['action']) && !isset($errmsg))
 
 					if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve)
 					{
-						$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :reserve, num_bids = num_bids + 1 WHERE id = :auc_id";
-						$params = array();
-						$params[] = array(':reserve', $reserve, 'float');
-						$params[] = array(':auc_id', $id, 'int');
-						$db->query($query, $params);
 						// Also update bids table
 						$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :reserve, :time, :qty)";
 						$params = array();
@@ -282,6 +279,13 @@ if (isset($_POST['action']) && !isset($errmsg))
 						$params[] = array(':bidder_id', $bidder_id, 'int');
 						$params[] = array(':time', $NOW, 'int');
 						$params[] = array(':qty', $qty, 'int');
+						$db->query($query, $params);
+						$current_bid_id = $db->lastInsertId();
+						$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :reserve, current_bid_id = :current_bid_id, num_bids = num_bids + 1 WHERE id = :auc_id";
+						$params = array();
+						$params[] = array(':reserve', $reserve, 'float');
+						$params[] = array(':current_bid_id', $current_bid_id, 'int');
+						$params[] = array(':auc_id', $id, 'int');
 						$db->query($query, $params);
 					}
 					extend_auction($item_id, $c);
@@ -308,12 +312,6 @@ if (isset($_POST['action']) && !isset($errmsg))
 				{
 					$next_bid = $reserve;
 				}
-				// Only updates current bid if it is a new bidder, not the current one
-				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 1 WHERE id = :auc_id";
-				$params = array();
-				$params[] = array(':auc_id', $id, 'int');
-				$params[] = array(':bid', $next_bid, 'float');
-				$db->query($query, $params);
 				// Also update bids table
 				$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
 				$params = array();
@@ -322,6 +320,14 @@ if (isset($_POST['action']) && !isset($errmsg))
 				$params[] = array(':bid', $next_bid, 'float');
 				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':qty', $qty, 'int');
+				$db->query($query, $params);
+				$current_bid_id = $db->lastInsertId();
+				// Only updates current bid if it is a new bidder, not the current one
+				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 1 WHERE id = :auc_id";
+				$params = array();
+				$params[] = array(':auc_id', $id, 'int');
+				$params[] = array(':current_bid_id', $current_bid_id, 'int');
+				$params[] = array(':bid', $next_bid, 'float');
 				$db->query($query, $params);
 				$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 1)";
 				$db->direct_query($query);
@@ -381,13 +387,15 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
+					$current_bid_id = $db->lastInsertId();
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + (1 + :fakebids))";
 					$params = array();
 					$params[] = array(':fakebids', $fakebids, 'int');
 					$db->query($query, $params);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = (num_bids + 1 + :fakebids) WHERE id = :auc_id";
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = (num_bids + 1 + :fakebids) WHERE id = :auc_id";
 					$params = array();
 					$params[] = array(':bid', $next_bid, 'float');
+					$params[] = array(':current_bid_id', $current_bid_id, 'int');
 					$params[] = array(':fakebids', $fakebids, 'int');
 					$params[] = array(':auc_id', $id, 'int');
 					$db->query($query, $params);
@@ -414,11 +422,13 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
+					$current_bid_id = $db->lastInsertId();
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 2)";
 					$db->direct_query($query);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 2 WHERE id = :auc_id";
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 2 WHERE id = :auc_id";
 					$params = array();
 					$params[] = array(':auc_id', $id, 'int');
+					$params[] = array(':current_bid_id', $current_bid_id, 'int');
 					$params[] = array(':bid', $cbid, 'float');
 					$db->query($query, $params);
 					if ($customincrement == 0)
@@ -470,11 +480,13 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
+					$current_bid_id = $db->lastInsertId();
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 2)";
 					$db->direct_query($query);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 2 WHERE id = :auc_id";
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 2 WHERE id = :auc_id";
 					$params = array();
 					$params[] = array(':auc_id', $id, 'int');
+					$params[] = array(':current_bid_id', $current_bid_id, 'int');
 					$params[] = array(':bid', $cbid, 'float');
 					$db->query($query, $params);
 					if ($customincrement == 0)
@@ -518,11 +530,13 @@ if (isset($_POST['action']) && !isset($errmsg))
 			$params[] = array(':time', $NOW, 'int');
 			$params[] = array(':qty', $qty, 'int');
 			$db->query($query, $params);
+			$current_bid_id = $db->lastInsertId();
 			$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 1)";
 			$db->direct_query($query);
-			$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 1 WHERE id = :auc_id";
+			$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 1 WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
+			$params[] = array(':current_bid_id', $current_bid_id, 'int');
 			$params[] = array(':bid', $bid, 'float');
 			$db->query($query, $params);
 		}

@@ -172,6 +172,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		$params[] = array(':time', $NOW, 'int');
 		$params[] = array(':qty', $qty, 'int');
 		$db->query($query, $params);
+		$current_bid_id = $db->lastInsertId();
 		if (defined('TrackUserIPs'))
 		{
 			// log auction BIN IP
@@ -179,10 +180,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		}
 		if ($Auction['bn_only'] != 'y')
 		{
-			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, bn_sale = 1, num_bids = num_bids + 1, current_bid = :buy_now WHERE id = :auc_id";
+			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, bn_sale = 1, num_bids = num_bids + 1, current_bid = :buy_now, current_bid_id = :current_bid_id WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
 			$params[] = array(':buy_now', $Auction['buy_now'], 'float');
+			$params[] = array(':current_bid_id', $current_bid_id, 'int');
 			$params[] = array(':time', $NOW, 'int');
 			$db->query($query, $params);
 			$query = "UPDATE " . $DBPrefix . "counters SET bids = bids + 1";
@@ -203,11 +205,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			// force close if all items sold
 			if (($Auction['quantity'] - $qty) == 0)
 			{
-				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, bn_sale = 1, current_bid = :current_bid, sold = 'y', num_bids = num_bids + 1, closed = 1 WHERE id = :auc_id";
+				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, bn_sale = 1, current_bid = :current_bid, current_bid_id = :current_bid_id, sold = 'y', num_bids = num_bids + 1, closed = 1 WHERE id = :auc_id";
 				$params = array();
 				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':auc_id', $id, 'int');
 				$params[] = array(':current_bid', $Auction['buy_now'], 'int');
+				$params[] = array(':current_bid_id', $current_bid_id, 'int');
 				$db->query($query, $params);
 			}
 			// do stuff that is important

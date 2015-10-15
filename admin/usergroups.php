@@ -139,7 +139,7 @@ if (isset($_POST['action']))
 $groups_array = array();
 $groups_unknown = array();
 $query = "SELECT groups, id, nick FROM ". $DBPrefix . "users";
-$db->direct_query();
+$db->direct_query($query);
 
 while ($row = $db->fetch())
 {

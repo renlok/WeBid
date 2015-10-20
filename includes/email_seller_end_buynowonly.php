@@ -49,4 +49,9 @@ if ($emailmode == 'one')
     $emailer->email_uid = $Seller['id']; 
     $subject = $system->SETTINGS['sitename'] . ' Your auction ' . $Auction['title'] .' has ended'; 
     $emailer->email_sender($Seller['email'], 'email_seller_end_buynowonly.inc.php', $subject); 
+<<<<<<< HEAD
 }
+=======
+} 
+?> 
+>>>>>>> renlok/master

@@ -165,4 +165,3 @@ if (!isset($_POST['action']))
 
 	header('location: sell.php?mode=recall');
 }
-?>

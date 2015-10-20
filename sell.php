@@ -745,5 +745,3 @@ include 'footer.php';
 
 //if ($_SESSION['action'] != 3)
 	makesessions();
-
-?>

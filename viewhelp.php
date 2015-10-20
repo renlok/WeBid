@@ -87,6 +87,3 @@ else
 	header('location: help.php');
 }
  include 'footer.php';
-
-
-?>

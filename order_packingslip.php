@@ -73,4 +73,3 @@ $template->set_filenames(array(
 		'body' => 'order_packingslip.tpl'
 		));
 $template->display('body');
-?>

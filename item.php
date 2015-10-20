@@ -615,4 +615,3 @@ $template->set_filenames(array(
 $template->display('body');
 include 'footer.php';
 unset($_SESSION['browse_id']);
-?>

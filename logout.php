@@ -31,4 +31,3 @@ if (isset($_COOKIE['WEBID_RM_ID']))
 
 header('location: index.php');
 exit;
-?>

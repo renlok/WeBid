@@ -363,4 +363,3 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	$template->display('body');
 	include 'footer.php';
 }
-?>

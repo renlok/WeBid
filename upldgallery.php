@@ -250,4 +250,3 @@ $template->set_filenames(array(
 		'body' => 'upldgallery.tpl'
 		));
 $template->display('body');
-?>

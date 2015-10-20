@@ -296,4 +296,3 @@ function CheckBidData()
 	
 	return 0;
 }
-?>

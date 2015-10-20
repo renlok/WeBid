@@ -49,4 +49,3 @@ function WeBidErrorHandler($errno, $errstr, $errfile, $errline)
 		exit(1);
 	return true;
 }
-?>

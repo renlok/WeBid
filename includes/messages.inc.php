@@ -74,4 +74,3 @@ function get_lang_img($string)
 	global $system, $language;
 	return $system->SETTINGS['siteurl'] . 'language/' . $language . '/images/' . $string;
 }
-?>

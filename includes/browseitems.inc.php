@@ -144,4 +144,3 @@ function build_items($row)
 
 	return $row;
 }
-?>

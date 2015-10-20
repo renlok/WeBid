@@ -143,4 +143,3 @@ function ArrangeDateNoCorrection($DATE)
 	}
 	return $return;
 }
-?>

@@ -243,4 +243,3 @@ if ($STATSSETTINGS['activate'] == 'y')
 		}
 	}
 }
-?>

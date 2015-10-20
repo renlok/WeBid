@@ -34,4 +34,3 @@ $emailer->assign_vars(array(
 		));
 $emailer->email_uid = $Winner['id'];
 $emailer->email_sender($Winner['email'], 'endauction_youwin_nodutch.inc.php', $system->SETTINGS['sitename'] . $MSG['909'] . ': ' . $item_title);
-?>

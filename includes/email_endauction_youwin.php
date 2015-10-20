@@ -45,4 +45,3 @@ $emailer->assign_vars(array(
 		));
 $emailer->email_uid = $Winner['id'];
 $emailer->email_sender($Winner['email'], 'endauction_youwin.inc.php', $MSG['909']);
-?>

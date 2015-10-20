@@ -32,4 +32,3 @@ $emailer->assign_vars(array(
 		));
 $emailer->email_uid = $OldWinner_id;
 $emailer->email_sender($OldWinner_email, 'no_longer_winner.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['906'] . ': ' . $item_title);
-?>

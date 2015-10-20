@@ -36,4 +36,3 @@ if ($user->user_data['startemailmode'] == 'yes')
 	$subject = $system->SETTINGS['sitename'] . ' ' . $MSG['099'] . ': ' . $title . ' (' . $auction_id . ')';
 	$emailer->email_sender($user->user_data['email'], 'auctionmail.inc.php', $subject);
 }
-?>

@@ -35,4 +35,3 @@ $emailer->assign_vars(array(
 		));
 $emailer->email_uid = $TPL_id_hidden;
 $emailer->email_sender(array($TPL_email_hidden, $system->SETTINGS['adminmail']), 'user_needapproval.inc.php', $system->SETTINGS['sitename']. ' '.$MSG['098']);
-?>

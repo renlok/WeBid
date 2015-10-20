@@ -24,4 +24,3 @@ $emailer->assign_vars(array(
 		));
 $emailer->email_uid = $TPL_id_hidden;
 $emailer->email_sender($TPL_email_hidden, 'usermail.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['098']);
-?>

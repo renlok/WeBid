@@ -527,4 +527,3 @@ class email_handler
 		$this->sendmail();
 	}
 }
-?>

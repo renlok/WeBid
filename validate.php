@@ -52,5 +52,3 @@ if (isset($_GET['toocheckout']))
 {
 	$fees->toocheckout_validate();
 }
-
-?>

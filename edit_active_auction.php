@@ -175,4 +175,3 @@ if (!isset($_POST['action'])) // already closed auctions
 		header('location: index.php');
 	}
 }
-?>

@@ -58,4 +58,3 @@ function check_file($file)
 	}
 	return true;
 }
-?>

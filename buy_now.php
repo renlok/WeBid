@@ -391,4 +391,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 require('footer.php');
-?>

@@ -20,4 +20,3 @@ $template->assign_vars(array(
 	'UCP_ERROR' => (isset($ERR)) ? $ERR : '',
 	'UCP_TITLE' => (isset($TMP_usmenutitle)) ? $TMP_usmenutitle : ''
 ));
-?>

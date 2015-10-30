@@ -166,4 +166,3 @@ $template->set_filenames(array(
 		'body' => 'rss.tpl'
 		));
 $template->display('body');
-?>

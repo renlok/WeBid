@@ -92,4 +92,3 @@ function rebuild_html_file($table)
 	fputs($handle, $output);
 	fclose($handle);
 }
-?>

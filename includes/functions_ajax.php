@@ -124,4 +124,3 @@ function upload_images()
 		}
 	}
 }
-?>

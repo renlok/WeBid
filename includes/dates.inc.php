@@ -76,6 +76,7 @@ function FormatTimeStamp($DATE, $spacer = '-')
 function FormatTimeLeft($diff)
 {
 	global $MSG;
+<<<<<<< HEAD
 
 	$days_difference = floor($diff / 86400);
 	$difference = $diff % 86400;
@@ -86,6 +87,18 @@ function FormatTimeLeft($diff)
 	$secshow = false;
 	$timeleft = '';
 
+=======
+
+	$days_difference = floor($diff / 86400);
+	$difference = $diff % 86400;
+	$hours_difference = floor($difference / 3600);
+	$difference = $difference % 3600;
+	$minutes_difference = floor($difference / 60);
+	$seconds_difference = $difference % 60;
+	$secshow = false;
+	$timeleft = '';
+
+>>>>>>> renlok/master
 	if ($days_difference > 0)
 	{
 		$timeleft = $days_difference . 'd ';
@@ -97,6 +110,7 @@ function FormatTimeLeft($diff)
 	else
 	{
 		$secshow = true;
+<<<<<<< HEAD
 	}
 	if ($diff > 60)
 	{
@@ -114,6 +128,25 @@ function FormatTimeLeft($diff)
 	{
 		$timeleft = $MSG['911'];
 	}
+=======
+	}
+	if ($diff > 60)
+	{
+		$timeleft .= $minutes_difference . 'm ';
+	}
+	elseif ($diff > 60 && !$seconds)
+	{
+		$timeleft = '<1m';
+	}
+	if ($secshow)
+	{
+		$timeleft .= $seconds_difference . 's ';
+	}
+	if ($diff < 0)
+	{
+		$timeleft = $MSG['911'];
+	}
+>>>>>>> renlok/master
 	if (($diff * 60) < 15)
 	{
 		$timeleft = '<span style="color:#FF0000;">' . $timeleft . '</span>';
@@ -136,6 +169,15 @@ function ArrangeDateNoCorrection($DATE)
 	if ($system->SETTINGS['datesformat'] == 'USA')
 	{
 		$return = $MSG[$mth] . ' ' . date('d, Y - H:i', $DATE);
+<<<<<<< HEAD
+	}
+	else
+	{
+		$return = date('d', $DATE) . ' ' . $MSG[$mth] . ', ' . date('Y - H:i', $DATE);
+	}
+	return $return;
+}
+=======
 	}
 	else
 	{
@@ -144,3 +186,4 @@ function ArrangeDateNoCorrection($DATE)
 	return $return;
 }
 ?>
+>>>>>>> renlok/master

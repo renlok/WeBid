@@ -65,4 +65,3 @@ $template->set_filenames(array(
 		'header' => 'global_header.tpl'
 		));
 $template->display('header');
-?>

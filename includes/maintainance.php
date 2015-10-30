@@ -22,4 +22,3 @@ if (basename($_SERVER['PHP_SELF']) != 'user_login.php')
 		exit;
 	}
 }
-?>

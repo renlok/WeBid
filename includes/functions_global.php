@@ -415,4 +415,3 @@ function filter_date($dt, $separator = "-")
     }
 	return 0;
 }
-?>

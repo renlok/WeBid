@@ -270,4 +270,3 @@ $template->display('body');
 include 'footer.php';
 
 unset($_SESSION['loginerror']);
-?>

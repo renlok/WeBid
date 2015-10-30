@@ -157,4 +157,3 @@ function invalidinvoice($packingslip = false)
 	$template->display('body');
 	exit;
 }
-?>

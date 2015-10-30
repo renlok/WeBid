@@ -172,4 +172,3 @@ function build_keyword_sql($array)
 	$query .= ')';
 	return $query;
 }
-?>

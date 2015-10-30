@@ -176,4 +176,3 @@ $template->set_filenames(array(
 $template->display('body');
 include 'footer.php';
 unset($_SESSION['TMP_MSG']);
-?>

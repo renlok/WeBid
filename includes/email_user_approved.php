@@ -23,4 +23,3 @@ $emailer->assign_vars(array(
 		));
 $emailer->userlang = $language;
 $emailer->email_sender(array($USER['email'], $system->SETTINGS['adminmail']), 'user_approved.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['095']);
-?>

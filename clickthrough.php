@@ -30,4 +30,3 @@ $db->query($query, $params);
 // Redirect
 header('location: ' . $URL);
 exit;
-?>

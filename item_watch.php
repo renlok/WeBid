@@ -81,10 +81,8 @@ if ($items != '' && $items != null)
 	{
 		$itemids .= ',' . $item[$j];
 	}
-	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id IN (:itemids)";
-	$params = array();
-	$params[] = array(':itemids', $itemids, 'str');
-	$db->query($query, $params);
+	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id IN (" . $itemids . ")";
+	$db->direct_query($query);
 	$total = $db->numrows();
 	browseItems($query, $params, '', '', $total, 'item_watch.php');
 }
@@ -97,4 +95,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

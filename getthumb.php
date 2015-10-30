@@ -170,4 +170,3 @@ else
 	header('Content-type: ' . $img['mime']);
 	$funcall($ou);
 }
-?>

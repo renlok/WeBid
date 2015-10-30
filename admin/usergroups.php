@@ -139,7 +139,11 @@ if (isset($_POST['action']))
 $groups_array = array();
 $groups_unknown = array();
 $query = "SELECT groups, id, nick FROM ". $DBPrefix . "users";
+<<<<<<< HEAD
+$db->direct_query($query);
+=======
 $db->direct_query();
+>>>>>>> renlok/master
 
 while ($row = $db->fetch())
 {

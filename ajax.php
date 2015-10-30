@@ -26,4 +26,3 @@ switch ($do)
 		getupldtable();
 		break;
 }
-?>

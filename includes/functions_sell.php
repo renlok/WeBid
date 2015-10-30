@@ -590,4 +590,3 @@ function check_gateway($gateway)
 		return true;
 	return false;
 }
-?>

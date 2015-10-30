@@ -75,7 +75,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 					{
 						$secTPL_feedback = $system->cleanvars($_POST['TPL_feedback']);
 						$uid = ($ws == 'w') ? $_REQUEST['sid'] : $_REQUEST['wid'];
-						$sql = "UPDATE " . $DBPrefix . "users SET rate_sum = rate_sum + :rate_sum, rate_num = rate_num + 1 WHERE id = :user_id";
+						$query = "UPDATE " . $DBPrefix . "users SET rate_sum = rate_sum + :rate_sum, rate_num = rate_num + 1 WHERE id = :user_id";
 						$params = array();
 						$params[] = array(':rate_sum', $_POST['TPL_rate'], 'int');
 						$params[] = array(':user_id', $uid, 'int');
@@ -85,7 +85,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 						{
 							$secTPL_feedback = $system->filter($secTPL_feedback);
 						}
-						$sql = "INSERT INTO " . $DBPrefix . "feedbacks (rated_user_id, rater_user_nick, feedback, rate, feedbackdate, auction_id) VALUES
+						$query = "INSERT INTO " . $DBPrefix . "feedbacks (rated_user_id, rater_user_nick, feedback, rate, feedbackdate, auction_id) VALUES
 							(:user_id, :user_nick, :feedback, :rate, :time, :auc_id)";
 						$params = array();
 						$params[] = array(':user_id', $uid, 'int');
@@ -103,7 +103,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 						{
 							$sqlset = "feedback_win = 1";
 						}
-						$sql = "UPDATE " . $DBPrefix . "winners SET $sqlset
+						$query = "UPDATE " . $DBPrefix . "winners SET $sqlset
 								WHERE auction = :auc_id AND winner = :winner AND seller = :seller";
 						$params = array();
 						$params[] = array(':auc_id', $auction_id, 'int');
@@ -228,7 +228,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			// get number of pages
 			$pages = ceil($total / $system->SETTINGS['perpage']);
 
-			$sql = "SELECT f.*, a.title, u.id As uId, u.rate_num, u.rate_sum
+			$query = "SELECT f.*, a.title, u.id As uId, u.rate_num, u.rate_sum
 				FROM " . $DBPrefix . "feedbacks f
 				LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.nick = f.rater_user_nick)
@@ -332,7 +332,7 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 
 if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 {
-	$sql = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $_REQUEST['id'], 'int');				
 	$db->query($query, $params);
@@ -363,4 +363,3 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	$template->display('body');
 	include 'footer.php';
 }
-?>

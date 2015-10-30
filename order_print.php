@@ -204,4 +204,3 @@ $template->set_filenames(array(
 		'body' => 'order_invoice.tpl'
 		));
 $template->display('body');
-?>

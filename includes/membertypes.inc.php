@@ -27,4 +27,3 @@ $membertypes = array(
 '21' => array(
 'id' => '21', 'feedbacks' => '999999', 'membertype' => '50000', 'icon' => 'starFV.gif')
 );
-?>

@@ -240,4 +240,3 @@ class db_handle
 		$this->pdo = null;
 	}
 }
-?>

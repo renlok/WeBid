@@ -104,4 +104,3 @@ if(isset($_SESSION['REDIRECT_AFTER_LOGIN']) && !defined('AtLogin'))
 }
 
 $template->set_template();
-?>

@@ -27,4 +27,3 @@ $emailer->assign_vars(array(
 		));
 $emailer->email_uid = $row['id'];
 $emailer->email_sender($row['email'], 'endauction_cumulative.inc.php', $MSG['25_0199']);
-?>

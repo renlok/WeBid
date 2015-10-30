@@ -25,4 +25,3 @@ $template->set_filenames(array(
 		'body' => 'preview_gallery.tpl'
 		));
 $template->display('body');
-?>

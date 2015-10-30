@@ -691,5 +691,3 @@ if ((time() - $purgecachetime) > 86400)
 
 // finish cron script
 printLog ("=========================== ENDING CRON: " . date('F d, Y H:i:s') . "\n");
-
-?>

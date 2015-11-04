@@ -51,9 +51,4 @@ if ($emailmode == 'one')
 	$emailer->email_uid = $Seller['id'];
 	$subject            = $system->SETTINGS['sitename'] . ' Some items have been sold in ' . $Auction['title'];
 	$emailer->email_sender($Seller['email'], 'email_seller_partial_winner.inc.php', $subject);
-<<<<<<< HEAD
 }
-=======
-}
-?> 
->>>>>>> renlok/master

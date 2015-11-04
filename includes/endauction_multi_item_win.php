@@ -33,13 +33,5 @@ $emailer->assign_vars(array(
         'SITE_URL' => $system->SETTINGS['siteurl'], 
         'SITENAME' => $system->SETTINGS['sitename'] 
         )); 
-$emailer->email_uid = $Winner['id']; 
-<<<<<<< HEAD
-$emailer->email_sender($Winner['email'], 'endauction_multi_item_win.inc.php', $system->SETTINGS['sitename'] .  'You Won ' . $item_title); 
-=======
-$emailer->email_sender($Winner['email'], 'endauction_multi_item_win.inc.php', $system->SETTINGS['sitename'] .  'You Won ' . $item_title); 
-
-
-
-?>
->>>>>>> renlok/master
+$emailer->email_uid = $Winner['id'];
+$emailer->email_sender($Winner['email'], 'endauction_multi_item_win.inc.php', $system->SETTINGS['sitename'] .  'You Won ' . $item_title);

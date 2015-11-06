@@ -928,7 +928,7 @@ $MSG['863'] = '<h2>Not a Member yet?</h2>
         <p> Becoming a member enables you to:</p>
         <ul>
             <li>Sell anything</li>
-            <li>Be notified when an item your looking for is listed</li>
+            <li>Be notified when an item you are looking for is listed</li>
             <li>Add items to your watchlist</li>
             <li>Bid on items</li>
             <li>plus a whole lot more</li>

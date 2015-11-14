@@ -48,9 +48,4 @@ function WeBidErrorHandler($errno, $errstr, $errfile, $errline)
 	if ($errno == E_USER_ERROR)
 		exit(1);
 	return true;
-<<<<<<< HEAD
 }
-=======
-}
-?>
->>>>>>> renlok/master

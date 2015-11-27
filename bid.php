@@ -350,12 +350,29 @@ if (isset($_POST['action']) && !isset($errmsg))
 						$next_bid = $bid;
 					}
 
-					$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (:auc_id, :bidder_id, :bid)";
+					$query = "SELECT userid, itemid FROM " . $DBPrefix . "proxybid WHERE itemid = :item_id AND userid = :bidder_id";
 					$params = array();
-					$params[] = array(':auc_id', $id, 'int');
+					$params[] = array(':item_id', $id, 'int');
 					$params[] = array(':bidder_id', $bidder_id, 'int');
-					$params[] = array(':bid', $bid, 'float');
 					$db->query($query, $params);
+					if ($db->numrows() == 0)
+					{
+						$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (:auc_id, :bidder_id, :bid)";
+						$params = array();
+						$params[] = array(':auc_id', $id, 'int');
+						$params[] = array(':bidder_id', $bidder_id, 'int');
+						$params[] = array(':bid', $bid, 'float');
+						$db->query($query, $params);
+					}
+					else
+					{
+						$query = "UPDATE " . $DBPrefix . "proxybid SET bid = :newbid WHERE userid = :bidder_id AND itemid = :item_id";
+						$params = array();
+						$params[] = array(':bidder_id', $bidder_id, 'int');
+						$params[] = array(':item_id', $id, 'int');
+						$params[] = array(':newbid', $bid, 'float');
+						$db->query($query, $params);
+					}
 
 					if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve)
 					{
@@ -600,7 +617,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 	if (defined('TrackUserIPs'))
 	{
 		// log auction bid IP
-		$system->log('user', 'Bid on Item', $bidder_id, $id);
+		$system->log('user', 'Bid $' . $bid . '(previous bid was $' . $current_bid . ') on Item', $bidder_id, $id);
 	}
 	$template->assign_vars(array(
 			'PAGE' => 2,

@@ -624,7 +624,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 			'BID_HISTORY' => (isset($ARETHEREBIDS)) ? $ARETHEREBIDS : '',
 			'TITLE' => $item_title,
 			'ID' => $id,
-			'BID' => $system->print_money($bid)
+			'BID' => $system->print_money($bid),
+			'TQTY' => 0
 			));
 }
 

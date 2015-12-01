@@ -47,7 +47,7 @@ $spam_html = '';
 if ($system->SETTINGS['spam_sendtofriend'] == 1)
 {
 	$resp = new Securimage();
-	$spam_html = $resp->show_html();
+	$spam_html = $resp->getCaptchaHtml();
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'sendmail')

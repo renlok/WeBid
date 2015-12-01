@@ -358,7 +358,7 @@ switch ($_SESSION['action'])
 		{
 			$title = $system->filter($title);
 			$subtitle = $system->filter($subtitle);
-			$description = $system->filter($description);
+			$sdescription = $system->filter($sdescription);
 		}
 		// check for errors
 		if ($ERR == 'ERR_')
@@ -448,7 +448,7 @@ switch ($_SESSION['action'])
 					'PAGE' => 2,
 					'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 
-					'AUC_DESCRIPTION' => stripslashes($description),
+					'AUC_DESCRIPTION' => stripslashes($sdescription),
 					'PIC_URL' => (empty($pict_url)) ? $MSG['114'] : '<img src="' . $uploaded_path . session_id() . '/' . $pict_url . '" style="max-width:100%; max-height:100%;">',
 					'MIN_BID' => $system->print_money($minimum_bid, false),
 					'RESERVE' => $system->print_money($reserve_price, false),

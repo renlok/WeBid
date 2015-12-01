@@ -831,6 +831,7 @@ $MSG['775'] = 'Buyer Fee';
 $MSG['776'] = "To finalise the sale please proceed to one of the payment gateways listed below to pay the fee of <b>%s</b>.";
 $MSG['777'] = 'You have an outstanding payment of the buyers fee for the item %s; your account will be suspended until this is paid. You can pay for this now at <a href="%s">Here</a>';
 $MSG['778'] = 'If you wish to pay via an alternative method contact <a href="profile.php?user_id=%s&amp;auction_id=%s">%s</a> to find out how.';
+$MSG['778a'] = 'The seller has not set up any online payment methods. Please contact them to find how they want to accept the payment';
 $MSG['779'] = 'User Registration Fields Updated';
 $MSG['780'] = 'Show On Registration Page';
 $MSG['781'] = 'Birthday Field Required?';

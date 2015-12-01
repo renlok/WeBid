@@ -123,7 +123,7 @@ $spam_html = '';
 if ($system->SETTINGS['spam_register'] == 1)
 {
 	$resp = new Securimage();
-	$spam_html = $resp->show_html();
+	$spam_html = $resp->getCaptchaHtml();
 }
 
 // missing check bools

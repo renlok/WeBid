@@ -388,30 +388,51 @@ function ynbool($str)
 	return $str;
 }
 
-
 // filters date format and date. Changes dd.mm.yyyy or dd/mm/yyyy to dd-mm-yyyy and validates date. 
 // Throws $ERR_700 if $dt is not a valid date or not 0. Returns valid and formatted date or 0.
 function filter_date($dt, $separator = "-")
 {
-   global $system, $ERR, $ERR_700;
-    
+	global $system, $ERR, $ERR_700;
+
 	if ($dt != 0)
 	{
-        $dt = preg_replace("([.]+)", $separator, $dt);
-        $date = str_replace("/", $separator, $dt); 
-        if ($system->SETTINGS['datesformat'] == 'USA')
+		$dt = preg_replace("([.]+)", $separator, $dt);
+		$date = str_replace("/", $separator, $dt); 
+		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
-            list($m, $d, $y) = array_pad(explode($separator, $date, 3), 3, 0);
+			list($m, $d, $y) = array_pad(explode($separator, $date, 3), 3, 0);
 		}
 		else
 		{
-            list($d, $m, $y) = array_pad(explode($separator, $date, 3), 3, 0);
+			list($d, $m, $y) = array_pad(explode($separator, $date, 3), 3, 0);
 		}
-        if (ctype_digit("$m$d$y") && checkdate($m, $d, $y))
+		if (ctype_digit("$m$d$y") && checkdate($m, $d, $y))
 		{
-		    return $date;
+			return $date;
 		}
 		$ERR = $ERR_700;
-    }
+	}
 	return 0;
+}
+
+function build_url($string)
+{
+	// TODO: make sure this works
+	// clean it
+	$string = preg_replace('/[^A-Za-z0-9=&]+/', '-', $string);
+	// sprint the url into _GET elements
+	$parts = explode('&', $string);
+	$slug = '';
+	foreach ($parts as $part)
+	{
+		// splits this=that 
+		$elements = explode('=', $part);
+		$slug .= $elements[0];
+		$slug .= '/';
+		$slug .= $elements[1];
+		$slug .= '/';
+	}
+	
+	$slug = strtolower ($slug);
+	return $slug;
 }

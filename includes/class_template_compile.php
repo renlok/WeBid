@@ -225,7 +225,7 @@ class template_compile
 		$varrefs = array();
 
 		// This one will handle varrefs WITH namespaces
-		preg_match_all('#\{((?:[a-z0-9\-_]+\.)+)(\$)?([A-Z0-9\-_]+)\}#', $text_blocks, $varrefs, PREG_SET_ORDER);
+		preg_match_all('#\{((?:[a-z0-9\-_=&]+\.)+)(\$)?([A-Z0-9\-_]+)\}#', $text_blocks, $varrefs, PREG_SET_ORDER);
 
 		foreach ($varrefs as $var_val)
 		{
@@ -236,9 +236,16 @@ class template_compile
 			$text_blocks = str_replace($var_val[0], $new, $text_blocks);
 		}
 
+		// check for language stings
 		if (strpos($text_blocks, '{L_') !== false)
 		{
 			$text_blocks = preg_replace('#\{L_([a-z0-9\-_]*)\}#is', "<?php echo ((isset(\$this->_rootref['L_\\1'])) ? \$this->_rootref['L_\\1'] : ((isset(\$MSG['\\1'])) ? \$MSG['\\1'] : '{ L_\\1 }')); ?>", $text_blocks);
+		}
+
+		// check for url stings
+		if (strpos($text_blocks, '{URL_') !== false)
+		{
+			$text_blocks = preg_replace('#\{URL_([a-z0-9\-_=&]*)\}#is', "<?php echo ((isset(\$this->_rootref['URL_\\1'])) ? \$this->_rootref['URL_\\1'] : build_url(\\1)); ?>", $text_blocks);
 		}
 
 		// Handle remaining varrefs

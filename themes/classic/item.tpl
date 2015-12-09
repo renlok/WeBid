@@ -159,10 +159,12 @@ $(document).ready(function() {
 						  <td align="left" valign="middle">{MAXBID}<!-- IF B_HASRESERVE -->&nbsp;<span class="smallspan">{L_514}</span><!-- ENDIF --></td>
 						</tr>
 <!-- ENDIF -->
+<!-- IF B_SHIPPING -->
 						<tr>
 						  <td width="50%" align="left">{L_023}: </td>
 						  <td align="left">{SHIPPING_COST}</td>
 						</tr>
+<!-- ENDIF -->
 <!-- IF (B_ADDITIONAL_SHIPPING_COST or B_BUY_NOW_ONLY) and B_SHOW_ADDITIONAL_SHIPPING_COST -->
 						<tr>
 						  <td width="50%" align="left">{L_350_1008}: </td>
@@ -370,7 +372,9 @@ $(document).ready(function() {
 <!-- IF COUNTRY ne '' or ZIP ne '' -->
 			  <b>{L_014}:</b> {COUNTRY} ({ZIP})<br>
 <!-- ENDIF -->
+<!-- IF B_SHIPPING -->
 			  <b>{L_025}:</b> {SHIPPING}, {INTERNATIONAL}<br>
+<!-- ENDIF -->
 <!-- IF SHIPPINGTERMS ne '' -->
 			  <table border="0" cellpadding="0" cellspacing="0">
 				<tr>

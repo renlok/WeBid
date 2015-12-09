@@ -385,13 +385,14 @@ $(document).ready(function(){
 					</div>
 	<!-- ENDIF -->
 					
+	<!-- IF B_SHIPPING -->
                         	<legend>{L_864}</legend>
 						
 					<div class="form-group col-md-12">
 						<label for="shipping_cost">{L_023}</label>
                                                    <div class="row">
                                                     <div class="col-md-4">
-							<input type="text" class="form-control" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- ENDIF -->>
+							<input type="text" class="form-control" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- 	ENDIF -->>
 							{CURRENCY}
                                                     </div>
                                                    </div>
@@ -424,6 +425,7 @@ $(document).ready(function(){
 						<label for="shipping_terms">{L_25_0215}</label>
 						<textarea name="shipping_terms" rows="3" class="form-control">{SHIPPING_TERMS}</textarea>
 					</div>
+	<!-- ENDIF -->
 					
                         	<legend>{L_30_0080}</legend>
 						
@@ -547,6 +549,7 @@ $(document).ready(function(){
 			</tr>
 		<!-- ENDIF -->
 	<!-- ENDIF -->
+	<!-- IF B_SHIPPING -->
 			<tr>
 				<td valign="top" align="right"><b>{L_023}</b></td>
 				<td>{SHIPPING_COST}</td>
@@ -555,6 +558,7 @@ $(document).ready(function(){
 				<td valign="top" align="right"><b>{L_350_1008}</b></td>
 				<td>{ADDITIONAL_SHIPPING_COST}</td>
 			</tr>
+	<!-- ENDIF -->
 			<tr>
 				<td valign="top" align="right"><b>{L_2__0016}</b></td>
 				<td>{STARTDATE}</td>
@@ -573,6 +577,7 @@ $(document).ready(function(){
 				<td valign="top" align="right"><b>{L_261}</b> </td>
 				<td>{ATYPE}</td>
 			</tr>
+	<!-- IF B_SHIPPING -->
 			<tr>
 				<td valign="top" align="right"><b>{L_025}</b></td>
 				<td>{SHIPPING}<br>{INTERNATIONAL}</td>
@@ -581,6 +586,7 @@ $(document).ready(function(){
 				<td align="right" valign="top"><b>{L_25_0215}</b></td>
 				<td>{SHIPPING_TERMS}</td>
 			</tr>
+	<!-- ENDIF -->
 			<tr>
 				<td valign="top" align="right"><b>{L_026}</b> </td>
 				<td>{PAYMENTS_METHODS}</td>

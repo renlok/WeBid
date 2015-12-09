@@ -67,6 +67,14 @@ class global_class
 			'moneybookers' => 'Moneybookers',
 			'toocheckout' => '2Checkout'
 			);
+
+		$query = "SELECT * FROM " . $DBPrefix . "settingsv2";
+		$db->direct_query($query);
+
+		while ($settingv2 = $db->fetch())
+		{
+			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
+		}
 	}
 
 	/* possible types cron, error, admin, user, mod */

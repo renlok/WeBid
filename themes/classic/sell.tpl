@@ -609,11 +609,11 @@ $(document).ready(function(){
 				<td valign="top" align="right"><b>{L_025}</b></td>
 				<td>{SHIPPING}<br>{INTERNATIONAL}</td>
 			</tr>
-	<!-- ENDIF -->
 			<tr>
 				<td align="right" valign="top"><b>{L_25_0215}</b></td>
 				<td>{SHIPPING_TERMS}</td>
 			</tr>
+	<!-- ENDIF -->
 			<tr>
 				<td valign="top" align="right"><b>{L_026}</b> </td>
 				<td>{PAYMENTS_METHODS}</td>

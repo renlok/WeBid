@@ -1,21 +1,18 @@
 <?php
-<<<<<<< HEAD
 # 
 # Table structure for table `" . $DBPrefix . "settingsv2`
 #
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settingsv2`;";
-$query[] = "CREATE TABLE `".$DBprefix ."webid_settingsv2` 
- `fieldname` VARCHAR(30) NOT NULL,
- `fieldtype` VARCHAR(10) NOT NULL,
- `value` VARCHAR(255) NOT NULL,
- `modifieddate` INT(11) NOT NULL,
- `modifiedby` INT(32) NOT NULL,
+$query[] = "CREATE TABLE `".$DBprefix ."settingsv2` 
+  `fieldname` VARCHAR(30) NOT NULL,
+  `fieldtype` VARCHAR(10) NOT NULL,
+  `value` VARCHAR(255) NOT NULL,
+  `modifieddate` INT(11) NOT NULL,
+  `modifiedby` INT(32) NOT NULL,
   PRIMARY KEY(`fieldname`)
-  )";
+);";
 
-=======
 #
->>>>>>> origin/master
 # Table structure for table `" . $DBPrefix . "accesseshistoric`
 #
 

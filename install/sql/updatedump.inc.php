@@ -313,16 +313,17 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	  `lang` char(2) NOT NULL default '',
 	  `group_name` varchar(255) NOT NULL default ''
 	);";
-	# 
+
+# 
 # Table structure for table `" . $DBPrefix . "settingsv2`
 #
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settingsv2`;";
-$query[] = "CREATE TABLE `".$DBprefix ."webid_settingsv2` 
- `fieldname` VARCHAR(30) NOT NULL,
- `fieldtype` VARCHAR(10) NOT NULL,
- `value` VARCHAR(255) NOT NULL,
- `modifieddate` INT(11) NOT NULL,
- `modifiedby` INT(32) NOT NULL,
+$query[] = "CREATE TABLE `".$DBprefix ."settingsv2` 
+  `fieldname` VARCHAR(30) NOT NULL,
+  `fieldtype` VARCHAR(10) NOT NULL,
+  `value` VARCHAR(255) NOT NULL,
+  `modifieddate` INT(11) NOT NULL,
+  `modifiedby` INT(32) NOT NULL,
   PRIMARY KEY(`fieldname`)
   )";
 }

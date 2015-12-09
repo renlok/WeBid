@@ -55,6 +55,7 @@ $template->assign_vars(array(
 		'Q' => (isset($q)) ? $q : '',
 		'SELECTION_BOX' => file_get_contents($main_path . 'language/' . $language . '/categories_select_box.inc.php'),
 		'YOURUSERNAME' => ($user->logged_in) ? $user->user_data['nick'] : '',
+		'GOOGLEANALYTICS' => $system->SETTINGS['googleanalytics'],
 
 		'B_CAN_SELL' => ($user->can_sell || !$user->logged_in),
 		'B_LOGGED_IN' => $user->logged_in,

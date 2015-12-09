@@ -31,7 +31,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	//purge the old wordlist
 	$query = "DELETE FROM " . $DBPrefix . "filterwords";
 	$db->direct_query($query);
-	
+
 	//rebuild the wordlist
 	$TMP = explode("\n", $_POST['filtervalues']);
 	if (is_array($TMP))

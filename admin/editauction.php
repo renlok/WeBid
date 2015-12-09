@@ -51,7 +51,7 @@ function load_gallery($uploaded_path, $auc_id)
 				if ($file != '.' && $file != '..' && strpos($file, 'thumb-') === false)
 				{
 					$UPLOADED_PICTURES[] = $uploaded_path . $auc_id . '/' . $file;
-					
+
 				}
 			}
 			@closedir($dir);

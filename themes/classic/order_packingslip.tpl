@@ -34,7 +34,7 @@
                 <td class="pageHeading-invoice" valign="top" align="left">
           <b>Seller:</b> {SENDER}
            </td>
-		  
+
               </tr>
             </tbody></table></td>
           <td>&nbsp;</td>
@@ -71,7 +71,7 @@
                     </tr>
                     <tr>
                       <td>&nbsp;</td>
-                    </tr>                    
+                    </tr>
                     <tr>
                       <td>&nbsp;</td>
                     </tr>
@@ -139,9 +139,9 @@
 
 
 <script type="text/javascript">
-    function printpage() {        
-        var printButton = document.getElementById("printpagebutton");         
-        printButton.style.visibility = 'hidden';        
+    function printpage() {
+        var printButton = document.getElementById("printpagebutton");
+        printButton.style.visibility = 'hidden';
         window.print()
         printButton.style.visibility = 'visible';
     }

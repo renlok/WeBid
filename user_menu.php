@@ -145,7 +145,7 @@ switch ($_SESSION['cptab'])
 				'BOUTBID' => ($reminders[4] > 0) ? sprintf($MSG['794'], $reminders[4]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourbids.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'SOLD_ITEMS' => ($reminders[5] > 0) ? sprintf($MSG['870'], $reminders[5]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_sold.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'NO_REMINDERS' => (($reminders[0] + $reminders[1] + $reminders[2] + $reminders[3] + $reminders[4] + $reminders[5]) == 0) ? $MSG['510'] : '',
-				
+
 				));
 		break;
 	case 'account':

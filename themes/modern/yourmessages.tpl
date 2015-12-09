@@ -2,7 +2,7 @@
 
 <div class="col-md-10 col-md-offset-1">
 	<div class="well well-sm">
-                <small>{L_332}:</small> <strong>{SUBJECT}</strong><br> 
+                <small>{L_332}:</small> <strong>{SUBJECT}</strong><br>
                 <small>{L_340}:</small> <strong>{SENDERNAME}</strong> - <small>{SENT}</small><br>
                   <br>
                 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {MESSAGE}<br>

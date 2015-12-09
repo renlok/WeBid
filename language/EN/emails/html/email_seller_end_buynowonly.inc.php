@@ -8,8 +8,8 @@
 					Congratulations, some items have been sold!
 				<!-- ENDIF -->
 			<!-- ELSE -->
-				We are sorry but your itmes were not sold.
-			
+				We are sorry but your items were not sold.
+
 			<!-- ENDIF -->
 			</div></td>
 	</tr>
@@ -18,7 +18,7 @@
 	</tr>
 	<tr>
 		<td colspan="3" height="50" style="font-size: 12px; padding-right: 6px;">
-			
+
 			<!-- IF A_QTY_SOLD -->
 				<!-- IF A_QTY_SOLD eq A_QTY_INITIAL -->
 					Congratulations, all items have been sold!
@@ -28,10 +28,10 @@
 					Below are the details.
 			<!-- ELSE -->
 				We are sorry but your itmes were not sold.
-			
+
 			<!-- ENDIF -->
-			
-			
+
+
 	</td>
 	</tr>
 	<tr>
@@ -82,7 +82,7 @@
 		<img border="0" src="{SITE_URL}images/email_alerts/Total_Due_Btn.jpg" width="120" height="32"></a></td>
 	</tr>
  </table><br />
- 
+
 <table border="0" width="100%">
 	<tr>
 		<td style="font-size: 12px;"><b>Buyer's Information</b></td>

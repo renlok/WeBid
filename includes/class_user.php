@@ -77,14 +77,14 @@ class user
 				$valid_req = ($_POST['csrftoken'] == $_SESSION['csrftoken']);
 			else
 				$valid_req = true;		# Neither GET nor POST params exist => permit
-			if(!$valid_req) 
+			if(!$valid_req)
             {
-                global $MSG, $ERR_077; 
-                 
-                $_SESSION['msg_title'] = $MSG['936']; 
-                $_SESSION['msg_body'] = $ERR_077; 
-                    header('location: message.php'); 
-                    exit; // kill the page 
+                global $MSG, $ERR_077;
+
+                $_SESSION['msg_title'] = $MSG['936'];
+                $_SESSION['msg_body'] = $ERR_077;
+                    header('location: message.php');
+                    exit; // kill the page
             }
 		}
 		return $this->logged_in;
@@ -128,20 +128,20 @@ class user
 		}
 	}
 
-	function is_valid_user($id) 
-    { 
-        global $system, $MSG, $ERR_025, $DBPrefix, $db; 
+	function is_valid_user($id)
+    {
+        global $system, $MSG, $ERR_025, $DBPrefix, $db;
 
-        $query = "SELECT id FROM " . $DBPrefix . "users WHERE id = :user_id"; 
+        $query = "SELECT id FROM " . $DBPrefix . "users WHERE id = :user_id";
         $params = array();
 		$params[] = array(':user_id', $id, 'int');
 		$db->query($query, $params);
         if ($db->numrows() == 0)
-        { 
-            $_SESSION['msg_title'] = $MSG['415']; 
-            $_SESSION['msg_body'] = $ERR_025; 
-            header('location: message.php'); 
-            exit; 
-        } 
+        {
+            $_SESSION['msg_title'] = $MSG['415'];
+            $_SESSION['msg_body'] = $ERR_025;
+            header('location: message.php');
+            exit;
+        }
     }
 }

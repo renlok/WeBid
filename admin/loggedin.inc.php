@@ -19,14 +19,14 @@ if(isset($_SESSION['csrftoken']))
 		$valid_req = ($_POST['csrftoken'] == $_SESSION['csrftoken']);
 	else
 		$valid_req = true;		# Neither GET nor POST params exist => permit
-	if(!$valid_req) 
+	if(!$valid_req)
 	{
-		global $MSG, $ERR_077; 
+		global $MSG, $ERR_077;
 
-		$_SESSION['msg_title'] = $MSG['936']; 
-		$_SESSION['msg_body'] = $ERR_077; 
+		$_SESSION['msg_title'] = $MSG['936'];
+		$_SESSION['msg_body'] = $ERR_077;
 		header('location: ../message.php');
-		exit; // kill the page 
+		exit; // kill the page
 	}
 }
 else

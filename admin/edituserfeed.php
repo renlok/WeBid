@@ -24,8 +24,8 @@ $id = intval($_GET['id']);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$user = intval($_POST['user']);
-	$query = "UPDATE " . $DBPrefix . "feedbacks SET 
-		  rate = :rate, 
+	$query = "UPDATE " . $DBPrefix . "feedbacks SET
+		  rate = :rate,
 		  feedback = :feedback
 		  WHERE id = :feedback_id";
 	$params = array();
@@ -70,7 +70,7 @@ $template->assign_vars(array(
 		'SEL2' => ($feedback['rate'] == 0),
 		'SEL3' => ($feedback['rate'] == -1)
 		));
-		
+
 $template->set_filenames(array(
 		'body' => 'edituserfeed.tpl'
 		));

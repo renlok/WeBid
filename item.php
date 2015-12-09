@@ -304,10 +304,10 @@ if ($user->logged_in && $num_bids > 0)
 				$yourbidmsg = $MSG['25_0089'];
 			}
 		}
-		elseif ($auction_data['bn_only'] == 'y') 
-		{ 
-			$yourbidmsg = $MSG['25_0089']; 
-			$yourbidclass = 'yourbidwin'; 
+		elseif ($auction_data['bn_only'] == 'y')
+		{
+			$yourbidmsg = $MSG['25_0089'];
+			$yourbidclass = 'yourbidwin';
 		}
 		else
 		{
@@ -408,7 +408,7 @@ else
 // get seller feebacks
 $query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
 $params = array();
-$params[] = array(':user_id', $user_id, 'int');	
+$params[] = array(':user_id', $user_id, 'int');
 $db->query($query, $params);
 $num_feedbacks = $db->numrows();
 // count numbers

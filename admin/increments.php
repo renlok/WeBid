@@ -95,7 +95,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 				$params[] = array(':inc_id', $ids[$i], 'int');
 				$db->query($query, $params);
 			}
-			
+
 		}
 		$ERR = $MSG['160'];
 	}

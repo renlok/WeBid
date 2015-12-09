@@ -22,14 +22,14 @@ function SubmitBoxes(N)
 		     <input type="hidden" name="action" value="process">
 		     <input type="hidden" name="box" value="" id="catformbox">
 		     <input type="hidden" name="cat_no" value="{CAT_NO}">
-                
+
 		<div class="col-sm-8 col-sm-offset-2">
                    <div class="form-group">
-		  
+
 			<label><!-- IF CAT_NO eq 2 -->{L_2__0041} {COST}<!-- ELSE -->{L_2__0038}<!-- ENDIF --></label>
-		   
+
 <!-- BEGIN boxes -->
-		  
+
 			  <select name="cat{boxes.I}" class="form-control" onchange="SubmitBoxes({boxes.I})">
                                 <option value="any"}>{L_2__0047}</option>
 	<!-- BEGIN cats -->
@@ -38,7 +38,7 @@ function SubmitBoxes(N)
 			  </select>
 		   <br>
 	<!-- IF boxes.B_NOWLINE -->
-		
+
 	<!-- ENDIF -->
 <!-- END boxes -->
 		</div>
@@ -48,7 +48,7 @@ function SubmitBoxes(N)
 <input type="submit" name="submitit" value="<!-- IF B_EDITING -->{L_25_0168}<!-- ELSE -->{L_2__0047}<!-- ENDIF -->" class="btn btn-primary">
           </div>
 <!-- ENDIF -->
-		  
+
 		</form>
                 </div>
                 <!-- IF CAT_NO eq 2 && ! B_SHOWBUTTON -->
@@ -60,7 +60,7 @@ function SubmitBoxes(N)
 		</form>
 		</div>
                 <!-- ENDIF -->
-	
+
           </div>
      </div>
 </div>

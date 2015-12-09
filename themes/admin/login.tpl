@@ -18,7 +18,7 @@
     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 	<table width="100%" border="0" cellspacing="0" cellpadding="1" class="blank">
 		<tr>
-			<td align="right" stype="width:170px;"> 
+			<td align="right" stype="width:170px;">
 				{L_003}
 			</td>
 			<td style="padding:10px;">

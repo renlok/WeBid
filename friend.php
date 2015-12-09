@@ -62,7 +62,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 	{
 		$TPL_error_text = $ERR_008;
 	}
-	
+
 	if ($system->SETTINGS['spam_sendtofriend'] == 2)
 	{
 		$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_POST['g-recaptcha-response']);
@@ -78,7 +78,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 			$TPL_error_text = $MSG['752'];
 		}
 	}
-	
+
 
 	if (!empty($TPL_error_text))
 	{

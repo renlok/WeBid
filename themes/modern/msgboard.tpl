@@ -16,13 +16,13 @@
 
       <div class="row">
           <div class="col-md-12">
-		
+
 			<div class="alert alert-info text-center" role="alert">{L_30_0181} {BOARD_NAME}</div>
-            
+
             <!-- IF ERROR ne '' -->
                         <div class="alert alert-danger text-center" role="alert">{ERROR}</div>
-            <!-- ENDIF --> 
-			
+            <!-- ENDIF -->
+
 			<form name="messageboard" action="" method="post">
             	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<input type="hidden" name="action" value="insertmessage">
@@ -33,12 +33,12 @@
 				<input type="submit" name="Submit" value="{L_5057}" class="btn btn-primary">
                                 </div>
 			</form>
-			
-		
+
+
 		<div class="row">
                      <div class="col-md-12">
 		          <legend>{L_5059}</legend>
-			
+
 <!-- BEGIN msgs -->
 		            <div class="well well-sm">
 		<!-- IF msgs.USERNAME ne '' -->
@@ -49,7 +49,7 @@
                                 <span class="glyphicon glyphicon-envelope" style="margin-right: 10px;" aria-hidden="true"></span>{msgs.MSG}
 			     </div>
 <!-- END msgs -->
-		
+
                    </div>
                 </div>
         <div class="col-md-12 text-center">
@@ -62,7 +62,7 @@
             {NEXT}
           </div>
       </div>
-        
+
 	</div>
 </div>
 </div>

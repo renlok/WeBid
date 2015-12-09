@@ -58,7 +58,7 @@ class global_class
 		global $DBPrefix, $db;
 		$query = "SELECT * FROM " . $DBPrefix . "settings";
 		$db->direct_query($query);
-		
+
 		$this->SETTINGS = $db->result();
 		$this->SETTINGS['gatways'] = array(
 			'paypal' => 'PayPal',
@@ -125,7 +125,7 @@ class global_class
 	}
 
 	function cleanvars($i, $trim = false)
-	{ 
+	{
 		if ($trim)
 			$i = trim($i);
 		if (!get_magic_quotes_gpc())
@@ -173,7 +173,7 @@ class global_class
 				if ($removeorg)
 					@unlink($from);
 				break;
-			
+
 			case 'move':
 				if (!@move_uploaded_file($from, $to))
 				{
@@ -335,7 +335,7 @@ function load_counters()
 		$params = array();
 		$params[] = array(':timer', $deltime, 'int');
 		$db->query($query, $params);
-		
+
 		$query = "SELECT id FROM " . $DBPrefix . "online";
 		$db->direct_query($query);
 
@@ -374,7 +374,7 @@ function calculate_shipping_data($auction_data, $total = true)
 {
 	$shipping_cost = ($auction_data['shipping'] == 1) ? $auction_data['shipping_cost'] : 0;
 	$additional_shipping_cost = $auction_data['additional_shipping_cost'] * ($auction_data['qty'] - 1);
-	
+
 	if ($total)
 	{
 		return ($shipping_cost + $additional_shipping_cost);
@@ -396,7 +396,7 @@ function ynbool($str)
 	return $str;
 }
 
-// filters date format and date. Changes dd.mm.yyyy or dd/mm/yyyy to dd-mm-yyyy and validates date. 
+// filters date format and date. Changes dd.mm.yyyy or dd/mm/yyyy to dd-mm-yyyy and validates date.
 // Throws $ERR_700 if $dt is not a valid date or not 0. Returns valid and formatted date or 0.
 function filter_date($dt, $separator = "-")
 {
@@ -405,7 +405,7 @@ function filter_date($dt, $separator = "-")
 	if ($dt != 0)
 	{
 		$dt = preg_replace("([.]+)", $separator, $dt);
-		$date = str_replace("/", $separator, $dt); 
+		$date = str_replace("/", $separator, $dt);
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
 			list($m, $d, $y) = array_pad(explode($separator, $date, 3), 3, 0);
@@ -433,14 +433,14 @@ function build_url($string)
 	$slug = '';
 	foreach ($parts as $part)
 	{
-		// splits this=that 
+		// splits this=that
 		$elements = explode('=', $part);
 		$slug .= $elements[0];
 		$slug .= '/';
 		$slug .= $elements[1];
 		$slug .= '/';
 	}
-	
+
 	$slug = strtolower ($slug);
 	return $slug;
 }

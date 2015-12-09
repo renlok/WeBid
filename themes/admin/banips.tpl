@@ -31,14 +31,14 @@
                         <tr {ips.BG}>
                             <td>{L_2_0025}</td>
                             <td align="center">{ips.IP}</td>
-                            <td align="center"> 
+                            <td align="center">
     <!-- IF ips.ACTION eq 'accept' -->
                             	{L_2_0012}
     <!-- ELSE -->
                             	{L_2_0013}
     <!-- ENDIF -->
                             </td>
-                            <td> 
+                            <td>
     <!-- IF ips.ACTION eq 'accept' -->
                                 <input type="checkbox" name="deny[]" value="{ips.ID}">
                                 &nbsp;{L_2_0006}

@@ -429,7 +429,7 @@ $(document).ready(function(){
 							<b>{L_025}</b>
 						</td>
 						<td valign="top" class="rightpan">
-							<input type="radio" name="shipping" id="bps" value="1" {SHIPPING1}>	
+							<input type="radio" name="shipping" id="bps" value="1" {SHIPPING1}>
 							{L_031}<br>
 							<input type="radio" name="shipping" id="sps" value="2" {SHIPPING2}>
 							{L_032}<br>
@@ -514,7 +514,7 @@ $(document).ready(function(){
 					</tr>
 	<!-- ENDIF -->
 				</table>
-				
+
 				<div style="text-align:center">
 					<input type="hidden" value="3" name="action">
 					<input type="submit" name="" value="{L_5189}" class="button">&nbsp;&nbsp;&nbsp;<input type="reset" id="resetbt" value="{L_5190}" class="button">

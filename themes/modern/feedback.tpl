@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-8 col-md-offset-2">
-           
-		
+
+
 <!-- IF ERROR ne '' -->
 		<div class="alert alert-danger" role="alert">
 			{ERROR}
@@ -13,7 +13,7 @@
 		      </legend>
 			<form class="form-horizontal" name="addfeedback" action="{SSLURL}feedback.php?wid={WID}&sid={SID}&ws={WS}" method="post">
             	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-				
+
 					 <div class="form-group">
 						<label class="col-sm-3 control-label">{L_168}:</label>
 						<div class="col-sm-9">
@@ -30,9 +30,9 @@
 						<label class="col-sm-3 control-label">{L_503}:</label>
 						<div class="col-sm-9"><div class="radio">
 							<label><input type="radio" name="TPL_rate" value="1" {RATE1}>
-							<img src="{SITEURL}images/positive.png" border="0" alt="+1"></label> 
+							<img src="{SITEURL}images/positive.png" border="0" alt="+1"></label>
 							<label><input type="radio" name="TPL_rate" value="0" {RATE2}>
-							<img src="{SITEURL}images/neutral.png" border="0" alt="0"></label> 
+							<img src="{SITEURL}images/neutral.png" border="0" alt="0"></label>
 							<label><input type="radio" name="TPL_rate" value="-1" {RATE3}>
 							<img src="{SITEURL}images/negative.png" border="0" alt="-1"></label></div>
                                                  </div>
@@ -57,7 +57,7 @@
 							<input type="reset" name="" class="btn btn-default">
 						</div>
 					</div>
-				
+
 				<input type="hidden" name="TPL_nick_hidden" value="{USERNICK}">
 				<input type="hidden" name="addfeedback" value="true">
 				<input type="hidden" name="auction_id" value="{AUCT_ID}">

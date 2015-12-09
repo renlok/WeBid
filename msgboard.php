@@ -66,7 +66,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_P
 	{
 		$message = strip_tags($_POST['newmessage']);
 	}
-	$query = "INSERT INTO " . $DBPrefix . "comm_messages VALUES 	
+	$query = "INSERT INTO " . $DBPrefix . "comm_messages VALUES
 			(NULL, :board_id, :now, :user_id, :user_nick, :message)";
 	$params = array();
 	$params[] = array(':board_id', $_POST['board_id'], 'int');

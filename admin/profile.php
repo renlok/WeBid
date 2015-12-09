@@ -34,7 +34,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			'zip' => $_POST['zip'],
 			'tel' => $_POST['tel']
 			);
-			
+
 	$DISPLAYED_FIELDS = array(
 			'birthdate_regshow' => $_POST['birthdate_regshow'],
 			'address_regshow' => $_POST['address_regshow'],

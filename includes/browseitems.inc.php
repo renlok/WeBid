@@ -59,7 +59,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 		// get the data we need
 		$row = build_items($row);
 
-		// time left till the end of this auction 
+		// time left till the end of this auction
 		$difference = $row['ends'] - time();
 		$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 

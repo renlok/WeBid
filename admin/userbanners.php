@@ -120,7 +120,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 				if (!empty($_POST['keywords']))
 				{
 					$KEYWORDS = explode("\n", $_POST['keywords']);
-					
+
 					foreach ($KEYWORDS as $k => $v)
 					{
 						if (!empty($v))
@@ -147,7 +147,7 @@ $params = array();
 $params[] = array(':id', $id, 'int');
 $db->query($query, $params);
 $USER = $db->result();
-	
+
 // retrieve user's banners
 $query = "SELECT * FROM " . $DBPrefix . "banners WHERE user = :user_id";
 $params = array();

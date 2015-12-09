@@ -32,7 +32,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$ERR = $ERR_006;
 	}
 	else
-	{ 
+	{
 		// Update
 		$query = "UPDATE " . $DBPrefix . "adminusers SET";
 		$params = array();

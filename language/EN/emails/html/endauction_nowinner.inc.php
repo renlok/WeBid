@@ -1,6 +1,6 @@
 <table border="0" width="100%">
 	<tr>
-		<td colspan="3" height="35"><div style="font-size: 14px; font-weight: bold;">Your auction has 
+		<td colspan="3" height="35"><div style="font-size: 14px; font-weight: bold;">Your auction has
 			ended with no winner on {SITENAME}</div></td>
 	</tr>
 	<tr>

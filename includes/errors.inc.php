@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 if (!defined('InWeBid')) exit();
 
 function WeBidErrorHandler($errno, $errstr, $errfile, $errline)
@@ -25,15 +25,15 @@ function WeBidErrorHandler($errno, $errstr, $errfile, $errline)
 			$error .= ", PHP " . PHP_VERSION . " (" . PHP_OS . ")\n";
 			$error .= "Aborting...\n";
 			break;
-	
+
 		case E_USER_WARNING:
 			$error = "<b>My WARNING</b> [$errno] $errstr on $errfile line $errline\n";
 			break;
-	
+
 		case E_USER_NOTICE:
 			$error = "<b>My NOTICE</b> [$errno] $errstr on $errfile line $errline\n";
 			break;
-	
+
 		default:
 			$error = "Unknown error type: [$errno] $errstr on $errfile line $errline\n";
 			break;

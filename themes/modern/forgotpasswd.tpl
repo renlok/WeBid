@@ -1,6 +1,6 @@
 <div class="row">
       <div class="col-md-12">
-           
+
 <div class="col-md-6 col-md-offset-3 well">
   <legend>{L_215}</legend>
 <!-- IF B_FIRST -->
@@ -25,9 +25,9 @@
                 </div>
 	    </div>
               <div class="clearfix"></div>
-                
+
 			<input type="submit" name="" value="{L_5431}" class="btn btn-primary center-block">
-		
+
 	<input type="hidden" name="action" value="ok">
 	</form>
 <!-- ELSE -->

@@ -28,13 +28,13 @@ $(document).ready(function() {
 <div class="row">
 	<div class="col-md-12">
            <ul class="breadcrumb"><b>{L_041}:</b> {TOPCATSPATH}</ul>
-	 
+
 
         <div class="panel panel-default sm-padding" style="text-align: right;">
-		{VIEW_HISTORY1} 
-		<a href="{SITEURL}friend.php?id={ID}">{L_106}</a> | 
+		{VIEW_HISTORY1}
+		<a href="{SITEURL}friend.php?id={ID}">{L_106}</a> |
 <!-- IF B_CANCONTACTSELLER -->
-		<a href="{SITEURL}send_email.php?auction_id={ID}">{L_922}</a> | 
+		<a href="{SITEURL}send_email.php?auction_id={ID}">{L_922}</a> |
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
 		<a href="{SITEURL}item_watch.php?{WATCH_VAR}={ID}">{WATCH_STRING}</a>
@@ -47,7 +47,7 @@ $(document).ready(function() {
 		{YOURBIDMSG}
 	</div>
 <!-- ENDIF -->
-	
+
 
             <div class="row grid-padding">
              <div class="col-md-5 col-sm-5 grid-padding">
@@ -69,7 +69,7 @@ $(document).ready(function() {
                            </div>
                               <div class="panel-footer">{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>
                    </div>
-	         
+
 	         <!-- ENDIF -->
                  <!-- ELSE -->
                         <div class="panel panel-default">
@@ -81,14 +81,14 @@ $(document).ready(function() {
                         </div>
                  <!-- ENDIF -->
              </div>
-             
+
              <div class="col-md-7 col-sm-7">
                   <div class="item-title hidden-xs text-capitalize">{TITLE}</div>
 		<!-- IF B_CANEDIT -->
 	  			<a class="btn btn-primary btn-xs" href="{SITEURL}edit_active_auction.php?id={ID}">{L_30_0069}</a>
-                <!-- ENDIF --> 
-					
-				<div class="panel panel-default"> 
+                <!-- ENDIF -->
+
+				<div class="panel panel-default">
 					  <table class="table table-bordered table-condensed table-striped">
 						<!-- auction type -->
 						<tr>
@@ -103,12 +103,12 @@ $(document).ready(function() {
 						  </td>
 						  <td>
 	<!-- BEGIN high_bidders -->
-							
+
 		<!-- IF B_BIDDERPRIV -->
 							<b>{high_bidders.BUYER_NAME}</b>
 		<!-- ELSE -->
 							<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
-							<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b> 
+							<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b>
 		<!-- ENDIF -->
 							{high_bidders.BUYER_FB_ICON}
 	<!-- END high_bidders -->
@@ -180,7 +180,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 					  </table>
                                        </div>
-					
+
              </div>
              <div class="col-md-7 col-sm-12">
                 <div class="panel panel-default">
@@ -202,13 +202,13 @@ $(document).ready(function() {
 			 </ul>
 				<a href="{SITEURL}active_auctions.php?user_id={SELLER_ID}"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="padding-right: 5px;"></span>{L_213}</a>
 				<br><br>
-			</div> 
-		  
+			</div>
+
 <!-- IF B_HASENDED eq false and B_CAN_BUY -->
                <div class="well well-sm">
                           <div class="row">
 	<!-- IF B_NOTBNONLY -->
-		             
+
 				          <form name="bid" action="{BIDURL}bid.php" method="post">
 				               <div class="form-group">
                                                    <div class="col-md-3 col-md-offset-2">
@@ -231,9 +231,9 @@ $(document).ready(function() {
                      <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					 <input type="submit" name="" value="{L_30_0208}" class="form-control btn btn-primary">
                                   </div>
-					
+
 				         </form>
-				    
+
 	                              <!-- ELSE -->
                                          <div class="col-md-8 col-md-offset-2">
 				{BUYNOW} <a class="btn btn-success btn-block" href="{BIDURL}buy_now.php?id={ID}">{L_496}</a>
@@ -242,7 +242,7 @@ $(document).ready(function() {
 
 	                              <!-- ENDIF -->
                        </div>
-               </div> 
+               </div>
                                       <!-- ENDIF -->
            <!-- IF B_CAN_BUY eq false -->
                  <div class="row">
@@ -254,7 +254,7 @@ $(document).ready(function() {
 		        </div>
                 </div>
            <!-- ENDIF -->
-                                    
+
                     </div>
                 </div>
              </div></div>
@@ -286,7 +286,7 @@ $(document).ready(function() {
                 </div>
         </div>
         <!-- ENDIF -->
-      
+
 
 <div class="panel panel-default">
   <div class="panel-heading">

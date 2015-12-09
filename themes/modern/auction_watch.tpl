@@ -8,7 +8,7 @@
                           <span class="input-group-btn"><input type="submit" value="{L_5204}" class="btn btn-default"></span>
                      </div>
                  </div>
-			
+
 			</form>
                </div>
 
@@ -17,10 +17,10 @@
 	                   <a class="btn btn-primary btn-xs" href="{SITEURL}auction_watch.php?delete={items.ITEMENCODE}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> {items.ITEM}</a>
 		       <!-- END items -->
 	        </div>
-			
-		
-			
-		
+
+
+
+
 <div class="alert alert-warning" role="alert">{L_30_0210}</div>
 
 <!-- INCLUDE user_menu_footer.tpl -->

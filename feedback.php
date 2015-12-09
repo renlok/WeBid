@@ -108,7 +108,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 						$params = array();
 						$params[] = array(':auc_id', $auction_id, 'int');
 						$params[] = array(':winner', $_REQUEST['wid'], 'int');
-						$params[] = array(':seller', $_REQUEST['sid'], 'int');						
+						$params[] = array(':seller', $_REQUEST['sid'], 'int');
 						$db->query($query, $params);
 						header ('location: feedback.php?faction=show&id=' . intval($uid));
 						exit;
@@ -168,13 +168,13 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 
 	$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = :auc_id LIMIT 1";
 	$params = array();
-	$params[] = array(':auc_id', $auction_id, 'int');				
+	$params[] = array(':auc_id', $auction_id, 'int');
 	$db->query($query, $params);
 	$item_title = $db->result('title');
 
 	$query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
-	$params[] = array(':user_id', $secid, 'int');						
+	$params[] = array(':user_id', $secid, 'int');
 	$db->query($query, $params);
 
 	if ($db->numrows() > 0)
@@ -217,7 +217,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 
 		$query = "SELECT rate_sum, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
 		$params = array();
-		$params[] = array(':user_id', $secid, 'int');					
+		$params[] = array(':user_id', $secid, 'int');
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
@@ -237,7 +237,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			$params = array();
 			$params[] = array(':user_id', $secid, 'int');
 			$params[] = array(':left_limit', $left_limit, 'int');
-			$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');					
+			$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 			$db->query($query, $params);
 			$i = 0;
 			$feed_disp = array();
@@ -334,7 +334,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
-	$params[] = array(':user_id', $_REQUEST['id'], 'int');				
+	$params[] = array(':user_id', $_REQUEST['id'], 'int');
 	$db->query($query, $params);
 	if ($arr = $db->fetch())
 	{

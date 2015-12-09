@@ -7,20 +7,20 @@
 <form name="details" action="" method="post">
 <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <div class="well">
-    
+
 	        <div class="alert alert-info" role="alert">{L_617}</div>
 
      <div class="row">
 	<div class="form-group col-lg-6">
 		<label for="TPL_password">{L_004}</label>
-		<input type="password" name="TPL_password" class="form-control" placeholder="{L_050}"> 
+		<input type="password" name="TPL_password" class="form-control" placeholder="{L_050}">
 	</div>
 	<div class="form-group col-lg-6">
 		<label for="TPL_repeat_password">{L_005}</label>
 	        <input type="password" name="TPL_repeat_password" class="form-control" />
 	</div>
-        
- 
+
+
 
 	<div class="form-group col-lg-12">
 		<label for="TPL_email">{L_006}</label>
@@ -71,7 +71,7 @@
 <div class="row">
 
 	<div class="form-group col-lg-6">
-                
+
 		<label>{L_352}</label>
                 <div class="radio">
 		        <label><input type="radio" name="TPL_emailtype" value="html" {EMAILTYPE1} />
@@ -80,7 +80,7 @@
 			{L_915}</label>
 		</div>
 	</div>
-	
+
 <!-- IF B_NEWLETTER -->
         <div class="form-group col-lg-6">
 		<label>{L_603}</label>
@@ -102,7 +102,7 @@
 
 <div class="row">
 <div class="col-lg-6 col-md-6">
-    
+
 <!-- IF B_PAYPAL -->
 	<div class="form-group">
 		<label for="TPL_pp_email">{L_720}</label>
@@ -144,7 +144,7 @@
 			<input type="submit" name="Input" value="{L_530}" class="btn btn-primary">
 			<input type="reset" name="Input" class="btn btn-default">
                 </div>
-		
+
 
 
 <input type="hidden" name="action" value="update">

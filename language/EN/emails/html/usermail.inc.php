@@ -7,7 +7,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" height="50" style="font-size: 12px; padding-right: 6px;">
-		Just click "Activate Me" to complete your registration. Once you do that you are ready to  
+		Just click "Activate Me" to complete your registration. Once you do that you are ready to
 		start buying/selling on {SITENAME}
 		</td>
 	</tr>

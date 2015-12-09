@@ -5,27 +5,27 @@
 		| <a href="{SITEURL}select_category.php?">{L_028}</a>
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
-		| <a href="{SITEURL}user_menu.php?">{L_622}</a> 
-		| <a href="{SSLURL}logout.php?">{L_245}</a> 
+		| <a href="{SITEURL}user_menu.php?">{L_622}</a>
+		| <a href="{SSLURL}logout.php?">{L_245}</a>
 <!-- ELSE -->
-		| <a href="{SSLURL}register.php?">{L_235}</a> 
-		| <a href="{SSLURL}user_login.php?">{L_052}</a> 
+		| <a href="{SSLURL}register.php?">{L_235}</a>
+		| <a href="{SSLURL}user_login.php?">{L_052}</a>
 <!-- ENDIF -->
 		| <a href="{SITEURL}help.php" alt="faqs" class="new-window">{L_148}</a>
 <!-- IF B_FEES -->
-		| <a href="{SITEURL}fees.php">{L_25_0012}</a> 
+		| <a href="{SITEURL}fees.php">{L_25_0012}</a>
 <!-- ENDIF -->
 <!-- IF B_VIEW_ABOUTUS -->
-		| <a href="{SITEURL}contents.php?show=aboutus">{L_5085}</a> 
+		| <a href="{SITEURL}contents.php?show=aboutus">{L_5085}</a>
 <!-- ENDIF -->
 <!-- IF B_VIEW_PRIVPOL -->
-		| <a href="{SITEURL}contents.php?show=priv">{L_401}</a> 
+		| <a href="{SITEURL}contents.php?show=priv">{L_401}</a>
 <!-- ENDIF -->
 <!-- IF B_VIEW_TERMS -->
-		| <a href="{SITEURL}contents.php?show=terms">{L_5086}</a> 
+		| <a href="{SITEURL}contents.php?show=terms">{L_5086}</a>
 <!-- ENDIF -->
 <!-- IF B_VIEW_COOKIES -->
-		| <a href="{SITEURL}contents.php?show=cookies">{L_1110}</a> 
+		| <a href="{SITEURL}contents.php?show=cookies">{L_1110}</a>
 <!-- ENDIF --></small>
 		<br>
 	</div>

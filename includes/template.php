@@ -106,7 +106,7 @@ class template
 			$this->filename[$handle] = $filename;
 			$this->files[$handle] = $this->root . '/' . $filename;
 		}
-		
+
 		return true;
 	}
 
@@ -187,7 +187,7 @@ class template
 
 		return true;
 	}
-	
+
 	/**
 	* Load a compiled template if possible, if not, recompile it
 	* @access private
@@ -315,7 +315,7 @@ class template
 			{
 				unset($this->_tpldata[$blockname][($s_row_count - 1)]['S_LAST_ROW']);
 			}
-			
+
 			// Add a new iteration to this block with the variable assignments we were given.
 			$this->_tpldata[$blockname][] = $vararray;
 		}
@@ -358,7 +358,7 @@ class template
 			// Nested blocks are not supported
 			return false;
 		}
-		
+
 		// Change key to zero (change first position) if false and to last position if true
 		if ($key === false || $key === true)
 		{

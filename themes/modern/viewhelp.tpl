@@ -33,13 +33,13 @@
 					<option value="{cats.ID}">{cats.CAT}</option>
 <!-- END cats -->
 				</select>
-                
+
 			</form>
                         </div>
 			<legend>{FNAME}</legend>
 			<div class="panel panel-default">
                                    <div class="list-group">
-<!-- BEGIN faqs -->  
+<!-- BEGIN faqs -->
 				<a class="list-group-item" href="#faq{faqs.ID}">{faqs.Q}</a>
 <!-- END faqs -->
                                     </div>
@@ -53,7 +53,7 @@
             </div>
             </div>
 <!-- END faqs -->
-			
+
 		</div>
 	</div>
 </div>

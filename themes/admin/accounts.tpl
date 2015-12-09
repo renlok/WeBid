@@ -10,7 +10,7 @@
             	<h4 class="rounded-top rounded-bottom">{L_854}&nbsp;&gt;&gt;&nbsp;{L_854}</h4>
 <!-- IF ERROR ne '' -->
 					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->				
+<!-- ENDIF -->
 				<div class="plain-box">
                 	<form action="" method="post">
                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

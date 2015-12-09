@@ -177,9 +177,9 @@ while ($row = $db->fetch())
 
 $end_soon = ($i > 0) ? true : false;
 // get hot items
-$query = "SELECT a.id, a.title, a.current_bid, a.pict_url, a.ends, a.num_bids, a.minimum_bid 
-        FROM " . $DBPrefix . "auctions a 
-        LEFT JOIN " . $DBPrefix . "auccounter c ON (a.id = c.auction_id) 
+$query = "SELECT a.id, a.title, a.current_bid, a.pict_url, a.ends, a.num_bids, a.minimum_bid
+        FROM " . $DBPrefix . "auctions a
+        LEFT JOIN " . $DBPrefix . "auccounter c ON (a.id = c.auction_id)
         WHERE closed = 0 AND suspended = 0 AND starts <= :time
         ORDER BY c.counter DESC LIMIT :limit";
 $params = array();
@@ -195,7 +195,7 @@ while ($row = $db->fetch())
     $difference = $ends - time();
     if ($difference > 0)
 	{
-        $ends_string = FormatTimeLeft($difference); 
+        $ends_string = FormatTimeLeft($difference);
     }
 	else
 	{

@@ -318,7 +318,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				include $include_path . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate, 
+						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate,
 						suspended, language, groups, balance, timecorrection, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
 						VALUES
 						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :reg_date, :birthdate,

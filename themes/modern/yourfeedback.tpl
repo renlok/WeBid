@@ -23,12 +23,12 @@
 		</td>
 	</tr>
 <!-- END fbs -->
-	
+
 </table>
 </div>
 		<div class="text-center">
 			{PAGENATION}
 		</div>
-	
+
 
 <!-- INCLUDE user_menu_footer.tpl -->

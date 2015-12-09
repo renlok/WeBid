@@ -19,7 +19,7 @@ require 'PHPMailerAutoload.php';
 class email_handler
 {
 	var $from, $message, $subject, $headers, $email_uid, $userlang, $errors;
-	
+
 	function build_header()
 	{
 		global $system, $CHARSET;
@@ -43,7 +43,7 @@ class email_handler
 
 		$this->headers = implode("\n", $headers);
 	}
-	
+
 	function buildmessage($file)
 	{
 		global $main_path, $include_path;
@@ -62,13 +62,13 @@ class email_handler
 		}
 		$this->message = implode($skipped_buffer, '');
 		$this->message = str_replace("'", "\'", $this->message);
-		
+
 		$this->message = preg_replace('#\{([a-z0-9\-_]*?)\}#is', "' . ((isset(\$this->vars['\\1'])) ? \$this->vars['\\1'] : '') . '", $this->message);
-		
+
 		preg_match_all('#<!-- ([^<].*?) (.*?)? ?-->#', $this->message, $blocks, PREG_SET_ORDER);
-		
+
 		$text_blocks = preg_split('#<!-- [^<].*? (?:.*?)? ?-->#', $this->message);
-		
+
 		$compile_blocks = array();
 		for ($curr_tb = 0, $tb_size = sizeof($blocks); $curr_tb < $tb_size; $curr_tb++)
 		{
@@ -93,17 +93,17 @@ class email_handler
 				break;
 			}
 		}
-		
+
 		$template_php = '';
 		for ($i = 0, $size = sizeof($text_blocks); $i < $size; $i++)
 		{
 			$trim_check_text = trim($text_blocks[$i]);
 			$template_php .= (($trim_check_text != '') ? $text_blocks[$i] : '') . ((isset($compile_blocks[$i])) ? $compile_blocks[$i] : '');
 		}
-		
+
 		eval("\$this->message = '$template_php';");
 	}
-	
+
 	function compile_tag_if ($tag_args, $elseif)
 	{
 		// Tokenize args for 'if' tag.
@@ -320,7 +320,7 @@ class email_handler
 
 		return $language;
 	}
-	
+
 	function getusermailtype()
 	{
 		global $system, $DBPrefix, $db;
@@ -481,7 +481,7 @@ class email_handler
 				{
 					for ($i = 0; $i < count($this->to); $i++)
 					{
-						$mail->addAddress($this->to[$i]); 
+						$mail->addAddress($this->to[$i]);
 					}
 				}
 				else
@@ -507,7 +507,7 @@ class email_handler
 		}
 		return implode('<br/>',$this->errors);
 	}
-	
+
 	function email_basic($subject, $to, $message, $from = '')
 	{
 		$this->to = $to;
@@ -517,7 +517,7 @@ class email_handler
 		$this->build_header();
 		$this->sendmail();
 	}
-	
+
 	function email_sender($to, $file, $subject)
 	{
 		$this->to = $to;

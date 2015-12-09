@@ -4,12 +4,12 @@
 		<tr>
 			<td>
 			<dl class="tabs">
-				<dd><a href="{SITEURL}user_menu.php?cptab=summary">{L_25_0080}</a></dd>  
-				<dd><a href="{SITEURL}user_menu.php?cptab=account">{L_25_0081}</a></dd>  
+				<dd><a href="{SITEURL}user_menu.php?cptab=summary">{L_25_0080}</a></dd>
+				<dd><a href="{SITEURL}user_menu.php?cptab=account">{L_25_0081}</a></dd>
 <!-- IF B_CAN_SELL -->
-				<dd><a href="{SITEURL}user_menu.php?cptab=selling">{L_25_0082}</a></dd>	
+				<dd><a href="{SITEURL}user_menu.php?cptab=selling">{L_25_0082}</a></dd>
 <!-- ENDIF -->
-				<dd><a href="{SITEURL}user_menu.php?cptab=buying">{L_25_0083}</a></dd> 	   
+				<dd><a href="{SITEURL}user_menu.php?cptab=buying">{L_25_0083}</a></dd>
 			</dl>
 			</td>
 		</tr>

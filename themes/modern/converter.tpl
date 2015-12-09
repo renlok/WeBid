@@ -38,7 +38,7 @@
 <!-- END to -->
 				</select>
 		           </div>
-                            </div><br>	
+                            </div><br>
 				<div style="text-align:center">
                 	<input class="btn btn-primary" type="button" name="convert" id="convert" value="{L_25_0176}">
 				</div>

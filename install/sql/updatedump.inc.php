@@ -221,8 +221,8 @@ if ($myversion == '1.0.6')
 	  `ip` VARCHAR( 45 ) NOT NULL,
 	  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
 	);";
-	
-	
+
+
 	$query[] = "ALTER TABLE `" . $DBPrefix . "accounts` MODIFY `amount` DOUBLE(6,2) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `minimum_bid` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_cost` double(16,2) default NULL;";

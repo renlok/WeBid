@@ -85,7 +85,7 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 
 	// send message
 	$id_type = ($email) ? 'fromemail' : 'sentto';
-	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, sentat, message, subject, reply_of, question) 
+	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, sentat, message, subject, reply_of, question)
 			VALUES (:to_ids, :sender_id, :times, :nowmessages, :subjects, :reply_of_hash, :question_hash)";
 	$params = array();
 	$params[] = array(':to_ids', ($email) ? $sendto : $userarray['id'], 'bool');

@@ -112,7 +112,7 @@ $(document).ready(function() {
             <!-- ENDIF -->
             <li><a href="{SITEURL}help.php" alt="faqs" class="new-window">{L_148}</a></li>
             <li><a href="{SITEURL}adsearch.php">{L_464}</a></li>
-        
+
       </ul>
       <form class="navbar-form navbar-right" role="search" action="{SITEURL}search.php" method="get">
         <div class="input-group">

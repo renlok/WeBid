@@ -34,7 +34,7 @@
         <!-- END featured -->
         </td>
     </tr>
-    <!-- ENDIF -->  
+    <!-- ENDIF -->
     <!-- IF B_HOT_ITEMS -->
     <tr>
         <td class="titTable4">{L_279}</td>
@@ -144,7 +144,7 @@
         <!-- END newsbox -->
         </ul>
 		<a href="{SITEURL}viewallnews.php">{L_341}</a>
-    </div>   
+    </div>
 <!-- ENDIF -->
 	</td>
 </tr>

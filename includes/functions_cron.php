@@ -71,7 +71,7 @@ function sendWatchEmails($id)
 			$emailer->email_uid = $watchusers['id'];
 			$emailer->email_sender($watchusers['email'], 'auctionend_watchmail.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['471']);
 		}
-	}	
+	}
 }
 
 function sortFees()
@@ -168,5 +168,5 @@ function sortFees()
 			'id' => $Auction['id'],
 			'title' => $system->uncleanvars($Auction['title'])
 			);
-	}	
+	}
 }

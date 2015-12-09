@@ -171,7 +171,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params = array();
 			$params[] = array(':cat_id', $AUCTION['category'], 'int');
 			$db->query($query, $params);
-	
+
 			$parent_node = $db->result();
 			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 			// update recursive categories

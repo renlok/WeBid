@@ -50,9 +50,9 @@ $(document).ready(function() {
 	</div>
 	<div class="titTable3">
 		{VIEW_HISTORY1}
-		<a href="{SITEURL}friend.php?id={ID}">{L_106}</a> | 
+		<a href="{SITEURL}friend.php?id={ID}">{L_106}</a> |
 <!-- IF B_CANCONTACTSELLER -->
-		<a href="{SITEURL}send_email.php?auction_id={ID}">{L_922}</a> | 
+		<a href="{SITEURL}send_email.php?auction_id={ID}">{L_922}</a> |
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
 		<a href="{SITEURL}item_watch.php?{WATCH_VAR}={ID}">{WATCH_STRING}</a>
@@ -94,7 +94,7 @@ $(document).ready(function() {
 					<td align="left" valign="top">
 					  {L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}<br>
 					  <a href="#description"><img src="{SITEURL}images/info.gif" border='0'></a>
-					  <a href="#description">{L_018}</a> &nbsp;&nbsp;&nbsp; 
+					  <a href="#description">{L_018}</a> &nbsp;&nbsp;&nbsp;
 					  <table border='0' width="100%" cellspacing="0" cellpadding="1">
 						<!-- auction type -->
 						<tr>
@@ -114,7 +114,7 @@ $(document).ready(function() {
 							<b>{high_bidders.BUYER_NAME}</b>
 		<!-- ELSE -->
 							<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
-							<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b> 
+							<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b>
 		<!-- ENDIF -->
 							{high_bidders.BUYER_FB_ICON}</p>
 	<!-- END high_bidders -->

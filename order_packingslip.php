@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *   copyright				: (C) 2008 - 2015 WeBid
  *   site					: http://www.webidsupport.com/
@@ -23,7 +23,7 @@ if (!$user->is_logged_in())
 }
 
 $sender = getSeller($user->user_data['id']);
-$query = "SELECT w.id, w.winner, w.closingdate, a.id AS auc_id, a.title, w.qty,	w.seller As uid 
+$query = "SELECT w.id, w.winner, w.closingdate, a.id AS auc_id, a.title, w.qty,	w.seller As uid
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 		WHERE a.id = :auc_id AND w.id = :winner_id";

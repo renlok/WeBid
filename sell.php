@@ -195,7 +195,7 @@ switch ($_SESSION['action'])
 				// update recursive categories
 				update_cat_counters(false, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
 			}
-			
+
 			// if editing the auction and the categories have been changed
 			if ($_SESSION['SELL_action'] == 'edit' && ($_SESSION['SELL_sellcat1'] != $_SESSION['SELL_original_sellcat1'] || $_SESSION['SELL_sellcat2'] != $_SESSION['SELL_original_sellcat2']))
 			{

@@ -54,7 +54,7 @@ $LANGUAGES = array();
 if ($handle = opendir($main_path . 'language'))
 {
 	while (false !== ($file = readdir($handle)))
-	{ 
+	{
 		if (preg_match('/^([A-Z]{2})$/i', $file, $regs))
 		{
 			$LANGUAGES[$regs[1]] = $regs[1];

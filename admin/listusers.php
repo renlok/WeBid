@@ -235,7 +235,7 @@ $template->assign_vars(array(
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES
 		));
-		
+
 $template->set_filenames(array(
 		'body' => 'listusers.tpl'
 		));

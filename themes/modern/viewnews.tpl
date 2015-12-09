@@ -8,7 +8,7 @@
                 <!-- BEGIN news -->
 			{news.CONT}
                 <!-- END news -->
-		
+
                 </div>
 	</div>
 </div>

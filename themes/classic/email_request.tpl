@@ -4,7 +4,7 @@
 			{L_334} {USERNAME}
 		</div>
 		<div class="titTable3">
-			<a href="profile.php?user_id={USERID}">{L_206}</a> | 
+			<a href="profile.php?user_id={USERID}">{L_206}</a> |
 			<a href="item.php?id={AUCTION_ID}">{L_138}</a>
 		</div>
 <!-- IF B_SENT -->

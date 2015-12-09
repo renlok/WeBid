@@ -13,7 +13,7 @@
 <!-- ENDIF -->
 					<div class="plain-box">{L_845}</div>
                     <table width="98%" cellpadding="0" cellspacing="0" class="blank">
-                        <tr> 
+                        <tr>
                             <td width="10" height="21">&nbsp;</td>
                             <td colspan="4" height="21">{CRUMBS}</td>
                         </tr>

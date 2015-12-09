@@ -1,6 +1,6 @@
 <!-- INCLUDE user_menu_header.tpl -->
 
-<script type="text/javascript"> 
+<script type="text/javascript">
 $(document).ready(function() {
 	var relist_fee = {RELIST_FEE_NO};
 $("#relistall").click(function() {
@@ -52,7 +52,7 @@ $("#relistall").click(function() {
 				<li role="presentation"><a href="yourauctions_sold.php">{L_25_0119}</a></li>
 			</ul>
 
-        
+
 
 <table class="table table-bordered table-condensed table-striped">
 	<tr>

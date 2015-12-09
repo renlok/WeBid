@@ -21,7 +21,7 @@
 			<legend>
 				{L_5236}
 			</legend>
-			 
+
 				<div class="text-right grid-margin-btm-md">
 					<a class="btn btn-danger btn-xs" href="javascript:window.close()">{L_678}</a>
 				</div>
@@ -32,7 +32,7 @@
                                              <!-- END cats -->
 				   </div>
                                 </div>
-			
+
 		</div>
 	</div>
 </div>

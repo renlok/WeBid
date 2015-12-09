@@ -61,40 +61,40 @@ if ($count > 0)
 </head>
 <body bgcolor="#ffffff">
 <center>
-  <p><b> 
+  <p><b>
 	Banner filter</b> </p>
    <p align="center"><a href="javascript:window.close()" class="bluelink">Close</a></p>
 
   <table width="352" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 	  <td bgcolor="#eeeeee">
-	  
+
 	  <?php echo $MSG['_0053']; ?>
-	  
+
 	  </td>
 	</tr>
 	<tbody>
 	<tr>
-	  <td> 
+	  <td>
 	  <?php echo $CATEGORIES; ?></td>
 	</tr>
 	<tr>
 	  <td bgcolor="#ffffff">&nbsp;
-	  
+
 	  </td>
 	</tr>
 	<tr>
 	  <td bgcolor="#eeeeee">
-	  
+
 	  <?php echo $MSG['_0054']; ?>
-	  
+
 	  </td>
 	</tr>
 	<tr>
 	  <td>
-	  	
+
 		<?php echo $KEYWORDS; ?>
-		
+
 	  </td>
 	</tr>
 	</tbody>

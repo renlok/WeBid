@@ -24,7 +24,7 @@
               </div>
             </div>
         <!-- END featured -->
-           <!-- ENDIF --> 
+           <!-- ENDIF -->
         </div>
 
         <div class="row">
@@ -111,10 +111,10 @@
   <!-- Default panel contents -->
   <div class="panel-heading"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true" style="padding-right: 10px;"></span>{L_276}</div>
     <div class="list-group">
-            
+
         <!-- BEGIN cat_list -->
             <a class="list-group-item" href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}<span class="pull-right">
-                <!-- IF cat_list.CATAUCNUM neq '' --> ({cat_list.CATAUCNUM})<!-- ENDIF --></span></a> 
+                <!-- IF cat_list.CATAUCNUM neq '' --> ({cat_list.CATAUCNUM})<!-- ENDIF --></span></a>
         <!-- END cat_list -->
             <a class="list-group-item" href="{SITEURL}browse.php?id=0"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>  {L_277}</a>
     </div>
@@ -126,17 +126,17 @@
       <div>{FLAGS}</div>
     </div>
           <!-- ENDIF -->
-         
+
           <!-- IF B_LOGIN_BOX -->
 	     <!-- IF B_LOGGED_IN -->
     <div class="panel panel-default">
     	<div class="panel-heading">{L_200} {YOURUSERNAME}</div>
         <div class="list-group">
-        
+
             <a class="list-group-item" href="{SITEURL}edit_data.php?">{L_244}</a>
             <a class="list-group-item" href="{SITEURL}user_menu.php">{L_622}</a>
             <a class="list-group-item" href="{SITEURL}logout.php"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> {L_245}</a>
-        
+
         </div>
     </div>
 	<!-- ELSE -->
@@ -156,16 +156,16 @@
                    <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
                    <input type="password" name="password" id="password" class="form-control" placeholder="{L_004}">
                  </div>
-                 
+
              <div class="form-group">
                      <div class="checkbox">
-                          <label for="rememberme"><input type="checkbox" name="rememberme" id="rememberme" value="1">&nbsp;{L_25_0085}</label>              
+                          <label for="rememberme"><input type="checkbox" name="rememberme" id="rememberme" value="1">&nbsp;{L_25_0085}</label>
                      </div>
              </div>
              <div class="text-center">
-                      <button type="submit" name="action" class="btn btn-primary btn-block" value="Go">{L_275a}</button>            
+                      <button type="submit" name="action" class="btn btn-primary btn-block" value="Go">{L_275a}</button>
              </div>
-              
+
                  <div class="text-center">
                     <small><a href="{SITEURL}forgotpasswd.php">{L_215}</a></small>
                  </div>
@@ -198,11 +198,11 @@
            <span class="text-muted"><small>{newsbox.DATE}</small></span>
            <li class="divider"></li>
            <br>
-           <!-- END newsbox --> 
+           <!-- END newsbox -->
          </ul>
            <div class="pull-right"><a href="{SITEURL}viewallnews.php">{L_341}</a></div>
            <br>
-       </div>   
+       </div>
      </div>
      <!-- ENDIF -->
 
@@ -210,6 +210,6 @@
        </div>
 
 
-       
+
 
 </div>

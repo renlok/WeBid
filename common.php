@@ -19,7 +19,7 @@ define('InWeBid', 1);
 define('TrackUserIPs', 1);
 date_default_timezone_set('UTC'); // to make times more consistant
 
-// file check & 
+// file check &
 if(!@include('includes/config.inc.php'))
 {
 	$install_path = (!defined('InAdmin')) ? 'install/install.php' : '../install/install.php';
@@ -28,7 +28,7 @@ if(!@include('includes/config.inc.php'))
 }
 
 $MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didnt set a code
-$include_path = $main_path . 'includes/'; 
+$include_path = $main_path . 'includes/';
 $uploaded_path = 'uploaded/';
 $upload_path = $main_path . $uploaded_path;
 

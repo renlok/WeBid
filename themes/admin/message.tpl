@@ -15,7 +15,7 @@
         </tr>
         <tr valign="top">
             <td height="22">&nbsp;</td>
-        </tr>      
+        </tr>
         <tr>
             <td>
                 <input type="hidden" name="action" value="update">

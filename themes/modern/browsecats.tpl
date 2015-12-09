@@ -1,9 +1,9 @@
 <div class="row">
        <div class="col-md-12">
-	
+
 		<ul class="breadcrumb"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true" style="margin-right:10px;"></span><a href="browse.php?id=0">{L_287}</a> : {CAT_STRING}</ul>
-	
-	
+
+
 
 <!-- IF TOP_HTML ne '' -->
    <div class="row">
@@ -33,14 +33,14 @@
                 <form name="catsearch" action="?id={ID}" method="post">
                        <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
     <div class="row">
-          
+
                  <div class="col-md-7 col-sm-7">
                    <input type="text" name="catkeyword" class="form-control" placeholder="{L_30_0070}">
                  </div>
                  <div class="col-md-5 col-sm-5">
                    <input type="submit" name="" value="{L_103}" class="btn btn-default">&nbsp;&nbsp;<a href="{SITEURL}adsearch.php">{L_464}</a>
                  </div>
-           
+
     </div>
 		</form>
 </div>
@@ -51,6 +51,6 @@
 			{L_198}
 		</div>
 <!-- ENDIF -->
-	
+
      </div>
 </div>

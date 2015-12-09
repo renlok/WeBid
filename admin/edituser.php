@@ -126,7 +126,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$birthdate = 0;
 			}
 
-			$query = "UPDATE " . $DBPrefix . "users SET 
+			$query = "UPDATE " . $DBPrefix . "users SET
 				  name = :name,
 				  email = :email,
 				  address = :address,
@@ -255,9 +255,9 @@ $template->assign_vars(array(
 					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : ''
 					)
 		));
-		
+
 $template->set_filenames(array(
 		'body' => 'edituser.tpl'
 		));
 $template->display('body');
-?> 
+?>

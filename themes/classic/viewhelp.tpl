@@ -31,7 +31,7 @@
 			</form>
 			<h1>{FNAME}</h1>
 			<ul>
-<!-- BEGIN faqs -->  
+<!-- BEGIN faqs -->
 				<li><a href="#faq{faqs.ID}">{faqs.Q}</a></li>
 <!-- END faqs -->
 			</ul>

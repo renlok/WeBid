@@ -7,7 +7,7 @@
 	</tr>
 	<tr>
 		<td colspan="3" height="50" style="font-size: 12px; padding-right: 6px;">
-			You have been outbid on the following:  
+			You have been outbid on the following:
 	  </td>
 	</tr>
 	<tr>
@@ -16,7 +16,6 @@
 		<table border="0" width="100%">
 			<tr>
 				<td colspan="2" style="font-size: 12px;"><a href="{A_URL}">{A_TITLE}</a></td>
-
 			</tr>
 			<tr>
 				<td width="22%" style="font-size: 12px;">Current price:</td>
@@ -26,7 +25,6 @@
 				<td width="22%" style="font-size: 12px;">End date:</td>
 				<td align="left" style="font-size: 12px;">{A_ENDS}</td>
 			</tr>
-			
 			<tr>
 				<td width="22%" style="font-size: 12px;"></td>
 				<td align="left" style="font-size: 12px;"><a href="{SITE_URL}user_menu.php">Goto My {SITENAME}</a></td>

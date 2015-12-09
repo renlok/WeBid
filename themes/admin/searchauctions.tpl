@@ -43,7 +43,7 @@
 									</tr>
 									<tr>
 										<td colspan="2" class="centered">
-											<input name="submit" type="submit" value="{L_199}"> 
+											<input name="submit" type="submit" value="{L_199}">
 											<input name="reset" type="button" onclick="javascript: this.form.auctionid.value = ''; this.form.usernick.value = ''; this.form.userid.value = ''; this.form.titlekeywords.value = ''; this.form.auctiontype[0].checked = true;" value="{L_035}">
 										</td>
 									</tr>

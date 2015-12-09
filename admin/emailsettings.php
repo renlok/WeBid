@@ -26,25 +26,25 @@ $smtp_secure_options =array('none' => 'None', 'tls' => 'TLS', 'ssl' => 'SSL');
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// checks 
+	// checks
 	if (intval($_POST['mail_protocol']) == 2)
 	{
 		if (empty($_POST['smtp_host']) || empty($_POST['smtp_username']) || empty($_POST['smtp_password']) || empty($_POST['smtp_port']) || intval($_POST['smtp_port']) <= 0 )
-		{ 
+		{
 			$ERR = $MSG['1132'];
 		}
 	}
-	
+
 	if (array_key_exists(intval($_POST['mail_protocol']), $mail_protocol))
 	{
-	
+
 	  if  (intval($_POST['mail_protocol']) !== 2)
 	  {
 	   // Update database
 	    	$query = "UPDATE ". $DBPrefix . "settings SET
 					mail_protocol = :protocol,
 					mail_parameter = :parameter,
-					alert_emails = :emails";  
+					alert_emails = :emails";
 	    	$params = array();
 			$params[] = array(':protocol', $_POST['mail_protocol'], 'int');
 			$params[] = array(':parameter', $_POST['mail_parameter'], 'str');
@@ -70,11 +70,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':password', (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : ''), 'str');
 			$params[] = array(':host', (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
 			$params[] = array(':emails', $_POST['alert_emails'], 'str');
-			$db->query($query, $params);	  
+			$db->query($query, $params);
 	    }
 	  $ERR = $MSG['895'];
-	} 
-	
+	}
+
     $system->SETTINGS['mail_protocol'] = intval($_POST['mail_protocol']);
 	$system->SETTINGS['mail_parameter'] = $_POST['mail_parameter'];
 	$system->SETTINGS['smtp_authentication'] = $_POST['smtp_authentication'];
@@ -109,7 +109,7 @@ if (isset($_GET['test_email']))
 	$to_email       = filter_var($_POST["user_email"], FILTER_SANITIZE_EMAIL);
 	$subject        = filter_var($_POST["subject"], FILTER_SANITIZE_STRING);
 	$message        = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
-    
+
 	$emailer = new email_handler();
 	$send_mail = $emailer->email_basic($subject, $to_email, $message);
 	if($send_mail)

@@ -77,7 +77,7 @@ if (isset($_POST['action']))
 			// prevent removal of webid default Group 1 or Group 2
 			if(intval($_POST['id']) == 1 || intval($_POST['id']) == 2)
 			{
-				$ERR = $MSG['cannot_delete_default_user_groups']; 
+				$ERR = $MSG['cannot_delete_default_user_groups'];
 			}
 			else
 			{
@@ -132,7 +132,7 @@ if (isset($_POST['action']))
 			$params[] = array(':auto_join', (($auto_join) ? $_POST['auto_join'] : 1), 'int');
 			$db->query($query, $params);
 		}
-		
+
 	}
 }
 
@@ -149,7 +149,7 @@ while ($row = $db->fetch())
 		{
            $groups_array = $groups_array .','. $row['groups'];
 		}
-        else 
+        else
 		{
            $groups_array = $row['groups'];
 		}
@@ -197,7 +197,7 @@ if (!empty($groups_unknown))
 				'NAME' => $v['nick'],
 				'TYPE' => 1
 				));
-	}		
+	}
 }
 
 // assigned to non existstant groups
@@ -208,7 +208,7 @@ if (!empty($groups_array))
 	    $template->assign_block_vars('groups_unknown', array(
 				'ID' => $k,
 				'NAME' => $MSG['text_unknown'],
-				'USER_COUNT' => $v 
+				'USER_COUNT' => $v
 				));
 	    $query = "SELECT groups, id, nick FROM ". $DBPrefix . "users WHERE groups LIKE :group_name";
 		$params = array();

@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';

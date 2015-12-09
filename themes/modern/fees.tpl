@@ -3,8 +3,8 @@
 <legend>{L_25_0012}</legend>
          <div class="row">
 	      <div class="col-md-8">
-		
-		
+
+
 <!-- IF B_SETUP_FEE -->
 			<table class="table table-striped table-bordered table-condensed">
 				<tr>
@@ -77,7 +77,7 @@
 <!-- IF B_SUBTITLE_FEE -->
 				<p>{L_803}: {SUBTITLE_FEE}</p>
 <!-- ENDIF -->
-            
+
 		</div>
 	    </div>
         </div>

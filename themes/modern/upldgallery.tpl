@@ -20,7 +20,7 @@ $(function() {
 		unique_names : true,
 		dragdrop: true,
 		multiple_queues: {MAXPICS} < {UPLOADED} ? "true" : "false",
-		
+
 		// Specify what files to browse for
 		filters : {
 		    // Maximum file size
@@ -33,15 +33,15 @@ $(function() {
 		multipart_params : {
         "csrftoken" : "{_CSRFTOKEN}"
        },
-	   
+
 	   // Resize images on clientside if we can
 		resize: {
-			width : 600, 
-			height : 600, 
+			width : 600,
+			height : 600,
 			quality : 90,
 			crop: false // crop to exact dimensions
 		},
-	   
+
         // Flash settings
 		flash_swf_url : '{SITEURL}js/pluploadjs/Moxie.swf',
 
@@ -60,30 +60,30 @@ $(function() {
 
 			QueueChanged: function(up) {
 				// Called when queue is changed by adding or removing files
-				
+
 				if (up.files.length > ({MAXPICS} - {UPLOADED}))
 				{
-					
+
 					for (var key in up.files) {
 						if (up.files.length > ({MAXPICS} - {UPLOADED})) {
 							up.removeFile(up.files[key]);
 							if ($('#uploader_browse').is(":visible")) {
-				             alert('You have reached the max  allowed of ' + {MAXPICS} + ' files.');	
+				             alert('You have reached the max  allowed of ' + {MAXPICS} + ' files.');
 				            }
 							$('#uploader_browse').hide();
-							
+
 						}
 					}
-				
-				
+
+
 				}
 			},
 
 			UploadProgress: function(up, file) {
 				// Called while a file is being uploaded
-				
+
 			},
-			
+
 			FileFiltered: function(up, file) {
 				// Called when file successfully files all the filters
             },
@@ -92,19 +92,19 @@ $(function() {
 				// Callced when files are added to queue
 				var max_files = {MAXPICS};
 				plupload.each(files, function (file) {
-				
+
                     if (up.files.length > max_files) {
                         // alert('You are allowed to add only ' + max_files + ' files.');
                          up.removeFile(file);
-						 
+
                     }
                });
-				
+
                 if (files.length >= max_files) {
                  $('#uploader_browse').hide('slow');
-				  
+
                 }
-				
+
 			},
 
 			FilesRemoved: function(up, files) {
@@ -112,7 +112,7 @@ $(function() {
 				var max_files = {MAXPICS};
 				if (files.length < max_files) {
                  $('#uploader_browse').fadeIn('slow');
-				 
+
                 }
 
 				plupload.each(files, function(file) {
@@ -126,19 +126,19 @@ $(function() {
 				});
 				if (up.files.length < ({MAXPICS} - {UPLOADED})) {
                 // $('.plupload_buttons').fadeIn('slow'); $('.plupload_upload_status').hide();
-				
+
                 }
 			},
-			
+
             ChunkUploaded: function(up, file, info) {
 				// Called when file chunk has finished uploading
 			},
-			
+
 			UploadComplete: function(up, files) {
 				// Called when all files are either uploaded or failed
 				window.location = window.location.pathname;
-				
-				
+
+
             },
 
 			Destroy: function(up) {
@@ -156,7 +156,7 @@ $(function() {
 
 <script type="text/javascript">
 $(document).ready(function () {
-    
+
 	if ( {MAXPICS} == {UPLOADED}) {$('.plupload_file_name').hide('slow'); $('.moxie-shim-html5').hide();}
 
    var num_images = $('#numimages', window.opener.document).val();

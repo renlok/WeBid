@@ -56,11 +56,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':answer', $_POST['answer'][$k], 'str');
 			if ($db->numrows() > 0)
 			{
-				$query = "UPDATE " . $DBPrefix . "faqs_translated SET 
+				$query = "UPDATE " . $DBPrefix . "faqs_translated SET
 					question = :question,
 					answer = :answer
 					WHERE id = :faq_id AND lang = :lang";
-				
+
 			}
 			else
 			{
@@ -69,7 +69,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$params[] = array(':faq_id', $_POST['id'], 'int');
 			}
 			$db->query($query, $params);
-		}  
+		}
 		header('location: faqs.php');
 		exit;
 	}
@@ -96,7 +96,7 @@ while ($row = $db->fetch())
 	$QUESTION_tr[$row['lang']] = $row['question'];
 	$ANSWER_tr[$row['lang']] = $row['answer'];
 }
-				
+
 reset($LANGUAGES);
 foreach ($LANGUAGES as $k => $v)
 {

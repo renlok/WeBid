@@ -75,15 +75,15 @@ $(document).on('click', '.test_button',  function(e) {
 	if ($('#text_testmail').val() == '')
 	alert('Empty messages cause errors!');
 	        post_data = {
-                'user_name'     : '{L_1139}', 
-                'user_email'    : '{ADMIN_EMAIL}', 
-                'subject'       : '{L_1138}', 
+                'user_name'     : '{L_1139}',
+                'user_email'    : '{ADMIN_EMAIL}',
+                'subject'       : '{L_1138}',
                 'message'       : $('#text_testmail').val(),
 				'csrftoken'     : $('input[name=csrftoken]').val()
 			};
             //Ajax post data to server
-            $.post('emailsettings.php?test_email', post_data, function(response){  
-                if(response.type == 'error'){ //load json data from server and output message     
+            $.post('emailsettings.php?test_email', post_data, function(response){
+                if(response.type == 'error'){ //load json data from server and output message
                     output = '<div class="error-box">'+response.text+'</div>';
                 }else{
                     output = '<div class="success-box">'+response.text+'</div>';
@@ -91,7 +91,7 @@ $(document).on('click', '.test_button',  function(e) {
                 $("#contact_form #contact_results").hide().html(output).slideDown();
 			 }, 'json');
    });
-}); 
+});
 function showDialog()
 {
     $("#dialog-modal").dialog(
@@ -124,7 +124,7 @@ $(document).ready(function() {
 	} else {
 		$('.para').parent().parent().hide();
     }
-	
+
 	$('select[name=mail_protocol]').on('change', function() {
 	//alert('changid');
 		if ($(this).val() == 2) {
@@ -138,7 +138,7 @@ $(document).ready(function() {
 			$('.para').parent().parent().show(300);
 		} else {
 			$('.para').parent().parent().hide();
-			}	
+			}
 	});
 });
 </script>

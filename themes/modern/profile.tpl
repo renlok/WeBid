@@ -7,26 +7,26 @@
 <!-- IF B_AUCID -->
 			<a class="btn btn-default btn-xs grid-margin-btm" href="{SITEURL}item.php?id={AUCTION_ID}"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>{L_138}</a>
 <!-- ENDIF -->
-			<a class="btn btn-success btn-xs grid-margin-btm" href="{SITEURL}active_auctions.php?user_id={USER_ID}">{L_213}</a> 
-			<a class="btn btn-danger btn-xs grid-margin-btm" href="{SITEURL}closed_auctions.php?user_id={USER_ID}">{L_214}</a> 
+			<a class="btn btn-success btn-xs grid-margin-btm" href="{SITEURL}active_auctions.php?user_id={USER_ID}">{L_213}</a>
+			<a class="btn btn-danger btn-xs grid-margin-btm" href="{SITEURL}closed_auctions.php?user_id={USER_ID}">{L_214}</a>
 <!-- IF B_CONTACT -->
-			<a class="btn btn-info btn-xs grid-margin-btm" href="{SITEURL}email_request.php?user_id={USER_ID}&amp;username={USER}&amp;auction_id={AUCTION_ID}">{L_210}{USER}</a> 
+			<a class="btn btn-info btn-xs grid-margin-btm" href="{SITEURL}email_request.php?user_id={USER_ID}&amp;username={USER}&amp;auction_id={AUCTION_ID}">{L_210}{USER}</a>
 <!-- ENDIF -->
 			<a class="btn btn-warning btn-xs grid-margin-btm" href="{SITEURL}feedback.php?id={USER_ID}&amp;faction=show">{L_208}</a>
 		</div>
-			
+
 		<div class="col-md-6">
                       <h4><span style="margin-right: 10px;" class="glyphicon glyphicon-user" aria-hidden="true"></span>{USER} ({SUM_FB})</b>{RATE_VAL}</h4> <br>
 			<ul class="list-unstyled">
-				
-						
+
+
 						<li>{L_209} <b>{REGSINCE}</b><br></li>
 						<li>{L_240} <b>{COUNTRY}</b><br></li>
 						<li>{L_502} <b>{NUM_FB}</b><br></li>
 						<li>{FB_POS}</li>
 						<li>{FB_NEUT}</li>
 						<li>{FB_NEG}</li>
-					
+
 			</ul><br>
                  </div>
                  <div class="col-md-6">
@@ -75,13 +75,13 @@
 						   <td align="center" style="color:#FF0000">{FB_BUYER_NEG}</td>
 						</tr>
 					 </table>
-					
+
 		</div>
 <!-- ELSE -->
 	<div class="padding">
 		{MSG}
 <!-- ENDIF -->
-	
+
 </div>
 </div>
 </div>

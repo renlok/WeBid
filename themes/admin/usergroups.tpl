@@ -49,9 +49,9 @@
                         </td>
                         <td>
 							<input type="hidden" name="id" value="{GROUP_ID}">
-							<!-- IF NOT_DEFAULT_GROUP --> 
+							<!-- IF NOT_DEFAULT_GROUP -->
 							<input type="checkbox" name="remove" value="y">{L_008}
-							<!-- ENDIF --> 
+							<!-- ENDIF -->
 						</td>
                     </tr>
                     <tr>
@@ -101,7 +101,7 @@
 						<!-- END list_users -->
 						</td>
                     </tr>
-<!-- END groups_unknown -->	
+<!-- END groups_unknown -->
 				   </table>
 <!-- ENDIF -->
 

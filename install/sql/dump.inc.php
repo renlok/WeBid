@@ -1,7 +1,7 @@
 <?php
-# 
+#
 # Table structure for table `" . $DBPrefix . "accesseshistoric`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "accesseshistoric`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "accesseshistoric` (
@@ -12,15 +12,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accesseshistoric` (
   `usersessions` int(11) NOT NULL default '0'
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "accesseshistoric`
-#  
+#
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "accounts`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "accounts`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
@@ -37,15 +37,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 	`year` INT(4) NOT NULL
 )";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "accounts`
-# 
+#
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "adminusers`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "adminusers`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
@@ -60,16 +60,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   KEY `id` (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "adminusers`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "auccounter`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auccounter`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "auccounter` (
@@ -78,15 +78,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auccounter` (
   PRIMARY KEY  (`auction_id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "auccounter`
-# 
+#
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "auctions`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auctions`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
@@ -135,16 +135,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   KEY `id` (`id`)
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "auctions`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "banners`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "banners`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "banners` (
@@ -163,16 +163,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "banners` (
   KEY `id` (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "banners`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "bannerscategories`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "bannerscategories`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "bannerscategories` (
@@ -180,16 +180,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannerscategories` (
   `category` int(11) NOT NULL default '0'
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "bannerscategories`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "bannerskeywords`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "bannerskeywords`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "bannerskeywords` (
@@ -197,16 +197,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannerskeywords` (
   `keyword` varchar(255) NOT NULL default ''
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "bannerskeywords`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "bannersstats`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "bannersstats`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "bannersstats` (
@@ -217,16 +217,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannersstats` (
   KEY `id` (`banner`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "bannersstats`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "bannersusers`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "bannersusers`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "bannersusers` (
@@ -237,16 +237,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannersusers` (
   KEY `id` (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "bannersusers`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "bids`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "bids`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "bids` (
@@ -259,16 +259,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bids` (
   PRIMARY KEY  (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "bids`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "categories`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
@@ -286,9 +286,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
   INDEX (`left_id`, `right_id`, `level`)
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "categories`
-# 
+#
 
 if ($_GET['cats'] == 1)
 {
@@ -498,9 +498,9 @@ else
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "categories_translated`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (
@@ -509,16 +509,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (
   `category` varchar(200) NOT NULL default ''
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "categories_translated`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "comm_messages`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "comm_messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "comm_messages` (
@@ -531,15 +531,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "comm_messages` (
   KEY `msg_id` (`id`)
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "comm_messages`
-# 
+#
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "community`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "community`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
@@ -552,9 +552,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
   KEY `msg_id` (`id`)
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "community`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (1, 'Selling', 0, '', 30, 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (2, 'Buying', 0, '', 30, 1);";
@@ -562,9 +562,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "community` VALUES (2, 'Buying', 0, '',
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "community_translated`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "community_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "community_translated` (
@@ -573,16 +573,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community_translated` (
   `name` varchar(255) NOT NULL default ''
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "community_translated`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "counters`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "counters`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
@@ -594,17 +594,17 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "counters` (
   `suspendedauctions` int(11) NOT NULL default '0'
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "counters`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "counters` VALUES (0, 0, 0, 0, 0, 0);";
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "countries`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "countries`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "countries` (
@@ -613,9 +613,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "countries` (
   PRIMARY KEY  (`country_id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "countries`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Afghanistan');";
 $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Albania');";
@@ -850,9 +850,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES (NULL, 'Zimbabwe');"
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "countries_translated`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "countries_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "countries_translated` (
@@ -861,16 +861,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "countries_translated` (
   `country` varchar(255) NOT NULL default ''
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "countries_translated`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "currentaccesses`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentaccesses`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "currentaccesses` (
@@ -882,16 +882,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currentaccesses` (
   `usersessions` int(11) NOT NULL default '0'
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "currentaccesses`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "currentbrowsers`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentbrowsers`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "currentbrowsers` (
@@ -901,16 +901,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currentbrowsers` (
   `counter` int(11) NOT NULL default '0'
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "currentbrowsers`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "currentplatforms`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "currentplatforms`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "currentplatforms` (
@@ -920,16 +920,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currentplatforms` (
   `counter` int(11) NOT NULL default '0'
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "currentplatforms`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "durations`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "durations`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "durations` (
@@ -937,9 +937,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "durations` (
   `description` varchar(30) default NULL
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "durations`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (1, '1 day');";
 $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (2, '2 days');";
@@ -951,9 +951,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (30, '1 month');";
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "durations_translated`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "durations_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "durations_translated` (
@@ -962,16 +962,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "durations_translated` (
   `description` varchar(255) NOT NULL default ''
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "durations_translated`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "faqs`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "faqs`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "faqs` (
@@ -982,9 +982,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqs` (
   KEY `id` (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "faqs`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs` VALUES (2, 'Registering', 'To register as a new user, click on Register at the top of the window. You will be asked for your name, a username and password, and contact information, including your email address.\r\n\r\n<B>You must be at least 18 years of age to register.</B>!', 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs` VALUES (4, 'Item Watch', '<b>Item watch</b> notifies you when someone bids on the auctions that you have added to your Item Watch. ', 3);";
@@ -992,9 +992,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "faqs` VALUES (5, 'What is a Dutch auct
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "faqs_translated`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "faqs_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "faqs_translated` (
@@ -1004,9 +1004,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqs_translated` (
   `answer` text NOT NULL
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "faqs_translated`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (2, 'EN', 'Registering', 'To register as a new user, click on Register at the top of the window. You will be asked for your name, a username and password, and contact information, including your email address.\r\n\r\n<B>You must be at least 18 years of age to register.</B>!');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (2, 'ES', 'Registrarse', 'Para registrar un nuevo usuario, haz click en <B>Reg&iacute;ÃÂ­strate</B> en la parte superior de la pantalla. Se te preguntar&aacute;n tus datos personales, un nombre de usuario, una contrase&ntilde;a e informacion de contacto como la direccion e-mail.\r\n\r\n<B>¡Tienes que ser mayor de edad para poder registrarte!</B>');";
@@ -1016,9 +1016,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (6, 'ES', 'Auc
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "faqscat_translated`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "faqscat_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "faqscat_translated` (
@@ -1027,9 +1027,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqscat_translated` (
   `category` varchar(255) NOT NULL default ''
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "faqscat_translated`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "faqscat_translated` VALUES (3, 'EN', 'Buying');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqscat_translated` VALUES (3, 'ES', 'Comprar');";
@@ -1040,9 +1040,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "faqscat_translated` VALUES (2, 'ES', '
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "faqscategories`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "faqscategories`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "faqscategories` (
@@ -1051,9 +1051,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqscategories` (
   KEY `id` (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "faqscategories`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "faqscategories` VALUES (1, 'General');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqscategories` VALUES (2, 'Selling');";
@@ -1061,9 +1061,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "faqscategories` VALUES (3, 'Buying');"
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "feedbacks`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "feedbacks`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
@@ -1077,15 +1077,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
   PRIMARY KEY  (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "feedbacks`
-# 
+#
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "fees`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fees`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
@@ -1098,9 +1098,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
   PRIMARY KEY  (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "fees`
-# 
+#
 
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'signup_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyer_fee');";
@@ -1118,26 +1118,26 @@ $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'endauc_f
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "filterwords`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "filterwords`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "filterwords` (
   `word` varchar(255) NOT NULL default ''
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "filterwords`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "filterwords` VALUES ('');";
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "gateways`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
@@ -1160,17 +1160,17 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
   `toocheckout_active` int(1) NOT NULL default '0'
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "gateways`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet,worldpay,moneybookers,toocheckout', '', 0, 1, '', '', 0, 1, '', 0, 1, '', 0, 1, '', 0, 1);";
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "groups`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
@@ -1183,18 +1183,18 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
   PRIMARY KEY  (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "groups`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0, 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0, 1);";
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "groups_translated`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "groups_translated` (
@@ -1203,16 +1203,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups_translated` (
   `group_name` varchar(255) NOT NULL default ''
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "groups_translated`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "increments`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "increments`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "increments` (
@@ -1223,9 +1223,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "increments` (
   PRIMARY KEY  (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "increments`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 0.0000, 0.9900, 0.2800);";
 $query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 1.0000, 9.9900, 0.5000);";
@@ -1237,9 +1237,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 500.0000, 99
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "logs`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "logs`;";
 $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
@@ -1252,16 +1252,16 @@ $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
   `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "logs`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "maintainance`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "maintainance`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "maintainance` (
@@ -1272,17 +1272,17 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "maintainance` (
   KEY `id` (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "maintainance`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 'n', 'renlok', '<br>\r\n<center>\r\n<b>Under maintainance!!!!!!!</b>\r\n</center>');";
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "membertypes`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "membertypes`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "membertypes` (
@@ -1292,9 +1292,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "membertypes` (
   PRIMARY KEY  (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "membertypes`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (24, 9, 'transparent.gif');";
 $query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (22, 999999, 'starFR.gif');";
@@ -1309,9 +1309,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (14, 49, 'starY.gi
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "messages`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
@@ -1332,9 +1332,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "news`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "news`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "news` (
@@ -1346,16 +1346,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "news` (
   PRIMARY KEY  (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "news`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "news_translated`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "news_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "news_translated` (
@@ -1365,16 +1365,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "news_translated` (
   `content` text NOT NULL
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "news_translated`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "online`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "online`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "online` (
@@ -1384,16 +1384,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "online` (
   PRIMARY KEY  (`ID`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "online`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "pendingnotif`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "pendingnotif`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "pendingnotif` (
@@ -1407,16 +1407,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "pendingnotif` (
   PRIMARY KEY  (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "pendingnotif`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "proxybid`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "proxybid`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "proxybid` (
@@ -1425,16 +1425,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "proxybid` (
   `bid` double(16,2) default '0'
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "proxybid`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "rates`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "rates`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "rates` (
@@ -1445,9 +1445,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "rates` (
   KEY `id` (`id`)
 ) AUTO_INCREMENT=64 ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "rates`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (1, 'Great Britain', 'Pound Sterling ', 'GBP');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (2, 'Argentina', 'Argentinian Peso', 'ARS');";
@@ -1507,9 +1507,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (55, 'Canadian', 'Canadi
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "rememberme`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "rememberme`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "rememberme` (
@@ -1517,16 +1517,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "rememberme` (
   `hashkey` char(32) NOT NULL default ''
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "rememberme`
-# 
+#
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "settings`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
@@ -1643,9 +1643,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `moneybookers_sandbox` INT(1) default 0
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "settings`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 ('WeBid',
@@ -1763,9 +1763,9 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "statssettings`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "statssettings`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "statssettings` (
@@ -1775,18 +1775,18 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "statssettings` (
   `domains` enum('y','n') NOT NULL default 'y'
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "statssettings`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('n', 'y', 'y', 'y');";
 
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "tax`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "tax`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
@@ -1799,17 +1799,17 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
 	  PRIMARY KEY (`id`)
 	);";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "tax`
-# 
+#
 
 $query[] = "INSERT INTO `" . $DBPrefix . "tax` VALUES (NULL, 'Site Fees', '0', '', '', '1');";
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "users`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "users`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
@@ -1852,15 +1852,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   PRIMARY KEY  (`id`)
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "users`
-# 
+#
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "useraccounts`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "useraccounts`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
@@ -1887,15 +1887,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   PRIMARY KEY (`useracc_id`)
 );";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "useraccounts`
-# 
+#
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "usersips`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "usersips`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "usersips` (
@@ -1907,15 +1907,15 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "usersips` (
   PRIMARY KEY  (`id`)
 ) ;";
 
-# 
+#
 # Dumping data for table `" . $DBPrefix . "usersips`
-# 
+#
 
 # ############################
 
-# 
+#
 # Table structure for table `" . $DBPrefix . "winners`
-# 
+#
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "winners`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (

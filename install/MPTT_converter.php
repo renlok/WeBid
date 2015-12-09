@@ -53,7 +53,7 @@ function getids($count, $searching, $level)
 			$ra = getids($count, $searching[$k], ($level + 1));
 			$tmp = array_merge($tmp, $ra[0]);
 			$count = $ra[1];
-		}	
+		}
 		$count++;
 		$t['right'] = $count;
 		$t['id'] = $k;

@@ -32,7 +32,7 @@ function GetLeftSeconds()
 	$minsleft = 60 - $today[4];
 	$secsleft = 60 - $today[5];
 	$left = $secsleft + ($minsleft * 60) + ($hoursleft * 3600) + ($daysleft * 86400);
-	
+
 	return $left;
 }
 
@@ -69,7 +69,7 @@ function FormatTimeStamp($DATE, $spacer = '-')
 	{
 		$F_date = mktime(0, 0, 0, $DATE[1], $DATE[0], $DATE[2]);
 	}
-	//echo ArrangeDateNoCorrection($F_date) .'<br>'; // enable to view finalized date 
+	//echo ArrangeDateNoCorrection($F_date) .'<br>'; // enable to view finalized date
 	return $F_date;
 }
 

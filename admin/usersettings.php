@@ -22,7 +22,7 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	
+
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
 			  usersauth = :usersauth,

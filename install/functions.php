@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 function getmainpath()
 {
 	$path = getcwd();
@@ -51,7 +51,7 @@ function makeconfigfile($contents, $main_path)
 
 	if (is_writable($filename))
 	{
-		if (!$handle = fopen($filename, 'w')) 
+		if (!$handle = fopen($filename, 'w'))
 		{
 			$return = false;
 		}
@@ -352,7 +352,7 @@ function show_config_table($fresh = true)
 		$data .= '<tr><td colspan="2">BC Math Support:</td><td colspan="2">';
 		$data .= (extension_loaded('bcmath')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
-		
+
 		$data .= '<tr><td colspan="2">PHP Data Objects Support:</td><td colspan="2">';
 		$data .= (extension_loaded('pdo')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';

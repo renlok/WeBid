@@ -69,7 +69,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$params = array();
 		$params[] = array(':seller_nick', $system->cleanvars($_SESSION['advs']['seller']), 'str');
 		$db->query($query, $params);
-	
+
 		if ($db->numrows() > 0)
 		{
 			$SELLER_ID = $db->result('id');
@@ -247,7 +247,7 @@ if ($searching && !isset($ERR))
 	$params = $asparams;
 	$params[] = array(':offset', $left_limit, 'int');
 	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
-	
+
 	// get featured items
 	$query_feat = "SELECT au.* FROM " . $DBPrefix . "auctions au
 			" . $userjoin . "

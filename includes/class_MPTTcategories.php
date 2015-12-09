@@ -389,7 +389,7 @@ class MPTTcategories
 
 		return $children;
 	}
-	
+
 	// return a list of every child node of a given parent node
 	function get_children_list($left_id, $right_id, $return = 'cat_id')
 	{
@@ -412,7 +412,7 @@ class MPTTcategories
 
 		return $children;
 	}
-	
+
 	//returns an ordered list of categories
 	function display_tree($left_id, $right_id, $indent = "\t")
 	{
@@ -459,7 +459,7 @@ class MPTTcategories
 		$root = array('left_id' => 1, 'right_id' => $row['right_id'], 'level' => -1);
 		return $root;
 	}
-	
+
 	function get_bread_crumbs($left_id, $right_id)
 	{
 		global $system, $DBPrefix, $db;

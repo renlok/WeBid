@@ -128,6 +128,6 @@ $(document).ready(function() {
 <!-- END pages -->
 			{NEXT}
 		</div>
-	
+
 
 <!-- INCLUDE user_menu_footer.tpl -->

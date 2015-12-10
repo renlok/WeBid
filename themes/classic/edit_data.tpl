@@ -12,7 +12,7 @@
 		<td valign="top"><i>{NICK}</i></td>
 	</tr>
 	<tr>
-		<th colspan="2" valign="top" align="center">{L_617}</td>
+		<th colspan="2" valign="top" align="center">{L_617}</th>
 	</tr>
 	<tr>
 		<td valign="top" class="errfont" style="text-align:right !important;">{L_004}</td>

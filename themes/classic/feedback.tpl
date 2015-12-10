@@ -10,7 +10,7 @@
 <!-- ENDIF -->
 		<div class="table2" style="padding:20px;">
 			<form name="addfeedback" action="{SSLURL}feedback.php?wid={WID}&sid={SID}&ws={WS}" method="post">
-            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" cellspacing="0" >
 					<tr>
 						<td width="40%" align="right"><b>{L_168}:</b></td>
@@ -33,6 +33,7 @@
 							<img src="{SITEURL}images/neutral.png" border="0" alt="0">
 							<input type="radio" name="TPL_rate" value="-1" {RATE3}>
 							<img src="{SITEURL}images/negative.png" border="0" alt="-1">
+						</td>
 					</tr>
 					<tr>
 						<td align="right" valign="top"><b>{L_227}:</b></td>

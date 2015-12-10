@@ -17,17 +17,17 @@
 					<td width="10%"><a href="{SITEURL}item.php?id={auctions.ID}"><img src="{auctions.PIC_URL}" border="0" alt="image"></a></td>
 					<td width="45%">
 						<a href="{SITEURL}item.php?id={auctions.ID}">{auctions.TITLE}</a>
-    <!-- IF auctions.B_BUY_NOW and not auctions.B_BNONLY -->
+	<!-- IF auctions.B_BUY_NOW and not auctions.B_BNONLY -->
 						&nbsp;&nbsp;(<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img src="{auctions.BNIMG}" border="0" class="buynow"></a> {auctions.BNFORMAT})
-    <!-- ENDIF -->
+	<!-- ENDIF -->
 					</td>
 					<td width="15%">
 	<!-- IF auctions.B_BNONLY -->
-    					<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img src="{auctions.BNIMG}" border="0" class="buynow"></a> {auctions.BNFORMAT}
-    <!-- ELSE -->
-                        {auctions.BIDFORMAT}
-    <!-- ENDIF -->
-                    </td>
+						<a href="{SITEURL}buy_now.php?id={auctions.ID}"><img src="{auctions.BNIMG}" border="0" class="buynow"></a> {auctions.BNFORMAT}
+	<!-- ELSE -->
+						{auctions.BIDFORMAT}
+	<!-- ENDIF -->
+						</td>
 					<td width="15%">{auctions.NUM_BIDS} </td>
 					<td width="15%">{auctions.TIMELEFT}</td>
 				</tr>
@@ -43,14 +43,14 @@
 					<td align="center">
 						{L_5117} {PAGE} {L_5118} {PAGES}
 						<br>
-    <!-- IF B_NOTLAST -->
+	 <!-- IF B_NOTLAST -->
 						<a href="active_auctions.php?PAGE={PREV}&user_id={USER_ID}"><u>{L_5119}</u></a>&nbsp;&nbsp;
-    <!-- ENDIF -->
+	 <!-- ENDIF -->
 						{PAGENA}
 						&nbsp;&nbsp;
-    <!-- IF B_NOTLAST -->
+	 <!-- IF B_NOTLAST -->
 						<a href="active_auctions.php?PAGE={NEXT}&user_id={USER_ID}"><u>{L_5120}</u></a>
-    <!-- ENDIF -->
+	 <!-- ENDIF -->
 					</td>
 				</tr>
 			</table>

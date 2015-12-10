@@ -37,10 +37,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update database
 		$query = "UPDATE " . $DBPrefix . "bannersusers SET
-				  name = :name,
-				  company = :company,
-				  email = :email
-				  WHERE id = :id";
+					name = :name,
+					company = :company,
+					email = :email
+					WHERE id = :id";
 		$params = array();
 		$params[] = array(':name', $_POST['name'], 'str');
 		$params[] = array(':company', $_POST['company'], 'str');

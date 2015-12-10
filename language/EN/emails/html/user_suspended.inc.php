@@ -7,7 +7,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" height="50" style="font-size: 12px; padding-right: 6px;">
-		 This e-mail is to alert you that your {SITENAME} account has been suspended.<br />
+			This e-mail is to alert you that your {SITENAME} account has been suspended.<br />
 		</td>
 	</tr>
 	<tr>

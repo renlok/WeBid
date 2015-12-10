@@ -86,11 +86,11 @@ if (isset($_POST['action']))
 				$params[] = array(':group_id', $_POST['id'], 'int');
 				$db->query($query, $params);
 				$ERR = $MSG['user_group_deleted'];
-		    }
+			}
 		}
 		else
 		{
-		    if (empty($_POST['group_name']))
+			if (empty($_POST['group_name']))
 			{
 				$ERR = $MSG['user_group_name_empty_update'];
 			}
@@ -156,8 +156,8 @@ while ($row = $db->fetch())
     }
 	else
 	{
-	    $groups_array = $groups_array . ',unknown';
-        $groups_unknown[] = $row;
+		$groups_array = $groups_array . ',unknown';
+		$groups_unknown[] = $row;
     }
 }
 $groups_array = explode(',', $groups_array);
@@ -205,12 +205,12 @@ if (!empty($groups_array))
 {
 	foreach ($groups_array as $k => $v)
 	{
-	    $template->assign_block_vars('groups_unknown', array(
+		$template->assign_block_vars('groups_unknown', array(
 				'ID' => $k,
 				'NAME' => $MSG['text_unknown'],
 				'USER_COUNT' => $v
 				));
-	    $query = "SELECT groups, id, nick FROM ". $DBPrefix . "users WHERE groups LIKE :group_name";
+		$query = "SELECT groups, id, nick FROM ". $DBPrefix . "users WHERE groups LIKE :group_name";
 		$params = array();
 		$params[] = array(':group_name', '%' . $k . '%', 'str');
 		$db->query($query, $params);

@@ -28,8 +28,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['aboutustext'] = $system->cleanvars($_POST['aboutustext']);
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  aboutus = :aboutus,
-			  aboutustext = :aboutustext";
+				aboutus = :aboutus,
+				aboutustext = :aboutustext";
 	$params = array();
 	$params[] = array(':aboutus', $system->SETTINGS['aboutus'], 'str');
 	$params[] = array(':aboutustext', $system->SETTINGS['aboutustext'], 'str');

@@ -34,8 +34,8 @@ $user->is_valid_user($user_id);
 
 // get number of closed auctions for this user
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
-	  WHERE user = :user_id
-	  AND closed = 1";
+		WHERE user = :user_id
+		AND closed = 1";
 $params = array();
 $params[] = array(':user_id', $user_id, 'int');
 $db->query($query, $params);

@@ -36,10 +36,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$query = "UPDATE " . $DBPrefix . "community
-				  SET name = :name,
-				  msgstoshow = :msgstoshow,
-				  active = :active
-				  WHERE id = :id";
+					SET name = :name,
+					msgstoshow = :msgstoshow,
+					active = :active
+					WHERE id = :id";
 		$params = array();
 		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 		$params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');

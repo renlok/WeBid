@@ -37,23 +37,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	if (array_key_exists(intval($_POST['mail_protocol']), $mail_protocol))
 	{
-
-	  if  (intval($_POST['mail_protocol']) !== 2)
-	  {
-	   // Update database
-	    	$query = "UPDATE ". $DBPrefix . "settings SET
+		if (intval($_POST['mail_protocol']) !== 2)
+		{
+			// Update database
+			$query = "UPDATE ". $DBPrefix . "settings SET
 					mail_protocol = :protocol,
 					mail_parameter = :parameter,
 					alert_emails = :emails";
-	    	$params = array();
+			$params = array();
 			$params[] = array(':protocol', $_POST['mail_protocol'], 'int');
 			$params[] = array(':parameter', $_POST['mail_parameter'], 'str');
 			$params[] = array(':emails', $_POST['alert_emails'], 'str');
 			$db->query($query, $params);
-	    }
+		}
 		else
 		{
-	    	$query = "UPDATE ". $DBPrefix . "settings SET
+			$query = "UPDATE ". $DBPrefix . "settings SET
 					mail_protocol = 2,
 					smtp_authentication = :authentication,
 					smtp_security = :security,
@@ -62,7 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					smtp_password = :password,
 					smtp_host = :host,
 					alert_emails = :emails";
-	    	$params = array();
+			$params = array();
 			$params[] = array(':authentication', $_POST['smtp_authentication'], 'str');
 			$params[] = array(':security', $_POST['smtp_security'], 'str');
 			$params[] = array(':port', $_POST['smtp_port'], 'int');
@@ -71,8 +70,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':host', (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
 			$params[] = array(':emails', $_POST['alert_emails'], 'str');
 			$db->query($query, $params);
-	    }
-	  $ERR = $MSG['895'];
+		}
+		$ERR = $MSG['895'];
 	}
 
     $system->SETTINGS['mail_protocol'] = intval($_POST['mail_protocol']);

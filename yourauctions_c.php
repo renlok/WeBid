@@ -128,15 +128,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 
 			$query = "UPDATE " . $DBPrefix . "auctions
-				  SET starts = :starts,
-				  ends = :ends,
-				  closed = 0,
-				  num_bids = 0,
-				  relisted = relisted + 1,
-				  current_bid = 0,
-				  sold = 'n',
-				  suspended = :suspended
-				  WHERE id = :auc_id";
+					SET starts = :starts,
+					ends = :ends,
+					closed = 0,
+					num_bids = 0,
+					relisted = relisted + 1,
+					current_bid = 0,
+					sold = 'n',
+					suspended = :suspended
+					WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':starts', $NOW, 'int');
 			$params[] = array(':ends', $WILLEND, 'int');

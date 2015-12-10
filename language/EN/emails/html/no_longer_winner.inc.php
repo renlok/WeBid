@@ -8,7 +8,7 @@
 	<tr>
 		<td colspan="3" height="50" style="font-size: 12px; padding-right: 6px;">
 			You have been outbid on the following:
-	  </td>
+		</td>
 	</tr>
 	<tr>
 		<td width="9%" rowspan="2"><img border="0" src="{SITE_URL}{A_PICURL}"></td>

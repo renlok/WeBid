@@ -513,9 +513,9 @@ if (count($categories) > 0)
 		if ($category['updated'])
 		{
 			$query = "UPDATE " . $DBPrefix . "categories SET
-					 counter = :counter,
-					 sub_counter = :sub_counter
-					 WHERE cat_id = :cat_id";
+						counter = :counter,
+						sub_counter = :sub_counter
+						WHERE cat_id = :cat_id";
 			$params = array();
 			$params[] = array(':counter', $category['counter'], 'int');
 			$params[] = array(':sub_counter', $category['sub_counter'], 'int');

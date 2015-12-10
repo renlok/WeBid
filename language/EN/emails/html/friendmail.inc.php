@@ -7,7 +7,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" height="50" style="font-size: 12px; padding-right: 6px;">
-		 You have been forwarded an auction from {S_NAME} (<a href="mailto:{S_EMAIL}">{S_EMAIL}</a>) at {SITENAME}
+			You have been forwarded an auction from {S_NAME} (<a href="mailto:{S_EMAIL}">{S_EMAIL}</a>) at {SITENAME}
 		</td>
 	</tr>
 	<tr>

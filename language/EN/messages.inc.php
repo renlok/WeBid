@@ -1495,7 +1495,7 @@ $MSG['2__0003'] = "<br>The default language is English.<br>
 				<li><b>rtl</b> (right-to-left): means the text must be read from right to left (i.e. Arabian, Hebrew, etc)
 				</ul>
 				Once changed <i>\$CHARSET</i> and <i>\$DOCDIR</i> according to the language you are translating into,
-				 you will have to translate all the error messages and user interface messages contained in the messages file.
+				you will have to translate all the error messages and user interface messages contained in the messages file.
 
 				<li>You will then need the flag(s) GIFs for the languages you are going to use, in the includes/flags directory.
 				Get the flag(s) you need and change the file name(s) to be XX.gif, where XX is the language code for your country language.

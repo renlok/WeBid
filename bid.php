@@ -260,8 +260,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 				{
 					// Just update proxy_bid
 					$query = "UPDATE " . $DBPrefix . "proxybid SET bid = :newbid
-							  WHERE userid = :user_id
-							  AND itemid = :item_id AND bid = :oldbid";
+								WHERE userid = :user_id
+								AND itemid = :item_id AND bid = :oldbid";
 					$params = array();
 					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$params[] = array(':item_id', $id, 'int');

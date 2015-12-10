@@ -65,9 +65,9 @@ $db->direct_query($query);
 $parent_id = $db->result('cat_id');
 
 $query = "SELECT * FROM " . $DBPrefix . "categories
-		  WHERE parent_id = :parent_id
-		  " . $catsorting . "
-		  LIMIT :limit";
+			WHERE parent_id = :parent_id
+			" . $catsorting . "
+			LIMIT :limit";
 $params = array();
 $params[] = array(':parent_id', $parent_id, 'int');
 $params[] = array(':limit', $system->SETTINGS['catstoshow'], 'int');
@@ -123,10 +123,10 @@ $featured_items = ($i > 0) ? true : false;
 
 // get last created auctions
 $query = "SELECT id, title, starts from " . $DBPrefix . "auctions
-		 WHERE closed = 0 AND suspended = 0
-		 AND starts <= :time
-		 ORDER BY starts DESC
-		 LIMIT :limit";
+			WHERE closed = 0 AND suspended = 0
+			AND starts <= :time
+			ORDER BY starts DESC
+			LIMIT :limit";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['lastitemsnumber'], 'int');
@@ -147,8 +147,8 @@ while ($row = $db->fetch())
 $auc_last = ($i > 0) ? true : false;
 // get ending soon auctions
 $query = "SELECT ends, id, title FROM " . $DBPrefix . "auctions
-		 WHERE closed = 0 AND suspended = 0 AND starts <= :time
-		 ORDER BY ends LIMIT :limit";
+			WHERE closed = 0 AND suspended = 0 AND starts <= :time
+			ORDER BY ends LIMIT :limit";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['endingsoonnumber'], 'int');

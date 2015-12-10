@@ -110,8 +110,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img'])
 
 	//if default deleted search $_SESSION['UPLOADED_PICTURES'] and make first one found default
 	if ($default_deleted)
-		{$first_value = reset($_SESSION['UPLOADED_PICTURES']);
-	    $_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $first_value;}
+	{
+		$first_value = reset($_SESSION['UPLOADED_PICTURES']);
+		$_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $first_value;
+	}
 }
 
 if (isset($_GET['action']) && $_GET['action'] == 'makedefault')

@@ -205,8 +205,8 @@ if ($STATSSETTINGS['activate'] == 'y')
 		else
 		{
 			$query = "UPDATE " . $DBPrefix . "currentbrowsers SET
-					 counter = counter + 1
-					 WHERE browser = :browser AND month = :month AND year = :year";
+						counter = counter + 1
+						WHERE browser = :browser AND month = :month AND year = :year";
 			$params = array();
 			$params[] = array(':browser', $browser, 'str');
 			$params[] = array(':month', $THISMONTH, 'str');

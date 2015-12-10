@@ -33,14 +33,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['endingsoonnumber'] = intval($_POST['endingsoonnumber']);
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  perpage = :perpage,
-			  thumb_list = :thumb_list,
-			  lastitemsnumber = :lastitemsnumber,
-			  hotitemsnumber = :hotitemsnumber,
-			  endingsoonnumber = :endingsoonnumber,
-			  loginbox = :loginbox,
-			  newsbox = :newsbox,
-			  newstoshow = :newstoshow";
+				perpage = :perpage,
+				thumb_list = :thumb_list,
+				lastitemsnumber = :lastitemsnumber,
+				hotitemsnumber = :hotitemsnumber,
+				endingsoonnumber = :endingsoonnumber,
+				loginbox = :loginbox,
+				newsbox = :newsbox,
+				newstoshow = :newstoshow";
 	$params = array();
 	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 	$params[] = array(':thumb_list', $system->SETTINGS['thumb_list'], 'int');

@@ -67,35 +67,35 @@ if ($count > 0)
 
   <table width="352" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	  <td bgcolor="#eeeeee">
+		<td bgcolor="#eeeeee">
 
-	  <?php echo $MSG['_0053']; ?>
+		<?php echo $MSG['_0053']; ?>
 
-	  </td>
+		</td>
 	</tr>
 	<tbody>
 	<tr>
-	  <td>
-	  <?php echo $CATEGORIES; ?></td>
+		<td>
+		<?php echo $CATEGORIES; ?></td>
 	</tr>
 	<tr>
-	  <td bgcolor="#ffffff">&nbsp;
+		<td bgcolor="#ffffff">&nbsp;
 
-	  </td>
+		</td>
 	</tr>
 	<tr>
-	  <td bgcolor="#eeeeee">
+		<td bgcolor="#eeeeee">
 
-	  <?php echo $MSG['_0054']; ?>
+		<?php echo $MSG['_0054']; ?>
 
-	  </td>
+		</td>
 	</tr>
 	<tr>
-	  <td>
+		<td>
 
 		<?php echo $KEYWORDS; ?>
 
-	  </td>
+		</td>
 	</tr>
 	</tbody>
   </table>

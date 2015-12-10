@@ -36,7 +36,7 @@ function constructCategories()
 	global $DBPrefix, $system, $db;
 
 	$query = "SELECT cat_id, parent_id, sub_counter, counter
-			 FROM " . $DBPrefix . "categories ORDER BY cat_id";
+				FROM " . $DBPrefix . "categories ORDER BY cat_id";
 	$db->direct_query($query);
 
 	while ($row = $db->fetch())

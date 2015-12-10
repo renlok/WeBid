@@ -127,17 +127,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 
 			$query = "UPDATE " . $DBPrefix . "users SET
-				  name = :name,
-				  email = :email,
-				  address = :address,
-				  city = :city,
-				  prov = :prov,
-				  country = :country,
-				  zip = :zip,
-				  phone = :phone,
-				  birthdate = :birthdate,
-				  groups = :groups,
-				  balance = :balance";
+					name = :name,
+					email = :email,
+					address = :address,
+					city = :city,
+					prov = :prov,
+					country = :country,
+					zip = :zip,
+					phone = :phone,
+					birthdate = :birthdate,
+					groups = :groups,
+					balance = :balance";
 			$params = array();
 			$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 			$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');

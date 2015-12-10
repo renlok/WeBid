@@ -1803,13 +1803,13 @@ $query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('n', 'y', 'y', 
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "tax`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
-	  `id` INT(2) NOT NULL AUTO_INCREMENT,
-	  `tax_name` VARCHAR(30) NOT NULL ,
-	  `tax_rate` DOUBLE(16, 2) NOT NULL ,
-	  `countries_seller` TEXT NOT NULL ,
-	  `countries_buyer` TEXT NOT NULL ,
-	  `fee_tax` INT(1) NOT NULL DEFAULT  '0',
-	  PRIMARY KEY (`id`)
+  `id` INT(2) NOT NULL AUTO_INCREMENT,
+  `tax_name` VARCHAR(30) NOT NULL ,
+  `tax_rate` DOUBLE(16, 2) NOT NULL ,
+  `countries_seller` TEXT NOT NULL ,
+  `countries_buyer` TEXT NOT NULL ,
+  `fee_tax` INT(1) NOT NULL DEFAULT  '0',
+  PRIMARY KEY (`id`)
 	);";
 
 #

@@ -298,7 +298,7 @@ switch ($_SESSION['action'])
 				if ($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
 				{
 					$query = "SELECT COUNT(*) as count FROM " . $DBPrefix . "auctions
-						 WHERE closed = 0 AND suspended = 0 AND user = :user_id";
+							WHERE closed = 0 AND suspended = 0 AND user = :user_id";
 					$params = array();
 					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$db->query($query, $params);
@@ -306,7 +306,7 @@ switch ($_SESSION['action'])
 					if ($totalaucs > 0)
 					{
 						$query = "SELECT COUNT(*) as count FROM " . $DBPrefix . "auctions
-							 WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = :user_id";
+								WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = :user_id";
 						$params = array();
 						$params[] = array(':user_id', $user->user_data['id'], 'int');
 						$db->query($query, $params);

@@ -45,7 +45,7 @@ $template->assign_vars(array(
 		'JSFILES' => $jsfiles,
 		'LOADCKEDITOR' => (basename($_SERVER['PHP_SELF']) == 'sell.php'),
 		'ACTUALDATE' => ActualDate(),
-		'LOGO' => ($system->SETTINGS['logo']) ? '<img src="' . $incurl . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '">' : '&nbsp;',
+		'LOGO' => ($system->SETTINGS['logo']) ? '<img src="' . $incurl . 'uploaded/logo/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '">' : '&nbsp;',
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',
 		'HEADERCOUNTER' => $counters,
 		'SITEURL' => $system->SETTINGS['siteurl'],

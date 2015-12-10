@@ -39,9 +39,13 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 			}
 		}
 	}
-	$query = " UPDATE " . $DBPrefix . "settings SET
-	logo = '" . $_FILES['logo']['name'] . "' ";
-	$db->direct_query($query);
+	$v = $_FILES['logo']['name'];
+		$params = array();
+	$params[] = array(':logo', $v , 'str');
+	
+	$query = " UPDATE " . $DBPrefix . "settings SET logo = :logo ";
+	$db->query($query,$params);
+		
 	$system->SETTINGS['logo'] = $_FILES['logo']['name'];
 }
 $logoURL = $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'];

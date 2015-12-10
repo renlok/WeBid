@@ -5,7 +5,7 @@ body {
 	margin:0;
 	padding:0;
 	background:#BBD9EE;
-  	color:#000;
+	color:#000;
 	font-family:tahoma,arial,sans-serif;
 	font-size:11px;
 }
@@ -244,7 +244,7 @@ ul.menu li {
 
 /* Info boxes */
 .plain-box {
- 	background-color: #FFFFFF;
+	background-color: #FFFFFF;
 	border-bottom: 1px solid #F4F4F4;
 	margin-left: 15px;
 }
@@ -280,6 +280,6 @@ ul.menu li {
 }
 
 .button {
-    display: inline-block;
-    height: 20px;
+	display: inline-block;
+	height: 20px;
 }

@@ -53,7 +53,7 @@ $title = $system->SETTINGS['sitename'] . ' - ' . $system->uncleanvars($data['tit
 
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR,
-		'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'],
+		'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo']
 		'CHARSET' => $CHARSET,
 		'LANGUAGE' => $language,
 		'SENDER' => $sender['nick'],

@@ -1677,7 +1677,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 '" . $siteEmail . "',
 1,
 1,
-'logo.gif',
+'logo.png',
 0,
 2,
 30,

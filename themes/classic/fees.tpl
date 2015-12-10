@@ -43,7 +43,7 @@
 				</tr>
 			</table>
 <!-- ENDIF -->
-            <div align="center" style="text-align:center; margin-top:15px;">
+			<div align="center" style="text-align:center; margin-top:15px;">
 <!-- IF B_SIGNUP_FEE -->
 				<p>{L_430}: {SIGNUP_FEE}</p>
 <!-- ENDIF -->
@@ -74,7 +74,7 @@
 <!-- IF B_SUBTITLE_FEE -->
 				<p>{L_803}: {SUBTITLE_FEE}</p>
 <!-- ENDIF -->
-            </div>
+			</div>
 		</div>
 	</div>
 </div>

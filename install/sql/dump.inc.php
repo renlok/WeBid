@@ -3,7 +3,7 @@
 # Table structure for table `" . $DBPrefix . "settingsv2`
 #
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settingsv2`;";
-$query[] = "CREATE TABLE `".$DBprefix ."settingsv2` 
+$query[] = "CREATE TABLE `" . $DBPrefix . "settingsv2` 
   `fieldname` VARCHAR(30) NOT NULL,
   `fieldtype` VARCHAR(10) NOT NULL,
   `value` VARCHAR(255) NOT NULL,
@@ -118,7 +118,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `reserve_price` double(16,2) default '0',
   `buy_now` double(16,2) default '0',
   `auction_type` char(1) default NULL,
-  `duration` varchar(7) default NULL,
+  `duration` double(8,2) default NULL,
   `increment` double(8,2) NOT NULL default '0',
   `shipping` char(1) default NULL,
   `payment` tinytext,
@@ -946,7 +946,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "currentplatforms` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "durations`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "durations` (
-  `days` int(11) NOT NULL default '0',
+  `days` double(8,2) NOT NULL default '0',
   `description` varchar(30) default NULL
 ) ;";
 
@@ -956,6 +956,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "durations` (
 
 $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (1, '1 day');";
 $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (2, '2 days');";
+$query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (2.5, '2.5 days');";
 $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (3, '3 days');";
 $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (7, '1 week');";
 $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (14, '2 weeks');";
@@ -970,7 +971,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "durations` VALUES (30, '1 month');";
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "durations_translated`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "durations_translated` (
-  `days` int(4) NOT NULL,
+  `days` double(8,2) NOT NULL,
   `lang` char(2) NOT NULL default '',
   `description` varchar(255) NOT NULL default ''
 );";

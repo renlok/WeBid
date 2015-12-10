@@ -66,7 +66,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 			if ($db->numrows() > 0)
 			{
-				$query = "UPDATE " . $DBPrefix . "news_translated SET 
+				$query = "UPDATE " . $DBPrefix . "news_translated SET
 						title = :title,
 						content = :content
 						WHERE  lang = :lang AND id = :news_id";

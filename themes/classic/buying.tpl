@@ -45,23 +45,23 @@
 		<td align="right">
 			{items.TOTAL}
 	<!-- IF items.SHIPPED eq 0 -->
-	        <img src="{SITEURL}images/clock.png"> <span class="smallspan">{L_1107}</span>
+			<img src="{SITEURL}images/clock.png"> <span class="smallspan">{L_1107}</span>
 	<!-- ELSEIF items.SHIPPED eq 1 -->
-	        <img src="{SITEURL}images/lorry_go.png" border="0"> <span class="smallspan"><a href="{SITEURL}buying.php?shipped={items.ID}">{L_1108}</a></span>
+			<img src="{SITEURL}images/lorry_go.png" border="0"> <span class="smallspan"><a href="{SITEURL}buying.php?shipped={items.ID}">{L_1108}</a></span>
 	<!-- ELSEIF items.SHIPPED eq 2 -->
-	        <img src="{SITEURL}images/box.png" border="0"> <span class="smallspan">{L_1109}</span>
-    <!-- ENDIF -->
+			<img src="{SITEURL}images/box.png" border="0"> <span class="smallspan">{L_1109}</span>
+	<!-- ENDIF -->
 		</td>
 		<td>
 	<!-- IF items.B_PAID -->
-    		{L_755}
-    <!-- ELSE -->
-    		<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
-            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-            <input type="hidden" name="pfval" value="{items.ID}">
-            <input type="submit" name="Pay" value="{L_756}" class="pay">
-            </form>
-    <!-- ENDIF -->
+			{L_755}
+	<!-- ELSE -->
+			<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
+				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+				<input type="hidden" name="pfval" value="{items.ID}">
+				<input type="submit" name="Pay" value="{L_756}" class="pay">
+			</form>
+	 <!-- ENDIF -->
 		</td>
 	</tr>
 <!-- END items -->

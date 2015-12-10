@@ -30,7 +30,7 @@
 
 
 			<table class="table hidden-xs">
-				
+
 				<tr class="titTable2">
 					<td width="5%">&nbsp;</td>
 					<td width="40%">{L_503}</td>
@@ -57,9 +57,9 @@
 					</td>
 				</tr>
 <!-- END fbs -->
-				
+
 			</table>
-  
+
                               <div class="text-center"> {PAGENATION}</div>
 
 		</div>

@@ -2,7 +2,7 @@
 		<div class="well">
 			<h4>{L_220}<a href="{SITEURL}profile.php?user_id={USER_ID}">{USERNAME}</a></h4>
 		</div>
-		
+
 			<table class="table table-bordered table-condensed table-striped">
 				<tr align="center">
 					<th width="10%">{L_167}</th>
@@ -37,7 +37,7 @@
 <!-- END no_auctions -->
 			</table>
 <!-- IF B_MULPAG -->
-			
+
 					<div class="text-center">
 						{L_5117} {PAGE} {L_5118} {PAGES}
 						<br>
@@ -50,7 +50,7 @@
 						<a href="{SITEURL}active_auctions.php?PAGE={NEXT}&user_id={USER_ID}"><u>{L_5120}</u></a>
     <!-- ENDIF -->
 					</div>
-				
+
 <!-- ENDIF -->
-		
-	
+
+

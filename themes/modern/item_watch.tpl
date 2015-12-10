@@ -18,13 +18,13 @@
                                 <div class="text-right">
                         <!-- IF items.BUY_NOW neq '' -->
 				<span class="buy-now-feat">{items.BUY_NOW}</span><br>
-	                
+
 	                <!-- ENDIF -->
-                                
+
                                 <span class="bigfont">{items.BIDFORM}</span><br>
 				<span class="label label-success">{items.NUMBIDS}</span>
                                 </div>
-                                <div class="text-right grid-margin-top-sm">	
+                                <div class="text-right grid-margin-top-sm">
                             <a class="btn btn-danger btn-xs" href="item_watch.php?delete={items.ID}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> {L_008}</a>
                             </div>
                      </div>

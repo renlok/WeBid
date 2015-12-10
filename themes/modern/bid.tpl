@@ -23,13 +23,13 @@ $(document).ready(function(){
                 <div class="col-md-6">
 		<nav>
                   <ul class="pager">
-			<li class="previous"><a href="{SITEURL}item.php?id={ID}"><span aria-hidden="true">&larr;</span>{L_138}</a></li>         
+			<li class="previous"><a href="{SITEURL}item.php?id={ID}"><span aria-hidden="true">&larr;</span>{L_138}</a></li>
                         <li>{BID_HISTORY}</li>
                   </ul>
 		</nav>
                 </div>
               </div>
-		
+
 <!-- IF PAGE eq 1 -->
 	<!-- IF ERROR ne '' -->
 			<div class="alert alert-danger" role="alert">
@@ -40,9 +40,9 @@ $(document).ready(function(){
             <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                                 <div class="col-md-12 text-center">{IMAGE}</div>
                                 <div class="col-md-8 col-md-offset-2">
-			
+
 				<div class="form-group">
-					
+
 					<label class="col-sm-5 control-label">{L_154}</label>
 					<div class="col-sm-7"><p class="form-control-static">{TITLE}</p></div>
 				</div>
@@ -76,7 +76,7 @@ $(document).ready(function(){
 					</div>
 				</div>
 	<!-- ENDIF -->
-			
+
 			<div class="text-center">
 				<input type="hidden" name="id" value="{ID}">
 				<div class="alert alert-success" role="alert">{AGREEMENT}</div>
@@ -85,13 +85,13 @@ $(document).ready(function(){
 			</div>
 			</form></div>
 <!-- ELSE -->
-			
+
 			<div class="alert alert-success" role="alert">{L_699} {BID} {L_700}<br>
                                    {L_272}&nbsp;
 			<a href="{SITEURL}item.php?id={ID}"><b>{TITLE}</b></a><br>
                         </div>
 <!-- ENDIF -->
-		
+
 	</div>
     </div>
 </div>

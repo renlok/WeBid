@@ -2,7 +2,7 @@
       <div class="col-md-12">
 		<div class="col-md-12 well">
                    <legend>{L_181}</legend>
-                      
+
                 <!-- IF ERROR ne '' -->
 		<div class="alert alert-danger">
 			{ERROR}

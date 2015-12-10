@@ -34,7 +34,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			'zip' => $_POST['zip'],
 			'tel' => $_POST['tel']
 			);
-			
+
 	$DISPLAYED_FIELDS = array(
 			'birthdate_regshow' => $_POST['birthdate_regshow'],
 			'address_regshow' => $_POST['address_regshow'],
@@ -60,8 +60,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$mdata = serialize($MANDATORY_FIELDS);
 		$sdata = serialize($DISPLAYED_FIELDS);
 		$query = "UPDATE " . $DBPrefix . "settings SET
-				  mandatory_fields = :mandatory_fields,
-				  displayed_feilds = :displayed_feilds";
+					mandatory_fields = :mandatory_fields,
+					displayed_feilds = :displayed_feilds";
 		$params = array();
 		$params[] = array(':mandatory_fields', $mdata, 'str');
 		$params[] = array(':displayed_feilds', $sdata, 'str');

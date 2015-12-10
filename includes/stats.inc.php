@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 if (!defined('InWeBid')) exit();
 
 include $include_path . 'useragent.inc.php';
@@ -29,7 +29,7 @@ if ($STATSSETTINGS['activate'] == 'y')
 {
 	// Users accesses
 	if ($STATSSETTINGS['accesses'] == 'y')
-	{		
+	{
 		// check cookies and session vars
 		if (isset($_SESSION['USER_STATS_SESSION']))
 		{
@@ -41,7 +41,7 @@ if ($STATSSETTINGS['activate'] == 'y')
 			$_SESSION['USER_STATS_SESSION'] = $USER_STATS_SESSION;
 			$UPDATESESSION = TRUE;
 		}
-		
+
 		// check cookies and session vars
 		$Cookie = 'uniqueuser';
 		if (isset($_COOKIE[$Cookie]))
@@ -55,7 +55,7 @@ if ($STATSSETTINGS['activate'] == 'y')
 			setcookie($Cookie, time(), time() + $exp);
 			$UPDATECOOKIE = TRUE;
 		}
-		
+
 		$query = "SELECT day, month FROM " . $DBPrefix . "currentaccesses WHERE day = :day AND month = :month";
 		$params = array();
 		$params[] = array(':day', $THISDAY, 'int');
@@ -70,7 +70,7 @@ if ($STATSSETTINGS['activate'] == 'y')
 			$params[] = array(':year', $THISYEAR, 'int');
 			$db->query($query, $params);
 		}
-		
+
 		$query = "UPDATE " . $DBPrefix . "currentaccesses SET pageviews = pageviews + 1";
 		if ($UPDATESESSION)
 		{
@@ -115,7 +115,7 @@ if ($STATSSETTINGS['activate'] == 'y')
 		default:
 			$os .= $browser_info[5];
 	}
-	
+
 	if ($browser_info[5] == 'nt')
 	{
 		if ($browser_info[6] == 5)
@@ -155,7 +155,7 @@ if ($STATSSETTINGS['activate'] == 'y')
 	{
 		$os .=  strtoupper( $browser_info[6] );
 	}
-	
+
 	$browser = '';
 	if ($browser_info[0] == 'moz')
 	{
@@ -183,7 +183,7 @@ if ($STATSSETTINGS['activate'] == 'y')
 		$browser .= ($browser_info[0] == 'ie') ? strtoupper($browser_info[7]) : ucwords($browser_info[7]);
 		$browser .= ' ' . $browser_info[1];
 	}
-	
+
 	if ($STATSSETTINGS['browsers'] == 'y' && !(isset($browser_info[8]) && $browser_info[8] == 'bot'))
 	{
 		// Update the browser stats
@@ -205,15 +205,15 @@ if ($STATSSETTINGS['activate'] == 'y')
 		else
 		{
 			$query = "UPDATE " . $DBPrefix . "currentbrowsers SET
-					 counter = counter + 1
-					 WHERE browser = :browser AND month = :month AND year = :year";
+						counter = counter + 1
+						WHERE browser = :browser AND month = :month AND year = :year";
 			$params = array();
 			$params[] = array(':browser', $browser, 'str');
 			$params[] = array(':month', $THISMONTH, 'str');
 			$params[] = array(':year', $THISYEAR, 'int');
 			$db->query($query, $params);
 		}
-		
+
 		// Update the platfom stats
 		$query = "SELECT month FROM " . $DBPrefix . "currentplatforms WHERE month = :month AND year = :year AND platform = :OS";
 		$params = array();

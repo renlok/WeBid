@@ -8,11 +8,11 @@
 		    <th width="15%" class="tr-image"> <small>{L_741}</small> </th>
 		    <th class="tr-title"> <small>{L_017}</small> </th>
 		    <th width="10%" class="tr-bids"> <small>{L_169}</small> </th>
-		    
+
 		    <th width="8%" class="hidden-xs tr-bindsno"> <small>{L_170}</small> </th>
 		    <th width="18%" class="tr-timeleft hidden-xs"> <small>{L_171}</small> </th>
 		  </tr>
-    
+
      <!-- BEGIN featured_items -->
 		<tr align="center">
 			<td align="center">
@@ -21,7 +21,7 @@
 			<td align="left"<!-- IF featured_items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
                 <a href="{SITEURL}item.php?id={featured_items.ID}" class="bigfont">{featured_items.TITLE}</a>
 				<!-- IF B_SUBTITLE && featured_items.SUBTITLE ne '' --><p><small>{featured_items.SUBTITLE}</small></p><!-- ENDIF -->
-				
+
 			</td>
 			<td align="center">
 	<!-- IF featured_items.BUY_NOW neq '' -->
@@ -32,7 +32,7 @@
                         {featured_items.BIDFORM}<span class="label label-success visible-xs">{featured_items.NUMBIDS}</span>
 			</td>
 			<td class="hidden-xs" align="center">
-				
+
 				<span class="label label-success">{featured_items.NUMBIDS}</span>
 			</td>
                         <td class="hidden-xs">{L_949} {featured_items.CLOSES}
@@ -52,7 +52,7 @@
 		    <th width="12%" class="tr-image"> <small>{L_741}</small> </th>
 		    <th class="tr-title"> <small>{L_017}</small> </th>
 		    <th width="10%" class="tr-bids"> <small>{L_169}</small> </th>
-		    
+
 		    <th width="8%" class="hidden-xs tr-bindsno"> <small>{L_170}</small> </th>
 		    <th width="18%" class="tr-timeleft hidden-xs"> <small>{L_171}</small> </th>
 		  </tr>
@@ -64,7 +64,7 @@
 			<td align="left"<!-- IF items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
                 <a href="{SITEURL}item.php?id={items.ID}" class="bigfont">{items.TITLE}</a>
 				<!-- IF B_SUBTITLE && items.SUBTITLE ne '' --><p><small>{items.SUBTITLE}</small></p><!-- ENDIF -->
-				
+
 			</td>
 			<td align="center">
 	<!-- IF items.BUY_NOW neq '' -->
@@ -75,14 +75,14 @@
                       {items.BIDFORM}<span class="label label-success visible-xs">{items.NUMBIDS}</span>
 			</td>
 			<td align="center" class="hidden-xs">
-				
+
 				<span class="label label-success">{items.NUMBIDS}</span>
 			</td>
                         <td class="hidden-xs">{L_949} {items.CLOSES}
                         </td>
 		</tr>
 <!-- END items -->
-		
+
 	</table>
 <div class="text-center">
 			<td>{L_290} {NUM_AUCTIONS}</td>

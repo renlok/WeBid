@@ -7,8 +7,8 @@
 	</tr>
 	<tr>
 		<td colspan="2" height="50" style="font-size: 12px; padding-right: 6px;">
-		 This e-mail is to confirm that your {SITENAME} account has been re-activated.<br />
-		 You can now login in to your account and start selling and/or bidding. See you soon!
+			This e-mail is to confirm that your {SITENAME} account has been re-activated.<br />
+			You can now login in to your account and start selling and/or bidding. See you soon!
 		</td>
 	</tr>
 	<tr>

@@ -120,7 +120,7 @@ if (!defined('AdminFuncCall'))
 	{
 		if(false !== ($str = file_get_contents($url)))
 		{
-			return $str; 
+			return $str;
 		}
 		elseif(($handle = @fopen($url, 'r')) !== false)
 		{

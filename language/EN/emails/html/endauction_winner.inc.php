@@ -47,7 +47,7 @@
 		<img border="0" src="{SITE_URL}images/email_alerts/Total_Due_Btn.jpg" width="120" height="32"></a></td>
 	</tr>
  </table><br />
- 
+
 <table border="0" width="100%">
 	<tr>
 		<td style="font-size: 12px;"><b>Buyer's Information</b></td>

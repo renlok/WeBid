@@ -79,7 +79,7 @@ while ($User = $db->fetch())
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
-		
+
 $template->set_filenames(array(
 		'body' => 'adminusers.tpl'
 		));

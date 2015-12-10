@@ -151,7 +151,7 @@ if (isset($_GET['action']))
 					$params[] = array(':cat_id', $row['secondcat'], 'int');
 					$db->query($query, $params);
 					$parent_node = $db->result();
-	
+
 					$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 					for ($i = 0; $i < count($crumbs); $i++)
 					{

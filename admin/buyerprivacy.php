@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['buyerprivacy'] = ynbool($_POST['buyerprivacy']);
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  buyerprivacy = :buyerprivacy";
+				buyerprivacy = :buyerprivacy";
 	$params = array();
 	$params[] = array(':buyerprivacy', $system->SETTINGS['buyerprivacy'], 'str');
 	$db->query($query, $params);

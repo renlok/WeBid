@@ -27,8 +27,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['catstoshow'] = intval($_POST['catstoshow']);
 	// Update database
 	$query = " UPDATE " . $DBPrefix . "settings SET
-			   catsorting = :catsorting,
-			   catstoshow = :catstoshow";
+				catsorting = :catsorting,
+				catstoshow = :catstoshow";
 	$params = array();
 	$params[] = array(':catsorting', $system->SETTINGS['catsorting'], 'str');
 	$params[] = array(':catstoshow', $system->SETTINGS['catstoshow'], 'int');

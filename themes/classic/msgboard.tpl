@@ -23,7 +23,7 @@
                 	<div class="error">{ERROR}</div>
                 </td>
             </tr>
-            <!-- ENDIF --> 
+            <!-- ENDIF -->
 			</tr>
 			<td align="center">
 			<form name="messageboard" action="" method="post">

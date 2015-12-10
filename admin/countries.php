@@ -80,7 +80,7 @@ foreach($countries as $country) {
 	$params[] = array(':country', $country, 'str');
 	$db->query($query, $params);
 	$USEDINUSERS = $db->numrows();
-	
+
 	$template->assign_block_vars('countries', array(
 			'COUNTRY' => $country,
 			'SELECTBOX' => ($USEDINUSERS == 0) ? '<input type="checkbox" name="delete[]" value="' . $country . '">' : '<img src="../images/nodelete.gif" alt="You cannot delete this">'

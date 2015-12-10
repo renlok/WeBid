@@ -128,15 +128,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 
 			$query = "UPDATE " . $DBPrefix . "auctions
-				  SET starts = :starts,
-				  ends = :ends,
-				  closed = 0,
-				  num_bids = 0,
-				  relisted = relisted + 1,
-				  current_bid = 0,
-				  sold = 'n',
-				  suspended = :suspended
-				  WHERE id = :auc_id";
+					SET starts = :starts,
+					ends = :ends,
+					closed = 0,
+					num_bids = 0,
+					relisted = relisted + 1,
+					current_bid = 0,
+					sold = 'n',
+					suspended = :suspended
+					WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':starts', $NOW, 'int');
 			$params[] = array(':ends', $WILLEND, 'int');
@@ -171,7 +171,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params = array();
 			$params[] = array(':cat_id', $AUCTION['category'], 'int');
 			$db->query($query, $params);
-	
+
 			$parent_node = $db->result();
 			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 			// update recursive categories

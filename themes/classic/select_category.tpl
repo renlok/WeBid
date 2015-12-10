@@ -26,7 +26,7 @@ function SubmitBoxes(N)
 			<!-- IF CAT_NO eq 2 -->{L_2__0041} {COST}<!-- ELSE -->{L_2__0038}<!-- ENDIF -->
 		  </td>
 		</tr>
-		<tr> 
+		<tr>
 <!-- BEGIN boxes -->
 		  <td align="center" style="width:{boxes.PERCENT}%;">
 			  <select name="cat{boxes.I}" class="box" size="15" onClick="SubmitBoxes({boxes.I})" style="width:230px;">

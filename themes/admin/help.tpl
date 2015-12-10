@@ -1,21 +1,21 @@
 <!-- INCLUDE header.tpl -->
-    	<div style="width:25%; float:left;">
-            <div style="margin-left:auto; margin-right:auto;">
-            	<div class="box">
-                	<h4 class="rounded-top">{L_1061}</h4>
-                    <div class="rounded-bottom">
-                    	<form name="anotes" action="" method="post">
-							<textarea rows="15" name="anotes" class="anotes">{ADMIN_NOTES}</textarea>
-							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-							<input type="submit" name="act" value="{L_007}">
-						</form>
+		<div style="width:25%; float:left;">
+				<div style="margin-left:auto; margin-right:auto;">
+					<div class="box">
+						<h4 class="rounded-top">{L_1061}</h4>
+						<div class="rounded-bottom">
+							<form name="anotes" action="" method="post">
+								<textarea rows="15" name="anotes" class="anotes">{ADMIN_NOTES}</textarea>
+								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+								<input type="submit" name="act" value="{L_007}">
+							</form>
+						</div>
 					</div>
-                </div>
-            </div>
-        </div>
-    	<div style="width:75%; float:right;">
-            <div class="main-box">
-            	<table width="98%" cellpadding="1" cellspacing="0">
+				</div>
+		</div>
+		<div style="width:75%; float:right;">
+			<div class="main-box">
+				<table width="98%" cellpadding="1" cellspacing="0">
 					<tr>
 						<th colspan="2">{L_1062}</th>
 					</tr>
@@ -62,6 +62,6 @@
 						<td>{L_1081}</td>
 					</tr>
 				</table>
-            </div>
-        </div>
+			</div>
+		</div>
 <!-- INCLUDE footer.tpl -->

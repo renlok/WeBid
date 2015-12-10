@@ -49,7 +49,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$ERR = $MSG['_0005'];
 	}
 	$system->SETTINGS['superuser'] = $_POST['superuser'];
-	$system->SETTINGS['maintainancetext'] = $_POST['maintainancetext'];		
+	$system->SETTINGS['maintainancetext'] = $_POST['maintainancetext'];
 	$system->SETTINGS['active'] = $_POST['active'];
 }
 else
@@ -58,7 +58,7 @@ else
 	$db->direct_query($query);
 	$data = $db->result();
 	$system->SETTINGS['superuser'] = $data['superuser'];
-	$system->SETTINGS['maintainancetext'] = $data['maintainancetext'];		
+	$system->SETTINGS['maintainancetext'] = $data['maintainancetext'];
 	$system->SETTINGS['active'] = $data['active'];
 }
 

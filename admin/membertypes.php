@@ -46,8 +46,8 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 			if ( $val != $new_membertypes[$id])
 			{
 				$query = "UPDATE " . $DBPrefix . "membertypes SET
-						feedbacks = :feedbacks, 
-						icon = :icon 
+						feedbacks = :feedbacks,
+						icon = :icon
 						WHERE id = :id";
 				$params = array();
 				$params[] = array(':feedbacks', $new_membertypes[$id]['feedbacks'], 'int');
@@ -83,7 +83,7 @@ foreach ($membertypes as $id => $quest)
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
-		
+
 $template->set_filenames(array(
 		'body' => 'membertypes.tpl'
 		));

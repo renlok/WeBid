@@ -102,7 +102,7 @@ if (isset($_POST['action']))
 	// delete check
 	if ($_POST['action'] == "Delete" && isset($_POST['delete']) && is_array($_POST['delete']))
 	{
-		// get cats FAQs can be moved to		
+		// get cats FAQs can be moved to
 		$delete = implode(',', $_POST['delete']);
 		$query = "SELECT category, id FROM " . $DBPrefix . "faqscategories WHERE id NOT IN (:delete_list)";
 		$params = array();
@@ -115,7 +115,7 @@ if (isset($_POST['action']))
 		}
 		// Get data from the database
 		$query = "SELECT COUNT(f.id) as COUNT, c.category, c.id FROM " . $DBPrefix . "faqscategories c
-					LEFT JOIN " . $DBPrefix . "faqs f ON ( f.category = c.id ) 
+					LEFT JOIN " . $DBPrefix . "faqs f ON ( f.category = c.id )
 					WHERE c.id IN (:delete_list) GROUP BY c.id ORDER BY category";
 		$params = array();
 		$params[] = array(':delete_list', $delete, 'int');

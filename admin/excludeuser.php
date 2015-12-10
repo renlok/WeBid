@@ -40,7 +40,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 		$db->query($query, $params);
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - 1, users = users + 1";
 		$db->direct_query($query);
-		
+
 		$was_suspended = ($USER['suspended'] == 1 ? true : false);
 
 		if (!$was_suspended)

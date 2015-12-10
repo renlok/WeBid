@@ -34,7 +34,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params[] = array(':id', $_POST['id'], 'int');
 		$db->query($query, $params);
 	}
-	
+
 	foreach ($_POST['category'] as $k => $v)
 	{
 		$query = "SELECT category FROM " . $DBPrefix . "faqscat_translated WHERE lang = :lang AND id = :id";
@@ -44,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
-			$query = "UPDATE " . $DBPrefix . "faqscat_translated SET 
+			$query = "UPDATE " . $DBPrefix . "faqscat_translated SET
 					category = :category
 					WHERE lang = :lang AND id = :id";
 		}

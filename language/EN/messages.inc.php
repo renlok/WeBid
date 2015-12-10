@@ -1153,7 +1153,7 @@ $MSG['1128'] = 'SMTP Authentication';
 $MSG['1129'] = 'Additional Admin E-Mails:';
 $MSG['1130'] = 'Additional email accounts you want to receive admin related email, in addition to the main site email address of %s. (comma separated)';
 $MSG['1131'] = 'Email Settings';
-$MSG['1132'] = 'Please enter missing or incorrect SMTP settings'; 
+$MSG['1132'] = 'Please enter missing or incorrect SMTP settings';
 $MSG['1133'] = "SMTP Specific Options:";
 // modal and js
 $MSG['1134'] = "Email Test and Response";
@@ -1495,9 +1495,9 @@ $MSG['2__0003'] = "<br>The default language is English.<br>
 				<li><b>rtl</b> (right-to-left): means the text must be read from right to left (i.e. Arabian, Hebrew, etc)
 				</ul>
 				Once changed <i>\$CHARSET</i> and <i>\$DOCDIR</i> according to the language you are translating into,
-				 you will have to translate all the error messages and user interface messages contained in the messages file.
-				
-				<li>You will then need the flag(s) GIFs for the languages you are going to use, in the includes/flags directory. 
+				you will have to translate all the error messages and user interface messages contained in the messages file.
+
+				<li>You will then need the flag(s) GIFs for the languages you are going to use, in the includes/flags directory.
 				Get the flag(s) you need and change the file name(s) to be XX.gif, where XX is the language code for your country language.
 				<br>Copy the renamed flag file(s) in the includes/flags/ directory.
 				<br><b>Note:</b> for each translation, you need the corresponding XX.gif file in includes/flags/
@@ -1775,7 +1775,7 @@ $MSG['30_0110'] = "Shipping";
 $MSG['350_1004'] = "Quantity";
 $MSG['350_1008'] = "Additional Shipping";
 $MSG['350_1009'] = "Additional Shipping Cost";
-$MSG['RPT_22'] = 'User ID'; 
+$MSG['RPT_22'] = 'User ID';
 $MSG['RPT_23'] = '(leave blank for all)';
 
 $MSG['NAY_01'] = 'Featured Items';
@@ -1787,7 +1787,7 @@ $MSG['AUCTIONS_404'] = "Sold";
 $MSG['AUCTIONS_405'] = "Winning Bid";
 $MSG['AUCTIONS_406'] = "Winners";
 
-$MSG['BUY_NOW_ONLY_TPL_0100'] = "Recently Closed Auction Report"; 
+$MSG['BUY_NOW_ONLY_TPL_0100'] = "Recently Closed Auction Report";
 
 $MSG['communative_report_winner_yes'] = 'An email has been sent to the any winner(s) with your email address.';
 $MSG['communative_report_winner_no'] = 'Sorry, no auction winner(s) this time.';

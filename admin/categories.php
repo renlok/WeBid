@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
@@ -189,7 +189,7 @@ if (isset($_POST['action']))
 	}
 }
 
-//show the page... 
+//show the page...
 if (!isset($_GET['parent']))
 {
 	$query = "SELECT left_id, right_id, level, cat_id FROM " . $DBPrefix . "categories WHERE parent_id = -1";

@@ -24,10 +24,10 @@ $id = intval($_GET['id']);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$user = intval($_POST['user']);
-	$query = "UPDATE " . $DBPrefix . "feedbacks SET 
-		  rate = :rate, 
-		  feedback = :feedback
-		  WHERE id = :feedback_id";
+	$query = "UPDATE " . $DBPrefix . "feedbacks SET
+			rate = :rate,
+			feedback = :feedback
+			WHERE id = :feedback_id";
 	$params = array();
 	$params[] = array(':rate', $_POST['aTPL_rate'], 'int');
 	$params[] = array(':feedback', $_POST['TPL_feedback'], 'str');
@@ -36,7 +36,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	// Update user's record
 	$query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks
-			  WHERE rated_user_id = :user_id";
+				WHERE rated_user_id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $user, 'int');
 	$db->query($query, $params);
@@ -70,7 +70,7 @@ $template->assign_vars(array(
 		'SEL2' => ($feedback['rate'] == 0),
 		'SEL3' => ($feedback['rate'] == -1)
 		));
-		
+
 $template->set_filenames(array(
 		'body' => 'edituserfeed.tpl'
 		));

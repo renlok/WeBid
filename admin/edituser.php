@@ -126,18 +126,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$birthdate = 0;
 			}
 
-			$query = "UPDATE " . $DBPrefix . "users SET 
-				  name = :name,
-				  email = :email,
-				  address = :address,
-				  city = :city,
-				  prov = :prov,
-				  country = :country,
-				  zip = :zip,
-				  phone = :phone,
-				  birthdate = :birthdate,
-				  groups = :groups,
-				  balance = :balance";
+			$query = "UPDATE " . $DBPrefix . "users SET
+					name = :name,
+					email = :email,
+					address = :address,
+					city = :city,
+					prov = :prov,
+					country = :country,
+					zip = :zip,
+					phone = :phone,
+					birthdate = :birthdate,
+					groups = :groups,
+					balance = :balance";
 			$params = array();
 			$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 			$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');
@@ -255,9 +255,9 @@ $template->assign_vars(array(
 					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : ''
 					)
 		));
-		
+
 $template->set_filenames(array(
 		'body' => 'edituser.tpl'
 		));
 $template->display('body');
-?> 
+?>

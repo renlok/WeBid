@@ -4,6 +4,6 @@ Your account on {SITENAME} has been suspended because you have exceeded the maxi
 
 Your balance is: {BALANCE}
 
-In order to reactivate your account, you will need to clear your account balance. 
+In order to reactivate your account, you will need to clear your account balance.
 Please visit the link below to access the payment page.
 {OUTSTANDING}

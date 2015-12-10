@@ -22,11 +22,11 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	
+
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  usersauth = :usersauth,
-			  activationtype = :usersconf";
+				usersauth = :usersauth,
+				activationtype = :usersconf";
 	$params = array();
 	$params[] = array(':usersauth', $_POST['usersauth'], 'str');
 	$params[] = array(':usersconf', $_POST['usersconf'], 'int');

@@ -67,9 +67,9 @@
 					<td>{BN_TOTAL}</td>
 				</tr>
         <!-- IF SHIPPINGCOST ne 0 -->
-				<tr> 
-                    <td align="right" width="40%"><b>{L_023}:</b></td> 
-                    <td>{SHIPPINGCOST}</td> 
+				<tr>
+                    <td align="right" width="40%"><b>{L_023}:</b></td>
+                    <td>{SHIPPINGCOST}</td>
                 </tr>
 	<!-- ENDIF -->
 				<tr>

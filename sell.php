@@ -195,7 +195,7 @@ switch ($_SESSION['action'])
 				// update recursive categories
 				update_cat_counters(false, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
 			}
-			
+
 			// if editing the auction and the categories have been changed
 			if ($_SESSION['SELL_action'] == 'edit' && ($_SESSION['SELL_sellcat1'] != $_SESSION['SELL_original_sellcat1'] || $_SESSION['SELL_sellcat2'] != $_SESSION['SELL_original_sellcat2']))
 			{
@@ -298,7 +298,7 @@ switch ($_SESSION['action'])
 				if ($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
 				{
 					$query = "SELECT COUNT(*) as count FROM " . $DBPrefix . "auctions
-						 WHERE closed = 0 AND suspended = 0 AND user = :user_id";
+							WHERE closed = 0 AND suspended = 0 AND user = :user_id";
 					$params = array();
 					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$db->query($query, $params);
@@ -306,7 +306,7 @@ switch ($_SESSION['action'])
 					if ($totalaucs > 0)
 					{
 						$query = "SELECT COUNT(*) as count FROM " . $DBPrefix . "auctions
-							 WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = :user_id";
+								WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = :user_id";
 						$params = array();
 						$params[] = array(':user_id', $user->user_data['id'], 'int');
 						$db->query($query, $params);
@@ -730,6 +730,7 @@ switch ($_SESSION['action'])
 				'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
 				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),
 				'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
+				'B_SHIPPING' => ($system->SETTINGS['shipping'] == 1),
 				'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y'),
 				'B_AUTORELIST' => ($system->SETTINGS['autorelist'] == 'y')
 				));

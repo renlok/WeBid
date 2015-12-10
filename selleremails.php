@@ -28,8 +28,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if (in_array($_POST['endemailmod'], array('one', 'cum', 'none')) && in_array($_POST['startemailmod'], array('yes', 'no')) && in_array($_POST['emailtype'], array('html', 'text')))
 	{
 		$query = "UPDATE " . $DBPrefix . "users SET endemailmode = :endemailmod,
-				  startemailmode = :startemailmod,
-				  emailtype = :emailtype WHERE id = :user_id";
+					startemailmode = :startemailmod,
+					emailtype = :emailtype WHERE id = :user_id";
 		$params = array(
 			array(':endemailmod', $_POST['endemailmod'], 'str'),
 			array(':startemailmod', $_POST['startemailmod'], 'str'),

@@ -36,7 +36,7 @@ function constructCategories()
 	global $DBPrefix, $system, $db;
 
 	$query = "SELECT cat_id, parent_id, sub_counter, counter
-			 FROM " . $DBPrefix . "categories ORDER BY cat_id";
+				FROM " . $DBPrefix . "categories ORDER BY cat_id";
 	$db->direct_query($query);
 
 	while ($row = $db->fetch())
@@ -71,7 +71,7 @@ function sendWatchEmails($id)
 			$emailer->email_uid = $watchusers['id'];
 			$emailer->email_sender($watchusers['email'], 'auctionend_watchmail.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['471']);
 		}
-	}	
+	}
 }
 
 function sortFees()
@@ -168,5 +168,5 @@ function sortFees()
 			'id' => $Auction['id'],
 			'title' => $system->uncleanvars($Auction['title'])
 			);
-	}	
+	}
 }

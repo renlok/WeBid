@@ -58,7 +58,7 @@ function get_increment($val, $input_check = true)
 	if ($input_check)
 		$val = $system->input_money($val);
 	// get the increment value for the current bid
-	$query = "SELECT increment FROM " . $DBPrefix . "increments 
+	$query = "SELECT increment FROM " . $DBPrefix . "increments
 			WHERE low <= :val AND high >= :val
 			ORDER BY increment DESC";
 	$params = array();
@@ -120,7 +120,7 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 $Data = $db->result();
 $item_title = $system->uncleanvars($Data['title']);
 $item_id = $Data['id'];
-$seller_name = $Data['nick']; 
+$seller_name = $Data['nick'];
 $seller_email = $Data['email'];
 $atype = $Data['auction_type'];
 $aquantity = $Data['quantity'];
@@ -195,7 +195,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 			$errmsg = $ERR_004;
 		}
 		include $include_path . 'PasswordHash.php';
-		$phpass = new PasswordHash(8, false);		
+		$phpass = new PasswordHash(8, false);
 		if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 		{
 			$errmsg = $ERR_611;
@@ -260,8 +260,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 				{
 					// Just update proxy_bid
 					$query = "UPDATE " . $DBPrefix . "proxybid SET bid = :newbid
-							  WHERE userid = :user_id
-							  AND itemid = :item_id AND bid = :oldbid";
+								WHERE userid = :user_id
+								AND itemid = :item_id AND bid = :oldbid";
 					$params = array();
 					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$params[] = array(':item_id', $id, 'int');

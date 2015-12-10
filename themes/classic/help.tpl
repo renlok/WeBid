@@ -16,7 +16,7 @@
 			<div class="titTable2 rounded-top rounded-bottom">
 				{L_5236}
 			</div>
-			<div class="table2"> 
+			<div class="table2">
 				<div style="text-align:right">
 					<a href="javascript:window.close()">{L_678}</a>
 				</div>

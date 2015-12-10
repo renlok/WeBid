@@ -27,8 +27,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['keywordstag'] = $system->cleanvars($_POST['keywordstag']);
 	// Update database
 	$query = "UPDATE " . $DBPrefix . "settings SET
-			 descriptiontag = :descriptiontag,
-			 keywordstag = :keywordstag";
+				descriptiontag = :descriptiontag,
+				keywordstag = :keywordstag";
 	$params = array();
 	$params[] = array(':descriptiontag', $system->SETTINGS['descriptiontag'], 'str');
 	$params[] = array(':keywordstag', $system->SETTINGS['keywordstag'], 'str');

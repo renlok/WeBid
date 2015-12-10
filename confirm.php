@@ -81,7 +81,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
-		    $login_data = $db->result();
+			$login_data = $db->result();
 			$password = $login_data['password'];
 			$_SESSION['WEBID_LOGGED_IN'] 		= $login_data['id'];
 			$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $login_data['hash']);

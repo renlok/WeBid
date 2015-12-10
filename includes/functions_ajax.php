@@ -70,12 +70,12 @@ function getupldtable()
 function upload_images()
 {
 	global $user, $MSG;
-	
+
 	if (!$user->logged_in)
 	{
 		// imitate code execution
 		die(json_encode(array(
-			'OK' => 0, 
+			'OK' => 0,
 			'error' => array(
 				'code' => '202', //random
 				'message' => $MSG['login_required_text']
@@ -99,7 +99,7 @@ function upload_images()
 			)))
 		{
 			die(json_encode(array(
-				'OK' => 0, 
+				'OK' => 0,
 				'error' => array(
 					'code' => $uploader->get_error_code(),
 					'message' => $uploader->get_error_message()

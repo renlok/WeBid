@@ -31,9 +31,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'add')
 	if (!empty($_POST['buyer_countries']) && is_array($_POST['buyer_countries'])) {
 	$buyer_countries = implode(' ', $_POST['buyer_countries']);
 	}
-	
+
 	if (!empty($system->cleanvars($_POST['tax_name']))) {
-	
+
 	if ($_POST['tax_id'] != '')
 	{
 		$query = "UPDATE " . $DBPrefix . "tax SET
@@ -61,7 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'add')
 		$params[] = array(':countries_buyer', $system->cleanvars($buyer_countries), 'str');
 		$db->query($query, $params);
 	}
-	} else { 
+	} else {
   $errmsg = $ERR_002;
   }
 }

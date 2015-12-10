@@ -12,6 +12,6 @@ Buy Now price: {A_BNPRICE}
 End time: {A_ENDS}
 
 {SITE_URL}item.php?id={A_ID}
-				
+
 Have another item to list?
 {SITE_URL}select_category.php

@@ -37,7 +37,7 @@ $(document).ready(function() {
 	  <td><a href="yourmessages.php?id={msgs.ID}">{msgs.SUBJECT}</a></td>
 	  <td>{msgs.SENDER}</td>
 	  <td><input type="checkbox" name="deleteid[]" class="deleteid" value="{msgs.ID}"></td>
-	</tr>	  
+	</tr>
 	<!-- END msgs -->
 <!-- ENDIF -->
 	</tbody>

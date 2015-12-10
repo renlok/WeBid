@@ -243,7 +243,7 @@ $(document).ready(function(){
                                                      </div>
 					</div>
 	                  <!-- ENDIF -->
-					
+
                                         <div class="form-group col-md-12">
 						<label for="subtitle">{L_018}</label>
 					   		{AUC_DESCRIPTION}
@@ -256,13 +256,13 @@ $(document).ready(function(){
 						<a href="upldgallery.php" alt="gallery" class="btn btn-primary new-window">{L_677}</a>
                             <input type="hidden" name="numimages" value="{NUMIMAGES}" id="numimages">
                                           <hr  /> </div>
-                        
+
 	<!-- ENDIF -->
 
                                         <div class="form-group col-md-12">
 					     <div class="alert alert-warning" role="alert">{L_640}</div>
                                         </div>
-						
+
 					<div class="form-group col-md-12">
 						<label for="atype">{L_257}</label>
                                                 <div class="row">
@@ -356,7 +356,7 @@ $(document).ready(function(){
         <!-- ELSE -->
                                                 <div class="checkbox">
                                                       <label>
-        					<input type="checkbox" name="start_now" {START_NOW}> {L_211} 
+        					<input type="checkbox" name="start_now" {START_NOW}> {L_211}
                                                       </label>
                                                 </div>
 							<label>{L_260}</label> <input type="text" name="a_starts" id="pubdate_input" value="{START_TIME}" class="form-control">
@@ -364,7 +364,7 @@ $(document).ready(function(){
 								new tcal ({'id': 'pubdate_input','controlname': 'a_starts', 'formname': 'sell'});
 							</script>
         <!-- ENDIF -->
-						
+
 					</div>
 	<!-- ELSE -->
     				<input type="hidden" name="start_now" value="1">
@@ -384,14 +384,15 @@ $(document).ready(function(){
                                                     </div>
 					</div>
 	<!-- ENDIF -->
-					
+
+	<!-- IF B_SHIPPING -->
                         	<legend>{L_864}</legend>
-						
+
 					<div class="form-group col-md-12">
 						<label for="shipping_cost">{L_023}</label>
                                                    <div class="row">
                                                     <div class="col-md-4">
-							<input type="text" class="form-control" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- ENDIF -->>
+							<input type="text" class="form-control" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- 	ENDIF -->>
 							{CURRENCY}
                                                     </div>
                                                    </div>
@@ -408,7 +409,7 @@ $(document).ready(function(){
 					<div class="form-group col-md-12">
 						<label>{L_025}</label>
 						<div class="radio">
-							<label><input type="radio" name="shipping" id="bps" value="1" {SHIPPING1}>	
+							<label><input type="radio" name="shipping" id="bps" value="1" {SHIPPING1}>
 							{L_031}</label><br>
 							<label><input type="radio" name="shipping" id="sps" value="2" {SHIPPING2}>
 							{L_032}</label><br>
@@ -424,18 +425,19 @@ $(document).ready(function(){
 						<label for="shipping_terms">{L_25_0215}</label>
 						<textarea name="shipping_terms" rows="3" class="form-control">{SHIPPING_TERMS}</textarea>
 					</div>
-					
+	<!-- ENDIF -->
+
                         	<legend>{L_30_0080}</legend>
-						
+
 					<div class="form-group col-md-12">
 						 <label>{L_026}</label>
 						<div class="checkbox">
 							<label>{PAYMENTS}</label>
 						</div>
 					</div>
-					
+
                         	<legend>{L_268}</legend>
-						
+
 	<!-- IF B_MKFEATURED or B_MKBOLD or B_MKHIGHLIGHT -->
                                         <div class="form-group col-md-12">
 						 <div class="checkbox">
@@ -480,11 +482,11 @@ $(document).ready(function(){
                         	<input type="hidden" name="fee_exact" id="fee_exact" value="{FEE_VALUE}">
                         	<div class="alert alert-info" role="alert">
                                        <b>{L_1151}: </b><span class="text-danger" id="to_pay"> {FEE_VALUE_F} </span><small> {CURRENCY}</small>
-                                </div> 
+                                </div>
 					</div>
 	<!-- ENDIF -->
-				
-				
+
+
 				<div style="text-align:center">
 					<input type="hidden" value="3" name="action">
 					<input type="submit" name="" value="{L_5189}" class="btn btn-primary">&nbsp;&nbsp;&nbsp;
@@ -547,6 +549,7 @@ $(document).ready(function(){
 			</tr>
 		<!-- ENDIF -->
 	<!-- ENDIF -->
+	<!-- IF B_SHIPPING -->
 			<tr>
 				<td valign="top" align="right"><b>{L_023}</b></td>
 				<td>{SHIPPING_COST}</td>
@@ -555,6 +558,7 @@ $(document).ready(function(){
 				<td valign="top" align="right"><b>{L_350_1008}</b></td>
 				<td>{ADDITIONAL_SHIPPING_COST}</td>
 			</tr>
+	<!-- ENDIF -->
 			<tr>
 				<td valign="top" align="right"><b>{L_2__0016}</b></td>
 				<td>{STARTDATE}</td>
@@ -573,6 +577,7 @@ $(document).ready(function(){
 				<td valign="top" align="right"><b>{L_261}</b> </td>
 				<td>{ATYPE}</td>
 			</tr>
+	<!-- IF B_SHIPPING -->
 			<tr>
 				<td valign="top" align="right"><b>{L_025}</b></td>
 				<td>{SHIPPING}<br>{INTERNATIONAL}</td>
@@ -581,6 +586,7 @@ $(document).ready(function(){
 				<td align="right" valign="top"><b>{L_25_0215}</b></td>
 				<td>{SHIPPING_TERMS}</td>
 			</tr>
+	<!-- ENDIF -->
 			<tr>
 				<td valign="top" align="right"><b>{L_026}</b> </td>
 				<td>{PAYMENTS_METHODS}</td>

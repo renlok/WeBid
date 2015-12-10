@@ -7,7 +7,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" height="50" style="font-size: 12px; padding-right: 6px;">
-		In order to begin selling and/or buying at {SITENAME}, your account must be 
+		In order to begin selling and/or buying at {SITENAME}, your account must be
 		accepted by our site's administrator which is currently under review. <br /><br />
 		You will receive an e-mail shortly when your account is active.<br>
 		</td>

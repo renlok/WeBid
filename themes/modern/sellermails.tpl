@@ -3,12 +3,12 @@
     <div class="well">
 	<form action="" method="post" name="thisform" id="thisform">
 	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-	
+
 				<div class="alert alert-info" role="alert">{L_25_0195}</div>
-			
+
 				<p><input type="radio" name="startemailmod" value="yes"{B_AUCSETUPY}>
 				{L_25_0196}</p>
-			
+
 				<p><input type="radio" name="startemailmod" value="no"{B_AUCSETUPN}>
 				{L_25_0197}</p>
     </div>
@@ -22,7 +22,7 @@
 		        <p>
 				<input type="radio" name="endemailmod" value="none"{B_CLOSENONE}>
 				{L_25_0193}</p>
-		
+
 			<p>{L_903}</p>
 			<p>
 				<input type="radio" name="emailtype" value="text"{B_EMAILTYPET}> {L_915} <input type="radio" name="emailtype" value="html"{B_EMAILTYPEH}> {L_902}
@@ -34,7 +34,7 @@
 				<br>
 				<br>
 			</div>
-		
+
 	</form>
 
 

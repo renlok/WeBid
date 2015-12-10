@@ -176,36 +176,36 @@ if ($myversion == '1.0.6')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD `notes` text;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userfees`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
-	  `useracc_id` int(11) NOT NULL AUTO_INCREMENT,
-	  `auc_id` int(15) NOT NULL default '0',
-	  `user_id` int(15) NOT NULL default '0',
-	  `date` int(15) NOT NULL default '0',
-	  `setup` double(8,2) NOT NULL default '0',
-	  `featured` double(8,2) NOT NULL default '0',
-	  `bold` double(8,2) NOT NULL default '0',
-	  `highlighted` double(8,2) NOT NULL default '0',
-	  `subtitle` double(8,2) NOT NULL default '0',
-	  `relist` double(8,2) NOT NULL default '0',
-	  `reserve` double(8,2) NOT NULL default '0',
-	  `buynow` double(8,2) NOT NULL default '0',
-	  `image` double(8,2) NOT NULL default '0',
-	  `extcat` double(8,2) NOT NULL default '0',
-	  `signup` double(8,2) NOT NULL default '0',
-	  `buyer` double(8,2) NOT NULL default '0',
-	  `finalval` double(8,2) NOT NULL default '0',
-	  `balance` double(8,2) NOT NULL default '0',
-	  `total` double(8,2) NOT NULL,
-	  `paid` int(1) NOT NULL default '0',
-	  PRIMARY KEY (`useracc_id`)
+		`useracc_id` int(11) NOT NULL AUTO_INCREMENT,
+		`auc_id` int(15) NOT NULL default '0',
+		`user_id` int(15) NOT NULL default '0',
+		`date` int(15) NOT NULL default '0',
+		`setup` double(8,2) NOT NULL default '0',
+		`featured` double(8,2) NOT NULL default '0',
+		`bold` double(8,2) NOT NULL default '0',
+		`highlighted` double(8,2) NOT NULL default '0',
+		`subtitle` double(8,2) NOT NULL default '0',
+		`relist` double(8,2) NOT NULL default '0',
+		`reserve` double(8,2) NOT NULL default '0',
+		`buynow` double(8,2) NOT NULL default '0',
+		`image` double(8,2) NOT NULL default '0',
+		`extcat` double(8,2) NOT NULL default '0',
+		`signup` double(8,2) NOT NULL default '0',
+		`buyer` double(8,2) NOT NULL default '0',
+		`finalval` double(8,2) NOT NULL default '0',
+		`balance` double(8,2) NOT NULL default '0',
+		`total` double(8,2) NOT NULL,
+		`paid` int(1) NOT NULL default '0',
+		PRIMARY KEY (`useracc_id`)
 	);";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
-	  `id` INT(2) NOT NULL AUTO_INCREMENT,
-	  `tax_name` VARCHAR(30) NOT NULL ,
-	  `tax_rate` DOUBLE(16, 2) NOT NULL ,
-	  `countries_seller` TEXT NOT NULL ,
-	  `countries_buyer` TEXT NOT NULL ,
-	  `fee_tax` INT(1) NOT NULL DEFAULT  '0',
-	  PRIMARY KEY (`id`)
+		`id` INT(2) NOT NULL AUTO_INCREMENT,
+		`tax_name` VARCHAR(30) NOT NULL ,
+		`tax_rate` DOUBLE(16, 2) NOT NULL ,
+		`countries_seller` TEXT NOT NULL ,
+		`countries_buyer` TEXT NOT NULL ,
+		`fee_tax` INT(1) NOT NULL DEFAULT  '0',
+		PRIMARY KEY (`id`)
 	);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "tax` VALUES (NULL, 'Site Fees', '0', '', '', '1');";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `winner_address`;";
@@ -213,16 +213,16 @@ if ($myversion == '1.0.6')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "membertypes` DROP `membertype`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "membertypes` DROP `discount`;";
 	$query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
-	  `id` INT( 25 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	  `type` VARCHAR( 5 ) NOT NULL ,
-	  `message` TEXT NOT NULL ,
-	  `action_id` INT( 11 ) NOT NULL DEFAULT  '0',
-	  `user_id` INT( 32 ) NOT NULL DEFAULT  '0',
-	  `ip` VARCHAR( 45 ) NOT NULL,
-	  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
+		`id` INT( 25 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+		`type` VARCHAR( 5 ) NOT NULL ,
+		`message` TEXT NOT NULL ,
+		`action_id` INT( 11 ) NOT NULL DEFAULT  '0',
+		`user_id` INT( 32 ) NOT NULL DEFAULT  '0',
+		`ip` VARCHAR( 45 ) NOT NULL,
+		`timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
 	);";
-	
-	
+
+
 	$query[] = "ALTER TABLE `" . $DBPrefix . "accounts` MODIFY `amount` DOUBLE(6,2) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `minimum_bid` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_cost` double(16,2) default NULL;";
@@ -285,34 +285,45 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	// add translation tables
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (
-	  `cat_id` int(4) NOT NULL,
-	  `lang` char(2) NOT NULL default '',
-	  `category` varchar(200) NOT NULL default ''
+		`cat_id` int(4) NOT NULL,
+		`lang` char(2) NOT NULL default '',
+		`category` varchar(200) NOT NULL default ''
 	);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "community_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "community_translated` (
-	  `id` int(4) NOT NULL,
-	  `lang` char(2) NOT NULL default '',
-	  `name` varchar(255) NOT NULL default ''
+		`id` int(4) NOT NULL,
+		`lang` char(2) NOT NULL default '',
+		`name` varchar(255) NOT NULL default ''
 	);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "countries_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "countries_translated` (
-	  `country_id` int(4) NOT NULL,
-	  `lang` char(2) NOT NULL default '',
-	  `country` varchar(255) NOT NULL default ''
+		`country_id` int(4) NOT NULL,
+		`lang` char(2) NOT NULL default '',
+		`country` varchar(255) NOT NULL default ''
 	);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "durations_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "durations_translated` (
-	  `country_id` int(4) NOT NULL,
-	  `lang` char(2) NOT NULL default '',
-	  `description` varchar(255) NOT NULL default ''
+		`country_id` int(4) NOT NULL,
+		`lang` char(2) NOT NULL default '',
+		`description` varchar(255) NOT NULL default ''
 	);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "groups_translated` (
-	  `id` int(5) NOT NULL,
-	  `lang` char(2) NOT NULL default '',
-	  `group_name` varchar(255) NOT NULL default ''
+		`id` int(5) NOT NULL,
+		`lang` char(2) NOT NULL default '',
+		`group_name` varchar(255) NOT NULL default ''
 	);";
-	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.2.0';";
+
+# 
+# Table structure for table `" . $DBPrefix . "settingsv2`
+#
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settingsv2`;";
+$query[] = "CREATE TABLE `".$DBprefix ."settingsv2` 
+	`fieldname` VARCHAR(30) NOT NULL,
+	`fieldtype` VARCHAR(10) NOT NULL,
+	`value` VARCHAR(255) NOT NULL,
+	`modifieddate` INT(11) NOT NULL,
+	`modifiedby` INT(32) NOT NULL,
+	PRIMARY KEY(`fieldname`)
+	)";
 }
-?>

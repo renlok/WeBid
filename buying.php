@@ -46,7 +46,7 @@ $sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] =
 $sslurl = ($system->SETTINGS['usersauth'] == 'y' && !empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
 
 while ($row = $db->fetch())
-{	
+{
 	$totalcost = ($row['qty'] > 1) ? ($row['bid'] * $row['qty']) : $row['bid'];
 	$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
 	$totalcost = ($row['shipping'] == 2) ? $totalcost : ($totalcost + $row['shipping_cost'] + $additional_shipping);

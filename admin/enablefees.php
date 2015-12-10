@@ -32,16 +32,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	// Update database
 	$query = "UPDATE ". $DBPrefix . "settings SET
-			  fees = :fees,
-			  fee_type = :fee_type,
-			  fee_max_debt = :fee_max_debt
-			  fee_signup_bonus = :fee_signup_bonus,
-			  fee_disable_acc = :fee_disable_acc,
-			  paypal_sandbox = :pp_sandbox,
-			  worldpay_sandbox = :wp_sandbox,
-			  moneybookers_sandbox = :mb_sandbox,
-			  authnet_sandbox = :ah_sandbox,
-			  checkout_sandbox = :co_sandbox";
+				fees = :fees,
+				fee_type = :fee_type,
+				fee_max_debt = :fee_max_debt
+				fee_signup_bonus = :fee_signup_bonus,
+				fee_disable_acc = :fee_disable_acc,
+				paypal_sandbox = :pp_sandbox,
+				worldpay_sandbox = :wp_sandbox,
+				moneybookers_sandbox = :mb_sandbox,
+				authnet_sandbox = :ah_sandbox,
+				checkout_sandbox = :co_sandbox";
 	$params = array();
 	$params[] = array(':fees', $_POST['fees'], 'str');
 	$params[] = array(':fee_type', $_POST['fee_type'], 'int');

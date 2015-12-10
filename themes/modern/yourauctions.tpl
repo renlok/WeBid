@@ -38,7 +38,7 @@ $(document).ready(function() {
 				<li role="presentation"><a href="yourauctions_s.php">{L_2__0056}</a></li>
 				<li role="presentation"><a href="yourauctions_sold.php">{L_25_0119}</a></li>
 			</ul>
-		
+
 <table class="table table-bordered table-condensed table-striped">
 <tr>
 		<td width="32%">
@@ -153,6 +153,6 @@ $(document).ready(function() {
 <!-- END pages -->
 			{NEXT}
 		</div>
-	
+
 
 <!-- INCLUDE user_menu_footer.tpl -->

@@ -161,15 +161,15 @@ function CheckSellData()
 		return '061';
 	}
 	if (isset($shipping_cost) && !$system->CheckMoney($shipping_cost)) {
-	
+
 	return '079';
-	
+
 	}
 	if (isset($additional_shipping_cost) && !$system->CheckMoney($additional_shipping_cost)) {
-	
-	
+
+
 	return '080';
-	
+
 	}
 
 	$numpay = count($payment);
@@ -258,17 +258,17 @@ function CheckSellData()
 function CheckBidData()
 {
 	global $bid, $next_bid, $atype, $qty, $Data, $bidder_id, $system;
-	
+
 	if ($Data['suspended'] > 0)
 	{
 		return '619';
 	}
-	
+
 	if ($bidder_id == $Data['user'])
 	{
 		return '612';
 	}
-	
+
 	if ($atype == 1) //normal auction
 	{
 		// have to use bccomp to check if bid is less than next_bid
@@ -293,6 +293,6 @@ function CheckBidData()
 			return '608';
 		}
 	}
-	
+
 	return 0;
 }

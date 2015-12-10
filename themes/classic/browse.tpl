@@ -4,13 +4,13 @@
 		<tr>
 			<td class="titTable4" colspan="4">{L_NAY_01}</td>
 		</tr>
-    <!-- BEGIN featured_items -->
+	<!-- BEGIN featured_items -->
 		<tr align="center">
 			<td align="center" width="15%">
 				<a href="{SITEURL}item.php?id={featured_items.ID}"><img src="{featured_items.IMAGE}" border="0"></a>
 			</td>
 			<td align="left"<!-- IF featured_items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
-                <a href="{SITEURL}item.php?id={featured_items.ID}" class="bigfont">{featured_items.TITLE}</a>
+				<a href="{SITEURL}item.php?id={featured_items.ID}" class="bigfont">{featured_items.TITLE}</a>
 				<!-- IF B_SUBTITLE && featured_items.SUBTITLE ne '' --><p class="smallspan">{featured_items.SUBTITLE}</p><!-- ENDIF -->
 				<p>{L_949} {featured_items.CLOSES}</p>
 			</td>
@@ -26,9 +26,9 @@
 				<p class="smallspan">{featured_items.NUMBIDS}</p>
 			</td>
 		</tr>
-    <!-- END featured_items -->
+	<!-- END featured_items -->
 	</table>
-    <br class="spacer">
+	<br class="spacer">
 <!-- ENDIF -->
 
 	<table width="99%" border="0" cellspacing="1" cellpadding="4">
@@ -41,7 +41,7 @@
 				<a href="{SITEURL}item.php?id={items.ID}"><img src="{items.IMAGE}" border="0"></a>
 			</td>
 			<td align="left"<!-- IF items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
-                <a href="{SITEURL}item.php?id={items.ID}" class="bigfont">{items.TITLE}</a>
+				<a href="{SITEURL}item.php?id={items.ID}" class="bigfont">{items.TITLE}</a>
 				<!-- IF B_SUBTITLE && items.SUBTITLE ne '' --><p class="smallspan">{items.SUBTITLE}</p><!-- ENDIF -->
 				<p>{L_949} {items.CLOSES}</p>
 			</td>

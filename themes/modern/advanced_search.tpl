@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-	
+
 <!-- IF ERROR ne '' -->
 	<div class="alert alert-danger" role="alert">
 		{ERROR}
@@ -12,7 +12,7 @@
 	</legend>
 		<form class="form-horizontal" name="adsearch" method="post" action="">
         	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-			
+
 				<div class="form-group">
 					<label class="col-sm-4 control-label">{L_1000}</label>
 					<div class="col-sm-8">
@@ -46,13 +46,13 @@
                                                <div class="col-sm-6">
                                                  <div class="input-group">
 						   <input maxlength="12" name="minprice" class="form-control" placeholder="{L_1004}" aria-describedby="addonprice1">
-                                                   <span class="input-group-addon" id="addonprice1">{CURRENCY}</span> 
+                                                   <span class="input-group-addon" id="addonprice1">{CURRENCY}</span>
                                                  </div>
                                                </div>
-                                               
+
                                                <div class="col-sm-6">
                                                  <div class="input-group">
-                                                   <input maxlength="12" name="maxprice" class="form-control" placeholder="{L_1005}" aria-describedby="addonprice1"> 
+                                                   <input maxlength="12" name="maxprice" class="form-control" placeholder="{L_1005}" aria-describedby="addonprice1">
                                                    <span class="input-group-addon" id="addonprice1">{CURRENCY}</span>
                                                  </div>
                                                </div>
@@ -135,14 +135,14 @@
 						</select>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<div class="text-center">
 						<input name="action" type="hidden" value="search">
 						<input type="submit" name="go" value="{L_5029}" class="btn btn-primary">
 					</div>
 				</div>
-			
+
 		</form>
 	</div>
     </div>

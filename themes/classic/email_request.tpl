@@ -4,7 +4,7 @@
 			{L_334} {USERNAME}
 		</div>
 		<div class="titTable3">
-			<a href="profile.php?user_id={USERID}">{L_206}</a> | 
+			<a href="profile.php?user_id={USERID}">{L_206}</a> |
 			<a href="item.php?id={AUCTION_ID}">{L_138}</a>
 		</div>
 <!-- IF B_SENT -->
@@ -19,7 +19,7 @@
 	<!-- ENDIF -->
 		<div class="table2">
 			<form name="seller" action="email_request.php" method="post">
-            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width=90% cellpadding="4" cellspacing="0">
 					<tr>
 						<td>{L_149}</td>

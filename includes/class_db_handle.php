@@ -14,7 +14,7 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-class db_handle 
+class db_handle
 {
 	// database
 	private     $pdo;

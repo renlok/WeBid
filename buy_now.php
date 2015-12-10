@@ -157,9 +157,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	{
 		$ERR = $ERR_608;
 	}
-	else if (!isset($qty) || $qty < 1) 
-	{ 
-		$ERR = $ERR_601;  
+	else if (!isset($qty) || $qty < 1)
+	{
+		$ERR = $ERR_601;
 	}
 	// perform final actions
 	if (!isset($ERR))
@@ -340,8 +340,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$month = date('m', $Auction['ends'] + $system->tdiff);
 			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
-			include $include_path . 'endauction_mutli_item_win.php'; 
-            include $include_path . 'email_seller_partial_winner.php';
+			include $include_path . 'endauction_mutli_item_win.php';
+			include $include_path . 'email_seller_partial_winner.php';
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{
@@ -351,12 +351,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			}
 
 			if ($Auction['initial_quantity'] == 1 || ($Auction['quantity'] - $qty) == 0)
-			{ 
+			{
 				$tmpauc = $Auction;
 				include 'cron.php';
 				$Auction = $tmpauc;
-				unset($tmpauc); 
-            } 
+				unset($tmpauc);
+			}
 		}
 
 		$buy_done = 1;

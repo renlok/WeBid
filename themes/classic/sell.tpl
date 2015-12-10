@@ -400,6 +400,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 	<!-- ENDIF -->
+	<!-- IF B_SHIPPING -->
 					<tr>
 						<td class="centre" colspan="2">
                         	<h2 class="underline">{L_864}</h2>
@@ -428,7 +429,7 @@ $(document).ready(function(){
 							<b>{L_025}</b>
 						</td>
 						<td valign="top" class="rightpan">
-							<input type="radio" name="shipping" id="bps" value="1" {SHIPPING1}>	
+							<input type="radio" name="shipping" id="bps" value="1" {SHIPPING1}>
 							{L_031}<br>
 							<input type="radio" name="shipping" id="sps" value="2" {SHIPPING2}>
 							{L_032}<br>
@@ -446,6 +447,7 @@ $(document).ready(function(){
 							<textarea name="shipping_terms" rows="3" cols="34">{SHIPPING_TERMS}</textarea>
 						</td>
 					</tr>
+	<!-- ENDIF -->
 					<tr>
 						<td class="centre" colspan="2">
                         	<h2 class="underline">{L_30_0080}</h2>
@@ -512,7 +514,7 @@ $(document).ready(function(){
 					</tr>
 	<!-- ENDIF -->
 				</table>
-				
+
 				<div style="text-align:center">
 					<input type="hidden" value="3" name="action">
 					<input type="submit" name="" value="{L_5189}" class="button">&nbsp;&nbsp;&nbsp;<input type="reset" id="resetbt" value="{L_5190}" class="button">
@@ -574,6 +576,7 @@ $(document).ready(function(){
 			</tr>
 		<!-- ENDIF -->
 	<!-- ENDIF -->
+	<!-- IF B_SHIPPING -->
 			<tr>
 				<td valign="top" align="right"><b>{L_023}</b></td>
 				<td>{SHIPPING_COST}</td>
@@ -582,6 +585,7 @@ $(document).ready(function(){
 				<td valign="top" align="right"><b>{L_350_1008}</b></td>
 				<td>{ADDITIONAL_SHIPPING_COST}</td>
 			</tr>
+	<!-- ENDIF -->
 			<tr>
 				<td valign="top" align="right"><b>{L_2__0016}</b></td>
 				<td>{STARTDATE}</td>
@@ -600,6 +604,7 @@ $(document).ready(function(){
 				<td valign="top" align="right"><b>{L_261}</b> </td>
 				<td>{ATYPE}</td>
 			</tr>
+	<!-- IF B_SHIPPING -->
 			<tr>
 				<td valign="top" align="right"><b>{L_025}</b></td>
 				<td>{SHIPPING}<br>{INTERNATIONAL}</td>
@@ -608,6 +613,7 @@ $(document).ready(function(){
 				<td align="right" valign="top"><b>{L_25_0215}</b></td>
 				<td>{SHIPPING_TERMS}</td>
 			</tr>
+	<!-- ENDIF -->
 			<tr>
 				<td valign="top" align="right"><b>{L_026}</b> </td>
 				<td>{PAYMENTS_METHODS}</td>

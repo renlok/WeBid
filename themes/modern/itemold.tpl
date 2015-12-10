@@ -41,9 +41,9 @@ $(document).ready(function() {
 
         <div class="well well-sm" style="text-align: right;">
 		{VIEW_HISTORY1} |
-		<a href="{SITEURL}friend.php?id={ID}">{L_106}</a> | 
+		<a href="{SITEURL}friend.php?id={ID}">{L_106}</a> |
 <!-- IF B_CANCONTACTSELLER -->
-		<a href="{SITEURL}send_email.php?auction_id={ID}">{L_922}</a> | 
+		<a href="{SITEURL}send_email.php?auction_id={ID}">{L_922}</a> |
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
 		<a href="{SITEURL}item_watch.php?{WATCH_VAR}={ID}">{WATCH_STRING}</a>
@@ -69,10 +69,10 @@ $(document).ready(function() {
                  <!-- ENDIF -->
              </div>
              <div class="col-md-4 col-sm-7">
-                  
+
 					  <div>{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>
 					 <div> <a href="#description"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-					  <a href="#description">{L_018}</a> &nbsp;&nbsp;&nbsp;</div> 
+					  <a href="#description">{L_018}</a> &nbsp;&nbsp;&nbsp;</div>
 					  <table class="table table-bordered table-striped">
 						<!-- auction type -->
 						<tr>
@@ -92,7 +92,7 @@ $(document).ready(function() {
 							<b>{high_bidders.BUYER_NAME}</b>
 		<!-- ELSE -->
 							<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
-							<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b> 
+							<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b>
 		<!-- ENDIF -->
 							{high_bidders.BUYER_FB_ICON}</p>
 	<!-- END high_bidders -->
@@ -161,7 +161,7 @@ $(document).ready(function() {
 						</tr>
 <!-- ENDIF -->
 					  </table>
-					
+
              </div>
              <div class="col-md-4 col-sm-12">
                <div class="panel panel-default">
@@ -185,15 +185,15 @@ $(document).ready(function() {
 			 </ul>
 				<a href="{SITEURL}active_auctions.php?user_id={SELLER_ID}"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="padding-right: 5px;"></span>{L_213}</a>
 				<br><br>
-			</div> 
+			</div>
 		  <div class="titTable1">
 <!-- IF B_HASENDED eq false and B_CAN_BUY -->
 	<!-- IF B_NOTBNONLY -->
 				<div class="well">
 				<form name="bid" action="{BIDURL}bid.php" method="post">
-				
-					 
-						
+
+
+
 		<!-- IF QTY gt 1 -->
 							{L_284}: <input type="text" name="qty" size=15 /> {QTY} {L_5408}<br>
 		<!-- ENDIF -->
@@ -202,15 +202,15 @@ $(document).ready(function() {
 						{L_124}: {NEXTBID}
 						 <br>
 		<!-- ENDIF -->
-						
-				   
+
+
 					 <input type="hidden" name="seller_id" value="{SELLER_ID}">
 					 <input type="hidden" name="title" value="{TITLE}" >
 					 <input type="hidden" name="category" value="{CAT_ID}" >
 					 <input type="hidden" name="id" value="{ID}">
                      <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					 <input type="submit" name="" value="{L_30_0208}" class="btn btn-primary">
-					
+
 				</form>
 				</div>
 	<!-- ELSE -->
@@ -250,7 +250,7 @@ $(document).ready(function() {
                 </div>
         </div>
         <!-- ENDIF -->
-      
+
          <!-- IF B_HASGALELRY -->
 <div class="panel panel-default">
   <div class="panel-heading">

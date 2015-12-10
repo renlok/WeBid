@@ -30,7 +30,7 @@ if (!isset($_POST['action']))
 	// Clear session folder and start afresh
 	$files = glob($uploaded_path . session_id() . '/*'); // get all file names
 	foreach($files as $file) // iterate files
-	{ 
+	{
 		if(is_file($file))
 			unlink($file); // delete file
 	}

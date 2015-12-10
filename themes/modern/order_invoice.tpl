@@ -19,7 +19,7 @@
 </style>
 </head>
 <body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#ffffff" marginheight="0" marginwidth="0">
-<!-- IF B_INVOICE --> 
+<!-- IF B_INVOICE -->
 
 <table width="830px" border="0">
   <tbody><tr>
@@ -38,7 +38,7 @@
 			&nbsp;
 <!-- ENDIF -->
            </td>
-		  
+
               </tr>
             </tbody></table></td>
           <td>&nbsp;</td>
@@ -77,10 +77,10 @@
                     <tr>
                       <td>{WINNER_NICK}<br>{WINNER_ADDRESS}</td>
                     </tr>
-                    
+
                     <tr>
                       <td>&nbsp;</td>
-                    </tr>                    
+                    </tr>
                     <tr>
                       <td>&nbsp;</td>
                     </tr>
@@ -169,7 +169,7 @@
 			<tr>
             <td class="smallText" align="right">{L_1053}</td>
 			<td class="smallText" align="right">{TOTAL_SUM}</td>
-			
+
           </tr>
 </tbody></table></td>
         </tr>
@@ -210,9 +210,9 @@
 
 
 <script type="text/javascript">
-    function printpage() {        
-        var printButton = document.getElementById("printpagebutton");         
-        printButton.style.visibility = 'hidden';        
+    function printpage() {
+        var printButton = document.getElementById("printpagebutton");
+        printButton.style.visibility = 'hidden';
         window.print()
         printButton.style.visibility = 'visible';
     }

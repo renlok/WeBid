@@ -33,6 +33,18 @@
 	<script type="text/javascript" src="{INCURL}ckeditor/ckeditor.js"></script>
 <!-- ENDIF -->
 
+<!-- IF GOOGLEANALYTICS ne '' -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '{GOOGLEANALYTICS}', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- ENDIF -->
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -100,7 +112,7 @@ $(document).ready(function() {
             <!-- ENDIF -->
             <li><a href="{SITEURL}help.php" alt="faqs" class="new-window">{L_148}</a></li>
             <li><a href="{SITEURL}adsearch.php">{L_464}</a></li>
-        
+
       </ul>
       <form class="navbar-form navbar-right" role="search" action="{SITEURL}search.php" method="get">
         <div class="input-group">

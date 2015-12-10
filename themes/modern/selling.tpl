@@ -1,6 +1,6 @@
 <!-- INCLUDE user_menu_header.tpl -->
 <!-- BEGIN a -->
-	
+
 	     <div class="panel panel-default">
                    <div class="panel-heading">
 			<a href="{SITEURL}item.php?id={a.AUCTIONID}" target="_blank">{a.TITLE}</a> <small><span class="text-muted"> (ID: <a href="{SITEURL}item.php?id={a.AUCTIONID}" target="_blank">{a.AUCTIONID}</a> - {L_25_0121} {a.ENDS})</span></small>
@@ -8,9 +8,9 @@
                    <div class="panel-body">
                    <div class="col-md-8 col-sm-7">
 			<p><small><span class="text-muted">{L_455}:</span></small> <a href="{SITEURL}profile.php?user_id={a.WINNERID}&auction_id={a.AUCTIONID}">{a.NICK}</a> {a.FB}<br>
-		
+
 			<small><span class="text-muted">{L_457}:</span></small> {a.BIDF}<br>
-		
+
 			<small><span class="text-muted">{L_284}:</span></small> {a.QTY}</p>
 		    </div>
                     <div class="col-md-4 col-sm-5 text-right">
@@ -25,7 +25,7 @@
 <!-- ELSE -->
 			<a class="btn btn-warning btn-xs" href="{SITEURL}selling.php?paid={a.ID}{AUCID}">{L_899}</a>
 <!-- ENDIF -->
-				
+
 			</form>
 <!-- IF a.SHIPPED eq 0 -->
 	        <img src="{SITEURL}images/clock.png"> <span class="smallspan"><a href="{SITEURL}selling.php?shipped={a.ID}{AUCID}">{L_1116}</a></span>
@@ -38,7 +38,7 @@
                  </div>
 		</div>
            </div>
-	
+
 <!-- END a -->
 
 

@@ -1178,7 +1178,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
 # Dumping data for table `" . $DBPrefix . "gateways`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet,worldpay,moneybookers,toocheckout', '', 0, 1, '', '', 0, 1, '', 0, 1, '', 0, 1, '', 0, 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet,worldpay,moneybookers,toocheckout', '', 0, 0, '', '', 0, 0, '', 0, 0, '', 0, 0, '', 0, 0);";
 
 # ############################
 

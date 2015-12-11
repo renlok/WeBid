@@ -1290,7 +1290,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "maintainance` (
 # Dumping data for table `" . $DBPrefix . "maintainance`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 'n', 'renlok', '<br>\r\n<center>\r\n<b>Under maintainance!!!!!!!</b>\r\n</center>');";
+$query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 'n', 'renlok', '<br>\r\n<center>\r\n<b>Under maintenance!!!!!!!</b>\r\n</center>');";
 
 # ############################
 

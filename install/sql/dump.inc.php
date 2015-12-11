@@ -1793,7 +1793,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "statssettings` (
 # Dumping data for table `" . $DBPrefix . "statssettings`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('n', 'y', 'y', 'y');";
+$query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('y', 'y', 'y', 'y');";
 
 
 # ############################

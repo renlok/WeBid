@@ -1178,7 +1178,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
 # Dumping data for table `" . $DBPrefix . "gateways`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet,worldpay,moneybookers,toocheckout', '', 0, 1, '', '', 0, 1, '', 0, 1, '', 0, 1, '', 0, 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet,worldpay,moneybookers,toocheckout', '', 0, 0, '', '', 0, 0, '', 0, 0, '', 0, 0, '', 0, 0);";
 
 # ############################
 
@@ -1290,7 +1290,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "maintainance` (
 # Dumping data for table `" . $DBPrefix . "maintainance`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 'n', 'renlok', '<br>\r\n<center>\r\n<b>Under maintainance!!!!!!!</b>\r\n</center>');";
+$query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 'n', 'renlok', '<br>\r\n<center>\r\n<b>Under maintenance!!!!!!!</b>\r\n</center>');";
 
 # ############################
 
@@ -1600,7 +1600,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `https_url` varchar(255) NOT NULL default '',
   `bn_only_disable` enum('y','n') NOT NULL default 'n',
   `bn_only_percent` int(3) NOT NULL default '50',
-  `buyerprivacy` ENUM('y','n') NOT NULL default 'n',
+  `buyerprivacy` ENUM('y','n') NOT NULL default 'y',
   `cust_increment` INT(1) NOT NULL DEFAULT '2',
   `subtitle` ENUM('y','n') NOT NULL default 'y',
   `extra_cat` ENUM('y','n') NOT NULL default 'n',
@@ -1718,7 +1718,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 '',
 'n',
 50,
-'n',
+'y',
 2,
 'y',
 'n',
@@ -1793,7 +1793,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "statssettings` (
 # Dumping data for table `" . $DBPrefix . "statssettings`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('n', 'y', 'y', 'y');";
+$query[] = "INSERT INTO `" . $DBPrefix . "statssettings` VALUES ('y', 'y', 'y', 'y');";
 
 
 # ############################

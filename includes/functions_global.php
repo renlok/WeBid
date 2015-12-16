@@ -77,6 +77,61 @@ class global_class
 		}
 	}
 
+	function writesetting($setting, $value, $type = 'string')
+	{
+		global $DBPrefix, $db, $_SESSION;
+
+		$modifiedby = $_SESSION['WEBID_ADMIN_IN'];
+		$modifieddate = $this->ctime;
+
+		// TODO: Use the data type to check if the value is valid
+		switch($type)
+		{
+			case "string":
+				break;
+			case "integer":
+				break;
+			case "boolean":
+				break;
+			default:
+				break;
+		}
+
+		$query = "SELECT * FROM " . $DBPrefix . "settingsv2 WHERE fieldname = :fieldname";
+		$params = array();
+		$params[] = array(':fieldname', $setting, 'str');
+		$db->query($query, $params);
+		if ($db->numrows() > 0)
+		{
+			$type = $db->result('fieldtype');
+			$query = "UPDATE " . $DBPrefix . "settingsv2 SET
+					fieldtype = :fieldtype,
+					value = :value,
+					modifieddate = :modifieddate,
+					modifiedby = :modifiedby
+					WHERE fieldname = :fieldname";
+			$params = array();
+			$params[] = array(':fieldname', $setting, 'str');
+			$params[] = array(':fieldtype', $type, 'str');
+			$params[] = array(':value', $value, 'str');
+			$params[] = array(':modifieddate', $modifieddate, 'int');
+			$params[] = array(':modifiedby', $modifiedby, 'int');
+			$db->query($query, $params);
+		}
+		else
+		{
+			$query = "INSERT INTO " . $DBPrefix . "settingsv2 (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
+					(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
+			$params = array();
+			$params[] = array(':fieldname', $setting, 'str');
+			$params[] = array(':fieldtype', $type, 'str');
+			$params[] = array(':value', $value, 'str');
+			$params[] = array(':modifieddate', $modifieddate, 'int');
+			$params[] = array(':modifiedby', $modifiedby, 'int');
+			$db->query($query, $params);
+		}
+	}
+
 	/* possible types cron, error, admin, user, mod */
 	function log($type, $message, $user = 0, $action_id = 0)
 	{

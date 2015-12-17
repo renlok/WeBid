@@ -47,18 +47,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// Update database
-		$query = "UPDATE " . $DBPrefix . "settings SET
-				currency = :currency,
-				moneyformat = :moneyformat,
-				moneydecimals = :moneydecimals,
-				moneysymbol = :moneysymbol";
-		$params = array();
-		$params[] = array(':currency', $system->cleanvars($CURRENCIES_SYMBOLS[$_POST['currency']]), 'str');
-		$params[] = array(':moneyformat', $_POST['moneyformat'], 'int');
-		$params[] = array(':moneydecimals', $_POST['moneydecimals'], 'int');
-		$params[] = array(':moneysymbol', $_POST['moneysymbol'], 'int');
-		$db->query($query,$params);
-
+		$system->writesetting("currency", $system->cleanvars($CURRENCIES_SYMBOLS[$_POST['currency']]), 'str');
+		$system->writesetting("moneyformat", $_POST['moneyformat'], 'int');
+		$system->writesetting("moneydecimals", $_POST['moneydecimals'], 'int');
+		$system->writesetting("moneysymbol", $_POST['moneysymbol'], 'int');
+		
 		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
 		$system->SETTINGS['moneyformat'] = $_POST['moneyformat'];
 		$system->SETTINGS['moneydecimals'] = $_POST['moneydecimals'];

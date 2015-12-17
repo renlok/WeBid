@@ -32,25 +32,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->SETTINGS['hotitemsnumber'] = intval($_POST['hotitemsnumber']);
 	$system->SETTINGS['endingsoonnumber'] = intval($_POST['endingsoonnumber']);
 	// Update database
-	$query = "UPDATE ". $DBPrefix . "settings SET
-				perpage = :perpage,
-				thumb_list = :thumb_list,
-				lastitemsnumber = :lastitemsnumber,
-				hotitemsnumber = :hotitemsnumber,
-				endingsoonnumber = :endingsoonnumber,
-				loginbox = :loginbox,
-				newsbox = :newsbox,
-				newstoshow = :newstoshow";
-	$params = array();
-	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
-	$params[] = array(':thumb_list', $system->SETTINGS['thumb_list'], 'int');
-	$params[] = array(':lastitemsnumber', $system->SETTINGS['lastitemsnumber'], 'int');
-	$params[] = array(':hotitemsnumber', $system->SETTINGS['hotitemsnumber'], 'int');
-	$params[] = array(':endingsoonnumber', $system->SETTINGS['endingsoonnumber'], 'int');
-	$params[] = array(':loginbox', $system->SETTINGS['loginbox'], 'int');
-	$params[] = array(':newsbox', $system->SETTINGS['newsbox'], 'int');
-	$params[] = array(':newstoshow', $system->SETTINGS['newstoshow'], 'int');
-	$db->query($query, $params);
+	$system->writesetting("perpage", $system->SETTINGS['perpage'], 'int');
+	$system->writesetting("thumb_list", $system->SETTINGS['thumb_list'], 'int');
+	$system->writesetting("lastitemsnumber", $system->SETTINGS['lastitemsnumber'], 'int');
+	$system->writesetting("hotitemsnumber", $system->SETTINGS['hotitemsnumber'], 'int');
+	$system->writesetting("endingsoonnumber", $system->SETTINGS['endingsoonnumber'], 'int');
+	$system->writesetting("loginbox", $system->SETTINGS['loginbox'], 'int');
+	$system->writesetting("newsbox", $system->SETTINGS['newsbox'], 'int');
+	$system->writesetting("newstoshow", $system->SETTINGS['newstoshow'], 'int');
 	$ERR = $MSG['795'];
 }
 

@@ -30,7 +30,7 @@
 		<td width="160" class="paytable1"><img src="images/authnet.gif"></td>
 		<td class="paytable2">Authorize.Net</td>
 		<td class="paytable3">
-			<form action="<!-- IF AN_SANDBOX -->https://test.authorize.net/gateway/transact.dll<!-- ELSE -->https://secure.authorize.net/gateway/transact.dll<!-- ENDIF -->" method="post"	 id="form_authnet">
+			<form action="<!-- IF AN_SANDBOX -->https://test.authorize.net/gateway/transact.dll<!-- ELSE -->https://secure.authorize.net/gateway/transact.dll<!-- ENDIF -->" method="post" id="form_authnet">
 				<input type="hidden" name="x_description" value="{TITLE}">
 				<input type="hidden" name="x_login" value="{AN_PAYTOID}">
 				<input type="hidden" name="x_amount" value="{PAY_VAL}">

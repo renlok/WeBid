@@ -42,7 +42,7 @@
 			<tr>
 				<td align="right"><b>{L_143}</b></td>
 				<td align="left"><input type="text" name="sender_email" size="25" value="{YOUR_EMAIL}"></td>
-			  <tr>
+			<tr>
 				<td colspan="2">{CAPCHA}</td>
 			</tr>
 			<tr>

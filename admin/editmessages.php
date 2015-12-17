@@ -55,7 +55,7 @@ $db->query($query, $gparams);
 $bg = '';
 while ($msg_data = $db->fetch())
 {
-    $template->assign_block_vars('msgs', array(
+	$template->assign_block_vars('msgs', array(
 			'ID' => $msg_data['id'],
 			'MESSAGE' => nl2br($msg_data['message']),
 			'POSTED_BY' => $msg_data['username'],

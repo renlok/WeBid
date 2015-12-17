@@ -61,7 +61,7 @@
 				<input type="hidden" name="pfval" value="{items.ID}">
 				<input type="submit" name="Pay" value="{L_756}" class="pay">
 			</form>
-	 <!-- ENDIF -->
+	<!-- ENDIF -->
 		</td>
 	</tr>
 <!-- END items -->

@@ -43,14 +43,14 @@
 					<td align="center">
 						{L_5117} {PAGE} {L_5118} {PAGES}
 						<br>
-	 <!-- IF B_NOTLAST -->
+	<!-- IF B_NOTLAST -->
 						<a href="{SITEURL}active_auctions.php?PAGE={PREV}&user_id={USER_ID}"><u>{L_5119}</u></a>&nbsp;&nbsp;
-	 <!-- ENDIF -->
+	<!-- ENDIF -->
 						{PAGENA}
 						&nbsp;&nbsp;
-	 <!-- IF B_NOTLAST -->
+	<!-- IF B_NOTLAST -->
 						<a href="{SITEURL}active_auctions.php?PAGE={NEXT}&user_id={USER_ID}"><u>{L_5120}</u></a>
-	 <!-- ENDIF -->
+	<!-- ENDIF -->
 					</td>
 				</tr>
 			</table>

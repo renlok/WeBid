@@ -73,7 +73,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 
 foreach ($membertypes as $id => $quest)
 {
-    $template->assign_block_vars('mtype', array(
+	$template->assign_block_vars('mtype', array(
 			'ID' => $id,
 			'FEEDBACK' => $quest['feedbacks'],
 			'ICON' => $quest['icon']

@@ -56,7 +56,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$ERR = $MSG['895'];
 	}
 
-    $system->SETTINGS['mail_protocol'] = intval($_POST['mail_protocol']);
+	$system->SETTINGS['mail_protocol'] = intval($_POST['mail_protocol']);
 	$system->SETTINGS['mail_parameter'] = $_POST['mail_parameter'];
 	$system->SETTINGS['smtp_authentication'] = $_POST['smtp_authentication'];
 	$system->SETTINGS['smtp_security'] = $_POST['smtp_security'];
@@ -94,15 +94,15 @@ if (isset($_GET['test_email']))
 	$emailer = new email_handler();
 	$send_mail = $emailer->email_basic($subject, $to_email, $message);
 	if($send_mail)
-    {
+	{
 		$output = json_encode(array('type'=>'error', 'text' => 'Could not send mail! Please check your PHP mail configuration.Response:<br>' . $send_mail));
 		die($output);
-    }
+	}
 	else
 	{
 		$output = json_encode(array('type'=>'message', 'text' => 'Hi '.$user_name .' Your email(s) has been processed and sent. No error(s) to report.'));
 		die($output);
-    }
+	}
 }
 
 $template->assign_vars(array(

@@ -39,38 +39,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		if (intval($_POST['mail_protocol']) !== 2)
 		{
-			// Update database
-			$query = "UPDATE ". $DBPrefix . "settings SET
-					mail_protocol = :protocol,
-					mail_parameter = :parameter,
-					alert_emails = :emails";
-			$params = array();
-			$params[] = array(':protocol', $_POST['mail_protocol'], 'int');
-			$params[] = array(':parameter', $_POST['mail_parameter'], 'str');
-			$params[] = array(':emails', $_POST['alert_emails'], 'str');
-			$db->query($query, $params);
+			$system->writesetting("protocol", $_POST['mail_protocol'], 'int');
+			$system->writesetting("parameter", $_POST['mail_parameter'], 'str');
+			$system->writesetting("emails", $_POST['alert_emails'], 'str');
 		}
 		else
 		{
-			$query = "UPDATE ". $DBPrefix . "settings SET
-					mail_protocol = 2,
-					smtp_authentication = :authentication,
-					smtp_security = :security,
-					smtp_port = :port,
-					smtp_username = :username,
-					smtp_password = :password,
-					smtp_host = :host,
-					alert_emails = :emails";
-			$params = array();
-			$params[] = array(':authentication', $_POST['smtp_authentication'], 'str');
-			$params[] = array(':security', $_POST['smtp_security'], 'str');
-			$params[] = array(':port', $_POST['smtp_port'], 'int');
-			$params[] = array(':username', (!empty($_POST['smtp_username'])? $_POST['smtp_username'] : ''), 'str');
-			$params[] = array(':password', (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : ''), 'str');
-			$params[] = array(':host', (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
-			$params[] = array(':emails', $_POST['alert_emails'], 'str');
-			$db->query($query, $params);
-		}
+			$system->writesetting("authentication", $_POST['smtp_authentication'], 'str');
+			$system->writesetting("security", $_POST['smtp_security'], 'str');
+			$system->writesetting("port", $_POST['smtp_port'], 'int');
+			$system->writesetting("username", (!empty($_POST['smtp_username'])? $_POST['smtp_username'] : ''), 'str');
+			$system->writesetting("password", (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : ''), 'str');
+			$system->writesetting("host", (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
+			$system->writesetting("emails", $_POST['alert_emails'], 'str');
+			}
 		$ERR = $MSG['895'];
 	}
 

@@ -24,11 +24,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']) && $_POST['dtheme'] != 'admin')
 	{
 		// Update database
-		$query = "UPDATE " . $DBPrefix . "settings SET
-				theme = :theme";
-		$params = array();
-		$params[] = array(':theme', $_POST['dtheme'], 'str');
-		$db->query($query, $params);
+		$system->writesetting("theme", $_POST['dtheme'], 'str');
 		$system->SETTINGS['theme'] = $_POST['dtheme'];
 		$ERR = $MSG['26_0005'];
 	}

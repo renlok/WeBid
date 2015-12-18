@@ -22,36 +22,36 @@
 <!-- ELSEIF THISPAGE eq 'selling' -->
 	<!-- IF B_CANSELL -->
 		<ul class="padding">
-				<li><a href="yourauctions_p.php">{L_25_0115}</a></li>
-				<li><a href="yourauctions.php">{L_203}</a></li>
-				<li><a href="yourauctions_c.php">{L_204}</a></li>
-				<li><a href="yourauctions_s.php">{L_2__0056}</a></li>
-				<li><a href="yourauctions_sold.php">{L_25_0119}</a></li>
-				<li><a href="selling.php">{L_453}</a><br></li>
+			<li><a href="yourauctions_p.php">{L_25_0115}</a></li>
+			<li><a href="yourauctions.php">{L_203}</a></li>
+			<li><a href="yourauctions_c.php">{L_204}</a></li>
+			<li><a href="yourauctions_s.php">{L_2__0056}</a></li>
+			<li><a href="yourauctions_sold.php">{L_25_0119}</a></li>
+			<li><a href="selling.php">{L_453}</a><br></li>
 		</ul>
 	<!-- ELSE -->
 		<form name="request" action="" method="post">
 			<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<p>{L_25_0140}</p>
-			<p><input type="submit" name="requesttoadmin" value="{L_25_0141}"  class="button"></p>
+			<p><input type="submit" name="requesttoadmin" value="{L_25_0141}" class="button"></p>
 		</form>
 	<!-- ENDIF -->
 <!-- ELSEIF THISPAGE eq 'summary' -->
 		<table width="100%" border="0" cellspacing="2" cellpadding="3">
-		<tr>
-			<td class="titTable2">{L_593}</td>
-		</tr>
-		<tr>
-			<td>
-				{FBTOLEAVE}
-				{NEWMESSAGES}
-				{NO_REMINDERS}
-                {TO_PAY}
-                {BENDING_SOON}
-                {BOUTBID}
-                {SOLD_ITEMS}
-			</td>
-		</tr>
+			<tr>
+				<td class="titTable2">{L_593}</td>
+			</tr>
+			<tr>
+				<td>
+					{FBTOLEAVE}
+					{NEWMESSAGES}
+					{NO_REMINDERS}
+					{TO_PAY}
+					{BENDING_SOON}
+					{BOUTBID}
+					{SOLD_ITEMS}
+				</td>
+			</tr>
 		</table>
 <!-- ELSE -->
 		<ul class="padding">

@@ -61,7 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		if (isset($_POST['balance']))
 		{
 			$balance_clean = str_replace('-', '', $_POST['balance']);
-        }
+		}
 
 		if (strlen($_POST['password']) > 0 && ($_POST['password'] != $_POST['repeat_password']))
 		{
@@ -107,14 +107,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$ERR = $ERR_044;
 		}
-        elseif (empty($_POST['balance']))
-        {
-            $ERR = $ERR_112;
-        }
-        elseif (!$system->CheckMoney($balance_clean))
-        {
-            $ERR = $ERR_081;
-        }
+		elseif (empty($_POST['balance']))
+		{
+			$ERR = $ERR_112;
+		}
+		elseif (!$system->CheckMoney($balance_clean))
+		{
+			$ERR = $ERR_081;
+		}
 		else
 		{
 			if (!empty($_POST['birthdate']))

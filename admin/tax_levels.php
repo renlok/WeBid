@@ -32,38 +32,40 @@ if (isset($_POST['action']) && $_POST['action'] == 'add')
 	$buyer_countries = implode(' ', $_POST['buyer_countries']);
 	}
 
-	if (!empty($system->cleanvars($_POST['tax_name']))) {
-
-	if ($_POST['tax_id'] != '')
+	if (!empty($system->cleanvars($_POST['tax_name'])))
 	{
-		$query = "UPDATE " . $DBPrefix . "tax SET
-				tax_name = :tax_name,
-				tax_rate = :tax_rate,
-				countries_seller = :countries_seller,
-				countries_buyer = :countries_buyer
-				WHERE id = :tax_id";
-		$params = array();
-		$params[] = array(':tax_name', $system->cleanvars($_POST['tax_name']), 'str');
-		$params[] = array(':tax_rate', $system->cleanvars($_POST['tax_rate']), 'str');
-		$params[] = array(':countries_seller', $system->cleanvars($seller_countries), 'str');
-		$params[] = array(':countries_buyer', $system->cleanvars($buyer_countries), 'str');
-		$params[] = array(':tax_id', $_POST['tax_id'], 'int');
-		$db->query($query, $params);
+		if ($_POST['tax_id'] != '')
+		{
+			$query = "UPDATE " . $DBPrefix . "tax SET
+					tax_name = :tax_name,
+					tax_rate = :tax_rate,
+					countries_seller = :countries_seller,
+					countries_buyer = :countries_buyer
+					WHERE id = :tax_id";
+			$params = array();
+			$params[] = array(':tax_name', $system->cleanvars($_POST['tax_name']), 'str');
+			$params[] = array(':tax_rate', $system->cleanvars($_POST['tax_rate']), 'str');
+			$params[] = array(':countries_seller', $system->cleanvars($seller_countries), 'str');
+			$params[] = array(':countries_buyer', $system->cleanvars($buyer_countries), 'str');
+			$params[] = array(':tax_id', $_POST['tax_id'], 'int');
+			$db->query($query, $params);
+		}
+		else
+		{
+			$query = "INSERT INTO " . $DBPrefix . "tax (tax_name, tax_rate, countries_seller, countries_buyer) VALUES
+					(:tax_name, :tax_rate, :countries_seller, :countries_buyer)";
+			$params = array();
+			$params[] = array(':tax_name', $system->cleanvars($_POST['tax_name']), 'str');
+			$params[] = array(':tax_rate', $system->cleanvars($_POST['tax_rate']), 'str');
+			$params[] = array(':countries_seller', $system->cleanvars($seller_countries), 'str');
+			$params[] = array(':countries_buyer', $system->cleanvars($buyer_countries), 'str');
+			$db->query($query, $params);
+		}
 	}
 	else
 	{
-		$query = "INSERT INTO " . $DBPrefix . "tax (tax_name, tax_rate, countries_seller, countries_buyer) VALUES
-				(:tax_name, :tax_rate, :countries_seller, :countries_buyer)";
-		$params = array();
-		$params[] = array(':tax_name', $system->cleanvars($_POST['tax_name']), 'str');
-		$params[] = array(':tax_rate', $system->cleanvars($_POST['tax_rate']), 'str');
-		$params[] = array(':countries_seller', $system->cleanvars($seller_countries), 'str');
-		$params[] = array(':countries_buyer', $system->cleanvars($buyer_countries), 'str');
-		$db->query($query, $params);
+		$errmsg = $ERR_002;
 	}
-	} else {
-  $errmsg = $ERR_002;
-  }
 }
 
 // update site fee

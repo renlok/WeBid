@@ -8,7 +8,7 @@
 				<a href="{SITEURL}item.php?id={items.ID}"><img src="{items.IMAGE}" border="0"></a>
 			</td>
 			<td align="left"<!-- IF items.B_BOLD --> style="font-weight: bold;"<!-- ENDIF -->>
-                <a href="{SITEURL}item.php?id={items.ID}" class="bigfont">{items.TITLE}</a>
+				<a href="{SITEURL}item.php?id={items.ID}" class="bigfont">{items.TITLE}</a>
 				<!-- IF B_SUBTITLE && items.SUBTITLE ne '' --><p class="smallspan">{items.SUBTITLE}</p><!-- ENDIF -->
 				<p>{L_949} {items.CLOSES}</p>
 			</td>

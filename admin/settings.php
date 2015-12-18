@@ -34,27 +34,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// Update data
-		$query = "UPDATE " . $DBPrefix . "settings SET
-				sitename = :name,
-				adminmail = :email,
-				siteurl = :url,
-				copyright = :copy,
-				cron = :cronjob,
-				archiveafter = :delete_auctions,
-				cache_theme = :cache,
-				https = :https,
-				https_url = :https_url";
-		$params = array();
-		$params[] = array(':name', $_POST['sitename'], 'str');
-		$params[] = array(':email', $_POST['adminmail'], 'str');
-		$params[] = array(':url', $_POST['siteurl'], 'str');
-		$params[] = array(':copy', $_POST['copyright'], 'str');
-		$params[] = array(':cronjob', $_POST['cron'], 'int');
-		$params[] = array(':delete_auctions', $_POST['archiveafter'], 'int');
-		$params[] = array(':cache', $_POST['cache_theme'], 'str');
-		$params[] = array(':https', $_POST['https'], 'str');
-		$params[] = array(':https_url', $_POST['https_url'], 'str');
-		$db->query($query, $params);
+		$system->writesetting("name", $_POST['sitename'], 'str');
+		$system->writesetting("email", $_POST['adminmail'], 'str');
+		$system->writesetting("url", $_POST['siteurl'], 'str');
+		$system->writesetting("copy", $_POST['copyright'], 'str');
+		$system->writesetting("cronjob", $_POST['cron'], 'int');
+		$system->writesetting("delete_auctions", $_POST['archiveafter'], 'int');
+		$system->writesetting("cache", $_POST['cache_theme'], 'str');
+		$system->writesetting("https", $_POST['https'], 'str');
+		$system->writesetting("https_url", $_POST['https_url'], 'str');
 		$ERR = $MSG['542'];
 	}
 

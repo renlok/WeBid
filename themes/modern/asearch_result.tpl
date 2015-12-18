@@ -1,9 +1,8 @@
 <div class="row">
-   <div class="col-md-12">
-	<legend>
-		{L_464}
-	</legend>
-
+	<div class="col-md-12">
+		<legend>
+			{L_464}
+		</legend>
 <!-- IF NUM_AUCTIONS gt 0 -->
 		<!-- INCLUDE browse.tpl -->
 <!-- ELSE -->
@@ -11,6 +10,5 @@
 			{L_198}
 		</div>
 <!-- ENDIF -->
-
-   </div>
+	</div>
 </div>

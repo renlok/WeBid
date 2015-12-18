@@ -302,8 +302,8 @@ foreach ($payment_options as $k => $v)
 $payment_options = unserialize($system->SETTINGS['payment_options']);
 foreach ($payment_options as $k => $v)
 {
-    $checked = (array_key_exists($k, array_flip($payment))) ? 'checked' : '';
-    $payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
+	$checked = (array_key_exists($k, array_flip($payment))) ? 'checked' : '';
+	$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
 }
 
 // category
@@ -336,7 +336,7 @@ $query = "SELECT id, group_name  FROM ". $DBPrefix . "groups";
 $db->direct_query($query);
 while ($row = $db->fetch())
 {
-    $TPL_user_group_list .= "\t" . '<option value="' . $row['id'] . '"' . (($row['id'] == $user_group) ? ' selected' : '') . '>' . $row['group_name'] . '</option>' . "\n";
+	$TPL_user_group_list .= "\t" . '<option value="' . $row['id'] . '"' . (($row['id'] == $user_group) ? ' selected' : '') . '>' . $row['group_name'] . '</option>' . "\n";
 }
 
 $template->assign_vars(array(

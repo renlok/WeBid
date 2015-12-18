@@ -217,7 +217,7 @@ if ($PAGES > 1)
 
 $_SESSION['INVOICE_RETURN'] = 'admin/invoice.php';
 $template->assign_vars(array(
-        'ERROR' => isset($ERR) ? $ERR : '',
+		'ERROR' => isset($ERR) ? $ERR : '',
 
 		'GROUP' => isset($_GET['group']) ? $_GET['group'] : 'i',
 		'FROM_DATE' => ($from_date == 0) ? '' : $from_date,

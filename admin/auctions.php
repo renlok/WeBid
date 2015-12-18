@@ -40,46 +40,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
-		// Update database
-		$query = "UPDATE ". $DBPrefix . "settings SET
-					proxy_bidding = :proxy_bidding,
-					edit_starttime = :edit_starttime,
-					cust_increment = :cust_increment,
-					hours_countdown = :hours_countdown,
-					ao_hpf_enabled = :ao_hpf_enabled,
-					ao_hi_enabled = :ao_hi_enabled,
-					ao_bi_enabled = :ao_bi_enabled,
-					subtitle = :subtitle,
-					extra_cat = :extra_cat,
-					autorelist = :autorelist,
-					autorelist_max = :autorelist_max,
-					ae_status = :ae_status,
-					ae_timebefore = :ae_timebefore,
-					ae_extend = :ae_extend,
-					picturesgallery = :picturesgallery,
-					maxpictures = :maxpictures,
-					maxuploadsize = :maxuploadsize,
-					thumb_show = :thumb_show";
-		$params = array();
-		$params[] = array(':proxy_bidding', ynbool($_POST['proxy_bidding']), 'str');
-		$params[] = array(':edit_starttime', $_POST['edit_starttime'], 'int');
-		$params[] = array(':cust_increment', $_POST['cust_increment'], 'int');
-		$params[] = array(':hours_countdown', $_POST['hours_countdown'], 'int');
-		$params[] = array(':ao_hpf_enabled', ynbool($_POST['ao_hpf_enabled']), 'str');
-		$params[] = array(':ao_hi_enabled', ynbool($_POST['ao_hi_enabled']), 'str');
-		$params[] = array(':ao_bi_enabled', ynbool($_POST['ao_bi_enabled']), 'str');
-		$params[] = array(':subtitle', ynbool($_POST['subtitle']), 'str');
-		$params[] = array(':extra_cat', ynbool($_POST['extra_cat']), 'str');
-		$params[] = array(':autorelist', ynbool($_POST['autorelist']), 'str');
-		$params[] = array(':autorelist_max', $_POST['autorelist_max'], 'int');
-		$params[] = array(':ae_status', ynbool($_POST['status']), 'str');
-		$params[] = array(':ae_timebefore', $_POST['timebefore'], 'int');
-		$params[] = array(':ae_extend', $_POST['extend'], 'int');
-		$params[] = array(':picturesgallery', $_POST['picturesgallery'], 'int');
-		$params[] = array(':maxpictures', $_POST['maxpictures'], 'int');
-		$params[] = array(':maxuploadsize', ($_POST['maxpicturesize'] * 1024), 'int');
-		$params[] = array(':thumb_show', $_POST['thumb_show'], 'int');
-		$db->query($query, $params);
+		$system->writesetting("proxy_bidding",ynbool($_POST['proxy_bidding']),"bool");
+		$system->writesetting("edit_starttime", $_POST['edit_starttime'], 'int');
+		$system->writesetting("cust_increment", $_POST['cust_increment'], 'int');
+		$system->writesetting("hours_countdown", $_POST['hours_countdown'], 'int');
+		$system->writesetting("ao_hpf_enabled", ynbool($_POST['ao_hpf_enabled']), 'str');
+		$system->writesetting("ao_hi_enabled", ynbool($_POST['ao_hi_enabled']), 'str');
+		$system->writesetting("ao_bi_enabled", ynbool($_POST['ao_bi_enabled']), 'str');
+		$system->writesetting("subtitle", ynbool($_POST['subtitle']), 'str');
+		$system->writesetting("extra_cat", ynbool($_POST['extra_cat']), 'str');
+		$system->writesetting("autorelist", ynbool($_POST['autorelist']), 'str');
+		$system->writesetting("autorelist_max", $_POST['autorelist_max'], 'int');
+		$system->writesetting("ae_status", ynbool($_POST['status']), 'str');
+		$system->writesetting("ae_timebefore", $_POST['timebefore'], 'int');
+		$system->writesetting("ae_extend", $_POST['extend'], 'int');
+		$system->writesetting("picturesgallery", $_POST['picturesgallery'], 'int');
+		$system->writesetting("maxpictures", $_POST['maxpictures'], 'int');
+		$system->writesetting("maxuploadsize", ($_POST['maxpicturesize'] * 1024), 'int');
+		$system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
 		$ERR = $MSG['5088'];
 	}
 	$system->SETTINGS['edit_starttime'] = $_POST['edit_starttime'];

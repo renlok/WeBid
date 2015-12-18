@@ -45,12 +45,12 @@
 				<input type="submit" type="button" value="{L_1106}">
 			</form>
 	<!-- IF a.SHIPPED eq 0 -->
-	        <img src="{SITEURL}images/clock.png"> <span class="smallspan"><a href="{SITEURL}selling.php?shipped={a.ID}{AUCID}">{L_1116}</a></span>
+			<img src="{SITEURL}images/clock.png"> <span class="smallspan"><a href="{SITEURL}selling.php?shipped={a.ID}{AUCID}">{L_1116}</a></span>
 	<!-- ELSEIF a.SHIPPED eq 1 -->
-	        <img src="{SITEURL}images/lorry_go.png" border="0"> <span class="smallspan">{L_1117}</span>
+			<img src="{SITEURL}images/lorry_go.png" border="0"> <span class="smallspan">{L_1117}</span>
 	<!-- ELSEIF a.SHIPPED eq 2 -->
-	        <img src="{SITEURL}images/box.png" border="0"> <span class="smallspan">{L_1109}</span>
-    <!-- ENDIF -->
+			<img src="{SITEURL}images/box.png" border="0"> <span class="smallspan">{L_1109}</span>
+	<!-- ENDIF -->
 		</td>
 	</tr>
 <!-- END a -->

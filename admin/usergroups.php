@@ -143,22 +143,22 @@ $db->direct_query($query);
 
 while ($row = $db->fetch())
 {
-    if (!empty($row['groups']))
+	if (!empty($row['groups']))
 	{
-        if (!empty($groups_array))
+		if (!empty($groups_array))
 		{
-           $groups_array = $groups_array .','. $row['groups'];
+			$groups_array = $groups_array .','. $row['groups'];
 		}
-        else
+		else
 		{
-           $groups_array = $row['groups'];
+			$groups_array = $row['groups'];
 		}
-    }
+	}
 	else
 	{
 		$groups_array = $groups_array . ',unknown';
 		$groups_unknown[] = $row;
-    }
+	}
 }
 $groups_array = explode(',', $groups_array);
 $groups_array = array_count_values($groups_array);
@@ -216,7 +216,7 @@ if (!empty($groups_array))
 		$db->query($query, $params);
 		// TODO: automatically remove users from groups when the group is deleted
 
-        while ($row = $db->fetch())
+		while ($row = $db->fetch())
 		{
 			$template->assign_block_vars('groups_unknown.list_users', array(
 					'ID' =>  $row['id'],

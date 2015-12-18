@@ -54,52 +54,36 @@ if ($count > 0)
 }
 ?>
 
-<html><head>
-
+<html>
+<head>
 <title>Banner filters</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body bgcolor="#ffffff">
 <center>
-  <p><b>
+	<p><b>
 	Banner filter</b> </p>
-   <p align="center"><a href="javascript:window.close()" class="bluelink">Close</a></p>
-
-  <table width="352" border="0" cellspacing="0" cellpadding="0">
+	<p align="center"><a href="javascript:window.close()" class="bluelink">Close</a></p>
+	<table width="352" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-		<td bgcolor="#eeeeee">
-
-		<?php echo $MSG['_0053']; ?>
-
-		</td>
+		<td bgcolor="#eeeeee"><?php echo $MSG['_0053']; ?></td>
 	</tr>
 	<tbody>
 	<tr>
-		<td>
-		<?php echo $CATEGORIES; ?></td>
+		<td><?php echo $CATEGORIES; ?></td>
 	</tr>
 	<tr>
-		<td bgcolor="#ffffff">&nbsp;
-
-		</td>
+		<td bgcolor="#ffffff">&nbsp;</td>
 	</tr>
 	<tr>
-		<td bgcolor="#eeeeee">
-
-		<?php echo $MSG['_0054']; ?>
-
-		</td>
+		<td bgcolor="#eeeeee"><?php echo $MSG['_0054']; ?></td>
 	</tr>
 	<tr>
-		<td>
-
-		<?php echo $KEYWORDS; ?>
-
-		</td>
+		<td><?php echo $KEYWORDS; ?></td>
 	</tr>
 	</tbody>
-  </table>
-  </center>
- <p align="center"><a href="javascript:window.close()" class="bluelink">Close</a></p>
-
-</body></html>
+	</table>
+	</center>
+	<p align="center"><a href="javascript:window.close()" class="bluelink">Close</a></p>
+</body>
+</html>

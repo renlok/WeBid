@@ -56,21 +56,22 @@ if (isset($_SESSION['searchauctionstitlekeywords']) && $_SESSION['searchauctions
 $titlekeywords_sql = " AND INSTR(LCASE(a.title), '" . strtolower($_SESSION['searchauctionstitlekeywords']) . "') > 0";
 }
 $auctiontype_sql = "a.closed >= 0";
-if (!empty($_SESSION['searchauctionsauctiontype'])) {
-    switch ($_SESSION['searchauctionsauctiontype'])
+if (!empty($_SESSION['searchauctionsauctiontype']))
 {
-	case 1:	// open auctions
-		$auctiontype_sql = "a.closed = 0";
-	break;
-	case 2: // closed auctions
-		$auctiontype_sql = "a.closed = 1";
-	break;
-	case 3:	// suspended auctions
-		$auctiontype_sql = "a.suspended != 0";
-	break;
-	default:			// all auctions
-		$auctiontype_sql = "a.closed >= 0";
-}
+	switch ($_SESSION['searchauctionsauctiontype'])
+	{
+		case 1:	// open auctions
+			$auctiontype_sql = "a.closed = 0";
+		break;
+		case 2: // closed auctions
+			$auctiontype_sql = "a.closed = 1";
+		break;
+		case 3:	// suspended auctions
+			$auctiontype_sql = "a.suspended != 0";
+		break;
+		default:			// all auctions
+			$auctiontype_sql = "a.closed >= 0";
+	}
 }
 // If a new search is posted, you need to unset $_SESSION['RETURN_LIST_OFFSET'] to get page 1.
 if (isset($_POST['auctionid']))

@@ -74,7 +74,7 @@ if (isset($_POST['act']))
 include $main_path . 'language/' . $language . '/countries.inc.php';
 
 foreach($countries as $country) {
-    // check if the country is being used by a user
+	// check if the country is being used by a user
 	$query = "SELECT id FROM " . $DBPrefix . "users WHERE country = :country LIMIT 1";
 	$params = array();
 	$params[] = array(':country', $country, 'str');

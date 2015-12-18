@@ -11,11 +11,11 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
- /***************************************************************************
- Logo_upload script based on popular MOD "Logo Upload Via Admin" by nay27uk
+
+/***************************************************************************
+ *   Script based on popular MOD "Logo Upload Via Admin" by nay27uk
  ***************************************************************************/
- 
+
 define('InAdmin', 1);
 $current_page = 'interface';
 include '../common.php';

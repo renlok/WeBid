@@ -4,9 +4,12 @@
 $(document).ready(function() {
 	var relist_fee = {RELIST_FEE};
 	$("#processrelist").submit(function() {
-		if (confirm('{L_30_0087}')){
+		if (confirm('{L_30_0087}'))
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	});
@@ -67,7 +70,7 @@ $(document).ready(function() {
 	<tr {items.BGCOLOUR}>
 		<td width="40%">
 			<a href="item.php?id={items.ID}">{items.TITLE}</a><br />
-            <span class="smallspan"><a href="selling.php?id={items.ID}">{L_900}</a></span>
+			<span class="smallspan"><a href="selling.php?id={items.ID}">{L_900}</a></span>
 		</td>
 		<td width="10%">
 			{items.STARTS}
@@ -117,7 +120,6 @@ $(document).ready(function() {
 	</tr>
 <!-- END items -->
 </table>
-
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 	<tr>
 		<td align="center">

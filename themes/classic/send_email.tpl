@@ -22,55 +22,71 @@ function ResetFriendForm(){
 			{ERROR}
 		</div>
 	<!-- ENDIF -->
-		<TABLE WIDTH="100%" >
-		<TR>
-		<TD>
-		<form name="sendemail" action="send_email.php" method="post">
-		<TABLE WIDTH="90%" border="0" cellpadding="4" cellspacing="0" class="content">
-		<TR>
-		<TD width="40%" ALIGN=right> <B>{L_125}</B>
-		</TD>
-		<TD width="60%"><INPUT TYPE="HIDDEN" NAME="seller_nick" SIZE="25" VALUE="{SELLER_NICK}">
-		{SELLER_NICK}</TD>
-		</TR>
+		<table WIDTH="100%" >
+			<tr>
+				<td>
+					<form name="sendemail" action="send_email.php" method="post">
+						<table WIDTH="90%" border="0" cellpadding="4" cellspacing="0" class="content">
+							<tr>
+								<td width="40%" align=right>
+									<b>{L_125}</b>
+								</td>
+								<td width="60%">
+									<input type="hidden" name="seller_nick" size="25" value="{SELLER_NICK}">
+									{SELLER_NICK}
+								</td>
+							</tr>
 	<!-- IF B_LOGGED_IN eq false -->
-		<TR>
-		<TD ALIGN=right> <B>{L_006}</B>
-		</TD>
-		<TD><INPUT TYPE="text" NAME="sender_email" SIZE="25" VALUE=""></TD>
-		</TR>
+							<tr>
+								<td align=right>
+									<b>{L_006}</b>
+								</td>
+								<td>
+									<input type="text" name="sender_email" size="25" value="">
+								</td>
+							</tr>
 	<!-- ENDIF -->
-		<TR>
-		<TD ALIGN=right> <B>{L_017}</B>
-		</TD>
-		<TD><INPUT TYPE="HIDDEN" NAME="item_title" SIZE="25" VALUE="{ITEM_TITLE}">
-		{ITEM_TITLE}</TD>
-		</TR>
-		<!-- your email -->
-		<TR>
-		<TD ALIGN=right> <B>{L_002}</B>
-		</TD>
-		<TD ><INPUT TYPE="TEXT" NAME="sender_name" SIZE="25" VALUE="{YOURUSERNAME}">
-		</TD>
-		</TR>
-		<!-- comment -->
-		<TR>
-		<TD ALIGN="right" VALIGN="TOP"> <B>{L_650}</B>
-		</TD>
-		<TD ><TEXTAREA NAME="sender_question" COLS="35" ROWS="6">{SELLER_QUESTION}</TEXTAREA>
-		<BR> <BR> <INPUT TYPE="hidden" NAME="seller_email" VALUE="{SELLER_EMAIL}">
-        <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-		<INPUT TYPE="hidden" NAME="id" VALUE="{AUCT_ID}">
-		<INPUT TYPE="hidden" NAME="action" VALUE="{L_106}"> <INPUT TYPE="submit" NAME="" VALUE="{L_5201}"  class="button">
+							<tr>
+								<td align=right>
+									<b>{L_017}</b>
+								</td>
+								<td>
+									<input type="hidden" name="item_title" size="25" value="{ITEM_TITLE}">
+									{ITEM_TITLE}
+								</td>
+							</tr>
+							<!-- your email -->
+							<tr>
+								<td align=right>
+									<b>{L_002}</b>
+								</td>
+								<td>
+									<input type="text" name="sender_name" size="25" value="{YOURUSERname}">
+								</td>
+							</tr>
+							<!-- comment -->
+							<tr>
+								<td align="right" valign="top">
+									<b>{L_650}</b>
+								</td>
+								<td>
+									<textarea name="sender_question" cols="35" rows="6">{SELLER_QUESTION}</textarea>
+									<br><br>
+									<input type="hidden" name="seller_email" value="{SELLER_EMAIL}">
+									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+									<input type="hidden" name="id" value="{AUCT_ID}">
+									<input type="hidden" name="action" value="{L_106}"> <input type="submit" name="" value="{L_5201}" class="button">
 	<!-- IF B_LOGGED_IN -->
-		<INPUT TYPE="hidden" NAME="sender_email" SIZE="25" VALUE="{EMAIL}">
+									<input type="hidden" name="sender_email" size="25" value="{EMAIL}">
 	<!-- ENDIF -->
-		<INPUT TYPE=reset NAME="" VALUE="{L_035}" class=button> <p> </TD>
-		</TR>
-		</TABLE>
-		</FORM></TD>
-		</TR>
-		</TABLE>
+									<input type=reset name="" value="{L_035}" class="button">
+								</td>
+							</tr>
+						</table>
+					</form>
+				</td>
+			</tr>
+		</table>
 <!-- ENDIF -->
 	</div>
 </div>

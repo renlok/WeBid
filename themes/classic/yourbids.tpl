@@ -1,14 +1,15 @@
 <!-- INCLUDE user_menu_header.tpl -->
 <table width="100%" border="0" cellpadding="4" cellspacing="1" align="center">
-	<TR>
-	<TD colspan="3">
-		<TABLE WIDTH=200 HEIGHT=20 BORDER=0 CELLPADDING=0 CELLSPACING=0>
-		<TD WIDTH=20 BGCOLOR="#FFFF00">&nbsp;</TD>
-		<TD WIDTH=150>{L_30_0098}</TD>
-		</TR>
-		</TABLE>
-	</TD>
-	</TR>
+	<tr>
+		<td colspan="3">
+			<table width="200" height="20" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="20" bgcolor="#FFFF00">&nbsp;</td>
+					<td width="150">{L_30_0098}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
 	<tr>
 		<th align="center">
 			{L_168}
@@ -30,7 +31,7 @@
 		</td>
 		<td>
 			{bids.BID} <!-- IF bids.QTY gt 1 -->(x {bids.QTY} {L_5492})<!-- ENDIF -->
-            <!-- IF bids.PROXYBID ne '' --><p><span class="smallspan">{bids.PROXYBID}</span></p><!-- ENDIF -->
+			<!-- IF bids.PROXYBID ne '' --><p><span class="smallspan">{bids.PROXYBID}</span></p><!-- ENDIF -->
 		</td>
 		<td>
 			{bids.CBID}

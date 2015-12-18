@@ -4,42 +4,44 @@ $(document).ready(function(){
 	// set up the page
 	// do something
 	//sell javascript
-	$("#bn_only_no").click(function(){
+	$("#bn_only_no").click(function() {
 		$(".additional_shipping_costhide").hide();
-	        $("#additional_shipping_cost").attr("disabled","disabled");
-	        $("#min_bid").removeAttr("disabled");
-	        $("#reserve_price").removeAttr("disabled");
-	        $("#iqty").attr("disabled","disabled");
-	        $("#iqty").val("1");
+		$("#additional_shipping_cost").attr("disabled","disabled");
+		$("#min_bid").removeAttr("disabled");
+		$("#reserve_price").removeAttr("disabled");
+		$("#iqty").attr("disabled","disabled");
+		$("#iqty").val("1");
 	});
-	$("#bn_only_yes").click(function(){
+	$("#bn_only_yes").click(function() {
 		$(".additional_shipping_costhide").show();
-	        $("#additional_shipping_cost").removeAttr("disabled","disabled");
-	        $("#min_bid").attr("disabled","disabled");
-	        $("#reserve_price").attr("disabled","disabled");
-	        $("#with_reserve_no").attr("checked", "checked");
-	        $("#iqty").removeAttr("disabled");
-	        $("#bn_yes").attr("checked", "checked");
-	        $("#bn").removeAttr("disabled");
+		$("#additional_shipping_cost").removeAttr("disabled","disabled");
+		$("#min_bid").attr("disabled","disabled");
+		$("#reserve_price").attr("disabled","disabled");
+		$("#with_reserve_no").attr("checked", "checked");
+		$("#iqty").removeAttr("disabled");
+		$("#bn_yes").attr("checked", "checked");
+		$("#bn").removeAttr("disabled");
 	});
-	$("#reserve_price").focus(function(){
+	$("#reserve_price").focus(function() {
 		$("#with_reserve_yes").attr("checked", "checked");
 	});
-	$("#bn").focus(function(){
+	$("#bn").focus(function() {
 		$("#bn_yes").attr("checked", "checked");
 	});
-	$("#bn_no").click(function(){
+	$("#bn_no").click(function() {
 		$("#bn_only_no").attr("checked", "checked");
 		$("#min_bid").removeAttr("disabled");
 		$("#reserve_price").removeAttr("disabled");
 		$("#iqty").attr("disabled","disabled");
 		$("#iqty").val("1");
 	});
-	$("#custominc").focus(function(){
+	$("#custominc").focus(function() {
 		$("#inc2").attr("checked", "checked");
 	});
-	$("#atype").change(function(){
-		if ($(this).find(':selected').val() == 2) { //dutch auction
+	$("#atype").change(function() {
+		if ($(this).find(':selected').val() == 2)
+		{
+			//dutch auction
 			$("#additional_shipping_cost").attr("disabled","disabled");
 			$("#additional_shipping_cost").removeAttr("disabled","disabled");
 			$("#with_reserve_no").attr("checked", "checked");
@@ -50,7 +52,10 @@ $(document).ready(function(){
 			$("#min_bid").removeAttr("disabled");
 			$(".dutchhide").hide();
 			$("#minval_text").text("{L_038}");
-		} else { //normal auction
+		}
+		else
+		{
+			//normal auction
 			$("#additional_shipping_cost").removeAttr("disabled","disabled");
 			$(".additional_shipping_costhide").hide();
 			$(".dutchhide").show();
@@ -59,10 +64,10 @@ $(document).ready(function(){
 			$("#minval_text").text("{L_020}");
 		}
 	});
-	$("#bps").click(function(){
+	$("#bps").click(function() {
 		$("#shipping_cost").removeAttr("disabled");
 	});
-	$(".sps").click(function(){
+	$(".sps").click(function() {
 		$("#additional_shipping_cost").removeAttr("disabled","disabled");
 		$(".additional_shipping_costhide").hide();
 		$("#shipping_cost").attr("disabled","disabled");
@@ -77,19 +82,27 @@ $(document).ready(function(){
 	var st = {FEE_SUBTITLE};
 	st = st * 1;
 	var rl = {FEE_RELIST};
-	$("#min_bid").blur(function(){
+	$("#min_bid").blur(function() {
 		var min_bid = parseFloat($("#min_bid").val());
 		updatefee(min_bid_fee * -1);
 		min_bid_fee = 0; // just incase theres nothing
-		if (min_bid == 0) {
+		if (min_bid == 0)
+		{
 			min_bid_fee = 0;
-		} else {
-			for (var i = 0; i < setup.length; i++) {
-				if (setup[i][0] <= min_bid && setup[i][1] >= min_bid) {
-					if (setup[i][3] == 'flat') {
+		}
+		else
+		{
+			for (var i = 0; i < setup.length; i++)
+			{
+				if (setup[i][0] <= min_bid && setup[i][1] >= min_bid)
+				{
+					if (setup[i][3] == 'flat')
+					{
 						min_bid_fee = setup[i][2];
 						updatefee(setup[i][2]);
-					} else {
+					}
+					else
+					{
 						min_bid_fee = (setup[i][2] / 100) * min_bid;
 						updatefee(min_bid_fee);
 					}
@@ -98,23 +111,24 @@ $(document).ready(function(){
 			}
 		}
 	});
-	$("#resetbt").click(function(){
+	$("#resetbt").click(function() {
 		current_fee = current_fee.toFixed({FEE_DECIMALS});
 		$("#fee_exact").val(current_fee);
 		$("#to_pay").text(current_fee);
 	});
-	$("#bn").blur(function(){
+	$("#bn").blur(function() {
 		bin();
 	});
-	$("#bn_yes").click(function(){
+	$("#bn_yes").click(function() {
 		bin();
 	});
-	$("#bn_no").click(function(){
+	$("#bn_no").click(function() {
 		$("#bn").val(0);
 		bin();
 	});
-	function bin(){
-		if (bn != parseInt($("#bn").val())){
+	function bin() {
+		if (bn != parseInt($("#bn").val()))
+		{
 			if (parseInt($("#bn").val()) > 0)
 				updatefee(buyout_fee);
 			else
@@ -122,18 +136,19 @@ $(document).ready(function(){
 			bn = parseInt($("#bn").val());
 		}
 	}
-	$("#reserve_price").blur(function(){
+	$("#reserve_price").blur(function() {
 		reserve();
 	});
-	$("#with_reserve_yes").click(function(){
+	$("#with_reserve_yes").click(function() {
 		reserve();
 	});
-	$("#with_reserve_no").click(function(){
+	$("#with_reserve_no").click(function() {
 		$("#reserve_price").val(0);
 		reserve();
 	});
-	function reserve(){
-		if (rp != parseInt($("#reserve_price").val())){
+	function reserve() {
+		if (rp != parseInt($("#reserve_price").val()))
+		{
 			if (parseInt($("#reserve_price").val()) > 0)
 				updatefee(rp_fee);
 			else
@@ -141,26 +156,26 @@ $(document).ready(function(){
 			rp = parseInt($("#reserve_price").val());
 		}
 	}
-	$("#is_featured").click(function(){
+	$("#is_featured").click(function() {
 		if ($('#is_featured').is(':checked'))
 			updatefee(hpfeat_fee);
 		else
 			updatefee(hpfeat_fee * -1);
 	});
-	$("#is_bold").click(function(){
+	$("#is_bold").click(function() {
 		if ($('#is_bold').is(':checked'))
 			updatefee(bolditem_fee);
 		else
 			updatefee(bolditem_fee * -1);
 	});
-	$("#is_highlighted").click(function(){
+	$("#is_highlighted").click(function() {
 		if ($('#is_highlighted').is(':checked'))
 			updatefee(hlitem_fee);
 		else
 			updatefee(hlitem_fee * -1);
 	});
 		<!-- IF B_SUBTITLE -->
-	$("#subtitle").blur(function(){
+	$("#subtitle").blur(function() {
 		if (st > 0 && $("#subtitle").val().length == 0)
 		{
 			updatefee(subtitle_fee * -1);
@@ -174,17 +189,18 @@ $(document).ready(function(){
 	});
 		<!-- ENDIF -->
 		<!-- IF B_AUTORELIST -->
-	$("#autorelist").blur(function(){
+	$("#autorelist").blur(function() {
 		var rl_times = $("#autorelist").val();
 		updatefee(relist_fee * rl * -1);
 		updatefee(relist_fee * rl_times);
 		rl = rl_times;
 	});
 		<!-- ENDIF -->
-	function updatefee(newfee){
+	function updatefee(newfee) {
 		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
 		$("#fee_exact").val(nowfee);
-		if (nowfee < 0){
+		if (nowfee < 0)
+		{
 			nowfee = 0;
 		}
 		nowfee = nowfee.toFixed({FEE_DECIMALS});
@@ -207,19 +223,19 @@ $(document).ready(function(){
 			{TITLE}
 		</div>
 		<div class="table2">
-        	<a name="goto"></a>
+			<a name="goto"></a>
 <!-- IF ERROR ne '' -->
-            <div class="error-box">
-                {ERROR}
-            </div>
+			<div class="error-box">
+				{ERROR}
+			</div>
 <!-- ENDIF -->
 <!-- IF PAGE eq 0 -->
 			<form name="sell" action="{ASSLURL}sell.php" method="post">
-            	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
 						<td class="centre" colspan="2">
-                        	<h2 class="underline">{L_865}</h2>
+							<h2 class="underline">{L_865}</h2>
 						</td>
 					</tr>
 					<tr>
@@ -259,7 +275,7 @@ $(document).ready(function(){
 					</tr>
 					<tr>
 						<td class="rightpan" colspan="2">
-					   		{AUC_DESCRIPTION}
+							{AUC_DESCRIPTION}
 						</td>
 					</tr>
 	<!-- IF B_GALLERY -->
@@ -269,8 +285,8 @@ $(document).ready(function(){
 							<h3>{L_663}</h3>
 							<p>{MAXPICS}</p>
 							[<a href="upldgallery.php" alt="gallery" class="new-window">{L_677}</a>]
-                            <input type="hidden" name="numimages" value="{NUMIMAGES}" id="numimages">
-                        </td>
+							<input type="hidden" name="numimages" value="{NUMIMAGES}" id="numimages">
+						</td>
 					</tr>
 	<!-- ENDIF -->
 					<tr>
@@ -360,27 +376,27 @@ $(document).ready(function(){
 						</td>
 					</tr>
 	<!-- ENDIF -->
-    <!-- IF B_EDIT_STARTTIME -->
+	<!-- IF B_EDIT_STARTTIME -->
 					<tr>
 						<td align="right" width="25%" valign="middle">
 							<b>{L_2__0016}</b>
 						</td>
 						<td class="rightpan">
-        <!-- IF B_EDITING -->
+		<!-- IF B_EDITING -->
 							{START_TIME}
 							<input type="hidden" name="a_starts" value="{START_TIME}">
-        <!-- ELSE -->
-        					{L_211} <input type="checkbox" name="start_now" {START_NOW}><br>
+		<!-- ELSE -->
+							{L_211} <input type="checkbox" name="start_now" {START_NOW}><br>
 							{L_260} <input type="text" name="a_starts" id="pubdate_input" value="{START_TIME}" size="20" maxlength="19">
 							<script type="text/javascript">
 								new tcal ({'id': 'pubdate_input','controlname': 'a_starts', 'formname': 'sell'});
 							</script>
-        <!-- ENDIF -->
+		<!-- ENDIF -->
 						</td>
 					</tr>
 	<!-- ELSE -->
-    				<input type="hidden" name="start_now" value="1">
-    <!-- ENDIF -->
+					<input type="hidden" name="start_now" value="1">
+	<!-- ENDIF -->
 					<tr>
 						<td align="right" width="25%" valign="middle">
 							<b>{L_022}</b>
@@ -390,20 +406,20 @@ $(document).ready(function(){
 						</td>
 					</tr>
 	<!-- IF B_AUTORELIST -->
-                    <tr>
+					<tr>
 						<td align="right" width="25%" valign="middle">
 							<b>{L__0161}</b>
 						</td>
 						<td class="rightpan">
-                        	<p>{L__0162}</p>
-                        	{RELIST}
+							<p>{L__0162}</p>
+							{RELIST}
 						</td>
 					</tr>
 	<!-- ENDIF -->
 	<!-- IF B_SHIPPING -->
 					<tr>
 						<td class="centre" colspan="2">
-                        	<h2 class="underline">{L_864}</h2>
+							<h2 class="underline">{L_864}</h2>
 						</td>
 					</tr>
 					<tr>
@@ -450,7 +466,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 					<tr>
 						<td class="centre" colspan="2">
-                        	<h2 class="underline">{L_30_0080}</h2>
+							<h2 class="underline">{L_30_0080}</h2>
 						</td>
 					</tr>
 					<tr>
@@ -463,27 +479,27 @@ $(document).ready(function(){
 					</tr>
 					<tr>
 						<td class="centre" colspan="2">
-                        	<h2 class="underline">{L_268}</h2>
+							<h2 class="underline">{L_268}</h2>
 						</td>
 					</tr>
 	<!-- IF B_MKFEATURED or B_MKBOLD or B_MKHIGHLIGHT -->
-                    <tr>
+					<tr>
 						<td>&nbsp;</td>
 						<td class="rightpan">
-        <!-- IF B_MKFEATURED -->
-        					<p><input type="checkbox" name="is_featured" id="is_featured" {IS_FEATURED}> {L_273}</p>
-        <!-- ENDIF -->
-        <!-- IF B_MKBOLD -->
-        					<p><input type="checkbox" name="is_bold" id="is_bold" {IS_BOLD}> {L_274}</p>
-        <!-- ENDIF -->
-        <!-- IF B_MKHIGHLIGHT -->
-        					<p><input type="checkbox" name="is_highlighted" id="is_highlighted" {IS_HIGHLIGHTED}> {L_292}</p>
-        <!-- ENDIF -->
+		<!-- IF B_MKFEATURED -->
+							<p><input type="checkbox" name="is_featured" id="is_featured" {IS_FEATURED}> {L_273}</p>
+		<!-- ENDIF -->
+		<!-- IF B_MKBOLD -->
+							<p><input type="checkbox" name="is_bold" id="is_bold" {IS_BOLD}> {L_274}</p>
+		<!-- ENDIF -->
+		<!-- IF B_MKHIGHLIGHT -->
+							<p><input type="checkbox" name="is_highlighted" id="is_highlighted" {IS_HIGHLIGHTED}> {L_292}</p>
+		<!-- ENDIF -->
 						</td>
 					</tr>
 	<!-- ENDIF -->
 	<!-- IF B_CAN_TAX -->
-                    <tr>
+					<tr>
 						<td align="right" width="25%" valign="middle">
 							<b>{L_1102}</b>
 						</td>
@@ -492,7 +508,7 @@ $(document).ready(function(){
 							<input type="radio" name="is_taxed" value="n" {TAX_N}> {L_029}
 						</td>
 					</tr>
-                    <tr>
+					<tr>
 						<td align="right" width="25%" valign="middle">
 							<b>{L_1103}</b>
 						</td>
@@ -503,18 +519,17 @@ $(document).ready(function(){
 					</tr>
 	<!-- ENDIF -->
 	<!-- IF B_FEES -->
-                    <tr>
+					<tr>
 						<td align="right" width="25%" valign="middle">
 							<b>{L_1151}</b>
 						</td>
 						<td class="rightpan">
-                        	<input type="hidden" name="fee_exact" id="fee_exact" value="{FEE_VALUE}">
-                        	<span id="to_pay">{FEE_VALUE_F}</span> {CURRENCY}
+							<input type="hidden" name="fee_exact" id="fee_exact" value="{FEE_VALUE}">
+							<span id="to_pay">{FEE_VALUE_F}</span> {CURRENCY}
 						</td>
 					</tr>
 	<!-- ENDIF -->
 				</table>
-
 				<div style="text-align:center">
 					<input type="hidden" value="3" name="action">
 					<input type="submit" name="" value="{L_5189}" class="button">&nbsp;&nbsp;&nbsp;<input type="reset" id="resetbt" value="{L_5190}" class="button">
@@ -522,146 +537,146 @@ $(document).ready(function(){
 			</form>
 <!-- ELSEIF PAGE eq 2 -->
 			<form name="preview" action="{ASSLURL}sell.php" method="post">
-            <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-			<table width="100%" border="0" cellpadding="4" align="center" cellspacing=0>
-			<tr>
-				<td colspan="2" align="center">{L_046}</td>
-			</tr>
-			<tr>
-				<td width="40%" align="right"  valign="top"><b>{L_017}</b></td>
-				<td width="60%" >{TITLE}</td>
-			</tr>
+				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+				<table width="100%" border="0" cellpadding="4" align="center" cellspacing=0>
+					<tr>
+						<td colspan="2" align="center">{L_046}</td>
+					</tr>
+					<tr>
+						<td width="40%" align="right"  valign="top"><b>{L_017}</b></td>
+						<td width="60%" >{TITLE}</td>
+					</tr>
 	<!-- IF B_SUBTITLE -->
-			<tr>
-				<td width="40%" align="right"  valign="top"><b>{L_806}</b></td>
-				<td width="60%" >{SUBTITLE}</td>
-			</tr>
+					<tr>
+						<td width="40%" align="right"  valign="top"><b>{L_806}</b></td>
+						<td width="60%" >{SUBTITLE}</td>
+					</tr>
 	<!-- ENDIF -->
-			<tr>
-				<td  valign="top" align="right"><b>{L_018}</b></td>
-				<td>{AUC_DESCRIPTION}</td>
-			</tr>
-			<tr>
-				<td  valign="top" align="right"><b>{L_019}</b></td>
-				<td>{PIC_URL}</td>
-			</tr>
+					<tr>
+						<td  valign="top" align="right"><b>{L_018}</b></td>
+						<td>{AUC_DESCRIPTION}</td>
+					</tr>
+					<tr>
+						<td  valign="top" align="right"><b>{L_019}</b></td>
+						<td>{PIC_URL}</td>
+					</tr>
 	<!-- IF B_GALLERY -->
-			<tr>
-				<td width="260" valign="middle" align="right">&nbsp;</td>
-				<td>
-				{L_663}<br>
+					<tr>
+						<td width="260" valign="middle" align="right">&nbsp;</td>
+						<td>
+							{L_663}<br>
 		<!-- BEGIN gallery -->
-				<a href="{SITEURL}preview_gallery.php?img={gallery.K}" alt="preview" class="new-window"><img src="{gallery.IMAGE}" width=40 hspace=5 border=0></a>
+							<a href="{SITEURL}preview_gallery.php?img={gallery.K}" alt="preview" class="new-window"><img src="{gallery.IMAGE}" width=40 hspace=5 border=0></a>
 		<!-- END gallery -->
-				</td>
-			</tr>
+						</td>
+					</tr>
 	<!-- ENDIF -->
 	<!-- IF B_BN_ONLY -->
-			<tr>
-				<td valign="top" align="right"><b>{MINTEXT}</b></td>
-				<td>{MIN_BID}</td>
-			</tr>
+					<tr>
+						<td valign="top" align="right"><b>{MINTEXT}</b></td>
+						<td>{MIN_BID}</td>
+					</tr>
 	<!-- ENDIF -->
 	<!-- IF ATYPE_PLAIN eq 1 -->
 		<!-- IF B_BN_ONLY -->
-			<tr>
-				<td valign="top" align="right"><b>{L_021}</b></td>
-				<td>{RESERVE}</td>
-			</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_021}</b></td>
+						<td>{RESERVE}</td>
+					</tr>
 		<!-- ENDIF -->
 		<!-- IF B_BN -->
-			<tr>
-				<td valign="top" align="right"><b>{L_496}</b></td>
-				<td>{BN_PRICE}</td>
-			</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_496}</b></td>
+						<td>{BN_PRICE}</td>
+					</tr>
 		<!-- ENDIF -->
 	<!-- ENDIF -->
 	<!-- IF B_SHIPPING -->
-			<tr>
-				<td valign="top" align="right"><b>{L_023}</b></td>
-				<td>{SHIPPING_COST}</td>
-			</tr>
-			<tr>
-				<td valign="top" align="right"><b>{L_350_1008}</b></td>
-				<td>{ADDITIONAL_SHIPPING_COST}</td>
-			</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_023}</b></td>
+						<td>{SHIPPING_COST}</td>
+					</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_350_1008}</b></td>
+						<td>{ADDITIONAL_SHIPPING_COST}</td>
+					</tr>
 	<!-- ENDIF -->
-			<tr>
-				<td valign="top" align="right"><b>{L_2__0016}</b></td>
-				<td>{STARTDATE}</td>
-			</tr>
-			<tr>
-				<td valign="top" align="right"><b>{L_022}</b></td>
-				<td>{DURATION}</td>
-			</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_2__0016}</b></td>
+						<td>{STARTDATE}</td>
+					</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_022}</b></td>
+						<td>{DURATION}</td>
+					</tr>
 	<!-- IF B_CUSINC -->
-			<tr>
-				<td valign="top" align="right"><b>{L_120}</b> </td>
-				<td>{INCREMENTS}</td>
-			</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_120}</b> </td>
+						<td>{INCREMENTS}</td>
+					</tr>
 	<!-- ENDIF -->
-			<tr>
-				<td valign="top" align="right"><b>{L_261}</b> </td>
-				<td>{ATYPE}</td>
-			</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_261}</b> </td>
+						<td>{ATYPE}</td>
+					</tr>
 	<!-- IF B_SHIPPING -->
-			<tr>
-				<td valign="top" align="right"><b>{L_025}</b></td>
-				<td>{SHIPPING}<br>{INTERNATIONAL}</td>
-			</tr>
-			<tr>
-				<td align="right" valign="top"><b>{L_25_0215}</b></td>
-				<td>{SHIPPING_TERMS}</td>
-			</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_025}</b></td>
+						<td>{SHIPPING}<br>{INTERNATIONAL}</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top"><b>{L_25_0215}</b></td>
+						<td>{SHIPPING_TERMS}</td>
+					</tr>
 	<!-- ENDIF -->
-			<tr>
-				<td valign="top" align="right"><b>{L_026}</b> </td>
-				<td>{PAYMENTS_METHODS}</td>
-			</tr>
-			<tr>
-				<td  valign="top" align="right"><b>{L_027}</b></td>
-				<td>
-					{CAT_LIST1}
+					<tr>
+						<td valign="top" align="right"><b>{L_026}</b> </td>
+						<td>{PAYMENTS_METHODS}</td>
+					</tr>
+					<tr>
+						<td  valign="top" align="right"><b>{L_027}</b></td>
+						<td>
+							{CAT_LIST1}
 	<!-- IF CAT_LIST2 ne '' -->
-					<br>{CAT_LIST2}
+							<br>{CAT_LIST2}
 	<!-- ENDIF -->
-				</td>
-			</tr>
+						</td>
+					</tr>
 	<!-- IF B_FEES -->
-			<tr>
-				<td valign="top" align="right"><b>{L_1151}</b> </td>
-				<td>{FEE}</td>
-			</tr>
+					<tr>
+						<td valign="top" align="right"><b>{L_1151}</b> </td>
+						<td>{FEE}</td>
+					</tr>
 	<!-- ENDIF -->
-			<tr>
-				<td  valign="top" align="right"></td>
-				<td>{L_264}<a href="{SITEURL}sell.php?mode=recall">{L_265}</a>{L_266}<br></td>
-			</tr>
+					<tr>
+						<td  valign="top" align="right"></td>
+						<td>{L_264}<a href="{SITEURL}sell.php?mode=recall">{L_265}</a>{L_266}<br></td>
+					</tr>
 	<!-- IF B_USERAUTH -->
-			<tr>
-				<td align="right">{L_003}</td>
-				<td><b>{YOURUSERNAME}</b><input type="hidden" name="nick" value="{YOURUSERNAME}">
-			</tr>
-			<tr>
-				<td align="right">{L_004}</td>
-				<td><input type="password" name="password" size="20" maxlength="20" value=""></td>
-			</tr>
+					<tr>
+						<td align="right">{L_003}</td>
+						<td><b>{YOURUSERNAME}</b><input type="hidden" name="nick" value="{YOURUSERNAME}">
+					</tr>
+					<tr>
+						<td align="right">{L_004}</td>
+						<td><input type="password" name="password" size="20" maxlength="20" value=""></td>
+					</tr>
 	<!-- ENDIF -->
-			</table>
-			<div style="text-align:center; padding-top: 10px;">
-				<input type="hidden" value="4" name="action">
-				<input type="submit" name="" value="{L_2__0037}" class="button">
-			</div>
+				</table>
+				<div style="text-align:center; padding-top: 10px;">
+					<input type="hidden" value="4" name="action">
+					<input type="submit" name="" value="{L_2__0037}" class="button">
+				</div>
 			</form>
 <!-- ELSE -->
 			<div class="padding">
 				{L_100}
-                <p>{MESSAGE}</p>
-                <ul>
-                	<li><a href="{SITEURL}item.php?id={AUCTION_ID}&mode=1">{L_101}</a></li>
-                    <li><a href="{SITEURL}edit_active_auction.php?id={AUCTION_ID}">{L_30_0069}</a></li>
-                    <li><a href="{SITEURL}sellsimilar.php?id={AUCTION_ID}">{L_2__0050}</a></li>
-                </ul>
+				<p>{MESSAGE}</p>
+				<ul>
+					<li><a href="{SITEURL}item.php?id={AUCTION_ID}&mode=1">{L_101}</a></li>
+					<li><a href="{SITEURL}edit_active_auction.php?id={AUCTION_ID}">{L_30_0069}</a></li>
+					<li><a href="{SITEURL}sellsimilar.php?id={AUCTION_ID}">{L_2__0050}</a></li>
+				</ul>
 			</div>
 <!-- ENDIF -->
 		</div>

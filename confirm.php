@@ -16,11 +16,11 @@ include 'common.php';
 
 if (isset($_GET['id']) && isset($_GET['hash']) && !isset($_POST['action']))
 {
-    $query = "SELECT suspended, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
-    $params = array();
-    $params[] = array(':user_id', $_GET['id'], 'int');
-    $db->query($query, $params);
-    $user_data = $db->result();
+	$query = "SELECT suspended, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_GET['id'], 'int');
+	$db->query($query, $params);
+	$user_data = $db->result();
 
 	if ($db->numrows() == 0)
 	{
@@ -57,11 +57,11 @@ if (!isset($_GET['id']) && !isset($_POST['action']))
 
 if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 {
-    $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
-    $params = array();
-    $params[] = array(':user_id', $_POST['id'], 'int');
-    $db->query($query, $params);
-    $user_data = $db->result();
+	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_POST['id'], 'int');
+	$db->query($query, $params);
+	$user_data = $db->result();
 
 	if (md5($MD5_PREFIX . $user_data['nick']) == $_POST['hash'])
 	{

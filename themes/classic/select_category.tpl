@@ -22,7 +22,7 @@ function SubmitBoxes(N)
 			<input type="hidden" name="cat_no" value="{CAT_NO}">
 			<table width="80%" border="0" cellpadding="4" class="content centre">
 				<tr>
-				<td colspan="2" valign="top">
+					<td colspan="2" valign="top">
 						<!-- IF CAT_NO eq 2 -->{L_2__0041} {COST}<!-- ELSE -->{L_2__0038}<!-- ENDIF -->
 					</td>
 				</tr>

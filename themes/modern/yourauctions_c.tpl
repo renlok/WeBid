@@ -22,9 +22,12 @@ $("#relistall").click(function() {
 		});
 	});
 	$("#processdel").submit(function() {
-		if (confirm('{L_30_0087}')){
+		if (confirm('{L_30_0087}'))
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	});
@@ -43,107 +46,104 @@ $("#relistall").click(function() {
 <!-- ENDIF -->
 
 <form name="closed" method="post" action="" id="processdel">
-<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                         <ul class="nav nav-tabs nav-justified">
-				<li role="presentation"><a href="yourauctions_p.php">{L_25_0115}</a></li>
-                                <li role="presentation"><a href="yourauctions.php">{L_619}</a></li>
-				<li role="presentation" class="active"><a href="yourauctions_c.php">{L_204}</a></li>
-				<li role="presentation"><a href="yourauctions_s.php">{L_2__0056}</a></li>
-				<li role="presentation"><a href="yourauctions_sold.php">{L_25_0119}</a></li>
-			</ul>
-
-
-
-<table class="table table-bordered table-condensed table-striped">
-	<tr>
-		<td class="titTable1" width="40%">
-			<a href="yourauctions_c.php?ca_ord=title&ca_type={ORDERNEXT}">{L_624}</a>
+	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+	<ul class="nav nav-tabs nav-justified">
+		<li role="presentation"><a href="yourauctions_p.php">{L_25_0115}</a></li>
+		<li role="presentation"><a href="yourauctions.php">{L_619}</a></li>
+		<li role="presentation" class="active"><a href="yourauctions_c.php">{L_204}</a></li>
+		<li role="presentation"><a href="yourauctions_s.php">{L_2__0056}</a></li>
+		<li role="presentation"><a href="yourauctions_sold.php">{L_25_0119}</a></li>
+	</ul>
+	<table class="table table-bordered table-condensed table-striped">
+		<tr>
+			<td class="titTable1" width="40%">
+				<a href="yourauctions_c.php?ca_ord=title&ca_type={ORDERNEXT}">{L_624}</a>
 <!-- IF ORDERCOL eq 'title' -->
-			<a href="yourauctions_c.php?ca_ord=title&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
+				<a href="yourauctions_c.php?ca_ord=title&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
-		</td>
-		<td class="hidden-xs" width="10%">
-			<a href="yourauctions_c.php?ca_ord=starts&ca_type={ORDERNEXT}">{L_625}</a>
+			</td>
+			<td class="hidden-xs" width="10%">
+				<a href="yourauctions_c.php?ca_ord=starts&ca_type={ORDERNEXT}">{L_625}</a>
 <!-- IF ORDERCOL eq 'starts' -->
-			<a href="yourauctions_c.php?ca_ord=starts&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
+				<a href="yourauctions_c.php?ca_ord=starts&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
-		</td>
-		<td class="hidden-xs" width="10%">
-			<a href="yourauctions_c.php?ca_ord=ends&ca_type={ORDERNEXT}">{L_626}</a>
+			</td>
+			<td class="hidden-xs" width="10%">
+				<a href="yourauctions_c.php?ca_ord=ends&ca_type={ORDERNEXT}">{L_626}</a>
 <!-- IF ORDERCOL eq 'ends' -->
-			<a href="yourauctions_c.php?ca_ord=ends&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
+				<a href="yourauctions_c.php?ca_ord=ends&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
-		</td>
-		<td class="titTable1" width="10%" align="center">
-			<a href="yourauctions_c.php?ca_ord=num_bids&ca_type={ORDERNEXT}">{L_627}</a>
+			</td>
+			<td class="titTable1" width="10%" align="center">
+				<a href="yourauctions_c.php?ca_ord=num_bids&ca_type={ORDERNEXT}">{L_627}</a>
 <!-- IF ORDERCOL eq 'num_bids' -->
-			<a href="yourauctions_c.php?ca_ord=num_bids&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
+				<a href="yourauctions_c.php?ca_ord=num_bids&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
-		</td>
-		<td class="titTable1" width="11%" align="center">
-			<a href="yourauctions_c.php?ca_ord=current_bid&ca_type={ORDERNEXT}">{L_628}</a>
+			</td>
+			<td class="titTable1" width="11%" align="center">
+				<a href="yourauctions_c.php?ca_ord=current_bid&ca_type={ORDERNEXT}">{L_628}</a>
 <!-- IF ORDERCOL eq 'current_bid' -->
-			<a href="yourauctions_c.php?ca_ord=current_bid&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
+				<a href="yourauctions_c.php?ca_ord=current_bid&ca_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
-		</td>
-		<td class="titTable1" width="10%" align="center">
-			{L_630}
-		</td>
-		<td class="titTable1" width="10%" align="center">
-			{L_25_0209}
-		</td>
-		<td class="titTable1" width="9%" align="center" bgcolor=>
-			{L_008}
-		</td>
-	</tr>
+			</td>
+			<td class="titTable1" width="10%" align="center">
+				{L_630}
+			</td>
+			<td class="titTable1" width="10%" align="center">
+				{L_25_0209}
+			</td>
+			<td class="titTable1" width="9%" align="center" bgcolor=>
+				{L_008}
+			</td>
+		</tr>
 <!-- IF B_AREITEMS -->
 	<!-- BEGIN items -->
-	<tr {items.BGCOLOUR}>
-		<td width="40%">
-			<a href="item.php?id={items.ID}">{items.TITLE}</a>
-		</td>
-		<td class="hidden-xs" width="10%">
-			{items.STARTS}
-		</td>
-		<td class="hidden-xs" width="10%">
-			{items.ENDS}
-		</td>
-		<td width="10%"  align="center">
-			{items.BIDS}
-		</td>
-		<td width="11%"  align="center">
-			{items.BID}
-		</td>
-		<td width="10%"  align="center">
+		<tr {items.BGCOLOUR}>
+			<td width="40%">
+				<a href="item.php?id={items.ID}">{items.TITLE}</a>
+			</td>
+			<td class="hidden-xs" width="10%">
+				{items.STARTS}
+			</td>
+			<td class="hidden-xs" width="10%">
+				{items.ENDS}
+			</td>
+			<td width="10%"  align="center">
+				{items.BIDS}
+			</td>
+			<td width="11%"  align="center">
+				{items.BID}
+			</td>
+			<td width="10%"  align="center">
 		<!-- IF items.B_CANRELIST and B_AUTORELIST -->
-			<input type="checkbox" name="relist[]" value="{items.ID}" class="relistid">
+				<input type="checkbox" name="relist[]" value="{items.ID}" class="relistid">
 		<!-- ELSE -->
-        	<!-- IF items.B_CANRELIST -->
-            <a href="sellsimilar.php?id={items.ID}&relist=1">{L_2__0051}</a>
-            <!-- ELSE -->
-            <a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
-            <!-- ENDIF -->
+			<!-- IF items.B_CANRELIST -->
+				<a href="sellsimilar.php?id={items.ID}&relist=1">{L_2__0051}</a>
+			<!-- ELSE -->
+				<a href="sellsimilar.php?id={items.ID}">{L_2__0050}</a>
+			<!-- ENDIF -->
 		<!-- ENDIF -->
-		</td>
-		<td width="10%"  align="center">
+			</td>
+			<td width="10%"  align="center">
 		<!-- IF items.B_CANSSELL -->
-			<input type="checkbox" name="sell[]" value="{items.ID}">
+				<input type="checkbox" name="sell[]" value="{items.ID}">
 		<!-- ENDIF -->
-		</td>
-		<td width="9%"  align="center">
+			</td>
+			<td width="9%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
-			<input type="checkbox" name="delete[]" value="{items.ID}">
+				<input type="checkbox" name="delete[]" value="{items.ID}">
 		<!-- ENDIF -->
-		</td>
-	</tr>
+			</td>
+		</tr>
 	<!-- END items -->
 <!-- ENDIF -->
-	<tr class="hidden-xs" {BGCOLOUR}>
-	  <td colspan="6" align="right">{L_30_0102}</td>
-<td align="center"><input type="checkbox" id="relistall"></td>
-	  <td align="center"><input type="checkbox" id="sellall"></td>
-	  <td align="center"><input type="checkbox" id="deleteall"></td>
-	</tr>
+		<tr class="hidden-xs" {BGCOLOUR}>
+			<td colspan="6" align="right">{L_30_0102}</td>
+			<td align="center"><input type="checkbox" id="relistall"></td>
+			<td align="center"><input type="checkbox" id="sellall"></td>
+			<td align="center"><input type="checkbox" id="deleteall"></td>
+		</tr>
 		<tr>
 			<td colspan="10" align="center">
 				<input type="hidden" name="action" value="update">
@@ -152,7 +152,6 @@ $("#relistall").click(function() {
 		</tr>
 	</table>
 </form>
-
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td align="center">

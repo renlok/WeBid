@@ -1,7 +1,6 @@
 <div class="row">
-   <div class="col-md-12">
-	<legend>{L_199}</legend>
-
+	<div class="col-md-12">
+		<legend>{L_199}</legend>
 <!-- IF ERROR ne '' -->
 		<div class="alert alert-danger" role="alert">
 			{ERROR}
@@ -15,6 +14,5 @@
 		</div>
 	<!-- ENDIF -->
 <!-- ENDIF -->
-
-   </div>
+	</div>
 </div>

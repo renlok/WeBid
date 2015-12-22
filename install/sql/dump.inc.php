@@ -3,7 +3,7 @@
 # Table structure for table `" . $DBPrefix . "settingsv2`
 #
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settingsv2`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "settingsv2` 
+$query[] = "CREATE TABLE `" . $DBPrefix . "settingsv2` (
   `fieldname` VARCHAR(30) NOT NULL,
   `fieldtype` VARCHAR(10) NOT NULL,
   `value` VARCHAR(255) NOT NULL,

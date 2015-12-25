@@ -15,9 +15,12 @@ $(document).ready(function() {
 		});
 	});
 	$("#processdel").submit(function() {
-		if (confirm('{L_30_0087}')){
+		if (confirm('{L_30_0087}'))
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	});
@@ -30,15 +33,15 @@ $(document).ready(function() {
 
 <form name="open" method="post" action="" id="processdel">
 <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                        <ul class="nav nav-tabs nav-justified">
-				<li role="presentation" class="active"><a href="yourauctions_p.php">{L_25_0115}</a></li>
-                                <li role="presentation"><a href="yourauctions.php">{L_619}</a></li>
-				<li role="presentation"><a href="yourauctions_c.php">{L_204}</a></li>
-				<li role="presentation"><a href="yourauctions_s.php">{L_2__0056}</a></li>
-				<li role="presentation"><a href="yourauctions_sold.php">{L_25_0119}</a></li>
-			</ul>
+	<ul class="nav nav-tabs nav-justified">
+		<li role="presentation" class="active"><a href="yourauctions_p.php">{L_25_0115}</a></li>
+		<li role="presentation"><a href="yourauctions.php">{L_619}</a></li>
+		<li role="presentation"><a href="yourauctions_c.php">{L_204}</a></li>
+		<li role="presentation"><a href="yourauctions_s.php">{L_2__0056}</a></li>
+		<li role="presentation"><a href="yourauctions_sold.php">{L_25_0119}</a></li>
+	</ul>
 	<table class="table table-bordered table-condensed table-striped">
-	<tr>
+		<tr>
 			<td>
 				<a href="yourauctions_p.php?pa_ord=title&pa_type={ORDERNEXT}">{L_624}</a>
 <!-- IF ORDERCOL eq 'title' -->
@@ -95,11 +98,11 @@ $(document).ready(function() {
 		</tr>
 	<!-- END items -->
 <!-- ENDIF -->
-	<tr class="hidden-xs" {BGCOLOUR}>
-	  <td colspan="4" align="right">{L_30_0102}</td>
-	  <td align="center"><input type="checkbox" id="deleteall"></td>
-	  <td align="center"><input type="checkbox" id="startall"></td>
-	</tr>
+		<tr class="hidden-xs" {BGCOLOUR}>
+			<td colspan="4" align="right">{L_30_0102}</td>
+			<td align="center"><input type="checkbox" id="deleteall"></td>
+			<td align="center"><input type="checkbox" id="startall"></td>
+		</tr>
 		<tr>
 			<td colspan="10" align="center">
 				<input type="hidden" name="action" value="delopenauctions">
@@ -108,17 +111,14 @@ $(document).ready(function() {
 		</tr>
 	</table>
 </form>
-
-
-		<div class="text-center">
-			{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
-			<br>
-			{PREV}
+<div class="text-center">
+	{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
+	<br>
+	{PREV}
 <!-- BEGIN pages -->
-			{pages.PAGE}&nbsp;&nbsp;
+	{pages.PAGE}&nbsp;&nbsp;
 <!-- END pages -->
-			{NEXT}
-		</div>
-
+	{NEXT}
+</div>
 
 <!-- INCLUDE user_menu_footer.tpl -->

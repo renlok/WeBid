@@ -15,11 +15,11 @@
 						<table width="98%" cellpadding="2" align="center" class="blank">
 <!-- BEGIN block -->
 						<tr valign="top">
-  <!-- IF block.B_HEADER -->
+<!-- IF block.B_HEADER -->
 							<td colspan="2" style="padding:3px; border-top:#0083D7 1px solid; background:#ECECEC;">
 								<b>{block.TITLE}</b>
 							</td>
-  <!-- ELSE -->
+<!-- ELSE -->
 							<td width="175">{block.TITLE}</td>
 							<td style="padding:3px;">
 								{block.DESCRIPTION}
@@ -32,7 +32,7 @@
 								{block.TYPE}
 	<!-- ENDIF -->
 							</td>
-  <!-- ENDIF -->
+<!-- ENDIF -->
 						</tr>
 <!-- END block -->
 						<tr valign="top">
@@ -84,7 +84,7 @@
 					};
 					//Ajax post data to server
 					$.post('emailsettings.php?test_email', post_data, function(response) {
-						 //load json data from server and output message
+						//load json data from server and output message
 						if(response.type == 'error')
 						{
 							output = '<div class="error-box">'+response.text+'</div>';

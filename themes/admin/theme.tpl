@@ -54,7 +54,7 @@
 						<tr {themes.BG}>
 							<td align="center" colspan="2">
 								<select name="file" multiple size="24" style="font-weight:bold; width:350px"
-								 ondblclick="document.getElementById('action').value = ''; document.getElementById('theme').value = '{themes.NAME}'; this.form.submit();">
+								ondblclick="document.getElementById('action').value = ''; document.getElementById('theme').value = '{themes.NAME}'; this.form.submit();">
 			<!-- BEGIN files -->
 								<option value="{themes.files.FILE}">{themes.files.FILE}</option>
 			<!-- END files -->

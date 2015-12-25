@@ -370,11 +370,11 @@ foreach ($auction_data as $Auction) // loop auctions
 		if ($Auction['sold'] != 's' AND $Auction['num_bids'] > 0 AND $Auction['reserve_price'] > 0 AND $Auction['current_bid'] < $Auction['reserve_price'])
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'n' WHERE id = :auc_id";
-        }
+		}
 		else
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'y' WHERE id = :auc_id";
-        }
+		}
 		$params = array();
 		$params[] = array(':auc_id', $Auction['id'], 'int');
 		$db->query($query, $params);
@@ -606,9 +606,9 @@ foreach ($auction_data as $row)
 	{
 		$pending_data = $db->fetchall();
 		$report_winner = 0;
-        $report = "<table cellspacing='0' cellpadding='10' border='1'>";
-        $report .= "<tr><th colspan='2'><h4><br>" . $MSG['BUY_NOW_ONLY_TPL_0100'] . "</h4></th></tr>";
-        $report .= "<tr><th>" . $MSG['168'] . "</th><th>" . $MSG['453'] . "</th></tr>";
+		$report = "<table cellspacing='0' cellpadding='10' border='1'>";
+		$report .= "<tr><th colspan='2'><h4><br>" . $MSG['BUY_NOW_ONLY_TPL_0100'] . "</h4></th></tr>";
+		$report .= "<tr><th>" . $MSG['168'] . "</th><th>" . $MSG['453'] . "</th></tr>";
 		foreach ($pending_data as $pending)
 		{
 			$Auction = unserialize($pending['auction']);

@@ -17,16 +17,16 @@ include 'common.php';
 function generatePassword($length = 8)
 {
 	// all possible characters to put in password
-    $chars = 'abcdfghjklmnpqrstvwxyzABCDFGHJKLMNPQRSTVWXYZ0123456789';
-    $count = mb_strlen($chars);
+	$chars = 'abcdfghjklmnpqrstvwxyzABCDFGHJKLMNPQRSTVWXYZ0123456789';
+	$count = mb_strlen($chars);
 
-    for ($i = 0, $result = ''; $i < $length; $i++)
+	for ($i = 0, $result = ''; $i < $length; $i++)
 	{
-        $index = rand(0, $count - 1);
-        $result .= mb_substr($chars, $index, 1);
-    }
+		$index = rand(0, $count - 1);
+		$result .= mb_substr($chars, $index, 1);
+	}
 
-    return $result;
+	return $result;
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'ok')

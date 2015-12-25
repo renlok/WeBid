@@ -29,9 +29,9 @@ switch ($_GET['show'])
 		$CONTENT = $system->uncleanvars($system->SETTINGS['privacypolicytext']);
 		break;
 	case 'cookies':
-        $TITLE = $MSG['1110'];
-        $CONTENT = $system->uncleanvars($system->SETTINGS['cookiespolicytext']);
-    	break;
+		$TITLE = $MSG['1110'];
+		$CONTENT = $system->uncleanvars($system->SETTINGS['cookiespolicytext']);
+		break;
 }
 
 $template->assign_vars(array(

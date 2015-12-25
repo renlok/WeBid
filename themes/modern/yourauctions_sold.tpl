@@ -4,9 +4,12 @@
 $(document).ready(function() {
 	var relist_fee = {RELIST_FEE};
 	$("#processrelist").submit(function() {
-		if (confirm('{L_30_0087}')){
+		if (confirm('{L_30_0087}'))
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	});
@@ -22,14 +25,13 @@ $(document).ready(function() {
 <!-- IF USER_MESSAGE ne '' -->
 <div class="success-box">{USER_MESSAGE}</div>
 <!-- ENDIF -->
-
-                         <ul class="nav nav-tabs nav-justified">
-				<li role="presentation"><a href="yourauctions_p.php">{L_25_0115}</a></li>
-                                <li role="presentation"><a href="yourauctions.php">{L_619}</a></li>
-				<li role="presentation"><a href="yourauctions_c.php">{L_204}</a></li>
-				<li role="presentation"><a href="yourauctions_s.php">{L_2__0056}</a></li>
-				<li role="presentation" class="active"><a href="yourauctions_sold.php">{L_25_0119}</a></li>
-			</ul>
+<ul class="nav nav-tabs nav-justified">
+	<li role="presentation"><a href="yourauctions_p.php">{L_25_0115}</a></li>
+	<li role="presentation"><a href="yourauctions.php">{L_619}</a></li>
+	<li role="presentation"><a href="yourauctions_c.php">{L_204}</a></li>
+	<li role="presentation"><a href="yourauctions_s.php">{L_2__0056}</a></li>
+	<li role="presentation" class="active"><a href="yourauctions_sold.php">{L_25_0119}</a></li>
+</ul>
 <table class="table table-bordered table-condensed table-striped">
 	<tr>
 		<td width="40%">
@@ -68,7 +70,7 @@ $(document).ready(function() {
 	<tr {items.BGCOLOUR}>
 		<td width="40%">
 			<a href="item.php?id={items.ID}">{items.TITLE}</a><br />
-            <a class="label label-info" href="selling.php?id={items.ID}">{L_900}</a>
+			<a class="label label-info" href="selling.php?id={items.ID}">{L_900}</a>
 		</td>
 		<td class="hidden-xs" width="10%">
 			{items.STARTS}
@@ -78,7 +80,7 @@ $(document).ready(function() {
 		</td>
 		<td width="10%" align="center">
 			{items.BIDS}
-        <!-- IF items.B_BUY_NOW_ONLY -->
+		<!-- IF items.B_BUY_NOW_ONLY -->
 			{L_AUCTIONS_404}
 	<!-- ELSEIF items.BIDS eq 1 -->
 		<!-- IF items.B_DUTCH -->
@@ -99,7 +101,7 @@ $(document).ready(function() {
 			-
 	<!-- ELSE -->
 			{items.BID}
-                <!-- IF items.B_BUY_NOW_ONLY -->
+		<!-- IF items.B_BUY_NOW_ONLY -->
 			<br>[ {L_933} {L_259} ]
 		<!-- ELSEIF items.B_BUY_NOW -->
 			<br>[ {L_496} {L_259} ]
@@ -118,16 +120,14 @@ $(document).ready(function() {
 	</tr>
 <!-- END items -->
 </table>
-
-		<div class="text-center">
-			{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
-			<br>
-			{PREV}
+<div class="text-center">
+	{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
+	<br>
+	{PREV}
 <!-- BEGIN pages -->
-			{pages.PAGE}&nbsp;&nbsp;
+	{pages.PAGE}&nbsp;&nbsp;
 <!-- END pages -->
-			{NEXT}
-		</div>
-
+	{NEXT}
+</div>
 
 <!-- INCLUDE user_menu_footer.tpl -->

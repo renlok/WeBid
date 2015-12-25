@@ -23,18 +23,18 @@ $(function() {
 
 		// Specify what files to browse for
 		filters : {
-		    // Maximum file size
+			// Maximum file size
 			max_file_size : "{MAXPICSIZE}kb",
 			// Specify what files to browse for
 			mime_types: [
-			{title : "Image files", extensions : "jpg,jpeg,gif,png"}
-		    ]
+				{title : "Image files", extensions : "jpg,jpeg,gif,png"}
+			]
 		},
 		multipart_params : {
-        "csrftoken" : "{_CSRFTOKEN}"
-       },
+			"csrftoken" : "{_CSRFTOKEN}"
+		},
 
-	   // Resize images on clientside if we can
+		// Resize images on clientside if we can
 		resize: {
 			width : 600,
 			height : 600,
@@ -42,7 +42,7 @@ $(function() {
 			crop: false // crop to exact dimensions
 		},
 
-        // Flash settings
+		// Flash settings
 		flash_swf_url : '{SITEURL}js/pluploadjs/Moxie.swf',
 
 		// Silverlight settings
@@ -52,7 +52,7 @@ $(function() {
 		init : {
 			Refresh: function(up) {
 				// Called when the position or dimensions of the picker change
-            },
+			},
 
 			StateChanged: function(up) {
 				// Called when the state of the queue is changed
@@ -60,60 +60,55 @@ $(function() {
 
 			QueueChanged: function(up) {
 				// Called when queue is changed by adding or removing files
-
 				if (up.files.length > ({MAXPICS} - {UPLOADED}))
 				{
-
-					for (var key in up.files) {
-						if (up.files.length > ({MAXPICS} - {UPLOADED})) {
+					for (var key in up.files)
+					{
+						if (up.files.length > ({MAXPICS} - {UPLOADED}))
+						{
 							up.removeFile(up.files[key]);
-							if ($('#uploader_browse').is(":visible")) {
-				             alert('You have reached the max  allowed of ' + {MAXPICS} + ' files.');
-				            }
+							if ($('#uploader_browse').is(":visible"))
+							{
+								alert('You have reached the max  allowed of ' + {MAXPICS} + ' files.');
+							}
 							$('#uploader_browse').hide();
-
 						}
 					}
-
-
 				}
 			},
 
 			UploadProgress: function(up, file) {
 				// Called while a file is being uploaded
-
 			},
 
 			FileFiltered: function(up, file) {
 				// Called when file successfully files all the filters
-            },
+			},
 
-            FilesAdded: function(up, files) {
+			FilesAdded: function(up, files) {
 				// Callced when files are added to queue
 				var max_files = {MAXPICS};
 				plupload.each(files, function (file) {
+					if (up.files.length > max_files)
+					{
+						// alert('You are allowed to add only ' + max_files + ' files.');
+						up.removeFile(file);
+					}
+				});
 
-                    if (up.files.length > max_files) {
-                        // alert('You are allowed to add only ' + max_files + ' files.');
-                         up.removeFile(file);
-
-                    }
-               });
-
-                if (files.length >= max_files) {
-                 $('#uploader_browse').hide('slow');
-
-                }
-
+				if (files.length >= max_files)
+				{
+					$('#uploader_browse').hide('slow');
+				}
 			},
 
 			FilesRemoved: function(up, files) {
 				// Called when files are removed from queue
 				var max_files = {MAXPICS};
-				if (files.length < max_files) {
-                 $('#uploader_browse').fadeIn('slow');
-
-                }
+				if (files.length < max_files)
+				{
+					$('#uploader_browse').fadeIn('slow');
+				}
 
 				plupload.each(files, function(file) {
 				});
@@ -124,26 +119,24 @@ $(function() {
 				$.get('{SITEURL}ajax.php?do=getupldtable', function(data) {
 					$('#uploaded').html(data);
 				});
-				if (up.files.length < ({MAXPICS} - {UPLOADED})) {
-                // $('.plupload_buttons').fadeIn('slow'); $('.plupload_upload_status').hide();
-
-                }
+				if (up.files.length < ({MAXPICS} - {UPLOADED}))
+				{
+					// $('.plupload_buttons').fadeIn('slow'); $('.plupload_upload_status').hide();
+				}
 			},
 
-            ChunkUploaded: function(up, file, info) {
+			ChunkUploaded: function(up, file, info) {
 				// Called when file chunk has finished uploading
 			},
 
 			UploadComplete: function(up, files) {
 				// Called when all files are either uploaded or failed
 				window.location = window.location.pathname;
-
-
-            },
+			},
 
 			Destroy: function(up) {
 				// Called when uploader is destroyed
-            },
+			},
 
 			Error: function(up, args) {
 				// Called when a error has occured
@@ -156,13 +149,16 @@ $(function() {
 
 <script type="text/javascript">
 $(document).ready(function () {
+	if ( {MAXPICS} == {UPLOADED})
+	{
+		$('.plupload_file_name').hide('slow'); $('.moxie-shim-html5').hide();
+	}
 
-	if ( {MAXPICS} == {UPLOADED}) {$('.plupload_file_name').hide('slow'); $('.moxie-shim-html5').hide();}
-
-   var num_images = $('#numimages', window.opener.document).val();
+	var num_images = $('#numimages', window.opener.document).val();
 	var now_images = {UPLOADED};
 	var image_cost = {IMAGE_COST_PLAIN};
-	if (num_images != now_images) {
+	if (num_images != now_images)
+	{
 		var fee_diff = (now_images - num_images) * image_cost;
 		var nowfee = $("#fee_exact", window.opener.document).val() + fee_diff;
 		$("#fee_exact", window.opener.document).val(nowfee);
@@ -183,7 +179,6 @@ $(document).ready(function () {
 	<div class="titTable2">
 		{L_663}
 	</div>
-
 	<table cellpadding="3" cellspacing="0" border="0" align="center" width="90%">
 		<tr bgcolor="{HEADERCOLOUR}">
 			<td width="76%" colspan="2">
@@ -198,20 +193,20 @@ $(document).ready(function () {
 		</tr>
 		<tbody id="uploaded">
 <!-- BEGIN images -->
-		<tr>
-			<td>
-				<img src="{images.IMAGE}" width="60" border="0">
-			</td>
-			<td width="46%">
-				{images.IMGNAME}
-			</td>
-			<td align="center">
-				<a href="?action=delete&img={images.ID}"><IMG SRC="images/trash.gif" border="0"></a>
-			</td>
-			<td align="center">
-				<a href="?action=makedefault&img={images.IMGNAME}"><img src="images/{images.DEFAULT}" border="0"></a>
-			</td>
-		</tr>
+			<tr>
+				<td>
+					<img src="{images.IMAGE}" width="60" border="0">
+				</td>
+				<td width="46%">
+					{images.IMGNAME}
+				</td>
+				<td align="center">
+					<a href="?action=delete&img={images.ID}"><IMG SRC="images/trash.gif" border="0"></a>
+				</td>
+				<td align="center">
+					<a href="?action=makedefault&img={images.IMGNAME}"><img src="images/{images.DEFAULT}" border="0"></a>
+				</td>
+			</tr>
 <!-- END images -->
 		</tbody>
 	</table>
@@ -220,7 +215,6 @@ $(document).ready(function () {
 	<div id="uploader">
 		<p>You browser doesn't have Flash, Silverlight or HTML5 support.</p>
 	</div>
-
 	<br style="clear:both;">
 	<center>
 		<a href="javascript: window.close()">{L_678}</a>

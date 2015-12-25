@@ -166,7 +166,7 @@
 	function printpage() {
 		var printButton = document.getElementById("printpagebutton");
 		printButton.style.visibility = 'hidden';
-		window.print()
+		window.print();
 		printButton.style.visibility = 'visible';
 	}
 </script>

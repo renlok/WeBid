@@ -41,4 +41,4 @@ $template->set_filenames(array(
 		'body' => 'help.tpl'
 		));
 $template->display('body');
-  include 'footer.php';
+include 'footer.php';

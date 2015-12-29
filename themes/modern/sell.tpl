@@ -405,7 +405,7 @@ $(document).ready(function(){
 						<label for="shipping_cost">{L_023}</label>
 						<div class="row">
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- 	ENDIF -->>
+								<input type="text" class="form-control" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- ENDIF -->>
 								{CURRENCY}
 							</div>
 						</div>

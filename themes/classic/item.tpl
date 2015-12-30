@@ -313,6 +313,11 @@ $(document).ready(function() {
 	<!-- END gallery -->
 						</tr>
 					</table>
+					<script type="text/javascript">
+						$(function() {
+							$('#gallery a').lightBox();
+						});
+					</script>
 				</div>
 			</div>
 <!-- ENDIF -->

@@ -131,6 +131,8 @@ function f_tcalShow (d_date) {
 		if (!e_form)
 			throw("TC: form '" + this.a_cfg.formname + "' can not be found");
 		this.e_input = e_form.elements[this.a_cfg.controlname];
+		if (this.a_cfg.now)
+			this.e_now = e_form.elements[this.a_cfg.now];
 	}
 	else
 		this.e_input = f_getElement(this.a_cfg.controlname);
@@ -186,6 +188,8 @@ function f_tcalHide (n_date) {
 		if (typeof this.s_time != 'undefined')
 			value = value + ' ' + this.s_time;
 		this.e_input.value = value;
+		if (this.e_now)
+			this.e_now.checked = false;
 	}
 
 	// no action if not visible

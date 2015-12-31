@@ -54,7 +54,7 @@ if (isset($_POST['action']))
 		$gateway = $gateways[$i];
 		$query .= $gateway . '_active = :active' . $gateway . ', ';
 		$query .= $gateway . '_required = :required' . $gateway . ', ';
-		$query .= $gateway . "_address = :address" . $gateway;
+		$query .= $gateway . (in_array($gateway, array('worldpay', 'toocheckout')) ? "_id" : "_address") . " = :address" . $gateway;
 		$params[] = array(':active' . $gateway, (isset($_POST[$gateway . '_active']) ? 1 : 0), 'int');
 		$params[] = array(':required' . $gateway, (isset($_POST[$gateway . '_required']) ? 1 : 0), 'int');
 		$params[] = array(':address' . $gateway, $_POST[$gateway . '_address'], 'str');
@@ -80,7 +80,7 @@ for ($i = 0; $i < count($gateways); $i++)
 			'PLAIN_NAME' => $gateway,
 			'ENABLED' => ($gateway_data[$gateway . '_active'] == 1) ? 'checked' : '',
 			'REQUIRED' => ($gateway_data[$gateway . '_required'] == 1) ? 'checked' : '',
-			'ADDRESS' => $gateway_data[$gateway . '_address'],
+			'ADDRESS' => (isset($gateway_data[$gateway . '_address']) ? $gateway_data[$gateway . '_address'] : $gateway_data[$gateway . '_id']),
 			'PASSWORD' => (isset($gateway_data[$gateway . '_password'])) ? $gateway_data[$gateway . '_password'] : '',
 			'WEBSITE' => $links[$gateway],
 			'ADDRESS_NAME' => $variables[$gateway . '_address'],

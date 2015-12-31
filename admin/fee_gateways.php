@@ -27,7 +27,7 @@ $links = array(
 	'moneybookers' => 'http://moneybookers.com/',
 	'toocheckout' => 'http://2checkout.com/'
 	);
-$varialbes = array(
+$variables = array(
 	'paypal_address' => $MSG['720'],
 	'authnet_address' => $MSG['773'],
 	'authnet_password' => $MSG['774'],
@@ -83,8 +83,8 @@ for ($i = 0; $i < count($gateways); $i++)
 			'ADDRESS' => $gateway_data[$gateway . '_address'],
 			'PASSWORD' => (isset($gateway_data[$gateway . '_password'])) ? $gateway_data[$gateway . '_password'] : '',
 			'WEBSITE' => $links[$gateway],
-			'ADDRESS_NAME' => $varialbes[$gateway . '_address'],
-			'ADDRESS_PASS' => (isset($varialbes[$gateway . '_password'])) ? $varialbes[$gateway . '_password'] : '',
+			'ADDRESS_NAME' => $variables[$gateway . '_address'],
+			'ADDRESS_PASS' => (isset($variables[$gateway . '_password'])) ? $variables[$gateway . '_password'] : '',
 
 			'B_PASSWORD' => (isset($gateway_data[$gateway . '_password']))
 			));

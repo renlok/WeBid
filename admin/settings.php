@@ -34,13 +34,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// Update data
-		$system->writesetting("name", $_POST['sitename'], 'str');
-		$system->writesetting("email", $_POST['adminmail'], 'str');
-		$system->writesetting("url", $_POST['siteurl'], 'str');
-		$system->writesetting("copy", $_POST['copyright'], 'str');
-		$system->writesetting("cronjob", $_POST['cron'], 'int');
-		$system->writesetting("delete_auctions", $_POST['archiveafter'], 'int');
-		$system->writesetting("cache", $_POST['cache_theme'], 'str');
+		$system->writesetting("sitename", $_POST['sitename'], 'str');
+		$system->writesetting("adminmail", $_POST['adminmail'], 'str');
+		$system->writesetting("siteurl", $_POST['siteurl'], 'str');
+		$system->writesetting("copyright", $_POST['copyright'], 'str');
+		$system->writesetting("cron", $_POST['cron'], 'int');
+		$system->writesetting("archiveafter", $_POST['archiveafter'], 'int');
+		$system->writesetting("cache_theme", $_POST['cache_theme'], 'str');
 		$system->writesetting("https", $_POST['https'], 'str');
 		$system->writesetting("https_url", $_POST['https_url'], 'str');
 		$ERR = $MSG['542'];

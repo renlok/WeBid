@@ -37,8 +37,7 @@
 		<a href="{SITE_URL}buying.php">
 		<img border="0" src="{SITE_URL}images/email_alerts/Total_Due_Btn.jpg" width="120" height="32"></a></td>
 	</tr>
- </table>
-
+</table>
 <table border="0" width="100%">
 	<tr>
 		<td style="font-size: 12px;"><b>Seller's Information</b></td>

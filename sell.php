@@ -481,7 +481,7 @@ switch ($_SESSION['action'])
 		}
 	case 1:  // enter auction details
 		// check time format is timestamp. If not change to timestamp
-        if (!(strpos($a_starts, '-') === false))
+		if (!(strpos($a_starts, '-') === false))
 		{
 			$a_starts = _mktime(substr($a_starts, 11, 2),
 				substr($a_starts, 14, 2),

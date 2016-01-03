@@ -918,22 +918,22 @@ $MSG['016_a'] = "The site admin will shortly review your account, once your acco
 $MSG['016_b'] = "You may now login using your username and password.";
 $MSG['860'] = '<p>In the meantime here are some tips to get you started with ' . $system->SETTINGS['sitename'] . '.</p>
 <ul>
-  <li>Have photos ready when listing an item to sell, reduce the filesize to save time when uploading.</li>
-  <li>Featured auctions are much more likely to sell, your auction will be randomly featured on the ' . $system->SETTINGS['sitename'] . ' Home page.</li>
+	<li>Have photos ready when listing an item to sell, reduce the filesize to save time when uploading.</li>
+	<li>Featured auctions are much more likely to sell, your auction will be randomly featured on the ' . $system->SETTINGS['sitename'] . ' Home page.</li>
 </ul>';
 $MSG['861'] = 'Search auctions';
 $MSG['862'] = 'Login to continue';
 $MSG['863'] = '<h2>Not a Member yet?</h2>
-        <h3><a href="register.php">Register Now</a><br>
-        It will only take a minute</h3>
-        <p> Becoming a member enables you to:</p>
-        <ul>
-            <li>Sell anything</li>
-            <li>Be notified when an item you are looking for is listed</li>
-            <li>Add items to your watchlist</li>
-            <li>Bid on items</li>
-            <li>plus a whole lot more</li>
-        </ul>';
+		<h3><a href="register.php">Register Now</a><br>
+		It will only take a minute</h3>
+		<p> Becoming a member enables you to:</p>
+		<ul>
+			<li>Sell anything</li>
+			<li>Be notified when an item you are looking for is listed</li>
+			<li>Add items to your watchlist</li>
+			<li>Bid on items</li>
+			<li>plus a whole lot more</li>
+		</ul>';
 $MSG['864'] = 'Shipping Details';
 $MSG['865'] = 'Listing Details';
 $MSG['867'] = 'Pick up only';

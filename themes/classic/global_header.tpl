@@ -56,9 +56,6 @@
 			$("#servertime").html(timestring);
 		}
 		setInterval(displaytime, 1000);
-		$(function() {
-			$('#gallery a').lightBox();
-		});
 	});
 </script>
 </head>

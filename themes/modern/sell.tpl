@@ -371,13 +371,16 @@ $(document).ready(function(){
 		<!-- ELSE -->
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" name="start_now" {START_NOW}> {L_211}
+								<input type="checkbox" name="start_now" id="start_now" {START_NOW}> {L_211}
 							</label>
 						</div>
 						<label>{L_260}</label>
 						<input type="text" name="a_starts" id="pubdate_input" value="{START_TIME}" class="form-control">
 						<script type="text/javascript">
-							new tcal ({'id': 'pubdate_input','controlname': 'a_starts', 'formname': 'sell'});
+							new tcal ({'id': 'pubdate_input', 'controlname': 'a_starts', 'formname': 'sell', 'now': 'start_now'});
+							$('#pubdate_input').change(function () {
+								$('#start_now').attr('checked', false);
+							});
 						</script>
 		<!-- ENDIF -->
 					</div>
@@ -405,7 +408,7 @@ $(document).ready(function(){
 						<label for="shipping_cost">{L_023}</label>
 						<div class="row">
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- 	ENDIF -->>
+								<input type="text" class="form-control" name="shipping_cost" id="shipping_cost" value="{SHIPPING_COST}" <!-- IF SHIPPING1 eq '' -->disabled="disabled"<!-- ENDIF -->>
 								{CURRENCY}
 							</div>
 						</div>

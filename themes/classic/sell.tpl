@@ -386,10 +386,13 @@ $(document).ready(function(){
 							{START_TIME}
 							<input type="hidden" name="a_starts" value="{START_TIME}">
 		<!-- ELSE -->
-							{L_211} <input type="checkbox" name="start_now" {START_NOW}><br>
+							{L_211} <input type="checkbox" name="start_now" id="start_now" {START_NOW}><br>
 							{L_260} <input type="text" name="a_starts" id="pubdate_input" value="{START_TIME}" size="20" maxlength="19">
 							<script type="text/javascript">
-								new tcal ({'id': 'pubdate_input','controlname': 'a_starts', 'formname': 'sell'});
+								new tcal ({'id': 'pubdate_input', 'controlname': 'a_starts', 'formname': 'sell', 'now': 'start_now'});
+								$('#pubdate_input').change(function () {
+									$('#start_now').attr('checked', false);
+								});
 							</script>
 		<!-- ENDIF -->
 						</td>

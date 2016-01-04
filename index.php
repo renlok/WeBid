@@ -86,10 +86,10 @@ while ($row = $db->fetch())
 
 // get featured items
 $query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, bn_only, buy_now
-        FROM " . $DBPrefix . "auctions
-        WHERE closed = 0 AND suspended = 0 AND starts <= :time
+		FROM " . $DBPrefix . "auctions
+		WHERE closed = 0 AND suspended = 0 AND starts <= :time
 		AND featured = 'y'
-        ORDER BY RAND() DESC LIMIT 12";
+		ORDER BY RAND() DESC LIMIT 12";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
 $db->query($query, $params);
@@ -116,7 +116,7 @@ while ($row = $db->fetch())
 			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
 			'TITLE' => $system->uncleanvars($row['title'])
 			));
- 	$i++;
+	$i++;
 }
 
 $featured_items = ($i > 0) ? true : false;
@@ -178,10 +178,10 @@ while ($row = $db->fetch())
 $end_soon = ($i > 0) ? true : false;
 // get hot items
 $query = "SELECT a.id, a.title, a.current_bid, a.pict_url, a.ends, a.num_bids, a.minimum_bid
-        FROM " . $DBPrefix . "auctions a
-        LEFT JOIN " . $DBPrefix . "auccounter c ON (a.id = c.auction_id)
-        WHERE closed = 0 AND suspended = 0 AND starts <= :time
-        ORDER BY c.counter DESC LIMIT :limit";
+		FROM " . $DBPrefix . "auctions a
+		LEFT JOIN " . $DBPrefix . "auccounter c ON (a.id = c.auction_id)
+		WHERE closed = 0 AND suspended = 0 AND starts <= :time
+		ORDER BY c.counter DESC LIMIT :limit";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['hotitemsnumber'], 'int');
@@ -192,23 +192,23 @@ while ($row = $db->fetch())
 {
 	$i++;
 	$ends = $row['ends'];
-    $difference = $ends - time();
-    if ($difference > 0)
+	$difference = $ends - time();
+	if ($difference > 0)
 	{
-        $ends_string = FormatTimeLeft($difference);
-    }
+		$ends_string = FormatTimeLeft($difference);
+	}
 	else
 	{
-        $ends_string = $MSG['911'];
-    }
-    $high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
-    $template->assign_block_vars('hotitems', array(
-            'ENDS' => $ends_string,
-            'ID' => $row['id'],
-            'BID' => $system->print_money($high_bid),
-            'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
-            'TITLE' => $system->uncleanvars($row['title'])
-            ));
+		$ends_string = $MSG['911'];
+	}
+	$high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
+	$template->assign_block_vars('hotitems', array(
+			'ENDS' => $ends_string,
+			'ID' => $row['id'],
+			'BID' => $system->print_money($high_bid),
+			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'TITLE' => $system->uncleanvars($row['title'])
+			));
 }
 $hot_items = ($i > 0) ? true : false;
 

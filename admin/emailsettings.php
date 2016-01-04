@@ -39,20 +39,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		if (intval($_POST['mail_protocol']) !== 2)
 		{
-			$system->writesetting("protocol", $_POST['mail_protocol'], 'int');
-			$system->writesetting("parameter", $_POST['mail_parameter'], 'str');
-			$system->writesetting("emails", $_POST['alert_emails'], 'str');
+			$system->writesetting("mail_protocol", $_POST['mail_protocol'], 'int');
+			$system->writesetting("mail_parameter", $_POST['mail_parameter'], 'str');
+			$system->writesetting("alert_emails", $_POST['alert_emails'], 'str');
 		}
 		else
 		{
-			$system->writesetting("authentication", $_POST['smtp_authentication'], 'str');
-			$system->writesetting("security", $_POST['smtp_security'], 'str');
-			$system->writesetting("port", $_POST['smtp_port'], 'int');
-			$system->writesetting("username", (!empty($_POST['smtp_username'])? $_POST['smtp_username'] : ''), 'str');
-			$system->writesetting("password", (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : ''), 'str');
-			$system->writesetting("host", (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
-			$system->writesetting("emails", $_POST['alert_emails'], 'str');
-			}
+			$system->writesetting("mail_protocol", 2, 'int');
+			$system->writesetting("smtp_authentication", $_POST['smtp_authentication'], 'str');
+			$system->writesetting("smtp_security", $_POST['smtp_security'], 'str');
+			$system->writesetting("smtp_port", $_POST['smtp_port'], 'int');
+			$system->writesetting("smtp_username", (!empty($_POST['smtp_username'])? $_POST['smtp_username'] : ''), 'str');
+			$system->writesetting("smtp_password", (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : ''), 'str');
+			$system->writesetting("smtp_host", (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
+			$system->writesetting("smtp_emails", $_POST['alert_emails'], 'str');
+		}
 		$ERR = $MSG['895'];
 	}
 

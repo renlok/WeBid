@@ -102,8 +102,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img'])
 	{
 		if(isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && is_writable($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]))
 		{
-            unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
-        }
+			unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
+		}
 	}
 	unset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE'][intval($_GET['img'])]);

@@ -22,15 +22,8 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-
-	// Update database
-	$query = "UPDATE ". $DBPrefix . "settings SET
-				usersauth = :usersauth,
-				activationtype = :usersconf";
-	$params = array();
-	$params[] = array(':usersauth', $_POST['usersauth'], 'str');
-	$params[] = array(':usersconf', $_POST['usersconf'], 'int');
-	$db->query($query, $params);
+	$system->writesetting("usersauth", $_POST['usersauth'], 'str');
+	$system->writesetting("activationtype", $_POST['usersconf'], 'int');
 	$ERR = $MSG['895'];
 
 	$system->SETTINGS['usersauth'] = $_POST['usersauth'];

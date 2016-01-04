@@ -9,7 +9,6 @@
 				<!-- ENDIF -->
 			<!-- ELSE -->
 				We are sorry but your items were not sold.
-
 			<!-- ENDIF -->
 			</div></td>
 	</tr>
@@ -18,7 +17,6 @@
 	</tr>
 	<tr>
 		<td colspan="3" height="50" style="font-size: 12px; padding-right: 6px;">
-
 			<!-- IF A_QTY_SOLD -->
 				<!-- IF A_QTY_SOLD eq A_QTY_INITIAL -->
 					Congratulations, all items have been sold!
@@ -28,10 +26,7 @@
 					Below are the details.
 			<!-- ELSE -->
 				We are sorry but your itmes were not sold.
-
 			<!-- ENDIF -->
-
-
 	</td>
 	</tr>
 	<tr>
@@ -40,7 +35,6 @@
 		<table border="0" width="100%">
 			<tr>
 				<td colspan="2" style="font-size: 12px;"><a href="{A_URL}">{A_TITLE}</a></td>
-
 			</tr>
 			<tr>
 				<td width="18%" style="font-size: 12px;">Sale price:</td>
@@ -81,8 +75,8 @@
 		<a href="{SITE_URL}buying.php">
 		<img border="0" src="{SITE_URL}images/email_alerts/Total_Due_Btn.jpg" width="120" height="32"></a></td>
 	</tr>
- </table><br />
-
+</table>
+<br />
 <table border="0" width="100%">
 	<tr>
 		<td style="font-size: 12px;"><b>Buyer's Information</b></td>
@@ -90,5 +84,6 @@
 	<tr>
 		<td style="font-size: 12px;">{B_REPORT}</td>
 	</tr>
-</table><br />
+</table>
+<br />
 <div style="font-size: 12px;"><i>An email has been sent to the winner(s) with your email address.</i></div>

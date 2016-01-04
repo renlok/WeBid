@@ -47,7 +47,7 @@ while (true)
 
 if (isset($_POST['action']) && $_POST['action'] == 'process' && $_POST['box'] == '')
 {
-    $_SESSION['action'] = 1;
+	$_SESSION['action'] = 1;
 	$VARNAME = 'cat' . (count($POST) - 1);
 	$_SESSION['SELL_sellcat' . $cat_no] = $POST[$VARNAME];
 	$query = "SELECT left_id, right_id FROM " . $DBPrefix . "categories WHERE cat_id = :sellcat";
@@ -82,7 +82,7 @@ if (isset($_GET['change']) && $_GET['change'] == 'yes')
 	$params[] = array(':sellcat_id', $_SESSION['SELL_sellcat' . $cat_no], 'int');
 	$db->query($query, $params);
 	$cat = $db->result();
-    $crumbs = $catscontrol->get_bread_crumbs($cat['left_id'], $cat['right_id']);
+	$crumbs = $catscontrol->get_bread_crumbs($cat['left_id'], $cat['right_id']);
 	$count = count($crumbs);
 	$box = $count - 1;
 	for ($i = 1; $i < $count; $i++)
@@ -93,37 +93,37 @@ if (isset($_GET['change']) && $_GET['change'] == 'yes')
 }
 elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 {
-    unset($_SESSION['UPLOADED_PICTURES_SIZE']);
+	unset($_SESSION['UPLOADED_PICTURES_SIZE']);
 	$_SESSION['SELL_editing_category'] = false;
 	$_SESSION['SELL_sellcat1'] = 0;
 	$_SESSION['SELL_sellcat2'] = 0;
 	$_SESSION['SELL_starts'] = '';
 	$_SESSION['UPLOADED_PICTURES'] = array();
-    $_SESSION['SELL_with_reserve'] = '';
-    $_SESSION['SELL_reserve_price'] = '';
-    $_SESSION['SELL_minimum_bid'] = '';
-    $_SESSION['SELL_file_uploaded'] = false;
-    $_SESSION['SELL_title'] = '';
-    $_SESSION['SELL_subtitle'] = '';
-    $_SESSION['SELL_description'] = '';
-    $_SESSION['SELL_pict_url'] = '';
+	$_SESSION['SELL_with_reserve'] = '';
+	$_SESSION['SELL_reserve_price'] = '';
+	$_SESSION['SELL_minimum_bid'] = '';
+	$_SESSION['SELL_file_uploaded'] = false;
+	$_SESSION['SELL_title'] = '';
+	$_SESSION['SELL_subtitle'] = '';
+	$_SESSION['SELL_description'] = '';
+	$_SESSION['SELL_pict_url'] = '';
 	$_SESSION['SELL_pict_url_temp'] = '';
-    $_SESSION['SELL_atype'] = '';
-    $_SESSION['SELL_iquantity'] = '';
-    $_SESSION['SELL_with_buy_now'] = '';
-    $_SESSION['SELL_buy_now_price'] = '';
-    $_SESSION['SELL_duration'] = '';
-    $_SESSION['SELL_relist'] = '';
-    $_SESSION['SELL_increments'] = '';
-    $_SESSION['SELL_customincrement'] = 0;
-    $_SESSION['SELL_shipping'] = 1;
-    $_SESSION['SELL_shipping_terms'] = '';
+	$_SESSION['SELL_atype'] = '';
+	$_SESSION['SELL_iquantity'] = '';
+	$_SESSION['SELL_with_buy_now'] = '';
+	$_SESSION['SELL_buy_now_price'] = '';
+	$_SESSION['SELL_duration'] = '';
+	$_SESSION['SELL_relist'] = '';
+	$_SESSION['SELL_increments'] = '';
+	$_SESSION['SELL_customincrement'] = 0;
+	$_SESSION['SELL_shipping'] = 1;
+	$_SESSION['SELL_shipping_terms'] = '';
 	$_SESSION['SELL_additional_shipping_cost'] = 0;
-    $_SESSION['SELL_payment'] = '';
-    $_SESSION['SELL_international'] = false;
-    $_SESSION['SELL_buy_now_only'] = '';
-    $_SESSION['SELL_action'] = '';
-    $_SESSION['SELL_shipping_cost'] = 0;
+	$_SESSION['SELL_payment'] = '';
+	$_SESSION['SELL_international'] = false;
+	$_SESSION['SELL_buy_now_only'] = '';
+	$_SESSION['SELL_action'] = '';
+	$_SESSION['SELL_shipping_cost'] = 0;
 	$_SESSION['SELL_is_bold'] = 'n';
 	$_SESSION['SELL_is_highlighted'] = 'n';
 	$_SESSION['SELL_is_featured'] = 'n';
@@ -202,16 +202,16 @@ if ($cat_no == 2)
 }
 
 $template->assign_vars(array(
-        'B_SHOWBUTTON' => $SHOWBUTTON,
-        'B_EDITING' => $_SESSION['SELL_editing_category'],
+		'B_SHOWBUTTON' => $SHOWBUTTON,
+		'B_EDITING' => $_SESSION['SELL_editing_category'],
 		'CAT_NO' => $cat_no,
 		'COST' => ($extra_cat > 0) ? $system->print_money($extra_cat) : '',
-        'ERROR' => (isset($ERR)) ? $ERR : ''
-        ));
+		'ERROR' => (isset($ERR)) ? $ERR : ''
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'select_category.tpl'
-        ));
+		'body' => 'select_category.tpl'
+		));
 $template->display('body');
 include 'footer.php';

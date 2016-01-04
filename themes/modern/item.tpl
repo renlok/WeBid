@@ -69,6 +69,11 @@ $(document).ready(function() {
 								</div>
 		<!-- END gallery -->
 							</div>
+							<script type="text/javascript">
+								$(function() {
+									$('#gallery a').lightBox();
+								});
+							</script>
 						</div>
 					</div>
 					<div class="panel-footer">{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>

@@ -16,7 +16,6 @@
 		<table border="0" width="100%">
 			<tr>
 				<td colspan="2" style="font-size: 12px;"><a href="{A_URL}">{A_TITLE}</a></td>
-
 			</tr>
 			<tr>
 				<td width="22%" style="font-size: 12px;">Item #:</td>

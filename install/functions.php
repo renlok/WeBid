@@ -349,11 +349,9 @@ function show_config_table($fresh = true)
 		$data .= (extension_loaded('bcmath')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 
-		$data .= '<tr><td colspan="2">BC Math Support:</td><td colspan="2">';
-		$data .= (extension_loaded('bcmath')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
-		$data .= '</tr>';
 
-		$data .= '<tr><td colspan="2">PHP Data Objects Support:</td><td colspan="2">';
+
+		$data .= '<tr><td>PHP Data Objects Support:</td><td colspan="2">';
 		$data .= (extension_loaded('pdo')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 

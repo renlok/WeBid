@@ -79,7 +79,7 @@ class global_class
 
 	function writesetting($setting, $value, $type = 'string')
 	{
-		global $global, $DBPrefix, $db, $_SESSION;
+		global $system, $DBPrefix, $db, $_SESSION;
 
 		$modifiedby = $_SESSION['WEBID_ADMIN_IN'];
 		$modifieddate = $this->ctime;

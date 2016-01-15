@@ -52,10 +52,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("moneydecimals", $_POST['moneydecimals'], 'int');
 		$system->writesetting("moneysymbol", $_POST['moneysymbol'], 'int');
 		
-		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
-		$system->SETTINGS['moneyformat'] = $_POST['moneyformat'];
-		$system->SETTINGS['moneydecimals'] = $_POST['moneydecimals'];
-		$system->SETTINGS['moneysymbol'] = $_POST['moneysymbol'];
 		$ERR = $MSG['553'];
 
 	}

@@ -23,17 +23,11 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['aboutus'] = ynbool($_POST['aboutus']);
-	$system->SETTINGS['aboutustext'] = $system->cleanvars($_POST['aboutustext']);
+
 	// Update database
-	$query = "UPDATE ". $DBPrefix . "settings SET
-				aboutus = :aboutus,
-				aboutustext = :aboutustext";
-	$params = array();
-	$params[] = array(':aboutus', $system->SETTINGS['aboutus'], 'str');
-	$params[] = array(':aboutustext', $system->SETTINGS['aboutustext'], 'str');
-	$db->query($query, $params);
+	$system->writesetting("aboutus", ynbool($_POST['aboutus']), "bool");
+	$system->writesetting("aboutustext", $system->cleanvars($_POST['aboutustext']), "str");
+
 	$ERR = $MSG['5079'];
 }
 

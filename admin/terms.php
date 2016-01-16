@@ -23,17 +23,9 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['terms'] = ynbool($_POST['terms']);
-	$system->SETTINGS['termstext'] = $system->cleanvars($_POST['termstext']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			terms = :terms,
-			termstext = :termstext";
-	$params = array();
-	$params[] = array(':terms', $system->SETTINGS['terms'], 'str');
-	$params[] = array(':termstext', $system->SETTINGS['termstext'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("terms", ynbool($_POST['terms']),"str");
+	$system->writesetting("termstext", $system->cleanvars($_POST['termstext']),"str");
 	$ERR = $MSG['5084'];
 }
 

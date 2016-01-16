@@ -24,16 +24,8 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission
-	$system->SETTINGS['privacypolicy'] = ynbool($_POST['privacypolicy']);
-	$system->SETTINGS['privacypolicytext'] = $system->cleanvars($_POST['privacypolicytext']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			privacypolicy = :privacypolicy,
-			privacypolicytext = :privacypolicytext";
-	$params = array();
-	$params[] = array(':privacypolicy', $system->SETTINGS['privacypolicy'], 'str');
-	$params[] = array(':privacypolicytext', $system->SETTINGS['privacypolicytext'], 'str');
-	$db->query($query, $params);
+	$system->writesetting("privacypolicy", ynbool($_POST['privacypolicy']),"str");
+	$system->writesetting("privacypolicytext", $system->cleanvars($_POST['privacypolicytext']),"str");
 	$ERR = $MSG['406'];
 }
 loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['030'], $MSG['029']));

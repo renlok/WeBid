@@ -24,13 +24,8 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['errortext'] = htmLawed($_POST['errortext'], array('safe'=>1));
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET errortext = :errortext";
-	$params = array();
-	$params[] = array(':errortext', $system->SETTINGS['errortext'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("errortext",htmLawed($_POST['errortext'], array('safe'=>1)),"str");
 	$ERR = $MSG['413'];
 }
 

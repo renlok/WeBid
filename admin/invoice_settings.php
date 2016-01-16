@@ -22,17 +22,9 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['invoice_yellow_line'] = $system->cleanvars($_POST['invoice_yellow_line']);
-	$system->SETTINGS['invoice_thankyou'] = $system->cleanvars($_POST['invoice_thankyou']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-				invoice_yellow_line = :invoice_yellow_line,
-				invoice_thankyou = :invoice_thankyou";
-	$params = array();
-	$params[] = array(':invoice_yellow_line', $system->SETTINGS['terms'], 'str');
-	$params[] = array(':invoice_thankyou', $system->SETTINGS['termstext'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("invoice_yellow_line", $system->cleanvars($_POST['invoice_yellow_line']),"str");
+	$system->writesetting("invoice_thankyou", $system->cleanvars($_POST['invoice_thankyou']),"str");
 	$ERR = $MSG['1095'];
 }
 

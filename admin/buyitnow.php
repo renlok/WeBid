@@ -29,21 +29,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE bn_only = 'n'";
 		$db->direct_query($query);
 	}
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			buy_now = :buy_now,
-			bn_only = :bn_only,
-			bn_only_disable = :disable,
-			bn_only_percent = :percent";
-	$params = array();
-	$params[] = array(':buy_now', $_POST['buy_now'], 'int');
-	$params[] = array(':bn_only', $_POST['bn_only'], 'str');
-	$params[] = array(':disable', $_POST['bn_only_disable'], 'str');
-	$params[] = array(':percent', $bn_only_percent, 'str');
-	$db->query($query, $params);
-	$system->SETTINGS['buy_now'] = $_POST['buy_now'];
-	$system->SETTINGS['bn_only'] = $_POST['bn_only'];
-	$system->SETTINGS['bn_only_disable'] = $_POST['bn_only_disable'];
-	$system->SETTINGS['bn_only_percent'] = $_POST['bn_only_percent'];
+
+	$system->writesetting("buy_now", $_POST['buy_now'], "int");
+	$system->writesetting("bn_only", $_POST['bn_only'], "str");
+	$system->writesetting("bn_only_disable", $_POST['bn_only_disable'], "str");
+	$system->writesetting("bn_only_percent", $bn_only_percent, "str");
 	$ERR = $MSG['30_0066'];
 }
 

@@ -22,14 +22,8 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['newsletter'] = intval($_POST['newsletter']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			newsletter = :newsletter";
-	$params = array();
-	$params[] = array(':newsletter', $system->SETTINGS['newsletter'], 'int');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("newsletter", intval($_POST['newsletter']),"int");
 	$ERR = $MSG['30_0049'];
 }
 

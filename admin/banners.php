@@ -22,13 +22,8 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['banners'] = intval($_POST['banners']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET banners = :banners";
-	$params = array();
-	$params[] = array(':banners', $system->SETTINGS['banners'], 'int');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("banners", intval($_POST['banners']), "int";
 	$ERR = $MSG['600'];
 }
 

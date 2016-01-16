@@ -20,14 +20,8 @@ include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['boards'] = ynbool($_POST['boards']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings set
-			boards = :boards";
-	$params = array();
-	$params[] = array(':boards', $system->SETTINGS['boards'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("boards",ynbool($_POST['boards']),"str");
 	$ERR = $MSG['5051'];
 }
 

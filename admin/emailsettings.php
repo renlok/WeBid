@@ -48,7 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$system->writesetting("mail_protocol", 2, 'int');
 			$system->writesetting("smtp_authentication", $_POST['smtp_authentication'], 'str');
 			$system->writesetting("smtp_security", $_POST['smtp_security'], 'str');
-			$system->writesetting("smtp_port", $_POST['smtp_port'], 'int');
+			$system->writesetting("smtp_port",(!empty($_POST['smtp_port']) && is_numeric($_POST['smtp_port']))? (int)($_POST['smtp_port']) : '', 'int');
 			$system->writesetting("smtp_username", (!empty($_POST['smtp_username'])? $_POST['smtp_username'] : ''), 'str');
 			$system->writesetting("smtp_password", (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : ''), 'str');
 			$system->writesetting("smtp_host", (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
@@ -57,15 +57,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$ERR = $MSG['895'];
 	}
 
-	$system->SETTINGS['mail_protocol'] = intval($_POST['mail_protocol']);
-	$system->SETTINGS['mail_parameter'] = $_POST['mail_parameter'];
-	$system->SETTINGS['smtp_authentication'] = $_POST['smtp_authentication'];
-	$system->SETTINGS['smtp_security'] = $_POST['smtp_security'];
-	$system->SETTINGS['smtp_port'] = (!empty($_POST['smtp_port']) && is_numeric($_POST['smtp_port']))? (int)($_POST['smtp_port']) : '';
-	$system->SETTINGS['smtp_username'] = $_POST['smtp_username'];
-	$system->SETTINGS['smtp_password'] = $_POST['smtp_password'];
-	$system->SETTINGS['smtp_host'] = $_POST['smtp_host'];
-	$system->SETTINGS['alert_emails'] = $_POST['alert_emails'];
 }
 
 $selectsetting = isset($system->SETTINGS['mail_protocol'])? $system->SETTINGS['mail_protocol'] : '0';

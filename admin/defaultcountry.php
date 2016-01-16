@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -23,13 +23,8 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['defaultcountry'] = $system->cleanvars($_POST['country']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET defaultcountry = :defaultcountry";
-	$params = array();
-	$params[] = array(':defaultcountry', $system->SETTINGS['defaultcountry'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("defaultcountry", $system->cleanvars($_POST['country']),"str");
 	$ERR = $MSG['5323'];
 }
 

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -180,8 +180,8 @@ while ($item = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => $system->uncleanvars($item['title']),
-			'STARTS' => FormatDate($item['starts']),
-			'ENDS' => FormatDate($item['ends']),
+			'STARTS' => FormatDate($item['starts'], '/', false),
+			'ENDS' => FormatDate($item['ends'], '/', false),
 			'BID' => $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 			'RELIST' => $item['relist'],

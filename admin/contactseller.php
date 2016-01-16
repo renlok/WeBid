@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -22,15 +22,9 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['contactseller'] = $system->cleanvars($_POST['contactseller']);
-	$system->SETTINGS['users_email'] = ynbool($_POST['users_email']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET contactseller = :contactseller, users_email = :users_email";
-	$params = array();
-	$params[] = array(':contactseller', $system->SETTINGS['contactseller'], 'str');
-	$params[] = array(':users_email', $system->SETTINGS['users_email'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("contactseller", $system->cleanvars($_POST['contactseller']), "str");
+	$system->writesetting("users_email", ynbool($_POST['users_email']), 'str');
 	$ERR = $MSG['25_0155'];
 }
 

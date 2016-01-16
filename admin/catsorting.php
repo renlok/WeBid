@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -22,17 +22,10 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['catsorting'] = $system->cleanvars($_POST['catsorting']);
-	$system->SETTINGS['catstoshow'] = intval($_POST['catstoshow']);
-	// Update database
-	$query = " UPDATE " . $DBPrefix . "settings SET
-				catsorting = :catsorting,
-				catstoshow = :catstoshow";
-	$params = array();
-	$params[] = array(':catsorting', $system->SETTINGS['catsorting'], 'str');
-	$params[] = array(':catstoshow', $system->SETTINGS['catstoshow'], 'int');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("catsorting", $system->cleanvars($_POST['catsorting']), "str");
+	$system->writesetting("catstoshow", intval($_POST['catstoshow']),"int");
+
 	$ERR = $MSG['25_0150'];
 }
 

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -60,26 +60,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
 		$ERR = $MSG['5088'];
 	}
-	$system->SETTINGS['edit_starttime'] = $_POST['edit_starttime'];
-	$system->SETTINGS['cust_increment'] = $_POST['cust_increment'];
-	$system->SETTINGS['hours_countdown'] = $_POST['hours_countdown'];
-	$system->SETTINGS['ao_hpf_enabled'] = $_POST['ao_hpf_enabled'];
-	$system->SETTINGS['ao_hi_enabled'] = $_POST['ao_hi_enabled'];
-	$system->SETTINGS['ao_bi_enabled'] = $_POST['ao_bi_enabled'];
-	$system->SETTINGS['proxy_bidding'] = $_POST['proxy_bidding'];
-	$system->SETTINGS['subtitle'] = $_POST['subtitle'];
-	$system->SETTINGS['extra_cat'] = $_POST['extra_cat'];
-	$system->SETTINGS['autorelist'] = $_POST['autorelist'];
-	$system->SETTINGS['autorelist_max'] = $_POST['autorelist_max'];
-
-	$system->SETTINGS['ae_status'] = $_POST['status'];
-	$system->SETTINGS['ae_timebefore'] = $_POST['timebefore'];
-	$system->SETTINGS['ae_extend'] = $_POST['extend'];
-
-	$system->SETTINGS['picturesgallery'] = $_POST['picturesgallery'];
-	$system->SETTINGS['maxpictures'] = $_POST['maxpictures'];
-	$system->SETTINGS['maxuploadsize'] = $_POST['maxpicturesize'] * 1024;
-	$system->SETTINGS['thumb_show'] = $_POST['thumb_show'];
+	
 }
 
 loadblock($MSG['427'], $MSG['428'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], array($MSG['030'], $MSG['029']));

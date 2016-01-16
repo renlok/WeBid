@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -23,15 +23,8 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			timecorrection = :timecorrection,
-			datesformat = :datesformat";
-	$params = array();
-	$params[] = array(':timecorrection', $_POST['timecorrection'], 'int');
-	$params[] = array(':datesformat', $_POST['datesformat'], 'str');
-	$db->query($query, $params);
-	$system->SETTINGS['timecorrection'] = floatval($_POST['timecorrection']);
-	$system->SETTINGS['datesformat'] = $_POST['datesformat'];
+	$system->writesetting("timecorrection", floatval($_POST['timecorrection']),"str");
+	$system->writesetting("datesformat", $_POST['datesformat'],"str");
 	$ERR = $MSG['347'];
 }
 

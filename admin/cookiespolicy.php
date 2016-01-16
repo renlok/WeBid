@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -24,13 +24,8 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$system->SETTINGS['cookiespolicy'] = ynbool($_POST['cookiespolicy']);
-	$system->SETTINGS['cookiespolicytext'] = $system->cleanvars($_POST['cookiespolicytext']);
-	$query = "UPDATE " . $DBPrefix . "settings SET cookiespolicy = :policy, cookiespolicytext = :cookiespolicy";
-	$params = array();
-	$params[] = array(':policy', $system->SETTINGS['cookiespolicy'], 'str');
-	$params[] = array(':cookiespolicy', $system->SETTINGS['cookiespolicytext'], 'str');
-	$db->query($query, $params);
+	$system->writesetting("cookiespolicy",ynbool($_POST['cookiespolicy']),"str");
+	$system->writesetting("cookiespolicytext", $system->cleanvars($_POST['cookiespolicytext']),"str");
 
 	$ERR = $MSG['1115'];
 }

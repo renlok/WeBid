@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -22,17 +22,9 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['descriptiontag'] = $system->cleanvars($_POST['descriptiontag']);
-	$system->SETTINGS['keywordstag'] = $system->cleanvars($_POST['keywordstag']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-				descriptiontag = :descriptiontag,
-				keywordstag = :keywordstag";
-	$params = array();
-	$params[] = array(':descriptiontag', $system->SETTINGS['descriptiontag'], 'str');
-	$params[] = array(':keywordstag', $system->SETTINGS['keywordstag'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("descriptiontag", $system->cleanvars($_POST['descriptiontag']),"str");
+	$system->writesetting("keywordstag", $system->cleanvars($_POST['keywordstag']),"str");
 	$ERR = $MSG['25_0185'];
 }
 

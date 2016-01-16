@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -31,39 +31,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$db->query($query, $params);
 	}
 	// Update database
-	$query = "UPDATE ". $DBPrefix . "settings SET
-				fees = :fees,
-				fee_type = :fee_type,
-				fee_max_debt = :fee_max_debt
-				fee_signup_bonus = :fee_signup_bonus,
-				fee_disable_acc = :fee_disable_acc,
-				paypal_sandbox = :pp_sandbox,
-				worldpay_sandbox = :wp_sandbox,
-				moneybookers_sandbox = :mb_sandbox,
-				authnet_sandbox = :ah_sandbox,
-				checkout_sandbox = :co_sandbox";
-	$params = array();
-	$params[] = array(':fees', $_POST['fees'], 'str');
-	$params[] = array(':fee_type', $_POST['fee_type'], 'int');
-	$params[] = array(':fee_max_debt', $system->input_money($_POST['fee_max_debt']), 'int');
-	$params[] = array(':fee_signup_bonus', $system->input_money($_POST['fee_signup_bonus']), 'int');
-	$params[] = array(':fee_disable_acc', $_POST['fee_disable_acc'], 'str');
-	$params[] = array(':pp_sandbox', $_POST['disable_pp_sandbox'], 'str');
-	$params[] = array(':wp_sandbox', $_POST['disable_wp_sandbox'], 'str');
-	$params[] = array(':mb_sandbox', $_POST['disable_mb_sandbox'], 'str');
-	$params[] = array(':ah_sandbox', $_POST['disable_ah_sandbox'], 'str');
-	$params[] = array(':co_sandbox', $_POST['disable_co_sandbox'], 'str');
-	$db->query($query, $params);
-	$system->SETTINGS['fees'] = $_POST['fees'];
-	$system->SETTINGS['fee_type'] = $_POST['fee_type'];
-	$system->SETTINGS['fee_max_debt'] = $_POST['fee_max_debt'];
-	$system->SETTINGS['fee_signup_bonus'] = $_POST['fee_signup_bonus'];
-	$system->SETTINGS['fee_disable_acc'] = $_POST['fee_disable_acc'];
-	$system->SETTINGS['paypal_sandbox'] = $_POST['disable_pp_sandbox'];
-	$system->SETTINGS['worldpay_sandbox'] = $_POST['disable_wp_sandbox'];
-	$system->SETTINGS['moneybookers_sandbox'] = $_POST['disable_mb_sandbox'];
-	$system->SETTINGS['authnet_sandbox'] = $_POST['disable_ah_sandbox'];
-	$system->SETTINGS['checkout_sandbox'] = $_POST['disable_co_sandbox'];
+	$system->writesetting("fees", $_POST['fees'], "str");
+	$system->writesetting("fee_type", $_POST['fee_type'], "int");
+	$system->writesetting("fee_max_debt", $system->input_money($_POST['fee_max_debt']), "int");
+	$system->writesetting("fee_signup_bonus", $system->input_money($_POST['fee_signup_bonus']), "int");
+	$system->writesetting("fee_disable_acc", $_POST['fee_disable_acc'], "str");
+	$system->writesetting("paypal_sandbox", $_POST['disable_pp_sandbox'], "str");
+	$system->writesetting("worldpay_sandbox", $_POST['disable_wp_sandbox'], "str");
+	$system->writesetting("moneybookers_sandbox", $_POST['disable_mb_sandbox'], "str");
+	$system->writesetting("authnet_sandbox", $_POST['disable_ah_sandbox'], "str");
+	$system->writesetting("checkout_sandbox", $_POST['disable_co_sandbox'], "str");
+	
+
 	$ERR = $MSG['761'];
 }
 

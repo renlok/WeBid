@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -22,14 +22,8 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['buyerprivacy'] = ynbool($_POST['buyerprivacy']);
-	// Update database
-	$query = "UPDATE ". $DBPrefix . "settings SET
-				buyerprivacy = :buyerprivacy";
-	$params = array();
-	$params[] = array(':buyerprivacy', $system->SETTINGS['buyerprivacy'], 'str');
-	$db->query($query, $params);
+    // Update database
+	$system->writesetting("buyerprivacy",ynbool($_POST['buyerprivacy']), "str");
 	$ERR = $MSG['247'];
 }
 

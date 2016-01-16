@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -59,13 +59,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$mdata = serialize($MANDATORY_FIELDS);
 		$sdata = serialize($DISPLAYED_FIELDS);
-		$query = "UPDATE " . $DBPrefix . "settings SET
-					mandatory_fields = :mandatory_fields,
-					displayed_feilds = :displayed_feilds";
-		$params = array();
-		$params[] = array(':mandatory_fields', $mdata, 'str');
-		$params[] = array(':displayed_feilds', $sdata, 'str');
-		$db->query($query, $params);
+		$system->writesetting("mandatory_fields", $mdata, "str");
+		$system->writesetting("displayed_feilds", $sdata, "str");
+		
 		$ERR = $MSG['779'];
 	}
 }

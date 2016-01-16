@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -132,7 +132,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$user_message .= sprintf($MSG['1146'], count($_POST['relist']));
 		if ($relist_fee > 0)
 		{
-			$user_message .= sprintf($MSG['1148'], $system->print_money(count($_POST['relist']) * $relist_fee);
+			$user_message .= sprintf($MSG['1148'], $system->print_money(count($_POST['relist']) * $relist_fee));
 		}
 	}
 }
@@ -212,8 +212,8 @@ while ($item = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => $system->uncleanvars($item['title']),
-			'STARTS' => FormatDate($item['starts']),
-			'ENDS' => FormatDate($item['ends']),
+			'STARTS' => FormatDate($item['starts'], '/', false),
+			'ENDS' => FormatDate($item['ends'], '/', false),
 			'BID' => ($item['current_bid'] == 0) ? '-' : $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 

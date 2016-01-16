@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -22,24 +22,15 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['perpage'] = intval($_POST['perpage']);
-	$system->SETTINGS['thumb_list'] = intval($_POST['thumb_list']);
-	$system->SETTINGS['loginbox'] = intval($_POST['loginbox']);
-	$system->SETTINGS['newsbox'] = intval($_POST['newsbox']);
-	$system->SETTINGS['newstoshow'] = intval($_POST['newstoshow']);
-	$system->SETTINGS['lastitemsnumber'] = intval($_POST['lastitemsnumber']);
-	$system->SETTINGS['hotitemsnumber'] = intval($_POST['hotitemsnumber']);
-	$system->SETTINGS['endingsoonnumber'] = intval($_POST['endingsoonnumber']);
-	// Update database
-	$system->writesetting("perpage", $system->SETTINGS['perpage'], 'int');
-	$system->writesetting("thumb_list", $system->SETTINGS['thumb_list'], 'int');
-	$system->writesetting("lastitemsnumber", $system->SETTINGS['lastitemsnumber'], 'int');
-	$system->writesetting("hotitemsnumber", $system->SETTINGS['hotitemsnumber'], 'int');
-	$system->writesetting("endingsoonnumber", $system->SETTINGS['endingsoonnumber'], 'int');
-	$system->writesetting("loginbox", $system->SETTINGS['loginbox'], 'int');
-	$system->writesetting("newsbox", $system->SETTINGS['newsbox'], 'int');
-	$system->writesetting("newstoshow", $system->SETTINGS['newstoshow'], 'int');
+	// clean submission & update database
+	$system->writesetting("perpage",  intval($_POST['perpage']), 'int');
+	$system->writesetting("thumb_list",  intval($_POST['thumb_list']), 'int');
+	$system->writesetting("loginbox", intval($_POST['loginbox']), 'int');
+	$system->writesetting("newsbox", intval($_POST['newsbox']), 'int');
+	$system->writesetting("newstoshow",intval($_POST['newstoshow']), 'int');
+	$system->writesetting("lastitemsnumber", intval($_POST['lastitemsnumber']), 'int');
+	$system->writesetting("hotitemsnumber",  intval($_POST['hotitemsnumber']), 'int');
+	$system->writesetting("endingsoonnumber", intval($_POST['endingsoonnumber']), 'int');
 	$ERR = $MSG['795'];
 }
 

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -79,7 +79,7 @@ class global_class
 
 	function writesetting($setting, $value, $type = 'string')
 	{
-		global $DBPrefix, $db, $_SESSION;
+		global $system, $DBPrefix, $db, $_SESSION;
 
 		$modifiedby = $_SESSION['WEBID_ADMIN_IN'];
 		$modifieddate = $this->ctime;
@@ -130,6 +130,7 @@ class global_class
 			$params[] = array(':modifiedby', $modifiedby, 'int');
 			$db->query($query, $params);
 		}
+        $system->SETTINGS[$setting] = $value;
 	}
 
 	/* possible types cron, error, admin, user, mod */

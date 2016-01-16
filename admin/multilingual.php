@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -22,15 +22,9 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['defaultlanguage']))
 {
-	// clean submission
-	$system->SETTINGS['defaultlanguage'] = $system->cleanvars($_POST['defaultlanguage']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET defaultlanguage = :defaultlanguage";
-	$params = array();
-	$params[] = array(':defaultlanguage', $system->SETTINGS['defaultlanguage'], 'str');
-	$db->query($query, $params);
-}
-
+	// clean submission and update database
+	$system->writesetting("defaultlanguage", $system->cleanvars($_POST['defaultlanguage']),"str");
+    
 $html = '';
 if (is_array($LANGUAGES))
 {

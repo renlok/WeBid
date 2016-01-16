@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -47,12 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 	}
 
-	$system->SETTINGS['payment_options'] = serialize($rebuilt_array);
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			payment_options = :payment_options";
-	$params = array();
-	$params[] = array(':payment_options', $system->SETTINGS['payment_options'], 'str');
-	$db->query($query, $params);
+	$system->writesetting("payment_options", serialize($rebuilt_array), "str");
 	$ERR = $MSG['093'];
 }
 

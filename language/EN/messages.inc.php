@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2015 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -1612,7 +1612,7 @@ $MSG['25_0137'] = "You must select an account type (seller or buyer)";
 $MSG['25_0138'] = "Sellers";
 $MSG['25_0139'] = "Buyers";
 $MSG['25_0140'] = "Your account is a buyer account. No selling activity is allowed.<br> If you want to switch to a <b>seller account</b> ";
-$MSG['25_0141'] = "send a request to the site administrator";
+$MSG['25_0141'] = "Send a request to the site administrator";
 $MSG['25_0142'] = "Request sent to the site's administrator.";
 $MSG['25_0143'] = "Your account is a buyer account. No selling activity is allowed.<br> You already sent a request to switch to a <b>seller account</b>: your request is being processed. ";
 $MSG['25_0146'] = "Categories Sorting";

@@ -23,19 +23,9 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission
-	$system->SETTINGS['counter_auctions'] = isset($_POST['auctions'])? 'y' : 'n';
-	$system->SETTINGS['counter_users']    = isset($_POST['users'])? 'y' : 'n';
-	$system->SETTINGS['counter_online']   = isset($_POST['online'])? 'y' : 'n';
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-				counter_auctions = :counter_auctions,
-				counter_users = :counter_users,
-				counter_online = :counter_online";
-	$params = array();
-	$params[] = array(':counter_auctions', $system->SETTINGS['counter_auctions'], 'str');
-	$params[] = array(':counter_users', $system->SETTINGS['counter_users'], 'str');
-	$params[] = array(':counter_online', $system->SETTINGS['counter_online'], 'str');
-	$db->query($query, $params);
+	$system->writesetting("counter_auctions", isset($_POST['auctions'])? 'y' : 'n',"str");
+	$system->writesetting("counter_users", isset($_POST['users'])? 'y' : 'n',"str");
+	$system->writesetting("counter_online",  isset($_POST['online'])? 'y' : 'n',"str");
 	$ERR = $MSG['2__0063'];
 }
 

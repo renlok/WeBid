@@ -1536,7 +1536,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "rememberme` (
 # Dumping data for table `" .DBPrefix . "settingsv2`
 #
 
-
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('siteurl',". $siteURL .", 1453119200,1);"; 
 $query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('aboutus', 'bool', 'y', 1453119200,1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('aboutustext', 'str', '', 1453119200,1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('activationtype', 'int', '1', 1453118751,1);";

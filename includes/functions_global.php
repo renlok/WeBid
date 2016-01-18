@@ -66,65 +66,83 @@ class global_class
 		$this->SETTINGS['gatways'] = unserialize($this->SETTINGS['gatways']);
 	}
 
-	function writesetting($setting, $value, $type = 'string')
+	/*
+		accepts either simple or array input
+		simple:
+			writesetting('setting_name', 'setting_value', 'string');
+		array:
+			writesetting(array(
+				array('some_setting_name', 'some_setting_value', 'string'),
+				array('another_setting_name', 'another_setting_value', 'string')
+			));
+	*/
+	function writesetting($settings, $value = '', $type = 'string')
 	{
 		global $system, $DBPrefix, $db, $_SESSION;
 
 		$modifiedby = $_SESSION['WEBID_ADMIN_IN'];
 		$modifieddate = $this->ctime;
 
-		// TODO: Use the data type to check if the value is valid
-		switch($type)
+		if (is_string($settings))
 		{
-			case "string":
-				break;
-			case "integer":
-				break;
-			case "boolean":
-				break;
-			case "array":
-				$value = serialize($value);
-				break;
-			default:
-				break;
+			$settings = array($settings, $value, $type);
 		}
 
-		$query = "SELECT * FROM " . $DBPrefix . "settingsv2 WHERE fieldname = :fieldname";
-		$params = array();
-		$params[] = array(':fieldname', $setting, 'str');
-		$db->query($query, $params);
-		if ($db->numrows() > 0)
+		foreach ($settings as $setting)
 		{
-			$type = $db->result('fieldtype');
-			$query = "UPDATE " . $DBPrefix . "settingsv2 SET
-					fieldtype = :fieldtype,
-					value = :value,
-					modifieddate = :modifieddate,
-					modifiedby = :modifiedby
-					WHERE fieldname = :fieldname";
+			// check arguments are set
+			if (!isset($setting[0]) || !isset($setting[1]))
+			{
+				continue;
+			}
+			$setting[2] = (isset($setting[2])) ? $setting[2] : 'string';
+			// TODO: Use the data type to check if the value is valid
+			switch($type)
+			{
+				case "string":
+					break;
+				case "integer":
+					$value = intval($value);
+					break;
+				case "boolean":
+					$value = ($value == true);
+					break;
+				case "array":
+					$value = serialize($value);
+					break;
+				default:
+					break;
+			}
+
+			$query = "SELECT * FROM " . $DBPrefix . "settingsv2 WHERE fieldname = :fieldname";
+			$params = array();
+			$params[] = array(':fieldname', $setting, 'str');
+			$db->query($query, $params);
+			if ($db->numrows() > 0)
+			{
+				$type = $db->result('fieldtype');
+				$query = "UPDATE " . $DBPrefix . "settingsv2 SET
+						fieldtype = :fieldtype,
+						value = :value,
+						modifieddate = :modifieddate,
+						modifiedby = :modifiedby
+						WHERE fieldname = :fieldname";
+			}
+			else
+			{
+				$query = "INSERT INTO " . $DBPrefix . "settingsv2 (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
+						(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
+			}
+	        $params = array();
+			$params[] = array(':fieldname', $setting, 'str');
+			$params[] = array(':fieldtype', $type, 'str');
+			$params[] = array(':value', $value, 'str');
+			$params[] = array(':modifieddate', $modifieddate, 'int');
+			$params[] = array(':modifiedby', $modifiedby, 'int');
+			$db->query($query, $params);
+	        $system->SETTINGS[$setting] = $value;
 		}
-		else
-		{
-			$query = "INSERT INTO " . $DBPrefix . "settingsv2 (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
-					(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
-
-		}
-
-
-        $params = array();
-		$params[] = array(':fieldname', $setting, 'str');
-		$params[] = array(':fieldtype', $type, 'str');
-		$params[] = array(':value', $value, 'str');
-		$params[] = array(':modifieddate', $modifieddate, 'int');
-		$params[] = array(':modifiedby', $modifiedby, 'int');
-		$db->query($query, $params);
-        $system->SETTINGS[$setting] = $value;
-
 	}
-
-
-
-
 
 	/* possible types cron, error, admin, user, mod */
 	function log($type, $message, $user = 0, $action_id = 0)

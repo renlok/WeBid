@@ -23,7 +23,7 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
-	$system->writesetting("banners", intval($_POST['banners']), "int";
+	$system->writesetting("banners", intval($_POST['banners']), "int");
 	$ERR = $MSG['600'];
 }
 

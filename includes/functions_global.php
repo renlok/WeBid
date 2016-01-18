@@ -56,18 +56,6 @@ class global_class
 	function loadsettings()
 	{
 		global $DBPrefix, $db;
-		$query = "SELECT * FROM " . $DBPrefix . "settings";
-		$db->direct_query($query);
-
-		$this->SETTINGS = $db->result();
-		$this->SETTINGS['gatways'] = array(
-			'paypal' => 'PayPal',
-			'authnet' => 'Authorize.net',
-			'worldpay' => 'WorldPay',
-			'moneybookers' => 'Moneybookers',
-			'toocheckout' => '2Checkout'
-			);
-
 		$query = "SELECT * FROM " . $DBPrefix . "settingsv2";
 		$db->direct_query($query);
 

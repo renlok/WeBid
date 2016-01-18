@@ -1531,248 +1531,104 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "rememberme` (
   `hashkey` char(32) NOT NULL default ''
 ) ;";
 
-#
-# Dumping data for table `" . $DBPrefix . "rememberme`
-#
-
-
-# ############################
 
 #
-# Table structure for table `" . $DBPrefix . "settings`
+# Dumping data for table `" .DBPrefix . "settingsv2`
 #
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('adminmail', 'str', ". $siteEmail .", 1453119200,1);"; 
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('version', 'str', ". this_version() .", 1453119200,1);"; 
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('siteurl', 'str', ". $siteURL .", 1453119200,1);"; 
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('aboutus', 'bool', 'y', 1453119200,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('aboutustext', 'str', '', 1453119200,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('archiveafter', 'int', 30, 1453119200,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('activationtype', 'int', '1', 1453118751,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('ae_extend', 'int', '300', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('ae_status', 'str', 'n', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('ae_timebefore', 'int', '120', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('alert_emails', 'str', '', 1453118748,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('ao_bi_enabled', 'str', 'y', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('ao_hi_enabled', 'str', 'y', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('ao_hpf_enabled', 'str', 'y', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('authnet_sandbox', 'str', '0', 1453118836,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('autorelist', 'str', 'y', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('autorelist_max', 'int', '10', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('banners', 'int', '2', 1453119148,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('bn_only', 'str', 'n', 1453118803,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('bn_only_disable', 'str', 'n', 1453118803,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('bn_only_percent', 'str', '50', 1453118803,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('boards', 'str', 'n', 1453119222,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('buyerprivacy', 'str', 'y', 1453118821,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('buy_now', 'int', '2', 1453118803,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('cache_theme', 'str', 'y', 1453118775,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('catsorting', 'str', 'alpha', 1453118814,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('catstoshow', 'int', '20', 1453118814,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('checkout_sandbox', 'str', '0', 1453118836,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('contactseller', 'str', 'always', 1453118819,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('cookiespolicy', 'str', 'y', 1453119211,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('cookiespolicytext', 'str', '', 1453119211,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('counter_auctions', 'str', 'y', 1453118809,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('counter_online', 'str', 'y', 1453118809,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('counter_users', 'str', 'y', 1453118809,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('cron', 'int', '1', 1453118751,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('currency', 'str', 'GBP', 1453118775,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('cust_increment', 'int', '2', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('datesformat', 'str', 'EUR', 1453118792,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('defaultcountry', 'str', 'United Kingdom', 1453118806,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('defaultlanguage', 'str', 'EN', 1453118811,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('descriptiontag', 'str', '', 1453118817,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('displayed_feilds', 'str', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"y\";s:15:\"address_regshow\";s:1:\"y\";s:12:\"city_regshow\";s:1:\"y\";s:12:\"prov_regshow\";s:1:\"y\";s:15:\"country_regshow\";s:1:\"y\";s:11:\"zip_regshow\";s:1:\"y\";s:11:\"tel_regshow\";s:1:\"y\";}', 1453119179,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('edit_starttime', 'int', '1', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('endingsoonnumber', 'int', '0', 1453118741,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('errortext', 'str', '<p>An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly</p>', 1453118754,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('extra_cat', 'str', 'n', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('fees', 'str', 'n', 1453118836,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('fee_disable_acc', 'str', 'y', 1453118836,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('fee_max_debt', 'int', '25', 1453118836,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('fee_signup_bonus', 'int', '0', 1453118836,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('fee_type', 'int', '1', 1453118836,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('hotitemsnumber', 'int', '8', 1453118741,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('hours_countdown', 'int', '24', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('https', 'str', 'n', 1453118843,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('invoice_thankyou', 'str', 'Thank you for shopping with us and we hope to see you return soon!', 1453118843,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('invoice_yellow_line', 'str', '', 1453118843,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('keywordstag', 'str', '', 1453118817,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('lastitemsnumber', 'int', '8', 1453118741,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('loginbox', 'int', '1', 1453118741,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('mail_parameter', 'str', '', 1453118748,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('mail_protocol', 'int', '0', 1453118748,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('mandatory_fields', 'str', 'a:7:{s:9:\"birthdate\";s:1:\"n\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"n\";}', 1453119179,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('maxpictures', 'int', '5', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('maxuploadsize', 'int', '51200', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('moneybookers_sandbox', 'str', '0', 1453118836,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('moneydecimals', 'int', '2', 1453118775,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('moneyformat', 'int', '1', 1453118775,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('moneysymbol', 'int', '2', 1453118775,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('newsbox', 'int', '1', 1453118741,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('newstoshow', 'int', '5', 1453118741,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('payment_options', 'str', 'a:2:{i:0;s:13:\"Wire Transfer\";i:1;s:6:\"Cheque\";}', 1453118761,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('paypal_sandbox', 'str', '0', 1453118836,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('perpage', 'int', '15', 1453118741,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('picturesgallery', 'int', '1', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('privacypolicy', 'str', 'y', 1453119209,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('privacypolicytext', 'str', '', 1453119209,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('proxy_bidding', 'bool', 'y', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('recaptcha_private', 'str', '', 1453118743,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('recaptcha_public', 'str', '', 1453118743,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('spam_register', 'int', '1', 1453118743,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('spam_sendtofriend', 'int', '1', 1453118743,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('subtitle', 'str', 'y', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('tax', 'str', 'n', 1453118847,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('taxuser', 'str', 'n', 1453118847,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('terms', 'str', 'y', 1453119206,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('termstext', 'str', '', 1453119206,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('theme', 'str', 'classic', 1453118858,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('thumb_list', 'int', '120', 1453118741,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('thumb_show', 'int', '120', 1453118739,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('timecorrection', 'str', '0', 1453118792,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('usersauth', 'str', 'y', 1453118751,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('users_email', 'str', 'y', 1453118819,1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('worldpay_sandbox', 'str', '0', 1453118836,1);";
 
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
-  `sitename` varchar(255) NOT NULL default '',
-  `siteurl` varchar(255) NOT NULL default '',
-  `copyright` varchar(255) NOT NULL default '',
-  `version` varchar(10) NOT NULL default '',
-  `loginbox` int(1) NOT NULL default '0',
-  `newsbox` int(1) NOT NULL default '0',
-  `newstoshow` int(11) NOT NULL default '0',
-  `helpbox` int(1) NOT NULL default '0',
-  `perpage` int(10) NOT NULL default '15',
-  `moneyformat` int(1) NOT NULL default '0',
-  `moneydecimals` int(11) NOT NULL default '2',
-  `moneysymbol` int(1) NOT NULL default '0',
-  `currency` varchar(10) NOT NULL default '',
-  `adminmail` varchar(100) NOT NULL default '',
-  `banners` int(1) NOT NULL default '0',
-  `newsletter` int(1) NOT NULL default '0',
-  `logo` varchar(255) NOT NULL default '',
-  `timecorrection` decimal(3,1) NOT NULL default '0',
-  `cron` int(1) NOT NULL default '0',
-  `archiveafter` int(11) NOT NULL default '0',
-  `datesformat` enum('USA','EUR') NOT NULL default 'EUR',
-  `errortext` text NOT NULL,
-  `picturesgallery` int(1) NOT NULL default '0',
-  `maxpictures` int(11) NOT NULL default '0',
-  `buy_now` int(1) NOT NULL default '1',
-  `thumb_show` smallint(6) NOT NULL default '120',
-  `thumb_list` smallint(6) NOT NULL default '120',
-  `lastitemsnumber` int(11) NOT NULL default '0',
-  `hotitemsnumber` int(11) NOT NULL default '0',
-  `endingsoonnumber` int(11) NOT NULL default '0',
-  `boards` enum('y','n') NOT NULL default 'y',
-  `wordsfilter` enum('y','n') NOT NULL default 'y',
-  `aboutus` enum('y','n') NOT NULL default 'y',
-  `aboutustext` text NOT NULL,
-  `terms` enum('y','n') NOT NULL default 'y',
-  `termstext` text NOT NULL,
-  `privacypolicy` enum('y','n') NOT NULL default 'y',
-  `privacypolicytext` text NOT NULL,
-  `defaultcountry` varchar(30) NOT NULL default '',
-  `defaultlanguage` char(2) NOT NULL default 'EN',
-  `catsorting` enum('alpha','counter') NOT NULL default 'alpha',
-  `usersauth` enum('y','n') NOT NULL default 'y',
-  `descriptiontag` text NOT NULL,
-  `keywordstag` text NOT NULL,
-  `maxuploadsize` int(11) NOT NULL default '0',
-  `contactseller` enum('always','logged','never') NOT NULL default 'always',
-  `theme` tinytext,
-  `catstoshow` int(11) NOT NULL default '0',
-  `bn_only` enum('y','n') NOT NULL default 'n',
-  `users_email` enum('y','n') NOT NULL default 'y',
-  `boardsmsgs` int(11) NOT NULL default '0',
-  `activationtype` INT(1) NOT NULL DEFAULT '1',
-  `https` enum('y','n') NOT NULL default 'n',
-  `https_url` varchar(255) NOT NULL default '',
-  `bn_only_disable` enum('y','n') NOT NULL default 'n',
-  `bn_only_percent` int(3) NOT NULL default '50',
-  `buyerprivacy` ENUM('y','n') NOT NULL default 'y',
-  `cust_increment` INT(1) NOT NULL DEFAULT '2',
-  `subtitle` ENUM('y','n') NOT NULL default 'y',
-  `extra_cat` ENUM('y','n') NOT NULL default 'n',
-  `fees` ENUM('y','n') NOT NULL default 'n',
-  `fee_type` int(1) NOT NULL default '1',
-  `fee_max_debt` double(16,2) NOT NULL default '25.00',
-  `fee_signup_bonus` double(16,2) NOT NULL default '0.00',
-  `fee_disable_acc` enum('y','n') NOT NULL default 'y',
-  `tax` enum('y','n') NOT NULL default 'n',
-  `taxuser` enum('y','n') NOT NULL default 'n',
-  `ae_status` enum('y','n') NOT NULL default 'n',
-  `ae_timebefore` int(11) NOT NULL default '120',
-  `ae_extend` int(11) NOT NULL default '300',
-  `cache_theme` ENUM('y','n') NOT NULL default 'y',
-  `hours_countdown` int(5) NOT NULL default '24',
-  `edit_starttime` int(1) NOT NULL default '1',
-  `banner_width` int(11) NOT NULL default '468',
-  `banner_height` int(11) NOT NULL default '60',
-  `counter_auctions` enum('y','n') NOT NULL default 'y',
-  `counter_users` enum('y','n') NOT NULL default 'y',
-  `counter_online` enum('y','n') NOT NULL default 'y',
-  `banemail` text NOT NULL,
-  `mandatory_fields` varchar(255) NOT NULL default '',
-  `displayed_feilds` VARCHAR(255) NOT NULL default '',
-  `ao_hpf_enabled` enum('y','n') NOT NULL default 'y',
-  `ao_hi_enabled` enum('y','n') NOT NULL default 'y',
-  `ao_bi_enabled` enum('y','n') NOT NULL default 'y',
-  `proxy_bidding` enum('y','n') NOT NULL default 'y',
-  `recaptcha_public` varchar(40) NOT NULL default '',
-  `recaptcha_private` varchar(40) NOT NULL default '',
-  `spam_sendtofriend` int(1) NOT NULL default '1',
-  `spam_register` int(1) NOT NULL default '1',
-  `mod_queue` enum('y','n') NOT NULL default 'n',
-  `payment_options` text NOT NULL,
-  `autorelist` ENUM('y','n') NOT NULL default 'y',
-  `autorelist_max` int(3) NOT NULL default '10',
-  `invoice_yellow_line` varchar(255) NOT NULL default '',
-  `invoice_thankyou` varchar(255) NOT NULL default '',
-  `cookiespolicy` enum('y','n') NOT NULL default 'y',
-  `cookiespolicytext` text NOT NULL,
-  `mail_protocol` VARCHAR(128) NOT NULL DEFAULT 0,
-  `mail_parameter` VARCHAR(128) NOT NULL,
-  `smtp_authentication`  enum('y', 'n') NOT NULL DEFAULT 'n',
-  `smtp_security` enum('none', 'tls', 'ssl') NOT NULL DEFAULT 'none',
-  `smtp_port`  VARCHAR(128) NOT NULL DEFAULT 25,
-  `smtp_host` VARCHAR(128) NOT NULL,
-  `smtp_username`  VARCHAR(128) NOT NULL,
-  `smtp_password`  VARCHAR(128) NOT NULL,
-  `alert_emails`  VARCHAR(128) NOT NULL,
-  `paypal_sandbox` INT(1) default 0,
-  `authnet_sandbox` INT(1) default 0,
-  `worldpay_sandbox` INT(1) default 0,
-  `checkout_sandbox` INT(1) default 0,
-  `moneybookers_sandbox` INT(1) default 0
-);";
-
-#
-# Dumping data for table `" . $DBPrefix . "settings`
-#
-
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
-('WeBid',
-'" . $siteURL . "',
-'',
-'" . this_version() . "',
-1,
-1,
-5,
-1,
-15,
-1,
-2,
-2,
-'GBP',
-'" . $siteEmail . "',
-1,
-1,
-'logo.png',
-0,
-2,
-30,
-'EUR',
-'An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly',
-1,
-5,
-2,
-120,
-120,
-8,
-8,
-0,
-'y',
-'y',
-'y',
-'',
-'y',
-'',
-'y',
-'',
-'United Kingdom',
-'EN',
-'alpha',
-'y',
-'',
-'',
-51200,
-'always',
-'classic',
-20,
-'n',
-'y',
-0,
-1,
-'n',
-'',
-'n',
-50,
-'y',
-2,
-'y',
-'n',
-'n',
-1,
-'25.00',
-'0.00',
-'y',
-'n',
-'n',
-'n',
-120,
-300,
-'y',
-24,
-1,
-468,
-60,
-'y',
-'y',
-'y',
-'',
-'a:7:{s:9:\"birthdate\";s:1:\"y\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"y\";}',
-'a:7:{s:17:\"birthdate_regshow\";s:1:\"y\";s:15:\"address_regshow\";s:1:\"y\";s:12:\"city_regshow\";s:1:\"y\";s:12:\"prov_regshow\";s:1:\"y\";s:15:\"country_regshow\";s:1:\"y\";s:11:\"zip_regshow\";s:1:\"y\";s:11:\"tel_regshow\";s:1:\"y\";}',
-'y',
-'y',
-'y',
-'y',
-'',
-'',
-1,
-1,
-'n',
-'a:2:{i:0;s:13:\"Wire Transfer\";i:1;s:6:\"Cheque\";}',
-'y',
-10,
-'',
-'Thank you for shopping with us and we hope to see you return soon!',
-'y',
-'',
-0,
-'',
-'n',
-'none',
-'25',
-'',
-'',
-'',
-'',
-0,
-0,
-0,
-0,
-0);";
 
 
 # ############################

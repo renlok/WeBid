@@ -59,7 +59,7 @@ foreach ($feedback_data as $row)
 			'QTY' => ($row['qty'] == 0) ? 1 : $row['qty'],
 			'WINNER' => $row['winner'],
 			'SELLER' => $row['seller'],
-			'CLOSINGDATE' => FormatDate($row['closingdate']),
+			'CLOSINGDATE' => FormatDate($row['closingdate'], '/', false),
 			'WS' => ($row['winner'] == $user->user_data['id']) ? 'w' : 's'
 			));
 	$k++;

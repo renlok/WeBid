@@ -110,28 +110,27 @@ class global_class
 					modifieddate = :modifieddate,
 					modifiedby = :modifiedby
 					WHERE fieldname = :fieldname";
-			$params = array();
-			$params[] = array(':fieldname', $setting, 'str');
-			$params[] = array(':fieldtype', $type, 'str');
-			$params[] = array(':value', $value, 'str');
-			$params[] = array(':modifieddate', $modifieddate, 'int');
-			$params[] = array(':modifiedby', $modifiedby, 'int');
-			$db->query($query, $params);
 		}
 		else
 		{
 			$query = "INSERT INTO " . $DBPrefix . "settingsv2 (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
 					(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
-			$params = array();
-			$params[] = array(':fieldname', $setting, 'str');
-			$params[] = array(':fieldtype', $type, 'str');
-			$params[] = array(':value', $value, 'str');
-			$params[] = array(':modifieddate', $modifieddate, 'int');
-			$params[] = array(':modifiedby', $modifiedby, 'int');
-			$db->query($query, $params);
+
 		}
+        
+        $params = array();
+		$params[] = array(':fieldname', $setting, 'str');
+		$params[] = array(':fieldtype', $type, 'str');
+		$params[] = array(':value', $value, 'str');
+		$params[] = array(':modifieddate', $modifieddate, 'int');
+		$params[] = array(':modifiedby', $modifiedby, 'int');
+		$db->query($query, $params);
         $system->SETTINGS[$setting] = $value;
 	}
+    
+    
+    
+  
 
 	/* possible types cron, error, admin, user, mod */
 	function log($type, $message, $user = 0, $action_id = 0)

@@ -25,10 +25,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['def
 	// clean submission and update database
 	$system->writesetting("defaultlanguage", $system->cleanvars($_POST['defaultlanguage']),"str");
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 $html = '';
 if (is_array($LANGUAGES))
 {

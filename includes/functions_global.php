@@ -130,7 +130,7 @@ class global_class
 			$params[] = array(':modifiedby', $modifiedby, 'int');
 			$db->query($query, $params);
 		}
-        $system->SETTINGS[$setting] = $value;
+		$system->SETTINGS[$setting] = $value;
 	}
 
 	/* possible types cron, error, admin, user, mod */

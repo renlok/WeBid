@@ -56,7 +56,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		$ERR = $MSG['895'];
 	}
-
 }
 
 $selectsetting = isset($system->SETTINGS['mail_protocol'])? $system->SETTINGS['mail_protocol'] : '0';

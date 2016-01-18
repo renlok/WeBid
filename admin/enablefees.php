@@ -42,7 +42,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("authnet_sandbox", $_POST['disable_ah_sandbox'], "str");
 	$system->writesetting("checkout_sandbox", $_POST['disable_co_sandbox'], "str");
 	
-
 	$ERR = $MSG['761'];
 }
 

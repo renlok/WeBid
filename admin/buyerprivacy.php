@@ -22,7 +22,7 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-    // Update database
+	// Update database
 	$system->writesetting("buyerprivacy",ynbool($_POST['buyerprivacy']), "str");
 	$ERR = $MSG['247'];
 }

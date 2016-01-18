@@ -60,7 +60,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
 		$ERR = $MSG['5088'];
 	}
-	
 }
 
 loadblock($MSG['427'], $MSG['428'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], array($MSG['030'], $MSG['029']));

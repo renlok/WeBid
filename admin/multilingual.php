@@ -25,14 +25,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['def
 	// clean submission and update database
 	$system->writesetting("defaultlanguage", $system->cleanvars($_POST['defaultlanguage']),"str");
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 $html = '';
 if (is_array($LANGUAGES))
 {
 	reset($LANGUAGES);
-	foreach ($LANGUAGES as $k => $v){
+	foreach ($LANGUAGES as $k => $v)
+	{
 		$html .= '<input type="radio" name="defaultlanguage" value="' . $k . '"' . (($system->SETTINGS['defaultlanguage'] == $k) ? ' checked="checked"' : '') . '>
-	<img src="../includes/flags/' . $k . '.gif" hspace="2">
-	' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MSG['2__0005'] : '') . '<br>';
+		<img src="../includes/flags/' . $k . '.gif" hspace="2">
+		' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MSG['2__0005'] : '') . '<br>';
 	}
 }
 

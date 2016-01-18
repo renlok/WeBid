@@ -23,7 +23,6 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-
 	// Update database
 	$system->writesetting("aboutus", ynbool($_POST['aboutus']), "bool");
 	$system->writesetting("aboutustext", $system->cleanvars($_POST['aboutustext']), "str");

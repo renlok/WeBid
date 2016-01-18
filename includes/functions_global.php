@@ -117,6 +117,7 @@ class global_class
 					(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
 
 		}
+<<<<<<< HEAD
         
         $params = array();
 		$params[] = array(':fieldname', $setting, 'str');
@@ -126,6 +127,9 @@ class global_class
 		$params[] = array(':modifiedby', $modifiedby, 'int');
 		$db->query($query, $params);
         $system->SETTINGS[$setting] = $value;
+=======
+		$system->SETTINGS[$setting] = $value;
+>>>>>>> origin/master
 	}
     
     

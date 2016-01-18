@@ -63,6 +63,7 @@ class global_class
 		{
 			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
 		}
+		$this->SETTINGS['gatways'] = unserialize($this->SETTINGS['gatways']);
 	}
 
 	function writesetting($setting, $value, $type = 'string')
@@ -80,6 +81,9 @@ class global_class
 			case "integer":
 				break;
 			case "boolean":
+				break;
+			case "array":
+				$value = serialize($value);
 				break;
 			default:
 				break;
@@ -106,7 +110,7 @@ class global_class
 
 		}
 
-        
+
         $params = array();
 		$params[] = array(':fieldname', $setting, 'str');
 		$params[] = array(':fieldtype', $type, 'str');
@@ -117,10 +121,10 @@ class global_class
         $system->SETTINGS[$setting] = $value;
 
 	}
-    
-    
-    
-  
+
+
+
+
 
 	/* possible types cron, error, admin, user, mod */
 	function log($type, $message, $user = 0, $action_id = 0)

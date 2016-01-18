@@ -289,7 +289,7 @@ foreach ($gateway_list as $v)
 	if ($gateways_data[$v . '_active'] == 1)
 	{
 		$checked = (in_array($v, $payment)) ? 'checked' : '';
-		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '>' . $system->SETTINGS['gatways'][$v] . '</p>';
+		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '>' . $system->SETTINGS['gateways'][$v] . '</p>';
 	}
 }
 

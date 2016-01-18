@@ -496,7 +496,7 @@ foreach ($gateway_list as $v)
 		{
 			$p_first = false;
 		}
-		$payment_methods .= $system->SETTINGS['gatways'][$v];
+		$payment_methods .= $system->SETTINGS['gateways'][$v];
 	}
 }
 

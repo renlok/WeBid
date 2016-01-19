@@ -139,7 +139,7 @@ function check_installation()
 	}
 }
 
-function this_version()
+function package_version()
 {
 	$string = file_get_contents('thisversion.txt') or die('error');
 	return $string;

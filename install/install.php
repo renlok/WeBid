@@ -21,7 +21,7 @@ define('InInstaller', 1);
 $db = new db_handle();
 
 $main_path = getmainpath();
-$thisversion = this_version();
+$thisversion = package_version();
 echo print_header(false);
 
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;

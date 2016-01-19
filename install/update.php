@@ -40,16 +40,16 @@ if ($step == 0)
 {
 	if (!file_exists($main_path . 'includes/config.inc.php'))
 	{
-		$thisversion = this_version();
-		$myversion = check_version();
+		$package_version = package_version();
+		$installed_version = check_version();
 		echo print_header(true);
 		echo show_config_table(false);
 	}
 	else
 	{
 		$check = check_installation();
-		$thisversion = this_version();
-		$myversion = check_version();
+		$package_version = package_version();
+		$installed_version = check_version();
 		echo print_header(true);
 		if (!$check)
 		{
@@ -81,8 +81,8 @@ if ($step == 1)
 	if ($output)
 	{
 		$check = check_installation();
-		$thisversion = this_version();
-		$myversion = check_version();
+		$package_version = package_version();
+		$installed_version = check_version();
 		echo print_header(true);
 		echo $toecho;
 		if (!$check)
@@ -96,8 +96,8 @@ if ($step == 1)
 	}
 	else
 	{
-		$thisversion = this_version();
-		$myversion = check_version();
+		$package_version = package_version();
+		$installed_version = check_version();
 		echo print_header(true);
 		echo $toecho;
 		echo '<p>WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)</p>';
@@ -108,8 +108,8 @@ if ($step == 1)
 if ($step == 2)
 {
 	$check = check_installation();
-	$thisversion = this_version();
-	$myversion = check_version();
+	$package_version = package_version();
+	$installed_version = check_version();
 	echo print_header(true);
 	if (!$check)
 	{
@@ -122,7 +122,11 @@ if ($step == 2)
 		$db->direct_query($query[$i]);
 		echo '<b>' . $query[$i] . '</b><br>';
 	}
-	if ($myversion == $thisversion)
+	if (file_exists('scripts/' . $new_version . '.php'))
+	{
+		include 'scripts/' . $new_version . '.php';
+	}
+	if ($installed_version == $package_version)
 	{
 		echo 'Complete, now to <b><a href="?step=3">step 3</a></b>';
 	}
@@ -135,8 +139,8 @@ if ($step == 2)
 if ($step == 3)
 {
 	$check = check_installation();
-	$thisversion = this_version();
-	$myversion = check_version();
+	$package_version = package_version();
+	$installed_version = check_version();
 	if (!$check)
 	{
 		echo print_header(true);

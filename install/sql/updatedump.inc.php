@@ -23,6 +23,7 @@ if ($myversion == '0.8.0')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `authnet_id` varchar(50) default '';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `authnet_pass` varchar(50) default '';";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '0.8.1';";
+	$new_version = '0.8.1';
 }
 
 if ($myversion == '0.8.1')
@@ -33,12 +34,14 @@ if ($myversion == '0.8.1')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `bf_paid` INT(1) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `current_fee` double(16,4) default '0.00';";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '0.8.2';";
+	$new_version = '0.8.2';
 }
 
 if ($myversion == '0.8.2')
 {
 	//0.8.2 to 0.8.3
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '0.8.3';";
+	$new_version = '0.8.3';
 }
 
 if ($myversion == '0.8.3')
@@ -46,12 +49,14 @@ if ($myversion == '0.8.3')
 	//0.8.3 to 0.8.4
 	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` ADD `fromemail` varchar(50) NOT NULL default '';";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '0.8.4';";
+	$new_version = '0.8.4';
 }
 
 if ($myversion == '0.8.4')
 {
 	//0.8.4 to 0.8.5
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '0.8.5';";
+	$new_version = '0.8.5';
 }
 
 if ($myversion == '0.8.5' || $myversion == '0.8.5 P1')
@@ -116,18 +121,21 @@ if ($myversion == '0.8.5' || $myversion == '0.8.5 P1')
 		`year` INT(4) NOT NULL
 	)";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.0'";
+	$new_version = '1.0.0';
 }
 
 if ($myversion == '1.0.0')
 {
 	//1.0.0 to 1.0.1
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.1';";
+	$new_version = '1.0.1';
 }
 
 if ($myversion == '1.0.1')
 {
 	//1.0.1 to 1.0.2
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.2';";
+	$new_version = '1.0.2';
 }
 
 if ($myversion == '1.0.2')
@@ -139,24 +147,28 @@ if ($myversion == '1.0.2')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `showacceptancetext`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP `acceptancetext`;";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.3';";
+	$new_version = '1.0.3';
 }
 
 if ($myversion == '1.0.3')
 {
 	//1.0.3 to 1.0.4
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.4';";
+	$new_version = '1.0.4';
 }
 
 if ($myversion == '1.0.4')
 {
 	//1.0.4 to 1.0.5
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.5';";
+	$new_version = '1.0.5';
 }
 
 if ($myversion == '1.0.5')
 {
 	//1.0.5 to 1.0.6
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.6';";
+	$new_version = '1.0.6';
 }
 
 if ($myversion == '1.0.6')
@@ -243,6 +255,7 @@ if ($myversion == '1.0.6')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `fee_signup_bonus` double(16,2) NOT NULL default '0.00';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `balance` double(16,2) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `bid` double(16,2) NOT NULL default '0';";
+	$new_version = '1.1.0';
 }
 
 if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2')))
@@ -313,17 +326,14 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 		`lang` char(2) NOT NULL default '',
 		`group_name` varchar(255) NOT NULL default ''
 	);";
-
-# 
-# Table structure for table `" . $DBPrefix . "settingsv2`
-#
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settingsv2`;";
-$query[] = "CREATE TABLE `".$DBprefix ."settingsv2` 
-	`fieldname` VARCHAR(30) NOT NULL,
-	`fieldtype` VARCHAR(10) NOT NULL,
-	`value` VARCHAR(255) NOT NULL,
-	`modifieddate` INT(11) NOT NULL,
-	`modifiedby` INT(32) NOT NULL,
-	PRIMARY KEY(`fieldname`)
-	)";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settingsv2`;";
+	$query[] = "CREATE TABLE `".$DBprefix ."settingsv2`
+		`fieldname` VARCHAR(30) NOT NULL,
+		`fieldtype` VARCHAR(10) NOT NULL,
+		`value` VARCHAR(255) NOT NULL,
+		`modifieddate` INT(11) NOT NULL,
+		`modifiedby` INT(32) NOT NULL,
+		PRIMARY KEY(`fieldname`)
+		)";
+	$new_version = '1.2.0';
 }

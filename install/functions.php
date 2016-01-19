@@ -120,12 +120,24 @@ function check_installation()
 	$db->error_supress(true); // we dont want errors returned for now
 	if($db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix))
 	{
-		// check webid install...
-		$query = "SELECT version FROM `" . $DBPrefix . "settings`";
-		$res = $db->direct_query($query);
-		if ($res != false)
+		// old method
+		$query = "SELECT * FROM `" . $DBPrefix . "settings` LIMIT 1";
+		$db->direct_query($query);
+		if ($db->numrows() > 0)
 		{
-			$settings_version = $db->result('version');
+			$settingkeys = array_keys($db->fetchall());
+			if ($settingkeys[0] == 'fieldname')
+			{
+				$query = "SELECT value FROM `" . $DBPrefix . "settings` WHERE fieldname = 'version'";
+				$db->direct_query($query);
+				$settings_version = $db->result('value');
+			}
+			else
+			{
+				$query = "SELECT version FROM `" . $DBPrefix . "settings` LIMIT 1";
+				$db->direct_query($query);
+				$settings_version = $db->result('version');
+			}
 			return true;
 		}
 		else
@@ -139,7 +151,7 @@ function check_installation()
 	}
 }
 
-function this_version()
+function package_version()
 {
 	$string = file_get_contents('thisversion.txt') or die('error');
 	return $string;

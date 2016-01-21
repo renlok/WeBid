@@ -1537,9 +1537,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settingsv2` (
 #
 # Dumping data for table `" .DBPrefix . "settingsv2`
 #
-$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('adminmail', 'str', ". $siteEmail .", UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('version', 'str', ". package_version() .", UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('siteurl', 'str', ". $siteURL .", UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('adminmail', 'str', '". $siteEmail ."', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('version', 'str', '". package_version() ."', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('siteurl', 'str', '". $siteURL ."', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('aboutus', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('aboutustext', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('archiveafter', 'int', 30, UNIX_TIMESTAMP(), 1);";

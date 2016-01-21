@@ -63,7 +63,7 @@ class global_class
 		{
 			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
 		}
-		$this->SETTINGS['gatways'] = unserialize($this->SETTINGS['gatways']);
+		$this->SETTINGS['gateways'] = unserialize($this->SETTINGS['gateways']);
 	}
 
 	/*
@@ -133,14 +133,14 @@ class global_class
 				$query = "INSERT INTO " . $DBPrefix . "settingsv2 (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
 						(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
 			}
-	        $params = array();
+			$params = array();
 			$params[] = array(':fieldname', $setting, 'str');
 			$params[] = array(':fieldtype', $type, 'str');
 			$params[] = array(':value', $value, 'str');
 			$params[] = array(':modifieddate', $modifieddate, 'int');
 			$params[] = array(':modifiedby', $modifiedby, 'int');
 			$db->query($query, $params);
-	        $system->SETTINGS[$setting] = $value;
+			$system->SETTINGS[$setting] = $value;
 		}
 	}
 

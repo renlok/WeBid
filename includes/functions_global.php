@@ -56,7 +56,7 @@ class global_class
 	function loadsettings()
 	{
 		global $DBPrefix, $db;
-		$query = "SELECT * FROM " . $DBPrefix . "settingsv2";
+		$query = "SELECT * FROM " . $DBPrefix . "settings";
 		$db->direct_query($query);
 
 		while ($settingv2 = $db->fetch())
@@ -114,14 +114,14 @@ class global_class
 					break;
 			}
 
-			$query = "SELECT * FROM " . $DBPrefix . "settingsv2 WHERE fieldname = :fieldname";
+			$query = "SELECT * FROM " . $DBPrefix . "settings WHERE fieldname = :fieldname";
 			$params = array();
 			$params[] = array(':fieldname', $setting, 'str');
 			$db->query($query, $params);
 			if ($db->numrows() > 0)
 			{
 				$type = $db->result('fieldtype');
-				$query = "UPDATE " . $DBPrefix . "settingsv2 SET
+				$query = "UPDATE " . $DBPrefix . "settings SET
 						fieldtype = :fieldtype,
 						value = :value,
 						modifieddate = :modifieddate,
@@ -130,7 +130,7 @@ class global_class
 			}
 			else
 			{
-				$query = "INSERT INTO " . $DBPrefix . "settingsv2 (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
+				$query = "INSERT INTO " . $DBPrefix . "settings (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
 						(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
 			}
 			$params = array();

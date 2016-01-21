@@ -18,6 +18,12 @@ $w = (isset($_GET['w'])) ? intval($_GET['w']) : '';
 $_w = $w;
 $fromfile = (isset($_GET['fromfile'])) ? $_GET['fromfile'] : '';
 $nomanage = false;
+$accepted_widths = array(
+	$system->SETTINGS['thumb_show'],
+	$system->SETTINGS['thumb_list'],
+	'' // load default image
+);
+$w = (in_array($w, $accepted_widths)) ? $w : '';
 
 function ErrorPNG($err)
 {
@@ -28,6 +34,16 @@ function ErrorPNG($err)
 	imagefilledrectangle($im, 0, 0, 100, 30, $bgc);
 	imagestring($im, 1, 5, 5, $err, $tc);
 	imagepng($im);
+}
+
+function load_image($file, $mime, $image_type, $output_type)
+{
+	header('Content-Type: ' . $mime);
+	$funcall = "imagecreatefrom$image_type";
+	$image = $funcall($file);
+	$funcall = "image$output_type";
+	$funcall($image);
+	exit;
 }
 
 // control parameters and file existence
@@ -72,7 +88,7 @@ if (file_exists($upload_path . 'cache/' . $w . '-' . md5($fromfile)))
 			if (!(imagetypes() &IMG_PNG)) $nomanage = true;
 			$img['mime'] = 'image/png';
 			break;
-		default :
+		default:
 			$nomanage = true;
 			break;
 	}
@@ -90,7 +106,6 @@ else
 	{
 		if (!is_dir($upload_path . 'cache')) mkdir($upload_path . 'cache', 0777);
 
-		if (!isset($_GET['w'])) $w = 100;
 		$img = @getimagesize($fromfile);
 		if (is_array($img))
 		{
@@ -105,44 +120,32 @@ else
 						}
 						else
 						{
-							$outype = 'png';
+							$output_type = 'png';
 							$img['mime'] = 'image/png';
 						}
 					}
 					else
 					{
-						$outype = 'gif';
+						$output_type = 'gif';
 						$img['mime'] = 'image/gif';
 					}
-					$imtype = 'gif';
+					$image_type = 'gif';
 					break;
 				case IMAGETYPE_JPEG:
 					if (!(imagetypes() &IMG_JPG)) $nomanage = true;
-					$outype = 'jpeg';
+					$output_type = 'jpeg';
 					$img['mime'] = 'image/jpeg';
-					$imtype = 'jpeg';
+					$image_type = 'jpeg';
 					break;
 				case IMAGETYPE_PNG:
 					if (!(imagetypes() &IMG_PNG)) $nomanage = true;
-					$imtype = 'png';
+					$image_type = 'png';
 					$img['mime'] = 'image/png';
-					$outype = 'png';
+					$output_type = 'png';
 					break;
 				default :
 					ErrorPNG($ERR_710);
 					exit;
-			}
-			// check image orientation
-			if ($img[0] < $img[1])
-			{
-				$h = $w;
-				$ratio = floatval($img[1] / $h);
-				$w = ceil($img[0] / $ratio);
-			}
-			else
-			{
-				$ratio = floatval($img[0] / $w);
-				$h = ceil($img[1] / $ratio);
 			}
 		}
 		else
@@ -150,22 +153,41 @@ else
 			ErrorPNG($ERR_710);
 			exit;
 		}
+		if ($w == '')
+		{
+			// just load the image
+			load_image($fromfile, $img['mime'], $image_type, $output_type);
+		}
 	}
 	else
 	{
 		$nomanage = true;
 	}
+
 	if ($nomanage)
 	{
 		ErrorPNG($ERR_710);
 		exit;
 	}
 
+	// check image orientation
+	if ($img[0] < $img[1])
+	{
+		$h = $w;
+		$ratio = floatval($img[1] / $h);
+		$w = ceil($img[0] / $ratio);
+	}
+	else
+	{
+		$ratio = floatval($img[0] / $w);
+		$h = ceil($img[1] / $ratio);
+	}
+
 	$ou = imagecreatetruecolor($w, $h);
 	imagealphablending($ou, false);
-	$funcall = "imagecreatefrom$imtype";
+	$funcall = "imagecreatefrom$image_type";
 	imagecopyresampled($ou, $funcall($fromfile), 0, 0, 0, 0, $w, $h, $img[0], $img[1]);
-	$funcall = "image$outype";
+	$funcall = "image$output_type";
 	$funcall($ou, $upload_path . 'cache/' . $_w . '-' . md5($fromfile));
 	header('Content-type: ' . $img['mime']);
 	$funcall($ou);

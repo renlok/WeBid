@@ -121,9 +121,9 @@ function check_installation()
 	if($db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix))
 	{
 		// old method
-		$query = "SELECT * FROM `" . $DBPrefix . "settings` LIMIT 1";
-		$db->direct_query($query);
-		if ($db->numrows() > 0)
+		$query = "SHOW TABLES LIKE '" . $DBPrefix . "settings'";
+		$results = $db->query($query);
+                if(count($results) > 0)
 		{
 			$settingkeys = array_keys($db->fetchall());
 			if ($settingkeys[0] == 'fieldname')

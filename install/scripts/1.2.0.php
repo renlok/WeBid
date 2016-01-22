@@ -66,7 +66,7 @@ foreach ($settings as $setting_name => $setting_value)
         $type = 'string';
             break;
     }
-    $query = "INSERT INTO " . $DBPrefix . "settingsv2 (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
+    $query = "INSERT INTO " . $DBPrefix . "settings (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
             ($setting_name, :$type, :$setting_value, UNIX_TIMESTAMP(), 1);";
     $db->direct_query($query);
 }
@@ -75,5 +75,5 @@ foreach ($settings as $setting_name => $setting_value)
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
 $db->direct_query($query);
 // rename new table
-$query[] = "RENAME TABLE `" . $DBPrefix . "settingsv2` TO `" . $DBPrefix . "settings`;;";
+$query[] = "RENAME TABLE `" . $DBPrefix . "settings` TO `" . $DBPrefix . "settings`;;";
 $db->direct_query($query);

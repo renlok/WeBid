@@ -474,7 +474,7 @@ switch ($_SESSION['action'])
 					'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
 					'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
 					'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
-					'B_SHIPPING' => ($system->SETTINGS['shipping'] == 1),
+					'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
 					'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y')
 					));
 			break;
@@ -730,7 +730,7 @@ switch ($_SESSION['action'])
 				'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
 				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),
 				'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
-				'B_SHIPPING' => ($system->SETTINGS['shipping'] == 1),
+				'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
 				'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y'),
 				'B_AUTORELIST' => ($system->SETTINGS['autorelist'] == 'y')
 				));

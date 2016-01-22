@@ -100,11 +100,14 @@ class global_class
 			switch($type)
 			{
 				case "string":
+				case "str":
 					break;
 				case "integer":
+				case "int":
 					$value = intval($value);
 					break;
 				case "boolean":
+				case "bool":
 					$value = ($value == true);
 					break;
 				case "array":

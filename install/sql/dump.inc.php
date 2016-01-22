@@ -1598,6 +1598,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('invoice_yellow_line
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('keywordstag', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('lastitemsnumber', 'int', '8', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('loginbox', 'int', '1', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('logo', 'str', 'logo.png', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('mail_parameter', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('mail_protocol', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('mandatory_fields', 'str', 'a:7:{s:9:\"birthdate\";s:1:\"n\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"n\";}', UNIX_TIMESTAMP(), 1);";

@@ -84,7 +84,9 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
-		'PAGENAME' => $MSG['526']
+		'PAGENAME' => $MSG['526'],
+
+		'LOGO' => ($system->SETTINGS['logo']) ? '<img src="' . $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '">' : '&nbsp;'
 		));
 
 $template->set_filenames(array(

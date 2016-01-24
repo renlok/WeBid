@@ -18,8 +18,8 @@
 								<div class="col-md-12"><img src="../images/nodelete.gif" width="20" height="21" style="vertical-align:middle;"> {L_2__0030}</div>
 							</div>
 							<div class="row">
-								<div class="col-md-9">{L_087}</div>
-								<div class="col-md-3">{L_008}</div>
+								<div class="col-md-9"><strong>{L_087}</strong></div>
+								<div class="col-md-3"><strong>{L_008}</strong></div>
 							</div>
 <!-- BEGIN countries -->
 							<div class="row">

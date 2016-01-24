@@ -1,54 +1,52 @@
 <!-- INCLUDE header.tpl -->
-		<div style="width:25%; float:left;">
-			<div style="margin-left:auto; margin-right:auto;">
+		<div class="row">
+			<div class="col-md-3">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
-		</div>
-		<div style="width:75%; float:right;">
-			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_5142}&nbsp;&gt;&gt;&nbsp;{L_25_0169}</h4>
-				<form name="memberlevels" action="" method="post">
+			<div class="col-md-9">
+				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_25_0169}</h2>	
 <!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
+				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
 <!-- ENDIF -->
-					<div class="plain-box">{L_25_0170}</div>
-					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
-						<tr>
-							<th>&nbsp;</th>
-							<th><b>{L_25_0171}</b></th>
-							<th><b>{L_25_0167}</b></th>
-							<th>&nbsp;</th>
-							<th width="5%"><b>{L_008}</b></th>
-						</tr>
+				<form name="memberlevels" action="" method="post">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">{L_25_0170}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3"><strong>{L_25_0171}</strong></div>
+								<div class="col-md-6"><strong>{L_25_0167}</strong></div>
+								<div class="col-md-3"><strong>{L_008}</strong></div>
+							</div>
 <!-- BEGIN mtype -->
-						<tr>
-							<td>&nbsp;</td>
-							<td>
-								<input type="hidden" name="old_membertypes[{mtype.ID}][feedbacks]" value="{mtype.FEEDBACK}">
-								<input type="text" name="new_membertypes[{mtype.ID}][feedbacks]" value="{mtype.FEEDBACK}" size="5">
-							</td>
-							<td>
-								<input type="hidden" name="old_membertypes[{mtype.ID}][icon]" value="{mtype.ICON}">
-								<input type="text" name="new_membertypes[{mtype.ID}][icon]" value="{mtype.ICON}" size="25">
-							</td>
-							<td><img src="../images/icons/{mtype.ICON}" align="middle"></td>
-							<td align="center"><input type="checkbox" name="delete[]" value="{mtype.ID}"></td>
-						</tr>
+							<div class="row">
+								<div class="col-md-3">
+									<input type="hidden" name="old_membertypes[{mtype.ID}][feedbacks]" value="{mtype.FEEDBACK}">
+									<input type="text" name="new_membertypes[{mtype.ID}][feedbacks]" value="{mtype.FEEDBACK}" size="5"></div>
+								<div class="col-md-5">
+									<input type="hidden" name="old_membertypes[{mtype.ID}][icon]" value="{mtype.ICON}">
+									<input type="text" name="new_membertypes[{mtype.ID}][icon]" value="{mtype.ICON}" size="25">
+								</div>
+								<div class="col-md-1"><img src="../images/icons/{mtype.ICON}" align="middle"></div>
+								<div class="col-md-3"><input type="checkbox" name="delete[]" value="{mtype.ID}"></div>
+							</div>
 <!-- END mtype -->
-						<tr>
-							<td colspan="4" align="right">{L_30_0102}</td>
-							<td align="center"><input type="checkbox" class="selectall" value="delete"></td>
-						</tr>
-						<tr>
-							<td>{L_518}</td>
-							<td><input type="text" name="new_membertype[feedbacks]" size="5"></td>
-							<td><input type="text" name="new_membertype[icon]" size="30"></td>
-							<td colspan="2">&nbsp;</td>
-						</tr>
-					</table>
+							<div class="row">
+								<div class="col-md-9 text-right">{L_30_0102}</div>
+								<div class="col-md-3"><input type="checkbox" class="selectall" value="delete"></div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-md-3">{L_394}: <input type="text" name="new_membertype[feedbacks]" size="5"></div>
+								<div class="col-md-6"><input type="text" name="new_membertype[icon]" size="30"></div>
+								<div class="col-md-3">&nbsp;</div>
+							</div>
+						</div>
+					</div>
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_089}">
+					<button class="btn btn-primary" type="submit" name="act" class="centre">{L_089}</button>
 				</form>
 			</div>
 		</div>

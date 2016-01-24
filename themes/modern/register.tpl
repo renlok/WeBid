@@ -12,7 +12,7 @@
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<div class="form-group col-lg-6 <!-- IF MISSING0 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_name">{L_002} *</label>
-					<input type="text" class="form-control" name="TPL_name" <!-- IF MISSING0 eq 1 -->id="inputError1"<!-- ENDIF --> value="{V_YNAME}">
+					<input type="text" class="form-control" name="TPL_name" <!-- IF MISSING0 eq 1 -->id="inputError1"<!-- ENDIF --> value="{V_YNAME}" autofocus>
 					<!-- IF MISSING0 eq 1 --><div class="error-box missing">{L_937}</div><!-- ENDIF -->
 				</div>
 				<div class="form-group col-lg-6 <!-- IF MISSING1 eq 1 -->has-error<!-- ENDIF -->">

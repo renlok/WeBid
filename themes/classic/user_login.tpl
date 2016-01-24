@@ -16,7 +16,7 @@
 					<form name="user_login" action="{SSLURL}user_login.php" method="post">
 						<p class="smallpadding">
 							{L_187}<br>
-							<input type="text" name="username" size="20" maxlength="20" value="{USER}">
+							<input type="text" autofocus name="username" size="20" maxlength="20" value="{USER}">
 						</p>
 						<p class="smallpadding">
 							{L_004}<br>

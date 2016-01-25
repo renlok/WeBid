@@ -4,7 +4,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_069}</h2>	
+				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_069}</h2>
 <!-- IF ERROR ne '' -->
 				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
 <!-- ENDIF -->

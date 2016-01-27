@@ -1,26 +1,21 @@
 <!-- INCLUDE header.tpl -->
-		<div class="row">
-			<div class="col-md-3">
+		<div style="width:25%; float:left;">
+			<div style="margin-left:auto; margin-right:auto;">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
-			<div class="col-md-9">
-				<h2>{L_5436}&nbsp;&gt;&gt;&nbsp;{L_25_0169a}</h2>
+		</div>
+		<div style="width:75%; float:right;">
+			<div class="main-box">
+				<h4 class="rounded-top rounded-bottom">{L_5436}&nbsp;&gt;&gt;&nbsp;{L_25_0169a}</h4>
+				<form name="errorlog" action="" method="post">
+				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <!-- IF ERROR ne '' -->
-				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
+					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">Your Version: <b>{MYVERSION}</b></div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">Current Version: {REALVERSION}</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">{TEXT}</div>
-						</div>
-					</div>
-				</div>
+					Your Version: <b>{MYVERSION}</b><br>
+					Current Version: {REALVERSION}<br>
+					{TEXT}
+				</form>
 			</div>
 		</div>
 <!-- INCLUDE footer.tpl -->

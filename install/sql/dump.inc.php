@@ -1645,7 +1645,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('termstext', 'str', 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('theme', 'str', 'classic', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('thumb_list', 'int', '120', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('thumb_show', 'int', '120', UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('timecorrection', 'str', '0', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('timezone', 'str', 'Europe/London', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('users_email', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('usersauth', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('version', 'str', '". package_version() ."', UNIX_TIMESTAMP(), 1);";
@@ -1733,7 +1733,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `payment_details` text,
   `groups` text,
   `bn_only` enum('y','n') NOT NULL default 'y',
-  `timecorrection` decimal(3,1) NOT NULL default '0',
+  `timezone` varchar(50) NOT NULL default 'Europe/London',
   `paypal_email` varchar(50) default '',
   `authnet_id` varchar(50) default '',
   `authnet_pass` varchar(50) default '',

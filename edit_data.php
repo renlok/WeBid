@@ -14,6 +14,7 @@
 
 include 'common.php';
 include $main_path . 'language/' . $language . '/countries.inc.php';
+include $include_path . 'timezones.php';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())
@@ -26,9 +27,8 @@ if (!$user->is_logged_in())
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 
-function generateSelect($name = '', $options = array())
+function generateSelect($name, $options, $selectsetting)
 {
-	global $selectsetting;
 	$html = '<select name="' . $name . '">';
 	foreach ($options as $option => $value)
 	{
@@ -43,12 +43,6 @@ function generateSelect($name = '', $options = array())
 	}
 	$html .= '</select>';
 	return $html;
-}
-
-$TIMECORRECTION = array();
-for ($i = 12; $i > -13; $i--)
-{
-	$TIMECORRECTION[$i] = $MSG['TZ_' . $i];
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
@@ -131,7 +125,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					country = :country,
 					zip = :zip,
 					phone = :phone,
-					timecorrection = :timecorrection,
+					timezone = :timezone,
 					emailtype = :emailtype,
 					nletter = :nletter";
 			$params = array();
@@ -143,7 +137,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':country', $system->cleanvars($_POST['TPL_country']), 'str');
 			$params[] = array(':zip', $system->cleanvars($_POST['TPL_zip']), 'str');
 			$params[] = array(':phone', $system->cleanvars($_POST['TPL_phone']), 'str');
-			$params[] = array(':timecorrection', $_POST['TPL_timezone'], 'float');
+			$params[] = array(':timezone', $_POST['TPL_timezone'], 'float');
 			$params[] = array(':emailtype', $system->cleanvars($_POST['TPL_emailtype']), 'str');
 			$params[] = array(':nletter', $system->cleanvars($_POST['TPL_nletter']), 'str');
 
@@ -253,8 +247,7 @@ for ($i = 1; $i <= 31; $i++)
 }
 $dobday .= '</select>';
 
-$selectsetting = $USER['timecorrection'];
-$time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
+$time_correction = generateSelect('TPL_timezone', $timezones, $USER['timezone']);
 
 $template->assign_vars(array(
 		'COUNTRYLIST' => $country,

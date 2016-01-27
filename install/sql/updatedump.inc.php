@@ -278,8 +278,8 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_username`  VARCHAR(128) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `smtp_password`  VARCHAR(128) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `alert_emails`  VARCHAR(128) NOT NULL;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `timecorrection` decimal(3,1) NOT NULL default '0';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `timecorrection` decimal(3,1) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` CHANGE `timecorrection` `timezone` varchar(50) NOT NULL default 'Europe/London';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` CHANGE `timecorrection` `timezone` varchar(50) NOT NULL default 'Europe/London';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "countries` ADD `country_id` int(4) NOT NULL auto_increment;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `paypal_sandbox` INT(1) default 0;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `authnet_sandbox` INT(1) default 0;";

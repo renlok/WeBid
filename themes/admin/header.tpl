@@ -1,19 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html dir="{DOCDIR}">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<title>WeBid Administration back-end</title>
-	<meta http-equiv="content-type" content="text/html; charset={CHARSET}" />
-	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/admin/style.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="generator" content="WeBid">
 
-	<!--[if IE]>
-	<style type="text/css">
-	.clearfix {
-		zoom: 1;
-		display: block;
-	}
-	</style>
-	<![endif]-->
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/admin/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/admin/css/style.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/admin/css/jquery.lightbox.css" media="screen">
 
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="{SITEURL}themes/admin/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="{SITEURL}ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="{SITEURL}loader.php?js=js/jquery.js{EXTRAJS}"></script>
 	<script type="text/javascript" src="{SITEURL}ckeditor/ckeditor.js"></script>
 	<script type="text/javascript">
@@ -39,33 +42,47 @@
 		}
 	</script>
 </head>
-
 <body id="{CURRENT_PAGE}">
-
-<div id="header" style="height:25px; margin:25px 50px">
-	<h1 style="float:left; width: 250px; font-size: 250%; margin:0; padding:0;">WeBid</h1>
-	<p style="float:right; width: 250px; text-align: right; margin:5px 0 0 0; line-height: 15px;">
+	<div class="container">
+		<div class="row header">
+			<div class="col-md-6">{LOGO}</div>
+			<div class="col-md-6 hidden-xs text-right">&nbsp;</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6"><small>{L_559}: {LAST_LOGIN}</small></div>
+			<div class="col-md-6 text-muted text-right">
 <!-- BEGIN langs -->
 	<!-- IF ! langs.B_DEFAULT -->
-		<a href="index.php?lan={langs.LANG}"><img src="{SITEURL}includes/flags/{langs.LANG}.gif"></a>
+				<a href="index.php?lan={langs.LANG}"><img src="{SITEURL}includes/flags/{langs.LANG}.gif"></a>
 	<!-- ENDIF -->
 <!-- END langs -->
-		{L_592} {ADMIN_USER} | <a href="editadminuser.php?id={ADMIN_ID}">{L_5142}</a> | <a href="{SITEURL}" target="_blank">{L_5001}</a> | <a href="logout.php">{L_245}</a><br /><small>{L_559}: {LAST_LOGIN}</small>
-	</p>
-</div>
-
-<div class="wrapper" style="margin:40px 50px;">
-	<ul id="tabnav">
-		<li class="home"><a href="index.php" alt="{L_166}">{L_166}</a></li>
-		<li class="settings"><a href="settings.php" alt="{L_5142}">{L_5142}</a></li>
-		<li class="fees"><a href="fees.php" alt="{L_25_0012}">{L_25_0012}</a></li>
-		<li class="interface"><a href="theme.php" alt="{L_25_0009}">{L_25_0009}</a></li>
-		<li class="banners"><a href="managebanners.php" alt="{L_25_0011}">{L_25_0011}</a></li>
-		<li class="users"><a href="listusers.php" alt="{L_25_0010}">{L_25_0010}</a></li>
-		<li class="auctions"><a href="listauctions.php" alt="{L_239}">{L_239}</a></li>
-		<li class="contents"><a href="news.php" alt="{L_25_0018}">{L_25_0018}</a></li>
-		<li class="stats"><a href="viewaccessstats.php" alt="{L_25_0023}">{L_25_0023}</a></li>
-		<li class="tools"><a href="errorlog.php" alt="{L_5436}">{L_5436}</a></li>
-		<li class="help"><a href="help.php" alt="{L_148}">{L_148}</a></li>
-	</ul>
-	<div id="wrapper" class="clearfix">
+				<small>{L_592} {ADMIN_USER} | <a href="editadminuser.php?id={ADMIN_ID}">{L_5142}</a> | <a href="{SITEURL}" target="_blank">{L_5001}</a> | <a href="logout.php">{L_245}</a><br /></small>
+			</div>
+		</div>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="headingnavbar">
+						<span class="sr-only">Toggle Navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="collapse navbar-collapse" id="headingnavbar">
+					<ul class="nav navbar-nav">
+						<li><a href="index.php" alt="{L_166}">{L_166}</a></li>
+						<li><a href="settings.php" alt="{L_5142}">{L_5142}</a></li>
+						<li><a href="fees.php" alt="{L_25_0012}">{L_25_0012}</a></li>
+						<li><a href="theme.php" alt="{L_25_0009}">{L_25_0009}</a></li>
+						<li><a href="managebanners.php" alt="{L_25_0011}">{L_25_0011}</a></li>
+						<li><a href="listusers.php" alt="{L_25_0010}">{L_25_0010}</a></li>
+						<li><a href="listauctions.php" alt="{L_239}">{L_239}</a></li>
+						<li><a href="news.php" alt="{L_25_0018}">{L_25_0018}</a></li>
+						<li><a href="viewaccessstats.php" alt="{L_25_0023}">{L_25_0023}</a></li>
+						<li><a href="errorlog.php" alt="{L_5436}">{L_5436}</a></li>
+						<li><a href="help.php" alt="{L_148}">{L_148}</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>

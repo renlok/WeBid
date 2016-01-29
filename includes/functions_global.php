@@ -280,13 +280,13 @@ class global_class
 
 	function getUserTimestamp($timestamp, $userTimezone)
 	{
-	    $dt = getConvertedDateTimeObject($timestamp, $userTimezone);
+	    $dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
 	    return $dt->getTimestamp();
 	}
 
 	function getUserOffset($timestamp, $userTimezone)
 	{
-	    $dt = getConvertedDateTimeObject($timestamp, $userTimezone);
+	    $dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
 	    return $dt->getOffset();
 	}
 

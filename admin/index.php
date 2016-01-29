@@ -218,6 +218,8 @@ $template->assign_vars(array(
 		'DEFULTCONTRY' => $system->SETTINGS['defaultcountry'],
 		'USERCONF' => $system->SETTINGS['activationtype'],
 
+		'LOGO' => ($system->SETTINGS['logo']) ? '<img src="' . $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '">' : '&nbsp;',
+
 		'C_USERS' => $COUNTERS['users'],
 		'C_IUSERS' => $COUNTERS['inactiveusers'],
 		'C_UUSERS' => (isset($uuser_count)) ? $uuser_count : '',

@@ -85,7 +85,7 @@ class global_class
 
 		if (is_string($settings))
 		{
-			$settings = array($settings, $value, $type);
+			$settings = array(array($settings, $value, $type));
 		}
 
 		foreach ($settings as $setting)
@@ -96,6 +96,11 @@ class global_class
 				continue;
 			}
 			$setting[2] = (isset($setting[2])) ? $setting[2] : 'string';
+
+			$fieldname = $setting[0];
+			$value = $setting[1];
+			$type = $setting[2];
+
 			// TODO: Use the data type to check if the value is valid
 			switch($type)
 			{
@@ -119,7 +124,7 @@ class global_class
 
 			$query = "SELECT * FROM " . $DBPrefix . "settings WHERE fieldname = :fieldname";
 			$params = array();
-			$params[] = array(':fieldname', $setting, 'str');
+			$params[] = array(':fieldname', $fieldname, 'str');
 			$db->query($query, $params);
 			if ($db->numrows() > 0)
 			{
@@ -137,13 +142,13 @@ class global_class
 						(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
 			}
 			$params = array();
-			$params[] = array(':fieldname', $setting, 'str');
+			$params[] = array(':fieldname', $fieldname, 'str');
 			$params[] = array(':fieldtype', $type, 'str');
 			$params[] = array(':value', $value, 'str');
 			$params[] = array(':modifieddate', $modifieddate, 'int');
 			$params[] = array(':modifiedby', $modifiedby, 'int');
 			$db->query($query, $params);
-			$system->SETTINGS[$setting] = $value;
+			$system->SETTINGS[$fieldname] = $value;
 		}
 	}
 
@@ -275,13 +280,13 @@ class global_class
 
 	function getUserTimestamp($timestamp, $userTimezone)
 	{
-	    $dt = getConvertedDateTimeObject($timestamp, $userTimezone);
+	    $dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
 	    return $dt->getTimestamp();
 	}
 
 	function getUserOffset($timestamp, $userTimezone)
 	{
-	    $dt = getConvertedDateTimeObject($timestamp, $userTimezone);
+	    $dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
 	    return $dt->getOffset();
 	}
 

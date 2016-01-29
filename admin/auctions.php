@@ -40,7 +40,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
-		$system->writesetting("proxy_bidding",ynbool($_POST['proxy_bidding']),"bool");
+		$system->writesetting("proxy_bidding",ynbool($_POST['proxy_bidding']), 'str');
 		$system->writesetting("edit_starttime", $_POST['edit_starttime'], 'int');
 		$system->writesetting("cust_increment", $_POST['cust_increment'], 'int');
 		$system->writesetting("hours_countdown", $_POST['hours_countdown'], 'int');

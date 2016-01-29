@@ -34,15 +34,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// Update data
-		$system->writesetting("sitename", $_POST['sitename'], 'str');
-		$system->writesetting("adminmail", $_POST['adminmail'], 'str');
-		$system->writesetting("siteurl", $_POST['siteurl'], 'str');
-		$system->writesetting("copyright", $_POST['copyright'], 'str');
-		$system->writesetting("cron", $_POST['cron'], 'int');
-		$system->writesetting("archiveafter", $_POST['archiveafter'], 'int');
-		$system->writesetting("cache_theme", $_POST['cache_theme'], 'str');
-		$system->writesetting("https", $_POST['https'], 'str');
-		$system->writesetting("https_url", $_POST['https_url'], 'str');
+		$system->writesetting(array(
+			array("sitename", $_POST['sitename'], 'str'),
+			array("adminmail", $_POST['adminmail'], 'str'),
+			array("siteurl", $_POST['siteurl'], 'str'),
+			array("copyright", $_POST['copyright'], 'str'),
+			array("cron", $_POST['cron'], 'int'),
+			array("archiveafter", $_POST['archiveafter'], 'int'),
+			array("cache_theme", $_POST['cache_theme'], 'str'),
+			array("https", $_POST['https'], 'str'),
+			array("https_url", $_POST['https_url'], 'str'),
+		));
 		$ERR = $MSG['542'];
 	}
 
@@ -84,7 +86,9 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
-		'PAGENAME' => $MSG['526']
+		'PAGENAME' => $MSG['526'],
+
+		'LOGO' => ($system->SETTINGS['logo']) ? '<img src="' . $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '">' : '&nbsp;'
 		));
 
 $template->set_filenames(array(

@@ -13,7 +13,7 @@
 					<div class="form-group col-md-10">
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-							<input type="text" name="username" class="form-control" placeholder="{L_187}" value="{USER}">
+							<input type="text" autofocus name="username" class="form-control" placeholder="{L_187}" value="{USER}">
 						</div>
 						<br>
 						<div class="input-group">

@@ -37,7 +37,7 @@
 <!-- END block -->
 						<tr valign="top">
 							<td  colspan="2">
-								<button  onclick="showDialog();return false;">{L_1137}</button>
+								<button type="button" onclick="showDialog();return false;">{L_1137}</button>
 							</td>
 						</tr>
 					</table>

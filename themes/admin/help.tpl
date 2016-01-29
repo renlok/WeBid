@@ -20,7 +20,7 @@
 						<th colspan="2">{L_1062}</th>
 					</tr>
 					<tr>
-						<td width="172"><a href="http://www.webidsupport.com/forums/index.php#webid-support.29"><strong>{L_1063}</strong><a/></td>
+						<td width="172"><a href="http://www.webidsupport.com/forums/index.php#webid-support.29"><strong>{L_1063}</strong></a></td>
 						<td>{L_1064}</td>
 					</tr>
 					<tr class="bg">

@@ -22,7 +22,7 @@
 						{L_003}
 					</td>
 					<td style="padding:10px;">
-						<input type="text" name="username" size="20">
+						<input type="text" name="username" size="20" autofocus>
 					</td>
 				</tr>
 				<tr>

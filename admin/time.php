@@ -16,6 +16,7 @@ define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
 include $include_path . 'functions_admin.php';
+include $include_path . 'timezones.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -23,24 +24,17 @@ unset($ERR);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$system->writesetting("timecorrection", floatval($_POST['timecorrection']),"str");
-	$system->writesetting("datesformat", $_POST['datesformat'],"str");
+	$system->writesetting("timezone", $_POST['timezone'], "str");
+	$system->writesetting("datesformat", $_POST['datesformat'], "str");
 	$ERR = $MSG['347'];
 }
 
-$TIMECORRECTION = array();
-for ($i = 12; $i > -13; $i--)
-{
-	$TIMECORRECTION[$i] = $MSG['TZ_' . $i];
-}
-
-$selectsetting = $system->SETTINGS['timecorrection'];
-
-$html = generateSelect('timecorrection', $TIMECORRECTION);
+$selectsetting = $system->SETTINGS['timezone'];
+$html = generateSelect('timezone', $timezones);
 
 //load the template
 loadblock($MSG['363'], $MSG['379'], 'datestacked', 'datesformat', $system->SETTINGS['datesformat'], array($MSG['382'], $MSG['383']));
-loadblock($MSG['346'], $MSG['345'], 'dropdown', 'timecorrection', $system->SETTINGS['timecorrection']);
+loadblock($MSG['346'], $MSG['345'], 'dropdown', 'timezone', $system->SETTINGS['timezone']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

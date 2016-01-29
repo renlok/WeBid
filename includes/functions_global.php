@@ -24,8 +24,8 @@ class global_class
 
 		// Load settings
 		$this->loadsettings();
-		$this->tdiff = ($this->SETTINGS['timecorrection'] + date('I')) * 3600;
-		$this->ctime = time() + $this->tdiff;
+		$this->ctime = $this->getUserTimestamp(time(), $this->SETTINGS['timezone']);
+		$this->tdiff = $this->getUserOffset(time(), $this->SETTINGS['timezone']);
 		// check install directory
 		if (is_dir($main_path . 'install'))
 		{
@@ -263,6 +263,31 @@ class global_class
 		}
 		@chmod($to, 0666);
 		return true;
+	}
+
+	// time zones
+	function getConvertedDateTimeObject($timestamp, $userTimezone)
+	{
+	    # create server and user timezone objects
+	    $fromZone = new DateTimeZone('UTC'); // UTC
+	    $toZone = new DateTimeZone($userTimezone); // Europe/London, or whatever it happens to be
+
+	    $time = date('Y-m-d H:i:s', $timestamp);
+	    $dt = new DateTime($time, $fromZone);
+	    $dt->setTimezone($toZone);
+	    return $dt;
+	}
+
+	function getUserTimestamp($timestamp, $userTimezone)
+	{
+	    $dt = getConvertedDateTimeObject($timestamp, $userTimezone);
+	    return $dt->getTimestamp();
+	}
+
+	function getUserOffset($timestamp, $userTimezone)
+	{
+	    $dt = getConvertedDateTimeObject($timestamp, $userTimezone);
+	    return $dt->getOffset();
 	}
 
 	//CURRENCY FUNCTIONS

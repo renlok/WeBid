@@ -16,6 +16,7 @@ define('InAdmin', 1);
 $current_page = 'home';
 include '../common.php';
 include $include_path . 'functions_admin.php';
+include $include_path . 'timezones.php';
 include 'loggedin.inc.php';
 
 if (isset($_GET['action']))
@@ -211,7 +212,7 @@ $template->assign_vars(array(
 		'GALLERY' => ($system->SETTINGS['picturesgallery'] == 1) ? '<b>' . $MSG['2__0066'] . '</b><br>' . $MSG['666'] . ': ' . $system->SETTINGS['maxpictures'] . '<br>' . $MSG['671'] . ': ' . $system->SETTINGS['maxuploadsize']/1024 . ' KB' : '<b>' . $MSG['2__0067'] . '</b>',
 		'BUY_NOW' => ($system->SETTINGS['buy_now'] == 1) ? '<b>' . $MSG['2__0067'] . '</b>' : '<b>' . $MSG['2__0066'] . '</b>',
 		'CURRENCY' => $system->SETTINGS['currency'],
-		'TIMEZONE' => ($system->SETTINGS['timecorrection'] == 0) ? $MSG['25_0036'] : $system->SETTINGS['timecorrection'] . $MSG['25_0037'],
+		'TIMEZONE' => $timezones[$system->SETTINGS['timezone']],
 		'DATEFORMAT' => $system->SETTINGS['datesformat'],
 		'DATEEXAMPLE' => ($system->SETTINGS['datesformat'] == 'USA') ? $MSG['382'] : $MSG['383'],
 		'DEFULTCONTRY' => $system->SETTINGS['defaultcountry'],

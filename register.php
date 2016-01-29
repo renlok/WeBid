@@ -14,6 +14,7 @@
 
 include 'common.php';
 include $main_path . 'language/' . $language . '/countries.inc.php';
+include $include_path . 'timezones.php';
 
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
@@ -70,9 +71,8 @@ function get_hash()
 	return $hash;
 }
 
-function generateSelect($name = '', $options = array())
+function generateSelect($name, $options, $selectsetting)
 {
-	global $selectsetting;
 	$html = '<select name="' . $name . '">';
 	foreach ($options as $option => $value)
 	{
@@ -319,10 +319,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
 						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate,
-						suspended, language, groups, balance, timecorrection, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
+						suspended, language, groups, balance, timezone, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
 						VALUES
 						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :reg_date, :birthdate,
-						:suspended, :language, :groups, :balance, :timecorrection, :paypal_email, :worldpay_id, :moneybookers_email, :toocheckout_id, :authnet_id, :authnet_pass)";
+						:suspended, :language, :groups, :balance, :timezone, :paypal_email, :worldpay_id, :moneybookers_email, :toocheckout_id, :authnet_id, :authnet_pass)";
 				$params = array(
 					array(':nick', $system->cleanvars($TPL_nick_hidden), 'str'),
 					array(':password', $phpass->HashPassword($TPL_password_hidden), 'str'),
@@ -342,7 +342,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':language', $language, 'str'),
 					array(':groups', implode(',', $groups), 'str'),
 					array(':balance', $balance, 'bool'),
-					array(':timecorrection', $_POST['TPL_timezone'], 'float'),
+					array(':timezone', $_POST['TPL_timezone'], 'str'),
 					array(':paypal_email', ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : ''), 'str'),
 					array(':worldpay_id', ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : ''), 'str'),
 					array(':moneybookers_email', ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']) : ''), 'str'),
@@ -408,12 +408,6 @@ $signup_fee = $db->result();
 
 $country = '';
 
-$TIMECORRECTION = array();
-for ($i = 12; $i > -13; $i--)
-{
-	$TIMECORRECTION[$i] = $MSG['TZ_' . $i];
-}
-
 $selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
 foreach ($countries as $key => $name)
 {
@@ -453,9 +447,8 @@ for ($i = 1; $i <= 31; $i++)
 }
 $dobday .= '</select>';
 
-$selectsetting = (isset($_POST['TPL_timezone'])) ? $_POST['TPL_timezone'] : $system->SETTINGS['timecorrection'];
-
-$time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
+$selectsetting = (isset($_POST['TPL_timezone'])) ? $_POST['TPL_timezone'] : $system->SETTINGS['timezone'];
+$time_correction = generateSelect('TPL_timezone', $timezones, $selectsetting);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

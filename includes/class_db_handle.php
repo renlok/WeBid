@@ -24,6 +24,11 @@ class db_handle
 	private		$fetchquery;
 	private		$error;
 	private		$error_supress = false;
+	private		$fetch_methods = [
+		'FETCH_ASSOC' => PDO::FETCH_ASSOC,
+		'FETCH_BOTH' => PDO::FETCH_BOTH,
+		'FETCH_NUM' => PDO::FETCH_NUM,
+	];
 
     public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
     {
@@ -95,7 +100,7 @@ class db_handle
 	}
 
 	// put together the quert ready for running
-	public function fetch($method = 'FETCH_ASSOC')
+	public function fetch($result = NULL, $method = 'FETCH_ASSOC')
 	{
 		try {
 			// set fetchquery
@@ -103,15 +108,17 @@ class db_handle
 			{
 				$this->fetchquery = $this->lastquery;
 			}
-			if ($method == 'FETCH_ASSOC') $result = $this->fetchquery->fetch(PDO::FETCH_ASSOC);
-			if ($method == 'FETCH_BOTH') $result = $this->fetchquery->fetch(PDO::FETCH_BOTH);
-			if ($method == 'FETCH_NUM') $result = $this->fetchquery->fetch(PDO::FETCH_NUM);
+			if ($result == NULL)
+			{
+				$result = $this->fetchquery;
+			}
+			$data = $result->fetch($this->fetch_methods[$method]);
 			// clear fetch query
-			if ($result == false)
+			if ($data == false)
 			{
 				$this->fetchquery = NULL;
 			}
-			return $result;
+			return $data;
 		}
 		catch(PDOException $e) {
 			$this->error_handler($e->getMessage());
@@ -119,23 +126,28 @@ class db_handle
 	}
 
 	// put together the quert ready for running + get all results
-	public function fetchall($method = 'FETCH_ASSOC')
+	public function fetchall($result = NULL, $method = 'FETCH_ASSOC')
 	{
 		try {
+			if ($result == NULL)
+			{
+				$result = $this->lastquery;
+			}
 			// set fetchquery
-			if ($method == 'FETCH_ASSOC') $result = $this->lastquery->fetchAll(PDO::FETCH_ASSOC);
-			if ($method == 'FETCH_BOTH') $result = $this->lastquery->fetchAll(PDO::FETCH_BOTH);
-			if ($method == 'FETCH_NUM') $result = $this->lastquery->fetchAll(PDO::FETCH_NUM);
-			return $result;
+			return $result->fetch($this->fetch_methods[$method]);
 		}
 		catch(PDOException $e) {
 			$this->error_handler($e->getMessage());
 		}
 	}
 
-	public function result($column = NULL)
+	public function result($column = NULL, $result = NULL, $method = 'FETCH_ASSOC')
 	{
-		$data = $this->lastquery->fetch(PDO::FETCH_BOTH);
+		if ($result == NULL)
+		{
+			$result = $this->lastquery;
+		}
+		$data = $result->fetch($this->fetch_methods[$method]);
 		if (empty($column) || $column == NULL)
 		{
 			return $data;
@@ -146,10 +158,14 @@ class db_handle
 		}
 	}
 
-	public function numrows()
+	public function numrows($result = NULL)
 	{
 		try {
-			return $this->lastquery->rowCount();
+			if ($result == NULL)
+			{
+				$result = $this->lastquery;
+			}
+			return $result->rowCount();
 		}
 		catch(PDOException $e) {
 			$this->error_handler($e->getMessage());
@@ -170,10 +186,6 @@ class db_handle
 	{
 		// find the vars set in the query
 		preg_match_all("(:[a-zA-Z0-9_]+)", $query, $set_params);
-		//print_r("params" . $query);
-		//print_r($params);
-		//print_r("set_params");
-		//print_r($set_params);
 		$new_params = array();
 		foreach ($set_params[0] as $val)
 		{
@@ -181,8 +193,6 @@ class db_handle
 			if (isset($key))
 				$new_params[] = $params[$key];
 		}
-		//print_r("new_params");
-		//print_r($new_params);
 		return $new_params;
 	}
 
@@ -226,8 +236,7 @@ class db_handle
 	{
 		if (!$this->error_supress)
 		{
-			// DO SOMETHING
-			//$this->error = $error;
+			// TODO: DO SOMETHING
 			$this->error = debug_backtrace();
 			//print_r($this->error);
 		}

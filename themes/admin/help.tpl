@@ -1,4 +1,3 @@
-<!-- INCLUDE header.tpl -->
 		<div class="row">
 			<div class="col-md-3">
 				<div class="panel panel-default">
@@ -67,4 +66,3 @@
 				</div>
 			</div>
 		</div>
-<!-- INCLUDE footer.tpl -->

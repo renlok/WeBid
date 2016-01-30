@@ -60,5 +60,3 @@
 </div>
 <div>
 	<div>
-
-<!-- INCLUDE footer.tpl -->

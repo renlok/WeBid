@@ -34,4 +34,3 @@
 		</td>
 	</tr>
 </table>
-<!-- INCLUDE footer.tpl -->

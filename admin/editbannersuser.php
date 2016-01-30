@@ -71,8 +71,10 @@ $template->assign_vars(array(
 		'EMAIL' => (isset($USER['email'])) ? $USER['email'] : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editbanneruser.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

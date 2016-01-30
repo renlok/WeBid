@@ -1,4 +1,3 @@
-<!-- INCLUDE header.tpl -->
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$('#userfilter').change(function(){
@@ -116,4 +115,3 @@
 				</table>
 			</div>
 		</div>
-<!-- INCLUDE footer.tpl -->

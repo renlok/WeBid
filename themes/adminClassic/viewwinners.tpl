@@ -1,4 +1,3 @@
-<!-- INCLUDE header.tpl -->
 		<div style="width:25%; float:left;">
 			<div style="margin-left:auto; margin-right:auto;">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
@@ -54,4 +53,3 @@
 <!-- ENDIF -->
 			</div>
 		</div>
-<!-- INCLUDE footer.tpl -->

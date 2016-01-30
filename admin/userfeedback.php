@@ -123,8 +123,10 @@ $template->assign_vars(array(
 		'PAGES' => $PAGES
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'userfeedback.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

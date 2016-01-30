@@ -1,4 +1,3 @@
-<!-- INCLUDE header.tpl -->
 		<div class="row">
 			<div class="col-md-3">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
@@ -23,4 +22,3 @@
 				</div>
 			</div>
 		</div>
-<!-- INCLUDE footer.tpl -->

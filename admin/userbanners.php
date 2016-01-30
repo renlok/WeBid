@@ -206,8 +206,10 @@ $template->assign_vars(array(
 		'NOTEDIT' => true
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'userbanners.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

@@ -96,8 +96,10 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'categoriestrans.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

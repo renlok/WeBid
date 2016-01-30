@@ -70,9 +70,11 @@ $template->assign_vars(array(
 		'ID' => $id
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editmessages.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

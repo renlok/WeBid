@@ -69,8 +69,10 @@ $template->assign_vars(array(
 		'WFNO' => ($system->SETTINGS['wordsfilter'] == 'n') ? ' checked="checked"' : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'wordfilter.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

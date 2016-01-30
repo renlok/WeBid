@@ -188,9 +188,11 @@ $template->assign_vars(array(
 		'B_ADDCAT' => (isset($_GET['do']) && $_GET['do'] == 'add')
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'faqscategories.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

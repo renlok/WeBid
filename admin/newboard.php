@@ -58,9 +58,11 @@ $template->assign_vars(array(
 		'B_DEACTIVE' => (isset($_POST['active']) && $_POST['active'] == 2)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'newboard.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

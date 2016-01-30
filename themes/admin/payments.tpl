@@ -1,4 +1,3 @@
-<!-- INCLUDE header.tpl -->
 		<div class="row">
 			<div class="col-md-3">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
@@ -43,4 +42,3 @@
 				</form>
 			</div>
 		</div>
-<!-- INCLUDE footer.tpl -->

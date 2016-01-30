@@ -117,8 +117,10 @@ $template->assign_vars(array(
 		'B_EDIT_FILE' => $edit_file
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'theme.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

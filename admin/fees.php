@@ -182,8 +182,10 @@ $template->assign_vars(array(
 		'ERROR' => (isset($errmsg)) ? $errmsg : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'fees.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

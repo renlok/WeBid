@@ -1,4 +1,3 @@
-<!-- INCLUDE header.tpl -->
 		<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 		<div style="width:25%; float:left;">
 			<div style="margin-left:auto; margin-right:auto;">
@@ -85,4 +84,3 @@
 <!-- ENDIF -->
 			</div>
 		</div>
-<!-- INCLUDE footer.tpl -->

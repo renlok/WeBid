@@ -92,8 +92,10 @@ $template->assign_vars(array(
 		'B_PREVIEW' => $is_preview
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'newsletter.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

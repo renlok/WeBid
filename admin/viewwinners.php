@@ -99,9 +99,11 @@ $template->assign_vars(array(
 		'B_BIDS' => $bids
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'viewwinners.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

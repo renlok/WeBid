@@ -83,8 +83,10 @@ $template->assign_vars(array(
 		'B_INACTIVE' => (isset($_POST['suspended']) && $_POST['suspended'] == 1)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'addnew.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

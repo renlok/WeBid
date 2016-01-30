@@ -411,8 +411,10 @@ $template->assign_vars(array(
 		'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y')
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editauction.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

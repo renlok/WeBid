@@ -58,9 +58,11 @@ $template->assign_vars(array(
 		'TYPE' => 2
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'confirm.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

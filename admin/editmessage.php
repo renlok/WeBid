@@ -63,8 +63,10 @@ $template->assign_vars(array(
 		'MSG_ID' => $msg
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editmessage.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

@@ -87,9 +87,11 @@ $template->assign_vars(array(
 		'B_INACTIVE' => ($user_data['status'] == 2)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editadminuser.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

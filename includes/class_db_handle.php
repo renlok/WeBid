@@ -134,7 +134,7 @@ class db_handle
 				$result = $this->lastquery;
 			}
 			// set fetchquery
-			return $result->fetch($this->fetch_methods[$method]);
+			return $result->fetchAll($this->fetch_methods[$method]);
 		}
 		catch(PDOException $e) {
 			$this->error_handler($e->getMessage());

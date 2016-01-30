@@ -12,32 +12,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-define('InAdmin', 1);
-$current_page = 'contents';
-include '../common.php';
-include $include_path . 'functions_admin.php';
-include 'loggedin.inc.php';
-
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	// clean submission and update database
-	$system->writesetting("boards",ynbool($_POST['boards']),"str");
-	$ERR = $MSG['5051'];
-}
-
-loadblock($MSG['5048'], '', 'yesno', 'boards', $system->SETTINGS['boards'], array($MSG['030'], $MSG['029']));
+if (!defined('InAdmin')) exit();
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['25_0018'],
-		'PAGENAME' => $MSG['5047']
+		'L_COPY' => empty($system->SETTINGS['copyright']) ? '' : '<p>' . $system->uncleanvars($system->SETTINGS['copyright']) . '</p>',
+		'L_COPY_YEAR' => date("Y"),
 		));
 
-include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
+		'footer' => 'footer.tpl'
 		));
-$template->display('body');
-include 'footer.php';
-?>
+$template->display('footer');

@@ -45,8 +45,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['402']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

@@ -12,32 +12,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-define('InAdmin', 1);
-$current_page = 'contents';
-include '../common.php';
-include $include_path . 'functions_admin.php';
-include 'loggedin.inc.php';
-
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	// clean submission and update database
-	$system->writesetting("boards",ynbool($_POST['boards']),"str");
-	$ERR = $MSG['5051'];
-}
-
-loadblock($MSG['5048'], '', 'yesno', 'boards', $system->SETTINGS['boards'], array($MSG['030'], $MSG['029']));
+if (!defined('InAdmin')) exit();
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['25_0018'],
-		'PAGENAME' => $MSG['5047']
+		'LOGO' => ($system->SETTINGS['logo']) ? '<img src="' . $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '">' : '&nbsp;'
 		));
 
-include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
+		'header' => 'header.tpl'
 		));
-$template->display('body');
-include 'footer.php';
-?>
+$template->display('header');

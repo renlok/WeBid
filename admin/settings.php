@@ -87,12 +87,12 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['526'],
-
-		'LOGO' => ($system->SETTINGS['logo']) ? '<img src="' . $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '">' : '&nbsp;'
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

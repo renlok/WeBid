@@ -1,4 +1,3 @@
-<!-- INCLUDE header.tpl -->
 		<div style="width:25%; float:left;">
 				<div style="margin-left:auto; margin-right:auto;">
 					<div class="box">
@@ -139,4 +138,3 @@
 				</table>
 			</div>
 		</div>
-<!-- INCLUDE footer.tpl -->

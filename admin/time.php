@@ -16,7 +16,7 @@ define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
 include $include_path . 'functions_admin.php';
-include $include_path . 'timezones.php';
+include $include_path . 'config/timezones.php';
 include 'loggedin.inc.php';
 
 unset($ERR);

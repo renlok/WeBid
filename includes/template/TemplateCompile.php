@@ -35,7 +35,7 @@ if (!defined('InWeBid'))
 *
 * @package phpBB3
 */
-class template_compile
+class TemplateCompile
 {
 	var $template;
 

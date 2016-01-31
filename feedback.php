@@ -69,7 +69,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 				else
 				{
 					// load hashing class to check password
-					include $include_path . 'PasswordHash.php';
+					include $package_path . 'PasswordHash.php';
 					$phpass = new PasswordHash(8, false);
 					if ($system->SETTINGS['usersauth'] == 'n' || $phpass->CheckPassword($_POST['TPL_password'], $user->user_data['password']))
 					{

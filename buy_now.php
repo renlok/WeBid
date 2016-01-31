@@ -140,7 +140,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$ERR = $ERR_610;
 		}
 		// check if password is correct
-		include $include_path . 'PasswordHash.php';
+		include $package_path . 'PasswordHash.php';
 		$phpass = new PasswordHash(8, false);
 		if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 		{
@@ -341,7 +341,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
 			include $include_path . 'endauction_mutli_item_win.php';
-			include $include_path . 'email_seller_partial_winner.php';
+			include $include_path . 'email/seller_partial_winner.php';
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{

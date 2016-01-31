@@ -14,11 +14,15 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-require 'PHPMailerAutoload.php';
-
 class email_handler
 {
 	var $from, $message, $subject, $headers, $email_uid, $userlang, $errors;
+
+	public function __construct()
+	{
+		global $package_path;
+		include $package_path . 'PHPMailer/PHPMailerAutoload.php';
+	}
 
 	function build_header()
 	{

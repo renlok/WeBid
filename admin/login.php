@@ -35,7 +35,7 @@ if (isset($_POST['action']))
 			}
 			else
 			{
-				include $include_path . 'PasswordHash.php';
+				include $package_path . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, created, lastlogin, status) VALUES
 						(:username, :password, :hash, :created, :lastlogin, 1)";
@@ -63,7 +63,7 @@ if (isset($_POST['action']))
 			}
 			else
 			{
-				include $include_path . 'PasswordHash.php';
+				include $package_path . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "SELECT id, hash, password FROM " . $DBPrefix . "adminusers WHERE username = :username";
 				$params = array();

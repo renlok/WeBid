@@ -15,10 +15,11 @@
 session_start();
 define('InWeBid', 1);
 include 'functions.php';
-include '../includes/class_db_handle.php';
+include '../includesdatabase/Database.php';
+include '../includesdatabase/DatabasePDO.php';
 define('InInstaller', 1);
 
-$db = new db_handle();
+$db = new DatabasePDO();
 
 $main_path = getmainpath();
 $thisversion = package_version();

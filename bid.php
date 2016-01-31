@@ -194,7 +194,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		{
 			$errmsg = $ERR_004;
 		}
-		include $include_path . 'PasswordHash.php';
+		include $package_path . 'PasswordHash.php';
 		$phpass = new PasswordHash(8, false);
 		if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 		{
@@ -611,7 +611,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $c + $system->tdiff);
 		$new_bid = $system->print_money($next_bid);
 		// Send e-mail message
-		include $include_path . 'email_outbid.php';
+		include $include_path . 'email/outbid.php';
 	}
 
 	if (defined('TrackUserIPs'))

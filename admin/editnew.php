@@ -16,7 +16,7 @@ define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
 include $include_path . 'functions_admin.php';
-include $include_path . 'htmLawed.php';
+include $package_path . 'htmLawed.php';
 include 'loggedin.inc.php';
 
 if (!isset($_POST['id']) && (!isset($_GET['id']) || empty($_GET['id'])))

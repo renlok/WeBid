@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		else
 		{
-			include $include_path . 'PasswordHash.php';
+			include $package_path . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
 			$query = "INSERT INTO " . $DBPrefix . "adminusers VALUES
 					(NULL, :username, :password, :hash, :created, '0', :status, '')";

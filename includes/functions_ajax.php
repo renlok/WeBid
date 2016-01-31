@@ -84,9 +84,9 @@ function upload_images()
 	}
 	else
 	{
-		global $main_path, $upload_path, $include_path;
+		global $main_path, $upload_path, $include_path, $package_path;
 
-		require_once $include_path . "PluploadHandler.php";
+		require_once $package_path . 'PluploadHandler.php';
 		$uploader = new PluploadHandler();
 		$uploader->no_cache_headers();
 		$uploader->cors_headers();

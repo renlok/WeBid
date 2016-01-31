@@ -14,7 +14,7 @@
 
 include 'common.php';
 include $main_path . 'language/' . $language . '/countries.inc.php';
-include $include_path . 'timezones.php';
+include $include_path . 'config/timezones.php';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())
@@ -176,7 +176,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			if (strlen($_POST['TPL_password']) > 0)
 			{
 				// hash the password
-				include $include_path . 'PasswordHash.php';
+				include $package_path . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query .= ", password = :password";
 				$params[] = array(':password', $phpass->HashPassword($_POST['TPL_password']), 'str');

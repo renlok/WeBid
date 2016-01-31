@@ -20,7 +20,7 @@ if (!defined('InWeBid'))
 * Base Template class.
 * @package phpBB3
 */
-class template
+class Template
 {
 	/** variable that holds all the data we'll be substituting into
 	* the compiled templates. Takes form:
@@ -213,11 +213,11 @@ class template
 
 		global $include_path;
 
-		if (!class_exists('template_compile'))
+		if (!class_exists('TemplateCompile'))
 		{
-			include($include_path . 'class_template_compile.php');
+			include($include_path . 'template/TemplateCompile.php');
 		}
-		$compile = new template_compile($this);
+		$compile = new TemplateCompile($this);
 
 		// If we don't have a file assigned to this handle, die.
 		if (!isset($this->files[$handle]))

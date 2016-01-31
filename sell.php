@@ -16,8 +16,8 @@ include 'common.php';
 include $include_path . 'datacheck.inc.php';
 include $include_path . 'functions_sell.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
-include $main_path . 'ckeditor/ckeditor.php';
-include $include_path . 'htmLawed.php';
+include $package_path . 'ckeditor/ckeditor.php';
+include $package_path . 'htmLawed.php';
 
 $_SESSION['action'] = (!isset($_SESSION['action'])) ? 1 : $_SESSION['action'];
 $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST['action'];
@@ -95,7 +95,7 @@ switch ($_SESSION['action'])
 		if ($system->SETTINGS['usersauth'] == 'y')
 		{
 			// hash and check the password
-			include $include_path . 'PasswordHash.php';
+			include $package_path . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
 			if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 			{
@@ -293,7 +293,7 @@ switch ($_SESSION['action'])
 
 				if ($user->user_data['startemailmode'] == 'yes')
 				{
-					include $include_path . 'email_auction_confirmation.php';
+					include $include_path . 'email/auction_confirmation.php';
 				}
 				if ($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
 				{
@@ -582,7 +582,7 @@ switch ($_SESSION['action'])
 		}
 
 		$CKEditor = new CKEditor();
-		$CKEditor->basePath = $main_path . 'ckeditor/';
+		$CKEditor->basePath = $package_path . 'ckeditor/';
 		$CKEditor->returnOutput = true;
 
 		// build the fees javascript

@@ -392,7 +392,7 @@ foreach ($auction_data as $Auction) // loop auctions
 				{
 					// Send mail to the buyer
 					$Winner = $winner_array[$i];
-					include $include_path . 'email_endauction_youwin.php';
+					include $include_path . 'email/endauction_youwin.php';
 					$added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
 				}
 			}
@@ -400,11 +400,11 @@ foreach ($auction_data as $Auction) // loop auctions
 			{
 				// Send mail to the buyer
 				$added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
-				include $include_path . 'email_endauction_youwin_nodutch.php';
+				include $include_path . 'email/endauction_youwin_nodutch.php';
 			}
 			if ($Seller['endemailmode'] !== 'cum')
 			{
-				include $include_path . 'email_endauction_winner.php';
+				include $include_path . 'email/endauction_winner.php';
 			}
 			else
 			{
@@ -450,7 +450,7 @@ foreach ($auction_data as $Auction) // loop auctions
 			if ($Seller['endemailmode'] != 'cum')
 			{
 				$report_text = $added_winner_names_cs;
-				include $include_path . 'email_seller_end_buynowonly.php';
+				include $include_path . 'email/seller_end_buynowonly.php';
 			}
 			else
 			{
@@ -473,7 +473,7 @@ foreach ($auction_data as $Auction) // loop auctions
 		// Send mail to the seller if no winner
 		if ($Seller['endemailmode'] != 'cum')
 		{
-			include $include_path . 'email_endauction_nowinner.php';
+			include $include_path . 'email/endauction_nowinner.php';
 		}
 		else
 		{
@@ -629,7 +629,7 @@ foreach ($auction_data as $row)
 			$db->query($query, $params);
 		}
 		$report .= "</table>";
-		include $include_path . 'email_endauction_cumulative.php';
+		include $include_path . 'email/endauction_cumulative.php';
 	}
 }
 

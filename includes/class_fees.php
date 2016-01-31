@@ -377,7 +377,7 @@ class fees
 
 				if ($user->user_data['startemailmode'] == 'yes')
 				{
-					include $include_path . 'email_auction_confirmation.php';
+					include $include_path . 'email/auction_confirmation.php';
 				}
 
 				// update recursive categories

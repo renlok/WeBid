@@ -14,16 +14,8 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-class db_handle
+class DatabasePDO extends Database
 {
-	// database
-	private     $pdo;
-	private		$DBPrefix;
-	private		$CHARSET;
-	private		$lastquery;
-	private		$fetchquery;
-	private		$error;
-	private		$error_supress = false;
 	private		$fetch_methods = [
 		'FETCH_ASSOC' => PDO::FETCH_ASSOC,
 		'FETCH_BOTH' => PDO::FETCH_BOTH,
@@ -36,11 +28,11 @@ class db_handle
         $this->CHARSET = $CHARSET;
 		try {
 			// MySQL with PDO_MYSQL
-			$this->pdo = new PDO("mysql:host=$DbHost;dbname=$DbDatabase;charset =$CHARSET", $DbUser, $DbPassword);
+			$this->conn = new PDO("mysql:host=$DbHost;dbname=$DbDatabase;charset =$CHARSET", $DbUser, $DbPassword);
 			// set error reporting up
-			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// actually use prepared statements
-			$this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			$this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 			return true;
 		}
 		catch(PDOException $e) {
@@ -59,7 +51,7 @@ class db_handle
 	public function direct_query($query)
 	{
 		try {
-			$this->lastquery = $this->pdo->query($query);
+			$this->lastquery = $this->conn->query($query);
 		}
 		catch(PDOException $e) {
 			$this->error_handler($e->getMessage());
@@ -82,7 +74,7 @@ class db_handle
 			//$query = $this->build_query($query, $table);
 			$params = $this->build_params($params);
 			$params = $this->clean_params($query, $params);
-			$this->lastquery = $this->pdo->prepare($query);
+			$this->lastquery = $this->conn->prepare($query);
 			//$this->lastquery->bindParam(':table', $this->DBPrefix . $table, PDO::PARAM_STR); // must always be set
 			foreach ($params as $val)
 			{
@@ -175,7 +167,7 @@ class db_handle
 	public function lastInsertId()
 	{
 		try {
-			return $this->pdo->lastInsertId();
+			return $this->conn->lastInsertId();
 		}
 		catch(PDOException $e) {
 			$this->error_handler($e->getMessage());
@@ -246,6 +238,6 @@ class db_handle
 	public function __destruct()
 	{
 		// close database connection
-		$this->pdo = null;
+		$this->conn = null;
 	}
 }

@@ -17,7 +17,7 @@ $current_page = 'users';
 include '../common.php';
 include $include_path . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'ckeditor/ckeditor.php';
+include $package_path . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
@@ -76,7 +76,7 @@ $USERSFILTER = array('all' => $MSG['5296'],
 $selectsetting = (isset($_POST['usersfilter'])) ? $_POST['usersfilter'] : '';
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->basePath = $package_path . 'ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;

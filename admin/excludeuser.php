@@ -45,11 +45,11 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 
 		if (!$was_suspended)
 		{
-			include $include_path . 'email_user_approved.php';
+			include $include_path . 'email/user_approved.php';
 		}
 		else
 		{
-			include $include_path . 'email_user_reactivated.php';
+			include $include_path . 'email/user_reactivated.php';
 		}
 	}
 	else
@@ -61,7 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers + 1, users = users - 1";
 		$db->direct_query($query);
 
-		include $include_path . 'email_user_suspended.php';
+		include $include_path . 'email/user_suspended.php';
 	}
 
 	header('location: listusers.php?PAGE=' . intval($_POST['offset']));

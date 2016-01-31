@@ -29,6 +29,7 @@ if(!@include('includes/config.inc.php'))
 
 $MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didnt set a code
 $include_path = $main_path . 'includes/';
+$package_path = $include_path . 'packages/';
 $uploaded_path = 'uploaded/';
 $upload_path = $main_path . $uploaded_path;
 
@@ -36,16 +37,17 @@ include $include_path . 'errors.inc.php'; //error handler functions
 include $include_path . 'dates.inc.php';
 
 // classes
-include $include_path . 'class_db_handle.php';
+include $include_path . 'database/Database.php';
+include $include_path . 'database/DatabasePDO.php';
 include $include_path . 'functions_global.php';
 include $include_path . 'class_email_handler.php';
 include $include_path . 'class_MPTTcategories.php';
 include $include_path . 'class_fees.php';
 include $include_path . 'class_user.php';
-include $include_path . 'template.php';
+include $include_path . 'template/Template.php';
 
 // connect to the database
-$db = new db_handle();
+$db = new DatabasePDO();
 if (isset($CHARSET))
 {
 	$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET);
@@ -56,7 +58,7 @@ else
 }
 
 $system = new global_class();
-$template = new template();
+$template = new Template();
 $user = new user();
 set_error_handler('WeBidErrorHandler', $error_reporting);
 

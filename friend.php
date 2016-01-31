@@ -17,11 +17,11 @@ include 'common.php';
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_sendtofriend'] == 2)
 {
-	include $include_path . 'recaptcha/recaptcha.php';
+	include $package_path . 'recaptcha/recaptcha.php';
 }
 elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
 {
-	include $include_path . 'captcha/securimage.php';
+	include $package_path . 'captcha/securimage.php';
 }
 
 if (isset($_REQUEST['id']))

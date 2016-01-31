@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-include $include_path . 'recaptcha/autoload.php';
+include $package_path . 'recaptcha/autoload.php';
 
 // Wrapper function for recaptcha HTML
 function recaptcha_get_html($pubkey)

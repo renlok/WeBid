@@ -46,8 +46,10 @@ $template->assign_vars(array(
 		'ERRORLOG' => $data
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'errorlog.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

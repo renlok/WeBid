@@ -43,8 +43,10 @@ $template->assign_vars(array(
 		'REALVERSION' => $realversion
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'checkversion.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

@@ -1,49 +1,41 @@
-<!-- INCLUDE header.tpl -->
-		<link rel="stylesheet" media="screen,projection" type="text/css" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
-		<div style="width:25%; float:left;">
-			<div style="margin-left:auto; margin-right:auto;">
-					<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
+		<div class="row">
+			<div class="col-md-3">
+				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
-		</div>
-		<div style="width:75%; float:right;">
-			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</h4>
+			<div class="col-md-9">
+				<h2>{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</h2>
 <!-- IF ERROR ne '' -->
-				<div class="error-box"><b>{ERROR}</b></div>
+				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
 <!-- ENDIF -->
-					<form name="conf" action="" method="post" enctype="multipart/form-data">
-						<table width="98%" cellpadding="2" align="center" class="blank">
+				<form name="conf" action="" method="post" enctype="multipart/form-data">
+					<div class="panel panel-default">
 <!-- BEGIN block -->
-						<tr valign="top">
-<!-- IF block.B_HEADER -->
-							<td colspan="2" style="padding:3px; border-top:#0083D7 1px solid; background:#ECECEC;">
-								<b>{block.TITLE}</b>
-							</td>
-<!-- ELSE -->
-							<td width="175">{block.TITLE}</td>
-							<td style="padding:3px;">
-								{block.DESCRIPTION}
-	<!-- IF block.TYPE eq 'yesno' -->
-								<input type="radio" name="{block.NAME}" value="y"<!-- IF block.DEFAULT eq 'y' --> checked<!-- ENDIF -->> {block.TAGLINE1}
-								<input type="radio" name="{block.NAME}" value="n"<!-- IF block.DEFAULT eq 'n' --> checked<!-- ENDIF -->> {block.TAGLINE2}
-	<!-- ELSEIF block.TYPE eq 'text' -->
-								<input type="text" name="{block.NAME}" value="{block.DEFAULT}" size="50" maxlength="255">
+	<!-- IF block.B_HEADER -->
+						<div class="panel-heading"><b>{block.TITLE}</b></div>
 	<!-- ELSE -->
-								{block.TYPE}
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3">{block.TITLE}</div>
+								<div class="col-md-9">
+									{block.DESCRIPTION}
+		<!-- IF block.TYPE eq 'yesno' -->
+									<input type="radio" name="{block.NAME}" value="y"<!-- IF block.DEFAULT eq 'y' --> checked<!-- ENDIF -->> {block.TAGLINE1}
+									<input type="radio" name="{block.NAME}" value="n"<!-- IF block.DEFAULT eq 'n' --> checked<!-- ENDIF -->> {block.TAGLINE2}
+		<!-- ELSEIF block.TYPE eq 'text' -->
+									<input type="text" name="{block.NAME}" value="{block.DEFAULT}" size="50" maxlength="255">
+		<!-- ELSE -->
+									{block.TYPE}
+		<!-- ENDIF -->
+								</div>
+							</div>
+						</div>
 	<!-- ENDIF -->
-							</td>
-<!-- ENDIF -->
-						</tr>
 <!-- END block -->
-						<tr valign="top">
-							<td  colspan="2">
-								<button type="button" onclick="showDialog();return false;">{L_1137}</button>
-							</td>
-						</tr>
-					</table>
+						<button type="button" class="btn btn-default" onclick="showDialog();return false;">{L_1137}</button>
+					</div>
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_530}">
+					<button class="btn btn-primary" type="submit" name="act" class="centre">{L_530}</button>
 				</form>
 			</div>
 		</div>
@@ -58,7 +50,7 @@
 				Smtp Password = {SMTP_PASS}<br>
 				Smtp Host = {SMTP_HOST}<br>
 				Alert Emails = {ALERT_EMAILS}<br>
-				Don't forget to save any changes to take effect <button onclick="$('form[name=conf]').submit();">Save changes</button>
+				Don't forget to save any changes to take effect <button class="btn btn-primary" onclick="$('form[name=conf]').submit();">Save changes</button>
 			</div>
 			{L_1135}
 			<div class="test_m">hi</div>
@@ -159,4 +151,3 @@
 				});
 			});
 		</script>
-<!-- INCLUDE footer.tpl -->

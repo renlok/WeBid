@@ -68,8 +68,10 @@ $template->assign_vars(array(
 		'B_TITLES' => true
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

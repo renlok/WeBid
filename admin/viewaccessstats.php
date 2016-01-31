@@ -148,8 +148,10 @@ $template->assign_vars(array(
 		'STATSTEXT' => $statstext
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'viewaccessstats.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

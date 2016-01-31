@@ -256,8 +256,10 @@ $template->assign_vars(array(
 					)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'edituser.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

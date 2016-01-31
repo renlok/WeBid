@@ -1,40 +1,38 @@
-<!-- INCLUDE header.tpl -->
-		<div style="width:25%; float:left;">
-			<div style="margin-left:auto; margin-right:auto;">
+		<div class="row">
+			<div class="col-md-3">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
-		</div>
-		<div style="width:75%; float:right;">
-			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_5436}&nbsp;&gt;&gt;&nbsp;{L_5068}</h4>
-				<form name="wordlist" action="" method="post">
+			<div class="col-md-9">
+				<h2>{L_5436}&nbsp;&gt;&gt;&nbsp;{L_5068}</h2>
 <!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
+				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
 <!-- ENDIF -->
-					<table width="98%" cellspacing="0" cellpadding="0" align="center" class="blank">
-						<tr valign="top">
-							<td width="109">&nbsp;</td>
-							<td width="375">{L_5069}</td>
-						</tr>
-						<tr valign="top">
-							<td>{L_5070}</td>
-							<td>
-								<input type="radio" name="wordsfilter" value="y"{WFYES}> {L_030}
-								<input type="radio" name="wordsfilter" value="n"{WFNO}> {L_029}
-							</td>
-						</tr>
-						<tr valign="top">
-							<td>{L_5071}</td>
-							<td>
-								{L_5072}<br>
-								<textarea name="filtervalues" cols="45" rows="15">{WORDLIST}</textarea>
-							</td>
-						</tr>
-					</table>
+				<form name="wordlist" action="" method="post">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3">&nbsp;</div>
+								<div class="col-md-9">{L_5069}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">{L_5070}</div>
+								<div class="col-md-9">
+									<input type="radio" name="wordsfilter" value="y"{WFYES}> {L_030}
+									<input type="radio" name="wordsfilter" value="n"{WFNO}> {L_029}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">{L_5071}</div>
+								<div class="col-md-9">
+									{L_5072}<br>
+									<textarea class="form-control" name="filtervalues" cols="45" rows="15">{WORDLIST}</textarea>
+								</div>
+							</div>
+						</div>
+					</div>
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_530}">
+					<button class="btn btn-primary" type="submit" name="act" class="centre">{L_530}</button>
 				</form>
 			</div>
 		</div>
-<!-- INCLUDE footer.tpl -->

@@ -113,8 +113,10 @@ $template->assign_vars(array(
 		'ADMIN_EMAIL' => $system->SETTINGS['adminmail'],
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'emailsettings.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

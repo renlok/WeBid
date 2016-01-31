@@ -52,8 +52,10 @@ $template->assign_vars(array(
 		'EMAIL' => (isset($_POST['email'])) ? $_POST['email'] : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'newbanneruser.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

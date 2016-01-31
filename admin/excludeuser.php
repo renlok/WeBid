@@ -140,8 +140,10 @@ $template->assign_vars(array(
 		'OFFSET' => $_GET['offset']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'excludeuser.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

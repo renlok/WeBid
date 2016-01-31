@@ -71,8 +71,10 @@ $template->assign_vars(array(
 		'SEL3' => ($feedback['rate'] == -1)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'edituserfeed.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

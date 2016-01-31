@@ -85,9 +85,11 @@ $template->assign_vars(array(
 		'DISPLAYED_6' => ($DISPLAYED_FIELDS['tel_regshow'] == 'y') ? true : false
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'profile.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

@@ -90,8 +90,10 @@ $template->assign_vars(array(
 		'ID' => $_GET['id']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editfaqscategory.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

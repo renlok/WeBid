@@ -54,8 +54,10 @@ $template->assign_vars(array(
 		'STATSMONTH' => date('F Y', $system->ctime)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'viewbrowserstats.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

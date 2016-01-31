@@ -144,8 +144,10 @@ $template->assign_vars(array(
 		'TAX_BUYER' => $tax_buyer
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'tax_levels.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

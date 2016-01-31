@@ -143,6 +143,7 @@ if (isset($_POST['action']))
 					'body' => 'confirm.tpl'
 					));
 			$template->display('body');
+			include 'footer.php';
 			exit;
 		}
 		rebuild_cat_file();
@@ -246,8 +247,10 @@ $template->assign_vars(array(
 		'PARENT' => $parent
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'categories.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

@@ -91,9 +91,11 @@ $template->assign_vars(array(
 		'ERROR' => isset($ERR) ? $ERR : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'countries.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

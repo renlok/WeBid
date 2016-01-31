@@ -439,7 +439,7 @@ function load_counters()
 		$query = "SELECT id FROM " . $DBPrefix . "online";
 		$db->direct_query($query);
 
-		$count15min = $db->numrows('id');
+		$count15min = $db->numrows();
 
 		$counters .= '<b>' . $count15min . '</b> ' . $MSG['2__0064'] . ' | ';
 	}

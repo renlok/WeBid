@@ -162,8 +162,10 @@ $template->assign_vars(array(
 		'OFFSET' => $_REQUEST['offset']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'excludeauction.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

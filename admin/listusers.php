@@ -236,8 +236,10 @@ $template->assign_vars(array(
 		'PAGES' => $PAGES
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'listusers.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

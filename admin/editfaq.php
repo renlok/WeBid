@@ -124,9 +124,11 @@ $template->assign_vars(array(
 		'FAQ_CAT' => $faq['category']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editfaq.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

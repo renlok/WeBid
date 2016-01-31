@@ -114,8 +114,10 @@ $template->assign_vars(array(
 		'PAGES' => $PAGES
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'listauctions.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

@@ -16,11 +16,11 @@ if (!defined('InWeBid')) exit();
 
 function rebuild_table_file($table)
 {
-	global $DBPrefix, $system, $include_path, $db;
+	global $DBPrefix, $system, $db;
 	switch($table)
 	{
 		case 'membertypes':
-			$output_filename = $include_path . 'membertypes.inc.php';
+			$output_filename = INCLUDE_PATH . 'membertypes.inc.php';
 			$field_name = array('id', 'feedbacks', 'icon');
 			$sort_field = 1;
 			$array_name = 'membertypes';
@@ -64,11 +64,11 @@ function rebuild_table_file($table)
 
 function rebuild_html_file($table)
 {
-	global $DBPrefix, $system, $main_path, $language, $db;
+	global $DBPrefix, $system, $language, $db;
 	switch($table)
 	{
 		case 'countries':
-			$output_filename = $main_path . 'language/' . $language . '/countries.inc.php';
+			$output_filename = MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 			$field_name = 'country';
 			$array_name = 'countries';
 		break;

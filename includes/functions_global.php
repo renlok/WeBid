@@ -20,14 +20,14 @@ class global_class
 
 	function global_class()
 	{
-		global $DBPrefix, $main_path, $db;
+		global $DBPrefix, $db;
 
 		// Load settings
 		$this->loadsettings();
 		$this->ctime = $this->getUserTimestamp(time(), $this->SETTINGS['timezone']);
 		$this->tdiff = $this->getUserOffset(time(), $this->SETTINGS['timezone']);
 		// check install directory
-		if (is_dir($main_path . 'install'))
+		if (is_dir(MAIN_PATH . 'install'))
 		{
 			if (!$this->check_maintainance_mode()) // check maint mode
 			{

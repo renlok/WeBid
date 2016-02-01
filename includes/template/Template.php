@@ -50,16 +50,16 @@ class Template
 	*/
 	function set_template()
 	{
-		global $main_path, $system;
+		global $system;
 
 		$theme = (!defined('InAdmin')) ? $system->SETTINGS['theme'] : 'admin';
 
-		if (file_exists($main_path . 'themes/' . $theme))
+		if (file_exists(MAIN_PATH . 'themes/' . $theme))
 		{
-			$this->root = $main_path . 'themes/' . $theme;
-			$this->cachepath = $main_path . 'cache/tpl_' . str_replace('_', '-', $theme) . '_';
-			$this->default_root = $main_path . 'themes/default';
-			$this->default_cachepath = $main_path . 'cache/tpl_default' . '_';
+			$this->root = MAIN_PATH . 'themes/' . $theme;
+			$this->cachepath = MAIN_PATH . 'cache/tpl_' . str_replace('_', '-', $theme) . '_';
+			$this->default_root = MAIN_PATH . 'themes/default';
+			$this->default_cachepath = MAIN_PATH . 'cache/tpl_default' . '_';
 		}
 		else
 		{
@@ -77,10 +77,8 @@ class Template
 	*/
 	function set_custom_template($template_path, $template_name)
 	{
-		global $main_path;
-
 		$this->root = $template_path;
-		$this->cachepath = $main_path . 'cache/ctpl_' . str_replace('_', '-', $template_name) . '_';
+		$this->cachepath = MAIN_PATH . 'cache/ctpl_' . str_replace('_', '-', $template_name) . '_';
 
 		return true;
 	}
@@ -211,11 +209,9 @@ class Template
 			return $filename;
 		}
 
-		global $include_path;
-
 		if (!class_exists('TemplateCompile'))
 		{
-			include($include_path . 'template/TemplateCompile.php');
+			include(INCLUDE_PATH . 'template/TemplateCompile.php');
 		}
 		$compile = new TemplateCompile($this);
 

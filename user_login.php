@@ -27,7 +27,7 @@ if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
 
 if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password']))
 {
-	include $package_path . 'PasswordHash.php';
+	include PACKAGE_PATH . 'PasswordHash.php';
 	$phpass = new PasswordHash(8, false);
 	$query = "SELECT id, hash, suspended, password FROM " . $DBPrefix . "users WHERE nick = :nick OR email = :email";
 	$params = array();

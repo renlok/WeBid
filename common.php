@@ -13,11 +13,11 @@
  ***************************************************************************/
 
 session_start();
+date_default_timezone_set('UTC'); // to make times more consistant
 $error_reporting = E_ALL^E_NOTICE;
 $error_reporting = E_ALL; // use this for debugging
-define('InWeBid', 1);
-define('TrackUserIPs', 1);
-date_default_timezone_set('UTC'); // to make times more consistant
+define('InWeBid', true);
+define('TrackUserIPs', true);
 
 // file check &
 if(!@include('includes/config.inc.php'))
@@ -28,23 +28,27 @@ if(!@include('includes/config.inc.php'))
 }
 
 $MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didnt set a code
-$include_path = $main_path . 'includes/';
-$package_path = $include_path . 'packages/';
-$uploaded_path = 'uploaded/';
-$upload_path = $main_path . $uploaded_path;
 
-include $include_path . 'errors.inc.php'; //error handler functions
-include $include_path . 'dates.inc.php';
+//define the paths
+define('MAIN_PATH', $main_path);
+define('CACHE_PATH', $main_path . 'cache/');
+define('INCLUDE_PATH', $main_path . 'includes/');
+define('PACKAGE_PATH', $main_path . 'includes/packages/');
+define('UPLOAD_FOLDER', 'uploaded/');
+define('UPLOAD_PATH', $main_path . UPLOAD_FOLDER);
+
+include INCLUDE_PATH . 'errors.inc.php'; //error handler functions
+include INCLUDE_PATH . 'dates.inc.php';
 
 // classes
-include $include_path . 'database/Database.php';
-include $include_path . 'database/DatabasePDO.php';
-include $include_path . 'functions_global.php';
-include $include_path . 'class_email_handler.php';
-include $include_path . 'class_MPTTcategories.php';
-include $include_path . 'class_fees.php';
-include $include_path . 'class_user.php';
-include $include_path . 'template/Template.php';
+include INCLUDE_PATH . 'database/Database.php';
+include INCLUDE_PATH . 'database/DatabasePDO.php';
+include INCLUDE_PATH . 'functions_global.php';
+include INCLUDE_PATH . 'class_email_handler.php';
+include INCLUDE_PATH . 'class_MPTTcategories.php';
+include INCLUDE_PATH . 'class_fees.php';
+include INCLUDE_PATH . 'class_user.php';
+include INCLUDE_PATH . 'template/Template.php';
 
 // connect to the database
 $db = new DatabasePDO();
@@ -62,7 +66,7 @@ $template = new Template();
 $user = new user();
 set_error_handler('WeBidErrorHandler', $error_reporting);
 
-include $include_path . 'messages.inc.php';
+include INCLUDE_PATH . 'messages.inc.php';
 
 // add auction types
 $system->SETTINGS['auction_types'] = array (

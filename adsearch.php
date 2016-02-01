@@ -13,8 +13,8 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/countries.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 unset($ERR);
 
@@ -261,7 +261,7 @@ if ($searching && !isset($ERR))
 
 	if ($total > 0)
 	{
-		include $include_path . 'browseitems.inc.php';
+		include INCLUDE_PATH . 'browseitems.inc.php';
 		browseItems($query, $params, $query_feat, $params_feat, $total, 'adsearch.php');
 
 		include 'header.php';

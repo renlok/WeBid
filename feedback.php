@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
 
 foreach ($membertypes as $idm => $memtypearr)
 {
@@ -69,7 +69,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 				else
 				{
 					// load hashing class to check password
-					include $package_path . 'PasswordHash.php';
+					include PACKAGE_PATH . 'PasswordHash.php';
 					$phpass = new PasswordHash(8, false);
 					if ($system->SETTINGS['usersauth'] == 'n' || $phpass->CheckPassword($_POST['TPL_password'], $user->user_data['password']))
 					{

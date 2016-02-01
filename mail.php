@@ -271,7 +271,7 @@ while ($array = $db->fetch())
 }
 
 include 'header.php';
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'mail.tpl'
 		));

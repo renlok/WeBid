@@ -14,7 +14,7 @@
 
 define('InAdmin', 1);
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 
 if (isset($_POST['action']))
 {
@@ -35,7 +35,7 @@ if (isset($_POST['action']))
 			}
 			else
 			{
-				include $package_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, created, lastlogin, status) VALUES
 						(:username, :password, :hash, :created, :lastlogin, 1)";
@@ -63,7 +63,7 @@ if (isset($_POST['action']))
 			}
 			else
 			{
-				include $package_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "SELECT id, hash, password FROM " . $DBPrefix . "adminusers WHERE username = :username";
 				$params = array();

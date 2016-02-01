@@ -93,16 +93,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img'])
 	{
 		if (isset($_SESSION['SELL_pict_url']) && !empty($_SESSION['SELL_pict_url']) )
 		{
-			unlink($upload_path . session_id() . '/' . $_SESSION['SELL_pict_url']);
+			unlink(UPLOAD_PATH . session_id() . '/' . $_SESSION['SELL_pict_url']);
 		}
 		unset($_SESSION['SELL_pict_url']);
 		$default_deleted = true; // a selected as default has just been deleted.
 	}
 	else
 	{
-		if(isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && is_writable($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]))
+		if(isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && is_writable(UPLOAD_PATH . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]))
 		{
-			unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
+			unlink(UPLOAD_PATH . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
 		}
 	}
 	unset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
@@ -136,8 +136,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'crop' && !empty($_POST['w']) &
 		$h = intval($_POST['h']);
 		// Scale the image to the thumb_width set above
 		$scale = $width / $w;
-		$large_image_location = $upload_path . session_id() . '/' . $_GET['img'];
-		$thumb_image_location = $upload_path . session_id() . '/thumb-' . $_GET['img'];
+		$large_image_location = UPLOAD_PATH . session_id() . '/' . $_GET['img'];
+		$thumb_image_location = UPLOAD_PATH . session_id() . '/thumb-' . $_GET['img'];
 		$cropped = resizeThumbnailImage($thumb_image_location, $large_image_location, $w, $h, $x1, $y1, $scale);
 		$_SESSION['SELL_pict_url'] = 'thumb-' . $_GET['img'];
 		$_SESSION['SELL_pict_url_temp'] = $_GET['img'];
@@ -157,7 +157,7 @@ if (!empty($_POST['creategallery']))
 
 if ($cropdefault)
 {
-	list($imgwidth, $imgheight) = getimagesize($upload_path . session_id() . '/' . $image);
+	list($imgwidth, $imgheight) = getimagesize(UPLOAD_PATH . session_id() . '/' . $image);
 	$swidth = ($imgwidth < 380) ? '' : ' width: 380px;';
 	$imgratio = ($imgwidth > 380) ? $imgwidth / 380 : 1;
 	$whratio = $imgheight / $imgwidth;
@@ -189,7 +189,7 @@ if ($cropdefault)
 			'SWIDTH' => $swidth,
 			'IMGWIDTH' => $imgwidth,
 			'IMGHEIGHT' => $imgheight,
-			'IMGPATH' => $uploaded_path . session_id() . '/' . $image,
+			'IMGPATH' => UPLOAD_FOLDER . session_id() . '/' . $image,
 			'STARTX' => $startX,
 			'STARTY' => $startY,
 			'IMAGE' => $image
@@ -212,7 +212,7 @@ foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
 			'IMGNAME' => $v,
 			'ID' => $k,
 			'DEFAULT' => ($v == $_SESSION['SELL_pict_url_temp']) ? 'selected.gif' : 'unselected.gif',
-			'IMAGE' => $uploaded_path . session_id() . '/' . $v
+			'IMAGE' => UPLOAD_FOLDER . session_id() . '/' . $v
 			));
 }
 

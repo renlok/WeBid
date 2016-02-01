@@ -14,7 +14,7 @@
 
 if (!defined('InWeBid')) exit();
 
-include $package_path . 'useragent.inc.php';
+include PACKAGE_PATH . 'useragent.inc.php';
 
 // Retrieve stats settings
 $query = "SELECT * FROM " . $DBPrefix . "statssettings";

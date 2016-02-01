@@ -14,7 +14,7 @@
 
 define('InAdmin', 1);
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 $msg_id = intval($_REQUEST['id']);

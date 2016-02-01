@@ -13,8 +13,8 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 // Get parameters from the URL
 foreach ($membertypes as $idm => $memtypearr)
@@ -443,9 +443,9 @@ if ($total_rate > 0)
 // Pictures Gellery
 $K = 0;
 $UPLOADED_PICTURES = array();
-if (file_exists($uploaded_path . $id))
+if (file_exists(UPLOAD_FOLDER . $id))
 {
-	$dir = @opendir($uploaded_path . $id);
+	$dir = @opendir(UPLOAD_FOLDER . $id);
 	if ($dir)
 	{
 		while ($file = @readdir($dir))
@@ -464,7 +464,7 @@ if (file_exists($uploaded_path . $id))
 	{
 		foreach ($UPLOADED_PICTURES as $k => $v)
 		{
-			$TMP = @getimagesize($uploaded_path . $id . '/' . $v);
+			$TMP = @getimagesize(UPLOAD_FOLDER . $id . '/' . $v);
 			if ($TMP[2] >= 1 && $TMP[2] <= 3)
 			{
 				$template->assign_block_vars('gallery', array(
@@ -537,7 +537,7 @@ $template->assign_vars(array(
 		'TITLE' => $system->uncleanvars($auction_data['title']),
 		'SUBTITLE' => $system->uncleanvars($auction_data['subtitle']),
 		'AUCTION_DESCRIPTION' => $auction_data['description'],
-		'PIC_URL' => $uploaded_path . $id . '/' . $auction_data['pict_url'],
+		'PIC_URL' => UPLOAD_FOLDER . $id . '/' . $auction_data['pict_url'],
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $MSG['1152'],
 		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['shipping_cost_additional']),
 		'COUNTRY' => $auction_data['country'],
@@ -567,7 +567,7 @@ $template->assign_vars(array(
 		'CATSPATH' => $cat_value,
 		'SECCATSPATH' => $secondcat_value,
 		'CAT_ID' => $auction_data['category'],
-		'UPLOADEDPATH' => $uploaded_path,
+		'UPLOADEDPATH' => UPLOAD_FOLDER,
 		'BNIMG' => get_lang_img('buy_it_now.gif'),
 
 		'SELLER_REG' => $seller_reg,

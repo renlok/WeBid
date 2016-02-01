@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 $NOW = time();
 $p24h = time() + (24 * 60 * 60);

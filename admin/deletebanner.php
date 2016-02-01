@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'banners';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 if (!isset($_GET['banner']) || empty($_GET['banner']))
@@ -41,7 +41,7 @@ $query = "DELETE FROM " . $DBPrefix . "bannerscategories WHERE banner = :banner_
 $db->query($query, $params);
 $query = "DELETE FROM " . $DBPrefix . "bannerskeywords WHERE banner = :banner_id";
 $db->query($query, $params);
-@unlink($upload_path . 'banners/' . $banneruser . '/' . $bannername);
+@unlink(UPLOAD_PATH . 'banners/' . $banneruser . '/' . $bannername);
 
 // Redirect
 header('location: userbanners.php?id=' . $banneruser);

@@ -47,11 +47,11 @@ else
 
 if (!isset($language) || empty($language)) $language = $system->SETTINGS['defaultlanguage'];
 
-include $main_path . 'language/' . $language . '/messages.inc.php';
+include MAIN_PATH . 'language/' . $language . '/messages.inc.php';
 
 //find installed languages
 $LANGUAGES = array();
-if ($handle = opendir($main_path . 'language'))
+if ($handle = opendir(MAIN_PATH . 'language'))
 {
 	while (false !== ($file = readdir($handle)))
 	{

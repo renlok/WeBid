@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'tools';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt')))

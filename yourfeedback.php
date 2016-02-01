@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
 
 foreach ($membertypes as $idm => $memtypearr)
 {
@@ -132,7 +132,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['25_0223'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourfeedback.tpl'
 		));

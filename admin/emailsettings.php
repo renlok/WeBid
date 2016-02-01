@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 $extraJs = ';js/jquery-ui.js;js/jquery-migrate.js';
 include 'loggedin.inc.php';
 

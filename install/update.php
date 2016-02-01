@@ -25,7 +25,7 @@ define('InInstaller', 1);
 
 $db = new DatabasePDO();
 
-$main_path = getmainpath();
+MAIN_PATH .  = getmainpath();
 /*
 how new updater will work
 in package config.inc.php will be named config.inc.php.new so it cannot be overwritten
@@ -39,7 +39,7 @@ in package config.inc.php will be named config.inc.php.new so it cannot be overw
 
 if ($step == 0)
 {
-	if (!file_exists($main_path . 'includes/config.inc.php'))
+	if (!file_exists(MAIN_PATH . 'includes/config.inc.php'))
 	{
 		$package_version = package_version();
 		$installed_version = check_version();
@@ -75,7 +75,7 @@ if ($step == 1)
 	$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";' . "\n";
 	$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
 	$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
-	$content .= '$main_path	= "' . $path . '";' . "\n";
+	$content .= 'MAIN_PATH . 	= "' . $path . '";' . "\n";
 	$content .= '$MD5_PREFIX = "' . md5(microtime() . rand(0,50)) . '";' . "\n";
 	$content .= '?>';
 	$output = makeconfigfile($content, $path);
@@ -148,10 +148,10 @@ if ($step == 3)
 		echo '<p>It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b></p>';
 		exit;
 	}
-	include $main_path . 'common.php';
+	include MAIN_PATH . 'common.php';
 	echo print_header(true);
 
-	include $include_path . 'functions_rebuild.inc.php';
+	include INCLUDE_PATH . 'functions_rebuild.inc.php';
 	echo '<p>Rebuilding membertypes...</p>';
 	rebuild_table_file('membertypes');
 
@@ -162,7 +162,7 @@ if ($step == 3)
 	$catscontrol = new MPTTcategories();
 	rebuild_cat_file();
 
-	include $main_path . 'admin/util_cc1.php';
+	include MAIN_PATH . 'admin/util_cc1.php';
 
 	echo '<p>Update almost complete, remove the install folder from your server to complete the upgrade</p>';
 }

@@ -13,8 +13,8 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/countries.inc.php';
-include $include_path . 'config/timezones.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
+include INCLUDE_PATH . 'config/timezones.php';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())
@@ -176,7 +176,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			if (strlen($_POST['TPL_password']) > 0)
 			{
 				// hash the password
-				include $package_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query .= ", password = :password";
 				$params[] = array(':password', $phpass->HashPassword($_POST['TPL_password']), 'str');
@@ -286,7 +286,7 @@ $template->assign_vars(array(
 
 $TMP_usmenutitle = $MSG['509'];
 include 'header.php';
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'edit_data.tpl'
 		));

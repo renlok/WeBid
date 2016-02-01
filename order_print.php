@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'functions_invoices.php';
+include INCLUDE_PATH . 'functions_invoices.php';
 
 $fromadmin = true;
 // first check if from admin

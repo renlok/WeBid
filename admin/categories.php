@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 $catscontrol = new MPTTcategories();
@@ -31,7 +31,7 @@ function search_cats($parent_id, $level)
 
 function rebuild_cat_file()
 {
-	global $system, $main_path, $DBPrefix, $db;
+	global $system, $DBPrefix, $db;
 	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
 	$db->direct_query($query);
 	$cats = array();
@@ -46,7 +46,7 @@ function rebuild_cat_file()
 	$output .= "$" . "category_plain = " . var_export(search_cats(0, 0), true) . ";\n";
 	$output .= "?>";
 
-	$handle = fopen ($main_path . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
+	$handle = fopen (MAIN_PATH . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 }
 

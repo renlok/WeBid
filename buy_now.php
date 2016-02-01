@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
 foreach ($membertypes as $idm => $memtypearr)
 {
 	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
@@ -140,7 +140,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$ERR = $ERR_610;
 		}
 		// check if password is correct
-		include $package_path . 'PasswordHash.php';
+		include PACKAGE_PATH . 'PasswordHash.php';
 		$phpass = new PasswordHash(8, false);
 		if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 		{
@@ -340,8 +340,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$month = date('m', $Auction['ends'] + $system->tdiff);
 			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
-			include $include_path . 'endauction_mutli_item_win.php';
-			include $include_path . 'email/seller_partial_winner.php';
+			include INCLUDE_PATH . 'endauction_mutli_item_win.php';
+			include INCLUDE_PATH . 'email/seller_partial_winner.php';
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{

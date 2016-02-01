@@ -15,9 +15,9 @@
 define('InAdmin', 1);
 $current_page = 'auctions';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 unset($ERR);
 $catscontrol = new MPTTcategories();
@@ -38,19 +38,19 @@ if (!isset($_REQUEST['id']))
 	exit;
 }
 
-function load_gallery($uploaded_path, $auc_id)
+function load_gallery(UPLOAD_FOLDER, $auc_id)
 {
 	$UPLOADED_PICTURES = array();
-	if (file_exists('../' . $uploaded_path . $auc_id))
+	if (file_exists('../' . UPLOAD_FOLDER . $auc_id))
 	{
-		$dir = @opendir('../' . $uploaded_path . $auc_id);
+		$dir = @opendir('../' . UPLOAD_FOLDER . $auc_id);
 		if ($dir)
 		{
 			while ($file = @readdir($dir))
 			{
 				if ($file != '.' && $file != '..' && strpos($file, 'thumb-') === false)
 				{
-					$UPLOADED_PICTURES[] = $uploaded_path . $auc_id . '/' . $file;
+					$UPLOADED_PICTURES[] = UPLOAD_FOLDER . $auc_id . '/' . $file;
 
 				}
 			}
@@ -197,12 +197,12 @@ if (isset($_POST['action']))
 			// clean unwanted images
 			if (isset($_POST['gallery']) && is_array($_POST['gallery']))
 			{
-				$uploaded = load_gallery($uploaded_path, $_POST['id']);
+				$uploaded = load_gallery(UPLOAD_FOLDER, $_POST['id']);
 				foreach ($uploaded as $img)
 				{
 					if (in_array($img, $_POST['gallery']))
 					{
-						unlink($main_path . $img);
+						unlink(MAIN_PATH . $img);
 					}
 				}
 			}
@@ -331,10 +331,10 @@ $categories_list2 .= '</select>' . "\n";
 // Pictures Gellery
 $K = 0;
 $UPLOADED_PICTURES = array();
-if (file_exists('../' . $uploaded_path . $auc_id))
+if (file_exists('../' . UPLOAD_FOLDER . $auc_id))
 {
 	// load dem pictures
-	$UPLOADED_PICTURES = load_gallery($uploaded_path, $auc_id);
+	$UPLOADED_PICTURES = load_gallery(UPLOAD_FOLDER, $auc_id);
 
 	if (is_array($UPLOADED_PICTURES))
 	{

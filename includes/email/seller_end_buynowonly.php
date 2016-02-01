@@ -33,7 +33,7 @@ if ($emailmode == 'one')
     $emailer->assign_vars(array(
             'S_NAME' => $Seller['name'],
             'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
-            'A_PICURL' => ($Auction['pict_url'] != '') ? $uploaded_path . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+            'A_PICURL' => ($Auction['pict_url'] != '') ? UPLOAD_FOLDER . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
             'A_TITLE' => $Auction['title'],
             'A_CURRENTBID' => $system->print_money($Auction['buy_now']),
             'A_QTY_SOLD' => $qty_sold,

@@ -15,8 +15,8 @@
 define('InAdmin', 1);
 $current_page = 'home';
 include '../common.php';
-include $include_path . 'functions_admin.php';
-include $include_path . 'config/timezones.php';
+include INCLUDE_PATH . 'functions_admin.php';
+include INCLUDE_PATH . 'config/timezones.php';
 include 'loggedin.inc.php';
 
 if (isset($_GET['action']))
@@ -24,14 +24,14 @@ if (isset($_GET['action']))
 	switch($_GET['action'])
 	{
 		case 'clearcache':
-			if (is_dir($main_path . 'cache'))
+			if (is_dir(MAIN_PATH . 'cache'))
 			{
-				$dir = opendir($main_path . 'cache');
+				$dir = opendir(MAIN_PATH . 'cache');
 				while (($myfile = readdir($dir)) !== false)
 				{
 					if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php')
 					{
-						unlink($main_path . 'cache/' . $myfile);
+						unlink(MAIN_PATH . 'cache/' . $myfile);
 					}
 				}
 				closedir($dir);

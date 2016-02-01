@@ -15,10 +15,10 @@
 define('InAdmin', 1);
 $current_page = 'interface';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$theme_root = $main_path . 'themes/'; //theres no point repeatedly defining this
+$theme_root = MAIN_PATH . 'themes/'; //theres no point repeatedly defining this
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']) && $_POST['dtheme'] != 'admin')

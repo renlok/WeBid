@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 $language = (isset($_GET['lang'])) ? $_GET['lang'] : 'EN';
@@ -37,7 +37,7 @@ function search_cats($parent_id, $level)
 
 function rebuild_cat_file($cats)
 {
-	global $language, $main_path;
+	global $language;
 	$output = "<?php\n";
 	$output.= "$" . "category_names = array(\n";
 
@@ -63,7 +63,7 @@ function rebuild_cat_file($cats)
 
 	$output .= ");\n?>";
 
-	$handle = fopen ($main_path . 'language/' . $language . '/categories.inc.php', 'w');
+	$handle = fopen (MAIN_PATH . 'language/' . $language . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 	fclose($handle);
 }
@@ -74,7 +74,7 @@ if (isset($_POST['categories']))
 	include 'util_cc1.php';
 }
 
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 $query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories ORDER BY cat_name";
 $db->direct_query($query);

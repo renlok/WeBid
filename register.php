@@ -13,17 +13,17 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/countries.inc.php';
-include $include_path . 'config/timezones.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
+include INCLUDE_PATH . 'config/timezones.php';
 
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
 {
-	include $package_path . 'recaptcha/recaptcha.php';
+	include PACKAGE_PATH . 'recaptcha/recaptcha.php';
 }
 elseif ($system->SETTINGS['spam_register'] == 1)
 {
-	include $package_path . 'captcha/securimage.php';
+	include PACKAGE_PATH . 'captcha/securimage.php';
 }
 
 if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
@@ -315,7 +315,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				}
 				$hash = get_hash();
 				// prepare to hash the password
-				include $package_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
 						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate,
@@ -371,18 +371,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				// send emails
 				if ($system->SETTINGS['activationtype'] == 0)
 				{
-					include $include_path . 'email/user_needapproval.php';
+					include INCLUDE_PATH . 'email/user_needapproval.php';
 					$TPL_message = $MSG['016_a'];
 				}
 				elseif ($system->SETTINGS['activationtype'] == 1)
 				{
-					include $include_path . 'email/user_confirmation.php';
+					include INCLUDE_PATH . 'email/user_confirmation.php';
 					$TPL_message = sprintf($MSG['016'], $TPL_email_hidden, $system->SETTINGS['sitename']);
 				}
 				else
 				{
 					$USER = array('name' => $TPL_name_hidden, 'email' => $_POST['TPL_email']);
-					include $include_path . 'email/user_approved.php';
+					include INCLUDE_PATH . 'email/user_approved.php';
 					$TPL_message = $MSG['016_b'];
 				}
 

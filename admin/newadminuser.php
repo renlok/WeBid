@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		else
 		{
-			include $package_path . 'PasswordHash.php';
+			include PACKAGE_PATH . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
 			$query = "INSERT INTO " . $DBPrefix . "adminusers VALUES
 					(NULL, :username, :password, :hash, :created, '0', :status, '')";

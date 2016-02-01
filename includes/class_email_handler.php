@@ -20,8 +20,7 @@ class email_handler
 
 	public function __construct()
 	{
-		global $package_path;
-		include $package_path . 'PHPMailer/PHPMailerAutoload.php';
+		include PACKAGE_PATH . 'PHPMailer/PHPMailerAutoload.php';
 	}
 
 	function build_header()
@@ -50,9 +49,7 @@ class email_handler
 
 	function buildmessage($file)
 	{
-		global $main_path, $include_path;
-
-		$buffer = file($main_path . 'language/' . $this->getuserlang() . '/emails/' . $this->getusermailtype() . '/' . $file);
+		$buffer = file(MAIN_PATH . 'language/' . $this->getuserlang() . '/emails/' . $this->getusermailtype() . '/' . $file);
 		$i = 0;
 		$j = 0;
 		while ($i < count($buffer))

@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'auctions';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Data check
@@ -83,17 +83,17 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 	}
 
 	// Delete auctions images
-	if ($dir = @opendir($upload_path . $auc_id))
+	if ($dir = @opendir(UPLOAD_PATH . $auc_id))
 	{
 		while ($file = readdir($dir))
 		{
 			if ($file != '.' && $file != '..')
 			{
-				@unlink($upload_path . $auc_id . '/' . $file);
+				@unlink(UPLOAD_PATH . $auc_id . '/' . $file);
 			}
 		}
 		closedir($dir);
-		@rmdir($upload_path . $auc_id);
+		@rmdir(UPLOAD_PATH . $auc_id);
 	}
 
 	$URL = $_SESSION['RETURN_LIST'];

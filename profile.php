@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
 
 foreach ($membertypes as $idm => $memtypearr)
 {

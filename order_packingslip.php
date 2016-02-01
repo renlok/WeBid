@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'functions_invoices.php';
+include INCLUDE_PATH . 'functions_invoices.php';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())

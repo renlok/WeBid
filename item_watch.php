@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'browseitems.inc.php';
+include INCLUDE_PATH . 'browseitems.inc.php';
 
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())
@@ -89,7 +89,7 @@ if ($items != '' && $items != null)
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['472'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'item_watch.tpl'
 		));

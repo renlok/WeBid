@@ -44,17 +44,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$v = intval($v);
 			// Pictures Gallery
-			if ($dir = @opendir($upload_path . $v))
+			if ($dir = @opendir(UPLOAD_PATH . $v))
 			{
 				while ($file = readdir($dir))
 				{
 					if ($file != '.' && $file != '..')
 					{
-						unlink($upload_path . $v . '/' . $file);
+						unlink(UPLOAD_PATH . $v . '/' . $file);
 					}
 				}
 				closedir($dir);
-				@rmdir($upload_path . $v);
+				@rmdir(UPLOAD_PATH . $v);
 			}
 
 			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = closedauctions - 1";
@@ -342,7 +342,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['354'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourauctions_c.tpl'
 		));

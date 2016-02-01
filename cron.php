@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 if (!isset($_SERVER['SCRIPT_NAME'])) $_SERVER['SCRIPT_NAME'] = 'cron.php';
 
-include $include_path . 'functions_cron.php';
+include INCLUDE_PATH . 'functions_cron.php';
 
 // initialize cron script
 printLog('=============== STARTING CRON SCRIPT: ' . date('F d, Y H:i:s'));
@@ -392,7 +392,7 @@ foreach ($auction_data as $Auction) // loop auctions
 				{
 					// Send mail to the buyer
 					$Winner = $winner_array[$i];
-					include $include_path . 'email/endauction_youwin.php';
+					include INCLUDE_PATH . 'email/endauction_youwin.php';
 					$added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
 				}
 			}
@@ -400,11 +400,11 @@ foreach ($auction_data as $Auction) // loop auctions
 			{
 				// Send mail to the buyer
 				$added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
-				include $include_path . 'email/endauction_youwin_nodutch.php';
+				include INCLUDE_PATH . 'email/endauction_youwin_nodutch.php';
 			}
 			if ($Seller['endemailmode'] !== 'cum')
 			{
-				include $include_path . 'email/endauction_winner.php';
+				include INCLUDE_PATH . 'email/endauction_winner.php';
 			}
 			else
 			{
@@ -450,7 +450,7 @@ foreach ($auction_data as $Auction) // loop auctions
 			if ($Seller['endemailmode'] != 'cum')
 			{
 				$report_text = $added_winner_names_cs;
-				include $include_path . 'email/seller_end_buynowonly.php';
+				include INCLUDE_PATH . 'email/seller_end_buynowonly.php';
 			}
 			else
 			{
@@ -473,7 +473,7 @@ foreach ($auction_data as $Auction) // loop auctions
 		// Send mail to the seller if no winner
 		if ($Seller['endemailmode'] != 'cum')
 		{
-			include $include_path . 'email/endauction_nowinner.php';
+			include INCLUDE_PATH . 'email/endauction_nowinner.php';
 		}
 		else
 		{
@@ -571,19 +571,19 @@ if ($num > 0)
 		$db->query($query, $params);
 
 		// Delete all images
-		if (file_exists($upload_path . $AuctionInfo['id']))
+		if (file_exists(UPLOAD_PATH . $AuctionInfo['id']))
 		{
-			if ($dir = @opendir($upload_path . $AuctionInfo['id']))
+			if ($dir = @opendir(UPLOAD_PATH . $AuctionInfo['id']))
 			{
 				while ($file = readdir($dir))
 				{
 					if ($file != '.' && $file != '..')
 					{
-						@unlink($upload_path . $AuctionInfo['id'] . '/' . $file);
+						@unlink(UPLOAD_PATH . $AuctionInfo['id'] . '/' . $file);
 					}
 				}
 				closedir($dir);
-				@rmdir($upload_path . $AuctionInfo['id']);
+				@rmdir(UPLOAD_PATH . $AuctionInfo['id']);
 			}
 		}
 	}
@@ -629,7 +629,7 @@ foreach ($auction_data as $row)
 			$db->query($query, $params);
 		}
 		$report .= "</table>";
-		include $include_path . 'email/endauction_cumulative.php';
+		include INCLUDE_PATH . 'email/endauction_cumulative.php';
 	}
 }
 
@@ -663,20 +663,20 @@ for ($i = 0; $i < count($seller_emails); $i++)
 }
 
 // Purging thumbnails cache
-if (!file_exists($upload_path . 'cache'))
+if (!file_exists(UPLOAD_PATH . 'cache'))
 {
-	mkdir($upload_path . 'cache', 0777);
+	mkdir(UPLOAD_PATH . 'cache', 0777);
 }
 
-if (!file_exists($upload_path . 'cache/purge'))
+if (!file_exists(UPLOAD_PATH . 'cache/purge'))
 {
-	touch($upload_path . 'cache/purge');
+	touch(UPLOAD_PATH . 'cache/purge');
 }
 
-$purgecachetime = filectime($upload_path . 'cache/purge');
+$purgecachetime = filectime(UPLOAD_PATH . 'cache/purge');
 if ((time() - $purgecachetime) > 86400)
 {
-	$dir = $upload_path . 'cache';
+	$dir = UPLOAD_PATH . 'cache';
 	if ($dh = opendir($dir))
 	{
 		while (($file = readdir($dh)) !== false)
@@ -686,7 +686,7 @@ if ((time() - $purgecachetime) > 86400)
 		}
 		closedir($dh);
 	}
-	touch($upload_path . 'cache/purge');
+	touch(UPLOAD_PATH . 'cache/purge');
 }
 
 // finish cron script

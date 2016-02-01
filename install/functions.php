@@ -30,10 +30,10 @@ function getdomainpath()
 	return $path;
 }
 
-function makeconfigfile($contents, $main_path)
+function makeconfigfile($contents, MAIN_PATH . )
 {
-	$filename = $main_path . 'includes/config.inc.php';
-	$altfilename = $main_path . 'includes/config.inc.php.new';
+	$filename = MAIN_PATH . 'includes/config.inc.php';
+	$altfilename = MAIN_PATH . 'includes/config.inc.php.new';
 
 	if (!file_exists($filename))
 	{
@@ -113,7 +113,7 @@ function check_version()
 
 function check_installation()
 {
-	global $DBPrefix, $settings_version, $main_path, $db;
+	global $DBPrefix, $settings_version, $db;
 
 	@include '../includes/config.inc.php';
 	$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
@@ -159,7 +159,7 @@ function package_version()
 
 function show_config_table($fresh = true)
 {
-	$main_path = getmainpath();
+	MAIN_PATH .  = getmainpath();
 
 	$data = '<form name="form1" method="post" action="?step=1">';
 	$data .= '<table cellspacing="1" border="1" style="border-collapse:collapse;" cellpadding="6">';
@@ -176,7 +176,7 @@ function show_config_table($fresh = true)
 	$data .= '  <tr>';
 	$data .= '	<td>Doument Root</td>';
 	$data .= '	<td>';
-	$data .= '	  <input type="text" name="mainpath" id="textfield" value="' . $main_path . '">';
+	$data .= '	  <input type="text" name="mainpath" id="textfield" value="' . MAIN_PATH . '">';
 	$data .= '	</td>';
 	$data .= '</tr>';
 	if ($fresh)
@@ -256,27 +256,27 @@ function show_config_table($fresh = true)
 			$exists = $write = false;
 
 			// Try to create the directory if it does not exist
-			if (!file_exists($main_path . $dir))
+			if (!file_exists(MAIN_PATH . $dir))
 			{
-				@mkdir($main_path . $dir, 0777);
-				@chmod($main_path . $dir, 0777);
+				@mkdir(MAIN_PATH . $dir, 0777);
+				@chmod(MAIN_PATH . $dir, 0777);
 			}
 
 			// Now really check
-			if (file_exists($main_path . $dir) && is_dir($main_path . $dir))
+			if (file_exists(MAIN_PATH . $dir) && is_dir(MAIN_PATH . $dir))
 			{
 				$exists = true;
 			}
 
 			// Now check if it is writable by storing a simple file
-			$fp = @fopen($main_path . $dir . 'test_lock', 'wb');
+			$fp = @fopen(MAIN_PATH . $dir . 'test_lock', 'wb');
 			if ($fp !== false)
 			{
 				$write = true;
 			}
 			@fclose($fp);
 
-			@unlink($main_path . $dir . 'test_lock');
+			@unlink(MAIN_PATH . $dir . 'test_lock');
 
 			if (!$exists || !$write)
 			{
@@ -291,16 +291,16 @@ function show_config_table($fresh = true)
 
 		//check config file exists and is writable
 		$write = $exists = true;
-		if (file_exists($main_path . 'includes/config.inc.php'))
+		if (file_exists(MAIN_PATH . 'includes/config.inc.php'))
 		{
-			if (!@is_writable($main_path . 'includes/config.inc.php'))
+			if (!@is_writable(MAIN_PATH . 'includes/config.inc.php'))
 			{
 				$write = false;
 			}
 		}
-		elseif (file_exists($main_path . 'includes/config.inc.php.new'))
+		elseif (file_exists(MAIN_PATH . 'includes/config.inc.php.new'))
 		{
-			if (!@is_writable($main_path . 'includes/config.inc.php.new'))
+			if (!@is_writable(MAIN_PATH . 'includes/config.inc.php.new'))
 			{
 				$write = false;
 			}
@@ -330,9 +330,9 @@ function show_config_table($fresh = true)
 		foreach ($directories as $dir)
 		{
 			$write = $exists = true;
-			if (file_exists($main_path . $dir))
+			if (file_exists(MAIN_PATH . $dir))
 			{
-				if (!@is_writable($main_path . $dir))
+				if (!@is_writable(MAIN_PATH . $dir))
 				{
 					$write = false;
 				}
@@ -392,7 +392,7 @@ function search_cats($parent_id, $level)
 
 function rebuild_cat_file()
 {
-	global $system, $main_path, $DBPrefix, $db;
+	global $system, $DBPrefix, $db;
 	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
 	$db->direct_query($query);
 	$cats = array();
@@ -426,7 +426,7 @@ function rebuild_cat_file()
 
 	$output .= ");\n?>";
 
-	$handle = fopen ($main_path . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
+	$handle = fopen (MAIN_PATH . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 }
 ?>

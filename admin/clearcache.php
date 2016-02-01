@@ -27,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php')
 			{
-				unlink(MAIN_PATH . 'cache/' . $myfile);
+				unlink(CACHE_PATH . $myfile);
 			}
 		}
 		closedir($dir);

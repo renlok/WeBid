@@ -31,7 +31,7 @@ if (isset($_GET['action']))
 				{
 					if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php')
 					{
-						unlink(MAIN_PATH . 'cache/' . $myfile);
+						unlink(CACHE_PATH . $myfile);
 					}
 				}
 				closedir($dir);

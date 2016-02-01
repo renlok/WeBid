@@ -1,0 +1,4 @@
+**/Thumbs.db
+cache/**
+includes/config.inc.php
+uploaded/**

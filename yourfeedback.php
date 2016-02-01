@@ -15,12 +15,6 @@
 include 'common.php';
 include INCLUDE_PATH . 'membertypes.inc.php';
 
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-ksort($memtypesarr, SORT_NUMERIC);
-
 if (!$user->is_logged_in())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourfeedback.php';
@@ -29,9 +23,9 @@ if (!$user->is_logged_in())
 }
 
 $i = 0;
-foreach ($memtypesarr as $k => $l)
+foreach ($membertypes as $k => $l)
 {
-	if ($k >= $user->user_data['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+	if ($k >= $user->user_data['rate_sum'] || $i++ == (count($membertypes) - 1))
 	{
 		$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 		break;
@@ -68,9 +62,9 @@ $feed_disp = array();
 while ($arrfeed = $db->fetch())
 {
 	$j = 0;
-	foreach ($memtypesarr as $k => $l)
+	foreach ($membertypes as $k => $l)
 	{
-		if ($k >= $arrfeed['rate_sum'] || $j++ == (count($memtypesarr) - 1))
+		if ($k >= $arrfeed['rate_sum'] || $j++ == (count($membertypes) - 1))
 		{
 			$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 			break;

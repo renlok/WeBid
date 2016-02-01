@@ -14,10 +14,6 @@
 
 include 'common.php';
 include INCLUDE_PATH . 'membertypes.inc.php';
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
 
 $id = intval($_REQUEST['id']);
 
@@ -50,7 +46,6 @@ if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' &
 }
 
 unset($ERR);
-ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 
 $query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
@@ -118,9 +113,9 @@ $Seller = $db->result();
 $total_rate = $Seller['rate_sum'];
 
 $i = 0;
-foreach ($memtypesarr as $k => $l)
+foreach ($membertypes as $k => $l)
 {
-	if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1))
+	if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
 	{
 		$TPL_rate_radio = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 		break;

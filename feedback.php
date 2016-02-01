@@ -15,12 +15,6 @@
 include 'common.php';
 include INCLUDE_PATH . 'membertypes.inc.php';
 
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-
-ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 
 if (isset($_REQUEST['auction_id']))
@@ -182,9 +176,9 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 		$arr = $db->result();
 		$TPL_nick = $arr['nick'];
 		$i = 0;
-		foreach ($memtypesarr as $k => $l)
+		foreach ($membertypes as $k => $l)
 		{
-			if ($k >= $arr['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes) - 1))
 			{
 				$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 				break;
@@ -244,9 +238,9 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			while ($arrfeed = $db->fetch())
 			{
 				$j = 0;
-				foreach ($memtypesarr as $k => $l)
+				foreach ($membertypes as $k => $l)
 				{
-					if ($k >= $arrfeed['rate_sum'] || $j++ == (count($memtypesarr) - 1))
+					if ($k >= $arrfeed['rate_sum'] || $j++ == (count($membertypes) - 1))
 					{
 						$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 						break;
@@ -339,9 +333,9 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	if ($arr = $db->fetch())
 	{
 		$TPL_rate_ratio_value = '';
-		foreach ($memtypesarr as $k => $l)
+		foreach ($membertypes as $k => $l)
 		{
-			if ($k >= $arr['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes) - 1))
 			{
 				$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 				break;

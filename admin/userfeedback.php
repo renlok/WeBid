@@ -19,12 +19,6 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include INCLUDE_PATH . 'membertypes.inc.php';
 
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-ksort($memtypesarr, SORT_NUMERIC);
-
 $secid = intval($_GET['id']);
 $query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
 $params = array();
@@ -50,9 +44,9 @@ if ($db->numrows() > 0)
 	$PAGES = ($num_fbs == 0) ? 1 : ceil($num_fbs / $system->SETTINGS['perpage']);
 
 	$i = 0;
-	foreach ($memtypesarr as $k => $l)
+	foreach ($membertypes as $k => $l)
 	{
-		if ($k >= $arr['rate_sum'] || $i++ == (count($memtypesarr)-1))
+		if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes)-1))
 		{
 			$feedback_image = '<img src="' . $system->SETTINGS['siteurl'] . '/images/icons/' . $l['icon'] . '" class="fbstar">';
 			break;

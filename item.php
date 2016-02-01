@@ -17,12 +17,6 @@ include INCLUDE_PATH . 'membertypes.inc.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 // Get parameters from the URL
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-ksort($memtypesarr, SORT_NUMERIC);
-
 $id = (isset($_SESSION['CURRENT_ITEM'])) ? intval($_SESSION['CURRENT_ITEM']) : 0;
 $id = (isset($_REQUEST['id'])) ? intval($_REQUEST['id']) : 0;
 if (!is_numeric($id)) $id = 0;
@@ -252,9 +246,9 @@ foreach ($db->fetchall() as $bidrec)
 
 		$total_rate = $fb_pos - $fb_neg;
 
-		foreach ($memtypesarr as $k => $l)
+		foreach ($membertypes as $k => $l)
 		{
-			if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
 			{
 				$buyer_rate_icon = $l['icon'];
 				break;
@@ -430,9 +424,9 @@ $total_rate = $fb_pos - $fb_neg;
 if ($total_rate > 0)
 {
 	$i = 0;
-	foreach ($memtypesarr as $k => $l)
+	foreach ($membertypes as $k => $l)
 	{
-		if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1))
+		if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
 		{
 			$seller_rate_icon = $l['icon'];
 			break;

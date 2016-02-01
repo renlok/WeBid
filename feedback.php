@@ -27,7 +27,7 @@ $ws = (isset($_GET['ws'])) ? $_GET['ws'] : 'w';
 
 if (isset($_POST['addfeedback'])) // submit the feedback
 {
-	if (!$user->is_logged_in())
+	if (!$user->checkAuth())
 	{
 		header('location: user_login.php');
 		exit;

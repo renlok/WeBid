@@ -14,7 +14,7 @@
 
 include 'common.php';
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	//if your not logged in you shouldn't be here
 	header("location: user_login.php");

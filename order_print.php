@@ -21,7 +21,7 @@ if (!(isset($_GET['hash']) && $_SESSION['INVOICE_RETURN'] == 'admin/invoice.php'
 {
 	$fromadmin = false;
 	// If user is not logged in redirect to login page
-	if (!$user->is_logged_in())
+	if (!$user->checkAuth())
 	{
 		header('location: user_login.php');
 		exit;

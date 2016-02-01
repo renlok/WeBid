@@ -18,14 +18,14 @@ $NOW = time();
 $NOWB = date('Ymd');
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_p.php';
 	header('location: user_login.php');
 	exit;
 }
 // check if the user can access this page
-$user->check_suspended();
+$user->checkSuspended();
 
 $user_message = '';
 

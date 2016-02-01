@@ -17,7 +17,7 @@ include INCLUDE_PATH . 'membertypes.inc.php';
 
 $id = intval($_REQUEST['id']);
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'buy_now.php?id=' . $id;
 	header('location: user_login.php');

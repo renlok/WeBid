@@ -22,7 +22,7 @@ if (!$user->logged_in)
 	exit;
 }
 // check if the user can access this page
-$user->check_suspended();
+$user->checkSuspended();
 
 // DELETE OPEN AUCTIONS
 $NOW = time();

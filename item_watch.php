@@ -16,7 +16,7 @@ include 'common.php';
 include INCLUDE_PATH . 'browseitems.inc.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	header("location: user_login.php");
 	exit;

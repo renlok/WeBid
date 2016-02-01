@@ -17,7 +17,7 @@ include INCLUDE_PATH . 'membertypes.inc.php';
 
 if(!isset($_GET['user_id']))
 {
-	if (!$user->is_logged_in())
+	if (!$user->checkAuth())
 	{
 		$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions.php';
 		header('location: user_login.php');

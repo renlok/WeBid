@@ -47,7 +47,7 @@ include INCLUDE_PATH . 'functions_global.php';
 include INCLUDE_PATH . 'class_email_handler.php';
 include INCLUDE_PATH . 'class_MPTTcategories.php';
 include INCLUDE_PATH . 'class_fees.php';
-include INCLUDE_PATH . 'class_user.php';
+include INCLUDE_PATH . 'User.php';
 include INCLUDE_PATH . 'template/Template.php';
 
 // connect to the database
@@ -63,7 +63,7 @@ else
 
 $system = new global_class();
 $template = new Template();
-$user = new user();
+$user = new User();
 set_error_handler('WeBidErrorHandler', $error_reporting);
 
 include INCLUDE_PATH . 'messages.inc.php';
@@ -73,29 +73,6 @@ $system->SETTINGS['auction_types'] = array (
 	1 => $MSG['1021'],
 	2 => $MSG['1020']
 );
-
-// Atuomatically login user is necessary "Remember me" option
-if (!$user->logged_in && isset($_COOKIE['WEBID_RM_ID']))
-{
-	$query = "SELECT userid FROM " . $DBPrefix . "rememberme WHERE hashkey = :RM_ID";
-	$params = array();
-	$params[] = array(':RM_ID', alphanumeric($_COOKIE['WEBID_RM_ID']), 'str');
-	$db->query($query, $params);
-	if ($db->numrows() > 0)
-	{
-		// generate a random unguessable token
-		$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
-		$id = $db->result('userid');
-		$query = "SELECT hash, password FROM " . $DBPrefix . "users WHERE id = :user_id";
-		$params = array();
-		$params[] = array(':user_id', $id, 'int');
-		$db->query($query, $params);
-		$password = $db->result('password');
-		$_SESSION['WEBID_LOGGED_IN'] 		= $id;
-		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $db->result('hash'));
-		$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
-	}
-}
 
 if($user->logged_in)
 {

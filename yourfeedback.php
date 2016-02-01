@@ -15,7 +15,7 @@
 include 'common.php';
 include INCLUDE_PATH . 'membertypes.inc.php';
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourfeedback.php';
 	header('location: user_login.php');

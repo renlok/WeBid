@@ -24,7 +24,7 @@ elseif (isset($_SESSION['CURRENT_ITEM']))
 	$auction_id = $_SESSION['CURRENT_ITEM'];
 }
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'email_request.php';
 	header('location: user_login.php');

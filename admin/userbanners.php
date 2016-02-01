@@ -15,9 +15,9 @@
 define('InAdmin', 1);
 $current_page = 'banners';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 unset($ERR);
 $id = intval($_REQUEST['id']);
@@ -33,18 +33,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 	else
 	{
 		// Handle upload
-		if (!file_exists($upload_path . 'banners'))
+		if (!file_exists(UPLOAD_PATH . 'banners'))
 		{
 			umask();
-			mkdir($upload_path . 'banners', 0777);
+			mkdir(UPLOAD_PATH . 'banners', 0777);
 		}
-		if (!file_exists($upload_path . 'banners/' . $id))
+		if (!file_exists(UPLOAD_PATH . 'banners/' . $id))
 		{
 			umask();
-			mkdir($upload_path . 'banners/' . $id, 0777);
+			mkdir(UPLOAD_PATH . 'banners/' . $id, 0777);
 		}
 
-		$TARGET = $upload_path . 'banners/' . $id . '/' . $_FILES['bannerfile']['name'];
+		$TARGET = UPLOAD_PATH . 'banners/' . $id . '/' . $_FILES['bannerfile']['name'];
 		if (file_exists($TARGET))
 		{
 			$ERR = sprintf($MSG['_0047'], $TARGET);
@@ -160,7 +160,7 @@ while ($row = $db->fetch())
 			'ID' => $row['id'],
 			'TYPE' => $row['type'],
 			'NAME' => $row['name'],
-			'BANNER' => $uploaded_path . 'banners/' . $id . '/' . $row['name'],
+			'BANNER' => UPLOAD_FOLDER . 'banners/' . $id . '/' . $row['name'],
 			'WIDTH' => $row['width'],
 			'HEIGHT' => $row['height'],
 			'URL' => $row['url'],

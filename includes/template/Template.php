@@ -20,7 +20,7 @@ if (!defined('InWeBid'))
 * Base Template class.
 * @package phpBB3
 */
-class template
+class Template
 {
 	/** variable that holds all the data we'll be substituting into
 	* the compiled templates. Takes form:
@@ -50,16 +50,16 @@ class template
 	*/
 	function set_template()
 	{
-		global $main_path, $system;
+		global $system;
 
 		$theme = (!defined('InAdmin')) ? $system->SETTINGS['theme'] : 'admin';
 
-		if (file_exists($main_path . 'themes/' . $theme))
+		if (file_exists(MAIN_PATH . 'themes/' . $theme))
 		{
-			$this->root = $main_path . 'themes/' . $theme;
-			$this->cachepath = $main_path . 'cache/tpl_' . str_replace('_', '-', $theme) . '_';
-			$this->default_root = $main_path . 'themes/default';
-			$this->default_cachepath = $main_path . 'cache/tpl_default' . '_';
+			$this->root = MAIN_PATH . 'themes/' . $theme;
+			$this->cachepath = MAIN_PATH . 'cache/tpl_' . str_replace('_', '-', $theme) . '_';
+			$this->default_root = MAIN_PATH . 'themes/default';
+			$this->default_cachepath = MAIN_PATH . 'cache/tpl_default' . '_';
 		}
 		else
 		{
@@ -77,10 +77,8 @@ class template
 	*/
 	function set_custom_template($template_path, $template_name)
 	{
-		global $main_path;
-
 		$this->root = $template_path;
-		$this->cachepath = $main_path . 'cache/ctpl_' . str_replace('_', '-', $template_name) . '_';
+		$this->cachepath = MAIN_PATH . 'cache/ctpl_' . str_replace('_', '-', $template_name) . '_';
 
 		return true;
 	}
@@ -211,13 +209,11 @@ class template
 			return $filename;
 		}
 
-		global $include_path;
-
-		if (!class_exists('template_compile'))
+		if (!class_exists('TemplateCompile'))
 		{
-			include($include_path . 'class_template_compile.php');
+			include(INCLUDE_PATH . 'template/TemplateCompile.php');
 		}
-		$compile = new template_compile($this);
+		$compile = new TemplateCompile($this);
 
 		// If we don't have a file assigned to this handle, die.
 		if (!isset($this->files[$handle]))

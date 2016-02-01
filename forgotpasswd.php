@@ -59,7 +59,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'ok')
 			// Update database
 			$query = "UPDATE " . $DBPrefix . "users SET password = :password WHERE id = :user_id";
 			// hash password
-			include $include_path . 'PasswordHash.php';
+			include PACKAGE_PATH . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
 			$params = array();
 			$params[] = array(':password', $phpass->HashPassword($newpass), 'str');

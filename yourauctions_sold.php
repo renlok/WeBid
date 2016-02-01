@@ -15,14 +15,14 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_sold.php';
 	header('location: user_login.php');
 	exit;
 }
 // check if the user can access this page
-$user->check_suspended();
+$user->checkSuspended();
 
 $NOW = time();
 $NOWB = date('Ymd');
@@ -257,7 +257,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['25_0119'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourauctions_sold.tpl'
 		));

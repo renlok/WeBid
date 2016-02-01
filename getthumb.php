@@ -58,7 +58,7 @@ elseif (!file_exists($_GET['fromfile']) && !fopen($_GET['fromfile'], 'r'))
 	exit;
 }
 
-if (file_exists($upload_path . 'cache/' . $w . '-' . md5($fromfile)))
+if (file_exists(UPLOAD_PATH . 'cache/' . $w . '-' . md5($fromfile)))
 {
 	$img = getimagesize($fromfile);
 	switch ($img[2])
@@ -98,13 +98,13 @@ if (file_exists($upload_path . 'cache/' . $w . '-' . md5($fromfile)))
 		exit;
 	}
 	header('Content-type: ' . $img['mime']);
-	echo file_get_contents($upload_path . 'cache/' . $w . '-' . md5($fromfile));
+	echo file_get_contents(UPLOAD_PATH . 'cache/' . $w . '-' . md5($fromfile));
 }
 else
 {
 	if (function_exists('imagetypes'))
 	{
-		if (!is_dir($upload_path . 'cache')) mkdir($upload_path . 'cache', 0777);
+		if (!is_dir(UPLOAD_PATH . 'cache')) mkdir(UPLOAD_PATH . 'cache', 0777);
 
 		$img = @getimagesize($fromfile);
 		if (is_array($img))
@@ -188,7 +188,7 @@ else
 	$funcall = "imagecreatefrom$image_type";
 	imagecopyresampled($ou, $funcall($fromfile), 0, 0, 0, 0, $w, $h, $img[0], $img[1]);
 	$funcall = "image$output_type";
-	$funcall($ou, $upload_path . 'cache/' . $_w . '-' . md5($fromfile));
+	$funcall($ou, UPLOAD_PATH . 'cache/' . $_w . '-' . md5($fromfile));
 	header('Content-type: ' . $img['mime']);
 	$funcall($ou);
 }

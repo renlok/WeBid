@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 function browseItems($query, $params, $query_feat, $params_feat, $total, $current_page, $extravar = '')
 {
-	global $system, $uploaded_path, $MSG, $ERR_114, $db;
+	global $system, $MSG, $ERR_114, $db;
 	global $template, $PAGES, $PAGE;
 
 	$feat_items = false;
@@ -111,12 +111,12 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 
 function build_items($row)
 {
-	global $system, $uploaded_path;
+	global $system;
 
 	// image icon
 	if (!empty($row['pict_url']))
 	{
-		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_list'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
+		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_list'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'];
 	}
 	else
 	{

@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 $catscontrol = new MPTTcategories();
 
 // Get parameters from the URL
@@ -218,7 +218,7 @@ else
 	$query_feat .= " ORDER BY ends ASC LIMIT :offset, 5";
 	$params_feat[] = array(':offset', (($PAGE - 1) * 5), 'int');
 
-	include $include_path . 'browseitems.inc.php';
+	include INCLUDE_PATH . 'browseitems.inc.php';
 	browseItems($query, $params, $query_feat, $params_feat, $TOTALAUCTIONS, 'browse.php', 'id=' . $id);
 
 	$template->assign_vars(array(

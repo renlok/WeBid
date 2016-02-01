@@ -13,15 +13,11 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
+include INCLUDE_PATH . 'membertypes.inc.php';
 
 $id = intval($_REQUEST['id']);
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'buy_now.php?id=' . $id;
 	header('location: user_login.php');
@@ -50,7 +46,6 @@ if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' &
 }
 
 unset($ERR);
-ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 
 $query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
@@ -118,9 +113,9 @@ $Seller = $db->result();
 $total_rate = $Seller['rate_sum'];
 
 $i = 0;
-foreach ($memtypesarr as $k => $l)
+foreach ($membertypes as $k => $l)
 {
-	if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1))
+	if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
 	{
 		$TPL_rate_radio = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 		break;
@@ -140,7 +135,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$ERR = $ERR_610;
 		}
 		// check if password is correct
-		include $include_path . 'PasswordHash.php';
+		include PACKAGE_PATH . 'PasswordHash.php';
 		$phpass = new PasswordHash(8, false);
 		if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 		{
@@ -340,8 +335,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$month = date('m', $Auction['ends'] + $system->tdiff);
 			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
-			include $include_path . 'endauction_mutli_item_win.php';
-			include $include_path . 'email_seller_partial_winner.php';
+			include INCLUDE_PATH . 'endauction_mutli_item_win.php';
+			include INCLUDE_PATH . 'email/seller_partial_winner.php';
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{

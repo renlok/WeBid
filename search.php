@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 $NOW = time();
 
@@ -87,7 +87,7 @@ else
 	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 
 	// to be sure about items format, I've unified the call
-	include $include_path . 'browseitems.inc.php';
+	include INCLUDE_PATH . 'browseitems.inc.php';
 	browseItems($query, $params, $query_feat, $params_feat, $total, 'search.php', 'q=' . $term . '&id=' . $cat_id);
 }
 

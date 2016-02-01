@@ -16,7 +16,7 @@
 							<div class="row">
 								<div class="col-md-12">
 <!-- BEGIN langs -->
-									<a href="categoriestrans.php?lang={langs.LANG}"><img align="middle" src="{SITEURL}includes/flags/{langs.LANG}.gif" border="0"></a>
+									<a href="categoriestrans.php?lang={langs.LANG}"><img align="middle" src="{SITEURL}images/flags/{langs.LANG}.gif" border="0"></a>
 <!-- END langs -->
 								</div>
 							</div>

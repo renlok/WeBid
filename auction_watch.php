@@ -15,7 +15,7 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'auction_watch.php';
 	header('location: user_login.php');
@@ -99,7 +99,7 @@ if ($auctions != '')
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['471'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'auction_watch.tpl'
 		));

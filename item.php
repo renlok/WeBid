@@ -13,16 +13,10 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 // Get parameters from the URL
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-ksort($memtypesarr, SORT_NUMERIC);
-
 $id = (isset($_SESSION['CURRENT_ITEM'])) ? intval($_SESSION['CURRENT_ITEM']) : 0;
 $id = (isset($_REQUEST['id'])) ? intval($_REQUEST['id']) : 0;
 if (!is_numeric($id)) $id = 0;
@@ -252,9 +246,9 @@ foreach ($db->fetchall() as $bidrec)
 
 		$total_rate = $fb_pos - $fb_neg;
 
-		foreach ($memtypesarr as $k => $l)
+		foreach ($membertypes as $k => $l)
 		{
-			if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
 			{
 				$buyer_rate_icon = $l['icon'];
 				break;
@@ -430,9 +424,9 @@ $total_rate = $fb_pos - $fb_neg;
 if ($total_rate > 0)
 {
 	$i = 0;
-	foreach ($memtypesarr as $k => $l)
+	foreach ($membertypes as $k => $l)
 	{
-		if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1))
+		if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
 		{
 			$seller_rate_icon = $l['icon'];
 			break;
@@ -443,9 +437,9 @@ if ($total_rate > 0)
 // Pictures Gellery
 $K = 0;
 $UPLOADED_PICTURES = array();
-if (file_exists($uploaded_path . $id))
+if (file_exists(UPLOAD_FOLDER . $id))
 {
-	$dir = @opendir($uploaded_path . $id);
+	$dir = @opendir(UPLOAD_FOLDER . $id);
 	if ($dir)
 	{
 		while ($file = @readdir($dir))
@@ -464,7 +458,7 @@ if (file_exists($uploaded_path . $id))
 	{
 		foreach ($UPLOADED_PICTURES as $k => $v)
 		{
-			$TMP = @getimagesize($uploaded_path . $id . '/' . $v);
+			$TMP = @getimagesize(UPLOAD_FOLDER . $id . '/' . $v);
 			if ($TMP[2] >= 1 && $TMP[2] <= 3)
 			{
 				$template->assign_block_vars('gallery', array(
@@ -537,7 +531,7 @@ $template->assign_vars(array(
 		'TITLE' => $system->uncleanvars($auction_data['title']),
 		'SUBTITLE' => $system->uncleanvars($auction_data['subtitle']),
 		'AUCTION_DESCRIPTION' => $auction_data['description'],
-		'PIC_URL' => $uploaded_path . $id . '/' . $auction_data['pict_url'],
+		'PIC_URL' => UPLOAD_FOLDER . $id . '/' . $auction_data['pict_url'],
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $MSG['1152'],
 		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['shipping_cost_additional']),
 		'COUNTRY' => $auction_data['country'],
@@ -567,7 +561,7 @@ $template->assign_vars(array(
 		'CATSPATH' => $cat_value,
 		'SECCATSPATH' => $secondcat_value,
 		'CAT_ID' => $auction_data['category'],
-		'UPLOADEDPATH' => $uploaded_path,
+		'UPLOADEDPATH' => UPLOAD_FOLDER,
 		'BNIMG' => get_lang_img('buy_it_now.gif'),
 
 		'SELLER_REG' => $seller_reg,

@@ -15,10 +15,10 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'ckeditor/ckeditor.php';
-include $include_path . 'htmLawed.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
+include PACKAGE_PATH . 'htmLawed.php';
 
 unset($ERR);
 
@@ -30,7 +30,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->basePath = PACKAGE_PATH . 'ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;

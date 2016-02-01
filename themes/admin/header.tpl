@@ -53,7 +53,7 @@
 			<div class="col-md-6 text-muted text-right">
 <!-- BEGIN langs -->
 	<!-- IF ! langs.B_DEFAULT -->
-				<a href="index.php?lan={langs.LANG}"><img src="{SITEURL}includes/flags/{langs.LANG}.gif"></a>
+				<a href="index.php?lan={langs.LANG}"><img src="{SITEURL}images/flags/{langs.LANG}.gif"></a>
 	<!-- ENDIF -->
 <!-- END langs -->
 				<small>{L_592} {ADMIN_USER} | <a href="editadminuser.php?id={ADMIN_ID}">{L_5142}</a> | <a href="{SITEURL}" target="_blank">{L_5001}</a> | <a href="logout.php">{L_245}</a><br /></small>

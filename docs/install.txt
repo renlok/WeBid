@@ -261,7 +261,7 @@ The Install.php script included with WeBid will:
 
 	> Also, review information available at http://www.webidsupport.com concerning Multilingual Support.
 
-	> If you are in USA, you will need to replace the UK Flag file /inclues/flags/EN.gif with a US Flag.
+	> If you are in USA, you will need to replace the UK Flag file /images/flags/EN.gif with a US Flag.
 
   - Adding or modifying Auction Categories using the AdminCP Categories Table Tree Update Page.
 

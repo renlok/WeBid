@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -38,7 +38,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params = array();
 		if (!empty($_POST['password']))
 		{
-			include $include_path . 'PasswordHash.php';
+			include PACKAGE_PATH . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
 			$query .= " password = :password, ";
 			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');

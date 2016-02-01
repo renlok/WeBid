@@ -14,23 +14,21 @@
 
 if (!defined('InWeBid')) exit();
 
-$item_title = $system->uncleanvars($Auction['title']);
+$item_title = $system->uncleanvars($item_title);
 
 $emailer = new email_handler();
 $emailer->assign_vars(array(
-		'W_NAME' => $Winner['name'],
-
-		'A_PICURL' => ($Auction['pict_url'] != '') ? $uploaded_path . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
-		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
-		'A_TITLE' => $item_title,
-		'A_CURRENTBID' => $system->print_money($Auction['current_bid']),
-		'A_ENDS' => $ends_string,
-
-		'S_NICK' => $Seller['nick'],
-		'S_EMAIL' => $Seller['email'],
-
 		'SITE_URL' => $system->SETTINGS['siteurl'],
-		'SITENAME' => $system->SETTINGS['sitename']
+		'SITENAME' => $system->SETTINGS['sitename'],
+
+		'C_NAME' => $OldWinner_name,
+
+		'N_BID' => $new_bid,
+
+		'A_TITLE' => $item_title,
+		'A_ENDS' => $ends_string,
+		'A_PICURL' => ($pict_url_plain != '') ? UPLOAD_FOLDER . $item_id . '/' . $pict_url_plain : 'images/email_alerts/default_item_img.jpg',
+		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $item_id
 		));
-$emailer->email_uid = $Winner['id'];
-$emailer->email_sender($Winner['email'], 'endauction_youwin_nodutch.inc.php', $system->SETTINGS['sitename'] . $MSG['909'] . ': ' . $item_title);
+$emailer->email_uid = $OldWinner_id;
+$emailer->email_sender($OldWinner_email, 'no_longer_winner.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['906'] . ': ' . $item_title);

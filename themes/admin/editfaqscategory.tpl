@@ -18,7 +18,7 @@
 	<!-- ELSE -->
 						<td>&nbsp;</td>
 	<!-- ENDIF -->
-						<td width="5%"><img src="{SITEURL}includes/flags/{flangs.LANGUAGE}.gif"></td>
+						<td width="5%"><img src="{SITEURL}images/flags/{flangs.LANGUAGE}.gif"></td>
 						<td width="75%" valign="top">
 							<input type="text" name="category[{flangs.LANGUAGE}]" size="50" maxlength="150" value="{flangs.TRANSLATION}">
 						</td>

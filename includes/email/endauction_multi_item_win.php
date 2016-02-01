@@ -20,7 +20,7 @@ $emailer = new email_handler();
 $emailer->assign_vars(array(
         'W_NAME' => $Winner['name'],
 
-        'A_PICURL' => ($Auction['pict_url'] != '') ? $uploaded_path . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+        'A_PICURL' => ($Auction['pict_url'] != '') ? UPLOAD_FOLDER . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
         'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
         'A_TITLE' => $Auction['title'],
         'A_CURRENTBID' => $system->print_money($Auction['buy_now']),

@@ -21,7 +21,7 @@ if ($system->SETTINGS['boards'] == 'n')
 }
 
 // Is the seller logged in?
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'boards.php';
 	header('location: user_login.php');

@@ -19,14 +19,14 @@ $NOWB = date('Ymd');
 $user_message = '';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_s.php';
 	header('location: user_login.php');
 	exit;
 }
 // check if the user can access this page
-$user->check_suspended();
+$user->checkSuspended();
 
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
@@ -38,17 +38,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 			$removed = 0;
 			$v = intval($v);
 			// Pictures Gallery
-			if ($dir = @opendir($upload_path . '/' . $v))
+			if ($dir = @opendir(UPLOAD_PATH . '/' . $v))
 			{
 				while ($file = readdir($dir))
 				{
 					if ($file != '.' && $file != '..')
 					{
-						@unlink($upload_path . '/' . $v . $file);
+						@unlink(UPLOAD_PATH . '/' . $v . $file);
 					}
 				}
 				closedir($dir);
-				@rmdir($upload_path . '/' . $v);
+				@rmdir(UPLOAD_PATH . '/' . $v);
 			}
 
 			// remove auction
@@ -180,7 +180,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['2__0056'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourauctions_s.tpl'
 		));

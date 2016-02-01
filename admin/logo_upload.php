@@ -19,7 +19,7 @@
 define('InAdmin', 1);
 $current_page = 'interface';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -32,7 +32,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update") {
 			exit;
 		}
 		if (!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none") {
-			if ($system->move_file($_FILES['logo']['tmp_name'], $main_path . 'uploaded/logo/'  . $_FILES['logo']['name'])) {
+			if ($system->move_file($_FILES['logo']['tmp_name'], MAIN_PATH . 'uploaded/logo/'  . $_FILES['logo']['name'])) {
 				$LOGOUPLOADED = true;
 			} else {
 				$LOGOUPLOADED = false;

@@ -13,16 +13,16 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 // Is the seller logged in?
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');
 	exit;
 }
-$user->check_suspended();
+$user->checkSuspended();
 
 if (!$user->can_sell)
 {

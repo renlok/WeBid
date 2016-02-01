@@ -13,14 +13,8 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
 
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-
-ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 
 if (isset($_REQUEST['auction_id']))
@@ -33,7 +27,7 @@ $ws = (isset($_GET['ws'])) ? $_GET['ws'] : 'w';
 
 if (isset($_POST['addfeedback'])) // submit the feedback
 {
-	if (!$user->is_logged_in())
+	if (!$user->checkAuth())
 	{
 		header('location: user_login.php');
 		exit;
@@ -69,7 +63,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 				else
 				{
 					// load hashing class to check password
-					include $include_path . 'PasswordHash.php';
+					include PACKAGE_PATH . 'PasswordHash.php';
 					$phpass = new PasswordHash(8, false);
 					if ($system->SETTINGS['usersauth'] == 'n' || $phpass->CheckPassword($_POST['TPL_password'], $user->user_data['password']))
 					{
@@ -182,9 +176,9 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 		$arr = $db->result();
 		$TPL_nick = $arr['nick'];
 		$i = 0;
-		foreach ($memtypesarr as $k => $l)
+		foreach ($membertypes as $k => $l)
 		{
-			if ($k >= $arr['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes) - 1))
 			{
 				$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 				break;
@@ -244,9 +238,9 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			while ($arrfeed = $db->fetch())
 			{
 				$j = 0;
-				foreach ($memtypesarr as $k => $l)
+				foreach ($membertypes as $k => $l)
 				{
-					if ($k >= $arrfeed['rate_sum'] || $j++ == (count($memtypesarr) - 1))
+					if ($k >= $arrfeed['rate_sum'] || $j++ == (count($membertypes) - 1))
 					{
 						$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 						break;
@@ -339,9 +333,9 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	if ($arr = $db->fetch())
 	{
 		$TPL_rate_ratio_value = '';
-		foreach ($memtypesarr as $k => $l)
+		foreach ($membertypes as $k => $l)
 		{
-			if ($k >= $arr['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes) - 1))
 			{
 				$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 				break;

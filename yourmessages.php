@@ -15,7 +15,7 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourmessages.php';
 	header('location: user_login.php');
@@ -86,7 +86,7 @@ $template->assign_vars(array(
 		));
 
 include 'header.php';
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourmessages.tpl'
 		));

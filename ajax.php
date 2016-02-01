@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'functions_ajax.php';
+include INCLUDE_PATH . 'functions_ajax.php';
 
 $do = alphanumeric($_GET['do']);
 

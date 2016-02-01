@@ -15,9 +15,9 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'language/' . $language . '/countries.inc.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
 unset($ERR);
 $userid = intval($_REQUEST['userid']);
@@ -152,7 +152,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':balance', $system->input_money($_POST['balance']), 'float');
 			if (strlen($_POST['password']) > 0)
 			{
-				include $include_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query .=  ", password = :password";
 				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');

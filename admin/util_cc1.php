@@ -15,8 +15,8 @@
 reset($LANGUAGES);
 foreach ($LANGUAGES as $k => $v)
 {
-	include $main_path . 'language/' . $k . '/messages.inc.php';
-	include $main_path . 'language/' . $k . '/categories.inc.php';
+	include MAIN_PATH . 'language/' . $k . '/messages.inc.php';
+	include MAIN_PATH . 'language/' . $k . '/categories.inc.php';
 
 	$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE parent_id = -1";
 	$db->direct_query($query);
@@ -39,7 +39,7 @@ foreach ($LANGUAGES as $k => $v)
 		$output .= "\t" . '<option value="' . $category_id . '">' . $cat_name . '</option>' . "\n";
 	}
 
-	$handle = fopen ($main_path . 'language/' . $k . '/categories_select_box.inc.php', 'w');
+	$handle = fopen (MAIN_PATH . 'language/' . $k . '/categories_select_box.inc.php', 'w');
 	fputs($handle, $output);
 	fclose($handle);
 }

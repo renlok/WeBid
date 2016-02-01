@@ -18,7 +18,7 @@
 	<!-- ELSE -->
 							<td>&nbsp;</td>
 	<!-- ENDIF -->
-							<td width="35" align="right"><img src="../includes/flags/{lang.LANG}.gif"></td>
+							<td width="35" align="right"><img src="../images/flags/{lang.LANG}.gif"></td>
 							<td><input type="text" name="title[{lang.LANG}]" size="40" maxlength="255" value="{lang.TITLE}"></td>
 						</tr>
 <!-- END lang -->
@@ -29,7 +29,7 @@
 	<!-- ELSE -->
 							<td>&nbsp;</td>
 	<!-- ENDIF -->
-							<td align="right" valign="top"><img src="../includes/flags/{lang.LANG}.gif"></td>
+							<td align="right" valign="top"><img src="../images/flags/{lang.LANG}.gif"></td>
 							<td><textarea name="content[{lang.LANG}]" cols="45" rows="20">{lang.CONTENT}</textarea></td>
 						</tr>
 <!-- END lang -->

@@ -124,9 +124,9 @@ if (!isset($_POST['action'])) // already closed auctions
 		// get gallery images
 		$UPLOADED_PICTURES = array();
 		$file_types = array('gif', 'jpg', 'jpeg', 'png');
-		if (is_dir($upload_path . intval($_GET['id'])))
+		if (is_dir(UPLOAD_PATH . intval($_GET['id'])))
 		{
-			$dir = opendir($upload_path . intval($_GET['id']));
+			$dir = opendir(UPLOAD_PATH . intval($_GET['id']));
 			while (($myfile = readdir($dir)) !== false)
 			{
 				if ($myfile != '.' && $myfile != '..' && !is_file($myfile))
@@ -144,18 +144,18 @@ if (!isset($_POST['action'])) // already closed auctions
 
 		if (count($UPLOADED_PICTURES) > 0)
 		{
-			if (!file_exists($upload_path . session_id()))
+			if (!file_exists(UPLOAD_PATH . session_id()))
 			{
 				umask();
-				mkdir($upload_path . session_id(), 0777);
+				mkdir(UPLOAD_PATH . session_id(), 0777);
 			}
 			foreach ($UPLOADED_PICTURES as $k => $v)
 			{
-				$system->move_file($uploaded_path . intval($_GET['id']) . '/' . $v, $uploaded_path . session_id() . '/' . $v, false);
+				$system->move_file(UPLOAD_FOLDER . intval($_GET['id']) . '/' . $v, UPLOAD_FOLDER . session_id() . '/' . $v, false);
 			}
 			if (!empty($RELISTEDAUCTION['pict_url']))
 			{
-				$system->move_file($uploaded_path . intval($_GET['id']) . '/' . $RELISTEDAUCTION['pict_url'], $uploaded_path . session_id() . '/' . $RELISTEDAUCTION['pict_url'], false);
+				$system->move_file(UPLOAD_FOLDER . intval($_GET['id']) . '/' . $RELISTEDAUCTION['pict_url'], UPLOAD_FOLDER . session_id() . '/' . $RELISTEDAUCTION['pict_url'], false);
 			}
 		}
 

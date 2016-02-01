@@ -18,7 +18,7 @@ if (!defined('InWeBid')) exit('Access denied');
 function converter_call($post_data = true, $data = array())
 {
 	global $system;
-	include $include_path . 'converter.inc.php';
+	include INCLUDE_PATH . 'converter.inc.php';
 
 	// get convertion data
 	if ($post_data)
@@ -46,12 +46,12 @@ function converter_call($post_data = true, $data = array())
 // reload the gallery table on upldgallery.php page
 function getupldtable()
 {
-	global $_SESSION, $uploaded_path;
+	global $_SESSION;
 	foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
 	{
 		echo '<tr>
 			<td>
-				<img src="' . $uploaded_path . session_id() . '/' . $v . '" width="60" border="0">
+				<img src="' . UPLOAD_FOLDER . session_id() . '/' . $v . '" width="60" border="0">
 			</td>
 			<td width="46%">
 				' . $v . '
@@ -84,14 +84,12 @@ function upload_images()
 	}
 	else
 	{
-		global $main_path, $upload_path, $include_path;
-
-		require_once $include_path . "PluploadHandler.php";
+		require_once PACKAGE_PATH . 'PluploadHandler.php';
 		$uploader = new PluploadHandler();
 		$uploader->no_cache_headers();
 		$uploader->cors_headers();
 
-		$targetDir = $upload_path . session_id();
+		$targetDir = UPLOAD_PATH . session_id();
 
 		if (!$uploader->handle(array(
 			'target_dir' => $targetDir,

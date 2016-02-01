@@ -13,17 +13,11 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
-
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-ksort($memtypesarr, SORT_NUMERIC);
+include INCLUDE_PATH . 'membertypes.inc.php';
 
 if(!isset($_GET['user_id']))
 {
-	if (!$user->is_logged_in())
+	if (!$user->checkAuth())
 	{
 		$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions.php';
 		header('location: user_login.php');
@@ -56,9 +50,9 @@ if (@$db->numrows() == 1)
 	$user_data = $db->result();
 	$TPL_user_id = $user_data['id'];
 	$TPL_rate_ratio_value = '';
-	foreach ($memtypesarr as $k => $l)
+	foreach ($membertypes as $k => $l)
 	{
-		if ($k >= $user_data['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+		if ($k >= $user_data['rate_sum'] || $i++ == (count($membertypes) - 1))
 		{
 			$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 			break;

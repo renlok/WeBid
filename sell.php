@@ -13,11 +13,11 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'datacheck.inc.php';
-include $include_path . 'functions_sell.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
-include $main_path . 'ckeditor/ckeditor.php';
-include $include_path . 'htmLawed.php';
+include INCLUDE_PATH . 'datacheck.inc.php';
+include INCLUDE_PATH . 'functions_sell.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
+include PACKAGE_PATH . 'htmLawed.php';
 
 $_SESSION['action'] = (!isset($_SESSION['action'])) ? 1 : $_SESSION['action'];
 $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST['action'];
@@ -31,7 +31,7 @@ if (!isset($_SESSION['SELL_sellcat1']) || !is_numeric($_SESSION['SELL_sellcat1']
 	exit;
 }
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'sell.php';
 	header('location: user_login.php');
@@ -62,10 +62,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img'])
 {
 	if ($_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])])
 	{
-		unlink($upload_path . session_id() . '/' . $_SESSION['SELL_pict_url']);
+		unlink(UPLOAD_PATH . session_id() . '/' . $_SESSION['SELL_pict_url']);
 		unset($_SESSION['SELL_pict_url']);
 	}
-	unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
+	unlink(UPLOAD_PATH . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
 	unset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE'][intval($_GET['img'])]);
 }
@@ -95,7 +95,7 @@ switch ($_SESSION['action'])
 		if ($system->SETTINGS['usersauth'] == 'y')
 		{
 			// hash and check the password
-			include $include_path . 'PasswordHash.php';
+			include PACKAGE_PATH . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
 			if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 			{
@@ -209,14 +209,14 @@ switch ($_SESSION['action'])
 
 			$UPLOADED_PICTURES = (isset($_SESSION['UPLOADED_PICTURES'])) ? $_SESSION['UPLOADED_PICTURES'] : array();
 			// remove old images if any
-			if (is_dir($upload_path . $auction_id))
+			if (is_dir(UPLOAD_PATH . $auction_id))
 			{
-				if ($dir = opendir($upload_path . $auction_id))
+				if ($dir = opendir(UPLOAD_PATH . $auction_id))
 				{
 					while (($file = readdir($dir)) !== false)
 					{
-						if (is_file($upload_path . $auction_id . '/' . $file))
-							unlink($upload_path . $auction_id . '/' . $file);
+						if (is_file(UPLOAD_PATH . $auction_id . '/' . $file))
+							unlink(UPLOAD_PATH . $auction_id . '/' . $file);
 					}
 					closedir($dir);
 				}
@@ -226,32 +226,32 @@ switch ($_SESSION['action'])
 			{
 				// Create dirctory
 				umask();
-				if (!is_dir($upload_path . $auction_id))
+				if (!is_dir(UPLOAD_PATH . $auction_id))
 				{
-					mkdir($upload_path . $auction_id, 0777);
+					mkdir(UPLOAD_PATH . $auction_id, 0777);
 				}
 				// Copy files
 				foreach ($UPLOADED_PICTURES as $k => $v)
 				{
-					$system->move_file($upload_path . session_id() . '/' . $v, $upload_path . $auction_id . '/' . $v);
-					chmod($upload_path . $auction_id . '/' . $v, 0777);
+					$system->move_file(UPLOAD_PATH . session_id() . '/' . $v, UPLOAD_PATH . $auction_id . '/' . $v);
+					chmod(UPLOAD_PATH . $auction_id . '/' . $v, 0777);
 				}
 				if (!empty($pict_url))
 				{
-					$system->move_file($upload_path . session_id() . '/' . $pict_url, $upload_path . $auction_id . '/' . $pict_url);
-					chmod($upload_path . $auction_id . '/' . $pict_url, 0777);
+					$system->move_file(UPLOAD_PATH . session_id() . '/' . $pict_url, UPLOAD_PATH . $auction_id . '/' . $pict_url);
+					chmod(UPLOAD_PATH . $auction_id . '/' . $pict_url, 0777);
 				}
 				// Delete files, using dir (to eliminate eventual odd files)
-				if ($dir = opendir($upload_path . session_id()))
+				if ($dir = opendir(UPLOAD_PATH . session_id()))
 				{
 					while (($file = readdir($dir)) !== false)
 					{
-						if (!is_dir($upload_path . session_id() . '/' . $file))
-							unlink($upload_path . session_id() . '/' . $file);
+						if (!is_dir(UPLOAD_PATH . session_id() . '/' . $file))
+							unlink(UPLOAD_PATH . session_id() . '/' . $file);
 					}
 					closedir($dir);
 				}
-				rmdir($upload_path . session_id());
+				rmdir(UPLOAD_PATH . session_id());
 			}
 			if (!isset($_SESSION['SELL_action']) || empty($_SESSION['SELL_action']))
 			{
@@ -293,7 +293,7 @@ switch ($_SESSION['action'])
 
 				if ($user->user_data['startemailmode'] == 'yes')
 				{
-					include $include_path . 'email_auction_confirmation.php';
+					include INCLUDE_PATH . 'email/auction_confirmation.php';
 				}
 				if ($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
 				{
@@ -416,7 +416,7 @@ switch ($_SESSION['action'])
 				{
 					$template->assign_block_vars('gallery', array(
 							'K' => $k,
-							'IMAGE' => $uploaded_path . session_id() . '/' . $v
+							'IMAGE' => UPLOAD_FOLDER . session_id() . '/' . $v
 							));
 				}
 			}
@@ -449,7 +449,7 @@ switch ($_SESSION['action'])
 					'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 
 					'AUC_DESCRIPTION' => stripslashes($sdescription),
-					'PIC_URL' => (empty($pict_url)) ? $MSG['114'] : '<img src="' . $uploaded_path . session_id() . '/' . $pict_url . '" style="max-width:100%; max-height:100%;">',
+					'PIC_URL' => (empty($pict_url)) ? $MSG['114'] : '<img src="' . UPLOAD_FOLDER . session_id() . '/' . $pict_url . '" style="max-width:100%; max-height:100%;">',
 					'MIN_BID' => $system->print_money($minimum_bid, false),
 					'RESERVE' => $system->print_money($reserve_price, false),
 					'BN_PRICE' => $system->print_money($buy_now_price, false),
@@ -582,7 +582,7 @@ switch ($_SESSION['action'])
 		}
 
 		$CKEditor = new CKEditor();
-		$CKEditor->basePath = $main_path . 'ckeditor/';
+		$CKEditor->basePath = PACKAGE_PATH . 'ckeditor/';
 		$CKEditor->returnOutput = true;
 
 		// build the fees javascript

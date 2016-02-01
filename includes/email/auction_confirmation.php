@@ -24,7 +24,7 @@ if ($user->user_data['startemailmode'] == 'yes')
 			'A_ID' => $auction_id,
 			'A_TITLE' => $title,
 			'A_TYPE' => ($atype == 1) ? $MSG['642'] : $MSG['641'],
-			'A_PICURL' => ($pict_url != '') ? $uploaded_path . $auction_id . '/' . $pict_url : 'images/email_alerts/default_item_img.jpg',
+			'A_PICURL' => ($pict_url != '') ? UPLOAD_FOLDER . $auction_id . '/' . $pict_url : 'images/email_alerts/default_item_img.jpg',
 			'A_MINBID' => $system->print_money($minimum_bid),
 			'A_RESERVE' => $system->print_money($reserve_price),
 			'A_BNPRICE' => $system->print_money($buy_now_price),

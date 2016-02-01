@@ -14,11 +14,14 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-require 'PHPMailerAutoload.php';
-
 class email_handler
 {
 	var $from, $message, $subject, $headers, $email_uid, $userlang, $errors;
+
+	public function __construct()
+	{
+		include PACKAGE_PATH . 'PHPMailer/PHPMailerAutoload.php';
+	}
 
 	function build_header()
 	{
@@ -46,9 +49,7 @@ class email_handler
 
 	function buildmessage($file)
 	{
-		global $main_path, $include_path;
-
-		$buffer = file($main_path . 'language/' . $this->getuserlang() . '/emails/' . $this->getusermailtype() . '/' . $file);
+		$buffer = file(MAIN_PATH . 'language/' . $this->getuserlang() . '/emails/' . $this->getusermailtype() . '/' . $file);
 		$i = 0;
 		$j = 0;
 		while ($i < count($buffer))

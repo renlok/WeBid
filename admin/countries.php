@@ -15,9 +15,9 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path . 'functions_rebuild.php';
+include INCLUDE_PATH . 'functions_rebuild.php';
 
 unset($ERR);
 
@@ -71,7 +71,7 @@ if (isset($_POST['act']))
 	$ERR = $MSG['1028'];
 }
 
-include $main_path . 'language/' . $language . '/countries.inc.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
 foreach($countries as $country) {
 	// check if the country is being used by a user

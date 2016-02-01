@@ -13,7 +13,7 @@
 					<div class="plain-box">
 						<p>{L_161}</p>
 <!-- BEGIN langs -->
-						<a href="categoriestrans.php?lang={langs.LANG}"><img align="middle" src="{SITEURL}includes/flags/{langs.LANG}.gif" border="0"></a>
+						<a href="categoriestrans.php?lang={langs.LANG}"><img align="middle" src="{SITEURL}images/flags/{langs.LANG}.gif" border="0"></a>
 <!-- END langs -->
 					</div>
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">

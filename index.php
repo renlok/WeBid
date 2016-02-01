@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 // Run cron according to SETTINGS
 if ($system->SETTINGS['cron'] == 2)
@@ -43,7 +43,7 @@ function ShowFlags()
 			$flags .= '<br>';
 			$counter = 0;
 		}
-		$flags .= '<a href="?lan=' . $lang . '"><img vspace="2" hspace="2" src="' . $system->SETTINGS['siteurl'] . 'includes/flags/' . $lang . '.gif" border="0" alt="' . $lang . '"></a>';
+		$flags .= '<a href="?lan=' . $lang . '"><img vspace="2" hspace="2" src="' . $system->SETTINGS['siteurl'] . 'images/flags/' . $lang . '.gif" border="0" alt="' . $lang . '"></a>';
 		$counter++;
 	}
 	return $flags;
@@ -113,7 +113,7 @@ while ($row = $db->fetch())
 			'ENDS' => $ends_string,
 			'ID' => $row['id'],
 			'BID' => $system->print_money($high_bid),
-			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
 			'TITLE' => $system->uncleanvars($row['title'])
 			));
 	$i++;
@@ -206,7 +206,7 @@ while ($row = $db->fetch())
 			'ENDS' => $ends_string,
 			'ID' => $row['id'],
 			'BID' => $system->print_money($high_bid),
-			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
 			'TITLE' => $system->uncleanvars($row['title'])
 			));
 }

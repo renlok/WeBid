@@ -26,16 +26,20 @@ if ($emailmode == 'one')
 	$emailer = new email_handler();
 	$emailer->assign_vars(array(
 			'S_NAME' => $Seller['name'],
-			'S_NICK' => $Seller['nick'],
-			'S_EMAIL' => $Seller['email'],
-			'A_TITLE' => $system->uncleanvars($Auction['title']),
-			'A_ID' => $Auction['id'],
-			'A_END' => $ends_string,
+
 			'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
+			'A_PICURL' => ($Auction['pict_url'] != '') ? UPLOAD_FOLDER . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'A_TITLE' => $Auction['title'],
+			'A_CURRENTBID' => $system->print_money($Auction['current_bid']),
+			'A_QTY' => $Auction['quantity'],
+			'A_ENDS' => $ends_string,
+
+			'B_REPORT' => $report_text,
+
 			'SITE_URL' => $system->SETTINGS['siteurl'],
-			'A_PICURL' => ($Auction['pict_url'] != '') ? $system->SETTINGS['siteurl'] . $uploaded_path . $Auction['id'] . '/' . $Auction['pict_url'] : $system->SETTINGS['siteurl'] . 'images/email_alerts/default_item_img.jpg',
 			'SITENAME' => $system->SETTINGS['sitename']
 			));
 	$emailer->email_uid = $Seller['id'];
-	$emailer->email_sender($Seller['email'], 'endauction_nowinner.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['112']);
+	$subject = $system->SETTINGS['sitename'] . ' ' . $MSG['079'] . ' ' . $MSG['907'] . ' ' . $system->uncleanvars($Auction['title']);
+	$emailer->email_sender($Seller['email'], 'endauction_winner.inc.php', $subject);
 }

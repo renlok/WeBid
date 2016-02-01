@@ -14,7 +14,7 @@
 
 include 'common.php';
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');
@@ -28,7 +28,7 @@ if (!isset($_POST['action']))
 	unset($_SESSION['UPLOADED_PICTURES']);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE']);
 	// Clear session folder and start afresh
-	$files = glob($uploaded_path . session_id() . '/*'); // get all file names
+	$files = glob(UPLOAD_FOLDER . session_id() . '/*'); // get all file names
 	foreach($files as $file) // iterate files
 	{
 		if(is_file($file))
@@ -120,9 +120,9 @@ if (!isset($_POST['action']))
 		// get gallery images
 		$UPLOADED_PICTURES = array();
 		$file_types = array('gif', 'jpg', 'jpeg', 'png');
-		if (is_dir($upload_path . $auc_id))
+		if (is_dir(UPLOAD_PATH . $auc_id))
 		{
-			$dir = opendir($upload_path . $auc_id);
+			$dir = opendir(UPLOAD_PATH . $auc_id);
 			while (($myfile = readdir($dir)) !== false)
 			{
 				if ($myfile != '.' && $myfile != '..' && !is_file($myfile))
@@ -140,18 +140,18 @@ if (!isset($_POST['action']))
 
 		if (count($UPLOADED_PICTURES) > 0)
 		{
-			if (!file_exists($upload_path . session_id()))
+			if (!file_exists(UPLOAD_PATH . session_id()))
 			{
 				umask();
-				mkdir($upload_path . session_id(), 0777);
+				mkdir(UPLOAD_PATH . session_id(), 0777);
 			}
 			foreach ($UPLOADED_PICTURES as $k => $v)
 			{
-				$system->move_file($uploaded_path . $auc_id . '/' . $v, $uploaded_path . session_id() . '/' . $v, false);
+				$system->move_file(UPLOAD_FOLDER . $auc_id . '/' . $v, UPLOAD_FOLDER . session_id() . '/' . $v, false);
 			}
 			if (!empty($RELISTEDAUCTION['pict_url']))
 			{
-				$system->move_file($uploaded_path . $auc_id . '/' . $RELISTEDAUCTION['pict_url'], $uploaded_path . session_id() . '/' . $RELISTEDAUCTION['pict_url'], false);
+				$system->move_file(UPLOAD_FOLDER . $auc_id . '/' . $RELISTEDAUCTION['pict_url'], UPLOAD_FOLDER . session_id() . '/' . $RELISTEDAUCTION['pict_url'], false);
 			}
 		}
 	}

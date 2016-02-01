@@ -15,15 +15,9 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path . 'membertypes.inc.php';
-
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-ksort($memtypesarr, SORT_NUMERIC);
+include INCLUDE_PATH . 'membertypes.inc.php';
 
 $secid = intval($_GET['id']);
 $query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
@@ -50,9 +44,9 @@ if ($db->numrows() > 0)
 	$PAGES = ($num_fbs == 0) ? 1 : ceil($num_fbs / $system->SETTINGS['perpage']);
 
 	$i = 0;
-	foreach ($memtypesarr as $k => $l)
+	foreach ($membertypes as $k => $l)
 	{
-		if ($k >= $arr['rate_sum'] || $i++ == (count($memtypesarr)-1))
+		if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes)-1))
 		{
 			$feedback_image = '<img src="' . $system->SETTINGS['siteurl'] . '/images/icons/' . $l['icon'] . '" class="fbstar">';
 			break;

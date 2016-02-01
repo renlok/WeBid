@@ -14,10 +14,10 @@
 
 if (!defined('InWeBid')) exit();
 
-include $include_path . 'maintainance.php';
-include $include_path . 'functions_banners.php';
+include INCLUDE_PATH . 'maintainance.php';
+include INCLUDE_PATH . 'functions_banners.php';
 if (basename($_SERVER['PHP_SELF']) != 'error.php')
-	include $include_path . 'stats.inc.php';
+	include INCLUDE_PATH . 'stats.inc.php';
 
 $jsfiles = 'js/jquery.js;js/jquery.lightbox.js;';
 $jsfiles .= (basename($_SERVER['PHP_SELF']) == 'sell.php') ? ';js/calendar.php' : '';
@@ -53,7 +53,7 @@ $template->assign_vars(array(
 		'ASSLURL' => ($system->SETTINGS['https'] == 'y' && $system->SETTINGS['usersauth'] == 'y') ? $sslurl : $system->SETTINGS['siteurl'],
 		'INCURL' => $incurl,
 		'Q' => (isset($q)) ? $q : '',
-		'SELECTION_BOX' => file_get_contents($main_path . 'language/' . $language . '/categories_select_box.inc.php'),
+		'SELECTION_BOX' => file_get_contents(MAIN_PATH . 'language/' . $language . '/categories_select_box.inc.php'),
 		'YOURUSERNAME' => ($user->logged_in) ? $user->user_data['nick'] : '',
 		'GOOGLEANALYTICS' => $system->SETTINGS['googleanalytics'],
 

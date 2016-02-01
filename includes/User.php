@@ -14,18 +14,61 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-class user
+class User
 {
-	var $user_data, $logged_in;
+	public $user_data = [];
+	public $logged_in = false;
+	public $can_sell = false;
+	public $can_buy = false;
 
-	function user()
+	function __construct()
 	{
 		global $_SESSION, $system, $DBPrefix, $db;
-
-		$this->logged_in = false;
-		$this->can_sell = false;
-		$this->can_buy = false;
-		$this->user_data = array();
+		
+		if (!$this->checkLoginSession())
+		{
+			$this->rememberMeLogin();
+		}
+		$this->userPermissions();
+		$this->checkBalance();
+	}
+	
+	private function rememberMeLogin()
+	{
+		global $db, $_COOKIE, $DBPrefix, $_SESSION;
+		
+		if (!$this->logged_in && isset($_COOKIE['WEBID_RM_ID']))
+		{
+			$query = "SELECT userid FROM " . $DBPrefix . "rememberme WHERE hashkey = :RM_ID";
+			$params = array();
+			$params[] = array(':RM_ID', alphanumeric($_COOKIE['WEBID_RM_ID']), 'str');
+			$db->query($query, $params);
+			if ($db->numrows() > 0)
+			{
+				// generate a random unguessable token
+				$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
+				$id = $db->result('userid');
+				$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
+				$params = array();
+				$params[] = array(':user_id', $id, 'int');
+				$db->query($query, $params);
+				if ($db->numrows() > 0)
+				{
+					$user_data = $db->result();
+					$this->user_data = $user_data;
+					$_SESSION['WEBID_LOGGED_IN'] 		= $id;
+					$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($user_data['password'], $user_data['hash']);
+					$_SESSION['WEBID_LOGGED_PASS'] 		= $user_data['password'];
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private function checkLoginSession()
+	{
+		global $DBPrefix, $_SESSION, $db;
 
 		if (isset($_SESSION['WEBID_LOGGED_NUMBER']) && isset($_SESSION['WEBID_LOGGED_IN']) && isset($_SESSION['WEBID_LOGGED_PASS']))
 		{
@@ -38,37 +81,46 @@ class user
 			if ($db->numrows() > 0)
 			{
 				$user_data = $db->result();
-
+				
 				if (strspn($user_data['password'], $user_data['hash']) == $_SESSION['WEBID_LOGGED_NUMBER'])
 				{
-					$this->logged_in = true;
 					$this->user_data = $user_data;
-					if ($this->user_data['suspended'] != 7)
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private function userPermissions()
+	{
+		global $DBPrefix, $db;
+		if ($this->logged_in)
+		{
+			if ($this->user_data['suspended'] != 7)
+			{
+				// check if user can sell or buy
+				if (strlen($this->user_data['groups']) > 0)
+				{
+					$query = "SELECT can_sell, can_buy FROM " . $DBPrefix . "groups WHERE id IN (" . $this->user_data['groups'] . ") AND (can_sell = 1 OR can_buy = 1)";
+					$db->direct_query($query);
+					while ($row = $db->fetch())
 					{
-						// check if user can sell or buy
-						if (strlen($user_data['groups']) < 1)
-							$user_data['groups'] = 0; // just in case
-						$query = "SELECT can_sell, can_buy FROM " . $DBPrefix . "groups WHERE id IN (" . $user_data['groups'] . ") AND (can_sell = 1 OR can_buy = 1)";
-						$db->direct_query($query);
-						while ($row = $db->fetch())
+						if ($row['can_sell'] == 1)
 						{
-							if ($row['can_sell'] == 1)
-							{
-								$this->can_sell = true;
-							}
-							if ($row['can_buy'] == 1)
-							{
-								$this->can_buy = true;
-							}
+							$this->can_sell = true;
+						}
+						if ($row['can_buy'] == 1)
+						{
+							$this->can_buy = true;
 						}
 					}
 				}
 			}
-			$this->check_balance();
 		}
 	}
 
-	function is_logged_in()
+	public function checkAuth()
 	{
 		if(isset($_SESSION['csrftoken']))
 		{
@@ -90,7 +142,7 @@ class user
 		return $this->logged_in;
 	}
 
-	function check_suspended()
+	public function checkSuspended()
 	{
 		if (in_array($this->user_data['suspended'], array(5, 6, 7)))
 		{
@@ -99,7 +151,7 @@ class user
 		}
 	}
 
-	function check_balance()
+	private function checkBalance()
 	{
 		global $system, $DBPrefix, $MSG, $db;
 
@@ -128,7 +180,7 @@ class user
 		}
 	}
 
-	function is_valid_user($id)
+	public function checkUserValid($id)
     {
         global $system, $MSG, $ERR_025, $DBPrefix, $db;
 

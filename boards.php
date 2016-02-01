@@ -19,7 +19,7 @@ if ($system->SETTINGS['boards'] == 'n')
 	header('location: index.php');
 }
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'boards.php';
 	header('location: user_login.php');

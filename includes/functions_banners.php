@@ -18,7 +18,7 @@ if (!function_exists('view'))
 {
 	function view()
 	{
-		global $system, $DBPrefix, $uploaded_path, $db;
+		global $system, $DBPrefix, $db;
 
 		$return = '';
 		$joinings = '';
@@ -127,15 +127,15 @@ if (!function_exists('view'))
 			{
 				$return .= '
 				<object width="' . $THISBANNER['width'] . '" height="' . $THISBANNER['height'] . '">
-					<param name="movie" value="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '">
+					<param name="movie" value="' . $system->SETTINGS['siteurl'] . UPLOAD_FOLDER . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '">
 					<param name="quality" value="high">
-					<embed src="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" width="' . $THISBANNER['width'] . '" height="' . $THISBANNER['height'] . '"></embed>
+					<embed src="' . $system->SETTINGS['siteurl'] . UPLOAD_FOLDER . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" width="' . $THISBANNER['width'] . '" height="' . $THISBANNER['height'] . '"></embed>
 				</object>';
 			}
 			else
 			{
 				$return .= '
-				<a href="' . $system->SETTINGS['siteurl'] . 'clickthrough.php?banner=' . $THISBANNER['id'] . '" target="_blank"> <img border=0 alt="' . $THISBANNER['alt'] . '" src="' . $system->SETTINGS['siteurl'] . $uploaded_path . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" /></a>';
+				<a href="' . $system->SETTINGS['siteurl'] . 'clickthrough.php?banner=' . $THISBANNER['id'] . '" target="_blank"> <img border=0 alt="' . $THISBANNER['alt'] . '" src="' . $system->SETTINGS['siteurl'] . UPLOAD_FOLDER . 'banners/' . $THISBANNER['user'] . '/' . $THISBANNER['name'] . '" /></a>';
 			}
 			if (!empty($THISBANNER['sponsortext']))
 			{

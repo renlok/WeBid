@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'datacheck.inc.php';
+include INCLUDE_PATH . 'datacheck.inc.php';
 
 $NOW = time();
 $id = intval($_REQUEST['id']);
@@ -23,7 +23,7 @@ $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
 $bidder_id = $user->user_data['id'];
 $bidding_ended = false;
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'bid.php?id=' . $id;
 	header('location: user_login.php');
@@ -194,7 +194,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		{
 			$errmsg = $ERR_004;
 		}
-		include $include_path . 'PasswordHash.php';
+		include PACKAGE_PATH . 'PasswordHash.php';
 		$phpass = new PasswordHash(8, false);
 		if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 		{
@@ -611,7 +611,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $c + $system->tdiff);
 		$new_bid = $system->print_money($next_bid);
 		// Send e-mail message
-		include $include_path . 'email_outbid.php';
+		include INCLUDE_PATH . 'email/outbid.php';
 	}
 
 	if (defined('TrackUserIPs'))
@@ -637,7 +637,7 @@ if (!isset($_POST['action']) || isset($errmsg))
 			'ERROR' => (isset($errmsg)) ? $errmsg : '',
 			'BID_HISTORY' => (isset($ARETHEREBIDS)) ? $ARETHEREBIDS : '',
 			'ID' => $id,
-			'IMAGE' => (!empty($pict_url_plain)) ? '<img src="getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $id . '/' . $pict_url_plain . '" border="0" align="center">' : '&nbsp;',
+			'IMAGE' => (!empty($pict_url_plain)) ? '<img src="getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $id . '/' . $pict_url_plain . '" border="0" align="center">' : '&nbsp;',
 			'TITLE' => $item_title,
 			'CURRENT_BID' => $system->print_money($cbid),
 			'ATYPE' => $atype,

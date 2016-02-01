@@ -137,7 +137,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':country', $system->cleanvars($_POST['TPL_country']), 'str');
 			$params[] = array(':zip', $system->cleanvars($_POST['TPL_zip']), 'str');
 			$params[] = array(':phone', $system->cleanvars($_POST['TPL_phone']), 'str');
-			$params[] = array(':timezone', $_POST['TPL_timezone'], 'float');
+			$params[] = array(':timezone', $_POST['TPL_timezone'], 'str');
 			$params[] = array(':emailtype', $system->cleanvars($_POST['TPL_emailtype']), 'str');
 			$params[] = array(':nletter', $system->cleanvars($_POST['TPL_nletter']), 'str');
 

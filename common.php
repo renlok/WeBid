@@ -76,8 +76,8 @@ $system->SETTINGS['auction_types'] = array (
 
 if($user->logged_in)
 {
-	$system->ctime = $system->getUserTimestamp(time(), $user->user_data['timezone']);
 	$system->tdiff = $system->getUserOffset(time(), $user->user_data['timezone']);
+	$system->ctime = $system->getUserTimestamp(time(), $user->user_data['timezone']) + $system->tdiff;
 }
 
 // delete REDIRECT_AFTER_LOGIN value automatically so you are never forwarded to an old page

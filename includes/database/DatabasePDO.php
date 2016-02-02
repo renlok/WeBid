@@ -174,7 +174,7 @@ class DatabasePDO extends Database
 		}
 	}
 
-	private function clean_params($query, $params)
+	protected function clean_params($query, $params)
 	{
 		// find the vars set in the query
 		preg_match_all("(:[a-zA-Z0-9_]+)", $query, $set_params);
@@ -188,7 +188,7 @@ class DatabasePDO extends Database
 		return $new_params;
 	}
 
-	private function find_key($params, $val)
+	protected function find_key($params, $val)
 	{
 		foreach ($params as $k => $v)
 		{
@@ -197,7 +197,7 @@ class DatabasePDO extends Database
 		}
 	}
 
-	private function build_params($params)
+	protected function build_params($params)
 	{
 		$PDO_constants = array(
 			'int' => PDO::PARAM_INT,
@@ -224,7 +224,7 @@ class DatabasePDO extends Database
 		return $params;
 	}
 
-	private function error_handler($error)
+	protected function error_handler($error)
 	{
 		if (!$this->error_supress)
 		{

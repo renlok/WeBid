@@ -14,7 +14,7 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-class DatabasePDO extends Database
+abstract class Database
 {
 	// database
 	private     $conn;
@@ -26,17 +26,17 @@ class DatabasePDO extends Database
 	private		$error_supress = false;
 	private		$fetch_methods = [];
 
-	public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8');
-	public function error_supress($state = true);
-	public function direct_query($query);
-	public function query($query, $params = array());
-	public function fetch($result = NULL, $method = 'FETCH_ASSOC');
-	public function fetchall($result = NULL, $method = 'FETCH_ASSOC');
-	public function result($column = NULL, $result = NULL, $method = 'FETCH_ASSOC');
-	public function numrows($result = NULL);
-	public function lastInsertId();
-	private function clean_params($query, $params);
-	private function find_key($params, $val);
-	private function build_params($params);
-	private function error_handler($error);
+	abstract public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8');
+	abstract public function error_supress($state = true);
+	abstract public function direct_query($query);
+	abstract public function query($query, $params = array());
+	abstract public function fetch($result = NULL, $method = 'FETCH_ASSOC');
+	abstract public function fetchall($result = NULL, $method = 'FETCH_ASSOC');
+	abstract public function result($column = NULL, $result = NULL, $method = 'FETCH_ASSOC');
+	abstract public function numrows($result = NULL);
+	abstract public function lastInsertId();
+	abstract protected function clean_params($query, $params);
+	abstract protected function find_key($params, $val);
+	abstract protected function build_params($params);
+	abstract protected function error_handler($error);
 }

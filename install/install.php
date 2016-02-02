@@ -15,13 +15,13 @@
 session_start();
 define('InWeBid', 1);
 include 'functions.php';
-include '../includesdatabase/Database.php';
-include '../includesdatabase/DatabasePDO.php';
+include '../includes/database/Database.php';
+include '../includes/database/DatabasePDO.php';
 define('InInstaller', 1);
 
 $db = new DatabasePDO();
 
-MAIN_PATH .  = getmainpath();
+define('MAIN_PATH', getmainpath());
 $thisversion = package_version();
 echo print_header(false);
 
@@ -74,7 +74,7 @@ switch($step)
 		$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";' . "\n";
 		$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
 		$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
-		$content .= 'MAIN_PATH . 	= "' . $path . '";' . "\n";
+		$content .= 'define("MAIN_PATH", "' . $path . '");' . "\n";
 		$content .= '$MD5_PREFIX = "' . $hash . '";' . "\n";
 		$content .= '?>';
 		$output = makeconfigfile($content, $path);

@@ -181,19 +181,19 @@ class User
 	}
 
 	public function checkUserValid($id)
-    {
-        global $system, $MSG, $ERR_025, $DBPrefix, $db;
+	{
+		global $system, $MSG, $ERR_025, $DBPrefix, $db;
 
-        $query = "SELECT id FROM " . $DBPrefix . "users WHERE id = :user_id";
-        $params = array();
+		$query = "SELECT id FROM " . $DBPrefix . "users WHERE id = :user_id";
+		$params = array();
 		$params[] = array(':user_id', $id, 'int');
 		$db->query($query, $params);
-        if ($db->numrows() == 0)
-        {
-            $_SESSION['msg_title'] = $MSG['415'];
-            $_SESSION['msg_body'] = $ERR_025;
-            header('location: message.php');
-            exit;
-        }
-    }
+		if ($db->numrows() == 0)
+		{
+			$_SESSION['msg_title'] = $MSG['415'];
+			$_SESSION['msg_body'] = $ERR_025;
+			header('location: message.php');
+			exit;
+		}
+	}
 }

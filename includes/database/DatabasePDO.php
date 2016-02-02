@@ -16,16 +16,16 @@ if (!defined('InWeBid')) exit('Access denied');
 
 class DatabasePDO extends Database
 {
-	private		$fetch_methods = [
+	protected		$fetch_methods = [
 		'FETCH_ASSOC' => PDO::FETCH_ASSOC,
 		'FETCH_BOTH' => PDO::FETCH_BOTH,
 		'FETCH_NUM' => PDO::FETCH_NUM,
 	];
 
-    public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
-    {
-        $this->DBPrefix = $DBPrefix;
-        $this->CHARSET = $CHARSET;
+	public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
+	{
+		$this->DBPrefix = $DBPrefix;
+		$this->CHARSET = $CHARSET;
 		try {
 			// MySQL with PDO_MYSQL
 			$this->conn = new PDO("mysql:host=$DbHost;dbname=$DbDatabase;charset =$CHARSET", $DbUser, $DbPassword);
@@ -39,7 +39,7 @@ class DatabasePDO extends Database
 			$this->error_handler($e->getMessage());
 			return false;
 		}
-    }
+	}
 
 	// to run a direct query
 	public function error_supress($state = true)
@@ -174,7 +174,7 @@ class DatabasePDO extends Database
 		}
 	}
 
-	private function clean_params($query, $params)
+	protected function clean_params($query, $params)
 	{
 		// find the vars set in the query
 		preg_match_all("(:[a-zA-Z0-9_]+)", $query, $set_params);
@@ -188,7 +188,7 @@ class DatabasePDO extends Database
 		return $new_params;
 	}
 
-	private function find_key($params, $val)
+	protected function find_key($params, $val)
 	{
 		foreach ($params as $k => $v)
 		{
@@ -197,7 +197,7 @@ class DatabasePDO extends Database
 		}
 	}
 
-	private function build_params($params)
+	protected function build_params($params)
 	{
 		$PDO_constants = array(
 			'int' => PDO::PARAM_INT,
@@ -224,7 +224,7 @@ class DatabasePDO extends Database
 		return $params;
 	}
 
-	private function error_handler($error)
+	protected function error_handler($error)
 	{
 		if (!$this->error_supress)
 		{

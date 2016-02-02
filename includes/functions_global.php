@@ -24,8 +24,8 @@ class global_class
 
 		// Load settings
 		$this->loadsettings();
-		$this->ctime = $this->getUserTimestamp(time(), $this->SETTINGS['timezone']);
 		$this->tdiff = $this->getUserOffset(time(), $this->SETTINGS['timezone']);
+		$this->ctime = $this->getUserTimestamp(time(), $this->SETTINGS['timezone']) + $this->tdiff;
 		// check install directory
 		if (is_dir(MAIN_PATH . 'install'))
 		{
@@ -268,26 +268,26 @@ class global_class
 	// time zones
 	function getConvertedDateTimeObject($timestamp, $userTimezone)
 	{
-	    # create server and user timezone objects
-	    $fromZone = new DateTimeZone('UTC'); // UTC
-	    $toZone = new DateTimeZone($userTimezone); // Europe/London, or whatever it happens to be
+		# create server and user timezone objects
+		$fromZone = new DateTimeZone('UTC'); // UTC
+		$toZone = new DateTimeZone($userTimezone); // Europe/London, or whatever it happens to be
 
-	    $time = date('Y-m-d H:i:s', $timestamp);
-	    $dt = new DateTime($time, $fromZone);
-	    $dt->setTimezone($toZone);
-	    return $dt;
+		$time = date('Y-m-d H:i:s', $timestamp);
+		$dt = new DateTime($time, $fromZone);
+		$dt->setTimezone($toZone);
+		return $dt;
 	}
 
 	function getUserTimestamp($timestamp, $userTimezone)
 	{
-	    $dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
-	    return $dt->getTimestamp();
+		$dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
+		return $dt->getTimestamp();
 	}
 
 	function getUserOffset($timestamp, $userTimezone)
 	{
-	    $dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
-	    return $dt->getOffset();
+		$dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
+		return $dt->getOffset();
 	}
 
 	//CURRENCY FUNCTIONS

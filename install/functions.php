@@ -30,7 +30,7 @@ function getdomainpath()
 	return $path;
 }
 
-function makeconfigfile($contents, MAIN_PATH . )
+function makeconfigfile($contents)
 {
 	$filename = MAIN_PATH . 'includes/config.inc.php';
 	$altfilename = MAIN_PATH . 'includes/config.inc.php.new';
@@ -159,8 +159,6 @@ function package_version()
 
 function show_config_table($fresh = true)
 {
-	MAIN_PATH .  = getmainpath();
-
 	$data = '<form name="form1" method="post" action="?step=1">';
 	$data .= '<table cellspacing="1" border="1" style="border-collapse:collapse;" cellpadding="6">';
 	$data .= '<tr>';

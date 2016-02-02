@@ -124,9 +124,9 @@ function setfeetemplate($data)
 function vat($price)
 {
 	global $system, $vat;
-    $price_with_vat = $price + ($vat * ($price / 100));
-    $price_with_vat = round($price_with_vat, $system->SETTINGS['moneydecimals']);
-    return $price_with_vat;
+	$price_with_vat = $price + ($vat * ($price / 100));
+	$price_with_vat = round($price_with_vat, $system->SETTINGS['moneydecimals']);
+	return $price_with_vat;
 }
 
 // remove vat

@@ -24,8 +24,8 @@ class global_class
 
 		// Load settings
 		$this->loadsettings();
-		$this->ctime = $this->getUserTimestamp(time(), $this->SETTINGS['timezone']);
 		$this->tdiff = $this->getUserOffset(time(), $this->SETTINGS['timezone']);
+		$this->ctime = $this->getUserTimestamp(time(), $this->SETTINGS['timezone']) + $this->tdiff;
 		// check install directory
 		if (is_dir(MAIN_PATH . 'install'))
 		{

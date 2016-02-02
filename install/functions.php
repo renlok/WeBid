@@ -159,8 +159,6 @@ function package_version()
 
 function show_config_table($fresh = true)
 {
-	MAIN_PATH .  = getmainpath();
-
 	$data = '<form name="form1" method="post" action="?step=1">';
 	$data .= '<table cellspacing="1" border="1" style="border-collapse:collapse;" cellpadding="6">';
 	$data .= '<tr>';

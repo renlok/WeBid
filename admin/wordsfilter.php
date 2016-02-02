@@ -22,11 +22,7 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET wordsfilter = :wordsfilter";
-	$params = array();
-	$params[] = array(':wordsfilter', ynbool($_POST['wordsfilter']), 'str');
-	$db->query($query, $params);
+	$system->writesetting("wordsfilter", ynbool($_POST['wordsfilter']), 'str');
 
 	//purge the old wordlist
 	$query = "DELETE FROM " . $DBPrefix . "filterwords";

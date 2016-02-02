@@ -26,8 +26,8 @@ class DatabasePDO extends Database
 	private		$error_supress = false;
 	private		$fetch_methods = [];
 
-    public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8');
-    public function error_supress($state = true);
+	public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8');
+	public function error_supress($state = true);
 	public function direct_query($query);
 	public function query($query, $params = array());
 	public function fetch($result = NULL, $method = 'FETCH_ASSOC');

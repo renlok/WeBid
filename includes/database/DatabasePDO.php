@@ -22,10 +22,10 @@ class DatabasePDO extends Database
 		'FETCH_NUM' => PDO::FETCH_NUM,
 	];
 
-    public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
-    {
-        $this->DBPrefix = $DBPrefix;
-        $this->CHARSET = $CHARSET;
+	public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
+	{
+		$this->DBPrefix = $DBPrefix;
+		$this->CHARSET = $CHARSET;
 		try {
 			// MySQL with PDO_MYSQL
 			$this->conn = new PDO("mysql:host=$DbHost;dbname=$DbDatabase;charset =$CHARSET", $DbUser, $DbPassword);
@@ -39,7 +39,7 @@ class DatabasePDO extends Database
 			$this->error_handler($e->getMessage());
 			return false;
 		}
-    }
+	}
 
 	// to run a direct query
 	public function error_supress($state = true)

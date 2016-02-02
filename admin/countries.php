@@ -38,8 +38,8 @@ if (isset($_POST['act']))
 			{
 				$query .= " OR ";
 			}
-			$query .= "country = :country";
-			$params[] = array(':country', $system->cleanvars($_POST['delete'][$i], 'str'));
+			$query .= "country = :country" . $i;
+			$params[] = array(':country' . $i, $system->cleanvars($_POST['delete'][$i]), 'str');
 		}
 		$db->query($query, $params);
 	}

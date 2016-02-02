@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit('Access denied');
 
 class DatabasePDO extends Database
 {
-	private		$fetch_methods = [
+	protected		$fetch_methods = [
 		'FETCH_ASSOC' => PDO::FETCH_ASSOC,
 		'FETCH_BOTH' => PDO::FETCH_BOTH,
 		'FETCH_NUM' => PDO::FETCH_NUM,

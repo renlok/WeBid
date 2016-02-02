@@ -17,14 +17,14 @@ if (!defined('InWeBid')) exit('Access denied');
 abstract class Database
 {
 	// database
-	private     $conn;
-	private		$DBPrefix;
-	private		$CHARSET;
-	private		$lastquery;
-	private		$fetchquery;
-	private		$error;
-	private		$error_supress = false;
-	private		$fetch_methods = [];
+	protected		$conn;
+	protected		$DBPrefix;
+	protected		$CHARSET;
+	protected		$lastquery;
+	protected		$fetchquery;
+	protected		$error;
+	protected		$error_supress = false;
+	protected		$fetch_methods = [];
 
 	abstract public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8');
 	abstract public function error_supress($state = true);

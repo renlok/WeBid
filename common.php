@@ -30,12 +30,11 @@ if(!@include('includes/config.inc.php'))
 $MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didnt set a code
 
 //define the paths
-define('MAIN_PATH', $main_path);
-define('CACHE_PATH', $main_path . 'cache/');
-define('INCLUDE_PATH', $main_path . 'includes/');
-define('PACKAGE_PATH', $main_path . 'includes/packages/');
+define('CACHE_PATH', MAIN_PATH . 'cache/');
+define('INCLUDE_PATH', MAIN_PATH . 'includes/');
+define('PACKAGE_PATH', MAIN_PATH . 'includes/packages/');
 define('UPLOAD_FOLDER', 'uploaded/');
-define('UPLOAD_PATH', $main_path . UPLOAD_FOLDER);
+define('UPLOAD_PATH', MAIN_PATH . UPLOAD_FOLDER);
 
 include INCLUDE_PATH . 'errors.inc.php'; //error handler functions
 include INCLUDE_PATH . 'dates.inc.php';

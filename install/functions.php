@@ -30,7 +30,7 @@ function getdomainpath()
 	return $path;
 }
 
-function makeconfigfile($contents, MAIN_PATH)
+function makeconfigfile($contents)
 {
 	$filename = MAIN_PATH . 'includes/config.inc.php';
 	$altfilename = MAIN_PATH . 'includes/config.inc.php.new';

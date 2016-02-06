@@ -117,7 +117,7 @@ function CheckSellData()
 		return '018';
 	}
 
-	if (!$system->CheckMoney($minimum_bid) && $buy_now_only == 'n')
+	if (!$system->CheckMoney($minimum_bid) && $buy_now_only == 0)
 	{
 		return '058';
 	}
@@ -126,12 +126,12 @@ function CheckSellData()
 	$clean_minimum_bid = $system->input_money($minimum_bid);
 	$clean_reserve_price = $system->input_money($reserve_price);
 	$clean_buy_now_price = $system->input_money($buy_now_price);
-	if ((empty($minimum_bid) || floatval($clean_minimum_bid) <= 0) && ($buy_now_only == 'n' || !$buy_now_only))
+	if ((empty($minimum_bid) || floatval($clean_minimum_bid) <= 0) && (!$buy_now_only))
 	{
 		return '019';
 	}
 
-	if (empty($reserve_price) && $with_reserve == 'yes' && $buy_now_only == 'n')
+	if (empty($reserve_price) && $with_reserve == 'yes' && $buy_now_only == 0)
 	{
 		return '021';
 	}
@@ -151,7 +151,7 @@ function CheckSellData()
 		return '022';
 	}
 
-	if ($buy_now_only == 'y')
+	if ($buy_now_only == 1)
 	{
 		$buy_now = 'yes';
 	}
@@ -219,7 +219,7 @@ function CheckSellData()
 		return '5045';
 	}
 
-	if ($buy_now == 'yes' && $buy_now_only == 'n')
+	if ($buy_now == 'yes' && $buy_now_only == 0)
 	{
 		if (($with_reserve == 'yes' && $clean_buy_now_price <= $clean_reserve_price) || $clean_buy_now_price <= $clean_minimum_bid)
 		{

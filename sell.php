@@ -295,7 +295,7 @@ switch ($_SESSION['action'])
 				{
 					include INCLUDE_PATH . 'email/auction_confirmation.php';
 				}
-				if ($system->SETTINGS['bn_only'] == 'y' && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
+				if ($system->SETTINGS['bn_only'] && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
 				{
 					$query = "SELECT COUNT(*) as count FROM " . $DBPrefix . "auctions
 							WHERE closed = 0 AND suspended = 0 AND user = :user_id";
@@ -306,22 +306,22 @@ switch ($_SESSION['action'])
 					if ($totalaucs > 0)
 					{
 						$query = "SELECT COUNT(*) as count FROM " . $DBPrefix . "auctions
-								WHERE closed = 0 AND suspended = 0 AND bn_only = 'y' AND user = :user_id";
+								WHERE closed = 0 AND suspended = 0 AND bn_only = 1 AND user = :user_id";
 						$params = array();
 						$params[] = array(':user_id', $user->user_data['id'], 'int');
 						$db->query($query, $params);
 						$totalbnaucs = $db->result('count');
 						$percent = ($totalbnaucs * 100) / $totalaucs;
-						if ($user->user_data['bn_only'] == 'y' && $system->SETTINGS['bn_only_percent'] <= $percent)
+						if ($user->user_data['bn_only'] && $system->SETTINGS['bn_only_percent'] <= $percent)
 						{
-							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'n' WHERE id = :user_id";
+							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 0 WHERE id = :user_id";
 							$params = array();
 							$params[] = array(':user_id', $user->user_data['id'], 'int');
 							$db->query($query, $params);
 						}
-						if ($user->user_data['bn_only'] == 'n' && $system->SETTINGS['bn_only_percent'] > $percent)
+						if ($user->user_data['bn_only'] == 0 && $system->SETTINGS['bn_only_percent'] > $percent)
 						{
-							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 'y' WHERE id = :user_id";
+							$query = "UPDATE " . $DBPrefix . "users SET bn_only = 1 WHERE id = :user_id";
 							$params = array();
 							$params[] = array(':user_id', $user->user_data['id'], 'int');
 							$db->query($query, $params);
@@ -421,7 +421,7 @@ switch ($_SESSION['action'])
 				}
 			}
 
-			$iquantity = ($atype == 2 || $buy_now_only == 'y') ? $iquantity : 1;
+			$iquantity = ($atype == 2 || $buy_now_only) ? $iquantity : 1;
 
 			if (!(strpos($a_starts, '-') === false))
 			{
@@ -469,7 +469,7 @@ switch ($_SESSION['action'])
 					'FEE' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
 
 					'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y'),
-					'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only == 'y')),
+					'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only)),
 					'B_BN' => ($system->SETTINGS['buy_now'] == 2),
 					'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
 					'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
@@ -675,15 +675,15 @@ switch ($_SESSION['action'])
 				'AUC_DESCRIPTION' => $CKEditor->editor('sdescription', stripslashes($sdescription)),
 				'ITEMQTY' => $iquantity,
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid, false),
-				'BN_ONLY' => ($buy_now_only == 'y') ? 'disabled' : '',
+				'BN_ONLY' => ($buy_now_only) ? 'disabled' : '',
 				'SHIPPING_COST' => $system->print_money_nosymbol($shipping_cost, false),
 				'ADDITIONAL_SHIPPING_COST' => $system->print_money_nosymbol($additional_shipping_cost, false),
 				'RESERVE_Y' => ($with_reserve == 'yes') ? 'checked' : '',
 				'RESERVE_N' => ($with_reserve == 'yes') ? '' : 'checked',
 				'RESERVE' => $system->print_money_nosymbol($reserve_price, false),
 				'START_TIME' => $TPL_start_date,
-				'BN_ONLY_Y' => ($buy_now_only == 'y') ? 'checked' : '',
-				'BN_ONLY_N' => ($buy_now_only == 'y') ? '' : 'checked',
+				'BN_ONLY_Y' => ($buy_now_only) ? 'checked' : '',
+				'BN_ONLY_N' => ($buy_now_only) ? '' : 'checked',
 				'BN_Y' => ($buy_now == 'yes') ? 'checked' : '',
 				'BN_N' => ($buy_now == 'yes') ? '' : 'checked',
 				'BN_PRICE' => $system->print_money_nosymbol($buy_now_price, false),
@@ -695,7 +695,7 @@ switch ($_SESSION['action'])
 				'SHIPPING3' => (intval($shipping) == 3) ? 'checked' : '',
 				'INTERNATIONAL' => (!empty($international)) ? 'checked' : '',
 				'SHIPPING_TERMS' => $shipping_terms,
-				'ITEMQTYD' => ($atype == 2 || $buy_now_only == 'y') ? '' : 'disabled',
+				'ITEMQTYD' => ($atype == 2 || $buy_now_only) ? '' : 'disabled',
 				'START_NOW' => (!empty($start_now)) ? 'checked' : '',
 				'IS_BOLD' => ($is_bold == 'y') ? 'checked' : '',
 				'IS_HIGHLIGHTED' => ($is_highlighted == 'y') ? 'checked' : '',
@@ -720,7 +720,7 @@ switch ($_SESSION['action'])
 
 				'B_CAN_TAX' => $can_tax,
 				'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1),
-				'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] == 'y' && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only'] == 'y') || $system->SETTINGS['bn_only_disable'] == 'n')),
+				'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only']) || $system->SETTINGS['bn_only_disable'] == 'n')),
 				'B_BN' => ($system->SETTINGS['buy_now'] == 2),
 				'B_EDITING' => ($_SESSION['SELL_action'] == 'edit'),
 				// options,

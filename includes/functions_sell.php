@@ -68,7 +68,7 @@ function setvars()
 	$_SESSION['SELL_sellcat2'] = (isset($_SESSION['SELL_sellcat2'])) ? $_SESSION['SELL_sellcat2'] : 0;
 	$sellcat2 = $_SESSION['SELL_sellcat2'];
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
-	$buy_now_only = (empty($buy_now_only)) ? 'n' : $buy_now_only;
+	$buy_now_only = (empty($buy_now_only)) ? 0 : $buy_now_only;
 	$a_starts = (isset($_POST['a_starts'])) ? $_POST['a_starts'] : $_SESSION['SELL_starts'];
 	$is_bold = (isset($_POST['is_bold'])) ? 'y' : $_SESSION['SELL_is_bold'];
 	$is_featured = (isset($_POST['is_featured'])) ? 'y' : $_SESSION['SELL_is_featured'];
@@ -229,12 +229,12 @@ function updateauction($type)
 	$params[] = array(':pict_url', $_SESSION['SELL_pict_url'], 'str');
 	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
 	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
-	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
+	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 0) ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
 	$params[] = array(':shipping_cost', $system->input_money($_SESSION['SELL_shipping_cost']), 'float');
 	$params[] = array(':shipping_cost_additional', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
 	$params[] = array(':reserve_price', $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0), 'float');
 	$params[] = array(':buy_now', $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0), 'float');
-	$params[] = array(':bn_only', ynbool($_SESSION['SELL_buy_now_only']), 'str');
+	$params[] = array(':bn_only', $_SESSION['SELL_buy_now_only'], 'bool');
 	$params[] = array(':auction_type', $_SESSION['SELL_atype'], 'int');
 	$params[] = array(':duration', $_SESSION['SELL_duration'], 'int');
 	$params[] = array(':increment', $system->input_money($_SESSION['SELL_customincrement']), 'float');
@@ -273,7 +273,7 @@ function addauction()
 	$params[] = array(':pict_url', $system->cleanvars($_SESSION['SELL_pict_url']), 'str');
 	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
 	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
-	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
+	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 0) ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
 	$params[] = array(':shipping_cost', $system->input_money($_SESSION['SELL_shipping_cost']), 'float');
 	$params[] = array(':shipping_cost_additional', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
 	$params[] = array(':reserve_price', $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0), 'float');
@@ -290,7 +290,7 @@ function addauction()
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
-	$params[] = array(':bn_only', ynbool($_SESSION['SELL_buy_now_only']), 'str');
+	$params[] = array(':bn_only', $_SESSION['SELL_buy_now_only'], 'bool');
 	$params[] = array(':bold', ynbool($_SESSION['SELL_is_bold']), 'str');
 	$params[] = array(':highlighted', ynbool($_SESSION['SELL_is_highlighted']), 'str');
 	$params[] = array(':featured', ynbool($_SESSION['SELL_is_featured']), 'str');

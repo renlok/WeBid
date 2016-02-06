@@ -217,9 +217,9 @@ while ($item = $db->fetch())
 			'BID' => ($item['current_bid'] == 0) ? '-' : $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 
-			'B_CLOSED' => ($item['closed'] == 1),
+			'B_CLOSED' => ($item['closed']),
 			'B_HASNOBIDS' => ($item['current_bid'] == 0),
-			'B_BUY_NOW_ONLY' => ($item['bn_only'] == 'y'),
+			'B_BUY_NOW_ONLY' => ($item['bn_only']),
 			'B_BUY_NOW' => ($item['bn_sale'] == 1),
 			'B_DUTCH' => ($item['auction_type'] == 2)
 			));

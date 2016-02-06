@@ -242,7 +242,7 @@ if (isset($_POST['action']))
 			$params[] = array(':minimum_bid', $system->input_money($_POST['min_bid']), 'float');
 			$params[] = array(':shipping_cost', $system->input_money($_POST['shipping_cost']), 'float');
 			$params[] = array(':buy_now', $system->input_money($_POST['buy_now']), 'float');
-			$params[] = array(':bn_only', $_POST['buy_now_only'], 'str');
+			$params[] = array(':bn_only', $_POST['buy_now_only'], 'bool');
 			$params[] = array(':reserve_price', $system->input_money($_POST['reserve_price']), 'float');
 			$params[] = array(':increment', $system->input_money($_POST['customincrement']), 'float');
 			$params[] = array(':shipping', $_POST['shipping'], 'str');
@@ -393,8 +393,8 @@ $template->assign_vars(array(
 
 		'SHIPPING_COST' => $system->print_money_nosymbol($auction_data['shipping_cost']),
 		'RESERVE' => $system->print_money_nosymbol($auction_data['reserve_price']),
-		'BN_ONLY_Y' => ($auction_data['bn_only'] == 'y') ? 'checked' : '',
-		'BN_ONLY_N' => ($auction_data['bn_only'] == 'y') ? '' : 'checked',
+		'BN_ONLY_Y' => ($auction_data['bn_only']) ? 'checked' : '',
+		'BN_ONLY_N' => ($auction_data['bn_only']) ? '' : 'checked',
 		'BN_PRICE' => $system->print_money_nosymbol($auction_data['buy_now']),
 		'CUSTOM_INC' => ($auction_data['increment'] > 0) ? $system->print_money_nosymbol($auction_data['increment']) : '',
 		'SHIPPING1' => ($auction_data['shipping'] == 1 || empty($auction_data['shipping'])) ? 'checked' : '',

@@ -55,7 +55,7 @@ $user_sql = " AND a.user = " . intval($_SESSION['searchauctionsuid']);
 if (isset($_SESSION['searchauctionstitlekeywords']) && $_SESSION['searchauctionstitlekeywords'] != '') {
 $titlekeywords_sql = " AND INSTR(LCASE(a.title), '" . strtolower($_SESSION['searchauctionstitlekeywords']) . "') > 0";
 }
-$auctiontype_sql = "a.closed >= 0";
+$auctiontype_sql = "a.closed = 1";
 if (!empty($_SESSION['searchauctionsauctiontype']))
 {
 	switch ($_SESSION['searchauctionsauctiontype'])
@@ -70,7 +70,7 @@ if (!empty($_SESSION['searchauctionsauctiontype']))
 			$auctiontype_sql = "a.suspended != 0";
 		break;
 		default:			// all auctions
-			$auctiontype_sql = "a.closed >= 0";
+			$auctiontype_sql = "";
 	}
 }
 // If a new search is posted, you need to unset $_SESSION['RETURN_LIST_OFFSET'] to get page 1.

@@ -108,7 +108,7 @@ while ($row = $db->fetch())
 		$ends_string = $MSG['911'];
 	}
 	$high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
-	$high_bid = ($row['bn_only'] == 'y') ? $row['buy_now'] : $high_bid;
+	$high_bid = ($row['bn_only']) ? $row['buy_now'] : $high_bid;
 	$template->assign_block_vars('featured', array(
 			'ENDS' => $ends_string,
 			'ID' => $row['id'],

@@ -295,7 +295,9 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_title` varchar(70);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_shipping_cost` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_payment` tinytext;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `auction_type` `auction_type` int(1);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `auction_type` `auction_type` int(2);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `international` `international` tinyint(1);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `closed` `closed` tinyint(1);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auction_types`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
 	  `id` int(2) NOT NULL auto_increment,
@@ -337,8 +339,8 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 		`lang` char(2) NOT NULL default '',
 		`group_name` varchar(255) NOT NULL default ''
 	);";
-	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
-	$query[] = "CREATE TABLE `".$DBprefix ."settings`
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settingsv2`;";
+	$query[] = "CREATE TABLE `".$DBprefix ."settingsv2`
 		`fieldname` VARCHAR(30) NOT NULL,
 		`fieldtype` VARCHAR(10) NOT NULL,
 		`value` VARCHAR(255) NOT NULL,

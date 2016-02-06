@@ -354,9 +354,9 @@ $(document).ready(function(){
 							<b>{L_30_0063}</b>
 						</td>
 						<td class="rightpan">
-							<input type="radio" name="buy_now_only" value="n" {BN_ONLY_N} id="bn_only_no">
+							<input type="radio" name="buy_now_only" value="0" {BN_ONLY_N} id="bn_only_no">
 							{L_029}
-							<input type="radio" name="buy_now_only" value="y" {BN_ONLY_Y} id="bn_only_yes">
+							<input type="radio" name="buy_now_only" value="1" {BN_ONLY_Y} id="bn_only_yes">
 							{L_030}
 						</td>
 					</tr>

@@ -293,12 +293,12 @@ if ($user->logged_in && $num_bids > 0)
 				$yourbidmsg = $MSG['514'];
 				$yourbidclass = 'yourbidloss';
 			}
-			elseif ($difference <= 0 || $auction_data['bn_only'] == 'y')
+			elseif ($difference <= 0 || $auction_data['bn_only'])
 			{
 				$yourbidmsg = $MSG['25_0089'];
 			}
 		}
-		elseif ($auction_data['bn_only'] == 'y')
+		elseif ($auction_data['bn_only'])
 		{
 			$yourbidmsg = $MSG['25_0089'];
 			$yourbidclass = 'yourbidwin';
@@ -547,12 +547,12 @@ $template->assign_vars(array(
 		'MINBID' => $min_bid,
 		'MAXBID' => $high_bid,
 		'NEXTBID' => $next_bid,
-		'INTERNATIONAL' => ($auction_data['international'] == 1) ? $MSG['033'] : $MSG['043'],
+		'INTERNATIONAL' => ($auction_data['international']) ? $MSG['033'] : $MSG['043'],
 		'SHIPPING' => $shipping,
 		'SHIPPINGTERMS' => nl2br($system->uncleanvars($auction_data['shipping_terms'])),
 		'PAYMENTS' => $payment_methods,
 		'AUCTION_VIEWS' => $auction_data['counter'],
-		'AUCTION_TYPE' => ($auction_data['bn_only'] == 'n') ? $system->SETTINGS['auction_types'][$auction_type] : $MSG['933'],
+		'AUCTION_TYPE' => ($auction_data['bn_only'] == 0) ? $system->SETTINGS['auction_types'][$auction_type] : $MSG['933'],
 		'ATYPE' => $auction_type,
 		'THUMBWIDTH' => $system->SETTINGS['thumb_show'],
 		'VIEW_HISTORY1' => (empty($view_history)) ? '' : $view_history . ' | ',
@@ -584,13 +584,13 @@ $template->assign_vars(array(
 		'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
 		'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && (!$user->logged_in || $user->user_data['id'] != $auction_data['user'])),
 		'B_HASIMAGE' => (!empty($auction_data['pict_url'])),
-		'B_NOTBNONLY' => ($auction_data['bn_only'] == 'n'),
+		'B_NOTBNONLY' => ($auction_data['bn_only'] == 0),
 		'B_HASRESERVE' => ($auction_data['reserve_price'] > 0 && $auction_data['reserve_price'] > $auction_data['current_bid']),
 		'B_BNENABLED' => ($system->SETTINGS['buy_now'] == 2),
 		'B_HASGALELRY' => (count($UPLOADED_PICTURES) > 0),
 		'B_SHOWHISTORY' => (isset($_GET['history']) && $num_bids > 0),
-		'B_BUY_NOW' => ($auction_data['buy_now'] > 0 && ($auction_data['bn_only'] == 'y' || $auction_data['bn_only'] == 'n' && ($auction_data['num_bids'] == 0 || ($auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])))),
-		'B_BUY_NOW_ONLY' => ($auction_data['bn_only'] == 'y'),
+		'B_BUY_NOW' => ($auction_data['buy_now'] > 0 && ($auction_data['bn_only'] || $auction_data['bn_only'] == 0 && ($auction_data['num_bids'] == 0 || ($auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])))),
+		'B_BUY_NOW_ONLY' => ($auction_data['bn_only']),
 		'B_ADDITIONAL_SHIPPING_COST' => ($auction_data['auction_type'] == '2'),
 		'B_USERBID' => $userbid,
 		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && (!$user->logged_in || ($user->logged_in && $user->user_data['id'] != $auction_data['user']))),

@@ -68,7 +68,7 @@ if (isset($_GET['action']))
 			$db->query($query, $params);
 
 			//update closed auction counter
-			$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE closed != 0";
+			$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE closed = 1";
 			$db->direct_query($query);
 			$AUCTIONS = $db->result('COUNT');
 			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = :AUCTIONS";

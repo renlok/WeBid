@@ -121,7 +121,7 @@ elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 	$_SESSION['SELL_additional_shipping_cost'] = 0;
 	$_SESSION['SELL_payment'] = '';
 	$_SESSION['SELL_international'] = false;
-	$_SESSION['SELL_buy_now_only'] = '';
+	$_SESSION['SELL_buy_now_only'] = 0;
 	$_SESSION['SELL_action'] = '';
 	$_SESSION['SELL_shipping_cost'] = 0;
 	$_SESSION['SELL_is_bold'] = 'n';

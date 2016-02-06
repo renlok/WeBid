@@ -56,7 +56,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `hash` varchar(5) NOT NULL default '',
   `created` varchar(8) NOT NULL default '',
   `lastlogin` varchar(14) NOT NULL default '',
-  `status` int(2) NOT NULL default '0',
+  `status` tinyint(1) NOT NULL default '0',
   `notes` text,
   KEY `id` (`id`)
 ) ;";
@@ -572,7 +572,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
   `messages` int(11) NOT NULL default '0',
   `lastmessage` varchar(14) NOT NULL default '0',
   `msgstoshow` int(11) NOT NULL default '0',
-  `active` int(1) NOT NULL default '1',
+  `active` tinyint(1) NOT NULL default '1',
   KEY `msg_id` (`id`)
 );";
 
@@ -1168,21 +1168,21 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
   `gateways` text,
   `paypal_address` varchar(50) NOT NULL default '',
-  `paypal_required` int(1) NOT NULL default '0',
-  `paypal_active` int(1) NOT NULL default '0',
+  `paypal_required` tinyint(1) NOT NULL default '0',
+  `paypal_active` tinyint(1) NOT NULL default '0',
   `authnet_address` varchar(50) NOT NULL default '',
   `authnet_password` varchar(50) NOT NULL default '',
-  `authnet_required` int(1) NOT NULL default '0',
-  `authnet_active` int(1) NOT NULL default '0',
+  `authnet_required` tinyint(1) NOT NULL default '0',
+  `authnet_active` tinyint(1) NOT NULL default '0',
   `worldpay_id` varchar(50) NOT NULL default '',
-  `worldpay_required` int(1) NOT NULL default '0',
-  `worldpay_active` int(1) NOT NULL default '0',
+  `worldpay_required` tinyint(1) NOT NULL default '0',
+  `worldpay_active` tinyint(1) NOT NULL default '0',
   `moneybookers_address` varchar(50) NOT NULL default '',
-  `moneybookers_required` int(1) NOT NULL default '0',
-  `moneybookers_active` int(1) NOT NULL default '0',
+  `moneybookers_required` tinyint(1) NOT NULL default '0',
+  `moneybookers_active` tinyint(1) NOT NULL default '0',
   `toocheckout_id` varchar(50) NOT NULL default '',
-  `toocheckout_required` int(1) NOT NULL default '0',
-  `toocheckout_active` int(1) NOT NULL default '0'
+  `toocheckout_required` tinyint(1) NOT NULL default '0',
+  `toocheckout_active` tinyint(1) NOT NULL default '0'
 ) ;";
 
 #
@@ -1201,10 +1201,10 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `group_name` varchar(50) NOT NULL default '',
-  `can_sell` int(1) NOT NULL default '0',
-  `can_buy` int(1) NOT NULL default '0',
-  `count` int(15) NOT NULL default '0',
-  `auto_join` int(15) NOT NULL default '0',
+  `can_sell` tinyint(1) NOT NULL default '0',
+  `can_buy` tinyint(1) NOT NULL default '0',
+  `count` tinyint(15) NOT NULL default '0',
+  `auto_join` tinyint(15) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1291,7 +1291,7 @@ $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "maintainance`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "maintainance` (
   `id` int(11) NOT NULL auto_increment,
-  `active` enum('y','n') default NULL,
+  `active` tinyint(1) NOT NULL default '0',
   `superuser` varchar(32) default NULL,
   `maintainancetext` text,
   KEY `id` (`id`)
@@ -1301,7 +1301,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "maintainance` (
 # Dumping data for table `" . $DBPrefix . "maintainance`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 'n', 'renlok', '<br>\r\n<center>\r\n<b>Under maintenance!!!!!!!</b>\r\n</center>');";
+$query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 0, 'renlok', '<br>\r\n<center>\r\n<b>Under maintenance!!!!!!!</b>\r\n</center>');";
 
 # ############################
 
@@ -1346,12 +1346,12 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
   `fromemail` varchar(50) NOT NULL default '',
   `sentat` varchar(20) NOT NULL default '',
   `message` text NOT NULL ,
-  `isread` int(1) NOT NULL default '0',
+  `isread` tinyint(1) NOT NULL default '0',
   `subject` varchar(50) NOT NULL default '',
-  `replied` int(1) NOT NULL default '0',
-  `reply_of` INT(50) NOT NULL default '0',
+  `replied` tinyint(1) NOT NULL default '0',
+  `reply_of` int(50) NOT NULL default '0',
   `question` int(15) NOT NULL default '0',
-  `public` INT(1) NOT NULL default '0',
+  `public` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`id`)
 ) ;";
 
@@ -1367,7 +1367,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "news` (
   `title` varchar(200) NOT NULL default '',
   `content` longtext NOT NULL,
   `new_date` int(8) NOT NULL default '0',
-  `suspended` int(1) NOT NULL default '0',
+  `suspended` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 

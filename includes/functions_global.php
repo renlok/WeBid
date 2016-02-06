@@ -200,7 +200,7 @@ class global_class
 			}
 		}
 
-		if ($this->SETTINGS['MAINTAINANCE']['active'] == 'y')
+		if ($this->SETTINGS['MAINTAINANCE']['active'])
 		{
 			if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['MAINTAINANCE']['superuser'] || $user->user_data['id'] == $this->SETTINGS['MAINTAINANCE']['superuser']))
 			{

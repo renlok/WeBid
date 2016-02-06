@@ -298,6 +298,11 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `auction_type` `auction_type` int(2);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `international` `international` tinyint(1);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `closed` `closed` tinyint(1);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `status` `status` tinyint(1) NOT NULL default '1';";
+	$query[] = "UPDATE `" . $DBPrefix . "adminusers` SET status = 0 WHERE status = 2;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "community` MODIFY `active` `active` tinyint(1) NOT NULL default '1';";
+	$query[] = "UPDATE `" . $DBPrefix . "community` SET active = 0 WHERE active = 2;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "maintainance` MODIFY `active` `active` tinyint(1) NOT NULL default '0';";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auction_types`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
 	  `id` int(2) NOT NULL auto_increment,

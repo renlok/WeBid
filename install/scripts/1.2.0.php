@@ -90,6 +90,7 @@ $query = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY
         `featured` `featured` tinyint(1) default 0,
         `tax` `tax` tinyint(1) default 0,
         `taxinc` `taxinc` tinyint(1) default 0;";
+$db->direct_query($query);
 foreach ($auctions_data as $auction)
 {
     $query = "UPDATE `" . $DBPrefix . "auctions`

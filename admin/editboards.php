@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params = array();
 		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 		$params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');
-		$params[] = array(':active', $_POST['active'], 'int');
+		$params[] = array(':active', $_POST['active'], 'bool');
 		$params[] = array(':id', $_POST['id'], 'int');
 		$db->query($query, $params);
 		header('location: boards.php');
@@ -68,7 +68,7 @@ $template->assign_vars(array(
 		'MSGTOSHOW' => $board_data['msgstoshow'],
 
 		'B_ACTIVE' => ($board_data['active'] == 1),
-		'B_DEACTIVE' => ($board_data['active'] == 2),
+		'B_DEACTIVE' => ($board_data['active'] == 0),
 		'ID' => $id
 		));
 

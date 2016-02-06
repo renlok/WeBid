@@ -36,7 +36,7 @@
 						<td>&nbsp;</td>
 						<td>
 							<input type="radio" name="active" value="1"<!-- IF B_ACTIVE --> checked="checked"<!-- ENDIF -->> {L_5038}<br>
-							<input type="radio" name="active" value="2"<!-- IF B_DEACTIVE --> checked="checked"<!-- ENDIF -->> {L_5039}
+							<input type="radio" name="active" value="0"<!-- IF B_DEACTIVE --> checked="checked"<!-- ENDIF -->> {L_5039}
 						</td>
 					</tr>
 					</table>

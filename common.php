@@ -67,12 +67,6 @@ set_error_handler('WeBidErrorHandler', $error_reporting);
 
 include INCLUDE_PATH . 'messages.inc.php';
 
-// add auction types
-$system->SETTINGS['auction_types'] = array (
-	1 => $MSG['1021'],
-	2 => $MSG['1020']
-);
-
 if($user->logged_in)
 {
 	$system->tdiff = $system->getUserOffset(time(), $user->user_data['timezone']);

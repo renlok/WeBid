@@ -105,8 +105,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `shipping_cost_additional` double(16,2) default '0',
   `reserve_price` double(16,2) default '0',
   `buy_now` double(16,2) default '0',
-  `auction_type` char(1) default NULL,
-  `duration` double(8,2) default NULL,
+  `auction_type` int(1),
+  `duration` double(8,2),
   `increment` double(8,2) NOT NULL default '0',
   `shipping` char(1) default NULL,
   `payment` tinytext,
@@ -115,7 +115,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `current_bid` double(16,2) default '0',
   `current_bid_id` int(11) default '0',
   `closed` int(1) default '0',
-  `photo_uploaded` tinyint(1) default NULL,
+  `photo_uploaded` tinyint(1) default 0,
   `initial_quantity` int(11) default '1',
   `quantity` int(11) default '1',
   `suspended` int(1) default '0',
@@ -139,6 +139,29 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
 #
 # Dumping data for table `" . $DBPrefix . "auctions`
 #
+
+
+# ############################
+
+#
+# Table structure for table `" . $DBPrefix . "auction_types`
+#
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auction_types`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
+  `id` int(2) NOT NULL auto_increment,
+  `key` varchar(32),
+  `language_string` varchar(32),
+  PRIMARY KEY  (`id`),
+  KEY `id` (`id`)
+);";
+
+#
+# Dumping data for table `" . $DBPrefix . "auction_types`
+#
+
+$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(1, 'standard', 1021);";
+$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(2, 'dutch', 1020);";
 
 
 # ############################

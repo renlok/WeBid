@@ -295,6 +295,17 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_title` varchar(70);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_shipping_cost` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_payment` tinytext;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `auction_type` `auction_type` int(1);";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auction_types`;";
+	$query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
+	  `id` int(2) NOT NULL auto_increment,
+	  `key` varchar(32),
+	  `language_string` varchar(32),
+	  PRIMARY KEY  (`id`),
+	  KEY `id` (`id`)
+	);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(1, 'standard', 1021);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(2, 'dutch', 1020);";
 	// add translation tables
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (

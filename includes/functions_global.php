@@ -64,6 +64,19 @@ class global_class
 			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
 		}
 		$this->SETTINGS['gateways'] = unserialize($this->SETTINGS['gateways']);
+		$this->loadAuctionTypes();
+	}
+
+	private function loadAuctionTypes()
+	{
+		global $MSG, $db;
+		$query = "SELECT id, language_string FROM " . $DBPrefix . "auction_types";
+		$db->direct_query($query);
+		$this->SETTINGS['auction_types'] = [];
+		for ($row = $db->fetch())
+		{
+			$this->SETTINGS['auction_types'][$row['id']] = $MSG[$row['language_string']];
+		}
 	}
 
 	/*

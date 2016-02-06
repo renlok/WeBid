@@ -70,9 +70,9 @@ function setvars()
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
 	$buy_now_only = (empty($buy_now_only)) ? 0 : $buy_now_only;
 	$a_starts = (isset($_POST['a_starts'])) ? $_POST['a_starts'] : $_SESSION['SELL_starts'];
-	$is_bold = (isset($_POST['is_bold'])) ? 'y' : $_SESSION['SELL_is_bold'];
-	$is_featured = (isset($_POST['is_featured'])) ? 'y' : $_SESSION['SELL_is_featured'];
-	$is_highlighted = (isset($_POST['is_highlighted'])) ? 'y' : $_SESSION['SELL_is_highlighted'];
+	$is_bold = (isset($_POST['is_bold'])) ? 1 : $_SESSION['SELL_is_bold'];
+	$is_featured = (isset($_POST['is_featured'])) ? 1 : $_SESSION['SELL_is_featured'];
+	$is_highlighted = (isset($_POST['is_highlighted'])) ? 1 : $_SESSION['SELL_is_highlighted'];
 	if (isset($_POST['a_starts'])) {
 		if (isset($_POST['start_now'])) {
 			$start_now = 1;
@@ -86,11 +86,11 @@ function setvars()
 	$tax_included = (isset($_POST['tax_included'])) ? $_POST['tax_included'] : $_SESSION['SELL_tax_included'];
 	if (isset($_POST['action']) && $_POST['action'] == 2)
 	{
-		$is_bold = (isset($_POST['is_bold'])) ? 'y' : 'n';
-		$is_featured = (isset($_POST['is_featured'])) ? 'y' : 'n';
-		$is_highlighted = (isset($_POST['is_highlighted'])) ? 'y' : 'n';
-		$is_taxed = (isset($_POST['is_taxed'])) ? 'y' : 'n';
-		$tax_included = (isset($_POST['tax_included'])) ? 'y' : 'n';
+		$is_bold = (isset($_POST['is_bold'])) ? 1 : 0;
+		$is_featured = (isset($_POST['is_featured'])) ? 1 : 0;
+		$is_highlighted = (isset($_POST['is_highlighted'])) ? 1 : 0;
+		$is_taxed = (isset($_POST['is_taxed'])) ? 1 : 0;
+		$tax_included = (isset($_POST['tax_included'])) ? 1 : 0;
 		$payment = (isset($_POST['payment'])) ? $payment : array();
 	}
 }
@@ -162,12 +162,12 @@ function unsetsessions()
 	$_SESSION['SELL_sendemail'] = '';
 	$_SESSION['SELL_starts'] = '';
 	$_SESSION['SELL_action'] = '';
-	$_SESSION['SELL_is_bold'] = 'n';
-	$_SESSION['SELL_is_highlighted'] = 'n';
-	$_SESSION['SELL_is_featured'] = 'n';
+	$_SESSION['SELL_is_bold'] = 0;
+	$_SESSION['SELL_is_highlighted'] = 0;
+	$_SESSION['SELL_is_featured'] = 0;
 	$_SESSION['SELL_start_now'] = '';
-	$_SESSION['SELL_is_taxed'] = 'n';
-	$_SESSION['SELL_tax_included'] = 'y';
+	$_SESSION['SELL_is_taxed'] = 0;
+	$_SESSION['SELL_tax_included'] = 0;
 }
 
 function updateauction($type)
@@ -247,11 +247,11 @@ function updateauction($type)
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
-	$params[] = array(':bold', ynbool($_SESSION['SELL_is_bold']), 'str');
-	$params[] = array(':highlighted', ynbool($_SESSION['SELL_is_highlighted']), 'str');
-	$params[] = array(':featured', ynbool($_SESSION['SELL_is_featured']), 'str');
-	$params[] = array(':tax', ynbool($_SESSION['SELL_is_taxed']), 'str');
-	$params[] = array(':taxinc', ynbool($_SESSION['SELL_tax_included']), 'str');
+	$params[] = array(':bold', $_SESSION['SELL_is_bold'], 'bool');
+	$params[] = array(':highlighted', $_SESSION['SELL_is_highlighted'], 'bool');
+	$params[] = array(':featured', $_SESSION['SELL_is_featured'], 'bool');
+	$params[] = array(':tax', $_SESSION['SELL_is_taxed'], 'bool');
+	$params[] = array(':taxinc', $_SESSION['SELL_tax_included'], 'bool');
 	$params[] = array(':fee', $fee, 'float');
 	$params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
 	$db->query($query, $params);
@@ -291,12 +291,12 @@ function addauction()
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
 	$params[] = array(':bn_only', $_SESSION['SELL_buy_now_only'], 'bool');
-	$params[] = array(':bold', ynbool($_SESSION['SELL_is_bold']), 'str');
-	$params[] = array(':highlighted', ynbool($_SESSION['SELL_is_highlighted']), 'str');
-	$params[] = array(':featured', ynbool($_SESSION['SELL_is_featured']), 'str');
+	$params[] = array(':bold', $_SESSION['SELL_is_bold'], 'bool');
+	$params[] = array(':highlighted', $_SESSION['SELL_is_highlighted'], 'bool');
+	$params[] = array(':featured', $_SESSION['SELL_is_featured'], 'bool');
 	$params[] = array(':fee', $fee, 'float');
-	$params[] = array(':tax', ynbool($_SESSION['SELL_is_taxed']), 'str');
-	$params[] = array(':taxinc', ynbool($_SESSION['SELL_tax_included']), 'str');
+	$params[] = array(':tax', $_SESSION['SELL_is_taxed'], 'bool');
+	$params[] = array(':taxinc', $_SESSION['SELL_tax_included'], 'bool');
 	$db->query($query, $params);
 }
 
@@ -369,17 +369,17 @@ function get_fee($minimum_bid, $just_fee = true)
 			$fee_data['rp_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'bolditem_fee' && $is_bold == 'y')
+		if ($row['type'] == 'bolditem_fee' && $is_bold)
 		{
 			$fee_data['bolditem_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'hlitem_fee' && $is_highlighted == 'y')
+		if ($row['type'] == 'hlitem_fee' && $is_highlighted)
 		{
 			$fee_data['hlitem_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'hpfeat_fee' && $is_featured == 'y')
+		if ($row['type'] == 'hpfeat_fee' && $is_featured)
 		{
 			$fee_data['hpfeat_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);

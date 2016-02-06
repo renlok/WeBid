@@ -79,13 +79,26 @@ $query[] = "RENAME TABLE `" . $DBPrefix . "settingsv2` TO `" . $DBPrefix . "sett
 $db->direct_query($query);
 
 // convert database values to bools
-$query = "SELECT id, bn_only FROM auctions;"
+$query = "SELECT id, bn_only, bold, highlighted, featured, tax, taxinc FROM auctions;"
 $db->direct_query($query);
 $auctions_data = $db->fetchall();
+// convert
+$query = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY
+        `bn_only` `bn_only` tinyint(1) default 0,
+        `bold` `bold` tinyint(1) default 0,
+        `highlighted` `highlighted` tinyint(1) default 0,
+        `featured` `featured` tinyint(1) default 0,
+        `tax` `tax` tinyint(1) default 0,
+        `taxinc` `taxinc` tinyint(1) default 0;";
 foreach ($auctions_data as $auction)
 {
     $query = "UPDATE `" . $DBPrefix . "auctions`
-            SET bn_only = " . intval($auction['bn_only'] == 'y') . "
+            SET bn_only = " . intval($auction['bn_only'] == 'y') . ",
+            bold = " . intval($auction['bold'] == 'y') . ",
+            highlighted = " . intval($auction['highlighted'] == 'y') . ",
+            featured = " . intval($auction['featured'] == 'y') . ",
+            tax = " . intval($auction['tax'] == 'y') . ",
+            taxinc = " . intval($auction['taxinc'] == 'y') . ",
             WHERE id = " . $auction['id'];
     $db->direct_query($query);
 }

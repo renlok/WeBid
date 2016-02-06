@@ -35,7 +35,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 
 			$template->assign_block_vars('featured_items', array(
 				'ID' => $row['id'],
-				'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
+				'ROWCOLOUR' => ($row['highlighted']) ? 'bgcolor="#fea100"' : $bgcolour,
 				'IMAGE' => $row['pict_url'],
 				'TITLE' => $system->uncleanvars($row['title']),
 				'SUBTITLE' => $system->uncleanvars($row['subtitle']),
@@ -45,7 +45,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 				'CLOSES' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 				'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
-				'B_BOLD' => ($row['bold'] == 'y')
+				'B_BOLD' => ($row['bold'])
 			));
 			$k++;
 			$feat_items = true;
@@ -65,7 +65,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 
 		$template->assign_block_vars('items', array(
 			'ID' => $row['id'],
-			'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
+			'ROWCOLOUR' => ($row['highlighted']) ? 'bgcolor="#fea100"' : $bgcolour,
 			'IMAGE' => $row['pict_url'],
 			'TITLE' => $system->uncleanvars($row['title']),
 			'SUBTITLE' => $system->uncleanvars($row['subtitle']),
@@ -75,7 +75,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 			'CLOSES' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 			'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
-			'B_BOLD' => ($row['bold'] == 'y')
+			'B_BOLD' => ($row['bold'])
 		));
 		$k++;
 	}

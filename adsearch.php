@@ -253,7 +253,7 @@ if ($searching && !isset($ERR))
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			featured = 'y'
+			featured = 1
 			AND	au.starts <= :time
 			ORDER BY " . $by . " LIMIT :offset, 5";
 	$params_feat = $asparams;

@@ -93,7 +93,7 @@ if ($auction)
 	$winner_address .= (!empty($winner['country'])) ? '<br>' . $winner['country'] : '';
 	$winner_address .= (!empty($winner['zip'])) ? '<br>' . $winner['zip'] : '';
 
-	if ($data['tax'] == 'n') // no tax
+	if ($data['tax'] == 0) // no tax
 	{
 		$unitexcl = $unitpriceincl = $paysubtotal;
 		$subtotal = $totalinc = $payvalue;
@@ -101,7 +101,7 @@ if ($auction)
 	}
 	else
 	{
-		if ($data['taxinc'] == 'y') // tax is included in price
+		if ($data['taxinc'] == 1) // tax is included in price
 		{
 			$unitexcl = vatexcluding($paysubtotal); // auction price - tax
 			$unitpriceincl = $paysubtotal; // auction price & tax

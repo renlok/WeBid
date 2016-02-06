@@ -124,11 +124,11 @@ elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 	$_SESSION['SELL_buy_now_only'] = 0;
 	$_SESSION['SELL_action'] = '';
 	$_SESSION['SELL_shipping_cost'] = 0;
-	$_SESSION['SELL_is_bold'] = 'n';
-	$_SESSION['SELL_is_highlighted'] = 'n';
-	$_SESSION['SELL_is_featured'] = 'n';
-	$_SESSION['SELL_is_taxed'] = 'n';
-	$_SESSION['SELL_tax_included'] = 'y';
+	$_SESSION['SELL_is_bold'] = 0;
+	$_SESSION['SELL_is_highlighted'] = 0;
+	$_SESSION['SELL_is_featured'] = 0;
+	$_SESSION['SELL_is_taxed'] = 0;
+	$_SESSION['SELL_tax_included'] = 0;
 	$_SESSION['SELL_start_now'] = '1';
 }
 

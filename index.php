@@ -88,7 +88,7 @@ while ($row = $db->fetch())
 $query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, bn_only, buy_now
 		FROM " . $DBPrefix . "auctions
 		WHERE closed = 0 AND suspended = 0 AND starts <= :time
-		AND featured = 'y'
+		AND featured = 1
 		ORDER BY RAND() DESC LIMIT 12";
 $params = array();
 $params[] = array(':time', $NOW, 'int');

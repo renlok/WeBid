@@ -249,9 +249,9 @@ if (isset($_POST['action']))
 			$params[] = array(':payment', implode(', ', $_POST['payment']), 'str');
 			$params[] = array(':international', ((isset($_POST['international'])) ? 1 : 0), 'int');
 			$params[] = array(':shipping_terms', $system->cleanvars($_POST['shipping_terms']), 'str');
-			$params[] = array(':bold', ((isset($_POST['is_bold'])) ? 'y' : 'n'), 'str');
-			$params[] = array(':highlighted', ((isset($_POST['is_highlighted'])) ? 'y' : 'n'), 'str');
-			$params[] = array(':featured', ((isset($_POST['is_featured'])) ? 'y' : 'n'), 'str');
+			$params[] = array(':bold', (isset($_POST['is_bold'])), 'bool');
+			$params[] = array(':highlighted', (isset($_POST['is_highlighted'])), 'bool');
+			$params[] = array(':featured', (isset($_POST['is_featured'])), 'bool');
 			$params[] = array(':auc_id', $_POST['id'], 'int');
 			$db->query($query, $params);
 
@@ -401,9 +401,9 @@ $template->assign_vars(array(
 		'SHIPPING2' => ($auction_data['shipping'] == 2) ? 'checked' : '',
 		'INTERNATIONAL' => (!empty($auction_data['international'])) ? 'checked' : '',
 		'SHIPPING_TERMS' => $system->uncleanvars($auction_data['shipping_terms']),
-		'IS_BOLD' => ($auction_data['bold'] == 'y') ? 'checked' : '',
-		'IS_HIGHLIGHTED' => ($auction_data['highlighted'] == 'y') ? 'checked' : '',
-		'IS_FEATURED' => ($auction_data['featured'] == 'y') ? 'checked' : '',
+		'IS_BOLD' => ($auction_data['bold']) ? 'checked' : '',
+		'IS_HIGHLIGHTED' => ($auction_data['highlighted']) ? 'checked' : '',
+		'IS_FEATURED' => ($auction_data['featured']) ? 'checked' : '',
 		'SUSPENDED' => ($auction_data['suspended'] == 0) ? $MSG['029'] : $MSG['030'],
 
 		'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),

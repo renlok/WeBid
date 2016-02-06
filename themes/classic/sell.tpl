@@ -507,8 +507,8 @@ $(document).ready(function(){
 							<b>{L_1102}</b>
 						</td>
 						<td class="rightpan">
-							<input type="radio" name="is_taxed" value="y" {TAX_Y}>	{L_030}<br>
-							<input type="radio" name="is_taxed" value="n" {TAX_N}> {L_029}
+							<input type="radio" name="is_taxed" value="1" {TAX_Y}>	{L_030}<br>
+							<input type="radio" name="is_taxed" value="0" {TAX_N}> {L_029}
 						</td>
 					</tr>
 					<tr>
@@ -516,8 +516,8 @@ $(document).ready(function(){
 							<b>{L_1103}</b>
 						</td>
 						<td class="rightpan">
-							<input type="radio" name="tax_included" value="y" {TAXINC_Y}>	{L_030}<br>
-							<input type="radio" name="tax_included" value="n" {TAXINC_N}> {L_029}
+							<input type="radio" name="tax_included" value="1" {TAXINC_Y}>	{L_030}<br>
+							<input type="radio" name="tax_included" value="0" {TAXINC_N}> {L_029}
 						</td>
 					</tr>
 	<!-- ENDIF -->

@@ -304,6 +304,7 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "ALTER TABLE `" . $DBPrefix . "community` MODIFY `active` tinyint(1) NOT NULL default '1';";
 	$query[] = "UPDATE `" . $DBPrefix . "community` SET active = 0 WHERE active = 2;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "maintainance` MODIFY `active` tinyint(1) NOT NULL default '0';";
+	$query[] = "UPDATE `" . $DBPrefix . "auctions` SET theme = IF (theme = 'default', 'classic', theme);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auction_types`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
 	  `id` int(2) NOT NULL auto_increment,

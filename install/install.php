@@ -23,6 +23,7 @@ $db = new DatabasePDO();
 
 define('MAIN_PATH', getmainpath());
 $thisversion = package_version();
+$settings_version = 'Unknown';
 echo print_header(false);
 
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
@@ -74,7 +75,7 @@ switch($step)
 		$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";' . "\n";
 		$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
 		$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
-		$content .= 'define("MAIN_PATH", "' . $path . '");' . "\n";
+		$content .= '$main_path = ' . $path . ';' . "\n";
 		$content .= '$MD5_PREFIX = "' . $hash . '";' . "\n";
 		$content .= '?>';
 		$output = makeconfigfile($content, $path);

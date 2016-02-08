@@ -12,9 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-$query = "SELECT * FROM settings;"
+$query = "SELECT * FROM " . $DBPrefix . "settings;";
 $db->direct_query($query);
-$settings_data = $db->fetchall();
+$settings_data = $db->result();
 $settings = array_combine(array_keys($settings_data), $settings_data);
 foreach ($settings as $setting_name => $setting_value)
 {
@@ -66,20 +66,24 @@ foreach ($settings as $setting_name => $setting_value)
         $type = 'string';
             break;
     }
+    if ($setting_name == 'timezone')
+    {
+        $setting_value = 'Europe/London';
+    }
     $query = "INSERT INTO " . $DBPrefix . "settingsv2 (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
-            ($setting_name, $type, $setting_value, UNIX_TIMESTAMP(), 1);";
+            ('$setting_name', '$type', '$setting_value', UNIX_TIMESTAMP(), 1);";
     $db->direct_query($query);
 }
 
 // drop old table
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
+$query = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
 $db->direct_query($query);
 // rename new table
-$query[] = "RENAME TABLE `" . $DBPrefix . "settingsv2` TO `" . $DBPrefix . "settings`;";
+$query = "RENAME TABLE `" . $DBPrefix . "settingsv2` TO `" . $DBPrefix . "settings`;";
 $db->direct_query($query);
 
 // convert database values to bools
-$query = "SELECT id, bn_only, bold, highlighted, featured, tax, taxinc FROM auctions;"
+$query = "SELECT id, bn_only, bold, highlighted, featured, tax, taxinc FROM auctions;";
 $db->direct_query($query);
 $auctions_data = $db->fetchall();
 // convert

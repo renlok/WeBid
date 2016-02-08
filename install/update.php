@@ -13,19 +13,21 @@
  ***************************************************************************/
 
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
-if ($step != 3)
+if ($step != 2)
 {
 	session_start();
+	define('InWeBid', 1);
+	include '../includes/database/Database.php';
+	include '../includes/database/DatabasePDO.php';
+	$db = new DatabasePDO();
 }
-define('InWeBid', 1);
 include 'functions.php';
-include '../includesdatabase/Database.php';
-include '../includesdatabase/DatabasePDO.php';
+if ($step != 2)
+{
+	define('MAIN_PATH',  getmainpath());
+}
 define('InInstaller', 1);
-
-$db = new DatabasePDO();
-
-MAIN_PATH .  = getmainpath();
+$settings_version = 'Unknown';
 /*
 how new updater will work
 in package config.inc.php will be named config.inc.php.new so it cannot be overwritten
@@ -58,55 +60,11 @@ if ($step == 0)
 		}
 		else
 		{
-			echo '<p>Now to <b><a href="?step=2">step 1</a></b></p>';
+			echo '<p>Now to <b><a href="?step=1">step 1</a></b></p>';
 		}
 	}
 }
 if ($step == 1)
-{
-	$db->connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass'], $_POST['DBName'], $_POST['DBPrefix']);
-	$toecho = '<p><b>Step 1:</b> Writing the config file...</p>';
-	$toecho .= '<p>As you are missing your old random security code all your users will have to reset their passwords after this update</p>';
-	$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
-	// generate config file
-	$content = '<?php' . "\n";
-	$content .= '$DbHost	 = "' . $_POST['DBHost'] . '";' . "\n";
-	$content .= '$DbDatabase = "' . $_POST['DBName'] . '";' . "\n";
-	$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";' . "\n";
-	$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
-	$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
-	$content .= 'MAIN_PATH . 	= "' . $path . '";' . "\n";
-	$content .= '$MD5_PREFIX = "' . md5(microtime() . rand(0,50)) . '";' . "\n";
-	$content .= '?>';
-	$output = makeconfigfile($content, $path);
-	if ($output)
-	{
-		$check = check_installation();
-		$package_version = package_version();
-		$installed_version = check_version();
-		echo print_header(true);
-		echo $toecho;
-		if (!$check)
-		{
-			echo '<p>It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b></p>';
-		}
-		else
-		{
-			echo '<p>Complete, now to <b><a href="?step=2">step 2</a></b></p>';
-		}
-	}
-	else
-	{
-		$package_version = package_version();
-		$installed_version = check_version();
-		echo print_header(true);
-		echo $toecho;
-		echo '<p>WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)</p>';
-		echo '<p><textarea style="width:500px; height:500px;">' . $content . '</textarea></p>';
-		echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2">step 2</a></b></p>';
-	}
-}
-if ($step == 2)
 {
 	$check = check_installation();
 	$package_version = package_version();
@@ -120,35 +78,28 @@ if ($step == 2)
 	include 'sql/updatedump.inc.php';
 	for ($i = 0; $i < @count($query); $i++)
 	{
-		$db->direct_query($query[$i]);
 		echo '<b>' . $query[$i] . '</b><br>';
+		$db->direct_query($query[$i]);
 	}
 	if (file_exists('scripts/' . $new_version . '.php'))
 	{
+		echo '<b>Running database update script</b><br>';
 		include 'scripts/' . $new_version . '.php';
 	}
+	$installed_version = $new_version;
 	if ($installed_version == $package_version)
 	{
-		echo 'Complete, now to <b><a href="?step=3">step 3</a></b>';
+		echo 'Complete, now to <b><a href="?step=2">step 2</a></b>';
 	}
 	else
 	{
-		echo '<script type="text/javascript">window.location = "?step=2";</script>';
-		echo '<noscript>Javascript is disabled please <a href="?step=2">refresh the page</a></noscript>';
+		echo '<script type="text/javascript">window.location = "?step=1";</script>';
+		echo '<noscript>Javascript is disabled please <a href="?step=1">refresh the page</a></noscript>';
 	}
 }
-if ($step == 3)
+if ($step == 2)
 {
-	$check = check_installation();
-	$package_version = package_version();
-	$installed_version = check_version();
-	if (!$check)
-	{
-		echo print_header(true);
-		echo '<p>It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b></p>';
-		exit;
-	}
-	include MAIN_PATH . 'common.php';
+	include '../common.php';
 	echo print_header(true);
 
 	include INCLUDE_PATH . 'functions_rebuild.inc.php';

@@ -69,11 +69,11 @@ class global_class
 
 	private function loadAuctionTypes()
 	{
-		global $MSG, $db;
+		global $MSG, $db, $DBPrefix;
 		$query = "SELECT id, language_string FROM " . $DBPrefix . "auction_types";
 		$db->direct_query($query);
 		$this->SETTINGS['auction_types'] = [];
-		for ($row = $db->fetch())
+		while ($row = $db->fetch())
 		{
 			$this->SETTINGS['auction_types'][$row['id']] = $MSG[$row['language_string']];
 		}

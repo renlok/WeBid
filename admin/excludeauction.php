@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 		$params[] = array(':auc_id', $id, 'int');
 		$db->query($query, $params);
 
-		if ($auc_data['closed'] == 1)
+		if ($auc_data['closed'])
 		{
 			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions - 1), closedauctions = (closedauctions + 1)";
 			$db->direct_query($query);
@@ -83,7 +83,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 		$params[] = array(':auc_id', $id, 'int');
 		$db->query($query, $params);
 
-		if ($auc_data['closed'] == 1)
+		if ($auc_data['closed'])
 		{
 			$query ="UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions + 1), closedauctions = (closedauctions - 1)";
 			$db->direct_query($query);

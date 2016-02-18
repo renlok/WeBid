@@ -88,7 +88,7 @@ while ($row = $db->fetch())
 $query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, bn_only, buy_now
 		FROM " . $DBPrefix . "auctions
 		WHERE closed = 0 AND suspended = 0 AND starts <= :time
-		AND featured = 'y'
+		AND featured = 1
 		ORDER BY RAND() DESC LIMIT 12";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
@@ -108,7 +108,7 @@ while ($row = $db->fetch())
 		$ends_string = $MSG['911'];
 	}
 	$high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
-	$high_bid = ($row['bn_only'] == 'y') ? $row['buy_now'] : $high_bid;
+	$high_bid = ($row['bn_only']) ? $row['buy_now'] : $high_bid;
 	$template->assign_block_vars('featured', array(
 			'ENDS' => $ends_string,
 			'ID' => $row['id'],

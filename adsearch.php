@@ -91,12 +91,12 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 
 	if (isset($_SESSION['advs']['buyitnow']))
 	{
-		$wher .= "(au.buy_now > 0 AND (au.bn_only = 'y' OR au.bn_only = 'n' && (au.num_bids = 0 OR (au.reserve_price > 0 AND au.current_bid < au.reserve_price)))) AND ";
+		$wher .= "(au.buy_now > 0 AND (au.bn_only = 1 OR au.bn_only = 0 && (au.num_bids = 0 OR (au.reserve_price > 0 AND au.current_bid < au.reserve_price)))) AND ";
 	}
 
 	if (isset($_SESSION['advs']['buyitnowonly']))
 	{
-		$wher .= "(au.bn_only = 'y') AND ";
+		$wher .= "(au.bn_only = 1) AND ";
 	}
 
 	if (!empty($_SESSION['advs']['zipcode']))
@@ -108,7 +108,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 
 	if (!isset($_SESSION['advs']['closed']))
 	{
-		$wher .= "(au.closed = '0') AND ";
+		$wher .= "(au.closed = 0) AND ";
 	}
 
 	if (!empty($_SESSION['advs']['type']))
@@ -253,7 +253,7 @@ if ($searching && !isset($ERR))
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			featured = 'y'
+			featured = 1
 			AND	au.starts <= :time
 			ORDER BY " . $by . " LIMIT :offset, 5";
 	$params_feat = $asparams;

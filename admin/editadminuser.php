@@ -44,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 		}
 		$query .= " status = :status WHERE id = :admin_id";
-		$params[] = array(':status', $_POST['status'], 'int');
+		$params[] = array(':status', $_POST['status'], 'bool');
 		$params[] = array(':admin_id', $id, 'int');
 		$db->query($query, $params);
 		header('location: adminusers.php');
@@ -84,7 +84,7 @@ $template->assign_vars(array(
 		'LASTLOGIN' => $LASTLOGIN,
 
 		'B_ACTIVE' => ($user_data['status'] == 1),
-		'B_INACTIVE' => ($user_data['status'] == 2)
+		'B_INACTIVE' => ($user_data['status'] == 0)
 		));
 
 include 'header.php';

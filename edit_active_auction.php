@@ -66,7 +66,7 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_is_taxed']			= $RELISTEDAUCTION['tax'];
 		$_SESSION['SELL_tax_included']		= $RELISTEDAUCTION['taxinc'];
 		$_SESSION['SELL_current_fee']		= $RELISTEDAUCTION['current_fee'];
-		if ($RELISTEDAUCTION['bn_only'] == 'n')
+		if ($RELISTEDAUCTION['bn_only'] == 0)
 		{
 			$_SESSION['SELL_minimum_bid'] = $system->print_money_nosymbol($RELISTEDAUCTION['minimum_bid']);
 		}

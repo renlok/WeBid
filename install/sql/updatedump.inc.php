@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if ($myversion == '0.8.0')
+if ($installed_version == '0.8.0')
 {
 	//0.8.0 to 0.8.1
 	$query[] = "ALTER TABLE `" . $DBPrefix . "gateways` ADD `authnet_address` varchar(50) NOT NULL default '';";
@@ -26,7 +26,7 @@ if ($myversion == '0.8.0')
 	$new_version = '0.8.1';
 }
 
-if ($myversion == '0.8.1')
+if ($installed_version == '0.8.1')
 {
 	//0.8.1 to 0.8.2
 	$query[] = "UPDATE `" . $DBPrefix . "gateways` SET gateways = 'paypal,authnet';";
@@ -37,14 +37,14 @@ if ($myversion == '0.8.1')
 	$new_version = '0.8.2';
 }
 
-if ($myversion == '0.8.2')
+if ($installed_version == '0.8.2')
 {
 	//0.8.2 to 0.8.3
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '0.8.3';";
 	$new_version = '0.8.3';
 }
 
-if ($myversion == '0.8.3')
+if ($installed_version == '0.8.3')
 {
 	//0.8.3 to 0.8.4
 	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` ADD `fromemail` varchar(50) NOT NULL default '';";
@@ -52,14 +52,14 @@ if ($myversion == '0.8.3')
 	$new_version = '0.8.4';
 }
 
-if ($myversion == '0.8.4')
+if ($installed_version == '0.8.4')
 {
 	//0.8.4 to 0.8.5
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '0.8.5';";
 	$new_version = '0.8.5';
 }
 
-if ($myversion == '0.8.5' || $myversion == '0.8.5 P1')
+if ($installed_version == '0.8.5' || $installed_version == '0.8.5 P1')
 {
 	//0.8.5 to 1.0.0
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP uniqueseller;";
@@ -124,21 +124,21 @@ if ($myversion == '0.8.5' || $myversion == '0.8.5 P1')
 	$new_version = '1.0.0';
 }
 
-if ($myversion == '1.0.0')
+if ($installed_version == '1.0.0')
 {
 	//1.0.0 to 1.0.1
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.1';";
 	$new_version = '1.0.1';
 }
 
-if ($myversion == '1.0.1')
+if ($installed_version == '1.0.1')
 {
 	//1.0.1 to 1.0.2
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.2';";
 	$new_version = '1.0.2';
 }
 
-if ($myversion == '1.0.2')
+if ($installed_version == '1.0.2')
 {
 	//1.0.2 to 1.0.3
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `helpbox` int(1) NOT NULL default '1';";
@@ -150,28 +150,28 @@ if ($myversion == '1.0.2')
 	$new_version = '1.0.3';
 }
 
-if ($myversion == '1.0.3')
+if ($installed_version == '1.0.3')
 {
 	//1.0.3 to 1.0.4
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.4';";
 	$new_version = '1.0.4';
 }
 
-if ($myversion == '1.0.4')
+if ($installed_version == '1.0.4')
 {
 	//1.0.4 to 1.0.5
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.5';";
 	$new_version = '1.0.5';
 }
 
-if ($myversion == '1.0.5')
+if ($installed_version == '1.0.5')
 {
 	//1.0.5 to 1.0.6
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.0.6';";
 	$new_version = '1.0.6';
 }
 
-if ($myversion == '1.0.6')
+if ($installed_version == '1.0.6')
 {
 	//1.0.6 to 1.1.0
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.1.0';";
@@ -258,7 +258,7 @@ if ($myversion == '1.0.6')
 	$new_version = '1.1.0';
 }
 
-if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2')))
+if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2')))
 {
 	//1.1.0 to 1.2.0
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `password` varchar(60) NOT NULL;";
@@ -295,6 +295,26 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_title` varchar(70);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_shipping_cost` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_payment` tinytext;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `auction_type` int(2);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `international` tinyint(1);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY  `closed` tinyint(1);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `gateways` INT(1) default 'a:5:{s:6:\"paypal\";s:6:\"PayPal\";s:7:\"authnet\";s:13:\"Authorize.net\";s:8:\"worldpay\";s:8:\"WorldPay\";s:12:\"moneybookers\";s:12:\"Moneybookers\";s:11:\"toocheckout\";s:9:\"2Checkout\";}';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `status` tinyint(1) NOT NULL default '1';";
+	$query[] = "UPDATE `" . $DBPrefix . "adminusers` SET status = 0 WHERE status = 2;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "community` MODIFY `active` tinyint(1) NOT NULL default '1';";
+	$query[] = "UPDATE `" . $DBPrefix . "community` SET active = 0 WHERE active = 2;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "maintainance` MODIFY `active` tinyint(1) NOT NULL default '0';";
+	$query[] = "UPDATE `" . $DBPrefix . "auctions` SET theme = IF (theme = 'default', 'classic', theme);";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auction_types`;";
+	$query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
+	  `id` int(2) NOT NULL auto_increment,
+	  `key` varchar(32),
+	  `language_string` varchar(32),
+	  PRIMARY KEY  (`id`),
+	  KEY `id` (`id`)
+	);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(1, 'standard', 1021);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(2, 'dutch', 1020);";
 	// add translation tables
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "categories_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "categories_translated` (
@@ -326,8 +346,8 @@ if (in_array($myversion, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2'))
 		`lang` char(2) NOT NULL default '',
 		`group_name` varchar(255) NOT NULL default ''
 	);";
-	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
-	$query[] = "CREATE TABLE `".$DBprefix ."settings`
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settingsv2`;";
+	$query[] = "CREATE TABLE `" . $DBPrefix . "settingsv2` (
 		`fieldname` VARCHAR(30) NOT NULL,
 		`fieldtype` VARCHAR(10) NOT NULL,
 		`value` VARCHAR(255) NOT NULL,

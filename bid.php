@@ -132,7 +132,7 @@ $reserve = $Data['reserve_price'];
 $c = $Data['ends'];
 $cbid = ($current_bid == 0) ? $minimum_bid : $current_bid;
 
-if (($Data['ends'] <= time() || $Data['closed'] == 1) && !isset($errmsg))
+if (($Data['ends'] <= time() || $Data['closed']) && !isset($errmsg))
 {
 	$errmsg = $ERR_614;
 }

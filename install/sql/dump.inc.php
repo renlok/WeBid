@@ -56,7 +56,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `hash` varchar(5) NOT NULL default '',
   `created` varchar(8) NOT NULL default '',
   `lastlogin` varchar(14) NOT NULL default '',
-  `status` int(2) NOT NULL default '0',
+  `status` tinyint(1) NOT NULL default '0',
   `notes` text,
   KEY `id` (`id`)
 ) ;";
@@ -105,17 +105,17 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `shipping_cost_additional` double(16,2) default '0',
   `reserve_price` double(16,2) default '0',
   `buy_now` double(16,2) default '0',
-  `auction_type` char(1) default NULL,
-  `duration` double(8,2) default NULL,
+  `auction_type` int(1),
+  `duration` double(8,2),
   `increment` double(8,2) NOT NULL default '0',
-  `shipping` char(1) default NULL,
+  `shipping` int(1) default 1,
   `payment` tinytext,
-  `international` char(1) default NULL,
+  `international` tinyint(1) default 0,
   `ends` varchar(14) default NULL,
   `current_bid` double(16,2) default '0',
   `current_bid_id` int(11) default '0',
-  `closed` int(1) default '0',
-  `photo_uploaded` tinyint(1) default NULL,
+  `closed` tinyint(1) default '0',
+  `photo_uploaded` tinyint(1) default 0,
   `initial_quantity` int(11) default '1',
   `quantity` int(11) default '1',
   `suspended` int(1) default '0',
@@ -124,14 +124,14 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `num_bids` int(11) NOT NULL default '0',
   `sold` enum('y', 'n', 's') NOT NULL default 'n',
   `shipping_terms` tinytext,
-  `bn_only` enum('y','n') NOT NULL default 'n',
-  `bold` enum('y','n') NOT NULL default 'n',
-  `highlighted` enum('y','n') NOT NULL default 'n',
-  `featured` enum('y','n') NOT NULL default 'n',
+  `bn_only` tinyint(1) default 0,
+  `bold` tinyint(1) default 0,
+  `highlighted` tinyint(1) default 0,
+  `featured` tinyint(1) default 0,
   `current_fee` double(16,2) default '0',
-  `tax`  enum('y','n') NOT NULL default 'n',
-  `taxinc`  enum('y','n') NOT NULL default 'y',
-  `bn_sale` int(1) default 0,
+  `tax` tinyint(1) default 0,
+  `taxinc` tinyint(1) default 0,
+  `bn_sale` tinyint(1) default 0,
   PRIMARY KEY  (`id`),
   KEY `id` (`id`)
 );";
@@ -139,6 +139,29 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
 #
 # Dumping data for table `" . $DBPrefix . "auctions`
 #
+
+
+# ############################
+
+#
+# Table structure for table `" . $DBPrefix . "auction_types`
+#
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auction_types`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
+  `id` int(2) NOT NULL auto_increment,
+  `key` varchar(32),
+  `language_string` varchar(32),
+  PRIMARY KEY  (`id`),
+  KEY `id` (`id`)
+);";
+
+#
+# Dumping data for table `" . $DBPrefix . "auction_types`
+#
+
+$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(1, 'standard', 1021);";
+$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(2, 'dutch', 1020);";
 
 
 # ############################
@@ -549,7 +572,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
   `messages` int(11) NOT NULL default '0',
   `lastmessage` varchar(14) NOT NULL default '0',
   `msgstoshow` int(11) NOT NULL default '0',
-  `active` int(1) NOT NULL default '1',
+  `active` tinyint(1) NOT NULL default '1',
   KEY `msg_id` (`id`)
 );";
 
@@ -1145,21 +1168,21 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
   `gateways` text,
   `paypal_address` varchar(50) NOT NULL default '',
-  `paypal_required` int(1) NOT NULL default '0',
-  `paypal_active` int(1) NOT NULL default '0',
+  `paypal_required` tinyint(1) NOT NULL default '0',
+  `paypal_active` tinyint(1) NOT NULL default '0',
   `authnet_address` varchar(50) NOT NULL default '',
   `authnet_password` varchar(50) NOT NULL default '',
-  `authnet_required` int(1) NOT NULL default '0',
-  `authnet_active` int(1) NOT NULL default '0',
+  `authnet_required` tinyint(1) NOT NULL default '0',
+  `authnet_active` tinyint(1) NOT NULL default '0',
   `worldpay_id` varchar(50) NOT NULL default '',
-  `worldpay_required` int(1) NOT NULL default '0',
-  `worldpay_active` int(1) NOT NULL default '0',
+  `worldpay_required` tinyint(1) NOT NULL default '0',
+  `worldpay_active` tinyint(1) NOT NULL default '0',
   `moneybookers_address` varchar(50) NOT NULL default '',
-  `moneybookers_required` int(1) NOT NULL default '0',
-  `moneybookers_active` int(1) NOT NULL default '0',
+  `moneybookers_required` tinyint(1) NOT NULL default '0',
+  `moneybookers_active` tinyint(1) NOT NULL default '0',
   `toocheckout_id` varchar(50) NOT NULL default '',
-  `toocheckout_required` int(1) NOT NULL default '0',
-  `toocheckout_active` int(1) NOT NULL default '0'
+  `toocheckout_required` tinyint(1) NOT NULL default '0',
+  `toocheckout_active` tinyint(1) NOT NULL default '0'
 ) ;";
 
 #
@@ -1178,10 +1201,10 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "groups`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `group_name` varchar(50) NOT NULL default '',
-  `can_sell` int(1) NOT NULL default '0',
-  `can_buy` int(1) NOT NULL default '0',
-  `count` int(15) NOT NULL default '0',
-  `auto_join` int(15) NOT NULL default '0',
+  `can_sell` tinyint(1) NOT NULL default '0',
+  `can_buy` tinyint(1) NOT NULL default '0',
+  `count` tinyint(15) NOT NULL default '0',
+  `auto_join` tinyint(15) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1268,7 +1291,7 @@ $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "maintainance`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "maintainance` (
   `id` int(11) NOT NULL auto_increment,
-  `active` enum('y','n') default NULL,
+  `active` tinyint(1) NOT NULL default '0',
   `superuser` varchar(32) default NULL,
   `maintainancetext` text,
   KEY `id` (`id`)
@@ -1278,7 +1301,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "maintainance` (
 # Dumping data for table `" . $DBPrefix . "maintainance`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 'n', 'renlok', '<br>\r\n<center>\r\n<b>Under maintenance!!!!!!!</b>\r\n</center>');";
+$query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 0, 'renlok', '<br>\r\n<center>\r\n<b>Under maintenance!!!!!!!</b>\r\n</center>');";
 
 # ############################
 
@@ -1323,12 +1346,12 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
   `fromemail` varchar(50) NOT NULL default '',
   `sentat` varchar(20) NOT NULL default '',
   `message` text NOT NULL ,
-  `isread` int(1) NOT NULL default '0',
+  `isread` tinyint(1) NOT NULL default '0',
   `subject` varchar(50) NOT NULL default '',
-  `replied` int(1) NOT NULL default '0',
-  `reply_of` INT(50) NOT NULL default '0',
+  `replied` tinyint(1) NOT NULL default '0',
+  `reply_of` int(50) NOT NULL default '0',
   `question` int(15) NOT NULL default '0',
-  `public` INT(1) NOT NULL default '0',
+  `public` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`id`)
 ) ;";
 
@@ -1344,7 +1367,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "news` (
   `title` varchar(200) NOT NULL default '',
   `content` longtext NOT NULL,
   `new_date` int(8) NOT NULL default '0',
-  `suspended` int(1) NOT NULL default '0',
+  `suspended` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 

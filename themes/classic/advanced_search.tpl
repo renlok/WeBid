@@ -42,8 +42,8 @@
 				<tr valign="top">
 					<td align="right">{L_2__0025}</td>
 					<td>
-						<INPUT TYPE="checkbox" name="buyitnow" value="y"> {L_30_0100}
-						<INPUT TYPE="checkbox" name="buyitnowonly" value="y"> {L_30_0101}
+						<input type="checkbox" name="buyitnow" value="y"> {L_30_0100}
+						<input type="checkbox" name="buyitnowonly" value="y"> {L_30_0101}
 					</td>
 				</tr>
 				<tr valign="top">

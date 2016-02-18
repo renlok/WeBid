@@ -64,6 +64,19 @@ class global_class
 			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
 		}
 		$this->SETTINGS['gateways'] = unserialize($this->SETTINGS['gateways']);
+		$this->loadAuctionTypes();
+	}
+
+	private function loadAuctionTypes()
+	{
+		global $MSG, $db, $DBPrefix;
+		$query = "SELECT id, language_string FROM " . $DBPrefix . "auction_types";
+		$db->direct_query($query);
+		$this->SETTINGS['auction_types'] = [];
+		while ($row = $db->fetch())
+		{
+			$this->SETTINGS['auction_types'][$row['id']] = $MSG[$row['language_string']];
+		}
 	}
 
 	/*
@@ -187,7 +200,7 @@ class global_class
 			}
 		}
 
-		if ($this->SETTINGS['MAINTAINANCE']['active'] == 'y')
+		if ($this->SETTINGS['MAINTAINANCE']['active'])
 		{
 			if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['MAINTAINANCE']['superuser'] || $user->user_data['id'] == $this->SETTINGS['MAINTAINANCE']['superuser']))
 			{

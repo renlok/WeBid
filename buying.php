@@ -36,7 +36,7 @@ $query = "SELECT DISTINCT a.id, a.qty, a.seller, a.paid, a.feedback_win, a.bid, 
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.seller)
-		WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
+		WHERE (b.closed = 1 OR b.bn_only = 1) AND b.suspended = 0
 		AND a.winner = :user_id ORDER BY a.closingdate DESC";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');

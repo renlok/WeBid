@@ -41,7 +41,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 		$params = array();
 		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 		$params[] = array(':msgstoshow', intval($_POST['msgstoshow']), 'int');
-		$params[] = array(':active', $_POST['active'], 'int');
+		$params[] = array(':active', $_POST['active'], 'bool');
 		$db->query($query, $params);
 		header('location: boards.php');
 		exit;
@@ -55,7 +55,7 @@ $template->assign_vars(array(
 		'NAME' => (isset($_POST['name'])) ? $_POST['name'] : '',
 		'MSGTOSHOW' => (isset($_POST['msgstoshow'])) ? $_POST['msgstoshow'] : '',
 		'B_ACTIVE' => ((isset($_POST['active']) && $_POST['active'] == 1) || !isset($_POST['active'])),
-		'B_DEACTIVE' => (isset($_POST['active']) && $_POST['active'] == 2)
+		'B_DEACTIVE' => (isset($_POST['active']) && $_POST['active'] == 0)
 		));
 
 include 'header.php';

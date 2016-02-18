@@ -207,7 +207,7 @@ else
 			WHERE " . $insql . " starts <= :time
 			AND closed = 0
 			AND suspended = 0
-			AND featured = 'y'";
+			AND featured = 1";
 	$params_feat = array();
 	$params_feat[] = array(':time', $NOW, 'int');
 	if (!empty($_POST['catkeyword']))

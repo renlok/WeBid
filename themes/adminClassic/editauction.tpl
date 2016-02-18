@@ -95,8 +95,8 @@
 					<tr>
 						<td align="right">{L_30_0063}</td>
 						<td>
-							<input type="radio" name="buy_now_only" value="n" {BN_ONLY_N}> {L_029}
-							<input type="radio" name="buy_now_only" value="y" {BN_ONLY_Y}> {L_030}
+							<input type="radio" name="buy_now_only" value="0" {BN_ONLY_N}> {L_029}
+							<input type="radio" name="buy_now_only" value="1" {BN_ONLY_Y}> {L_030}
 						</td>
 					</tr>
 					<tr>

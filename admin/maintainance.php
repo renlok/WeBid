@@ -30,7 +30,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$params = array();
 	$params[] = array(':nick', $superuser, 'str');
 	$db->query($query, $params);
-	if ($db->numrows() == 0 && $_POST['active'] == 'y')
+	if ($db->numrows() == 0 && $_POST['active'] == 1)
 	{
 		$ERR = $ERR_025;
 	}
@@ -63,7 +63,7 @@ else
 }
 
 loadblock('', $MSG['_0002']);
-loadblock($MSG['_0006'], '', 'yesno', 'active', $system->SETTINGS['active'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['_0006'], '', 'bool', 'active', $system->SETTINGS['active'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['003'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();

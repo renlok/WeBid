@@ -133,7 +133,7 @@
 					</tr>
 					<tr>
 						<td align="right" valign="top">{L_026}</td>
-						<td>{PAYMENTS}</td>
+						<td>{!PAYMENTS!}</td>
 					</tr>
 	<!-- IF B_MKFEATURED or B_MKBOLD or B_MKHIGHLIGHT -->
 					<tr>

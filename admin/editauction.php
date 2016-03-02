@@ -352,27 +352,17 @@ if (file_exists('../' . UPLOAD_FOLDER . $auc_id))
 }
 
 // payments
-$payment = explode(', ', $auction_data['payment']);
+$payment = explode(', ', strtolower($auction_data['payment']));
 $payment_methods = '';
-$query = "SELECT * FROM " . $DBPrefix . "gateways";
+$query = "SELECT * FROM " . $DBPrefix . "payment_options";
 $db->direct_query($query);
-$gateways_data = $db->result();
-$gateway_list = explode(',', $gateways_data['gateways']);
-foreach ($gateway_list as $v)
+foreach ($payment_method = $db->fetch())
 {
-	$v = strtolower($v);
-	if ($gateways_data[$v . '_active'] == 1 && _in_array($v, $payment))
+	if ($payment_method['gateway_active'] == 1)
 	{
-		$checked = (in_array($v, $payment)) ? 'checked' : '';
-		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '> ' . $system->SETTINGS['gateways'][$v] . '</p>';
+		$checked = (in_array($payment_method['name'], $payment)) ? 'checked' : '';
+		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '> ' . $payment_method['displayname'] . '</p>';
 	}
-}
-
-$payment_options = unserialize($system->SETTINGS['payment_options']);
-foreach ($payment_options as $k => $v)
-{
-	$checked = (_in_array($k, $payment)) ? 'checked' : '';
-	$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '> ' . $v . '</p>';
 }
 
 $template->assign_vars(array(

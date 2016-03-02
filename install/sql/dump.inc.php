@@ -1194,6 +1194,36 @@ $query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet,worl
 # ############################
 
 #
+# Table structure for table `" . $DBPrefix . "payment_options`
+#
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "payment_options`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "payment_options` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL default '',
+  `displayname` varchar(50) NOT NULL default '',
+  `is_gateway` tinyint(1) NOT NULL default '0',
+  `gateway_admin_address` varchar(50) NOT NULL default '',
+  `gateway_admin_password` varchar(50) NOT NULL default '',
+  `gateway_required` tinyint(1) NOT NULL default '0',
+  `gateway_active` tinyint(1) NOT NULL default '0',
+) ;";
+
+#
+# Dumping data for table `" . $DBPrefix . "payment_options`
+#
+
+$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('banktransfer', 'Bank Transfer', 0);";
+$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('cheque', 'Cheque', 0);";
+$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('paypal', 'PayPal', 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('authnet', 'Authorize.net', 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('worldpay', 'WorldPay', 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('moneybookers', 'Moneybookers', 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('toocheckout', '2Checkout', 1);";
+
+# ############################
+
+#
 # Table structure for table `" . $DBPrefix . "groups`
 #
 

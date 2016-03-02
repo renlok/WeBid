@@ -119,40 +119,36 @@ function check_installation()
 {
 	global $DBPrefix, $settings_version, $db;
 
-	@include '../includes/config.inc.php';
-	$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
-	$db->error_supress(true); // we dont want errors returned for now
-	if($db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix))
+	if (is_file ('../includes/config.inc.php'))
 	{
-		// old method
-		$query = "SHOW COLUMNS FROM `" . $DBPrefix . "settings` WHERE `Field` = 'fieldname' OR `Field` = 'version'";
-		$db->query($query);
-		$settingkeys = $db->fetchall();
-        if(count($settingkeys) > 0)
+		include '../includes/config.inc.php';
+		$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
+		$db->error_supress(true); // we dont want errors returned for now
+		if($db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix))
 		{
-			if ($settingkeys[0]['Field'] == 'fieldname')
+			// old method
+			$query = "SHOW COLUMNS FROM `" . $DBPrefix . "settings` WHERE `Field` = 'fieldname' OR `Field` = 'version'";
+			$db->query($query);
+			$settingkeys = $db->fetchall();
+			if(count($settingkeys) > 0)
 			{
-				$query = "SELECT value FROM `" . $DBPrefix . "settings` WHERE fieldname = 'version'";
-				$db->direct_query($query);
-				$settings_version = $db->result('value');
+				if ($settingkeys[0]['Field'] == 'fieldname')
+				{
+					$query = "SELECT value FROM `" . $DBPrefix . "settings` WHERE fieldname = 'version'";
+					$db->direct_query($query);
+					$settings_version = $db->result('value');
+				}
+				else
+				{
+					$query = "SELECT version FROM `" . $DBPrefix . "settings` LIMIT 1";
+					$db->direct_query($query);
+					$settings_version = $db->result('version');
+				}
+				return true;
 			}
-			else
-			{
-				$query = "SELECT version FROM `" . $DBPrefix . "settings` LIMIT 1";
-				$db->direct_query($query);
-				$settings_version = $db->result('version');
-			}
-			return true;
-		}
-		else
-		{
-			return false;
 		}
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 function package_version()

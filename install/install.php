@@ -22,7 +22,7 @@ define('InInstaller', 1);
 $db = new DatabasePDO();
 
 define('MAIN_PATH', getmainpath());
-$thisversion = package_version();
+$package_version = package_version();
 $settings_version = 'Unknown';
 echo print_header(false);
 
@@ -75,7 +75,7 @@ switch($step)
 		$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";' . "\n";
 		$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
 		$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
-		$content .= '$main_path = ' . $path . ';' . "\n";
+		$content .= '$main_path = "' . $path . '";' . "\n";
 		$content .= '$MD5_PREFIX = "' . $hash . '";' . "\n";
 		$content .= '?>';
 		$output = makeconfigfile($content, $path);

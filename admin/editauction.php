@@ -358,7 +358,7 @@ $query = "SELECT * FROM " . $DBPrefix . "payment_options";
 $db->direct_query($query);
 foreach ($payment_method = $db->fetch())
 {
-	if ($payment_method['gateway_active'] == 1)
+	if ($payment_method['gateway_active'] == 1 || $payment_method['is_gateway'] == 0)
 	{
 		$checked = (in_array($payment_method['name'], $payment)) ? 'checked' : '';
 		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '> ' . $payment_method['displayname'] . '</p>';

@@ -448,7 +448,7 @@ switch ($_SESSION['action'])
 					'PAGE' => 2,
 					'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 
-					'AUC_DESCRIPTION' => stripslashes($sdescription),
+					'AUC_DESCRIPTION' => $sdescription,
 					'PIC_URL' => (empty($pict_url)) ? $MSG['114'] : '<img src="' . UPLOAD_FOLDER . session_id() . '/' . $pict_url . '" style="max-width:100%; max-height:100%;">',
 					'MIN_BID' => $system->print_money($minimum_bid, false),
 					'RESERVE' => $system->print_money($reserve_price, false),
@@ -462,7 +462,7 @@ switch ($_SESSION['action'])
 					'ATYPE_PLAIN' => $atype,
 					'SHIPPING' => $shippingtext,
 					'INTERNATIONAL' => ($international) ? $MSG['033'] : $MSG['043'],
-					'SHIPPING_TERMS' => nl2br(stripslashes($shipping_terms)),
+					'SHIPPING_TERMS' => nl2br($shipping_terms),
 					'PAYMENTS_METHODS' => $payment_methods,
 					'CAT_LIST1' => $category_string1,
 					'CAT_LIST2' => $category_string2,
@@ -672,7 +672,7 @@ switch ($_SESSION['action'])
 				// auction details
 				'AUC_TITLE' => $title,
 				'AUC_SUBTITLE' => $subtitle,
-				'AUC_DESCRIPTION' => $CKEditor->editor('sdescription', stripslashes($sdescription)),
+				'AUC_DESCRIPTION' => $CKEditor->editor('sdescription', $sdescription),
 				'ITEMQTY' => $iquantity,
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid, false),
 				'BN_ONLY' => ($buy_now_only) ? 'disabled' : '',

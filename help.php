@@ -32,7 +32,7 @@ $db->query($query, $params);
 while ($cat = $db->fetch())
 {
 	$template->assign_block_vars('cats', array(
-			'CAT' => stripslashes($cat['category']),
+			'CAT' => $cat['category'],
 			'ID' => $cat['id']
 			));
 }

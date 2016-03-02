@@ -17,7 +17,7 @@
 						<tr valign="top">
 							<td width="175">{L_5299}</td>
 							<td style="padding:3px;">
-								{SELECTBOX}
+								{!SELECTBOX!}
 							</td>
 						</tr>
 						<tr valign="top">
@@ -30,7 +30,7 @@
 							<td width="175">{L_605}</td>
 							<td style="padding:3px;">
 								{L_30_0055}
-								{EDITOR}
+								{!EDITOR!}
 							</td>
 						</tr>
 					</table>

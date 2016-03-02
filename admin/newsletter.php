@@ -21,8 +21,8 @@ include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
-$subject = (isset($_POST['subject'])) ? stripslashes($_POST['subject']) : '';
-$content = (isset($_POST['content'])) ? stripslashes($_POST['content']) : '';
+$subject = (isset($_POST['subject'])) ? $_POST['subject'] : '';
+$content = (isset($_POST['content'])) ? $_POST['content'] : '';
 $is_preview = false;
 
 if (isset($_POST['action']) && $_POST['action'] == 'submit')
@@ -86,7 +86,7 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'SELECTBOX' => generateSelect('usersfilter', $USERSFILTER),
 		'SUBJECT' => $subject,
-		'EDITOR' => $CKEditor->editor('content', stripslashes($content)),
+		'EDITOR' => $CKEditor->editor('content', $content),
 		'PREVIEW' => $content,
 
 		'B_PREVIEW' => $is_preview

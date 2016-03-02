@@ -39,7 +39,6 @@ loadblock($MSG['346'], $MSG['345'], 'dropdown', 'timezone', $system->SETTINGS['t
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'OPTIONHTML' => $html,
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['344'],
 		'DROPDOWN' => $html

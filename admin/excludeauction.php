@@ -154,7 +154,7 @@ $template->assign_vars(array(
 		'STARTS' => $date,
 		'DURATION' => $auc_data['duration'],
 		'CATEGORY' => $category_names[$auc_data['category']],
-		'DESCRIPTION' => stripslashes($auc_data['description']),
+		'DESCRIPTION' => $auc_data['description'],
 		'CURRENT_BID' => $system->print_money($auc_data['current_bid']),
 		'QTY' => $auc_data['quantity'],
 		'RESERVE_PRICE' => $system->print_money($auc_data['reserve_price']),

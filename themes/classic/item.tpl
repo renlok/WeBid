@@ -30,7 +30,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 <div class="content">
 	<div class="tableContent2">
-		<div class="padding"><b>{L_041}:</b> {TOPCATSPATH}</div>
+		<div class="padding"><b>{L_041}:</b> {!TOPCATSPATH!}</div>
 		<div class="titTable2 rounded-top rounded-bottom">
 			<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<tr>
@@ -154,24 +154,24 @@ $(document).ready(function() {
 														<td width="50%" align="left">
 															{L_038}:
 														</td>
-														<td align="left">{MINBID}</td>
+														<td align="left">{!MINBID!}</td>
 													</tr>
 	<!-- ENDIF -->
 													<tr>
 														<td width="50%" align="left">{L_116}: </td>
-														<td align="left" valign="middle">{MAXBID}<!-- IF B_HASRESERVE -->&nbsp;<span class="smallspan">{L_514}</span><!-- ENDIF --></td>
+														<td align="left" valign="middle">{!MAXBID!}<!-- IF B_HASRESERVE -->&nbsp;<span class="smallspan">{L_514}</span><!-- ENDIF --></td>
 													</tr>
 <!-- ENDIF -->
 <!-- IF B_SHIPPING -->
 													<tr>
 														<td width="50%" align="left">{L_023}: </td>
-														<td align="left">{SHIPPING_COST}</td>
+														<td align="left">{!SHIPPING_COST!}</td>
 													</tr>
 <!-- ENDIF -->
 <!-- IF (B_ADDITIONAL_SHIPPING_COST or B_BUY_NOW_ONLY) and B_SHOW_ADDITIONAL_SHIPPING_COST -->
 													<tr>
 														<td width="50%" align="left">{L_350_1008}: </td>
-														<td align="left">{ADDITIONAL_SHIPPING_COST}</td>
+														<td align="left">{!ADDITIONAL_SHIPPING_COST!}</td>
 													</tr>
 <!-- ENDIF -->
 <!-- IF B_BUY_NOW -->
@@ -242,7 +242,7 @@ $(document).ready(function() {
 		<!-- ENDIF -->
 														{L_121} <input type="text" name="bid" size="15">
 		<!-- IF ATYPE eq 1 -->
-														{L_124}: {NEXTBID}
+														{L_124}: {!NEXTBID!}
 														<br>
 		<!-- ENDIF -->
 													</td>
@@ -347,7 +347,7 @@ $(document).ready(function() {
 		<!-- ENDIF -->
 							</td>
 							<td align="center">
-								{bidhistory.BID}
+								{!bidhistory.BID!}
 							</td>
 							<td align="center">
 								{bidhistory.WHEN}
@@ -387,16 +387,16 @@ $(document).ready(function() {
 								<br>
 								<b>{L_026}:</b> {PAYMENTS}<br>
 <!-- IF ! B_BUY_NOW_ONLY -->
-								<b><!-- IF ATYPE eq 1 -->{L_127}<!-- ELSE -->{L_038}<!-- ENDIF -->:</b> {MINBID}<br>
+								<b><!-- IF ATYPE eq 1 -->{L_127}<!-- ELSE -->{L_038}<!-- ENDIF -->:</b> {!MINBID!}<br>
 <!-- ENDIF -->
 								<br>
 								<b>{L_111}:</b> {STARTTIME}<br>
 								<b>{L_112}:</b> {ENDTIME}<br>
 								<b>{L_113}:</b> {ID}<br>
 								<br>
-								<b>{L_041}:</b> {CATSPATH}<br>
+								<b>{L_041}:</b> {!CATSPATH!}<br>
 <!-- IF SECCATSPATH ne '' -->
-								<b>{L_814}:</b> {SECCATSPATH}
+								<b>{L_814}:</b> {!SECCATSPATH!}
 <!-- ENDIF -->
 							</div>
 						</div>

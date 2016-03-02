@@ -38,7 +38,7 @@ if (!isset($_REQUEST['id']))
 	exit;
 }
 
-function load_gallery(UPLOAD_FOLDER, $auc_id)
+function load_gallery($auc_id)
 {
 	$UPLOADED_PICTURES = array();
 	if (file_exists('../' . UPLOAD_FOLDER . $auc_id))
@@ -356,7 +356,7 @@ $payment = explode(', ', strtolower($auction_data['payment']));
 $payment_methods = '';
 $query = "SELECT * FROM " . $DBPrefix . "payment_options";
 $db->direct_query($query);
-foreach ($payment_method = $db->fetch())
+while ($payment_method = $db->fetch())
 {
 	if ($payment_method['gateway_active'] == 1 || $payment_method['is_gateway'] == 0)
 	{

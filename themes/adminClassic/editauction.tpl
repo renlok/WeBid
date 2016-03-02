@@ -25,11 +25,11 @@
 					</tr>
 					<tr>
 						<td align="right">{L_287}</td>
-						<td>{CATLIST1}</td>
+						<td>{!CATLIST1!}</td>
 					</tr>
 					<tr>
 						<td align="right">{L_814}</td>
-						<td>{CATLIST2}</td>
+						<td>{!CATLIST2!}</td>
 					</tr>
 					<tr>
 						<td align="right">{L_018}</td>
@@ -44,7 +44,7 @@
 						<td>
 							<select name="duration">
 								<option value=""> </option>
-								{DURLIST}
+								{!DURLIST!}
 							</select>
 						</td>
 					</tr>

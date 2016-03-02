@@ -553,31 +553,31 @@ $(document).ready(function(){
 	<!-- IF B_BN_ONLY -->
 						<tr>
 							<td valign="top" align="right"><b>{MINTEXT}</b></td>
-							<td>{MIN_BID}</td>
+							<td>{!MIN_BID!}</td>
 						</tr>
 	<!-- ENDIF -->
 	<!-- IF ATYPE_PLAIN eq 1 -->
 		<!-- IF B_BN_ONLY -->
 						<tr>
 							<td valign="top" align="right"><b>{L_021}</b></td>
-							<td>{RESERVE}</td>
+							<td>{!RESERVE!}</td>
 						</tr>
 		<!-- ENDIF -->
 		<!-- IF B_BN -->
 						<tr>
 							<td valign="top" align="right"><b>{L_496}</b></td>
-							<td>{BN_PRICE}</td>
+							<td>{!BN_PRICE!}</td>
 						</tr>
 		<!-- ENDIF -->
 	<!-- ENDIF -->
 	<!-- IF B_SHIPPING -->
 						<tr>
 							<td valign="top" align="right"><b>{L_023}</b></td>
-							<td>{SHIPPING_COST}</td>
+							<td>{!SHIPPING_COST!}</td>
 						</tr>
 						<tr>
 							<td valign="top" align="right"><b>{L_350_1008}</b></td>
-							<td>{ADDITIONAL_SHIPPING_COST}</td>
+							<td>{!ADDITIONAL_SHIPPING_COST!}</td>
 						</tr>
 	<!-- ENDIF -->
 						<tr>
@@ -615,9 +615,9 @@ $(document).ready(function(){
 						<tr>
 							<td  valign="top" align="right"><b>{L_027}</b></td>
 							<td>
-								{CAT_LIST1}
+								{!CAT_LIST1!}
 	<!-- IF CAT_LIST2 ne '' -->
-								<br>{CAT_LIST2}
+								<br>{!CAT_LIST2!}
 	<!-- ENDIF -->
 							</td>
 						</tr>

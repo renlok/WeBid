@@ -29,7 +29,7 @@
 					</tr>
 					<tr>
 						<td>{L_018}</td>
-						<td>{DESCRIPTION}</td>
+						<td>{!DESCRIPTION!}</td>
 					</tr>
 					<tr>
 						<td>{L_116}</td>

@@ -189,7 +189,7 @@
 					</tr>
 				<!-- ENDIF -->
 						<tr>
-						<td colspan="2">{CAPCHA}</td>
+						<td colspan="2">{!CAPCHA!}</td>
 					</tr>
 				</table>
 				<!-- IF B_FEES -->

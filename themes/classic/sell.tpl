@@ -275,7 +275,7 @@ $(document).ready(function(){
 					</tr>
 					<tr>
 						<td class="rightpan" colspan="2">
-							{AUC_DESCRIPTION}
+							{!AUC_DESCRIPTION!}
 						</td>
 					</tr>
 	<!-- IF B_GALLERY -->
@@ -557,7 +557,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 					<tr>
 						<td  valign="top" align="right"><b>{L_018}</b></td>
-						<td>{AUC_DESCRIPTION}</td>
+						<td>{!AUC_DESCRIPTION!}</td>
 					</tr>
 					<tr>
 						<td  valign="top" align="right"><b>{L_019}</b></td>

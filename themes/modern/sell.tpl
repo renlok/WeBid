@@ -259,7 +259,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 					<div class="form-group col-md-12">
 						<label for="subtitle">{L_018}</label>
-						{AUC_DESCRIPTION}
+						{!AUC_DESCRIPTION!}
 					</div>
 	<!-- IF B_GALLERY -->
 					<legend>{L_663}</legend>
@@ -533,7 +533,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 						<tr>
 							<td  valign="top" align="right"><b>{L_018}</b></td>
-							<td>{AUC_DESCRIPTION}</td>
+							<td>{!AUC_DESCRIPTION!}</td>
 						</tr>
 						<tr>
 							<td  valign="top" align="right"><b>{L_019}</b></td>

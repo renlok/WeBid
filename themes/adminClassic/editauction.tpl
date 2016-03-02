@@ -33,7 +33,7 @@
 					</tr>
 					<tr>
 						<td align="right">{L_018}</td>
-						<td><textarea name="description" cols="40" rows="8">{DESC}</textarea></td>
+						<td><textarea name="description" cols="40" rows="8">{!DESC!}</textarea></td>
 					</tr>
 					<tr>
 						<td align="right">{L_258}</td>

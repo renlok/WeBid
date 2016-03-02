@@ -261,7 +261,7 @@ $(document).ready(function() {
 						<h3 class="panel-title"><a name="description"></a>{L_018}</h3>
 					</div>
 					<div class="panel-body">
-						{AUCTION_DESCRIPTION}
+						{!AUCTION_DESCRIPTION!}
 					</div>
 				</div>
 <!-- IF B_HAS_QUESTIONS -->

@@ -277,7 +277,7 @@ $(document).ready(function() {
 				<div class="titTable4">
 					<a name="description"></a>{L_018}
 				</div>
-				<div class="table2">{AUCTION_DESCRIPTION}</div>
+				<div class="table2">{!AUCTION_DESCRIPTION!}</div>
 			</div>
 <!-- IF B_HAS_QUESTIONS -->
 			<div class="tableContent2">

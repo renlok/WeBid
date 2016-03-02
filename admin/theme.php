@@ -21,7 +21,7 @@ include 'loggedin.inc.php';
 $theme_root = MAIN_PATH . 'themes/'; //theres no point repeatedly defining this
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']) && $_POST['dtheme'] != 'admin')
+	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']) && strstr($_POST['dtheme'], 'admin') === false)
 	{
 		// Update database
 		$system->writesetting("theme", $_POST['dtheme'], 'str');
@@ -55,7 +55,7 @@ if ($dir = @opendir($theme_root))
 					'NAME' => $atheme,
 					'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
 					'B_LISTFILES' => $list_files,
-					'B_NOTADMIN' => ($atheme != 'admin'),
+					'B_NOTADMIN' => (strstr($atheme, 'admin') === false),
 					'BG' => $bg
 					));
 			$bg = ($bg == '') ? 'class="bg"' : '';

@@ -46,7 +46,7 @@
 									<input type="radio" name="dtheme" value="{themes.NAME}" <!-- IF themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
 									<b>{themes.NAME}</b>
 	<!-- ELSE -->
-									<b>{L_841}</b>
+									<b>{L_841}: {themes.NAME}</b>
 	<!-- ENDIF -->
 								</div>
 								<div class="col-md-6">

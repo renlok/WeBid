@@ -64,9 +64,9 @@ else
 $system = new global_class();
 $template = new Template();
 $user = new User();
-set_error_handler('WeBidErrorHandler', $error_reporting);
-
 include INCLUDE_PATH . 'messages.inc.php';
+$system->loadAuctionTypes();
+set_error_handler('WeBidErrorHandler', $error_reporting);
 
 if($user->logged_in)
 {

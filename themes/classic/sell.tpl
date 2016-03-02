@@ -298,7 +298,7 @@ $(document).ready(function(){
 						<td align="right" width="25%" valign="middle">
 							<b>{L_257}</b>
 						</td>
-						<td class="rightpan">{ATYPE}</td>
+						<td class="rightpan">{!ATYPE!}</td>
 					</tr>
 					<tr>
 						<td align="right" width="25%" valign="middle">
@@ -405,7 +405,7 @@ $(document).ready(function(){
 							<b>{L_022}</b>
 						</td>
 						<td class="rightpan">
-							{DURATIONS}
+							{!DURATIONS!}
 						</td>
 					</tr>
 	<!-- IF B_AUTORELIST -->
@@ -415,7 +415,7 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan">
 							<p>{L__0162}</p>
-							{RELIST}
+							{!RELIST!}
 						</td>
 					</tr>
 	<!-- ENDIF -->
@@ -477,7 +477,7 @@ $(document).ready(function(){
 							<b>{L_026}</b>
 						</td>
 						<td class="rightpan">
-							{PAYMENTS}
+							{!PAYMENTS!}
 						</td>
 					</tr>
 					<tr>

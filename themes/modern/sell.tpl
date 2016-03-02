@@ -276,7 +276,7 @@ $(document).ready(function(){
 					<div class="form-group col-md-12">
 						<label for="atype">{L_257}</label>
 						<div class="row">
-							<div class="auctiontype col-md-4">{ATYPE}</div>
+							<div class="auctiontype col-md-4">{!ATYPE!}</div>
 						</div>
 					</div>
 					<div class="form-group col-md-12">
@@ -390,7 +390,7 @@ $(document).ready(function(){
 					<div class="form-group col-md-12">
 						<label>{L_022}</label>
 						<div class="row">
-							<div class="duration col-md-4">{DURATIONS}</div>
+							<div class="duration col-md-4">{!DURATIONS!}</div>
 						</div>
 					</div>
 	<!-- IF B_AUTORELIST -->
@@ -398,7 +398,7 @@ $(document).ready(function(){
 						<label>{L__0161}</label>
 						<p class="bg-info sm-padding">{L__0162}</p>
 						<div class="row">
-							<div class="relist col-md-4">{RELIST}</div>
+							<div class="relist col-md-4">{!RELIST!}</div>
 						</div>
 					</div>
 	<!-- ENDIF -->
@@ -457,7 +457,7 @@ $(document).ready(function(){
 					<div class="form-group col-md-12">
 						<label>{L_026}</label>
 						<div class="checkbox">
-							<label>{PAYMENTS}</label>
+							<label>{!PAYMENTS!}</label>
 						</div>
 					</div>
 					<legend>{L_268}</legend>

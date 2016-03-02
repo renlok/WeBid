@@ -64,10 +64,9 @@ class global_class
 			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
 		}
 		$this->SETTINGS['gateways'] = unserialize($this->SETTINGS['gateways']);
-		$this->loadAuctionTypes();
 	}
 
-	private function loadAuctionTypes()
+	public function loadAuctionTypes()
 	{
 		global $MSG, $db, $DBPrefix;
 		$query = "SELECT id, language_string FROM " . $DBPrefix . "auction_types";

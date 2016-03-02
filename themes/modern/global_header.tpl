@@ -71,12 +71,12 @@ $(document).ready(function() {
 <body>
 <div class="container">
 	<div class="row header">
-		<div class="col-md-6">{LOGO}</div>
+		<div class="col-md-6"><img src="{SITEURL}uploaded/logo/{LOGO}" border="0" alt="{SITENAME}"></div>
 		<div class="col-md-6 hidden-xs text-right">{BANNER}</div>
 	</div>
 	<div class="row">
 		<div class="col-md-6 text-muted"><small><!-- IF B_LOGGED_IN -->{L_200} {YOURUSERNAME}. <a href="{SSLURL}logout.php?">{L_245}</a><!-- ENDIF --></small></div>
-		<div class="col-md-6 text-right text-muted"><small>{HEADERCOUNTER}</small></div>
+		<div class="col-md-6 text-right text-muted"><small>{!HEADERCOUNTER!}</small></div>
 	</div>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">

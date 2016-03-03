@@ -73,7 +73,7 @@
 	</div>
 	<div class="counters">
 		<span class="leftside"><!-- IF B_LOGGED_IN -->{L_200} {YOURUSERNAME}. <a href="{SSLURL}logout.php?">{L_245}</a><!-- ENDIF --></span>
-		<span class="rightside">{!HEADERCOUNTER!}</span>
+		<span class="rightside">{HEADERCOUNTER}</span>
 	</div>
 	<div class="navbar">
 		<ul>
@@ -98,7 +98,7 @@
 		<div>
 			<form name="search" action="{SITEURL}search.php" method="get">
 				<select class="" name="id">
-					{!SELECTION_BOX!}
+					{SELECTION_BOX}
 				</select>
 				<input type="search" name="q" size="50" value="{Q}" placeholder="{L_861}">
 				<input type="submit" name="sub" value="{L_399}" class="button">

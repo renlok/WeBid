@@ -13,7 +13,7 @@
 			<link>{rss.URL}</link>
 			<guid isPermaLink="true">{rss.URL}</guid>
 			<description>
-				<![CDATA[{!rss.DESC!}<br />{rss.CAT}]]>
+				<![CDATA[{rss.DESC}<br />{rss.CAT}]]>
 			</description>
 			<dc:creator>{rss.USER}</dc:creator>
 			<dc:date>{rss.POSTED}</dc:date>

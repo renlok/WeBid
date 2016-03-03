@@ -55,7 +55,7 @@
 			<div class="form-group col-lg-12">
 				<label>{L_346}</label>
 				<div class="timezone">
-					{!TIMEZONE!}
+					{TIMEZONE}
 				</div>
 			</div>
 		</div>

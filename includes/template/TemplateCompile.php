@@ -250,14 +250,14 @@ class TemplateCompile
 		
 		
 		// Handle remaining varrefs dont use htmlentities 
-		$text_blocks = preg_replace('#\{!([a-z0-9_-]+)!\}#is', "<?php echo (isset(\$this->_rootref['\\1'])) ? \$this->_rootref['\\1'] : ''; ?>", $text_blocks);
-		$text_blocks = preg_replace('#\{!([a-z0-9_-]+)\(([a-z0-9]+)\)!\}#is', "<?php echo (isset(\$this->_rootref['\\1'][\\2])) ? \$this->_rootref['\\1'][\\2] : ''; ?>", $text_blocks);
-		$text_blocks = preg_replace('#\{!\$([a-z0-9_-]+)!\}#is', "<?php echo (isset(\$this->_tpldata['DEFINE']['.']['\\1'])) ? \$this->_tpldata['DEFINE']['.']['\\1'] : ''; ?>", $text_blocks);
+		$text_blocks = preg_replace('#\{([a-z0-9_-]+)\|e\}#is', "<?php echo (isset(\$this->_rootref['\\1'])) ? htmlentities(\$this->_rootref['\\1']) : ''; ?>", $text_blocks);
+		$text_blocks = preg_replace('#\{([a-z0-9_-]+)\(([a-z0-9]+)\)\|e\}#is', "<?php echo (isset(\$this->_rootref['\\1'][\\2])) ? htmlentities(\$this->_rootref['\\1'][\\2]) : ''; ?>", $text_blocks);
+		$text_blocks = preg_replace('#\{\$([a-z0-9_-]+)\|e\}#is', "<?php echo (isset(\$this->_tpldata['DEFINE']['.']['\\1'])) ? htmlentities(\$this->_tpldata['DEFINE']['.']['\\1']) : ''; ?>", $text_blocks);
 
 		// Handle remaining varrefs do use htmlentities 
-		$text_blocks = preg_replace('#\{([a-z0-9_-]+)\}#is', "<?php echo (isset(\$this->_rootref['\\1'])) ? htmlentities(\$this->_rootref['\\1']) : ''; ?>", $text_blocks);
-		$text_blocks = preg_replace('#\{([a-z0-9_-]+)\(([a-z0-9]+)\)\}#is', "<?php echo (isset(\$this->_rootref['\\1'][\\2])) ? htmlentities(\$this->_rootref['\\1'][\\2]) : ''; ?>", $text_blocks);
-		$text_blocks = preg_replace('#\{\$([a-z0-9_-]+)\}#is', "<?php echo (isset(\$this->_tpldata['DEFINE']['.']['\\1'])) ? htmlentities(\$this->_tpldata['DEFINE']['.']['\\1']) : ''; ?>", $text_blocks);
+		$text_blocks = preg_replace('#\{([a-z0-9_-]+)\}#is', "<?php echo (isset(\$this->_rootref['\\1'])) ? \$this->_rootref['\\1'] : ''; ?>", $text_blocks);
+		$text_blocks = preg_replace('#\{([a-z0-9_-]+)\(([a-z0-9]+)\)\}#is', "<?php echo (isset(\$this->_rootref['\\1'][\\2])) ? \$this->_rootref['\\1'][\\2] : ''; ?>", $text_blocks);
+		$text_blocks = preg_replace('#\{\$([a-z0-9_-]+)\}#is', "<?php echo (isset(\$this->_tpldata['DEFINE']['.']['\\1'])) ? \$this->_tpldata['DEFINE']['.']['\\1'] : ''; ?>", $text_blocks);
 
 		return;
 	}

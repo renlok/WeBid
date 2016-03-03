@@ -76,7 +76,7 @@ $(document).ready(function() {
 	</div>
 	<div class="row">
 		<div class="col-md-6 text-muted"><small><!-- IF B_LOGGED_IN -->{L_200} {YOURUSERNAME}. <a href="{SSLURL}logout.php?">{L_245}</a><!-- ENDIF --></small></div>
-		<div class="col-md-6 text-right text-muted"><small>{!HEADERCOUNTER!}</small></div>
+		<div class="col-md-6 text-right text-muted"><small>{HEADERCOUNTER}</small></div>
 	</div>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">

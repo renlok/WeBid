@@ -25,15 +25,15 @@
 					</tr>
 					<tr>
 						<td align="right">{L_287}</td>
-						<td>{!CATLIST1!}</td>
+						<td>{CATLIST1}</td>
 					</tr>
 					<tr>
 						<td align="right">{L_814}</td>
-						<td>{!CATLIST2!}</td>
+						<td>{CATLIST2}</td>
 					</tr>
 					<tr>
 						<td align="right">{L_018}</td>
-						<td><textarea name="description" cols="40" rows="8">{!DESC!}</textarea></td>
+						<td><textarea name="description" cols="40" rows="8">{DESC}</textarea></td>
 					</tr>
 					<tr>
 						<td align="right">{L_258}</td>
@@ -44,7 +44,7 @@
 						<td>
 							<select name="duration">
 								<option value=""> </option>
-								{!DURLIST!}
+								{DURLIST}
 							</select>
 						</td>
 					</tr>
@@ -133,7 +133,7 @@
 					</tr>
 					<tr>
 						<td align="right" valign="top">{L_026}</td>
-						<td>{!PAYMENTS!}</td>
+						<td>{PAYMENTS}</td>
 					</tr>
 	<!-- IF B_MKFEATURED or B_MKBOLD or B_MKHIGHLIGHT -->
 					<tr>

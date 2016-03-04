@@ -35,7 +35,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 
 			$template->assign_block_vars('featured_items', array(
 				'ID' => $row['id'],
-				'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
+				'ROWCOLOUR' => ($row['highlighted']) ? 'bgcolor="#fea100"' : $bgcolour,
 				'IMAGE' => $row['pict_url'],
 				'TITLE' => $system->uncleanvars($row['title']),
 				'SUBTITLE' => $system->uncleanvars($row['subtitle']),
@@ -45,7 +45,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 				'CLOSES' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 				'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
-				'B_BOLD' => ($row['bold'] == 'y')
+				'B_BOLD' => ($row['bold'])
 			));
 			$k++;
 			$feat_items = true;
@@ -65,7 +65,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 
 		$template->assign_block_vars('items', array(
 			'ID' => $row['id'],
-			'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
+			'ROWCOLOUR' => ($row['highlighted']) ? 'bgcolor="#fea100"' : $bgcolour,
 			'IMAGE' => $row['pict_url'],
 			'TITLE' => $system->uncleanvars($row['title']),
 			'SUBTITLE' => $system->uncleanvars($row['subtitle']),
@@ -75,7 +75,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 			'CLOSES' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 			'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
-			'B_BOLD' => ($row['bold'] == 'y')
+			'B_BOLD' => ($row['bold'])
 		));
 		$k++;
 	}
@@ -128,11 +128,11 @@ function build_items($row)
 		$row['current_bid'] = $row['minimum_bid'];
 	}
 
-	if ($row['buy_now'] > 0 && $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
+	if ($row['buy_now'] > 0 && $row['bn_only'] == 0 && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
 	{
 		$row['buy_now'] = '<a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a>' . $system->print_money($row['buy_now']);
 	}
-	elseif ($row['buy_now'] > 0 && $row['bn_only'] == 'y')
+	elseif ($row['buy_now'] > 0 && $row['bn_only'])
 	{
 		$row['current_bid'] = $row['buy_now'];
 		$row['buy_now'] = '<a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a>' . $system->print_money($row['buy_now']) . ' <img src="' . get_lang_img('bn_only.png') . '" border="0" class="buynow">';

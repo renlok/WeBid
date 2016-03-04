@@ -30,6 +30,7 @@ if(!@include('includes/config.inc.php'))
 $MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didnt set a code
 
 //define the paths
+define('MAIN_PATH', $main_path);
 define('CACHE_PATH', MAIN_PATH . 'cache/');
 define('INCLUDE_PATH', MAIN_PATH . 'includes/');
 define('PACKAGE_PATH', MAIN_PATH . 'includes/packages/');
@@ -63,15 +64,9 @@ else
 $system = new global_class();
 $template = new Template();
 $user = new User();
-set_error_handler('WeBidErrorHandler', $error_reporting);
-
 include INCLUDE_PATH . 'messages.inc.php';
-
-// add auction types
-$system->SETTINGS['auction_types'] = array (
-	1 => $MSG['1021'],
-	2 => $MSG['1020']
-);
+$system->loadAuctionTypes();
+set_error_handler('WeBidErrorHandler', $error_reporting);
 
 if($user->logged_in)
 {

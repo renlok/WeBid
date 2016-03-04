@@ -141,7 +141,7 @@ if ($db->numrows() > 0)
 	while ($messages = $db->result())
 	{
 		$template->assign_block_vars('msgs', array(
-				'MSG' => nl2br(stripslashes($messages['message'])),
+				'MSG' => nl2br($messages['message']),
 				'USERNAME' => $messages['username'],
 				'POSTED' => FormatDate($messages['msgdate']),
 				'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',

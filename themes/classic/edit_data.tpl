@@ -77,7 +77,7 @@
 	<tr>
 		<td valign="top" align="right">{L_346}</td>
 		<td>
-			{TIMEZONE}
+			{!TIMEZONE!}
 		</td>
 	</tr>
 	<tr>

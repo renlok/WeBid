@@ -41,7 +41,6 @@ class DatabasePDO extends Database
 		}
 	}
 
-	// to run a direct query
 	public function error_supress($state = true)
 	{
 		$this->error_supress = $state;

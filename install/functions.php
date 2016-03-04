@@ -30,10 +30,10 @@ function getdomainpath()
 	return $path;
 }
 
-function makeconfigfile($contents)
+function makeconfigfile($contents, $path)
 {
-	$filename = MAIN_PATH . 'includes/config.inc.php';
-	$altfilename = MAIN_PATH . 'includes/config.inc.php.new';
+	$filename = $path . 'includes/config.inc.php';
+	$altfilename = $path . 'includes/config.inc.php.new';
 
 	if (!file_exists($filename))
 	{
@@ -78,20 +78,20 @@ function makeconfigfile($contents)
 
 function print_header($update)
 {
-	global $thisversion;
+	global $package_version;
 	if ($update)
 	{
-		global $_SESSION, $myversion;
+		global $_SESSION, $installed_version;
 		if (!isset($_SESSION['oldversion']))
 		{
-			$_SESSION['oldversion'] = $myversion;
+			$_SESSION['oldversion'] = $installed_version;
 		}
 
-		return '<h1>WeBid Updater, v' . $_SESSION['oldversion'] . ' to v' . $thisversion . '</h1>';
+		return '<h1>WeBid Updater, v' . $_SESSION['oldversion'] . ' to v' . $package_version . '</h1>';
 	}
 	else
 	{
-		return '<h1>WeBid Installer v' . $thisversion . '</h1>';
+		return '<h1>WeBid Installer v' . $package_version . '</h1>';
 	}
 }
 
@@ -102,10 +102,14 @@ function check_version()
 	// check if using an old version
 	if (!isset($settings_version) || empty($settings_version))
 	{
-		$version = file_get_contents('../includes/version.txt') or die('error');
-		$query = "ALTER TABLE `" . $DBPrefix . "settings` ADD `version` varchar(10) NOT NULL default '" . $version . "'";
-		@$db->direct_query($query);
-		return $version;
+		if (is_file('../includes/version.txt'))
+		{
+			// using a very, very old version
+			$version = file_get_contents('../includes/version.txt') or die('error');
+			$query = "ALTER TABLE `" . $DBPrefix . "settings` ADD `version` varchar(10) NOT NULL default '" . $version . "'";
+			@$db->direct_query($query);
+			return $version;
+		}
 	}
 
 	return $settings_version;
@@ -115,46 +119,42 @@ function check_installation()
 {
 	global $DBPrefix, $settings_version, $db;
 
-	@include '../includes/config.inc.php';
-	$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
-	$db->error_supress(true); // we dont want errors returned for now
-	if($db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix))
+	if (is_file ('../includes/config.inc.php'))
 	{
-		// old method
-		$query = "SHOW TABLES LIKE '" . $DBPrefix . "settings'";
-		$results = $db->query($query);
-                if(count($results) > 0)
+		include '../includes/config.inc.php';
+		$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
+		$db->error_supress(true); // we dont want errors returned for now
+		if($db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix))
 		{
-			$settingkeys = array_keys($db->fetchall());
-			if ($settingkeys[0] == 'fieldname')
+			// old method
+			$query = "SHOW COLUMNS FROM `" . $DBPrefix . "settings` WHERE `Field` = 'fieldname' OR `Field` = 'version'";
+			$db->query($query);
+			$settingkeys = $db->fetchall();
+			if(count($settingkeys) > 0)
 			{
-				$query = "SELECT value FROM `" . $DBPrefix . "settings` WHERE fieldname = 'version'";
-				$db->direct_query($query);
-				$settings_version = $db->result('value');
+				if ($settingkeys[0]['Field'] == 'fieldname')
+				{
+					$query = "SELECT value FROM `" . $DBPrefix . "settings` WHERE fieldname = 'version'";
+					$db->direct_query($query);
+					$settings_version = $db->result('value');
+				}
+				else
+				{
+					$query = "SELECT version FROM `" . $DBPrefix . "settings` LIMIT 1";
+					$db->direct_query($query);
+					$settings_version = $db->result('version');
+				}
+				return true;
 			}
-			else
-			{
-				$query = "SELECT version FROM `" . $DBPrefix . "settings` LIMIT 1";
-				$db->direct_query($query);
-				$settings_version = $db->result('version');
-			}
-			return true;
-		}
-		else
-		{
-			return false;
 		}
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 function package_version()
 {
 	$string = file_get_contents('thisversion.txt') or die('error');
-	return $string;
+	return trim($string);
 }
 
 function show_config_table($fresh = true)

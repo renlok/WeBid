@@ -87,8 +87,9 @@ while ($arrfeed = $db->fetch())
 			'USFEED' => $arrfeed['rate_sum'],
 			'USICON' => (isset($usicon)) ? $usicon : '',
 			'FBDATE' => FormatDate($arrfeed['feedbackdate']),
-			'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $system->uncleanvars($arrfeed['title']) . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
-			'FEEDBACK' => nl2br(stripslashes($arrfeed['feedback']))
+			'AUCTION_TITLE' => $system->uncleanvars($arrfeed['title']),
+			'AUCTION_ID' => $arrfeed['auction_id'],
+			'FEEDBACK' => nl2br($arrfeed['feedback'])
 			));
 
 	$i++;

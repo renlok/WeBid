@@ -56,7 +56,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 			$params[] = array(':hash', get_hash(), 'str');
 			$params[] = array(':created', date('Ymd'), 'str');
-			$params[] = array(':status', $_POST['status'], 'int');
+			$params[] = array(':status', $_POST['status'], 'bool');
 			$db->query($query, $params);
 			header('location: adminusers.php');
 			exit;
@@ -67,7 +67,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 loadblock($MSG['003'], '', 'text', 'username', '');
 loadblock($MSG['004'], '', 'password', 'password', '');
 loadblock($MSG['564'], '', 'password', 'repeatpassword', '');
-loadblock('', '', 'batch', 'status', '1', array($MSG['566'], $MSG['567']));
+loadblock('', '', 'bool', 'status', '1', array($MSG['567'], $MSG['566']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

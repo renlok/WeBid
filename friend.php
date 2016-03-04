@@ -26,10 +26,10 @@ elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
 
 if (isset($_REQUEST['id']))
 {
-	$_SESSION['CURRENT_ITEM'] = $_REQUEST['id'];
+	$_SESSION['CURRENT_ITEM'] = intval($_REQUEST['id']);
 }
 
-$id = intval($_SESSION['CURRENT_ITEM']);
+$id = $_SESSION['CURRENT_ITEM'];
 
 $TPL_error_text = '';
 $emailsent = 1;

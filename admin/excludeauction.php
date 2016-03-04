@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 		$params[] = array(':auc_id', $id, 'int');
 		$db->query($query, $params);
 
-		if ($auc_data['closed'] == 1)
+		if ($auc_data['closed'])
 		{
 			$query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions - 1), closedauctions = (closedauctions + 1)";
 			$db->direct_query($query);
@@ -83,7 +83,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 		$params[] = array(':auc_id', $id, 'int');
 		$db->query($query, $params);
 
-		if ($auc_data['closed'] == 1)
+		if ($auc_data['closed'])
 		{
 			$query ="UPDATE " . $DBPrefix . "counters SET suspendedauctions = (suspendedauctions + 1), closedauctions = (closedauctions - 1)";
 			$db->direct_query($query);
@@ -154,7 +154,7 @@ $template->assign_vars(array(
 		'STARTS' => $date,
 		'DURATION' => $auc_data['duration'],
 		'CATEGORY' => $category_names[$auc_data['category']],
-		'DESCRIPTION' => stripslashes($auc_data['description']),
+		'DESCRIPTION' => $auc_data['description'],
 		'CURRENT_BID' => $system->print_money($auc_data['current_bid']),
 		'QTY' => $auc_data['quantity'],
 		'RESERVE_PRICE' => $system->print_money($auc_data['reserve_price']),

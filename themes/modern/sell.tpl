@@ -259,7 +259,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 					<div class="form-group col-md-12">
 						<label for="subtitle">{L_018}</label>
-						{AUC_DESCRIPTION}
+						{!AUC_DESCRIPTION!}
 					</div>
 	<!-- IF B_GALLERY -->
 					<legend>{L_663}</legend>
@@ -276,7 +276,7 @@ $(document).ready(function(){
 					<div class="form-group col-md-12">
 						<label for="atype">{L_257}</label>
 						<div class="row">
-							<div class="auctiontype col-md-4">{ATYPE}</div>
+							<div class="auctiontype col-md-4">{!ATYPE!}</div>
 						</div>
 					</div>
 					<div class="form-group col-md-12">
@@ -335,11 +335,11 @@ $(document).ready(function(){
 						<label>{L_30_0063}</label>
 						<div class="radio">
 							<label class="radio-inline">
-								<input type="radio" name="buy_now_only" value="n" {BN_ONLY_N} id="bn_only_no">
+								<input type="radio" name="buy_now_only" value="0" {BN_ONLY_N} id="bn_only_no">
 								{L_029}
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="buy_now_only" value="y" {BN_ONLY_Y} id="bn_only_yes">
+								<input type="radio" name="buy_now_only" value="1" {BN_ONLY_Y} id="bn_only_yes">
 								{L_030}
 							</label>
 						</div>
@@ -390,7 +390,7 @@ $(document).ready(function(){
 					<div class="form-group col-md-12">
 						<label>{L_022}</label>
 						<div class="row">
-							<div class="duration col-md-4">{DURATIONS}</div>
+							<div class="duration col-md-4">{!DURATIONS!}</div>
 						</div>
 					</div>
 	<!-- IF B_AUTORELIST -->
@@ -398,7 +398,7 @@ $(document).ready(function(){
 						<label>{L__0161}</label>
 						<p class="bg-info sm-padding">{L__0162}</p>
 						<div class="row">
-							<div class="relist col-md-4">{RELIST}</div>
+							<div class="relist col-md-4">{!RELIST!}</div>
 						</div>
 					</div>
 	<!-- ENDIF -->
@@ -457,7 +457,7 @@ $(document).ready(function(){
 					<div class="form-group col-md-12">
 						<label>{L_026}</label>
 						<div class="checkbox">
-							<label>{PAYMENTS}</label>
+							<label>{!PAYMENTS!}</label>
 						</div>
 					</div>
 					<legend>{L_268}</legend>
@@ -481,10 +481,10 @@ $(document).ready(function(){
 						<label>{L_1102}</label>
 						<div class="radio">
 							<label class="radio-inline">
-								<input type="radio" name="is_taxed" value="y" {TAX_Y}>	{L_030}
+								<input type="radio" name="is_taxed" value="1" {TAX_Y}>	{L_030}
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="is_taxed" value="n" {TAX_N}> {L_029}
+								<input type="radio" name="is_taxed" value="0" {TAX_N}> {L_029}
 							</label>
 						</div>
 					</div>
@@ -492,10 +492,10 @@ $(document).ready(function(){
 						<label>{L_1103}</label>
 						<div class="radio">
 							<label class="radio-inline">
-								<input type="radio" name="tax_included" value="y" {TAXINC_Y}>	{L_030}
+								<input type="radio" name="tax_included" value="1" {TAXINC_Y}>	{L_030}
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="tax_included" value="n" {TAXINC_N}> {L_029}
+								<input type="radio" name="tax_included" value="0" {TAXINC_N}> {L_029}
 							</label>
 						</div>
 					</div>
@@ -533,7 +533,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 						<tr>
 							<td  valign="top" align="right"><b>{L_018}</b></td>
-							<td>{AUC_DESCRIPTION}</td>
+							<td>{!AUC_DESCRIPTION!}</td>
 						</tr>
 						<tr>
 							<td  valign="top" align="right"><b>{L_019}</b></td>
@@ -553,31 +553,31 @@ $(document).ready(function(){
 	<!-- IF B_BN_ONLY -->
 						<tr>
 							<td valign="top" align="right"><b>{MINTEXT}</b></td>
-							<td>{MIN_BID}</td>
+							<td>{!MIN_BID!}</td>
 						</tr>
 	<!-- ENDIF -->
 	<!-- IF ATYPE_PLAIN eq 1 -->
 		<!-- IF B_BN_ONLY -->
 						<tr>
 							<td valign="top" align="right"><b>{L_021}</b></td>
-							<td>{RESERVE}</td>
+							<td>{!RESERVE!}</td>
 						</tr>
 		<!-- ENDIF -->
 		<!-- IF B_BN -->
 						<tr>
 							<td valign="top" align="right"><b>{L_496}</b></td>
-							<td>{BN_PRICE}</td>
+							<td>{!BN_PRICE!}</td>
 						</tr>
 		<!-- ENDIF -->
 	<!-- ENDIF -->
 	<!-- IF B_SHIPPING -->
 						<tr>
 							<td valign="top" align="right"><b>{L_023}</b></td>
-							<td>{SHIPPING_COST}</td>
+							<td>{!SHIPPING_COST!}</td>
 						</tr>
 						<tr>
 							<td valign="top" align="right"><b>{L_350_1008}</b></td>
-							<td>{ADDITIONAL_SHIPPING_COST}</td>
+							<td>{!ADDITIONAL_SHIPPING_COST!}</td>
 						</tr>
 	<!-- ENDIF -->
 						<tr>
@@ -615,9 +615,9 @@ $(document).ready(function(){
 						<tr>
 							<td  valign="top" align="right"><b>{L_027}</b></td>
 							<td>
-								{CAT_LIST1}
+								{!CAT_LIST1!}
 	<!-- IF CAT_LIST2 ne '' -->
-								<br>{CAT_LIST2}
+								<br>{!CAT_LIST2!}
 	<!-- ENDIF -->
 							</td>
 						</tr>

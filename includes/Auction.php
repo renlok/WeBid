@@ -12,13 +12,51 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (basename($_SERVER['PHP_SELF']) != 'user_login.php')
+if (!defined('InWeBid')) exit('Access denied');
+
+// work in progress
+class Auction
 {
-	// Check if we are in Maintainance mode
-	// And if the logged in user is the superuser
-	if ($system->check_maintainance_mode())
+	protected $auction_data;
+	protected $default_data = [];
+
+	public function __construct()
 	{
-		echo $system->SETTINGS['MAINTAINANCE']['maintainancetext'];
-		exit;
+		$this->auction_data = $this->default_data;
+	}
+
+	public function __set($variable, $value)
+	{
+        $this->auction_data[$variable] = $value;
+    }
+
+    public function __get($variable)
+	{
+        if(isset($this->auction_data[$variable]))
+		{
+            return $this->auction_data[$variable];
+        }
+		else
+		{
+            return null;
+        }
+    }
+
+	public function setData($data)
+	{
+		foreach ($data as $k => $v)
+		{
+			$this->auction_data[$k] = $v;
+		}
+	}
+
+	public function updateAuction()
+	{
+
+	}
+
+	public function saveAuction()
+	{
+		
 	}
 }

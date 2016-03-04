@@ -30,7 +30,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$params = array();
 	$params[] = array(':nick', $superuser, 'str');
 	$db->query($query, $params);
-	if ($db->numrows() == 0 && $_POST['active'] == 'y')
+	if ($db->numrows() == 0 && $_POST['active'] == 1)
 	{
 		$ERR = $ERR_025;
 	}
@@ -63,7 +63,7 @@ else
 }
 
 loadblock('', $MSG['_0002']);
-loadblock($MSG['_0006'], '', 'yesno', 'active', $system->SETTINGS['active'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['_0006'], '', 'bool', 'active', $system->SETTINGS['active'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['003'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
@@ -72,7 +72,7 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', stripslashes($system->SETTINGS['maintainancetext'])));
+loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', $system->SETTINGS['maintainancetext']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

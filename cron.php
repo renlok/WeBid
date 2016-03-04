@@ -119,7 +119,7 @@ foreach ($auction_data as $Auction) // loop auctions
 			$winner_present = true;
 		}
 
-		if ($winner_present && $Auction['bn_only'] != 'y')
+		if ($winner_present && $Auction['bn_only'] == 0)
 		{
 			$report_text = $Winner['nick'] . "\n";
 			if ($system->SETTINGS['users_email'] == 'n')
@@ -155,7 +155,7 @@ foreach ($auction_data as $Auction) // loop auctions
 			$params[] = array(':auc_payment', $Auction['payment'], 'str');
 			$db->query($query, $params);
 		}
-		else if ($winner_present && $Auction['bn_only'] == 'y')
+		else if ($winner_present && $Auction['bn_only'])
 		{
 			$query = "SELECT b.bidder, b.quantity, u.nick, u.email, u.name, u.address, u.city, u.zip, u.prov, u.country
 					FROM " . $DBPrefix . "bids b
@@ -382,7 +382,7 @@ foreach ($auction_data as $Auction) // loop auctions
 
 	if ($winner_present)
 	{
-		if ($Auction['bn_only'] != 'y')
+		if ($Auction['bn_only'] == 0)
 		{
 			// Send mail to the seller
 			$added_winner_names = array();

@@ -71,7 +71,7 @@ if ($db->numrows() == 0)
 	exit; // kill the page
 }
 
-if ($Auction['closed'] == 1)
+if ($Auction['closed'])
 {
 	header('location: item.php?id=' . $_REQUEST['id']);
 	exit;
@@ -82,7 +82,7 @@ if ($Auction['starts'] > time())
 }
 
 // If there are bids for this auction -> error
-if ($Auction['bn_only'] == 'n')
+if ($Auction['bn_only'] == 0)
 {
 	if (!($Auction['buy_now'] > 0 && ($Auction['num_bids'] == 0 || ($Auction['reserve_price'] > 0 && $Auction['current_bid'] < $Auction['reserve_price']) || ($Auction['current_bid'] < $Auction['buy_now']))))
 	{
@@ -173,7 +173,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			// log auction BIN IP
 			$system->log('user', 'BIN on Item', $user->user_data['id'], $id);
 		}
-		if ($Auction['bn_only'] != 'y')
+		if ($Auction['bn_only'] == 0)
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, bn_sale = 1, num_bids = num_bids + 1, current_bid = :buy_now, current_bid_id = :current_bid_id WHERE id = :auc_id";
 			$params = array();

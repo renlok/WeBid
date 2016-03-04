@@ -13,7 +13,13 @@
 		</td>
 		<td valign="top">
 			<b><a href="{fbs.USFLINK}">{fbs.USERNAME} ({fbs.USFEED})</a></b>&nbsp;{fbs.USICON}
-			({L_506}{fbs.FBDATE} {L_25_0177} {fbs.AUCTIONURL})
+			({L_506}{fbs.FBDATE} {L_25_0177} 
+	<!-- IF AUCTION_TITLE eq '' -->
+			{L_113}{AUCTION_ID}
+	<!-- ELSE -->
+			<a href="item.php?id={AUCTION_ID}">{AUCTION_TITLE}</a>
+	<!-- ENDIF -->
+			)
 			<br>
 			<b>{L_504}: </b>{fbs.FEEDBACK}
 		</td>

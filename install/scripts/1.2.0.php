@@ -12,9 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-$query = "SELECT * FROM settings;"
+$query = "SELECT * FROM " . $DBPrefix . "settings;";
 $db->direct_query($query);
-$settings_data = $db->fetchall();
+$settings_data = $db->result();
 $settings = array_combine(array_keys($settings_data), $settings_data);
 foreach ($settings as $setting_name => $setting_value)
 {
@@ -66,14 +66,44 @@ foreach ($settings as $setting_name => $setting_value)
         $type = 'string';
             break;
     }
-    $query = "INSERT INTO " . $DBPrefix . "settings (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
-            ($setting_name, :$type, :$setting_value, UNIX_TIMESTAMP(), 1);";
+    if ($setting_name == 'timezone')
+    {
+        $setting_value = 'Europe/London';
+    }
+    $query = "INSERT INTO " . $DBPrefix . "settingsv2 (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
+            ('$setting_name', '$type', '$setting_value', UNIX_TIMESTAMP(), 1);";
     $db->direct_query($query);
 }
 
 // drop old table
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
+$query = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
 $db->direct_query($query);
 // rename new table
-$query[] = "RENAME TABLE `" . $DBPrefix . "settings` TO `" . $DBPrefix . "settings`;;";
+$query = "RENAME TABLE `" . $DBPrefix . "settingsv2` TO `" . $DBPrefix . "settings`;";
 $db->direct_query($query);
+
+// convert database values to bools
+$query = "SELECT id, bn_only, bold, highlighted, featured, tax, taxinc FROM auctions;";
+$db->direct_query($query);
+$auctions_data = $db->fetchall();
+// convert
+$query = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY
+        `bn_only` `bn_only` tinyint(1) default 0,
+        `bold` `bold` tinyint(1) default 0,
+        `highlighted` `highlighted` tinyint(1) default 0,
+        `featured` `featured` tinyint(1) default 0,
+        `tax` `tax` tinyint(1) default 0,
+        `taxinc` `taxinc` tinyint(1) default 0;";
+$db->direct_query($query);
+foreach ($auctions_data as $auction)
+{
+    $query = "UPDATE `" . $DBPrefix . "auctions`
+            SET bn_only = " . intval($auction['bn_only'] == 'y') . ",
+            bold = " . intval($auction['bold'] == 'y') . ",
+            highlighted = " . intval($auction['highlighted'] == 'y') . ",
+            featured = " . intval($auction['featured'] == 'y') . ",
+            tax = " . intval($auction['tax'] == 'y') . ",
+            taxinc = " . intval($auction['taxinc'] == 'y') . ",
+            WHERE id = " . $auction['id'];
+    $db->direct_query($query);
+}

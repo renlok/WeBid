@@ -66,7 +66,7 @@
 								<input type="checkbox" name="{block.NAME}" id="{block.DEFAULT}" value="y"<!-- IF block.DEFAULT eq 'y' --> checked<!-- ENDIF -->> {block.TAGLINE1}
 	<!-- ELSEIF block.TYPE eq 'dropdown' -->
 								<div class="Browse">
-									{DROPDOWN}
+									{!DROPDOWN!}
 								</div>
 	<!-- ELSEIF block.TYPE eq 'upload' -->
 								<input type="file" name="{block.NAME}" size="25" maxlength="100">
@@ -74,7 +74,7 @@
 	<!-- ELSEIF block.TYPE eq 'image' -->
 								<img src="{IMAGEURL}">{block.TAGLINE1}
 	<!-- ELSE -->
-								{block.TYPE}
+								{!block.TYPE!}
 	<!-- ENDIF -->
 							</td>
 <!-- ENDIF -->

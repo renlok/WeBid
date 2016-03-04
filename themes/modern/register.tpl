@@ -99,7 +99,7 @@
 				<div class="form-group col-lg-12">
 					<label>{L_346}</label>
 					<div class="timezone">
-						{TIMEZONE}
+						{!TIMEZONE!}
 					</div>
 				</div>
 	<!-- IF B_NLETTER -->
@@ -152,7 +152,7 @@
 				</div>
 	<!-- ENDIF -->
 				<div class="form-group col-lg-12">
-					<div class="capchabox">{CAPCHA}</div>
+					<div class="capchabox">{!CAPCHA!}</div>
 				</div>
 				<div class="form-group col-lg-12">
 					<div class="checkbox">

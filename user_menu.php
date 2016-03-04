@@ -38,7 +38,7 @@ function get_reminders($secid)
 	// get number of pending feedback
 	$query = "SELECT COUNT(DISTINCT a.auction) AS total FROM " . $DBPrefix . "winners a
 			LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
-			WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
+			WHERE (b.closed = 1 OR b.bn_only = 1) AND b.suspended = 0
 			AND ((a.seller = :seller AND a.feedback_sel = 0)
 			OR (a.winner = :winner AND a.feedback_win = 0))";
 	$params = array();

@@ -2,3 +2,5 @@
 cache/**
 includes/config.inc.php
 uploaded/**
+!uploaded/logo/logo.gif
+!uploaded/logo/logo.png

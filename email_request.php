@@ -63,15 +63,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 		}
 		else
 		{
-			$item_title = $db->result('title');
-			$item_title = $system->uncleanvars($item_title);
+			$item_title = $system->uncleanvars($db->result('title'));
 			$from_email = ($system->SETTINGS['users_email'] == 'n') ? $user->user_data['email'] : $system->SETTINGS['adminmail'];
 			// Send e-mail message
 			$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
 			$message = $MSG['084'] . ' ' . $MSG['240'] . ': ' . $from_email . "\n\n" . $_POST['TPL_text'];
 			$emailer = new email_handler();
 			$emailer->email_uid = $user_id;
-			$emailer->email_basic($subject, $email, nl2br($message), $user->user_data['name'] . '<'. $from_email . '>'); //send the email :D
+			$emailer->email_basic($subject, $email, nl2br($message), $user->user_data['name'] . '<' . $from_email . '>');
 			// send a copy to their mesasge box
 			$nowmessage = nl2br($system->cleanvars($message));
 			$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject)

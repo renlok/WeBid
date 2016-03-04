@@ -25,7 +25,7 @@ if (!$user->checkAuth())
 $query = "SELECT DISTINCT a.auction, a.seller, a.winner, a.bid, b.id, b.current_bid, b.title, a.qty, a.closingdate
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
-		WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
+		WHERE (b.closed = 1 OR b.bn_only = 1) AND b.suspended = 0
 		AND ((a.seller = :user_ids AND a.feedback_sel = 0)
 		OR (a.winner = :user_idw AND a.feedback_win = 0))";
 $params = array();

@@ -21,9 +21,34 @@ if (!$user->checkAuth() && $_GET['a'] != 3)
 	exit;
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+// TODO: this whole page needs to be re-written
+$query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1";
 $db->direct_query($query);
-$gateway_data = $db->result();
+$gateway_data = [];
+while ($gateway = $db->fetch())
+{
+	if ($gateway['name'] == 'paypal')
+	{
+		$gateway_data['paypal_address'] = $gateway['gateway_admin_address'];
+	}
+	if ($gateway['name'] == 'authnet')
+	{
+		$gateway_data['authnet_address'] = $gateway['gateway_admin_address'];
+		$gateway_data['authnet_password'] = $gateway['gateway_admin_password'];
+	}
+	if ($gateway['name'] == 'worldpay')
+	{
+		$gateway_data['worldpay_id'] = $gateway['gateway_admin_address'];
+	}
+	if ($gateway['name'] == 'moneybookers')
+	{
+		$gateway_data['moneybookers_address'] = $gateway['gateway_admin_address'];
+	}
+	if ($gateway['name'] == 'toocheckout')
+	{
+		$gateway_data['toocheckout_id'] = $gateway['gateway_admin_address'];
+	}
+}
 
 $fees = new fees;
 
@@ -43,8 +68,8 @@ switch($_GET['a'])
 		$fees->add_to_account($MSG['935'], 'balance', $payvalue);
 		break;
 	case 2: // pay for an item
-		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
-				u.id As uid, u.nick, a.payment, u.worldpay_id, u.toocheckout_id, u.moneybookers_email, w.qty
+		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, w.bid,
+				u.id As uid, u.nick, a.payment, w.qty
 				FROM " . $DBPrefix . "winners w
 				LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
@@ -60,16 +85,42 @@ switch($_GET['a'])
 			header('location: outstanding.php');
 			exit;
 		}
-
 		$data = $db->result();
+
 		$payment = explode(', ', $data['payment']);
-		$pp_paytoemail = (in_array('paypal', $payment)) ? $data['paypal_email'] : '';
+		$query = "SELECT u.address, u.password, p.name FROM " . $DBPrefix . "usergateways u
+				JOIN " . $DBPrefix . "payment_options p ON (u.gateway_id = p.id)
+				WHERE u.user_id = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$db->query($query, $params);
+		$user_gateways = $db->fetchAll();
+		foreach ($user_gateways as $gateway)
+		{
+			if ($gateway['name'] == 'paypal')
+			{
+				$pp_paytoemail = (in_array('paypal', $payment)) ? $gateway['address'] : '';
+			}
+			if ($gateway['name'] == 'authnet')
+			{
+				$an_paytoid = (in_array('authnet', $payment)) ? $gateway['address'] : '';
+				$an_paytopass = (in_array('authnet', $payment)) ? $gateway['password'] : '';
+			}
+			if ($gateway['name'] == 'worldpay')
+			{
+				$wp_paytoid = (in_array('worldpay', $payment)) ? $gateway['address'] : '';
+			}
+			if ($gateway['name'] == 'moneybookers')
+			{
+				$mb_paytoemail = (in_array('moneybookers', $payment)) ? $gateway['address'] : '';
+			}
+			if ($gateway['name'] == 'toocheckout')
+			{
+				$tc_paytoid = (in_array('toocheckout', $payment)) ? $gateway['address'] : '';
+			}
+		}
+
 		$extrastring = sprintf($MSG['778'], $data['uid'], $_POST['pfval'], $data['nick']);
-		$an_paytoid = (in_array('authnet', $payment)) ? $data['authnet_id'] : '';
-		$an_paytopass = (in_array('authnet', $payment)) ? $data['authnet_pass'] : '';
-		$wp_paytoid = (in_array('worldpay', $payment)) ? $data['worldpay_id'] : '';
-		$tc_paytoid = (in_array('toocheckout', $payment)) ? $data['toocheckout_id'] : '';
-		$mb_paytoemail = (in_array('moneybookers', $payment)) ? $data['moneybookers_email'] : '';
 		$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
 		$shipping_cost = ($data['shipping'] == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
 		$payvalue = ($data['bid'] * $data['qty']) + $shipping_cost;

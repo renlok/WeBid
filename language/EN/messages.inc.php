@@ -1805,6 +1805,9 @@ $MSG['error_no_user_group_id'] = 'has been assigned to a Group ID which does not
 $MSG['text_update_users_group'] = '[Please View and Update each user\'s details]';
 $MSG['warning'] = 'Warning';
 
+$MSG['payment_name'] = 'Name';
+$MSG['clean_payment_name'] = 'Clean Name <small>(all lower case no spaces or special characters)</small>';
+
 $MSG['all_user_groups'] = 'All User Groups';
 
 $MSG['login_required_text'] = "Login required";

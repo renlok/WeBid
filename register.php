@@ -15,6 +15,7 @@
 include 'common.php';
 include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 include INCLUDE_PATH . 'config/timezones.php';
+include INCLUDE_PATH . 'config/gateways.php';
 
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
@@ -89,9 +90,8 @@ function generateSelect($name, $options, $selectsetting)
 	return $html;
 }
 
-function checkMissing()
+function checkMissing ($missing)
 {
-	global $missing;
 	foreach ($missing as $value)
 	{
 		if ($value)
@@ -110,9 +110,9 @@ if (empty($_POST['action']))
 	$action = 'first';
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1";
 $db->direct_query($query);
-$gateway_data = $db->result();
+$gateway_data = $db->fetchAll();
 
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
@@ -183,27 +183,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 	{
 		$missing['birthday'] = true;
 	}
-	if ($gateway_data['paypal_required'] == 1 && empty($_POST['TPL_pp_email']))
+	foreach ($gateway_data as $gateway)
 	{
-		$missing['paypal'] = true;
+		if ($gateway['gateway_required'] == 1 && isset($_POST[$gateway['name']]['address']) && empty($_POST[$gateway['name']]['address']))
+		{
+			$missing[$gateway['name']] = true;
+		}
 	}
-	if ($gateway_data['authnet_required'] == 1 && (empty($_POST['TPL_authnet_id']) || empty($_POST['TPL_authnet_pass'])))
-	{
-		$missing['authnet'] = true;
-	}
-	if ($gateway_data['moneybookers_required'] == 1 && (empty($_POST['TPL_moneybookers_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_moneybookers_email'])))
-	{
-		$missing['moneybookers'] = true;
-	}
-	if ($gateway_data['toocheckout_required'] == 1 && (empty($_POST['TPL_toocheckout_id'])))
-	{
-		$missing['toocheckout'] = true;
-	}
-	if ($gateway_data['worldpay_required'] == 1 && (empty($_POST['TPL_worldpay_id'])))
-	{
-		$missing['worldpay'] = true;
-	}
-	if (checkMissing())
+	if (checkMissing($missing))
 	{
 		$ERR = $ERR_047;
 	}
@@ -319,10 +306,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
 						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate,
-						suspended, language, groups, balance, timezone, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
+						suspended, language, groups, balance, timezone)
 						VALUES
 						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :reg_date, :birthdate,
-						:suspended, :language, :groups, :balance, :timezone, :paypal_email, :worldpay_id, :moneybookers_email, :toocheckout_id, :authnet_id, :authnet_pass)";
+						:suspended, :language, :groups, :balance, :timezone)";
 				$params = array(
 					array(':nick', $system->cleanvars($TPL_nick_hidden), 'str'),
 					array(':password', $phpass->HashPassword($TPL_password_hidden), 'str'),
@@ -343,12 +330,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':groups', implode(',', $groups), 'str'),
 					array(':balance', $balance, 'bool'),
 					array(':timezone', $_POST['TPL_timezone'], 'str'),
-					array(':paypal_email', ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : ''), 'str'),
-					array(':worldpay_id', ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : ''), 'str'),
-					array(':moneybookers_email', ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']) : ''), 'str'),
-					array(':toocheckout_id', ((isset($_POST['toocheckout_id'])) ? $system->cleanvars($_POST['toocheckout_id']) : ''), 'str'),
-					array(':authnet_id', ((isset($_POST['TPL_authnet_id'])) ? $system->cleanvars($_POST['TPL_authnet_id']) : ''), 'str'),
-					array(':authnet_pass', ((isset($_POST['TPL_authnet_pass'])) ? $system->cleanvars($_POST['TPL_authnet_pass']) : ''), 'str'),
 				);
 				$db->query($query, $params);
 				$TPL_id_hidden = $db->lastInsertId();
@@ -358,6 +339,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$params[] = array(':id_hidden', $TPL_id_hidden, 'int');
 				$params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'int');
 				$db->query($query, $params);
+				foreach ($gateway_data as $gateway)
+				{
+					if (isset($_POST[$gateway['name']]['address']) && empty($_POST[$gateway['name']]['address']))
+					{
+						$query = "INSERT INTO " . $DBPrefix . "usergateways (gateway_id, user_id, address, password) VALUES (:gateway_id, :user_id, :address, :password)";
+						$params = array(
+							array(':user_id', $TPL_id_hidden, 'int'),
+							array(':gateway_id', $gateway['id'], 'int'),
+							array(':address', ((isset($_POST[$gateway['name']]['address'])) ? $system->cleanvars($_POST[$gateway['name']]['address']) : ''), 'str'),
+							array(':password', ((isset($_POST[$gateway['name']]['password'])) ? $system->cleanvars($_POST[$gateway['name']]['password']) : ''), 'str'),
+						);
+					}
+				}
 
 				$_SESSION['language'] = $language;
 				$first = false;
@@ -450,20 +444,33 @@ $dobday .= '</select>';
 $selectsetting = (isset($_POST['TPL_timezone'])) ? $_POST['TPL_timezone'] : $system->SETTINGS['timezone'];
 $time_correction = generateSelect('TPL_timezone', $timezones, $selectsetting);
 
+foreach ($gateway_data as $gateway)
+{
+	if ($gateway['active'] == 1)
+	{
+		$template->assign_block_vars('gateways', array(
+				'GATEWAY_ID' => $gateway['id'],
+				'NAME' => $gateway['displayname'],
+				'PLAIN_NAME' => $gateway['name'],
+				'MISSING' => ($missing[$gateway['name']]) ? 1 : 0,
+				'REQUIRED' => ($gateway['gateway_required'] == 1) ? 'checked' : '',
+				'ADDRESS' => isset($_POST[$gateway['name']]['address']) ? $_POST[$gateway['name']]['address'] : '',
+				'PASSWORD' => isset($_POST[$gateway['name']]['password']) ? $_POST[$gateway['name']]['password'] : '',
+				'ADDRESS_NAME' => isset($address_string[$gateway['name']]) ? $address_string[$gateway['name']] : $gateway['name'],
+				'PASSWORD_NAME' => isset($password_string[$gateway['name']]) ? $password_string[$gateway['name']] : '',
+				'ERROR_STRING' => $error_string[$gateway['name']],
+
+				'B_PASSWORD' => isset($password_string[$gateway['name']])
+				));
+	}
+}
+
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'L_COUNTRIES' => $country,
 		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'TIMEZONE' => $time_correction,
 		'TERMSTEXT' => $system->SETTINGS['termstext'],
-
-		//payment stuff
-		'PP_EMAIL' => (isset($_POST['TPL_pp_email'])) ? $_POST['TPL_pp_email'] : '',
-		'AN_ID' => (isset($_POST['TPL_authnet_id'])) ? $_POST['TPL_authnet_id'] : '',
-		'AN_PASS' => (isset($_POST['TPL_authnet_pass'])) ? $_POST['TPL_authnet_pass'] : '',
-		'WP_ID' => (isset($_POST['TPL_worldpay_id'])) ? $_POST['TPL_worldpay_id'] : '',
-		'MB_EMAIL' => (isset($_POST['TPL_moneybookers_email'])) ? $_POST['TPL_moneybookers_email'] : '',
-		'TC_ID' => (isset($_POST['TPL_toocheckout_id'])) ? $_POST['TPL_toocheckout_id'] : '',
 
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
@@ -491,12 +498,7 @@ $template->assign_vars(array(
 					($MANDATORY_FIELDS['prov'] == 'y') ? ' *' : '',
 					($MANDATORY_FIELDS['country'] == 'y') ? ' *' : '',
 					($MANDATORY_FIELDS['zip'] == 'y') ? ' *' : '',
-					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : '',
-					($gateway_data['paypal_required'] == 1) ? ' *' : '',
-					($gateway_data['authnet_required'] == 1) ? ' *' : '',
-					($gateway_data['worldpay_required'] == 1) ? ' *' : '',
-					($gateway_data['toocheckout_required'] == 1) ? ' *' : '',
-					($gateway_data['moneybookers_required'] == 1) ? ' *' : ''
+					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : ''
 					),
 		'MISSING0' => ($missing['name']) ? 1 : 0,
 		'MISSING1' => ($missing['nick']) ? 1 : 0,
@@ -509,12 +511,7 @@ $template->assign_vars(array(
 		'MISSING8' => ($missing['prov']) ? 1 : 0,
 		'MISSING9' => ($missing['country']) ? 1 : 0,
 		'MISSING10' => ($missing['zip']) ? 1 : 0,
-		'MISSING11' => ($missing['tel']) ? 1 : 0,
-		'MISSING12' => ($missing['paypal']) ? 1 : 0,
-		'MISSING13' => ($missing['authnet']) ? 1 : 0,
-		'MISSING14' => ($missing['worldpay']) ? 1 : 0,
-		'MISSING15' => ($missing['toocheckout']) ? 1 : 0,
-		'MISSING16' => ($missing['moneybookers']) ? 1 : 0,
+		'MISSING11' => ($missing['tel']) ? 1 : 0
 		'FEES'=> $system->print_money($signup_fee['value']),
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',

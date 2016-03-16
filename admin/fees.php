@@ -170,13 +170,13 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 	}
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$query = "SELECT COUNT(id) as count FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1 AND gateway_admin_address != ''";
 $db->direct_query($query);
-$gateway_data = $db->result();
+$gateway_check = $db->result('count');
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'B_NOT_SETUP_CORRECTLY' => (strlen($gateway_data['paypal_address'] . $gateway_data['worldpay_id'] . $gateway_data['toocheckout_id'] . $gateway_data['moneybookers_address']) == 0 && (strlen($gateway_data['authnet_address']) == 0 || strlen($gateway_data['authnet_password']) == 0)),
+		'B_NOT_SETUP_CORRECTLY' => ($gateway_check == 0),
 		'B_SINGLE' => (isset($_GET['type']) && isset($fees[$_GET['type']]) && $fees[$_GET['type']] == 0) ? true : false,
 		'FEETYPE' => (isset($_GET['type']) && isset($feenames[$_GET['type']])) ? $feenames[$_GET['type']] : '',
 		'ERROR' => (isset($errmsg)) ? $errmsg : ''

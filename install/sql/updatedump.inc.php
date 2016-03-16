@@ -189,9 +189,9 @@ if ($installed_version == '1.0.6')
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userfees`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
 		`useracc_id` int(11) NOT NULL AUTO_INCREMENT,
-		`auc_id` int(15) NOT NULL default '0',
-		`user_id` int(15) NOT NULL default '0',
-		`date` int(15) NOT NULL default '0',
+		`auc_id` int(11) NOT NULL default '0',
+		`user_id` int(11) NOT NULL default '0',
+		`date` int(11) NOT NULL default '0',
 		`setup` double(8,2) NOT NULL default '0',
 		`featured` double(8,2) NOT NULL default '0',
 		`bold` double(8,2) NOT NULL default '0',
@@ -365,6 +365,7 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	  `gateway_admin_password` varchar(50) NOT NULL default '',
 	  `gateway_required` tinyint(1) NOT NULL default '0',
 	  `gateway_active` tinyint(1) NOT NULL default '0',
+	  PRIMARY KEY(`id`)
 	) ;";
 	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('banktransfer', 'Bank Transfer', 0);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('cheque', 'Cheque', 0);";
@@ -373,5 +374,15 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('worldpay', 'WorldPay', 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('moneybookers', 'Moneybookers', 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('toocheckout', '2Checkout', 1);";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "usergateways`;";
+	$query[] = "CREATE TABLE `" . $DBPrefix . "usergateways` (
+	  `id` int(5) NOT NULL AUTO_INCREMENT,
+	  `gateway_id` int(5) NOT NULL,
+	  `user_id` int(11) NOT NULL,
+	  `address` varchar(50) NOT NULL default '',
+	  `password` varchar(50) NOT NULL default '',
+	  PRIMARY KEY(`id`)
+	) ;";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
 	$new_version = '1.2.0';
 }

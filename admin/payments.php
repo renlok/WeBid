@@ -20,43 +20,59 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 
-function ToBeDeleted($index)
-{
-	if (!isset($_POST['delete']))
-		return false;
-
-	$i = 0;
-	while ($i < count($_POST['delete']))
-	{
-		if ($_POST['delete'][$i] == $index) return true;
-		$i++;
-	}
-	return false;
-}
-
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// Build new payments array
-	$rebuilt_array = array();
-	for ($i = 0; $i < count($_POST['new_payments']); $i++)
+	foreach ($_POST['payment'] as $payment)
 	{
-		if (!ToBeDeleted($i) && strlen($_POST['new_payments'][$i]) != 0)
+		if (isset($payment['delete']))
 		{
-			$rebuilt_array[] = $_POST['new_payments'][$i];
+			$query = "DELETE FROM " . $DBPrefix . "payment_options WHERE id = :id";
+			$params = [[':id', $payment['id'], 'int']];
+			$db->query($query, $params);
+		}
+		else
+		{
+			// clean the clean name
+			if ($payment['clean'] == '')
+			{
+				$payment['clean'] = strtolower($payment['name']);
+			}
+			$payment['clean'] = preg_replace("/[^a-z]/", '', $payment['clean']);
+			$query = "UPDATE " . $DBPrefix . "payment_options
+					SET name = :name,
+					displayname = :displayname
+					WHERE id = :id";
+			$params = [
+				[':id', $payment['id'], 'int'],
+				[':name', $payment['name'], 'str'],
+				[':displayname', $payment['clean'], 'str'],
+			];
+			$db->query($query, $params);
 		}
 	}
 
-	$system->writesetting("payment_options", serialize($rebuilt_array), "str");
+	if ($_POST['new_payments'] != '' && $_POST['new_payments_clean'] != '')
+	{
+		$query = "INSERT INTO " . $DBPrefix . "payment_options (name, displayname, is_gateway) VALUES (:name, :displayname, 0)";
+		$params = [
+			[':name', $payment['name'], 'str'],
+			[':displayname', $payment['clean'], 'str'],
+		];
+		$db->query($query, $params);
+	}
+
 	$ERR = $MSG['093'];
 }
 
-$payment_options = unserialize($system->SETTINGS['payment_options']);
-foreach ($payment_options as $k => $v)
+$query = "SELECT * FORM " . $DBPrefix . "payment_options WHERE is_gateway = 0";
+$db->direct_query($query);
+$payment_options = $db->fetchAll();
+foreach ($payment_options as $payment_type)
 {
 	$template->assign_block_vars('payments', array(
-			'PAYMENT' => $v,
-			'ID' => $k
+			'NAME' => $payment_type['displayname'],
+			'CLEAN' => $payment_type['name'],
+			'ID' => $payment_type['id']
 			));
 }
 

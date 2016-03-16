@@ -16,77 +16,59 @@ define('InAdmin', 1);
 $current_page = 'fees';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
+include INCLUDE_PATH . 'config/gateways.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
-$links = array(
-	'paypal' => 'http://paypal.com/',
-	'authnet' => 'http://authorize.net/',
-	'worldpay' => 'http://rbsworldpay.com/',
-	'moneybookers' => 'http://moneybookers.com/',
-	'toocheckout' => 'http://2checkout.com/'
-	);
-$variables = array(
-	'paypal_address' => $MSG['720'],
-	'authnet_address' => $MSG['773'],
-	'authnet_password' => $MSG['774'],
-	'worldpay_address' => $MSG['824'],
-	'moneybookers_address' => $MSG['825'],
-	'toocheckout_address' => $MSG['826']
-	);
-
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1";
 $db->direct_query($query);
-$gateway_data = $db->result();
-
-$gateways = explode(',', $gateway_data['gateways']);
+$gateway_data = $db->fetchAll();
 
 if (isset($_POST['action']))
 {
 	// build the sql
-	$params = array();
-	$query = 'UPDATE ' . $DBPrefix . 'gateways SET ';
-	for ($i = 0; $i < count($gateways); $i++)
+	foreach ($gateway_data as $k => $gateway)
 	{
-		if ($i != 0)
-			$query .= ', ';
-		$gateway = $gateways[$i];
-		$query .= $gateway . '_active = :active' . $gateway . ', ';
-		$query .= $gateway . '_required = :required' . $gateway . ', ';
-		$query .= $gateway . (in_array($gateway, array('worldpay', 'toocheckout')) ? "_id" : "_address") . " = :address" . $gateway;
-		$params[] = array(':active' . $gateway, (isset($_POST[$gateway . '_active']) ? 1 : 0), 'int');
-		$params[] = array(':required' . $gateway, (isset($_POST[$gateway . '_required']) ? 1 : 0), 'int');
-		$params[] = array(':address' . $gateway, $_POST[$gateway . '_address'], 'str');
-		if (isset($_POST[$gateway . '_password']))
+		if (isset($_POST[$gateway['name']]))
 		{
-			$query .= ', ' . $gateway . "_password = :password" . $gateway;
-			$params[] = array(':password' . $gateway, $_POST[$gateway . '_password'], 'str');
-			$gateway_data[$gateway . '_password'] = $_POST[$gateway . '_password'];
+			$query = "UPDATE " . $DBPrefix . "payment_options SET
+						gateway_admin_address = :gateway_admin_address,
+						gateway_admin_password = :gateway_admin_password,
+						gateway_required = :gateway_required,
+						gateway_active = :gateway_active
+						WHERE id = :id";
+			$params = array();
+			$params[] = array(':gateway_admin_address', $_POST[$gateway['name']]['address'], 'str');
+			$params[] = array(':gateway_admin_password', $_POST[$gateway['name']]['password'], 'str');
+			$params[] = array(':gateway_required', $_POST[$gateway['name']]['required'], 'bool');
+			$params[] = array(':gateway_active', $_POST[$gateway['name']]['active'], 'bool');
+			$params[] = array(':id', $_POST[$gateway['name']]['id'], 'int');
+			$db->query($query, $params);
+			$gateway_data[$k]['gateway_admin_address'] = $_POST[$gateway['name']]['address'];
+			$gateway_data[$k]['gateway_admin_password'] = $_POST[$gateway['name']]['password'];
+			$gateway_data[$k]['gateway_required'] = $_POST[$gateway['name']]['required'];
+			$gateway_data[$k]['gateway_active'] = $_POST[$gateway['name']]['active'];
 		}
-		$gateway_data[$gateway . '_active'] = (isset($_POST[$gateway . '_active']) ? 1 : 0);
-		$gateway_data[$gateway . '_required'] = (isset($_POST[$gateway . '_required']) ? 1 : 0);
-		$gateway_data[$gateway . '_address'] = $_POST[$gateway . '_address'];
 	}
-	$db->query($query, $params);
 	$ERR = $MSG['762'];
 }
 
-for ($i = 0; $i < count($gateways); $i++)
+foreach ($gateway_data as $gateway)
 {
-	$gateway = $gateways[$i];
 	$template->assign_block_vars('gateways', array(
-			'NAME' => $system->SETTINGS['gateways'][$gateway],
-			'PLAIN_NAME' => $gateway,
-			'ENABLED' => ($gateway_data[$gateway . '_active'] == 1) ? 'checked' : '',
-			'REQUIRED' => ($gateway_data[$gateway . '_required'] == 1) ? 'checked' : '',
-			'ADDRESS' => (isset($gateway_data[$gateway . '_address']) ? $gateway_data[$gateway . '_address'] : $gateway_data[$gateway . '_id']),
-			'PASSWORD' => (isset($gateway_data[$gateway . '_password'])) ? $gateway_data[$gateway . '_password'] : '',
-			'WEBSITE' => $links[$gateway],
-			'ADDRESS_NAME' => $variables[$gateway . '_address'],
-			'ADDRESS_PASS' => (isset($variables[$gateway . '_password'])) ? $variables[$gateway . '_password'] : '',
+			'GATEWAY_ID' => $gateway['id'],
+			'NAME' => $gateway['displayname'],
+			'PLAIN_NAME' => $gateway['name'],
+			'ENABLED' => ($gateway['gateway_active'] == 1) ? 'checked' : '',
+			'REQUIRED' => ($gateway['gateway_required'] == 1) ? 'checked' : '',
+			'ADDRESS' => $gateway['gateway_admin_address'],
+			'PASSWORD' => $gateway['gateway_admin_password'],
+			'WEBSITE' => $gateway_links[$gateway['name']],
+			'ADDRESS_NAME' => isset($address_string[$gateway['name']]) ? $address_string[$gateway['name']] : $gateway['name'],
+			'PASSWORD_NAME' => isset($password_string[$gateway['name']]) ? $password_string[$gateway['name']] : '',
 
-			'B_PASSWORD' => (isset($gateway_data[$gateway . '_password']))
+			'B_PASSWORD' => isset($password_string[$gateway['name']])
 			));
 }
 

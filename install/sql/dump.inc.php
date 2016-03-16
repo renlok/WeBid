@@ -91,8 +91,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auccounter` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auctions`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
-  `id` int(32) NOT NULL auto_increment,
-  `user` int(32) default NULL,
+  `id` int(11) NOT NULL auto_increment,
+  `user` int(11) default NULL,
   `title` varchar(70),
   `subtitle` varchar(70),
   `starts` varchar(14) default NULL,
@@ -275,8 +275,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannersusers` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "bids`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "bids` (
   `id` int(11) NOT NULL auto_increment,
-  `auction` int(32) default NULL,
-  `bidder` int(32) default NULL,
+  `auction` int(11) default NULL,
+  `bidder` int(11) default NULL,
   `bid` double(16,2) default NULL,
   `bidwhen` varchar(14) default NULL,
   `quantity` int(11) default '0',
@@ -1093,12 +1093,12 @@ $query[] = "INSERT INTO `" . $DBPrefix . "faqscategories` VALUES (3, 'Buying');"
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "feedbacks`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
   `id` int(11) NOT NULL auto_increment,
-  `rated_user_id` int(32) default NULL,
+  `rated_user_id` int(11) default NULL,
   `rater_user_nick` varchar(20) default NULL,
   `feedback` mediumtext,
   `rate` int(2) default NULL,
   `feedbackdate` INT(15) NOT NULL,
-  `auction_id` int(32) NOT NULL default '0',
+  `auction_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1161,39 +1161,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "filterwords` VALUES ('');";
 # ############################
 
 #
-# Table structure for table `" . $DBPrefix . "gateways`
-#
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
-  `gateways` text,
-  `paypal_address` varchar(50) NOT NULL default '',
-  `paypal_required` tinyint(1) NOT NULL default '0',
-  `paypal_active` tinyint(1) NOT NULL default '0',
-  `authnet_address` varchar(50) NOT NULL default '',
-  `authnet_password` varchar(50) NOT NULL default '',
-  `authnet_required` tinyint(1) NOT NULL default '0',
-  `authnet_active` tinyint(1) NOT NULL default '0',
-  `worldpay_id` varchar(50) NOT NULL default '',
-  `worldpay_required` tinyint(1) NOT NULL default '0',
-  `worldpay_active` tinyint(1) NOT NULL default '0',
-  `moneybookers_address` varchar(50) NOT NULL default '',
-  `moneybookers_required` tinyint(1) NOT NULL default '0',
-  `moneybookers_active` tinyint(1) NOT NULL default '0',
-  `toocheckout_id` varchar(50) NOT NULL default '',
-  `toocheckout_required` tinyint(1) NOT NULL default '0',
-  `toocheckout_active` tinyint(1) NOT NULL default '0'
-) ;";
-
-#
-# Dumping data for table `" . $DBPrefix . "gateways`
-#
-
-$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet,worldpay,moneybookers,toocheckout', '', 0, 0, '', '', 0, 0, '', 0, 0, '', 0, 0, '', 0, 0);";
-
-# ############################
-
-#
 # Table structure for table `" . $DBPrefix . "payment_options`
 #
 
@@ -1207,6 +1174,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "payment_options` (
   `gateway_admin_password` varchar(50) NOT NULL default '',
   `gateway_required` tinyint(1) NOT NULL default '0',
   `gateway_active` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY(`id`)
 ) ;";
 
 #
@@ -1233,8 +1201,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
   `group_name` varchar(50) NOT NULL default '',
   `can_sell` tinyint(1) NOT NULL default '0',
   `can_buy` tinyint(1) NOT NULL default '0',
-  `count` tinyint(15) NOT NULL default '0',
-  `auto_join` tinyint(15) NOT NULL default '0',
+  `count` tinyint(11) NOT NULL default '0',
+  `auto_join` tinyint(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1380,7 +1348,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
   `subject` varchar(50) NOT NULL default '',
   `replied` tinyint(1) NOT NULL default '0',
   `reply_of` int(50) NOT NULL default '0',
-  `question` int(15) NOT NULL default '0',
+  `question` int(11) NOT NULL default '0',
   `public` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`id`)
 ) ;";
@@ -1393,7 +1361,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "news`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "news` (
-  `id` int(32) NOT NULL auto_increment,
+  `id` int(11) NOT NULL auto_increment,
   `title` varchar(200) NOT NULL default '',
   `content` longtext NOT NULL,
   `new_date` int(8) NOT NULL default '0',
@@ -1475,8 +1443,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "pendingnotif` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "proxybid`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "proxybid` (
-  `itemid` int(32) default NULL,
-  `userid` int(32) default NULL,
+  `itemid` int(11) default NULL,
+  `userid` int(11) default NULL,
   `bid` double(16,2) default '0'
 ) ;";
 
@@ -1670,7 +1638,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('moneysymbol', 'int'
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('newsletter', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('newsbox', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('newstoshow', 'int', '5', UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('payment_options', 'str', 'a:2:{i:0;s:13:\"Wire Transfer\";i:1;s:6:\"Cheque\";}', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('paypal_sandbox', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('perpage', 'int', '15', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('picturesgallery', 'int', '1', UNIX_TIMESTAMP(), 1);";
@@ -1758,7 +1725,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "tax` VALUES (NULL, 'Site Fees', '0', '
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "users`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
-  `id` int(32) NOT NULL auto_increment,
+  `id` int(11) NOT NULL auto_increment,
   `nick` varchar(20) NOT NULL,
   `password` varchar(60) NOT NULL,
   `hash` varchar(5) default '',
@@ -1770,7 +1737,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `zip` varchar(10) default '',
   `phone` varchar(40) default '',
   `email` varchar(50) default '',
-  `reg_date` int(15) default NULL,
+  `reg_date` int(11) default NULL,
   `rate_sum` int(11) NOT NULL default '0',
   `rate_num` int(11) NOT NULL default '0',
   `birthdate` int(8) default '0',
@@ -1810,9 +1777,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "useraccounts`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   `useracc_id` int(11) NOT NULL AUTO_INCREMENT,
-  `auc_id` int(15) NOT NULL default '0',
-  `user_id` int(15) NOT NULL default '0',
-  `date` int(15) NOT NULL default '0',
+  `auc_id` int(11) NOT NULL default '0',
+  `user_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
   `setup` double(8,2) NOT NULL default '0',
   `featured` double(8,2) NOT NULL default '0',
   `bold` double(8,2) NOT NULL default '0',
@@ -1845,7 +1812,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "usersips`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "usersips` (
   `id` int(11) NOT NULL auto_increment,
-  `user` int(32) default NULL,
+  `user` int(11) default NULL,
   `ip` varchar(15) default NULL,
   `type` enum('first','after') NOT NULL default 'first',
   `action` enum('accept','deny') NOT NULL default 'accept',
@@ -1859,20 +1826,40 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "usersips` (
 # ############################
 
 #
+# Table structure for table `" . $DBPrefix . "usergateways`
+#
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "usergateways`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "usergateways` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `gateway_id` int(5) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `address` varchar(50) NOT NULL default '',
+  `password` varchar(50) NOT NULL default '',
+  PRIMARY KEY(`id`)
+) ;";
+
+#
+# Dumping data for table `" . $DBPrefix . "usergateways`
+#
+
+# ############################
+
+#
 # Table structure for table `" . $DBPrefix . "winners`
 #
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "winners`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `id` int(11) NOT NULL auto_increment,
-  `auction` int(32) NOT NULL default '0',
-  `seller` int(32) NOT NULL default '0',
-  `winner` int(32) NOT NULL default '0',
+  `auction` int(11) NOT NULL default '0',
+  `seller` int(11) NOT NULL default '0',
+  `winner` int(11) NOT NULL default '0',
   `bid` double(16,2) NOT NULL default '0',
   `auc_title` varchar(70),
   `auc_shipping_cost` double(16,2) default '0',
   `auc_payment` tinytext,
-  `closingdate` int(15) NOT NULL default '0',
+  `closingdate` int(11) NOT NULL default '0',
   `feedback_win` tinyint(1) NOT NULL default '0',
   `feedback_sel` tinyint(1) NOT NULL default '0',
   `qty` int(11) NOT NULL default '1',

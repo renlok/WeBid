@@ -106,52 +106,25 @@
 </div>
 
 <table width="100%" border="0" cellpadding="4" align="center">
-<!-- IF B_PAYPAL -->
+<!-- BEGIN gateways -->
 	<tr>
-		<td align="right" width="30%">{L_720}</td>
+		<td align="right" width="30%">{gateways.ADDRESS_NAME}{gateways.REQUIRED}</td>
 		<td>
-			<input type="text" name="TPL_pp_email" size=40 value="{PP_EMAIL}">
+			<input type="hidden" name="{gateways.PLAIN_NAME}[id]" value="{gateways.GATEWAY_ID}">
+			<input type="text" name="{gateways.PLAIN_NAME}[address]" size=40 value="{gateways.ADDRESS}">
 		</td>
 	</tr>
-<!-- ENDIF -->
-<!-- IF B_AUTHNET -->
-	<tr>
-		<td align="right" width="30%">{L_773}</td>
-		<td>
-			<input type="text" name="TPL_authnet_id" size=40 value="{AN_ID}">
-		</td>
-	</tr>
-	<tr>
-		<td align="right" width="30%">{L_774}</td>
-		<td>
-			<input type="text" name="TPL_authnet_pass" size=40 value="{AN_PASS}">
-		</td>
-	</tr>
-<!-- ENDIF -->
-<!-- IF B_WORLDPAY -->
-	<tr>
-		<td align="right" width="30%">{L_824}</td>
-		<td>
-			<input type="text" name="TPL_worldpay_id" size=40 value="{WP_ID}">
-		</td>
-	</tr>
-<!-- ENDIF -->
-<!-- IF B_TOOCHECKOUT -->
-	<tr>
-		<td align="right" width="30%">{L_826}</td>
-		<td>
-			<input type="text" name="TPL_toocheckout_id" size=40 value="{TC_ID}">
-		</td>
-	</tr>
-<!-- ENDIF -->
-<!-- IF B_MONEYBOOKERS -->
-	<tr>
-		<td align="right" width="30%">{L_825}</td>
-		<td>
-			<input type="text" name="TPL_moneybookers_email" size=40 value="{MB_EMAIL}">
-		</td>
-	</tr>
-<!-- ENDIF -->
+	<!-- IF gateways.B_PASSWORD -->
+		<tr>
+			<td align="right" width="30%">{gateways.PASSWORD_NAME}{gateways.REQUIRED}</td>
+			<td>
+				<input type="text" name="{gateways.PLAIN_NAME}[password]" size=40 value="{gateways.PASS}">
+			</td>
+		</tr>
+	<!-- ELSE -->
+		<input type="hidden" name="{gateways.PLAIN_NAME}[password]" value="">
+	<!-- ENDIF -->
+<!-- END gateways -->
 	<tr>
 		<td colspan="2">&nbsp;</td>
 	</tr>

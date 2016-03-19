@@ -23,4 +23,12 @@ $emailer->assign_vars(array(
 		'C_NAME' => $TPL_name_hidden
 		));
 $emailer->email_uid = $TPL_id_hidden;
-$emailer->email_sender($TPL_email_hidden, 'usermail.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['098']);
+if ($system->SETTINGS['email_admin_on_signup'])
+{
+	$email_to = $TPL_email_hidden;
+}
+else
+{
+	$email_to = array($TPL_email_hidden, $system->SETTINGS['adminmail']);
+}
+$emailer->email_sender($email_to, 'usermail.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['098']);

@@ -34,4 +34,12 @@ $emailer->assign_vars(array(
 		'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo']
 		));
 $emailer->email_uid = $TPL_id_hidden;
-$emailer->email_sender(array($TPL_email_hidden, $system->SETTINGS['adminmail']), 'user_needapproval.inc.php', $system->SETTINGS['sitename']. ' '.$MSG['098']);
+if ($system->SETTINGS['email_admin_on_signup'])
+{
+	$email_to = $TPL_email_hidden;
+}
+else
+{
+	$email_to = array($TPL_email_hidden, $system->SETTINGS['adminmail']);
+}
+$emailer->email_sender($email_to, 'user_needapproval.inc.php', $system->SETTINGS['sitename']. ' '.$MSG['098']);

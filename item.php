@@ -580,7 +580,7 @@ $template->assign_vars(array(
 		'B_HASBUYER' => (count($hbidder_data) > 0),
 		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
 		'B_HAS_QUESTIONS' => ($num_questions > 0),
-		'B_CAN_BUY' => $user->can_buy && !($start > time()),
+		'B_CAN_BUY' => ($user->can_buy || (!$user->logged_in && $system->SETTINGS['bidding_visable_to_guest'])) && !($start > time()),
 		'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
 		'B_SHOWENDTIME' => $showendtime,
 		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['shipping_cost_additional'] > 0)

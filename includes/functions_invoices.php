@@ -143,7 +143,7 @@ function invalidinvoice($packingslip = false)
 	global $template, $system;
 
 	$template->assign_vars(array(
-			'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo']
+			'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'],
 			'LANGUAGE' => $language,
 			'SALE_ID' => 0,
 			'B_INVOICE' => false

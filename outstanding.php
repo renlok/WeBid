@@ -41,8 +41,8 @@ $db->query($query, $params);
 $TOTALAUCTIONS = $db->result('COUNT');
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
-$query = "SELECT w.id, w.winner, w.auc_title, w.shipping_cost, w.bid, w.qty, w.auction As auc_id, a.shipping_cost_additional, a.shipping FROM " . $DBPrefix . "winners w
-		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
+$query = "SELECT w.id, w.winner, w.auc_title, w.auc_shipping_cost, a.shipping_cost, w.bid, w.qty, w.auction As auc_id, a.shipping_cost_additional, a.shipping FROM " . $DBPrefix . "winners w
+		JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 		WHERE w.paid = 0 AND w.winner = :user_id
 		LIMIT :OFFSET, :per_page";
 $params = array();

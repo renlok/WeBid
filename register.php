@@ -511,7 +511,7 @@ $template->assign_vars(array(
 		'MISSING8' => ($missing['prov']) ? 1 : 0,
 		'MISSING9' => ($missing['country']) ? 1 : 0,
 		'MISSING10' => ($missing['zip']) ? 1 : 0,
-		'MISSING11' => ($missing['tel']) ? 1 : 0
+		'MISSING11' => ($missing['tel']) ? 1 : 0,
 		'FEES'=> $system->print_money($signup_fee['value']),
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',

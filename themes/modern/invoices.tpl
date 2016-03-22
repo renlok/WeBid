@@ -16,7 +16,7 @@
 			<td>{topay.INFO}</td>
 			<td style="text-align: center;">{topay.TOTAL}</td>
 			<td style="text-align: center;">
-				<!-- IF topay.PAID --><span class="label label-success">{L_898}</span><br><br><!-- ENDIF --><a class="btn btn-default btn-xs" href="{SITEURL}order_print.php?id={topay.INVOICE}" tagret="_blank">{L_1058}</a>
+				<!-- IF topay.PAID --><span class="label label-success">{L_898}</span><br><br><!-- ENDIF --><a class="btn btn-default btn-xs" href="{SITEURL}order_print.php?id={topay.INVOICE}" target="_blank">{L_1058}</a>
 			</td>
 		</tr>
 <!-- END topay -->

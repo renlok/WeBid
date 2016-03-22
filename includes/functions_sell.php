@@ -510,6 +510,12 @@ function update_cat_counters($add, $category, $second_category = 0)
 {
 	global $_SESSION, $DBPrefix, $system, $catscontrol, $db;
 
+	$addsub = ($add) ? '+' : '-';
+	// change category counter
+	$query = "UPDATE " . $DBPrefix . "categories SET counter = counter " . $addsub . " 1 WHERE cat_id = :cat_id";
+	$params = array();
+	$params[] = array(':cat_id', $category, 'int');
+	$db->query($query, $params);
 	// get the category crumbs
 	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
 	$params = array();
@@ -520,6 +526,11 @@ function update_cat_counters($add, $category, $second_category = 0)
 
 	if ($second_category > 0)
 	{
+		// change secondary category counter
+		$query = "UPDATE " . $DBPrefix . "categories SET counter = counter " . $addsub . " 1 WHERE cat_id = :cat_id";
+		$params = array();
+		$params[] = array(':cat_id', $second_category, 'int');
+		$db->query($query, $params);
 		// get the second category crumbs
 		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
 		$params = array();
@@ -536,7 +547,6 @@ function update_cat_counters($add, $category, $second_category = 0)
 		$crumbs = $category_crumbs;
 	}
 
-	$addsub = ($add) ? '+' : '-';
 	for ($i = 0; $i < count($crumbs); $i++)
 	{
 		$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter " . $addsub . " 1 WHERE cat_id = :cat_id";

@@ -22,4 +22,12 @@ $emailer->assign_vars(array(
 		'C_NAME' => $USER['name']
 		));
 $emailer->userlang = $language;
-$emailer->email_sender(array($USER['email'], $system->SETTINGS['adminmail']), 'user_approved.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['095']);
+if ($system->SETTINGS['email_admin_on_signup'])
+{
+	$email_to = $USER['email'];
+}
+else
+{
+	$email_to = array($USER['email'], $system->SETTINGS['adminmail']);
+}
+$emailer->email_sender($email_to, 'user_approved.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['095']);

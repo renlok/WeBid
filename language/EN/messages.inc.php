@@ -1805,6 +1805,11 @@ $MSG['error_no_user_group_id'] = 'has been assigned to a Group ID which does not
 $MSG['text_update_users_group'] = '[Please View and Update each user\'s details]';
 $MSG['warning'] = 'Warning';
 
+$MSG['bidding_visable_to_guest'] = 'Buy now visible to guests';
+$MSG['bidding_visable_to_guest_explain'] = 'Guest can see the Bid now/Buy now option when viewing an auction, this should be disabled if you plan to run a single seller site';
+$MSG['email_admin_on_signup'] = 'Email admin on signup';
+$MSG['email_admin_on_signup_explain'] = 'Admin receives an email each time a new user registers';
+
 $MSG['payment_name'] = 'Name';
 $MSG['clean_payment_name'] = 'Clean Name <small>(all lower case no spaces or special characters)</small>';
 

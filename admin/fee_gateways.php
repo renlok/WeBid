@@ -41,14 +41,14 @@ if (isset($_POST['action']))
 			$params = array();
 			$params[] = array(':gateway_admin_address', $_POST[$gateway['name']]['address'], 'str');
 			$params[] = array(':gateway_admin_password', $_POST[$gateway['name']]['password'], 'str');
-			$params[] = array(':gateway_required', $_POST[$gateway['name']]['required'], 'bool');
-			$params[] = array(':gateway_active', $_POST[$gateway['name']]['active'], 'bool');
+			$params[] = array(':gateway_required', (isset($_POST[$gateway['name']]['required']) ? 1 : 0), 'bool');
+			$params[] = array(':gateway_active', (isset($_POST[$gateway['name']]['active']) ? 1 : 0), 'bool');
 			$params[] = array(':id', $_POST[$gateway['name']]['id'], 'int');
 			$db->query($query, $params);
 			$gateway_data[$k]['gateway_admin_address'] = $_POST[$gateway['name']]['address'];
 			$gateway_data[$k]['gateway_admin_password'] = $_POST[$gateway['name']]['password'];
-			$gateway_data[$k]['gateway_required'] = $_POST[$gateway['name']]['required'];
-			$gateway_data[$k]['gateway_active'] = $_POST[$gateway['name']]['active'];
+			$gateway_data[$k]['gateway_required'] = (isset($_POST[$gateway['name']]['required']) ? 1 : 0);
+			$gateway_data[$k]['gateway_active'] = (isset($_POST[$gateway['name']]['active']) ? 1 : 0);
 		}
 	}
 	$ERR = $MSG['762'];

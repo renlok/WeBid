@@ -124,9 +124,9 @@ if (!isset($_POST['action'])) // already closed auctions
 		// get gallery images
 		$UPLOADED_PICTURES = array();
 		$file_types = array('gif', 'jpg', 'jpeg', 'png');
-		if (is_dir(UPLOAD_PATH . intval($_GET['id'])))
+		if (is_dir(UPLOAD_PATH . $id))
 		{
-			$dir = opendir(UPLOAD_PATH . intval($_GET['id']));
+			$dir = opendir(UPLOAD_PATH . $id);
 			while (($myfile = readdir($dir)) !== false)
 			{
 				if ($myfile != '.' && $myfile != '..' && !is_file($myfile))

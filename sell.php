@@ -235,16 +235,19 @@ switch ($_SESSION['action'])
 					chmod(UPLOAD_PATH . $auction_id . '/' . $pict_url, 0777);
 				}
 				// Delete files, using dir (to eliminate eventual odd files)
-				if ($dir = opendir(UPLOAD_PATH . session_id()))
+				if (is_dir(UPLOAD_PATH . session_id()))
 				{
-					while (($file = readdir($dir)) !== false)
+					if ($dir = opendir(UPLOAD_PATH . session_id()))
 					{
-						if (!is_dir(UPLOAD_PATH . session_id() . '/' . $file))
-							unlink(UPLOAD_PATH . session_id() . '/' . $file);
+						while (($file = readdir($dir)) !== false)
+						{
+							if (!is_dir(UPLOAD_PATH . session_id() . '/' . $file))
+								unlink(UPLOAD_PATH . session_id() . '/' . $file);
+						}
+						closedir($dir);
 					}
-					closedir($dir);
+					rmdir(UPLOAD_PATH . session_id());
 				}
-				rmdir(UPLOAD_PATH . session_id());
 			}
 			if (!isset($_SESSION['SELL_action']) || empty($_SESSION['SELL_action']))
 			{

@@ -41,10 +41,9 @@ if (!isset($_REQUEST['id']))
 function load_gallery($auc_id)
 {
 	$UPLOADED_PICTURES = array();
-	if (file_exists('../' . UPLOAD_FOLDER . $auc_id))
+	if (is_dir(UPLOAD_PATH . $auc_id))
 	{
-		$dir = @opendir('../' . UPLOAD_FOLDER . $auc_id);
-		if ($dir)
+		if ($dir = @opendir(UPLOAD_PATH . $auc_id))
 		{
 			while ($file = @readdir($dir))
 			{

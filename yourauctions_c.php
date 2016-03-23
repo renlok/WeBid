@@ -44,17 +44,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$v = intval($v);
 			// Pictures Gallery
-			if ($dir = @opendir(UPLOAD_PATH . $v))
+			if (is_dir(UPLOAD_PATH . $v))
 			{
-				while ($file = readdir($dir))
+				if ($dir = @opendir(UPLOAD_PATH . $v))
 				{
-					if ($file != '.' && $file != '..')
+					while ($file = readdir($dir))
 					{
-						unlink(UPLOAD_PATH . $v . '/' . $file);
+						if ($file != '.' && $file != '..')
+						{
+							unlink(UPLOAD_PATH . $v . '/' . $file);
+						}
 					}
+					closedir($dir);
+					@rmdir(UPLOAD_PATH . $v);
 				}
-				closedir($dir);
-				@rmdir(UPLOAD_PATH . $v);
 			}
 
 			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = closedauctions - 1";

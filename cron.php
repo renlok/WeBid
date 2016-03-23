@@ -571,7 +571,7 @@ if ($num > 0)
 		$db->query($query, $params);
 
 		// Delete all images
-		if (file_exists(UPLOAD_PATH . $AuctionInfo['id']))
+		if (is_dir(UPLOAD_PATH . $AuctionInfo['id']))
 		{
 			if ($dir = @opendir(UPLOAD_PATH . $AuctionInfo['id']))
 			{

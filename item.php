@@ -437,7 +437,7 @@ if ($total_rate > 0)
 // Pictures Gellery
 $K = 0;
 $UPLOADED_PICTURES = array();
-if (file_exists(UPLOAD_FOLDER . $id))
+if (is_dir(UPLOAD_PATH . $id))
 {
 	$dir = @opendir(UPLOAD_FOLDER . $id);
 	if ($dir)

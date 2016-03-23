@@ -42,50 +42,53 @@ elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'
 }
 
 $bg = '';
-if ($dir = @opendir($theme_root))
+if (is_dir($theme_root))
 {
-	while (($atheme = readdir($dir)) !== false)
+	if ($dir = @opendir($theme_root))
 	{
-		$theme_path = $theme_root . '/' . $atheme;
-		$list_files = (isset($_GET['do']) && isset($_GET['theme']) && $_GET['do'] == 'listfiles' && $_GET['theme'] == $atheme);
-		if ($atheme != 'CVS' && is_dir($theme_path) && substr($atheme, 0, 1) != '.')
+		while (($atheme = readdir($dir)) !== false)
 		{
-			$THEMES[$atheme] = $atheme;
-			$template->assign_block_vars('themes', array(
-					'NAME' => $atheme,
-					'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
-					'B_LISTFILES' => $list_files,
-					'B_NOTADMIN' => (strstr($atheme, 'admin') === false),
-					'BG' => $bg
-					));
-			$bg = ($bg == '') ? 'class="bg"' : '';
-
-			if ($list_files)
+			$theme_path = $theme_root . '/' . $atheme;
+			$list_files = (isset($_GET['do']) && isset($_GET['theme']) && $_GET['do'] == 'listfiles' && $_GET['theme'] == $atheme);
+			if ($atheme != 'CVS' && is_dir($theme_path) && substr($atheme, 0, 1) != '.')
 			{
-				// list files
-				$handler = opendir($theme_path);
+				$THEMES[$atheme] = $atheme;
+				$template->assign_block_vars('themes', array(
+						'NAME' => $atheme,
+						'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
+						'B_LISTFILES' => $list_files,
+						'B_NOTADMIN' => (strstr($atheme, 'admin') === false),
+						'BG' => $bg
+						));
+				$bg = ($bg == '') ? 'class="bg"' : '';
 
-				// keep going until all files in directory have been read
-				$files = array();
-				while ($file = readdir($handler))
+				if ($list_files)
 				{
-					$extension = substr($file, strrpos($file, '.') + 1);
-					if (in_array($extension, array('tpl', 'html', 'css')))
+					// list files
+					$handler = opendir($theme_path);
+
+					// keep going until all files in directory have been read
+					$files = array();
+					while ($file = readdir($handler))
 					{
-						$files[] = $file;
+						$extension = substr($file, strrpos($file, '.') + 1);
+						if (in_array($extension, array('tpl', 'html', 'css')))
+						{
+							$files[] = $file;
+						}
 					}
-				}
-				sort($files);
-				for ($i = 0; $i < count($files); $i++)
-				{
-					$template->assign_block_vars('themes.files', array(
-							'FILE' => $files[$i]
-							));
+					sort($files);
+					for ($i = 0; $i < count($files); $i++)
+					{
+						$template->assign_block_vars('themes.files', array(
+								'FILE' => $files[$i]
+								));
+					}
 				}
 			}
 		}
+		@closedir($dir);
 	}
-	@closedir($dir);
 }
 
 $edit_file = false;

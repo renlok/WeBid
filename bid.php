@@ -20,7 +20,6 @@ $id = intval($_REQUEST['id']);
 // reformat bid to valid number
 $bid = round($system->input_money($_POST['bid']), 2);
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
-$bidder_id = $user->user_data['id'];
 $bidding_ended = false;
 
 if (!$user->checkAuth())
@@ -30,6 +29,7 @@ if (!$user->checkAuth())
 	exit;
 }
 
+$bidder_id = $user->user_data['id'];
 if (in_array($user->user_data['suspended'], array(5, 6, 7)))
 {
 	header('location: message.php');

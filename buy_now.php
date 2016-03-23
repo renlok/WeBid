@@ -327,7 +327,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$month = date('m', $Auction['ends'] + $system->tdiff);
 			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
-			include INCLUDE_PATH . 'endauction_mutli_item_win.php';
+			include INCLUDE_PATH . 'email/endauction_mutli_item_win.php';
 			include INCLUDE_PATH . 'email/seller_partial_winner.php';
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
@@ -357,7 +357,7 @@ $BN_total = ($Auction['buy_now'] * $qty) + $shipping_cost;
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_REQUEST['id'],
-		'WINID' => $winner_id,
+		'WINID' => (isset($winner_id)) ? $winner_id : 0,
 		'TITLE' => $system->uncleanvars($Auction['title']),
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),
 		'SHIPPINGCOST' => ($shipping_cost >  0) ? $system->print_money($shipping_cost) : 0,

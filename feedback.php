@@ -197,10 +197,12 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	}
 	else
 	{
+		// set page values
 		$secid = intval($_GET['id']);
 		$thispage = (isset($_GET['pg'])) ? $_GET['pg'] : 1;
 		if ($thispage == 0) $thispage = 1;
 		$left_limit = ($thispage - 1) * $system->SETTINGS['perpage'];
+		$pages = 1;
 
 		$query = "SELECT rate_sum, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
 		$params = array();
@@ -292,8 +294,8 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 {
 	$template->assign_vars(array(
 			'ERROR' => (isset($TPL_errmsg)) ? $TPL_errmsg : '',
-			'USERNICK' => $TPL_nick,
-			'USERFB' => $TPL_feedbacks_sum,
+			'USERNICK' => (isset($TPL_nick)) ? $TPL_nick : '',
+			'USERFB' => (isset($TPL_feedbacks_sum)) ? $TPL_feedbacks_sum : '',
 			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
 			'AUCT_ID' => $auction_id,
 			'AUCT_TITLE' => $item_title,

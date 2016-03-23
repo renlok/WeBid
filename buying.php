@@ -45,7 +45,7 @@ $db->query($query, $params);
 while ($row = $db->fetch())
 {
 	$totalcost = ($row['qty'] > 1) ? ($row['bid'] * $row['qty']) : $row['bid'];
-	$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
+	$additional_shipping = $row['additional_shipping_cost'] * ($row['qty'] - 1);
 	$totalcost = ($row['shipping'] == 2) ? $totalcost : ($totalcost + $row['shipping_cost'] + $additional_shipping);
 
 	$template->assign_block_vars('items', array(

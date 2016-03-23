@@ -458,7 +458,7 @@ $time_correction = generateSelect('TPL_timezone', $timezones, $selectsetting);
 
 foreach ($gateway_data as $gateway)
 {
-	if ($gateway['active'] == 1)
+	if ($gateway['gateway_active'])
 	{
 		$template->assign_block_vars('gateways', array(
 				'GATEWAY_ID' => $gateway['id'],
@@ -487,11 +487,6 @@ $template->assign_vars(array(
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_FIRST' => $first,
-		'B_PAYPAL' => ($gateway_data['paypal_active'] == 1),
-		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1),
-		'B_WORLDPAY' => ($gateway_data['worldpay_active'] == 1),
-		'B_TOOCHECKOUT' => ($gateway_data['toocheckout_active'] == 1),
-		'B_MONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1),
 		'B_FEES' => ($signup_fee['value'] > 0),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],

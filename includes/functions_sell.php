@@ -341,7 +341,19 @@ function get_fee($minimum_bid, $just_fee = true)
 	$db->direct_query($query);
 
 	$fee_value = 0;
-	$fee_data = array();
+	// set defaults
+	$fee_data = array(
+		'setup' => 0,
+		'hpfeat_fee' => 0,
+		'bolditem_fee' => 0,
+		'hlitem_fee' => 0,
+		'subtitle_fee' => 0,
+		'relist_fee' => 0,
+		'rp_fee' => 0,
+		'buyout_fee' => 0,
+		'picture_fee' => 0,
+		'excat_fee' => 0
+	);
 	while ($row = $db->fetch())
 	{
 		if ($minimum_bid >= $row['fee_from'] && $minimum_bid <= $row['fee_to'] && $row['type'] == 'setup')

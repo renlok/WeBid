@@ -386,5 +386,6 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('bidding_visable_to_guest', 'bool', '1', UNIX_TIMESTAMP(), 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('email_admin_on_signup', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('user_request_seller_permission', 'bool', '0', UNIX_TIMESTAMP(), 1);";
 	$new_version = '1.2.0';
 }

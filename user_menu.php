@@ -100,7 +100,7 @@ function get_reminders($secid)
 }
 
 // Send buyer's request to the administrator
-if (isset($_POST['requesttoadmin']))
+if (isset($_POST['requesttoadmin']) && $system->SETTINGS['user_request_seller_permission'])
 {
 	$emailer = new email_handler();
 	$emailer->assign_vars(array(
@@ -163,6 +163,7 @@ switch ($_SESSION['cptab'])
 
 $template->assign_vars(array(
 		'B_CANSELL' => ($user->can_sell),
+		'B_CANREQUESTSELL' => ($system->SETTINGS['user_request_seller_permission']),
 
 		'TMPMSG' => (isset($_SESSION['TMP_MSG'])) ? $_SESSION['TMP_MSG'] : '',
 		'THISPAGE' => $_SESSION['cptab']

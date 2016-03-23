@@ -1673,6 +1673,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('wordsfilter', 'bool
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('worldpay_sandbox', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('bidding_visable_to_guest', 'bool', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('email_admin_on_signup', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('user_request_seller_permission', 'bool', '0', UNIX_TIMESTAMP(), 1);";
 
 
 # ############################

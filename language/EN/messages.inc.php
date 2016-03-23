@@ -1809,6 +1809,8 @@ $MSG['bidding_visable_to_guest'] = 'Buy now visible to guests';
 $MSG['bidding_visable_to_guest_explain'] = 'Guest can see the Bid now/Buy now option when viewing an auction, this should be disabled if you plan to run a single seller site';
 $MSG['email_admin_on_signup'] = 'Email admin on signup';
 $MSG['email_admin_on_signup_explain'] = 'Admin receives an email each time a new user registers';
+$MSG['user_request_seller_permission'] = 'Users can request to become sellers';
+$MSG['user_request_seller_permission_explain'] = 'Users who do not have permission to sell items can request to gain permission';
 
 $MSG['payment_name'] = 'Name';
 $MSG['clean_payment_name'] = 'Clean Name <small>(all lower case no spaces or special characters)</small>';

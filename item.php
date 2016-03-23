@@ -498,9 +498,6 @@ $bn_link = (!$has_ended) ? ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_no
 
 $page_title = $system->uncleanvars($auction_data['title']);
 
-$sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
-$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-
 $shipping = '';
 if ($auction_data['shipping'] == 1)
 	$shipping = $MSG['031'];
@@ -561,7 +558,6 @@ $template->assign_vars(array(
 
 		'YOURBIDMSG' => (isset($yourbidmsg)) ? $yourbidmsg : '',
 		'YOURBIDCLASS' => (isset($yourbidclass)) ? $yourbidclass : '',
-		'BIDURL' => $sslurl,
 
 		'B_HASENDED' => $has_ended,
 		'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),

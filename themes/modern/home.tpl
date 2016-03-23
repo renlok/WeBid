@@ -143,7 +143,7 @@
 				{L_221}
 			</div>
 			<div class="panel-body">
-				<form name="login" action="{SSLURL}user_login.php" method="post">
+				<form name="login" action="{SITEURL}user_login.php" method="post">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>

@@ -64,6 +64,11 @@ class global_class
 			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
 		}
 		$this->SETTINGS['gateways'] = unserialize($this->SETTINGS['gateways']);
+		// check if url needs https
+		if ($system->SETTINGS['https'] == 'y')
+		{
+			$system->SETTINGS['siteurl'] = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
+		}
 	}
 
 	public function loadAuctionTypes()

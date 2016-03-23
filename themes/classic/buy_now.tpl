@@ -10,7 +10,7 @@
 			</div>
 <!-- ENDIF -->
 <!-- IF B_NOTBOUGHT -->
-			<form action="{ASSLURL}buy_now.php?id={ID}" method="post">
+			<form action="{SITEURL}buy_now.php?id={ID}" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <!-- ENDIF -->
 				<table border=0 width="100%" cellspacing="0" cellpadding="4">

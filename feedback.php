@@ -152,13 +152,6 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 		$them = $_REQUEST['sid'];
 		$sbmsg = $MSG['125'];
 	}
-	if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-	{
-		$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-		$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-		header('Location: ' . $sslurl . 'feedback.php?auction_id=' . $auction_id . '&sid=' . $_REQUEST['sid'] . '&wid=' . $_REQUEST['wid'] . '&ws=' . $_REQUEST['ws']);
-		exit;
-	}
 
 	$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = :auc_id LIMIT 1";
 	$params = array();

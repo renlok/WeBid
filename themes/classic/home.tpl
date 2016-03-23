@@ -104,7 +104,7 @@
 				{L_221}
 			</div>
 			<div class="smallpadding">
-				<form name="login" action="{SSLURL}user_login.php" method="post">
+				<form name="login" action="{SITEURL}user_login.php" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					<table width="100%">
 					<tr>

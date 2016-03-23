@@ -230,7 +230,7 @@ $(document).ready(function() {
 <!-- IF B_HASENDED eq false and B_CAN_BUY -->
 	<!-- IF B_NOTBNONLY -->
 							<table width="100%" border=0 cellpadding=2 cellspacing=0 border=1>
-								<form name="bid" action="{BIDURL}bid.php" method="post">
+								<form name="bid" action="{SITEURL}bid.php" method="post">
 									<tr>
 										<td width="65%">
 											<table width=100% border=0 cellpadding=2 cellspacing=0>
@@ -261,7 +261,7 @@ $(document).ready(function() {
 								</form>
 							</table>
 	<!-- ELSE -->
-							{BUYNOW} <a href="{BIDURL}buy_now.php?id={ID}"><img border="0" align="absbottom" alt="{L_496}" src="{BNIMG}"></a>
+							{BUYNOW} <a href="{SITEURL}buy_now.php?id={ID}"><img border="0" align="absbottom" alt="{L_496}" src="{BNIMG}"></a>
 	<!-- ENDIF -->
 <!-- ENDIF -->
 <!-- IF B_CAN_BUY eq false -->

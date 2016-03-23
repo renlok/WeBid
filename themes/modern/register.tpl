@@ -6,7 +6,7 @@
 			{ERROR}
 		</div>
 	<!-- ENDIF -->
-		<form name="registration" action="{SSLURL}register.php" method="post">
+		<form name="registration" action="{SITEURL}register.php" method="post">
 			<div class="col-md-7 well">
 				<legend>{L_001}</legend>
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

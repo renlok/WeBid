@@ -27,14 +27,6 @@ elseif ($system->SETTINGS['spam_register'] == 1)
 	include PACKAGE_PATH . 'captcha/securimage.php';
 }
 
-if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('Location: ' . $sslurl . 'register.php');
-	exit;
-}
-
 function CheckAge($day, $month, $year) // check if the users > 18
 {
 	$NOW_year = date('Y');

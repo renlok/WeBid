@@ -43,14 +43,6 @@ if (!$user->can_buy)
 	exit;
 }
 
-if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('location: ' . $sslurl . 'bid.php?id=' . $id . '&bid=' . $bid . '&qty=' . $qty);
-	exit;
-}
-
 function get_increment($val, $input_check = true)
 {
 	global $db, $DBPrefix, $system;

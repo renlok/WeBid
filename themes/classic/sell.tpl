@@ -230,7 +230,7 @@ $(document).ready(function(){
 			</div>
 <!-- ENDIF -->
 <!-- IF PAGE eq 0 -->
-			<form name="sell" action="{ASSLURL}sell.php" method="post">
+			<form name="sell" action="{SITEURL}sell.php" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
@@ -539,7 +539,7 @@ $(document).ready(function(){
 				</div>
 			</form>
 <!-- ELSEIF PAGE eq 2 -->
-			<form name="preview" action="{ASSLURL}sell.php" method="post">
+			<form name="preview" action="{SITEURL}sell.php" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" align="center" cellspacing=0>
 					<tr>

@@ -27,13 +27,12 @@ $counters = load_counters();
 
 $page_title = (isset($page_title)) ? ' ' . $page_title : '';
 
-$sslurl = $system->SETTINGS['siteurl'];
-if ($system->SETTINGS['https'] == 'y')
+// check we are using ssl
+if($system->SETTINGS['https'] == 'y' && $_SERVER["HTTPS"] != "on")
 {
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
+    header("Location: https://" . $system->SETTINGS['siteurl'] . $_SERVER["REQUEST_URI"]);
+    exit();
 }
-// for images/ccs/javascript etc on secure pages
-$incurl = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on') ? $system->SETTINGS['siteurl'] : $sslurl;
 
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR, // Set document direction
@@ -50,9 +49,6 @@ $template->assign_vars(array(
 		'HEADERCOUNTER' => $counters,
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'SITENAME' => $system->SETTINGS['sitename'],
-		'SSLURL' => $sslurl,
-		'ASSLURL' => ($system->SETTINGS['https'] == 'y' && $system->SETTINGS['usersauth'] == 'y') ? $sslurl : $system->SETTINGS['siteurl'],
-		'INCURL' => $incurl,
 		'Q' => (isset($q)) ? $q : '',
 		'SELECTION_BOX' => file_get_contents(MAIN_PATH . 'language/' . $language . '/categories_select_box.inc.php'),
 		'YOURUSERNAME' => ($user->logged_in) ? $user->user_data['nick'] : '',

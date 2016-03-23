@@ -9,7 +9,7 @@
 <!-- ENDIF -->
 			<div class="col-md-5">
 				<h2>{L_862}</h2>
-				<form name="user_login" action="{SSLURL}user_login.php" method="post">
+				<form name="user_login" action="{SITEURL}user_login.php" method="post">
 					<div class="form-group col-md-10">
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>

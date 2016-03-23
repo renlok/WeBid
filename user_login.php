@@ -17,14 +17,6 @@ include 'common.php';
 
 $NOW = time();
 
-if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('location: ' . $sslurl . 'user_login.php');
-	exit;
-}
-
 if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password']))
 {
 	include PACKAGE_PATH . 'PasswordHash.php';

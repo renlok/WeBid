@@ -62,14 +62,11 @@ $query = "SELECT a.title, a.ends, w.id, w.auction, w.bid, w.qty, w.winner, w.sel
 $params[] = array(':seller_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
 
-$sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
-$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-
 $i = 0;
 $winner_data = $db->fetchall();
 foreach ($winner_data as $row)
 {
-	$fblink = ($row['feedback_sel'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $row['winner'] . '&sid=' . $row['seller'] . '&ws=s">' . $MSG['207'] . '</a>)' : '';
+	$fblink = ($row['feedback_sel'] == 0) ? '(<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $row['winner'] . '&sid=' . $row['seller'] . '&ws=s">' . $MSG['207'] . '</a>)' : '';
 	$template->assign_block_vars('a', array(
 		'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 		'TITLE' => $system->uncleanvars($row['title']),

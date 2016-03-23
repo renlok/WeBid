@@ -6,10 +6,10 @@
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
 		| <a href="{SITEURL}user_menu.php?">{L_622}</a>
-		| <a href="{SSLURL}logout.php?">{L_245}</a>
+		| <a href="{SITEURL}logout.php?">{L_245}</a>
 <!-- ELSE -->
-		| <a href="{SSLURL}register.php?">{L_235}</a>
-		| <a href="{SSLURL}user_login.php?">{L_052}</a>
+		| <a href="{SITEURL}register.php?">{L_235}</a>
+		| <a href="{SITEURL}user_login.php?">{L_052}</a>
 <!-- ENDIF -->
 		| <a href="{SITEURL}help.php" alt="faqs" class="new-window">{L_148}</a>
 <!-- IF B_FEES -->

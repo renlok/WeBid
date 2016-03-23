@@ -84,13 +84,6 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'recall')
 switch ($_SESSION['action'])
 {
 	case 4: // finalise auction (submit to db)
-		if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-		{
-			$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-			$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-			header('location: ' . $sslurl . 'sell.php');
-			exit;
-		}
 		// does the user need to login before they can submit the auction?
 		if ($system->SETTINGS['usersauth'] == 'y')
 		{

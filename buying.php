@@ -42,9 +42,6 @@ $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
 
-$sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
-$sslurl = ($system->SETTINGS['usersauth'] == 'y' && !empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-
 while ($row = $db->fetch())
 {
 	$totalcost = ($row['qty'] > 1) ? ($row['bid'] * $row['qty']) : $row['bid'];
@@ -65,7 +62,7 @@ while ($row = $db->fetch())
 
 			'SELLNICK' => $row['nick'],
 			'SELLEMAIL' => $row['email'],
-			'FB_LINK' => ($row['feedback_win'] == 0) ? '<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $user->user_data['id'] . '&sid=' . $row['seller'] . '&ws=w">' . $MSG['207'] . '</a>' : ''
+			'FB_LINK' => ($row['feedback_win'] == 0) ? '<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $user->user_data['id'] . '&sid=' . $row['seller'] . '&ws=w">' . $MSG['207'] . '</a>' : ''
 			));
 }
 

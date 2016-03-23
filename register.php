@@ -94,6 +94,22 @@ function checkMissing ($missing)
 	return false;
 }
 
+function checkEmail($email)
+{
+	global $system;
+	if ($system->SETTINGS['spam_blocked_email_enabled'])
+	{
+		$exploded_email = explode('@', $email);
+    	$email_domain = trim(array_pop($exploded_email));
+		$emails = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
+		if ( in_array($email_domain, $emails))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 $first = true;
 unset($ERR);
 
@@ -225,6 +241,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_email']))
 		{
 			$ERR = $ERR_008;
+		}
+		elseif (!checkEmail($_POST['TPL_email']))
+		{
+			$ERR = $MSG['spam_blocked_email_domains_register_error'];
 		}
 		elseif (!CheckAge($birth_day, $birth_month, $birth_year) && $MANDATORY_FIELDS['birthdate'] == 'y')
 		{

@@ -1811,6 +1811,10 @@ $MSG['email_admin_on_signup'] = 'Email admin on signup';
 $MSG['email_admin_on_signup_explain'] = 'Admin receives an email each time a new user registers';
 $MSG['user_request_seller_permission'] = 'Users can request to become sellers';
 $MSG['user_request_seller_permission_explain'] = 'Users who do not have permission to sell items can request to gain permission';
+$MSG['spam_blocked_email_enabled'] = 'Enable block email domains';
+$MSG['spam_blocked_email_domains'] = 'Deny registration from disposable emails';
+$MSG['spam_blocked_email_domains_explain'] = 'Put a each domain on a new line';
+$MSG['spam_blocked_email_domains_register_error'] = 'The E-Mail address you have entered has been black-listed';
 
 $MSG['payment_name'] = 'Name';
 $MSG['clean_payment_name'] = 'Clean Name <small>(all lower case no spaces or special characters)</small>';

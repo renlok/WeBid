@@ -1,4 +1,4 @@
-<br>
+	</div>
 	<div class="footer">
 		<a href="{SITEURL}index.php?">{L_166}</a>
 <!-- IF B_CAN_SELL -->

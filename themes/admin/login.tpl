@@ -43,7 +43,6 @@
 	</script>
 </head>
 <body id="{CURRENT_PAGE}">
-	<br>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">&nbsp;</div>

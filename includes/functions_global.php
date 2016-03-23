@@ -130,7 +130,7 @@ class global_class
 					break;
 				case "boolean":
 				case "bool":
-					$value = ($value == true);
+					$value = ($value) ? 1 : 0;
 					break;
 				case "array":
 					$value = serialize($value);

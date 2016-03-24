@@ -32,7 +32,7 @@ if (isset($_GET['shipped']))
 }
 
 // Get closed auctions with winners
-$query = "SELECT DISTINCT a.id, a.qty, a.seller, a.paid, a.feedback_win, a.bid, a.auction, a.shipped, b.title, b.ends, b.shipping_cost, b.shipping, u.nick, u.email
+$query = "SELECT DISTINCT a.id, a.qty, a.seller, a.paid, a.feedback_win, a.bid, a.auction, a.shipped, b.title, b.ends, b.shipping_cost, b.additional_shipping_cost, b.shipping, u.nick, u.email
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.seller)

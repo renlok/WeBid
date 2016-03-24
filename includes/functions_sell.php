@@ -197,7 +197,7 @@ function updateauction($type)
 		secondcat = :cattwo,
 		minimum_bid = :min_bid,
 		shipping_cost = :shipping_cost,
-		shipping_cost_additional = :shipping_cost_additional,
+		additional_shipping_cost = :additional_shipping_cost,
 		reserve_price = :reserve_price,
 		buy_now = :buy_now,
 		bn_only = :bn_only,
@@ -231,7 +231,7 @@ function updateauction($type)
 	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
 	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 0) ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
 	$params[] = array(':shipping_cost', $system->input_money($_SESSION['SELL_shipping_cost']), 'float');
-	$params[] = array(':shipping_cost_additional', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
+	$params[] = array(':additional_shipping_cost', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
 	$params[] = array(':reserve_price', $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0), 'float');
 	$params[] = array(':buy_now', $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0), 'float');
 	$params[] = array(':bn_only', $_SESSION['SELL_buy_now_only'], 'bool');
@@ -261,8 +261,8 @@ function addauction()
 {
 	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee, $db;
 
-	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,shipping_cost_additional,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,initial_quantity,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
-	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :shipping_cost_additional, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :initial_quantity, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
+	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,additional_shipping_cost,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,initial_quantity,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
+	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :additional_shipping_cost, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :initial_quantity, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
 
 	$params = array();
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
@@ -275,7 +275,7 @@ function addauction()
 	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
 	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 0) ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
 	$params[] = array(':shipping_cost', $system->input_money($_SESSION['SELL_shipping_cost']), 'float');
-	$params[] = array(':shipping_cost_additional', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
+	$params[] = array(':additional_shipping_cost', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
 	$params[] = array(':reserve_price', $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0), 'float');
 	$params[] = array(':buy_now', $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0), 'float');
 	$params[] = array(':auction_type', $_SESSION['SELL_atype'], 'int');

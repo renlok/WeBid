@@ -513,7 +513,7 @@ $template->assign_vars(array(
 		'AUCTION_DESCRIPTION' => $auction_data['description'],
 		'PIC_URL' => UPLOAD_FOLDER . $id . '/' . $auction_data['pict_url'],
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $MSG['1152'],
-		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['shipping_cost_additional']),
+		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['additional_shipping_cost']),
 		'COUNTRY' => $auction_data['country'],
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
@@ -579,7 +579,7 @@ $template->assign_vars(array(
 		'B_CAN_BUY' => ($user->can_buy || (!$user->logged_in && $system->SETTINGS['bidding_visable_to_guest'])) && !($start > time()),
 		'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
 		'B_SHOWENDTIME' => $showendtime,
-		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['shipping_cost_additional'] > 0)
+		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['additional_shipping_cost'] > 0)
 		));
 
 include 'header.php';

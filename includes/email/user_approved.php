@@ -22,7 +22,7 @@ $emailer->assign_vars(array(
 		'C_NAME' => $USER['name']
 		));
 $emailer->userlang = $language;
-if ($system->SETTINGS['email_admin_on_signup'])
+if (!$system->SETTINGS['email_admin_on_signup'])
 {
 	$email_to = $USER['email'];
 }

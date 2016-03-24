@@ -23,7 +23,7 @@ $emailer->assign_vars(array(
 		'C_NAME' => $TPL_name_hidden
 		));
 $emailer->email_uid = $TPL_id_hidden;
-if ($system->SETTINGS['email_admin_on_signup'])
+if (!$system->SETTINGS['email_admin_on_signup'])
 {
 	$email_to = $TPL_email_hidden;
 }

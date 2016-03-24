@@ -350,7 +350,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	}
 }
 
-$additional_shipping = $Auction['shipping_cost_additional'] * ($qty - 1);
+$additional_shipping = $Auction['additional_shipping_cost'] * ($qty - 1);
 $shipping_cost = ($Auction['shipping'] == 1) ? ($Auction['shipping_cost'] + $additional_shipping) : 0;
 $BN_total = ($Auction['buy_now'] * $qty) + $shipping_cost;
 

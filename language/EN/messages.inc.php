@@ -1185,16 +1185,7 @@ $MSG['1153'] = 'Print Invoice';
 
 //Sandbox messages for the AdminCP
 $MSG['1154'] = 'You can turn on the payment gateways sandbox to test the payment gateways but make sure disable the sandbox mode before making your site live';
-$MSG['1155'] = "Paypal Sandbox";
-$MSG['1156'] = "You can turn on the paypal sandbox to test the paypal IPN";
-$MSG['1157'] = "Worldpay Sandbox";
-$MSG['1158'] = "You can turn on the worldpay sandbox to test the worldpay IPN";
-$MSG['1159'] = "Moneybookers Sandbox";
-$MSG['1160'] = "You can turn on the moneybookers sandbox to test the skrill IPN";
-$MSG['1161'] = "Authorize Sandbox";
-$MSG['1162'] = "You can turn on the authorize sandbox to test the authorize IPN";
-$MSG['1163'] = "2checkout Sandbox";
-$MSG['1164'] = "You can turn on the 2checkout sandbox to test the 2checkout IPN";
+$MSG['1155'] = "Payment gateway sandbox";
 
 $MSG['5001'] = "View Site";
 $MSG['5002'] = "You must be logged in to bid";

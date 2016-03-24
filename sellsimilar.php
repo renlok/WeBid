@@ -52,7 +52,7 @@ if (!isset($_POST['action']))
 		$_SESSION['SELL_atype']			= $RELISTEDAUCTION['auction_type'];
 		$_SESSION['SELL_iquantity']		= $RELISTEDAUCTION['initial_quantity'];
 		$_SESSION['SELL_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost']);
-		$_SESSION['SELL_additional_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost_additional']);
+		$_SESSION['SELL_additional_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['additional_shipping_cost']);
 		$_SESSION['SELL_minimum_bid']	= $system->print_money_nosymbol($RELISTEDAUCTION['minimum_bid']);
 		$_SESSION['SELL_sellcat1']		= $RELISTEDAUCTION['category'];
 		$_SESSION['SELL_sellcat2']		= $RELISTEDAUCTION['secondcat'];

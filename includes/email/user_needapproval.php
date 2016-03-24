@@ -34,7 +34,7 @@ $emailer->assign_vars(array(
 		'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo']
 		));
 $emailer->email_uid = $TPL_id_hidden;
-if ($system->SETTINGS['email_admin_on_signup'])
+if (!$system->SETTINGS['email_admin_on_signup'])
 {
 	$email_to = $TPL_email_hidden;
 }

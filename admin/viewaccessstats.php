@@ -47,7 +47,7 @@ elseif ($listby == 'w')
 }
 else
 {
-	$month = date('n');
+	$month = date('m');
 	$year = date('Y');
 	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = :month AND year = :year ORDER BY LENGTH(day), day ASC";
 	$params[] = array(':month', $month, 'int');

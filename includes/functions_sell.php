@@ -62,26 +62,31 @@ function setvars()
 	$shipping_terms = (isset($_POST['shipping_terms'])) ? $_POST['shipping_terms'] : $_SESSION['SELL_shipping_terms'];
 	$payment = (isset($_POST['payment'])) ? $_POST['payment'] : $_SESSION['SELL_payment'];
 	$payment = (is_array($payment)) ? $payment : array();
-	$international = (isset($_POST['international'])) ? $_POST['international'] : false;
-	$international = (isset($_SESSION['SELL_international']) && !isset($_POST['action'])) ? $_SESSION['SELL_international'] : $international;
 	$sellcat1 = $_SESSION['SELL_sellcat1'];
 	$_SESSION['SELL_sellcat2'] = (isset($_SESSION['SELL_sellcat2'])) ? $_SESSION['SELL_sellcat2'] : 0;
 	$sellcat2 = $_SESSION['SELL_sellcat2'];
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
 	$buy_now_only = (empty($buy_now_only)) ? 0 : $buy_now_only;
 	$a_starts = (isset($_POST['a_starts'])) ? $_POST['a_starts'] : $_SESSION['SELL_starts'];
-	$is_bold = (isset($_POST['is_bold'])) ? 1 : $_SESSION['SELL_is_bold'];
-	$is_featured = (isset($_POST['is_featured'])) ? 1 : $_SESSION['SELL_is_featured'];
-	$is_highlighted = (isset($_POST['is_highlighted'])) ? 1 : $_SESSION['SELL_is_highlighted'];
-	if (isset($_POST['a_starts'])) {
-		if (isset($_POST['start_now'])) {
-			$start_now = 1;
-		} else {
-			$start_now = 0;
-		}
-	} else {
+
+	// deal with checkboxes
+	if (isset($_POST['action']))
+	{
+		$is_bold = (isset($_POST['is_bold'])) ? 1 : 0;
+		$is_featured = (isset($_POST['is_featured'])) ? 1 : 0;
+		$is_highlighted = (isset($_POST['is_highlighted'])) ? 1 : 0;
+		$international = (isset($_POST['international'])) ? 1 : 0;
+		$start_now = (isset($_POST['start_now'])) ? 1 : 0;
+	}
+	else
+	{
+		$is_bold = $_SESSION['SELL_is_bold'];
+		$is_featured = $_SESSION['SELL_is_featured'];
+		$is_highlighted = $_SESSION['SELL_is_highlighted'];
+		$international = $_SESSION['SELL_international'];
 		$start_now = $_SESSION['SELL_start_now'];
 	}
+
 	$is_taxed = (isset($_POST['is_taxed'])) ? $_POST['is_taxed'] : $_SESSION['SELL_is_taxed'];
 	$tax_included = (isset($_POST['tax_included'])) ? $_POST['tax_included'] : $_SESSION['SELL_tax_included'];
 	if (isset($_POST['action']) && $_POST['action'] == 2)

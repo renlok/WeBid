@@ -145,23 +145,24 @@ while ($row = $db->fetch())
 {
 	if (!empty($row['groups']))
 	{
-		if (!empty($groups_array))
+		$exploded_groups = explode(',', $row['groups']);
+		foreach ($exploded_groups as $group_id)
 		{
-			$groups_array = $groups_array .','. $row['groups'];
-		}
-		else
-		{
-			$groups_array = $row['groups'];
+			if (!isset($groups_array[$group_id]))
+			{
+				$groups_array[$group_id] = 1;
+			}
+			else
+			{
+				$groups_array[$group_id]++;
+			}
 		}
 	}
 	else
 	{
-		$groups_array = $groups_array . ',unknown';
 		$groups_unknown[] = $row;
 	}
 }
-$groups_array = explode(',', $groups_array);
-$groups_array = array_count_values($groups_array);
 
 $query = "SELECT * FROM ". $DBPrefix . "groups";
 $db->direct_query($query);
@@ -174,7 +175,7 @@ while ($row = $db->fetch())
 			'CAN_SELL' => ($row['can_sell'] == 1) ? $MSG['030'] : $MSG['029'],
 			'CAN_BUY' => ($row['can_buy'] == 1) ? $MSG['030'] : $MSG['029'],
 			'AUTO_JOIN' => ($row['auto_join'] == 1) ? $MSG['030'] : $MSG['029'],
-			'USER_COUNT' => !empty($groups_array[$row['id']])? $groups_array[$row['id']] : 0 // $row['count']
+			'USER_COUNT' => !isset($groups_array[$row['id']])? $groups_array[$row['id']] : 0 // $row['count']
 			));
 	unset($groups_array[$row['id']]);
 	// TODO: automatically control user group count when users join/leave groups
@@ -188,7 +189,6 @@ if (!empty($groups_unknown))
 			'NAME' => $MSG['empty_line'],
 			'USER_COUNT' => !empty($groups_array['unknown']) ? $groups_array['unknown']  : 0
 			));
-	unset($groups_array['unknown']);
 
 	foreach ($groups_unknown as $k => $v)
 	{
@@ -229,6 +229,7 @@ if (!empty($groups_array))
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'GROUPS_UNKNOWN' => (count($groups_unknown) > 0),
 		'B_EDIT' => $edit
 		));
 

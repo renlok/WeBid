@@ -73,7 +73,7 @@
 						</tr>
 					</table>
 
-<!-- IF .groups_unknown -->
+<!-- IF GROUPS_UNKNOWN -->
 					<p class="error"><h4><b>{L_warning}</b></h4></p>
 					<table width="98%" cellpadding="0" cellspacing="0">
 						<tr>

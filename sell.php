@@ -281,9 +281,14 @@ switch ($_SESSION['action'])
 					}
 				}
 
-				if ($user->user_data['startemailmode'] == 'yes')
+				if ($user->user_data['startemailmode'] == 'yes' && $addcounter)
 				{
 					include INCLUDE_PATH . 'email/auction_confirmation.php';
+				}
+				elseif ($user->user_data['startemailmode'] == 'yes')
+				{
+					// awaiting payment
+					include INCLUDE_PATH . 'auction_pending.php';
 				}
 				if ($system->SETTINGS['bn_only'] && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
 				{

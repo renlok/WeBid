@@ -27,9 +27,10 @@ $emailer->assign_vars(array(
 		'A_RESERVE' => $system->print_money($reserve_price),
 		'A_BNPRICE' => $system->print_money($buy_now_price),
 		'A_ENDS' => ArrangeDateNoCorrection($a_ends + $system->tdiff),
+		'PAY_LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=4&auction_id=' . $Auction['id'],
 
 		'C_NAME' => $user->user_data['name']
 		));
 $emailer->email_uid = $user->user_data['id'];
-$subject = $system->SETTINGS['sitename'] . ' ' . $MSG['099'] . ': ' . $title . ' (' . $auction_id . ')';
-$emailer->email_sender($user->user_data['email'], 'auctionmail.inc.php', $subject);
+$subject = $system->SETTINGS['sitename'] . ' ' . $MSG['769'] . ': ' . $title . ' (' . $auction_id . ')';
+$emailer->email_sender($user->user_data['email'], 'auction_pending.php', $subject);

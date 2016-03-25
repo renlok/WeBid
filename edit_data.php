@@ -235,7 +235,7 @@ $time_correction = generateSelect('TPL_timezone', $timezones, $USER['timezone'])
 
 foreach ($gateway_data as $gateway)
 {
-	if ($gateway['active'] == 1)
+	if ($gateway['gateway_active'] == 1)
 	{
 		$template->assign_block_vars('gateways', array(
 				'GATEWAY_ID' => $gateway['id'],

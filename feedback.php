@@ -338,8 +338,8 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 		}
 	}
 	$template->assign_vars(array(
-			'USERNICK' => $TPL_nick,
-			'USERFB' => $TPL_feedbacks_num,
+			'USERNICK' => (isset($TPL_nick)) ? $TPL_nick : '',
+			'USERFB' => (isset($TPL_feedbacks_num)) ? $TPL_feedbacks_num : '',
 			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
 			'PAGENATION' => $echofeed,
 			'AUCT_ID' => $auction_id,

@@ -166,7 +166,6 @@ foreach ($auction_data as $Auction) // loop auctions
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$db->query($query, $params);
 
-			$decrem = $decrem + $db->numrows();
 			$WINNERS_ID = array();
 			$winner_array = array();
 			$bid_data = $db->fetchall();
@@ -428,14 +427,6 @@ foreach ($auction_data as $Auction) // loop auctions
 			// emails for buyers already sent in buy_now.php
 			// email to seller for partial items already sent in buy_now.php
 			// prepare to send auction closed to seller
-
-			//if buy_now there is not maxbid
-			if ($Winner['maxbid'] == 0 && $Auction['buy_now'])
-			{
-				// TODO: This could have errors with reserved price
-				$Winner['maxbid'] = $Auction['buy_now'];
-			}
-
 			// retreive buyers
 			if (isset($winner_array) && is_array($winner_array) && count($winner_array) > 0)
 			{
@@ -445,26 +436,27 @@ foreach ($auction_data as $Auction) // loop auctions
 					$added_winner_names[] = $value['nick'] . ' (<a href="mailto:' . $value['email'] . '">' . $value['email'] . '</a>)';
 				}
 				$added_winner_names_cs = implode(",<br>", $added_winner_names);
-			}
-			// Send mail to the seller
-			if ($Seller['endemailmode'] != 'cum')
-			{
-				$report_text = $added_winner_names_cs;
-				include INCLUDE_PATH . 'email/seller_end_buynowonly.php';
-			}
-			else
-			{
-				// Add in the database to send later as cumulitave email to seller
-				$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
-						(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
-				$params = array();
-				$params[] = array(':auc_id', $Auction['id'], 'int');
-				$params[] = array(':seller_id', $Seller['id'], 'int');
-				$params[] = array(':winner_names', $added_winner_names_cs, 'str');
-				$params[] = array(':auc_data', serialize($Auction), 'str');
-				$params[] = array(':seller_data', serialize($Seller), 'str');
-				$params[] = array(':date', gmdate('Ymd'), 'str');
-				$db->query($query, $params);
+
+				// Send mail to the seller
+				if ($Seller['endemailmode'] != 'cum')
+				{
+					$report_text = $added_winner_names_cs;
+					include INCLUDE_PATH . 'email/seller_end_buynowonly.php';
+				}
+				else
+				{
+					// Add in the database to send later as cumulitave email to seller
+					$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
+							(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
+					$params = array();
+					$params[] = array(':auc_id', $Auction['id'], 'int');
+					$params[] = array(':seller_id', $Seller['id'], 'int');
+					$params[] = array(':winner_names', $added_winner_names_cs, 'str');
+					$params[] = array(':auc_data', serialize($Auction), 'str');
+					$params[] = array(':seller_data', serialize($Seller), 'str');
+					$params[] = array(':date', gmdate('Ymd'), 'str');
+					$db->query($query, $params);
+				}
 			}
 		}
 	}

@@ -207,6 +207,8 @@ switch($_GET['a'])
 $query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1";
 $db->direct_query($query);
 $sequence = rand(1, 1000);
+$timestamp = time();
+$pay_val = $system->input_money($system->print_money_nosymbol($payvalue));
 while ($gateway = $db->fetch())
 {
 	$address = ($paying_fee) ? $gateway['gateway_admin_address'] : $user_gateways[$gateway['name']]['address'];
@@ -225,8 +227,6 @@ while ($gateway = $db->fetch())
 		));
 }
 
-$timestamp = time();
-$pay_val = $system->input_money($system->print_money_nosymbol($payvalue));
 $template->assign_vars(array(
 		'TOP_MESSAGE' => $message,
 		'SANDBOX' => $system->SETTINGS['payment_gateway_sandbox'],

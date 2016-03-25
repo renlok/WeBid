@@ -252,6 +252,11 @@ class global_class
 	function move_file($from, $to, $removeorg = true)
 	{
 		$upload_mode = (@ini_get('open_basedir') || @ini_get('safe_mode') || strtolower(@ini_get('safe_mode')) == 'on') ? 'move' : 'copy';
+		// error check
+		if  (!is_file($from))
+		{
+			return false;
+		}
 		switch ($upload_mode)
 		{
 			case 'copy':

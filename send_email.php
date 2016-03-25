@@ -118,10 +118,10 @@ $template->assign_vars(array(
 		'MESSAGE' => (isset($mes)) ? $mes : '',
 		'ERROR' => (isset($TPL_error_text)) ? $TPL_error_text : '',
 		'AUCT_ID' => $auction_id,
-		'SELLER_NICK' => $seller_nick,
-		'SELLER_EMAIL' => $seller_email,
+		'SELLER_NICK' => (isset($seller_nick)) ? $seller_nick : '',
+		'SELLER_EMAIL' => (isset($seller_email)) ? $seller_email : '',
 		'SELLER_QUESTION' => (isset($_POST['sender_question'])) ? $_POST['sender_question'] : '',
-		'ITEM_TITLE' => $item_title,
+		'ITEM_TITLE' => (isset($item_title)) ? $item_title : '',
 		'EMAIL' => ($user->logged_in) ? $user->user_data['email'] : ''
 		));
 

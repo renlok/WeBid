@@ -109,6 +109,7 @@ else
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+
 // Handle columns sorting variables
 if (!isset($_SESSION['oa_ord']) && empty($_GET['oa_ord']))
 {
@@ -143,7 +144,7 @@ else
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 	WHERE user = :user_id AND closed = 0
 	AND starts <= :time AND suspended = 0
-	ORDER BY " . $_SESSION['ca_ord'] . " " . $_SESSION['ca_type'] . " LIMIT :offset, :perpage";
+	ORDER BY " . $_SESSION['oa_ord'] . " " . $_SESSION['oa_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $params[] = array(':time', $NOW, 'int');

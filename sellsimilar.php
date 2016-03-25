@@ -102,17 +102,9 @@ if (!isset($_POST['action']))
 			$_SESSION['SELL_increment']			= 1;
 			$_SESSION['SELL_customincrement']	= 0;
 		}
-		if (isset($_GET['relist']))
-		{
-			$_SESSION['SELL_auction_id']	= $auc_id;
-			$_SESSION['SELL_action']		= 'relist';
-		}
-		else
-		{
-			$_SESSION['SELL_auction_id']    = '';
-			$_SESSION['SELL_action']    = '';
-			$_SESSION['action']        = '';
-		}
+		$_SESSION['SELL_auction_id']    = '';
+		$_SESSION['SELL_action']    = '';
+		$_SESSION['action']        = '';
 
 		$_SESSION['SELL_pict_url']		= $system->uncleanvars($RELISTEDAUCTION['pict_url']);
 		$_SESSION['SELL_pict_url_temp']	= str_replace('thumb-', '', $RELISTEDAUCTION['pict_url']);

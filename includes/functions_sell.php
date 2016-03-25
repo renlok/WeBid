@@ -70,7 +70,7 @@ function setvars()
 	$a_starts = (isset($_POST['a_starts'])) ? $_POST['a_starts'] : $_SESSION['SELL_starts'];
 
 	// deal with checkboxes
-	if (isset($_POST['action']))
+	if (isset($_POST['action']) && $_POST['action'] == 3)
 	{
 		$is_bold = (isset($_POST['is_bold'])) ? 1 : 0;
 		$is_featured = (isset($_POST['is_featured'])) ? 1 : 0;
@@ -175,22 +175,9 @@ function unsetsessions()
 	$_SESSION['SELL_tax_included'] = 0;
 }
 
-function updateauction($type)
+function updateauction()
 {
 	global $_SESSION, $DBPrefix, $a_starts, $a_ends, $payment_text, $system, $fee, $db;
-	$params = array();
-	if ($type == 2)
-	{
-		$extraquery = ",relisted = relisted + 1,
-		current_bid = 0,
-		starts = :starts,
-		num_bids = 0";
-		$params[] = array(':starts', $a_starts, 'int');
-	}
-	else
-	{
-		$extraquery = '';
-	}
 
 	$query =
 		"UPDATE " . $DBPrefix . "auctions SET
@@ -224,9 +211,8 @@ function updateauction($type)
 		featured = :featured,
 		tax = :tax,
 		taxinc = :taxinc,
-		current_fee = current_fee + :fee";
-		$query .= $extraquery;
-		$query .= " WHERE id = :auction_id";
+		current_fee = current_fee + :fee
+		WHERE id = :auction_id";
 	$params = array();
 	$params[] = array(':title', $system->cleanvars($_SESSION['SELL_title']), 'str');
 	$params[] = array(':subtitle', $system->cleanvars($_SESSION['SELL_subtitle']), 'str');

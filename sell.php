@@ -117,14 +117,8 @@ switch ($_SESSION['action'])
 			$fee_data = $fee_data[1];
 
 			if ($_SESSION['SELL_action'] == 'edit')
+			{
 				updateauction(1);
-			if ($_SESSION['SELL_action'] == 'relist')
-			{
-				remove_bids($_SESSION['SELL_auction_id']); // incase they've not already been removed
-				updateauction(2);
-			}
-			if ($_SESSION['SELL_action'] == 'edit' || $_SESSION['SELL_action'] == 'relist')
-			{
 				$auction_id = $_SESSION['SELL_auction_id'];
 			}
 			else

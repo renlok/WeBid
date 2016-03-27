@@ -42,7 +42,6 @@ $template->assign_vars(array(
 		'DESCRIPTION' => $system->SETTINGS['descriptiontag'],
 		'KEYWORDS' => $system->SETTINGS['keywordstag'],
 		'JSFILES' => $jsfiles,
-		'LOADCKEDITOR' => (basename($_SERVER['PHP_SELF']) == 'sell.php'),
 		'ACTUALDATE' => ActualDate(),
 		'LOGO' => $system->SETTINGS['logo'],
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',

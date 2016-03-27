@@ -21,9 +21,6 @@
 <link rel="alternate" type="application/rss+xml" title="{L_931}" href="{SITEURL}rss.php?feed=8">
 
 <script type="text/javascript" src="{SITEURL}loader.php?js={JSFILES}"></script>
-<!-- IF LOADCKEDITOR -->
-	<script type="text/javascript" src="{SITEURL}ckeditor/ckeditor.js"></script>
-<!-- ENDIF -->
 
 <!-- IF GOOGLEANALYTICS ne '' -->
 <script>

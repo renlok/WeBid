@@ -29,9 +29,6 @@
 <script src="{SITEURL}themes/{THEME}/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="{SITEURL}loader.php?js={JSFILES}"></script>
-<!-- IF LOADCKEDITOR -->
-<script type="text/javascript" src="{SITEURL}ckeditor/ckeditor.js"></script>
-<!-- ENDIF -->
 
 <!-- IF GOOGLEANALYTICS ne '' -->
 <script>

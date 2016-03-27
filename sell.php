@@ -558,7 +558,7 @@ switch ($_SESSION['action'])
 		}
 
 		$CKEditor = new CKEditor();
-		$CKEditor->basePath = PACKAGE_PATH . 'ckeditor/';
+		$CKEditor->basePath = 'js/ckeditor/';
 		$CKEditor->returnOutput = true;
 
 		// build the fees javascript

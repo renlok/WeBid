@@ -17,8 +17,7 @@ include INCLUDE_PATH . 'datacheck.inc.php';
 
 $NOW = time();
 $id = intval($_REQUEST['id']);
-// reformat bid to valid number
-$bid = round($system->input_money($_POST['bid']), 2);
+$bid = $_POST['bid'];
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
 $bidding_ended = false;
 
@@ -123,6 +122,8 @@ $pict_url_plain = $Data['pict_url'];
 $reserve = $Data['reserve_price'];
 $c = $Data['ends'];
 $cbid = ($current_bid == 0) ? $minimum_bid : $current_bid;
+// reformat bid to valid number
+$bid = round($system->input_money($bid, 2));
 
 if (($Data['ends'] <= time() || $Data['closed']) && !isset($errmsg))
 {

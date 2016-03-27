@@ -343,7 +343,7 @@ class global_class
 			if (!preg_match('#^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{0,3})?$#', $amount))
 				return false;
 		}
-		elseif ($this->SETTINGS['moneyformat'] == 2)
+		else
 		{
 			if (!preg_match('#^([0-9]+|[0-9]{1,3}(\.[0-9]{3})*)(,[0-9]{0,3})?$#', $amount))
 				return false;

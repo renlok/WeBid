@@ -150,7 +150,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				{
 					$params = array();
 					$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "usergateways WHERE gateway_id = :gateway_id AND user_id = :user_id";
-					$params[] = array(':user_id', $TPL_id_hidden, 'int');
+					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$params[] = array(':gateway_id', $gateway['id'], 'int');
 					$db->query($query, $params);
 					$usergateways = $db->result();
@@ -241,6 +241,7 @@ foreach ($gateway_data as $gateway)
 				'GATEWAY_ID' => $gateway['id'],
 				'NAME' => $gateway['displayname'],
 				'PLAIN_NAME' => $gateway['name'],
+				'REQUIRED' => $gateway['gateway_required'],
 				'ADDRESS' => isset($_POST[$gateway['name']]['address']) ? $_POST[$gateway['name']]['address'] : '',
 				'PASSWORD' => isset($_POST[$gateway['name']]['password']) ? $_POST[$gateway['name']]['password'] : '',
 				'ADDRESS_NAME' => isset($address_string[$gateway['name']]) ? $address_string[$gateway['name']] : $gateway['name'],

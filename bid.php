@@ -153,6 +153,7 @@ if ($db->numrows() > 0)
 else
 {
 	$high_bid = $current_bid;
+	$WINNING_BIDDER = 0;
 }
 
 if ($customincrement > 0)

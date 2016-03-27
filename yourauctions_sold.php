@@ -51,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$WILLEND = time() + ($AUCTION['duration'] * 24 * 60 * 60);
 			$suspend = 0;
 
-			if ($system->SETTINGS['fees'] == 'y')
+			if ($system->SETTINGS['fees'] == 'y' && $relist_fee > 0)
 			{
 				if ($system->SETTINGS['fee_type'] == 1)
 				{

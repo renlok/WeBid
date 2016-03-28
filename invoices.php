@@ -35,7 +35,7 @@ else
 
 // count the pages
 $query = "SELECT COUNT(useracc_id) As COUNT  FROM " . $DBPrefix . "useraccounts
-		WHERE user_id = :user_id";
+		WHERE user_id = :user_id AND total > 0";
 $params = array(
 	array(':user_id', $user->user_data['id'], 'int'),
 );

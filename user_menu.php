@@ -59,7 +59,7 @@ function get_reminders($secid)
 	$query = "SELECT COUNT(DISTINCT b.auction) AS total FROM " . $DBPrefix . "bids b
 			LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
 			WHERE b.bidder = :bidder AND a.ends <= :timer
-			AND a.closed = 0 GROUP BY b.auction";
+			AND a.closed = 0 AND a.bn_only = 0 GROUP BY b.auction";
 	$params = array();
 	$params[] = array(':bidder', $secid, 'int');
 	$params[] = array(':timer', (time() + (3600 * 24)), 'int');

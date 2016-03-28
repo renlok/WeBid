@@ -107,6 +107,11 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 {
 	$errmsg = $ERR_058;
 }
+else
+{
+	// reformat bid to valid number
+	$bid = round($system->input_money($bid, 2));
+}
 
 $Data = $db->result();
 $item_title = $system->uncleanvars($Data['title']);
@@ -122,8 +127,6 @@ $pict_url_plain = $Data['pict_url'];
 $reserve = $Data['reserve_price'];
 $c = $Data['ends'];
 $cbid = ($current_bid == 0) ? $minimum_bid : $current_bid;
-// reformat bid to valid number
-$bid = round($system->input_money($bid, 2));
 
 if (($Data['ends'] <= time() || $Data['closed']) && !isset($errmsg))
 {

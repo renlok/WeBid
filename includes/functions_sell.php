@@ -295,21 +295,21 @@ function addoutstanding()
 {
 	global $DBPrefix, $fee_data, $user, $system, $fee, $_SESSION, $db;
 
-	$query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,date,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,image,extcat,total,paid) VALUES
-	(:auction_id, :user_id, :time, :setup, :hpfeat_fee, :bolditem_fee, :hlitem_fee, :subtitle_fee, :relist_fee, :rp_fee, :buyout_fee, :picture_fee, :excat_fee, :fee, 0)";
+	$query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,date,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,picture,extracat,total,paid) VALUES
+	(:auction_id, :user_id, :time, :setup_fee, :featured_fee, :bold_fee, :highlighted_fee, :subtitle_fee, :relist_fee, :reserve_fee, :buynow_fee, :picture_fee, :extracat_fee, :fee, 0)";
 
 	$params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
 	$params[] = array(':time', time(), 'int');
-	$params[] = array(':setup', $fee_data['setup'], 'float');
-	$params[] = array(':hpfeat_fee', $fee_data['hpfeat_fee'], 'float');
-	$params[] = array(':bolditem_fee', $fee_data['bolditem_fee'], 'float');
-	$params[] = array(':hlitem_fee', $fee_data['hlitem_fee'], 'float');
+	$params[] = array(':setup_fee', $fee_data['setup_fee'], 'float');
+	$params[] = array(':featured_fee', $fee_data['featured_fee'], 'float');
+	$params[] = array(':bold_fee', $fee_data['bold_fee'], 'float');
+	$params[] = array(':highlighted_fee', $fee_data['highlighted_fee'], 'float');
 	$params[] = array(':subtitle_fee', $fee_data['subtitle_fee'], 'float');
 	$params[] = array(':relist_fee', $fee_data['relist_fee'], 'float');
-	$params[] = array(':rp_fee', $fee_data['rp_fee'], 'float');
-	$params[] = array(':buyout_fee', $fee_data['buyout_fee'], 'float');
+	$params[] = array(':reserve_fee', $fee_data['reserve_fee'], 'float');
+	$params[] = array(':buynow_fee', $fee_data['buynow_fee'], 'float');
 	$params[] = array(':picture_fee', $fee_data['picture_fee'], 'float');
-	$params[] = array(':excat_fee', $fee_data['excat_fee'], 'float');
+	$params[] = array(':extracat_fee', $fee_data['extracat_fee'], 'float');
 	$params[] = array(':fee', $fee, 'float');
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
@@ -334,16 +334,16 @@ function get_fee($minimum_bid, $just_fee = true)
 	$fee_value = 0;
 	// set defaults
 	$fee_data = array(
-		'setup' => 0,
-		'hpfeat_fee' => 0,
-		'bolditem_fee' => 0,
-		'hlitem_fee' => 0,
+		'setup_fee' => 0,
+		'featured_fee' => 0,
+		'bold_fee' => 0,
+		'highlighted_fee' => 0,
 		'subtitle_fee' => 0,
 		'relist_fee' => 0,
-		'rp_fee' => 0,
-		'buyout_fee' => 0,
+		'reserve_fee' => 0,
+		'buynow_fee' => 0,
 		'picture_fee' => 0,
-		'excat_fee' => 0
+		'extracat_fee' => 0
 	);
 	while ($row = $db->fetch())
 	{
@@ -351,40 +351,40 @@ function get_fee($minimum_bid, $just_fee = true)
 		{
 			if ($row['fee_type'] == 'flat')
 			{
-				$fee_data['setup'] = $row['value'];
+				$fee_data['setup_fee'] = $row['value'];
 				$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 			}
 			else
 			{
 				$tmp = bcdiv($row['value'], '100', $system->SETTINGS['moneydecimals']);
 				$tmp = bcmul($tmp, $minimum_bid, $system->SETTINGS['moneydecimals']);
-				$fee_data['setup'] = $tmp;
+				$fee_data['setup_fee'] = $tmp;
 				$fee_value = bcadd($fee_value, $tmp, $system->SETTINGS['moneydecimals']);
 			}
 		}
-		if ($row['type'] == 'buyout_fee' && $buy_now_price > 0)
+		if ($row['type'] == 'buynow_fee' && $buy_now_price > 0)
 		{
-			$fee_data['buyout_fee'] = $row['value'];
+			$fee_data['buynow_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'rp_fee' && $reserve_price > 0)
+		if ($row['type'] == 'reserve_fee' && $reserve_price > 0)
 		{
-			$fee_data['rp_fee'] = $row['value'];
+			$fee_data['reserve_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'bolditem_fee' && $is_bold)
+		if ($row['type'] == 'bold_fee' && $is_bold)
 		{
-			$fee_data['bolditem_fee'] = $row['value'];
+			$fee_data['bold_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'hlitem_fee' && $is_highlighted)
+		if ($row['type'] == 'highlighted_fee' && $is_highlighted)
 		{
-			$fee_data['hlitem_fee'] = $row['value'];
+			$fee_data['highlighted_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'hpfeat_fee' && $is_featured)
+		if ($row['type'] == 'featured_fee' && $is_featured)
 		{
-			$fee_data['hpfeat_fee'] = $row['value'];
+			$fee_data['featured_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'picture_fee' && count($_SESSION['UPLOADED_PICTURES']) > 0)
@@ -398,9 +398,9 @@ function get_fee($minimum_bid, $just_fee = true)
 			$fee_data['subtitle_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'excat_fee' && $sellcat2 > 0)
+		if ($row['type'] == 'extracat_fee' && $sellcat2 > 0)
 		{
-			$fee_data['excat_fee'] = $row['value'];
+			$fee_data['extracat_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'relist_fee' && $relist > 0)
@@ -429,67 +429,34 @@ function get_fee($minimum_bid, $just_fee = true)
 			'relist' => 0,
 			'reserve' => 0,
 			'buynow' => 0,
-			'image' => 0,
-			'extcat' => 0,
+			'picture' => 0,
+			'extracat' => 0
 			);
 		while ($row = $db->fetch())
 		{
-			foreach ($row as $k => $v)
+			foreach ($row as $fee => $value)
 			{
-				if (isset($past_fees[$k]))
+				if (isset($past_fees[$fee]))
 				{
-					$past_fees[$k] += $v;
+					$past_fees[$fee] += $value;
 				}
 				else
 				{
-					$past_fees[$k] = $v;
+					$past_fees[$fee] = $value;
 				}
 			}
 		}
 
-		$diff = 0; // difference from last payment
-		$fee_data['setup'] = 0; // shouldn't have to pay setup for an edit...
-		$diff = bcadd($diff, $past_fees['setup'], $system->SETTINGS['moneydecimals']);
-		if (isset($fee_data['bolditem_fee']) && $past_fees['bold'] == $fee_data['bolditem_fee'])
+		$diff = 0;
+		foreach ($past_fees as $fee => $value)
 		{
-			$diff = bcadd($diff, $fee_data['bolditem_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['bolditem_fee'] = 0;
+			if ($value > 0)
+			{
+				$diff = bcadd($diff, $fee_data[$fee . '_fee'], $system->SETTINGS['moneydecimals']);
+				$fee_data[$fee . '_fee'] = 0;
+			}
 		}
-		if (isset($fee_data['hlitem_fee']) && $past_fees['highlighted'] == $fee_data['hlitem_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['hlitem_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['hlitem_fee'] = 0;
-		}
-		if (isset($fee_data['subtitle_fee']) && $past_fees['subtitle'] == $fee_data['subtitle_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['subtitle_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['subtitle_fee'] = 0;
-		}
-		if (isset($fee_data['relist_fee']) && $past_fees['relist'] == $fee_data['relist_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['relist_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['relist_fee'] = 0;
-		}
-		if (isset($fee_data['rp_fee']) && $past_fees['reserve'] == $fee_data['rp_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['rp_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['rp_fee'] = 0;
-		}
-		if (isset($fee_data['buyout_fee']) && $past_fees['buynow'] == $fee_data['buyout_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['buyout_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['buyout_fee'] = 0;
-		}
-		if (isset($fee_data['picture_fee']) && $past_fees['image'] == $fee_data['picture_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['picture_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['picture_fee'] = 0;
-		}
-		if (isset($fee_data['excat_fee']) && $past_fees['extcat'] == $fee_data['excat_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['excat_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['excat_fee'] = 0;
-		}
+
 		$fee_value = bcsub($fee_value, $diff, $system->SETTINGS['moneydecimals']);
 		if ($fee_value < 0)
 		{

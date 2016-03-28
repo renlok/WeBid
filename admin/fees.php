@@ -21,32 +21,32 @@ include 'loggedin.inc.php';
 $fees = array( //0 = single value, 1 = staged fees
 	'signup_fee' => 0,
 	'buyer_fee' => 1,
-	'setup' => 1,
-	'hpfeat_fee' => 0,
-	'bolditem_fee' => 0,
-	'hlitem_fee' => 0,
+	'setup_fee' => 1,
+	'featured_fee' => 0,
+	'bold_fee' => 0,
+	'highlighted_fee' => 0,
 	'subtitle_fee' => 0,
-	'excat_fee' => 0,
-	'rp_fee' => 0,
+	'extracat_fee' => 0,
+	'reserve_fee' => 0,
 	'picture_fee' => 0,
 	'relist_fee' => 0,
-	'buyout_fee' => 0,
+	'buynow_fee' => 0,
 	'endauc_fee' => 1
 	);
 
 $feenames = array(
 	'signup_fee' => $MSG['430'],
 	'buyer_fee' => $MSG['775'],
-	'setup' => $MSG['432'],
-	'hpfeat_fee' => $MSG['433'],
-	'bolditem_fee' => $MSG['439'],
-	'hlitem_fee' => $MSG['434'],
+	'setup_fee' => $MSG['432'],
+	'featured_fee' => $MSG['433'],
+	'bold_fee' => $MSG['439'],
+	'highlighted_fee' => $MSG['434'],
 	'subtitle_fee' => $MSG['803'],
-	'excat_fee' => $MSG['804'],
-	'rp_fee' => $MSG['440'],
+	'extracat_fee' => $MSG['804'],
+	'reserve_fee' => $MSG['440'],
 	'picture_fee' => $MSG['435'],
 	'relist_fee' => $MSG['437'],
-	'buyout_fee' => $MSG['436'],
+	'buynow_fee' => $MSG['436'],
 	'endauc_fee' => $MSG['791']
 	);
 

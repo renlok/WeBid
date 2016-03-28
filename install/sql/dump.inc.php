@@ -1129,16 +1129,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
 
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'signup_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyer_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'setup');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hpfeat_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'bolditem_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hlitem_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'rp_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'setup_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'featured_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'bold_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'highlighted_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'reserve_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'picture_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'subtitle_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'excat_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'extracat_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'relist_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyout_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buynow_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'endauc_fee');";
 
 # ############################
@@ -1789,8 +1789,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   `relist` double(8,2) NOT NULL default '0',
   `reserve` double(8,2) NOT NULL default '0',
   `buynow` double(8,2) NOT NULL default '0',
-  `image` double(8,2) NOT NULL default '0',
-  `extcat` double(8,2) NOT NULL default '0',
+  `picture` double(8,2) NOT NULL default '0',
+  `extracat` double(8,2) NOT NULL default '0',
   `signup` double(8,2) NOT NULL default '0',
   `buyer` double(8,2) NOT NULL default '0',
   `finalval` double(8,2) NOT NULL default '0',

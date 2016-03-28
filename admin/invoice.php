@@ -150,14 +150,14 @@ while ($row = $db->fetch())
 		$info .= $MSG['436'] . ' ' . $system->print_money($row['buynow']) . '<br>';
 		$auc_id = true;
 	}
-	if ($row['image'] != 0)
+	if ($row['picture'] != 0)
 	{
-		$info .= $MSG['435'] . ' ' . $system->print_money($row['image']) . '<br>';
+		$info .= $MSG['435'] . ' ' . $system->print_money($row['picture']) . '<br>';
 		$auc_id = true;
 	}
-	if ($row['extcat'] != 0)
+	if ($row['extracat'] != 0)
 	{
-		$info .= $MSG['804'] . ' ' . $system->print_money($row['extcat']) . '<br>';
+		$info .= $MSG['804'] . ' ' . $system->print_money($row['extracat']) . '<br>';
 		$auc_id = true;
 	}
 	if ($row['signup'] != 0)

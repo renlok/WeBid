@@ -130,9 +130,9 @@ $(document).ready(function(){
 		if (bn != parseInt($("#bn").val()))
 		{
 			if (parseInt($("#bn").val()) > 0)
-				updatefee(buyout_fee);
+				updatefee(buynow_fee);
 			else
-				updatefee(buyout_fee * -1);
+				updatefee(buynow_fee * -1);
 			bn = parseInt($("#bn").val());
 		}
 	}
@@ -150,29 +150,29 @@ $(document).ready(function(){
 		if (rp != parseInt($("#reserve_price").val()))
 		{
 			if (parseInt($("#reserve_price").val()) > 0)
-				updatefee(rp_fee);
+				updatefee(reserve_fee);
 			else
-				updatefee(rp_fee * -1);
+				updatefee(reserve_fee * -1);
 			rp = parseInt($("#reserve_price").val());
 		}
 	}
 	$("#is_featured").click(function() {
 		if ($('#is_featured').is(':checked'))
-			updatefee(hpfeat_fee);
+			updatefee(featured_fee);
 		else
-			updatefee(hpfeat_fee * -1);
+			updatefee(featured_fee * -1);
 	});
 	$("#is_bold").click(function() {
 		if ($('#is_bold').is(':checked'))
-			updatefee(bolditem_fee);
+			updatefee(bold_fee);
 		else
-			updatefee(bolditem_fee * -1);
+			updatefee(bold_fee * -1);
 	});
 	$("#is_highlighted").click(function() {
 		if ($('#is_highlighted').is(':checked'))
-			updatefee(hlitem_fee);
+			updatefee(highlighted_fee);
 		else
-			updatefee(hlitem_fee * -1);
+			updatefee(highlighted_fee * -1);
 	});
 		<!-- IF B_SUBTITLE -->
 	$("#subtitle").blur(function() {

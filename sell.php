@@ -563,13 +563,13 @@ switch ($_SESSION['action'])
 
 		// build the fees javascript
 		$fees = array( //0 = single value, 1 = staged fees
-			'setup' => 1,
-			'hpfeat_fee' => 0,
-			'bolditem_fee' => 0,
-			'hlitem_fee' => 0,
-			'rp_fee' => 0,
+			'setup_fee' => 1,
+			'featured_fee' => 0,
+			'bold_fee' => 0,
+			'highlighted_fee' => 0,
+			'reserve_fee' => 0,
 			'picture_fee' => 0,
-			'buyout_fee' => 0,
+			'buynow_fee' => 0,
 			'subtitle_fee' => 0,
 			'relist_fee' => 0
 			);
@@ -596,7 +596,7 @@ switch ($_SESSION['action'])
 				$fee_javascript .= $row['type'] . '[' . $feevarsset[$row['type']] . '][3] = \'' . $row['fee_type'] . '\';' . "\n";
 				$feevarsset[$row['type']]++;
 			}
-			if ($minimum_bid >= $row['fee_from'] && $minimum_bid <= $row['fee_to'] && $row['type'] == 'setup')
+			if ($minimum_bid >= $row['fee_from'] && $minimum_bid <= $row['fee_to'] && $row['type'] == 'setup_fee')
 			{
 				if ($row['fee_type'] == 'flat')
 				{
@@ -607,11 +607,11 @@ switch ($_SESSION['action'])
 					$fee_min_bid = ($row['value'] / 100) * $minimum_bid;
 				}
 			}
-			if ($row['type'] == 'buyout_fee' && $buy_now_price > 0)
+			if ($row['type'] == 'buynow_fee' && $buy_now_price > 0)
 			{
 				$fee_bn = $row['value'];
 			}
-			if ($row['type'] == 'rp_fee' && $reserve_price > 0)
+			if ($row['type'] == 'reserve_fee' && $reserve_price > 0)
 			{
 				$fee_rp = $row['value'];
 			}
@@ -631,6 +631,7 @@ switch ($_SESSION['action'])
 			$relist_options .= '<option value="' . $i . '"' . (($relist == $i) ? ' selected="selected"' : '') . '>' . $i . '</option>';
 		}
 		$relist_options .= '</select>';
+		$fee_value = get_fee($minimum_bid);
 
 		$template->assign_vars(array(
 				'TITLE' => $MSG['028'],
@@ -685,8 +686,8 @@ switch ($_SESSION['action'])
 				'TAXINC_N' => ($tax_included == 0) ? 'checked' : '',
 				'MAXPICS' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']/1024),
 
-				'FEE_VALUE' => get_fee($minimum_bid),
-				'FEE_VALUE_F' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
+				'FEE_VALUE' => $fee_value,
+				'FEE_VALUE_F' => number_format($fee_value, $system->SETTINGS['moneydecimals']),
 				'FEE_MIN_BID' => $fee_min_bid,
 				'FEE_BN' => $fee_bn,
 				'FEE_RP' => $fee_rp,

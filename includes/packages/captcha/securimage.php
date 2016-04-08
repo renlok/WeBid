@@ -1385,6 +1385,8 @@ class Securimage
 
         $html .= sprintf('<input %s/>', $input_attr);
 
+        $html = '<div style="width:260px; margin: 0 auto;">' . $html . '</div>';
+
         return $html;
     }
 

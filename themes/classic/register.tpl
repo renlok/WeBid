@@ -14,6 +14,10 @@
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="90%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
+						<td width="40%" valign="top" align="right"></td>
+						<td width="60%" ><h2>{L_894}</h2></td>
+					</tr>
+					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_002}</b> *</td>
 						<td width="60%">
 							<input type="text" name="TPL_name" <!-- IF MISSING0 eq 1 -->class="missing"<!-- ENDIF --> size=40 maxlength=255 value="{V_YNAME}" autofocus>
@@ -55,6 +59,12 @@
 							{L_DATEFORMAT} <input type="text" name="TPL_year" size="4" maxlength="4" value="{V_YEAR}" <!-- IF MISSING5 eq 1 -->class="missing"<!-- ENDIF -->>
 							<!-- IF MISSING5 eq 1 --><div class="error-box missing">{L_948}</div><!-- ENDIF -->
 						</td>
+					</tr>
+		<!-- ENDIF -->
+		<!-- IF ADDRESS or CITY or PROV or COUNTRY -->
+					<tr>
+						<td width="40%" valign="top" align="right"></td>
+						<td width="60%" ><h2>{L_009}</h2></td>
 					</tr>
 		<!-- ENDIF -->
 		<!-- IF ADDRESS -->
@@ -115,6 +125,10 @@
 					</tr>
 		<!-- ENDIF -->
 					<tr>
+						<td width="40%" valign="top" align="right"></td>
+						<td width="60%" ><h2>{L_5233}</h2></td>
+					</tr>
+					<tr>
 						<td valign="top" align="right">{L_346}</td>
 						<td>
 							{TIMEZONE}
@@ -131,8 +145,6 @@
 						</td>
 					</tr>
 		<!-- ENDIF -->
-				</table>
-				<table width="90%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
 						<td width="40%" valign="top" align="right"></td>
 						<td width="60%" ><h2>{L_719}</h2></td>
@@ -158,7 +170,9 @@
 					<!-- ENDIF -->
 				<!-- END gateways -->
 						<tr>
-						<td colspan="2">{CAPCHA}</td>
+						<td colspan="2">
+							{CAPCHA}
+						</td>
 					</tr>
 				</table>
 				<!-- IF B_FEES -->

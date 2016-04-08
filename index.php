@@ -65,8 +65,21 @@ $params[] = array(':parent_id', $parent_id, 'int');
 $params[] = array(':limit', $system->SETTINGS['catstoshow'], 'int');
 $db->query($query, $params);
 
+$cat_strings = [];
+$categories = [];
 while ($row = $db->fetch())
 {
+	$cat_strings[$row['cat_id']] = $category_names[$row['cat_id']];
+	$categories[$row['cat_id']] = $row;
+}
+// sort the categories
+if ($system->SETTINGS['catsorting'] == 'alpha')
+{
+	asort($cat_strings);
+}
+foreach ($cat_strings as $cat_id => $category_name)
+{
+	$row = $categories[$cat_id];
 	$template->assign_block_vars('cat_list', array(
 			'CATAUCNUM' => ($row['sub_counter'] != 0) ? $row['sub_counter'] : '',
 			'ID' => $row['cat_id'],

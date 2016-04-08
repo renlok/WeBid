@@ -65,9 +65,9 @@ class global_class
 		}
 		$this->SETTINGS['gateways'] = unserialize($this->SETTINGS['gateways']);
 		// check if url needs https
-		if ($system->SETTINGS['https'] == 'y')
+		if ($this->SETTINGS['https'] == 'y')
 		{
-			$system->SETTINGS['siteurl'] = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
+			$this->SETTINGS['siteurl'] = (!empty($this->SETTINGS['https_url'])) ? $this->SETTINGS['https_url'] : str_replace('http://', 'https://', $this->SETTINGS['siteurl']);
 		}
 	}
 

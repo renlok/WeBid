@@ -58,6 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("maxpictures", $_POST['maxpictures'], 'int');
 		$system->writesetting("maxuploadsize", ($_POST['maxpicturesize'] * 1024), 'int');
 		$system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
+		$system->writesetting("gallery_max_width_height", $_POST['gallery_max_width_height'], 'int');
 		$ERR = $MSG['5088'];
 	}
 }
@@ -88,6 +89,7 @@ loadblock($MSG['665'], $MSG['664'], 'batch', 'picturesgallery', $system->SETTING
 loadblock($MSG['666'], '', 'days', 'maxpictures', $system->SETTINGS['maxpictures']);
 loadblock($MSG['671'], $MSG['25_0187'], 'decimals', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), array($MSG['672']));
 loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], array($MSG['2__0045']));
+loadblock($MSG['gallery_image_max_size'], $MSG['gallery_image_max_size_explain'], 'decimals', 'gallery_max_width_height', $system->SETTINGS['gallery_max_width_height'], array($MSG['2__0045']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

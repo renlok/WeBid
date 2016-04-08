@@ -69,7 +69,7 @@ function getupldtable()
 // plupload images
 function upload_images()
 {
-	global $user, $MSG;
+	global $user, $MSG, $system;
 
 	if (!$user->logged_in)
 	{
@@ -109,6 +109,8 @@ function upload_images()
 			//upload was good
 			$conf = $uploader->get_conf();
 			$fileName = $conf['file_name'];
+			// resize picture
+			$uploader->resizeThumbnailImage($targetDir . '/' . $fileName, $system->SETTINGS['gallery_max_width_height']);
 			if (!in_array($fileName, $_SESSION['UPLOADED_PICTURES']))
 			{
 				$final_file_name = strtolower($fileName);

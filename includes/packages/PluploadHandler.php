@@ -9,7 +9,6 @@ define('PLUPLOAD_TYPE_ERR', 104);
 define('PLUPLOAD_UNKNOWN_ERR', 111);
 define('PLUPLOAD_SECURITY_ERR', 105);
 
-
 class PluploadHandler {
 
 	public static $conf;
@@ -36,7 +35,7 @@ class PluploadHandler {
 	{
 		if (!self::$_error) {
 			return null;
-		} 
+		}
 
 		if (!isset(self::$_errors[self::$_error])) {
 			return PLUPLOAD_UNKNOWN_ERR;
@@ -61,14 +60,14 @@ class PluploadHandler {
 
 
 	/**
-	 * 
+	 *
 	 */
 	static function get_conf()
 	{
 		return self::$conf;
-		
+
 	}
-	 
+
 	static function handle($conf = array())
 	{
 		global $_FILES;
@@ -91,9 +90,9 @@ class PluploadHandler {
 			'cb_sanitize_file_name' => array(__CLASS__, 'sanitize_file_name'),
 			'cb_check_file' => false,
 		), $conf);
-        
-		
-    
+
+
+
 		try {
 			if (!$conf['file_name']) {
 			 	if (!empty($_FILES)) {
@@ -102,7 +101,7 @@ class PluploadHandler {
 					throw new Exception('', PLUPLOAD_INPUT_ERR);
 				}
 			}
-		
+
 			// Cleanup outdated temp files and folders
 			if ($conf['cleanup']) {
 				self::cleanup();
@@ -128,27 +127,26 @@ class PluploadHandler {
 				if (!in_array(strtolower(pathinfo($file_name, PATHINFO_EXTENSION)), $conf['allow_extensions'])) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-				/* TODO: Fix this
-				WHY THIS NO WORK
-				$mime_types = $conf['allow_extensions'];
-				array_walk($mime_types, function(&$value, $key) { $value = 'image/' . $value; });
+				$allowed_mime_types = $conf['allow_extensions'];
+				array_walk($allowed_mime_types, function(&$value, $key) { $value = 'image/' . $value; });
 				// check mime type
 				$finfo = finfo_open(FILEINFO_MIME_TYPE);
-				if (!in_array(finfo_file($finfo, $_FILES[$conf['file_data_name']]['tmp_name'])) {
+				$mime_type = finfo_file($finfo, $_FILES[$conf['file_data_name']]['tmp_name']);
+				if (!in_array($mime_type, $allowed_mime_types)) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-				finfo_close($finfo);*/
+				finfo_close($finfo);
 			}
 
 			$file_path = rtrim($conf['target_dir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file_name;
 			$tmp_path = $file_path . ".part";
 
 			// Write file or chunk to appropriate temp location
-			if ($conf['chunks']) {				
+			if ($conf['chunks']) {
 				self::write_file_to("$file_path.dir.part" . DIRECTORY_SEPARATOR . $conf['chunk']);
 
 				// Check if all chunks already uploaded
-				if ($conf['chunk'] == $conf['chunks'] - 1) { 
+				if ($conf['chunk'] == $conf['chunks'] - 1) {
 					self::write_chunks_to_file("$file_path.dir.part", $tmp_path);
 				}
 			} else {
@@ -170,7 +168,7 @@ class PluploadHandler {
 					'path' => $final_file_path,
 					'size' => filesize($final_file_path)
 				);
-			} 
+			}
 
 			// ok so far
 			return true;
@@ -183,7 +181,7 @@ class PluploadHandler {
 
 
 	/**
-	 * Writes either a multipart/form-data message or a binary stream 
+	 * Writes either a multipart/form-data message or a binary stream
 	 * to the specified file.
 	 *
 	 * @throws Exception In case of error generates exception with the corresponding code
@@ -208,7 +206,7 @@ class PluploadHandler {
 				throw new Exception('', PLUPLOAD_MOVE_ERR);
 			}
 			move_uploaded_file($_FILES[$file_data_name]["tmp_name"], $file_path);
-		} else {	
+		} else {
 			// Handle binary streams
 			if (!$in = @fopen("php://input", "rb")) {
 				throw new Exception('', PLUPLOAD_INPUT_ERR);
@@ -267,7 +265,7 @@ class PluploadHandler {
 	}
 
 
-	static function no_cache_headers() 
+	static function no_cache_headers()
 	{
 		// Make sure this file is not cached (as it might happen on iOS devices, for example)
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -302,9 +300,9 @@ class PluploadHandler {
 	}
 
 
-	private static function cleanup() 
+	private static function cleanup()
 	{
-		// Remove old temp files	
+		// Remove old temp files
 		if (file_exists(self::$conf['target_dir'])) {
 			foreach(glob(self::$conf['target_dir'] . '/*.part') as $tmpFile) {
 				if (time() - filemtime($tmpFile) < self::$conf['max_file_age']) {
@@ -334,7 +332,7 @@ class PluploadHandler {
 	 * @param string $filename The filename to be sanitized
 	 * @return string The sanitized filename
 	 */
-	private static function sanitize_file_name($filename) 
+	private static function sanitize_file_name($filename)
 	{
 	    $special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
 	    $filename = str_replace($special_chars, '', $filename);
@@ -344,13 +342,13 @@ class PluploadHandler {
 	}
 
 
-	/** 
-	 * Concise way to recursively remove a directory 
+	/**
+	 * Concise way to recursively remove a directory
 	 * http://www.php.net/manual/en/function.rmdir.php#108113
 	 *
 	 * @param string $dir Directory to remove
 	 */
-	private static function rrmdir($dir) 
+	private static function rrmdir($dir)
 	{
 		foreach(glob($dir . '/*') as $file) {
 			if(is_dir($file))
@@ -359,5 +357,76 @@ class PluploadHandler {
 				unlink($file);
 		}
 		rmdir($dir);
+	}
+
+	function resizeThumbnailImage($image, $size_limit = 1500)
+	{
+		list($image_width, $image_height, $image_type) = getimagesize($image);
+		$image_type = image_type_to_mime_type($image_type);
+		// some error checks
+		$size_limit = ($size_limit < 100) ? 100 : $size_limit;
+		// is this needed?
+		if ($size_limit > $image_width && $size_limit > $image_height)
+		{
+			// no
+			return false;
+		}
+
+		// width is bigger
+		if ($image_width > $image_height)
+		{
+			$new_image_width = $size_limit;
+			$new_image_height = (($image_height * $size_limit) / $image_width);
+		}
+		// height is bigger
+		elseif ($image_width < $image_height)
+		{
+			$new_image_width = (($image_width * $size_limit) / $image_height);
+			$new_image_height = $size_limit;
+		}
+		// same
+		else
+		{
+			$new_image_width = $size_limit;
+			$new_image_height = $size_limit;
+		}
+
+		$new_image = imagecreatetruecolor($new_image_width, $new_image_height);
+		// make the background white
+		$bg = imagecolorallocate($new_image, 0, 0, 0);
+		imagefill($new_image, 0, 0, $bg);
+		switch ($image_type)
+		{
+			case 'image/gif':
+				$source = imagecreatefromgif ($image);
+				break;
+			case 'image/pjpeg':
+			case 'image/jpeg':
+			case 'image/jpg':
+				$source = imagecreatefromjpeg($image);
+				break;
+			case 'image/png':
+			case 'image/x-png':
+				$source = imagecreatefrompng($image);
+				break;
+		}
+		imagecopyresampled($new_image, $source, 0, 0, 0, 0, $new_image_width, $new_image_height, $image_width, $image_height);
+		switch ($image_type)
+		{
+			case 'image/gif':
+				imagegif ($new_image, $image);
+				break;
+			case 'image/pjpeg':
+			case 'image/jpeg':
+			case 'image/jpg':
+				imagejpeg($new_image, $image, 90);
+				break;
+			case 'image/png':
+			case 'image/x-png':
+				imagepng($new_image, $image);
+				break;
+		}
+		chmod($image, 0777);
+		return true;
 	}
 }

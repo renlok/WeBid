@@ -400,5 +400,6 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'reserve_fee' WHERE type = 'rp_fee';";
 	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'extracat_fee' WHERE type = 'excat_fee';";
 	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'buynow_fee' WHERE type = 'buyout_fee';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` CHANGE `subject` `subject` varchar(255) NOT NULL default '';";
 	$new_version = '1.2.0';
 }

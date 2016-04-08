@@ -271,7 +271,7 @@ $(document).ready(function() {
 					</div>
 					<div class="panel-body">
 	<!-- BEGIN questions -->
-						<span class="glyphicon glyphicon-comment" aria-hidden="true" style="padding-right: 10px;"></span>{L_5239}
+						<span class="glyphicon glyphicon-comment" aria-hidden="true" style="padding-right: 10px;"></span>
 						<div class="well well-sm">
 		<!-- BEGIN conv -->
 							<p><span class="text-muted"><small>{questions.conv.BY_WHO}:</small></span> {questions.conv.MESSAGE}</p>

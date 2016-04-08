@@ -286,7 +286,6 @@ $(document).ready(function() {
 				</div>
 				<div class="table2">
 	<!-- BEGIN questions -->
-					<b>{L_5239}</b>
 					<div class="smallspan padding">
 		<!-- BEGIN conv -->
 					<p><b>{questions.conv.BY_WHO}</b>: {questions.conv.MESSAGE}</p>

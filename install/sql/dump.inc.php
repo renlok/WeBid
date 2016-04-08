@@ -1338,16 +1338,16 @@ $query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (14, 49, 'starY.gi
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
-  `id` int(50) NOT NULL AUTO_INCREMENT ,
-  `sentto` int(25) NOT NULL default '0',
-  `sentfrom` int(25) NOT NULL default '0',
-  `fromemail` varchar(50) NOT NULL default '',
+  `id` int(11) NOT NULL AUTO_INCREMENT ,
+  `sentto` int(11) NOT NULL default '0',
+  `sentfrom` int(11) NOT NULL default '0',
+  `fromemail` varchar(255) NOT NULL default '',
   `sentat` varchar(20) NOT NULL default '',
   `message` text NOT NULL ,
   `isread` tinyint(1) NOT NULL default '0',
-  `subject` varchar(50) NOT NULL default '',
+  `subject` varchar(255) NOT NULL default '',
   `replied` tinyint(1) NOT NULL default '0',
-  `reply_of` int(50) NOT NULL default '0',
+  `reply_of` int(11) NOT NULL default '0',
   `question` int(11) NOT NULL default '0',
   `public` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`id`)

@@ -72,15 +72,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 			$emailer->email_uid = $user_id;
 			$emailer->email_basic($subject, $email, nl2br($message), $user->user_data['name'] . '<' . $from_email . '>');
 			// send a copy to their mesasge box
-			$nowmessage = nl2br($system->cleanvars($message));
+			$message = nl2br($system->cleanvars($message));
 			$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject)
-					VALUES (:id, :user_id, :times, :nowmessage, :msg)";
+					VALUES (:id, :user_id, :times, :message, :subject)";
 			$params = array();
 			$params[] = array(':id', $user_id, 'int');
 			$params[] = array(':user_id', $user->user_data['id'], 'int');
 			$params[] = array(':times', time(), 'int');
-			$params[] = array(':nowmessage', $nowmessage, 'str');
-			$params[] = array(':msg', $system->cleanvars(sprintf($MSG['651'], $item_title)), 'str');
+			$params[] = array(':message', $message, 'str');
+			$subject = $system->cleanvars(sprintf($MSG['651'], $item_title));
+			if (strlen($subject) > 255)
+			{
+				$pos = strpos($subject, ' ', 200);
+				$subject = substr($subject, 0, $pos) . '...';
+			}
+			$params[] = array(':subject', $subject, 'str');
 			$db->query($query, $params);
 			$sent = true;
 		}

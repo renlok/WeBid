@@ -1176,10 +1176,10 @@ $MSG['1147'] = "<p>You have successfully sold %s auction(s)</p>";
 $MSG['1148'] = "<p>A charge of %s has been made to your account</p>";
 $MSG['1149'] = "<p>You have successfully closed %s auction(s)</p>";
 $MSG['1150'] = "<p>You have successfully started %s auction(s)</p>";
-$MSG['Tooltip_01'] = "Edit Disabled, Item has Bids";
-$MSG['Tooltip_02'] = "Delete Disabled, Item has Bids";
-$MSG['Your_Auc_01'] = "No Bids";
-$MSG['Your_Auc_02'] = "Click to edit this auction";
+$MSG['edit_disabled'] = "Edit Disabled, Item has Bids";
+$MSG['delete_auction_disabled'] = "Delete Disabled, Item has Bids";
+$MSG['no_bids'] = "No Bids";
+$MSG['click_to_edit_auction'] = "Click to edit this auction";
 
 // sell item page
 $MSG['1151'] = "Auction fee";

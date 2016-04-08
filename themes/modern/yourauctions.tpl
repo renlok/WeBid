@@ -110,23 +110,23 @@ $(document).ready(function() {
 			</td>
 			<td width="10%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
-				{L_Your_Auc_01}
+				{L_no_bids}
 		<!-- ELSE -->
 				{items.BID}
 		<!-- ENDIF -->
 			</td>
 			<td width="6%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
-				<a href="edit_active_auction.php?id={items.ID}"><span class="glyphicon glyphicon-edit" aria-hidden="true" title="{L_Your_Auc_02}"></span></a>
+				<a href="edit_active_auction.php?id={items.ID}"><span class="glyphicon glyphicon-edit" aria-hidden="true" title="{L_click_to_edit_auction}"></span></a>
 		<!-- ELSE -->
-				<span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="{L_Tooltip_01}"></span>
+				<span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="{L_edit_disabled}"></span>
 		<!-- ENDIF -->
 			</td>
 			<td width="8%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
 				<input type="checkbox" name="O_delete[]" value="{items.ID}">
 		<!-- ELSE -->
-				<span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="{L_Tooltip_02}"></span>		
+				<span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="{L_delete_auction_disabled}"></span>		
 		<!-- ENDIF -->
 			</td>
 			<td width="6%"  align="center" bgcolor="#FFFFaa">

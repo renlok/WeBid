@@ -1247,6 +1247,7 @@ $MSG['5069'] = "The Words Filter option gives you the possibility to eliminate u
 <ul>
 <li>TITLE and DESCRIPTION of the auctions.</li>
 <li>Messages posted to the message boards</li>
+<li>Usernames</li>
 </ul>";
 $MSG['5070'] = "Enable Words Filter?";
 $MSG['5071'] = "Undesired words list";
@@ -1812,6 +1813,8 @@ $MSG['spam_blocked_email_enabled'] = 'Enable block email domains';
 $MSG['spam_blocked_email_domains'] = 'Deny registration from disposable emails';
 $MSG['spam_blocked_email_domains_explain'] = 'Put a each domain on a new line';
 $MSG['spam_blocked_email_domains_register_error'] = 'The E-Mail address you have entered has been black-listed';
+
+$MSG['wordfilter_banned_username'] = 'Please select a different user name as our word filter will not allow this name to be used';
 
 $MSG['payment_name'] = 'Name';
 $MSG['clean_payment_name'] = 'Clean Name <small>(all lower case no spaces or special characters)</small>';

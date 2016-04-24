@@ -202,6 +202,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 	{
 		$ERR = $ERR_047;
 	}
+	if ($system->SETTINGS['wordsfilter'] == 'y')
+	{
+		if (empty($system->filter($_POST['TPL_nick'])))
+		{
+			$ERR = $MSG['wordfilter_banned_username']; // User name altered by word filter
+		}
+	}
 	if (!isset($ERR))
 	{
 		$birth_day = (isset($_POST['TPL_day'])) ? $_POST['TPL_day'] : '';

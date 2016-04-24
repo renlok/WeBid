@@ -365,7 +365,7 @@ $(document).ready(function(){
 	<!-- IF B_EDIT_STARTTIME -->
 					<div class="form-group col-md-12">
 						<label for="a_starts">{L_2__0016}</label>
-		<!-- IF B_EDITING -->
+		<!-- IF B_EDITING && !B_CANEDITSTARTDATE -->
 						{START_TIME}
 						<input type="hidden" name="a_starts" value="{START_TIME}">
 		<!-- ELSE -->

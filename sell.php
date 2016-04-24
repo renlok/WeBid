@@ -109,7 +109,7 @@ switch ($_SESSION['action'])
 
 			$payment_text = implode(', ', $payment);
 			// set time back to GMT
-			$a_starts = (empty($start_now) || $_SESSION['SELL_action'] == 'edit') ? ($a_starts - $system->tdiff) : time();
+			$a_starts = (empty($start_now) || !$caneditstartdate) ? ($a_starts - $system->tdiff) : time();
 			$a_ends = ($custom_end == 1) ? ($a_ends - $system->tdiff) : ($a_starts + ($duration * 24 * 60 * 60));
 			// get fee
 			$fee_data = get_fee($minimum_bid, false);
@@ -730,6 +730,7 @@ switch ($_SESSION['action'])
 				'B_BN_ONLY' => ($system->SETTINGS['buy_now'] == 2 && $system->SETTINGS['bn_only'] && (($system->SETTINGS['bn_only_disable'] == 'y' && $user->user_data['bn_only']) || $system->SETTINGS['bn_only_disable'] == 'n')),
 				'B_BN' => ($system->SETTINGS['buy_now'] == 2),
 				'B_EDITING' => ($_SESSION['SELL_action'] == 'edit'),
+				'B_CANEDITSTARTDATE' => $caneditstartdate,
 				// options,
 				'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
 				'B_EDIT_STARTTIME' => ($system->SETTINGS['edit_starttime'] == 1),

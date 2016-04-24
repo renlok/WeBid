@@ -33,7 +33,7 @@ function setvars()
 {
 	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $sdescription, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sellcat1, $sellcat2, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now;
-	global $_POST, $_SESSION, $system, $custom_end, $a_ends, $custom_end;
+	global $_POST, $_SESSION, $system, $custom_end, $a_ends, $custom_end, $caneditstartdate;
 
 	$with_reserve = (isset($_POST['with_reserve'])) ? $_POST['with_reserve'] : $_SESSION['SELL_with_reserve'];
 	$reserve_price = (isset($_POST['reserve_price'])) ? $_POST['reserve_price'] : $_SESSION['SELL_reserve_price'];
@@ -64,6 +64,7 @@ function setvars()
 	$sellcat1 = $_SESSION['SELL_sellcat1'];
 	$_SESSION['SELL_sellcat2'] = (isset($_SESSION['SELL_sellcat2'])) ? $_SESSION['SELL_sellcat2'] : 0;
 	$sellcat2 = $_SESSION['SELL_sellcat2'];
+	$caneditstartdate = $_SESSION['SELL_caneditstartdate'];
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
 	$buy_now_only = (empty($buy_now_only)) ? 0 : $buy_now_only;
 
@@ -110,7 +111,7 @@ function makesessions()
 {
 	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $sdescription, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sendemail, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now, $_SESSION;
-	global $a_ends, $custom_end;
+	global $a_ends, $custom_end, $caneditstartdate;
 
 	$_SESSION['SELL_with_reserve'] = $with_reserve;
 	$_SESSION['SELL_reserve_price'] = $reserve_price;
@@ -144,6 +145,7 @@ function makesessions()
 	$_SESSION['SELL_start_now'] = $start_now;
 	$_SESSION['SELL_is_taxed'] = $is_taxed;
 	$_SESSION['SELL_tax_included'] = $tax_included;
+	$_SESSION['SELL_caneditstartdate'] = $caneditstartdate;
 }
 
 function unsetsessions()
@@ -184,11 +186,12 @@ function unsetsessions()
 	$_SESSION['SELL_start_now'] = '';
 	$_SESSION['SELL_is_taxed'] = 0;
 	$_SESSION['SELL_tax_included'] = 0;
+	$_SESSION['SELL_caneditstartdate'] = true;
 }
 
 function updateauction()
 {
-	global $_SESSION, $DBPrefix, $a_starts, $a_ends, $payment_text, $system, $fee, $db;
+	global $_SESSION, $DBPrefix, $a_starts, $a_ends, $payment_text, $system, $fee, $db, $caneditstartdate;
 
 	$query =
 		"UPDATE " . $DBPrefix . "auctions SET
@@ -256,6 +259,11 @@ function updateauction()
 	$params[] = array(':taxinc', $_SESSION['SELL_tax_included'], 'bool');
 	$params[] = array(':fee', $fee, 'float');
 	$params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
+	if ($caneditstartdate)
+	{
+		$query .= ", starts = :starts";
+		$params[] = array(':starts', $a_starts, 'int');
+	}
 	$db->query($query, $params);
 }
 

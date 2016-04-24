@@ -160,13 +160,13 @@ if (!isset($_POST['action'])) // already closed auctions
 		}
 
 		$_SESSION['SELL_action'] = 'edit';
-		if ($_SESSION['SELL_starts'] > $NOW)
+		if ($RELISTEDAUCTION['starts'] > $NOW)
 		{
-			$_SESSION['editstartdate'] = true;
+			$_SESSION['SELL_caneditstartdate'] = true;
 		}
 		else
 		{
-			$_SESSION['editstartdate'] = false;
+			$_SESSION['SELL_caneditstartdate'] = false;
 		}
 		header('location: sell.php?mode=recall');
 	}

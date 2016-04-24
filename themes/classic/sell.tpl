@@ -382,7 +382,7 @@ $(document).ready(function(){
 							<b>{L_2__0016}</b>
 						</td>
 						<td class="rightpan">
-		<!-- IF B_EDITING -->
+		<!-- IF B_EDITING && !B_CANEDITSTARTDATE -->
 							{START_TIME}
 							<input type="hidden" name="a_starts" value="{START_TIME}">
 		<!-- ELSE -->

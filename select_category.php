@@ -132,6 +132,7 @@ elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 	$_SESSION['SELL_start_now'] = '1';
 	$_SESSION['SELL_ends'] = '';
 	$_SESSION['SELL_custom_end'] = 0;
+	$_SESSION['SELL_caneditstartdate'] = true;
 }
 
 // Build the categories arrays

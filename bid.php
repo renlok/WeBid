@@ -572,17 +572,19 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$OldWinner_email = $OldWinner['email'];
 	}
 	// Update counters table with the new bid
-	// Send notification if users keyword matches (Item Watch)
-	$query = "SELECT id, email, name, item_watch FROM " . $DBPrefix . "users WHERE item_watch != '' AND item_watch IS NOT NULL AND id != :user_id";
+	// Send notification if auction id matches (Item Watch)
+	$query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE :auc_id AND id != :user_id";
 	$params = array();
 	$params[] = array(':user_id', $bidder_id, 'int');
+	$params[] = array(':auc_id', '%' . $id . '%', 'str');
 	$db->query($query, $params);
 
 	$fetch = $db->fetchall();
 	foreach ($fetch as $row)
 	{
-		// If keyword matches with opened auction title or/and desc send user a mail
-		if (strstr($row['item_watch'], strval($id)) !== false)
+		// double check there is a match
+		$watch_values = explode(' ', $row['item_watch']);
+		if (in_array(strval($id), $watch_values))
 		{
 			// Get data about the auction
 			$query = "SELECT title, current_bid FROM " . $DBPrefix . "auctions WHERE id = :auc_id";

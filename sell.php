@@ -110,7 +110,7 @@ switch ($_SESSION['action'])
 			$payment_text = implode(', ', $payment);
 			// set time back to GMT
 			$a_starts = (empty($start_now) || $_SESSION['SELL_action'] == 'edit') ? ($a_starts - $system->tdiff) : time();
-			$a_ends = $a_starts + ($duration * 24 * 60 * 60);
+			$a_ends = ($custom_end == 1) ? ($a_ends - $system->tdiff) : ($a_starts + ($duration * 24 * 60 * 60));
 			// get fee
 			$fee_data = get_fee($minimum_bid, false);
 			$fee = $fee_data[0];
@@ -419,6 +419,16 @@ switch ($_SESSION['action'])
 					substr($a_starts, 6, 4), 0);
 			}
 
+			if (!(strpos($a_ends, '-') === false))
+			{
+				$a_ends = _mktime(substr($a_ends, 11, 2),
+					substr($a_ends, 14, 2),
+					substr($a_ends, 17, 2),
+					substr($a_ends, 0, 2),
+					substr($a_ends, 3, 2),
+					substr($a_ends, 6, 4), 0);
+			}
+
 			$shippingtext = '';
 			if ($shipping == 1)
 				$shippingtext = $MSG['033'];
@@ -442,6 +452,8 @@ switch ($_SESSION['action'])
 					'SHIPPING_COST' => $system->print_money($shipping_cost, false),
 					'ADDITIONAL_SHIPPING_COST' => $system->print_money($additional_shipping_cost, false),
 					'STARTDATE' => (empty($start_now)) ? FormatDate($a_starts) : FormatDate($system->ctime),
+					'END_TIME' => FormatDate($a_ends),
+					'CUSTOM_END' => $custom_end,
 					'DURATION' => $duration_desc,
 					'INCREMENTS' => ($increments == 1) ? $MSG['614'] : $system->print_money($customincrement, false),
 					'ATYPE' => $system->SETTINGS['auction_types'][$atype],
@@ -476,6 +488,15 @@ switch ($_SESSION['action'])
 				substr($a_starts, 3, 2),
 				substr($a_starts, 6, 4), 0);
 		}
+		if (!(strpos($a_ends, '-') === false))
+        {
+            $a_ends = _mktime(substr($a_ends, 11, 2),
+                substr($a_ends, 14, 2),
+                substr($a_ends, 17, 2),
+                substr($a_ends, 0, 2),
+                substr($a_ends, 3, 2),
+                substr($a_ends, 6, 4), 0);
+        }
 		$category_string1 = get_category_string($sellcat1);
 		$category_string2 = get_category_string($sellcat2);
 
@@ -542,6 +563,7 @@ switch ($_SESSION['action'])
 			if (empty($a_starts))
 			{
 				$TPL_start_date = date($gmdate_string, $system->ctime);
+				$TPL_end_date = date($gmdate_string, $system->ctime + (3600 * 24));
 			}
 			else
 			{
@@ -549,12 +571,18 @@ switch ($_SESSION['action'])
 				{
 					$a_starts = date($gmdate_string, $a_starts);
 				}
+				if (strpos($a_ends, '-') === false)
+				{
+					$a_ends = gmdate($gmdate_string, $a_ends);
+				}
 				$TPL_start_date = $a_starts;
+				$TPL_end_date = $a_ends;
 			}
 		}
 		else
 		{
 			$TPL_start_date = date($gmdate_string, $a_starts);
+			$TPL_end_date = date($gmdate_string, $a_ends);
 		}
 
 		$CKEditor = new CKEditor();
@@ -659,6 +687,8 @@ switch ($_SESSION['action'])
 				'RESERVE_N' => ($with_reserve == 'yes') ? '' : 'checked',
 				'RESERVE' => $system->print_money_nosymbol($reserve_price, false),
 				'START_TIME' => $TPL_start_date,
+				'END_TIME' => $TPL_end_date,
+				'CUSTOM_END' => (!empty($custom_end)) ? 'checked' : '',
 				'BN_ONLY_Y' => ($buy_now_only) ? 'checked' : '',
 				'BN_ONLY_N' => ($buy_now_only) ? '' : 'checked',
 				'BN_Y' => ($buy_now == 'yes') ? 'checked' : '',
@@ -703,6 +733,7 @@ switch ($_SESSION['action'])
 				// options,
 				'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
 				'B_EDIT_STARTTIME' => ($system->SETTINGS['edit_starttime'] == 1),
+				'B_EDIT_ENDTIME' => ($system->SETTINGS['edit_endtime'] == 1),
 				'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
 				'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
 				'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),

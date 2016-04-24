@@ -1602,6 +1602,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('defaultlanguage', '
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('descriptiontag', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('displayed_feilds', 'str', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"y\";s:15:\"address_regshow\";s:1:\"y\";s:12:\"city_regshow\";s:1:\"y\";s:12:\"prov_regshow\";s:1:\"y\";s:15:\"country_regshow\";s:1:\"y\";s:11:\"zip_regshow\";s:1:\"y\";s:11:\"tel_regshow\";s:1:\"y\";}', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('edit_starttime', 'int', '1', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('edit_endtime', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('endingsoonnumber', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('errortext', 'str', '<p>An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly</p>', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('extra_cat', 'bool', 'n', UNIX_TIMESTAMP(), 1);";

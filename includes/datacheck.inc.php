@@ -253,6 +253,20 @@ function CheckSellData()
 			return '060';
 		}
 	}
+
+	if (!(strpos($a_ends, '-') === false) && $custom_end == 1)
+	{
+		$a_ends = _mktime(substr($a_ends, 11, 2),
+			substr($a_ends, 14, 2),
+			substr($a_ends, 17, 2),
+			substr($a_ends, 0, 2),
+			substr($a_ends, 3, 2),
+			substr($a_ends, 6, 4), 0);
+		if ($a_ends < $a_starts)
+		{
+			return '082';
+		}
+	}
 }//--CheckSellData
 
 function CheckBidData()

@@ -46,6 +46,8 @@ if (!isset($_POST['action']))
 		$RELISTEDAUCTION = $db->result();
 		$_SESSION['SELL_starts']		= '';
 		$_SESSION['SELL_start_now'] 	= '1';
+		$_SESSION['SELL_ends']			= '';
+		$_SESSION['SELL_custom_end']	= 0;
 		$_SESSION['SELL_title']			= $system->uncleanvars($RELISTEDAUCTION['title']);
 		$_SESSION['SELL_subtitle']		= $system->uncleanvars($RELISTEDAUCTION['subtitle']);
 		$_SESSION['SELL_description']	= $RELISTEDAUCTION['description'];

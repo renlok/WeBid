@@ -33,7 +33,7 @@ function setvars()
 {
 	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $sdescription, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sellcat1, $sellcat2, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now;
-	global $_POST, $_SESSION, $system;
+	global $_POST, $_SESSION, $system, $custom_end, $a_ends, $custom_end;
 
 	$with_reserve = (isset($_POST['with_reserve'])) ? $_POST['with_reserve'] : $_SESSION['SELL_with_reserve'];
 	$reserve_price = (isset($_POST['reserve_price'])) ? $_POST['reserve_price'] : $_SESSION['SELL_reserve_price'];
@@ -54,7 +54,6 @@ function setvars()
 	$iquantity = (empty($iquantity)) ? 1 : round($iquantity);
 	$buy_now = (isset($_POST['buy_now'])) ? $_POST['buy_now'] : $_SESSION['SELL_with_buy_now'];
 	$buy_now_price = (isset($_POST['buy_now_price'])) ? $_POST['buy_now_price'] : $_SESSION['SELL_buy_now_price'];
-	$duration = (isset($_POST['duration'])) ? $_POST['duration'] : $_SESSION['SELL_duration'];
 	$relist = (isset($_POST['autorelist'])) ? $_POST['autorelist'] : $_SESSION['SELL_relist'];
 	$increments = (isset($_POST['increments'])) ? $_POST['increments'] : $_SESSION['SELL_increments'];
 	$customincrement = (isset($_POST['customincrement'])) ? $_POST['customincrement'] : $_SESSION['SELL_customincrement'];
@@ -67,7 +66,10 @@ function setvars()
 	$sellcat2 = $_SESSION['SELL_sellcat2'];
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
 	$buy_now_only = (empty($buy_now_only)) ? 0 : $buy_now_only;
+
 	$a_starts = (isset($_POST['a_starts'])) ? $_POST['a_starts'] : $_SESSION['SELL_starts'];
+	$duration = (isset($_POST['duration'])) ? $_POST['duration'] : $_SESSION['SELL_duration'];
+	$a_ends = (isset($_POST['a_ends'])) ? $_POST['a_ends'] : $_SESSION['SELL_ends'];
 
 	// deal with checkboxes
 	if (isset($_POST['action']) && $_POST['action'] == 3)
@@ -77,6 +79,9 @@ function setvars()
 		$is_highlighted = (isset($_POST['is_highlighted'])) ? 1 : 0;
 		$international = (isset($_POST['international'])) ? 1 : 0;
 		$start_now = (isset($_POST['start_now'])) ? 1 : 0;
+		$custom_end = (isset($_POST['custom_end'])) ? 1 : 0;
+		// ignore duration for custom end date
+		$duration = ($custom_end == 1) ? 0 : $duration;
 	}
 	else
 	{
@@ -85,6 +90,7 @@ function setvars()
 		$is_highlighted = $_SESSION['SELL_is_highlighted'];
 		$international = $_SESSION['SELL_international'];
 		$start_now = $_SESSION['SELL_start_now'];
+		$custom_end = $_SESSION['SELL_custom_end'];
 	}
 
 	$is_taxed = (isset($_POST['is_taxed'])) ? $_POST['is_taxed'] : $_SESSION['SELL_is_taxed'];
@@ -104,6 +110,7 @@ function makesessions()
 {
 	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $sdescription, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sendemail, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now, $_SESSION;
+	global $a_ends, $custom_end;
 
 	$_SESSION['SELL_with_reserve'] = $with_reserve;
 	$_SESSION['SELL_reserve_price'] = $reserve_price;
@@ -129,6 +136,8 @@ function makesessions()
 	$_SESSION['SELL_international'] = $international;
 	$_SESSION['SELL_buy_now_only'] = $buy_now_only;
 	$_SESSION['SELL_starts'] = $a_starts;
+	$_SESSION['SELL_ends'] = $a_ends;
+	$_SESSION['SELL_custom_end'] = $custom_end;
 	$_SESSION['SELL_is_bold'] = $is_bold;
 	$_SESSION['SELL_is_highlighted'] = $is_highlighted;
 	$_SESSION['SELL_is_featured'] = $is_featured;
@@ -166,6 +175,8 @@ function unsetsessions()
 	$_SESSION['SELL_international'] = false;
 	$_SESSION['SELL_sendemail'] = '';
 	$_SESSION['SELL_starts'] = '';
+	$_SESSION['SELL_ends'] = '';
+	$_SESSION['SELL_custom_end'] = 0;
 	$_SESSION['SELL_action'] = '';
 	$_SESSION['SELL_is_bold'] = 0;
 	$_SESSION['SELL_is_highlighted'] = 0;

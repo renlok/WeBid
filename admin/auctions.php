@@ -42,6 +42,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$system->writesetting("proxy_bidding",ynbool($_POST['proxy_bidding']), 'str');
 		$system->writesetting("edit_starttime", $_POST['edit_starttime'], 'int');
+		$system->writesetting("edit_endtime", $_POST['edit_endtime'], 'int');
 		$system->writesetting("cust_increment", $_POST['cust_increment'], 'int');
 		$system->writesetting("hours_countdown", $_POST['hours_countdown'], 'int');
 		$system->writesetting("ao_hpf_enabled", ynbool($_POST['ao_hpf_enabled']), 'str');
@@ -65,6 +66,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 loadblock($MSG['427'], $MSG['428'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['5090'], $MSG['5089'], 'batch', 'edit_starttime', $system->SETTINGS['edit_starttime'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['allow_custom_end_date'], $MSG['allow_custom_end_date_explain'], 'batch', 'edit_endtime', $system->SETTINGS['edit_endtime'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['068'], $MSG['070'], 'batch', 'cust_increment', $system->SETTINGS['cust_increment'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['5091'], $MSG['5095'], 'days', 'hours_countdown', $system->SETTINGS['hours_countdown'], array($MSG['25_0037']));
 

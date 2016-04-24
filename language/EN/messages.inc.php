@@ -104,6 +104,7 @@ $ERR_078 = 'You must agree to the Terms and Conditions';
 $ERR_079 = 'The Shipping fee price you inserted is not correct';
 $ERR_080 = 'Additional Shipping price you inserted is not correct';
 $ERR_081 = "The balance you entered is not valid";
+$ERR_082 = "Your auctions end date must be after its start date";
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
@@ -1815,6 +1816,13 @@ $MSG['spam_blocked_email_domains_explain'] = 'Put a each domain on a new line';
 $MSG['spam_blocked_email_domains_register_error'] = 'The E-Mail address you have entered has been black-listed';
 
 $MSG['wordfilter_banned_username'] = 'Please select a different user name as our word filter will not allow this name to be used';
+
+$MSG['custom_end_time'] = 'Set custom end time';
+$MSG['or_custom_end_time'] = 'Or set a custom end time';
+$MSG['ending_date'] = 'Ending date';
+
+$MSG['allow_custom_end_date_explain'] = "Users can set a custom <b>end</b> date for auctions";
+$MSG['allow_custom_end_date'] = "Allow Custom End Date?";
 
 $MSG['payment_name'] = 'Name';
 $MSG['clean_payment_name'] = 'Clean Name <small>(all lower case no spaces or special characters)</small>';

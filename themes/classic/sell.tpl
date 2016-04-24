@@ -400,12 +400,36 @@ $(document).ready(function(){
 	<!-- ELSE -->
 					<input type="hidden" name="start_now" value="1">
 	<!-- ENDIF -->
+	<!-- IF B_EDIT_ENDTIME -->
 					<tr>
-						<td align="right" width="25%" valign="middle">
-							<b>{L_022}</b>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L_custom_end_time}</b>
 						</td>
 						<td class="rightpan">
-							{DURATIONS}
+							<input type="checkbox" id="custom_end" name="custom_end" {CUSTOM_END}>
+						</td>
+					</tr>
+	<!-- ENDIF -->
+					<tr>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L_ending_date}</b>
+						</td>
+						<td class="rightpan">
+        <!-- IF B_EDITING -->
+							{END_TIME}
+							<input type="hidden" name="a_ends" value="{END_TIME}">
+        <!-- ELSE -->
+        					{L_022}: {DURATIONS}<br>
+			<!-- IF B_EDIT_ENDTIME -->
+							{L_or_custom_end_time}: <input type="text" name="a_ends" id="a_ends" value="{END_TIME}" size="20" maxlength="19">
+							<script type="text/javascript">
+								new tcal ({'id': 'a_ends','controlname': 'a_ends', 'formname': 'sell'});
+								$('#a_ends').change(function () {
+									$('#custom_end').attr('checked', true);
+								});
+							</script>
+			<!-- ENDIF -->
+        <!-- ENDIF -->
 						</td>
 					</tr>
 	<!-- IF B_AUTORELIST -->

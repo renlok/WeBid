@@ -12,10 +12,6 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-/***************************************************************************
- *   Script based on popular MOD "Logo Upload Via Admin" by nay27uk
- ***************************************************************************/
-
 define('InAdmin', 1);
 $current_page = 'interface';
 include '../common.php';
@@ -23,34 +19,44 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
-if (isset($_POST['action']) && $_POST['action'] == "update") {
-	if (isset($_FILES['logo']['tmp_name']) && !empty($_FILES['logo']['tmp_name'])) {
+
+if (isset($_POST['action']) && $_POST['action'] == "update")
+{
+	if (isset($_FILES['logo']['tmp_name']) && !empty($_FILES['logo']['tmp_name']))
+	{
 		// Handle logo upload
 		$inf = GetImageSize ($_FILES['logo']['tmp_name']);
-		if ($inf[2] < 1 || $inf[2] > 3) {
+		if ($inf[2] < 1 || $inf[2] > 3)
+		{
 			print $ERR_602;
 			exit;
 		}
-		if (!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none") {
-			if ($system->move_file($_FILES['logo']['tmp_name'], MAIN_PATH . 'uploaded/logo/'  . $_FILES['logo']['name'])) {
-				$LOGOUPLOADED = true;
-			} else {
-				$LOGOUPLOADED = false;
+		if (!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none")
+		{
+			if ($system->move_file($_FILES['logo']['tmp_name'], UPLOAD_PATH . 'logo/'  . $_FILES['logo']['name']))
+			{
+				$logo_file_name = $_FILES['logo']['name'];
+				$params = array();
+				$params[] = array(':logo', $logo_file_name , 'str');
+
+				$query = " UPDATE " . $DBPrefix . "settings SET logo = :logo ";
+				$db->query($query,$params);
+
+				$system->SETTINGS['logo'] = $_FILES['logo']['name'];
+			}
+			else
+			{
+				$ERR = $MSG['upload_failed'];
 			}
 		}
 	}
-	$v = $_FILES['logo']['name'];
-		$params = array();
-	$params[] = array(':logo', $v , 'str');
-	
-	$query = " UPDATE " . $DBPrefix . "settings SET logo = :logo ";
-	$db->query($query,$params);
-		
-	$system->SETTINGS['logo'] = $_FILES['logo']['name'];
+
 }
+
 $logoURL = $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'];
 loadblock($MSG['531'], $MSG['556'], 'image', 'logo', $system->SETTINGS['logo']);
 loadblock('', $MSG['602'], 'upload', 'logo', $system->SETTINGS['logo']);
+
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],

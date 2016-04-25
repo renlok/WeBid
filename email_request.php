@@ -26,6 +26,7 @@ elseif (isset($_SESSION['CURRENT_ITEM']))
 
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'email_request.php';
 	header('location: user_login.php');
 	exit;

@@ -16,6 +16,7 @@ include 'common.php';
 
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'selleremails.php';
 	header('location: user_login.php');
 	exit;

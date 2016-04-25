@@ -17,6 +17,12 @@ include 'common.php';
 
 $NOW = time();
 
+if (isset($_SESSION['LOGIN_MESSAGE']))
+{
+	$ERR = $_SESSION['LOGIN_MESSAGE'];
+	unset($_SESSION['LOGIN_MESSAGE']);
+}
+
 if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password']))
 {
 	include PACKAGE_PATH . 'PasswordHash.php';

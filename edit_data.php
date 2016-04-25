@@ -22,6 +22,7 @@ unset($ERR);
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'edit_data.php';
 	header('location: user_login.php');
 	exit;

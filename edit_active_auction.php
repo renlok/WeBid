@@ -20,6 +20,7 @@ $id = intval($_GET['id']);
 // Is the seller logged in?
 if (!$user->logged_in)
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');
 	exit;

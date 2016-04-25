@@ -18,6 +18,7 @@ include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 // Is the seller logged in?
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');
 	exit;

@@ -29,6 +29,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 {
 	if (!$user->checkAuth())
 	{
+		$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 		header('location: user_login.php');
 		exit;
 	}

@@ -161,7 +161,7 @@ input, textarea, select, .button {
 	border: 2px solid #CCCCCC;
 	padding: 4px;
 	background: #F7F7F7;
-	text-size: 1.2em;
+	font-size: 1.2em;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
@@ -281,5 +281,4 @@ ul.menu li {
 
 .button {
 	display: inline-block;
-	height: 20px;
 }

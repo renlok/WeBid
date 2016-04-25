@@ -18,6 +18,7 @@ include INCLUDE_PATH . 'functions_invoices.php';
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	header('location: user_login.php');
 	exit;
 }

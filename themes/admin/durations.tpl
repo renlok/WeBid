@@ -7,6 +7,7 @@
 <!-- IF ERROR ne '' -->
 				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
 <!-- ENDIF -->
+				{L_122}
 				<form name="durations" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">

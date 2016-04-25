@@ -17,6 +17,7 @@ include INCLUDE_PATH . 'membertypes.inc.php';
 
 if(!isset($_GET['user_id']))
 {
+	$user_id = $_GET['user_id'];
 	if (!$user->checkAuth())
 	{
 		$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
@@ -26,23 +27,22 @@ if(!isset($_GET['user_id']))
 	}
 	else
 	{
-		$_GET['user_id'] = $user->user_data['id'];
+		$user_id = $user->user_data['id'];
 	}
 }
 
-if (!empty($_GET['user_id']) && is_string($_GET['user_id']))
+if (is_string($user_id))
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE nick = :user";
 	$params = array();
-	$params[] = array(':user', $system->cleanvars($_GET['user_id']), 'str');
+	$params[] = array(':user', $system->cleanvars($user_id), 'str');
 	$db->query($query, $params);
 }
-
-if (!empty($_GET['user_id']))
+else
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
-	$params[] = array(':user_id', $_GET['user_id'], 'int');
+	$params[] = array(':user_id', $user_id, 'int');
 	$db->query($query, $params);
 }
 

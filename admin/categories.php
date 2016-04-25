@@ -189,6 +189,10 @@ if (isset($_POST['action']))
 		resync_category_counters();
 		include 'util_cc1.php';
 	}
+	if (!isset($ERR))
+	{
+		$ERR = $MSG['086'];
+	}
 }
 
 //show the page...

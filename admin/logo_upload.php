@@ -28,10 +28,9 @@ if (isset($_POST['action']) && $_POST['action'] == "update")
 		$inf = GetImageSize ($_FILES['logo']['tmp_name']);
 		if ($inf[2] < 1 || $inf[2] > 3)
 		{
-			print $ERR_602;
-			exit;
+			$ERR = $ERR_602;
 		}
-		if (!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none")
+		else if (!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none")
 		{
 			if ($system->move_file($_FILES['logo']['tmp_name'], UPLOAD_PATH . 'logo/'  . $_FILES['logo']['name']))
 			{
@@ -39,7 +38,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update")
 				$params = array();
 				$params[] = array(':logo', $logo_file_name , 'str');
 
-				$query = " UPDATE " . $DBPrefix . "settings SET logo = :logo ";
+				$query = " UPDATE " . $DBPrefix . "settings SET logo = :logo";
 				$db->query($query,$params);
 
 				$system->SETTINGS['logo'] = $_FILES['logo']['name'];

@@ -37,7 +37,7 @@
 <!-- IF B_PREVIEW -->
 					<span class="smallspan">{L_606}</span>
 					<input type="hidden" name="action" value="submit">
-					<input type="submit" name="act" class="centre" value="{L_007}">
+					<input type="submit" name="act" class="centre" value="{L_398}">
 <!-- ELSE -->
 					<input type="hidden" name="action" value="preview">
 					<input type="submit" name="act" class="centre" value="{L_25_0224}">

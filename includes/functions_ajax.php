@@ -14,35 +14,6 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-// author: John	http://www.webidsupport.com/forums/member.php?5491-John
-function converter_call($post_data = true, $data = array())
-{
-	global $system;
-	include INCLUDE_PATH . 'converter.inc.php';
-
-	// get convertion data
-	if ($post_data)
-	{
-		global $_REQUEST;
-		$amount = $_REQUEST['amount'];
-		$from = $_REQUEST['from'];
-		$to = $_REQUEST['to'];
-	}
-	else
-	{
-		$amount = $data['amount'];
-		$from = $data['from'];
-		$to = $data['to'];
-	}
-	$amount = $system->input_money($amount);
-
-	$CURRENCIES = CurrenciesList();
-
-	$conversion = ConvertCurrency($from, $to, $amount);
-	// construct string
-	echo $amount . ' ' . $CURRENCIES[$from] . ' = ' . $system->print_money_nosymbol($conversion, true) . ' ' . $CURRENCIES[$to];
-}
-
 // reload the gallery table on upldgallery.php page
 function getupldtable()
 {

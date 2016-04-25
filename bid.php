@@ -111,7 +111,7 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 else
 {
 	// reformat bid to valid number
-	$bid = round($system->input_money($bid, 2));
+	$bid = round($system->input_money($bid, 2), 2);
 }
 
 $Data = $db->result();

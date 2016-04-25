@@ -94,9 +94,10 @@ $query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, 
 		FROM " . $DBPrefix . "auctions
 		WHERE closed = 0 AND suspended = 0 AND starts <= :time
 		AND featured = 1
-		ORDER BY RAND() DESC LIMIT 12";
+		ORDER BY RAND() DESC LIMIT :limit";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
+$params[] = array(':limit', $system->SETTINGS['homefeaturednumber'], 'int');
 $db->query($query, $params);
 
 $i = 0;

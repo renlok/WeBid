@@ -565,7 +565,7 @@ if ($num > 0)
 		// Delete all images
 		if (is_dir(UPLOAD_PATH . $AuctionInfo['id']))
 		{
-			if ($dir = @opendir(UPLOAD_PATH . $AuctionInfo['id']))
+			if ($dir = opendir(UPLOAD_PATH . $AuctionInfo['id']))
 			{
 				while ($file = readdir($dir))
 				{
@@ -575,7 +575,7 @@ if ($num > 0)
 					}
 				}
 				closedir($dir);
-				@rmdir(UPLOAD_PATH . $AuctionInfo['id']);
+				rmdir(UPLOAD_PATH . $AuctionInfo['id']);
 			}
 		}
 	}

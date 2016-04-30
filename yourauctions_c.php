@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			// Pictures Gallery
 			if (is_dir(UPLOAD_PATH . $v))
 			{
-				if ($dir = @opendir(UPLOAD_PATH . $v))
+				if ($dir = opendir(UPLOAD_PATH . $v))
 				{
 					while ($file = readdir($dir))
 					{
@@ -57,7 +57,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 						}
 					}
 					closedir($dir);
-					@rmdir(UPLOAD_PATH . $v);
+					rmdir(UPLOAD_PATH . $v);
 				}
 			}
 

@@ -44,7 +44,7 @@ elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'
 $bg = '';
 if (is_dir($theme_root))
 {
-	if ($dir = @opendir($theme_root))
+	if ($dir = opendir($theme_root))
 	{
 		while (($atheme = readdir($dir)) !== false)
 		{
@@ -87,7 +87,7 @@ if (is_dir($theme_root))
 				}
 			}
 		}
-		@closedir($dir);
+		closedir($dir);
 	}
 }
 

@@ -85,7 +85,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 	// Delete auctions images
 	if (is_dir(UPLOAD_PATH . $auc_id))
 	{
-		if ($dir = @opendir(UPLOAD_PATH . $auc_id))
+		if ($dir = opendir(UPLOAD_PATH . $auc_id))
 		{
 			while ($file = readdir($dir))
 			{
@@ -95,7 +95,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 				}
 			}
 			closedir($dir);
-			@rmdir(UPLOAD_PATH . $auc_id);
+			rmdir(UPLOAD_PATH . $auc_id);
 		}
 	}
 

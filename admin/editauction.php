@@ -43,7 +43,7 @@ function load_gallery($auc_id)
 	$UPLOADED_PICTURES = array();
 	if (is_dir(UPLOAD_PATH . $auc_id))
 	{
-		if ($dir = @opendir(UPLOAD_PATH . $auc_id))
+		if ($dir = opendir(UPLOAD_PATH . $auc_id))
 		{
 			while ($file = @readdir($dir))
 			{
@@ -53,7 +53,7 @@ function load_gallery($auc_id)
 
 				}
 			}
-			@closedir($dir);
+			closedir($dir);
 		}
 	}
 	return $UPLOADED_PICTURES;

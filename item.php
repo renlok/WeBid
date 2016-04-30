@@ -19,7 +19,7 @@ include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 // Get parameters from the URL
 $id = (isset($_SESSION['CURRENT_ITEM'])) ? intval($_SESSION['CURRENT_ITEM']) : 0;
 $id = (isset($_REQUEST['id'])) ? intval($_REQUEST['id']) : 0;
-if (!is_numeric($id)) $id = 0;
+
 $bidderarray = array();
 $bidderarraynum = 1;
 $catscontrol = new MPTTcategories();
@@ -211,7 +211,7 @@ foreach ($db->fetchall() as $bidrec)
 {
 	if (!isset($bidderarray[$bidrec['nick']]))
 	{
-		if ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user'] && $user->user_data['id'] != $bidrec['bidder'])
+		if ($system->SETTINGS['buyerprivacy'] == 'y' && (!$user->logged_in || ($user->user_data['id'] != $auction_data['user'] && $user->user_data['id'] != $bidrec['bidder'])))
 		{
 			$bidderarray[$bidrec['nick']] = $MSG['176'] . ' ' . $bidderarraynum;
 			$bidderarraynum++;
@@ -439,7 +439,7 @@ $K = 0;
 $UPLOADED_PICTURES = array();
 if (is_dir(UPLOAD_PATH . $id))
 {
-	$dir = @opendir(UPLOAD_FOLDER . $id);
+	$dir = opendir(UPLOAD_FOLDER . $id);
 	if ($dir)
 	{
 		while ($file = @readdir($dir))
@@ -450,7 +450,7 @@ if (is_dir(UPLOAD_PATH . $id))
 				$K++;
 			}
 		}
-		@closedir($dir);
+		closedir($dir);
 	}
 	$GALLERY_DIR = $id;
 

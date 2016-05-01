@@ -492,9 +492,17 @@ function alphanumeric($str)
 }
 
 // $auction_data sould come straight from the database
-function calculate_shipping_data($auction_data, $total = true)
+function calculate_shipping_data($auction_data, $bought_quantity = 0, $total = true)
 {
-	$quantity = (isset($auction_data['qty'])) ? $auction_data['qty'] : $auction_data['quantity'];
+	if ($bought_quantity == 0)
+	{
+		$quantity = $auction_data['quantity'];
+	}
+	else
+	{
+		$quantity = $bought_quantity;
+	}
+
 	$shipping_cost = ($auction_data['shipping'] == 1) ? $auction_data['shipping_cost'] : 0;
 	$additional_shipping_cost = $auction_data['additional_shipping_cost'] * ($quantity - 1);
 

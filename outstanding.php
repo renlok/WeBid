@@ -54,7 +54,7 @@ $db->query($query, $params);
 
 while ($row = $db->fetch())
 {
-	$shipping_data = calculate_shipping_data($row, false);
+	$shipping_data = calculate_shipping_data($row, $row['qty'], false);
 	$template->assign_block_vars('to_pay', array(
 			'ID' => $row['id'],
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['auc_id'],
@@ -72,7 +72,7 @@ while ($row = $db->fetch())
 			'AUC_ID' => $row['auc_id'],
 			'WINID'=> $row['id'],
 
-			'B_NOTITLE' => (empty($row['title']))
+			'B_NOTITLE' => (empty($row['auc_title']))
 			));
 }
 

@@ -23,6 +23,10 @@ $db->query($query, $params);
 
 $categories = $db->fetchAll();
 
+// move current language to end of array
+unset($LANGUAGES[$language]);
+$LANGUAGES[$language] = $language;
+
 foreach ($LANGUAGES as $k => $v)
 {
 	include MAIN_PATH . 'language/' . $k . '/messages.inc.php';

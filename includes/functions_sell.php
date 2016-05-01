@@ -529,7 +529,7 @@ function update_cat_counters($add, $category, $second_category = 0)
 		$second_category_crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 		// merge the arrays
-		$crumbs = array_merge($category_crumbs, $second_category_crumbs);
+		$crumbs = $category_crumbs + $second_category_crumbs;
 	}
 	else
 	{

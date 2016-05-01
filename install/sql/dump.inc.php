@@ -25,7 +25,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accesseshistoric` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "accounts`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
-	`id` INT(7) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`id` INT(7) NOT NULL AUTO_INCREMENT,
 	`nick` VARCHAR(20) NOT NULL,
 	`name` TINYTEXT NOT NULL,
 	`text` TEXT NOT NULL,
@@ -35,7 +35,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 	`day` INT(3) NOT NULL,
 	`week` INT(2) NOT NULL,
 	`month` INT(2) NOT NULL,
-	`year` INT(4) NOT NULL
+	`year` INT(4) NOT NULL,
+    PRIMARY KEY  (`id`)
 )";
 
 #
@@ -58,7 +59,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `lastlogin` varchar(14) NOT NULL default '',
   `status` tinyint(1) NOT NULL default '0',
   `notes` text,
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -132,8 +133,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `tax` tinyint(1) default 0,
   `taxinc` tinyint(1) default 0,
   `bn_sale` tinyint(1) default 0,
-  PRIMARY KEY  (`id`),
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -152,8 +152,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
   `id` int(2) NOT NULL auto_increment,
   `key` varchar(32),
   `language_string` varchar(32),
-  PRIMARY KEY  (`id`),
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -184,7 +183,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "banners` (
   `width` int(11) NOT NULL default '0',
   `height` int(11) NOT NULL default '0',
   `user` int(11) NOT NULL default '0',
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -237,8 +236,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannersstats` (
   `banner` int(11) default NULL,
   `purchased` int(11) default NULL,
   `views` int(11) default NULL,
-  `clicks` int(11) default NULL,
-  KEY `id` (`banner`)
+  `clicks` int(11) default NULL
 ) ;";
 
 #
@@ -258,7 +256,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannersusers` (
   `name` varchar(255) default NULL,
   `company` varchar(255) default NULL,
   `email` varchar(255) default NULL,
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -552,7 +550,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "comm_messages` (
   `user` int(11) NOT NULL default '0',
   `username` varchar(255) NOT NULL default '',
   `message` text NOT NULL,
-  KEY `msg_id` (`id`)
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -573,7 +571,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
   `lastmessage` varchar(14) NOT NULL default '0',
   `msgstoshow` int(11) NOT NULL default '0',
   `active` tinyint(1) NOT NULL default '1',
-  KEY `msg_id` (`id`)
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -1004,7 +1002,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqs` (
   `question` varchar(200) NOT NULL default '',
   `answer` text NOT NULL,
   `category` int(11) NOT NULL default '0',
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -1073,7 +1071,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "faqscategories`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "faqscategories` (
   `id` int(11) NOT NULL auto_increment,
   `category` varchar(200) NOT NULL default '',
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -1266,13 +1264,14 @@ $query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 500.0000, 99
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "logs`;";
 $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
-  `id` INT( 25 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `id` INT( 25 ) NOT NULL AUTO_INCREMENT ,
   `type` VARCHAR( 5 ) NOT NULL ,
   `message` TEXT NOT NULL ,
   `action_id` INT( 11 ) NOT NULL DEFAULT  '0',
   `user_id` INT( 32 ) NOT NULL DEFAULT  '0',
   `ip` VARCHAR( 45 ) NOT NULL,
-  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
+  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0',
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -1713,7 +1712,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
   `countries_buyer` TEXT NOT NULL ,
   `fee_tax` INT(1) NOT NULL DEFAULT  '0',
   PRIMARY KEY (`id`)
-	);";
+);";
 
 #
 # Dumping data for table `" . $DBPrefix . "tax`
@@ -1871,7 +1870,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `bf_paid` INT(1) NOT NULL DEFAULT  '0',
   `ff_paid` INT(1) NOT NULL DEFAULT '1',
   `shipped` INT(1) NOT NULL DEFAULT '0',
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 ?>

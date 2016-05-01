@@ -415,10 +415,6 @@ $(document).ready(function(){
 							<b>{L_ending_date}</b>
 						</td>
 						<td class="rightpan">
-        <!-- IF B_EDITING -->
-							{END_TIME}
-							<input type="hidden" name="a_ends" value="{END_TIME}">
-        <!-- ELSE -->
         					{L_022}: {DURATIONS}<br>
 			<!-- IF B_EDIT_ENDTIME -->
 							{L_or_custom_end_time}: <input type="text" name="a_ends" id="a_ends" value="{END_TIME}" size="20" maxlength="19">
@@ -429,7 +425,6 @@ $(document).ready(function(){
 								});
 							</script>
 			<!-- ENDIF -->
-        <!-- ENDIF -->
 						</td>
 					</tr>
 	<!-- IF B_AUTORELIST -->
@@ -632,10 +627,17 @@ $(document).ready(function(){
 						<td valign="top" align="right"><b>{L_2__0016}</b></td>
 						<td>{STARTDATE}</td>
 					</tr>
+	<!-- IF CUSTOM_END -->
+					<tr>
+						<td valign="top" align="right"><b>{L_end_date}</b></td>
+						<td>{END_TIME}</td>
+					</tr>
+	<!-- ELSE -->
 					<tr>
 						<td valign="top" align="right"><b>{L_022}</b></td>
 						<td>{DURATION}</td>
 					</tr>
+	<!-- ENDIF -->
 	<!-- IF B_CUSINC -->
 					<tr>
 						<td valign="top" align="right"><b>{L_120}</b> </td>

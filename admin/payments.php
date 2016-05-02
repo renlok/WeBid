@@ -22,32 +22,35 @@ unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	foreach ($_POST['payment'] as $payment)
+	if (isset($_POST['payment']))
 	{
-		if (isset($payment['delete']))
+		foreach ($_POST['payment'] as $payment_id => $payment)
 		{
-			$query = "DELETE FROM " . $DBPrefix . "payment_options WHERE id = :id";
-			$params = [[':id', $payment['id'], 'int']];
-			$db->query($query, $params);
-		}
-		else
-		{
-			// clean the clean name
-			if ($payment['clean'] == '')
+			if (isset($payment['delete']))
 			{
-				$payment['clean'] = strtolower($payment['name']);
+				$query = "DELETE FROM " . $DBPrefix . "payment_options WHERE id = :id";
+				$params = [[':id', $payment['id'], 'int']];
+				$db->query($query, $params);
 			}
-			$payment['clean'] = preg_replace("/[^a-z]/", '', $payment['clean']);
-			$query = "UPDATE " . $DBPrefix . "payment_options
-					SET name = :name,
-					displayname = :displayname
-					WHERE id = :id";
-			$params = [
-				[':id', $payment['id'], 'int'],
-				[':name', $payment['name'], 'str'],
-				[':displayname', $payment['clean'], 'str'],
-			];
-			$db->query($query, $params);
+			else
+			{
+				// clean the clean name
+				if ($payment['clean'] == '')
+				{
+					$payment['clean'] = $payment['name'];
+				}
+				$payment['clean'] = preg_replace("/[^a-z]/", '', strtolower($payment['clean']));
+				$query = "UPDATE " . $DBPrefix . "payment_options
+						SET name = :name,
+						displayname = :displayname
+						WHERE id = :id";
+				$params = [
+					[':id', $payment['id'], 'int'],
+					[':name', $payment['clean'], 'str'],
+					[':displayname', $payment['name'], 'str'],
+				];
+				$db->query($query, $params);
+			}
 		}
 	}
 
@@ -55,8 +58,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$query = "INSERT INTO " . $DBPrefix . "payment_options (name, displayname, is_gateway) VALUES (:name, :displayname, 0)";
 		$params = [
-			[':name', $payment['name'], 'str'],
-			[':displayname', $payment['clean'], 'str'],
+			[':name', $_POST['new_payments_clean'], 'str'],
+			[':displayname', $_POST['new_payments'], 'str'],
 		];
 		$db->query($query, $params);
 	}
@@ -64,10 +67,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['093'];
 }
 
-$query = "SELECT * FORM " . $DBPrefix . "payment_options WHERE is_gateway = 0";
+$query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 0";
 $db->direct_query($query);
-$payment_options = $db->fetchAll();
-foreach ($payment_options as $payment_type)
+while ($payment_type = $db->fetch())
 {
 	$template->assign_block_vars('payments', array(
 			'NAME' => $payment_type['displayname'],

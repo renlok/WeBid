@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("buy_now", $_POST['buy_now'], "int");
 	$system->writesetting("bn_only", $_POST['bn_only'], "int");
 	$system->writesetting("bn_only_disable", $_POST['bn_only_disable'], "str");
-	$system->writesetting("bn_only_percent", $bn_only_percent, "str");
+	$system->writesetting("bn_only_percent", $bn_only_percent, "int");
 	$ERR = $MSG['30_0066'];
 }
 

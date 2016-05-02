@@ -179,7 +179,7 @@ while ($row = $db->fetch())
 			'CAN_SELL' => ($row['can_sell'] == 1) ? $MSG['030'] : $MSG['029'],
 			'CAN_BUY' => ($row['can_buy'] == 1) ? $MSG['030'] : $MSG['029'],
 			'AUTO_JOIN' => ($row['auto_join'] == 1) ? $MSG['030'] : $MSG['029'],
-			'USER_COUNT' => !isset($groups_array[$row['id']])? $groups_array[$row['id']] : 0 // $row['count']
+			'USER_COUNT' => isset($groups_array[$row['id']]) ? $groups_array[$row['id']] : 0 // $row['count']
 			));
 	unset($groups_array[$row['id']]);
 	// TODO: automatically control user group count when users join/leave groups

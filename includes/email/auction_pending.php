@@ -23,9 +23,9 @@ $emailer->assign_vars(array(
 		'A_TITLE' => $title,
 		'A_TYPE' => ($atype == 1) ? $MSG['642'] : $MSG['641'],
 		'A_PICURL' => ($pict_url != '') ? UPLOAD_FOLDER . $auction_id . '/' . $pict_url : 'images/email_alerts/default_item_img.jpg',
-		'A_MINBID' => $system->print_money($minimum_bid),
-		'A_RESERVE' => $system->print_money($reserve_price),
-		'A_BNPRICE' => $system->print_money($buy_now_price),
+		'A_MINBID' => $system->print_money($minimum_bid, false),
+		'A_RESERVE' => $system->print_money($reserve_price, false),
+		'A_BNPRICE' => $system->print_money($buy_now_price, false),
 		'A_ENDS' => ArrangeDateNoCorrection($a_ends + $system->tdiff),
 		'PAY_LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=4&auction_id=' . $Auction['id'],
 

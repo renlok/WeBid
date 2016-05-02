@@ -1548,7 +1548,6 @@ $MSG['30_0032'] = "Delete all the template cache files, you will need to do this
 $MSG['30_0033'] = "Cache cleared";
 $MSG['30_0049'] = "Newsletter Settings Updated";
 $MSG['30_0053'] = "<p>Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:</p>";
-$MSG['30_0055'] = "The newsletter sent through WeBid will be sent automatically in <b>HTML</b>, so, it is necessary to add a tag <code>&lt;BR&gt;</code> tags for each new line you are going to add. Otherwise, the message will look like a single line of text without format.";
 $MSG['30_0063'] = "Buy it now only?";
 $MSG['30_0064'] = "Activate <b>Buy it now only</b> auctions?";
 $MSG['30_0065'] = "Enabling the <b>Buy it now only</b> option you'll give your sellers the ability to set up auctions for which it will not be possible to place any bid, but only use the <b>Buy it now</b> feature (fixed price auctions).<br><b>Note:</b> the <b>Buy it now only</b> option will only take effect if <b>Buy it now</b> is enabled.";
@@ -1637,10 +1636,7 @@ $MSG['payment_name'] = 'Name';
 $MSG['clean_payment_name'] = 'Clean Name <small>(all lower case no spaces or special characters)</small>';
 
 $MSG['all_user_groups'] = 'All User Groups';
-
 $MSG['login_required_text'] = "Login required";
-
 $MSG['end_date'] = 'End date';
-
-$MSG['delete'] = 'delete'
+$MSG['delete'] = 'delete';
 ?>

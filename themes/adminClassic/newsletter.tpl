@@ -11,7 +11,10 @@
 <!-- ENDIF -->
 				<form name="conf" action="" method="post">
 <!-- IF B_PREVIEW -->
-					<div class="main-box">{PREVIEW}</div>
+					<div class="main-box jumbo-box">
+						<h1>{SUBJECT}</h1>
+						{PREVIEW}
+					</div>
 <!-- ENDIF -->
 					<table width="98%" cellpadding="2" align="center" class="blank">
 						<tr valign="top">
@@ -29,7 +32,6 @@
 						<tr valign="top">
 							<td width="175">{L_605}</td>
 							<td style="padding:3px;">
-								{L_30_0055}
 								{EDITOR}
 							</td>
 						</tr>

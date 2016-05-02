@@ -279,6 +279,13 @@ ul.menu li {
 	font-size: 1.1em;
 }
 
+.jumbo-box {
+	background-color: #F4F4F4;
+	padding: 15px;
+	margin: 3px 0;
+	font-size: 1.5em;
+}
+
 .button {
 	display: inline-block;
 }

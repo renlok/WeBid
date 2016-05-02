@@ -76,7 +76,7 @@ $USERSFILTER = array('all' => $MSG['5296'],
 $selectsetting = (isset($_POST['usersfilter'])) ? $_POST['usersfilter'] : '';
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = 'js/ckeditor/';
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;

@@ -15,7 +15,6 @@
 	<![endif]-->
 
 	<script type="text/javascript" src="{SITEURL}loader.php?js=js/jquery.js{EXTRAJS}"></script>
-	<script type="text/javascript" src="{SITEURL}ckeditor/ckeditor.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('a.new-window').click(function(){

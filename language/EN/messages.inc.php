@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 // CHARSET ENCODING
 // Change the charset according to the language used in this file.
-$CHARSET = "ISO-8859-1";
+$CHARSET = "UTF-8";
 // DOCUMENT DIRECTION
 // Change the $DOCDIR variable below according to the document direction needed
 // by the language you are using.

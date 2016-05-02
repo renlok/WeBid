@@ -113,6 +113,7 @@ while ($row = $db->fetch())
 	$TOTAL_USERSESSIONS += $row['usersessions'];
 }
 
+ksort($data_line);
 $MAX = (count($data_max) > 0) ? max($data_max) : 0;
 foreach ($data_line as $k => $v)
 {

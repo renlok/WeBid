@@ -355,7 +355,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			$month = date('m', $Auction['ends'] + $system->tdiff);
 			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
-			include INCLUDE_PATH . 'email/endauction_mutli_item_win.php';
+			include INCLUDE_PATH . 'email/endauction_multi_item_win.php';
 			include INCLUDE_PATH . 'email/seller_partial_winner.php';
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)

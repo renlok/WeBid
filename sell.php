@@ -572,9 +572,13 @@ switch ($_SESSION['action'])
 				{
 					$a_starts = date($gmdate_string, $a_starts);
 				}
-				if (strpos($a_ends, '-') === false)
+				if (empty($a_ends))
 				{
-					$a_ends = gmdate($gmdate_string, $a_ends);
+					$TPL_end_date = date($gmdate_string, $system->ctime + (3600 * 24));
+				}
+				elseif (strpos($a_ends, '-') === false)
+				{
+					$a_ends = date($gmdate_string, $a_ends);
 				}
 				$TPL_start_date = $a_starts;
 				$TPL_end_date = $a_ends;

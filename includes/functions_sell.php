@@ -459,10 +459,6 @@ function get_fee($minimum_bid, $just_fee = true)
 				{
 					$past_fees[$fee] += $value;
 				}
-				else
-				{
-					$past_fees[$fee] = $value;
-				}
 			}
 		}
 

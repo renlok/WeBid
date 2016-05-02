@@ -17,7 +17,6 @@ include INCLUDE_PATH . 'membertypes.inc.php';
 
 if(!isset($_GET['user_id']))
 {
-	$user_id = $_GET['user_id'];
 	if (!$user->checkAuth())
 	{
 		$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
@@ -29,6 +28,10 @@ if(!isset($_GET['user_id']))
 	{
 		$user_id = $user->user_data['id'];
 	}
+}
+else
+{
+	$user_id = $_GET['user_id'];
 }
 
 if (is_string($user_id))

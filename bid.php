@@ -17,7 +17,7 @@ include INCLUDE_PATH . 'datacheck.inc.php';
 
 $NOW = time();
 $id = intval($_REQUEST['id']);
-$bid = $_POST['bid'];
+$bid = (isset($_POST['bid'])) ? $_POST['bid'] : 0;
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
 $bidding_ended = false;
 

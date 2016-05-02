@@ -39,7 +39,8 @@ if (isset($_GET['action']) && !isset($_POST['action']))
 				'CAN_BUY_N' => ($group['can_buy'] == 0) ? 'selected="true"' : '',
 				'AUTO_JOIN_Y' => ($group['auto_join'] == 1) ? 'selected="true"' : '',
 				'AUTO_JOIN_N' => ($group['auto_join'] == 0) ? 'selected="true"' : '',
-				'USER_COUNT' => $group['count']
+				'USER_COUNT' => $group['count'],
+				'NOT_DEFAULT_GROUP' => ($group['auto_join'] == 0)
 				));
 		$edit = true;
 	}
@@ -58,7 +59,7 @@ if (isset($_POST['action']))
 	// check other groups are auto-join as every user needs a group
 	if ($_POST['auto_join'] == 0)
 	{
-		$query = "SELECT * FROM ". $DBPrefix . "groups WHERE auto_join = 1";
+		$query = "SELECT id FROM ". $DBPrefix . "groups WHERE auto_join = 1";
 		$db->direct_query($query);
 		$auto_join = false;
 		while ($row = $db->fetch())
@@ -68,11 +69,14 @@ if (isset($_POST['action']))
 				$auto_join = true;
 			}
 		}
-		$ERR = $ERR_050;
+		if (!$auto_join)
+		{
+			$ERR = $ERR_050;
+		}
 	}
-	if ($_GET['action'] == 'edit' || (isset($_GET['id']) && is_numeric($_GET['id'])))
+	if (($_GET['action'] == 'edit' || (isset($_GET['id']) && is_numeric($_GET['id']))) && !isset($ERR))
 	{
-		if ($_GET['action'] == 'edit' && isset($_POST['remove']) && $_POST['remove'] == 'y')
+		if ($_GET['action'] == 'edit' && isset($_POST['remove']))
 		{
 			// prevent removal of webid default Group 1 or Group 2
 			if(intval($_POST['id']) == 1 || intval($_POST['id']) == 2)

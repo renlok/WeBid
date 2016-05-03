@@ -158,37 +158,35 @@ else
 			// just load the image
 			load_image($fromfile, $img['mime'], $image_type, $output_type);
 		}
+		else
+		{
+			// check image orientation
+			if ($img[0] < $img[1])
+			{
+				$h = $w;
+				$ratio = floatval($img[1] / $h);
+				$w = ceil($img[0] / $ratio);
+			}
+			else
+			{
+				$ratio = floatval($img[0] / $w);
+				$h = ceil($img[1] / $ratio);
+			}
+		
+			$ou = imagecreatetruecolor($w, $h);
+			imagealphablending($ou, false);
+			$funcall = "imagecreatefrom$image_type";
+			imagecopyresampled($ou, $funcall($fromfile), 0, 0, 0, 0, $w, $h, $img[0], $img[1]);
+			$funcall = "image$output_type";
+			$funcall($ou, UPLOAD_PATH . 'cache/' . $_w . '-' . md5($fromfile));
+			header('Content-type: ' . $img['mime']);
+			$funcall($ou);
+			exit;
+		}
 	}
 	else
-	{
-		$nomanage = true;
-	}
-
-	if ($nomanage)
 	{
 		ErrorPNG($ERR_710);
 		exit;
 	}
-
-	// check image orientation
-	if ($img[0] < $img[1])
-	{
-		$h = $w;
-		$ratio = floatval($img[1] / $h);
-		$w = ceil($img[0] / $ratio);
-	}
-	else
-	{
-		$ratio = floatval($img[0] / $w);
-		$h = ceil($img[1] / $ratio);
-	}
-
-	$ou = imagecreatetruecolor($w, $h);
-	imagealphablending($ou, false);
-	$funcall = "imagecreatefrom$image_type";
-	imagecopyresampled($ou, $funcall($fromfile), 0, 0, 0, 0, $w, $h, $img[0], $img[1]);
-	$funcall = "image$output_type";
-	$funcall($ou, UPLOAD_PATH . 'cache/' . $_w . '-' . md5($fromfile));
-	header('Content-type: ' . $img['mime']);
-	$funcall($ou);
 }

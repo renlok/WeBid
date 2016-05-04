@@ -21,7 +21,7 @@ include 'loggedin.inc.php';
 // Retrieve data
 $query = "SELECT * FROM " . $DBPrefix . "currentplatforms WHERE month = :month AND year = :year ORDER BY counter DESC";
 $params = array();
-$params[] = array(':month', date('n'), 'int');
+$params[] = array(':month', date('m'), 'int');
 $params[] = array(':year', date('Y'), 'int');
 $db->query($query, $params);
 

@@ -17,6 +17,7 @@ include 'common.php';
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_sold.php';
 	header('location: user_login.php');
 	exit;
@@ -51,7 +52,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$WILLEND = time() + ($AUCTION['duration'] * 24 * 60 * 60);
 			$suspend = 0;
 
-			if ($system->SETTINGS['fees'] == 'y')
+			if ($system->SETTINGS['fees'] == 'y' && $relist_fee > 0)
 			{
 				if ($system->SETTINGS['fee_type'] == 1)
 				{

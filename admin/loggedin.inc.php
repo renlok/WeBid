@@ -71,7 +71,7 @@ else
 	{
 		$template->assign_block_vars('langs', array(
 				'LANG' => $value,
-				'B_DEFAULT' => ($lang == $system->SETTINGS['defaultlanguage'])
+				'B_DEFAULT' => ($lang == $language)
 				));
 	}
 }

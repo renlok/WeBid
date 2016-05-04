@@ -17,12 +17,10 @@ include 'common.php';
 
 $NOW = time();
 
-if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
+if (isset($_SESSION['LOGIN_MESSAGE']))
 {
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('location: ' . $sslurl . 'user_login.php');
-	exit;
+	$ERR = $_SESSION['LOGIN_MESSAGE'];
+	unset($_SESSION['LOGIN_MESSAGE']);
 }
 
 if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password']))

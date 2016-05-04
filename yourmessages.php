@@ -17,6 +17,7 @@ include 'common.php';
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourmessages.php';
 	header('location: user_login.php');
 	exit;
@@ -31,9 +32,8 @@ $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $params[] = array(':message_id', $messageid, 'int');
 $db->query($query, $params);
-$check = $db->numrows();
 
-if ($check == 0)
+if ($db->numrows() == 0)
 {
 	$_SESSION['message'] = $ERR_070;
 	header('location: mail.php');

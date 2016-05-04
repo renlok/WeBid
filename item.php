@@ -19,7 +19,7 @@ include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 // Get parameters from the URL
 $id = (isset($_SESSION['CURRENT_ITEM'])) ? intval($_SESSION['CURRENT_ITEM']) : 0;
 $id = (isset($_REQUEST['id'])) ? intval($_REQUEST['id']) : 0;
-if (!is_numeric($id)) $id = 0;
+
 $bidderarray = array();
 $bidderarraynum = 1;
 $catscontrol = new MPTTcategories();
@@ -211,7 +211,7 @@ foreach ($db->fetchall() as $bidrec)
 {
 	if (!isset($bidderarray[$bidrec['nick']]))
 	{
-		if ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user'] && $user->user_data['id'] != $bidrec['bidder'])
+		if ($system->SETTINGS['buyerprivacy'] == 'y' && (!$user->logged_in || ($user->user_data['id'] != $auction_data['user'] && $user->user_data['id'] != $bidrec['bidder'])))
 		{
 			$bidderarray[$bidrec['nick']] = $MSG['176'] . ' ' . $bidderarraynum;
 			$bidderarraynum++;
@@ -437,9 +437,9 @@ if ($total_rate > 0)
 // Pictures Gellery
 $K = 0;
 $UPLOADED_PICTURES = array();
-if (file_exists(UPLOAD_FOLDER . $id))
+if (is_dir(UPLOAD_PATH . $id))
 {
-	$dir = @opendir(UPLOAD_FOLDER . $id);
+	$dir = opendir(UPLOAD_FOLDER . $id);
 	if ($dir)
 	{
 		while ($file = @readdir($dir))
@@ -450,7 +450,7 @@ if (file_exists(UPLOAD_FOLDER . $id))
 				$K++;
 			}
 		}
-		@closedir($dir);
+		closedir($dir);
 	}
 	$GALLERY_DIR = $id;
 
@@ -472,51 +472,31 @@ if (file_exists(UPLOAD_FOLDER . $id))
 // payment methods
 $payment = explode(', ', $auction_data['payment']);
 $payment_methods = '';
-$query = "SELECT * FROM " . $DBPrefix . "gateways";
+$query = "SELECT gateway_active, is_gateway, name, displayname FROM " . $DBPrefix . "payment_options";
 $db->direct_query($query);
-$gateways_data = $db->result();
-$gateway_list = explode(',', $gateways_data['gateways']);
 $p_first = true;
-foreach ($gateway_list as $v)
+while ($payment_method = $db->fetch())
 {
-	$v = strtolower($v);
-	if ($gateways_data[$v . '_active'] == 1 && _in_array($v, $payment))
+	if ($payment_method['gateway_active'] == 1 || $payment_method['is_gateway'] == 0)
 	{
-		if (!$p_first)
+		if (in_array($payment_method['name'], $payment))
 		{
-			$payment_methods .= ', ';
+			if (!$p_first)
+			{
+				$payment_methods .= ', ';
+			}
+			else
+			{
+				$p_first = false;
+			}
+			$payment_methods .= $payment_method['displayname'];
 		}
-		else
-		{
-			$p_first = false;
-		}
-		$payment_methods .= $system->SETTINGS['gateways'][$v];
-	}
-}
-
-$payment_options = unserialize($system->SETTINGS['payment_options']);
-foreach ($payment_options as $k => $v)
-{
-	if (_in_array($k, $payment))
-	{
-		if (!$p_first)
-		{
-			$payment_methods .= ', ';
-		}
-		else
-		{
-			$p_first = false;
-		}
-		$payment_methods .= $v;
 	}
 }
 
 $bn_link = (!$has_ended) ? ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $id . '"><img border="0" align="absbottom" alt="' . $MSG['496'] . '" src="' . get_lang_img('buy_it_now.gif') . '"></a>' : '';
 
 $page_title = $system->uncleanvars($auction_data['title']);
-
-$sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
-$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
 
 $shipping = '';
 if ($auction_data['shipping'] == 1)
@@ -533,7 +513,7 @@ $template->assign_vars(array(
 		'AUCTION_DESCRIPTION' => $auction_data['description'],
 		'PIC_URL' => UPLOAD_FOLDER . $id . '/' . $auction_data['pict_url'],
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $MSG['1152'],
-		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['shipping_cost_additional']),
+		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['additional_shipping_cost']),
 		'COUNTRY' => $auction_data['country'],
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
@@ -578,7 +558,6 @@ $template->assign_vars(array(
 
 		'YOURBIDMSG' => (isset($yourbidmsg)) ? $yourbidmsg : '',
 		'YOURBIDCLASS' => (isset($yourbidclass)) ? $yourbidclass : '',
-		'BIDURL' => $sslurl,
 
 		'B_HASENDED' => $has_ended,
 		'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
@@ -597,10 +576,10 @@ $template->assign_vars(array(
 		'B_HASBUYER' => (count($hbidder_data) > 0),
 		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
 		'B_HAS_QUESTIONS' => ($num_questions > 0),
-		'B_CAN_BUY' => $user->can_buy && !($start > time()),
+		'B_CAN_BUY' => ($user->can_buy || (!$user->logged_in && $system->SETTINGS['bidding_visable_to_guest'])) && !($start > time()),
 		'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
 		'B_SHOWENDTIME' => $showendtime,
-		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['shipping_cost_additional'] > 0)
+		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['additional_shipping_cost'] > 0)
 		));
 
 include 'header.php';

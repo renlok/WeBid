@@ -83,17 +83,20 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 	}
 
 	// Delete auctions images
-	if ($dir = @opendir(UPLOAD_PATH . $auc_id))
+	if (is_dir(UPLOAD_PATH . $auc_id))
 	{
-		while ($file = readdir($dir))
+		if ($dir = opendir(UPLOAD_PATH . $auc_id))
 		{
-			if ($file != '.' && $file != '..')
+			while ($file = readdir($dir))
 			{
-				@unlink(UPLOAD_PATH . $auc_id . '/' . $file);
+				if ($file != '.' && $file != '..')
+				{
+					@unlink(UPLOAD_PATH . $auc_id . '/' . $file);
+				}
 			}
+			closedir($dir);
+			rmdir(UPLOAD_PATH . $auc_id);
 		}
-		closedir($dir);
-		@rmdir(UPLOAD_PATH . $auc_id);
 	}
 
 	$URL = $_SESSION['RETURN_LIST'];

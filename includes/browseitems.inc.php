@@ -42,7 +42,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 				'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
 				'BID' => $row['current_bid'],
 				'BIDFORM' => $system->print_money($row['current_bid']),
-				'CLOSES' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
+				'CLOSES' => ($difference < 1728000) ? FormatTimeLeft($difference) : ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 				'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
 				'B_BOLD' => ($row['bold'])
@@ -72,7 +72,7 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 			'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
 			'BID' => $row['current_bid'],
 			'BIDFORM' => $system->print_money($row['current_bid']),
-			'CLOSES' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
+			'CLOSES' => ($difference < 1728000) ? FormatTimeLeft($difference) : ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 			'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
 			'B_BOLD' => ($row['bold'])

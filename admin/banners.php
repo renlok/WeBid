@@ -27,12 +27,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['600'];
 }
 
-loadblock($MSG['597'], '', 'batch', 'banners', $system->SETTINGS['banners'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['597'], $MSG['_0014'], 'batch', 'banners', $system->SETTINGS['banners'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TYPENAME' => $MSG['25_0011'],
-		'PAGENAME' => $MSG['5205']
+		'PAGENAME' => $MSG['_0008'] . ' : ' . $MSG['5205']
 		));
 
 include 'header.php';

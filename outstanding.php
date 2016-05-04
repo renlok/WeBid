@@ -17,6 +17,7 @@ include 'common.php';
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'outstanding.php';
 	header('location: user_login.php');
 	exit;
@@ -41,8 +42,8 @@ $db->query($query, $params);
 $TOTALAUCTIONS = $db->result('COUNT');
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
-$query = "SELECT w.id, w.winner, w.auc_title, w.shipping_cost, w.bid, w.qty, w.auction As auc_id, a.shipping_cost_additional, a.shipping FROM " . $DBPrefix . "winners w
-		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
+$query = "SELECT w.id, w.winner, w.auc_title, w.auc_shipping_cost, a.shipping_cost, w.bid, w.qty, w.auction As auc_id, a.additional_shipping_cost, a.shipping FROM " . $DBPrefix . "winners w
+		JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 		WHERE w.paid = 0 AND w.winner = :user_id
 		LIMIT :OFFSET, :per_page";
 $params = array();
@@ -53,11 +54,11 @@ $db->query($query, $params);
 
 while ($row = $db->fetch())
 {
-	$shipping_data = calculate_shipping_data($row, false);
+	$shipping_data = calculate_shipping_data($row, $row['qty'], false);
 	$template->assign_block_vars('to_pay', array(
 			'ID' => $row['id'],
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['auc_id'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => $system->uncleanvars($row['auc_title']),
 			'PAY_SHIPPING' => ($row['shipping'] == 1),
 			'SHIPPING' => $system->print_money($shipping_data['shipping_cost']),
 			'ADDITIONAL_SHIPPING_COST' => $system->print_money($shipping_data['additional_shipping_cost']),
@@ -71,7 +72,7 @@ while ($row = $db->fetch())
 			'AUC_ID' => $row['auc_id'],
 			'WINID'=> $row['id'],
 
-			'B_NOTITLE' => (empty($row['title']))
+			'B_NOTITLE' => (empty($row['auc_title']))
 			));
 }
 

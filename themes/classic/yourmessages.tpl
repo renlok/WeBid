@@ -9,7 +9,7 @@
 			</tr>
 			<tr>
 				<td>{L_340}:</td>
-				<td>{SENDERNAME}<br>{SENT}</td>
+				<td>{SENDERNAME} - <span class="small">{SENT}</span></td>
 			</tr>
 			<tr>
 				<td>{L_333}:</td>

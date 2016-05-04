@@ -23,6 +23,7 @@ if (!(isset($_GET['hash']) && $_SESSION['INVOICE_RETURN'] == 'admin/invoice.php'
 	// If user is not logged in redirect to login page
 	if (!$user->checkAuth())
 	{
+		$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 		header('location: user_login.php');
 		exit;
 	}
@@ -48,11 +49,11 @@ else
 	}
 }
 
-$vat = 20; // NEEDS TO BE SET TO AN ADMIN OPTION
+$vat = 20; // set default
 if ($auction)
 {
 	// get auction data
-	$query = "SELECT w.id, w.winner, w.closingdate As date, w.auction AS auc_id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, a.shipping_terms, w.bid, w.qty, w.seller As seller_id, a.tax, a.taxinc
+	$query = "SELECT w.id, w.winner, w.closingdate As date, w.auc_title, w.auc_shipping_cost, w.auction AS auc_id, a.title, a.shipping_cost, a.additional_shipping_cost, a.shipping, a.shipping_terms, w.bid, w.qty, w.seller As seller_id, a.tax, a.taxinc
 			FROM " . $DBPrefix . "winners w
 			LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 			WHERE a.id = :auc_id AND w.id = :winner_id";
@@ -80,7 +81,7 @@ if ($auction)
 	$winner = getAddressWinner($data['winner']);
 	$vat = getTax(true, $winner['country'], $seller['country']);
 	$title = $system->SETTINGS['sitename'] . ' - ' . $system->uncleanvars($data['title']);
-	$additional_shipping = $data['shipping_cost_additional'] * ($data['qty'] - 1);
+	$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
 	$shipping_cost = ($data['shipping'] == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
 	$paysubtotal = ($data['bid']* $data['qty']);
 	$payvalue = $paysubtotal + $shipping_cost;
@@ -177,7 +178,7 @@ else
 
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR,
-		'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo']
+		'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'],
 		'CHARSET' => $CHARSET,
 		'LANGUAGE' => $language,
 		'SENDER' => $seller['nick'],

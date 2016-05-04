@@ -16,6 +16,7 @@ include 'common.php';
 
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');
 	exit;
@@ -46,13 +47,15 @@ if (!isset($_POST['action']))
 		$RELISTEDAUCTION = $db->result();
 		$_SESSION['SELL_starts']		= '';
 		$_SESSION['SELL_start_now'] 	= '1';
+		$_SESSION['SELL_ends']			= '';
+		$_SESSION['SELL_custom_end']	= 0;
 		$_SESSION['SELL_title']			= $system->uncleanvars($RELISTEDAUCTION['title']);
 		$_SESSION['SELL_subtitle']		= $system->uncleanvars($RELISTEDAUCTION['subtitle']);
 		$_SESSION['SELL_description']	= $RELISTEDAUCTION['description'];
 		$_SESSION['SELL_atype']			= $RELISTEDAUCTION['auction_type'];
 		$_SESSION['SELL_iquantity']		= $RELISTEDAUCTION['initial_quantity'];
 		$_SESSION['SELL_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost']);
-		$_SESSION['SELL_additional_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost_additional']);
+		$_SESSION['SELL_additional_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['additional_shipping_cost']);
 		$_SESSION['SELL_minimum_bid']	= $system->print_money_nosymbol($RELISTEDAUCTION['minimum_bid']);
 		$_SESSION['SELL_sellcat1']		= $RELISTEDAUCTION['category'];
 		$_SESSION['SELL_sellcat2']		= $RELISTEDAUCTION['secondcat'];
@@ -102,17 +105,10 @@ if (!isset($_POST['action']))
 			$_SESSION['SELL_increment']			= 1;
 			$_SESSION['SELL_customincrement']	= 0;
 		}
-		if (isset($_GET['relist']))
-		{
-			$_SESSION['SELL_auction_id']	= $auc_id;
-			$_SESSION['SELL_action']		= 'relist';
-		}
-		else
-		{
-			$_SESSION['SELL_auction_id']    = '';
-			$_SESSION['SELL_action']    = '';
-			$_SESSION['action']        = '';
-		}
+		$_SESSION['SELL_auction_id']    = '';
+		$_SESSION['SELL_action']    = '';
+		$_SESSION['action']        = '';
+		$_SESSION['SELL_caneditstartdate'] = true;
 
 		$_SESSION['SELL_pict_url']		= $system->uncleanvars($RELISTEDAUCTION['pict_url']);
 		$_SESSION['SELL_pict_url_temp']	= str_replace('thumb-', '', $RELISTEDAUCTION['pict_url']);

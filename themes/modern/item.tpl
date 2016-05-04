@@ -209,7 +209,7 @@ $(document).ready(function() {
 						<div class="well well-sm">
 							<div class="row">
 	<!-- IF B_NOTBNONLY -->
-								<form name="bid" action="{BIDURL}bid.php" method="post">
+								<form name="bid" action="{SITEURL}bid.php" method="post">
 									<div class="form-group">
 										<div class="col-md-3 col-md-offset-2">
 		<!-- IF QTY gt 1 -->
@@ -234,7 +234,7 @@ $(document).ready(function() {
 								</form>
 	<!-- ELSE -->
 								<div class="col-md-8 col-md-offset-2">
-									{BUYNOW} <a class="btn btn-success btn-block" href="{BIDURL}buy_now.php?id={ID}">{L_496}</a>
+									{BUYNOW} <a class="btn btn-success btn-block" href="{SITEURL}buy_now.php?id={ID}">{L_496}</a>
 								</div>
 	<!-- ENDIF -->
 							</div>
@@ -271,7 +271,7 @@ $(document).ready(function() {
 					</div>
 					<div class="panel-body">
 	<!-- BEGIN questions -->
-						<span class="glyphicon glyphicon-comment" aria-hidden="true" style="padding-right: 10px;"></span>{L_5239}
+						<span class="glyphicon glyphicon-comment" aria-hidden="true" style="padding-right: 10px;"></span>
 						<div class="well well-sm">
 		<!-- BEGIN conv -->
 							<p><span class="text-muted"><small>{questions.conv.BY_WHO}:</small></span> {questions.conv.MESSAGE}</p>

@@ -29,7 +29,7 @@ function SubmitBoxes(N)
 				<tr>
 <!-- BEGIN boxes -->
 					<td align="center" style="width:{boxes.PERCENT}%;">
-						<select name="cat{boxes.I}" class="box" size="15" onClick="SubmitBoxes({boxes.I})" style="width:230px;">
+						<select name="cat{boxes.I}" class="box" size="15" onchange="SubmitBoxes({boxes.I})" style="width:230px;">
 	<!-- BEGIN cats -->
 							<option value="{boxes.cats.K}" {boxes.cats.SELECTED}>{boxes.cats.CATNAME}</option>
 	<!-- END cats -->

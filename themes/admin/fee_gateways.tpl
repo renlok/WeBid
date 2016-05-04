@@ -19,14 +19,17 @@
 						</tr>
 						<tr>
 							<td width="50%">
-								<a href="{gateways.WEBSITE}" target="_blank">{gateways.ADDRESS_NAME}</a>:<br><input type="text" name="{gateways.PLAIN_NAME}_address" value="{gateways.ADDRESS}" size="50">
+								<input type="hidden" name="{gateways.PLAIN_NAME}[id]" value="{gateways.GATEWAY_ID}">
+								<a href="{gateways.WEBSITE}" target="_blank">{gateways.ADDRESS_NAME}</a>:<br><input type="text" name="{gateways.PLAIN_NAME}[address]" value="{gateways.ADDRESS}" size="50">
 	<!-- IF gateways.B_PASSWORD -->
-								<p>{gateways.ADDRESS_PASS}:<br><input type="text" name="{gateways.PLAIN_NAME}_password" value="{gateways.PASSWORD}" size="50"></p>
+								<p>{gateways.PASSWORD_NAME}:<br><input type="text" name="{gateways.PLAIN_NAME}[password]" value="{gateways.PASSWORD}" size="50"></p>
+	<!-- ELSE -->
+								<input type="hidden" name="{gateways.PLAIN_NAME}[password]" value="">
 	<!-- ENDIF -->
 							</td>
 							<td>
-								<p><input type="checkbox" name="{gateways.PLAIN_NAME}_required"{gateways.REQUIRED}> {L_446}</p>
-								<p><input type="checkbox" name="{gateways.PLAIN_NAME}_active"{gateways.ENABLED}> {L_447}</p>
+								<p><input type="checkbox" name="{gateways.PLAIN_NAME}[required]"{gateways.REQUIRED}> {L_446}</p>
+								<p><input type="checkbox" name="{gateways.PLAIN_NAME}[active]"{gateways.ENABLED}> {L_447}</p>
 							</td>
 						</tr>
 <!-- END gateways -->

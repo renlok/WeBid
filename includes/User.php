@@ -59,6 +59,7 @@ class User
 					$_SESSION['WEBID_LOGGED_IN'] 		= $id;
 					$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($user_data['password'], $user_data['hash']);
 					$_SESSION['WEBID_LOGGED_PASS'] 		= $user_data['password'];
+					$this->logged_in = true;
 					return true;
 				}
 			}
@@ -85,6 +86,7 @@ class User
 				if (strspn($user_data['password'], $user_data['hash']) == $_SESSION['WEBID_LOGGED_NUMBER'])
 				{
 					$this->user_data = $user_data;
+					$this->logged_in = true;
 					return true;
 				}
 			}

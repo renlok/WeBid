@@ -10,7 +10,7 @@
 			</div>
 <!-- ENDIF -->
 <!-- IF B_NOTBOUGHT -->
-			<form action="{ASSLURL}buy_now.php?id={ID}" method="post">
+			<form action="{SITEURL}buy_now.php?id={ID}" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 <!-- ENDIF -->
 				<table border=0 width="100%" cellspacing="0" cellpadding="4">
@@ -61,14 +61,14 @@
 				</div>
 			</form>
 <!-- ELSE -->
-			<table>
+			<table width="100%">
 				<tr>
-					<td align="right" width="40%"><b>{L_893}:</b></td>
+					<td align="right" width="50%"><b>{L_893}:</b></td>
 					<td>{BN_TOTAL}</td>
 				</tr>
 	<!-- IF SHIPPINGCOST ne 0 -->
 				<tr>
-					<td align="right" width="40%"><b>{L_023}:</b></td>
+					<td align="right" width="50%"><b>{L_023}:</b></td>
 					<td>{SHIPPINGCOST}</td>
 				</tr>
 	<!-- ENDIF -->

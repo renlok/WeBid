@@ -189,9 +189,9 @@ if ($installed_version == '1.0.6')
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userfees`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
 		`useracc_id` int(11) NOT NULL AUTO_INCREMENT,
-		`auc_id` int(15) NOT NULL default '0',
-		`user_id` int(15) NOT NULL default '0',
-		`date` int(15) NOT NULL default '0',
+		`auc_id` int(11) NOT NULL default '0',
+		`user_id` int(11) NOT NULL default '0',
+		`date` int(11) NOT NULL default '0',
 		`setup` double(8,2) NOT NULL default '0',
 		`featured` double(8,2) NOT NULL default '0',
 		`bold` double(8,2) NOT NULL default '0',
@@ -350,10 +350,59 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "CREATE TABLE `" . $DBPrefix . "settingsv2` (
 		`fieldname` VARCHAR(30) NOT NULL,
 		`fieldtype` VARCHAR(10) NOT NULL,
-		`value` VARCHAR(255) NOT NULL,
+		`value` text NOT NULL,
 		`modifieddate` INT(11) NOT NULL,
 		`modifiedby` INT(32) NOT NULL,
 		PRIMARY KEY(`fieldname`)
 		)";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "payment_options`;";
+	$query[] = "CREATE TABLE `" . $DBPrefix . "payment_options` (
+	  `id` int(5) NOT NULL AUTO_INCREMENT,
+	  `name` varchar(50) NOT NULL default '',
+	  `displayname` varchar(50) NOT NULL default '',
+	  `is_gateway` tinyint(1) NOT NULL default '0',
+	  `gateway_admin_address` varchar(50) NOT NULL default '',
+	  `gateway_admin_password` varchar(50) NOT NULL default '',
+	  `gateway_required` tinyint(1) NOT NULL default '0',
+	  `gateway_active` tinyint(1) NOT NULL default '0',
+	  PRIMARY KEY(`id`)
+	) ;";
+	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('banktransfer', 'Bank Transfer', 0);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('cheque', 'Cheque', 0);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('paypal', 'PayPal', 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('authnet', 'Authorize.net', 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('worldpay', 'WorldPay', 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('moneybookers', 'Moneybookers', 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('toocheckout', '2Checkout', 1);";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "usergateways`;";
+	$query[] = "CREATE TABLE `" . $DBPrefix . "usergateways` (
+	  `id` int(5) NOT NULL AUTO_INCREMENT,
+	  `gateway_id` int(5) NOT NULL,
+	  `user_id` int(11) NOT NULL,
+	  `address` varchar(50) NOT NULL default '',
+	  `password` varchar(50) NOT NULL default '',
+	  PRIMARY KEY(`id`)
+	) ;";
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('bidding_visable_to_guest', 'bool', '1', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('email_admin_on_signup', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('user_request_seller_permission', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_blocked_email_enabled', 'bool', '1', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('spam_blocked_email_domains', 'str', \"0-mail.com\n0815.ru\n0clickemail.com\n0wnd.net\n0wnd.org\n10minutemail.com\n20minutemail.com\n2prong.com\n30minutemail.com\n3d-painting.com\n4warding.com\n4warding.net\n4warding.org\n60minutemail.com\n675hosting.com\n675hosting.net\n675hosting.org\n6url.com\n75hosting.com\n75hosting.net\n75hosting.org\n7tags.com\n9ox.net\na-bc.net\nafrobacon.com\najaxapp.net\namilegit.com\namiri.net\namiriindustries.com\nanonbox.net\nanonymbox.com\nantichef.com\nantichef.net\nantispam.de\nbaxomale.ht.cx\nbeefmilk.com\nbinkmail.com\nbio-muesli.net\nbobmail.info\nbodhi.lawlita.com\nbofthew.com\nbrefmail.com\nbroadbandninja.com\nbsnow.net\nbugmenot.com\nbumpymail.com\ncasualdx.com\ncentermail.com\ncentermail.net\nchogmail.com\nchoicemail1.com\ncool.fr.nf\ncorreo.blogos.net\ncosmorph.com\ncourriel.fr.nf\ncourrieltemporaire.com\ncubiclink.com\ncurryworld.de\ncust.in\ndacoolest.com\ndandikmail.com\ndayrep.com\ndeadaddress.com\ndeadspam.com\ndespam.it\ndespammed.com\ndevnullmail.com\ndfgh.net\ndigitalsanctuary.com\ndiscardmail.com\ndiscardmail.de\nDisposableemailaddresses:emailmiser.com\ndisposableaddress.com\ndisposeamail.com\ndisposemail.com\ndispostable.com\ndm.w3internet.co.ukexample.com\ndodgeit.com\ndodgit.com\ndodgit.org\ndonemail.ru\ndontreg.com\ndontsendmespam.de\ndump-email.info\ndumpandjunk.com\ndumpmail.de\ndumpyemail.com\ne4ward.com\nemail60.com\nemaildienst.de\nemailias.com\nemailigo.de\nemailinfive.com\nemailmiser.com\nemailsensei.com\nemailtemporario.com.br\nemailto.de\nemailwarden.com\nemailx.at.hm\nemailxfer.com\nemz.net\nenterto.com\nephemail.net\netranquil.com\netranquil.net\netranquil.org\nexplodemail.com\nfakeinbox.com\nfakeinformation.com\nfastacura.com\nfastchevy.com\nfastchrysler.com\nfastkawasaki.com\nfastmazda.com\nfastmitsubishi.com\nfastnissan.com\nfastsubaru.com\nfastsuzuki.com\nfasttoyota.com\nfastyamaha.com\nfilzmail.com\nfizmail.com\nfr33mail.info\nfrapmail.com\nfront14.org\nfux0ringduh.com\ngarliclife.com\nget1mail.com\nget2mail.fr\ngetonemail.com\ngetonemail.net\nghosttexter.de\ngirlsundertheinfluence.com\ngishpuppy.com\ngowikibooks.com\ngowikicampus.com\ngowikicars.com\ngowikifilms.com\ngowikigames.com\ngowikimusic.com\ngowikinetwork.com\ngowikitravel.com\ngowikitv.com\ngreat-host.in\ngreensloth.com\ngsrv.co.uk\nguerillamail.biz\nguerillamail.com\nguerillamail.net\nguerillamail.org\nguerrillamail.biz\nguerrillamail.com\nguerrillamail.de\nguerrillamail.net\nguerrillamail.org\nguerrillamailblock.com\nh.mintemail.com\nh8s.org\nhaltospam.com\nhatespam.org\nhidemail.de\nhochsitze.com\nhotpop.com\nhulapla.de\nieatspam.eu\nieatspam.info\nihateyoualot.info\niheartspam.org\nimails.info\ninboxclean.com\ninboxclean.org\nincognitomail.com\nincognitomail.net\nincognitomail.org\ninsorg-mail.info\nipoo.org\nirish2me.com\niwi.net\njetable.com\njetable.fr.nf\njetable.net\njetable.org\njnxjn.com\njunk1e.com\nkasmail.com\nkaspop.com\nkeepmymail.com\nkillmail.com\nkillmail.net\nkir.ch.tc\nklassmaster.com\nklassmaster.net\nklzlk.com\nkulturbetrieb.info\nkurzepost.de\nletthemeatspam.com\nlhsdv.com\nlifebyfood.com\nlink2mail.net\nlitedrop.com\nlol.ovpn.to\nlookugly.com\nlopl.co.cc\nlortemail.dk\nlr78.com\nm4ilweb.info\nmaboard.com\nmail-temporaire.fr\nmail.by\nmail.mezimages.net\nmail2rss.org\nmail333.com\nmail4trash.com\nmailbidon.com\nmailblocks.com\nmailcatch.com\nmaileater.com\nmailexpire.com\nmailfreeonline.com\nmailin8r.com\nmailinater.com\nmailinator.com\nmailinator.net\nmailinator2.com\nmailincubator.com\nmailme.ir\nmailme.lv\nmailmetrash.com\nmailmoat.com\nmailnator.com\nmailnesia.com\nmailnull.com\nmailshell.com\nmailsiphon.com\nmailslite.com\nmailzilla.com\nmailzilla.org\nmbx.cc\nmega.zik.dj\nmeinspamschutz.de\nmeltmail.com\nmessagebeamer.de\nmierdamail.com\nmintemail.com\nmoburl.com\nmoncourrier.fr.nf\nmonemail.fr.nf\nmonmail.fr.nf\nmsa.minsmail.com\nmt2009.com\nmx0.wwwnew.eu\nmycleaninbox.net\nmypartyclip.de\nmyphantomemail.com\nmyspaceinc.com\nmyspaceinc.net\nmyspaceinc.org\nmyspacepimpedup.com\nmyspamless.com\nmytrashmail.com\nneomailbox.com\nnepwk.com\nnervmich.net\nnervtmich.net\nnetmails.com\nnetmails.net\nnetzidiot.de\nneverbox.com\nno-spam.ws\nnobulk.com\nnoclickemail.com\nnogmailspam.info\nnomail.xl.cx\nnomail2me.com\nnomorespamemails.com\nnospam.ze.tc\nnospam4.us\nnospamfor.us\nnospamthanks.info\nnotmailinator.com\nnowmymail.com\nnurfuerspam.de\nnus.edu.sg\nnwldx.com\nobjectmail.com\nobobbo.com\noneoffemail.com\nonewaymail.com\nonline.ms\noopi.org\nordinaryamerican.net\notherinbox.com\nourklips.com\noutlawspam.com\novpn.to\nowlpic.com\npancakemail.com\npimpedupmyspace.com\npjjkp.com\npolitikerclub.de\npoofy.org\npookmail.com\nprivacy.net\nproxymail.eu\nprtnx.com\npunkass.com\nPutThisInYourSpamDatabase.com\nqq.com\nquickinbox.com\nrcpt.at\nrecode.me\nrecursor.net\nregbypass.com\nregbypass.comsafe-mail.net\nrejectmail.com\nrklips.com\nrmqkr.net\nrppkn.com\nrtrtr.com\ns0ny.net\nsafe-mail.net\nsafersignup.de\nsafetymail.info\nsafetypost.de\nsandelf.de\nsaynotospams.com\nselfdestructingmail.com\nSendSpamHere.com\nsharklasers.com\nshiftmail.com\nshitmail.me\nshortmail.net\nsibmail.com\nskeefmail.com\nslaskpost.se\nslopsbox.com\nsmellfear.com\nsnakemail.com\nsneakemail.com\nsofimail.com\nsofort-mail.de\nsogetthis.com\nsoodonims.com\nspam.la\nspam.su\nspamavert.com\nspambob.com\nspambob.net\nspambob.org\nspambog.com\nspambog.de\nspambog.ru\nspambox.info\nspambox.irishspringrealty.com\nspambox.us\nspamcannon.com\nspamcannon.net\nspamcero.com\nspamcon.org\nspamcorptastic.com\nspamcowboy.com\nspamcowboy.net\nspamcowboy.org\nspamday.com\nspamex.com\nspamfree24.com\nspamfree24.de\nspamfree24.eu\nspamfree24.info\nspamfree24.net\nspamfree24.org\nspamgourmet.com\nspamgourmet.net\nspamgourmet.org\nSpamHereLots.com\nSpamHerePlease.com\nspamhole.com\nspamify.com\nspaminator.de\nspamkill.info\nspaml.com\nspaml.de\nspammotel.com\nspamobox.com\nspamoff.de\nspamslicer.com\nspamspot.com\nspamthis.co.uk\nspamthisplease.com\nspamtrail.com\nspeed.1s.fr\nsupergreatmail.com\nsupermailer.jp\nsuremail.info\nteewars.org\nteleworm.com\ntempalias.com\ntempe-mail.com\ntempemail.biz\ntempemail.com\nTempEMail.net\ntempinbox.co.uk\ntempinbox.com\ntempmail.it\ntempmail2.com\ntempomail.fr\ntemporarily.de\ntemporarioemail.com.br\ntemporaryemail.net\ntemporaryforwarding.com\ntemporaryinbox.com\nthanksnospam.info\nthankyou2010.com\nthisisnotmyrealemail.com\nthrowawayemailaddress.com\ntilien.com\ntmailinator.com\ntradermail.info\ntrash-amil.com\ntrash-mail.at\ntrash-mail.com\ntrash-mail.de\ntrash2009.com\ntrashemail.de\ntrashmail.at\ntrashmail.com\ntrashmail.de\ntrashmail.me\ntrashmail.net\ntrashmail.org\ntrashmail.ws\ntrashmailer.com\ntrashymail.com\ntrashymail.net\ntrillianpro.com\nturual.com\ntwinmail.de\ntyldd.com\nuggsrock.com\nupliftnow.com\nuplipht.com\nvenompen.com\nveryrealemail.com\nviditag.com\nviewcastmedia.com\nviewcastmedia.net\nviewcastmedia.org\nwebm4il.info\nwegwerfadresse.de\nwegwerfemail.de\nwegwerfmail.de\nwegwerfmail.net\nwegwerfmail.org\nwetrainbayarea.com\nwetrainbayarea.org\nwh4f.org\nwhyspam.me\nwillselfdestruct.com\nwinemaven.info\nwronghead.com\nwuzup.net\nwuzupmail.net\nwww.e4ward.com\nwww.gishpuppy.com\nwww.mailinator.com\nwwwnew.eu\nxagloo.com\nxemaps.com\nxents.com\nxmaily.com\nxoxy.net\nyep.it\nyogamaven.com\nyopmail.com\nyopmail.fr\nyopmail.net\nypmail.webarnak.fr.eu.org\nyuurok.com\nzehnminutenmail.de\nzippymail.info\nzoaxe.com\nzoemail.org\", UNIX_TIMESTAMP(), 1);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` CHANGE `shipping_cost_additional` `additional_shipping_cost` double(16,2) default '0';";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('payment_gateway_sandbox', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "useraccounts` CHANGE `extcat` `extracat` double(8,2) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "useraccounts` CHANGE `image` `picture` double(8,2) NOT NULL default '0';";
+	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'setup_fee' WHERE type = 'setup';";
+	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'featured_fee' WHERE type = 'hpfeat_fee';";
+	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'bold_fee' WHERE type = 'bolditem_fee';";
+	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'highlighted_fee' WHERE type = 'hlitem_fee';";
+	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'reserve_fee' WHERE type = 'rp_fee';";
+	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'extracat_fee' WHERE type = 'excat_fee';";
+	$query[] = "UPDATE `" . $DBPrefix . "fees` SET type = 'buynow_fee' WHERE type = 'buyout_fee';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` CHANGE `subject` `subject` varchar(255) NOT NULL default '';";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('gallery_max_width_height', 'int', '1500', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('edit_endtime', 'int', '1', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('homefeaturednumber', 'int', '12', UNIX_TIMESTAMP(), 1);";
 	$new_version = '1.2.0';
 }

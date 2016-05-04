@@ -2,6 +2,7 @@
 					<li class="list-group-item active">{L_25_0009}</li>
 					<li class="list-group-item"><a href="{SITEURL}admin/theme.php">{L_26_0002}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/clearcache.php">{L_30_0031}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/logo_upload.php">{L_30_0215}</a></li>
 				</ul>
 				<div class="panel panel-default">
 					<div class="panel-heading">{L_1061}</div>

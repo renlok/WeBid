@@ -13,7 +13,7 @@
 			<tr>
 				<td width="301">
 					<h2>{L_862}</h2>
-					<form name="user_login" action="{SSLURL}user_login.php" method="post">
+					<form name="user_login" action="{SITEURL}user_login.php" method="post">
 						<p class="smallpadding">
 							{L_187}<br>
 							<input type="text" autofocus name="username" size="20" maxlength="20" value="{USER}">

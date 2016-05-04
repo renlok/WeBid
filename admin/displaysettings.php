@@ -28,6 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("loginbox", intval($_POST['loginbox']), 'int');
 	$system->writesetting("newsbox", intval($_POST['newsbox']), 'int');
 	$system->writesetting("newstoshow",intval($_POST['newstoshow']), 'int');
+	$system->writesetting("homefeaturednumber", intval($_POST['homefeaturednumber']), 'int');
 	$system->writesetting("lastitemsnumber", intval($_POST['lastitemsnumber']), 'int');
 	$system->writesetting("hotitemsnumber",  intval($_POST['hotitemsnumber']), 'int');
 	$system->writesetting("endingsoonnumber", intval($_POST['endingsoonnumber']), 'int');
@@ -38,6 +39,7 @@ loadblock($MSG['789'], $MSG['790'], 'days', 'perpage', $system->SETTINGS['perpag
 loadblock($MSG['25_0107'], $MSG['808'], 'decimals', 'thumb_list', $system->SETTINGS['thumb_list'], array($MSG['2__0045']));
 
 loadblock($MSG['807'], '', '', '', '', array(), true);
+loadblock($MSG['5011'], $MSG['5012'], 'days', 'homefeaturednumber', $system->SETTINGS['homefeaturednumber']);
 loadblock($MSG['5013'], $MSG['5014'], 'days', 'lastitemsnumber', $system->SETTINGS['lastitemsnumber']);
 loadblock($MSG['5015'], $MSG['5016'], 'days', 'hotitemsnumber', $system->SETTINGS['hotitemsnumber']);
 loadblock($MSG['5017'], $MSG['5018'], 'days', 'endingsoonnumber', $system->SETTINGS['endingsoonnumber']);

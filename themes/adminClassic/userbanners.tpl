@@ -63,7 +63,7 @@
 					</table>
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>
-							<th colspan="2"><!-- IF NOTEDIT -->{L__0041}<!-- ELSE -->{L__0055}<!-- ENDIF --></th>
+							<th colspan="2"><strong><!-- IF NOTEDIT -->{L__0041}<!-- ELSE -->{L__0055}<!-- ENDIF --></strong></th>
 						</tr>
 						<tr>
 							<td width="30%">{L__0029}</td>

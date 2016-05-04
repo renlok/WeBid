@@ -104,7 +104,7 @@ function CheckSellData()
 
 	global $title, $sdescription, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
-	global $payments, $num, $nnum, $a_starts, $start_now, $relist;
+	global $payments, $num, $nnum, $a_starts, $a_ends, $start_now, $relist;
 	global $additional_shipping_cost, $shipping_cost;
 
 	if (empty($title))
@@ -251,6 +251,20 @@ function CheckSellData()
 		if ($a_starts < $system->ctime)
 		{
 			return '060';
+		}
+	}
+
+	if (!(strpos($a_ends, '-') === false) && $custom_end == 1)
+	{
+		$a_ends = _mktime(substr($a_ends, 11, 2),
+			substr($a_ends, 14, 2),
+			substr($a_ends, 17, 2),
+			substr($a_ends, 0, 2),
+			substr($a_ends, 3, 2),
+			substr($a_ends, 6, 4), 0);
+		if ($a_ends < $a_starts)
+		{
+			return '082';
 		}
 	}
 }//--CheckSellData

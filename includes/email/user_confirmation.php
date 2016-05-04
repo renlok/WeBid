@@ -19,8 +19,16 @@ $emailer->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ADMINMAIL' => $system->SETTINGS['adminmail'],
-		'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($MD5_PREFIX . $TPL_nick_hidden),
+		'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($MD5_PREFIX . $hash),
 		'C_NAME' => $TPL_name_hidden
 		));
 $emailer->email_uid = $TPL_id_hidden;
-$emailer->email_sender($TPL_email_hidden, 'usermail.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['098']);
+if (!$system->SETTINGS['email_admin_on_signup'])
+{
+	$email_to = $TPL_email_hidden;
+}
+else
+{
+	$email_to = array($TPL_email_hidden, $system->SETTINGS['adminmail']);
+}
+$emailer->email_sender($email_to, 'usermail.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['098']);

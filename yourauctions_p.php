@@ -20,6 +20,7 @@ $NOWB = date('Ymd');
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_p.php';
 	header('location: user_login.php');
 	exit;
@@ -39,17 +40,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 		{
 			$v = intval($v);
 			// Pictures Gallery
-			if ($dir = @opendir(UPLOAD_PATH . '/' . $v))
+			if (is_dir(UPLOAD_PATH . $v))
 			{
-				while ($file = readdir($dir))
+				if ($dir = opendir(UPLOAD_PATH . $v))
 				{
-					if ($file != '.' && $file != '..')
+					while ($file = readdir($dir))
 					{
-						@unlink(UPLOAD_PATH . '/' . $v . $file);
+						if ($file != '.' && $file != '..')
+						{
+							@unlink(UPLOAD_PATH . $v . '/' . $file);
+						}
 					}
+					closedir($dir);
+					rmdir(UPLOAD_PATH . $v);
 				}
-				closedir($dir);
-				@rmdir(UPLOAD_PATH . '/' . $v);
 			}
 
 			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";

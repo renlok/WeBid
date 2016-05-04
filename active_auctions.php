@@ -24,6 +24,7 @@ elseif ($user->logged_in)
 }
 else
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'active_auctions.php';
 	header('location: user_login.php');
 	exit;

@@ -186,7 +186,12 @@ if (isset($_POST['action']))
 			}
 		}
 		rebuild_cat_file();
+		resync_category_counters();
 		include 'util_cc1.php';
+	}
+	if (!isset($ERR))
+	{
+		$ERR = $MSG['086'];
 	}
 }
 

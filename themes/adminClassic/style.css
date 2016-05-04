@@ -161,7 +161,7 @@ input, textarea, select, .button {
 	border: 2px solid #CCCCCC;
 	padding: 4px;
 	background: #F7F7F7;
-	text-size: 1.2em;
+	font-size: 1.2em;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
@@ -279,7 +279,13 @@ ul.menu li {
 	font-size: 1.1em;
 }
 
+.jumbo-box {
+	background-color: #F4F4F4;
+	padding: 15px;
+	margin: 3px 0;
+	font-size: 1.5em;
+}
+
 .button {
 	display: inline-block;
-	height: 20px;
 }

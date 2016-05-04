@@ -68,7 +68,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 			</td>
 			<td class="titTable1" width="10%" align="center">
-				<a href="yourauctions.php?oa_ord=current_bid&oa_type={ORDERNEXT}">{L_628}</a>
+				<a href="yourauctions.php?oa_ord=current_bid&oa_type={ORDERNEXT}">{L_116}</a>
 <!-- IF ORDERCOL eq 'current_bid' -->
 				<a href="yourauctions.php?oa_ord=current_bid&oa_type={ORDERNEXT}">{ORDERTYPEIMG}</a>
 <!-- ENDIF -->
@@ -90,15 +90,15 @@ $(document).ready(function() {
 				<a href="item.php?id={items.ID}">{items.TITLE}</a>
 				<br>
 				[{L_30_0081}{items.COUNTER}{L__0151}]</td>
-			<td width="11%">
+			<td width="11%" align="center">
 				{items.STARTS}
 			</td>
-			<td width="11%">
+			<td width="11%" align="center">
 				{items.ENDS}
 			</td>
 			<td width="9%"  align="center">
 		<!-- IF items.RELISTED eq 0 -->
-				--
+				0
 		<!-- ELSE -->
 				{items.RELISTED}
 		<!-- ENDIF -->
@@ -108,19 +108,23 @@ $(document).ready(function() {
 			</td>
 			<td width="10%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
-				-
+				{L_no_bids}
 		<!-- ELSE -->
 				{items.BID}
 		<!-- ENDIF -->
 			</td>
 			<td width="6%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
-				<a href="edit_active_auction.php?id={items.ID}"><img src="images/edititem.gif" width="13" height="17" alt="{L_512}" border="0"></a>
+				<a href="edit_active_auction.php?id={items.ID}" title="{L_click_to_edit_auction}"><img src="images/edititem.gif" width="13" height="17" alt="{L_512}" border="0"></a>
+		<!-- ELSE -->
+				<img src="images/info.gif" title="{L_edit_disabled}" width="13" height="13" alt="{L_512}" border="0">
 		<!-- ENDIF -->
 			</td>
 			<td width="8%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
 				<input type="checkbox" name="O_delete[]" value="{items.ID}">
+		<!-- ELSE -->
+				<img src="images/info.gif" title="{L_delete_auction_disabled}" width="13" height="13" alt="{L_512}" border="0">
 		<!-- ENDIF -->
 			</td>
 			<td width="6%"  align="center" bgcolor="#FFFFaa">

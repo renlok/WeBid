@@ -130,9 +130,9 @@ $(document).ready(function(){
 		if (bn != parseInt($("#bn").val()))
 		{
 			if (parseInt($("#bn").val()) > 0)
-				updatefee(buyout_fee);
+				updatefee(buynow_fee);
 			else
-				updatefee(buyout_fee * -1);
+				updatefee(buynow_fee * -1);
 			bn = parseInt($("#bn").val());
 		}
 	}
@@ -150,29 +150,29 @@ $(document).ready(function(){
 		if (rp != parseInt($("#reserve_price").val()))
 		{
 			if (parseInt($("#reserve_price").val()) > 0)
-				updatefee(rp_fee);
+				updatefee(reserve_fee);
 			else
-				updatefee(rp_fee * -1);
+				updatefee(reserve_fee * -1);
 			rp = parseInt($("#reserve_price").val());
 		}
 	}
 	$("#is_featured").click(function() {
 		if ($('#is_featured').is(':checked'))
-			updatefee(hpfeat_fee);
+			updatefee(featured_fee);
 		else
-			updatefee(hpfeat_fee * -1);
+			updatefee(featured_fee * -1);
 	});
 	$("#is_bold").click(function() {
 		if ($('#is_bold').is(':checked'))
-			updatefee(bolditem_fee);
+			updatefee(bold_fee);
 		else
-			updatefee(bolditem_fee * -1);
+			updatefee(bold_fee * -1);
 	});
 	$("#is_highlighted").click(function() {
 		if ($('#is_highlighted').is(':checked'))
-			updatefee(hlitem_fee);
+			updatefee(highlighted_fee);
 		else
-			updatefee(hlitem_fee * -1);
+			updatefee(highlighted_fee * -1);
 	});
 		<!-- IF B_SUBTITLE -->
 	$("#subtitle").blur(function() {
@@ -197,7 +197,7 @@ $(document).ready(function(){
 	});
 		<!-- ENDIF -->
 	function updatefee(newfee) {
-		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
+		var nowfee = parseFloat($("#fee_exact").val()) + newfee - current_fee;
 		$("#fee_exact").val(nowfee);
 		if (nowfee < 0)
 		{
@@ -229,7 +229,7 @@ $(document).ready(function(){
 				</div>
 <!-- ENDIF -->
 <!-- IF PAGE eq 0 -->
-				<form name="sell" action="{ASSLURL}sell.php" method="post">
+				<form name="sell" action="{SITEURL}sell.php" method="post">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					<div class="form-group col-md-12">
 						<label>{L_287}</label>
@@ -365,7 +365,7 @@ $(document).ready(function(){
 	<!-- IF B_EDIT_STARTTIME -->
 					<div class="form-group col-md-12">
 						<label for="a_starts">{L_2__0016}</label>
-		<!-- IF B_EDITING -->
+		<!-- IF B_EDITING && !B_CANEDITSTARTDATE -->
 						{START_TIME}
 						<input type="hidden" name="a_starts" value="{START_TIME}">
 		<!-- ELSE -->
@@ -387,10 +387,29 @@ $(document).ready(function(){
 	<!-- ELSE -->
 					<input type="hidden" name="start_now" value="1">
 	<!-- ENDIF -->
+	<!-- IF B_EDIT_ENDTIME -->
 					<div class="form-group col-md-12">
-						<label>{L_022}</label>
+						<label>{L_custom_end_time}</label>
 						<div class="row">
-							<div class="duration col-md-4">{DURATIONS}</div>
+							<div class="duration col-md-4"><input type="checkbox" name="custom_end" {CUSTOM_END}></div>
+						</div>
+					</div>
+	<!-- ENDIF -->
+					<div class="form-group col-md-12">
+						<label>{L_ending_date}</label>
+						<div class="row">
+							<div class="duration col-md-4">
+	        					{L_022}: {DURATIONS}<br>
+				<!-- IF B_EDIT_ENDTIME -->
+								{L_or_custom_end_time}: <input type="text" name="a_ends" id="a_ends" value="{END_TIME}" size="20" maxlength="19">
+								<script type="text/javascript">
+									new tcal ({'id': 'a_ends','controlname': 'a_ends', 'formname': 'sell'});
+									$('#a_ends').change(function () {
+										$('#custom_end').attr('checked', true);
+									});
+								</script>
+				<!-- ENDIF -->
+							</div>
 						</div>
 					</div>
 	<!-- IF B_AUTORELIST -->
@@ -515,7 +534,7 @@ $(document).ready(function(){
 					</div>
 				</form>
 <!-- ELSEIF PAGE eq 2 -->
-				<form name="preview" action="{ASSLURL}sell.php" method="post">
+				<form name="preview" action="{SITEURL}sell.php" method="post">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					<table class="table table-striped table-bordered">
 						<tr>
@@ -584,10 +603,17 @@ $(document).ready(function(){
 							<td valign="top" align="right"><b>{L_2__0016}</b></td>
 							<td>{STARTDATE}</td>
 						</tr>
+		<!-- IF CUSTOM_END -->
+						<tr>
+							<td valign="top" align="right"><b>{L_end_date}</b></td>
+							<td>{END_TIME}</td>
+						</tr>
+		<!-- ELSE -->
 						<tr>
 							<td valign="top" align="right"><b>{L_022}</b></td>
 							<td>{DURATION}</td>
 						</tr>
+		<!-- ENDIF -->
 	<!-- IF B_CUSINC -->
 						<tr>
 							<td valign="top" align="right"><b>{L_120}</b> </td>

@@ -7,9 +7,9 @@
 <meta name="keywords" content="{KEYWORDS}">
 <meta name="generator" content="WeBid">
 
-<link rel="stylesheet" type="text/css" href="{INCURL}themes/{THEME}/style.css">
-<link rel="stylesheet" type="text/css" href="{INCURL}themes/{THEME}/jquery.lightbox.css" media="screen">
-<link rel="stylesheet" type="text/css" href="{INCURL}includes/calendar.css">
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/style.css">
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/jquery.lightbox.css" media="screen">
+<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 
 <link rel="alternate" type="application/rss+xml" title="{L_924}" href="{SITEURL}rss.php?feed=1">
 <link rel="alternate" type="application/rss+xml" title="{L_925}" href="{SITEURL}rss.php?feed=2">
@@ -20,10 +20,7 @@
 <link rel="alternate" type="application/rss+xml" title="{L_930}" href="{SITEURL}rss.php?feed=7">
 <link rel="alternate" type="application/rss+xml" title="{L_931}" href="{SITEURL}rss.php?feed=8">
 
-<script type="text/javascript" src="{INCURL}loader.php?js={JSFILES}"></script>
-<!-- IF LOADCKEDITOR -->
-	<script type="text/javascript" src="{INCURL}ckeditor/ckeditor.js"></script>
-<!-- ENDIF -->
+<script type="text/javascript" src="{SITEURL}loader.php?js={JSFILES}"></script>
 
 <!-- IF GOOGLEANALYTICS ne '' -->
 <script>
@@ -63,14 +60,16 @@
 <div class="wrapper rounded-top rounded-bottom">
 	<div class="splitbox">
 		<div class="leftside">
-			<a class="" href="{SITEURL}index.php">{LOGO}</a>
+			<a class="" href="{SITEURL}index.php">
+				<img src="{SITEURL}uploaded/logo/{LOGO}" border="0" alt="{SITENAME}">
+			</a>
 		</div>
 		<div class="rightside">
 			{BANNER}
 		</div>
 	</div>
 	<div class="counters">
-		<span class="leftside"><!-- IF B_LOGGED_IN -->{L_200} {YOURUSERNAME}. <a href="{SSLURL}logout.php?">{L_245}</a><!-- ENDIF --></span>
+		<span class="leftside"><!-- IF B_LOGGED_IN -->{L_200} {YOURUSERNAME}. <a href="{SITEURL}logout.php?">{L_245}</a><!-- ENDIF --></span>
 		<span class="rightside">{HEADERCOUNTER}</span>
 	</div>
 	<div class="navbar">
@@ -81,10 +80,10 @@
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
 			<li><a href="{SITEURL}user_menu.php?">{L_622}</a></li>
-			<li><a href="{SSLURL}logout.php?">{L_245}</a></li>
+			<li><a href="{SITEURL}logout.php?">{L_245}</a></li>
 <!-- ELSE -->
-			<li><a href="{SSLURL}register.php?">{L_235}</a></li>
-			<li><a href="{SSLURL}user_login.php?">{L_052}</a></li>
+			<li><a href="{SITEURL}register.php?">{L_235}</a></li>
+			<li><a href="{SITEURL}user_login.php?">{L_052}</a></li>
 <!-- ENDIF -->
 <!-- IF B_BOARDS -->
 			<li><a href="{SITEURL}boards.php">{L_5030}</a></li>
@@ -104,3 +103,4 @@
 			</form>
 		</div>
 	</div>
+	<div class="container">

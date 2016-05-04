@@ -84,20 +84,20 @@
 							<th colspan="2"><b>{L_431}</b></th>
 						</tr>
 						<tr>
-							<td><a href="{SITEURL}admin/fees.php?type=setup">{L_432}</a> </td>
+							<td><a href="{SITEURL}admin/fees.php?type=setup_fee">{L_432}</a> </td>
 							<td><a href="{SITEURL}admin/fees.php?type=relist_fee">{L_437}</a> </td>
 						</tr>
 						<tr>
-							<td><a href="{SITEURL}admin/fees.php?type=hpfeat_fee">{L_433}</a> </td>
-							<td><a href="{SITEURL}admin/fees.php?type=bolditem_fee">{L_439}</a> </td>
+							<td><a href="{SITEURL}admin/fees.php?type=featured_fee">{L_433}</a> </td>
+							<td><a href="{SITEURL}admin/fees.php?type=bold_fee">{L_439}</a> </td>
 						</tr>
 						<tr>
-							<td><a href="{SITEURL}admin/fees.php?type=hlitem_fee">{L_434}</a> </td>
-							<td><a href="{SITEURL}admin/fees.php?type=rp_fee">{L_440}</a> </td>
+							<td><a href="{SITEURL}admin/fees.php?type=highlighted_fee">{L_434}</a> </td>
+							<td><a href="{SITEURL}admin/fees.php?type=reserve_fee">{L_440}</a> </td>
 						</tr>
 						<tr>
 							<td><a href="{SITEURL}admin/fees.php?type=picture_fee">{L_435}</a> </td>
-							<td><a href="{SITEURL}admin/fees.php?type=buyout_fee">{L_436}</a> </td>
+							<td><a href="{SITEURL}admin/fees.php?type=buynow_fee">{L_436}</a> </td>
 						</tr>
 						<tr>
 							<td><a href="{SITEURL}admin/fees.php?type=buyer_fee">{L_775}</a></td>
@@ -105,7 +105,7 @@
 						</tr>
 						<tr>
 							<td><a href="{SITEURL}admin/fees.php?type=subtitle_fee">{L_803}</a></td>
-							<td><a href="{SITEURL}admin/fees.php?type=excat_fee">{L_804}</a></td>
+							<td><a href="{SITEURL}admin/fees.php?type=extracat_fee">{L_804}</a></td>
 						</tr>
 					</table>
 				</form>

@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_075}</h2>	
+				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_075}</h2>
 <!-- IF ERROR ne '' -->
 				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
 <!-- ENDIF -->
@@ -14,15 +14,20 @@
 								<div class="col-md-12">{L_092}</div>
 							</div>
 							<div class="row">
-								<div class="col-md-9"><strong>{L_087}</strong></div>
+								<div class="col-md-6"><strong>{L_payment_name}</strong></div>
+								<div class="col-md-6"><strong>{L_clean_payment_name}</strong></div>
 								<div class="col-md-3"><strong>{L_008}</strong></div>
 							</div>
 <!-- BEGIN payments -->
 							<div class="row">
-								<div class="col-md-9">
-									<input type="text" name="new_payments[]" value="{payments.PAYMENT}" size="25">
+								<div class="col-md-6">
+									<input type="hidden" name="payment[{payments.ID}][id]" value="{payments.ID}" size="25">
+									<input type="text" name="payment[{payments.ID}][name]" value="{payments.NAME}" size="25">
 								</div>
-								<div class="col-md-3"><input type="checkbox" name="delete[]" value="{payments.S_ROW_COUNT}"></div>
+								<div class="col-md-6">
+									<input type="text" name="payment[{payments.ID}][clean]" value="{payments.CLEAN}" size="25">
+								</div>
+								<div class="col-md-3"><input type="checkbox" name="payment[{payments.ID}][delete]" value="{payments.ID}"></div>
 							</div>
 <!-- END payments -->
 							<div class="row">
@@ -31,7 +36,8 @@
 							</div>
 							<br>
 							<div class="row">
-								<div class="col-md-9">{L_394}: <input type="text" name="new_payments[]" size="25"></div>
+								<div class="col-md-6">{L_394}: <input type="text" name="new_payments" size="25"></div>
+								<div class="col-md-6"><input type="text" name="new_payments_clean" size="25"></div>
 								<div class="col-md-3">&nbsp;</div>
 							</div>
 						</div>

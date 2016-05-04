@@ -150,7 +150,7 @@ function sortFees()
 		$params = array();
 		$params[] = array(':fee_value', $fee_value, 'float');
 		$params[] = array(':seller_id', $Seller['id'], 'int');
-		$params[] = array(':auc_id', $user_id, 'int');
+		$params[] = array(':auc_id', $Auction['id'], 'int');
 		$params[] = array(':time', $NOW, 'int');
 		$db->query($query, $params);
 	}

@@ -10,6 +10,7 @@
 <!-- IF ERROR ne '' -->
 					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
+					{L_122}
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>
 							<th>&nbsp;</th>

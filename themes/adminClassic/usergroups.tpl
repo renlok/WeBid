@@ -48,9 +48,9 @@
 							</td>
 							<td>
 								<input type="hidden" name="id" value="{GROUP_ID}">
-								<!-- IF NOT_DEFAULT_GROUP -->
-								<input type="checkbox" name="remove" value="y">{L_008}
-								<!-- ENDIF -->
+	<!-- IF NOT_DEFAULT_GROUP -->
+								<input type="checkbox" name="remove" value="1">{L_008}
+	<!-- ENDIF -->
 							</td>
 						</tr>
 						<tr>
@@ -73,7 +73,7 @@
 						</tr>
 					</table>
 
-<!-- IF .groups_unknown -->
+<!-- IF GROUPS_UNKNOWN -->
 					<p class="error"><h4><b>{L_warning}</b></h4></p>
 					<table width="98%" cellpadding="0" cellspacing="0">
 						<tr>

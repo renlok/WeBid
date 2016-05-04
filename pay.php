@@ -17,25 +17,17 @@ include 'common.php';
 // If user is not logged in redirect to login page
 if (!$user->checkAuth() && $_GET['a'] != 3)
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	header('location: user_login.php');
 	exit;
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
-$db->direct_query($query);
-$gateway_data = $db->result();
-
 $fees = new fees;
 
+$paying_fee = true;
 switch($_GET['a'])
 {
 	case 1: // add to account balance
-		$pp_paytoemail = $gateway_data['paypal_address'];
-		$an_paytoid = $gateway_data['authnet_address'];
-		$an_paytopass = $gateway_data['authnet_password'];
-		$wp_paytoid = $gateway_data['worldpay_id'];
-		$tc_paytoid = $gateway_data['toocheckout_id'];
-		$mb_paytoemail = $gateway_data['moneybookers_address'];
 		$payvalue = $system->input_money($_POST['pfval']);
 		$custoncode = $user->user_data['id'] . 'WEBID1';
 		$message = sprintf($MSG['582'], $system->print_money($payvalue));
@@ -43,8 +35,8 @@ switch($_GET['a'])
 		$fees->add_to_account($MSG['935'], 'balance', $payvalue);
 		break;
 	case 2: // pay for an item
-		$query = "SELECT w.id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, w.bid, u.paypal_email, u.authnet_id, u.authnet_pass,
-				u.id As uid, u.nick, a.payment, u.worldpay_id, u.toocheckout_id, u.moneybookers_email, w.qty
+		$query = "SELECT w.id, a.title, a.shipping_cost, a.additional_shipping_cost, a.shipping, w.bid,
+				u.id As uid, u.nick, a.payment, w.qty
 				FROM " . $DBPrefix . "winners w
 				LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.seller)
@@ -60,22 +52,29 @@ switch($_GET['a'])
 			header('location: outstanding.php');
 			exit;
 		}
-
 		$data = $db->result();
+
 		$payment = explode(', ', $data['payment']);
-		$pp_paytoemail = (in_array('paypal', $payment)) ? $data['paypal_email'] : '';
+		$query = "SELECT u.address, u.password, p.name FROM " . $DBPrefix . "usergateways u
+				JOIN " . $DBPrefix . "payment_options p ON (u.gateway_id = p.id)
+				WHERE u.user_id = :user_id";
+		$params = array();
+		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$db->query($query, $params);
+		$user_gateways = array();
+		while ($gateway = $db->fetch())
+		{
+			$user_gateways[$gateway['name']] = $gateway;
+		}
+
 		$extrastring = sprintf($MSG['778'], $data['uid'], $_POST['pfval'], $data['nick']);
-		$an_paytoid = (in_array('authnet', $payment)) ? $data['authnet_id'] : '';
-		$an_paytopass = (in_array('authnet', $payment)) ? $data['authnet_pass'] : '';
-		$wp_paytoid = (in_array('worldpay', $payment)) ? $data['worldpay_id'] : '';
-		$tc_paytoid = (in_array('toocheckout', $payment)) ? $data['toocheckout_id'] : '';
-		$mb_paytoemail = (in_array('moneybookers', $payment)) ? $data['moneybookers_email'] : '';
 		$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
 		$shipping_cost = ($data['shipping'] == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
 		$payvalue = ($data['bid'] * $data['qty']) + $shipping_cost;
 		$custoncode = $data['id'] . 'WEBID2';
 		$message = sprintf($MSG['581'], $system->print_money($payvalue));
 		$title = $system->SETTINGS['sitename'] . ' - ' . $system->uncleanvars($data['title']);
+		$paying_fee = false;
 		break;
 	case 3: // pay signup fee (live mode)
 		if (!isset($_SESSION['signup_id']) || !is_int($_SESSION['signup_id']) || $_SESSION['signup_id'] < 1 || $system->SETTINGS['fee_type'] != 2)
@@ -83,12 +82,6 @@ switch($_GET['a'])
 			header('location: index.php');
 			exit;
 		}
-		$pp_paytoemail = $gateway_data['paypal_address'];
-		$an_paytoid = $gateway_data['authnet_address'];
-		$an_paytopass = $gateway_data['authnet_password'];
-		$wp_paytoid = $gateway_data['worldpay_id'];
-		$tc_paytoid = $gateway_data['toocheckout_id'];
-		$mb_paytoemail = $gateway_data['moneybookers_address'];
 		$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
 		$db->direct_query($query);
 		$payvalue = $db->result('value');
@@ -107,12 +100,6 @@ switch($_GET['a'])
 			header('location: index.php');
 			exit;
 		}
-		$pp_paytoemail = $gateway_data['paypal_address'];
-		$an_paytoid = $gateway_data['authnet_address'];
-		$an_paytopass = $gateway_data['authnet_password'];
-		$wp_paytoid = $gateway_data['worldpay_id'];
-		$tc_paytoid = $gateway_data['toocheckout_id'];
-		$mb_paytoemail = $gateway_data['moneybookers_address'];
 		$query = "SELECT total, useracc_id FROM " . $DBPrefix . "useraccounts WHERE auc_id = :auc_id AND user_id = :user_id";
 		$params = array();
 		$params[] = array(':auc_id', $_SESSION['auction_id'], 'int');
@@ -126,13 +113,6 @@ switch($_GET['a'])
 		$fees->add_to_account($MSG['432'], 'setup', $payvalue);
 		break;
 	case 5: // pay relist fee (live mode)
-		$pp_paytoemail = $gateway_data['paypal_address'];
-		$an_paytoid = $gateway_data['authnet_address'];
-		$an_paytopass = $gateway_data['authnet_password'];
-		$wp_paytoid = $gateway_data['worldpay_id'];
-		$tc_paytoid = $gateway_data['toocheckout_id'];
-		$mb_paytoemail = $gateway_data['moneybookers_address'];
-
 		// number of auctions to relist
 		$query = "SELECT COUNT(*) As COUNT FROM " . $DBPrefix . "auctions WHERE suspended = 8 AND user = :user_id";
 		$params = array();
@@ -160,12 +140,6 @@ switch($_GET['a'])
 			header('location: index.php');
 			exit;
 		}
-		$pp_paytoemail = $gateway_data['paypal_address'];
-		$an_paytoid = $gateway_data['authnet_address'];
-		$an_paytopass = $gateway_data['authnet_password'];
-		$wp_paytoid = $gateway_data['worldpay_id'];
-		$tc_paytoid = $gateway_data['toocheckout_id'];
-		$mb_paytoemail = $gateway_data['moneybookers_address'];
 		$query = "SELECT current_bid FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
 		$params = array();
 		$params[] = array(':auc_id', $user->user_data['id'], 'int');
@@ -198,12 +172,6 @@ switch($_GET['a'])
 			header('location: index.php');
 			exit;
 		}
-		$pp_paytoemail = $gateway_data['paypal_address'];
-		$an_paytoid = $gateway_data['authnet_address'];
-		$an_paytopass = $gateway_data['authnet_password'];
-		$wp_paytoid = $gateway_data['worldpay_id'];
-		$tc_paytoid = $gateway_data['toocheckout_id'];
-		$mb_paytoemail = $gateway_data['moneybookers_address'];
 
 		// get final sell price
 		$query = "SELECT current_bid FROM " . $DBPrefix . "auctions WHERE user = :user_id AND id = :auc_id";
@@ -236,35 +204,33 @@ switch($_GET['a'])
 		break;
 }
 
+// load the payment gateways
+$query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1";
+$db->direct_query($query);
 $sequence = rand(1, 1000);
 $timestamp = time();
 $pay_val = $system->input_money($system->print_money_nosymbol($payvalue));
+while ($gateway = $db->fetch())
+{
+	$address = ($paying_fee) ? $gateway['gateway_admin_address'] : $user_gateways[$gateway['name']]['address'];
+	$password = ($paying_fee) ? $gateway['gateway_admin_password'] : $user_gateways[$gateway['name']]['password'];
+	$template->assign_block_vars('gateways', array(
+		'B_ACTIVE' => ($paying_fee) ? $gateway['gateway_active'] : (in_array($gateway['name'], $payment) && isset($user_gateways[$gateway['name']])),
+		'NAME' => $gateway['name'],
+		'DISPLAY_NAME' => $gateway['displayname'],
+
+		'PAY_ADDRESS' => ($paying_fee) ? $gateway['gateway_admin_address'] : $user_gateways[$gateway['name']]['address'],
+		'PAY_PASSWORD' => ($paying_fee) ? $gateway['gateway_admin_password'] : $user_gateways[$gateway['name']]['password'],
+
+		// TODO: need a better way to deal with these
+		'AN_SEQUENCE' => $sequence,
+		'AN_KEY' => ($gateway['name'] == 'authnet') ? $fees->hmac($password, $address . "^" . $sequence . "^" . $timestamp . "^" . $pay_val . "^" . $system->SETTINGS['currency']) : '',
+		));
+}
+
 $template->assign_vars(array(
 		'TOP_MESSAGE' => $message,
-		// enabled gateways
-		'B_ENPAYPAL' => ($gateway_data['paypal_active'] == 1 && !empty($pp_paytoemail)),
-		'B_ENAUTHNET' => ($gateway_data['authnet_active'] == 1 && !empty($an_paytoid) && !empty($an_paytopass)),
-		'B_ENWORLDPAY' => ($gateway_data['worldpay_active'] == 1 && !empty($wp_paytoid)),
-		'B_ENTOOCHECK' => ($gateway_data['toocheckout_active'] == 1 && !empty($tc_paytoid)),
-		'B_ENMONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1 && !empty($mb_paytoemail)),
-		// paypal
-		'PP_PAYTOEMAIL' => $pp_paytoemail,
-		'PP_SANDBOX' => $system->SETTINGS['paypal_sandbox'],
-		// authorize.net
-		'AN_PAYTOID' => $an_paytoid,
-		'AN_PAYTOPASS' => $an_paytopass,
-		'AN_KEY' => ($gateway_data['authnet_active'] == 1) ? $fees->hmac($an_paytopass, $an_paytoid . "^" . $sequence . "^" . $timestamp . "^" . $pay_val . "^" . $system->SETTINGS['currency']) : '',
-		'AN_SEQUENCE' => $sequence,
-		'AN_SANDBOX' => $system->SETTINGS['authnet_sandbox'],
-		// worldpay
-		'WP_PAYTOID' => $wp_paytoid,
-		'WP_SANDBOX' => $system->SETTINGS['worldpay_sandbox'],
-		// 2checkout
-		'TC_PAYTOID' => $tc_paytoid,
-		'TC_SANDBOX' => $system->SETTINGS['checkout_sandbox'],
-		// moneybookers
-		'MB_PAYTOEMAIL' => $mb_paytoemail,
-		'MB_SANDBOX' => $system->SETTINGS['moneybookers_sandbox'],
+		'SANDBOX' => $system->SETTINGS['payment_gateway_sandbox'],
 		// item values
 		'PAY_VAL' => $pay_val,
 		'CURRENCY' => $system->SETTINGS['currency'],

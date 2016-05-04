@@ -67,12 +67,12 @@ loadblock($MSG['_0006'], '', 'bool', 'active', $system->SETTINGS['active'], arra
 loadblock($MSG['003'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = PACKAGE_PATH . 'ckeditor/';
+$CKEditor->basePath = 'js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', stripslashes($system->SETTINGS['maintainancetext'])));
+loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', $system->SETTINGS['maintainancetext']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

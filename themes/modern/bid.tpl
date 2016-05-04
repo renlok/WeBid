@@ -35,7 +35,7 @@ $(document).ready(function(){
 				{ERROR}
 			</div>
 	<!-- ENDIF -->
-			<form class="form-horizontal" name="bid" action="{ASSLURL}bid.php" method="post">
+			<form class="form-horizontal" name="bid" action="{SITEURL}bid.php" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<div class="col-md-12 text-center">{IMAGE}</div>
 				<div class="col-md-8 col-md-offset-2">

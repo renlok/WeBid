@@ -36,8 +36,8 @@ $(function() {
 
 		// Resize images on clientside if we can
 		resize: {
-			width : 600,
-			height : 600,
+			width : {MAXWIDTHHEIGHT},
+			height : {MAXWIDTHHEIGHT},
 			quality : 90,
 			crop: false // crop to exact dimensions
 		},
@@ -69,7 +69,7 @@ $(function() {
 							up.removeFile(up.files[key]);
 							if ($('#uploader_browse').is(":visible"))
 							{
-								alert('You have reached the max  allowed of ' + {MAXPICS} + ' files.');
+								alert('You have reached the max allowed of ' + {MAXPICS} + ' files.');
 							}
 							$('#uploader_browse').hide();
 
@@ -106,7 +106,7 @@ $(function() {
 			FilesRemoved: function(up, files) {
 				// Called when files are removed from queue
 				var max_files = {MAXPICS};
-				if (files.length < max_files) 
+				if (files.length < max_files)
 				{
 					$('#uploader_browse').fadeIn('slow');
 				}

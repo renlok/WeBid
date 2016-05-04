@@ -1,7 +1,7 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="smallpadding">
 	<tr>
 		<td width="22%" valign="top" class="columL">
-			<div class="titTable1 rounded-right">
+			<div class="titTable1 rounded-left rounded-right">
 				{L_276}
 			</div>
 			<div class="smallpadding">
@@ -24,7 +24,7 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="maincolum">
 <!-- IF B_FEATURED_ITEMS -->
 				<tr>
-					<td class="titTable4">{L_NAY_01}</td>
+					<td class="titTable4 rounded-left rounded-right">{L_NAY_01}</td>
 				</tr>
 				<tr>
 					<td class="table2">
@@ -39,7 +39,7 @@
 <!-- ENDIF -->
 <!-- IF B_HOT_ITEMS -->
 				<tr>
-					<td class="titTable4">{L_279}</td>
+					<td class="titTable4 rounded-left rounded-right">{L_279}</td>
 				</tr>
 				<tr>
 					<td class="table2">
@@ -54,7 +54,7 @@
 <!-- ENDIF -->
 <!-- IF B_AUC_LAST -->
 				<tr>
-					<td class="titTable4">{L_278}</td>
+					<td class="titTable4 rounded-left rounded-right">{L_278}</td>
 				</tr>
 				<tr>
 					<td class="table2">
@@ -66,7 +66,7 @@
 <!-- ENDIF -->
 <!-- IF B_AUC_ENDSOON -->
 				<tr>
-					<td class="titTable4">{L_280}</td>
+					<td class="titTable4 rounded-left rounded-right">{L_280}</td>
 				</tr>
 				<tr>
 					<td class="table2">
@@ -80,7 +80,7 @@
 		</td>
 		<td width="20%" valign="top" class="columR">
 <!-- IF B_MULT_LANGS -->
-			<div class="titTable1 rounded-left">
+			<div class="titTable1 rounded-left rounded-right">
 				{L_2__0001}
 			</div>
 			<div class="smallpadding">
@@ -89,7 +89,7 @@
 <!-- ENDIF -->
 <!-- IF B_LOGIN_BOX -->
 	<!-- IF B_LOGGED_IN -->
-			<div class="titTable1 rounded-left">
+			<div class="titTable1 rounded-left rounded-right">
 				{L_200} {YOURUSERNAME}
 			</div>
 			<div class="smallpadding">
@@ -100,11 +100,11 @@
 				</ul>
 			</div>
 	<!-- ELSE -->
-			<div class="titTable1 rounded-left">
+			<div class="titTable1 rounded-left rounded-right">
 				{L_221}
 			</div>
 			<div class="smallpadding">
-				<form name="login" action="{SSLURL}user_login.php" method="post">
+				<form name="login" action="{SITEURL}user_login.php" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					<table width="100%">
 					<tr>
@@ -124,7 +124,7 @@
 	<!-- ENDIF -->
 <!-- ENDIF -->
 <!-- IF B_HELPBOX -->
-			<div class="titTable1 rounded-left">
+			<div class="titTable1 rounded-left rounded-right">
 				{L_281}
 			</div>
 			<div class="smallpadding">
@@ -136,7 +136,7 @@
 			</div>
 <!-- ENDIF -->
 <!-- IF B_NEWS_BOX -->
-			<div class="titTable1 rounded-left">
+			<div class="titTable1 rounded-left rounded-right">
 				{L_282}
 			</div>
 			<div class="smallpadding">

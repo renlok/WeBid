@@ -23,6 +23,7 @@ if ($system->SETTINGS['boards'] == 'n')
 // Is the seller logged in?
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'boards.php';
 	header('location: user_login.php');
 	exit;
@@ -36,6 +37,8 @@ elseif (isset($_GET['board_id']))
 {
 	$board_id = intval($_GET['board_id']);
 }
+
+$show = (isset($_GET['show'])) ? $_GET['show'] : '';
 
 if (!isset($board_id) || is_array($board_id) || empty($board_id) || $board_id == 0)
 {
@@ -57,7 +60,8 @@ if (isset($_POST['action']) && empty($_POST['newmessage']))
 }
 
 // Insert new message in the database
-if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_POST['newmessage'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_POST['newmessage']))
+{
 	if ($system->SETTINGS['wordsfilter'] == 'y')
 	{
 		$message = strip_tags($system->filter($_POST['newmessage']));
@@ -120,7 +124,7 @@ if ($BOARD_ACTIVE == 2)
 	exit;
 }
 
-if (isset($_GET['show']) && $_GET['show'] == 'all')
+if ($show == 'all')
 {
 	$SQL_LIMIT = '';
 }
@@ -141,7 +145,7 @@ if ($db->numrows() > 0)
 	while ($messages = $db->result())
 	{
 		$template->assign_block_vars('msgs', array(
-				'MSG' => nl2br(stripslashes($messages['message'])),
+				'MSG' => nl2br($messages['message']),
 				'USERNAME' => $messages['username'],
 				'POSTED' => FormatDate($messages['msgdate']),
 				'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',
@@ -179,12 +183,13 @@ $template->assign_vars(array(
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES
 		));
+
 // Build the bottom navigation line for the template
-if ($COUNT > $BOARD_LIMIT && (!isset($_GET['show']) || $_GET['show'] != 'all'))
+if ($COUNT > $BOARD_LIMIT && $show != 'all')
 {
 	$NAVIGATION = '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?show=all&offset=' . $_REQUEST['offset'] . '&board_id=' . $_REQUEST['board_id'] . '">' . $MSG['5062'] . '</a> (' . $COUNT . ')';
 }
-elseif ($_GET['show'] == 'all')
+elseif ($show == 'all')
 {
 	$NAVIGATION = '<a href="' . $system->SETTINGS['siteurl'] . 'msgboard.php?board_id=' . $_REQUEST['board_id'] . '&offset=' . $_REQUEST['offset'] . '">&lt;&lt; ' . $MSG['270'] . '</a> ';
 }

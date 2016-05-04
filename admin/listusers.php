@@ -24,7 +24,7 @@ if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
 
 {
 
-	$query = "SELECT id, nick, name, email FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT id, nick, name, email, hash FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $_GET['id'], 'int');
 	$db->query($query, $params);
@@ -37,7 +37,7 @@ if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
 				'SITENAME' => $system->SETTINGS['sitename'],
 				'SITEURL' => $system->SETTINGS['siteurl'],
 				'ADMINMAIL' => $system->SETTINGS['adminmail'],
-				'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $USER['id'] . '&hash=' . md5($MD5_PREFIX . $USER['nick']),
+				'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $USER['id'] . '&hash=' . md5($MD5_PREFIX . $USER['hash']),
 				'C_NAME' => $USER['name']
 				));
 		$emailer->email_uid = $USER['id'];

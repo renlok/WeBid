@@ -100,40 +100,19 @@
 		</legend>
 		<div class="row">
 			<div class="col-lg-6 col-md-6">
-<!-- IF B_PAYPAL -->
-				<div class="form-group">
-					<label for="TPL_pp_email">{L_720}</label>
-					<input type="text" name="TPL_pp_email" class="form-control" value="{PP_EMAIL}">
-				</div>
-<!-- ENDIF -->
-<!-- IF B_AUTHNET -->
-				<div class="form-group">
-					<label for="TPL_authnet_id">{L_773}</label>
-					<input type="text" name="TPL_authnet_id" class="form-control" value="{AN_ID}">
-				</div>
-				<div class="form-group">
-					<label for="TPL_authnet_pass">{L_774}</label>
-					<input type="text" name="TPL_authnet_pass" class="form-control" value="{AN_PASS}">
-				</div>
-<!-- ENDIF -->
-<!-- IF B_WORLDPAY -->
-				<div class="form-group">
-					<label for="TPL_worldpay_id">{L_824}</label>
-					<input type="text" name="TPL_worldpay_id" class="form-control" value="{WP_ID}">
-				</div>
-<!-- ENDIF -->
-<!-- IF B_TOOCHECKOUT -->
-				<div class="form-group">
-					<label for="TPL_toocheckout_id">{L_826}</label>
-					<input type="text" name="TPL_toocheckout_id" class="form-control" value="{TC_ID}">
-				</div>
-<!-- ENDIF -->
-<!-- IF B_MONEYBOOKERS -->
-				<div class="form-group">
-					<label for="TPL_moneybookers_email">{L_825}</label>
-					<input type="text" name="TPL_moneybookers_email" class="form-control" value="{MB_EMAIL}">
-				</div>
-<!-- ENDIF -->
+		<!-- BEGIN gateways -->
+			<div class="form-group col-lg-12">
+				<label for="{gateways.PLAIN_NAME}[address]">{gateways.ADDRESS_NAME}{gateways.REQUIRED}</label>
+				<input type="hidden" name="{gateways.PLAIN_NAME}[id]" value="{gateways.GATEWAY_ID}">
+				<input type="text" name="{gateways.PLAIN_NAME}[address]" class="form-control" value="{gateways.ADDRESS}">
+			<!-- IF gateways.B_PASSWORD -->
+				<label for="{gateways.PLAIN_NAME}[password]">{gateways.PASSWORD_NAME}{gateways.REQUIRED}</label>
+				<input type="text" name="{gateways.PLAIN_NAME}[password]" class="form-control" value="{gateways.PASS}">
+			<!-- ELSE -->
+				<input type="hidden" name="{gateways.PLAIN_NAME}[password]" value="">
+			<!-- ENDIF -->
+			</div>
+		<!-- END gateways -->
 			</div>
 		</div>
 	</div>

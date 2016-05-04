@@ -27,7 +27,7 @@
 				<small><span class="text-muted"><b>{L_869}:</b> {fbs.CLOSINGDATE}</span></small>
 			</td>
 			<td>
-				{fbs.WINORSELLNICK} , {fbs.WINORSELL} <br> <a class="label label-primary" href="{ASSLURL}feedback.php?auction_id={fbs.ID}&wid={fbs.WINNER}&sid={fbs.SELLER}&ws={fbs.WS}">{L_207}</a>
+				{fbs.WINORSELLNICK} , {fbs.WINORSELL} <br> <a class="label label-primary" href="{SITEURL}feedback.php?auction_id={fbs.ID}&wid={fbs.WINNER}&sid={fbs.SELLER}&ws={fbs.WS}">{L_207}</a>
 			</td>
 			<td class="hidden-xs">
 				<a href="mailto:{fbs.WINORSELLEMAIL}">{fbs.WINORSELLEMAIL}</a>

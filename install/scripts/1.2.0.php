@@ -107,3 +107,5 @@ foreach ($auctions_data as $auction)
             WHERE id = " . $auction['id'];
     $db->direct_query($query);
 }
+
+// fix payments options

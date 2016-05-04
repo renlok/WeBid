@@ -64,10 +64,14 @@ class global_class
 			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
 		}
 		$this->SETTINGS['gateways'] = unserialize($this->SETTINGS['gateways']);
-		$this->loadAuctionTypes();
+		// check if url needs https
+		if ($this->SETTINGS['https'] == 'y')
+		{
+			$this->SETTINGS['siteurl'] = (!empty($this->SETTINGS['https_url'])) ? $this->SETTINGS['https_url'] : str_replace('http://', 'https://', $this->SETTINGS['siteurl']);
+		}
 	}
 
-	private function loadAuctionTypes()
+	public function loadAuctionTypes()
 	{
 		global $MSG, $db, $DBPrefix;
 		$query = "SELECT id, language_string FROM " . $DBPrefix . "auction_types";
@@ -126,7 +130,7 @@ class global_class
 					break;
 				case "boolean":
 				case "bool":
-					$value = ($value == true);
+					$value = ($value) ? 1 : 0;
 					break;
 				case "array":
 					$value = serialize($value);
@@ -248,6 +252,11 @@ class global_class
 	function move_file($from, $to, $removeorg = true)
 	{
 		$upload_mode = (@ini_get('open_basedir') || @ini_get('safe_mode') || strtolower(@ini_get('safe_mode')) == 'on') ? 'move' : 'copy';
+		// error check
+		if  (!is_file($from))
+		{
+			return false;
+		}
 		switch ($upload_mode)
 		{
 			case 'copy':
@@ -334,7 +343,7 @@ class global_class
 			if (!preg_match('#^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{0,3})?$#', $amount))
 				return false;
 		}
-		elseif ($this->SETTINGS['moneyformat'] == 2)
+		else
 		{
 			if (!preg_match('#^([0-9]+|[0-9]{1,3}(\.[0-9]{3})*)(,[0-9]{0,3})?$#', $amount))
 				return false;
@@ -483,10 +492,19 @@ function alphanumeric($str)
 }
 
 // $auction_data sould come straight from the database
-function calculate_shipping_data($auction_data, $total = true)
+function calculate_shipping_data($auction_data, $bought_quantity = 0, $total = true)
 {
+	if ($bought_quantity == 0)
+	{
+		$quantity = $auction_data['quantity'];
+	}
+	else
+	{
+		$quantity = $bought_quantity;
+	}
+
 	$shipping_cost = ($auction_data['shipping'] == 1) ? $auction_data['shipping_cost'] : 0;
-	$additional_shipping_cost = $auction_data['additional_shipping_cost'] * ($auction_data['qty'] - 1);
+	$additional_shipping_cost = $auction_data['additional_shipping_cost'] * ($quantity - 1);
 
 	if ($total)
 	{

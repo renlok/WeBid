@@ -14,9 +14,7 @@
 				<form name="errorlog" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div class="row">
-								<h4>{FEETYPE}</h4>
-							</div>
+							<h4>{FEETYPE}</h4>
 	<!-- IF B_SINGLE -->
 							<div class="row">
 								<div class="col-md-3">{L_263}</div>

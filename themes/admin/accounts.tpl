@@ -1,85 +1,78 @@
 		<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
-		<div style="width:25%; float:left;">
-			<div style="margin-left:auto; margin-right:auto;">
+		<div class="row">
+			<div class="col-md-3">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
-		</div>
-		<div style="width:75%; float:right;">
-			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_854}&nbsp;&gt;&gt;&nbsp;{L_854}</h4>
+			<div class="col-md-9">
+				<h2>{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_854}</h2>
 <!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
+				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
 <!-- ENDIF -->
-					<div class="plain-box">
-						<form action="" method="post">
-						<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-						<table cellpadding="0" cellspacing="0" width="100%" class="blank">
-						<tr>
-							<td>{L_855}</td>
-							<td>
-								{L_5281} <input type="radio" name="type" value="m"<!-- IF TYPE eq 'm' --> checked="checked"<!-- ENDIF -->>
-								{L_827} <input type="radio" name="type" value="w"<!-- IF TYPE eq 'w' --> checked="checked"<!-- ENDIF -->>
-								{L_5285} <input type="radio" name="type" value="d"<!-- IF TYPE eq 'd' --> checked="checked"<!-- ENDIF -->>
-								{L_2__0027} <input type="radio" name="type" value="a"<!-- IF TYPE eq 'a' --> checked="checked"<!-- ENDIF -->>
-							</td>
-						</tr>
-						<tr>
-							<td>{L_856}</td>
-							<td>
-							<input type="text" name="from_date" id="from_date" value="{FROM_DATE}" size="20" maxlength="19">
-							<script type="text/javascript">
-								new tcal ({'id': 'from_date','controlname': 'from_date'});
-							</script>
-							-
-							<input type="text" name="to_date" id="to_date" value="{TO_DATE}" size="20" maxlength="19">
-							<script type="text/javascript">
-								new tcal ({'id': 'to_date','controlname': 'to_date'});
-							</script>
-							</td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-							<td>
-								<input type="submit" name="act" value="{L_275}">
-							</td>
-						</tr>
-						</table>
-						</form>
+				<form action="" method="post">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3">{L_855}</div>
+								<div class="col-md-9">
+									{L_5281} <input type="radio" name="type" value="m"<!-- IF TYPE eq 'm' --> checked="checked"<!-- ENDIF -->>
+									{L_827} <input type="radio" name="type" value="w"<!-- IF TYPE eq 'w' --> checked="checked"<!-- ENDIF -->>
+									{L_5285} <input type="radio" name="type" value="d"<!-- IF TYPE eq 'd' --> checked="checked"<!-- ENDIF -->>
+									{L_2__0027} <input type="radio" name="type" value="a"<!-- IF TYPE eq 'a' --> checked="checked"<!-- ENDIF -->>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">{L_856}</div>
+								<div class="col-md-9">
+									<input type="text" name="from_date" id="from_date" value="{FROM_DATE}" size="20" maxlength="19">
+									<script type="text/javascript">
+										new tcal ({'id': 'from_date','controlname': 'from_date'});
+									</script>
+									-
+									<input type="text" name="to_date" id="to_date" value="{TO_DATE}" size="20" maxlength="19">
+									<script type="text/javascript">
+										new tcal ({'id': 'to_date','controlname': 'to_date'});
+									</script>
+								</div>
+							</div>
+						</div>
 					</div>
-					<table width="98%" cellpadding="0" cellspacing="0">
+					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+					<button class="btn btn-primary" type="submit" name="act">{L_275}</button>
+				</form>
+				<br>
+				<div class="panel panel-default">
+					<div class="panel-body">
 <!-- IF PAGNATION -->
-						<tr>
-							<th><b>{L_313}</b></th>
-							<th><b>{L_766}</b></th>
-							<th align="center"><b>{L_314}</b></th>
-							<th align="center"><b>{L_391}</b></th>
-						<tr>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_313}</strong></div>
+							<div class="col-md-3"><strong>{L_766}</strong></div>
+							<div class="col-md-3"><strong>{L_314}</strong></div>
+							<div class="col-md-3"><strong>{L_391}</strong></div>
+						</div>
 <!-- ELSE -->
-						<tr>
-							<th><b>{L_314}</b></th>
-							<th align="center"><b>{L_857}</b></th>
-						<tr>
+						<div class="row">
+							<div class="col-md-6">{L_314}</div>
+							<div class="col-md-6">{L_857}</div>
+						</div>
 <!-- ENDIF -->
 <!-- BEGIN accounts -->
 	<!-- IF PAGNATION -->
-						<tr {accounts.BG}>
-							<td>{accounts.RNAME} ({accounts.NICK})</td>
-							<td>{accounts.TEXT}</td>
-							<td align="center">{accounts.DATE}</td>
-							<td align="center">{accounts.AMOUNT}</td>
-						</tr>
+						<div class="row">
+							<div class="col-md-3">{accounts.RNAME} ({accounts.NICK})</div>
+							<div class="col-md-3">{accounts.TEXT}</div>
+							<div class="col-md-3">{accounts.DATE}</div>
+							<div class="col-md-3">{accounts.AMOUNT}</div>
+						</div>
 	<!-- ELSE -->
-						<tr {accounts.BG}>
-							<td>{accounts.DATE}</td>
-							<td align="center">{accounts.TOTAL}</td>
-						</tr>
+						<div class="row">
+							<div class="col-md-6">{accounts.DATE}</div>
+							<div class="col-md-6">{accounts.TOTAL}</div>
+						</div>
 	<!-- ENDIF -->
 <!-- END accounts -->
-					</table>
 <!-- IF PAGNATION -->
-					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
-						<tr>
-							<td align="center">
+						<div class="row">
+							<div class="col-md-12 text-center">
 								{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
 								<br>
 								{PREV}
@@ -87,9 +80,10 @@
 								{pages.PAGE}&nbsp;&nbsp;
 	<!-- END pages -->
 								{NEXT}
-							</td>
-						</tr>
-					</table>
+							</div>
+						</div>
 <!-- ENDIF -->
+					</div>
 				</div>
 			</div>
+		</div>

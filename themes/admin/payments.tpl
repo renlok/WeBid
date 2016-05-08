@@ -14,31 +14,31 @@
 								<div class="col-md-12">{L_092}</div>
 							</div>
 							<div class="row">
-								<div class="col-md-6"><strong>{L_payment_name}</strong></div>
-								<div class="col-md-6"><strong>{L_clean_payment_name}</strong></div>
-								<div class="col-md-3"><strong>{L_008}</strong></div>
+								<div class="col-md-5"><strong>{L_payment_name}</strong></div>
+								<div class="col-md-5"><strong>{L_clean_payment_name}</strong></div>
+								<div class="col-md-2"><strong>{L_008}</strong></div>
 							</div>
 <!-- BEGIN payments -->
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<input type="hidden" name="payment[{payments.ID}][id]" value="{payments.ID}" size="25">
 									<input type="text" name="payment[{payments.ID}][name]" value="{payments.NAME}" size="25">
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<input type="text" name="payment[{payments.ID}][clean]" value="{payments.CLEAN}" size="25">
 								</div>
-								<div class="col-md-3"><input type="checkbox" name="payment[{payments.ID}][delete]" value="{payments.ID}"></div>
+								<div class="col-md-2"><input type="checkbox" name="payment[{payments.ID}][delete]" value="{payments.ID}"></div>
 							</div>
 <!-- END payments -->
 							<div class="row">
-								<div class="col-md-9 text-right">{L_30_0102}</div>
-								<div class="col-md-3"><input type="checkbox" class="selectall" value="delete"></div>
+								<div class="col-md-10 text-right">{L_30_0102}</div>
+								<div class="col-md-2"><input type="checkbox" class="selectall" value="delete"></div>
 							</div>
 							<br>
 							<div class="row">
-								<div class="col-md-6">{L_394}: <input type="text" name="new_payments" size="25"></div>
-								<div class="col-md-6"><input type="text" name="new_payments_clean" size="25"></div>
-								<div class="col-md-3">&nbsp;</div>
+								<div class="col-md-5">{L_394}: <input type="text" name="new_payments" size="25"></div>
+								<div class="col-md-5"><input type="text" name="new_payments_clean" size="25"></div>
+								<div class="col-md-2">&nbsp;</div>
 							</div>
 						</div>
 					</div>

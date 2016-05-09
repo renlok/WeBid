@@ -221,6 +221,7 @@ foreach ($auction_data as $Auction) // loop auctions
 		{
 			if (!in_array($row['bidder'], $WINNERS_ID))
 			{
+				$winner_present = true;
 				$items_wanted = $row['quantity'];
 				$items_got = 0;
 				if ($items_wanted <= $items_count)
@@ -381,21 +382,11 @@ foreach ($auction_data as $Auction) // loop auctions
 
 	if ($winner_present)
 	{
-		if ($Auction['bn_only'] == 0)
+		if ($Auction['bn_only'] == 0 && $atype != 2)
 		{
 			// Send mail to the seller
 			$added_winner_names = array();
-			if (isset($winner_array) && is_array($winner_array) && count($winner_array) > 0)
-			{
-				for ($i = 0, $count = count($winner_array); $i < $count; $i++)
-				{
-					// Send mail to the buyer
-					$Winner = $winner_array[$i];
-					include INCLUDE_PATH . 'email/endauction_youwin.php';
-					$added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
-				}
-			}
-			elseif (is_array($Winner))
+			if (is_array($Winner))
 			{
 				// Send mail to the buyer
 				$added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
@@ -433,6 +424,12 @@ foreach ($auction_data as $Auction) // loop auctions
 				$added_winner_names = array();
 				foreach ($winner_array as $key => $value)
 				{
+					if ($atype == 2)
+					{
+						// Send mail to the buyer
+						$Winner = $value;
+						include INCLUDE_PATH . 'email/endauction_youwin.php';
+					}
 					$added_winner_names[] = $value['nick'] . ' (<a href="mailto:' . $value['email'] . '">' . $value['email'] . '</a>)';
 				}
 				$added_winner_names_cs = implode(",<br>", $added_winner_names);

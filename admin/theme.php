@@ -25,7 +25,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		// Update database
 		$system->writesetting("theme", $_POST['dtheme'], 'str');
+		$system->writesetting("admin_theme", $_POST['admin_theme'], 'str');
 		$system->SETTINGS['theme'] = $_POST['dtheme'];
+		$system->SETTINGS['admin_theme'] = $_POST['admin_theme'];
 		$ERR = $MSG['26_0005'];
 	}
 	else
@@ -41,7 +43,7 @@ elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'
 	fclose($fh);
 }
 
-$bg = '';
+$abg = $bg = '';
 if (is_dir($theme_root))
 {
 	if ($dir = opendir($theme_root))
@@ -53,14 +55,26 @@ if (is_dir($theme_root))
 			if ($atheme != 'CVS' && is_dir($theme_path) && substr($atheme, 0, 1) != '.')
 			{
 				$THEMES[$atheme] = $atheme;
-				$template->assign_block_vars('themes', array(
-						'NAME' => $atheme,
-						'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
-						'B_LISTFILES' => $list_files,
-						'B_NOTADMIN' => (strstr($atheme, 'admin') === false),
-						'BG' => $bg
+				if (strstr($atheme, 'admin') === false)
+				{
+					$template->assign_block_vars('themes', array(
+							'NAME' => $atheme,
+							'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
+							'B_LISTFILES' => $list_files,
+							'BG' => $bg
 						));
-				$bg = ($bg == '') ? 'class="bg"' : '';
+					$bg = ($bg == '') ? 'class="bg"' : '';
+				}
+				else
+				{
+					$template->assign_block_vars('admin_themes', array(
+							'NAME' => $atheme,
+							'B_CHECKED' => ($system->SETTINGS['admin_theme'] == $atheme),
+							'B_LISTFILES' => $list_files,
+							'BG' => $abg
+						));
+					$abg = ($abg == '') ? 'class="bg"' : '';
+				}
 
 				if ($list_files)
 				{
@@ -80,9 +94,18 @@ if (is_dir($theme_root))
 					sort($files);
 					for ($i = 0; $i < count($files); $i++)
 					{
-						$template->assign_block_vars('themes.files', array(
-								'FILE' => $files[$i]
-								));
+						if (strstr($atheme, 'admin') === false)
+						{
+							$template->assign_block_vars('themes.files', array(
+									'FILE' => $files[$i]
+									));
+						}
+						else
+						{
+							$template->assign_block_vars('admin_themes.files', array(
+									'FILE' => $files[$i]
+									));
+						}
 					}
 				}
 			}

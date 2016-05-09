@@ -37,12 +37,8 @@
 	<!-- BEGIN themes -->
 						<tr {themes.BG}>
 							<td style="padding-left:10px;">
-		<!-- IF themes.B_NOTADMIN -->
 								<input type="radio" name="dtheme" value="{themes.NAME}" <!-- IF themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
 								<b>{themes.NAME}</b>
-		<!-- ELSE -->
-								<b>{L_841}: {themes.NAME}</b>
-		<!-- ENDIF -->
 							</td>
 							<td align="left">
 								<p><a href="theme.php?do=listfiles&theme={themes.NAME}">{L_26_0003}</a></p>
@@ -62,6 +58,32 @@
 						</tr>
 		<!-- ENDIF -->
 	<!-- END themes -->
+					</table>
+					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+	<!-- BEGIN admin_themes -->
+						<tr {admin_themes.BG}>
+							<td style="padding-left:10px;">
+								<input type="radio" name="admin_theme" value="{admin_themes.NAME}" <!-- IF admin_themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
+								<b>{admin_themes.NAME}</b>
+							</td>
+							<td align="left">
+								<p><a href="theme.php?do=listfiles&theme={admin_themes.NAME}">{L_26_0003}</a></p>
+								<p><a href="theme.php?do=addfile&theme={admin_themes.NAME}">{L_26_0004}</a></p>
+							</td>
+						</tr>
+		<!-- IF admin_themes.B_LISTFILES -->
+						<tr {admin_themes.BG}>
+							<td align="center" colspan="2">
+								<select name="file" multiple size="24" style="font-weight:bold; width:350px"
+								ondblclick="document.getElementById('action').value = ''; document.getElementById('theme').value = '{admin_themes.NAME}'; this.form.submit();">
+			<!-- BEGIN files -->
+								<option value="{admin_themes.files.FILE}">{admin_themes.files.FILE}</option>
+			<!-- END files -->
+								</select>
+							</td>
+						</tr>
+		<!-- ENDIF -->
+	<!-- END admin_themes -->
 					</table>
 					<input type="hidden" name="action" value="update" id="action">
 					<input type="hidden" name="theme" value="" id="theme">

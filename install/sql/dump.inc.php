@@ -1660,6 +1660,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('taxuser', 'bool', '
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('terms', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('termstext', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('theme', 'str', 'modern', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('admin_theme', 'str', 'adminClassic', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('thumb_list', 'int', '120', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('thumb_show', 'int', '120', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('timezone', 'str', 'Europe/London', UNIX_TIMESTAMP(), 1);";

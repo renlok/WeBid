@@ -1640,4 +1640,7 @@ $MSG['all_user_groups'] = 'All User Groups';
 $MSG['login_required_text'] = "Login required";
 $MSG['end_date'] = 'End date';
 $MSG['delete'] = 'delete';
+
+$MSG['all_error_messages'] = 'All errors';
+$MSG['unique_error_messages'] = 'Unique errors';
 ?>

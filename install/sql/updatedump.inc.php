@@ -404,5 +404,6 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('gallery_max_width_height', 'int', '1500', UNIX_TIMESTAMP(), 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('edit_endtime', 'int', '1', UNIX_TIMESTAMP(), 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('homefeaturednumber', 'int', '12', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('admin_theme', 'str', 'adminClassic', UNIX_TIMESTAMP(), 1);";
 	$new_version = '1.2.0';
 }

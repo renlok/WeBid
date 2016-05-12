@@ -1,7 +1,7 @@
 <html>
 <head>
 	<title>WeBid Administration back-end</title>
-	<link rel="stylesheet" type="text/css" href="{SITEURL}/themes/admin/style.css" />
+	<link rel="stylesheet" type="text/css" href="{SITEURL}/themes/{THEME}/style.css" />
 </head>
 <body style="margin:0;">
 <div style="width:400px; padding:40px;" class="centre">

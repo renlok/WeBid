@@ -3,7 +3,7 @@
 <head>
 	<title>WeBid Administration back-end</title>
 	<meta http-equiv="content-type" content="text/html; charset={CHARSET}" />
-	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/admin/style.css" />
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/style.css" />
 
 	<!--[if IE]>
 	<style type="text/css">
@@ -29,8 +29,6 @@
 				});
 			});
 		});
-	</script>
-	<script type="text/javascript">
 		function window_open(url,title,width,height,x,y)
 		{
 			var window_= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+width+',height='+height;

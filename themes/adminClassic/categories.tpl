@@ -34,10 +34,10 @@
 							<td valign="middle">
 								<input type="checkbox" name="delete[]" value="{cats.CAT_ID}">
 	<!-- IF cats.B_SUBCATS -->
-								<img src="{SITEURL}themes/admin/images/bullet_blue.png">
+								<img src="{SITEURL}themes/{THEME}/images/bullet_blue.png">
 	<!-- ENDIF -->
 	<!-- IF cats.B_AUCTIONS -->
-								<img src="{SITEURL}themes/admin/images/bullet_red.png">
+								<img src="{SITEURL}themes/{THEME}/images/bullet_red.png">
 	<!-- ENDIF -->
 							</td>
 						</tr>

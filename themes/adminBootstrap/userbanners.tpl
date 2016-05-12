@@ -13,7 +13,7 @@
 							<div class="row">
 								<div class="col-md-3">{L_5180}</div>
 								<div class="col-md-3">{NAME}</div>
-								<div class="col-md-3"><a href="editbannersuser.php?id={ID}"><img src="{SITEURL}themes/admin/images/bullet_wrench.png"></a></div>
+								<div class="col-md-3"><a href="editbannersuser.php?id={ID}"><img src="{SITEURL}themes/{THEME}/images/bullet_wrench.png"></a></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">{L__0022}</div>
@@ -50,10 +50,10 @@
 								<div class="col-md-1">{L__0051} <strong>{banners.CLICKS}</strong></div>
 								<div class="col-md-2">{L__0045}: <strong>{banners.PURCHASED}</strong></div>
 								<div class="col-md-2">
-									<a href="viewfilters.php?banner={banners.ID}&amp;id={ID}" class="new-window" alt="{L__0052}"><img src="{SITEURL}themes/admin/images/cog.png" alt="{L__0052}"	></a>
+									<a href="viewfilters.php?banner={banners.ID}&amp;id={ID}" class="new-window" alt="{L__0052}"><img src="{SITEURL}themes/{THEME}/images/cog.png" alt="{L__0052}"	></a>
 	<!-- IF NOTEDIT -->
-									<a href="editbanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/admin/images/application_form_edit.png" alt="{L__0055}"></a>
-									<a href="deletebanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/admin/images/bin.png" alt="{L_008}"></a>
+									<a href="editbanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/{THEME}/images/application_form_edit.png" alt="{L__0055}"></a>
+									<a href="deletebanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/{THEME}/images/bin.png" alt="{L_008}"></a>
 	<!-- ENDIF -->
 								</div>
 							</div>

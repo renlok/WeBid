@@ -9,7 +9,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accesseshistoric` (
   `month` char(2) NOT NULL default '',
   `year` char(4) NOT NULL default '',
   `pageviews` int(11) NOT NULL default '0',
-  `uniquevisitiors` int(11) NOT NULL default '0',
+  `uniquevisitors` int(11) NOT NULL default '0',
   `usersessions` int(11) NOT NULL default '0'
 ) ;";
 

@@ -45,8 +45,9 @@ $TOTALINVOICES = $db->result('COUNT');
 $PAGES = ($TOTALINVOICES == 0) ? 1 : ceil($TOTALINVOICES / $system->SETTINGS['perpage']);
 
 // get this page of data
-$query = "SELECT * FROM " . $DBPrefix . "useraccounts
-		WHERE user_id = :user_id AND total > 0
+$query = "SELECT ua.*, a.title FROM " . $DBPrefix . "useraccounts ua
+		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = ua.auc_id)
+		WHERE ua.user_id = :user_id AND ua.total > 0
 		LIMIT :OFFSET, :perpage";
 $params = array(
 	array(':user_id', $user->user_data['id'], 'int'),
@@ -133,7 +134,14 @@ while ($row = $db->fetch())
 
 	if ($auc_id)
 	{
-		$info = '<strong>' . $MSG['1034'] . ': ' . $row['auc_id'] . '</strong><br>' . $info;
+		if (empty($row['title']))
+		{
+			$info = '<strong>' . $MSG['1034'] . ': ' . $row['auc_id'] . '</strong><br>' . $info;
+		}
+		else
+		{
+			$info = '<strong><a href="item.php?id=' . $row['auc_id'] . '">' . $row['title'] . '</a></strong><br>' . $info;
+		}
 	}
 
 	$template->assign_block_vars('topay', array(

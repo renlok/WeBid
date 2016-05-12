@@ -104,7 +104,7 @@ function CheckSellData()
 
 	global $title, $sdescription, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
-	global $payments, $num, $nnum, $a_starts, $a_ends, $start_now, $relist;
+	global $payments, $num, $nnum, $a_starts, $a_ends, $start_now, $custom_end, $relist;
 	global $additional_shipping_cost, $shipping_cost;
 
 	if (empty($title))

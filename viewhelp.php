@@ -14,7 +14,7 @@
 
 include 'common.php';
 
-$cat = (isset($_GET['cat'])) ? intval($_GET['cat']) : intval($_POST['cat']);
+$cat = (isset($_REQUEST['cat'])) ? intval($_REQUEST['cat']) : 0;
 if ($cat > 0)
 {
 	// Retrieve category's name

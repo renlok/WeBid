@@ -42,12 +42,8 @@
 <!-- BEGIN themes -->
 							<div class="row">
 								<div class="col-md-6">
-	<!-- IF themes.B_NOTADMIN -->
 									<input type="radio" name="dtheme" value="{themes.NAME}" <!-- IF themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
 									<b>{themes.NAME}</b>
-	<!-- ELSE -->
-									<b>{L_841}: {themes.NAME}</b>
-	<!-- ENDIF -->
 								</div>
 								<div class="col-md-6">
 									<div class="row">
@@ -72,6 +68,39 @@
 							</div>
 	<!-- ENDIF -->
 <!-- END themes -->
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-body">
+<!-- BEGIN admin_themes -->
+							<div class="row">
+								<div class="col-md-6">
+									<input type="radio" name="admin_theme" value="{admin_themes.NAME}" <!-- IF admin_themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
+									<b>{admin_themes.NAME}</b>
+								</div>
+								<div class="col-md-6">
+									<div class="row">
+										<div class="col-md-12"><a href="theme.php?do=listfiles&theme={admin_themes.NAME}">{L_26_0003}</a></div>
+									</div>
+									<div class="row">
+										<div class="col-md-12"><a href="theme.php?do=addfile&theme={admin_themes.NAME}">{L_26_0004}</a></div>
+									</div>
+								</div>
+							</div>
+	<!-- IF admin_themes.B_LISTFILES -->
+							<div class="row">
+								<div class="col-md-6">&nbsp;</div>
+								<div class="col-md-6">
+									<select name="file" multiple size="24" style="font-weight:bold; width:350px"
+								ondblclick="document.getElementById('action').value = ''; document.getElementById('theme').value = '{admin_themes.NAME}'; this.form.submit();">
+		<!-- BEGIN files -->
+										<option value="{admin_themes.files.FILE}">{admin_themes.files.FILE}</option>
+		<!-- END files -->
+									</select>
+								</div>
+							</div>
+	<!-- ENDIF -->
+<!-- END admin_themes -->
 						</div>
 					</div>
 					<input type="hidden" name="action" value="update" id="action">

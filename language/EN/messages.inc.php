@@ -1585,6 +1585,7 @@ $MSG['350_1008'] = "Additional Shipping";
 $MSG['350_1009'] = "Additional Shipping Cost";
 $MSG['RPT_22'] = 'User ID';
 $MSG['RPT_23'] = '(leave blank for all)';
+$MSG['email_settings_updated'] = 'Email settings updated';
 
 $MSG['NAY_01'] = 'Featured Items';
 $MSG['NAY_02'] = 'All Items';
@@ -1639,4 +1640,7 @@ $MSG['all_user_groups'] = 'All User Groups';
 $MSG['login_required_text'] = "Login required";
 $MSG['end_date'] = 'End date';
 $MSG['delete'] = 'delete';
+
+$MSG['all_error_messages'] = 'All errors';
+$MSG['unique_error_messages'] = 'Unique errors';
 ?>

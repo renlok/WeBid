@@ -66,6 +66,7 @@
 				<div id="contact_results"></div>
 			</div>
 		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$(document).on('click', '.test_button',  function(e) {
@@ -114,7 +115,7 @@
 					}
 				});
 			}
-			
+
 			$(document).ready(function() {
 				if ($('select[name=mail_protocol] option:selected').val() == 2)
 				{
@@ -134,7 +135,7 @@
 				{
 					$('.para').parent().parent().hide();
 				}
-			
+
 				$('select[name=mail_protocol]').on('change', function() {
 					//alert('changid');
 					if ($(this).val() == 2)

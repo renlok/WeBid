@@ -65,7 +65,7 @@ switch($step)
 		$db->connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass'], $_POST['DBName'], $_POST['DBPrefix']);
 		$cats = (isset($_POST['importcats'])) ? 1 : 0;
 		echo '<p><b>Step 1:</b> Writing config file...</p>';
-		$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
+		$path = str_replace('\\', '\\\\', $_POST['mainpath']);
 		$hash = md5(microtime() . rand(0,50));
 		$_SESSION['hash'] = $hash;
 		// generate config file

@@ -220,8 +220,7 @@ class global_class
 	{
 		if ($trim)
 			$i = trim($i);
-		if (!get_magic_quotes_gpc())
-			$i = addslashes($i);
+		$i = addslashes($i);
 		$i = rtrim($i);
 		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
 		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;');

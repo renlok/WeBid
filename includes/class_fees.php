@@ -98,10 +98,7 @@ class fees
 		foreach ($this->data as $key => $value)
 		{
 			// Handle escape characters, which depends on setting of magic quotes
-			if(get_magic_quotes_gpc())
-				$value = urlencode(stripslashes($value));
-			else
-				$value = urlencode($value);
+			$value = urlencode($value);
 			$req .= '&' . $key . '=' . $value;
 		}
 

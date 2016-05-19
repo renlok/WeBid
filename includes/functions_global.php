@@ -63,7 +63,6 @@ class global_class
 		{
 			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
 		}
-		$this->SETTINGS['gateways'] = unserialize($this->SETTINGS['gateways']);
 		// check if url needs https
 		if ($this->SETTINGS['https'] == 'y')
 		{

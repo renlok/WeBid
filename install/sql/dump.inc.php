@@ -1610,7 +1610,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('fee_max_debt', 'str
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('fee_signup_bonus', 'str', '0.00', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('fee_type', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('fees', 'bool', 'n', UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('gateways', 'str', 'a:5:{s:6:\"paypal\";s:6:\"PayPal\";s:7:\"authnet\";s:13:\"Authorize.net\";s:8:\"worldpay\";s:8:\"WorldPay\";s:12:\"moneybookers\";s:12:\"Moneybookers\";s:11:\"toocheckout\";s:9:\"2Checkout\";}', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('googleanalytics', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('helpbox', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('hotitemsnumber', 'int', '8', UNIX_TIMESTAMP(), 1);";

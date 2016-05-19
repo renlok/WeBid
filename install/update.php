@@ -12,21 +12,17 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-$step = (isset($_GET['step'])) ? $_GET['step'] : 0;
-if ($step != 2)
-{
-	session_start();
-	define('InWeBid', 1);
-	include '../includes/database/Database.php';
-	include '../includes/database/DatabasePDO.php';
-	$db = new DatabasePDO();
-}
-include 'functions.php';
-if ($step != 2)
-{
-	define('MAIN_PATH',  getmainpath());
-}
+session_start();
+define('InWeBid', 1);
 define('InInstaller', 1);
+include '../includes/database/Database.php';
+include '../includes/database/DatabasePDO.php';
+
+$db = new DatabasePDO();
+
+include 'functions.php';
+define('MAIN_PATH',  getmainpath());
+$step = (isset($_GET['step'])) ? $_GET['step'] : 0;
 $settings_version = 'Unknown';
 /*
 how new updater will work
@@ -76,44 +72,34 @@ if ($step == 1)
 		exit;
 	}
 	include 'sql/updatedump.inc.php';
-	for ($i = 0; $i < @count($query); $i++)
+	$queries = count($query);
+	$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
+	if ($queries > 0 && $from < $queries)
 	{
-		echo '<b>' . $query[$i] . '</b><br>';
-		$db->direct_query($query[$i]);
+		$fourth = floor($queries/4);
+		$to = (($queries - $from) > 25) ? $from + 25 : $queries;
+		echo 'Writing to database: ' . floor($to / $queries * 100) . '% Complete<br>';
+		for ($i = $from; $i < $to; $i++)
+		{
+			$db->direct_query($query[$i]);
+		}
+		echo '<script type="text/javascript">window.location = "update.php?step=1&from=' . $i . '";</script>';
+		exit;
 	}
 	if (file_exists('scripts/' . $new_version . '.php'))
 	{
 		echo '<b>Running database update script</b><br>';
 		include 'scripts/' . $new_version . '.php';
+		echo '<b>Update script complete</b><br>';
 	}
 	$installed_version = $new_version;
 	if ($installed_version == $package_version)
 	{
-		echo 'Complete, now to <b><a href="?step=2">step 2</a></b>';
+		echo '<p>Update almost complete, remove the install folder from your server to complete the upgrade</p>';
 	}
 	else
 	{
 		echo '<script type="text/javascript">window.location = "?step=1";</script>';
 		echo '<noscript>Javascript is disabled please <a href="?step=1">refresh the page</a></noscript>';
 	}
-}
-if ($step == 2)
-{
-	include '../common.php';
-	echo print_header(true);
-
-	include INCLUDE_PATH . 'functions_rebuild.inc.php';
-	echo '<p>Rebuilding membertypes...</p>';
-	rebuild_table_file('membertypes');
-
-	echo '<p>Rebuilding countries...</p>';
-	rebuild_html_file('countries');
-
-	echo '<p>Rebuilding categories...</p>';
-	$catscontrol = new MPTTcategories();
-	rebuild_cat_file();
-
-	include MAIN_PATH . 'admin/util_cc1.php';
-
-	echo '<p>Update almost complete, remove the install folder from your server to complete the upgrade</p>';
 }

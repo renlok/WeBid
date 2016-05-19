@@ -36,10 +36,10 @@ switch($step)
 		include 'sql/dump.inc.php';
 		$queries = count($query);
 		$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
-		echo ($_GET['n'] * 25) . '% Complete<br>';
 		$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
 		$fourth = floor($queries/4);
-		$to = ($_GET['n'] == 4) ? $queries : ($fourth * $_GET['n']);
+		$to = (($queries - $from) > 50) ? $from + 50 : $queries;
+		echo 'Writing to database: ' . floor($to / $queries * 100) . '% Complete<br>';
 		for ($i = $from; $i < $to; $i++)
 		{
 			$db->direct_query($query[$i]);
@@ -47,7 +47,7 @@ switch($step)
 		flush();
 		if ($i < $queries)
 		{
-			echo '<script type="text/javascript">window.location = "install.php?step=2&URL=' . urlencode($_GET['URL']) . '&EMail=' . $_GET['EMail'] . '&cats=' . $_GET['cats'] . '&n=' . ($_GET['n'] + 1) . '&from=' . $i . '";</script>';
+			echo '<script type="text/javascript">window.location = "install.php?step=2&URL=' . urlencode($_GET['URL']) . '&EMail=' . $_GET['EMail'] . '&cats=' . $_GET['cats'] . '&from=' . $i . '";</script>';
 		}
 		else
 		{
@@ -86,7 +86,7 @@ switch($step)
 			{
 				echo '<p>You appear to already have an installation on WeBid running would you like to do a <a href="update.php">upgrade instead?</a></p>';
 			}
-			echo '<p>Complete, now to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '&n=1">step 2</a></b></p>';
+			echo '<p>Complete, now to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '">step 2</a></b></p>';
 		}
 		else
 		{
@@ -94,7 +94,7 @@ switch($step)
 			echo '<p><textarea style="width:500px; height:500px;">
 '.$content.'
 			</textarea></p>';
-			echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '&n=1">step 2</a></b></p>';
+			echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '">step 2</a></b></p>';
 		}
 		break;
 	default:

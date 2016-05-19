@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 session_start();
-date_default_timezone_set('UTC'); // to make times more consistant
+date_default_timezone_set('UTC'); // to make times more consistent
 $error_reporting = E_ALL^E_NOTICE;
 $error_reporting = E_ALL; // use this for debugging
 define('InWeBid', true);
@@ -27,7 +27,7 @@ if(!@include('includes/config.inc.php'))
 	exit;
 }
 
-$MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didnt set a code
+$MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didn't set a code
 
 //define the paths
 define('MAIN_PATH', $main_path);

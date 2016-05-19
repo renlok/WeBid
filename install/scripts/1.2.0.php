@@ -28,7 +28,6 @@ foreach ($settings as $setting_name => $setting_value)
         case "extra_cat":
         case "autorelist":
         case "ae_status":
-        case "ao_bi_enabled":
 
             $type = 'str';
             break;

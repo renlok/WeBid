@@ -440,11 +440,6 @@ class email_handler
 					else
 						$sent = mail($this->to, $this->subject, $this->message, $this->headers);
 				}
-
-				if ($sent)
-					return false;
-				else
-					return true;
 			break;
 		}
 

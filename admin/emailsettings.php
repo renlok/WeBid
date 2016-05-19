@@ -83,17 +83,8 @@ if (isset($_GET['test_email']))
 	$message        = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
 
 	$emailer = new email_handler();
-	$send_mail = $emailer->email_basic($subject, $to_email, $message);
-	if($send_mail)
-	{
-		$output = json_encode(array('type'=>'error', 'text' => 'Could not send mail! Please check your PHP mail configuration.Response:<br>' . $send_mail));
-		die($output);
-	}
-	else
-	{
-		$output = json_encode(array('type'=>'message', 'text' => 'Hi '.$user_name .' Your email(s) has been processed and sent. No error(s) to report.'));
-		die($output);
-	}
+	$emailer->email_basic($subject, $to_email, $message);
+	die();
 }
 
 $template->assign_vars(array(

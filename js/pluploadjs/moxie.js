@@ -1561,7 +1561,6 @@ define('moxie/core/utils/Dom', ['moxie/core/utils/Env'], function(Env) {
 	var getPos = function(node, root) {
 		var x = 0, y = 0, parent, doc = document, nodeRect, rootRect;
 
-		node = node;
 		root = root || doc.body;
 
 		// Returns the x, y cordinate for an element on IE 6 and IE 7

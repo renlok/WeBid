@@ -44,8 +44,7 @@
 		var currenttime = '{ACTUALDATE}';
 		var serverdate = new Date(currenttime);
 		function padlength(what){
-			var output=(what.toString().length==1)? "0"+what : what;
-			return output;
+			return (what.toString().length==1)? "0"+what : what;
 		}
 		function displaytime(){
 			serverdate.setSeconds(serverdate.getSeconds()+1)

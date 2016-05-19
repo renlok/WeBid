@@ -219,7 +219,7 @@ foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
 if ($system->SETTINGS['fees'] == 'y')
 {
 	$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'picture_fee'";
-	$res = $db->direct_query($query);
+	$db->direct_query($query);
 	$image_fee = $db->result('value');
 }
 else

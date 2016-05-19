@@ -196,7 +196,7 @@ if (isset($_POST['action']))
 			// clean unwanted images
 			if (isset($_POST['gallery']) && is_array($_POST['gallery']))
 			{
-				$uploaded = load_gallery(UPLOAD_FOLDER, $_POST['id']);
+				$uploaded = load_gallery($_POST['id']);
 				foreach ($uploaded as $img)
 				{
 					if (in_array($img, $_POST['gallery']))
@@ -333,7 +333,7 @@ $UPLOADED_PICTURES = array();
 if (file_exists(UPLOAD_PATH . $auc_id))
 {
 	// load dem pictures
-	$UPLOADED_PICTURES = load_gallery(UPLOAD_FOLDER, $auc_id);
+	$UPLOADED_PICTURES = load_gallery($auc_id);
 
 	if (is_array($UPLOADED_PICTURES))
 	{

@@ -246,7 +246,7 @@ function CheckSellData()
 			substr($a_starts, 17, 2),
 			substr($a_starts, 0, 2),
 			substr($a_starts, 3, 2),
-			substr($a_starts, 6, 4), 0);
+			substr($a_starts, 6, 4));
 
 		if ($a_starts < $system->ctime)
 		{
@@ -261,7 +261,7 @@ function CheckSellData()
 			substr($a_ends, 17, 2),
 			substr($a_ends, 0, 2),
 			substr($a_ends, 3, 2),
-			substr($a_ends, 6, 4), 0);
+			substr($a_ends, 6, 4));
 		if ($a_ends < $a_starts)
 		{
 			return '082';

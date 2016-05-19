@@ -360,7 +360,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{
-				$_SESSION['auction_id'] = $auction_id;
+				$_SESSION['auction_id'] = $id;
 				header('location: pay.php?a=6');
 				exit;
 			}

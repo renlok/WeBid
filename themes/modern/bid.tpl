@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#qty").keyup(function(){
-		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) + ">{CURRENCY}</a>");;
+		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) + ">{CURRENCY}</a>");
 	});
 	$("#qty").click(function(){
 		$("#bidcost").html((parseFloat(($("#qty").val()) * ($("#bid").val()))).toFixed(2) + ">{CURRENCY}</a>");

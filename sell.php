@@ -119,7 +119,7 @@ switch ($_SESSION['action'])
 
 			if ($_SESSION['SELL_action'] == 'edit')
 			{
-				updateauction(1);
+				updateauction();
 				$auction_id = $_SESSION['SELL_auction_id'];
 			}
 			else
@@ -417,7 +417,7 @@ switch ($_SESSION['action'])
 					substr($a_starts, 17, 2),
 					substr($a_starts, 0, 2),
 					substr($a_starts, 3, 2),
-					substr($a_starts, 6, 4), 0);
+					substr($a_starts, 6, 4));
 			}
 
 			if (!(strpos($a_ends, '-') === false))
@@ -427,7 +427,7 @@ switch ($_SESSION['action'])
 					substr($a_ends, 17, 2),
 					substr($a_ends, 0, 2),
 					substr($a_ends, 3, 2),
-					substr($a_ends, 6, 4), 0);
+					substr($a_ends, 6, 4));
 			}
 
 			$shippingtext = '';
@@ -487,7 +487,7 @@ switch ($_SESSION['action'])
 				substr($a_starts, 17, 2),
 				substr($a_starts, 0, 2),
 				substr($a_starts, 3, 2),
-				substr($a_starts, 6, 4), 0);
+				substr($a_starts, 6, 4));
 		}
 		if (!(strpos($a_ends, '-') === false))
         {
@@ -496,7 +496,7 @@ switch ($_SESSION['action'])
                 substr($a_ends, 17, 2),
                 substr($a_ends, 0, 2),
                 substr($a_ends, 3, 2),
-                substr($a_ends, 6, 4), 0);
+                substr($a_ends, 6, 4));
         }
 		$category_string1 = get_category_string($sellcat1);
 		$category_string2 = get_category_string($sellcat2);

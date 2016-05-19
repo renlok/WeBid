@@ -376,7 +376,7 @@ class global_class
 		$b = ($this->SETTINGS['moneyformat'] == 1) ? ',' : '.';
 		if (!$from_database)
 		{
-			$str = $this->input_money($str, $from_database);
+			$str = $this->input_money($str);
 		}
 
 		return number_format(floatval($str), $this->SETTINGS['moneydecimals'], $a, $b);

@@ -21,7 +21,6 @@ foreach ($settings as $setting_name => $setting_value)
     switch($setting_name)
     {
         // str
-        case "cust_increment":
         case "ao_hpf_enabled":
         case "ao_hi_enabled":
         case "ao_bi_enabled":
@@ -29,7 +28,6 @@ foreach ($settings as $setting_name => $setting_value)
         case "extra_cat":
         case "autorelist":
         case "ae_status":
-        case "ao_bi_enabled":
         case "ao_bi_enabled":
 
             $type = 'str';
@@ -39,7 +37,6 @@ foreach ($settings as $setting_name => $setting_value)
         case "edit_starttime":
         case "cust_increment":
         case "hours_countdown":
-        case "autorelist_max":
         case "ae_timebefore":
         case "ae_extend":
         case "picturesgallery":

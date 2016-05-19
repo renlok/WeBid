@@ -51,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'submit')
 				break;
 		}
 		$headers = 'From:' . $system->SETTINGS['sitename'] . ' <' . $system->SETTINGS['adminmail'] . '>' . "\n" . 'Content-Type: text/html; charset=' . $CHARSET;
-		$res = $db->direct_query($query);
+		$db->direct_query($query);
 		while ($row = $db->fetch())
 		{
 			if (mail($row['email'], $subject, $content, $headers))

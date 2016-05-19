@@ -17,6 +17,8 @@ include 'common.php';
 if (!empty($_GET['user_id']))
 {
 	$user_id = intval($_GET['user_id']);
+	// check trying to access valid user id
+	$user->checkUserValid($user_id);
 }
 elseif ($user->logged_in)
 {
@@ -29,9 +31,6 @@ else
 	header('location: user_login.php');
 	exit;
 }
-
-// check trying to access valid user id
-$user->is_valid_user($user_id);
 
 // get number of closed auctions for this user
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions

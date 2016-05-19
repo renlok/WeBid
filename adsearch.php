@@ -155,7 +155,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 	if (!empty($_SESSION['advs']['ending']) && ($_SESSION['advs']['ending'] == '1' || $_SESSION['advs']['ending'] == '2' || $_SESSION['advs']['ending'] == '4' || $_SESSION['advs']['ending'] == '6'))
 	{
 		$wher .= "(au.ends <= :auc_ending) AND ";
-		$asparams[] = array(':auc_ending', time() + ($ending * 86400), 'int');
+		$asparams[] = array(':auc_ending', time() + ($_SESSION['advs']['ending'] * 86400), 'int');
 	}
 
 	if (!empty($_SESSION['advs']['country']))
@@ -175,13 +175,13 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 			{
 				if (!$pri)
 				{
-					$ora = "((au.payment LIKE :payment" . get_param_number($i) . ")";
-					$asparams[] = array(":payment" . get_param_number($i), '%' . $system->cleanvars($val) . '%', 'str');
+					$ora = "((au.payment LIKE :payment" . ($i) . ")";
+					$asparams[] = array(":payment" . ($i), '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				else
 				{
-					$ora .= " OR (au.payment LIKE :payment" . get_param_number($i) . ") AND ";
-					$asparams[] = array(":payment" . get_param_number($i), '%' . $system->cleanvars($val) . '%', 'str');
+					$ora .= " OR (au.payment LIKE :payment" . ($i) . ") AND ";
+					$asparams[] = array(":payment" . ($i), '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				$pri = true;
 				$i++;

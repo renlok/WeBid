@@ -111,7 +111,7 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 else
 {
 	// reformat bid to valid number
-	$bid = round($system->input_money($bid, 2), 2);
+	$bid = round($system->input_money($bid), 2);
 }
 
 $Data = $db->result();
@@ -529,7 +529,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
-			$PREVIOUSBID = result();
+			$PREVIOUSBID = $db->result();
 			if (($bid * $qty) <= ($PREVIOUSBID['bid'] * $PREVIOUSBID['quantity']))
 			{
 				$errmsg = $ERR_059;

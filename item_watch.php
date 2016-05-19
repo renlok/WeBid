@@ -48,25 +48,22 @@ if (isset($_GET['delete']) && !empty($_GET['delete']))
 {
 	$items = trim($user->user_data['item_watch']);
 	$auc_id = explode(' ', $items);
+	$item_watch = $items;
 	for ($j = 0; $j < count($auc_id); $j++)
 	{
-		$match = strstr($auc_id[$j], strval($_GET['delete']));
-		if ($match)
-		{
-			$item_watch = $item_watch;
-		}
-		else
+		$match = ;
+		if (!strstr($auc_id[$j], strval($_GET['delete'])))
 		{
 			$item_watch = $auc_id[$j] . ' ' . $item_watch;
 		}
 	}
-	$item_watch_new = trim($item_watch);
+	$item_watch = trim($item_watch);
 	$query = "UPDATE " . $DBPrefix . "users SET item_watch = :item_watch_new WHERE id = :user_id";
 	$params = array();
-	$params[] = array(':item_watch_new', $system->cleanvars($item_watch_new), 'str');
+	$params[] = array(':item_watch_new', $system->cleanvars($item_watch), 'str');
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
-	$user->user_data['item_watch'] = $item_watch_new;
+	$user->user_data['item_watch'] = $item_watch;
 }
 
 // Show results

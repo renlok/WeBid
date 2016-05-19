@@ -4,8 +4,7 @@ $(document).ready(function() {
 	var currenttime = '{ENDS_IN}';
 	function padlength(what)
 	{
-		var output=(what.toString().length == 1)? '0' + what : what;
-		return output;
+		return (what.toString().length == 1)? '0' + what : what;
 	}
 	function displaytime()
 	{

@@ -33,7 +33,7 @@ function printLogL($str, $level)
 
 function constructCategories()
 {
-	global $DBPrefix, $system, $db;
+	global $DBPrefix, $db;
 
 	$query = "SELECT cat_id, parent_id, sub_counter, counter
 				FROM " . $DBPrefix . "categories ORDER BY cat_id";

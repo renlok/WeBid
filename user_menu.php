@@ -25,7 +25,7 @@ if (!$user->checkAuth())
 
 function get_reminders($secid)
 {
-	global $DBPrefix, $system, $db;
+	global $DBPrefix, $db;
 	$data = array();
 
 	// get number of new messages

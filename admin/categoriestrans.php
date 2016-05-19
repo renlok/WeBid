@@ -23,7 +23,7 @@ $catscontrol = new MPTTcategories();
 
 function search_cats($parent_id, $level)
 {
-	global $DBPrefix, $catscontrol;
+	global $catscontrol;
 	$catstr = '';
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');

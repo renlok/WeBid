@@ -20,7 +20,7 @@ class MPTTcategories
 	// Add an element to the tree as a child of $parent and as $child_num'th child. If $data is not supplied the insert id will be returned.
 	function add($parent_id, $child_num = 0, $misc_data = false)
 	{
-		global $system, $DBPrefix, $db;
+		global $DBPrefix, $db;
 		if(!is_numeric($parent_id) || $parent_id < 0)
 		{
 			return false;
@@ -375,7 +375,7 @@ class MPTTcategories
 	// get a nodes children
 	function get_children($left_id, $right_id, $level)
 	{
-		global $system, $DBPrefix, $db;
+		global $DBPrefix, $db;
 		$query = "SELECT * FROM " . $DBPrefix . "categories WHERE left_id > :left_id AND right_id < :right_id AND level = :level ORDER BY cat_name";
 		$params = array();
 		$params[] = array(':left_id', $left_id, 'int');
@@ -394,7 +394,7 @@ class MPTTcategories
 	// return a list of every child node of a given parent node
 	function get_children_list($left_id, $right_id, $return = 'cat_id')
 	{
-		global $system, $DBPrefix, $db;
+		global $DBPrefix, $db;
 
 		if (empty($left_id) || empty($right_id))
 		{
@@ -417,7 +417,7 @@ class MPTTcategories
 	//returns an ordered list of categories
 	function display_tree($left_id, $right_id, $indent = "\t")
 	{
-		global $system, $DBPrefix, $db;
+		global $DBPrefix, $db;
 		// start with an empty $right stack
 		$right = array();
 		$return = array();
@@ -452,7 +452,7 @@ class MPTTcategories
 	// Return the left_id, right_id and level for the virtual root node.
 	function get_virtual_root()
 	{
-		global $system, $DBPrefix, $db;
+		global $DBPrefix, $db;
 		// Virtual root element as parent.
 		$query = "SELECT right_id FROM " . $DBPrefix . "categories ORDER BY right_id DESC LIMIT 1";
 		$db->direct_query($query);
@@ -463,7 +463,7 @@ class MPTTcategories
 
 	function get_bread_crumbs($left_id, $right_id)
 	{
-		global $system, $DBPrefix, $db;
+		global $DBPrefix, $db;
 
 		if (empty($left_id) || empty($right_id))
 		{
@@ -502,7 +502,7 @@ class MPTTcategories
 
 	function check_category($id)
 	{
-		global $system, $DBPrefix, $db;
+		global $DBPrefix, $db;
 
 		$query = "SELECT cat_id FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id LIMIT 1";
 		$params = array();

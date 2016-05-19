@@ -28,7 +28,7 @@ class fees
 
 	function get_fee_types()
 	{
-		global $system, $DBPrefix, $db;
+		global $DBPrefix, $db;
 		$query = "SELECT type FROM " . $DBPrefix . "fees GROUP BY type";
 		$db->direct_query($query);
 		$fee_types = array();
@@ -41,7 +41,7 @@ class fees
 
 	function add_to_account($text, $type, $amount)
 	{
-		global $system, $DBPrefix, $user, $db;
+		global $DBPrefix, $user, $db;
 
 		$date_values = date('z|W|m|Y');
 		$date_values = explode('|', $date_values);

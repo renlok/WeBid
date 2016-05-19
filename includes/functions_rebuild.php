@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 function rebuild_table_file($table)
 {
-	global $DBPrefix, $system, $db;
+	global $DBPrefix, $db;
 	switch($table)
 	{
 		case 'membertypes':
@@ -65,7 +65,7 @@ function rebuild_table_file($table)
 
 function rebuild_html_file($table)
 {
-	global $DBPrefix, $system, $language, $db;
+	global $DBPrefix, $language, $db;
 	switch($table)
 	{
 		case 'countries':

@@ -117,5 +117,3 @@ if ($step == 2)
 
 	echo '<p>Update almost complete, remove the install folder from your server to complete the upgrade</p>';
 }
-
-?>

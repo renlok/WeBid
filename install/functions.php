@@ -382,7 +382,9 @@ function show_config_table($fresh = true)
 
 function search_cats($parent_id, $level)
 {
-	global $DBPrefix, $catscontrol;
+	global $catscontrol;
+	
+	$catstr = '';
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
 	foreach ($tree as $k => $v)
@@ -431,4 +433,3 @@ function rebuild_cat_file()
 	$handle = fopen (MAIN_PATH . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 }
-?>

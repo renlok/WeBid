@@ -18,7 +18,7 @@ if (!defined('AdminFuncCall'))
 {
 	function checklogin()
 	{
-		global $_SESSION, $system, $DBPrefix, $db;
+		global $_SESSION, $DBPrefix, $db;
 
 		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS']))
 		{
@@ -43,7 +43,7 @@ if (!defined('AdminFuncCall'))
 
 	function getAdminNotes()
 	{
-		global $_SESSION, $system, $DBPrefix, $db;
+		global $_SESSION, $DBPrefix, $db;
 
 		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS']))
 		{

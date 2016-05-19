@@ -1873,5 +1873,3 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `shipped` INT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`id`)
 ) ;";
-
-?>

@@ -1643,4 +1643,3 @@ $MSG['delete'] = 'delete';
 
 $MSG['all_error_messages'] = 'All errors';
 $MSG['unique_error_messages'] = 'Unique errors';
-?>

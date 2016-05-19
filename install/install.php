@@ -106,5 +106,3 @@ switch($step)
 		echo show_config_table(true);
 	break;
 }
-
-?>

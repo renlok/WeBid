@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit('Access denied');
 
 function getSeller($user_id)
 {
-	global $system, $DBPrefix, $db;
+	global $DBPrefix, $db;
 
 	$query = "SELECT nick, country FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
@@ -32,7 +32,7 @@ function getSeller($user_id)
 
 function getAddressWinner($user_id)
 {
-	global $system, $DBPrefix, $db;
+	global $DBPrefix, $db;
 
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
@@ -56,7 +56,7 @@ function getAddressWinner($user_id)
 
 function getTax($is_auction, $buyer_from, $seller_from = '')
 {
-	global $system, $DBPrefix, $db;
+	global $DBPrefix, $db;
 
 	// build the query
 	$query = "SELECT tax_rate FROM " . $DBPrefix . "tax WHERE countries_buyer LIKE '" . $buyer_from . "'";

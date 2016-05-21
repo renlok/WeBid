@@ -212,7 +212,7 @@ switch ($_SESSION['action'])
 			// Create pictures gallery if any
 			if ($system->SETTINGS['picturesgallery'] == 1 && count($UPLOADED_PICTURES) > 0)
 			{
-				// Create dirctory
+				// Create directory
 				umask();
 				if (!is_dir(UPLOAD_PATH . $auction_id))
 				{

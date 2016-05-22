@@ -39,6 +39,14 @@ switch($step)
 		$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
 		$fourth = floor($queries/4);
 		$to = (($queries - $from) > 50) ? $from + 50 : $queries;
+		if (!mysql_connect($DbHost, $DbUser, $DbPassword))
+        	{
+            	die('<p>Cannot connect to ' . $DbHost . '</p>');
+        	}
+        	if (!mysql_select_db($DbDatabase))
+        	{
+            	die('<p>Cannot select database</p>');
+        	}
 		echo 'Writing to database: ' . floor($to / $queries * 100) . '% Complete<br>';
 		for ($i = $from; $i < $to; $i++)
 		{

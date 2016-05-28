@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,21 +15,15 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['buyerprivacy'] = ynbool($_POST['buyerprivacy']);
 	// Update database
-	$query = "UPDATE ". $DBPrefix . "settings SET
-			  buyerprivacy = :buyerprivacy";
-	$params = array();
-	$params[] = array(':buyerprivacy', $system->SETTINGS['buyerprivacy'], 'str');
-	$db->query($query, $params);
+	$system->writesetting("buyerprivacy",ynbool($_POST['buyerprivacy']), "str");
 	$ERR = $MSG['247'];
 }
 
@@ -43,8 +37,10 @@ $template->assign_vars(array(
 		'B_TITLES' => true
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

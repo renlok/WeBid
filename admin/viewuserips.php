@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,14 +15,14 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 $id = intval($_REQUEST['id']);
 $uloffset = intval($_REQUEST['offset']);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (is_array($_POST['accept']))
+	if (isset($_POST['deny']) && is_array($_POST['accept']))
 	{
 		foreach ($_POST['accept'] as $v)
 		{
@@ -32,7 +32,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$db->query($query, $params);
 		}
 	}
-	if (is_array($_POST['deny']))
+	if (isset($_POST['deny']) && is_array($_POST['deny']))
 	{
 		foreach ($_POST['deny'] as $v)
 		{
@@ -124,15 +124,17 @@ $template->assign_vars(array(
 		'NICK' => $USER['nick'],
 		'LASTLOGIN' => date('Y-m-d H:i:s', strtotime($USER['lastlogin']) + $system->tdiff),
 		'OFFSET' => $uloffset,
-
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/viewuserips.php?' . $url_id . '&PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/viewuserips.php?' . $url_id . '&PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'viewuserips.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

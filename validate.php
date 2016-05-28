@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -52,5 +52,3 @@ if (isset($_GET['toocheckout']))
 {
 	$fees->toocheckout_validate();
 }
-
-?>

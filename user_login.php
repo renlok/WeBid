@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -17,17 +17,15 @@ include 'common.php';
 
 $NOW = time();
 
-if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
+if (isset($_SESSION['LOGIN_MESSAGE']))
 {
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('location: ' . $sslurl . 'user_login.php');
-	exit;
+	$ERR = $_SESSION['LOGIN_MESSAGE'];
+	unset($_SESSION['LOGIN_MESSAGE']);
 }
 
 if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['password']))
 {
-	include $include_path . 'PasswordHash.php';
+	include PACKAGE_PATH . 'PasswordHash.php';
 	$phpass = new PasswordHash(8, false);
 	$query = "SELECT id, hash, suspended, password FROM " . $DBPrefix . "users WHERE nick = :nick OR email = :email";
 	$params = array();
@@ -142,4 +140,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

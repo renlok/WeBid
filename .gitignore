@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+**/.DS_Store
+**/Thumbs.db
+cache/**
+includes/config.inc.php
+uploaded/**
+!uploaded/logo/logo.gif
+!uploaded/logo/logo.png
+.idea/

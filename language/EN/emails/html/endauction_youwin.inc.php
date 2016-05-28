@@ -19,7 +19,7 @@ SELLER'S INFO<br>
 {S_NICK}<br>
 <a href="mailto:{S_EMAIL}">{S_EMAIL}</a><br>
 Seller's payment details:<br>
-{S_PAYMENT}<br>		 
+{S_PAYMENT}<br>
 <br>
 <br>
 If you have received this message in error, please reply to this email,<br>

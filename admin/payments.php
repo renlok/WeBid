@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,53 +15,66 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
-function ToBeDeleted($index)
-{
-	if (!isset($_POST['delete']))
-		return false;
-
-	$i = 0;
-	while ($i < count($_POST['delete']))
-	{
-		if ($_POST['delete'][$i] == $index) return true;
-		$i++;
-	}
-	return false;
-}
-
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// Build new payments array
-	$rebuilt_array = array();
-	for ($i = 0; $i < count($_POST['new_payments']); $i++)
+	if (isset($_POST['payment']))
 	{
-		if (!ToBeDeleted($i) && strlen($_POST['new_payments'][$i]) != 0)
+		foreach ($_POST['payment'] as $payment_id => $payment)
 		{
-			$rebuilt_array[] = $_POST['new_payments'][$i];
+			if (isset($payment['delete']))
+			{
+				$query = "DELETE FROM " . $DBPrefix . "payment_options WHERE id = :id";
+				$params = [[':id', $payment['id'], 'int']];
+				$db->query($query, $params);
+			}
+			else
+			{
+				// clean the clean name
+				if ($payment['clean'] == '')
+				{
+					$payment['clean'] = $payment['name'];
+				}
+				$payment['clean'] = preg_replace("/[^a-z]/", '', strtolower($payment['clean']));
+				$query = "UPDATE " . $DBPrefix . "payment_options
+						SET name = :name,
+						displayname = :displayname
+						WHERE id = :id";
+				$params = [
+					[':id', $payment['id'], 'int'],
+					[':name', $payment['clean'], 'str'],
+					[':displayname', $payment['name'], 'str'],
+				];
+				$db->query($query, $params);
+			}
 		}
 	}
 
-	$system->SETTINGS['payment_options'] = serialize($rebuilt_array);
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			payment_options = :payment_options";
-	$params = array();
-	$params[] = array(':payment_options', $system->SETTINGS['payment_options'], 'str');
-	$db->query($query, $params);
+	if ($_POST['new_payments'] != '' && $_POST['new_payments_clean'] != '')
+	{
+		$query = "INSERT INTO " . $DBPrefix . "payment_options (name, displayname, is_gateway) VALUES (:name, :displayname, 0)";
+		$params = [
+			[':name', $_POST['new_payments_clean'], 'str'],
+			[':displayname', $_POST['new_payments'], 'str'],
+		];
+		$db->query($query, $params);
+	}
+
 	$ERR = $MSG['093'];
 }
 
-$payment_options = unserialize($system->SETTINGS['payment_options']);
-foreach ($payment_options as $k => $v)
+$query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 0";
+$db->direct_query($query);
+while ($payment_type = $db->fetch())
 {
 	$template->assign_block_vars('payments', array(
-			'PAYMENT' => $v,
-			'ID' => $k
+			'NAME' => $payment_type['displayname'],
+			'CLEAN' => $payment_type['name'],
+			'ID' => $payment_type['id']
 			));
 }
 
@@ -71,9 +84,11 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'payments.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

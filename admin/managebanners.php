@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'banners';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Delete users and banners if necessary
@@ -23,10 +23,12 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
 	foreach ($_POST['delete'] as $k => $v)
 	{
-		$query = "DELETE FROM " . $DBPrefix . "banners WHERE user = " . $v;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$query = "DELETE FROM " . $DBPrefix . "bannersusers WHERE id = " . $v;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$params = array();
+		$params[] = array(':user_id', $v, 'int');
+		$query = "DELETE FROM " . $DBPrefix . "banners WHERE user = :user_id";
+		$db->query($query, $params);
+		$query = "DELETE FROM " . $DBPrefix . "bannersusers WHERE id = :user_id";
+		$db->query($query, $params);
 	}
 }
 
@@ -34,10 +36,9 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 $query = "SELECT u.*, COUNT(b.user) as count FROM " . $DBPrefix . "bannersusers u
 		LEFT JOIN " . $DBPrefix . "banners b ON (b.user = u.id)
 		GROUP BY u.id ORDER BY u.name";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('busers', array(
 			'ID' => $row['id'],
@@ -54,8 +55,10 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'managebanners.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

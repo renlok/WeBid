@@ -1,6 +1,6 @@
-<?php 
+<?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,17 +13,18 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'functions_invoices.php';
+include INCLUDE_PATH . 'functions_invoices.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	header('location: user_login.php');
 	exit;
 }
 
 $sender = getSeller($user->user_data['id']);
-$query = "SELECT w.id, w.winner, w.closingdate, a.id AS auc_id, a.title, w.qty,	w.seller As uid 
+$query = "SELECT w.id, w.winner, w.closingdate, a.id AS auc_id, a.title, w.qty,	w.seller As uid
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
 		WHERE a.id = :auc_id AND w.id = :winner_id";
@@ -53,7 +54,7 @@ $title = $system->SETTINGS['sitename'] . ' - ' . $system->uncleanvars($data['tit
 
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR,
-		'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'],
+		'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'],
 		'CHARSET' => $CHARSET,
 		'LANGUAGE' => $language,
 		'SENDER' => $sender['nick'],
@@ -61,9 +62,9 @@ $template->assign_vars(array(
 		'WINNER_ADDRESS' => $winner_address,
 		'AUCTION_TITLE' => strtoupper($title),
 		'AUCTION_ID' => $data['auc_id'],
-		'SHIPPING_METHOD' => "N/A", // NEEEDS FIXING
-		'PAYMENT_METHOD' => "N/A", // NEEEDS FIXING
-		'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate']),
+		'SHIPPING_METHOD' => "N/A", // TODO: NEEDS FIXING
+		'PAYMENT_METHOD' => "N/A", // TODO: NEEDS FIXING
+		'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate'] + $system->tdiff),
 		'PAYMENT' => $data['payment'],
 		'ITEM_QUANTITY' => $data['qty'],
 		'B_INVOICE' => true
@@ -73,4 +74,3 @@ $template->set_filenames(array(
 		'body' => 'order_packingslip.tpl'
 		));
 $template->display('body');
-?>

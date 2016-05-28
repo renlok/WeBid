@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,42 +13,39 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'dates.inc.php';
-include $include_path . 'membertypes.inc.php';
-
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-ksort($memtypesarr, SORT_NUMERIC);
+include INCLUDE_PATH . 'membertypes.inc.php';
 
 if(!isset($_GET['user_id']))
 {
-	if (!$user->is_logged_in())
+	if (!$user->checkAuth())
 	{
+		$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 		$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions.php';
 		header('location: user_login.php');
 		exit;
 	}
 	else
 	{
-		$_GET['user_id'] = $user->user_data['id'];
+		$user_id = $user->user_data['id'];
 	}
 }
+else
+{
+	$user_id = $_GET['user_id'];
+}
 
-if (!empty($_GET['user_id']) && is_string($_GET['user_id']))
+if (is_string($user_id))
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE nick = :user";
 	$params = array();
-	$params[] = array(':user', $system->cleanvars($_GET['user_id']), 'str');
+	$params[] = array(':user', $system->cleanvars($user_id), 'str');
 	$db->query($query, $params);
 }
-
-if (!empty($_GET['user_id']))
+else
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
-	$params[] = array(':user_id', $_GET['user_id'], 'int');
+	$params[] = array(':user_id', $user_id, 'int');
 	$db->query($query, $params);
 }
 
@@ -57,9 +54,9 @@ if (@$db->numrows() == 1)
 	$user_data = $db->result();
 	$TPL_user_id = $user_data['id'];
 	$TPL_rate_ratio_value = '';
-	foreach ($memtypesarr as $k => $l)
+	foreach ($membertypes as $k => $l)
 	{
-		if ($k >= $user_data['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+		if ($k >= $user_data['rate_sum'] || $i++ == (count($membertypes) - 1))
 		{
 			$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 			break;
@@ -162,4 +159,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

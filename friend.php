@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,32 +15,46 @@
 include 'common.php';
 
 // check recaptcha is enabled
-include $main_path . 'inc/captcha/recaptchalib.php';
-include $main_path . 'inc/captcha/securimage.php';
+if ($system->SETTINGS['spam_sendtofriend'] == 2)
+{
+	include PACKAGE_PATH . 'recaptcha/recaptcha.php';
+}
+elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
+{
+	include PACKAGE_PATH . 'captcha/securimage.php';
+}
 
 if (isset($_REQUEST['id']))
 {
-	$_SESSION['CURRENT_ITEM'] = $_REQUEST['id'];
+	$_SESSION['CURRENT_ITEM'] = intval($_REQUEST['id']);
 }
 
-$id = intval($_SESSION['CURRENT_ITEM']);
+$id = $_SESSION['CURRENT_ITEM'];
 
 $TPL_error_text = '';
 $emailsent = 1;
 // Get item data
-$query = "SELECT title, category FROM " . $DBPrefix . "auctions WHERE id = " . $id;
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-if (mysql_num_rows($result) > 0)
+$query = "SELECT title, category FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+$params = array();
+$params[] = array(':auc_id', $id, 'int');
+$db->query($query, $params);
+if ($db->numrows() > 0)
 {
-	$TPL_item_title = mysql_result($result, 0, 'title');
+	$TPL_item_title = $db->result('title');
+}
+else
+{
+	$_SESSION['msg_title'] = $ERR_622;
+	$_SESSION['msg_body'] = $ERR_623;
+	header('location: message.php');
+	exit;
 }
 
 $spam_html = '';
-if ($system->SETTINGS['spam_register'] == 1)
+if ($system->SETTINGS['spam_sendtofriend'] == 1)
 {
 	$resp = new Securimage();
-	$spam_html = $resp->show_html();
+	$spam_html = $resp->getCaptchaHtml();
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
@@ -55,11 +69,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 	{
 		$TPL_error_text = $ERR_008;
 	}
-	
+
 	if ($system->SETTINGS['spam_sendtofriend'] == 2)
 	{
-		$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
-		if (!$resp->is_valid)
+		$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_POST['g-recaptcha-response']);
+		if (!$resp)
 		{
 			$TPL_error_text = $MSG['752'];
 		}
@@ -71,7 +85,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 			$TPL_error_text = $MSG['752'];
 		}
 	}
-	
+
 
 	if (!empty($TPL_error_text))
 	{
@@ -98,7 +112,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'sendmail')
 
 if ($system->SETTINGS['spam_sendtofriend'] == 2)
 {
-	$capcha_text = recaptcha_get_html($system->SETTINGS['recaptcha_public'], ($system->SETTINGS['https'] == 'y'));
+	$capcha_text = recaptcha_get_html($system->SETTINGS['recaptcha_public']);
 }
 elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
 {
@@ -108,7 +122,7 @@ elseif ($system->SETTINGS['spam_sendtofriend'] == 1)
 $template->assign_vars(array(
 		'ERROR' => $TPL_error_text,
 		'ID' => intval($_REQUEST['id']),
-		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
+		'CAPTCHATYPE' => $system->SETTINGS['spam_sendtofriend'],
 		'CAPCHA' => (isset($capcha_text)) ? $capcha_text : '',
 		'TITLE' => $TPL_item_title,
 		'FRIEND_NAME' => (isset($_POST['friend_name'])) ? $system->cleanvars($_POST['friend_name']) : '',
@@ -125,4 +139,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

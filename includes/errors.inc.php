@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -11,62 +11,41 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 if (!defined('InWeBid')) exit();
 
-// Errors handling functions
-if (!function_exists('MySQLError'))
+function WeBidErrorHandler($errno, $errstr, $errfile, $errline)
 {
-	function MySQLError($Q, $line = '', $page = '')
+	global $system, $_SESSION;
+	switch ($errno)
 	{
-		global 	$ERR_001, $system, $_SESSION;
+		case E_USER_ERROR:
+			$error = "<b>My ERROR</b> [$errno] $errstr\n";
+			$error .= "  Fatal error on line $errline in file $errfile";
+			$error .= ", PHP " . PHP_VERSION . " (" . PHP_OS . ")\n";
+			$error .= "Aborting...\n";
+			break;
 
-		$SESSION_ERROR = $ERR_001 . "\t" . $Q . "\n\t" . mysql_error() . "\n\tpage:" . $page . " line:" . $line;
-		if (!isset($_SESSION['SESSION_ERROR']) || !is_array($_SESSION['SESSION_ERROR']))
-		{
-			$_SESSION['SESSION_ERROR'] = array();
-		}
-		$_SESSION['SESSION_ERROR'][] = $SESSION_ERROR;
-		$system->log('error', $SESSION_ERROR);
+		case E_USER_WARNING:
+			$error = "<b>My WARNING</b> [$errno] $errstr on $errfile line $errline\n";
+			break;
+
+		case E_USER_NOTICE:
+			$error = "<b>My NOTICE</b> [$errno] $errstr on $errfile line $errline\n";
+			break;
+
+		default:
+			$error = "Unknown error type: [$errno] $errstr on $errfile line $errline\n";
+			break;
 	}
-}
-
-if (!function_exists('WeBidErrorHandler'))
-{
-	function WeBidErrorHandler($errno, $errstr, $errfile, $errline)
+	if (!isset($_SESSION['SESSION_ERROR']) || !is_array($_SESSION['SESSION_ERROR']))
 	{
-		global $system, $_SESSION;
-		switch ($errno)
-		{
-			case E_USER_ERROR:
-				$error = "<b>My ERROR</b> [$errno] $errstr\n";
-				$error .= "  Fatal error on line $errline in file $errfile";
-				$error .= ", PHP " . PHP_VERSION . " (" . PHP_OS . ")\n";
-				$error .= "Aborting...\n";
-				break;
-		
-			case E_USER_WARNING:
-				$error = "<b>My WARNING</b> [$errno] $errstr on $errfile line $errline\n";
-				break;
-		
-			case E_USER_NOTICE:
-				$error = "<b>My NOTICE</b> [$errno] $errstr on $errfile line $errline\n";
-				break;
-		
-			default:
-				$error = "Unknown error type: [$errno] $errstr on $errfile line $errline\n";
-				break;
-		}
-		if (!isset($_SESSION['SESSION_ERROR']) || !is_array($_SESSION['SESSION_ERROR']))
-		{
-			$_SESSION['SESSION_ERROR'] = array();
-		}
-		$_SESSION['SESSION_ERROR'][] = $error;
-		// log the error
-		$system->log('error', $error);
-		if ($errno == E_USER_ERROR)
-			exit(1);
-		return true;
+		$_SESSION['SESSION_ERROR'] = array();
 	}
+	$_SESSION['SESSION_ERROR'][] = $error;
+	// log the error
+	$system->log('error', $error);
+	if ($errno == E_USER_ERROR)
+		exit(1);
+	return true;
 }
-?>

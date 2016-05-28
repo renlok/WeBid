@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -29,9 +29,9 @@ switch ($_GET['show'])
 		$CONTENT = $system->uncleanvars($system->SETTINGS['privacypolicytext']);
 		break;
 	case 'cookies':
-        $TITLE = $MSG['1110'];
-        $CONTENT = $system->uncleanvars($system->SETTINGS['cookiespolicytext']);
-    	break;
+		$TITLE = $MSG['1110'];
+		$CONTENT = $system->uncleanvars($system->SETTINGS['cookiespolicytext']);
+		break;
 }
 
 $template->assign_vars(array(
@@ -45,4 +45,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,19 +15,19 @@
 define('InAdmin', 1);
 $current_page = 'interface';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (is_dir($main_path . 'cache'))
+	if (is_dir(MAIN_PATH . 'cache'))
 	{
-		$dir = opendir($main_path . 'cache');
+		$dir = opendir(MAIN_PATH . 'cache');
 		while (($myfile = readdir($dir)) !== false)
 		{
 			if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php')
 			{
-				unlink($main_path . 'cache/' . $myfile);
+				unlink(CACHE_PATH . $myfile);
 			}
 		}
 		closedir($dir);
@@ -40,8 +40,10 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'clearcache.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

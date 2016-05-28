@@ -24,7 +24,7 @@ var ARR_WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 // day week starts from (normally 0-Su or 1-Mo)
 var NUM_WEEKSTART = 1;
 // path to the directory where calendar images are stored. trailing slash req.
-var STR_ICONPATH = 'inc/img/';
+var STR_ICONPATH = 'includes/img/';
 
 var re_url = new RegExp('datetime=(\\-?\\d+)');
 var dt_current = (re_url.exec(String(window.location))
@@ -144,7 +144,7 @@ while (dt_current_day.getMonth() == dt_current.getMonth() ||
 	document.write('</tr>');
 }
 if (obj_caller && obj_caller.time_comp)
-	document.write('<form onsubmit="javascript:set_datetime('+dt_current.valueOf()+', true)" name="cal"><tr><td colspan="7" bgcolor="#87CEFA"><font color="White" face="tahoma, verdana" size="2">Time: <input type="text" name="time" value="'+obj_caller.gen_time(this.dt_current)+'" size="8" maxlength="8"></font></td></tr></form>');
+	document.write('<form onsubmit="set_datetime('+dt_current.valueOf()+', true)" name="cal"><tr><td colspan="7" bgcolor="#87CEFA"><font color="White" face="tahoma, verdana" size="2">Time: <input type="text" name="time" value="'+obj_caller.gen_time(this.dt_current)+'" size="8" maxlength="8"></font></td></tr></form>');
 </script>
 </table></tr></td>
 </table>

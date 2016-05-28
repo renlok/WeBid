@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,8 +15,9 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'mail.php';
 	header('location: user_login.php');
 	exit;
@@ -85,7 +86,7 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 
 	// send message
 	$id_type = ($email) ? 'fromemail' : 'sentto';
-	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, sentat, message, subject, reply_of, question) 
+	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, sentat, message, subject, reply_of, question)
 			VALUES (:to_ids, :sender_id, :times, :nowmessages, :subjects, :reply_of_hash, :question_hash)";
 	$params = array();
 	$params[] = array(':to_ids', ($email) ? $sendto : $userarray['id'], 'bool');
@@ -139,7 +140,7 @@ if (isset($_REQUEST['deleteid']) && is_array($_REQUEST['deleteid']))
 	}
 	$query = "DELETE FROM " . $DBPrefix . "messages WHERE id IN (" . $message_id . ")";
 	$db->direct_query($query);
-	$ERR = $MSG['444'];
+	$_SESSION['message'] = $MSG['444'];
 }
 
 // if sending a message
@@ -240,7 +241,7 @@ $messagespaceused = ($messages * 4) + 1;
 $messagespaceleft = ($mailbox_space - $messages) * 4;
 $messagesleft = $mailbox_space - $messages;
 
-$ERR = (isset($_SESSION['message'])) ? $_SESSION['message'] : $ERR;
+$ERR = (isset($_SESSION['message'])) ? $_SESSION['message'] : '';
 unset($_SESSION['message']);
 
 $template->assign_vars(array(
@@ -255,7 +256,7 @@ $template->assign_vars(array(
 		'REPLY_PUBLIC' => (isset($reply_public) && $reply_public == 1) ? ' checked="checked"' : '',
 
 		'B_QMKPUBLIC' => (isset($question)) ? $question : false,
-		'B_CONVO' => (isset($_SESSION['reply_of' . $_GET['message']]))
+		'B_CONVO' => (isset($_SESSION['reply_of' . $replymessage]))
 		));
 
 while ($array = $db->fetch())
@@ -271,10 +272,9 @@ while ($array = $db->fetch())
 }
 
 include 'header.php';
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'mail.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

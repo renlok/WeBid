@@ -21,11 +21,10 @@ User-agent: *
 Disallow: /admin/
 Disallow: /cache/
 Disallow: /docs/
-Disallow: /fck/
-Disallow: /inc/
 Disallow: /includes/
-Disallow: /logs/
+Disallow: /langauge/
 Disallow: /themes/
+Disallow: /uploaded/
 # Files
 Disallow: /batch.php
 Disallow: /cron.php

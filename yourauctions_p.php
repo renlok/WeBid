@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,36 +18,42 @@ $NOW = time();
 $NOWB = date('Ymd');
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_p.php';
 	header('location: user_login.php');
 	exit;
 }
+// check if the user can access this page
+$user->checkSuspended();
 
 $user_message = '';
 
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 {
-	if (is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
+	if (isset($_POST['O_delete']) && is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
 	{
 		$removed = 0;
 		foreach ($_POST['O_delete'] as $k => $v)
 		{
 			$v = intval($v);
 			// Pictures Gallery
-			if ($dir = @opendir($upload_path . '/' . $v))
+			if (is_dir(UPLOAD_PATH . $v))
 			{
-				while ($file = readdir($dir))
+				if ($dir = opendir(UPLOAD_PATH . $v))
 				{
-					if ($file != '.' && $file != '..')
+					while ($file = readdir($dir))
 					{
-						@unlink($upload_path . '/' . $v . $file);
+						if ($file != '.' && $file != '..')
+						{
+							@unlink(UPLOAD_PATH . $v . '/' . $file);
+						}
 					}
+					closedir($dir);
+					rmdir(UPLOAD_PATH . $v);
 				}
-				closedir($dir);
-				@rmdir($upload_path . '/' . $v);
 			}
 
 			$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
@@ -69,7 +75,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 		$user_message .= sprintf($MSG['1145'], count($_POST['O_delete']));
 	}
 
-	if (is_array($_POST['startnow']) && count($_POST['startnow']) > 0)
+	if (isset($_POST['startnow']) && is_array($_POST['startnow']) && count($_POST['startnow']) > 0)
 	{
 		foreach ($_POST['startnow'] as $k => $v)
 		{
@@ -163,8 +169,8 @@ while ($item = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => $system->uncleanvars($item['title']),
-			'STARTS' => FormatDate($item['starts']),
-			'ENDS' => FormatDate($item['ends']),
+			'STARTS' => FormatDate($item['starts'], '/', false),
+			'ENDS' => FormatDate($item['ends'], '/', false),
 
 			'B_HASNOBIDS' => ($item['current_bid'] == 0)
 			));
@@ -204,10 +210,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['25_0115'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourauctions_p.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -40,72 +40,33 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
-		// Update database
-		$query = "UPDATE ". $DBPrefix . "settings SET
-				  proxy_bidding = :proxy_bidding,
-				  edit_starttime = :edit_starttime,
-				  cust_increment = :cust_increment,
-				  hours_countdown = :hours_countdown,
-				  ao_hpf_enabled = :ao_hpf_enabled,
-				  ao_hi_enabled = :ao_hi_enabled,
-				  ao_bi_enabled = :ao_bi_enabled,
-				  subtitle = :subtitle,
-				  extra_cat = :extra_cat,
-				  autorelist = :autorelist,
-				  autorelist_max = :autorelist_max,
-				  ae_status = :ae_status,
-				  ae_timebefore = :ae_timebefore,
-				  ae_extend = :ae_extend,
-				  picturesgallery = :picturesgallery,
-				  maxpictures = :maxpictures,
-				  maxuploadsize = :maxuploadsize,
-				  thumb_show = :thumb_show";
-		$params = array();
-		$params[] = array(':proxy_bidding', ynbool($_POST['proxy_bidding']), 'str');
-		$params[] = array(':edit_starttime', $_POST['edit_starttime'], 'int');
-		$params[] = array(':cust_increment', $_POST['cust_increment'], 'int');
-		$params[] = array(':hours_countdown', $_POST['hours_countdown'], 'int');
-		$params[] = array(':ao_hpf_enabled', ynbool($_POST['ao_hpf_enabled']), 'str');
-		$params[] = array(':ao_hi_enabled', ynbool($_POST['ao_hi_enabled']), 'str');
-		$params[] = array(':ao_bi_enabled', ynbool($_POST['ao_bi_enabled']), 'str');
-		$params[] = array(':subtitle', ynbool($_POST['subtitle']), 'str');
-		$params[] = array(':extra_cat', ynbool($_POST['extra_cat']), 'str');
-		$params[] = array(':autorelist', ynbool($_POST['autorelist']), 'str');
-		$params[] = array(':autorelist_max', $_POST['autorelist_max'], 'int');
-		$params[] = array(':ae_status', ynbool($_POST['status']), 'str');
-		$params[] = array(':ae_timebefore', $_POST['timebefore'], 'int');
-		$params[] = array(':ae_extend', $_POST['extend'], 'int');
-		$params[] = array(':picturesgallery', $_POST['picturesgallery'], 'int');
-		$params[] = array(':maxpictures', $_POST['maxpictures'], 'int');
-		$params[] = array(':maxuploadsize', ($_POST['maxpicturesize'] * 1024), 'int');
-		$params[] = array(':thumb_show', $_POST['thumb_show'], 'int');
-		$db->query($query, $params);
+		$system->writesetting("proxy_bidding",ynbool($_POST['proxy_bidding']), 'str');
+		$system->writesetting("edit_starttime", $_POST['edit_starttime'], 'int');
+		$system->writesetting("edit_endtime", $_POST['edit_endtime'], 'int');
+		$system->writesetting("cust_increment", $_POST['cust_increment'], 'int');
+		$system->writesetting("hours_countdown", $_POST['hours_countdown'], 'int');
+		$system->writesetting("ao_hpf_enabled", ynbool($_POST['ao_hpf_enabled']), 'str');
+		$system->writesetting("ao_hi_enabled", ynbool($_POST['ao_hi_enabled']), 'str');
+		$system->writesetting("ao_bi_enabled", ynbool($_POST['ao_bi_enabled']), 'str');
+		$system->writesetting("subtitle", ynbool($_POST['subtitle']), 'str');
+		$system->writesetting("extra_cat", ynbool($_POST['extra_cat']), 'str');
+		$system->writesetting("autorelist", ynbool($_POST['autorelist']), 'str');
+		$system->writesetting("autorelist_max", $_POST['autorelist_max'], 'int');
+		$system->writesetting("ae_status", ynbool($_POST['status']), 'str');
+		$system->writesetting("ae_timebefore", $_POST['timebefore'], 'int');
+		$system->writesetting("ae_extend", $_POST['extend'], 'int');
+		$system->writesetting("picturesgallery", $_POST['picturesgallery'], 'int');
+		$system->writesetting("maxpictures", $_POST['maxpictures'], 'int');
+		$system->writesetting("maxuploadsize", ($_POST['maxpicturesize'] * 1024), 'int');
+		$system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
+		$system->writesetting("gallery_max_width_height", $_POST['gallery_max_width_height'], 'int');
 		$ERR = $MSG['5088'];
 	}
-	$system->SETTINGS['edit_starttime'] = $_POST['edit_starttime'];
-	$system->SETTINGS['cust_increment'] = $_POST['cust_increment'];
-	$system->SETTINGS['hours_countdown'] = $_POST['hours_countdown'];
-	$system->SETTINGS['ao_hpf_enabled'] = $_POST['ao_hpf_enabled'];
-	$system->SETTINGS['ao_hi_enabled'] = $_POST['ao_hi_enabled'];
-	$system->SETTINGS['ao_bi_enabled'] = $_POST['ao_bi_enabled'];
-	$system->SETTINGS['proxy_bidding'] = $_POST['proxy_bidding'];
-	$system->SETTINGS['subtitle'] = $_POST['subtitle'];
-	$system->SETTINGS['extra_cat'] = $_POST['extra_cat'];
-	$system->SETTINGS['autorelist'] = $_POST['autorelist'];
-	$system->SETTINGS['autorelist_max'] = $_POST['autorelist_max'];
-
-	$system->SETTINGS['ae_status'] = $_POST['status'];
-	$system->SETTINGS['ae_timebefore'] = $_POST['timebefore'];
-	$system->SETTINGS['ae_extend'] = $_POST['extend'];
-
-	$system->SETTINGS['picturesgallery'] = $_POST['picturesgallery'];
-	$system->SETTINGS['maxpictures'] = $_POST['maxpictures'];
-	$system->SETTINGS['maxuploadsize'] = $_POST['maxpicturesize'] * 1024;
-	$system->SETTINGS['thumb_show'] = $_POST['thumb_show'];
 }
 
 loadblock($MSG['427'], $MSG['428'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['5090'], $MSG['5089'], 'batch', 'edit_starttime', $system->SETTINGS['edit_starttime'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['allow_custom_end_date'], $MSG['allow_custom_end_date_explain'], 'batch', 'edit_endtime', $system->SETTINGS['edit_endtime'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['068'], $MSG['070'], 'batch', 'cust_increment', $system->SETTINGS['cust_increment'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['5091'], $MSG['5095'], 'days', 'hours_countdown', $system->SETTINGS['hours_countdown'], array($MSG['25_0037']));
 
@@ -130,6 +91,7 @@ loadblock($MSG['665'], $MSG['664'], 'batch', 'picturesgallery', $system->SETTING
 loadblock($MSG['666'], '', 'days', 'maxpictures', $system->SETTINGS['maxpictures']);
 loadblock($MSG['671'], $MSG['25_0187'], 'decimals', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), array($MSG['672']));
 loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], array($MSG['2__0045']));
+loadblock($MSG['gallery_image_max_size'], $MSG['gallery_image_max_size_explain'], 'decimals', 'gallery_max_width_height', $system->SETTINGS['gallery_max_width_height'], array($MSG['2__0045']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
@@ -138,8 +100,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['5087']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

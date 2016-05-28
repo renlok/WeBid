@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,11 +13,16 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/countries.inc.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
+include INCLUDE_PATH . 'config/timezones.php';
+include INCLUDE_PATH . 'config/gateways.php';
+
+unset($ERR);
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'edit_data.php';
 	header('location: user_login.php');
 	exit;
@@ -26,9 +31,8 @@ if (!$user->is_logged_in())
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 
-function generateSelect($name = '', $options = array())
+function generateSelect($name, $options, $selectsetting)
 {
-	global $selectsetting;
 	$html = '<select name="' . $name . '">';
 	foreach ($options as $option => $value)
 	{
@@ -45,15 +49,9 @@ function generateSelect($name = '', $options = array())
 	return $html;
 }
 
-$TIMECORRECTION = array();
-for ($i = 12; $i > -13; $i--)
-{
-	$TIMECORRECTION[$i] = $MSG['TZ_' . $i];
-}
-
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1";
 $db->direct_query($query);
-$gateway_data = $db->result();
+$gateway_data = $db->fetchAll();
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -92,27 +90,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$ERR = $ERR_117;
 		}
-		elseif ($gateway_data['paypal_required'] == 1 && (empty($_POST['TPL_pp_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_pp_email'])))
+		foreach ($gateway_data as $gateway)
 		{
-			$ERR = $MSG['810'];
+			if ($gateway['gateway_required'] == 1 && isset($_POST[$gateway['name']]['address']) && empty($_POST[$gateway['name']]['address']))
+			{
+				$ERR = $error_string[$gateway['name']];
+			}
 		}
-		elseif ($gateway_data['authnet_required'] == 1 && (empty($_POST['TPL_authnet_id']) || empty($_POST['TPL_authnet_pass'])))
-		{
-			$ERR = $MSG['811'];
-		}
-		elseif ($gateway_data['moneybookers_required'] == 1 && (empty($_POST['TPL_moneybookers_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_moneybookers_email'])))
-		{
-			$ERR = $MSG['822'];
-		}
-		elseif ($gateway_data['toocheckout_required'] == 1 && (empty($_POST['TPL_toocheckout_id'])))
-		{
-			$ERR = $MSG['821'];
-		}
-		elseif ($gateway_data['worldpay_required'] == 1 && (empty($_POST['TPL_worldpay_id'])))
-		{
-			$ERR = $MSG['823'];
-		}
-		else
+		if (!isset($ERR))
 		{
 			if (!empty($_POST['TPL_day']) && !empty($_POST['TPL_month']) && !empty($_POST['TPL_year']))
 			{
@@ -131,7 +116,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					country = :country,
 					zip = :zip,
 					phone = :phone,
-					timecorrection = :timecorrection,
+					timezone = :timezone,
 					emailtype = :emailtype,
 					nletter = :nletter";
 			$params = array();
@@ -143,46 +128,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':country', $system->cleanvars($_POST['TPL_country']), 'str');
 			$params[] = array(':zip', $system->cleanvars($_POST['TPL_zip']), 'str');
 			$params[] = array(':phone', $system->cleanvars($_POST['TPL_phone']), 'str');
-			$params[] = array(':timecorrection', $_POST['TPL_timezone'], 'float');
+			$params[] = array(':timezone', $_POST['TPL_timezone'], 'str');
 			$params[] = array(':emailtype', $system->cleanvars($_POST['TPL_emailtype']), 'str');
 			$params[] = array(':nletter', $system->cleanvars($_POST['TPL_nletter']), 'str');
-
-			if ($gateway_data['paypal_active'] == 1)
-			{
-				$query .= ", paypal_email = :paypal_email";
-				$params[] = array(':paypal_email', $system->cleanvars($_POST['TPL_pp_email']), 'str');
-			}
-
-			if ($gateway_data['authnet_active'] == 1)
-			{
-				$query .= ", authnet_id = :authnet_id,
-							authnet_pass = :authnet_pass";
-				$params[] = array(':authnet_id', $system->cleanvars($_POST['TPL_authnet_id']), 'str');
-				$params[] = array(':authnet_pass', $system->cleanvars($_POST['TPL_authnet_pass']), 'str');
-			}
-
-			if ($gateway_data['worldpay_active'] == 1)
-			{
-				$query .= ", worldpay_id = :worldpay_id";
-				$params[] = array(':worldpay_id', $system->cleanvars($_POST['TPL_worldpay_id']), 'str');
-			}
-
-			if ($gateway_data['moneybookers_active'] == 1)
-			{
-				$query .= ", moneybookers_email = :moneybookers_email";
-				$params[] = array(':moneybookers_email', $system->cleanvars($_POST['TPL_moneybookers_email']), 'str');
-			}
-
-			if ($gateway_data['toocheckout_active'] == 1)
-			{
-				$query .= ", toocheckout_id = :toocheckout_id";
-				$params[] = array(':toocheckout_id', $system->cleanvars($_POST['TPL_toocheckout_id']), 'str');
-			}
 
 			if (strlen($_POST['TPL_password']) > 0)
 			{
 				// hash the password
-				include $include_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query .= ", password = :password";
 				$params[] = array(':password', $phpass->HashPassword($_POST['TPL_password']), 'str');
@@ -191,6 +144,32 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$query .= " WHERE id = :user_id";
 			$params[] = array(':user_id', $user->user_data['id'], 'int');
 			$db->query($query, $params);
+
+			foreach ($gateway_data as $gateway)
+			{
+				if (isset($_POST[$gateway['name']]['address']) && empty($_POST[$gateway['name']]['address']))
+				{
+					$params = array();
+					$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "usergateways WHERE gateway_id = :gateway_id AND user_id = :user_id";
+					$params[] = array(':user_id', $user->user_data['id'], 'int');
+					$params[] = array(':gateway_id', $gateway['id'], 'int');
+					$db->query($query, $params);
+					$usergateways = $db->result();
+					if ($usergateways['COUNT'] == 0)
+					{
+						$query = "INSERT INTO " . $DBPrefix . "usergateways (gateway_id, user_id, address, password) VALUES (:gateway_id, :user_id, :address, :password)";
+					}
+					else
+					{
+						$query = "UPDATE " . $DBPrefix . "usergateways SET address = :address, password = :password
+								WHERE gateway_id = :gateway_id AND user_id = :user_id";
+					}
+					$params[] = array(':address', ((isset($_POST[$gateway['name']]['address'])) ? $system->cleanvars($_POST[$gateway['name']]['address']) : ''), 'str');
+					$params[] = array(':password', ((isset($_POST[$gateway['name']]['password'])) ? $system->cleanvars($_POST[$gateway['name']]['password']) : ''), 'str');
+					$db->query($query, $params);
+				}
+			}
+
 			$ERR = $MSG['183'];
 		}
 	}
@@ -253,8 +232,27 @@ for ($i = 1; $i <= 31; $i++)
 }
 $dobday .= '</select>';
 
-$selectsetting = $USER['timecorrection'];
-$time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
+$time_correction = generateSelect('TPL_timezone', $timezones, $USER['timezone']);
+
+foreach ($gateway_data as $gateway)
+{
+	if ($gateway['gateway_active'] == 1)
+	{
+		$template->assign_block_vars('gateways', array(
+				'GATEWAY_ID' => $gateway['id'],
+				'NAME' => $gateway['displayname'],
+				'PLAIN_NAME' => $gateway['name'],
+				'REQUIRED' => $gateway['gateway_required'],
+				'ADDRESS' => isset($_POST[$gateway['name']]['address']) ? $_POST[$gateway['name']]['address'] : '',
+				'PASSWORD' => isset($_POST[$gateway['name']]['password']) ? $_POST[$gateway['name']]['password'] : '',
+				'ADDRESS_NAME' => isset($address_string[$gateway['name']]) ? $address_string[$gateway['name']] : $gateway['name'],
+				'PASSWORD_NAME' => isset($password_string[$gateway['name']]) ? $password_string[$gateway['name']] : '',
+				'ERROR_STRING' => $error_string[$gateway['name']],
+
+				'B_PASSWORD' => isset($password_string[$gateway['name']])
+				));
+	}
+}
 
 $template->assign_vars(array(
 		'COUNTRYLIST' => $country,
@@ -270,33 +268,19 @@ $template->assign_vars(array(
 		'DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'TIMEZONE' => $time_correction,
 
-		//payment stuff
-		'PP_EMAIL' => $USER['paypal_email'],
-		'AN_ID' => $USER['authnet_id'],
-		'AN_PASS' => $USER['authnet_pass'],
-		'WP_ID' => $USER['worldpay_id'],
-		'TC_ID' => $USER['toocheckout_id'],
-		'MB_EMAIL' => $USER['moneybookers_email'],
-
 		'NLETTER1' => ($USER['nletter'] == 1) ? ' checked="checked"' : '',
 		'NLETTER2' => ($USER['nletter'] == 2) ? ' checked="checked"' : '',
 		'EMAILTYPE1' => ($USER['emailtype'] == 'html') ? ' checked="checked"' : '',
 		'EMAILTYPE2' => ($USER['emailtype'] == 'text') ? ' checked="checked"' : '',
 
-		'B_NEWLETTER' => ($system->SETTINGS['newsletter'] == 1),
-		'B_PAYPAL' => ($gateway_data['paypal_active'] == 1),
-		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1),
-		'B_WORLDPAY' => ($gateway_data['worldpay_active'] == 1),
-		'B_TOOCHECKOUT' => ($gateway_data['toocheckout_active'] == 1),
-		'B_MONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1)
+		'B_NEWLETTER' => ($system->SETTINGS['newsletter'] == 1)
 		));
 
 $TMP_usmenutitle = $MSG['509'];
 include 'header.php';
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'edit_data.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

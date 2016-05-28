@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,20 +13,12 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 // Run cron according to SETTINGS
 if ($system->SETTINGS['cron'] == 2)
 {
 	include_once 'cron.php';
-}
-
-if ($system->SETTINGS['loginbox'] == 1 && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('Location: ' . $sslurl . 'index.php');
-	exit;
 }
 
 $NOW = time();
@@ -43,7 +35,7 @@ function ShowFlags()
 			$flags .= '<br>';
 			$counter = 0;
 		}
-		$flags .= '<a href="?lan=' . $lang . '"><img vspace="2" hspace="2" src="' . $system->SETTINGS['siteurl'] . 'inc/flags/' . $lang . '.gif" border="0" alt="' . $lang . '"></a>';
+		$flags .= '<a href="?lan=' . $lang . '"><img vspace="2" hspace="2" src="' . $system->SETTINGS['siteurl'] . 'images/flags/' . $lang . '.gif" border="0" alt="' . $lang . '"></a>';
 		$counter++;
 	}
 	return $flags;
@@ -65,18 +57,31 @@ $db->direct_query($query);
 $parent_id = $db->result('cat_id');
 
 $query = "SELECT * FROM " . $DBPrefix . "categories
-		  WHERE parent_id = :parent_id
-		  " . $catsorting . "
-		  LIMIT :limit";
+			WHERE parent_id = :parent_id
+			" . $catsorting . "
+			LIMIT :limit";
 $params = array();
 $params[] = array(':parent_id', $parent_id, 'int');
 $params[] = array(':limit', $system->SETTINGS['catstoshow'], 'int');
 $db->query($query, $params);
 
+$cat_strings = [];
+$categories = [];
 while ($row = $db->fetch())
 {
+	$cat_strings[$row['cat_id']] = $category_names[$row['cat_id']];
+	$categories[$row['cat_id']] = $row;
+}
+// sort the categories
+if ($system->SETTINGS['catsorting'] == 'alpha')
+{
+	asort($cat_strings);
+}
+foreach ($cat_strings as $cat_id => $category_name)
+{
+	$row = $categories[$cat_id];
 	$template->assign_block_vars('cat_list', array(
-			'CATAUCNUM' => ($row['sub_counter'] != 0) ? '(' . $row['sub_counter'] . ')' : '',
+			'CATAUCNUM' => ($row['sub_counter'] != 0) ? $row['sub_counter'] : '',
 			'ID' => $row['cat_id'],
 			'IMAGE' => (!empty($row['cat_image'])) ? '<img src="' . $row['cat_image'] . '" border=0>' : '',
 			'COLOUR' => (empty($row['cat_colour'])) ? '#FFFFFF' : $row['cat_colour'],
@@ -86,12 +91,13 @@ while ($row = $db->fetch())
 
 // get featured items
 $query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, bn_only, buy_now
-        FROM " . $DBPrefix . "auctions
-        WHERE closed = 0 AND suspended = 0 AND starts <= :time
-		AND featured = 'y'
-        ORDER BY RAND() DESC LIMIT 12";
+		FROM " . $DBPrefix . "auctions
+		WHERE closed = 0 AND suspended = 0 AND starts <= :time
+		AND featured = 1
+		ORDER BY RAND() DESC LIMIT :limit";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
+$params[] = array(':limit', $system->SETTINGS['homefeaturednumber'], 'int');
 $db->query($query, $params);
 
 $i = 0;
@@ -108,25 +114,25 @@ while ($row = $db->fetch())
 		$ends_string = $MSG['911'];
 	}
 	$high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
-	$high_bid = ($row['bn_only'] == 'y') ? $row['buy_now'] : $high_bid;
+	$high_bid = ($row['bn_only']) ? $row['buy_now'] : $high_bid;
 	$template->assign_block_vars('featured', array(
 			'ENDS' => $ends_string,
 			'ID' => $row['id'],
 			'BID' => $system->print_money($high_bid),
-			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
 			'TITLE' => $system->uncleanvars($row['title'])
 			));
- 	$i++;
+	$i++;
 }
 
 $featured_items = ($i > 0) ? true : false;
 
 // get last created auctions
 $query = "SELECT id, title, starts from " . $DBPrefix . "auctions
-		 WHERE closed = 0 AND suspended = 0
-		 AND starts <= :time
-		 ORDER BY starts DESC
-		 LIMIT :limit";
+			WHERE closed = 0 AND suspended = 0
+			AND starts <= :time
+			ORDER BY starts DESC
+			LIMIT :limit";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['lastitemsnumber'], 'int');
@@ -147,8 +153,8 @@ while ($row = $db->fetch())
 $auc_last = ($i > 0) ? true : false;
 // get ending soon auctions
 $query = "SELECT ends, id, title FROM " . $DBPrefix . "auctions
-		 WHERE closed = 0 AND suspended = 0 AND starts <= :time
-		 ORDER BY ends LIMIT :limit";
+			WHERE closed = 0 AND suspended = 0 AND starts <= :time
+			ORDER BY ends LIMIT :limit";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['endingsoonnumber'], 'int');
@@ -177,11 +183,11 @@ while ($row = $db->fetch())
 
 $end_soon = ($i > 0) ? true : false;
 // get hot items
-$query = "SELECT a.id, a.title, a.current_bid, a.pict_url, a.ends, a.num_bids, a.minimum_bid 
-        FROM " . $DBPrefix . "auctions a 
-        LEFT JOIN " . $DBPrefix . "auccounter c ON (a.id = c.auction_id) 
-        WHERE closed = 0 AND suspended = 0 AND starts <= :time
-        ORDER BY c.counter DESC LIMIT :limit";
+$query = "SELECT a.id, a.title, a.current_bid, a.pict_url, a.ends, a.num_bids, a.minimum_bid
+		FROM " . $DBPrefix . "auctions a
+		LEFT JOIN " . $DBPrefix . "auccounter c ON (a.id = c.auction_id)
+		WHERE closed = 0 AND suspended = 0 AND starts <= :time
+		ORDER BY c.counter DESC LIMIT :limit";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['hotitemsnumber'], 'int');
@@ -192,23 +198,23 @@ while ($row = $db->fetch())
 {
 	$i++;
 	$ends = $row['ends'];
-    $difference = $ends - time();
-    if ($difference > 0)
+	$difference = $ends - time();
+	if ($difference > 0)
 	{
-        $ends_string = FormatTimeLeft($difference); 
-    }
+		$ends_string = FormatTimeLeft($difference);
+	}
 	else
 	{
-        $ends_string = $MSG['911'];
-    }
-    $high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
-    $template->assign_block_vars('hotitems', array(
-            'ENDS' => $ends_string,
-            'ID' => $row['id'],
-            'BID' => $system->print_money($high_bid),
-            'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
-            'TITLE' => $system->uncleanvars($row['title'])
-            ));
+		$ends_string = $MSG['911'];
+	}
+	$high_bid = ($row['num_bids'] == 0) ? $row['minimum_bid'] : $row['current_bid'];
+	$template->assign_block_vars('hotitems', array(
+			'ENDS' => $ends_string,
+			'ID' => $row['id'],
+			'BID' => $system->print_money($high_bid),
+			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'TITLE' => $system->uncleanvars($row['title'])
+			));
 }
 $hot_items = ($i > 0) ? true : false;
 
@@ -270,4 +276,3 @@ $template->display('body');
 include 'footer.php';
 
 unset($_SESSION['loginerror']);
-?>

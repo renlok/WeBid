@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,12 +15,12 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (!empty($_POST['ip']))
+	if (isset($_POST['ip']) && !empty($_POST['ip']))
 	{
 		$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
 				(NULL, 'NOUSER',  :user_ip, 'next',  'deny')";
@@ -28,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params[] = array(':user_ip', $system->cleanvars($_POST['ip']), 'str');
 		$db->query($query, $params);
 	}
-	if (is_array($_POST['delete']))
+	if (isset($_POST['delete']) && is_array($_POST['delete']))
 	{
 		foreach ($_POST['delete'] as $k => $v)
 		{
@@ -38,7 +38,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$db->query($query, $params);
 		}
 	}
-	if (is_array($_POST['accept']))
+	if (isset($_POST['accept']) && is_array($_POST['accept']))
 	{
 		foreach ($_POST['accept'] as $k => $v)
 		{
@@ -48,7 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$db->query($query, $params);
 		}
 	}
-	if (is_array($_POST['deny']))
+	if (isset($_POST['deny']) && is_array($_POST['deny']))
 	{
 		foreach ($_POST['deny'] as $k => $v)
 		{
@@ -75,8 +75,14 @@ while ($row = $db->fetch())
 	$bg = ($bg == '') ? 'class="bg"' : '';
 }
 
+$template->assign_vars(array(
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		));
+
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'banips.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

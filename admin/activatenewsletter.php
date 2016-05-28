@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,21 +15,15 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['newsletter'] = intval($_POST['newsletter']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			newsletter = :newsletter";
-	$params = array();
-	$params[] = array(':newsletter', $system->SETTINGS['newsletter'], 'int');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("newsletter", intval($_POST['newsletter']),"int");
 	$ERR = $MSG['30_0049'];
 }
 
@@ -42,8 +36,9 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['25_0079']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
-?>
+include 'footer.php';

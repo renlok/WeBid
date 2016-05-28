@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,18 +14,6 @@
 
 include 'common.php';
 
-if (($system->SETTINGS['contactseller'] == 'logged' && !$user->is_logged_in()) || $system->SETTINGS['contactseller'] == 'never')
-{
-	if (isset($_SESSION['REDIRECT_AFTER_LOGIN']))
-	{
-		header('location: ' . $_SESSION['REDIRECT_AFTER_LOGIN']);
-	}
-	else
-	{
-		header('location: index.php');
-	}
-}
-
 if (!isset($_POST['auction_id']) && !isset($_GET['auction_id']))
 {
 	$auction_id = $_SESSION['CURRENT_ITEM'];
@@ -35,6 +23,20 @@ else
 	$auction_id = intval($_GET['auction_id']);
 }
 $_SESSION['CURRENT_ITEM'] = $auction_id;
+
+if (($system->SETTINGS['contactseller'] == 'logged' && !$user->checkAuth()) || $system->SETTINGS['contactseller'] == 'never')
+{
+	if (isset($_SESSION['REDIRECT_AFTER_LOGIN']))
+	{
+		header('location: ' . $_SESSION['REDIRECT_AFTER_LOGIN']);
+	}
+	else
+	{
+		$_SESSION['LOGIN_MESSAGE'] = $MSG['646'];
+		$_SESSION['REDIRECT_AFTER_LOGIN'] = 'send_email.php?id=' . $auction_id;
+		header('location: user_login.php');
+	}
+}
 
 // Get item description
 $query = "SELECT a.user, a.title, u.nick, u.email FROM " . $DBPrefix . "auctions a
@@ -118,10 +120,10 @@ $template->assign_vars(array(
 		'MESSAGE' => (isset($mes)) ? $mes : '',
 		'ERROR' => (isset($TPL_error_text)) ? $TPL_error_text : '',
 		'AUCT_ID' => $auction_id,
-		'SELLER_NICK' => $seller_nick,
-		'SELLER_EMAIL' => $seller_email,
+		'SELLER_NICK' => (isset($seller_nick)) ? $seller_nick : '',
+		'SELLER_EMAIL' => (isset($seller_email)) ? $seller_email : '',
 		'SELLER_QUESTION' => (isset($_POST['sender_question'])) ? $_POST['sender_question'] : '',
-		'ITEM_TITLE' => $item_title,
+		'ITEM_TITLE' => (isset($item_title)) ? $item_title : '',
 		'EMAIL' => ($user->logged_in) ? $user->user_data['email'] : ''
 		));
 
@@ -131,4 +133,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

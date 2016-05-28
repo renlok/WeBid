@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,29 +15,24 @@
 define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'ckeditor/ckeditor.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$system->SETTINGS['cookiespolicy'] = ynbool($_POST['cookiespolicy']);
-	$system->SETTINGS['cookiespolicytext'] = $system->cleanvars($_POST['cookiespolicytext']);
-	$query = "UPDATE " . $DBPrefix . "settings SET cookiespolicy = :policy, cookiespolicytext = :cookiespolicy";
-	$params = array();
-	$params[] = array(':policy', $system->SETTINGS['cookiespolicy'], 'str');
-	$params[] = array(':cookiespolicy', $system->SETTINGS['cookiespolicytext'], 'str');
-	$db->query($query, $params);
+	$system->writesetting("cookiespolicy",ynbool($_POST['cookiespolicy']),"str");
+	$system->writesetting("cookiespolicytext", $system->cleanvars($_POST['cookiespolicytext']),"str");
 
 	$ERR = $MSG['1115'];
 }
 loadblock($MSG['1111'], $MSG['1112'], 'yesno', 'cookiespolicy', $system->SETTINGS['cookiespolicy'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->basePath = 'js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
@@ -51,8 +46,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['1114']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

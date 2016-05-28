@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,19 +15,19 @@
 define('InAdmin', 1);
 $current_page = 'interface';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$theme_root = $main_path . 'themes/'; //theres no point repeatedly defining this
+$theme_root = MAIN_PATH . 'themes/'; //theres no point repeatedly defining this
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']) && $_POST['dtheme'] != 'admin')
+	if (is_dir($theme_root . '/' . $_POST['dtheme']) && !empty($_POST['dtheme']) && strstr($_POST['dtheme'], 'admin') === false)
 	{
 		// Update database
-		$query = "UPDATE " . $DBPrefix . "settings SET
-				theme = '" . $_POST['dtheme'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$system->writesetting("theme", $_POST['dtheme'], 'str');
+		$system->writesetting("admin_theme", $_POST['admin_theme'], 'str');
 		$system->SETTINGS['theme'] = $_POST['dtheme'];
+		$system->SETTINGS['admin_theme'] = $_POST['admin_theme'];
 		$ERR = $MSG['26_0005'];
 	}
 	else
@@ -39,55 +39,79 @@ elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'
 {
 	$filename = ($_POST['action'] == 'add') ? $_POST['new_filename'] : $_POST['filename'];
 	$fh = fopen($theme_root . $_POST['theme'] . '/' . $filename, 'w') or die("can't open file " . $theme_root . $_POST['theme'] . '/' . $filename);
-	fwrite($fh, stripslashes($_POST['content']));
+	fwrite($fh, $_POST['content']);
 	fclose($fh);
 }
 
-$bg = '';
-if ($dir = @opendir($theme_root))
+$abg = $bg = '';
+if (is_dir($theme_root))
 {
-	while (($atheme = readdir($dir)) !== false)
+	if ($dir = opendir($theme_root))
 	{
-		$theme_path = $theme_root . '/' . $atheme;
-		$list_files = (isset($_GET['do']) && isset($_GET['theme']) && $_GET['do'] == 'listfiles' && $_GET['theme'] == $atheme);
-		if ($atheme != 'CVS' && is_dir($theme_path) && substr($atheme, 0, 1) != '.')
+		while (($atheme = readdir($dir)) !== false)
 		{
-			$THEMES[$atheme] = $atheme;
-			$template->assign_block_vars('themes', array(
-					'NAME' => $atheme,
-					'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
-					'B_LISTFILES' => $list_files,
-					'B_NOTADMIN' => ($atheme != 'admin'),
-					'BG' => $bg
-					));
-			$bg = ($bg == '') ? 'class="bg"' : '';
-
-			if ($list_files)
+			$theme_path = $theme_root . '/' . $atheme;
+			$list_files = (isset($_GET['do']) && isset($_GET['theme']) && $_GET['do'] == 'listfiles' && $_GET['theme'] == $atheme);
+			if ($atheme != 'CVS' && is_dir($theme_path) && substr($atheme, 0, 1) != '.')
 			{
-				// list files
-				$handler = opendir($theme_path);
-
-				// keep going until all files in directory have been read
-				$files = array();
-				while ($file = readdir($handler))
+				$THEMES[$atheme] = $atheme;
+				if (strstr($atheme, 'admin') === false)
 				{
-					$extension = substr($file, strrpos($file, '.') + 1);
-					if (in_array($extension, array('tpl', 'html', 'css')))
-					{
-						$files[] = $file;
-					}
+					$template->assign_block_vars('themes', array(
+							'NAME' => $atheme,
+							'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
+							'B_LISTFILES' => $list_files,
+							'BG' => $bg
+						));
+					$bg = ($bg == '') ? 'class="bg"' : '';
 				}
-				sort($files);
-				for ($i = 0; $i < count($files); $i++)
+				else
 				{
-					$template->assign_block_vars('themes.files', array(
-							'FILE' => $files[$i]
-							));
+					$template->assign_block_vars('admin_themes', array(
+							'NAME' => $atheme,
+							'B_CHECKED' => ($system->SETTINGS['admin_theme'] == $atheme),
+							'B_LISTFILES' => $list_files,
+							'BG' => $abg
+						));
+					$abg = ($abg == '') ? 'class="bg"' : '';
+				}
+
+				if ($list_files)
+				{
+					// list files
+					$handler = opendir($theme_path);
+
+					// keep going until all files in directory have been read
+					$files = array();
+					while ($file = readdir($handler))
+					{
+						$extension = substr($file, strrpos($file, '.') + 1);
+						if (in_array($extension, array('tpl', 'html', 'css')))
+						{
+							$files[] = $file;
+						}
+					}
+					sort($files);
+					for ($i = 0; $i < count($files); $i++)
+					{
+						if (strstr($atheme, 'admin') === false)
+						{
+							$template->assign_block_vars('themes.files', array(
+									'FILE' => $files[$i]
+									));
+						}
+						else
+						{
+							$template->assign_block_vars('admin_themes.files', array(
+									'FILE' => $files[$i]
+									));
+						}
+					}
 				}
 			}
 		}
+		closedir($dir);
 	}
-	@closedir($dir);
 }
 
 $edit_file = false;
@@ -119,8 +143,10 @@ $template->assign_vars(array(
 		'B_EDIT_FILE' => $edit_file
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'theme.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

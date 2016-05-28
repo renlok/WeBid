@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,13 +15,13 @@
 define('InAdmin', 1);
 $current_page = 'stats';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Retrieve data
 $query = "SELECT * FROM " . $DBPrefix . "currentbrowsers WHERE month = :month AND year = :year ORDER BY counter DESC";
 $params = array();
-$params[] = array(':month', date('n'), 'int');
+$params[] = array(':month', date('m'), 'int');
 $params[] = array(':year', date('Y'), 'int');
 $db->query($query, $params);
 
@@ -54,8 +54,10 @@ $template->assign_vars(array(
 		'STATSMONTH' => date('F Y', $system->ctime)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'viewbrowserstats.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

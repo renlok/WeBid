@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -33,10 +33,10 @@ function printLogL($str, $level)
 
 function constructCategories()
 {
-	global $DBPrefix, $system, $db;
+	global $DBPrefix, $db;
 
 	$query = "SELECT cat_id, parent_id, sub_counter, counter
-			 FROM " . $DBPrefix . "categories ORDER BY cat_id";
+				FROM " . $DBPrefix . "categories ORDER BY cat_id";
 	$db->direct_query($query);
 
 	while ($row = $db->fetch())
@@ -71,7 +71,7 @@ function sendWatchEmails($id)
 			$emailer->email_uid = $watchusers['id'];
 			$emailer->email_sender($watchusers['email'], 'auctionend_watchmail.inc.php', $system->SETTINGS['sitename'] . ' - ' . $MSG['471']);
 		}
-	}	
+	}
 }
 
 function sortFees()
@@ -150,7 +150,7 @@ function sortFees()
 		$params = array();
 		$params[] = array(':fee_value', $fee_value, 'float');
 		$params[] = array(':seller_id', $Seller['id'], 'int');
-		$params[] = array(':auc_id', $user_id, 'int');
+		$params[] = array(':auc_id', $Auction['id'], 'int');
 		$params[] = array(':time', $NOW, 'int');
 		$db->query($query, $params);
 	}
@@ -168,6 +168,5 @@ function sortFees()
 			'id' => $Auction['id'],
 			'title' => $system->uncleanvars($Auction['title'])
 			);
-	}	
+	}
 }
-?>

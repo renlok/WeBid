@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,10 +13,11 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $include_path."countries.inc.php";
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
 unset($ERR);
 $id = intval($_REQUEST['id']);
@@ -30,7 +31,7 @@ if (empty($id) || $id <= 0)
 
 $has_auctions = false;
 $has_bids = false;
-if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
 {
 	$catscontrol = new MPTTcategories();
 
@@ -122,8 +123,9 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 				$next_bid = $db->result('bid');
 				// set new highest bid
 				$params = array();
-				$extra = ", current_bid = :next_bid";
+				$extra = ", current_bid = :next_bid, current_bid_id = :current_bid_id";
 				$params[] = array(':next_bid', $next_bid, 'float');
+				$params[] = array(':current_bid_id', $row['id'], 'int');
 			}
 			$query = "UPDATE " . $DBPrefix . "auctions SET num_bids = num_bids - 1" . $extra . " WHERE id = :auc_id";
 			$params[] = array(':auc_id', $row['id'], 'int');
@@ -154,7 +156,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
 	header('location: listusers.php');
 	exit;
 }
-elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	header('location: listusers.php');
 	exit;
@@ -211,9 +213,11 @@ $template->assign_vars(array(
 		'TYPE' => 1
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'confirm.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

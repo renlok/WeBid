@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,15 +13,12 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'functions_ajax.php';
+include INCLUDE_PATH . 'functions_ajax.php';
 
 $do = alphanumeric($_GET['do']);
 
 switch ($do)
 {
-	case 'converter':
-		converter_call();
-		break;
 	case 'uploadaucimages':
 		upload_images();
 		break;
@@ -29,4 +26,3 @@ switch ($do)
 		getupldtable();
 		break;
 }
-?>

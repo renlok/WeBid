@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,24 +15,16 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['descriptiontag'] = $system->cleanvars($_POST['descriptiontag']);
-	$system->SETTINGS['keywordstag'] = $system->cleanvars($_POST['keywordstag']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			 descriptiontag = :descriptiontag,
-			 keywordstag = :keywordstag";
-	$params = array();
-	$params[] = array(':descriptiontag', $system->SETTINGS['descriptiontag'], 'str');
-	$params[] = array(':keywordstag', $system->SETTINGS['keywordstag'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("descriptiontag", $system->cleanvars($_POST['descriptiontag']),"str");
+	$system->writesetting("keywordstag", $system->cleanvars($_POST['keywordstag']),"str");
 	$ERR = $MSG['25_0185'];
 }
 
@@ -46,8 +38,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['25_0178']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

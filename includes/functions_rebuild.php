@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,28 +16,28 @@ if (!defined('InWeBid')) exit();
 
 function rebuild_table_file($table)
 {
-	global $DBPrefix, $system, $include_path;
+	global $DBPrefix, $db;
 	switch($table)
 	{
 		case 'membertypes':
-			$output_filename = $include_path . 'membertypes.inc.php';
+			$output_filename = INCLUDE_PATH . 'membertypes.inc.php';
 			$field_name = array('id', 'feedbacks', 'icon');
 			$sort_field = 1;
 			$array_name = 'membertypes';
-			$output = '<?php' . "\n";
-			$output.= '$' . $array_name . ' = array(' . "\n";
+			$array_key = 'feedbacks';
 		break;
 	}
 
-	$query = "SELECT " . join(',', $field_name) . " FROM " . $DBPrefix . "" . $table . " ORDER BY " .$field_name[$sort_field] . ";";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$num_rows = mysql_num_rows($res);
+	$query = "SELECT " . join(',', $field_name) . " FROM " . $DBPrefix . "" . $table . " ORDER BY " . $field_name[$sort_field] . ";";
+	$db->direct_query($query);
+	$num_rows = $db->numrows();
 
 	$i = 0;
-	while ($row = mysql_fetch_assoc($res))
+	$output = '<?php' . "\n";
+	$output.= '$' . $array_name . ' = array(' . "\n";
+	while ($row = $db->fetch())
 	{
-		$output .= '\'' . $row[$field_name[0]] . '\' => array(' . "\n";
+		$output .= '\'' . $row[$array_key] . '\' => array(' . "\n\t";
 		$field_count = count($field_name);
 		$j = 0;
 		foreach ($field_name as $field)
@@ -47,7 +47,7 @@ function rebuild_table_file($table)
 			if ($j < $field_count)
 				$output .= ', ';
 			else
-				$output .= ')';
+				$output .= "\n" . ')';
 		}
 		$i++;
 		if ($i < $num_rows)
@@ -65,25 +65,24 @@ function rebuild_table_file($table)
 
 function rebuild_html_file($table)
 {
-	global $DBPrefix, $system, $main_path, $language;
+	global $DBPrefix, $language, $db;
 	switch($table)
 	{
 		case 'countries':
-			$output_filename = $main_path . 'language/' . $language . '/countries.inc.php';
+			$output_filename = MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 			$field_name = 'country';
 			$array_name = 'countries';
 		break;
 	}
 
 	$query = "SELECT " . $field_name . " FROM " . $DBPrefix . $table . " ORDER BY " . $field_name . ";";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$num_rows = mysql_num_rows($res);
+	$db->direct_query($query);
+	$num_rows = $db->numrows();
 
 	$output = '<?php' . "\n";
 	$output.= '$' . $array_name . ' = array(' . "\n";
 
-	while ($row = mysql_fetch_assoc($res))
+	while ($row = $db->fetch())
 	{
 		$output .= '\'' . $row[$field_name] . '\' => \'' . $row[$field_name] . '\',' . "\n";
 	}
@@ -94,4 +93,3 @@ function rebuild_html_file($table)
 	fputs($handle, $output);
 	fclose($handle);
 }
-?>

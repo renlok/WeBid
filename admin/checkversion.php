@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'tools';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt')))
@@ -43,8 +43,10 @@ $template->assign_vars(array(
 		'REALVERSION' => $realversion
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'checkversion.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

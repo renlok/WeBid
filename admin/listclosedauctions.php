@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,8 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'auctions';
 include '../common.php';
-include $include_path . 'functions_admin.php';
-include $include_path . 'dates.inc.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -42,27 +41,28 @@ $_SESSION['RETURN_LIST'] = 'listclosedauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(id) As auctions FROM " . $DBPrefix . "auctions WHERE closed = 1 AND suspended = 0";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_auctions = mysql_result($res, 0, 'auctions');
+$db->direct_query($query);
+$num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(w.id) as winners FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
 		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
-		WHERE a.closed = 1 AND a.suspended = 0 GROUP BY a.id ORDER BY nick LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+		WHERE a.closed = 1 AND a.suspended = 0 GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
+$params = array();
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
+$db->query($query, $params);
 $bg = '';
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],
 			'ID' => $row['id'],
 			'TITLE' => $system->uncleanvars($row['title']),
-			'START_TIME' => ArrangeDateNoCorrection($row['starts']),
-			'END_TIME' => ArrangeDateNoCorrection($row['ends']),
+			'START_TIME' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
+			'END_TIME' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 			'USERNAME' => $row['nick'],
 			'CATEGORY' => $row['cat_name'],
 			'B_HASWINNERS' => ($row['winners'] == 0) ? false : true,
@@ -92,15 +92,17 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'PAGE_TITLE' => $MSG['214'],
 		'NUM_AUCTIONS' => $num_auctions,
-
+		'B_SEARCHUSER' => false, // needs decaring as listauctions.tpl is shared and expects B_SEARCHUSER to be declared. Used in users->view actions link
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'listauctions.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

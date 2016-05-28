@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -17,10 +17,13 @@ include 'common.php';
 // If user is not logged in redirect to login page
 if (!$user->logged_in)
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_c.php';
 	header('location: user_login.php');
 	exit;
 }
+// check if the user can access this page
+$user->checkSuspended();
 
 // DELETE OPEN AUCTIONS
 $NOW = time();
@@ -36,23 +39,26 @@ $relist_fee = $db->result('value');
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Delete auction
-	if (is_array($_POST['delete']) && count($_POST['delete']) > 0)
+	if (isset($_POST['delete']) && is_array($_POST['delete']) && count($_POST['delete']) > 0)
 	{
 		foreach ($_POST['delete'] as $k => $v)
 		{
 			$v = intval($v);
 			// Pictures Gallery
-			if ($dir = @opendir($upload_path . $v))
+			if (is_dir(UPLOAD_PATH . $v))
 			{
-				while ($file = readdir($dir))
+				if ($dir = opendir(UPLOAD_PATH . $v))
 				{
-					if ($file != '.' && $file != '..')
+					while ($file = readdir($dir))
 					{
-						unlink($upload_path . $v . '/' . $file);
+						if ($file != '.' && $file != '..')
+						{
+							unlink(UPLOAD_PATH . $v . '/' . $file);
+						}
 					}
+					closedir($dir);
+					rmdir(UPLOAD_PATH . $v);
 				}
-				closedir($dir);
-				@rmdir($upload_path . $v);
 			}
 
 			$query = "UPDATE " . $DBPrefix . "counters SET closedauctions = closedauctions - 1";
@@ -80,7 +86,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		$user_message .= sprintf($MSG['1145'], count($_POST['delete']));
 	}
-	if (is_array($_POST['sell']) && count($_POST['sell']) > 0)
+	if (isset($_POST['sell']) && is_array($_POST['sell']) && count($_POST['sell']) > 0)
 	{
 		foreach ($_POST['sell'] as $v)
 		{
@@ -93,7 +99,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$user_message .= sprintf($MSG['1147'], count($_POST['sell']));
 	}
 	// Re-list auctions
-	if (is_array($_POST['relist']) && count($_POST['relist']) > 0)
+	if (isset($_POST['relist']) && is_array($_POST['relist']) && count($_POST['relist']) > 0)
 	{
 		foreach ($_POST['relist'] as $k)
 		{
@@ -108,7 +114,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$WILLEND = time() + ($AUCTION['duration'] * 24 * 60 * 60);
 			$suspend = 0;
 
-			if ($system->SETTINGS['fees'] == 'y')
+			if ($system->SETTINGS['fees'] == 'y' && $relist_fee > 0)
 			{
 				if ($system->SETTINGS['fee_type'] == 1)
 				{
@@ -126,15 +132,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 
 			$query = "UPDATE " . $DBPrefix . "auctions
-				  SET starts = :starts,
-				  ends = :ends,
-				  closed = 0,
-				  num_bids = 0,
-				  relisted = relisted + 1,
-				  current_bid = 0,
-				  sold = 'n',
-				  suspended = :suspended
-				  WHERE id = :auc_id";
+					SET starts = :starts,
+					ends = :ends,
+					closed = 0,
+					num_bids = 0,
+					relisted = relisted + 1,
+					current_bid = 0,
+					sold = 'n',
+					suspended = :suspended
+					WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':starts', $NOW, 'int');
 			$params[] = array(':ends', $WILLEND, 'int');
@@ -169,7 +175,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params = array();
 			$params[] = array(':cat_id', $AUCTION['category'], 'int');
 			$db->query($query, $params);
-	
+
 			$parent_node = $db->result();
 			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 			// update recursive categories
@@ -289,8 +295,8 @@ while ($item = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => $system->uncleanvars($item['title']),
-			'STARTS' => FormatDate($item['starts']),
-			'ENDS' => FormatDate($item['ends']),
+			'STARTS' => FormatDate($item['starts'], '/', false),
+			'ENDS' => FormatDate($item['ends'], '/', false),
 			'BID' => ($item['current_bid'] == 0) ? '-' : $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 
@@ -340,10 +346,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['354'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourauctions_c.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

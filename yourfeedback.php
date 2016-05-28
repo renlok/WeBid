@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,32 +13,27 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
 
-foreach ($membertypes as $idm => $memtypearr)
+if (!$user->checkAuth())
 {
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-ksort($memtypesarr, SORT_NUMERIC);
-
-if (!$user->is_logged_in())
-{
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourfeedback.php';
 	header('location: user_login.php');
 	exit;
 }
 
 $i = 0;
-foreach ($memtypesarr as $k => $l)
+foreach ($membertypes as $k => $l)
 {
-	if ($k >= $user->user_data['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+	if ($k >= $user->user_data['rate_sum'] || $i++ == (count($membertypes) - 1))
 	{
 		$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 		break;
 	}
 }
 
-$page = (isset($_GET['pg']) && $_GET['pg'] > 0) ? $_GET['pg'] : 1;
+$page = (isset($_GET['pg']) && intval($_GET['pg']) > 0) ? $_GET['pg'] : 1;
 $left_limit = ($page - 1) * $system->SETTINGS['perpage'];
 
 $query = "SELECT count(*) As COUNT FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
@@ -68,9 +63,9 @@ $feed_disp = array();
 while ($arrfeed = $db->fetch())
 {
 	$j = 0;
-	foreach ($memtypesarr as $k => $l)
+	foreach ($membertypes as $k => $l)
 	{
-		if ($k >= $arrfeed['rate_sum'] || $j++ == (count($memtypesarr) - 1))
+		if ($k >= $arrfeed['rate_sum'] || $j++ == (count($membertypes) - 1))
 		{
 			$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 			break;
@@ -93,8 +88,9 @@ while ($arrfeed = $db->fetch())
 			'USFEED' => $arrfeed['rate_sum'],
 			'USICON' => (isset($usicon)) ? $usicon : '',
 			'FBDATE' => FormatDate($arrfeed['feedbackdate']),
-			'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $system->uncleanvars($arrfeed['title']) . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
-			'FEEDBACK' => nl2br(stripslashes($arrfeed['feedback']))
+			'AUCTION_TITLE' => $system->uncleanvars($arrfeed['title']),
+			'AUCTION_ID' => $arrfeed['auction_id'],
+			'FEEDBACK' => nl2br($arrfeed['feedback'])
 			));
 
 	$i++;
@@ -132,10 +128,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['25_0223'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourfeedback.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

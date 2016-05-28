@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,9 +15,9 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'language/' . $language . '/countries.inc.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
 unset($ERR);
 $userid = intval($_REQUEST['userid']);
@@ -61,7 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		if (isset($_POST['balance']))
 		{
 			$balance_clean = str_replace('-', '', $_POST['balance']);
-        }
+		}
 
 		if (strlen($_POST['password']) > 0 && ($_POST['password'] != $_POST['repeat_password']))
 		{
@@ -103,18 +103,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$ERR = $ERR_5037;
 		}
-		elseif (count($_POST['group']) == 0)
+		elseif (empty($_POST['group']))
 		{
 			$ERR = $ERR_044;
 		}
-        elseif (empty($_POST['balance']))
-        {
-            $ERR = $ERR_112;
-        }
-        elseif (!$system->CheckMoney($balance_clean))
-        {
-            $ERR = $ERR_081;
-        }
+		elseif (empty($_POST['balance']))
+		{
+			$ERR = $ERR_112;
+		}
+		elseif (!$system->CheckMoney($balance_clean))
+		{
+			$ERR = $ERR_081;
+		}
 		else
 		{
 			if (!empty($_POST['birthdate']))
@@ -126,18 +126,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$birthdate = 0;
 			}
 
-			$query = "UPDATE " . $DBPrefix . "users SET 
-				  name = :name,
-				  email = :email,
-				  address = :address,
-				  city = :city,
-				  prov = :prov,
-				  country = :country,
-				  zip = :zip,
-				  phone = :phone,
-				  birthdate = :birthdate,
-				  groups = :groups,
-				  balance = :balance";
+			$query = "UPDATE " . $DBPrefix . "users SET
+					name = :name,
+					email = :email,
+					address = :address,
+					city = :city,
+					prov = :prov,
+					country = :country,
+					zip = :zip,
+					phone = :phone,
+					birthdate = :birthdate,
+					groups = :groups,
+					balance = :balance";
 			$params = array();
 			$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 			$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');
@@ -147,11 +147,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':prov', $system->cleanvars($_POST['prov']), 'str');
 			$params[] = array(':country', $system->cleanvars($_POST['country']), 'str');
 			$params[] = array(':zip', $system->cleanvars($_POST['zip']), 'str');
+			$params[] = array(':phone', $system->cleanvars($_POST['phone']), 'str');
 			$params[] = array(':groups', implode(',', $_POST['group']), 'str');
 			$params[] = array(':balance', $system->input_money($_POST['balance']), 'float');
 			if (strlen($_POST['password']) > 0)
 			{
-				include $include_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query .=  ", password = :password";
 				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
@@ -254,9 +255,11 @@ $template->assign_vars(array(
 					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : ''
 					)
 		));
-		
+
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'edituser.tpl'
 		));
 $template->display('body');
-?> 
+include 'footer.php';
+?>

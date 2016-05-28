@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,8 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
-include $include_path . 'functions_admin.php';
-include $include_path . 'dates.inc.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Insert new currency
@@ -37,14 +36,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		$query = "UPDATE " . $DBPrefix . "community
-				  SET name = :name,
-				  msgstoshow = :msgstoshow,
-				  active = :active
-				  WHERE id = :id";
+					SET name = :name,
+					msgstoshow = :msgstoshow,
+					active = :active
+					WHERE id = :id";
 		$params = array();
 		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
 		$params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');
-		$params[] = array(':active', $_POST['active'], 'int');
+		$params[] = array(':active', $_POST['active'], 'bool');
 		$params[] = array(':id', $_POST['id'], 'int');
 		$db->query($query, $params);
 		header('location: boards.php');
@@ -69,13 +68,15 @@ $template->assign_vars(array(
 		'MSGTOSHOW' => $board_data['msgstoshow'],
 
 		'B_ACTIVE' => ($board_data['active'] == 1),
-		'B_DEACTIVE' => ($board_data['active'] == 2),
+		'B_DEACTIVE' => ($board_data['active'] == 0),
 		'ID' => $id
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editboards.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

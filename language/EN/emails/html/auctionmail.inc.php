@@ -14,7 +14,6 @@
 		<table border="0" width="100%">
 			<tr>
 				<td colspan="2" style="font-size: 12px;"><a href="{SITE_URL}item.php?id={A_ID}">{A_TITLE}</a></td>
-
 			</tr>
 			<tr>
 				<td width="22%" style="font-size: 12px;">Auction type:</td>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,24 +15,17 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['catsorting'] = $system->cleanvars($_POST['catsorting']);
-	$system->SETTINGS['catstoshow'] = intval($_POST['catstoshow']);
-	// Update database
-	$query = " UPDATE " . $DBPrefix . "settings SET
-			   catsorting = :catsorting,
-			   catstoshow = :catstoshow";
-	$params = array();
-	$params[] = array(':catsorting', $system->SETTINGS['catsorting'], 'str');
-	$params[] = array(':catstoshow', $system->SETTINGS['catstoshow'], 'int');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("catsorting", $system->cleanvars($_POST['catsorting']), "str");
+	$system->writesetting("catstoshow", intval($_POST['catstoshow']),"int");
+
 	$ERR = $MSG['25_0150'];
 }
 
@@ -46,8 +39,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['25_0146']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

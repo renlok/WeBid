@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,8 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
-include $include_path . 'functions_admin.php';
-include $include_path . 'dates.inc.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // get page limits
@@ -88,8 +87,10 @@ $template->assign_vars(array(
 		'PAGES' => $PAGES
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'news.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

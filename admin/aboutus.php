@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,32 +15,25 @@
 define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'ckeditor/ckeditor.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['aboutus'] = ynbool($_POST['aboutus']);
-	$system->SETTINGS['aboutustext'] = $system->cleanvars($_POST['aboutustext']);
 	// Update database
-	$query = "UPDATE ". $DBPrefix . "settings SET
-			  aboutus = :aboutus,
-			  aboutustext = :aboutustext";
-	$params = array();
-	$params[] = array(':aboutus', $system->SETTINGS['aboutus'], 'str');
-	$params[] = array(':aboutustext', $system->SETTINGS['aboutustext'], 'str');
-	$db->query($query, $params);
+	$system->writesetting("aboutus", ynbool($_POST['aboutus']), "bool");
+	$system->writesetting("aboutustext", $system->cleanvars($_POST['aboutustext']), "str");
+
 	$ERR = $MSG['5079'];
 }
 
 loadblock($MSG['5077'], $MSG['5076'], 'yesno', 'aboutus', $system->SETTINGS['aboutus'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->basePath = 'js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
@@ -54,8 +47,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['5074']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

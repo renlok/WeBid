@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,38 +15,38 @@
 define('InAdmin', 1);
 $current_page = 'fees';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 $fees = array( //0 = single value, 1 = staged fees
 	'signup_fee' => 0,
 	'buyer_fee' => 1,
-	'setup' => 1,
-	'hpfeat_fee' => 0,
-	'bolditem_fee' => 0,
-	'hlitem_fee' => 0,
+	'setup_fee' => 1,
+	'featured_fee' => 0,
+	'bold_fee' => 0,
+	'highlighted_fee' => 0,
 	'subtitle_fee' => 0,
-	'excat_fee' => 0,
-	'rp_fee' => 0,
+	'extracat_fee' => 0,
+	'reserve_fee' => 0,
 	'picture_fee' => 0,
 	'relist_fee' => 0,
-	'buyout_fee' => 0,
+	'buynow_fee' => 0,
 	'endauc_fee' => 1
 	);
 
 $feenames = array(
 	'signup_fee' => $MSG['430'],
 	'buyer_fee' => $MSG['775'],
-	'setup' => $MSG['432'],
-	'hpfeat_fee' => $MSG['433'],
-	'bolditem_fee' => $MSG['439'],
-	'hlitem_fee' => $MSG['434'],
+	'setup_fee' => $MSG['432'],
+	'featured_fee' => $MSG['433'],
+	'bold_fee' => $MSG['439'],
+	'highlighted_fee' => $MSG['434'],
 	'subtitle_fee' => $MSG['803'],
-	'excat_fee' => $MSG['804'],
-	'rp_fee' => $MSG['440'],
+	'extracat_fee' => $MSG['804'],
+	'reserve_fee' => $MSG['440'],
 	'picture_fee' => $MSG['435'],
 	'relist_fee' => $MSG['437'],
-	'buyout_fee' => $MSG['436'],
+	'buynow_fee' => $MSG['436'],
 	'endauc_fee' => $MSG['791']
 	);
 
@@ -170,20 +170,22 @@ if(isset($_GET['type']) && isset($fees[$_GET['type']]))
 	}
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$query = "SELECT COUNT(id) as count FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1 AND gateway_admin_address != ''";
 $db->direct_query($query);
-$gateway_data = $db->result();
+$gateway_check = $db->result('count');
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'B_NOT_SETUP_CORRECTLY' => (strlen($gateway_data['paypal_address'] . $gateway_data['worldpay_address'] . $gateway_data['toocheckout_address'] . $gateway_data['moneybookers_address']) == 0 && (strlen($gateway_data['authnet_address']) == 0 || strlen($gateway_data['authnet_password']) == 0)),
+		'B_NOT_SETUP_CORRECTLY' => ($gateway_check == 0),
 		'B_SINGLE' => (isset($_GET['type']) && isset($fees[$_GET['type']]) && $fees[$_GET['type']] == 0) ? true : false,
 		'FEETYPE' => (isset($_GET['type']) && isset($feenames[$_GET['type']])) ? $feenames[$_GET['type']] : '',
 		'ERROR' => (isset($errmsg)) ? $errmsg : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'fees.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

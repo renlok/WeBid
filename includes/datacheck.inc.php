@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -32,7 +32,7 @@ function CheckFirstRegData()
 	010 = nick too short
 	011 = password too short
 	*/
-	global $name, $nick, $password, $repeat_password, $email;
+	global $name, $nick, $password, $repeat_password, $email, $db;
 	if (!isset($name) || empty($name))
 	{
 		return '002';
@@ -69,9 +69,11 @@ function CheckFirstRegData()
 	{
 		return '011';
 	}
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = '" . $nick . "'";
-	$result = mysql_query($query);
-	if (mysql_num_rows($result))
+	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = :user_nick";
+	$params = array();
+	$params[] = array(':user_nick', $nick, 'str');
+	$db->query($query, $params);
+	if ($db->numrows() == 0)
 	{
 		return '009';
 	}
@@ -100,9 +102,9 @@ function CheckSellData()
 	601 = wrong quantity of items
 	*/
 
-	global $title, $description, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
+	global $title, $sdescription, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
 	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
-	global $payments, $num, $nnum, $a_starts, $start_now, $relist;
+	global $payments, $num, $nnum, $a_starts, $a_ends, $start_now, $custom_end, $relist;
 	global $additional_shipping_cost, $shipping_cost;
 
 	if (empty($title))
@@ -110,12 +112,12 @@ function CheckSellData()
 		return '017';
 	}
 
-	if (empty($description))
+	if (empty($sdescription))
 	{
 		return '018';
 	}
 
-	if (!$system->CheckMoney($minimum_bid) && $buy_now_only == 'n')
+	if (!$system->CheckMoney($minimum_bid) && $buy_now_only == 0)
 	{
 		return '058';
 	}
@@ -124,12 +126,12 @@ function CheckSellData()
 	$clean_minimum_bid = $system->input_money($minimum_bid);
 	$clean_reserve_price = $system->input_money($reserve_price);
 	$clean_buy_now_price = $system->input_money($buy_now_price);
-	if ((empty($minimum_bid) || floatval($clean_minimum_bid) <= 0) && ($buy_now_only == 'n' || !$buy_now_only))
+	if ((empty($minimum_bid) || floatval($clean_minimum_bid) <= 0) && (!$buy_now_only))
 	{
 		return '019';
 	}
 
-	if (empty($reserve_price) && $with_reserve == 'yes' && $buy_now_only == 'n')
+	if (empty($reserve_price) && $with_reserve == 'yes' && $buy_now_only == 0)
 	{
 		return '021';
 	}
@@ -149,7 +151,7 @@ function CheckSellData()
 		return '022';
 	}
 
-	if ($buy_now_only == 'y')
+	if ($buy_now_only == 1)
 	{
 		$buy_now = 'yes';
 	}
@@ -159,15 +161,15 @@ function CheckSellData()
 		return '061';
 	}
 	if (isset($shipping_cost) && !$system->CheckMoney($shipping_cost)) {
-	
+
 	return '079';
-	
+
 	}
 	if (isset($additional_shipping_cost) && !$system->CheckMoney($additional_shipping_cost)) {
-	
-	
+
+
 	return '080';
-	
+
 	}
 
 	$numpay = count($payment);
@@ -217,7 +219,7 @@ function CheckSellData()
 		return '5045';
 	}
 
-	if ($buy_now == 'yes' && $buy_now_only == 'n')
+	if ($buy_now == 'yes' && $buy_now_only == 0)
 	{
 		if (($with_reserve == 'yes' && $clean_buy_now_price <= $clean_reserve_price) || $clean_buy_now_price <= $clean_minimum_bid)
 		{
@@ -244,11 +246,25 @@ function CheckSellData()
 			substr($a_starts, 17, 2),
 			substr($a_starts, 0, 2),
 			substr($a_starts, 3, 2),
-			substr($a_starts, 6, 4), 0);
+			substr($a_starts, 6, 4));
 
 		if ($a_starts < $system->ctime)
 		{
 			return '060';
+		}
+	}
+
+	if (!(strpos($a_ends, '-') === false) && $custom_end == 1)
+	{
+		$a_ends = _mktime(substr($a_ends, 11, 2),
+			substr($a_ends, 14, 2),
+			substr($a_ends, 17, 2),
+			substr($a_ends, 0, 2),
+			substr($a_ends, 3, 2),
+			substr($a_ends, 6, 4));
+		if ($a_ends < $a_starts)
+		{
+			return '082';
 		}
 	}
 }//--CheckSellData
@@ -256,17 +272,17 @@ function CheckSellData()
 function CheckBidData()
 {
 	global $bid, $next_bid, $atype, $qty, $Data, $bidder_id, $system;
-	
+
 	if ($Data['suspended'] > 0)
 	{
 		return '619';
 	}
-	
+
 	if ($bidder_id == $Data['user'])
 	{
 		return '612';
 	}
-	
+
 	if ($atype == 1) //normal auction
 	{
 		// have to use bccomp to check if bid is less than next_bid
@@ -291,7 +307,6 @@ function CheckBidData()
 			return '608';
 		}
 	}
-	
+
 	return 0;
 }
-?>

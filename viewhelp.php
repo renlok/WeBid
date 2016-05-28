@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,7 +14,7 @@
 
 include 'common.php';
 
-$cat = (isset($_GET['cat'])) ? intval($_GET['cat']) : intval($_POST['cat']);
+$cat = (isset($_REQUEST['cat'])) ? intval($_REQUEST['cat']) : 0;
 if ($cat > 0)
 {
 	// Retrieve category's name
@@ -28,7 +28,7 @@ if ($cat > 0)
 			'DOCDIR' => $DOCDIR, // Set document direction (set in includes/messages.XX.inc.php) ltr/rtl
 			'PAGE_TITLE' => $system->SETTINGS['sitename'] . ' ' . $MSG['5236'] . ' - ' . $FAQ_ctitle,
 			'CHARSET' => $CHARSET,
-			'LOGO' => ($system->SETTINGS['logo']) ? '<a href="' . $system->SETTINGS['siteurl'] . 'index.php?"><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '"></a>' : "&nbsp;",
+			'LOGO' => ($system->SETTINGS['logo']) ? '<img src="' . $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '">' : '&nbsp;',
 			'SITEURL' => $system->SETTINGS['siteurl'],
 			'THEME' => $system->SETTINGS['theme'],
 
@@ -45,6 +45,7 @@ if ($cat > 0)
 				'ID' => $cats['id']
 				));
 	}
+	include 'header.php';
 
 	// Retrieve FAQs from the database
 	$query = "SELECT f.question As q, f.answer As a, t.* FROM " . $DBPrefix . "faqs f
@@ -84,4 +85,4 @@ else
 {
 	header('location: help.php');
 }
-?>
+include 'footer.php';

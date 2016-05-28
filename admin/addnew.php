@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,8 +15,8 @@
 define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
-include $include_path . 'functions_admin.php';
-include $include_path . 'htmLawed.php';
+include INCLUDE_PATH . 'functions_admin.php';
+include PACKAGE_PATH . 'htmLawed.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -77,13 +77,16 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TITLE' => $MSG['518'],
 		'BUTTON' => $MSG['518'],
+		'ID' => '', // inserting new user so needs to be blank
 
 		'B_ACTIVE' => ((isset($_POST['suspended']) && $_POST['suspended'] == 0) || !isset($_POST['suspended'])),
 		'B_INACTIVE' => (isset($_POST['suspended']) && $_POST['suspended'] == 1)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'addnew.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

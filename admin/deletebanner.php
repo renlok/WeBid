@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,8 +13,9 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'banners';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 if (!isset($_GET['banner']) || empty($_GET['banner']))
@@ -24,21 +25,23 @@ if (!isset($_GET['banner']) || empty($_GET['banner']))
 }
 
 $banner = $_GET['banner'];
+$params = array();
+$params[] = array(':banner_id', $banner, 'int');
 
-$query = "SELECT name, user FROM " . $DBPrefix . "banners WHERE id = " . $banner;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$bannername = mysql_result($res, 0, 'name');
-$banneruser = mysql_result($res, 0, 'user');
+$query = "SELECT name, user FROM " . $DBPrefix . "banners WHERE id = :banner_id";
+$db->query($query, $params);
+$banner_data = $db->result();
+$bannername = $banner_data['name'];
+$banneruser = $banner_data['user'];
 
 
-$query = "DELETE FROM " . $DBPrefix . "banners WHERE id = " . $banner;
-$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-$query = "DELETE FROM " . $DBPrefix . "bannerscategories WHERE banner = " . $banner;
-$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-$query = "DELETE FROM " . $DBPrefix . "bannerskeywords WHERE banner = " . $banner;
-$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-@unlink($upload_path . 'banners/' . $banneruser . '/' . $bannername);
+$query = "DELETE FROM " . $DBPrefix . "banners WHERE id = :banner_id";
+$db->query($query, $params);
+$query = "DELETE FROM " . $DBPrefix . "bannerscategories WHERE banner = :banner_id";
+$db->query($query, $params);
+$query = "DELETE FROM " . $DBPrefix . "bannerskeywords WHERE banner = :banner_id";
+$db->query($query, $params);
+@unlink(UPLOAD_PATH . 'banners/' . $banneruser . '/' . $bannername);
 
 // Redirect
 header('location: userbanners.php?id=' . $banneruser);

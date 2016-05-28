@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,7 +14,7 @@
 
 include 'common.php';
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	//if your not logged in you shouldn't be here
 	header("location: user_login.php");
@@ -89,23 +89,31 @@ function resizeThumbnailImage($thumb_image_name, $image, $width, $height, $start
 $default_deleted = false;
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['img']))
 {
-	if (isset($_SESSION['SELL_pict_url_temp']) && isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && $_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) 
+	if (isset($_SESSION['SELL_pict_url_temp']) && isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && $_SESSION['SELL_pict_url_temp'] == $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])])
 	{
-		if (isset($_SESSION['SELL_pict_url']) && !empty($_SESSION['SELL_pict_url']) ) unlink($upload_path . session_id() . '/' . $_SESSION['SELL_pict_url']);
-		  unset($_SESSION['SELL_pict_url']);
-		  $default_deleted = true; // a selected as default has just been deleted.
-	} else {
-		if(isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && is_writable($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])])){
-            unlink($upload_path . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]); 
-        }
+		if (isset($_SESSION['SELL_pict_url']) && !empty($_SESSION['SELL_pict_url']) )
+		{
+			unlink(UPLOAD_PATH . session_id() . '/' . $_SESSION['SELL_pict_url']);
+		}
+		unset($_SESSION['SELL_pict_url']);
+		$default_deleted = true; // a selected as default has just been deleted.
+	}
+	else
+	{
+		if(isset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]) && is_writable(UPLOAD_PATH . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]))
+		{
+			unlink(UPLOAD_PATH . session_id() . '/' . $_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
+		}
 	}
 	unset($_SESSION['UPLOADED_PICTURES'][intval($_GET['img'])]);
 	unset($_SESSION['UPLOADED_PICTURES_SIZE'][intval($_GET['img'])]);
-	
+
 	//if default deleted search $_SESSION['UPLOADED_PICTURES'] and make first one found default
 	if ($default_deleted)
-		{$first_value = reset($_SESSION['UPLOADED_PICTURES']);
-	    $_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $first_value;}
+	{
+		$first_value = reset($_SESSION['UPLOADED_PICTURES']);
+		$_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $first_value;
+	}
 }
 
 if (isset($_GET['action']) && $_GET['action'] == 'makedefault')
@@ -128,8 +136,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'crop' && !empty($_POST['w']) &
 		$h = intval($_POST['h']);
 		// Scale the image to the thumb_width set above
 		$scale = $width / $w;
-		$large_image_location = $upload_path . session_id() . '/' . $_GET['img'];
-		$thumb_image_location = $upload_path . session_id() . '/thumb-' . $_GET['img'];
+		$large_image_location = UPLOAD_PATH . session_id() . '/' . $_GET['img'];
+		$thumb_image_location = UPLOAD_PATH . session_id() . '/thumb-' . $_GET['img'];
 		$cropped = resizeThumbnailImage($thumb_image_location, $large_image_location, $w, $h, $x1, $y1, $scale);
 		$_SESSION['SELL_pict_url'] = 'thumb-' . $_GET['img'];
 		$_SESSION['SELL_pict_url_temp'] = $_GET['img'];
@@ -147,67 +155,9 @@ if (!empty($_POST['creategallery']))
 	exit;
 }
 
-// PROCESS UPLOADED FILE
-if (isset($_POST['uploadpicture']) && $_POST['uploadpicture'] == $MSG['681'])
-{
-	if (!empty($_FILES['userfile']['tmp_name']) && $_FILES['userfile']['tmp_name'] != 'none')
-	{
-		if (!isset($_SESSION['UPLOADED_PICTURES']) || !is_array($_SESSION['UPLOADED_PICTURES'])) $_SESSION['UPLOADED_PICTURES'] = array();
-		if (!isset($_SESSION['UPLOADED_PICTURES_SIZE']) || !is_array($_SESSION['UPLOADED_PICTURES_SIZE'])) $_SESSION['UPLOADED_PICTURES_SIZE'] = array();
-		$filename = $_FILES['userfile']['name'];
-		$nameparts = explode('.', $filename);
-		$ext_key = count($nameparts) - 1;
-		$file_ext = strtolower($nameparts[$ext_key]);
-		$file_types = array('gif', 'jpg', 'jpeg', 'png');
-
-		// clean the name
-		unset($nameparts[$ext_key]);
-		$newname = implode('_', $nameparts);
-
-		$newname = preg_replace('/[^a-zA-Z0-9_]/', '', $newname);
-		$newname .= '.' . $file_ext;
-
-		if ($_FILES['userfile']['size'] > $system->SETTINGS['maxuploadsize'])
-		{
-			$ERR = $ERR_709 . '&nbsp;' . ($system->SETTINGS['maxuploadsize'] / 1024) . '&nbsp;' . $MSG['672'];
-		}
-		elseif (!in_array($file_ext, $file_types))
-		{
-			$ERR = $ERR_710 . ' (' . $file_ext . ')';
-		}
-		elseif (in_array($newname, $_SESSION['UPLOADED_PICTURES']))
-		{
-			$ERR = $MSG['2__0054'] . ' (' . $_FILES['userfile']['name'] . ')';
-		}
-		else
-		{
-			// Create a TMP directory for this session (if not already created)
-			if (!file_exists($upload_path . session_id()))
-			{
-				umask(0);
-				mkdir($upload_path . session_id(), 0777);
-				chmod($upload_path . session_id(), 0777); //incase mkdir fails
-			}
-			// Move uploaded file into TMP directory & rename
-			if ($system->move_file($_FILES['userfile']['tmp_name'], $upload_path . session_id() . '/' . $newname))
-			{
-				// Populate arrays
-				array_push($_SESSION['UPLOADED_PICTURES'], $newname);
-				$fname = $upload_path . session_id() . '/' . $newname;
-				array_push($_SESSION['UPLOADED_PICTURES_SIZE'], filesize($fname));
-				if (count($_SESSION['UPLOADED_PICTURES']) == 1)
-				{
-					$cropdefault = true;
-					$image = $newname;
-				}
-			}
-		}
-	}
-}
-
 if ($cropdefault)
 {
-	list($imgwidth, $imgheight) = getimagesize($upload_path . session_id() . '/' . $image);
+	list($imgwidth, $imgheight) = getimagesize(UPLOAD_PATH . session_id() . '/' . $image);
 	$swidth = ($imgwidth < 380) ? '' : ' width: 380px;';
 	$imgratio = ($imgwidth > 380) ? $imgwidth / 380 : 1;
 	$whratio = $imgheight / $imgwidth;
@@ -239,7 +189,7 @@ if ($cropdefault)
 			'SWIDTH' => $swidth,
 			'IMGWIDTH' => $imgwidth,
 			'IMGHEIGHT' => $imgheight,
-			'IMGPATH' => $uploaded_path . session_id() . '/' . $image,
+			'IMGPATH' => UPLOAD_FOLDER . session_id() . '/' . $image,
 			'STARTX' => $startX,
 			'STARTY' => $startY,
 			'IMAGE' => $image
@@ -262,14 +212,14 @@ foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
 			'IMGNAME' => $v,
 			'ID' => $k,
 			'DEFAULT' => ($v == $_SESSION['SELL_pict_url_temp']) ? 'selected.gif' : 'unselected.gif',
-			'IMAGE' => $uploaded_path . session_id() . '/' . $v
+			'IMAGE' => UPLOAD_FOLDER . session_id() . '/' . $v
 			));
 }
 
 if ($system->SETTINGS['fees'] == 'y')
 {
 	$query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'picture_fee'";
-	$res = $db->direct_query($query);
+	$db->direct_query($query);
 	$image_fee = $db->result('value');
 }
 else
@@ -295,6 +245,7 @@ $template->assign_vars(array(
 		'MAXPICS' => $system->SETTINGS['maxpictures'],
 		'MAXPICSIZE' => $system->SETTINGS['maxuploadsize']/1024,
 		'MAXPICSIZE_MB' => $system->SETTINGS['maxuploadsize']/(1024*1024),  //kb to mb convertion
+		'MAXWIDTHHEIGHT' => $system->SETTINGS['gallery_max_width_height'],
 		'SESSION_ID' => session_id(),
 		'UPLOADED' => intval(count($_SESSION['UPLOADED_PICTURES']))
 		));
@@ -302,4 +253,3 @@ $template->set_filenames(array(
 		'body' => 'upldgallery.tpl'
 		));
 $template->display('body');
-?>

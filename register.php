@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,24 +13,18 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/countries.inc.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
+include INCLUDE_PATH . 'config/timezones.php';
+include INCLUDE_PATH . 'config/gateways.php';
 
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
 {
-	include $main_path . 'inc/captcha/recaptchalib.php';
+	include PACKAGE_PATH . 'recaptcha/recaptcha.php';
 }
 elseif ($system->SETTINGS['spam_register'] == 1)
 {
-	include $main_path . 'inc/captcha/securimage.php';
-}
-
-if ($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('Location: ' . $sslurl . 'register.php');
-	exit;
+	include PACKAGE_PATH . 'captcha/securimage.php';
 }
 
 function CheckAge($day, $month, $year) // check if the users > 18
@@ -70,9 +64,8 @@ function get_hash()
 	return $hash;
 }
 
-function generateSelect($name = '', $options = array())
+function generateSelect($name, $options, $selectsetting)
 {
-	global $selectsetting;
 	$html = '<select name="' . $name . '">';
 	foreach ($options as $option => $value)
 	{
@@ -89,9 +82,8 @@ function generateSelect($name = '', $options = array())
 	return $html;
 }
 
-function checkMissing()
+function checkMissing ($missing)
 {
-	global $missing;
 	foreach ($missing as $value)
 	{
 		if ($value)
@@ -102,6 +94,22 @@ function checkMissing()
 	return false;
 }
 
+function checkEmail($email)
+{
+	global $system;
+	if ($system->SETTINGS['spam_blocked_email_enabled'])
+	{
+		$exploded_email = explode('@', $email);
+    	$email_domain = trim(array_pop($exploded_email));
+		$emails = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
+		if ( in_array($email_domain, $emails))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 $first = true;
 unset($ERR);
 
@@ -110,9 +118,9 @@ if (empty($_POST['action']))
 	$action = 'first';
 }
 
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1";
 $db->direct_query($query);
-$gateway_data = $db->result();
+$gateway_data = $db->fetchAll();
 
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
@@ -123,7 +131,7 @@ $spam_html = '';
 if ($system->SETTINGS['spam_register'] == 1)
 {
 	$resp = new Securimage();
-	$spam_html = $resp->show_html();
+	$spam_html = $resp->getCaptchaHtml();
 }
 
 // missing check bools
@@ -183,29 +191,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 	{
 		$missing['birthday'] = true;
 	}
-	if ($gateway_data['paypal_required'] == 1 && empty($_POST['TPL_pp_email']))
+	foreach ($gateway_data as $gateway)
 	{
-		$missing['paypal'] = true;
+		if ($gateway['gateway_required'] == 1 && isset($_POST[$gateway['name']]['address']) && empty($_POST[$gateway['name']]['address']))
+		{
+			$missing[$gateway['name']] = true;
+		}
 	}
-	if ($gateway_data['authnet_required'] == 1 && (empty($_POST['TPL_authnet_id']) || empty($_POST['TPL_authnet_pass'])))
-	{
-		$missing['authnet'] = true;
-	}
-	if ($gateway_data['moneybookers_required'] == 1 && (empty($_POST['TPL_moneybookers_email']) || !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_moneybookers_email'])))
-	{
-		$missing['moneybookers'] = true;
-	}
-	if ($gateway_data['toocheckout_required'] == 1 && (empty($_POST['TPL_toocheckout_id'])))
-	{
-		$missing['toocheckout'] = true;
-	}
-	if ($gateway_data['worldpay_required'] == 1 && (empty($_POST['TPL_worldpay_id'])))
-	{
-		$missing['worldpay'] = true;
-	}
-	if (checkMissing())
+	if (checkMissing($missing))
 	{
 		$ERR = $ERR_047;
+	}
+	if ($system->SETTINGS['wordsfilter'] == 'y')
+	{
+		if (empty($system->filter($_POST['TPL_nick'])))
+		{
+			$ERR = $MSG['wordfilter_banned_username']; // User name altered by word filter
+		}
 	}
 	if (!isset($ERR))
 	{
@@ -216,10 +218,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 
 		if ($system->SETTINGS['spam_register'] == 2)
 		{
-			$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
+			$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_POST['g-recaptcha-response']);
 		}
 
-		if ($system->SETTINGS['spam_register'] == 2 && !$resp->is_valid)
+		if ($system->SETTINGS['spam_register'] == 2 && !$resp)
 		{
 			$ERR = $MSG['752'];
 		}
@@ -246,6 +248,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['TPL_email']))
 		{
 			$ERR = $ERR_008;
+		}
+		elseif (!checkEmail($_POST['TPL_email']))
+		{
+			$ERR = $MSG['spam_blocked_email_domains_register_error'];
 		}
 		elseif (!CheckAge($birth_day, $birth_month, $birth_year) && $MANDATORY_FIELDS['birthdate'] == 'y')
 		{
@@ -315,14 +321,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				}
 				$hash = get_hash();
 				// prepare to hash the password
-				include $include_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate, 
-						suspended, language, groups, balance, timecorrection, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
+						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate,
+						suspended, language, groups, balance, timezone)
 						VALUES
 						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :reg_date, :birthdate,
-						:suspended, :language, :groups, :balance, :timecorrection, :paypal_email, :worldpay_id, :moneybookers_email, :toocheckout_id, :authnet_id, :authnet_pass)";
+						:suspended, :language, :groups, :balance, :timezone)";
 				$params = array(
 					array(':nick', $system->cleanvars($TPL_nick_hidden), 'str'),
 					array(':password', $phpass->HashPassword($TPL_password_hidden), 'str'),
@@ -342,22 +348,29 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':language', $language, 'str'),
 					array(':groups', implode(',', $groups), 'str'),
 					array(':balance', $balance, 'bool'),
-					array(':timecorrection', $_POST['TPL_timezone'], 'float'),
-					array(':paypal_email', ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : ''), 'str'),
-					array(':worldpay_id', ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : ''), 'str'),
-					array(':moneybookers_email', ((isset($_POST['TPL_moneybookers_email'])) ? $system->cleanvars($_POST['TPL_moneybookers_email']) : ''), 'str'),
-					array(':toocheckout_id', ((isset($_POST['toocheckout_id'])) ? $system->cleanvars($_POST['toocheckout_id']) : ''), 'str'),
-					array(':authnet_id', ((isset($_POST['TPL_authnet_id'])) ? $system->cleanvars($_POST['TPL_authnet_id']) : ''), 'str'),
-					array(':authnet_pass', ((isset($_POST['TPL_authnet_pass'])) ? $system->cleanvars($_POST['TPL_authnet_pass']) : ''), 'str'),
+					array(':timezone', $_POST['TPL_timezone'], 'str'),
 				);
 				$db->query($query, $params);
 				$TPL_id_hidden = $db->lastInsertId();
 				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-						  (NULL, :id_hidden, :remote_addr, 'first', 'accept')";
+							(NULL, :id_hidden, :remote_addr, 'first', 'accept')";
 				$params = array();
 				$params[] = array(':id_hidden', $TPL_id_hidden, 'int');
 				$params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'int');
 				$db->query($query, $params);
+				foreach ($gateway_data as $gateway)
+				{
+					if (isset($_POST[$gateway['name']]['address']) && empty($_POST[$gateway['name']]['address']))
+					{
+						$query = "INSERT INTO " . $DBPrefix . "usergateways (gateway_id, user_id, address, password) VALUES (:gateway_id, :user_id, :address, :password)";
+						$params = array(
+							array(':user_id', $TPL_id_hidden, 'int'),
+							array(':gateway_id', $gateway['id'], 'int'),
+							array(':address', ((isset($_POST[$gateway['name']]['address'])) ? $system->cleanvars($_POST[$gateway['name']]['address']) : ''), 'str'),
+							array(':password', ((isset($_POST[$gateway['name']]['password'])) ? $system->cleanvars($_POST[$gateway['name']]['password']) : ''), 'str'),
+						);
+					}
+				}
 
 				$_SESSION['language'] = $language;
 				$first = false;
@@ -371,18 +384,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				// send emails
 				if ($system->SETTINGS['activationtype'] == 0)
 				{
-					include $include_path . 'email_user_needapproval.php';
+					include INCLUDE_PATH . 'email/user_needapproval.php';
 					$TPL_message = $MSG['016_a'];
 				}
 				elseif ($system->SETTINGS['activationtype'] == 1)
 				{
-					include $include_path . 'email_user_confirmation.php';
+					include INCLUDE_PATH . 'email/user_confirmation.php';
 					$TPL_message = sprintf($MSG['016'], $TPL_email_hidden, $system->SETTINGS['sitename']);
 				}
 				else
 				{
 					$USER = array('name' => $TPL_name_hidden, 'email' => $_POST['TPL_email']);
-					include $include_path . 'email_user_approved.php';
+					include INCLUDE_PATH . 'email/user_approved.php';
 					$TPL_message = $MSG['016_b'];
 				}
 
@@ -407,12 +420,6 @@ $db->direct_query($query);
 $signup_fee = $db->result();
 
 $country = '';
-
-$TIMECORRECTION = array();
-for ($i = 12; $i > -13; $i--)
-{
-	$TIMECORRECTION[$i] = $MSG['TZ_' . $i];
-}
 
 $selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
 foreach ($countries as $key => $name)
@@ -453,8 +460,29 @@ for ($i = 1; $i <= 31; $i++)
 }
 $dobday .= '</select>';
 
-$selectsetting = (isset($_POST['TPL_timezone'])) ? $_POST['TPL_timezone'] : '';
-$time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
+$selectsetting = (isset($_POST['TPL_timezone'])) ? $_POST['TPL_timezone'] : $system->SETTINGS['timezone'];
+$time_correction = generateSelect('TPL_timezone', $timezones, $selectsetting);
+
+foreach ($gateway_data as $gateway)
+{
+	if ($gateway['gateway_active'])
+	{
+		$template->assign_block_vars('gateways', array(
+				'GATEWAY_ID' => $gateway['id'],
+				'NAME' => $gateway['displayname'],
+				'PLAIN_NAME' => $gateway['name'],
+				'MISSING' => ($missing[$gateway['name']]) ? 1 : 0,
+				'REQUIRED' => ($gateway['gateway_required'] == 1) ? 'checked' : '',
+				'ADDRESS' => isset($_POST[$gateway['name']]['address']) ? $_POST[$gateway['name']]['address'] : '',
+				'PASSWORD' => isset($_POST[$gateway['name']]['password']) ? $_POST[$gateway['name']]['password'] : '',
+				'ADDRESS_NAME' => isset($address_string[$gateway['name']]) ? $address_string[$gateway['name']] : $gateway['name'],
+				'PASSWORD_NAME' => isset($password_string[$gateway['name']]) ? $password_string[$gateway['name']] : '',
+				'ERROR_STRING' => $error_string[$gateway['name']],
+
+				'B_PASSWORD' => isset($password_string[$gateway['name']])
+				));
+	}
+}
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
@@ -463,26 +491,13 @@ $template->assign_vars(array(
 		'TIMEZONE' => $time_correction,
 		'TERMSTEXT' => $system->SETTINGS['termstext'],
 
-		//payment stuff
-		'PP_EMAIL' => (isset($_POST['TPL_pp_email'])) ? $_POST['TPL_pp_email'] : '',
-		'AN_ID' => (isset($_POST['TPL_authnet_id'])) ? $_POST['TPL_authnet_id'] : '',
-		'AN_PASS' => (isset($_POST['TPL_authnet_pass'])) ? $_POST['TPL_authnet_pass'] : '',
-		'WP_ID' => (isset($_POST['TPL_worldpay_id'])) ? $_POST['TPL_worldpay_id'] : '',
-		'MB_EMAIL' => (isset($_POST['TPL_moneybookers_email'])) ? $_POST['TPL_moneybookers_email'] : '',
-		'TC_ID' => (isset($_POST['TPL_toocheckout_id'])) ? $_POST['TPL_toocheckout_id'] : '',
-
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_FIRST' => $first,
-		'B_PAYPAL' => ($gateway_data['paypal_active'] == 1),
-		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1),
-		'B_WORLDPAY' => ($gateway_data['worldpay_active'] == 1),
-		'B_TOOCHECKOUT' => ($gateway_data['toocheckout_active'] == 1),
-		'B_MONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1),
 		'B_FEES' => ($signup_fee['value'] > 0),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
-		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public'], ($system->SETTINGS['https'] == 'y')) : $spam_html,
+		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
 		'BIRTHDATE' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 'y'),
 		'ADDRESS' => ($DISPLAYED_FIELDS['address_regshow'] == 'y'),
 		'CITY' => ($DISPLAYED_FIELDS['city_regshow'] == 'y'),
@@ -497,12 +512,7 @@ $template->assign_vars(array(
 					($MANDATORY_FIELDS['prov'] == 'y') ? ' *' : '',
 					($MANDATORY_FIELDS['country'] == 'y') ? ' *' : '',
 					($MANDATORY_FIELDS['zip'] == 'y') ? ' *' : '',
-					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : '',
-					($gateway_data['paypal_required'] == 1) ? ' *' : '',
-					($gateway_data['authnet_required'] == 1) ? ' *' : '',
-					($gateway_data['worldpay_required'] == 1) ? ' *' : '',
-					($gateway_data['toocheckout_required'] == 1) ? ' *' : '',
-					($gateway_data['moneybookers_required'] == 1) ? ' *' : ''
+					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : ''
 					),
 		'MISSING0' => ($missing['name']) ? 1 : 0,
 		'MISSING1' => ($missing['nick']) ? 1 : 0,
@@ -516,11 +526,6 @@ $template->assign_vars(array(
 		'MISSING9' => ($missing['country']) ? 1 : 0,
 		'MISSING10' => ($missing['zip']) ? 1 : 0,
 		'MISSING11' => ($missing['tel']) ? 1 : 0,
-		'MISSING12' => ($missing['paypal']) ? 1 : 0,
-		'MISSING13' => ($missing['authnet']) ? 1 : 0,
-		'MISSING14' => ($missing['worldpay']) ? 1 : 0,
-		'MISSING15' => ($missing['toocheckout']) ? 1 : 0,
-		'MISSING16' => ($missing['moneybookers']) ? 1 : 0,
 		'FEES'=> $system->print_money($signup_fee['value']),
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
@@ -542,4 +547,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

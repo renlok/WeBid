@@ -1,6 +1,6 @@
-<?php 
+<?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,12 +16,13 @@ if (!defined('InWeBid')) exit('Access denied');
 
 function getSeller($user_id)
 {
-	global $system, $DBPrefix;
+	global $DBPrefix, $db;
 
-	$query = "SELECT nick, country FROM " . $DBPrefix . "users WHERE id = " . $user_id;
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$result = mysql_fetch_array($result);
+	$query = "SELECT nick, country FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $user_id, 'int');
+	$db->query($query, $params);
+	$result = $db->result();
 	$address_data = array(
 		'nick'      => $result['nick'],
 		'country'   => $result['country'],
@@ -31,12 +32,13 @@ function getSeller($user_id)
 
 function getAddressWinner($user_id)
 {
-	global $system, $DBPrefix;
+	global $DBPrefix, $db;
 
-	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = " . $user_id;
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	$result = mysql_fetch_array($result);
+	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $user_id, 'int');
+	$db->query($query, $params);
+	$result = $db->result();
 	$address_data = array(
 		//'user_id'   => $result['id'],
 		'nick'      => $result['nick'],
@@ -54,21 +56,21 @@ function getAddressWinner($user_id)
 
 function getTax($is_auction, $buyer_from, $seller_from = '')
 {
-	global $system, $DBPrefix;
+	global $DBPrefix, $db;
 
 	// build the query
 	$query = "SELECT tax_rate FROM " . $DBPrefix . "tax WHERE countries_buyer LIKE '" . $buyer_from . "'";
 	$query .= ($is_auction) ? " AND fee_tax = 0" : " AND fee_tax = 1";
 	$query .= (!empty($seller_from)) ? " AND countries_seller LIKE '" . $seller_from . "'" : '';
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($res) == 0)
+	$db->direct_query($query);
+
+	if ($db->numrows() == 0)
 	{
 		$tax_rate = 0;
 	}
 	else
 	{
-		$tax_rate = mysql_result($res, 0);
+		$tax_rate = $db->result();
 	}
 
 	return $tax_rate;
@@ -86,9 +88,9 @@ function setfeetemplate($data)
 		'bold' => $MSG['439'],
 		'highlighted' => $MSG['434'],
 		'subtitle' => $MSG['803'],
-		'extcat' => $MSG['804'],
+		'extracat' => $MSG['804'],
 		'reserve' => $MSG['440'],
-		'image' => $MSG['435'],
+		'picture' => $MSG['435'],
 		'relist' => $MSG['437'],
 		'buynow' => $MSG['436'],
 		'finalval' => $MSG['791'],
@@ -122,9 +124,9 @@ function setfeetemplate($data)
 function vat($price)
 {
 	global $system, $vat;
-    $price_with_vat = $price + ($vat * ($price / 100));
-    $price_with_vat = round($price_with_vat, $system->SETTINGS['moneydecimals']);
-    return $price_with_vat;
+	$price_with_vat = $price + ($vat * ($price / 100));
+	$price_with_vat = round($price_with_vat, $system->SETTINGS['moneydecimals']);
+	return $price_with_vat;
 }
 
 // remove vat
@@ -141,7 +143,7 @@ function invalidinvoice($packingslip = false)
 	global $template, $system;
 
 	$template->assign_vars(array(
-			'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'],
+			'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'],
 			'LANGUAGE' => $language,
 			'SALE_ID' => 0,
 			'B_INVOICE' => false
@@ -155,4 +157,3 @@ function invalidinvoice($packingslip = false)
 	$template->display('body');
 	exit;
 }
-?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,23 +15,19 @@
 define('InAdmin', 1);
 $current_page = 'tools';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET wordsfilter = :wordsfilter";
-	$params = array();
-	$params[] = array(':wordsfilter', ynbool($_POST['wordsfilter']), 'str');
-	$db->query($query, $params);
+	$system->writesetting("wordsfilter", ynbool($_POST['wordsfilter']), 'str');
 
 	//purge the old wordlist
 	$query = "DELETE FROM " . $DBPrefix . "filterwords";
 	$db->direct_query($query);
-	
+
 	//rebuild the wordlist
 	$TMP = explode("\n", $_POST['filtervalues']);
 	if (is_array($TMP))
@@ -69,8 +65,10 @@ $template->assign_vars(array(
 		'WFNO' => ($system->SETTINGS['wordsfilter'] == 'n') ? ' checked="checked"' : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'wordfilter.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

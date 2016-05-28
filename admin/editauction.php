@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,9 +15,9 @@
 define('InAdmin', 1);
 $current_page = 'auctions';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 unset($ERR);
 $catscontrol = new MPTTcategories();
@@ -38,23 +38,22 @@ if (!isset($_REQUEST['id']))
 	exit;
 }
 
-function load_gallery($uploaded_path, $auc_id)
+function load_gallery($auc_id)
 {
 	$UPLOADED_PICTURES = array();
-	if (file_exists('../' . $uploaded_path . $auc_id))
+	if (is_dir(UPLOAD_PATH . $auc_id))
 	{
-		$dir = @opendir('../' . $uploaded_path . $auc_id);
-		if ($dir)
+		if ($dir = opendir(UPLOAD_PATH . $auc_id))
 		{
 			while ($file = @readdir($dir))
 			{
 				if ($file != '.' && $file != '..' && strpos($file, 'thumb-') === false)
 				{
-					$UPLOADED_PICTURES[$K] = $uploaded_path . $auc_id . '/' . $file;
-					$K++;
+					$UPLOADED_PICTURES[] = UPLOAD_FOLDER . $auc_id . '/' . $file;
+
 				}
 			}
-			@closedir($dir);
+			closedir($dir);
 		}
 	}
 	return $UPLOADED_PICTURES;
@@ -73,7 +72,7 @@ if (isset($_POST['action']))
 		{
 			$ERR = $ERR_701;
 		}
-		elseif ($_POST['current_bid'] < $_POST['min_bid'] && $_POST['current_bid'] != 0) // bid > min_bid
+		elseif (isset($_POST['current_bid']) && $_POST['current_bid'] < $_POST['min_bid'] && $_POST['current_bid'] != 0) // bid > min_bid
 		{
 			$ERR = $ERR_702;
 		}
@@ -197,40 +196,63 @@ if (isset($_POST['action']))
 			// clean unwanted images
 			if (isset($_POST['gallery']) && is_array($_POST['gallery']))
 			{
-				$uploaded = load_gallery($uploaded_path, $_POST['id']);
+				$uploaded = load_gallery($_POST['id']);
 				foreach ($uploaded as $img)
 				{
 					if (in_array($img, $_POST['gallery']))
 					{
-						unlink($main_path . $img);
+						unlink(MAIN_PATH . $img);
 					}
 				}
 			}
 
 			$query = "UPDATE " . $DBPrefix . "auctions SET
-					title = '" . $system->cleanvars($_POST['title']) . "',
-					subtitle = '" . $system->cleanvars($_POST['subtitle']) . "',
-					ends = '" . $a_ends . "',
-					duration = '" . $system->cleanvars($_POST['duration']) . "',
-					category = '" . intval($_POST['category']) . "',
-					secondcat = '" . intval($_POST['secondcat']) . "',
-					description = '" . mysql_real_escape_string($_POST['description']) . "',
-					quantity = '" . intval($_POST['quantity']) . "',
-					minimum_bid = '" . $system->input_money($_POST['min_bid']) . "',
-					shipping_cost = '" . $system->input_money($_POST['shipping_cost']) . "',
-					buy_now = '" . $system->input_money($_POST['buy_now']) . "',
-					bn_only = '" . $system->cleanvars($_POST['buy_now_only']) . "',
-					reserve_price = '" . $system->input_money($_POST['reserve_price']) . "',
-					increment = " . $system->input_money($_POST['customincrement']) . ",
-					shipping = '" . $_POST['shipping'] . "',
-					payment = '" . $system->cleanvars(implode(', ', $_POST['payment'])) . "',
-					international = " . ((isset($_POST['international'])) ? 1 : 0) . ",
-					shipping_terms = '" . $system->cleanvars($_POST['shipping_terms']) . "',
-					bold = '" . ((isset($_POST['is_bold'])) ? 'y' : 'n') . "',
-					highlighted = '" . ((isset($_POST['is_highlighted'])) ? 'y' : 'n') . "',
-					featured = '" . ((isset($_POST['is_featured'])) ? 'y' : 'n') . "'
-					WHERE id = " . $_POST['id'];
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+					title = :title,
+					subtitle = :subtitle,
+					ends = :ends,
+					duration = :duration,
+					category = :category,
+					secondcat = :secondcat,
+					description = :description,
+					quantity = :quantity,
+					minimum_bid = :minimum_bid,
+					shipping_cost = :shipping_cost,
+					buy_now = :buy_now,
+					bn_only = :bn_only,
+					reserve_price = :reserve_price,
+					increment = :increment,
+					shipping = :shipping,
+					payment = :payment,
+					international = :international,
+					shipping_terms = :shipping_terms,
+					bold = :bold,
+					highlighted = :highlighted,
+					featured = :featured
+					WHERE id = :auc_id";
+			$params = array();
+			$params[] = array(':title', $system->cleanvars($_POST['title']), 'str');
+			$params[] = array(':subtitle', $system->cleanvars($_POST['subtitle']), 'str');
+			$params[] = array(':ends', $a_ends, 'int');
+			$params[] = array(':duration', $system->cleanvars($_POST['duration']), 'str');
+			$params[] = array(':category', $_POST['category'], 'int');
+			$params[] = array(':secondcat', $_POST['secondcat'], 'int');
+			$params[] = array(':description', $_POST['description'], 'str');
+			$params[] = array(':quantity', $_POST['quantity'], 'int');
+			$params[] = array(':minimum_bid', $system->input_money($_POST['min_bid']), 'float');
+			$params[] = array(':shipping_cost', $system->input_money($_POST['shipping_cost']), 'float');
+			$params[] = array(':buy_now', $system->input_money($_POST['buy_now']), 'float');
+			$params[] = array(':bn_only', $_POST['buy_now_only'], 'bool');
+			$params[] = array(':reserve_price', $system->input_money($_POST['reserve_price']), 'float');
+			$params[] = array(':increment', $system->input_money($_POST['customincrement']), 'float');
+			$params[] = array(':shipping', $_POST['shipping'], 'str');
+			$params[] = array(':payment', implode(', ', $_POST['payment']), 'str');
+			$params[] = array(':international', ((isset($_POST['international'])) ? 1 : 0), 'int');
+			$params[] = array(':shipping_terms', $system->cleanvars($_POST['shipping_terms']), 'str');
+			$params[] = array(':bold', (isset($_POST['is_bold'])), 'bool');
+			$params[] = array(':highlighted', (isset($_POST['is_highlighted'])), 'bool');
+			$params[] = array(':featured', (isset($_POST['is_featured'])), 'bool');
+			$params[] = array(':auc_id', $_POST['id'], 'int');
+			$db->query($query, $params);
 
 			$URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
 			unset($_SESSION['RETURN_LIST'], $_SESSION['RETURN_LIST_OFFSET']);
@@ -247,11 +269,12 @@ if (isset($_POST['action']))
 $auc_id = intval($_REQUEST['id']);
 $query =   "SELECT u.nick, a.* FROM " . $DBPrefix . "auctions a
 			LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-			WHERE a.id = " . $auc_id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+			WHERE a.id = :auc_id";
+$params = array();
+$params[] = array(':auc_id', $auc_id, 'int');
+$db->query($query, $params);
 
-if (mysql_num_rows($res) == 0)
+if ($db->numrows() == 0)
 {
 	if (!isset($_SESSION['RETURN_LIST']))
 	{
@@ -266,15 +289,14 @@ if (mysql_num_rows($res) == 0)
 	exit;
 }
 
-$auction_data = mysql_fetch_assoc($res);
+$auction_data = $db->result();
 
 // DURATIONS
 $dur_list = ''; // empty string to begin HTML list
 $query = "SELECT days, description FROM " . $DBPrefix . "durations";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$db->direct_query($query);
 
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$dur_list .= '<option value="' . $row['days'] . '"';
 	if ($row['days'] == $auction_data['duration'])
@@ -308,10 +330,10 @@ $categories_list2 .= '</select>' . "\n";
 // Pictures Gellery
 $K = 0;
 $UPLOADED_PICTURES = array();
-if (file_exists('../' . $uploaded_path . $auc_id))
+if (file_exists(UPLOAD_PATH . $auc_id))
 {
 	// load dem pictures
-	$UPLOADED_PICTURES = load_gallery($uploaded_path, $auc_id);
+	$UPLOADED_PICTURES = load_gallery($auc_id);
 
 	if (is_array($UPLOADED_PICTURES))
 	{
@@ -329,28 +351,17 @@ if (file_exists('../' . $uploaded_path . $auc_id))
 }
 
 // payments
-$payment = explode(', ', $auction_data['payment']);
+$payment = explode(', ', strtolower($auction_data['payment']));
 $payment_methods = '';
-$query = "SELECT * FROM " . $DBPrefix . "gateways";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateways_data = mysql_fetch_assoc($res);
-$gateway_list = explode(',', $gateways_data['gateways']);
-foreach ($gateway_list as $v)
+$query = "SELECT * FROM " . $DBPrefix . "payment_options";
+$db->direct_query($query);
+while ($payment_method = $db->fetch())
 {
-	$v = strtolower($v);
-	if ($gateways_data[$v . '_active'] == 1 && _in_array($v, $payment))
+	if ($payment_method['gateway_active'] == 1 || $payment_method['is_gateway'] == 0)
 	{
-		$checked = (in_array($v, $payment)) ? 'checked' : '';
-		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '> ' . $system->SETTINGS['gatways'][$v] . '</p>';
+		$checked = (in_array($payment_method['name'], $payment)) ? 'checked' : '';
+		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $payment_method['name'] . '" ' . $checked . '> ' . $payment_method['displayname'] . '</p>';
 	}
-}
-
-$payment_options = unserialize($system->SETTINGS['payment_options']);
-foreach ($payment_options as $k => $v)
-{
-	$checked = (_in_array($k, $payment)) ? 'checked' : '';
-	$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '> ' . $v . '</p>';
 }
 
 $template->assign_vars(array(
@@ -371,17 +382,17 @@ $template->assign_vars(array(
 
 		'SHIPPING_COST' => $system->print_money_nosymbol($auction_data['shipping_cost']),
 		'RESERVE' => $system->print_money_nosymbol($auction_data['reserve_price']),
-		'BN_ONLY_Y' => ($auction_data['bn_only'] == 'y') ? 'checked' : '',
-		'BN_ONLY_N' => ($auction_data['bn_only'] == 'y') ? '' : 'checked',
+		'BN_ONLY_Y' => ($auction_data['bn_only']) ? 'checked' : '',
+		'BN_ONLY_N' => ($auction_data['bn_only']) ? '' : 'checked',
 		'BN_PRICE' => $system->print_money_nosymbol($auction_data['buy_now']),
 		'CUSTOM_INC' => ($auction_data['increment'] > 0) ? $system->print_money_nosymbol($auction_data['increment']) : '',
 		'SHIPPING1' => ($auction_data['shipping'] == 1 || empty($auction_data['shipping'])) ? 'checked' : '',
 		'SHIPPING2' => ($auction_data['shipping'] == 2) ? 'checked' : '',
 		'INTERNATIONAL' => (!empty($auction_data['international'])) ? 'checked' : '',
 		'SHIPPING_TERMS' => $system->uncleanvars($auction_data['shipping_terms']),
-		'IS_BOLD' => ($auction_data['bold'] == 'y') ? 'checked' : '',
-		'IS_HIGHLIGHTED' => ($auction_data['highlighted'] == 'y') ? 'checked' : '',
-		'IS_FEATURED' => ($auction_data['featured'] == 'y') ? 'checked' : '',
+		'IS_BOLD' => ($auction_data['bold']) ? 'checked' : '',
+		'IS_HIGHLIGHTED' => ($auction_data['highlighted']) ? 'checked' : '',
+		'IS_FEATURED' => ($auction_data['featured']) ? 'checked' : '',
 		'SUSPENDED' => ($auction_data['suspended'] == 0) ? $MSG['029'] : $MSG['030'],
 
 		'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
@@ -389,8 +400,10 @@ $template->assign_vars(array(
 		'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y')
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editauction.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

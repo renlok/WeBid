@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -31,9 +31,9 @@ function generate_id()
 
 function setvars()
 {
-	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $description, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
+	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $sdescription, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sellcat1, $sellcat2, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now;
-	global $_POST, $_SESSION, $system;
+	global $_POST, $_SESSION, $system, $custom_end, $a_ends, $custom_end, $caneditstartdate;
 
 	$with_reserve = (isset($_POST['with_reserve'])) ? $_POST['with_reserve'] : $_SESSION['SELL_with_reserve'];
 	$reserve_price = (isset($_POST['reserve_price'])) ? $_POST['reserve_price'] : $_SESSION['SELL_reserve_price'];
@@ -47,14 +47,13 @@ function setvars()
 	$imgtype = (isset($_POST['imgtype'])) ? $_POST['imgtype'] : $_SESSION['SELL_file_uploaded'];
 	$title = (isset($_POST['title'])) ? $_POST['title'] : $_SESSION['SELL_title'];
 	$subtitle = (isset($_POST['subtitle'])) ? $_POST['subtitle'] : $_SESSION['SELL_subtitle'];
-	$description = (isset($_POST['description'])) ? $_POST['description'] : $_SESSION['SELL_description'];
+	$sdescription = (isset($_POST['sdescription'])) ? $_POST['sdescription'] : $_SESSION['SELL_description'];
 	$pict_url = (isset($_POST['pict_url'])) ? $_POST['pict_url'] : $_SESSION['SELL_pict_url'];
 	$atype = (isset($_POST['atype'])) ? $_POST['atype'] : $_SESSION['SELL_atype'];
 	$iquantity = (int)(isset($_POST['iquantity'])) ? $_POST['iquantity'] : $_SESSION['SELL_iquantity'];
 	$iquantity = (empty($iquantity)) ? 1 : round($iquantity);
 	$buy_now = (isset($_POST['buy_now'])) ? $_POST['buy_now'] : $_SESSION['SELL_with_buy_now'];
 	$buy_now_price = (isset($_POST['buy_now_price'])) ? $_POST['buy_now_price'] : $_SESSION['SELL_buy_now_price'];
-	$duration = (isset($_POST['duration'])) ? $_POST['duration'] : $_SESSION['SELL_duration'];
 	$relist = (isset($_POST['autorelist'])) ? $_POST['autorelist'] : $_SESSION['SELL_relist'];
 	$increments = (isset($_POST['increments'])) ? $_POST['increments'] : $_SESSION['SELL_increments'];
 	$customincrement = (isset($_POST['customincrement'])) ? $_POST['customincrement'] : $_SESSION['SELL_customincrement'];
@@ -62,43 +61,57 @@ function setvars()
 	$shipping_terms = (isset($_POST['shipping_terms'])) ? $_POST['shipping_terms'] : $_SESSION['SELL_shipping_terms'];
 	$payment = (isset($_POST['payment'])) ? $_POST['payment'] : $_SESSION['SELL_payment'];
 	$payment = (is_array($payment)) ? $payment : array();
-	$international = (isset($_POST['international'])) ? $_POST['international'] : false; 
-	$international = (isset($_SESSION['SELL_international']) && !isset($_POST['action'])) ? $_SESSION['SELL_international'] : $international; 
 	$sellcat1 = $_SESSION['SELL_sellcat1'];
 	$_SESSION['SELL_sellcat2'] = (isset($_SESSION['SELL_sellcat2'])) ? $_SESSION['SELL_sellcat2'] : 0;
 	$sellcat2 = $_SESSION['SELL_sellcat2'];
+	$caneditstartdate = $_SESSION['SELL_caneditstartdate'];
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
-	$buy_now_only = (empty($buy_now_only)) ? 'n' : $buy_now_only;
+	$buy_now_only = (empty($buy_now_only)) ? 0 : $buy_now_only;
+
 	$a_starts = (isset($_POST['a_starts'])) ? $_POST['a_starts'] : $_SESSION['SELL_starts'];
-	$is_bold = (isset($_POST['is_bold'])) ? 'y' : $_SESSION['SELL_is_bold'];
-	$is_featured = (isset($_POST['is_featured'])) ? 'y' : $_SESSION['SELL_is_featured'];
-	$is_highlighted = (isset($_POST['is_highlighted'])) ? 'y' : $_SESSION['SELL_is_highlighted'];
-	if (isset($_POST['a_starts'])) {
-		if (isset($_POST['start_now'])) {
-			$start_now = 1;
-		} else {
-			$start_now = 0;
-		}
-	} else {
-		$start_now = $_SESSION['SELL_start_now'];
+	$duration = (isset($_POST['duration'])) ? $_POST['duration'] : $_SESSION['SELL_duration'];
+	$a_ends = (isset($_POST['a_ends'])) ? $_POST['a_ends'] : $_SESSION['SELL_ends'];
+
+	// deal with checkboxes
+	if (isset($_POST['action']) && $_POST['action'] == 3)
+	{
+		$is_bold = (isset($_POST['is_bold'])) ? 1 : 0;
+		$is_featured = (isset($_POST['is_featured'])) ? 1 : 0;
+		$is_highlighted = (isset($_POST['is_highlighted'])) ? 1 : 0;
+		$international = (isset($_POST['international'])) ? 1 : 0;
+		$start_now = (isset($_POST['start_now'])) ? 1 : 0;
+		$custom_end = (isset($_POST['custom_end'])) ? 1 : 0;
+		// ignore duration for custom end date
+		$duration = ($custom_end == 1) ? 0 : $duration;
 	}
+	else
+	{
+		$is_bold = $_SESSION['SELL_is_bold'];
+		$is_featured = $_SESSION['SELL_is_featured'];
+		$is_highlighted = $_SESSION['SELL_is_highlighted'];
+		$international = $_SESSION['SELL_international'];
+		$start_now = $_SESSION['SELL_start_now'];
+		$custom_end = $_SESSION['SELL_custom_end'];
+	}
+
 	$is_taxed = (isset($_POST['is_taxed'])) ? $_POST['is_taxed'] : $_SESSION['SELL_is_taxed'];
 	$tax_included = (isset($_POST['tax_included'])) ? $_POST['tax_included'] : $_SESSION['SELL_tax_included'];
 	if (isset($_POST['action']) && $_POST['action'] == 2)
 	{
-		$is_bold = (isset($_POST['is_bold'])) ? 'y' : 'n';
-		$is_featured = (isset($_POST['is_featured'])) ? 'y' : 'n';
-		$is_highlighted = (isset($_POST['is_highlighted'])) ? 'y' : 'n';
-		$is_taxed = (isset($_POST['is_taxed'])) ? 'y' : 'n';
-		$tax_included = (isset($_POST['tax_included'])) ? 'y' : 'n';
+		$is_bold = (isset($_POST['is_bold'])) ? 1 : 0;
+		$is_featured = (isset($_POST['is_featured'])) ? 1 : 0;
+		$is_highlighted = (isset($_POST['is_highlighted'])) ? 1 : 0;
+		$is_taxed = (isset($_POST['is_taxed'])) ? 1 : 0;
+		$tax_included = (isset($_POST['tax_included'])) ? 1 : 0;
 		$payment = (isset($_POST['payment'])) ? $payment : array();
 	}
 }
 
 function makesessions()
 {
-	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $description, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
+	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $sdescription, $pict_url, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sendemail, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now, $_SESSION;
+	global $a_ends, $custom_end, $caneditstartdate;
 
 	$_SESSION['SELL_with_reserve'] = $with_reserve;
 	$_SESSION['SELL_reserve_price'] = $reserve_price;
@@ -108,7 +121,7 @@ function makesessions()
 	$_SESSION['SELL_file_uploaded'] = $imgtype;
 	$_SESSION['SELL_title'] = $title;
 	$_SESSION['SELL_subtitle'] = $subtitle;
-	$_SESSION['SELL_description'] = $description;
+	$_SESSION['SELL_description'] = $sdescription;
 	$_SESSION['SELL_pict_url'] = $pict_url;
 	$_SESSION['SELL_atype'] = $atype;
 	$_SESSION['SELL_iquantity'] = $iquantity;
@@ -124,12 +137,15 @@ function makesessions()
 	$_SESSION['SELL_international'] = $international;
 	$_SESSION['SELL_buy_now_only'] = $buy_now_only;
 	$_SESSION['SELL_starts'] = $a_starts;
+	$_SESSION['SELL_ends'] = $a_ends;
+	$_SESSION['SELL_custom_end'] = $custom_end;
 	$_SESSION['SELL_is_bold'] = $is_bold;
 	$_SESSION['SELL_is_highlighted'] = $is_highlighted;
 	$_SESSION['SELL_is_featured'] = $is_featured;
 	$_SESSION['SELL_start_now'] = $start_now;
 	$_SESSION['SELL_is_taxed'] = $is_taxed;
 	$_SESSION['SELL_tax_included'] = $tax_included;
+	$_SESSION['SELL_caneditstartdate'] = $caneditstartdate;
 }
 
 function unsetsessions()
@@ -161,32 +177,22 @@ function unsetsessions()
 	$_SESSION['SELL_international'] = false;
 	$_SESSION['SELL_sendemail'] = '';
 	$_SESSION['SELL_starts'] = '';
+	$_SESSION['SELL_ends'] = '';
+	$_SESSION['SELL_custom_end'] = 0;
 	$_SESSION['SELL_action'] = '';
-	$_SESSION['SELL_is_bold'] = 'n';
-	$_SESSION['SELL_is_highlighted'] = 'n';
-	$_SESSION['SELL_is_featured'] = 'n';
+	$_SESSION['SELL_is_bold'] = 0;
+	$_SESSION['SELL_is_highlighted'] = 0;
+	$_SESSION['SELL_is_featured'] = 0;
 	$_SESSION['SELL_start_now'] = '';
-	$_SESSION['SELL_is_taxed'] = 'n';
-	$_SESSION['SELL_tax_included'] = 'y';
+	$_SESSION['SELL_is_taxed'] = 0;
+	$_SESSION['SELL_tax_included'] = 0;
+	$_SESSION['SELL_caneditstartdate'] = true;
 }
 
-function updateauction($type)
+function updateauction()
 {
-	global $_SESSION, $DBPrefix, $a_starts, $a_ends, $payment_text, $system, $fee, $db;
-	$params = array();
-	if ($type == 2)
-	{
-		$extraquery = ",relisted = relisted + 1,
-		current_bid = 0,
-		starts = :starts,
-		num_bids = 0";
-		$params[] = array(':starts', $a_starts, 'int');
-	}
-	else
-	{
-		$extraquery = '';
-	}
-	
+	global $_SESSION, $DBPrefix, $a_starts, $a_ends, $payment_text, $system, $fee, $db, $caneditstartdate;
+
 	$query =
 		"UPDATE " . $DBPrefix . "auctions SET
 		title = :title,
@@ -197,7 +203,7 @@ function updateauction($type)
 		secondcat = :cattwo,
 		minimum_bid = :min_bid,
 		shipping_cost = :shipping_cost,
-		shipping_cost_additional = :shipping_cost_additional,
+		additional_shipping_cost = :additional_shipping_cost,
 		reserve_price = :reserve_price,
 		buy_now = :buy_now,
 		bn_only = :bn_only,
@@ -209,6 +215,7 @@ function updateauction($type)
 		international = :international,
 		ends = :ends,
 		photo_uploaded = :photo_uploaded,
+		initial_quantity = :initial_quantity,
 		quantity = :quantity,
 		relist = :relist,
 		shipping_terms = :shipping_terms,
@@ -218,9 +225,8 @@ function updateauction($type)
 		featured = :featured,
 		tax = :tax,
 		taxinc = :taxinc,
-		current_fee = current_fee + :fee";
-		$query .= $extraquery;
-		$query .= " WHERE id = :auction_id";
+		current_fee = current_fee + :fee
+		WHERE id = :auction_id";
 	$params = array();
 	$params[] = array(':title', $system->cleanvars($_SESSION['SELL_title']), 'str');
 	$params[] = array(':subtitle', $system->cleanvars($_SESSION['SELL_subtitle']), 'str');
@@ -228,12 +234,12 @@ function updateauction($type)
 	$params[] = array(':pict_url', $_SESSION['SELL_pict_url'], 'str');
 	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
 	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
-	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
+	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 0) ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
 	$params[] = array(':shipping_cost', $system->input_money($_SESSION['SELL_shipping_cost']), 'float');
-	$params[] = array(':shipping_cost_additional', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
+	$params[] = array(':additional_shipping_cost', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
 	$params[] = array(':reserve_price', $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0), 'float');
 	$params[] = array(':buy_now', $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0), 'float');
-	$params[] = array(':bn_only', ynbool($_SESSION['SELL_buy_now_only']), 'str');
+	$params[] = array(':bn_only', $_SESSION['SELL_buy_now_only'], 'bool');
 	$params[] = array(':auction_type', $_SESSION['SELL_atype'], 'int');
 	$params[] = array(':duration', $_SESSION['SELL_duration'], 'int');
 	$params[] = array(':increment', $system->input_money($_SESSION['SELL_customincrement']), 'float');
@@ -242,16 +248,22 @@ function updateauction($type)
 	$params[] = array(':international', $_SESSION['SELL_international'], 'bool');
 	$params[] = array(':ends', $a_ends, 'int');
 	$params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
+	$params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
-	$params[] = array(':bold', ynbool($_SESSION['SELL_is_bold']), 'str');
-	$params[] = array(':highlighted', ynbool($_SESSION['SELL_is_highlighted']), 'str');
-	$params[] = array(':featured', ynbool($_SESSION['SELL_is_featured']), 'str');
-	$params[] = array(':tax', ynbool($_SESSION['SELL_is_taxed']), 'str');
-	$params[] = array(':taxinc', ynbool($_SESSION['SELL_tax_included']), 'str');
+	$params[] = array(':bold', $_SESSION['SELL_is_bold'], 'bool');
+	$params[] = array(':highlighted', $_SESSION['SELL_is_highlighted'], 'bool');
+	$params[] = array(':featured', $_SESSION['SELL_is_featured'], 'bool');
+	$params[] = array(':tax', $_SESSION['SELL_is_taxed'], 'bool');
+	$params[] = array(':taxinc', $_SESSION['SELL_tax_included'], 'bool');
 	$params[] = array(':fee', $fee, 'float');
 	$params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
+	if ($caneditstartdate)
+	{
+		$query .= ", starts = :starts";
+		$params[] = array(':starts', $a_starts, 'int');
+	}
 	$db->query($query, $params);
 }
 
@@ -259,8 +271,8 @@ function addauction()
 {
 	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee, $db;
 
-	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,shipping_cost_additional,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
-	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :shipping_cost_additional, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
+	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,additional_shipping_cost,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,initial_quantity,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
+	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :additional_shipping_cost, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :initial_quantity, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
 
 	$params = array();
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
@@ -271,9 +283,9 @@ function addauction()
 	$params[] = array(':pict_url', $system->cleanvars($_SESSION['SELL_pict_url']), 'str');
 	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
 	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
-	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 'n') ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
+	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 0) ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
 	$params[] = array(':shipping_cost', $system->input_money($_SESSION['SELL_shipping_cost']), 'float');
-	$params[] = array(':shipping_cost_additional', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
+	$params[] = array(':additional_shipping_cost', $system->input_money($_SESSION['SELL_additional_shipping_cost']), 'float');
 	$params[] = array(':reserve_price', $system->input_money(($_SESSION['SELL_with_reserve'] == 'yes') ? $_SESSION['SELL_reserve_price'] : 0), 'float');
 	$params[] = array(':buy_now', $system->input_money(($_SESSION['SELL_with_buy_now'] == 'yes') ? $_SESSION['SELL_buy_now_price'] : 0), 'float');
 	$params[] = array(':auction_type', $_SESSION['SELL_atype'], 'int');
@@ -284,16 +296,17 @@ function addauction()
 	$params[] = array(':international', $_SESSION['SELL_international'], 'bool');
 	$params[] = array(':ends', $a_ends, 'int');
 	$params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
+	$params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
 	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
-	$params[] = array(':bn_only', ynbool($_SESSION['SELL_buy_now_only']), 'str');
-	$params[] = array(':bold', ynbool($_SESSION['SELL_is_bold']), 'str');
-	$params[] = array(':highlighted', ynbool($_SESSION['SELL_is_highlighted']), 'str');
-	$params[] = array(':featured', ynbool($_SESSION['SELL_is_featured']), 'str');
+	$params[] = array(':bn_only', $_SESSION['SELL_buy_now_only'], 'bool');
+	$params[] = array(':bold', $_SESSION['SELL_is_bold'], 'bool');
+	$params[] = array(':highlighted', $_SESSION['SELL_is_highlighted'], 'bool');
+	$params[] = array(':featured', $_SESSION['SELL_is_featured'], 'bool');
 	$params[] = array(':fee', $fee, 'float');
-	$params[] = array(':tax', ynbool($_SESSION['SELL_is_taxed']), 'str');
-	$params[] = array(':taxinc', ynbool($_SESSION['SELL_tax_included']), 'str');
+	$params[] = array(':tax', $_SESSION['SELL_is_taxed'], 'bool');
+	$params[] = array(':taxinc', $_SESSION['SELL_tax_included'], 'bool');
 	$db->query($query, $params);
 }
 
@@ -301,21 +314,21 @@ function addoutstanding()
 {
 	global $DBPrefix, $fee_data, $user, $system, $fee, $_SESSION, $db;
 
-	$query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,date,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,image,extcat,total,paid) VALUES
-	(:auction_id, :user_id, :time, :setup, :hpfeat_fee, :bolditem_fee, :hlitem_fee, :subtitle_fee, :relist_fee, :rp_fee, :buyout_fee, :picture_fee, :excat_fee, :fee, 0)";
+	$query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,date,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,picture,extracat,total,paid) VALUES
+	(:auction_id, :user_id, :time, :setup_fee, :featured_fee, :bold_fee, :highlighted_fee, :subtitle_fee, :relist_fee, :reserve_fee, :buynow_fee, :picture_fee, :extracat_fee, :fee, 0)";
 
 	$params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
 	$params[] = array(':time', time(), 'int');
-	$params[] = array(':setup', $fee_data['setup'], 'float');
-	$params[] = array(':hpfeat_fee', $fee_data['hpfeat_fee'], 'float');
-	$params[] = array(':bolditem_fee', $fee_data['bolditem_fee'], 'float');
-	$params[] = array(':hlitem_fee', $fee_data['hlitem_fee'], 'float');
+	$params[] = array(':setup_fee', $fee_data['setup_fee'], 'float');
+	$params[] = array(':featured_fee', $fee_data['featured_fee'], 'float');
+	$params[] = array(':bold_fee', $fee_data['bold_fee'], 'float');
+	$params[] = array(':highlighted_fee', $fee_data['highlighted_fee'], 'float');
 	$params[] = array(':subtitle_fee', $fee_data['subtitle_fee'], 'float');
 	$params[] = array(':relist_fee', $fee_data['relist_fee'], 'float');
-	$params[] = array(':rp_fee', $fee_data['rp_fee'], 'float');
-	$params[] = array(':buyout_fee', $fee_data['buyout_fee'], 'float');
+	$params[] = array(':reserve_fee', $fee_data['reserve_fee'], 'float');
+	$params[] = array(':buynow_fee', $fee_data['buynow_fee'], 'float');
 	$params[] = array(':picture_fee', $fee_data['picture_fee'], 'float');
-	$params[] = array(':excat_fee', $fee_data['excat_fee'], 'float');
+	$params[] = array(':extracat_fee', $fee_data['extracat_fee'], 'float');
 	$params[] = array(':fee', $fee, 'float');
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
@@ -338,47 +351,59 @@ function get_fee($minimum_bid, $just_fee = true)
 	$db->direct_query($query);
 
 	$fee_value = 0;
-	$fee_data = array();
+	// set defaults
+	$fee_data = array(
+		'setup_fee' => 0,
+		'featured_fee' => 0,
+		'bold_fee' => 0,
+		'highlighted_fee' => 0,
+		'subtitle_fee' => 0,
+		'relist_fee' => 0,
+		'reserve_fee' => 0,
+		'buynow_fee' => 0,
+		'picture_fee' => 0,
+		'extracat_fee' => 0
+	);
 	while ($row = $db->fetch())
 	{
 		if ($minimum_bid >= $row['fee_from'] && $minimum_bid <= $row['fee_to'] && $row['type'] == 'setup')
 		{
 			if ($row['fee_type'] == 'flat')
 			{
-				$fee_data['setup'] = $row['value'];
+				$fee_data['setup_fee'] = $row['value'];
 				$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 			}
 			else
 			{
 				$tmp = bcdiv($row['value'], '100', $system->SETTINGS['moneydecimals']);
 				$tmp = bcmul($tmp, $minimum_bid, $system->SETTINGS['moneydecimals']);
-				$fee_data['setup'] = $tmp;
+				$fee_data['setup_fee'] = $tmp;
 				$fee_value = bcadd($fee_value, $tmp, $system->SETTINGS['moneydecimals']);
 			}
 		}
-		if ($row['type'] == 'buyout_fee' && $buy_now_price > 0)
+		if ($row['type'] == 'buynow_fee' && $buy_now_price > 0)
 		{
-			$fee_data['buyout_fee'] = $row['value'];
+			$fee_data['buynow_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'rp_fee' && $reserve_price > 0)
+		if ($row['type'] == 'reserve_fee' && $reserve_price > 0)
 		{
-			$fee_data['rp_fee'] = $row['value'];
+			$fee_data['reserve_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'bolditem_fee' && $is_bold == 'y')
+		if ($row['type'] == 'bold_fee' && $is_bold)
 		{
-			$fee_data['bolditem_fee'] = $row['value'];
+			$fee_data['bold_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'hlitem_fee' && $is_highlighted == 'y')
+		if ($row['type'] == 'highlighted_fee' && $is_highlighted)
 		{
-			$fee_data['hlitem_fee'] = $row['value'];
+			$fee_data['highlighted_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'hpfeat_fee' && $is_featured == 'y')
+		if ($row['type'] == 'featured_fee' && $is_featured)
 		{
-			$fee_data['hpfeat_fee'] = $row['value'];
+			$fee_data['featured_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'picture_fee' && count($_SESSION['UPLOADED_PICTURES']) > 0)
@@ -392,9 +417,9 @@ function get_fee($minimum_bid, $just_fee = true)
 			$fee_data['subtitle_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
-		if ($row['type'] == 'excat_fee' && $sellcat2 > 0)
+		if ($row['type'] == 'extracat_fee' && $sellcat2 > 0)
 		{
-			$fee_data['excat_fee'] = $row['value'];
+			$fee_data['extracat_fee'] = $row['value'];
 			$fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);
 		}
 		if ($row['type'] == 'relist_fee' && $relist > 0)
@@ -423,67 +448,30 @@ function get_fee($minimum_bid, $just_fee = true)
 			'relist' => 0,
 			'reserve' => 0,
 			'buynow' => 0,
-			'image' => 0,
-			'extcat' => 0,
+			'picture' => 0,
+			'extracat' => 0
 			);
 		while ($row = $db->fetch())
 		{
-			foreach ($row as $k => $v)
+			foreach ($row as $fee => $value)
 			{
-				if (isset($past_fees[$k]))
+				if (isset($past_fees[$fee]))
 				{
-					$past_fees[$k] += $v;
-				}
-				else
-				{
-					$past_fees[$k] = $v;
+					$past_fees[$fee] += $value;
 				}
 			}
 		}
 
-		$diff = 0; // difference from last payment
-		$fee_data['setup'] = 0; // shouldn't have to pay setup for an edit...
-		$diff = bcadd($diff, $past_fees['setup'], $system->SETTINGS['moneydecimals']);
-		if ($past_fees['bold'] == $fee_data['bolditem_fee'])
+		$diff = 0;
+		foreach ($past_fees as $fee => $value)
 		{
-			$diff = bcadd($diff, $fee_data['bolditem_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['bolditem_fee'] = 0;
+			if ($value > 0)
+			{
+				$diff = bcadd($diff, $fee_data[$fee . '_fee'], $system->SETTINGS['moneydecimals']);
+				$fee_data[$fee . '_fee'] = 0;
+			}
 		}
-		if ($past_fees['highlighted'] == $fee_data['hlitem_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['hlitem_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['hlitem_fee'] = 0;
-		}
-		if ($past_fees['subtitle'] == $fee_data['subtitle_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['subtitle_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['subtitle_fee'] = 0;
-		}
-		if ($past_fees['relist'] == $fee_data['relist_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['relist_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['relist_fee'] = 0;
-		}
-		if ($past_fees['reserve'] == $fee_data['rp_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['rp_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['rp_fee'] = 0;
-		}
-		if ($past_fees['buynow'] == $fee_data['buyout_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['buyout_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['buyout_fee'] = 0;
-		}
-		if ($past_fees['image'] == $fee_data['picture_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['picture_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['picture_fee'] = 0;
-		}
-		if ($past_fees['extcat'] == $fee_data['excat_fee'])
-		{
-			$diff = bcadd($diff, $fee_data['excat_fee'], $system->SETTINGS['moneydecimals']);
-			$fee_data['excat_fee'] = 0;
-		}
+
 		$fee_value = bcsub($fee_value, $diff, $system->SETTINGS['moneydecimals']);
 		if ($fee_value < 0)
 		{
@@ -503,18 +491,47 @@ function get_fee($minimum_bid, $just_fee = true)
 	return $return;
 }
 
-function update_cat_counters($add, $category)
+function update_cat_counters($add, $category, $second_category = 0)
 {
 	global $_SESSION, $DBPrefix, $system, $catscontrol, $db;
 
+	$addsub = ($add) ? '+' : '-';
+	// change category counter
+	$query = "UPDATE " . $DBPrefix . "categories SET counter = counter " . $addsub . " 1 WHERE cat_id = :cat_id";
+	$params = array();
+	$params[] = array(':cat_id', $category, 'int');
+	$db->query($query, $params);
+	// get the category crumbs
 	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
 	$params = array();
 	$params[] = array(':cat_id', $category, 'int');
 	$db->query($query, $params);
 	$parent_node = $db->result();
-	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+	$category_crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
-	$addsub = ($add) ? '+' : '-';
+	if ($second_category > 0)
+	{
+		// change secondary category counter
+		$query = "UPDATE " . $DBPrefix . "categories SET counter = counter " . $addsub . " 1 WHERE cat_id = :cat_id";
+		$params = array();
+		$params[] = array(':cat_id', $second_category, 'int');
+		$db->query($query, $params);
+		// get the second category crumbs
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+		$params = array();
+		$params[] = array(':cat_id', $second_category, 'int');
+		$db->query($query, $params);
+		$parent_node = $db->result();
+		$second_category_crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+
+		// merge the arrays
+		$crumbs = $category_crumbs + $second_category_crumbs;
+	}
+	else
+	{
+		$crumbs = $category_crumbs;
+	}
+
 	for ($i = 0; $i < count($crumbs); $i++)
 	{
 		$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter " . $addsub . " 1 WHERE cat_id = :cat_id";
@@ -568,4 +585,3 @@ function check_gateway($gateway)
 		return true;
 	return false;
 }
-?>

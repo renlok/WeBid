@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,20 +13,13 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'dates.inc.php';
-include $include_path . 'membertypes.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 // Get parameters from the URL
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-ksort($memtypesarr, SORT_NUMERIC);
-
 $id = (isset($_SESSION['CURRENT_ITEM'])) ? intval($_SESSION['CURRENT_ITEM']) : 0;
 $id = (isset($_REQUEST['id'])) ? intval($_REQUEST['id']) : 0;
-if (!is_numeric($id)) $id = 0;
+
 $bidderarray = array();
 $bidderarraynum = 1;
 $catscontrol = new MPTTcategories();
@@ -38,17 +31,18 @@ $_SESSION['REDIRECT_AFTER_LOGIN'] = $system->SETTINGS['siteurl'] . 'item.php?id=
 $query = "SELECT a.*, ac.counter, u.nick, u.reg_date, u.country, u.zip FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "auccounter ac ON (ac.auction_id = a.id)
-		WHERE a.id = " . $id . " LIMIT 1";
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-if (mysql_num_rows($result) == 0)
+		WHERE a.id = :auction_id LIMIT 1";
+$params = array();
+$params[] = array(':auction_id', $id, 'int');
+$db->query($query, $params);
+if ($db->numrows() == 0)
 {
 	$_SESSION['msg_title'] = $ERR_622;
 	$_SESSION['msg_body'] = $ERR_623;
 	header('location: message.php');
 	exit;
 }
-$auction_data = mysql_fetch_assoc($result);
+$auction_data = $db->result();
 $category = $auction_data['category'];
 $auction_type = $auction_data['auction_type'];
 $ends = $auction_data['ends'];
@@ -62,8 +56,10 @@ $seller_reg = FormatDate($auction_data['reg_date'], '/', false);
 // sort out counter
 if (empty($auction_data['counter']))
 {
-	$query = "INSERT INTO " . $DBPrefix . "auccounter VALUES (" . $id . ", 1)";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "INSERT INTO `" . $DBPrefix . "auccounter` (`auction_id`, `counter`) VALUES (:counter, 1)";
+	$params = array();
+	$params[] = array(':counter', $id, 'int');
+	$db->query($query, $params);
 	$auction_data['counter'] = 1;
 }
 else
@@ -74,8 +70,10 @@ else
 	}
 	if (!in_array($id, $_SESSION['WEBID_VIEWED_AUCTIONS']))
 	{
-		$query = "UPDATE " . $DBPrefix . "auccounter set counter = counter + 1 WHERE auction_id = " . $id;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "auccounter set counter = counter + 1 WHERE auction_id = :auction_id";
+		$params = array();
+		$params[] = array(':auction_id', $id, 'int');
+		$db->query($query, $params);
 		$_SESSION['WEBID_VIEWED_AUCTIONS'][] = $id;
 	}
 }
@@ -155,10 +153,11 @@ else
 }
 
 // build bread crumbs
-$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['category'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$parent_node = mysql_fetch_assoc($res);
+$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+$params = array();
+$params[] = array(':cat_id', $auction_data['category'], 'int');
+$db->query($query, $params);
+$parent_node = $db->result();
 
 $cat_value = '';
 $crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
@@ -177,10 +176,11 @@ for ($i = 0; $i < count($crumbs); $i++)
 $secondcat_value = '';
 if ($system->SETTINGS['extra_cat'] == 'y' && intval($auction_data['secondcat']) > 0)
 {
-	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = " . $auction_data['secondcat'];
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$parent_node = mysql_fetch_assoc($res);
+	$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :sec_cat_id";
+	$params = array();
+	$params[] = array(':sec_cat_id', $auction_data['secondcat'], 'int');
+	$db->query($query, $params);
+	$parent_node = $db->result();
 
 	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 	for ($i = 0; $i < count($crumbs); $i++)
@@ -198,19 +198,20 @@ if ($system->SETTINGS['extra_cat'] == 'y' && intval($auction_data['secondcat']) 
 
 // history
 $query = "SELECT b.*, u.nick, u.rate_sum FROM " . $DBPrefix . "bids b
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-		WHERE b.auction = " . $id . " ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
-$result_numbids = mysql_query($query);
-$system->check_mysql($result_numbids, $query, __LINE__, __FILE__);
-$num_bids = mysql_num_rows($result_numbids);
+LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
+WHERE b.auction = :auc_id ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
+$params = array();
+$params[] = array(':auc_id', $id, 'int');
+$db->query($query, $params);
+$num_bids = $db->numrows();
 $i = 0;
 $left = $auction_data['quantity'];
 $hbidder_data = array();
-while ($bidrec = mysql_fetch_assoc($result_numbids))
+foreach ($db->fetchall() as $bidrec)
 {
 	if (!isset($bidderarray[$bidrec['nick']]))
 	{
-		if ($system->SETTINGS['buyerprivacy'] == 'y' && $user->user_data['id'] != $auction_data['user'] && $user->user_data['id'] != $bidrec['bidder'])
+		if ($system->SETTINGS['buyerprivacy'] == 'y' && (!$user->logged_in || ($user->user_data['id'] != $auction_data['user'] && $user->user_data['id'] != $bidrec['bidder'])))
 		{
 			$bidderarray[$bidrec['nick']] = $MSG['176'] . ' ' . $bidderarraynum;
 			$bidderarraynum++;
@@ -225,12 +226,13 @@ while ($bidrec = mysql_fetch_assoc($result_numbids))
 		$hbidder_data[] = $bidrec['bidder'];
 		$fb_pos = $fb_neg = 0;
 		// get seller feebacks
-		$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $bidrec['bidder'];
-		$result = mysql_query($query);
-		$system->check_mysql($result, $query, __LINE__, __FILE__);
+		$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :rate_users_id";
+		$params = array();
+		$params[] = array(':rate_users_id', $bidrec['bidder'], 'int');
+		$db->query($query, $params);
 		// count numbers
 		$fb_pos = $fb_neg = 0;
-		while ($fb_arr = mysql_fetch_assoc($result))
+		while ($fb_arr = $db->fetch())
 		{
 			if ($fb_arr['rate'] == 1)
 			{
@@ -244,9 +246,9 @@ while ($bidrec = mysql_fetch_assoc($result_numbids))
 
 		$total_rate = $fb_pos - $fb_neg;
 
-		foreach ($memtypesarr as $k => $l)
+		foreach ($membertypes as $k => $l)
 		{
-			if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
 			{
 				$buyer_rate_icon = $l['icon'];
 				break;
@@ -275,10 +277,12 @@ $userbid = false;
 if ($user->logged_in && $num_bids > 0)
 {
 	// check if youve bid on this before
-	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = " . $id . " AND bidder = " . $user->user_data['id'] . " LIMIT 1";
-	$result = mysql_query($query);
-	$system->check_mysql($result, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($result) > 0)
+	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :auction AND bidder = :bidder LIMIT 1";
+	$params = array();
+	$params[] = array(':auction', $id, 'int');
+	$params[] = array(':bidder', $user->user_data['id'], 'int');
+	$db->query($query, $params);
+	if ($db->numrows() > 0)
 	{
 		if (in_array($user->user_data['id'], $hbidder_data))
 		{
@@ -289,10 +293,15 @@ if ($user->logged_in && $num_bids > 0)
 				$yourbidmsg = $MSG['514'];
 				$yourbidclass = 'yourbidloss';
 			}
-			elseif ($difference <= 0 || $auction_data['bn_only'] == 'y')
+			elseif ($difference <= 0 || $auction_data['bn_only'])
 			{
 				$yourbidmsg = $MSG['25_0089'];
 			}
+		}
+		elseif ($auction_data['bn_only'])
+		{
+			$yourbidmsg = $MSG['25_0089'];
+			$yourbidclass = 'yourbidwin';
 		}
 		else
 		{
@@ -304,17 +313,21 @@ if ($user->logged_in && $num_bids > 0)
 }
 
 // sort out user questions
-$query = "SELECT id FROM " . $DBPrefix . "messages WHERE reply_of = 0 AND public = 1 AND question = " . $id;
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$num_questions = mysql_num_rows($res);
-while ($row = mysql_fetch_assoc($res))
+$query = "SELECT id FROM " . $DBPrefix . "messages WHERE reply_of = 0 AND public = 1 AND question = :question_id";
+$params = array();
+$params[] = array(':question_id', $id, 'int');
+$db->query($query, $params);
+$num_questions = $db->numrows();
+foreach ($db->fetchall() as $row)
 {
 	$template->assign_block_vars('questions', array()); // just need to create the block
-	$query = "SELECT sentfrom, message FROM " . $DBPrefix . "messages WHERE question = " . $id . " AND reply_of = " . $row['id'] . " OR id = " . $row['id'] . " ORDER BY sentat ASC";
-	$res_ = mysql_query($query);
-	$system->check_mysql($res_, $query, __LINE__, __FILE__);
-	while ($row_ = mysql_fetch_assoc($res_))
+	$query = "SELECT sentfrom, message FROM " . $DBPrefix . "messages WHERE question = :id AND reply_of = :reply_of OR id = :message_id ORDER BY sentat ASC";
+	$params = array();
+	$params[] = array(':id', $id, 'int');
+	$params[] = array(':reply_of', $row['id'], 'int');
+	$params[] = array(':message_id', $row['id'], 'int');
+	$db->query($query, $params);
+	while ($row_ = $db->fetch())
 	{
 		$template->assign_block_vars('questions.conv', array(
 				'MESSAGE' => $row_['message'],
@@ -329,13 +342,17 @@ if ($customincrement == 0)
 {
 	// Get bid increment for current bid and calculate minimum bid
 	$query = "SELECT increment FROM " . $DBPrefix . "increments WHERE
-			((low <= " . $high_bid . " AND high >= " . $high_bid . ") OR
-			(low < " . $high_bid . " AND high < " . $high_bid . ")) ORDER BY increment DESC";
-	$result_incr = mysql_query($query);
-	$system->check_mysql($result_incr, $query, __LINE__, __FILE__);
-	if (mysql_num_rows($result_incr) != 0)
+			((low <= :val0 AND high >= :val1) OR
+			(low < :val2 AND high < :val3)) ORDER BY increment DESC";
+	$params = array();
+	$params[] = array(':val0', $high_bid, 'float');
+	$params[] = array(':val1', $high_bid, 'float');
+	$params[] = array(':val2', $high_bid, 'float');
+	$params[] = array(':val3', $high_bid, 'float');
+	$db->query($query, $params);
+	if ($db->numrows() != 0)
 	{
-		$increment = mysql_result($result_incr, 0, 'increment');
+		$increment = $db->result('increment');
 	}
 }
 else
@@ -383,13 +400,14 @@ else
 }
 
 // get seller feebacks
-$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $user_id;
-$result = mysql_query($query);
-$system->check_mysql($result, $query, __LINE__, __FILE__);
-$num_feedbacks = mysql_num_rows($result);
+$query = "SELECT rate FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
+$params = array();
+$params[] = array(':user_id', $user_id, 'int');
+$db->query($query, $params);
+$num_feedbacks = $db->numrows();
 // count numbers
 $fb_pos = $fb_neg = 0;
-while ($fb_arr = mysql_fetch_assoc($result))
+while ($fb_arr = $db->fetch())
 {
 	if ($fb_arr['rate'] == 1)
 	{
@@ -406,9 +424,9 @@ $total_rate = $fb_pos - $fb_neg;
 if ($total_rate > 0)
 {
 	$i = 0;
-	foreach ($memtypesarr as $k => $l)
+	foreach ($membertypes as $k => $l)
 	{
-		if ($k >= $total_rate || $i++ == (count($memtypesarr) - 1))
+		if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
 		{
 			$seller_rate_icon = $l['icon'];
 			break;
@@ -419,9 +437,9 @@ if ($total_rate > 0)
 // Pictures Gellery
 $K = 0;
 $UPLOADED_PICTURES = array();
-if (file_exists($uploaded_path . $id))
+if (is_dir(UPLOAD_PATH . $id))
 {
-	$dir = @opendir($uploaded_path . $id);
+	$dir = opendir(UPLOAD_FOLDER . $id);
 	if ($dir)
 	{
 		while ($file = @readdir($dir))
@@ -432,7 +450,7 @@ if (file_exists($uploaded_path . $id))
 				$K++;
 			}
 		}
-		@closedir($dir);
+		closedir($dir);
 	}
 	$GALLERY_DIR = $id;
 
@@ -440,7 +458,7 @@ if (file_exists($uploaded_path . $id))
 	{
 		foreach ($UPLOADED_PICTURES as $k => $v)
 		{
-			$TMP = @getimagesize($uploaded_path . $id . '/' . $v);
+			$TMP = @getimagesize(UPLOAD_FOLDER . $id . '/' . $v);
 			if ($TMP[2] >= 1 && $TMP[2] <= 3)
 			{
 				$template->assign_block_vars('gallery', array(
@@ -454,52 +472,31 @@ if (file_exists($uploaded_path . $id))
 // payment methods
 $payment = explode(', ', $auction_data['payment']);
 $payment_methods = '';
-$query = "SELECT * FROM " . $DBPrefix . "gateways";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateways_data = mysql_fetch_assoc($res);
-$gateway_list = explode(',', $gateways_data['gateways']);
+$query = "SELECT gateway_active, is_gateway, name, displayname FROM " . $DBPrefix . "payment_options";
+$db->direct_query($query);
 $p_first = true;
-foreach ($gateway_list as $v)
+while ($payment_method = $db->fetch())
 {
-	$v = strtolower($v);
-	if ($gateways_data[$v . '_active'] == 1 && _in_array($v, $payment))
+	if ($payment_method['gateway_active'] == 1 || $payment_method['is_gateway'] == 0)
 	{
-		if (!$p_first)
+		if (in_array($payment_method['name'], $payment))
 		{
-			$payment_methods .= ', ';
+			if (!$p_first)
+			{
+				$payment_methods .= ', ';
+			}
+			else
+			{
+				$p_first = false;
+			}
+			$payment_methods .= $payment_method['displayname'];
 		}
-		else
-		{
-			$p_first = false;
-		}
-		$payment_methods .= $system->SETTINGS['gatways'][$v];
-	}
-}
-
-$payment_options = unserialize($system->SETTINGS['payment_options']);
-foreach ($payment_options as $k => $v)
-{
-	if (_in_array($k, $payment))
-	{
-		if (!$p_first)
-		{
-			$payment_methods .= ', ';
-		}
-		else
-		{
-			$p_first = false;
-		}
-		$payment_methods .= $v;
 	}
 }
 
 $bn_link = (!$has_ended) ? ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $id . '"><img border="0" align="absbottom" alt="' . $MSG['496'] . '" src="' . get_lang_img('buy_it_now.gif') . '"></a>' : '';
 
 $page_title = $system->uncleanvars($auction_data['title']);
-
-$sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
-$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
 
 $shipping = '';
 if ($auction_data['shipping'] == 1)
@@ -514,9 +511,9 @@ $template->assign_vars(array(
 		'TITLE' => $system->uncleanvars($auction_data['title']),
 		'SUBTITLE' => $system->uncleanvars($auction_data['subtitle']),
 		'AUCTION_DESCRIPTION' => $auction_data['description'],
-		'PIC_URL' => $uploaded_path . $id . '/' . $auction_data['pict_url'],
+		'PIC_URL' => UPLOAD_FOLDER . $id . '/' . $auction_data['pict_url'],
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $MSG['1152'],
-		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['shipping_cost_additional']),
+		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['additional_shipping_cost']),
 		'COUNTRY' => $auction_data['country'],
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
@@ -530,12 +527,12 @@ $template->assign_vars(array(
 		'MINBID' => $min_bid,
 		'MAXBID' => $high_bid,
 		'NEXTBID' => $next_bid,
-		'INTERNATIONAL' => ($auction_data['international'] == 1) ? $MSG['033'] : $MSG['043'],
+		'INTERNATIONAL' => ($auction_data['international']) ? $MSG['033'] : $MSG['043'],
 		'SHIPPING' => $shipping,
 		'SHIPPINGTERMS' => nl2br($system->uncleanvars($auction_data['shipping_terms'])),
 		'PAYMENTS' => $payment_methods,
 		'AUCTION_VIEWS' => $auction_data['counter'],
-		'AUCTION_TYPE' => ($auction_data['bn_only'] == 'n') ? $system->SETTINGS['auction_types'][$auction_type] : $MSG['933'],
+		'AUCTION_TYPE' => ($auction_data['bn_only'] == 0) ? $system->SETTINGS['auction_types'][$auction_type] : $MSG['933'],
 		'ATYPE' => $auction_type,
 		'THUMBWIDTH' => $system->SETTINGS['thumb_show'],
 		'VIEW_HISTORY1' => (empty($view_history)) ? '' : $view_history . ' | ',
@@ -544,7 +541,7 @@ $template->assign_vars(array(
 		'CATSPATH' => $cat_value,
 		'SECCATSPATH' => $secondcat_value,
 		'CAT_ID' => $auction_data['category'],
-		'UPLOADEDPATH' => $uploaded_path,
+		'UPLOADEDPATH' => UPLOAD_FOLDER,
 		'BNIMG' => get_lang_img('buy_it_now.gif'),
 
 		'SELLER_REG' => $seller_reg,
@@ -561,28 +558,28 @@ $template->assign_vars(array(
 
 		'YOURBIDMSG' => (isset($yourbidmsg)) ? $yourbidmsg : '',
 		'YOURBIDCLASS' => (isset($yourbidclass)) ? $yourbidclass : '',
-		'BIDURL' => $sslurl,
 
 		'B_HASENDED' => $has_ended,
 		'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
 		'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && (!$user->logged_in || $user->user_data['id'] != $auction_data['user'])),
 		'B_HASIMAGE' => (!empty($auction_data['pict_url'])),
-		'B_NOTBNONLY' => ($auction_data['bn_only'] == 'n'),
+		'B_NOTBNONLY' => ($auction_data['bn_only'] == 0),
 		'B_HASRESERVE' => ($auction_data['reserve_price'] > 0 && $auction_data['reserve_price'] > $auction_data['current_bid']),
 		'B_BNENABLED' => ($system->SETTINGS['buy_now'] == 2),
 		'B_HASGALELRY' => (count($UPLOADED_PICTURES) > 0),
 		'B_SHOWHISTORY' => (isset($_GET['history']) && $num_bids > 0),
-		'B_BUY_NOW' => ($auction_data['buy_now'] > 0 && ($auction_data['bn_only'] == 'y' || $auction_data['bn_only'] == 'n' && ($auction_data['num_bids'] == 0 || ($auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])))),
-		'B_BUY_NOW_ONLY' => ($auction_data['bn_only'] == 'y'),
+		'B_BUY_NOW' => ($auction_data['buy_now'] > 0 && ($auction_data['bn_only'] || $auction_data['bn_only'] == 0 && ($auction_data['num_bids'] == 0 || ($auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price'])))),
+		'B_BUY_NOW_ONLY' => ($auction_data['bn_only']),
 		'B_ADDITIONAL_SHIPPING_COST' => ($auction_data['auction_type'] == '2'),
 		'B_USERBID' => $userbid,
 		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && (!$user->logged_in || ($user->logged_in && $user->user_data['id'] != $auction_data['user']))),
 		'B_HASBUYER' => (count($hbidder_data) > 0),
 		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
 		'B_HAS_QUESTIONS' => ($num_questions > 0),
-		'B_CAN_BUY' => $user->can_buy && !($start > time()),
+		'B_CAN_BUY' => ($user->can_buy || (!$user->logged_in && $system->SETTINGS['bidding_visable_to_guest'])) && !($start > time()),
+		'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
 		'B_SHOWENDTIME' => $showendtime,
-		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['shipping_cost_additional'] > 0)
+		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['additional_shipping_cost'] > 0)
 		));
 
 include 'header.php';
@@ -592,4 +589,3 @@ $template->set_filenames(array(
 $template->display('body');
 include 'footer.php';
 unset($_SESSION['browse_id']);
-?>

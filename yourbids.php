@@ -1,7 +1,7 @@
 <?php
 
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,19 +15,20 @@
 
 include 'common.php';
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourbids.php';
 	header('location: user_login.php');
 	exit;
 }
 
 // get active bids for this user
-$query = "SELECT a.current_bid, a.id, a.title, a.ends, b.bid, b.quantity, p.bid As proxybid FROM " . $DBPrefix . "bids b
-	LEFT JOIN " . $DBPrefix . "proxybid p ON (p.itemid = b.auction)
+$query = "SELECT a.current_bid, a.current_bid_id, a.id, a.title, a.ends, b.bid, b.quantity, p.bid As proxybid, b.id As bid_id FROM " . $DBPrefix . "bids b
+	LEFT JOIN " . $DBPrefix . "proxybid p ON (p.itemid = b.auction AND p.userid = b.bidder)
 	LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
 	WHERE a.closed = 0 AND b.bidder = :user_id
-	AND a.bn_only = 'n' ORDER BY a.ends ASC, b.bid DESC";
+	AND a.bn_only = 0 ORDER BY a.ends ASC, b.bid DESC";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
@@ -42,7 +43,7 @@ while ($row = $db->fetch())
 		$bgColor = (!($auctions_count % 2)) ? '' : 'class="alt-row"';
 
 		// Outbidded or winning bid
-		if ($row['current_bid'] != $row['bid']) $bgColor = 'style="background-color:#FFFF00;"';
+		if ($row['bid_id'] != $row['current_bid_id']) $bgColor = 'style="background-color:#FFFF00;"';
 
 		$auctions_count++;
 		$idcheck[] = $row['id'];
@@ -66,10 +67,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['620'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourbids.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

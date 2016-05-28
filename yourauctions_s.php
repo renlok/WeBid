@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -19,34 +19,40 @@ $NOWB = date('Ymd');
 $user_message = '';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_s.php';
 	header('location: user_login.php');
 	exit;
 }
+// check if the user can access this page
+$user->checkSuspended();
 
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 {
-	if (is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
+	if (isset($_POST['O_delete']) && is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
 	{
 		foreach ($_POST['O_delete'] as $k => $v)
 		{
 			$removed = 0;
 			$v = intval($v);
 			// Pictures Gallery
-			if ($dir = @opendir($upload_path . '/' . $v))
+			if (is_dir(UPLOAD_PATH . $v))
 			{
-				while ($file = readdir($dir))
+				if ($dir = opendir(UPLOAD_PATH . $v))
 				{
-					if ($file != '.' && $file != '..')
+					while ($file = readdir($dir))
 					{
-						@unlink($upload_path . '/' . $v . $file);
+						if ($file != '.' && $file != '..')
+						{
+							@unlink(UPLOAD_PATH . $v . '/' . $file);
+						}
 					}
+					closedir($dir);
+					rmdir(UPLOAD_PATH . $v);
 				}
-				closedir($dir);
-				@rmdir($upload_path . '/' . $v);
 			}
 
 			// remove auction
@@ -178,10 +184,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['2__0056'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourauctions_s.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

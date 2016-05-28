@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,30 +15,25 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['defaultlanguage']))
 {
-	// clean submission
-	$system->SETTINGS['defaultlanguage'] = $system->cleanvars($_POST['defaultlanguage']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET defaultlanguage = :defaultlanguage";
-	$params = array();
-	$params[] = array(':defaultlanguage', $system->SETTINGS['defaultlanguage'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("defaultlanguage", $system->cleanvars($_POST['defaultlanguage']),"str");
 }
-
 $html = '';
 if (is_array($LANGUAGES))
 {
 	reset($LANGUAGES);
-	foreach ($LANGUAGES as $k => $v){
+	foreach ($LANGUAGES as $k => $v)
+	{
 		$html .= '<input type="radio" name="defaultlanguage" value="' . $k . '"' . (($system->SETTINGS['defaultlanguage'] == $k) ? ' checked="checked"' : '') . '>
-	<img src="../inc/flags/' . $k . '.gif" hspace="2">
-	' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MSG['2__0005'] : '') . '<br>';
+		<img src="../images/flags/' . $k . '.gif" hspace="2">
+		' . $v . (($system->SETTINGS['defaultlanguage'] == $k) ? '&nbsp;' . $MSG['2__0005'] : '') . '<br>';
 	}
 }
 
@@ -51,8 +46,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['2__0002']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

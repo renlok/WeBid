@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,11 +13,10 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'browseitems.inc.php';
-include $include_path . 'dates.inc.php';
+include INCLUDE_PATH . 'browseitems.inc.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
 	header("location: user_login.php");
 	exit;
@@ -49,25 +48,22 @@ if (isset($_GET['delete']) && !empty($_GET['delete']))
 {
 	$items = trim($user->user_data['item_watch']);
 	$auc_id = explode(' ', $items);
+	$item_watch = $items;
 	for ($j = 0; $j < count($auc_id); $j++)
 	{
-		$match = strstr($auc_id[$j], strval($_GET['delete']));
-		if ($match)
-		{
-			$item_watch = $item_watch;
-		}
-		else
+		$match = ;
+		if (!strstr($auc_id[$j], strval($_GET['delete'])))
 		{
 			$item_watch = $auc_id[$j] . ' ' . $item_watch;
 		}
 	}
-	$item_watch_new = trim($item_watch);
+	$item_watch = trim($item_watch);
 	$query = "UPDATE " . $DBPrefix . "users SET item_watch = :item_watch_new WHERE id = :user_id";
 	$params = array();
-	$params[] = array(':item_watch_new', $system->cleanvars($item_watch_new), 'str');
+	$params[] = array(':item_watch_new', $system->cleanvars($item_watch), 'str');
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
-	$user->user_data['item_watch'] = $item_watch_new;
+	$user->user_data['item_watch'] = $item_watch;
 }
 
 // Show results
@@ -82,20 +78,17 @@ if ($items != '' && $items != null)
 	{
 		$itemids .= ',' . $item[$j];
 	}
-	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id IN (:itemids)";
-	$params = array();
-	$params[] = array(':itemids', $itemids, 'str');
-	$db->query($query, $params);
+	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id IN (" . $itemids . ")";
+	$db->direct_query($query);
 	$total = $db->numrows();
 	browseItems($query, $params, '', '', $total, 'item_watch.php');
 }
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['472'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'item_watch.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

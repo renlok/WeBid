@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -55,17 +55,16 @@ $db->direct_query($query);
 $bg = '';
 while ($User = $db->fetch())
 {
-    $created = substr($User['created'], 4, 2) . '/' . substr($User['created'], 6, 2) . '/' . substr($User['created'], 0, 4);
-    if ($User['lastlogin'] == 0)
-    {
+	$created = substr($User['created'], 4, 2) . '/' . substr($User['created'], 6, 2) . '/' . substr($User['created'], 0, 4);
+	if ($User['lastlogin'] == 0)
+	{
 		$lastlogin = $MSG['570'];
-    }
-    else
-    {
+	}
+	else
+	{
 		$lastlogin = date('d/m/Y H:i:s', $User['lastlogin'] + $system->tdiff);
-    }
-
-    $template->assign_block_vars('users', array(
+	}
+	$template->assign_block_vars('users', array(
 			'ID' => $User['id'],
 			'USERNAME' => $User['username'],
 			'STATUS' => $STATUS[$User['status']],
@@ -79,10 +78,12 @@ while ($User = $db->fetch())
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
-		
+
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminusers.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -24,10 +24,10 @@ $id = intval($_GET['id']);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$user = intval($_POST['user']);
-	$query = "UPDATE " . $DBPrefix . "feedbacks SET 
-		  rate = :rate, 
-		  feedback = :feedback
-		  WHERE id = :feedback_id";
+	$query = "UPDATE " . $DBPrefix . "feedbacks SET
+			rate = :rate,
+			feedback = :feedback
+			WHERE id = :feedback_id";
 	$params = array();
 	$params[] = array(':rate', $_POST['aTPL_rate'], 'int');
 	$params[] = array(':feedback', $_POST['TPL_feedback'], 'str');
@@ -36,7 +36,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	// Update user's record
 	$query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks
-			  WHERE rated_user_id = :user_id";
+				WHERE rated_user_id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $user, 'int');
 	$db->query($query, $params);
@@ -70,9 +70,11 @@ $template->assign_vars(array(
 		'SEL2' => ($feedback['rate'] == 0),
 		'SEL3' => ($feedback['rate'] == -1)
 		));
-		
+
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'edituserfeed.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

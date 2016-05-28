@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,19 +15,15 @@
 define('InAdmin', 1);
 $current_page = 'fees';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	$query = "UPDATE " . $DBPrefix . "settings SET
-				taxuser = '" . $_POST['taxuser'] . "',
-				tax = '" . $_POST['tax'] . "'";
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	$system->SETTINGS['taxuser'] = $_POST['taxuser'];
-	$system->SETTINGS['tax'] = $_POST['tax'];
+	$system->writesetting("taxuser", $_POST['taxuser'],"str");
+	$system->writesetting("tax", $_POST['tax'],"str");
 	$ERR = $MSG['1089'];
 }
 
@@ -41,8 +37,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['1088']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

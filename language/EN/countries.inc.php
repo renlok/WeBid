@@ -230,4 +230,3 @@ $countries = array(
 'Zambia' => 'Zambia',
 'Zimbabwe' => 'Zimbabwe'
 );
-?>

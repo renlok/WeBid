@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 $extraJs = ';js/jquery-ui.js;js/jquery-migrate.js';
 include 'loggedin.inc.php';
 
@@ -26,52 +26,36 @@ $smtp_secure_options =array('none' => 'None', 'tls' => 'TLS', 'ssl' => 'SSL');
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// checks 
+	// checks
 	if (intval($_POST['mail_protocol']) == 2)
 	{
 		if (empty($_POST['smtp_host']) || empty($_POST['smtp_username']) || empty($_POST['smtp_password']) || empty($_POST['smtp_port']) || intval($_POST['smtp_port']) <= 0 )
-		{ 
+		{
 			$ERR = $MSG['1132'];
 		}
 	}
-	
+
 	if (array_key_exists(intval($_POST['mail_protocol']), $mail_protocol))
 	{
-	
-	  if  (intval($_POST['mail_protocol']) !== 2)
-	  {
-	   // Update database
-			$query = "UPDATE ". $DBPrefix . "settings SET
-					mail_protocol = " . intval($_POST['mail_protocol']) . ",
-					mail_parameter = '" . $_POST['mail_parameter'] . "',
-					alert_emails = '" . $_POST['alert_emails'] . "'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-	    }
+		if (intval($_POST['mail_protocol']) !== 2)
+		{
+			$system->writesetting("mail_protocol", $_POST['mail_protocol'], 'int');
+			$system->writesetting("mail_parameter", $_POST['mail_parameter'], 'str');
+			$system->writesetting("alert_emails", $_POST['alert_emails'], 'str');
+		}
 		else
 		{
-			$query = "UPDATE ". $DBPrefix . "settings SET
-					mail_protocol = 2,
-					smtp_authentication = '" . $_POST['smtp_authentication'] . "',
-					smtp_security = '" . $_POST['smtp_security'] . "',
-					smtp_port = " . intval($_POST['smtp_port']) . ",
-					smtp_username = '" . (!empty($_POST['smtp_username'])? $_POST['smtp_username'] : '') . "',
-					smtp_password = '" . (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : '') . "',
-					smtp_host = '" . (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : '') . "',
-					alert_emails = '" . $_POST['alert_emails'] . "'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);		  
-	    }
-	  $ERR = $MSG['895'];
-	} 
-	
-    $system->SETTINGS['mail_protocol'] = intval($_POST['mail_protocol']);
-	$system->SETTINGS['mail_parameter'] = $_POST['mail_parameter'];
-	$system->SETTINGS['smtp_authentication'] = $_POST['smtp_authentication'];
-	$system->SETTINGS['smtp_security'] = $_POST['smtp_security'];
-	$system->SETTINGS['smtp_port'] = (!empty($_POST['smtp_port']) && is_numeric($_POST['smtp_port']))? (int)($_POST['smtp_port']) : '';
-	$system->SETTINGS['smtp_username'] = $_POST['smtp_username'];
-	$system->SETTINGS['smtp_password'] = $_POST['smtp_password'];
-	$system->SETTINGS['smtp_host'] = $_POST['smtp_host'];
-	$system->SETTINGS['alert_emails'] = $_POST['alert_emails'];
+			$system->writesetting("mail_protocol", 2, 'int');
+			$system->writesetting("smtp_authentication", $_POST['smtp_authentication'], 'str');
+			$system->writesetting("smtp_security", $_POST['smtp_security'], 'str');
+			$system->writesetting("smtp_port",(!empty($_POST['smtp_port']) && is_numeric($_POST['smtp_port']))? (int)($_POST['smtp_port']) : '', 'int');
+			$system->writesetting("smtp_username", (!empty($_POST['smtp_username'])? $_POST['smtp_username'] : ''), 'str');
+			$system->writesetting("smtp_password", (!empty($_POST['smtp_password'])? $_POST['smtp_password'] : ''), 'str');
+			$system->writesetting("smtp_host", (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
+			$system->writesetting("smtp_emails", $_POST['alert_emails'], 'str');
+		}
+		$ERR = $MSG['email_settings_updated'];
+	}
 }
 
 $selectsetting = isset($system->SETTINGS['mail_protocol'])? $system->SETTINGS['mail_protocol'] : '0';
@@ -97,19 +81,10 @@ if (isset($_GET['test_email']))
 	$to_email       = filter_var($_POST["user_email"], FILTER_SANITIZE_EMAIL);
 	$subject        = filter_var($_POST["subject"], FILTER_SANITIZE_STRING);
 	$message        = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
-    
+
 	$emailer = new email_handler();
-	$send_mail = $emailer->email_basic($subject, $to_email, $message);
-	if($send_mail)
-    {
-		$output = json_encode(array('type'=>'error', 'text' => 'Could not send mail! Please check your PHP mail configuration.Response:<br>' . $send_mail));
-		die($output);
-    }
-	else
-	{
-		$output = json_encode(array('type'=>'message', 'text' => 'Hi '.$user_name .' Your email(s) has been processed and sent. No error(s) to report.'));
-		die($output);
-    }
+	$emailer->email_basic($subject, $to_email, $message);
+	die();
 }
 
 $template->assign_vars(array(
@@ -129,8 +104,10 @@ $template->assign_vars(array(
 		'ADMIN_EMAIL' => $system->SETTINGS['adminmail'],
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'emailsettings.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,31 +15,23 @@
 define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'ckeditor/ckeditor.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission
-	$system->SETTINGS['privacypolicy'] = ynbool($_POST['privacypolicy']);
-	$system->SETTINGS['privacypolicytext'] = $system->cleanvars($_POST['privacypolicytext']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-			privacypolicy = :privacypolicy,
-			privacypolicytext = :privacypolicytext";
-	$params = array();
-	$params[] = array(':privacypolicy', $system->SETTINGS['privacypolicy'], 'str');
-	$params[] = array(':privacypolicytext', $system->SETTINGS['privacypolicytext'], 'str');
-	$db->query($query, $params);
+	$system->writesetting("privacypolicy", ynbool($_POST['privacypolicy']),"str");
+	$system->writesetting("privacypolicytext", $system->cleanvars($_POST['privacypolicytext']),"str");
 	$ERR = $MSG['406'];
 }
 loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->basePath = 'js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
@@ -53,8 +45,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['402']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

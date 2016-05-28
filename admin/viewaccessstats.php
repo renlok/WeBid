@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'stats';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 $TOTAL_PAGEVIEWS = 0;
@@ -47,7 +47,7 @@ elseif ($listby == 'w')
 }
 else
 {
-	$month = date('n');
+	$month = date('m');
 	$year = date('Y');
 	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = :month AND year = :year ORDER BY LENGTH(day), day ASC";
 	$params[] = array(':month', $month, 'int');
@@ -113,7 +113,8 @@ while ($row = $db->fetch())
 	$TOTAL_USERSESSIONS += $row['usersessions'];
 }
 
-$MAX = max($data_max);
+ksort($data_line);
+$MAX = (count($data_max) > 0) ? max($data_max) : 0;
 foreach ($data_line as $k => $v)
 {
 	if ($listby == 'w')
@@ -148,8 +149,10 @@ $template->assign_vars(array(
 		'STATSTEXT' => $statstext
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'viewaccessstats.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

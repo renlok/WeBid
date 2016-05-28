@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -17,16 +17,16 @@ include 'common.php';
 function generatePassword($length = 8)
 {
 	// all possible characters to put in password
-    $chars = 'abcdfghjklmnpqrstvwxyzABCDFGHJKLMNPQRSTVWXYZ0123456789';
-    $count = mb_strlen($chars);
+	$chars = 'abcdfghjklmnpqrstvwxyzABCDFGHJKLMNPQRSTVWXYZ0123456789';
+	$count = mb_strlen($chars);
 
-    for ($i = 0, $result = ''; $i < $length; $i++)
+	for ($i = 0, $result = ''; $i < $length; $i++)
 	{
-        $index = rand(0, $count - 1);
-        $result .= mb_substr($chars, $index, 1);
-    }
+		$index = rand(0, $count - 1);
+		$result .= mb_substr($chars, $index, 1);
+	}
 
-    return $result;
+	return $result;
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'ok')
@@ -59,7 +59,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'ok')
 			// Update database
 			$query = "UPDATE " . $DBPrefix . "users SET password = :password WHERE id = :user_id";
 			// hash password
-			include $include_path . 'PasswordHash.php';
+			include PACKAGE_PATH . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
 			$params = array();
 			$params[] = array(':password', $phpass->HashPassword($newpass), 'str');
@@ -90,4 +90,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

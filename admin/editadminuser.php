@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,8 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
-include $include_path . 'dates.inc.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -33,19 +32,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$ERR = $ERR_006;
 	}
 	else
-	{ 
+	{
 		// Update
 		$query = "UPDATE " . $DBPrefix . "adminusers SET";
 		$params = array();
 		if (!empty($_POST['password']))
 		{
-			include $include_path . 'PasswordHash.php';
+			include PACKAGE_PATH . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
 			$query .= " password = :password, ";
 			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 		}
 		$query .= " status = :status WHERE id = :admin_id";
-		$params[] = array(':status', $_POST['status'], 'int');
+		$params[] = array(':status', $_POST['status'], 'bool');
 		$params[] = array(':admin_id', $id, 'int');
 		$db->query($query, $params);
 		header('location: adminusers.php');
@@ -85,12 +84,14 @@ $template->assign_vars(array(
 		'LASTLOGIN' => $LASTLOGIN,
 
 		'B_ACTIVE' => ($user_data['status'] == 1),
-		'B_INACTIVE' => ($user_data['status'] == 2)
+		'B_INACTIVE' => ($user_data['status'] == 0)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editadminuser.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

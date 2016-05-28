@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		else
 		{
-			include $include_path . 'PasswordHash.php';
+			include PACKAGE_PATH . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
 			$query = "INSERT INTO " . $DBPrefix . "adminusers VALUES
 					(NULL, :username, :password, :hash, :created, '0', :status, '')";
@@ -56,7 +56,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 			$params[] = array(':hash', get_hash(), 'str');
 			$params[] = array(':created', date('Ymd'), 'str');
-			$params[] = array(':status', $_POST['status'], 'int');
+			$params[] = array(':status', $_POST['status'], 'bool');
 			$db->query($query, $params);
 			header('location: adminusers.php');
 			exit;
@@ -64,10 +64,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
-loadblock($MSG['003'], '', 'text', 'username', $system->SETTINGS['username']);
-loadblock($MSG['004'], '', 'password', 'password', $system->SETTINGS['password']);
-loadblock($MSG['564'], '', 'password', 'repeatpassword', $system->SETTINGS['repeatpassword']);
-loadblock('', '', 'batch', 'status', $system->SETTINGS['status'], array($MSG['566'], $MSG['567']));
+loadblock($MSG['003'], '', 'text', 'username', '');
+loadblock($MSG['004'], '', 'password', 'password', '');
+loadblock($MSG['564'], '', 'password', 'repeatpassword', '');
+loadblock('', '', 'bool', 'status', '1', array($MSG['567'], $MSG['566']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
@@ -76,8 +76,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['367']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

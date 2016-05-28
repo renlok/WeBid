@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,21 +15,16 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'language/' . $language . '/countries.inc.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['defaultcountry'] = $system->cleanvars($_POST['country']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET defaultcountry = :defaultcountry";
-	$params = array();
-	$params[] = array(':defaultcountry', $system->SETTINGS['defaultcountry'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("defaultcountry", $system->cleanvars($_POST['country']),"str");
 	$ERR = $MSG['5323'];
 }
 
@@ -43,8 +38,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['5322']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

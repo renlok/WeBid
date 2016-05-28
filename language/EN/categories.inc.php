@@ -397,4 +397,3 @@ $category_plain = array(
 5 => '|___Ancient World',
 4 => '|___Amateur Art',
 3 => '|___Textiles &amp; Linens');
-?>

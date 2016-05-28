@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 if (!isset($_SERVER['SCRIPT_NAME'])) $_SERVER['SCRIPT_NAME'] = 'cron.php';
 
-include $include_path . 'functions_cron.php';
+include INCLUDE_PATH . 'functions_cron.php';
 
 // initialize cron script
 printLog('=============== STARTING CRON SCRIPT: ' . date('F d, Y H:i:s'));
@@ -119,7 +119,7 @@ foreach ($auction_data as $Auction) // loop auctions
 			$winner_present = true;
 		}
 
-		if ($winner_present)
+		if ($winner_present && $Auction['bn_only'] == 0)
 		{
 			$report_text = $Winner['nick'] . "\n";
 			if ($system->SETTINGS['users_email'] == 'n')
@@ -140,8 +140,8 @@ foreach ($auction_data as $Auction) // loop auctions
 
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners
-				(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped) VALUES
-				(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, 1, 0, :bf_paid, :ff_paid, 0)";
+				(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+				(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, 1, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
 			$params = array();
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$params[] = array(':seller_id', $Seller['id'], 'int');
@@ -150,7 +150,50 @@ foreach ($auction_data as $Auction) // loop auctions
 			$params[] = array(':current_bid', $Auction['current_bid'], 'float');
 			$params[] = array(':bf_paid', $bf_paid, 'int');
 			$params[] = array(':ff_paid', $ff_paid, 'int');
+			$params[] = array(':auc_title', $Auction['title'], 'str');
+			$params[] = array(':auc_shipping_cost', calculate_shipping_data($Auction), 'float');
+			$params[] = array(':auc_payment', $Auction['payment'], 'str');
 			$db->query($query, $params);
+		}
+		else if ($winner_present && $Auction['bn_only'])
+		{
+			$query = "SELECT b.bidder, b.quantity, u.nick, u.email, u.name, u.address, u.city, u.zip, u.prov, u.country
+					FROM " . $DBPrefix . "bids b
+					LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
+					WHERE b.auction = :auc_id
+					ORDER BY b.bid DESC, b.bidwhen ASC, b.id DESC";
+			$params = array();
+			$params[] = array(':auc_id', $Auction['id'], 'int');
+			$db->query($query, $params);
+
+			$WINNERS_ID = array();
+			$winner_array = array();
+			$bid_data = $db->fetchall();
+			foreach ($bid_data as $row)
+			{
+				$Winner = array(
+					'id' => $row['bidder'],
+					'nick' => $row['nick'],
+					'email' => $row['email'],
+					'name' => $row['name'],
+					'address' => $row['address'],
+					'city' => $row['city'],
+					'zip' => $row['zip'],
+					'prov' => $row['prov'],
+					'country' => $row['country']);
+				// set arrays
+				$WINNERS_ID[] = $row['bidder'];
+				$Winner['maxbid'] = $Auction['buy_now'];
+				$items_got = $row['quantity'];
+				$winner_array[] = $Winner; // set array ready for emails
+				$report_text .= ' ' . $MSG['131'] . ' ' . $Winner['nick'];
+				if ($system->SETTINGS['users_email'] != 'n')
+				{
+					$report_text .= ' (' . $Winner['email'] . ')';
+				}
+				$report_text .= ' ' . $MSG['5492'] . ' ' . $items_got . "<br>\n";
+				$report_text .= ' ' . $MSG['30_0086'] . $Winner['address'] .' ' . $Winner['city'] . ' '.$Winner['country'] ."<br><br>\n\n";
+			}
 		}
 		else
 		{
@@ -178,6 +221,7 @@ foreach ($auction_data as $Auction) // loop auctions
 		{
 			if (!in_array($row['bidder'], $WINNERS_ID))
 			{
+				$winner_present = true;
 				$items_wanted = $row['quantity'];
 				$items_got = 0;
 				if ($items_wanted <= $items_count)
@@ -222,8 +266,8 @@ foreach ($auction_data as $Auction) // loop auctions
 
 				// Add winner's data to "winners" table
 				$query = "INSERT INTO " . $DBPrefix . "winners
-						(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped) VALUES
-						(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, :items_got, 0, :bf_paid, :ff_paid, 0)";
+						(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+						(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, :items_got, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
 				$params = array();
 				$params[] = array(':auc_id', $Auction['id'], 'int');
 				$params[] = array(':seller_id', $Seller['id'], 'int');
@@ -233,6 +277,9 @@ foreach ($auction_data as $Auction) // loop auctions
 				$params[] = array(':current_bid', $row['maxbid'], 'float');
 				$params[] = array(':bf_paid', $bf_paid, 'int');
 				$params[] = array(':ff_paid', $ff_paid, 'int');
+				$params[] = array(':auc_title', $Auction['title'], 'str');
+				$params[] = array(':auc_shipping_cost', calculate_shipping_data($Auction), 'float');
+				$params[] = array(':auc_payment', $Auction['payment'], 'str');
 				$db->query($query, $params);
 			}
 			if ($items_count == 0)
@@ -323,34 +370,91 @@ foreach ($auction_data as $Auction) // loop auctions
 		if ($Auction['sold'] != 's' AND $Auction['num_bids'] > 0 AND $Auction['reserve_price'] > 0 AND $Auction['current_bid'] < $Auction['reserve_price'])
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'n' WHERE id = :auc_id";
-        }
+		}
 		else
 		{
 			$query = "UPDATE " . $DBPrefix . "auctions SET closed = 1, sold = 'y' WHERE id = :auc_id";
-        }
+		}
 		$params = array();
 		$params[] = array(':auc_id', $Auction['id'], 'int');
 		$db->query($query, $params);
 	}
 
-	// WINNER PRESENT
 	if ($winner_present)
 	{
-		// Send mail to the seller
-		include $include_path . 'email_endauction_winner.php';
-		if (isset($winner_array) && is_array($winner_array) && count($winner_array) > 0)
+		if ($Auction['bn_only'] == 0 && $atype != 2)
 		{
-			for ($i = 0, $count = count($winner_array); $i < $count; $i++)
+			// Send mail to the seller
+			$added_winner_names = array();
+			if (is_array($Winner))
 			{
 				// Send mail to the buyer
-				$Winner = $winner_array[$i];
-				include $include_path . 'email_endauction_youwin.php';
+				$added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
+				include INCLUDE_PATH . 'email/endauction_youwin_nodutch.php';
+			}
+			if ($Seller['endemailmode'] !== 'cum')
+			{
+				include INCLUDE_PATH . 'email/endauction_winner.php';
+			}
+			else
+			{
+				// Add in the database to send later as cumulitave email to seller
+				$added_winner_names_cs = implode(",<br>", $added_winner_names);
+				$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
+						(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
+				$params = array();
+				$params[] = array(':auc_id', $Auction['id'], 'int');
+				$params[] = array(':seller_id', $Seller['id'], 'int');
+				$params[] = array(':winner_names', $added_winner_names_cs, 'str');
+				$params[] = array(':auc_data', serialize($Auction), 'str');
+				$params[] = array(':seller_data', serialize($Seller), 'str');
+				$params[] = array(':date', gmdate('Ymd'), 'str');
+				$db->query($query, $params);
 			}
 		}
-		elseif (is_array($Winner))
+		// elseif bn_only == y
+		else
 		{
-			// Send mail to the buyer
-			include $include_path . 'email_endauction_youwin_nodutch.php';
+			// emails for buyers already sent in buy_now.php
+			// email to seller for partial items already sent in buy_now.php
+			// prepare to send auction closed to seller
+			// retreive buyers
+			if (isset($winner_array) && is_array($winner_array) && count($winner_array) > 0)
+			{
+				$added_winner_names = array();
+				foreach ($winner_array as $key => $value)
+				{
+					if ($atype == 2)
+					{
+						// Send mail to the buyer
+						$Winner = $value;
+						include INCLUDE_PATH . 'email/endauction_youwin.php';
+					}
+					$added_winner_names[] = $value['nick'] . ' (<a href="mailto:' . $value['email'] . '">' . $value['email'] . '</a>)';
+				}
+				$added_winner_names_cs = implode(",<br>", $added_winner_names);
+
+				// Send mail to the seller
+				if ($Seller['endemailmode'] != 'cum')
+				{
+					$report_text = $added_winner_names_cs;
+					include INCLUDE_PATH . 'email/seller_end_buynowonly.php';
+				}
+				else
+				{
+					// Add in the database to send later as cumulitave email to seller
+					$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
+							(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
+					$params = array();
+					$params[] = array(':auc_id', $Auction['id'], 'int');
+					$params[] = array(':seller_id', $Seller['id'], 'int');
+					$params[] = array(':winner_names', $added_winner_names_cs, 'str');
+					$params[] = array(':auc_data', serialize($Auction), 'str');
+					$params[] = array(':seller_data', serialize($Seller), 'str');
+					$params[] = array(':date', gmdate('Ymd'), 'str');
+					$db->query($query, $params);
+				}
+			}
 		}
 	}
 	else
@@ -358,7 +462,7 @@ foreach ($auction_data as $Auction) // loop auctions
 		// Send mail to the seller if no winner
 		if ($Seller['endemailmode'] != 'cum')
 		{
-			include $include_path . 'email_endauction_nowinner.php';
+			include INCLUDE_PATH . 'email/endauction_nowinner.php';
 		}
 		else
 		{
@@ -387,6 +491,10 @@ $params[] = array(':num_aucsa', $count_auctions, 'int');
 $params[] = array(':num_aucsb', $count_auctions, 'int');
 $db->query($query, $params);
 
+// TODO needs rewriting
+/*
+
+*/
 if (count($categories) > 0)
 {
 	foreach ($categories as $cat_id => $category)
@@ -394,9 +502,9 @@ if (count($categories) > 0)
 		if ($category['updated'])
 		{
 			$query = "UPDATE " . $DBPrefix . "categories SET
-					 counter = :counter,
-					 sub_counter = :sub_counter
-					 WHERE cat_id = :cat_id";
+						counter = :counter,
+						sub_counter = :sub_counter
+						WHERE cat_id = :cat_id";
 			$params = array();
 			$params[] = array(':counter', $category['counter'], 'int');
 			$params[] = array(':sub_counter', $category['sub_counter'], 'int');
@@ -452,19 +560,19 @@ if ($num > 0)
 		$db->query($query, $params);
 
 		// Delete all images
-		if (file_exists($upload_path . $AuctionInfo['id']))
+		if (is_dir(UPLOAD_PATH . $AuctionInfo['id']))
 		{
-			if ($dir = @opendir($upload_path . $AuctionInfo['id']))
+			if ($dir = opendir(UPLOAD_PATH . $AuctionInfo['id']))
 			{
 				while ($file = readdir($dir))
 				{
 					if ($file != '.' && $file != '..')
 					{
-						@unlink($upload_path . $AuctionInfo['id'] . '/' . $file);
+						@unlink(UPLOAD_PATH . $AuctionInfo['id'] . '/' . $file);
 					}
 				}
 				closedir($dir);
-				@rmdir($upload_path . $AuctionInfo['id']);
+				rmdir(UPLOAD_PATH . $AuctionInfo['id']);
 			}
 		}
 	}
@@ -477,7 +585,7 @@ $db->direct_query($query);
 $user_data = $db->fetchall();
 foreach ($auction_data as $row)
 {
-	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < '" . date('Ymd') . "' AND seller_id = :seller_id";
+	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < :date AND seller_id = :seller_id";
 	$params = array();
 	$params[] = array(':seller_id', $row['id'], 'int');
 	$params[] = array(':date', date('Ymd'), 'int');
@@ -486,27 +594,31 @@ foreach ($auction_data as $row)
 	if ($db->numrows() > 0)
 	{
 		$pending_data = $db->fetchall();
+		$report_winner = 0;
+		$report = "<table cellspacing='0' cellpadding='10' border='1'>";
+		$report .= "<tr><th colspan='2'><h4><br>" . $MSG['BUY_NOW_ONLY_TPL_0100'] . "</h4></th></tr>";
+		$report .= "<tr><th>" . $MSG['168'] . "</th><th>" . $MSG['453'] . "</th></tr>";
 		foreach ($pending_data as $pending)
 		{
 			$Auction = unserialize($pending['auction']);
 			$Seller = unserialize($pending['seller']);
-			$report .= "-------------------------------------------------------------------------\n" . 
-						$Auction['title'] . "\n" . 
-						"-------------------------------------------------------------------------\n";
+			$report .= "<tr><td width='250'>" . $Auction['title'] . "<br>(ID: " . $Auction['id'] . ")</td>";
 			if(strlen($pending['winners']) > 0)
 			{
-				$report .= $MSG['453'] . ':' . "\n" . $pending['winners'] . "\n\n";
+				$report .= "<td width='250'>" . $pending['winners'] . "</td></tr>";
+				$report_winner = 1;
 			}
 			else
 			{
-				$report .= $MSG['1032']."\n\n";
+				$report .= "<td width='280'>" . $MSG['1032'] . "</td></tr>";
 			}
 			$query = "DELETE FROM " . $DBPrefix . "pendingnotif WHERE id = :pending_id";
 			$params = array();
 			$params[] = array(':pending_id', $pending['id'], 'int');
 			$db->query($query, $params);
 		}
-		include $include_path . 'email_endauction_cumulative.php';
+		$report .= "</table>";
+		include INCLUDE_PATH . 'email/endauction_cumulative.php';
 	}
 }
 
@@ -540,20 +652,20 @@ for ($i = 0; $i < count($seller_emails); $i++)
 }
 
 // Purging thumbnails cache
-if (!file_exists($upload_path . 'cache'))
+if (!file_exists(UPLOAD_PATH . 'cache'))
 {
-	mkdir($upload_path . 'cache', 0777);
+	mkdir(UPLOAD_PATH . 'cache', 0777);
 }
 
-if (!file_exists($upload_path . 'cache/purge'))
+if (!file_exists(UPLOAD_PATH . 'cache/purge'))
 {
-	touch($upload_path . 'cache/purge');
+	touch(UPLOAD_PATH . 'cache/purge');
 }
 
-$purgecachetime = filectime($upload_path . 'cache/purge');
+$purgecachetime = filectime(UPLOAD_PATH . 'cache/purge');
 if ((time() - $purgecachetime) > 86400)
 {
-	$dir = $upload_path . 'cache';
+	$dir = UPLOAD_PATH . 'cache';
 	if ($dh = opendir($dir))
 	{
 		while (($file = readdir($dh)) !== false)
@@ -563,10 +675,8 @@ if ((time() - $purgecachetime) > 86400)
 		}
 		closedir($dh);
 	}
-	touch($upload_path . 'cache/purge');
+	touch(UPLOAD_PATH . 'cache/purge');
 }
 
 // finish cron script
 printLog ("=========================== ENDING CRON: " . date('F d, Y H:i:s') . "\n");
-
-?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,74 +15,60 @@
 define('InAdmin', 1);
 $current_page = 'fees';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
+include INCLUDE_PATH . 'config/gateways.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
-$links = array(
-	'paypal' => 'http://paypal.com/',
-	'authnet' => 'http://authorize.net/',
-	'worldpay' => 'http://rbsworldpay.com/',
-	'moneybookers' => 'http://moneybookers.com/',
-	'toocheckout' => 'http://2checkout.com/'
-	);
-$varialbes = array(
-	'paypal_address' => $MSG['720'],
-	'authnet_address' => $MSG['773'],
-	'authnet_password' => $MSG['774'],
-	'worldpay_address' => $MSG['824'],
-	'moneybookers_address' => $MSG['825'],
-	'toocheckout_address' => $MSG['826']
-	);
-
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$gateway_data = mysql_fetch_assoc($res);
-
-$gateways = explode(',', $gateway_data['gateways']);
+$query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1";
+$db->direct_query($query);
+$gateway_data = $db->fetchAll();
 
 if (isset($_POST['action']))
 {
 	// build the sql
-	$query = 'UPDATE ' . $DBPrefix . 'gateways SET ';
-	for ($i = 0; $i < count($gateways); $i++)
+	foreach ($gateway_data as $k => $gateway)
 	{
-		if ($i != 0)
-			$query .= ', ';
-		$gateway = $gateways[$i];
-		$query .= $gateway . '_active = ' . (isset($_POST[$gateway . '_active']) ? 1 : 0) . ', ';
-		$query .= $gateway . '_required = ' . (isset($_POST[$gateway . '_required']) ? 1 : 0) . ', ';
-		$query .= $gateway . "_address = '" . $_POST[$gateway . '_address'] . "'";
-		if (isset($_POST[$gateway . '_password']))
+		if (isset($_POST[$gateway['name']]))
 		{
-			$query .= ', ' . $gateway . "_password = '" . $_POST[$gateway . '_password'] . "'";
-			$gateway_data[$gateway . '_password'] = $_POST[$gateway . '_password'];
+			$query = "UPDATE " . $DBPrefix . "payment_options SET
+						gateway_admin_address = :gateway_admin_address,
+						gateway_admin_password = :gateway_admin_password,
+						gateway_required = :gateway_required,
+						gateway_active = :gateway_active
+						WHERE id = :id";
+			$params = array();
+			$params[] = array(':gateway_admin_address', $_POST[$gateway['name']]['address'], 'str');
+			$params[] = array(':gateway_admin_password', $_POST[$gateway['name']]['password'], 'str');
+			$params[] = array(':gateway_required', (isset($_POST[$gateway['name']]['required']) ? 1 : 0), 'bool');
+			$params[] = array(':gateway_active', (isset($_POST[$gateway['name']]['active']) ? 1 : 0), 'bool');
+			$params[] = array(':id', $_POST[$gateway['name']]['id'], 'int');
+			$db->query($query, $params);
+			$gateway_data[$k]['gateway_admin_address'] = $_POST[$gateway['name']]['address'];
+			$gateway_data[$k]['gateway_admin_password'] = $_POST[$gateway['name']]['password'];
+			$gateway_data[$k]['gateway_required'] = (isset($_POST[$gateway['name']]['required']) ? 1 : 0);
+			$gateway_data[$k]['gateway_active'] = (isset($_POST[$gateway['name']]['active']) ? 1 : 0);
 		}
-		$gateway_data[$gateway . '_active'] = (isset($_POST[$gateway . '_active']) ? 1 : 0);
-		$gateway_data[$gateway . '_required'] = (isset($_POST[$gateway . '_required']) ? 1 : 0);
-		$gateway_data[$gateway . '_address'] = $_POST[$gateway . '_address'];
 	}
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 	$ERR = $MSG['762'];
 }
 
-for ($i = 0; $i < count($gateways); $i++)
+foreach ($gateway_data as $gateway)
 {
-	$gateway = $gateways[$i];
 	$template->assign_block_vars('gateways', array(
-			'NAME' => $system->SETTINGS['gatways'][$gateway],
-			'PLAIN_NAME' => $gateway,
-			'ENABLED' => ($gateway_data[$gateway . '_active'] == 1) ? 'checked' : '',
-			'REQUIRED' => ($gateway_data[$gateway . '_required'] == 1) ? 'checked' : '',
-			'ADDRESS' => $gateway_data[$gateway . '_address'],
-			'PASSWORD' => (isset($gateway_data[$gateway . '_password'])) ? $gateway_data[$gateway . '_password'] : '',
-			'WEBSITE' => $links[$gateway],
-			'ADDRESS_NAME' => $varialbes[$gateway . '_address'],
-			'ADDRESS_PASS' => (isset($varialbes[$gateway . '_password'])) ? $varialbes[$gateway . '_password'] : '',
+			'GATEWAY_ID' => $gateway['id'],
+			'NAME' => $gateway['displayname'],
+			'PLAIN_NAME' => $gateway['name'],
+			'ENABLED' => ($gateway['gateway_active'] == 1) ? 'checked' : '',
+			'REQUIRED' => ($gateway['gateway_required'] == 1) ? 'checked' : '',
+			'ADDRESS' => $gateway['gateway_admin_address'],
+			'PASSWORD' => $gateway['gateway_admin_password'],
+			'WEBSITE' => $gateway_links[$gateway['name']],
+			'ADDRESS_NAME' => isset($address_string[$gateway['name']]) ? $address_string[$gateway['name']] : $gateway['name'],
+			'PASSWORD_NAME' => isset($password_string[$gateway['name']]) ? $password_string[$gateway['name']] : '',
 
-			'B_PASSWORD' => (isset($gateway_data[$gateway . '_password']))
+			'B_PASSWORD' => isset($password_string[$gateway['name']])
 			));
 }
 
@@ -91,9 +77,11 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'fee_gateways.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,17 +15,19 @@
 define('InAdmin', 1);
 $current_page = 'stats';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Retrieve data
-$query = "SELECT * FROM " . $DBPrefix . "currentplatforms WHERE month = " . date('n') . " AND year = " . date('Y') . " ORDER BY counter DESC";
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
+$query = "SELECT * FROM " . $DBPrefix . "currentplatforms WHERE month = :month AND year = :year ORDER BY counter DESC";
+$params = array();
+$params[] = array(':month', date('m'), 'int');
+$params[] = array(':year', date('Y'), 'int');
+$db->query($query, $params);
 
 $MAX = 0;
 $TOTAL = 0;
-while ($row = mysql_fetch_assoc($res))
+while ($row = $db->fetch())
 {
 	$PLATFORMS[$row['platform']] = $row['counter'];
 	$TOTAL = $TOTAL + $row['counter'];
@@ -36,7 +38,7 @@ while ($row = mysql_fetch_assoc($res))
 	}
 }
 
-if (is_array($PLATFORMS))
+if (isset($PLATFORMS) && is_array($PLATFORMS))
 {
 	foreach ($PLATFORMS as $k => $v)
 	{
@@ -54,8 +56,10 @@ $template->assign_vars(array(
 		'STATSMONTH' => date('F Y', $system->ctime)
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'viewplatformstats.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

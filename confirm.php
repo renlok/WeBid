@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,17 +16,17 @@ include 'common.php';
 
 if (isset($_GET['id']) && isset($_GET['hash']) && !isset($_POST['action']))
 {
-    $query = "SELECT suspended, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
-    $params = array();
-    $params[] = array(':user_id', $_GET['id'], 'int');
-    $db->query($query, $params);
-    $user_data = $db->result();
+	$query = "SELECT suspended, hash FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_GET['id'], 'int');
+	$db->query($query, $params);
+	$user_data = $db->result();
 
 	if ($db->numrows() == 0)
 	{
 		$errmsg = $ERR_025;
 	}
-	elseif (!isset($_GET['hash']) || md5($MD5_PREFIX . $system->uncleanvars($user_data['nick'])) != $_GET['hash'])
+	elseif (!isset($_GET['hash']) || md5($MD5_PREFIX . $user_data['hash']) != $_GET['hash'])
 	{
 		$errmsg = $ERR_033;
 	}
@@ -55,15 +55,15 @@ if (!isset($_GET['id']) && !isset($_POST['action']))
 	$page = 'error';
 }
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
+if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 {
-    $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
-    $params = array();
-    $params[] = array(':user_id', $_POST['id'], 'int');
-    $db->query($query, $params);
-    $user_data = $db->result();
+	$query = "SELECT hash FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_POST['id'], 'int');
+	$db->query($query, $params);
+	$user_data = $db->result();
 
-	if (md5($MD5_PREFIX . $user_data['nick']) == $_POST['hash'])
+	if (md5($MD5_PREFIX . $user_data['hash']) == $_POST['hash'])
 	{
 		// User wants to confirm his/her registration
 		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = :user_id AND suspended = 8";
@@ -81,7 +81,7 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
-		    $login_data = $db->result();
+			$login_data = $db->result();
 			$password = $login_data['password'];
 			$_SESSION['WEBID_LOGGED_IN'] 		= $login_data['id'];
 			$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $login_data['hash']);
@@ -119,12 +119,13 @@ if (isset($_POST['action']) && $_POST['action'] == $MSG['249'])
 	}
 }
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['250'])
+if (isset($_POST['action']) && $_POST['action'] == "Refuse")
 {
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = " . intval($_POST['id']);
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	if (md5($MD5_PREFIX . mysql_result($res, 0, 'nick')) == $_POST['hash'])
+	$query = "SELECT hash FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $_POST['id'], 'int');
+	$db->query($query, $params);
+	if (md5($MD5_PREFIX . $db->result('hash')) == $_POST['hash'])
 	{
 		// User doesn't want to confirm the registration
 		$query = "DELETE FROM " . $DBPrefix . "users WHERE id = :user_id AND suspended = 8";
@@ -156,4 +157,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

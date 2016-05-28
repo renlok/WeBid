@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,9 +13,8 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'dates.inc.php';
-include $main_path . 'language/' . $language . '/countries.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 unset($ERR);
 
@@ -70,7 +69,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$params = array();
 		$params[] = array(':seller_nick', $system->cleanvars($_SESSION['advs']['seller']), 'str');
 		$db->query($query, $params);
-	
+
 		if ($db->numrows() > 0)
 		{
 			$SELLER_ID = $db->result('id');
@@ -83,14 +82,21 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		}
 	}
 
+	if (!empty($_SESSION['advs']['groups']))
+	{
+		$userjoin = "LEFT JOIN " . $DBPrefix . "users u ON (u.id = au.user)";
+		$wher .= "(u.groups RLIKE :user_group) AND ";
+			$asparams[] = array(':user_group', '[[:<:]]' . $system->cleanvars($_SESSION['advs']['groups']) . '[[:>:]]', 'str');
+	}
+
 	if (isset($_SESSION['advs']['buyitnow']))
 	{
-		$wher .= "(au.buy_now > 0 AND (au.bn_only = 'y' OR au.bn_only = 'n' && (au.num_bids = 0 OR (au.reserve_price > 0 AND au.current_bid < au.reserve_price)))) AND ";
+		$wher .= "(au.buy_now > 0 AND (au.bn_only = 1 OR au.bn_only = 0 && (au.num_bids = 0 OR (au.reserve_price > 0 AND au.current_bid < au.reserve_price)))) AND ";
 	}
 
 	if (isset($_SESSION['advs']['buyitnowonly']))
 	{
-		$wher .= "(au.bn_only = 'y') AND ";
+		$wher .= "(au.bn_only = 1) AND ";
 	}
 
 	if (!empty($_SESSION['advs']['zipcode']))
@@ -102,7 +108,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 
 	if (!isset($_SESSION['advs']['closed']))
 	{
-		$wher .= "(au.closed = '0') AND ";
+		$wher .= "(au.closed = 0) AND ";
 	}
 
 	if (!empty($_SESSION['advs']['type']))
@@ -149,7 +155,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 	if (!empty($_SESSION['advs']['ending']) && ($_SESSION['advs']['ending'] == '1' || $_SESSION['advs']['ending'] == '2' || $_SESSION['advs']['ending'] == '4' || $_SESSION['advs']['ending'] == '6'))
 	{
 		$wher .= "(au.ends <= :auc_ending) AND ";
-		$asparams[] = array(':auc_ending', time() + ($ending * 86400), 'int');
+		$asparams[] = array(':auc_ending', time() + ($_SESSION['advs']['ending'] * 86400), 'int');
 	}
 
 	if (!empty($_SESSION['advs']['country']))
@@ -169,13 +175,13 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 			{
 				if (!$pri)
 				{
-					$ora = "((au.payment LIKE :payment" . get_param_number($i) . ")";
-					$asparams[] = array(":payment" . get_param_number($i), '%' . $system->cleanvars($val) . '%', 'str');
+					$ora = "((au.payment LIKE :payment" . ($i) . ")";
+					$asparams[] = array(":payment" . ($i), '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				else
 				{
-					$ora .= " OR (au.payment LIKE :payment" . get_param_number($i) . ") AND ";
-					$asparams[] = array(":payment" . get_param_number($i), '%' . $system->cleanvars($val) . '%', 'str');
+					$ora .= " OR (au.payment LIKE :payment" . ($i) . ") AND ";
+					$asparams[] = array(":payment" . ($i), '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				$pri = true;
 				$i++;
@@ -241,13 +247,13 @@ if ($searching && !isset($ERR))
 	$params = $asparams;
 	$params[] = array(':offset', $left_limit, 'int');
 	$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
-	
+
 	// get featured items
 	$query_feat = "SELECT au.* FROM " . $DBPrefix . "auctions au
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			featured = 'y'
+			featured = 1
 			AND	au.starts <= :time
 			ORDER BY " . $by . " LIMIT :offset, 5";
 	$params_feat = $asparams;
@@ -255,7 +261,7 @@ if ($searching && !isset($ERR))
 
 	if ($total > 0)
 	{
-		include $include_path . 'browseitems.inc.php';
+		include INCLUDE_PATH . 'browseitems.inc.php';
 		browseItems($query, $params, $query_feat, $params_feat, $total, 'adsearch.php');
 
 		include 'header.php';
@@ -274,30 +280,15 @@ if ($searching && !isset($ERR))
 
 // payments
 $payment_methods = '';
-$query = "SELECT * FROM " . $DBPrefix . "gateways LIMIT 1";
+$query = "SELECT * FROM " . $DBPrefix . "payment_options";
 $db->direct_query($query);
-$gateways_data = $db->result();
-$gateway_list = explode(',', $gateways_data['gateways']);
-foreach ($gateway_list as $v)
+while ($payment_method = $db->fetch())
 {
-	if ($gateways_data[$v . '_active'] == 1)
+	if ($payment_method['gateway_active'] == 1 || $payment_method['is_gateway'] == 0)
 	{
-		$checked = (in_array($v, $payment)) ? 'checked' : '';
-		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '>' . $system->SETTINGS['gatways'][$v] . '</p>';
+		$checked = (in_array($payment_method['name'], $payment)) ? 'checked' : '';
+		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $payment_method['name'] . '" ' . $checked . '> ' . $payment_method['displayname'] . '</p>';
 	}
-}
-
-$payment_options = unserialize($system->SETTINGS['payment_options']);
-foreach ($payment_options as $k => $v)
-{
-	$checked = (in_array($k, $payment)) ? 'checked' : '';
-	$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
-}
-$payment_options = unserialize($system->SETTINGS['payment_options']);
-foreach ($payment_options as $k => $v)
-{
-    $checked = (array_key_exists($k, array_flip($payment))) ? 'checked' : '';
-    $payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $k . '" ' . $checked . '>' . $v . '</p>';
 }
 
 // category
@@ -323,12 +314,23 @@ foreach ($countries as $key => $val)
 }
 $TPL_countries_list .= '</select>' . "\n";
 
+// user groups
+$TPL_user_group_list = '';
+$user_group = (isset($_SESSION['advs']['groups'])) ? $_SESSION['advs']['groups'] : '';
+$query = "SELECT id, group_name  FROM ". $DBPrefix . "groups";
+$db->direct_query($query);
+while ($row = $db->fetch())
+{
+	$TPL_user_group_list .= "\t" . '<option value="' . $row['id'] . '"' . (($row['id'] == $user_group) ? ' selected' : '') . '>' . $row['group_name'] . '</option>' . "\n";
+}
+
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'CATEGORY_LIST' => $TPL_categories_list,
 		'CURRENCY' => $system->SETTINGS['currency'],
 		'PAYMENTS_LIST' => $payment_methods,
-		'COUNTRY_LIST' => $TPL_countries_list
+		'COUNTRY_LIST' => $TPL_countries_list,
+		'USER_GROUP_LIST' => $TPL_user_group_list,
 		));
 
 include 'header.php';
@@ -337,4 +339,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

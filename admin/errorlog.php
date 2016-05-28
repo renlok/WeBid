@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,10 +15,12 @@
 define('InAdmin', 1);
 $current_page = 'tools';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+
+$type = (isset($_GET['type'])) ? $_GET['type'] : 'distinct';
 
 if (isset($_POST['action']) && $_POST['action'] == 'clearlog')
 {
@@ -28,11 +30,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'clearlog')
 }
 
 $data = '';
-$query = "SELECT * FROM " . $DBPrefix . "logs WHERE type = 'error'";
-$db->direct_query($query);
-while ($row = $db->fetch())
+if ($type == 'distinct')
 {
-	$data .= '<strong>' . date('d-m-Y, H:i:s', $row['timestamp'] + $system->tdiff) . '</strong>: ' . $row['message'] . '<br>';
+	$query = "SELECT DISTINCT(message) FROM " . $DBPrefix . "logs WHERE type = 'error'";
+	$db->direct_query($query);
+	while ($row = $db->fetch())
+	{
+		$data .= $row['message'] . '<br>';
+	}
+}
+else
+{
+	$query = "SELECT * FROM " . $DBPrefix . "logs WHERE type = 'error'";
+	$db->direct_query($query);
+	while ($row = $db->fetch())
+	{
+		$data .= '<strong>' . date('d-m-Y, H:i:s', $row['timestamp'] + $system->tdiff) . '</strong>: ' . $row['message'] . '<br>';
+	}
 }
 
 if ($data == '')
@@ -43,11 +57,14 @@ if ($data == '')
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
+		'TYPE' => $type,
 		'ERRORLOG' => $data
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'errorlog.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -47,26 +47,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// Update database
-		$query = "UPDATE " . $DBPrefix . "settings SET
-				currency = :currency,
-				moneyformat = :moneyformat,
-				moneydecimals = :moneydecimals,
-				moneysymbol = :moneysymbol";
-		$params = array();
-		$params[] = array(':currency', $system->cleanvars($CURRENCIES_SYMBOLS[$_POST['currency']]), 'str');
-		$params[] = array(':moneyformat', $_POST['moneyformat'], 'int');
-		$params[] = array(':moneydecimals', $_POST['moneydecimals'], 'int');
-		$params[] = array(':moneysymbol', $_POST['moneysymbol'], 'int');
-
-		$system->SETTINGS['currency'] = $CURRENCIES_SYMBOLS[$_POST['currency']];
-		$system->SETTINGS['moneyformat'] = $_POST['moneyformat'];
-		$system->SETTINGS['moneydecimals'] = $_POST['moneydecimals'];
-		$system->SETTINGS['moneysymbol'] = $_POST['moneysymbol'];
+		$system->writesetting("currency", $system->cleanvars($CURRENCIES_SYMBOLS[$_POST['currency']]), 'str');
+		$system->writesetting("moneyformat", $_POST['moneyformat'], 'int');
+		$system->writesetting("moneydecimals", $_POST['moneydecimals'], 'int');
+		$system->writesetting("moneysymbol", $_POST['moneysymbol'], 'int');
+		
 		$ERR = $MSG['553'];
-	}
-}
 
-$link = "javascript:window_open('" . $system->SETTINGS['siteurl'] . "converter.php','incre',650,250,30,30)";
+	}
+
+}
 
 foreach ($CURRENCIES_SYMBOLS as $k => $v)
 {
@@ -75,7 +65,7 @@ foreach ($CURRENCIES_SYMBOLS as $k => $v)
 }
 
 loadblock($MSG['5008'], '', generateSelect('currency', $CURRENCIES));
-loadblock('', $MSG['5138'], 'link', 'currenciesconverter', '', array($MSG['5010']));
+loadblock('', $MSG['5138']);
 loadblock($MSG['544'], '', 'batchstacked', 'moneyformat', $system->SETTINGS['moneyformat'], array($MSG['545'], $MSG['546']));
 loadblock($MSG['548'], $MSG['547'], 'decimals', 'moneydecimals', $system->SETTINGS['moneydecimals']);
 loadblock($MSG['549'], '', 'batchstacked', 'moneysymbol', $system->SETTINGS['moneysymbol'], array($MSG['550'], $MSG['551']));
@@ -83,14 +73,15 @@ loadblock($MSG['549'], '', 'batchstacked', 'moneysymbol', $system->SETTINGS['mon
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'LINKURL' => $link,
 		'OPTIONHTML' => $html,
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['5004']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,7 +14,7 @@
 
 ob_start('ob_gzhandler');
 header("Content-type: text/javascript");
-include 'inc/checks/files.php';
+include 'includes/checks/files.php';
 if (isset($_GET['js']))
 {
 	$js = explode(';', $_GET['js']);
@@ -58,4 +58,3 @@ function check_file($file)
 	}
 	return true;
 }
-?>

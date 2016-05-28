@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,14 +15,14 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'ckeditor/ckeditor.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 
-$subject = (isset($_POST['subject'])) ? stripslashes($_POST['subject']) : '';
-$content = (isset($_POST['content'])) ? stripslashes($_POST['content']) : '';
+$subject = (isset($_POST['subject'])) ? $_POST['subject'] : '';
+$content = (isset($_POST['content'])) ? $_POST['content'] : '';
 $is_preview = false;
 
 if (isset($_POST['action']) && $_POST['action'] == 'submit')
@@ -51,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'submit')
 				break;
 		}
 		$headers = 'From:' . $system->SETTINGS['sitename'] . ' <' . $system->SETTINGS['adminmail'] . '>' . "\n" . 'Content-Type: text/html; charset=' . $CHARSET;
-		$res = $db->direct_query($query);
+		$db->direct_query($query);
 		while ($row = $db->fetch())
 		{
 			if (mail($row['email'], $subject, $content, $headers))
@@ -76,7 +76,7 @@ $USERSFILTER = array('all' => $MSG['5296'],
 $selectsetting = (isset($_POST['usersfilter'])) ? $_POST['usersfilter'] : '';
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
@@ -86,14 +86,16 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'SELECTBOX' => generateSelect('usersfilter', $USERSFILTER),
 		'SUBJECT' => $subject,
-		'EDITOR' => $CKEditor->editor('content', stripslashes($content)),
+		'EDITOR' => $CKEditor->editor('content', $content),
 		'PREVIEW' => $content,
 
 		'B_PREVIEW' => $is_preview
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'newsletter.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

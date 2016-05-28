@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -34,17 +34,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// Update data
-		$query = "UPDATE " . $DBPrefix . "settings SET
-				sitename = '" . $system->cleanvars($_POST['sitename']) . "',
-				adminmail = '" . mysql_real_escape_string($_POST['adminmail']) . "',
-				siteurl = '" . mysql_real_escape_string($_POST['siteurl']) . "',
-				copyright = '" . $system->cleanvars($_POST['copyright']) . "',
-				cron = " . intval($_POST['cron']) . ",
-				archiveafter = " . intval($_POST['archiveafter']) . ",
-				cache_theme = '" . $_POST['cache_theme'] . "',
-				https = '" . $_POST['https'] . "',
-				https_url = '" . $_POST['https_url'] . "'";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$system->writesetting(array(
+			array("sitename", $_POST['sitename'], 'str'),
+			array("adminmail", $_POST['adminmail'], 'str'),
+			array("siteurl", $_POST['siteurl'], 'str'),
+			array("copyright", $_POST['copyright'], 'str'),
+			array("cron", $_POST['cron'], 'int'),
+			array("archiveafter", $_POST['archiveafter'], 'int'),
+			array("cache_theme", $_POST['cache_theme'], 'str'),
+			array("https", $_POST['https'], 'str'),
+			array("https_url", $_POST['https_url'], 'str'),
+		));
 		$ERR = $MSG['542'];
 	}
 
@@ -86,11 +86,13 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
-		'PAGENAME' => $MSG['526']
+		'PAGENAME' => $MSG['526'],
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

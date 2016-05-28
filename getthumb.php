@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright              : (C) 2008 - 2014 WeBid
+ *   copyright              : (C) 2008 - 2016 WeBid
  *   site                   : http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,6 +18,12 @@ $w = (isset($_GET['w'])) ? intval($_GET['w']) : '';
 $_w = $w;
 $fromfile = (isset($_GET['fromfile'])) ? $_GET['fromfile'] : '';
 $nomanage = false;
+$accepted_widths = array(
+	$system->SETTINGS['thumb_show'],
+	$system->SETTINGS['thumb_list'],
+	'' // load default image
+);
+$w = (in_array($w, $accepted_widths)) ? $w : '';
 
 function ErrorPNG($err)
 {
@@ -28,6 +34,16 @@ function ErrorPNG($err)
 	imagefilledrectangle($im, 0, 0, 100, 30, $bgc);
 	imagestring($im, 1, 5, 5, $err, $tc);
 	imagepng($im);
+}
+
+function load_image($file, $mime, $image_type, $output_type)
+{
+	header('Content-Type: ' . $mime);
+	$funcall = "imagecreatefrom$image_type";
+	$image = $funcall($file);
+	$funcall = "image$output_type";
+	$funcall($image);
+	exit;
 }
 
 // control parameters and file existence
@@ -42,7 +58,7 @@ elseif (!file_exists($_GET['fromfile']) && !fopen($_GET['fromfile'], 'r'))
 	exit;
 }
 
-if (file_exists($upload_path . 'cache/' . $w . '-' . md5($fromfile)))
+if (file_exists(UPLOAD_PATH . 'cache/' . $w . '-' . md5($fromfile)))
 {
 	$img = getimagesize($fromfile);
 	switch ($img[2])
@@ -72,7 +88,7 @@ if (file_exists($upload_path . 'cache/' . $w . '-' . md5($fromfile)))
 			if (!(imagetypes() &IMG_PNG)) $nomanage = true;
 			$img['mime'] = 'image/png';
 			break;
-		default :
+		default:
 			$nomanage = true;
 			break;
 	}
@@ -82,15 +98,14 @@ if (file_exists($upload_path . 'cache/' . $w . '-' . md5($fromfile)))
 		exit;
 	}
 	header('Content-type: ' . $img['mime']);
-	echo file_get_contents($upload_path . 'cache/' . $w . '-' . md5($fromfile));
+	echo file_get_contents(UPLOAD_PATH . 'cache/' . $w . '-' . md5($fromfile));
 }
 else
 {
 	if (function_exists('imagetypes'))
 	{
-		if (!is_dir($upload_path . 'cache')) mkdir($upload_path . 'cache', 0777);
+		if (!is_dir(UPLOAD_PATH . 'cache')) mkdir(UPLOAD_PATH . 'cache', 0777);
 
-		if (!isset($_GET['w'])) $w = 100;
 		$img = @getimagesize($fromfile);
 		if (is_array($img))
 		{
@@ -105,33 +120,46 @@ else
 						}
 						else
 						{
-							$outype = 'png';
+							$output_type = 'png';
 							$img['mime'] = 'image/png';
 						}
 					}
 					else
 					{
-						$outype = 'gif';
+						$output_type = 'gif';
 						$img['mime'] = 'image/gif';
 					}
-					$imtype = 'gif';
+					$image_type = 'gif';
 					break;
 				case IMAGETYPE_JPEG:
 					if (!(imagetypes() &IMG_JPG)) $nomanage = true;
-					$outype = 'jpeg';
+					$output_type = 'jpeg';
 					$img['mime'] = 'image/jpeg';
-					$imtype = 'jpeg';
+					$image_type = 'jpeg';
 					break;
 				case IMAGETYPE_PNG:
 					if (!(imagetypes() &IMG_PNG)) $nomanage = true;
-					$imtype = 'png';
+					$image_type = 'png';
 					$img['mime'] = 'image/png';
-					$outype = 'png';
+					$output_type = 'png';
 					break;
 				default :
 					ErrorPNG($ERR_710);
 					exit;
 			}
+		}
+		else
+		{
+			ErrorPNG($ERR_710);
+			exit;
+		}
+		if ($w == '')
+		{
+			// just load the image
+			load_image($fromfile, $img['mime'], $image_type, $output_type);
+		}
+		else
+		{
 			// check image orientation
 			if ($img[0] < $img[1])
 			{
@@ -144,30 +172,21 @@ else
 				$ratio = floatval($img[0] / $w);
 				$h = ceil($img[1] / $ratio);
 			}
-		}
-		else
-		{
-			ErrorPNG($ERR_710);
+		
+			$ou = imagecreatetruecolor($w, $h);
+			imagealphablending($ou, false);
+			$funcall = "imagecreatefrom$image_type";
+			imagecopyresampled($ou, $funcall($fromfile), 0, 0, 0, 0, $w, $h, $img[0], $img[1]);
+			$funcall = "image$output_type";
+			$funcall($ou, UPLOAD_PATH . 'cache/' . $_w . '-' . md5($fromfile));
+			header('Content-type: ' . $img['mime']);
+			$funcall($ou);
 			exit;
 		}
 	}
 	else
 	{
-		$nomanage = true;
-	}
-	if ($nomanage)
-	{
 		ErrorPNG($ERR_710);
 		exit;
 	}
-
-	$ou = imagecreatetruecolor($w, $h);
-	imagealphablending($ou, false);
-	$funcall = "imagecreatefrom$imtype";
-	imagecopyresampled($ou, $funcall($fromfile), 0, 0, 0, 0, $w, $h, $img[0], $img[1]);
-	$funcall = "image$outype";
-	$funcall($ou, $upload_path . 'cache/' . $_w . '-' . md5($fromfile));
-	header('Content-type: ' . $img['mime']);
-	$funcall($ou);
 }
-?>

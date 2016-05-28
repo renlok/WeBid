@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,22 +15,16 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['contactseller'] = $system->cleanvars($_POST['contactseller']);
-	$system->SETTINGS['users_email'] = ynbool($_POST['users_email']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET contactseller = :contactseller, users_email = :users_email";
-	$params = array();
-	$params[] = array(':contactseller', $system->SETTINGS['contactseller'], 'str');
-	$params[] = array(':users_email', $system->SETTINGS['users_email'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("contactseller", $system->cleanvars($_POST['contactseller']), "str");
+	$system->writesetting("users_email", ynbool($_POST['users_email']), 'str');
 	$ERR = $MSG['25_0155'];
 }
 
@@ -44,8 +38,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['25_0216']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

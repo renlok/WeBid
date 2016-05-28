@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,15 +16,16 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	header('location: user_login.php');
 	exit;
 }
 
 function get_reminders($secid)
 {
-	global $DBPrefix, $system, $db;
+	global $DBPrefix, $db;
 	$data = array();
 
 	// get number of new messages
@@ -38,7 +39,7 @@ function get_reminders($secid)
 	// get number of pending feedback
 	$query = "SELECT COUNT(DISTINCT a.auction) AS total FROM " . $DBPrefix . "winners a
 			LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
-			WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
+			WHERE (b.closed = 1 OR b.bn_only = 1) AND b.suspended = 0
 			AND ((a.seller = :seller AND a.feedback_sel = 0)
 			OR (a.winner = :winner AND a.feedback_win = 0))";
 	$params = array();
@@ -59,7 +60,7 @@ function get_reminders($secid)
 	$query = "SELECT COUNT(DISTINCT b.auction) AS total FROM " . $DBPrefix . "bids b
 			LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
 			WHERE b.bidder = :bidder AND a.ends <= :timer
-			AND a.closed = 0 GROUP BY b.auction";
+			AND a.closed = 0 AND a.bn_only = 0 GROUP BY b.auction";
 	$params = array();
 	$params[] = array(':bidder', $secid, 'int');
 	$params[] = array(':timer', (time() + (3600 * 24)), 'int');
@@ -100,7 +101,7 @@ function get_reminders($secid)
 }
 
 // Send buyer's request to the administrator
-if (isset($_POST['requesttoadmin']))
+if (isset($_POST['requesttoadmin']) && $system->SETTINGS['user_request_seller_permission'])
 {
 	$emailer = new email_handler();
 	$emailer->assign_vars(array(
@@ -145,7 +146,7 @@ switch ($_SESSION['cptab'])
 				'BOUTBID' => ($reminders[4] > 0) ? sprintf($MSG['794'], $reminders[4]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourbids.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'SOLD_ITEMS' => ($reminders[5] > 0) ? sprintf($MSG['870'], $reminders[5]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourauctions_sold.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'NO_REMINDERS' => (($reminders[0] + $reminders[1] + $reminders[2] + $reminders[3] + $reminders[4] + $reminders[5]) == 0) ? $MSG['510'] : '',
-				
+
 				));
 		break;
 	case 'account':
@@ -163,17 +164,17 @@ switch ($_SESSION['cptab'])
 
 $template->assign_vars(array(
 		'B_CANSELL' => ($user->can_sell),
+		'B_CANREQUESTSELL' => ($system->SETTINGS['user_request_seller_permission']),
 
 		'TMPMSG' => (isset($_SESSION['TMP_MSG'])) ? $_SESSION['TMP_MSG'] : '',
 		'THISPAGE' => $_SESSION['cptab']
 		));
 
 include 'header.php';
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'user_menu.tpl'
 		));
 $template->display('body');
 include 'footer.php';
 unset($_SESSION['TMP_MSG']);
-?>

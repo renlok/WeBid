@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 function ToBeDeleted($index)
@@ -70,6 +70,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 						$params[] = array(':low', $system->input_money($lows[$i]), 'float');
 						$params[] = array(':high', $system->input_money($highs[$i]), 'float');
 						$params[] = array(':inc', $system->input_money($increments[$i]), 'float');
+						$db->query($query, $params);
 					}
 					else
 					{
@@ -83,6 +84,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 						$params[] = array(':high', $system->input_money($highs[$i]), 'float');
 						$params[] = array(':inc', $system->input_money($increments[$i]), 'float');
 						$params[] = array(':inc_id', $ids[$i], 'int');
+						$db->query($query, $params);
 					}
 				}
 			}
@@ -91,8 +93,9 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 				$query = "DELETE FROM " . $DBPrefix . "increments WHERE id = :inc_id";
 				$params = array();
 				$params[] = array(':inc_id', $ids[$i], 'int');
+				$db->query($query, $params);
 			}
-			$db->query($query, $params);
+
 		}
 		$ERR = $MSG['160'];
 	}
@@ -116,8 +119,10 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'increments.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

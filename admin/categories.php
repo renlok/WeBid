@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -11,19 +11,19 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 $catscontrol = new MPTTcategories();
 
 function search_cats($parent_id, $level)
 {
-	global $DBPrefix, $catscontrol;
-	$catstr = '';
+	global $catscontrol;
+	
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
 	return $tree;
@@ -31,7 +31,7 @@ function search_cats($parent_id, $level)
 
 function rebuild_cat_file()
 {
-	global $system, $main_path, $DBPrefix, $db;
+	global $system, $DBPrefix, $db;
 	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
 	$db->direct_query($query);
 	$cats = array();
@@ -46,13 +46,13 @@ function rebuild_cat_file()
 	$output .= "$" . "category_plain = " . var_export(search_cats(0, 0), true) . ";\n";
 	$output .= "?>";
 
-	$handle = fopen ($main_path . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
+	$handle = fopen (MAIN_PATH . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 }
 
 if (isset($_POST['action']))
 {
-	if ($_POST['action'] == $MSG['089'])
+	if ($_POST['action'] == "Process")
 	{
 		//update all categories that arnt being deleted
 		if (isset($_POST['categories']) && is_array($_POST['categories']))
@@ -143,13 +143,14 @@ if (isset($_POST['action']))
 					'body' => 'confirm.tpl'
 					));
 			$template->display('body');
+			include 'footer.php';
 			exit;
 		}
 		rebuild_cat_file();
 		include 'util_cc1.php';
 	}
 
-	if ($_POST['action'] == $MSG['030'])
+	if ($_POST['action'] == "Yes")
 	{
 		//delete categories that are selected
 		if (isset($_POST['delete']) && is_array($_POST['delete']))
@@ -185,11 +186,16 @@ if (isset($_POST['action']))
 			}
 		}
 		rebuild_cat_file();
+		resync_category_counters();
 		include 'util_cc1.php';
+	}
+	if (!isset($ERR))
+	{
+		$ERR = $MSG['086'];
 	}
 }
 
-//show the page... 
+//show the page...
 if (!isset($_GET['parent']))
 {
 	$query = "SELECT left_id, right_id, level, cat_id FROM " . $DBPrefix . "categories WHERE parent_id = -1";
@@ -246,8 +252,10 @@ $template->assign_vars(array(
 		'PARENT' => $parent
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'categories.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

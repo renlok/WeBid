@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 function getmainpath()
 {
 	$path = getcwd();
@@ -30,10 +30,10 @@ function getdomainpath()
 	return $path;
 }
 
-function makeconfigfile($contents, $main_path)
+function makeconfigfile($contents, $path)
 {
-	$filename = $main_path . 'includes/config.inc.php';
-	$altfilename = $main_path . 'includes/config.inc.php.new';
+	$filename = $path . 'includes/config.inc.php';
+	$altfilename = $path . 'includes/config.inc.php.new';
 
 	if (!file_exists($filename))
 	{
@@ -51,7 +51,7 @@ function makeconfigfile($contents, $main_path)
 
 	if (is_writable($filename))
 	{
-		if (!$handle = fopen($filename, 'w')) 
+		if (!$handle = fopen($filename, 'w'))
 		{
 			$return = false;
 		}
@@ -78,34 +78,38 @@ function makeconfigfile($contents, $main_path)
 
 function print_header($update)
 {
-	global $thisversion;
+	global $package_version;
 	if ($update)
 	{
-		global $_SESSION, $myversion;
+		global $_SESSION, $installed_version;
 		if (!isset($_SESSION['oldversion']))
 		{
-			$_SESSION['oldversion'] = $myversion;
+			$_SESSION['oldversion'] = $installed_version;
 		}
 
-		return '<h1>WeBid Updater, v' . $_SESSION['oldversion'] . ' to v' . $thisversion . '</h1>';
+		return '<h1>WeBid Updater, v' . $_SESSION['oldversion'] . ' to v' . $package_version . '</h1>';
 	}
 	else
 	{
-		return '<h1>WeBid Installer v' . $thisversion . '</h1>';
+		return '<h1>WeBid Installer v' . $package_version . '</h1>';
 	}
 }
 
 function check_version()
 {
-	global $DBPrefix, $settings_version;
+	global $DBPrefix, $settings_version, $db;
 
 	// check if using an old version
 	if (!isset($settings_version) || empty($settings_version))
 	{
-		$version = file_get_contents('../includes/version.txt') or die('error');
-		$query = "ALTER TABLE `" . $DBPrefix . "settings` ADD `version` varchar(10) NOT NULL default '" . $version . "'";
-		$res = @mysql_query($query);
-		return $version;
+		if (is_file('../includes/version.txt'))
+		{
+			// using a very, very old version
+			$version = file_get_contents('../includes/version.txt') or die('error');
+			$query = "ALTER TABLE `" . $DBPrefix . "settings` ADD `version` varchar(10) NOT NULL default '" . $version . "'";
+			@$db->direct_query($query);
+			return $version;
+		}
 	}
 
 	return $settings_version;
@@ -113,36 +117,48 @@ function check_version()
 
 function check_installation()
 {
-	global $DBPrefix, $settings_version, $main_path;
+	global $DBPrefix, $settings_version, $db;
 
-	@include '../includes/config.inc.php';
-	@mysql_connect($DbHost, $DbUser, $DbPassword);
-	@mysql_select_db($DbDatabase);
-	$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
-	// check webid install...
-	$query = "SELECT * FROM `" . $DBPrefix . "settings`";
-	$res = @mysql_query($query);
-	if ($res != false)
+	if (is_file ('../includes/config.inc.php'))
 	{
-		$settings_version = @mysql_result($res, 0, 'version');
-		return true;
+		include '../includes/config.inc.php';
+		$DBPrefix = (isset($DBPrefix)) ? $DBPrefix : '';
+		$db->error_supress(true); // we dont want errors returned for now
+		if($db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix))
+		{
+			// old method
+			$query = "SHOW COLUMNS FROM `" . $DBPrefix . "settings` WHERE `Field` = 'fieldname' OR `Field` = 'version'";
+			$db->query($query);
+			$settingkeys = $db->fetchall();
+			if(count($settingkeys) > 0)
+			{
+				if ($settingkeys[0]['Field'] == 'fieldname')
+				{
+					$query = "SELECT value FROM `" . $DBPrefix . "settings` WHERE fieldname = 'version'";
+					$db->direct_query($query);
+					$settings_version = $db->result('value');
+				}
+				else
+				{
+					$query = "SELECT version FROM `" . $DBPrefix . "settings` LIMIT 1";
+					$db->direct_query($query);
+					$settings_version = $db->result('version');
+				}
+				return true;
+			}
+		}
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
-function this_version()
+function package_version()
 {
 	$string = file_get_contents('thisversion.txt') or die('error');
-	return $string;
+	return trim($string);
 }
 
 function show_config_table($fresh = true)
 {
-	$main_path = getmainpath();
-
 	$data = '<form name="form1" method="post" action="?step=1">';
 	$data .= '<table cellspacing="1" border="1" style="border-collapse:collapse;" cellpadding="6">';
 	$data .= '<tr>';
@@ -158,7 +174,7 @@ function show_config_table($fresh = true)
 	$data .= '  <tr>';
 	$data .= '	<td>Doument Root</td>';
 	$data .= '	<td>';
-	$data .= '	  <input type="text" name="mainpath" id="textfield" value="' . $main_path . '">';
+	$data .= '	  <input type="text" name="mainpath" id="textfield" value="' . MAIN_PATH . '">';
 	$data .= '	</td>';
 	$data .= '</tr>';
 	if ($fresh)
@@ -238,27 +254,27 @@ function show_config_table($fresh = true)
 			$exists = $write = false;
 
 			// Try to create the directory if it does not exist
-			if (!file_exists($main_path . $dir))
+			if (!file_exists(MAIN_PATH . $dir))
 			{
-				@mkdir($main_path . $dir, 0777);
-				@chmod($main_path . $dir, 0777);
+				@mkdir(MAIN_PATH . $dir, 0777);
+				@chmod(MAIN_PATH . $dir, 0777);
 			}
 
 			// Now really check
-			if (file_exists($main_path . $dir) && is_dir($main_path . $dir))
+			if (file_exists(MAIN_PATH . $dir) && is_dir(MAIN_PATH . $dir))
 			{
 				$exists = true;
 			}
 
 			// Now check if it is writable by storing a simple file
-			$fp = @fopen($main_path . $dir . 'test_lock', 'wb');
+			$fp = @fopen(MAIN_PATH . $dir . 'test_lock', 'wb');
 			if ($fp !== false)
 			{
 				$write = true;
 			}
 			@fclose($fp);
 
-			@unlink($main_path . $dir . 'test_lock');
+			@unlink(MAIN_PATH . $dir . 'test_lock');
 
 			if (!$exists || !$write)
 			{
@@ -273,16 +289,16 @@ function show_config_table($fresh = true)
 
 		//check config file exists and is writable
 		$write = $exists = true;
-		if (file_exists($main_path . 'includes/config.inc.php'))
+		if (file_exists(MAIN_PATH . 'includes/config.inc.php'))
 		{
-			if (!@is_writable($main_path . 'includes/config.inc.php'))
+			if (!@is_writable(MAIN_PATH . 'includes/config.inc.php'))
 			{
 				$write = false;
 			}
 		}
-		elseif (file_exists($main_path . 'includes/config.inc.php.new'))
+		elseif (file_exists(MAIN_PATH . 'includes/config.inc.php.new'))
 		{
-			if (!@is_writable($main_path . 'includes/config.inc.php.new'))
+			if (!@is_writable(MAIN_PATH . 'includes/config.inc.php.new'))
 			{
 				$write = false;
 			}
@@ -303,7 +319,6 @@ function show_config_table($fresh = true)
 		$data .= '</tr>';
 
 		$directories = array(
-			'includes/currencies.php',
 			'includes/membertypes.inc.php',
 			'language/EN/countries.inc.php',
 			'language/EN/categories.inc.php',
@@ -313,9 +328,9 @@ function show_config_table($fresh = true)
 		foreach ($directories as $dir)
 		{
 			$write = $exists = true;
-			if (file_exists($main_path . $dir))
+			if (file_exists(MAIN_PATH . $dir))
 			{
-				if (!@is_writable($main_path . $dir))
+				if (!@is_writable(MAIN_PATH . $dir))
 				{
 					$write = false;
 				}
@@ -344,6 +359,14 @@ function show_config_table($fresh = true)
 		$data .= (extension_loaded('bcmath')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 
+		$data .= '<tr><td>PHP Data Objects Support:</td><td colspan="2">';
+		$data .= (extension_loaded('pdo')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+		$data .= '</tr>';
+
+		$data .= '<tr><td>PHP Version: (' . phpversion() . ')</td><td colspan="2">';
+		$data .= ((version_compare(phpversion(), '5.4', '>'))) ? '<strong style="color:green">OK</strong>' : '<strong style="color:red">Too low</strong>';
+		$data .= '</tr>';
+
 		$data .= '</table>';
 	}
 
@@ -359,7 +382,9 @@ function show_config_table($fresh = true)
 
 function search_cats($parent_id, $level)
 {
-	global $DBPrefix, $catscontrol;
+	global $catscontrol;
+	
+	$catstr = '';
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
 	foreach ($tree as $k => $v)
@@ -371,11 +396,11 @@ function search_cats($parent_id, $level)
 
 function rebuild_cat_file()
 {
-	global $system, $main_path, $DBPrefix;
+	global $system, $DBPrefix, $db;
 	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
-	$result = mysql_query($query);
+	$db->direct_query($query);
 	$cats = array();
-	while ($catarr = mysql_fetch_array($result))
+	while ($catarr = $db->fetch())
 	{
 		$cats[$catarr['cat_id']] = $catarr['cat_name'];
 		$allcats[] = $catarr;
@@ -405,7 +430,6 @@ function rebuild_cat_file()
 
 	$output .= ");\n?>";
 
-	$handle = fopen ($main_path . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
+	$handle = fopen (MAIN_PATH . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 }
-?>

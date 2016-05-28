@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -24,10 +24,12 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
 	foreach ($_POST['delete'] as $val)
 	{
-		$query = "DELETE FROM " . $DBPrefix . "faqs WHERE id = " . $val;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$query = "DELETE FROM " . $DBPrefix . "faqs_translated WHERE id = " . $val;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$params = array();
+		$params[] = array(':faq_id', $val, 'int');
+		$query = "DELETE FROM " . $DBPrefix . "faqs WHERE id = :faq_id";
+		$db->query($query, $params);
+		$query = "DELETE FROM " . $DBPrefix . "faqs_translated WHERE id = :faq_id";
+		$db->query($query, $params);
 	}
 }
 
@@ -41,10 +43,11 @@ foreach ($faq_cats as $row)
 			'CAT' => $row['category']
 			));
 
-	$query = "SELECT id, question FROM " . $DBPrefix . "faqs WHERE category = " . $row['id'];
-	$cat_res = mysql_query($query);
-	$system->check_mysql($cat_res, $query, __LINE__, __FILE__);
-	while ($cat_row = mysql_fetch_assoc($cat_res))
+	$query = "SELECT id, question FROM " . $DBPrefix . "faqs WHERE category = :cat_id";
+	$params = array();
+	$params[] = array(':cat_id', $row['id'], 'int');
+	$db->query($query, $params);
+	while ($cat_row = $db->fetch())
 	{
 		$template->assign_block_vars('cats.faqs', array(
 				'ID' => $cat_row['id'],
@@ -57,9 +60,11 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'faqs.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

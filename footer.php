@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -30,4 +30,3 @@ $template->display('footer');
 
 // if the page has loaded OK you dont need this data anymore :)
 unset($_SESSION['SESSION_ERROR']);
-?>

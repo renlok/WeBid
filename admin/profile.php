@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'users';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -34,7 +34,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			'zip' => $_POST['zip'],
 			'tel' => $_POST['tel']
 			);
-			
+
 	$DISPLAYED_FIELDS = array(
 			'birthdate_regshow' => $_POST['birthdate_regshow'],
 			'address_regshow' => $_POST['address_regshow'],
@@ -59,13 +59,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$mdata = serialize($MANDATORY_FIELDS);
 		$sdata = serialize($DISPLAYED_FIELDS);
-		$query = "UPDATE " . $DBPrefix . "settings SET
-				  mandatory_fields = :mandatory_fields,
-				  displayed_feilds = :displayed_feilds";
-		$params = array();
-		$params[] = array(':mandatory_fields', $mdata, 'str');
-		$params[] = array(':displayed_feilds', $sdata, 'str');
-		$db->query($query, $params);
+		$system->writesetting("mandatory_fields", $mdata, "str");
+		$system->writesetting("displayed_feilds", $sdata, "str");
+		
 		$ERR = $MSG['779'];
 	}
 }
@@ -89,9 +85,11 @@ $template->assign_vars(array(
 		'DISPLAYED_6' => ($DISPLAYED_FIELDS['tel_regshow'] == 'y') ? true : false
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'profile.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

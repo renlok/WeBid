@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -20,6 +20,7 @@ $id = intval($_GET['id']);
 // Is the seller logged in?
 if (!$user->logged_in)
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');
 	exit;
@@ -66,7 +67,7 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_is_taxed']			= $RELISTEDAUCTION['tax'];
 		$_SESSION['SELL_tax_included']		= $RELISTEDAUCTION['taxinc'];
 		$_SESSION['SELL_current_fee']		= $RELISTEDAUCTION['current_fee'];
-		if ($RELISTEDAUCTION['bn_only'] == 'n')
+		if ($RELISTEDAUCTION['bn_only'] == 0)
 		{
 			$_SESSION['SELL_minimum_bid'] = $system->print_money_nosymbol($RELISTEDAUCTION['minimum_bid']);
 		}
@@ -112,7 +113,7 @@ if (!isset($_POST['action'])) // already closed auctions
 			$_SESSION['SELL_customincrement']	= 0;
 		}
 		$_SESSION['SELL_shipping_cost']	 = $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost']);
-		$_SESSION['SELL_additional_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost_additional']);
+		$_SESSION['SELL_additional_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['additional_shipping_cost']);
 		$_SESSION['SELL_shipping']		 = $RELISTEDAUCTION['shipping'];
 		$_SESSION['SELL_shipping_terms'] = $system->uncleanvars($RELISTEDAUCTION['shipping_terms']);
 		$_SESSION['SELL_payment']		 = explode(', ', $RELISTEDAUCTION['payment']);
@@ -124,9 +125,9 @@ if (!isset($_POST['action'])) // already closed auctions
 		// get gallery images
 		$UPLOADED_PICTURES = array();
 		$file_types = array('gif', 'jpg', 'jpeg', 'png');
-		if (is_dir($upload_path . intval($_GET['id'])))
+		if (is_dir(UPLOAD_PATH . $id))
 		{
-			$dir = opendir($upload_path . intval($_GET['id']));
+			$dir = opendir(UPLOAD_PATH . $id);
 			while (($myfile = readdir($dir)) !== false)
 			{
 				if ($myfile != '.' && $myfile != '..' && !is_file($myfile))
@@ -144,29 +145,29 @@ if (!isset($_POST['action'])) // already closed auctions
 
 		if (count($UPLOADED_PICTURES) > 0)
 		{
-			if (!file_exists($upload_path . session_id()))
+			if (!file_exists(UPLOAD_PATH . session_id()))
 			{
 				umask();
-				mkdir($upload_path . session_id(), 0777);
+				mkdir(UPLOAD_PATH . session_id(), 0777);
 			}
 			foreach ($UPLOADED_PICTURES as $k => $v)
 			{
-				$system->move_file($uploaded_path . intval($_GET['id']) . '/' . $v, $uploaded_path . session_id() . '/' . $v, false);
+				$system->move_file(UPLOAD_FOLDER . intval($_GET['id']) . '/' . $v, UPLOAD_FOLDER . session_id() . '/' . $v, false);
 			}
 			if (!empty($RELISTEDAUCTION['pict_url']))
 			{
-				$system->move_file($uploaded_path . intval($_GET['id']) . '/' . $RELISTEDAUCTION['pict_url'], $uploaded_path . session_id() . '/' . $RELISTEDAUCTION['pict_url'], false);
+				$system->move_file(UPLOAD_FOLDER . intval($_GET['id']) . '/' . $RELISTEDAUCTION['pict_url'], UPLOAD_FOLDER . session_id() . '/' . $RELISTEDAUCTION['pict_url'], false);
 			}
 		}
 
 		$_SESSION['SELL_action'] = 'edit';
-		if ($_SESSION['SELL_starts'] > $NOW)
+		if ($RELISTEDAUCTION['starts'] > $NOW)
 		{
-			$_SESSION['editstartdate'] = true;
+			$_SESSION['SELL_caneditstartdate'] = true;
 		}
 		else
 		{
-			$_SESSION['editstartdate'] = false;
+			$_SESSION['SELL_caneditstartdate'] = false;
 		}
 		header('location: sell.php?mode=recall');
 	}
@@ -175,4 +176,3 @@ if (!isset($_POST['action'])) // already closed auctions
 		header('location: index.php');
 	}
 }
-?>

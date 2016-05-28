@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,8 +15,9 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'buysellnofeedback.php';
 	header('location: user_login.php');
 	exit;
@@ -25,7 +26,7 @@ if (!$user->is_logged_in())
 $query = "SELECT DISTINCT a.auction, a.seller, a.winner, a.bid, b.id, b.current_bid, b.title, a.qty, a.closingdate
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
-		WHERE (b.closed = 1 OR b.bn_only = 'y') AND b.suspended = 0
+		WHERE (b.closed = 1 OR b.bn_only = 1) AND b.suspended = 0
 		AND ((a.seller = :user_ids AND a.feedback_sel = 0)
 		OR (a.winner = :user_idw AND a.feedback_win = 0))";
 $params = array();
@@ -59,7 +60,7 @@ foreach ($feedback_data as $row)
 			'QTY' => ($row['qty'] == 0) ? 1 : $row['qty'],
 			'WINNER' => $row['winner'],
 			'SELLER' => $row['seller'],
-			'CLOSINGDATE' => FormatDate($row['closingdate']),
+			'CLOSINGDATE' => FormatDate($row['closingdate'], '/', false),
 			'WS' => ($row['winner'] == $user->user_data['id']) ? 'w' : 's'
 			));
 	$k++;
@@ -72,10 +73,9 @@ $template->assign_vars(array(
 $TPL_rater_nick = $user->user_data['nick'];
 include 'header.php';
 $TMP_usmenutitle = $MSG['207'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'sellbuyfeedback.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

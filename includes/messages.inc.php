@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -47,14 +47,14 @@ else
 
 if (!isset($language) || empty($language)) $language = $system->SETTINGS['defaultlanguage'];
 
-include $main_path . 'language/' . $language . '/messages.inc.php';
+include MAIN_PATH . 'language/' . $language . '/messages.inc.php';
 
 //find installed languages
 $LANGUAGES = array();
-if ($handle = opendir($main_path . 'language'))
+if ($handle = opendir(MAIN_PATH . 'language'))
 {
 	while (false !== ($file = readdir($handle)))
-	{ 
+	{
 		if (preg_match('/^([A-Z]{2})$/i', $file, $regs))
 		{
 			$LANGUAGES[$regs[1]] = $regs[1];
@@ -74,4 +74,3 @@ function get_lang_img($string)
 	global $system, $language;
 	return $system->SETTINGS['siteurl'] . 'language/' . $language . '/images/' . $string;
 }
-?>

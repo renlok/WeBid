@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,8 +14,9 @@
 
 include 'common.php';
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'selleremails.php';
 	header('location: user_login.php');
 	exit;
@@ -28,8 +29,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if (in_array($_POST['endemailmod'], array('one', 'cum', 'none')) && in_array($_POST['startemailmod'], array('yes', 'no')) && in_array($_POST['emailtype'], array('html', 'text')))
 	{
 		$query = "UPDATE " . $DBPrefix . "users SET endemailmode = :endemailmod,
-				  startemailmode = :startemailmod,
-				  emailtype = :emailtype WHERE id = :user_id";
+					startemailmode = :startemailmod,
+					emailtype = :emailtype WHERE id = :user_id";
 		$params = array(
 			array(':endemailmod', $_POST['endemailmod'], 'str'),
 			array(':startemailmod', $_POST['startemailmod'], 'str'),
@@ -54,10 +55,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['25_0188'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'sellermails.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

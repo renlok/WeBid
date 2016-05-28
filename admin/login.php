@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,7 +14,7 @@
 
 define('InAdmin', 1);
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 
 if (isset($_POST['action']))
 {
@@ -35,7 +35,7 @@ if (isset($_POST['action']))
 			}
 			else
 			{
-				include $include_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, created, lastlogin, status) VALUES
 						(:username, :password, :hash, :created, :lastlogin, 1)";
@@ -63,7 +63,7 @@ if (isset($_POST['action']))
 			}
 			else
 			{
-				include $include_path . 'PasswordHash.php';
+				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "SELECT id, hash, password FROM " . $DBPrefix . "adminusers WHERE username = :username";
 				$params = array();
@@ -105,13 +105,14 @@ $db->direct_query($query);
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'THEME' => $system->SETTINGS['theme'],
-           'L_COPY_YEAR' => date("Y"),
+		'THEME' => $system->SETTINGS['admin_theme'],
+		'L_COPY_YEAR' => date("Y"),
 		'PAGE' => ($db->numrows() == 0) ? 1 : 2
 		));
 
 $template->set_filenames(array(
 		'body' => 'login.tpl'
 		));
-$template->display('body'); 
+$template->display('body');
+include 'footer.php';
 ?>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -28,7 +28,7 @@ class fees
 
 	function get_fee_types()
 	{
-		global $system, $DBPrefix, $db;
+		global $DBPrefix, $db;
 		$query = "SELECT type FROM " . $DBPrefix . "fees GROUP BY type";
 		$db->direct_query($query);
 		$fee_types = array();
@@ -41,7 +41,7 @@ class fees
 
 	function add_to_account($text, $type, $amount)
 	{
-		global $system, $DBPrefix, $user, $db;
+		global $DBPrefix, $user, $db;
 
 		$date_values = date('z|W|m|Y');
 		$date_values = explode('|', $date_values);
@@ -81,8 +81,8 @@ class fees
 	{
 		global $system;
 
-		$sandbox = ($system->SETTINGS['paypal_sandbox'] == 'y') ? true : false;
-		$https = ($system->SETTINGS['https'] == 'y') ? true : false; 
+		$sandbox = ($system->SETTINGS['paypal_sandbox']);
+		$https = ($system->SETTINGS['https'] == 'y') ? true : false;
 		// we ensure that the txn_id (transaction ID) contains only ASCII chars...
 		$pos = strspn($this->data['txn_id'], $this->ASCII_RANGE);
 		$len = strlen($this->data['txn_id']);
@@ -97,11 +97,8 @@ class fees
 
 		foreach ($this->data as $key => $value)
 		{
-			// Handle escape characters, which depends on setting of magic quotes  
-			if(get_magic_quotes_gpc())
-				$value = urlencode(stripslashes($value));
-			else
-				$value = urlencode($value);
+			// Handle escape characters, which depends on setting of magic quotes
+			$value = urlencode($value);
 			$req .= '&' . $key . '=' . $value;
 		}
 
@@ -117,7 +114,7 @@ class fees
 			$header .= "Host: www.sandbox.paypal.com\r\n";
 		}
 		$header .= "Content-Length: " . strlen($req) . "\r\n";
-		$header .= "Connection: close\r\n\r\n";  
+		$header .= "Connection: close\r\n\r\n";
 
 		if (!$sandbox)
 		{
@@ -165,8 +162,8 @@ class fees
 
 				if (strcmp ($resl, 'VERIFIED') == 0)
 				{
-					// We can do various checks to make sure nothing is wrong  
-					// Check that receiver_email is your Primary PayPal email and   
+					// We can do various checks to make sure nothing is wrong
+					// Check that receiver_email is your Primary PayPal email and
 					// that txn_id has not been previously processed
 					if ($payment_status == 'Completed')
 					{
@@ -339,7 +336,7 @@ class fees
 				$params[] = array(':useracc_id', $custom_id, 'int');
 				$db->query($query, $params);
 				$auc_id = $db->result('auc_id');
-				
+
 				$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = :auc_id";
 				$params = array();
 				$params[] = array(':auc_id', $auc_id, 'int');
@@ -362,7 +359,7 @@ class fees
 					FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
 				$params = array();
 				$params[] = array(':auc_id', $auc_id, 'int');
-				$db->query($query, $params);	
+				$db->query($query, $params);
 				$auc_data = $db->result();
 
 				// auction data
@@ -377,14 +374,14 @@ class fees
 
 				if ($user->user_data['startemailmode'] == 'yes')
 				{
-					include $include_path . 'email_auction_confirmation.php';
+					include INCLUDE_PATH . 'email/auction_confirmation.php';
 				}
 
 				// update recursive categories
 				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
 				$params = array();
 				$params[] = array(':cat_id', $auc_data['category'], 'int');
-				$db->query($query, $params);	
+				$db->query($query, $params);
 				$parent_node = $db->result();
 				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
@@ -458,8 +455,7 @@ class fees
 				$params[] = array(':total', $payment_amount, 'float');
 				$db->query($query, $params);
 			break;
-			
+
 		}
 	}
 }
-?>

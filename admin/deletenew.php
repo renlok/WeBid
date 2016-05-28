@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,26 +15,29 @@
 define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == $MSG['030'])
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
 {
-	$query = "DELETE FROM " . $DBPrefix . "news WHERE id = " . intval($_POST['id']);
-	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+	$query = "DELETE FROM " . $DBPrefix . "news WHERE id = :news_id";
+	$params = array();
+	$params[] = array(':news_id', $_POST['id'], 'int');
+	$db->query($query, $params);
 	header('location: news.php');
 	exit;
 }
-elseif (isset($_POST['action']) && $_POST['action'] == $MSG['029'])
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
 {
 	header('location: news.php');
 	exit;
 }
 
-$query = "SELECT title FROM " . $DBPrefix . "news WHERE id = " . intval($_GET['id']);
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$title = mysql_result($res, 0);
+$query = "SELECT title FROM " . $DBPrefix . "news WHERE id = :news_id";
+$params = array();
+$params[] = array(':news_id', $_GET['id'], 'int');
+$db->query($query, $params);
+$title = $db->result('title');
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
@@ -43,9 +46,11 @@ $template->assign_vars(array(
 		'TYPE' => 1
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'confirm.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

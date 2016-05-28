@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -14,44 +14,15 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
-// author: John	http://www.webidsupport.com/forums/member.php?5491-John
-function converter_call($post_data = true, $data = array())
-{
-	global $system;
-	include $include_path . 'converter.inc.php';
-
-	// get convertion data
-	if ($post_data)
-	{
-		global $_REQUEST;
-		$amount = $_REQUEST['amount'];
-		$from = $_REQUEST['from'];
-		$to = $_REQUEST['to'];
-	}
-	else
-	{
-		$amount = $data['amount'];
-		$from = $data['from'];
-		$to = $data['to'];
-	}
-	$amount = $system->input_money($amount);
-
-	$CURRENCIES = CurrenciesList();
-
-	$conversion = ConvertCurrency($from, $to, $amount);
-	// construct string
-	echo $amount . ' ' . $CURRENCIES[$from] . ' = ' . $system->print_money_nosymbol($conversion, true) . ' ' . $CURRENCIES[$to];
-}
-
 // reload the gallery table on upldgallery.php page
 function getupldtable()
 {
-	global $_SESSION, $uploaded_path;
+	global $_SESSION;
 	foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v)
 	{
 		echo '<tr>
 			<td>
-				<img src="' . $uploaded_path . session_id() . '/' . $v . '" width="60" border="0">
+				<img src="' . UPLOAD_FOLDER . session_id() . '/' . $v . '" width="60" border="0">
 			</td>
 			<td width="46%">
 				' . $v . '
@@ -69,14 +40,13 @@ function getupldtable()
 // plupload images
 function upload_images()
 {
-	global $user, $MSG;
-	
+	global $user, $MSG, $system;
+
 	if (!$user->logged_in)
 	{
-		$MSG['login_required_text'] = "Login required";
 		// imitate code execution
 		die(json_encode(array(
-			'OK' => 0, 
+			'OK' => 0,
 			'error' => array(
 				'code' => '202', //random
 				'message' => $MSG['login_required_text']
@@ -85,14 +55,12 @@ function upload_images()
 	}
 	else
 	{
-		global $main_path, $upload_path, $include_path;
-
-		require_once $include_path . "PluploadHandler.php";
+		require_once PACKAGE_PATH . 'PluploadHandler.php';
 		$uploader = new PluploadHandler();
 		$uploader->no_cache_headers();
 		$uploader->cors_headers();
 
-		$targetDir = $upload_path . session_id();
+		$targetDir = UPLOAD_PATH . session_id();
 
 		if (!$uploader->handle(array(
 			'target_dir' => $targetDir,
@@ -100,7 +68,7 @@ function upload_images()
 			)))
 		{
 			die(json_encode(array(
-				'OK' => 0, 
+				'OK' => 0,
 				'error' => array(
 					'code' => $uploader->get_error_code(),
 					'message' => $uploader->get_error_message()
@@ -112,16 +80,18 @@ function upload_images()
 			//upload was good
 			$conf = $uploader->get_conf();
 			$fileName = $conf['file_name'];
+			// resize picture
+			$uploader->resizeThumbnailImage($targetDir . '/' . $fileName, $system->SETTINGS['gallery_max_width_height']);
 			if (!in_array($fileName, $_SESSION['UPLOADED_PICTURES']))
 			{
-				array_push($_SESSION['UPLOADED_PICTURES'], $fileName);
+				$final_file_name = strtolower($fileName);
+				array_push($_SESSION['UPLOADED_PICTURES'], $final_file_name);
 				if (count($_SESSION['UPLOADED_PICTURES']) == 1)
 				{
-					$_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $fileName;
+					$_SESSION['SELL_pict_url_temp'] = $_SESSION['SELL_pict_url'] = $final_file_name;
 				}
 			}
 			die(json_encode(array('OK' => 1)));
 		}
 	}
 }
-?>

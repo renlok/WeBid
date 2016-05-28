@@ -1,6 +1,6 @@
 -- Copyrights --
 
-WeBid (C) 2008 - 2014 WeBidSupport.com
+WeBid (C) 2008 - 2016 WeBidSupport.com
 
 WeBid contains code from the following packages:
 
@@ -13,20 +13,28 @@ WeBid contains the following packages:
 GPL licenced:
 CKeditor (c) 2003-2008 Frederico Caldeira Knabben http://www.ckeditor.net/
 jQuery (c) 2008 John Resig http://www.jquery.com/
-HTML Purifier (C) 2012 Santosh Patnaik
-Plupload (c) 2009, Moxiecode Systems AB http://www.plupload.com/
+Plupload (c) 2009 Moxiecode Systems AB http://www.plupload.com/
+htmLawed (c) 2015 Santosh Patnaik www.bioinformatics.org/phplabware/internal_utilities/htmLawed
 
 GNU Lesser General Public License:
-Securimage (c) 2007 Drew Phillips
-http://www.phpcaptcha.org
+Securimage (c) 2007 Drew Phillips http://www.phpcaptcha.org
+PHPMailer (c) 2014 PHPMailer https://github.com/PHPMailer/PHPMailer/
 
 Creative Commons Attribution 2.5 License:
-Silk Icons
-http://www.famfamfam.com/lab/icons/silk/
+Silk Icons http://www.famfamfam.com/lab/icons/silk/
+Glyphicons http://glyphicons.com/
 
 CC Attribution-No Derivative Works:
 jQuery lightBox plugin (c) 2008 Leandro Vieira Pinho http://leandrovieira.com/
 
+OFL Licenced:
+Carlito foint https://fontlibrary.org/en/font/carlito
+
+MIT Licenced:
+Bootstrap (c) 2011-2015 Twitter, Inc. http://getbootstrap.com
+
+Public Domain:
+Portable PHP password hashing framework (c) 2006 Solar Designer http://www.openwall.com/phpass/
+
 Other:
-reCaptcha PHP API (c) 2007 reCAPTCHA
-http://recaptcha.net/
+reCaptcha PHP API (c) 2007 reCAPTCHA http://recaptcha.net/

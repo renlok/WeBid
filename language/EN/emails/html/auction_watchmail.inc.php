@@ -7,8 +7,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" height="50" style="font-size: 12px; padding-right: 6px;">
-		This is your auction watch you've requested.  The following auction has opened matching your keyword(s): <b>{KWORD}</b>
-
+			This is your auction watch you've requested.  The following auction has opened matching your keyword(s): <b>{KWORD}</b>
 		</td>
 	</tr>
 	<tr>
@@ -16,7 +15,6 @@
 		<table border="0" width="100%">
 			<tr>
 				<td style="font-size: 12px; padding-bottom: 7px; padding-top: 5px;"><b>Auction:</b>&nbsp;{TITLE}</td>
-
 			</tr>
 			<tr>
 				<td style="font-size: 12px;"><b>Auction URL:</b>&nbsp;<a href="{URL}">{URL}</a></td>

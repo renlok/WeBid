@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,16 +16,21 @@ define('InAdmin', 1);
 $current_page = 'fees';
 $extraJs = ';js/calendar.php';
 include '../common.php';
-include $include_path . 'functions_admin.php';
-include $include_path . 'dates.inc.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 // get form variables
 $list_type = isset($_POST['type']) ? ($_POST['type']) : 'a';
-$from_date = isset($_POST['from_date']) ? intval($_POST['from_date']) : 0;
-$to_date = isset($_POST['to_date']) ? intval($_POST['to_date']) : 0;
+$from_date = !empty($_POST['from_date']) ? $_POST['from_date'] : 0;
+$to_date = !empty($_POST['to_date']) ? $_POST['to_date'] : 0;
+
+
+// filter date and date format
+$from_date = filter_date($from_date);
+$to_date = filter_date($to_date);
+
 
 // Set offset and limit for pagination
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
@@ -48,8 +53,8 @@ $where_sql = '';
 $params = array();
 if ($from_date != 0)
 {
-	$where_sql = 'paid_date > \'' . FormatTimeStamp($from_date, '-') . '\'';
-	$params[] = array(':from_date', FormatTimeStamp($from_date, '-') , 'str');
+	$where_sql = 'paid_date > \'' . FormatTimeStamp($from_date) . '\'';
+	$params[] = array(':from_date', FormatTimeStamp($from_date) , 'str');
 }
 if ($to_date != 0)
 {
@@ -57,8 +62,8 @@ if ($to_date != 0)
 	{
 		$where_sql .= ' AND ';
 	}
-	$where_sql .= 'paid_date < \'' . FormatTimeStamp($to_date, '-') . '\'';
-	$params[] = array(':to_date', FormatTimeStamp($to_date, '-') , 'str');
+	$where_sql .= 'paid_date < \'' . FormatTimeStamp($to_date) . '\'';
+	$params[] = array(':to_date', FormatTimeStamp($to_date) , 'str');
 }
 
 if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
@@ -104,7 +109,7 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
 		}
 		$template->assign_block_vars('accounts', array(
 				'DATE' => $date,
-				'AMOUNT' => $system->print_money($row['amount'], true, false),
+				'AMOUNT' => $system->print_money($row['amount']),
 				'BG' => $bg,
 				'TOTAL' => ((!empty($row['total'])) ? $row['total'] : '')
 				));
@@ -133,7 +138,7 @@ else
 				'NICK' => $row['nick'],
 				'RNAME' => $row['name'],
 				'DATE' => ArrangeDateNoCorrection($row['paid_date']),
-				'AMOUNT' => $system->print_money($row['amount'], true, false),
+				'AMOUNT' => $system->print_money($row['amount']),
 				'TEXT' => $row['text'],
 				'BG' => $bg
 				));
@@ -162,7 +167,7 @@ $template->assign_vars(array(
 		'TYPE' => $list_type,
 		'FROM_DATE' => ($from_date == 0) ? '' : $from_date,
 		'TO_DATE' => ($to_date == 0) ? '' : $to_date,
-
+		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'PAGNATION' => $show_pagnation,
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/accounts.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/accounts.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
@@ -170,8 +175,10 @@ $template->assign_vars(array(
 		'PAGES' => $PAGES
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'accounts.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

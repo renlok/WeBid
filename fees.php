@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -22,13 +22,13 @@ if ($system->SETTINGS['fees'] == 'n')
 
 // get fees
 $query = "SELECT * FROM " . $DBPrefix . "fees ORDER BY fee_from ASC";
-$res = $db->direct_query($query);
+$db->direct_query($query);
 $setup = $buyer_fee = $endauc_fee = false;
 
 $i = 0;
 while ($row = $db->fetch())
 {
-	if ($row['type'] == 'setup')
+	if ($row['type'] == 'setup_fee')
 	{
 		if ($row['fee_from'] != $row['fee_to'])
 		{
@@ -74,28 +74,28 @@ while ($row = $db->fetch())
 				'SIGNUP_FEE' => $system->print_money($row['value'])
 				));
 	}
-	elseif ($row['type'] == 'hpfeat_fee')
+	elseif ($row['type'] == 'featured_fee')
 	{
 		$template->assign_vars(array(
 				'B_HPFEAT_FEE' => ($row['value'] > 0),
 				'HPFEAT_FEE' => $system->print_money($row['value'])
 				));
 	}
-	elseif ($row['type'] == 'bolditem_fee')
+	elseif ($row['type'] == 'bold_fee')
 	{
 		$template->assign_vars(array(
 				'B_BOLD_FEE' => ($row['value'] > 0),
 				'BOLD_FEE' => $system->print_money($row['value'])
 				));
 	}
-	elseif ($row['type'] == 'hlitem_fee')
+	elseif ($row['type'] == 'highlighted_fee')
 	{
 		$template->assign_vars(array(
 				'B_HL_FEE' => ($row['value'] > 0),
 				'HL_FEE' => $system->print_money($row['value'])
 				));
 	}
-	elseif ($row['type'] == 'rp_fee')
+	elseif ($row['type'] == 'reserve_fee')
 	{
 		$template->assign_vars(array(
 				'B_RP_FEE' => ($row['value'] > 0),
@@ -116,14 +116,14 @@ while ($row = $db->fetch())
 				'RELIST_FEE' => $system->print_money($row['value'])
 				));
 	}
-	elseif ($row['type'] == 'buyout_fee')
+	elseif ($row['type'] == 'buynow_fee')
 	{
 		$template->assign_vars(array(
 				'B_BUYNOW_FEE' => ($row['value'] > 0),
 				'BUYNOW_FEE' => $system->print_money($row['value'])
 				));
 	}
-	elseif ($row['type'] == 'excat_fee')
+	elseif ($row['type'] == 'extracat_fee')
 	{
 		$template->assign_vars(array(
 				'B_EXCAT_FEE' => ($row['value'] > 0),
@@ -152,4 +152,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

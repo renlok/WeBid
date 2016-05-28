@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -11,16 +11,19 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
-$step = (isset($_GET['step'])) ? $_GET['step'] : 0;
-if ($step != 3)
-{
-	session_start();
-}
-include 'functions.php';
-define('InInstaller', 1);
 
-$main_path = getmainpath();
+session_start();
+define('InWeBid', 1);
+define('InInstaller', 1);
+include '../includes/database/Database.php';
+include '../includes/database/DatabasePDO.php';
+
+$db = new DatabasePDO();
+
+include 'functions.php';
+define('MAIN_PATH',  getmainpath());
+$step = (isset($_GET['step'])) ? $_GET['step'] : 0;
+$settings_version = 'Unknown';
 /*
 how new updater will work
 in package config.inc.php will be named config.inc.php.new so it cannot be overwritten
@@ -34,18 +37,18 @@ in package config.inc.php will be named config.inc.php.new so it cannot be overw
 
 if ($step == 0)
 {
-	if (!file_exists($main_path . 'includes/config.inc.php'))
+	if (!file_exists(MAIN_PATH . 'includes/config.inc.php'))
 	{
-		$thisversion = this_version();
-		$myversion = check_version();
+		$package_version = package_version();
+		$installed_version = check_version();
 		echo print_header(true);
 		echo show_config_table(false);
 	}
 	else
 	{
 		$check = check_installation();
-		$thisversion = this_version();
-		$myversion = check_version();
+		$package_version = package_version();
+		$installed_version = check_version();
 		echo print_header(true);
 		if (!$check)
 		{
@@ -53,66 +56,15 @@ if ($step == 0)
 		}
 		else
 		{
-			echo '<p>Now to <b><a href="?step=2">step 1</a></b></p>';
+			echo '<p>Now to <b><a href="?step=1">step 1</a></b></p>';
 		}
 	}
 }
 if ($step == 1)
 {
-	if (!mysql_connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass']))
-	{
-		die('<p>Cannot connect to ' . $DbHost . ' with the supplied username and password. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
-	}
-	if (!mysql_select_db($_POST['DBName']))
-	{
-		die('<p>Cannot select database ' . $_POST['DBName'] . '. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
-	}
-	$toecho = '<p><b>Step 1:</b> Writing the config file...</p>';
-	$toecho .= '<p>As you are missing your old random security code all your users will have to reset their passwords after this update</p>';
-	$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
-	// generate config file
-	$content = '<?php' . "\n";
-	$content .= '$DbHost	 = "' . $_POST['DBHost'] . '";' . "\n";
-	$content .= '$DbDatabase = "' . $_POST['DBName'] . '";' . "\n";
-	$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";' . "\n";
-	$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
-	$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
-	$content .= '$main_path	= "' . $path . '";' . "\n";
-	$content .= '$MD5_PREFIX = "' . md5(microtime() . rand(0,50)) . '";' . "\n";
-	$content .= '?>';
-	$output = makeconfigfile($content, $path);
-	if ($output)
-	{
-		$check = check_installation();
-		$thisversion = this_version();
-		$myversion = check_version();
-		echo print_header(true);
-		echo $toecho;
-		if (!$check)
-		{
-			echo '<p>It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b></p>';
-		}
-		else
-		{
-			echo '<p>Complete, now to <b><a href="?step=2">step 2</a></b></p>';
-		}
-	}
-	else
-	{
-		$thisversion = this_version();
-		$myversion = check_version();
-		echo print_header(true);
-		echo $toecho;
-		echo '<p>WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the inclues directory)</p>';
-		echo '<p><textarea style="width:500px; height:500px;">' . $content . '</textarea></p>';
-		echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2">step 2</a></b></p>';
-	}
-}
-if ($step == 2)
-{
 	$check = check_installation();
-	$thisversion = this_version();
-	$myversion = check_version();
+	$package_version = package_version();
+	$installed_version = check_version();
 	echo print_header(true);
 	if (!$check)
 	{
@@ -120,49 +72,34 @@ if ($step == 2)
 		exit;
 	}
 	include 'sql/updatedump.inc.php';
-	for ($i = 0; $i < @count($query); $i++)
+	$queries = count($query);
+	$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
+	if ($queries > 0 && $from < $queries)
 	{
-		mysql_query($query[$i]) or print(mysql_error() . '<br>' . $query[$i] . '<br>');
-		echo '<b>' . $query[$i] . '</b><br>';
+		$fourth = floor($queries/4);
+		$to = (($queries - $from) > 25) ? $from + 25 : $queries;
+		echo 'Writing to database: ' . floor($to / $queries * 100) . '% Complete<br>';
+		for ($i = $from; $i < $to; $i++)
+		{
+			$db->direct_query($query[$i]);
+		}
+		echo '<script type="text/javascript">window.location = "update.php?step=1&from=' . $i . '";</script>';
+		exit;
 	}
-	if ($myversion == $thisversion)
+	if (file_exists('scripts/' . $new_version . '.php'))
 	{
-		echo 'Complete, now to <b><a href="?step=3">step 3</a></b>';
+		echo '<b>Running database update script</b><br>';
+		include 'scripts/' . $new_version . '.php';
+		echo '<b>Update script complete</b><br>';
+	}
+	$installed_version = $new_version;
+	if ($installed_version == $package_version)
+	{
+		echo '<p>Update almost complete, remove the install folder from your server to complete the upgrade</p>';
 	}
 	else
 	{
-		echo '<script type="text/javascript">window.location = "?step=2";</script>';
-		echo '<noscript>Javascript is disabled please <a href="?step=2">refresh the page</a></noscript>';
+		echo '<script type="text/javascript">window.location = "?step=1";</script>';
+		echo '<noscript>Javascript is disabled please <a href="?step=1">refresh the page</a></noscript>';
 	}
 }
-if ($step == 3)
-{
-	$check = check_installation();
-	$thisversion = this_version();
-	$myversion = check_version();
-	if (!$check)
-	{
-		echo print_header(true);
-		echo '<p>It seems you don\'t currently have a version of WeBid installed we recommend you do a <b><a href="install.php">fresh install</a></b></p>';
-		exit;
-	}
-	include $main_path . 'common.php';
-	echo print_header(true);
-
-	include $include_path . 'functions_rebuild.inc.php';
-	echo '<p>Rebuilding membertypes...</p>';
-	rebuild_table_file('membertypes');
-
-	echo '<p>Rebuilding countries...</p>';
-	rebuild_html_file('countries');
-
-	echo '<p>Rebuilding categories...</p>';
-	$catscontrol = new MPTTcategories();
-	rebuild_cat_file();
-
-	include $main_path . 'admin/util_cc1.php';
-
-	echo '<p>Update almost complete, remove the install folder from your server to complete the upgrade</p>';
-}
-
-?>

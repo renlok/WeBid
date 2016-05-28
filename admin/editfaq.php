@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
 define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Default for error message (blank)
@@ -32,34 +32,44 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
-		$query = "UPDATE " . $DBPrefix . "faqs SET category=" . $_POST['category'] . ",
-			question='" . mysql_real_escape_string($_POST['question'][$system->SETTINGS['defaultlanguage']]) . "',
-			answer='" . mysql_real_escape_string($_POST['answer'][$system->SETTINGS['defaultlanguage']]) . "'
-			WHERE id = " . $_POST['id'];
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "UPDATE " . $DBPrefix . "faqs SET category = :category,
+			question = :question,
+			answer = :answer
+			WHERE id = :faq_id";
+		$params = array();
+		$params[] = array(':category', $_POST['category'], 'int');
+		$params[] = array(':question', $_POST['question'][$system->SETTINGS['defaultlanguage']], 'str');
+		$params[] = array(':answer', $_POST['answer'][$system->SETTINGS['defaultlanguage']], 'str');
+		$params[] = array(':faq_id', $_POST['id'], 'int');
+		$db->query($query, $params);
 		reset($LANGUAGES);
 		foreach ($LANGUAGES as $k => $v)
 		{
-			$query = "SELECT question FROM " . $DBPrefix . "faqs_translated WHERE lang = '" . $k . "' AND id = " . $_POST['id'];
-			$res = mysql_query($query);
-			$system->check_mysql($res, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($res) > 0)
+			$query = "SELECT question FROM " . $DBPrefix . "faqs_translated WHERE lang = :lang AND id = :faq_id";
+			$params = array();
+			$params[] = array(':lang', $k, 'str');
+			$params[] = array(':faq_id', $_POST['id'], 'int');
+			$db->query($query, $params);
+			$params = array();
+			$params[] = array(':lang', $k, 'str');
+			$params[] = array(':question', $_POST['question'][$k], 'str');
+			$params[] = array(':answer', $_POST['answer'][$k], 'str');
+			if ($db->numrows() > 0)
 			{
-				$query = "UPDATE " . $DBPrefix . "faqs_translated SET 
-						question = '" . mysql_real_escape_string($_POST['question'][$k]) . "',
-						answer = '" . mysql_real_escape_string($_POST['answer'][$k]) . "'
-						WHERE id = '" . $_POST['id'] . "' AND lang = '" . $k . "'";
+				$query = "UPDATE " . $DBPrefix . "faqs_translated SET
+					question = :question,
+					answer = :answer
+					WHERE id = :faq_id AND lang = :lang";
+
 			}
 			else
 			{
-				$query = "INSERT INTO " . $DBPrefix . "faqs_translated VALUES(
-						'" . $_POST['id'] . "',
-						'" . $k . "',
-						'" . mysql_real_escape_string($_POST['question'][$k]) . "',
-						'" . mysql_real_escape_string($_POST['answer'][$k]) . "')";
+				$query = "INSERT INTO " . $DBPrefix . "faqs_translated VALUES
+					(:faq_id, :lang, :question, :answer)";
+				$params[] = array(':faq_id', $_POST['id'], 'int');
 			}
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		}  
+			$db->query($query, $params);
+		}
 		header('location: faqs.php');
 		exit;
 	}
@@ -77,33 +87,35 @@ while ($row = $db->fetch())
 }
 
 // Get data from the database
-$query = "SELECT * FROM " . $DBPrefix . "faqs_translated WHERE id = " . $_GET['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-while ($row = mysql_fetch_array($res))
+$query = "SELECT * FROM " . $DBPrefix . "faqs_translated WHERE id = :faq_id";
+$params = array();
+$params[] = array(':faq_id', $_GET['id'], 'int');
+$db->query($query, $params);
+while ($row = $db->fetch())
 {
 	$QUESTION_tr[$row['lang']] = $row['question'];
 	$ANSWER_tr[$row['lang']] = $row['answer'];
 }
-				
+
 reset($LANGUAGES);
 foreach ($LANGUAGES as $k => $v)
 {
 	$template->assign_block_vars('qs', array(
 			'LANG' => $k,
-			'QUESTION' => (isset($_POST['question'][$k])) ? $_POST['question'][$k] : $QUESTION_tr[$k]
+			'QUESTION' => (isset($_POST['question'][$k])) ? $_POST['question'][$k] : (isset($QUESTION_tr[$k])? $QUESTION_tr[$k] : '')
 			));
 	$template->assign_block_vars('as', array(
 			'LANG' => $k,
-			'ANSWER' => (isset($_POST['answer'][$k])) ? $_POST['answer'][$k] : $ANSWER_tr[$k]
+			'ANSWER' => (isset($_POST['answer'][$k])) ? $_POST['answer'][$k] : (isset($ANSWER_tr[$k])? $ANSWER_tr[$k] : '')
 			));
 }
 
 // Get data from the database
-$query = "SELECT * FROM " . $DBPrefix . "faqs WHERE id = " . $_GET['id'];
-$res = mysql_query($query);
-$system->check_mysql($res, $query, __LINE__, __FILE__);
-$faq = mysql_fetch_assoc($res);
+$query = "SELECT * FROM " . $DBPrefix . "faqs WHERE id = :faq_id";
+$params = array();
+$params[] = array(':faq_id', $_GET['id'], 'int');
+$db->query($query, $params);
+$faq = $db->result();
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
@@ -112,9 +124,11 @@ $template->assign_vars(array(
 		'FAQ_CAT' => $faq['category']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'editfaq.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

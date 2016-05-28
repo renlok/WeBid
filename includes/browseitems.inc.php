@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 function browseItems($query, $params, $query_feat, $params_feat, $total, $current_page, $extravar = '')
 {
-	global $system, $uploaded_path, $MSG, $ERR_114, $db;
+	global $system, $MSG, $ERR_114, $db;
 	global $template, $PAGES, $PAGE;
 
 	$feat_items = false;
@@ -35,17 +35,17 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 
 			$template->assign_block_vars('featured_items', array(
 				'ID' => $row['id'],
-				'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
+				'ROWCOLOUR' => ($row['highlighted']) ? 'bgcolor="#fea100"' : $bgcolour,
 				'IMAGE' => $row['pict_url'],
 				'TITLE' => $system->uncleanvars($row['title']),
 				'SUBTITLE' => $system->uncleanvars($row['subtitle']),
 				'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
 				'BID' => $row['current_bid'],
 				'BIDFORM' => $system->print_money($row['current_bid']),
-				'CLOSES' => ArrangeDateNoCorrection($row['ends']),
+				'CLOSES' => ($difference < 1728000) ? FormatTimeLeft($difference) : ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 				'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
-				'B_BOLD' => ($row['bold'] == 'y')
+				'B_BOLD' => ($row['bold'])
 			));
 			$k++;
 			$feat_items = true;
@@ -59,23 +59,23 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 		// get the data we need
 		$row = build_items($row);
 
-		// time left till the end of this auction 
+		// time left till the end of this auction
 		$difference = $row['ends'] - time();
 		$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
 		$template->assign_block_vars('items', array(
 			'ID' => $row['id'],
-			'ROWCOLOUR' => ($row['highlighted'] == 'y') ? 'bgcolor="#fea100"' : $bgcolour,
+			'ROWCOLOUR' => ($row['highlighted']) ? 'bgcolor="#fea100"' : $bgcolour,
 			'IMAGE' => $row['pict_url'],
 			'TITLE' => $system->uncleanvars($row['title']),
 			'SUBTITLE' => $system->uncleanvars($row['subtitle']),
 			'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
 			'BID' => $row['current_bid'],
 			'BIDFORM' => $system->print_money($row['current_bid']),
-			'CLOSES' => ArrangeDateNoCorrection($row['ends']),
+			'CLOSES' => ($difference < 1728000) ? FormatTimeLeft($difference) : ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 			'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
-			'B_BOLD' => ($row['bold'] == 'y')
+			'B_BOLD' => ($row['bold'])
 		));
 		$k++;
 	}
@@ -111,12 +111,12 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 
 function build_items($row)
 {
-	global $system, $uploaded_path;
+	global $system;
 
 	// image icon
 	if (!empty($row['pict_url']))
 	{
-		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_list'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
+		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_list'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'];
 	}
 	else
 	{
@@ -128,11 +128,11 @@ function build_items($row)
 		$row['current_bid'] = $row['minimum_bid'];
 	}
 
-	if ($row['buy_now'] > 0 && $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
+	if ($row['buy_now'] > 0 && $row['bn_only'] == 0 && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))
 	{
 		$row['buy_now'] = '<a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a>' . $system->print_money($row['buy_now']);
 	}
-	elseif ($row['buy_now'] > 0 && $row['bn_only'] == 'y')
+	elseif ($row['buy_now'] > 0 && $row['bn_only'])
 	{
 		$row['current_bid'] = $row['buy_now'];
 		$row['buy_now'] = '<a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $row['id'] . '"><img src="' . get_lang_img('buy_it_now.gif') . '" border=0 class="buynow"></a>' . $system->print_money($row['buy_now']) . ' <img src="' . get_lang_img('bn_only.png') . '" border="0" class="buynow">';
@@ -144,4 +144,3 @@ function build_items($row)
 
 	return $row;
 }
-?>

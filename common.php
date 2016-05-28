@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,13 +13,13 @@
  ***************************************************************************/
 
 session_start();
+date_default_timezone_set('UTC'); // to make times more consistent
 $error_reporting = E_ALL^E_NOTICE;
 $error_reporting = E_ALL; // use this for debugging
-define('InWeBid', 1);
-define('TrackUserIPs', 1);
-date_default_timezone_set('UTC'); // to make times more consistant
+define('InWeBid', true);
+define('TrackUserIPs', true);
 
-// file check & 
+// file check &
 if(!@include('includes/config.inc.php'))
 {
 	$install_path = (!defined('InAdmin')) ? 'install/install.php' : '../install/install.php';
@@ -27,70 +27,51 @@ if(!@include('includes/config.inc.php'))
 	exit;
 }
 
-$MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didnt set a code
-$include_path = $main_path . 'includes/'; 
-$uploaded_path = 'uploaded/';
-$upload_path = $main_path . $uploaded_path;
+$MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didn't set a code
 
-include $include_path . 'errors.inc.php'; //error handler functions
-include $include_path . 'dates.inc.php';
+//define the paths
+define('MAIN_PATH', $main_path);
+define('CACHE_PATH', MAIN_PATH . 'cache/');
+define('INCLUDE_PATH', MAIN_PATH . 'includes/');
+define('PACKAGE_PATH', MAIN_PATH . 'includes/packages/');
+define('UPLOAD_FOLDER', 'uploaded/');
+define('UPLOAD_PATH', MAIN_PATH . UPLOAD_FOLDER);
+
+include INCLUDE_PATH . 'errors.inc.php'; //error handler functions
+include INCLUDE_PATH . 'dates.inc.php';
 
 // classes
-include $include_path . 'class_db_handle.php';
-include $include_path . 'functions_global.php';
-include $include_path . 'class_email_handler.php';
-include $include_path . 'class_MPTTcategories.php';
-include $include_path . 'class_fees.php';
-include $include_path . 'class_user.php';
-include $include_path . 'template.php';
-
-$db = new db_handle();
-$system = new global_class();
-$template = new template();
-$user = new user();
-set_error_handler('WeBidErrorHandler', $error_reporting);
-
-include $include_path . 'messages.inc.php';
+include INCLUDE_PATH . 'database/Database.php';
+include INCLUDE_PATH . 'database/DatabasePDO.php';
+include INCLUDE_PATH . 'functions_global.php';
+include INCLUDE_PATH . 'class_email_handler.php';
+include INCLUDE_PATH . 'class_MPTTcategories.php';
+include INCLUDE_PATH . 'class_fees.php';
+include INCLUDE_PATH . 'User.php';
+include INCLUDE_PATH . 'template/Template.php';
 
 // connect to the database
-$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET);
-
-// set DB charset
-mysql_set_charset($CHARSET); # TEMP WHILE STILL USING MYSQL_
-
-// add auction types
-$system->SETTINGS['auction_types'] = array (
-	1 => $MSG['1021'],
-	2 => $MSG['1020']
-);
-
-// Atuomatically login user is necessary "Remember me" option
-if (!$user->logged_in && isset($_COOKIE['WEBID_RM_ID']))
+$db = new DatabasePDO();
+if (isset($CHARSET))
 {
-	$query = "SELECT userid FROM " . $DBPrefix . "rememberme WHERE hashkey = :RM_ID";
-	$params = array();
-	$params[] = array(':RM_ID', alphanumeric($_COOKIE['WEBID_RM_ID']), 'str');
-	$db->query($query, $params);
-	if ($db->numrows() > 0)
-	{
-		// generate a random unguessable token
-		$_SESSION['csrftoken'] = md5(uniqid(rand(), true));
-		$id = mysql_result($res, 0, 'userid');
-		$query = "SELECT hash, password FROM " . $DBPrefix . "users WHERE id = :user_id";
-		$params = array();
-		$params[] = array(':user_id', $id, 'int');
-		$db->query($query, $params);
-		$password = $db->result('password');
-		$_SESSION['WEBID_LOGGED_IN'] 		= $id;
-		$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($password, $db->result('hash'));
-		$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
-	}
+	$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET);
 }
+else
+{
+	$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
+}
+
+$system = new global_class();
+$template = new Template();
+$user = new User();
+include INCLUDE_PATH . 'messages.inc.php';
+$system->loadAuctionTypes();
+set_error_handler('WeBidErrorHandler', $error_reporting);
 
 if($user->logged_in)
 {
-	$system->tdiff = ($user->user_data['timecorrection'] + date('I')) * 3600;
-	$system->ctime = time() + $system->tdiff;
+	$system->tdiff = $system->getUserOffset(time(), $user->user_data['timezone']);
+	$system->ctime = $system->getUserTimestamp(time(), $user->user_data['timezone']) + $system->tdiff;
 }
 
 // delete REDIRECT_AFTER_LOGIN value automatically so you are never forwarded to an old page
@@ -100,4 +81,3 @@ if(isset($_SESSION['REDIRECT_AFTER_LOGIN']) && !defined('AtLogin'))
 }
 
 $template->set_template();
-?>

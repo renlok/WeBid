@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,7 +18,7 @@ if (!defined('AdminFuncCall'))
 {
 	function checklogin()
 	{
-		global $_SESSION, $system, $DBPrefix, $db;
+		global $_SESSION, $DBPrefix, $db;
 
 		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS']))
 		{
@@ -43,7 +43,7 @@ if (!defined('AdminFuncCall'))
 
 	function getAdminNotes()
 	{
-		global $_SESSION, $system, $DBPrefix, $db;
+		global $_SESSION, $DBPrefix, $db;
 
 		if (isset($_SESSION['WEBID_ADMIN_NUMBER']) && isset($_SESSION['WEBID_ADMIN_IN']) && isset($_SESSION['WEBID_ADMIN_PASS']))
 		{
@@ -120,7 +120,7 @@ if (!defined('AdminFuncCall'))
 	{
 		if(false !== ($str = file_get_contents($url)))
 		{
-			return $str; 
+			return $str;
 		}
 		elseif(($handle = @fopen($url, 'r')) !== false)
 		{
@@ -145,6 +145,83 @@ if (!defined('AdminFuncCall'))
 		return false;
 	}
 
+	function resync_category_counters()
+	{
+		global $db, $system, $DBPrefix;
+		// update categories
+		$catscontrol = new MPTTcategories();
+		$query = "UPDATE " . $DBPrefix . "categories set counter = 0, sub_counter = 0";
+		$db->direct_query($query);
+
+		$query = "SELECT COUNT(*) AS COUNT, category FROM " . $DBPrefix . "auctions
+				WHERE closed = 0 AND starts <= :time AND suspended = 0 GROUP BY category";
+		$params = array();
+		$params[] = array(':time', time(), 'int');
+		$db->query($query, $params);
+
+		$cat_data = $db->fetchall();
+		foreach ($cat_data as $row)
+		{
+			$row['COUNT'] = $row['COUNT'] * 1; // force it to be a number
+			if ($row['COUNT'] > 0 && !empty($row['category'])) // avoid some errors
+			{
+				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+				$params = array();
+				$params[] = array(':cat_id', $row['category'], 'int');
+				$db->query($query, $params);
+				$parent_node = $db->result();
+
+				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+				for ($i = 0; $i < count($crumbs); $i++)
+				{
+					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + :COUNT WHERE cat_id = :cat_id";
+					$params = array();
+					$params[] = array(':COUNT', $row['COUNT'], 'int');
+					$params[] = array(':cat_id', $crumbs[$i]['cat_id'], 'int');
+					$db->query($query, $params);
+				}
+				$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + :COUNT WHERE cat_id = :cat_id";
+				$params = array();
+				$params[] = array(':COUNT', $row['COUNT'], 'int');
+				$params[] = array(':cat_id', $row['category'], 'int');
+				$db->query($query, $params);
+			}
+		}
+
+		if ($system->SETTINGS['extra_cat'] == 'y')
+		{
+			$query = "SELECT COUNT(*) AS COUNT, secondcat FROM " . $DBPrefix . "auctions
+					WHERE closed = 0 AND starts <= :time AND suspended = 0 AND secondcat != 0 GROUP BY secondcat";
+			$params = array();
+			$params[] = array(':time', time(), 'int');
+			$db->query($query, $params);
+
+			$cat_data = $db->fetchall();
+			foreach ($cat_data as $row)
+			{
+				$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+				$params = array();
+				$params[] = array(':cat_id', $row['secondcat'], 'int');
+				$db->query($query, $params);
+				$parent_node = $db->result();
+
+				$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+				for ($i = 0; $i < count($crumbs); $i++)
+				{
+					$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter + :COUNT WHERE cat_id = :cat_id";
+					$params = array();
+					$params[] = array(':COUNT', $row['COUNT'], 'int');
+					$params[] = array(':cat_id', $crumbs[$i]['cat_id'], 'int');
+					$db->query($query, $params);
+				}
+				$query = "UPDATE " . $DBPrefix . "categories SET counter = counter + :COUNT WHERE cat_id = :cat_id";
+				$params = array();
+				$params[] = array(':COUNT', $row['COUNT'], 'int');
+				$params[] = array(':cat_id', $row['secondcat'], 'int');
+				$db->query($query, $params);
+			}
+		}
+	}
+
 	define('AdminFuncCall', 1);
 }
-?>

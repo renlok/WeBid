@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,24 +15,16 @@
 define('InAdmin', 1);
 $current_page = 'fees';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['invoice_yellow_line'] = $system->cleanvars($_POST['invoice_yellow_line']);
-	$system->SETTINGS['invoice_thankyou'] = $system->cleanvars($_POST['invoice_thankyou']);
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET
-				invoice_yellow_line = :invoice_yellow_line,
-				invoice_thankyou = :invoice_thankyou";
-	$params = array();
-	$params[] = array(':invoice_yellow_line', $system->SETTINGS['terms'], 'str');
-	$params[] = array(':invoice_thankyou', $system->SETTINGS['termstext'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("invoice_yellow_line", $system->cleanvars($_POST['invoice_yellow_line']),"str");
+	$system->writesetting("invoice_thankyou", $system->cleanvars($_POST['invoice_thankyou']),"str");
 	$ERR = $MSG['1095'];
 }
 
@@ -46,8 +38,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['1094']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

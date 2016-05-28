@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,8 +15,9 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'outstanding.php';
 	header('location: user_login.php');
 	exit;
@@ -41,8 +42,8 @@ $db->query($query, $params);
 $TOTALAUCTIONS = $db->result('COUNT');
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
-$query = "SELECT w.id, w.winner, a.title, a.shipping_cost, w.bid, w.qty, a.id As auc_id, a.shipping_cost_additional, a.shipping FROM " . $DBPrefix . "winners w
-		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
+$query = "SELECT w.id, w.winner, w.auc_title, w.auc_shipping_cost, a.shipping_cost, w.bid, w.qty, w.auction As auc_id, a.additional_shipping_cost, a.shipping FROM " . $DBPrefix . "winners w
+		JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 		WHERE w.paid = 0 AND w.winner = :user_id
 		LIMIT :OFFSET, :per_page";
 $params = array();
@@ -53,25 +54,25 @@ $db->query($query, $params);
 
 while ($row = $db->fetch())
 {
-	$shipping_cost = ($row['shipping'] == 1) ? $row['shipping_cost'] : 0;
-	$additional_shipping_cost = $row['additional_shipping_cost'] * ($row['qty'] - 1);
+	$shipping_data = calculate_shipping_data($row, $row['qty'], false);
 	$template->assign_block_vars('to_pay', array(
+			'ID' => $row['id'],
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['auc_id'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => $system->uncleanvars($row['auc_title']),
 			'PAY_SHIPPING' => ($row['shipping'] == 1),
-			'SHIPPING' => $system->print_money($shipping_cost),
-			'ADDITIONAL_SHIPPING_COST' => $system->print_money($additional_shipping_cost),
-			'TOTAL_SHIPPING_COST' => $system->print_money($shipping_cost + $additional_shipping_cost),
+			'SHIPPING' => $system->print_money($shipping_data['shipping_cost']),
+			'ADDITIONAL_SHIPPING_COST' => $system->print_money($shipping_data['additional_shipping_cost']),
+			'TOTAL_SHIPPING_COST' => $system->print_money($shipping_data['shipping_total']),
 			'ADDITIONAL_SHIPPING' => $system->print_money($row['additional_shipping_cost']),
 			'ADDITIONAL_SHIPPING_PLAIN' => $row['additional_shipping_cost'],
 			'ADDITIONAL_SHIPPING_QUANTITYS' => $row['qty'] - 1,
 			'QUANTITY' => $row['qty'],
 			'BID' => $system->print_money($row['bid'] * $row['qty']),
-			'TOTAL' => $system->print_money($row['shipping_cost'] + ($row['bid'] * $row['qty']) + ($row['additional_shipping_cost'] * ($row['qty'] - 1))),
+			'TOTAL' => $system->print_money(($row['bid'] * $row['qty']) + $shipping_data['shipping_total']),
 			'AUC_ID' => $row['auc_id'],
 			'WINID'=> $row['id'],
 
-			'B_NOTITLE' => (empty($row['title']))
+			'B_NOTITLE' => (empty($row['auc_title']))
 			));
 }
 
@@ -112,10 +113,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['422'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'outstanding.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

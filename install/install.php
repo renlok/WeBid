@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -11,13 +11,19 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
- 
+
 session_start();
+define('InWeBid', 1);
 include 'functions.php';
+include '../includes/database/Database.php';
+include '../includes/database/DatabasePDO.php';
 define('InInstaller', 1);
 
-$main_path = getmainpath();
-$thisversion = this_version();
+$db = new DatabasePDO();
+
+define('MAIN_PATH', getmainpath());
+$package_version = package_version();
+$settings_version = 'Unknown';
 echo print_header(false);
 
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
@@ -29,26 +35,19 @@ switch($step)
 		include '../includes/config.inc.php';
 		include 'sql/dump.inc.php';
 		$queries = count($query);
-		if (!mysql_connect($DbHost, $DbUser, $DbPassword))
-		{
-			die('<p>Cannot connect to ' . $DbHost . '</p>');
-		}
-		if (!mysql_select_db($DbDatabase))
-		{
-			die('<p>Cannot select database</p>');
-		}
-		echo ($_GET['n'] * 25) . '% Complete<br>';
+		$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
 		$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
 		$fourth = floor($queries/4);
-		$to = ($_GET['n'] == 4) ? $queries : ($fourth * $_GET['n']);
+		$to = (($queries - $from) > 50) ? $from + 50 : $queries;
+		echo 'Writing to database: ' . floor($to / $queries * 100) . '% Complete<br>';
 		for ($i = $from; $i < $to; $i++)
 		{
-			mysql_query($query[$i]) or die(mysql_error() . "\n\t" . $query[$i]);
+			$db->direct_query($query[$i]);
 		}
 		flush();
 		if ($i < $queries)
 		{
-			echo '<script type="text/javascript">window.location = "install.php?step=2&URL=' . urlencode($_GET['URL']) . '&EMail=' . $_GET['EMail'] . '&cats=' . $_GET['cats'] . '&n=' . ($_GET['n'] + 1) . '&from=' . $i . '";</script>';
+			echo '<script type="text/javascript">window.location = "install.php?step=2&URL=' . urlencode($_GET['URL']) . '&EMail=' . $_GET['EMail'] . '&cats=' . $_GET['cats'] . '&from=' . $i . '";</script>';
 		}
 		else
 		{
@@ -63,17 +62,10 @@ switch($step)
 		}
 		break;
 	case 1:
-		if (!mysql_connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass']))
-		{
-			die('<p>Cannot connect to ' . $DbHost . ' with the supplied username and password. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
-		}
-		if (!mysql_select_db($_POST['DBName']))
-		{
-			die('<p>Cannot select database ' . $_POST['DBName'] . '. <a href="#" onClick="history.go(-1)">Go Back</a></p>');
-		}
+		$db->connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass'], $_POST['DBName'], $_POST['DBPrefix']);
 		$cats = (isset($_POST['importcats'])) ? 1 : 0;
 		echo '<p><b>Step 1:</b> Writing config file...</p>';
-		$path = (!get_magic_quotes_gpc()) ? str_replace('\\', '\\\\', $_POST['mainpath']) : $_POST['mainpath'];
+		$path = str_replace('\\', '\\\\', $_POST['mainpath']);
 		$hash = md5(microtime() . rand(0,50));
 		$_SESSION['hash'] = $hash;
 		// generate config file
@@ -83,7 +75,7 @@ switch($step)
 		$content .= '$DbUser	 = "' . $_POST['DBUser'] . '";' . "\n";
 		$content .= '$DbPassword = "' . $_POST['DBPass'] . '";' . "\n";
 		$content .= '$DBPrefix	= "' . $_POST['DBPrefix'] . '";' . "\n";
-		$content .= '$main_path	= "' . $path . '";' . "\n";
+		$content .= '$main_path = "' . $path . '";' . "\n";
 		$content .= '$MD5_PREFIX = "' . $hash . '";' . "\n";
 		$content .= '?>';
 		$output = makeconfigfile($content, $path);
@@ -94,7 +86,7 @@ switch($step)
 			{
 				echo '<p>You appear to already have an installation on WeBid running would you like to do a <a href="update.php">upgrade instead?</a></p>';
 			}
-			echo '<p>Complete, now to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '&n=1">step 2</a></b></p>';
+			echo '<p>Complete, now to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '">step 2</a></b></p>';
 		}
 		else
 		{
@@ -102,7 +94,7 @@ switch($step)
 			echo '<p><textarea style="width:500px; height:500px;">
 '.$content.'
 			</textarea></p>';
-			echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '&n=1">step 2</a></b></p>';
+			echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '">step 2</a></b></p>';
 		}
 		break;
 	default:
@@ -114,5 +106,3 @@ switch($step)
 		echo show_config_table(true);
 	break;
 }
-
-?>

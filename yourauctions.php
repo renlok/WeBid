@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,12 +15,15 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions.php';
 	header('location: user_login.php');
 	exit;
 }
+// check if the user can access this page
+$user->checkSuspended();
 
 $NOW = time();
 $NOWB = date('Ymd');
@@ -29,24 +32,27 @@ $user_message = '';
 // DELETE OR CLOSE OPEN AUCTIONS
 if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 {
-	if (is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
+	if (isset($_POST['O_delete']) && is_array($_POST['O_delete']) && count($_POST['O_delete']) > 0)
 	{
 		$removed = 0;
 		foreach ($_POST['O_delete'] as $k => $v)
 		{
 			$v = intval($v);
 			// Pictures Gallery
-			if ($dir = @opendir($upload_path . $v))
+			if (is_dir(UPLOAD_PATH . $v))
 			{
-				while ($file = readdir($dir))
+				if ($dir = opendir(UPLOAD_PATH . $v))
 				{
-					if ($file != '.' && $file != '..')
+					while ($file = readdir($dir))
 					{
-						@unlink($upload_path . $v . '/' . $file);
+						if ($file != '.' && $file != '..')
+						{
+							@unlink(UPLOAD_PATH . $v . '/' . $file);
+						}
 					}
+					closedir($dir);
+					rmdir(UPLOAD_PATH . $v);
 				}
-				closedir($dir);
-				@rmdir($upload_path . $v);
 			}
 
 			// Delete auction views
@@ -70,7 +76,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 		$user_message .= sprintf($MSG['1145'], count($_POST['O_delete']));
 	}
 
-	if (is_array($_POST['closenow']) && count($_POST['closenow']) > 0)
+	if (isset($_POST['closenow']) && is_array($_POST['closenow']) && count($_POST['closenow']) > 0)
 	{
 		foreach ($_POST['closenow'] as $k => $v)
 		{
@@ -104,6 +110,7 @@ else
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+
 // Handle columns sorting variables
 if (!isset($_SESSION['oa_ord']) && empty($_GET['oa_ord']))
 {
@@ -138,7 +145,7 @@ else
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 	WHERE user = :user_id AND closed = 0
 	AND starts <= :time AND suspended = 0
-	ORDER BY " . $_SESSION['ca_ord'] . " " . $_SESSION['ca_type'] . " LIMIT :offset, :perpage";
+	ORDER BY " . $_SESSION['oa_ord'] . " " . $_SESSION['oa_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $params[] = array(':time', $NOW, 'int');
@@ -178,8 +185,8 @@ while ($item = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => $system->uncleanvars($item['title']),
-			'STARTS' => FormatDate($item['starts']),
-			'ENDS' => FormatDate($item['ends']),
+			'STARTS' => FormatDate($item['starts'], '/', false),
+			'ENDS' => FormatDate($item['ends'], '/', false),
 			'BID' => $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 			'RELIST' => $item['relist'],
@@ -224,10 +231,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['619'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourauctions.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

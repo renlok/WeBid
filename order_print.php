@@ -1,6 +1,6 @@
-<?php 
+<?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'functions_invoices.php';
+include INCLUDE_PATH . 'functions_invoices.php';
 
 $fromadmin = true;
 // first check if from admin
@@ -21,8 +21,9 @@ if (!(isset($_GET['hash']) && $_SESSION['INVOICE_RETURN'] == 'admin/invoice.php'
 {
 	$fromadmin = false;
 	// If user is not logged in redirect to login page
-	if (!$user->is_logged_in())
+	if (!$user->checkAuth())
 	{
+		$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 		header('location: user_login.php');
 		exit;
 	}
@@ -48,13 +49,13 @@ else
 	}
 }
 
-$vat = 20; // NEEDS TO BE SET TO AN ADMIN OPTION
+$vat = 20; // set default
 if ($auction)
 {
 	// get auction data
-	$query = "SELECT w.id, w.winner, w.closingdate As date, a.id AS auc_id, a.title, a.shipping_cost, a.shipping_cost_additional, a.shipping, a.shipping_terms, w.bid, w.qty, a.user As seller_id, a.tax, a.taxinc
-			FROM " . $DBPrefix . "auctions a
-			LEFT JOIN " . $DBPrefix . "winners w ON (a.id = w.auction)
+	$query = "SELECT w.id, w.winner, w.closingdate As date, w.auc_title, w.auc_shipping_cost, w.auction AS auc_id, a.title, a.shipping_cost, a.additional_shipping_cost, a.shipping, a.shipping_terms, w.bid, w.qty, w.seller As seller_id, a.tax, a.taxinc
+			FROM " . $DBPrefix . "winners w
+			LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 			WHERE a.id = :auc_id AND w.id = :winner_id";
 	$params = array();
 	$params[] = array(':auc_id', $_POST['pfval'], 'int');
@@ -80,7 +81,7 @@ if ($auction)
 	$winner = getAddressWinner($data['winner']);
 	$vat = getTax(true, $winner['country'], $seller['country']);
 	$title = $system->SETTINGS['sitename'] . ' - ' . $system->uncleanvars($data['title']);
-	$additional_shipping = $data['shipping_cost_additional'] * ($data['qty'] - 1);
+	$additional_shipping = $data['additional_shipping_cost'] * ($data['qty'] - 1);
 	$shipping_cost = ($data['shipping'] == 1) ? ($data['shipping_cost'] + $additional_shipping) : 0;
 	$paysubtotal = ($data['bid']* $data['qty']);
 	$payvalue = $paysubtotal + $shipping_cost;
@@ -93,7 +94,7 @@ if ($auction)
 	$winner_address .= (!empty($winner['country'])) ? '<br>' . $winner['country'] : '';
 	$winner_address .= (!empty($winner['zip'])) ? '<br>' . $winner['zip'] : '';
 
-	if ($data['tax'] == 'n') // no tax
+	if ($data['tax'] == 0) // no tax
 	{
 		$unitexcl = $unitpriceincl = $paysubtotal;
 		$subtotal = $totalinc = $payvalue;
@@ -101,7 +102,7 @@ if ($auction)
 	}
 	else
 	{
-		if ($data['taxinc'] == 'y') // tax is included in price
+		if ($data['taxinc'] == 1) // tax is included in price
 		{
 			$unitexcl = vatexcluding($paysubtotal); // auction price - tax
 			$unitpriceincl = $paysubtotal; // auction price & tax
@@ -126,10 +127,10 @@ if ($auction)
 			'AUCTION_TITLE' => strtoupper($title),
 			'ITEM_QUANTITY' => $data['qty'],
 
-			'UNIT_PRICE' => $system->print_money($unitexcl, true, false), // auction price
-			'UNIT_PRICE_WITH_TAX' => $system->print_money($unitpriceincl, true, false),// auction price & tax
-			'TOTAL' => $system->print_money($subtotal, true, false), // total invoice
-			'TOTAL_WITH_TAX' => $system->print_money($totalinc, true, false) // total invoice & tax
+			'UNIT_PRICE' => $system->print_money($unitexcl), // auction price
+			'UNIT_PRICE_WITH_TAX' => $system->print_money($unitpriceincl),// auction price & tax
+			'TOTAL' => $system->print_money($subtotal), // total invoice
+			'TOTAL_WITH_TAX' => $system->print_money($totalinc) // total invoice & tax
 			));
 }
 else
@@ -170,14 +171,14 @@ else
 
 	// fee specific details
 	$template->assign_vars(array(
-			'TOTAL' => $system->print_money($totals[1], true, false),
-			'TOTAL_WITH_TAX' => $system->print_money($totals[0], true, false)
+			'TOTAL' => $system->print_money($totals[1]),
+			'TOTAL_WITH_TAX' => $system->print_money($totals[0])
 			));
 }
 
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR,
-		'LOGO' => $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['theme'] . '/' . $system->SETTINGS['logo'],
+		'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'],
 		'CHARSET' => $CHARSET,
 		'LANGUAGE' => $language,
 		'SENDER' => $seller['nick'],
@@ -189,9 +190,9 @@ $template->assign_vars(array(
 		'SALE_ID' => (($auction) ? 'AUC' : 'FEE') . $data['id'],
 		// tax start
 		'TAX' => $vat . '%',
-		'SHIPPING_COST' => $system->print_money($shipping_cost, true, false),
-		'VAT_TOTAL' => $system->print_money($totalvat, true, false),
-		'TOTAL_SUM' => $system->print_money($payvalue, true, false),
+		'SHIPPING_COST' => $system->print_money($shipping_cost),
+		'VAT_TOTAL' => $system->print_money($totalvat),
+		'TOTAL_SUM' => $system->print_money($payvalue),
 		// tax end
 		'YELLOW_LINE' => $system->SETTINGS['invoice_yellow_line'],
 		'THANKYOU' => $system->SETTINGS['invoice_thankyou'],
@@ -204,4 +205,3 @@ $template->set_filenames(array(
 		'body' => 'order_invoice.tpl'
 		));
 $template->display('body');
-?>

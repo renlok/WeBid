@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,14 +13,8 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'membertypes.inc.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
 
-foreach ($membertypes as $idm => $memtypearr)
-{
-	$memtypesarr[$memtypearr['feedbacks']] = $memtypearr;
-}
-
-ksort($memtypesarr, SORT_NUMERIC);
 $NOW = time();
 
 if (isset($_REQUEST['auction_id']))
@@ -33,8 +27,9 @@ $ws = (isset($_GET['ws'])) ? $_GET['ws'] : 'w';
 
 if (isset($_POST['addfeedback'])) // submit the feedback
 {
-	if (!$user->is_logged_in())
+	if (!$user->checkAuth())
 	{
+		$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 		header('location: user_login.php');
 		exit;
 	}
@@ -69,13 +64,13 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 				else
 				{
 					// load hashing class to check password
-					include $include_path . 'PasswordHash.php';
+					include PACKAGE_PATH . 'PasswordHash.php';
 					$phpass = new PasswordHash(8, false);
 					if ($system->SETTINGS['usersauth'] == 'n' || $phpass->CheckPassword($_POST['TPL_password'], $user->user_data['password']))
 					{
 						$secTPL_feedback = $system->cleanvars($_POST['TPL_feedback']);
 						$uid = ($ws == 'w') ? $_REQUEST['sid'] : $_REQUEST['wid'];
-						$sql = "UPDATE " . $DBPrefix . "users SET rate_sum = rate_sum + :rate_sum, rate_num = rate_num + 1 WHERE id = :user_id";
+						$query = "UPDATE " . $DBPrefix . "users SET rate_sum = rate_sum + :rate_sum, rate_num = rate_num + 1 WHERE id = :user_id";
 						$params = array();
 						$params[] = array(':rate_sum', $_POST['TPL_rate'], 'int');
 						$params[] = array(':user_id', $uid, 'int');
@@ -85,7 +80,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 						{
 							$secTPL_feedback = $system->filter($secTPL_feedback);
 						}
-						$sql = "INSERT INTO " . $DBPrefix . "feedbacks (rated_user_id, rater_user_nick, feedback, rate, feedbackdate, auction_id) VALUES
+						$query = "INSERT INTO " . $DBPrefix . "feedbacks (rated_user_id, rater_user_nick, feedback, rate, feedbackdate, auction_id) VALUES
 							(:user_id, :user_nick, :feedback, :rate, :time, :auc_id)";
 						$params = array();
 						$params[] = array(':user_id', $uid, 'int');
@@ -103,12 +98,12 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 						{
 							$sqlset = "feedback_win = 1";
 						}
-						$sql = "UPDATE " . $DBPrefix . "winners SET $sqlset
+						$query = "UPDATE " . $DBPrefix . "winners SET $sqlset
 								WHERE auction = :auc_id AND winner = :winner AND seller = :seller";
 						$params = array();
 						$params[] = array(':auc_id', $auction_id, 'int');
 						$params[] = array(':winner', $_REQUEST['wid'], 'int');
-						$params[] = array(':seller', $_REQUEST['sid'], 'int');						
+						$params[] = array(':seller', $_REQUEST['sid'], 'int');
 						$db->query($query, $params);
 						header ('location: feedback.php?faction=show&id=' . intval($uid));
 						exit;
@@ -158,23 +153,16 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 		$them = $_REQUEST['sid'];
 		$sbmsg = $MSG['125'];
 	}
-	if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-	{
-		$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-		$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-		header('Location: ' . $sslurl . 'feedback.php?auction_id=' . $auction_id . '&sid=' . $_REQUEST['sid'] . '&wid=' . $_REQUEST['wid'] . '&ws=' . $_REQUEST['ws']);
-		exit;
-	}
 
 	$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = :auc_id LIMIT 1";
 	$params = array();
-	$params[] = array(':auc_id', $auction_id, 'int');				
+	$params[] = array(':auc_id', $auction_id, 'int');
 	$db->query($query, $params);
 	$item_title = $db->result('title');
 
-	$sql = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
-	$params[] = array(':user_id', $secid, 'int');						
+	$params[] = array(':user_id', $secid, 'int');
 	$db->query($query, $params);
 
 	if ($db->numrows() > 0)
@@ -182,9 +170,9 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 		$arr = $db->result();
 		$TPL_nick = $arr['nick'];
 		$i = 0;
-		foreach ($memtypesarr as $k => $l)
+		foreach ($membertypes as $k => $l)
 		{
-			if ($k >= $arr['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes) - 1))
 			{
 				$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 				break;
@@ -210,14 +198,16 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	}
 	else
 	{
+		// set page values
 		$secid = intval($_GET['id']);
 		$thispage = (isset($_GET['pg'])) ? $_GET['pg'] : 1;
 		if ($thispage == 0) $thispage = 1;
 		$left_limit = ($thispage - 1) * $system->SETTINGS['perpage'];
+		$pages = 1;
 
 		$query = "SELECT rate_sum, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
 		$params = array();
-		$params[] = array(':user_id', $secid, 'int');					
+		$params[] = array(':user_id', $secid, 'int');
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
@@ -228,7 +218,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			// get number of pages
 			$pages = ceil($total / $system->SETTINGS['perpage']);
 
-			$sql = "SELECT f.*, a.title, u.id As uId, u.rate_num, u.rate_sum
+			$query = "SELECT f.*, a.title, u.id As uId, u.rate_num, u.rate_sum
 				FROM " . $DBPrefix . "feedbacks f
 				LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.nick = f.rater_user_nick)
@@ -237,16 +227,16 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			$params = array();
 			$params[] = array(':user_id', $secid, 'int');
 			$params[] = array(':left_limit', $left_limit, 'int');
-			$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');					
+			$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 			$db->query($query, $params);
 			$i = 0;
 			$feed_disp = array();
 			while ($arrfeed = $db->fetch())
 			{
 				$j = 0;
-				foreach ($memtypesarr as $k => $l)
+				foreach ($membertypes as $k => $l)
 				{
-					if ($k >= $arrfeed['rate_sum'] || $j++ == (count($memtypesarr) - 1))
+					if ($k >= $arrfeed['rate_sum'] || $j++ == (count($membertypes) - 1))
 					{
 						$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 						break;
@@ -274,11 +264,6 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 						'FEEDBACK' => nl2br($arrfeed['feedback'])
 						));
 				$i++;
-			}
-			else
-			{
-				$TPL_err = 1;
-				$TPL_errmsg = $ERR_105;
 			}
 		}
 	}
@@ -310,15 +295,15 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 {
 	$template->assign_vars(array(
 			'ERROR' => (isset($TPL_errmsg)) ? $TPL_errmsg : '',
-			'USERNICK' => $TPL_nick,
-			'USERFB' => $TPL_feedbacks_sum,
+			'USERNICK' => (isset($TPL_nick)) ? $TPL_nick : '',
+			'USERFB' => (isset($TPL_feedbacks_sum)) ? $TPL_feedbacks_sum : '',
 			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
 			'AUCT_ID' => $auction_id,
 			'AUCT_TITLE' => $item_title,
 			'WID' => $_GET['wid'],
 			'SID' => $_GET['sid'],
 			'WS' => $ws,
-			'FEEDBACK' => $TPL_feedback,
+			'FEEDBACK' => (isset($secTPL_feedback)) ? $secTPL_feedback : '',
 			'RATE1' => (!isset($_POST['TPL_rate']) || $_POST['TPL_rate'] == 1) ? ' checked="true"' : '',
 			'RATE2' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == 0) ? ' checked="true"' : '',
 			'RATE3' => (isset($_POST['TPL_rate']) && $_POST['TPL_rate'] == -1) ? ' checked="true"' : '',
@@ -337,16 +322,16 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 
 if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 {
-	$sql = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
-	$params[] = array(':user_id', $_REQUEST['id'], 'int');				
+	$params[] = array(':user_id', $_REQUEST['id'], 'int');
 	$db->query($query, $params);
 	if ($arr = $db->fetch())
 	{
 		$TPL_rate_ratio_value = '';
-		foreach ($memtypesarr as $k => $l)
+		foreach ($membertypes as $k => $l)
 		{
-			if ($k >= $arr['rate_sum'] || $i++ == (count($memtypesarr) - 1))
+			if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes) - 1))
 			{
 				$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
 				break;
@@ -354,8 +339,8 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 		}
 	}
 	$template->assign_vars(array(
-			'USERNICK' => $TPL_nick,
-			'USERFB' => $TPL_feedbacks_num,
+			'USERNICK' => (isset($TPL_nick)) ? $TPL_nick : '',
+			'USERFB' => (isset($TPL_feedbacks_num)) ? $TPL_feedbacks_num : '',
 			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
 			'PAGENATION' => $echofeed,
 			'AUCT_ID' => $auction_id,
@@ -368,4 +353,3 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	$template->display('body');
 	include 'footer.php';
 }
-?>

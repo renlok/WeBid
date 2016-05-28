@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,8 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'dates.inc.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 $catscontrol = new MPTTcategories();
 
 // Get parameters from the URL
@@ -133,7 +132,7 @@ else
 		// Retrieve the translated category name
 		$row['cat_name'] = $category_names[$row['cat_id']];
 		$catimage = (!empty($row['cat_image'])) ? '<img src="' . $row['cat_image'] . '" border=0>' : '';
-		$TPL_main_value .= "\t" . '<td ' . $BG . ' WIDTH="33%">' . $catimage . '<a href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $row['cat_id'] . '">' . $row['cat_name'] . $count_string . '</a></td>' . "\n";
+		$TPL_main_value .= "\t" . '<td class="cattd" ' . $BG . ' WIDTH="33%">' . $catimage . '<a class="catclass" href="' . $system->SETTINGS['siteurl'] . 'browse.php?id=' . $row['cat_id'] . '">' . $row['cat_name'] . $count_string . '</a></td>' . "\n";
 
 		++$cycle;
 		if ($cycle == 4)
@@ -208,7 +207,7 @@ else
 			WHERE " . $insql . " starts <= :time
 			AND closed = 0
 			AND suspended = 0
-			AND featured = 'y'";
+			AND featured = 1";
 	$params_feat = array();
 	$params_feat[] = array(':time', $NOW, 'int');
 	if (!empty($_POST['catkeyword']))
@@ -219,7 +218,7 @@ else
 	$query_feat .= " ORDER BY ends ASC LIMIT :offset, 5";
 	$params_feat[] = array(':offset', (($PAGE - 1) * 5), 'int');
 
-	include $include_path . 'browseitems.inc.php';
+	include INCLUDE_PATH . 'browseitems.inc.php';
 	browseItems($query, $params, $query_feat, $params_feat, $TOTALAUCTIONS, 'browse.php', 'id=' . $id);
 
 	$template->assign_vars(array(
@@ -237,4 +236,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

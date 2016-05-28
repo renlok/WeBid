@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,8 +15,9 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'selling.php';
 	header('location: user_login.php');
 	exit;
@@ -56,20 +57,17 @@ $query = "SELECT a.title, a.ends, w.id, w.auction, w.bid, w.qty, w.winner, w.sel
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
-		WHERE (a.closed = 1 OR a.bn_only = 'y') AND a.suspended = 0 AND a.user = :seller_id
+		WHERE (a.closed = 1 OR a.bn_only = 1) AND a.suspended = 0 AND a.user = :seller_id
 		" . $searchid . "
 		ORDER BY w.closingdate DESC";
 $params[] = array(':seller_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
 
-$sslurl = ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y') ? str_replace('http://', 'https://', $system->SETTINGS['siteurl']) : $system->SETTINGS['siteurl'];
-$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-
 $i = 0;
 $winner_data = $db->fetchall();
 foreach ($winner_data as $row)
 {
-	$fblink = ($row['feedback_sel'] == 0) ? '(<a href="' . $sslurl . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $row['winner'] . '&sid=' . $row['seller'] . '&ws=s">' . $MSG['207'] . '</a>)' : '';
+	$fblink = ($row['feedback_sel'] == 0) ? '(<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $row['winner'] . '&sid=' . $row['seller'] . '&ws=s">' . $MSG['207'] . '</a>)' : '';
 	$template->assign_block_vars('a', array(
 		'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 		'TITLE' => $system->uncleanvars($row['title']),
@@ -98,10 +96,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['453'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'selling.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

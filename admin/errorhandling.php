@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,27 +15,22 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include $main_path . 'ckeditor/ckeditor.php';
-include $include_path . 'htmLawed.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
+include PACKAGE_PATH . 'htmLawed.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	// clean submission
-	$system->SETTINGS['errortext'] = htmLawed($_POST['errortext'], array('safe'=>1));
-	// Update database
-	$query = "UPDATE " . $DBPrefix . "settings SET errortext = :errortext";
-	$params = array();
-	$params[] = array(':errortext', $system->SETTINGS['errortext'], 'str');
-	$db->query($query, $params);
+	// clean submission and update database
+	$system->writesetting("errortext",htmLawed($_POST['errortext'], array('safe'=>1)),"str");
 	$ERR = $MSG['413'];
 }
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = $main_path . 'ckeditor/';
+$CKEditor->basePath = 'js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
@@ -49,8 +44,10 @@ $template->assign_vars(array(
 		'PAGENAME' => $MSG['409']
 		));
 
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'adminpages.tpl'
 		));
 $template->display('body');
+include 'footer.php';
 ?>

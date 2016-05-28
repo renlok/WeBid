@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,11 +13,12 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'dates.inc.php';
 
 if (isset($_GET['user_id']) && !empty($_GET['user_id']))
 {
 	$user_id = intval($_GET['user_id']);
+	// check trying to access valid user id
+	$user->checkUserValid($user_id);
 }
 elseif ($user->logged_in)
 {
@@ -25,13 +26,11 @@ elseif ($user->logged_in)
 }
 else
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'active_auctions.php';
 	header('location: user_login.php');
 	exit;
 }
-
-// check trying to access valid user id
-$user->is_valid_user($user_id);
 
 $NOW = time();
 
@@ -77,7 +76,7 @@ while ($row = $db->fetch())
 {
 	if (strlen($row['pict_url']) > 0)
 	{
-		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $row['id'] . '/' . $row['pict_url'];
+		$row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'];
 	}
 	else
 	{
@@ -97,7 +96,7 @@ while ($row = $db->fetch())
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
 			'TITLE' => $system->uncleanvars($row['title']),
-			'BNIMG' => get_lang_img(($row['bn_only'] == 'n') ? 'buy_it_now.gif' : 'bn_only.png'),
+			'BNIMG' => get_lang_img(($row['bn_only'] == 0) ? 'buy_it_now.gif' : 'bn_only.png'),
 			'BNVALUE' => $row['buy_now'],
 			'BNFORMAT' => $system->print_money($row['buy_now']),
 			'BIDVALUE' => $row['current_bid'],
@@ -105,8 +104,8 @@ while ($row = $db->fetch())
 			'NUM_BIDS' => $num_bids,
 			'TIMELEFT' => FormatTimeLeft($difference),
 
-			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] == 'y' || $row['bn_only'] == 'n' && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),
-			'B_BNONLY' => ($row['bn_only'] == 'y')
+			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] || $row['bn_only'] == 0 && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),
+			'B_BNONLY' => ($row['bn_only'])
 			));
 	$k++;
 }
@@ -157,4 +156,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

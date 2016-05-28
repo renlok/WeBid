@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,23 +13,23 @@
  ***************************************************************************/
 
 include 'common.php';
-include $include_path . 'datacheck.inc.php';
+include INCLUDE_PATH . 'datacheck.inc.php';
 
 $NOW = time();
 $id = intval($_REQUEST['id']);
-// reformat bid to valid number
-$bid = round($system->input_money($_POST['bid']), 2);
+$bid = (isset($_POST['bid'])) ? $_POST['bid'] : 0;
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
-$bidder_id = $user->user_data['id'];
 $bidding_ended = false;
 
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5002'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'bid.php?id=' . $id;
 	header('location: user_login.php');
 	exit;
 }
 
+$bidder_id = $user->user_data['id'];
 if (in_array($user->user_data['suspended'], array(5, 6, 7)))
 {
 	header('location: message.php');
@@ -43,14 +43,6 @@ if (!$user->can_buy)
 	exit;
 }
 
-if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('location: ' . $sslurl . 'bid.php?id=' . $id . '&bid=' . $bid . '&qty=' . $qty);
-	exit;
-}
-
 function get_increment($val, $input_check = true)
 {
 	global $db, $DBPrefix, $system;
@@ -58,7 +50,7 @@ function get_increment($val, $input_check = true)
 	if ($input_check)
 		$val = $system->input_money($val);
 	// get the increment value for the current bid
-	$query = "SELECT increment FROM " . $DBPrefix . "increments 
+	$query = "SELECT increment FROM " . $DBPrefix . "increments
 			WHERE low <= :val AND high >= :val
 			ORDER BY increment DESC";
 	$params = array();
@@ -116,11 +108,16 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 {
 	$errmsg = $ERR_058;
 }
+else
+{
+	// reformat bid to valid number
+	$bid = round($system->input_money($bid), 2);
+}
 
 $Data = $db->result();
 $item_title = $system->uncleanvars($Data['title']);
 $item_id = $Data['id'];
-$seller_name = $Data['nick']; 
+$seller_name = $Data['nick'];
 $seller_email = $Data['email'];
 $atype = $Data['auction_type'];
 $aquantity = $Data['quantity'];
@@ -132,7 +129,7 @@ $reserve = $Data['reserve_price'];
 $c = $Data['ends'];
 $cbid = ($current_bid == 0) ? $minimum_bid : $current_bid;
 
-if (($Data['ends'] <= time() || $Data['closed'] == 1) && !isset($errmsg))
+if (($Data['ends'] <= time() || $Data['closed']) && !isset($errmsg))
 {
 	$errmsg = $ERR_614;
 }
@@ -149,15 +146,18 @@ $query = "SELECT bid, bidder FROM " . $DBPrefix . "bids WHERE auction = :auc_id 
 $params = array();
 $params[] = array(':auc_id', $id, 'int');
 $db->query($query, $params);
+$last_highest_bid = array();
 if ($db->numrows() > 0)
 {
-	$high_bid = $db->result('bid');
-	$WINNING_BIDDER = $db->result('bidder');
+	$last_highest_bid = $db->result();
+	$high_bid = $last_highest_bid['bid'];
+	$WINNING_BIDDER = $last_highest_bid['bidder'];
 	$ARETHEREBIDS = ' | <a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $id . '&history=view#history">' . $MSG['105'] . '</a>';
 }
 else
 {
 	$high_bid = $current_bid;
+	$WINNING_BIDDER = 0;
 }
 
 if ($customincrement > 0)
@@ -192,8 +192,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 		{
 			$errmsg = $ERR_004;
 		}
-		include $include_path . 'PasswordHash.php';
-		$phpass = new PasswordHash(8, false);		
+		include PACKAGE_PATH . 'PasswordHash.php';
+		$phpass = new PasswordHash(8, false);
 		if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 		{
 			$errmsg = $ERR_611;
@@ -218,11 +218,6 @@ if (isset($_POST['action']) && !isset($errmsg))
 				{
 					$send_email = true;
 				}
-				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 1 WHERE id = :auc_id";
-				$params = array();
-				$params[] = array(':bid', $bid, 'float');
-				$params[] = array(':auc_id', $id, 'int');
-				$db->query($query, $params);
 				// Also update bids table
 				$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
 				$params = array();
@@ -231,6 +226,13 @@ if (isset($_POST['action']) && !isset($errmsg))
 				$params[] = array(':bidder_id', $bidder_id, 'int');
 				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':qty', $qty, 'int');
+				$db->query($query, $params);
+				$current_bid_id = $db->lastInsertId();
+				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 1 WHERE id = :auc_id";
+				$params = array();
+				$params[] = array(':bid', $bid, 'float');
+				$params[] = array(':current_bid_id', $current_bid_id, 'int');
+				$params[] = array(':auc_id', $id, 'int');
 				$db->query($query, $params);
 				extend_auction($item_id, $c);
 				$bidding_ended = true;
@@ -256,8 +258,8 @@ if (isset($_POST['action']) && !isset($errmsg))
 				{
 					// Just update proxy_bid
 					$query = "UPDATE " . $DBPrefix . "proxybid SET bid = :newbid
-							  WHERE userid = :user_id
-							  AND itemid = :item_id AND bid = :oldbid";
+								WHERE userid = :user_id
+								AND itemid = :item_id AND bid = :oldbid";
 					$params = array();
 					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$params[] = array(':item_id', $id, 'int');
@@ -267,11 +269,6 @@ if (isset($_POST['action']) && !isset($errmsg))
 
 					if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve)
 					{
-						$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :reserve, num_bids = num_bids + 1 WHERE id = :auc_id";
-						$params = array();
-						$params[] = array(':reserve', $reserve, 'float');
-						$params[] = array(':auc_id', $id, 'int');
-						$db->query($query, $params);
 						// Also update bids table
 						$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :reserve, :time, :qty)";
 						$params = array();
@@ -280,6 +277,13 @@ if (isset($_POST['action']) && !isset($errmsg))
 						$params[] = array(':bidder_id', $bidder_id, 'int');
 						$params[] = array(':time', $NOW, 'int');
 						$params[] = array(':qty', $qty, 'int');
+						$db->query($query, $params);
+						$current_bid_id = $db->lastInsertId();
+						$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :reserve, current_bid_id = :current_bid_id, num_bids = num_bids + 1 WHERE id = :auc_id";
+						$params = array();
+						$params[] = array(':reserve', $reserve, 'float');
+						$params[] = array(':current_bid_id', $current_bid_id, 'int');
+						$params[] = array(':auc_id', $id, 'int');
 						$db->query($query, $params);
 					}
 					extend_auction($item_id, $c);
@@ -306,12 +310,6 @@ if (isset($_POST['action']) && !isset($errmsg))
 				{
 					$next_bid = $reserve;
 				}
-				// Only updates current bid if it is a new bidder, not the current one
-				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 1 WHERE id = :auc_id";
-				$params = array();
-				$params[] = array(':auc_id', $id, 'int');
-				$params[] = array(':bid', $next_bid, 'float');
-				$db->query($query, $params);
 				// Also update bids table
 				$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
 				$params = array();
@@ -320,6 +318,14 @@ if (isset($_POST['action']) && !isset($errmsg))
 				$params[] = array(':bid', $next_bid, 'float');
 				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':qty', $qty, 'int');
+				$db->query($query, $params);
+				$current_bid_id = $db->lastInsertId();
+				// Only updates current bid if it is a new bidder, not the current one
+				$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 1 WHERE id = :auc_id";
+				$params = array();
+				$params[] = array(':auc_id', $id, 'int');
+				$params[] = array(':current_bid_id', $current_bid_id, 'int');
+				$params[] = array(':bid', $next_bid, 'float');
 				$db->query($query, $params);
 				$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 1)";
 				$db->direct_query($query);
@@ -342,12 +348,29 @@ if (isset($_POST['action']) && !isset($errmsg))
 						$next_bid = $bid;
 					}
 
-					$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (:auc_id, :bidder_id, :bid)";
+					$query = "SELECT userid, itemid FROM " . $DBPrefix . "proxybid WHERE itemid = :item_id AND userid = :bidder_id";
 					$params = array();
-					$params[] = array(':auc_id', $id, 'int');
+					$params[] = array(':item_id', $id, 'int');
 					$params[] = array(':bidder_id', $bidder_id, 'int');
-					$params[] = array(':bid', $bid, 'float');
 					$db->query($query, $params);
+					if ($db->numrows() == 0)
+					{
+						$query = "INSERT INTO " . $DBPrefix . "proxybid VALUES (:auc_id, :bidder_id, :bid)";
+						$params = array();
+						$params[] = array(':auc_id', $id, 'int');
+						$params[] = array(':bidder_id', $bidder_id, 'int');
+						$params[] = array(':bid', $bid, 'float');
+						$db->query($query, $params);
+					}
+					else
+					{
+						$query = "UPDATE " . $DBPrefix . "proxybid SET bid = :newbid WHERE userid = :bidder_id AND itemid = :item_id";
+						$params = array();
+						$params[] = array(':bidder_id', $bidder_id, 'int');
+						$params[] = array(':item_id', $id, 'int');
+						$params[] = array(':newbid', $bid, 'float');
+						$db->query($query, $params);
+					}
 
 					if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve)
 					{
@@ -379,13 +402,15 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
+					$current_bid_id = $db->lastInsertId();
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + (1 + :fakebids))";
 					$params = array();
 					$params[] = array(':fakebids', $fakebids, 'int');
 					$db->query($query, $params);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = (num_bids + 1 + :fakebids) WHERE id = :auc_id";
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = (num_bids + 1 + :fakebids) WHERE id = :auc_id";
 					$params = array();
 					$params[] = array(':bid', $next_bid, 'float');
+					$params[] = array(':current_bid_id', $current_bid_id, 'int');
 					$params[] = array(':fakebids', $fakebids, 'int');
 					$params[] = array(':auc_id', $id, 'int');
 					$db->query($query, $params);
@@ -412,11 +437,13 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
+					$current_bid_id = $db->lastInsertId();
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 2)";
 					$db->direct_query($query);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 2 WHERE id = :auc_id";
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 2 WHERE id = :auc_id";
 					$params = array();
 					$params[] = array(':auc_id', $id, 'int');
+					$params[] = array(':current_bid_id', $current_bid_id, 'int');
 					$params[] = array(':bid', $cbid, 'float');
 					$db->query($query, $params);
 					if ($customincrement == 0)
@@ -468,11 +495,13 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
+					$current_bid_id = $db->lastInsertId();
 					$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 2)";
 					$db->direct_query($query);
-					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 2 WHERE id = :auc_id";
+					$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 2 WHERE id = :auc_id";
 					$params = array();
 					$params[] = array(':auc_id', $id, 'int');
+					$params[] = array(':current_bid_id', $current_bid_id, 'int');
 					$params[] = array(':bid', $cbid, 'float');
 					$db->query($query, $params);
 					if ($customincrement == 0)
@@ -500,7 +529,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
-			$PREVIOUSBID = result();
+			$PREVIOUSBID = $db->result();
 			if (($bid * $qty) <= ($PREVIOUSBID['bid'] * $PREVIOUSBID['quantity']))
 			{
 				$errmsg = $ERR_059;
@@ -516,27 +545,22 @@ if (isset($_POST['action']) && !isset($errmsg))
 			$params[] = array(':time', $NOW, 'int');
 			$params[] = array(':qty', $qty, 'int');
 			$db->query($query, $params);
+			$current_bid_id = $db->lastInsertId();
 			$query = "UPDATE " . $DBPrefix . "counters SET bids = (bids + 1)";
 			$db->direct_query($query);
-			$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, num_bids = num_bids + 1 WHERE id = :auc_id";
+			$query = "UPDATE " . $DBPrefix . "auctions SET current_bid = :bid, current_bid_id = :current_bid_id, num_bids = num_bids + 1 WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
+			$params[] = array(':current_bid_id', $current_bid_id, 'int');
 			$params[] = array(':bid', $bid, 'float');
 			$db->query($query, $params);
 		}
 	}
-	// send emails where needed
-	$query = "SELECT bidder, bid FROM " . $DBPrefix . "bids WHERE auction = :auc_id ORDER BY bid DESC";
-	$params = array();
-	$params[] = array(':auc_id', $id, 'int');
-	$db->query($query, $params);
 
 	// if there was a previous bidder tell them they have been outbid
-	if ($db->numrows() > 1)
+	if (count($last_highest_bid) > 0)
 	{
-		$OldWinner_id = $db->result('bidder');
-		$new_bid = $next_bid;
-		$OldWinner_bid = $system->print_money($new_bid - $increment);
+		$OldWinner_id = $last_highest_bid['bidder'];
 
 		$query = "SELECT nick, name, email FROM " . $DBPrefix . "users WHERE id = :user_id";
 		$params = array();
@@ -549,28 +573,31 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$OldWinner_email = $OldWinner['email'];
 	}
 	// Update counters table with the new bid
-	// Send notification if users keyword matches (Item Watch)
-	$query = "SELECT id, email, name, item_watch FROM " . $DBPrefix . "users WHERE item_watch != '' AND item_watch IS NOT NULL AND id != :user_id";
+	// Send notification if auction id matches (Item Watch)
+	$query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE :auc_id AND id != :user_id";
 	$params = array();
 	$params[] = array(':user_id', $bidder_id, 'int');
+	$params[] = array(':auc_id', '%' . $id . '%', 'str');
 	$db->query($query, $params);
 
 	$fetch = $db->fetchall();
 	foreach ($fetch as $row)
 	{
-		// If keyword matches with opened auction title or/and desc send user a mail
-		if (strstr($row['item_watch'], strval($id)) !== false)
+		// double check there is a match
+		$watch_values = explode(' ', $row['item_watch']);
+		if (in_array(strval($id), $watch_values))
 		{
 			// Get data about the auction
 			$query = "SELECT title, current_bid FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
 			$db->query($query, $params);
+			$auction_data = $db->result();
 			$emailer = new email_handler();
 			$emailer->assign_vars(array(
 					'REALNAME' => $row['name'],
-					'TITLE' => mysql_result($res, 0, 'title'),
-					'BID' => $system->print_money(mysql_result($res, 0, 'current_bid'), false),
+					'TITLE' => $auction_data['title'],
+					'BID' => $system->print_money($auction_data['current_bid'], false),
 					'AUCTION_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $id
 					));
 			$emailer->email_uid = $row['id'];
@@ -584,19 +611,21 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $c + $system->tdiff);
 		$new_bid = $system->print_money($next_bid);
 		// Send e-mail message
-		include $include_path . 'email_outbid.php';
+		include INCLUDE_PATH . 'email/outbid.php';
 	}
 
 	if (defined('TrackUserIPs'))
 	{
 		// log auction bid IP
-		$system->log('user', 'Bid on Item', $bidder_id, $id);
+		$system->log('user', 'Bid $' . $bid . '(previous bid was $' . $current_bid . ') on Item', $bidder_id, $id);
 	}
 	$template->assign_vars(array(
 			'PAGE' => 2,
 			'BID_HISTORY' => (isset($ARETHEREBIDS)) ? $ARETHEREBIDS : '',
+			'TITLE' => $item_title,
 			'ID' => $id,
-			'BID' => $system->print_money($bid)
+			'BID' => $system->print_money($bid),
+			'TQTY' => 0
 			));
 }
 
@@ -608,7 +637,7 @@ if (!isset($_POST['action']) || isset($errmsg))
 			'ERROR' => (isset($errmsg)) ? $errmsg : '',
 			'BID_HISTORY' => (isset($ARETHEREBIDS)) ? $ARETHEREBIDS : '',
 			'ID' => $id,
-			'IMAGE' => (!empty($pict_url_plain)) ? '<img src="getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . $uploaded_path . $id . '/' . $pict_url_plain . '" border="0" align="center">' : '&nbsp;',
+			'IMAGE' => (!empty($pict_url_plain)) ? '<img src="getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $id . '/' . $pict_url_plain . '" border="0" align="center">' : '&nbsp;',
 			'TITLE' => $item_title,
 			'CURRENT_BID' => $system->print_money($cbid),
 			'ATYPE' => $atype,
@@ -629,4 +658,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

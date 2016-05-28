@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -19,14 +19,14 @@ if(isset($_SESSION['csrftoken']))
 		$valid_req = ($_POST['csrftoken'] == $_SESSION['csrftoken']);
 	else
 		$valid_req = true;		# Neither GET nor POST params exist => permit
-	if(!$valid_req) 
+	if(!$valid_req)
 	{
-		global $MSG, $ERR_077; 
+		global $MSG, $ERR_077;
 
-		$_SESSION['msg_title'] = $MSG['936']; 
-		$_SESSION['msg_body'] = $ERR_077; 
+		$_SESSION['msg_title'] = $MSG['936'];
+		$_SESSION['msg_body'] = $ERR_077;
 		header('location: ../message.php');
-		exit; // kill the page 
+		exit; // kill the page
 	}
 }
 else
@@ -43,7 +43,7 @@ if (checklogin())
 else
 {
 	// update admin notes
-	if (isset($_POST['anotes']) && !empty($_POST['anotes']))
+	if (isset($_POST['anotes']))
 	{
 		$query = "UPDATE " . $DBPrefix . "adminusers SET notes = :admin_note WHERE id = :admin_id";
 		$params = array();
@@ -71,7 +71,7 @@ else
 	{
 		$template->assign_block_vars('langs', array(
 				'LANG' => $value,
-				'B_DEFAULT' => ($lang == $system->SETTINGS['defaultlanguage'])
+				'B_DEFAULT' => ($lang == $language)
 				));
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,9 +15,9 @@
 define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
-include $include_path . 'functions_admin.php';
-include $include_path . 'functions_rebuild.php';
-include $include_path . 'membertypes.inc.php';
+include INCLUDE_PATH . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_rebuild.php';
+include INCLUDE_PATH . 'membertypes.inc.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
@@ -32,8 +32,10 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 	if (isset($_POST['delete']) && is_array($_POST['delete']))
 	{
 		$idslist = implode(',', $_POST['delete']);
-		$query = "DELETE FROM " . $DBPrefix . "membertypes WHERE id IN (" . $idslist . ")";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "DELETE FROM " . $DBPrefix . "membertypes WHERE id IN (:idslist)";
+		$params = array();
+		$params[] = array(':idslist', $idslist, 'str');
+		$db->query($query, $params);
 	}
 
 	// now update everything else
@@ -44,10 +46,14 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 			if ( $val != $new_membertypes[$id])
 			{
 				$query = "UPDATE " . $DBPrefix . "membertypes SET
-						feedbacks = '" . $new_membertypes[$id]['feedbacks'] . "', 
-						icon = '" . $system->cleanvars($new_membertypes[$id]['icon']) . "' 
-						WHERE id = " . $id;
-				$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+						feedbacks = :feedbacks,
+						icon = :icon
+						WHERE id = :id";
+				$params = array();
+				$params[] = array(':feedbacks', $new_membertypes[$id]['feedbacks'], 'int');
+				$params[] = array(':icon', $new_membertypes[$id]['icon'], 'str');
+				$params[] = array(':id', $id, 'int');
+				$db->query($query, $params);
 			}
 		}
 	}
@@ -55,8 +61,11 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 	// If a new membertype was added, insert it into database
 	if (!empty($new_membertype['feedbacks']))
 	{
-		$query = "INSERT INTO " . $DBPrefix . "membertypes VALUES (NULL, '" . $new_membertype['feedbacks'] . "', '" . $system->cleanvars($new_membertype['icon']) . "');";
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+		$query = "INSERT INTO " . $DBPrefix . "membertypes VALUES (NULL, :feedbacks, :icon);";
+		$params = array();
+		$params[] = array(':feedbacks', $new_membertype['feedbacks'], 'int');
+		$params[] = array(':icon', $new_membertype['icon'], 'int');
+		$db->query($query, $params);
 	}
 	rebuild_table_file('membertypes');
 	$ERR = $MSG['836'];
@@ -64,7 +73,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 
 foreach ($membertypes as $id => $quest)
 {
-    $template->assign_block_vars('mtype', array(
+	$template->assign_block_vars('mtype', array(
 			'ID' => $id,
 			'FEEDBACK' => $quest['feedbacks'],
 			'ICON' => $quest['icon']
@@ -74,10 +83,12 @@ foreach ($membertypes as $id => $quest)
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : ''
 		));
-		
+
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'membertypes.tpl'
 		));
 $template->display('body');
 
+include 'footer.php';
 ?>

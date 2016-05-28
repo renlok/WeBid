@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,12 +15,15 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->is_logged_in())
+if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions_sold.php';
 	header('location: user_login.php');
 	exit;
 }
+// check if the user can access this page
+$user->checkSuspended();
 
 $NOW = time();
 $NOWB = date('Ymd');
@@ -34,7 +37,7 @@ $relist_fee = $db->result('value');
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Re-list auctions
-	if (is_array($_POST['relist']))
+	if (isset($_POST['relist']) && is_array($_POST['relist']) && count($_POST['relist']) > 0)
 	{
 		foreach ($_POST['relist'] as $k)
 		{
@@ -49,7 +52,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$WILLEND = time() + ($AUCTION['duration'] * 24 * 60 * 60);
 			$suspend = 0;
 
-			if ($system->SETTINGS['fees'] == 'y')
+			if ($system->SETTINGS['fees'] == 'y' && $relist_fee > 0)
 			{
 				if ($system->SETTINGS['fee_type'] == 1)
 				{
@@ -67,15 +70,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 
 			$query = "UPDATE " . $DBPrefix . "auctions
-				  SET starts = :starts,
-				  ends = :ends,
-				  closed = 0,
-				  num_bids = 0,
-				  relisted = relisted + 1,
-				  current_bid = 0,
-				  sold = 'n',
-				  suspended = :suspended
-				  WHERE id = :auc_id";
+					SET starts = :starts,
+					ends = :ends,
+					closed = 0,
+					num_bids = 0,
+					relisted = relisted + 1,
+					current_bid = 0,
+					sold = 'n',
+					suspended = :suspended
+					WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':starts', $NOW, 'int');
 			$params[] = array(':ends', $WILLEND, 'int');
@@ -110,7 +113,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params = array();
 			$params[] = array(':cat_id', $AUCTION['category'], 'int');
 			$db->query($query, $params);
-	
+
 			$parent_node = $db->result();
 			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 			// update recursive categories
@@ -130,7 +133,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$user_message .= sprintf($MSG['1146'], count($_POST['relist']));
 		if ($relist_fee > 0)
 		{
-			$user_message .= sprintf($MSG['1148'], $system->print_money((count($_POST['relist']) * $relist_fee), true, false));
+			$user_message .= sprintf($MSG['1148'], $system->print_money(count($_POST['relist']) * $relist_fee));
 		}
 	}
 }
@@ -210,13 +213,16 @@ while ($item = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => $system->uncleanvars($item['title']),
-			'STARTS' => FormatDate($item['starts']),
-			'ENDS' => FormatDate($item['ends']),
+			'STARTS' => FormatDate($item['starts'], '/', false),
+			'ENDS' => FormatDate($item['ends'], '/', false),
 			'BID' => ($item['current_bid'] == 0) ? '-' : $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 
-			'B_CLOSED' => ($item['closed'] == 1),
-			'B_HASNOBIDS' => ($item['current_bid'] == 0)
+			'B_CLOSED' => ($item['closed']),
+			'B_HASNOBIDS' => ($item['current_bid'] == 0),
+			'B_BUY_NOW_ONLY' => ($item['bn_only']),
+			'B_BUY_NOW' => ($item['bn_sale'] == 1),
+			'B_DUTCH' => ($item['auction_type'] == 2)
 			));
 	$i++;
 }
@@ -252,10 +258,9 @@ $template->assign_vars(array(
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['25_0119'];
-include $include_path . 'user_cp.php';
+include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
 		'body' => 'yourauctions_sold.tpl'
 		));
 $template->display('body');
 include 'footer.php';
-?>

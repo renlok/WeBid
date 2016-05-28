@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -20,18 +20,14 @@ class global_class
 
 	function global_class()
 	{
-		global $DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $main_path;
-
-		// Database connection
-		if (!mysql_connect($DbHost,$DbUser,$DbPassword)) die();
-		if (!mysql_select_db($DbDatabase)) die();
+		global $DBPrefix, $db;
 
 		// Load settings
 		$this->loadsettings();
-		$this->tdiff = ($this->SETTINGS['timecorrection'] + date('I')) * 3600;
-		$this->ctime = time() + $this->tdiff;
+		$this->tdiff = $this->getUserOffset(time(), $this->SETTINGS['timezone']);
+		$this->ctime = $this->getUserTimestamp(time(), $this->SETTINGS['timezone']) + $this->tdiff;
 		// check install directory
-		if (is_dir($main_path . 'install'))
+		if (is_dir(MAIN_PATH . 'install'))
 		{
 			if (!$this->check_maintainance_mode()) // check maint mode
 			{
@@ -43,10 +39,11 @@ class global_class
 		// Check ip
 		if (!defined('ErrorPage') && !defined('InAdmin'))
 		{
-			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE ip = '" . $_SERVER['REMOTE_ADDR'] . "' AND action = 'deny'";
-			$result = mysql_query($query);
-			$this->check_mysql($result, $query, __LINE__, __FILE__);
-			if (mysql_num_rows($result) > 0)
+			$query = "SELECT id FROM " . $DBPrefix . "usersips WHERE ip = :user_ip AND action = 'deny'";
+			$params = array();
+			$params[] = array(':user_ip', $_SERVER['REMOTE_ADDR'], 'str');
+			$db->query($query, $params);
+			if ($db->numrows() > 0)
 			{
 				$_SESSION['msg_title'] = $MSG['2_0027'];
 				$_SESSION['msg_body'] = $MSG['2_0026'];
@@ -58,53 +55,147 @@ class global_class
 
 	function loadsettings()
 	{
-		global $DBPrefix;
+		global $DBPrefix, $db;
 		$query = "SELECT * FROM " . $DBPrefix . "settings";
-		$result = mysql_query($query);
-		$this->check_mysql($result, $query, __LINE__, __FILE__);
-		$this->SETTINGS = mysql_fetch_assoc($result);
-		$this->SETTINGS['gatways'] = array(
-			'paypal' => 'PayPal',
-			'authnet' => 'Authorize.net',
-			'worldpay' => 'WorldPay',
-			'moneybookers' => 'Moneybookers',
-			'toocheckout' => '2Checkout'
-			);
+		$db->direct_query($query);
+
+		while ($settingv2 = $db->fetch())
+		{
+			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
+		}
+		// check if url needs https
+		if ($this->SETTINGS['https'] == 'y')
+		{
+			$this->SETTINGS['siteurl'] = (!empty($this->SETTINGS['https_url'])) ? $this->SETTINGS['https_url'] : str_replace('http://', 'https://', $this->SETTINGS['siteurl']);
+		}
 	}
 
-	function check_mysql($result, $query, $line, $page)
+	public function loadAuctionTypes()
 	{
-		if (!$result)
+		global $MSG, $db, $DBPrefix;
+		$query = "SELECT id, language_string FROM " . $DBPrefix . "auction_types";
+		$db->direct_query($query);
+		$this->SETTINGS['auction_types'] = [];
+		while ($row = $db->fetch())
 		{
-			MySQLError($query, $line, $page);
-			header('location: ' . $this->SETTINGS['siteurl'] . 'error.php');
-			exit;
+			$this->SETTINGS['auction_types'][$row['id']] = $MSG[$row['language_string']];
+		}
+	}
+
+	/*
+		accepts either simple or array input
+		simple:
+			writesetting('setting_name', 'setting_value', 'string');
+		array:
+			writesetting(array(
+				array('some_setting_name', 'some_setting_value', 'string'),
+				array('another_setting_name', 'another_setting_value', 'string')
+			));
+	*/
+	function writesetting($settings, $value = '', $type = 'string')
+	{
+		global $system, $DBPrefix, $db, $_SESSION;
+
+		$modifiedby = $_SESSION['WEBID_ADMIN_IN'];
+		$modifieddate = $this->ctime;
+
+		if (is_string($settings))
+		{
+			$settings = array(array($settings, $value, $type));
+		}
+
+		foreach ($settings as $setting)
+		{
+			// check arguments are set
+			if (!isset($setting[0]) || !isset($setting[1]))
+			{
+				continue;
+			}
+			$setting[2] = (isset($setting[2])) ? $setting[2] : 'string';
+
+			$fieldname = $setting[0];
+			$value = $setting[1];
+			$type = $setting[2];
+
+			// TODO: Use the data type to check if the value is valid
+			switch($type)
+			{
+				case "string":
+				case "str":
+					break;
+				case "integer":
+				case "int":
+					$value = intval($value);
+					break;
+				case "boolean":
+				case "bool":
+					$value = ($value) ? 1 : 0;
+					break;
+				case "array":
+					$value = serialize($value);
+					break;
+				default:
+					break;
+			}
+
+			$query = "SELECT * FROM " . $DBPrefix . "settings WHERE fieldname = :fieldname";
+			$params = array();
+			$params[] = array(':fieldname', $fieldname, 'str');
+			$db->query($query, $params);
+			if ($db->numrows() > 0)
+			{
+				$type = $db->result('fieldtype');
+				$query = "UPDATE " . $DBPrefix . "settings SET
+						fieldtype = :fieldtype,
+						value = :value,
+						modifieddate = :modifieddate,
+						modifiedby = :modifiedby
+						WHERE fieldname = :fieldname";
+			}
+			else
+			{
+				$query = "INSERT INTO " . $DBPrefix . "settings (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
+						(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
+			}
+			$params = array();
+			$params[] = array(':fieldname', $fieldname, 'str');
+			$params[] = array(':fieldtype', $type, 'str');
+			$params[] = array(':value', $value, 'str');
+			$params[] = array(':modifieddate', $modifieddate, 'int');
+			$params[] = array(':modifiedby', $modifiedby, 'int');
+			$db->query($query, $params);
+			$system->SETTINGS[$fieldname] = $value;
 		}
 	}
 
 	/* possible types cron, error, admin, user, mod */
 	function log($type, $message, $user = 0, $action_id = 0)
 	{
-		global $DBPrefix;
+		global $DBPrefix, $db;
 		$query = "INSERT INTO " . $DBPrefix . "logs (type, message, ip, action_id, user_id, timestamp) VALUES
-				('" . $type . "', '" . mysql_real_escape_string($message) . "', '" . $_SERVER['REMOTE_ADDR'] . "', " . $action_id . ", " . $user . ", " . time() . ")";
-		$res = mysql_query($query);
-		$this->check_mysql($res, $query, __LINE__, __FILE__);
+				(:type, :message, :user_ip, :action_id, :user_id, :time)";
+		$params = array();
+		$params[] = array(':type', $type, 'str');
+		$params[] = array(':message', $message, 'str');
+		$params[] = array(':user_ip', $_SERVER['REMOTE_ADDR'], 'str');
+		$params[] = array(':action_id', $action_id, 'int');
+		$params[] = array(':user_id', $user, 'int');
+		$params[] = array(':time', time(), 'int');
+		$db->query($query, $params);
 	}
 
 	function check_maintainance_mode()
 	{
-		global $DBPrefix, $user;
+		global $DBPrefix, $user, $db;
 
 		if (!isset($this->SETTINGS['MAINTAINANCE']))
 		{
 			$query = "SELECT * FROM " . $DBPrefix . "maintainance";
-			$res = mysql_query($query);
-			$this->check_mysql($res, $query, __LINE__, __FILE__);
+			$db->direct_query($query);
 
-			if (mysql_num_rows($res) > 0)
+			if ($db->numrows() > 0)
 			{
-				$this->SETTINGS['MAINTAINANCE'] = mysql_fetch_assoc($res);
+				$this->SETTINGS['MAINTAINANCE'] = $db->result();
 			}
 			else
 			{
@@ -112,7 +203,7 @@ class global_class
 			}
 		}
 
-		if ($this->SETTINGS['MAINTAINANCE']['active'] == 'y')
+		if ($this->SETTINGS['MAINTAINANCE']['active'])
 		{
 			if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['MAINTAINANCE']['superuser'] || $user->user_data['id'] == $this->SETTINGS['MAINTAINANCE']['superuser']))
 			{
@@ -125,11 +216,10 @@ class global_class
 	}
 
 	function cleanvars($i, $trim = false)
-	{ 
+	{
 		if ($trim)
 			$i = trim($i);
-		if (!get_magic_quotes_gpc())
-			$i = addslashes($i);
+		$i = addslashes($i);
 		$i = rtrim($i);
 		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
 		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;');
@@ -147,11 +237,10 @@ class global_class
 
 	function filter($txt)
 	{
-		global $DBPrefix;
+		global $DBPrefix, $db;
 		$query = "SELECT * FROM " . $DBPrefix . "filterwords";
-		$res = mysql_query($query);
-		$this->check_mysql($res, $query, __LINE__, __FILE__);
-		while ($word = mysql_fetch_array($res))
+		$db->direct_query($query);
+		while ($word = $db->fetch())
 		{
 			$txt = preg_replace('(' . $word['word'] . ')', '', $txt); //best to use str_ireplace but not avalible for PHP4
 		}
@@ -161,6 +250,11 @@ class global_class
 	function move_file($from, $to, $removeorg = true)
 	{
 		$upload_mode = (@ini_get('open_basedir') || @ini_get('safe_mode') || strtolower(@ini_get('safe_mode')) == 'on') ? 'move' : 'copy';
+		// error check
+		if  (!is_file($from))
+		{
+			return false;
+		}
 		switch ($upload_mode)
 		{
 			case 'copy':
@@ -174,7 +268,7 @@ class global_class
 				if ($removeorg)
 					@unlink($from);
 				break;
-			
+
 			case 'move':
 				if (!@move_uploaded_file($from, $to))
 				{
@@ -189,6 +283,31 @@ class global_class
 		}
 		@chmod($to, 0666);
 		return true;
+	}
+
+	// time zones
+	function getConvertedDateTimeObject($timestamp, $userTimezone)
+	{
+		# create server and user timezone objects
+		$fromZone = new DateTimeZone('UTC'); // UTC
+		$toZone = new DateTimeZone($userTimezone); // Europe/London, or whatever it happens to be
+
+		$time = date('Y-m-d H:i:s', $timestamp);
+		$dt = new DateTime($time, $fromZone);
+		$dt->setTimezone($toZone);
+		return $dt;
+	}
+
+	function getUserTimestamp($timestamp, $userTimezone)
+	{
+		$dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
+		return $dt->getTimestamp();
+	}
+
+	function getUserOffset($timestamp, $userTimezone)
+	{
+		$dt = $this->getConvertedDateTimeObject($timestamp, $userTimezone);
+		return $dt->getOffset();
 	}
 
 	//CURRENCY FUNCTIONS
@@ -222,7 +341,7 @@ class global_class
 			if (!preg_match('#^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(\.[0-9]{0,3})?$#', $amount))
 				return false;
 		}
-		elseif ($this->SETTINGS['moneyformat'] == 2)
+		else
 		{
 			if (!preg_match('#^([0-9]+|[0-9]{1,3}(\.[0-9]{3})*)(,[0-9]{0,3})?$#', $amount))
 				return false;
@@ -230,18 +349,10 @@ class global_class
 		return true;
 	}
 
-	function print_money($str, $from_database = true, $link = true, $bold = true)
+	function print_money($str, $from_database = true, $bold = true)
 	{
 		$str = $this->print_money_nosymbol($str, $from_database);
-
-		if ($link)
-		{
-			$currency = '<a href="' . $this->SETTINGS['siteurl'] . 'converter.php?AMOUNT=' . $str . '" alt="converter" class="new-window">' . $this->SETTINGS['currency'] . '</a>';
-		}
-		else
-		{
-			$currency = $this->SETTINGS['currency'];
-		}
+		$currency = $this->SETTINGS['currency'];
 
 		if ($bold)
 		{
@@ -264,7 +375,7 @@ class global_class
 		$b = ($this->SETTINGS['moneyformat'] == 1) ? ',' : '.';
 		if (!$from_database)
 		{
-			$str = $this->input_money($str, $from_database);
+			$str = $this->input_money($str);
 		}
 
 		return number_format(floatval($str), $this->SETTINGS['moneydecimals'], $a, $b);
@@ -287,11 +398,10 @@ function _mktime($hr, $min, $sec, $mon, $day, $year)
 
 function load_counters()
 {
-	global $system, $DBPrefix, $MSG, $_COOKIE, $user;
+	global $system, $DBPrefix, $MSG, $_COOKIE, $user, $db;
 	$query = "SELECT * FROM " . $DBPrefix . "counters";
-	$res = mysql_query($query);
-	$system->check_mysql($res, $query, __LINE__, __FILE__);
-	$counter_data = mysql_fetch_assoc($res);
+	$db->direct_query($query);
+	$counter_data = $db->result();
 	$counters = '';
 
 	if ($system->SETTINGS['counter_auctions'] == 'y')
@@ -318,29 +428,38 @@ function load_counters()
 			$s = 'uId-' . $user->user_data['id'];
 		}
 		$uxtime = time();
-		$query = "SELECT id FROM " . $DBPrefix . "online WHERE SESSION = '$s'";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "SELECT ID FROM " . $DBPrefix . "online WHERE SESSION = :user";
+		$params = array();
+		$params[] = array(':user', $s, 'str');
+		$db->query($query, $params);
 
-		if (mysql_num_rows($res) == 0)
+		if ($db->numrows() == 0)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES ('$s', " . $uxtime . ")";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$query = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES (:user, :timer)";
+			$params = array();
+			$params[] = array(':user', $s, 'str');
+			$params[] = array(':timer', $uxtime, 'int');
+			$db->query($query, $params);
 		}
 		else
 		{
-			$oID = mysql_result($res, 0, 'ID');
-			$query = "UPDATE " . $DBPrefix . "online SET time = " . $uxtime . " WHERE ID = '$oID'";
-			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
+			$oID = $db->result('ID');
+			$query = "UPDATE " . $DBPrefix . "online SET time = :timer WHERE ID = :online_id";
+			$params = array();
+			$params[] = array(':timer', $uxtime, 'int');
+			$params[] = array(':online_id', $oID, 'int');
+			$db->query($query, $params);
 		}
 		$deltime = $uxtime - 900;
-		$query = "DELETE from " . $DBPrefix . "online WHERE time < " . $deltime;
-		$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
-		$query = "SELECT * FROM " . $DBPrefix . "online";
-		$res = mysql_query($query);
-		$system->check_mysql($res, $query, __LINE__, __FILE__);
+		$query = "DELETE from " . $DBPrefix . "online WHERE time <= :timer";
+		$params = array();
+		$params[] = array(':timer', $deltime, 'int');
+		$db->query($query, $params);
 
-		$count15min = mysql_num_rows($res);
+		$query = "SELECT id FROM " . $DBPrefix . "online";
+		$db->direct_query($query);
+
+		$count15min = $db->numrows();
 
 		$counters .= '<b>' . $count15min . '</b> ' . $MSG['2__0064'] . ' | ';
 	}
@@ -370,10 +489,87 @@ function alphanumeric($str)
 	return $str;
 }
 
-// this is a stupid way of doing things these need to be changed to bools
+// $auction_data sould come straight from the database
+function calculate_shipping_data($auction_data, $bought_quantity = 0, $total = true)
+{
+	if ($bought_quantity == 0)
+	{
+		$quantity = $auction_data['quantity'];
+	}
+	else
+	{
+		$quantity = $bought_quantity;
+	}
+
+	$shipping_cost = ($auction_data['shipping'] == 1) ? $auction_data['shipping_cost'] : 0;
+	$additional_shipping_cost = $auction_data['additional_shipping_cost'] * ($quantity - 1);
+
+	if ($total)
+	{
+		return ($shipping_cost + $additional_shipping_cost);
+	}
+	else
+	{
+		$shipping_data = array();
+		$shipping_data['shipping_cost'] = $shipping_cost;
+		$shipping_data['additional_shipping_cost'] = $additional_shipping_cost;
+		$shipping_data['shipping_total'] = ($shipping_cost + $additional_shipping_cost);
+		return $shipping_data;
+	}
+}
+
+// TODO: this is a stupid way of doing things these need to be changed to bools
 function ynbool($str)
 {
 	$str = preg_replace("/[^yn]/", '', $str);
 	return $str;
 }
-?>
+
+// filters date format and date. Changes dd.mm.yyyy or dd/mm/yyyy to dd-mm-yyyy and validates date.
+// Throws $ERR_700 if $dt is not a valid date or not 0. Returns valid and formatted date or 0.
+function filter_date($dt, $separator = "-")
+{
+	global $system, $ERR, $ERR_700;
+
+	if ($dt != 0)
+	{
+		$dt = preg_replace("([.]+)", $separator, $dt);
+		$date = str_replace("/", $separator, $dt);
+		if ($system->SETTINGS['datesformat'] == 'USA')
+		{
+			list($m, $d, $y) = array_pad(explode($separator, $date, 3), 3, 0);
+		}
+		else
+		{
+			list($d, $m, $y) = array_pad(explode($separator, $date, 3), 3, 0);
+		}
+		if (ctype_digit("$m$d$y") && checkdate($m, $d, $y))
+		{
+			return $date;
+		}
+		$ERR = $ERR_700;
+	}
+	return 0;
+}
+
+function build_url($string)
+{
+	// TODO: make sure this works
+	// clean it
+	$string = preg_replace('/[^A-Za-z0-9=&]+/', '-', $string);
+	// sprint the url into _GET elements
+	$parts = explode('&', $string);
+	$slug = '';
+	foreach ($parts as $part)
+	{
+		// splits this=that
+		$elements = explode('=', $part);
+		$slug .= $elements[0];
+		$slug .= '/';
+		$slug .= $elements[1];
+		$slug .= '/';
+	}
+
+	$slug = strtolower ($slug);
+	return $slug;
+}

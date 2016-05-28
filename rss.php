@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2014 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 include 'common.php';
-include $main_path . 'language/' . $language . '/categories.inc.php';
+include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 $NOW = time();
 $p24h = time() + (24 * 60 * 60);
@@ -28,7 +28,7 @@ $params[] = array(':NOW', $NOW, 'int');
 
 switch ($feed)
 {
-	case 1: 
+	case 1:
 		$RSStitle = $MSG['924']; // items listed in the last 24 hours
 		$postdate = 'starts';
 		$sort = 'DESC';
@@ -36,7 +36,7 @@ switch ($feed)
 		$params[] = array(':starts', $m24h, 'int');
 		break;
 
-	case 2: 
+	case 2:
 		$RSStitle = $MSG['925']; // items closing in 24 hours or less
 		$postdate = 'ends';
 		$sort = 'ASC';
@@ -44,42 +44,42 @@ switch ($feed)
 		$params[] = array(':ends', $p24h, 'int');
 		break;
 
-	case 3: 
+	case 3:
 		$RSStitle = $MSG['926']; // items over 300.00
 		$postdate = 'ends';
 		$sort = 'ASC';
 		$subquery = 'a.starts <= :NOW AND (a.current_bid >= 300 OR a.minimum_bid >= 300 OR a.buy_now >= 300)';
 		break;
 
-	case 4: 
+	case 4:
 		$RSStitle = $MSG['927']; // items over 1000.00
 		$postdate = 'ends';
 		$sort = 'ASC';
 		$subquery = 'a.starts <= :NOW AND (a.current_bid >= 1000 OR a.minimum_bid >= 1000 OR a.buy_now >= 1000)';
 		break;
 
-	case 5: 
+	case 5:
 		$RSStitle = $MSG['928'];
 		$postdate = 'starts';
 		$sort = 'DESC';
 		$subquery = 'a.starts <= :NOW AND (a.current_bid <= 10 OR a.buy_now <= 10)';
 		break;
 
-	case 6: 
+	case 6:
 		$RSStitle = $MSG['929']; // items with 10 or more bids
 		$postdate = 'starts';
 		$sort = 'DESC';
 		$subquery = 'a.starts <= :NOW AND a.num_bids >= 10';
 		break;
 
-	case 7: 
+	case 7:
 		$RSStitle = $MSG['930']; // items with 25 or more bids
 		$postdate = 'starts';
 		$sort = 'DESC';
 		$subquery = 'a.starts <= :NOW AND a.num_bids >= 25';
 		break;
 
-	case 8: 
+	case 8:
 		$RSStitle = $MSG['931']; // item with a Buy Now
 		$postdate = 'starts';
 		$sort = 'DESC';
@@ -140,7 +140,7 @@ foreach ($aution_data_all as $auction_data)
 	}
 
 	$template->assign_block_vars('rss', array(
-			'PRICE' => str_replace(array('<b>', '</b>'), '', $system->print_money(($auction_data['num_bids'] == 0) ? $auction_data['minimum_bid'] : $auction_data['current_bid'], true, false, false)),
+			'PRICE' => str_replace(array('<b>', '</b>'), '', $system->print_money(($auction_data['num_bids'] == 0) ? $auction_data['minimum_bid'] : $auction_data['current_bid'], true, false)),
 			'TITLE' => $system->uncleanvars($auction_data['title']),
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $auction_data['id'],
 			'DESC' => $auction_data['description'],
@@ -166,4 +166,3 @@ $template->set_filenames(array(
 		'body' => 'rss.tpl'
 		));
 $template->display('body');
-?>

@@ -268,6 +268,7 @@ $(document).ready(function() {
 							<p><a href="{SITEURL}user_login.php?">{L_221}</a></p>
 <!-- ENDIF -->
 						</div>
+						<a class="report-item rightside" href='{SITEURL}item_report.php?id={ID}'>{L_report_this_item}</a>
 					</td>
 				</tr>
 			</table>

@@ -151,6 +151,7 @@ $ERR_5045 = "The reserve price cannot be less than the minimum bid";
 $ERR_5046 = "The buy now price must be greater than the minimum bid and/or the reserve price";
 $ERR_25_0001 = "Please choose a sub-category";
 $ERR_25_0002 = "<p>URL file-access is disabled on your server so WeBid is unable to run the version check</p>";
+$ERR_INVALID_REPORT_REASON = "Please select a reason for report";
 
 // UI Messages =============================================================
 $MSG['000'] = "n/a";
@@ -313,7 +314,7 @@ $MSG['209'] = "Registered user since: ";
 $MSG['210'] = "Contact ";
 $MSG['211'] = "Start auction now";
 $MSG['213'] = "View active auctions";
-$MSG['214'] = "View closed auctions";
+$MSG['214'] = "View Closed Auctions";
 $MSG['215'] = "Forgot your password?";
 $MSG['217'] = "A new password has been sent to your e-mail address.";
 $MSG['219'] = "Active auctions: ";
@@ -1597,6 +1598,19 @@ $MSG['AUCTIONS_405'] = "Winning Bid";
 $MSG['AUCTIONS_406'] = "Winners";
 
 $MSG['BUY_NOW_ONLY_TPL_0100'] = "Recently Closed Auction Report";
+
+$MSG['auction_has_been_reported'] = "This auction has been reported";
+$MSG['item_report_captcha_type'] = "Captcha type on item report page";
+$MSG['report_this_item'] = "Report this item";
+$MSG['view_reported_auctions'] = "View Reported Auctions";
+$MSG['report_item'] = "Report item";
+$MSG['reason_for_report'] = "Reason for Report";
+$MSG['report_reason_select'] = "Select a reason";
+$MSG['report_reason_copy'] = "Copying of your listing";
+$MSG['report_reason_counterfeit'] = "Counterfeits and copyright violations";
+$MSG['report_reason_prohibited'] = "Prohibited (banned items)";
+$MSG['report_reason_terms_and_conditions'] = "Listing policy violations";
+$MSG['report_reason_stolen'] = "Stolen property";
 
 $MSG['communative_report_winner_yes'] = 'An email has been sent to the any winner(s) with your email address.';
 $MSG['communative_report_winner_no'] = 'Sorry, no auction winner(s) this time.';

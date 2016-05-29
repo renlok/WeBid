@@ -19,7 +19,11 @@
 						<!-- IF auctions.SUSPENDED eq 1 -->
 						<span style="color:#FF0000">{auctions.TITLE}</span>
 						<!-- ELSE -->
-						{auctions.TITLE}
+							<!-- IF auctions.TIMESREPORTED > 0 -->
+							<span style="color:#FFA500">{auctions.TITLE}</span>
+							<!-- ELSE -->
+							{auctions.TITLE}
+							<!-- ENDIF -->
 						<!-- ENDIF -->
 						<p>[ <a href="{SITEURL}item.php?id={auctions.ID}" target="_blank">{L_5295}</a> ]</p>
 					</td>

@@ -30,7 +30,7 @@ if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
 	$PAGE = intval($_GET['PAGE']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listauctions.php')
+elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listreportedauctions.php')
 {
 	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
@@ -41,19 +41,21 @@ else
 	$PAGE = 1;
 }
 
-$_SESSION['RETURN_LIST'] = 'listauctions.php';
+$_SESSION['RETURN_LIST'] = 'listreportedauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
-$query = "SELECT COUNT(a.id) As auctions FROM " . $DBPrefix . "auctions a WHERE a.closed = 0 " . $user_sql;
+$query = "SELECT COUNT(a.id) As auctions FROM " . $DBPrefix . "auctions a
+		INNER JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
+		WHERE a.closed = 0 AND a.suspended = 0 " . $user_sql;
 $db->direct_query($query);
 $num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
-$query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(r.id) as times_reported FROM " . $DBPrefix . "auctions a
+$query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(r.auction_id) as times_reported FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
-		LEFT JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
-		WHERE a.closed = 0 " . $user_sql . "  GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
+		INNER JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
+		WHERE a.closed = 0 AND a.suspended = 0 " . $user_sql . " GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
@@ -98,20 +100,20 @@ if ($PAGES > 1)
 	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
 	{
 		$template->assign_block_vars('pages', array(
-				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listauctions.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listreportedauctions.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
 				));
 		$COUNTER++;
 	}
 }
 
 $template->assign_vars(array(
-		'PAGE_TITLE' => $MSG['067'],
+		'PAGE_TITLE' => $MSG['view_reported_auctions'],
 		'NUM_AUCTIONS' => $num_auctions,
 		'B_SEARCHUSER' => ($uid > 0),
 		'USERNAME' => $username,
 
-		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
-		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listreportedauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listreportedauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
 		'PAGE' => $PAGE,
 		'PAGES' => $PAGES
 		));

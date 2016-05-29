@@ -407,3 +407,18 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "INSERT INTO `" . $DBPrefix . "settingsv2` VALUES ('admin_theme', 'str', 'adminClassic', UNIX_TIMESTAMP(), 1);";
 	$new_version = '1.2.0';
 }
+
+if ($installed_version == '1.2.0')
+{
+	//1.2.0 to 1.3.0
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "reportedauctions`;";
+	$query[] = "CREATE TABLE `" . $DBPrefix . "reportedauctions` (
+	  `id` int(11) NOT NULL,
+	  `auction_id` int(11) NOT NULL DEFAULT '0',
+	  `reason` int(11) NOT NULL DEFAULT '0',
+	  `user_id` int(11) NOT NULL DEFAULT '0',
+	  PRIMARY KEY(`id`)
+	) ;";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_reportitem', 'int', '1', UNIX_TIMESTAMP(), 1);";
+	$new_version = '1.3.0';
+}

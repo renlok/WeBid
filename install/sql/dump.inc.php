@@ -1542,6 +1542,21 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "rememberme` (
 # ############################
 
 #
+# Table structure for table `" . $DBPrefix . "reportedauctions`
+#
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "reportedauctions`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "reportedauctions` (
+  `id` int(11) NOT NULL,
+  `auction_id` int(11) NOT NULL DEFAULT '0',
+  `reason` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY(`id`)
+) ;";
+
+# ############################
+
+#
 # Table structure for table `" . $DBPrefix . "settings`
 #
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
@@ -1653,6 +1668,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('smtp_security', 'st
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('smtp_username', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_register', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_sendtofriend', 'int', '1', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_reportitem', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('subtitle', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('tax', 'bool', 'n', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('taxuser', 'bool', 'n', UNIX_TIMESTAMP(), 1);";

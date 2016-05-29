@@ -51,7 +51,6 @@ if (isset($_GET['delete']) && !empty($_GET['delete']))
 	$item_watch = $items;
 	for ($j = 0; $j < count($auc_id); $j++)
 	{
-		$match = ;
 		if (!strstr($auc_id[$j], strval($_GET['delete'])))
 		{
 			$item_watch = $auc_id[$j] . ' ' . $item_watch;

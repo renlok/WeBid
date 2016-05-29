@@ -251,6 +251,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 					</div>
 				</div>
+				<a class="report-item pull-right" href='{SITEURL}item_report.php?id={ID}'>{L_report_this_item}</a>
 			</div>
 		</div>
 		<div class="row">

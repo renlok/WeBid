@@ -419,5 +419,6 @@ if ($installed_version == '1.2.0')
 	  `user_id` int(11) NOT NULL DEFAULT '0',
 	  PRIMARY KEY(`id`)
 	) ;";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_reportitem', 'int', '1', UNIX_TIMESTAMP(), 1);";
 	$new_version = '1.3.0';
 }

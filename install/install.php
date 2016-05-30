@@ -66,10 +66,10 @@ switch($step)
 		$invalid_parameters = false;
 		foreach($connection_parameters as $parameter_name)
 		{
-		   if (!isset($_POST[$parameter_name]) || empty($_POST[$parameter_name]))
-		   {
-		      $invalid_parameters = true;
-		   }
+			if (!isset($_POST[$parameter_name]) || empty($_POST[$parameter_name]))
+			{
+				$invalid_parameters = true;
+			}
 		}
 
 		if (!$db->connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass'], $_POST['DBName'], $_POST['DBPrefix']))

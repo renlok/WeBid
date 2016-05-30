@@ -62,7 +62,34 @@ switch($step)
 		}
 		break;
 	case 1:
-		$db->connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass'], $_POST['DBName'], $_POST['DBPrefix']);
+		$connection_parameters = array('DBHost', 'DBUser', 'DBName');
+		$invalid_parameters = false;
+		foreach($connection_parameters as $parameter_name)
+		{
+		   if (!isset($_POST[$parameter_name]) || empty($_POST[$parameter_name]))
+		   {
+		      $invalid_parameters = true;
+		   }
+		}
+
+		if (!$db->connect($_POST['DBHost'], $_POST['DBUser'], $_POST['DBPass'], $_POST['DBName'], $_POST['DBPrefix']))
+		{
+			$invalid_parameters = true;
+		}
+
+		if ($invalid_parameters)
+		{
+			die('<p>Couldn\'t connect to the database.</p>
+				<p>What do I do now?</p>
+				<p>Please <a href="javascript:void(0)" onclick="window.history.back();">return to step 1</a> and verify that...</p>
+				<ul>
+					<li>\'Database Host\' is correct.</li>
+					<li>\'Database Username\' is correct and that the specified user can access the database.</li>
+					<li>\'Database Password\' is correct.</li>
+					<li>\'Database Name\' is correct and the specified database exists.</li>
+				</ul>');
+		}
+
 		$cats = (isset($_POST['importcats'])) ? 1 : 0;
 		echo '<p><b>Step 1:</b> Writing config file...</p>';
 		$path = str_replace('\\', '\\\\', $_POST['mainpath']);

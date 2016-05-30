@@ -793,7 +793,7 @@ $MSG['841'] = 'Admin Template';
 $MSG['842'] = 'Set Fees';
 $MSG['843'] = 'What do you want to do with the auctions & subcategories in the following categories<br><small>(If you want to move them you must enter the category id of where you want them moved)</small>';
 $MSG['844'] = 'Some categories selected to move could not be processed as no valid category ID was given to where they would be moved to';
-$MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['admin_theme'] . '/images/bullet_blue.png"> Shows a category that contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/{THEME}/images/bullet_red.png"> Shows a category that contains auctions</p>';
+$MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['admin_theme'] . '/images/bullet_blue.png"> Shows a category that contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['admin_theme'] . '/images/bullet_red.png"> Shows a category that contains auctions</p>';
 $MSG['846'] = 'Account Balance';
 $MSG['847'] = 'Price';
 $MSG['848'] = 'Are you sure you want to delete this user feedback (ID: %s)';

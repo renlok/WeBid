@@ -34,9 +34,10 @@
 <!-- ENDIF -->
 				<form name="theme" action="" method="post">
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+					<th colspan="2">{L_NAY_03}</th>
 	<!-- BEGIN themes -->
 						<tr {themes.BG}>
-							<td style="padding-left:10px;">
+							<td style="padding-left:10px;" width="75%">
 								<input type="radio" name="dtheme" value="{themes.NAME}" <!-- IF themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
 								<b>{themes.NAME}</b>
 							</td>
@@ -60,9 +61,10 @@
 	<!-- END themes -->
 					</table>
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+						<th colspan="2">{L_NAY_04}</th>
 	<!-- BEGIN admin_themes -->
 						<tr {admin_themes.BG}>
-							<td style="padding-left:10px;">
+							<td style="padding-left:10px;" width="75%">
 								<input type="radio" name="admin_theme" value="{admin_themes.NAME}" <!-- IF admin_themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
 								<b>{admin_themes.NAME}</b>
 							</td>

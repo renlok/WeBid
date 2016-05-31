@@ -61,7 +61,10 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'IMAGEURL' => $logoURL,
 		));
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'logo_upload.tpl'
 		));
 $template->display('body');
+include 'footer.php';
+?>

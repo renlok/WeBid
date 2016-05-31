@@ -1590,6 +1590,8 @@ $MSG['email_settings_updated'] = 'Email settings updated';
 
 $MSG['NAY_01'] = 'Featured Items';
 $MSG['NAY_02'] = 'All Items';
+$MSG['NAY_03'] = "Site Theme";
+$MSG['NAY_04'] = "Admin Theme";
 
 $MSG['AUCTIONS_401'] = "Bid";
 $MSG['AUCTIONS_402'] = "Bids";

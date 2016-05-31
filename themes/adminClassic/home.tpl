@@ -14,10 +14,10 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-<!-- IF THIS_VERSION eq CUR_VERSION -->
-				<div class="info-box">{L_30_0212}</div>
-<!-- ELSE -->
+<!-- IF UPDATE_AVAILABLE -->
 				<div class="error-box">{L_30_0211}</div>
+<!-- ELSE -->
+				<div class="info-box">{L_30_0212}</div>
 <!-- ENDIF -->
 <!-- IF ERROR ne '' -->
 				<div class="error-box"><b>{ERROR}</b></div>

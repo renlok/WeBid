@@ -16,7 +16,6 @@ define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
-include PACKAGE_PATH . 'htmLawed.php';
 include 'loggedin.inc.php';
 
 if (!isset($_POST['id']) && (!isset($_GET['id']) || empty($_GET['id'])))
@@ -35,12 +34,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// clean up everything
-		$conf = array();
-		$conf['safe'] = 1;
 		foreach ($_POST['title'] as $k => $v)
 		{
-			$_POST['title'][$k] = htmLawed($v, $conf);
-			$_POST['content'][$k] = htmLawed($_POST['content'][$k], $conf);
+			$_POST['title'][$k] = $system->cleanvars($v);
+			$_POST['content'][$k] = $system->cleanvars($_POST['content'][$k]);
 		}
 
 		$news_id = intval($_POST['id']);
@@ -102,8 +99,8 @@ while ($arr = $db->fetch())
 	$suspended = $arr['suspended'];
 	$template->assign_block_vars('lang', array(
 			'LANG' => $arr['lang'],
-			'TITLE' => $system->uncleanvars($arr['title']),
-			'CONTENT' => $system->uncleanvars($arr['content'])
+			'TITLE' => htmlspecialchars($arr['title']),
+			'CONTENT' => htmlspecialchars($arr['content'])
 			));
 }
 

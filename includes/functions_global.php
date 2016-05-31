@@ -215,24 +215,9 @@ class global_class
 		return false;
 	}
 
-	function cleanvars($i, $trim = false)
+	function cleanvars($input, $config = array('elements'=>'-*'))
 	{
-		if ($trim)
-			$i = trim($i);
-		$i = addslashes($i);
-		$i = rtrim($i);
-		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
-		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;');
-		$i = str_replace($look, $safe, $i);
-		return $i;
-	}
-
-	function uncleanvars($i)
-	{
-		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
-		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;');
-		$i = str_replace($safe, $look, $i);
-		return $i;
+		return str_replace(array('&lt;', '&gt;', '&amp;'), array('<', '>', '&'), htmLawed($input, $config));
 	}
 
 	function filter($txt)

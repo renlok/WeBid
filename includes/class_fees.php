@@ -364,7 +364,7 @@ class fees
 
 				// auction data
 				$auction_id = $auc_id;
-				$title = $system->uncleanvars($auc_data['title']);
+				$title = htmlspecialchars($auc_data['title']);
 				$atype = $auc_data['auction_type'];
 				$pict_url = $auc_data['pict_url'];
 				$minimum_bid = $auc_data['minimum_bid'];

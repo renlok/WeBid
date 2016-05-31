@@ -52,7 +52,7 @@ while ($row = $db->fetch())
 {
 	$template->assign_block_vars('news', array(
 			'ID' => $row['id'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => htmlspecialchars($row['title']),
 			'DATE' => FormatDate($row['new_date']),
 			'SUSPENDED' => $row['suspended'],
 			'BG' => (!($k % 2)) ? '' : 'class="bg"'

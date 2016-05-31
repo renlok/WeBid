@@ -35,7 +35,7 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['411'], $MSG['410'], $CKEditor->editor('errortext', $system->uncleanvars($system->SETTINGS['errortext'])));
+loadblock($MSG['411'], $MSG['410'], $CKEditor->editor('errortext', $system->SETTINGS['errortext']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

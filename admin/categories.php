@@ -236,7 +236,7 @@ for ($i = 0; $i < count($children); $i++)
 	$child = $children[$i];
 	$template->assign_block_vars('cats', array(
 			'CAT_ID' => $child['cat_id'],
-			'CAT_NAME' => $system->uncleanvars($child['cat_name']),
+			'CAT_NAME' => htmlspecialchars($child['cat_name']),
 			'CAT_COLOUR' => $child['cat_colour'],
 			'CAT_IMAGE' => $child['cat_image'],
 

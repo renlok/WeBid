@@ -32,7 +32,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'add')
 	$buyer_countries = implode(' ', $_POST['buyer_countries']);
 	}
 
-	if (!empty($system->cleanvars($_POST['tax_name'])))
+	if (!empty($_POST['tax_name']))
 	{
 		if ($_POST['tax_id'] != '')
 		{

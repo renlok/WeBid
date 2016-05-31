@@ -103,10 +103,7 @@ switch ($_SESSION['action'])
 		else
 		{
 			// clean up sell description
-			$conf = array();
-			$conf['safe'] = 1;
-			$conf['deny_attribute'] = 'style';
-			$_SESSION['SELL_description'] = htmLawed($_SESSION['SELL_description'], $conf);
+			$_SESSION['SELL_description'] = $system->cleanvars($_SESSION['SELL_description'], array('safe' => 1,'elements'=>'a ol ul li u strong em br', 'deny_attribute'=>'*'));
 
 			$payment_text = implode(', ', $payment);
 			// set time back to GMT
@@ -439,8 +436,8 @@ switch ($_SESSION['action'])
 				$shippingtext = $MSG['867'];
 
 			$template->assign_vars(array(
-					'TITLE' => $title,
-					'SUBTITLE' => $subtitle,
+					'TITLE' => htmlspecialchars($title),
+					'SUBTITLE' => htmlspecialchars($subtitle),
 					'ERROR' => ($ERR == 'ERR_') ? '' : $$ERR,
 					'PAGE' => 2,
 					'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
@@ -680,8 +677,8 @@ switch ($_SESSION['action'])
 				'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 				'FEE_JS' => $fee_javascript,
 				// auction details
-				'AUC_TITLE' => $title,
-				'AUC_SUBTITLE' => $subtitle,
+				'AUC_TITLE' => htmlspecialchars($title),
+				'AUC_SUBTITLE' => htmlspecialchars($subtitle),
 				'AUC_DESCRIPTION' => $CKEditor->editor('sdescription', $sdescription),
 				'ITEMQTY' => $iquantity,
 				'MIN_BID' => $system->print_money_nosymbol($minimum_bid, false),
@@ -706,7 +703,7 @@ switch ($_SESSION['action'])
 				'SHIPPING2' => (intval($shipping) == 2 || empty($shipping)) ? 'checked' : '',
 				'SHIPPING3' => (intval($shipping) == 3) ? 'checked' : '',
 				'INTERNATIONAL' => (!empty($international)) ? 'checked' : '',
-				'SHIPPING_TERMS' => $shipping_terms,
+				'SHIPPING_TERMS' => htmlspecialchars($shipping_terms),
 				'ITEMQTYD' => ($atype == 2 || $buy_now_only) ? '' : 'disabled',
 				'START_NOW' => (!empty($start_now)) ? 'checked' : '',
 				'IS_BOLD' => ($is_bold) ? 'checked' : '',

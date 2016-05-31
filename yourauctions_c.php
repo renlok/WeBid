@@ -294,7 +294,7 @@ while ($item = $db->fetch())
 	$template->assign_block_vars('items', array(
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
-			'TITLE' => $system->uncleanvars($item['title']),
+			'TITLE' => htmlspecialchars($item['title']),
 			'STARTS' => FormatDate($item['starts'], '/', false),
 			'ENDS' => FormatDate($item['ends'], '/', false),
 			'BID' => ($item['current_bid'] == 0) ? '-' : $system->print_money($item['current_bid']),

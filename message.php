@@ -36,7 +36,7 @@ elseif ($user->logged_in && $user->user_data['suspended'] == 6)
 	$auction_data = $db->result();
 	$title = $MSG['753'];
 	$url =  $system->SETTINGS['siteurl'] . 'pay.php?a=6&auction_id=' . $auction_data['id'];
-	$body = sprintf($MSG['777'], $system->uncleanvars($auction_data['title']), $url);
+	$body = sprintf($MSG['777'], htmlspecialchars($auction_data['title']), $url);
 }
 elseif ($user->logged_in && $user->user_data['suspended'] == 5)
 {
@@ -49,7 +49,7 @@ elseif ($user->logged_in && $user->user_data['suspended'] == 5)
 	$auction_data = $db->result();
 	$title = $MSG['753'];
 	$url = $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $auction_data['id'];
-	$body = sprintf($MSG['796'], $system->uncleanvars($auction_data['title']), $url);
+	$body = sprintf($MSG['796'], htmlspecialchars($auction_data['title']), $url);
 }
 else
 {

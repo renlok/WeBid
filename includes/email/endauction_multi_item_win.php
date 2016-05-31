@@ -13,8 +13,8 @@
  ***************************************************************************/
 
 if (!defined('InWeBid')) exit();
-//echo "got here ". $Winner['name'];
-$item_title = $system->uncleanvars($Auction['title']);
+
+$item_title = htmlspecialchars($Auction['title']);
 
 $emailer = new email_handler();
 $emailer->assign_vars(array(

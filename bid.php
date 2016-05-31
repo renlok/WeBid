@@ -115,7 +115,7 @@ else
 }
 
 $Data = $db->result();
-$item_title = $system->uncleanvars($Data['title']);
+$item_title = htmlspecialchars($Data['title']);
 $item_id = $Data['id'];
 $seller_name = $Data['nick'];
 $seller_email = $Data['email'];

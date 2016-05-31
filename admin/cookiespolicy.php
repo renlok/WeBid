@@ -37,7 +37,7 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['1113'], $MSG['5080'], $CKEditor->editor('cookiespolicytext', $system->uncleanvars($system->SETTINGS['cookiespolicytext'])));
+loadblock($MSG['1113'], $MSG['5080'], $CKEditor->editor('cookiespolicytext', $system->SETTINGS['cookiespolicytext']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

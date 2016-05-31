@@ -51,7 +51,7 @@ while ($row = $db->fetch())
 
 	$template->assign_block_vars('items', array(
 			'AUC_ID' => $row['auction'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => htmlspecialchars($row['title']),
 			'ID' => $row['id'],
 			'ENDS' => FormatDate($row['ends']),
 			'BID' => $row['bid'],

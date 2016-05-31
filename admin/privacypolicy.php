@@ -36,7 +36,7 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['404'], $MSG['5080'], $CKEditor->editor('privacypolicytext', $system->uncleanvars($system->SETTINGS['privacypolicytext'])));
+loadblock($MSG['404'], $MSG['5080'], $CKEditor->editor('privacypolicytext', $system->SETTINGS['privacypolicytext']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

@@ -149,7 +149,7 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'PAGE_TITLE' => ($auc_data['suspended'] > 0) ? $MSG['322'] : $MSG['321'],
 		'ID' => $_GET['id'],
-		'TITLE' => $system->uncleanvars($auc_data['title']),
+		'TITLE' => htmlspecialchars($auc_data['title']),
 		'NICK' => $auc_data['nick'],
 		'STARTS' => $date,
 		'DURATION' => $auc_data['duration'],

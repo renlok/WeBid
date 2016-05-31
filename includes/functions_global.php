@@ -14,6 +14,9 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
+
+include PACKAGE_PATH . 'htmLawed.php';
+
 class global_class
 {
 	var $SETTINGS, $ctime, $tdiff;

@@ -17,7 +17,6 @@ include INCLUDE_PATH . 'datacheck.inc.php';
 include INCLUDE_PATH . 'functions_sell.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
-include PACKAGE_PATH . 'htmLawed.php';
 
 $_SESSION['action'] = (!isset($_SESSION['action'])) ? 1 : $_SESSION['action'];
 $_SESSION['action'] = (!isset($_POST['action'])) ? $_SESSION['action'] : $_POST['action'];

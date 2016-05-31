@@ -18,14 +18,13 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
-include PACKAGE_PATH . 'htmLawed.php';
 
 unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
-	$system->writesetting("errortext",htmLawed($_POST['errortext'], array('safe'=>1)),"str");
+	$system->writesetting("errortext", $system->cleanvars($_POST['errortext']), "str");
 	$ERR = $MSG['413'];
 }
 

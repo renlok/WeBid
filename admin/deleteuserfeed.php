@@ -12,7 +12,6 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-
 define('InAdmin', 1);
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';

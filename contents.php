@@ -18,19 +18,19 @@ switch ($_GET['show'])
 {
 	case 'aboutus':
 		$TITLE = $MSG['5085'];
-		$CONTENT = htmlspecialchars($system->SETTINGS['aboutustext']);
+		$CONTENT = $system->SETTINGS['aboutustext'];
 		break;
 	case 'terms':
 		$TITLE = $MSG['5086'];
-		$CONTENT = htmlspecialchars($system->SETTINGS['termstext']);
+		$CONTENT = $system->SETTINGS['termstext'];
 		break;
 	case 'priv':
 		$TITLE = $MSG['401'];
-		$CONTENT = htmlspecialchars($system->SETTINGS['privacypolicytext']);
+		$CONTENT = $system->SETTINGS['privacypolicytext'];
 		break;
 	case 'cookies':
 		$TITLE = $MSG['1110'];
-		$CONTENT = htmlspecialchars($system->SETTINGS['cookiespolicytext']);
+		$CONTENT = $system->SETTINGS['cookiespolicytext'];
 		break;
 }
 

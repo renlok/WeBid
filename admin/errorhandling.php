@@ -25,12 +25,12 @@ unset($INFO);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
-	$system->writesetting("errortext", $system->cleanvars($_POST['errortext']), "str");
+	$system->writesetting("errortext", $system->cleanvars($_POST['errortext'], true), "str");
 	$INFO = $MSG['413'];
 }
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = 'js/ckeditor/';
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;

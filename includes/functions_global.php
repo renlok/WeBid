@@ -218,8 +218,15 @@ class global_class
 		return false;
 	}
 
-	function cleanvars($input, $config = array('elements'=>'-*'))
+	function cleanvars($input, $allow_html = false)
 	{
+		$config = array('elements' => '-*');
+
+		if ($allow_html)
+		{
+			$config = array('safe' => 1, 'elements' => 'a, ol, ul, li, u, strong, em, br, p', 'deny_attribute' => '*');
+		}
+
 		return str_replace(array('&lt;', '&gt;', '&amp;'), array('<', '>', '&'), htmLawed($input, $config));
 	}
 

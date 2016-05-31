@@ -29,6 +29,7 @@ loadblock($MSG['5048'], '', 'yesno', 'boards', $system->SETTINGS['boards'], arra
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0018'],
 		'PAGENAME' => $MSG['5047']

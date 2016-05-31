@@ -60,7 +60,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					question = :question,
 					answer = :answer
 					WHERE id = :faq_id AND lang = :lang";
-
 			}
 			else
 			{

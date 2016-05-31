@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -63,6 +64,7 @@ loadblock('' , '', 'checkbox', 'browsers', $statssettings['browsers'], array($MS
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0023'],
 		'PAGENAME' => $MSG['5142']

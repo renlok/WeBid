@@ -20,6 +20,7 @@ include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -66,7 +67,7 @@ loadblock($MSG['_0006'], '', 'bool', 'active', $system->SETTINGS['active'], arra
 loadblock($MSG['003'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = 'js/ckeditor/';
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
@@ -75,6 +76,7 @@ loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', $system->SETT
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5436'],
 		'PAGENAME' => $MSG['_0001']

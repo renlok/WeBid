@@ -44,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$query = "INSERT INTO " . $DBPrefix . "durations VALUES (:day_count, :day_string)";
 		$params = array();
 		$params[] = array(':day_count', $rebuilt_days[$i], 'int');
-		$params[] = array(':day_string', $system->cleanvars($rebuilt_durations[$i]), 'str');
+		$params[] = array(':day_string', $rebuilt_durations[$i], 'str');
 		$db->query($query, $params);
 	}
 

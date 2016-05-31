@@ -28,8 +28,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$ERR = $MSG['1095'];
 }
 
-loadblock($MSG['1096'], $MSG['1097'], 'text', 'invoice_yellow_line', $system->SETTINGS['invoice_yellow_line']));
-loadblock($MSG['1098'], $MSG['1099'], 'text', 'invoice_thankyou', $system->SETTINGS['invoice_thankyou']));
+loadblock($MSG['1096'], $MSG['1097'], 'text', 'invoice_yellow_line', $system->SETTINGS['invoice_yellow_line']);
+loadblock($MSG['1098'], $MSG['1099'], 'text', 'invoice_thankyou', $system->SETTINGS['invoice_thankyou']);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

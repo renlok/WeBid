@@ -19,13 +19,14 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
 	$system->writesetting("descriptiontag", $system->cleanvars($_POST['descriptiontag']),"str");
 	$system->writesetting("keywordstag", $system->cleanvars($_POST['keywordstag']),"str");
-	$ERR = $MSG['25_0185'];
+	$INFO = $MSG['25_0185'];
 }
 
 loadblock($MSG['25_0180'], $MSG['25_0182'], 'textarea', 'descriptiontag', $system->SETTINGS['descriptiontag']);
@@ -33,6 +34,7 @@ loadblock($MSG['25_0181'], $MSG['25_0184'], 'textarea', 'keywordstag', $system->
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['25_0178']

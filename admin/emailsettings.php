@@ -20,6 +20,7 @@ $extraJs = ';js/jquery-ui.js;js/jquery-migrate.js';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 $mail_protocol = array('0' => 'WEBID MAIL', '1' => 'MAIL', '2' => 'SMTP', '4' => 'SENDMAIL', '5'=> 'QMAIL', '3' => 'NEVER SEND EMAILS (may be useful for testing purposes)');
 $smtp_secure_options =array('none' => 'None', 'tls' => 'TLS', 'ssl' => 'SSL');
@@ -54,7 +55,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$system->writesetting("smtp_host", (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
 			$system->writesetting("smtp_emails", $_POST['alert_emails'], 'str');
 		}
-		$ERR = $MSG['email_settings_updated'];
+		$INFO = $MSG['email_settings_updated'];
 	}
 }
 
@@ -89,6 +90,7 @@ if (isset($_GET['test_email']))
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['524'],
 		'PAGENAME' => $MSG['1131'],

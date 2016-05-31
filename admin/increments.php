@@ -30,6 +30,7 @@ function ToBeDeleted($index)
 }
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] = 'update')
 {
@@ -97,7 +98,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 			}
 
 		}
-		$ERR = $MSG['160'];
+		$INFO = $MSG['160'];
 	}
 }
 
@@ -116,7 +117,8 @@ while ($row = $db->fetch())
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($ERR)) ? $ERR : ''
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		));
 
 include 'header.php';

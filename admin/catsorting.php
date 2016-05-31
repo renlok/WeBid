@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -26,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("catsorting", $system->cleanvars($_POST['catsorting']), "str");
 	$system->writesetting("catstoshow", intval($_POST['catstoshow']),"int");
 
-	$ERR = $MSG['25_0150'];
+	$INFO = $MSG['25_0150'];
 }
 
 loadblock('', $MSG['25_0147'], 'sortstacked', 'catsorting', $system->SETTINGS['catsorting'], array($MSG['25_0148'], $MSG['25_0149']));
@@ -34,6 +35,7 @@ loadblock($MSG['30_0030'], $MSG['30_0029'], 'percent', 'catstoshow', $system->SE
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['25_0146']

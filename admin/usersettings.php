@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -27,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("bidding_visable_to_guest", $_POST['bidding_visable_to_guest'], 'bool');
 	$system->writesetting("email_admin_on_signup", $_POST['email_admin_on_signup'], 'bool');
 	$system->writesetting("user_request_seller_permission", $_POST['user_request_seller_permission'], 'bool');
-	$ERR = $MSG['895'];
+	$INFO = $MSG['895'];
 
 	$system->SETTINGS['usersauth'] = $_POST['usersauth'];
 	$system->SETTINGS['activationtype'] = $_POST['usersconf'];
@@ -44,6 +45,7 @@ loadblock($MSG['user_request_seller_permission'], $MSG['user_request_seller_perm
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['894']

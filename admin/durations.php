@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -47,7 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$db->query($query, $params);
 	}
 
-	$ERR = $MSG['123'];
+	$INFO = $MSG['123'];
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "durations ORDER BY days";
@@ -66,7 +67,8 @@ while ($row = $db->fetch())
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($ERR)) ? $ERR : ''
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		));
 
 include 'header.php';

@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -45,7 +46,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			array("https", $_POST['https'], 'str'),
 			array("https_url", $_POST['https_url'], 'str'),
 		));
-		$ERR = $MSG['542'];
+		$INFO = $MSG['542'];
 	}
 
 	$system->SETTINGS['sitename'] = $_POST['sitename'];
@@ -84,6 +85,7 @@ loadblock($MSG['801'], $MSG['802'], 'text', 'https_url', $system->SETTINGS['http
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['526'],

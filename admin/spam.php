@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -43,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->SETTINGS['spam_register'] = $_POST['spam_register'];
 		$system->SETTINGS['spam_blocked_email_enabled'] = $_POST['spam_blocked_email_enabled'];
 		$system->SETTINGS['spam_blocked_email_domains'] = $_POST['spam_blocked_email_domains'];
-		$ERR = $MSG['750'];
+		$INFO = $MSG['750'];
 	}
 }
 
@@ -57,6 +58,7 @@ loadblock($MSG['spam_blocked_email_domains'], $MSG['spam_blocked_email_domains_e
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['749']

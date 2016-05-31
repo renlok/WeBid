@@ -19,12 +19,15 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['defaultlanguage']))
 {
 	// clean submission and update database
 	$system->writesetting("defaultlanguage", $system->cleanvars($_POST['defaultlanguage']),"str");
+	$INFO = $MSG['multilingual_support_settings_updated'];
 }
+
 $html = '';
 if (is_array($LANGUAGES))
 {
@@ -41,6 +44,7 @@ loadblock($MSG['2__0004'], $MSG['2__0003'], $html);
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['2__0002']

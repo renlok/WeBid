@@ -20,12 +20,13 @@ include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
 	$system->writesetting("errortext", $system->cleanvars($_POST['errortext']), "str");
-	$ERR = $MSG['413'];
+	$INFO = $MSG['413'];
 }
 
 $CKEditor = new CKEditor();
@@ -38,6 +39,7 @@ loadblock($MSG['411'], $MSG['410'], $CKEditor->editor('errortext', $system->SETT
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['409']

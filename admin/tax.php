@@ -19,12 +19,13 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$system->writesetting("taxuser", $_POST['taxuser'],"str");
 	$system->writesetting("tax", $_POST['tax'],"str");
-	$ERR = $MSG['1089'];
+	$INFO = $MSG['1089'];
 }
 
 loadblock($MSG['1090'], $MSG['1091'], 'yesno', 'tax', $system->SETTINGS['tax'], array($MSG['030'], $MSG['029']));
@@ -32,6 +33,7 @@ loadblock($MSG['1092'], $MSG['1093'], 'yesno', 'taxuser', $system->SETTINGS['tax
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0012'],
 		'PAGENAME' => $MSG['1088']

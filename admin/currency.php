@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 $html = '';
 
 // Create currencies array
@@ -52,16 +53,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("moneydecimals", $_POST['moneydecimals'], 'int');
 		$system->writesetting("moneysymbol", $_POST['moneysymbol'], 'int');
 		
-		$ERR = $MSG['553'];
-
+		$INFO = $MSG['553'];
 	}
-
 }
 
 foreach ($CURRENCIES_SYMBOLS as $k => $v)
 {
 	if ($v == $system->SETTINGS['currency'])
+	{
 		$selectsetting = $k;
+	}
 }
 
 loadblock($MSG['5008'], '', generateSelect('currency', $CURRENCIES));
@@ -72,6 +73,7 @@ loadblock($MSG['549'], '', 'batchstacked', 'moneysymbol', $system->SETTINGS['mon
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'OPTIONHTML' => $html,
 		'TYPENAME' => $MSG['25_0008'],

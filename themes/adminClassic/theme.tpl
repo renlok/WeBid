@@ -9,6 +9,9 @@
 <!-- IF ERROR ne '' -->
 				<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
+<!-- IF INFO ne '' -->
+				<div class="info-box"><b>{INFO}</b></div>
+<!-- ENDIF -->
 <!-- IF B_EDIT_FILE -->
 				<form name="editfile" action="" method="post">
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">

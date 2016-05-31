@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -32,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("lastitemsnumber", intval($_POST['lastitemsnumber']), 'int');
 	$system->writesetting("hotitemsnumber",  intval($_POST['hotitemsnumber']), 'int');
 	$system->writesetting("endingsoonnumber", intval($_POST['endingsoonnumber']), 'int');
-	$ERR = $MSG['795'];
+	$INFO = $MSG['795'];
 }
 
 loadblock($MSG['789'], $MSG['790'], 'days', 'perpage', $system->SETTINGS['perpage']);
@@ -49,6 +50,7 @@ loadblock('', $MSG['554'], 'days', 'newstoshow', $system->SETTINGS['newstoshow']
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['788']

@@ -21,6 +21,7 @@ include INCLUDE_PATH . 'membertypes.inc.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] = 'update')
 {
@@ -68,7 +69,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 		$db->query($query, $params);
 	}
 	rebuild_table_file('membertypes');
-	$ERR = $MSG['836'];
+	$INFO = $MSG['836'];
 }
 
 foreach ($membertypes as $id => $quest)
@@ -81,7 +82,8 @@ foreach ($membertypes as $id => $quest)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : ''
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		));
 
 include 'header.php';

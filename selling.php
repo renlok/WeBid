@@ -70,7 +70,7 @@ foreach ($winner_data as $row)
 	$fblink = ($row['feedback_sel'] == 0) ? '(<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $row['winner'] . '&sid=' . $row['seller'] . '&ws=s">' . $MSG['207'] . '</a>)' : '';
 	$template->assign_block_vars('a', array(
 		'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
-		'TITLE' => $system->uncleanvars($row['title']),
+		'TITLE' => htmlspecialchars($row['title']),
 		'ENDS' => FormatDate($row['ends']),
 		'AUCTIONID' => $row['auction'],
 

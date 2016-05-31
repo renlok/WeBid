@@ -24,15 +24,15 @@ if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt
 	$realversion = 'Unknown';
 }
 
-if ($realversion != $system->SETTINGS['version'])
-{
+if (version_compare($system->SETTINGS['version'], $realversion, "<"))
+{ 
 	$myversion = '<span style="color:#ff0000;">' . $system->SETTINGS['version'] . '</span>';
 	$text = $MSG['30_0211'];
 }
 else
-{
+{ 
 	$myversion = '<span style="color:#00ae00;">' . $system->SETTINGS['version'] . '</span>';
-	$text = $MSG['30_0212'];
+	$text = $MSG['30_0212']; 
 }
 
 $template->assign_vars(array(

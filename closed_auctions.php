@@ -97,7 +97,7 @@ foreach ($auction_data as $row)
 			'BGCOLOUR' => (!($TOTALAUCTIONS % 2)) ? '' : 'class="alt-row"',
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => htmlspecialchars($row['title']),
 			'BNIMG' => get_lang_img(($row['bn_only'] == 0) ? 'buy_it_now.gif' : 'bn_only.png'),
 			'BNVALUE' => $row['buy_now'],
 			'BNFORMAT' => $system->print_money($row['buy_now']),

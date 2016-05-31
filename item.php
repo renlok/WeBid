@@ -496,7 +496,7 @@ while ($payment_method = $db->fetch())
 
 $bn_link = (!$has_ended) ? ' <a href="' . $system->SETTINGS['siteurl'] . 'buy_now.php?id=' . $id . '"><img border="0" align="absbottom" alt="' . $MSG['496'] . '" src="' . get_lang_img('buy_it_now.gif') . '"></a>' : '';
 
-$page_title = $system->uncleanvars($auction_data['title']);
+$page_title = htmlspecialchars($auction_data['title']);
 
 $shipping = '';
 if ($auction_data['shipping'] == 1)
@@ -508,8 +508,8 @@ elseif ($auction_data['shipping'] == 3)
 
 $template->assign_vars(array(
 		'ID' => $auction_data['id'],
-		'TITLE' => $system->uncleanvars($auction_data['title']),
-		'SUBTITLE' => $system->uncleanvars($auction_data['subtitle']),
+		'TITLE' => htmlspecialchars($auction_data['title']),
+		'SUBTITLE' => htmlspecialchars($auction_data['subtitle']),
 		'AUCTION_DESCRIPTION' => $auction_data['description'],
 		'PIC_URL' => UPLOAD_FOLDER . $id . '/' . $auction_data['pict_url'],
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $MSG['1152'],
@@ -529,7 +529,7 @@ $template->assign_vars(array(
 		'NEXTBID' => $next_bid,
 		'INTERNATIONAL' => ($auction_data['international']) ? $MSG['033'] : $MSG['043'],
 		'SHIPPING' => $shipping,
-		'SHIPPINGTERMS' => nl2br($system->uncleanvars($auction_data['shipping_terms'])),
+		'SHIPPINGTERMS' => nl2br(htmlspecialchars($auction_data['shipping_terms'])),
 		'PAYMENTS' => $payment_methods,
 		'AUCTION_VIEWS' => $auction_data['counter'],
 		'AUCTION_TYPE' => ($auction_data['bn_only'] == 0) ? $system->SETTINGS['auction_types'][$auction_type] : $MSG['933'],

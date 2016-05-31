@@ -14,7 +14,7 @@
 
 if (!defined('InWeBid')) exit();
 
-$item_title = $system->uncleanvars($item_title);
+$item_title = htmlspecialchars($item_title);
 
 $emailer = new email_handler();
 $emailer->assign_vars(array(

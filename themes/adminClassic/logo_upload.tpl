@@ -1,5 +1,4 @@
-<!-- INCLUDE header.tpl -->
-		<div style="width:25%; float:left;">
+<div style="width:25%; float:left;">
 			<div style="margin-left:auto; margin-right:auto;">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
@@ -31,5 +30,4 @@
 					</div>
 				</form>
 			</div>
-		</div>
-<!-- INCLUDE footer.tpl -->
+</div>

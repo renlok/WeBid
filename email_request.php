@@ -64,7 +64,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 		}
 		else
 		{
-			$item_title = $system->uncleanvars($db->result('title'));
+			$item_title = htmlspecialchars($db->result('title'));
 			$from_email = ($system->SETTINGS['users_email'] == 'n') ? $user->user_data['email'] : $system->SETTINGS['adminmail'];
 			// Send e-mail message
 			$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;

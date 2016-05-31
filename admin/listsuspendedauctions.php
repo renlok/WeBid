@@ -59,7 +59,7 @@ while ($row = $db->fetch())
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],
 			'ID' => $row['id'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => htmlspecialchars($row['title']),
 			'START_TIME' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
 			'END_TIME' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 			'USERNAME' => $row['nick'],

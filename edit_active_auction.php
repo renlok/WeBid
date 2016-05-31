@@ -54,8 +54,8 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_auction_id']	= $RELISTEDAUCTION['id'];
 		$_SESSION['SELL_starts']		= $RELISTEDAUCTION['starts'] + $system->tdiff;
 		$_SESSION['SELL_ends']			= $RELISTEDAUCTION['ends'];
-		$_SESSION['SELL_title']			= $system->uncleanvars($RELISTEDAUCTION['title']);
-		$_SESSION['SELL_subtitle']		= $system->uncleanvars($RELISTEDAUCTION['subtitle']);
+		$_SESSION['SELL_title']			= htmlspecialchars($RELISTEDAUCTION['title']);
+		$_SESSION['SELL_subtitle']		= htmlspecialchars($RELISTEDAUCTION['subtitle']);
 		$_SESSION['SELL_description']	= $RELISTEDAUCTION['description'];
 		$_SESSION['SELL_atype']			= $RELISTEDAUCTION['auction_type'];
 		$_SESSION['SELL_buy_now_only']	= $RELISTEDAUCTION['bn_only'];

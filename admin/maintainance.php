@@ -18,7 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
-include PACKAGE_PATH . 'htmLawed.php';
 
 unset($ERR);
 
@@ -43,7 +42,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				active = :active";
 		$params = array();
 		$params[] = array(':superuser', $superuser, 'str');
-		$params[] = array(':maintainancetext', htmLawed($_POST['maintainancetext'], array('safe' => 1)), 'str');
+		$params[] = array(':maintainancetext', $system->cleanvars($_POST['maintainancetext']), 'str');
 		$params[] = array(':active', $_POST['active'], 'str');
 		$db->query($query, $params);
 		$ERR = $MSG['_0005'];

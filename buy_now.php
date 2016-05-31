@@ -296,7 +296,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					$emailer = new email_handler();
 					$emailer->assign_vars(array(
 							'ID' => $Auction['id'],
-							'TITLE' => $system->uncleanvars($Auction['title']),
+							'TITLE' => htmlspecialchars($Auction['title']),
 							'NAME' => $Seller['name'],
 							'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $Auction['id']
 							));

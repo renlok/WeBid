@@ -18,6 +18,7 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
 $catscontrol = new MPTTcategories();
@@ -364,6 +365,12 @@ while ($payment_method = $db->fetch())
 	}
 }
 
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
+
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => intval($_REQUEST['id']),
@@ -373,7 +380,7 @@ $template->assign_vars(array(
 		'DURLIST' => $dur_list,
 		'CATLIST1' => $categories_list1,
 		'CATLIST2' => $categories_list2,
-		'DESC' => $auction_data['description'],
+		'EDITOR' => $CKEditor->editor('description', $auction_data['description']),
 		'CURRENT_BID' => $system->print_money_nosymbol($auction_data['current_bid']),
 		'MIN_BID' => $system->print_money_nosymbol($auction_data['minimum_bid']),
 		'QTY' => $auction_data['quantity'],

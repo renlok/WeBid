@@ -39,7 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params = array();
 		$params[] = array(':category', $_POST['category'], 'int');
 		$params[] = array(':question', $_POST['question'][$system->SETTINGS['defaultlanguage']], 'str');
-		$params[] = array(':answer', $_POST['answer'][$system->SETTINGS['defaultlanguage']], 'str');
+		$params[] = array(':answer', $system->cleanvars($_POST['answer'][$system->SETTINGS['defaultlanguage']]), 'str');
 		$params[] = array(':faq_id', $_POST['id'], 'int');
 		$db->query($query, $params);
 		reset($LANGUAGES);
@@ -53,7 +53,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params = array();
 			$params[] = array(':lang', $k, 'str');
 			$params[] = array(':question', $_POST['question'][$k], 'str');
-			$params[] = array(':answer', $_POST['answer'][$k], 'str');
+			$params[] = array(':answer', $system->cleanvars($_POST['answer'][$k]), 'str');
 			if ($db->numrows() > 0)
 			{
 				$query = "UPDATE " . $DBPrefix . "faqs_translated SET

@@ -115,7 +115,7 @@ if (!isset($_POST['action'])) // already closed auctions
 		$_SESSION['SELL_shipping_cost']	 = $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost']);
 		$_SESSION['SELL_additional_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['additional_shipping_cost']);
 		$_SESSION['SELL_shipping']		 = $RELISTEDAUCTION['shipping'];
-		$_SESSION['SELL_shipping_terms'] = $system->uncleanvars($RELISTEDAUCTION['shipping_terms']);
+		$_SESSION['SELL_shipping_terms'] = $RELISTEDAUCTION['shipping_terms'];
 		$_SESSION['SELL_payment']		 = explode(', ', $RELISTEDAUCTION['payment']);
 		$_SESSION['SELL_international']	 = $RELISTEDAUCTION['international'];
 		$_SESSION['SELL_file_uploaded']	 = $RELISTEDAUCTION['photo_uploaded'];

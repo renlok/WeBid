@@ -10,6 +10,9 @@
 <!-- IF ERROR ne '' -->
 					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
+<!-- IF INFO ne '' -->
+					<div class="info-box"><b>{INFO}</b></div>
+<!-- ENDIF -->
 					{L_30_0032}
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

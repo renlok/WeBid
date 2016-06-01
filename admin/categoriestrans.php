@@ -84,7 +84,7 @@ while ($row = $db->fetch())
 	// set category data
 	$template->assign_block_vars('cats', array(
 			'CAT_ID' => $row['cat_id'],
-			'CAT_NAME' => $system->uncleanvars($row['cat_name']),
+			'CAT_NAME' => htmlspecialchars($row['cat_name']),
 			'TRAN_CAT' => isset($category_names[$row['cat_id']])? $category_names[$row['cat_id']] : '',
 			'BG' => $bg
 			));

@@ -45,9 +45,9 @@ function setvars()
 	$additional_shipping_cost = (isset($_POST['additional_shipping_cost'])) ? $_POST['additional_shipping_cost'] : $_SESSION['SELL_additional_shipping_cost'];
 	$additional_shipping_cost = (empty($additional_shipping_cost)) ? 0 : $additional_shipping_cost;
 	$imgtype = (isset($_POST['imgtype'])) ? $_POST['imgtype'] : $_SESSION['SELL_file_uploaded'];
-	$title = (isset($_POST['title'])) ? $_POST['title'] : $_SESSION['SELL_title'];
-	$subtitle = (isset($_POST['subtitle'])) ? $_POST['subtitle'] : $_SESSION['SELL_subtitle'];
-	$sdescription = (isset($_POST['sdescription'])) ? $_POST['sdescription'] : $_SESSION['SELL_description'];
+	$title = (isset($_POST['title'])) ? $system->cleanvars($_POST['title']) : $_SESSION['SELL_title'];
+	$subtitle = (isset($_POST['subtitle'])) ? $system->cleanvars($_POST['subtitle']) : $_SESSION['SELL_subtitle'];
+	$sdescription = (isset($_POST['sdescription'])) ? $system->cleanvars($_POST['sdescription'], true) : $_SESSION['SELL_description'];
 	$pict_url = (isset($_POST['pict_url'])) ? $_POST['pict_url'] : $_SESSION['SELL_pict_url'];
 	$atype = (isset($_POST['atype'])) ? $_POST['atype'] : $_SESSION['SELL_atype'];
 	$iquantity = (int)(isset($_POST['iquantity'])) ? $_POST['iquantity'] : $_SESSION['SELL_iquantity'];
@@ -58,7 +58,7 @@ function setvars()
 	$increments = (isset($_POST['increments'])) ? $_POST['increments'] : $_SESSION['SELL_increments'];
 	$customincrement = (isset($_POST['customincrement'])) ? $_POST['customincrement'] : $_SESSION['SELL_customincrement'];
 	$shipping = (isset($_POST['shipping'])) ? $_POST['shipping'] : $_SESSION['SELL_shipping'];
-	$shipping_terms = (isset($_POST['shipping_terms'])) ? $_POST['shipping_terms'] : $_SESSION['SELL_shipping_terms'];
+	$shipping_terms = (isset($_POST['shipping_terms'])) ? $system->cleanvars($_POST['shipping_terms']) : $_SESSION['SELL_shipping_terms'];
 	$payment = (isset($_POST['payment'])) ? $_POST['payment'] : $_SESSION['SELL_payment'];
 	$payment = (is_array($payment)) ? $payment : array();
 	$sellcat1 = $_SESSION['SELL_sellcat1'];
@@ -228,8 +228,8 @@ function updateauction()
 		current_fee = current_fee + :fee
 		WHERE id = :auction_id";
 	$params = array();
-	$params[] = array(':title', $system->cleanvars($_SESSION['SELL_title']), 'str');
-	$params[] = array(':subtitle', $system->cleanvars($_SESSION['SELL_subtitle']), 'str');
+	$params[] = array(':title', $_SESSION['SELL_title'], 'str');
+	$params[] = array(':subtitle', $_SESSION['SELL_subtitle'], 'str');
 	$params[] = array(':description', $_SESSION['SELL_description'], 'str');
 	$params[] = array(':pict_url', $_SESSION['SELL_pict_url'], 'str');
 	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
@@ -251,7 +251,7 @@ function updateauction()
 	$params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
-	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
+	$params[] = array(':shipping_terms', $_SESSION['SELL_shipping_terms'], 'str');
 	$params[] = array(':bold', $_SESSION['SELL_is_bold'], 'bool');
 	$params[] = array(':highlighted', $_SESSION['SELL_is_highlighted'], 'bool');
 	$params[] = array(':featured', $_SESSION['SELL_is_featured'], 'bool');
@@ -276,11 +276,11 @@ function addauction()
 
 	$params = array();
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
-	$params[] = array(':title', $system->cleanvars($_SESSION['SELL_title']), 'str');
-	$params[] = array(':subtitle', $system->cleanvars($_SESSION['SELL_subtitle']), 'str');
+	$params[] = array(':title', $_SESSION['SELL_title'], 'str');
+	$params[] = array(':subtitle', $_SESSION['SELL_subtitle'], 'str');
 	$params[] = array(':starts', $a_starts, 'int');
 	$params[] = array(':description', $_SESSION['SELL_description'], 'str');
-	$params[] = array(':pict_url', $system->cleanvars($_SESSION['SELL_pict_url']), 'str');
+	$params[] = array(':pict_url', $_SESSION['SELL_pict_url'], 'str');
 	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
 	$params[] = array(':cattwo', $_SESSION['SELL_sellcat2'], 'int');
 	$params[] = array(':min_bid', $system->input_money(($_SESSION['SELL_buy_now_only'] == 0) ? $_SESSION['SELL_minimum_bid'] : $_SESSION['SELL_buy_now_price']), 'float');
@@ -299,7 +299,7 @@ function addauction()
 	$params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':relist', $_SESSION['SELL_relist'], 'int');
-	$params[] = array(':shipping_terms', $system->cleanvars($_SESSION['SELL_shipping_terms']), 'str');
+	$params[] = array(':shipping_terms', $_SESSION['SELL_shipping_terms'], 'str');
 	$params[] = array(':bn_only', $_SESSION['SELL_buy_now_only'], 'bool');
 	$params[] = array(':bold', $_SESSION['SELL_is_bold'], 'bool');
 	$params[] = array(':highlighted', $_SESSION['SELL_is_highlighted'], 'bool');

@@ -20,27 +20,29 @@ include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$system->writesetting("cookiespolicy",ynbool($_POST['cookiespolicy']),"str");
-	$system->writesetting("cookiespolicytext", $system->cleanvars($_POST['cookiespolicytext']),"str");
+	$system->writesetting("cookiespolicy", ynbool($_POST['cookiespolicy']), "str");
+	$system->writesetting("cookiespolicytext", $system->cleanvars($_POST['cookiespolicytext'], true), "str");
 
-	$ERR = $MSG['1115'];
+	$INFO = $MSG['1115'];
 }
 loadblock($MSG['1111'], $MSG['1112'], 'yesno', 'cookiespolicy', $system->SETTINGS['cookiespolicy'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = 'js/ckeditor/';
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['1113'], $MSG['5080'], $CKEditor->editor('cookiespolicytext', $system->uncleanvars($system->SETTINGS['cookiespolicytext'])));
+loadblock($MSG['1113'], $MSG['5080'], $CKEditor->editor('cookiespolicytext', $system->SETTINGS['cookiespolicytext']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0018'],
 		'PAGENAME' => $MSG['1114']

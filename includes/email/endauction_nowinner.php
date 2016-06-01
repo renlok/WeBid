@@ -28,7 +28,7 @@ if ($emailmode == 'one')
 			'S_NAME' => $Seller['name'],
 			'S_NICK' => $Seller['nick'],
 			'S_EMAIL' => $Seller['email'],
-			'A_TITLE' => $system->uncleanvars($Auction['title']),
+			'A_TITLE' => htmlspecialchars($Auction['title']),
 			'A_ID' => $Auction['id'],
 			'A_END' => $ends_string,
 			'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],

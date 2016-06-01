@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -64,7 +65,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$db->query($query, $params);
 	}
 
-	$ERR = $MSG['093'];
+	$INFO = $MSG['093'];
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 0";
@@ -81,7 +82,8 @@ while ($payment_type = $db->fetch())
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($ERR)) ? $ERR : ''
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		));
 
 include 'header.php';

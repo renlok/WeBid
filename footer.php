@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 $template->assign_vars(array(
-		'L_COPY' => empty($system->SETTINGS['copyright']) ? '' : '<p>' . $system->uncleanvars($system->SETTINGS['copyright']) . '</p>',
+		'L_COPY' => empty($system->SETTINGS['copyright']) ? '' : '<p>' . htmlspecialchars($system->SETTINGS['copyright']) . '</p>',
 		'L_COPY_YEAR' => date("Y"),
 
 		'B_VIEW_TERMS' => ($system->SETTINGS['terms'] == 'y'),

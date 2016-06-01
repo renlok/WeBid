@@ -18,17 +18,21 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+unset($ERR);
+unset($INFO);
+
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
-	$system->writesetting("boards",ynbool($_POST['boards']),"str");
-	$ERR = $MSG['5051'];
+	$system->writesetting("boards", ynbool($_POST['boards']), "str");
+	$INFO = $MSG['5051'];
 }
 
 loadblock($MSG['5048'], '', 'yesno', 'boards', $system->SETTINGS['boards'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0018'],
 		'PAGENAME' => $MSG['5047']

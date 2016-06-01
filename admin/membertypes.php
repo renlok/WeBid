@@ -21,6 +21,7 @@ include INCLUDE_PATH . 'membertypes.inc.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] = 'update')
 {
@@ -64,24 +65,25 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 		$query = "INSERT INTO " . $DBPrefix . "membertypes VALUES (NULL, :feedbacks, :icon);";
 		$params = array();
 		$params[] = array(':feedbacks', $new_membertype['feedbacks'], 'int');
-		$params[] = array(':icon', $new_membertype['icon'], 'int');
+		$params[] = array(':icon', $new_membertype['icon'], 'str');
 		$db->query($query, $params);
 	}
 	rebuild_table_file('membertypes');
-	$ERR = $MSG['836'];
+	$INFO = $MSG['836'];
 }
 
 foreach ($membertypes as $id => $quest)
 {
 	$template->assign_block_vars('mtype', array(
-			'ID' => $id,
+			'ID' => $quest['id'],
 			'FEEDBACK' => $quest['feedbacks'],
 			'ICON' => $quest['icon']
 			));
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : ''
+		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		));
 
 include 'header.php';

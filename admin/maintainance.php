@@ -18,9 +18,9 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
-include PACKAGE_PATH . 'htmLawed.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				active = :active";
 		$params = array();
 		$params[] = array(':superuser', $superuser, 'str');
-		$params[] = array(':maintainancetext', htmLawed($_POST['maintainancetext'], array('safe' => 1)), 'str');
+		$params[] = array(':maintainancetext', $system->cleanvars($_POST['maintainancetext']), 'str');
 		$params[] = array(':active', $_POST['active'], 'str');
 		$db->query($query, $params);
 		$ERR = $MSG['_0005'];
@@ -67,7 +67,7 @@ loadblock($MSG['_0006'], '', 'bool', 'active', $system->SETTINGS['active'], arra
 loadblock($MSG['003'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = 'js/ckeditor/';
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
@@ -76,6 +76,7 @@ loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', $system->SETT
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5436'],
 		'PAGENAME' => $MSG['_0001']

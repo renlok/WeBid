@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -38,7 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("fee_disable_acc", $_POST['fee_disable_acc'], "str");
 	$system->writesetting("payment_gateway_sandbox", $_POST['payment_gateway_sandbox'], "str");
 
-	$ERR = $MSG['761'];
+	$INFO = $MSG['761'];
 }
 
 loadblock($MSG['395'], $MSG['397'], 'yesno', 'fees', $system->SETTINGS['fees'], array($MSG['759'], $MSG['760']));
@@ -53,6 +54,7 @@ loadblock($MSG['738'], $MSG['739'], 'yesno', 'fee_disable_acc', $system->SETTING
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0012'],
 		'PAGENAME' => $MSG['395'],

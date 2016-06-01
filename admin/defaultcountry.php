@@ -20,12 +20,13 @@ include 'loggedin.inc.php';
 include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
-	$system->writesetting("defaultcountry", $system->cleanvars($_POST['country']),"str");
-	$ERR = $MSG['5323'];
+	$system->writesetting("defaultcountry", $system->cleanvars($_POST['country']), "str");
+	$INFO = $MSG['5323'];
 }
 
 $selectsetting = $system->SETTINGS['defaultcountry'];
@@ -33,6 +34,7 @@ loadblock($MSG['5322'], $MSG['5321'], generateSelect('country', $countries, fals
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['5322']

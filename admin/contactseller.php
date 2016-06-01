@@ -19,13 +19,14 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
 	$system->writesetting("contactseller", $system->cleanvars($_POST['contactseller']), "str");
 	$system->writesetting("users_email", ynbool($_POST['users_email']), 'str');
-	$ERR = $MSG['25_0155'];
+	$INFO = $MSG['25_0155'];
 }
 
 loadblock($MSG['25_0216'], $MSG['25_0217'], 'select3contact', 'contactseller', $system->SETTINGS['contactseller'], array($MSG['25_0218'], $MSG['25_0219'], $MSG['25_0220']));
@@ -33,6 +34,7 @@ loadblock($MSG['30_0085'], $MSG['30_0084'], 'yesno', 'users_email', $system->SET
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['25_0216']

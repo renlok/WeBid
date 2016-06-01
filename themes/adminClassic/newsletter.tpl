@@ -9,6 +9,9 @@
 <!-- IF ERROR ne '' -->
 				<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
+<!-- IF INFO ne '' -->
+				<div class="info-box"><b>{INFO}</b></div>
+<!-- ENDIF -->
 				<form name="conf" action="" method="post">
 <!-- IF B_PREVIEW -->
 					<div class="main-box jumbo-box">

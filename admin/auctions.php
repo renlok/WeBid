@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -60,7 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("maxuploadsize", ($_POST['maxpicturesize'] * 1024), 'int');
 		$system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
 		$system->writesetting("gallery_max_width_height", $_POST['gallery_max_width_height'], 'int');
-		$ERR = $MSG['5088'];
+		$INFO = $MSG['5088'];
 	}
 }
 
@@ -95,6 +96,7 @@ loadblock($MSG['gallery_image_max_size'], $MSG['gallery_image_max_size_explain']
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['5087']

@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -26,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("counter_auctions", isset($_POST['auctions'])? 'y' : 'n',"str");
 	$system->writesetting("counter_users", isset($_POST['users'])? 'y' : 'n',"str");
 	$system->writesetting("counter_online",  isset($_POST['online'])? 'y' : 'n',"str");
-	$ERR = $MSG['2__0063'];
+	$INFO = $MSG['2__0063'];
 }
 
 loadblock($MSG['2__0062'], $MSG['2__0058']);
@@ -36,6 +37,7 @@ loadblock($MSG['2__0059'], '', 'checkbox', 'online', $system->SETTINGS['counter_
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['2__0057']

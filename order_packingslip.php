@@ -50,7 +50,7 @@ $winner_address .= (!empty($winner['prov'])) ? '<br>' . $winner['prov'] : '';
 $winner_address .= (!empty($winner['country'])) ? '<br>' . $winner['country'] : '';
 $winner_address .= (!empty($winner['zip'])) ? '<br>' . $winner['zip'] : '';
 
-$title = $system->SETTINGS['sitename'] . ' - ' . $system->uncleanvars($data['title']);
+$title = $system->SETTINGS['sitename'] . ' - ' . htmlspecialchars($data['title']);
 
 $template->assign_vars(array(
 		'DOCDIR' => $DOCDIR,

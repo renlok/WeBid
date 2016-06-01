@@ -20,6 +20,7 @@ include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 unset($ERR);
+unset($INFO);
 
 $subject = (isset($_POST['subject'])) ? $_POST['subject'] : '';
 $content = (isset($_POST['content'])) ? $_POST['content'] : '';
@@ -83,6 +84,7 @@ $CKEditor->config['height'] = 400;
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'SELECTBOX' => generateSelect('usersfilter', $USERSFILTER),
 		'SUBJECT' => $subject,

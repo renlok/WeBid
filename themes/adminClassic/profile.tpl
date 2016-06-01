@@ -10,6 +10,9 @@
 <!-- IF ERROR ne '' -->
 					<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
+<!-- IF INFO ne '' -->
+					<div class="info-box"><b>{INFO}</b></div>
+<!-- ENDIF -->
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr valign="top">
 							<td width="50%">{L_781}</td>

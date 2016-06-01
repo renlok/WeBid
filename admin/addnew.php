@@ -16,7 +16,6 @@ define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
-include PACKAGE_PATH . 'htmLawed.php';
 include 'loggedin.inc.php';
 
 unset($ERR);

@@ -132,6 +132,13 @@ if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt
 	$realversion = 'Unknown';
 }
 
+$update_available = false;
+if (version_compare($system->SETTINGS['version'], $realversion, "<"))
+{ 
+	$update_available = true;
+	$text = $MSG['30_0211'];
+}
+
 $template->assign_vars(array(
 		'ERROR' => (isset($errmsg)) ? $errmsg : '',
 		'SITENAME' => $system->SETTINGS['sitename'],
@@ -158,7 +165,8 @@ $template->assign_vars(array(
 		'A_USESSIONS' => $ACCESS['usersessions'],
 
 		'THIS_VERSION' => $system->SETTINGS['version'],
-		'CUR_VERSION' => $realversion
+		'CUR_VERSION' => $realversion,
+		'UPDATE_AVAILABLE' => $update_available
 		));
 
 include 'header.php';

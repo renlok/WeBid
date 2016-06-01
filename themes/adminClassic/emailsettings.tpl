@@ -10,6 +10,9 @@
 <!-- IF ERROR ne '' -->
 				<div class="error-box"><b>{ERROR}</b></div>
 <!-- ENDIF -->
+<!-- IF INFO ne '' -->
+				<div class="info-box"><b>{INFO}</b></div>
+<!-- ENDIF -->
 					<form name="conf" action="" method="post" enctype="multipart/form-data">
 						<table width="98%" cellpadding="2" align="center" class="blank">
 <!-- BEGIN block -->

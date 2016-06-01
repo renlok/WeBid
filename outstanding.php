@@ -58,7 +58,7 @@ while ($row = $db->fetch())
 	$template->assign_block_vars('to_pay', array(
 			'ID' => $row['id'],
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['auc_id'],
-			'TITLE' => $system->uncleanvars($row['auc_title']),
+			'TITLE' => htmlspecialchars($row['auc_title']),
 			'PAY_SHIPPING' => ($row['shipping'] == 1),
 			'SHIPPING' => $system->print_money($shipping_data['shipping_cost']),
 			'ADDITIONAL_SHIPPING_COST' => $system->print_money($shipping_data['additional_shipping_cost']),

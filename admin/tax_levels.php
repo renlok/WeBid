@@ -19,6 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 unset($ERR);
+unset($INFO);
 
 // add or edit a value
 if (isset($_POST['action']) && $_POST['action'] == 'add')
@@ -32,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'add')
 	$buyer_countries = implode(' ', $_POST['buyer_countries']);
 	}
 
-	if (!empty($system->cleanvars($_POST['tax_name'])))
+	if (!empty($_POST['tax_name']))
 	{
 		if ($_POST['tax_id'] != '')
 		{
@@ -137,6 +138,7 @@ while($row = $db->fetch())
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ERROR' => (isset($errmsg)) ? $errmsg : '',
+		'INFO' => (isset($INFO)) ? $INFO : '',
 		'TAX_ID' => (isset($data['id'])) ? $data['id'] : '',
 		'TAX_NAME' => (isset($data['tax_name'])) ? $data['tax_name'] : '',
 		'TAX_RATE' => (isset($data['tax_rate'])) ? $data['tax_rate'] : '',

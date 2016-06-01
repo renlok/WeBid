@@ -26,11 +26,9 @@ $list_type = isset($_POST['type']) ? ($_POST['type']) : 'a';
 $from_date = !empty($_POST['from_date']) ? $_POST['from_date'] : 0;
 $to_date = !empty($_POST['to_date']) ? $_POST['to_date'] : 0;
 
-
 // filter date and date format
 $from_date = filter_date($from_date);
 $to_date = filter_date($to_date);
-
 
 // Set offset and limit for pagination
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))

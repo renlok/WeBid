@@ -14,6 +14,9 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
+
+include PACKAGE_PATH . 'htmLawed.php';
+
 class global_class
 {
 	var $SETTINGS, $ctime, $tdiff;
@@ -215,24 +218,16 @@ class global_class
 		return false;
 	}
 
-	function cleanvars($i, $trim = false)
+	function cleanvars($input, $allow_html = false)
 	{
-		if ($trim)
-			$i = trim($i);
-		$i = addslashes($i);
-		$i = rtrim($i);
-		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
-		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;');
-		$i = str_replace($look, $safe, $i);
-		return $i;
-	}
+		$config = array('elements' => '-*');
 
-	function uncleanvars($i)
-	{
-		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
-		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;');
-		$i = str_replace($safe, $look, $i);
-		return $i;
+		if ($allow_html)
+		{
+			$config = array('safe' => 1, 'elements' => 'a, ol, ul, li, u, strong, em, br, p', 'deny_attribute' => '*');
+		}
+
+		return str_replace(array('&lt;', '&gt;', '&amp;'), array('<', '>', '&'), htmLawed($input, $config));
 	}
 
 	function filter($txt)

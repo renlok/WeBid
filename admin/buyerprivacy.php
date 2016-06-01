@@ -24,7 +24,7 @@ unset($INFO);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$system->writesetting("buyerprivacy",ynbool($_POST['buyerprivacy']), "str");
+	$system->writesetting("buyerprivacy", ynbool($_POST['buyerprivacy']), "str");
 	$INFO = $MSG['247'];
 }
 

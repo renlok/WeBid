@@ -41,6 +41,7 @@ if (isset($_POST['action']) && $_POST['action'] == "update")
 				$query = " UPDATE " . $DBPrefix . "settings SET logo = :logo";
 				$db->query($query,$params);
 
+				$system->writesetting("logo", $_FILES['logo']['name'], "str");
 				$system->SETTINGS['logo'] = $_FILES['logo']['name'];
 			}
 			else

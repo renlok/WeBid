@@ -739,6 +739,7 @@ $MSG['787'] = 'Telephone Field Required?';
 $MSG['788'] = 'Display Settings';
 $MSG['789'] = 'Results shown per page';
 $MSG['790'] = 'The maximum number of items before a page break';
+$MSG['max_featured_items'] = 'The maximum number of featured items shown';
 $MSG['791'] = 'Final Price Fee';
 $MSG['792'] = 'You need to pay for %s item(s)';
 $MSG['793'] = ' items you\'re bidding on are ending soon';

@@ -25,6 +25,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission & update database
 	$system->writesetting("perpage",  intval($_POST['perpage']), 'int');
+	$system->writesetting("featuredperpage",  intval($_POST['featuredperpage']), 'int');
 	$system->writesetting("thumb_list",  intval($_POST['thumb_list']), 'int');
 	$system->writesetting("loginbox", intval($_POST['loginbox']), 'int');
 	$system->writesetting("newsbox", intval($_POST['newsbox']), 'int');
@@ -37,6 +38,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 
 loadblock($MSG['789'], $MSG['790'], 'days', 'perpage', $system->SETTINGS['perpage']);
+loadblock('', $MSG['max_featured_items'], 'days', 'featuredperpage', $system->SETTINGS['featuredperpage']);
 loadblock($MSG['25_0107'], $MSG['808'], 'decimals', 'thumb_list', $system->SETTINGS['thumb_list'], array($MSG['2__0045']));
 
 loadblock($MSG['807'], '', '', '', '', array(), true);

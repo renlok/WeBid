@@ -1620,6 +1620,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('edit_endtime', 'int
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('endingsoonnumber', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('errortext', 'str', '<p>An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly</p>', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('extra_cat', 'bool', 'n', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('featuredperpage', 'int', '5', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('fee_disable_acc', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('fee_max_debt', 'str', '25.00', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('fee_signup_bonus', 'str', '0.00', UNIX_TIMESTAMP(), 1);";

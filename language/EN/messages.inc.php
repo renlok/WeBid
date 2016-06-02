@@ -1615,6 +1615,8 @@ $MSG['report_reason_prohibited'] = "Prohibited (banned items)";
 $MSG['report_reason_terms_and_conditions'] = "Listing policy violations";
 $MSG['report_reason_stolen'] = "Stolen property";
 
+$MSG['multilingual_support_settings_updated'] = 'Multilingual Support Settings updated';
+
 $MSG['communative_report_winner_yes'] = 'An email has been sent to the any winner(s) with your email address.';
 $MSG['communative_report_winner_no'] = 'Sorry, no auction winner(s) this time.';
 

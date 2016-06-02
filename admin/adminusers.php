@@ -40,7 +40,6 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 		$params = array();
 		$params[] = array(':delete', $delete, 'str');
 		$db->query($query, $params);
-		$ERR = $MSG['1100'];
 	}
 }
 

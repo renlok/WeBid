@@ -44,8 +44,8 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 }
 
 $STATUS = array(
-	1 => '<span style="color:#00AF33"><b>' . $MSG['566'] . '</b></span>',
-	2 => '<span style="color:#FF0000"><b>' . $MSG['567'] . '</b></span>'
+	0 => '<span style="color:#FF0000"><b>' . $MSG['567'] . '</b></span>',
+	1 => '<span style="color:#00AF33"><b>' . $MSG['566'] . '</b></span>'
 );
 
 $query = "SELECT * FROM " . $DBPrefix . "adminusers ORDER BY username";

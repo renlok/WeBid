@@ -728,7 +728,7 @@ $MSG['623'] = "View Messages";
 $MSG['624'] = "Auction Title";
 $MSG['625'] = "Started";
 $MSG['626'] = "Ends";
-$MSG['627'] = "N. Bids";
+$MSG['627'] = "Total Bids";
 $MSG['628'] = "Max. Bid";
 $MSG['629'] = "*If you click cancel the thumbnail image for your auction will be a squashed down version of the image you uploaded/set as default";
 $MSG['630'] = "Re-list";
@@ -1176,6 +1176,10 @@ $MSG['1147'] = "<p>You have successfully sold %s auction(s)</p>";
 $MSG['1148'] = "<p>A charge of %s has been made to your account</p>";
 $MSG['1149'] = "<p>You have successfully closed %s auction(s)</p>";
 $MSG['1150'] = "<p>You have successfully started %s auction(s)</p>";
+$MSG['Tooltip_01'] = "Edit Disabled, Item has Bids";
+$MSG['Tooltip_02'] = "Delete Disabled, Item has Bids";
+$MSG['Your_Auc_01'] = "No Bids";
+$MSG['Your_Auc_02'] = "Click to edit this auction";
 
 // sell item page
 $MSG['1151'] = "Auction fee";

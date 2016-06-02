@@ -386,7 +386,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_REQUEST['id'],
 		'WINID' => (isset($winner_id)) ? $winner_id : 0,
-		'TITLE' => $system->uncleanvars($Auction['title']),
+		'TITLE' => htmlspecialchars($Auction['title']),
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),
 		'SHIPPINGCOST' => ($shipping_cost >  0) ? $system->print_money($shipping_cost) : 0,
 		'BN_TOTAL' => $system->print_money($BN_total),

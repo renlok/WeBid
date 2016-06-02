@@ -108,23 +108,23 @@ $(document).ready(function() {
 			</td>
 			<td width="10%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
-				{L_Your_Auc_01}
+				{L_no_bids}
 		<!-- ELSE -->
 				{items.BID}
 		<!-- ENDIF -->
 			</td>
 			<td width="6%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
-				<a href="edit_active_auction.php?id={items.ID}" title="{L_Your_Auc_02}"><img src="images/edititem.gif" width="13" height="17" alt="{L_512}" border="0"></a>
+				<a href="edit_active_auction.php?id={items.ID}" title="{L_click_to_edit_auction}"><img src="images/edititem.gif" width="13" height="17" alt="{L_512}" border="0"></a>
 		<!-- ELSE -->
-				<img src="images/info.gif" title="{L_Tooltip_01}" width="13" height="13" alt="{L_512}" border="0">
+				<img src="images/info.gif" title="{L_edit_disabled}" width="13" height="13" alt="{L_512}" border="0">
 		<!-- ENDIF -->
 			</td>
 			<td width="8%"  align="center">
 		<!-- IF items.B_HASNOBIDS -->
 				<input type="checkbox" name="O_delete[]" value="{items.ID}">
 		<!-- ELSE -->
-				<img src="images/info.gif" title="{L_Tooltip_02}" width="13" height="13" alt="{L_512}" border="0">
+				<img src="images/info.gif" title="{L_delete_auction_disabled}" width="13" height="13" alt="{L_512}" border="0">
 		<!-- ENDIF -->
 			</td>
 			<td width="6%"  align="center" bgcolor="#FFFFaa">
@@ -159,5 +159,14 @@ $(document).ready(function() {
 		</td>
 	</tr>
 </table>
-
+<table width="100%" border="0" elpadding="0" celspacing="0">
+	<tr>
+	<td align="center">
+	<br>
+	<form method="post" action="{SITE_URL}user_menu.php?cptab=selling">
+	<input type="submit" value="<< {L_25_0082}">
+	</form>
+	</td>
+	</tr>
+</table>
 <!-- INCLUDE user_menu_footer.tpl -->

@@ -37,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		foreach ($_POST['title'] as $k => $v)
 		{
 			$_POST['title'][$k] = $system->cleanvars($v);
-			$_POST['content'][$k] = $system->cleanvars($_POST['content'][$k]);
+			$_POST['content'][$k] = $system->cleanvars($_POST['content'][$k], true);
 		}
 
 		$news_id = intval($_POST['id']);

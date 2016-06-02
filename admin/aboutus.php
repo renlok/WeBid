@@ -25,7 +25,7 @@ unset($INFO);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
-	$system->writesetting("aboutus", ynbool($_POST['aboutus']), "bool");
+	$system->writesetting("aboutus", ynbool($_POST['aboutus']), "str");
 	$system->writesetting("aboutustext", $system->cleanvars($_POST['aboutustext'], true), "str");
 
 	$INFO = $MSG['5079'];

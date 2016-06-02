@@ -30,18 +30,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	else
 	{
 		// clean up everything
-		$conf = array();
-		$conf['safe'] = 1;
 		foreach ($_POST['title'] as $k => $v)
 		{
-			$_POST['title'][$k] = htmLawed($v, $conf);
-			$_POST['content'][$k] = htmLawed($_POST['content'][$k], $conf);
+			$_POST['title'][$k] = $system->cleanvars($v);
+			$_POST['content'][$k] = $system->cleanvars($_POST['content'][$k], true);
 		}
 
 		$query = "INSERT INTO " . $DBPrefix . "news VALUES (NULL, :title, :content, :time, :suspended)";
 		$params = array();
 		$params[] = array(':title', $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]), 'str');
-		$params[] = array(':content', $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']]), 'str');
+		$params[] = array(':content', $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']], true), 'str');
 		$params[] = array(':time', time(), 'int');
 		$params[] = array(':suspended', $_POST['suspended'], 'int');
 		$db->query($query, $params);
@@ -53,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$query = "INSERT INTO " . $DBPrefix . "news_translated VALUES (:news_id, :lang, :title, :content)";
 			$params = array();
 			$params[] = array(':title', $system->cleanvars($_POST['title'][$k]), 'str');
-			$params[] = array(':content', $system->cleanvars($_POST['content'][$k]), 'str');
+			$params[] = array(':content', $system->cleanvars($_POST['content'][$k], true), 'str');
 			$params[] = array(':lang', $k, 'str');
 			$params[] = array(':news_id', $news_id, 'int');
 			$db->query($query, $params);

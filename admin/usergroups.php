@@ -20,6 +20,7 @@ include 'loggedin.inc.php';
 
 unset($ERR);
 $edit = false;
+$can_delete = false;
 
 if (isset($_GET['action']) && !isset($_POST['action']))
 {
@@ -30,6 +31,9 @@ if (isset($_GET['action']) && !isset($_POST['action']))
 		$params[] = array(':groupid', $_GET['id'], 'int');
 		$db->query($query, $params);
 		$group = $db->result();
+
+		$can_delete = ($group['auto_join'] == 0);
+
 		$template->assign_vars(array(
 				'GROUP_ID' => $group['id'],
 				'EDIT_NAME' => $group['group_name'],
@@ -40,7 +44,7 @@ if (isset($_GET['action']) && !isset($_POST['action']))
 				'AUTO_JOIN_Y' => ($group['auto_join'] == 1) ? 'selected="true"' : '',
 				'AUTO_JOIN_N' => ($group['auto_join'] == 0) ? 'selected="true"' : '',
 				'USER_COUNT' => $group['count'],
-				'NOT_DEFAULT_GROUP' => ($group['auto_join'] == 0)
+				'NOT_DEFAULT_GROUP' => $can_delete
 				));
 		$edit = true;
 	}
@@ -234,7 +238,8 @@ if (!empty($groups_array))
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'GROUPS_UNKNOWN' => (count($groups_unknown) > 0),
-		'B_EDIT' => $edit
+		'B_EDIT' => $edit,
+		'NOT_DEFAULT_GROUP' => $can_delete
 		));
 
 include 'header.php';

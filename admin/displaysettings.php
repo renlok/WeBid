@@ -18,13 +18,11 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission & update database
 	$system->writesetting("perpage",  intval($_POST['perpage']), 'int');
+	$system->writesetting("featuredperpage",  intval($_POST['featuredperpage']), 'int');
 	$system->writesetting("thumb_list",  intval($_POST['thumb_list']), 'int');
 	$system->writesetting("loginbox", intval($_POST['loginbox']), 'int');
 	$system->writesetting("newsbox", intval($_POST['newsbox']), 'int');
@@ -33,10 +31,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("lastitemsnumber", intval($_POST['lastitemsnumber']), 'int');
 	$system->writesetting("hotitemsnumber",  intval($_POST['hotitemsnumber']), 'int');
 	$system->writesetting("endingsoonnumber", intval($_POST['endingsoonnumber']), 'int');
-	$INFO = $MSG['795'];
+
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['795']));
 }
 
 loadblock($MSG['789'], $MSG['790'], 'days', 'perpage', $system->SETTINGS['perpage']);
+loadblock('', $MSG['max_featured_items'], 'days', 'featuredperpage', $system->SETTINGS['featuredperpage']);
 loadblock($MSG['25_0107'], $MSG['808'], 'decimals', 'thumb_list', $system->SETTINGS['thumb_list'], array($MSG['2__0045']));
 
 loadblock($MSG['807'], '', '', '', '', array(), true);
@@ -49,8 +49,6 @@ loadblock($MSG['533'], $MSG['538'], 'batch', 'newsbox', $system->SETTINGS['newsb
 loadblock('', $MSG['554'], 'days', 'newstoshow', $system->SETTINGS['newstoshow']);
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['788']

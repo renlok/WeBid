@@ -23,15 +23,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active']))
 	{
-		$ERR = $ERR_047;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
 	}
 	elseif (!is_numeric($_POST['msgstoshow']))
 	{
-		$ERR = $ERR_5000;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5000));
 	}
 	elseif (intval($_POST['msgstoshow'] == 0))
 	{
-		$ERR = $ERR_5001;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5001));
 	}
 	else
 	{
@@ -61,7 +61,6 @@ $db->query($query, $params);
 $board_data = $db->result();
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'NAME' => $board_data['name'],
 		'MESSAGES' => $board_data['messages'],
 		'LAST_POST' => ($board_data['lastmessage'] > 0) ? FormatDate($board_data['lastmessage']) : '--',

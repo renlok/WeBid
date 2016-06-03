@@ -18,26 +18,23 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if ($_POST['status'] == 'enabled' && (!is_numeric($_POST['timebefore']) || !is_numeric($_POST['extend'])))
 	{
-		$ERR = $MSG['2_0038'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['2_0038']));
 	}
 	elseif ($_POST['maxpicturesize'] == 0)
 	{
-		$ERR = $ERR_707;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_707));
 	}
 	elseif (!empty($_POST['maxpicturesize']) && !intval($_POST['maxpicturesize']))
 	{
-		$ERR = $ERR_708;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_708));
 	}
 	elseif (!empty($_POST['maxpictures']) && !intval($_POST['maxpictures']))
 	{
-		$ERR = $ERR_706;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_706));
 	}
 	else
 	{
@@ -61,7 +58,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("maxuploadsize", ($_POST['maxpicturesize'] * 1024), 'int');
 		$system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
 		$system->writesetting("gallery_max_width_height", $_POST['gallery_max_width_height'], 'int');
-		$INFO = $MSG['5088'];
+
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5088']));
 	}
 }
 
@@ -95,8 +93,6 @@ loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTI
 loadblock($MSG['gallery_image_max_size'], $MSG['gallery_image_max_size_explain'], 'decimals', 'gallery_max_width_height', $system->SETTINGS['gallery_max_width_height'], array($MSG['2__0045']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['5087']

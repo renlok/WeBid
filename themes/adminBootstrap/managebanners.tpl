@@ -4,9 +4,6 @@
 			</div>
 			<div class="col-md-9">
 				<h2>{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L__0008}</h2>
-<!-- IF ERROR ne '' -->
-				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 				<form name="deleteusers" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">

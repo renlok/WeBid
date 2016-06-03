@@ -36,7 +36,7 @@ if (isset($_GET['action']))
 				}
 				closedir($dir);
 			}
-			$errmsg = $MSG['30_0033'];
+			$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0033']));
 		break;
 
 		case 'updatecounters':
@@ -98,7 +98,7 @@ if (isset($_GET['action']))
 
 			resync_category_counters();
 
-			$errmsg = $MSG['1029'];
+			$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1029']));
 		break;
 	}
 }
@@ -140,7 +140,6 @@ if (version_compare($system->SETTINGS['version'], $realversion, "<"))
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($errmsg)) ? $errmsg : '',
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'ADMINMAIL' => $system->SETTINGS['adminmail'],
 		'CRON' => ($system->SETTINGS['cron'] == 1) ? '<b>' . $MSG['373'] . '</b><br>' . $MSG['25_0027'] : '<b>' . $MSG['374'] . '</b>',

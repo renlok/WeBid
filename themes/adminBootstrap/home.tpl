@@ -13,13 +13,10 @@
 				</div>
 			</div>
 			<div class="col-md-9">
-<!-- IF THIS_VERSION eq CUR_VERSION -->
-				<div class="alert alert-info" role="alert">{L_30_0212}</div>
+<!-- IF UPDATE_AVAILABLE -->
+				<div class="alert alert-danger" role="alert">{L_30_0211}</div>	
 <!-- ELSE -->
-				<div class="alert alert-danger" role="alert">{L_30_0211}</div>
-<!-- ENDIF -->
-<!-- IF ERROR ne '' -->
-				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
+				<div class="alert alert-info" role="alert">{L_30_0212}</div>
 <!-- ENDIF -->
 				<div class="panel panel-default">
 					<div class="panel-heading"><strong>{L_25_0025}</strong></div>

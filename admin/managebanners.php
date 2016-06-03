@@ -51,10 +51,6 @@ while ($row = $db->fetch())
 	$bg = ($bg == '') ? 'class="bg"' : '';
 }
 
-$template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : ''
-		));
-
 include 'header.php';
 $template->set_filenames(array(
 		'body' => 'managebanners.tpl'

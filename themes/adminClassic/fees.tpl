@@ -7,12 +7,6 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_842}</h4>
 				<form name="errorlog" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
-<!-- IF B_NOT_SETUP_CORRECTLY -->
-					<div class="error-box"><b>{L_1144}</b></div>
-<!-- ENDIF -->
 <!-- IF FEETYPE ne '' -->
 					<table width="98%" cellpadding="0" cellspacing="0">
 						<tr>

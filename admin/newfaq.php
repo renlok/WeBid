@@ -18,14 +18,12 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // Insert new message
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (empty($_POST['question'][$system->SETTINGS['defaultlanguage']]) || empty($_POST['answer'][$system->SETTINGS['defaultlanguage']]))
 	{
-		$ERR = $ERR_067;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_067));
 	}
 	else
 	{
@@ -73,10 +71,6 @@ foreach ($LANGUAGES as $k => $language)
 			'CONTENT' => (isset($_POST['content'][$k])) ? $_POST['content'][$k] : ''
 			));
 }
-
-$template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : ''
-		));
 
 include 'header.php';
 $template->set_filenames(array(

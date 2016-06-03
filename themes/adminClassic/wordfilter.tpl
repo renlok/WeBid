@@ -7,9 +7,6 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_5436}&nbsp;&gt;&gt;&nbsp;{L_5068}</h4>
 				<form name="wordlist" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 					<table width="98%" cellspacing="0" cellpadding="0" align="center" class="blank">
 						<tr valign="top">
 							<td width="109">&nbsp;</td>

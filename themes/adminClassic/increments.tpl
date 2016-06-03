@@ -7,12 +7,6 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_5142}&nbsp;&gt;&gt;&nbsp;{L_128}</h4>
 				<form name="increments" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
-<!-- IF INFO ne '' -->
-					<div class="info-box"><b>{INFO}</b></div>
-<!-- ENDIF -->
 					<div class="plain-box">
 						{L_135}
 					</div>

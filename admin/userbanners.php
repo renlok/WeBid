@@ -19,7 +19,6 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
-unset($ERR);
 $id = intval($_REQUEST['id']);
 
 // insert a new banner
@@ -28,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 	// Data integrity
 	if (empty($_FILES['bannerfile']) || empty($_POST['url']))
 	{
-		$ERR = $ERR_047;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
 	}
 	else
 	{
@@ -57,7 +56,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 			$file_types = array('gif', 'jpg', 'jpeg', 'png', 'swf');
 			if (!in_array(strtolower($file_ext), $file_types))
 			{
-				$ERR = $MSG['_0048'];
+				$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['_0048']));
 			}
 			else
 			{
@@ -190,7 +189,6 @@ if (isset($category_plain) && count($category_plain) > 0)
 $TPL_categories_list .= '</select>' . "\n";
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $id,
 		'NAME' => $USER['name'],
 		'COMPANY' => $USER['company'],

@@ -4,10 +4,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h2>{L_25_0009}&nbsp;&gt;&gt;&nbsp;{L_30_0215}</h2>	
-<!-- IF ERROR ne '' -->
-				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
-<!-- ENDIF -->
+				<h2>{L_25_0009}&nbsp;&gt;&gt;&nbsp;{L_30_0215}</h2>
 				<form name="logo" action="" method="post" enctype="multipart/form-data">
 					<div class="panel panel-default">
 						<div class="panel-body">

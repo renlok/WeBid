@@ -18,7 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
 $id = intval($_GET['id']);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
@@ -49,7 +48,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$params[] = array(':NUM', $NUM, 'int');
 	$params[] = array(':user_id', $user, 'int');
 	$db->query($query, $params);
-	$ERR = $MSG['183'];
+	
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['183']));
 }
 
 $query = "SELECT u.nick, u.id, f.rater_user_nick, f.feedback, f.rate FROM " . $DBPrefix . "feedbacks f
@@ -61,7 +61,6 @@ $db->query($query, $params);
 $feedback = $db->result();
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'RATED_USER' => $feedback['nick'],
 		'RATED_USER_ID' => $feedback['id'],
 		'RATER_USER' => $feedback['rater_user_nick'],

@@ -18,7 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
 $extra_sql = '';
 
 // Get the posted variables if this is a new search.

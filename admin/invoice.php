@@ -19,8 +19,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // get form variables
 $group = isset($_GET['group']) ? $_GET['group'] : 'i';
 $from_date = isset($_GET['from_date']) ? $_GET['from_date'] : 0;
@@ -217,8 +215,6 @@ if ($PAGES > 1)
 
 $_SESSION['INVOICE_RETURN'] = 'admin/invoice.php';
 $template->assign_vars(array(
-		'ERROR' => isset($ERR) ? $ERR : '',
-
 		'GROUP' => isset($_GET['group']) ? $_GET['group'] : 'i',
 		'FROM_DATE' => ($from_date == 0) ? '' : $from_date,
 		'TO_DATE' => ($to_date == 0) ? '' : $to_date,

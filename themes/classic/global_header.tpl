@@ -73,16 +73,16 @@
 	</div>
 	<div class="navbar">
 		<ul>
-			<li><a href="{SITEURL}index.php?">{L_166}</a></li>
+			<li><a href="{SITEURL}index.php">{L_166}</a></li>
 <!-- IF B_CAN_SELL -->
-			<li><a href="{SITEURL}select_category.php?">{L_028}</a></li>
+			<li><a href="{SITEURL}select_category.php">{L_028}</a></li>
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
-			<li><a href="{SITEURL}user_menu.php?">{L_622}</a></li>
-			<li><a href="{SITEURL}logout.php?">{L_245}</a></li>
+			<li><a href="{SITEURL}user_menu.php">{L_622}</a></li>
+			<li><a href="{SITEURL}logout.php">{L_245}</a></li>
 <!-- ELSE -->
-			<li><a href="{SITEURL}register.php?">{L_235}</a></li>
-			<li><a href="{SITEURL}user_login.php?">{L_052}</a></li>
+			<li><a href="{SITEURL}register.php">{L_235}</a></li>
+			<li><a href="{SITEURL}user_login.php">{L_052}</a></li>
 <!-- ENDIF -->
 <!-- IF B_BOARDS -->
 			<li><a href="{SITEURL}boards.php">{L_5030}</a></li>

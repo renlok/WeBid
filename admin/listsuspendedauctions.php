@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // Set offset and limit for pagination
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
 {
@@ -88,7 +86,6 @@ if ($PAGES > 1)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'PAGE_TITLE' => $MSG['5227'],
 		'NUM_AUCTIONS' => $num_auctions,
 		'B_SEARCHUSER' => false, // needs decaring as listauctions.tpl is shared and expects B_SEARCHUSER to be declared. Used in users->view actions link

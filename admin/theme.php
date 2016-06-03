@@ -18,9 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 $theme_root = MAIN_PATH . 'themes/'; //theres no point repeatedly defining this
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -31,11 +28,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("admin_theme", $_POST['admin_theme'], 'str');
 		$system->SETTINGS['theme'] = $_POST['dtheme'];
 		$system->SETTINGS['admin_theme'] = $_POST['admin_theme'];
-		$INFO = $MSG['26_0005'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['26_0005']));
 	}
 	else
 	{
-		$ERR = $ERR_068;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_068));
 	}
 }
 elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'] == 'edit'))
@@ -136,8 +133,6 @@ elseif (isset($_GET['do']) && $_GET['do'] == 'addfile')
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 
 		'FILENAME' => isset($filename) ? $filename : '',

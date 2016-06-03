@@ -19,7 +19,6 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
-unset($ERR);
 $userid = intval($_REQUEST['userid']);
 
 // Data check
@@ -65,55 +64,55 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 		if (strlen($_POST['password']) > 0 && ($_POST['password'] != $_POST['repeat_password']))
 		{
-			$ERR = $ERR_006;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_006));
 		}
 		elseif (strlen($_POST['email']) < 5) //Primitive mail check
 		{
-			$ERR = $ERR_110;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5033));
 		}
 		elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['email']))
 		{
-			$ERR = $ERR_008;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_008));
 		}
 		elseif (!preg_match('/^([0-9]{2})\/([0-9]{2})\/([0-9]{2,4})$/', $_POST['birthdate']) && $MANDATORY_FIELDS['birthdate'] == 'y')
 		{ //Birthdate check
-			$ERR = $ERR_043;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_043));
 		}
 		elseif (strlen($_POST['zip']) < 4 && $MANDATORY_FIELDS['zip'] == 'y')
 		{ //Primitive zip check
-			$ERR = $ERR_616;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_616));
 		}
 		elseif (strlen($_POST['phone']) < 3 && $MANDATORY_FIELDS['tel'] == 'y')
 		{ //Primitive phone check
-			$ERR = $ERR_617;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_617));
 		}
 		elseif (empty($_POST['address']) && $MANDATORY_FIELDS['address'] == 'y')
 		{
-			$ERR = $ERR_5034;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5034));
 		}
 		elseif (empty($_POST['city']) && $MANDATORY_FIELDS['city'] == 'y')
 		{
-			$ERR = $ERR_5035;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5035));
 		}
 		elseif (empty($_POST['prov']) && $MANDATORY_FIELDS['prov'] == 'y')
 		{
-			$ERR = $ERR_5036;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5036));
 		}
 		elseif (empty($_POST['country']) && $MANDATORY_FIELDS['country'] == 'y')
 		{
-			$ERR = $ERR_5037;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5037));
 		}
 		elseif (empty($_POST['group']))
 		{
-			$ERR = $ERR_044;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_044));
 		}
 		elseif (empty($_POST['balance']))
 		{
-			$ERR = $ERR_112;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
 		}
 		elseif (!$system->CheckMoney($balance_clean))
 		{
-			$ERR = $ERR_081;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_081));
 		}
 		else
 		{
@@ -176,7 +175,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 	else
 	{
-		$ERR = $ERR_112;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
 	}
 }
 
@@ -229,7 +228,6 @@ while ($row = $db->fetch())
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'REALNAME' => $user_data['name'],
 		'USERNAME' => $user_data['nick'],
 		'EMAIL' => $user_data['email'],

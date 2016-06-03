@@ -19,16 +19,13 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission
 	$system->writesetting("privacypolicy", ynbool($_POST['privacypolicy']), "str");
 	$system->writesetting("privacypolicytext", $system->cleanvars($_POST['privacypolicytext'], true), "str");
 
-	$INFO = $MSG['406'];
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['406']));
 }
 loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['030'], $MSG['029']));
 
@@ -41,8 +38,6 @@ $CKEditor->config['height'] = 400;
 loadblock($MSG['404'], $MSG['5080'], $CKEditor->editor('privacypolicytext', $system->SETTINGS['privacypolicytext']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0018'],
 		'PAGENAME' => $MSG['402']

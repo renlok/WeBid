@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // check if looking for users auctions
 $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
 $user_sql = isset($_GET['uid']) ? " AND a.user = " . $uid : '';
@@ -30,7 +28,8 @@ if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
 	$PAGE = intval($_GET['PAGE']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listauctions.php')
+elseif (isset($_SESSION['RETURN_LIST_OFFSET']) &&
+	(isset($_SESSION['RETURN_LIST']) && $_SESSION['RETURN_LIST'] == 'listauctions.php'))
 {
 	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];

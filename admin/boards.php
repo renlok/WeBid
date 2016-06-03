@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // Delete boards
 if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
@@ -32,7 +30,8 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 		$params = array(array(':id', $v, 'int'));
 		$db->query($query, $params);
 	}
-	$ERR = $MSG['5044'];
+
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5044']));
 }
 
 // get list of boards
@@ -48,10 +47,6 @@ while ($row = $db->result())
 			'MSGCOUNT' => $row['messages']
 			));
 }
-
-$template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : ''
-		));
 
 include 'header.php';
 $template->set_filenames(array(

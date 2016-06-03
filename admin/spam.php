@@ -18,14 +18,11 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (($_POST['spam_sendtofriend'] == 2 || $_POST['spam_register'] == 2 || $_POST['spam_reportitem'] == 2) && empty($_POST['recaptcha_public']) && empty($_POST['recaptcha_private']))
 	{
-		$ERR = $MSG['751'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['751']));
 	}
 	else
 	{
@@ -44,7 +41,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->SETTINGS['spam_register'] = $_POST['spam_register'];
 		$system->SETTINGS['spam_blocked_email_enabled'] = $_POST['spam_blocked_email_enabled'];
 		$system->SETTINGS['spam_blocked_email_domains'] = $_POST['spam_blocked_email_domains'];
-		$INFO = $MSG['750'];
+		
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['750']));
 	}
 }
 
@@ -57,8 +55,6 @@ loadblock($MSG['spam_blocked_email_enabled'], '', 'bool', 'spam_blocked_email_en
 loadblock($MSG['spam_blocked_email_domains'], $MSG['spam_blocked_email_domains_explain'], 'textarea', 'spam_blocked_email_domains', $system->SETTINGS['spam_blocked_email_domains']);
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['749']

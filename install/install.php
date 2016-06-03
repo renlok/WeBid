@@ -24,7 +24,13 @@ $db = new DatabasePDO();
 define('MAIN_PATH', getmainpath());
 $package_version = package_version();
 $settings_version = 'Unknown';
-echo print_header(false);
+
+$silent = (isset($_GET['silent']) && $_GET['silent'] == 1) ? true : false;
+
+if (!$silent)
+{
+	echo print_header(false);
+}
 
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
 switch($step)
@@ -39,26 +45,44 @@ switch($step)
 		$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
 		$fourth = floor($queries/4);
 		$to = (($queries - $from) > 50) ? $from + 50 : $queries;
-		echo 'Writing to database: ' . floor($to / $queries * 100) . '% Complete<br>';
+
+		// if this is a silent install, run all the queries in one go
+		if ($silent)
+		{
+			$to = $queries;
+		}
+		else
+		{
+			echo 'Writing to database: ' . floor($to / $queries * 100) . '% Complete<br>';
+			flush();
+		}
+
 		for ($i = $from; $i < $to; $i++)
 		{
 			$db->direct_query($query[$i]);
 		}
-		flush();
-		if ($i < $queries)
+
+		if (!$silent)
 		{
-			echo '<script type="text/javascript">window.location = "install.php?step=2&URL=' . urlencode($_GET['URL']) . '&EMail=' . $_GET['EMail'] . '&cats=' . $_GET['cats'] . '&from=' . $i . '";</script>';
+			if ($i < $queries)
+			{
+				echo '<script type="text/javascript">window.location = "install.php?step=2&URL=' . urlencode($_GET['URL']) . '&EMail=' . $_GET['EMail'] . '&cats=' . $_GET['cats'] . '&from=' . $i . '";</script>';
+			}
+			else
+			{
+				echo '<p>Installation complete.</p>
+					<p>What do I do now?</p>
+					<ul>
+						<li>Your WeBid password salt: <span style="color: #FF0000; font-weight:bold;">' . $_SESSION['hash'] . '</span> You should make note of this random code, it is used to secure your users passwords. It is stored in your config file if you accidently delete this file and don\'t have this code all your users will have to reset their passwords</li>
+						<li>Remove the install folder from your server. You will not be able to use WeBid until you do this.</li>
+						<li>Finally set-up your admin account <a href="' . $_GET['URL'] . 'admin/" style="font-weight:bold;">here</a></li>
+						<li>And don\'t forget to check out our <a href="http://www.webidsupport.com/forums/">support forum</a></li>
+					</ul>';
+			}
 		}
 		else
 		{
-			echo '<p>Installation complete.</p>
-				<p>What do I do now?</p>
-				<ul>
-					<li>Your WeBid password salt: <span style="color: #FF0000; font-weight:bold;">' . $_SESSION['hash'] . '</span> You should make note of this random code, it is used to secure your users passwords. It is stored in your config file if you accidently delete this file and don\'t have this code all your users will have to reset their passwords</li>
-					<li>Remove the install folder from your server. You will not be able to use WeBid until you do this.</li>
-					<li>Finally set-up your admin account <a href="' . $_GET['URL'] . 'admin/" style="font-weight:bold;">here</a></li>
-					<li>And don\'t forget to check out our <a href="http://www.webidsupport.com/forums/">support forum</a></li>
-				</ul>';
+			echo 'DONE';
 		}
 		break;
 	case 1:
@@ -91,7 +115,12 @@ switch($step)
 		}
 
 		$cats = (isset($_POST['importcats'])) ? 1 : 0;
-		echo '<p><b>Step 1:</b> Writing config file...</p>';
+
+		if (!$silent)
+		{
+			echo '<p><b>Step 1:</b> Writing config file...</p>';	
+		}
+		
 		$path = str_replace('\\', '\\\\', $_POST['mainpath']);
 		$hash = md5(microtime() . rand(0,50));
 		$_SESSION['hash'] = $hash;
@@ -106,22 +135,28 @@ switch($step)
 		$content .= '$MD5_PREFIX = "' . $hash . '";' . "\n";
 		$content .= '?>';
 		$output = makeconfigfile($content, $path);
-		if ($output)
+
+		if (!$silent)
 		{
-			$check = check_installation();
-			if ($check)
+			if ($output)
 			{
-				echo '<p>You appear to already have an installation on WeBid running would you like to do a <a href="update.php">upgrade instead?</a></p>';
+				$check = check_installation();
+				if ($check)
+				{
+					echo '<p>You appear to already have an installation on WeBid running would you like to do a <a href="update.php">upgrade instead?</a></p>';
+				}
+				echo '<p>Complete, now to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '">step 2</a></b></p>';
 			}
-			echo '<p>Complete, now to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '">step 2</a></b></p>';
+			else
+			{
+				echo '<p>WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the includes directory)</p>';
+				echo '<p><textarea style="width:500px; height:500px;">'.$content.'</textarea></p>';
+				echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '">step 2</a></b></p>';
+			}
 		}
 		else
 		{
-			echo '<p>WeBid could not automatically create the config file, please could you enter the following into config.inc.php (this file is located in the includes directory)</p>';
-			echo '<p><textarea style="width:500px; height:500px;">
-'.$content.'
-			</textarea></p>';
-			echo '<p>Once you\'ve done this, you can continue to <b><a href="?step=2&URL=' . urlencode($_POST['URL']) . '&EMail=' . $_POST['EMail'] . '&cats=' . $cats . '">step 2</a></b></p>';
+			echo 'OK';
 		}
 		break;
 	default:

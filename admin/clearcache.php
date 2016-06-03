@@ -18,9 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (is_dir(MAIN_PATH . 'cache'))
@@ -35,12 +32,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		closedir($dir);
 	}
-	$INFO = $MSG['30_0033'];
+
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0033']));
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl']
 		));
 

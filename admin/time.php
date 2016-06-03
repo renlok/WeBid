@@ -19,15 +19,12 @@ include INCLUDE_PATH . 'functions_admin.php';
 include INCLUDE_PATH . 'config/timezones.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Update database
 	$system->writesetting("timezone", $_POST['timezone'], "str");
 	$system->writesetting("datesformat", $_POST['datesformat'], "str");
-	$INFO = $MSG['347'];
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['347']));
 }
 
 $selectsetting = $system->SETTINGS['timezone'];
@@ -38,8 +35,6 @@ loadblock($MSG['363'], $MSG['379'], 'datestacked', 'datesformat', $system->SETTI
 loadblock($MSG['346'], $MSG['345'], 'dropdown', 'timezone', $system->SETTINGS['timezone']);
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0008'],
 		'PAGENAME' => $MSG['344'],

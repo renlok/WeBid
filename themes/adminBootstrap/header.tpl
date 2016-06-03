@@ -84,3 +84,8 @@
 				</div>
 			</div>
 		</nav>
+<!-- BEGIN alerts -->
+		<div id="alerts">
+			<div class="alert alert-{alerts.TYPE}">{alerts.MESSAGE}</div>
+		</div>
+	<!-- END alerts -->

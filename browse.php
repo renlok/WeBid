@@ -215,8 +215,8 @@ else
 		$query_feat .= " AND title LIKE :title";
 		$params_feat[] = array(':title', '%' . $system->cleanvars($_POST['catkeyword']) . '%', 'str');
 	}
-	$query_feat .= " ORDER BY ends ASC LIMIT :offset, 5";
-	$params_feat[] = array(':offset', (($PAGE - 1) * 5), 'int');
+	$query_feat .= " ORDER BY ends ASC LIMIT :offset, " . $system->SETTINGS['featuredperpage'];
+	$params_feat[] = array(':offset', (($PAGE - 1) * $system->SETTINGS['featuredperpage']), 'int');
 
 	include INCLUDE_PATH . 'browseitems.inc.php';
 	browseItems($query, $params, $query_feat, $params_feat, $TOTALAUCTIONS, 'browse.php', 'id=' . $id);

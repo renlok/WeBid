@@ -18,13 +18,11 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (strlen($_POST['category'][$system->SETTINGS['defaultlanguage']]) == 0)
 	{
-		$ERR = $ERR_049;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_049));
 	}
 	else
 	{
@@ -85,7 +83,6 @@ foreach ($LANGUAGES as $k => $v)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'FAQ_NAME' => $tr[$system->SETTINGS['defaultlanguage']],
 		'ID' => $_GET['id']
 		));

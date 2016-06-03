@@ -50,7 +50,6 @@ elseif (isset($_POST['action']) && $_POST['action'] == "No")
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $id,
 		'USERID' => $user_id,
 		'MESSAGE' => sprintf($MSG['848'], $id),

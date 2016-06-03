@@ -6,9 +6,6 @@
 		<div style="width:75%; float:right;">
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{L_222}</h4>
-<!-- IF ERROR ne '' -->
-				<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 					<tr>
 						<td align="right" colspan="2"><b>{NICK} ({FB_NUM}) {FB_IMG}</b></td>

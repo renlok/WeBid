@@ -47,7 +47,7 @@ else
 	{
 		$query = "UPDATE " . $DBPrefix . "adminusers SET notes = :admin_note WHERE id = :admin_id";
 		$params = array();
-		$params[] = array(':admin_note', $system->cleanvars($_POST['anotes']), 'str');
+		$params[] = array(':admin_note', $_POST['anotes'], 'str');
 		$params[] = array(':admin_id', $_SESSION['WEBID_ADMIN_IN'], 'int');
 		$db->query($query, $params);
 	}

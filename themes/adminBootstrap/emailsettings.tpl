@@ -4,9 +4,6 @@
 			</div>
 			<div class="col-md-9">
 				<h2>{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</h2>
-<!-- IF ERROR ne '' -->
-				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 				<form name="conf" action="" method="post" enctype="multipart/form-data">
 					<div class="panel panel-default">
 <!-- BEGIN block -->

@@ -3,10 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_25_0169}</h2>	
-<!-- IF ERROR ne '' -->
-				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
-<!-- ENDIF -->
+				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_25_0169}</h2>
 				<form name="memberlevels" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">

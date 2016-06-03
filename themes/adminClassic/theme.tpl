@@ -6,12 +6,6 @@
 		<div style="width:75%; float:right;">
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0009}&nbsp;&gt;&gt;&nbsp;<!-- IF B_EDIT_FILE --><!-- IF FILENAME ne '' -->{L_298}: {FILENAME}<!-- ELSE -->{L_518}<!-- ENDIF --><!-- ELSE -->{L_26_0002}<!-- ENDIF --></h4>
-<!-- IF ERROR ne '' -->
-				<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
-<!-- IF INFO ne '' -->
-				<div class="info-box"><b>{INFO}</b></div>
-<!-- ENDIF -->
 <!-- IF B_EDIT_FILE -->
 				<form name="editfile" action="" method="post">
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">

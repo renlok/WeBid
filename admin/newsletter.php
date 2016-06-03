@@ -19,9 +19,6 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-unset($ERR);
-unset($INFO);
-
 $subject = (isset($_POST['subject'])) ? $_POST['subject'] : '';
 $content = (isset($_POST['content'])) ? $_POST['content'] : '';
 $is_preview = false;
@@ -30,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'submit')
 {
 	if (empty($subject) || empty($content))
 	{
-		$ERR = $ERR_5014;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5014));
 	}
 	else
 	{
@@ -83,8 +80,6 @@ $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'SELECTBOX' => generateSelect('usersfilter', $USERSFILTER),
 		'SUBJECT' => $subject,

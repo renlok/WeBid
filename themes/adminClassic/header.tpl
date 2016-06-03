@@ -66,3 +66,8 @@
 		<li class="help"><a href="help.php" alt="{L_148}">{L_148}</a></li>
 	</ul>
 	<div id="wrapper" class="clearfix">
+	<!-- BEGIN alerts -->
+		<div id="alerts">
+			<div class="alert alert-{alerts.TYPE}">{alerts.MESSAGE}</div>
+		</div>
+	<!-- END alerts -->

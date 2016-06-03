@@ -20,9 +20,6 @@ include INCLUDE_PATH . 'functions_rebuild.php';
 include INCLUDE_PATH . 'membertypes.inc.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] = 'update')
 {
 	$old_membertypes = $_POST['old_membertypes'];
@@ -69,7 +66,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 		$db->query($query, $params);
 	}
 	rebuild_table_file('membertypes');
-	$INFO = $MSG['836'];
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['836']));
 }
 
 foreach ($membertypes as $id => $quest)
@@ -80,11 +77,6 @@ foreach ($membertypes as $id => $quest)
 			'ICON' => $quest['icon']
 			));
 }
-
-$template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
-		));
 
 include 'header.php';
 $template->set_filenames(array(

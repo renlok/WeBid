@@ -29,7 +29,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Data check
 	if (empty($_POST['title']) || empty($_POST['content']))
 	{
-		$ERR = $ERR_112;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
 	}
 	else
 	{
@@ -106,7 +106,6 @@ while ($arr = $db->fetch())
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TITLE' => $MSG['343'],
 		'BUTTON' => $MSG['530'],
 		'ID' => intval($_GET['id']),

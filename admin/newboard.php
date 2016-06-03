@@ -18,22 +18,20 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // Insert new message board
 if (isset($_POST['action']) && $_POST['action'] == 'insert')
 {
 	if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active']))
 	{
-		$ERR = $ERR_047;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
 	}
 	elseif (!is_numeric($_POST['msgstoshow']))
 	{
-		$ERR = $ERR_5000;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5000));
 	}
 	elseif (intval($_POST['msgstoshow'] == 0))
 	{
-		$ERR = $ERR_5001;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5001));
 	}
 	else
 	{
@@ -50,7 +48,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 
 		'NAME' => (isset($_POST['name'])) ? $_POST['name'] : '',
 		'MSGTOSHOW' => (isset($_POST['msgstoshow'])) ? $_POST['msgstoshow'] : '',

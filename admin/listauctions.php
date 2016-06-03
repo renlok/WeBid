@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // check if looking for users auctions
 $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
 $user_sql = isset($_GET['uid']) ? " AND a.user = " . $uid : '';

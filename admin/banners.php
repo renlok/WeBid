@@ -18,21 +18,17 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
 	$system->writesetting("banners", intval($_POST['banners']), "int");
-	$INFO = $MSG['600'];
+
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['600']));
 }
 
 loadblock($MSG['597'], $MSG['_0014'], 'batch', 'banners', $system->SETTINGS['banners'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'TYPENAME' => $MSG['25_0011'],
 		'PAGENAME' => $MSG['_0008'] . ' : ' . $MSG['5205']
 		));

@@ -19,8 +19,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // get form variables
 $list_type = isset($_POST['type']) ? ($_POST['type']) : 'a';
 $from_date = !empty($_POST['from_date']) ? $_POST['from_date'] : 0;
@@ -165,7 +163,6 @@ $template->assign_vars(array(
 		'TYPE' => $list_type,
 		'FROM_DATE' => ($from_date == 0) ? '' : $from_date,
 		'TO_DATE' => ($to_date == 0) ? '' : $to_date,
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'PAGNATION' => $show_pagnation,
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/accounts.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/accounts.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',

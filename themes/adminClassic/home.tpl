@@ -15,12 +15,9 @@
 		<div style="width:75%; float:right;">
 			<div class="main-box">
 <!-- IF UPDATE_AVAILABLE -->
-				<div class="error-box">{L_30_0211}</div>
+				<div class="alert alert-error">{L_30_0211}</div>
 <!-- ELSE -->
-				<div class="info-box">{L_30_0212}</div>
-<!-- ENDIF -->
-<!-- IF ERROR ne '' -->
-				<div class="error-box"><b>{ERROR}</b></div>
+				<div class="alert alert-info">{L_30_0212}</div>
 <!-- ENDIF -->
 					<table width="98%" cellpadding="1" cellspacing="0">
 						<tr>

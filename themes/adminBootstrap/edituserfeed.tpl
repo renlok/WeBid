@@ -7,9 +7,6 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{RATED_USER}&nbsp;&gt;&gt;&nbsp;{L_222}</h4>
 				<form name="editfeedback" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 					<div class="plain-box">
 						{RATER_USER} {L_506}{RATED_USER}
 					</div>

@@ -5,9 +5,6 @@
 <body style="margin:0;">
 <div style="width:400px; padding:40px;" class="centre">
 	<div class="plain-box" style="text-align:center; padding: 10px; font-size: 1.4em;">
-<!-- IF ERROR ne '' -->
-	<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 	<form action="" method="post">
 	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 		<p>{MESSAGE}</p>

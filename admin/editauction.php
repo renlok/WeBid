@@ -20,7 +20,6 @@ include 'loggedin.inc.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-unset($ERR);
 $catscontrol = new MPTTcategories();
 
 // Data check
@@ -71,11 +70,11 @@ if (isset($_POST['action']))
 		// Check the input values for validity.
 		if ($_POST['quantity'] < 1) // 1 or more items being sold
 		{
-			$ERR = $ERR_701;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_701));
 		}
 		elseif (isset($_POST['current_bid']) && $_POST['current_bid'] < $_POST['min_bid'] && $_POST['current_bid'] != 0) // bid > min_bid
 		{
-			$ERR = $ERR_702;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_702));
 		}
 		else
 		{
@@ -263,7 +262,7 @@ if (isset($_POST['action']))
 	}
 	else
 	{
-		$ERR = $ERR_112;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
 	}
 }
 
@@ -372,7 +371,6 @@ $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => intval($_REQUEST['id']),
 		'USER' => $auction_data['nick'],
 		'TITLE' => $auction_data['title'],

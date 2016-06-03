@@ -18,14 +18,11 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (isset($_POST['activate']) && $_POST['activate'] == 'y' && (!isset($_POST['accesses']) && !isset($_POST['browsers']) && !isset($_POST['domains'])))
 	{
-		$ERR = $ERR_5002;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5002));
 		$statssettings['activate'] = 'n';
 		$statssettings['accesses'] = 'n';
 		$statssettings['browsers'] = 'n';
@@ -45,7 +42,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params[] = array(':accesses', $_POST['accesses'], 'str');
 		$params[] = array(':browsers', $_POST['browsers'], 'str');
 		$db->query($query, $params);
-		$ERR = $MSG['5148'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5148']));
 		$statssettings = $_POST;
 	}
 }
@@ -63,8 +60,6 @@ loadblock('' , '', 'checkbox', 'accesses', $statssettings['accesses'], array($MS
 loadblock('' , '', 'checkbox', 'browsers', $statssettings['browsers'], array($MSG['5146']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0023'],
 		'PAGENAME' => $MSG['5142']

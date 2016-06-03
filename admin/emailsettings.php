@@ -19,9 +19,6 @@ include INCLUDE_PATH . 'functions_admin.php';
 $extraJs = ';js/jquery-ui.js;js/jquery-migrate.js';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 $mail_protocol = array('0' => 'WEBID MAIL', '1' => 'MAIL', '2' => 'SMTP', '4' => 'SENDMAIL', '5'=> 'QMAIL', '3' => 'NEVER SEND EMAILS (may be useful for testing purposes)');
 $smtp_secure_options =array('none' => 'None', 'tls' => 'TLS', 'ssl' => 'SSL');
 
@@ -32,7 +29,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		if (empty($_POST['smtp_host']) || empty($_POST['smtp_username']) || empty($_POST['smtp_password']) || empty($_POST['smtp_port']) || intval($_POST['smtp_port']) <= 0 )
 		{
-			$ERR = $MSG['1132'];
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['1132']));
 		}
 	}
 
@@ -89,8 +86,6 @@ if (isset($_GET['test_email']))
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['524'],
 		'PAGENAME' => $MSG['1131'],

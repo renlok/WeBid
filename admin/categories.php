@@ -246,7 +246,6 @@ for ($i = 0; $i < count($children); $i++)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'CRUMBS' => $crumb_string,
 		'PARENT' => $parent

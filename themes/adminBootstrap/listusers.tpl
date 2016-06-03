@@ -13,9 +13,6 @@
 		<div style="width:75%; float:right;">
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}</h4>
-<!-- IF ERROR ne '' -->
-				<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 				<div class="plain-box">{TOTALUSERS} {L_301}</div>
 				<table width="98%" cellpadding="0" cellspacing="0">
 					<tr bgcolor="#FFFF66">

@@ -18,19 +18,18 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
 $id = $_REQUEST['id'];
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (empty($_POST['name']) || empty($_POST['company']) || empty($_POST['email']))
 	{
-		$ERR = $ERR_047;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
 		$USER = $_POST;
 	}
 	elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['email']))
 	{
-		$ERR = $ERR_008;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_008));
 		$USER = $_POST;
 	}
 	else
@@ -64,7 +63,6 @@ else
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $id,
 		'NAME' => (isset($USER['name'])) ? $USER['name'] : '',
 		'COMPANY' => (isset($USER['company'])) ? $USER['company'] : '',

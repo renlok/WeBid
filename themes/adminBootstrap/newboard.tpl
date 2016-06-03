@@ -7,9 +7,6 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5032}&nbsp;&gt;&gt;&nbsp;{L_5031}</h4>
 				<form name="errorlog" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>
 							<td width="24%">{L_5034}</td>

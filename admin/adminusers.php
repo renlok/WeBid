@@ -18,13 +18,11 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
 	if (in_array($_SESSION['WEBID_ADMIN_IN'], $_POST['delete']))
 	{
-		$ERR = $MSG['1100'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['1100']));
 	}
 	else
 	{
@@ -73,10 +71,6 @@ while ($User = $db->fetch())
 			));
 	$bg = ($bg == '') ? 'class="bg"' : '';
 }
-
-$template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : ''
-		));
 
 include 'header.php';
 $template->set_filenames(array(

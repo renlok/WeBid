@@ -4,9 +4,6 @@
 			</div>
 			<div class="col-md-9">
 				<h2>{L_5436}&nbsp;&gt;&gt;&nbsp;{L_25_0169a}</h2>
-<!-- IF ERROR ne '' -->
-				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="row">

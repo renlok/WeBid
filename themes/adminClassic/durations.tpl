@@ -7,12 +7,6 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_5142}&nbsp;&gt;&gt;&nbsp;{L_069}</h4>
 				<form name="durations" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
-<!-- IF INFO ne '' -->
-					<div class="info-box"><b>{INFO}</b></div>
-<!-- ENDIF -->
 					{L_122}
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>

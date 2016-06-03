@@ -7,12 +7,6 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_25_0005}</h4>
 				<form name="profile_feilds" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
-<!-- IF INFO ne '' -->
-					<div class="info-box"><b>{INFO}</b></div>
-<!-- ENDIF -->
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr valign="top">
 							<td width="50%">{L_781}</td>

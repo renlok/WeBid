@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['action']))
 {
 	// add category
@@ -27,7 +25,7 @@ if (isset($_POST['action']))
 	{
 		if (empty($_POST['cat_name'][$system->SETTINGS['defaultlanguage']]))
 		{
-			$ERR = $ERR_047;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
 		}
 		else
 		{
@@ -184,7 +182,6 @@ foreach ($LANGUAGES as $k => $v)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'B_ADDCAT' => (isset($_GET['do']) && $_GET['do'] == 'add')
 		));
 

@@ -119,7 +119,6 @@ $db->query($query, $params);
 $title = $db->result('title');
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_GET['id'],
 		'MESSAGE' => sprintf($MSG['833'], $title),
 		'TYPE' => 1

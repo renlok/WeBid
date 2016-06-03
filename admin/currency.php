@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
 $html = '';
 
 // Create currencies array
@@ -39,11 +37,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Data check
 	if (empty($_POST['currency']))
 	{
-		$ERR = $ERR_047;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
 	}
 	elseif (!empty($_POST['moneydecimals']) && !is_numeric($_POST['moneydecimals']))
 	{
-		$ERR = $ERR_051;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_051));
 	}
 	else
 	{
@@ -53,7 +51,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("moneydecimals", $_POST['moneydecimals'], 'int');
 		$system->writesetting("moneysymbol", $_POST['moneysymbol'], 'int');
 		
-		$INFO = $MSG['553'];
+
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['553']));
 	}
 }
 
@@ -72,8 +71,6 @@ loadblock($MSG['548'], $MSG['547'], 'decimals', 'moneydecimals', $system->SETTIN
 loadblock($MSG['549'], '', 'batchstacked', 'moneysymbol', $system->SETTINGS['moneysymbol'], array($MSG['550'], $MSG['551']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'OPTIONHTML' => $html,
 		'TYPENAME' => $MSG['25_0008'],

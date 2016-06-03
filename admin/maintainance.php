@@ -19,9 +19,6 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Check if the specified user exists
@@ -32,7 +29,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$db->query($query, $params);
 	if ($db->numrows() == 0 && $_POST['active'] == 1)
 	{
-		$ERR = $ERR_025;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_025));
 	}
 	else
 	{
@@ -46,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params[] = array(':maintainancetext', $system->cleanvars($_POST['maintainancetext']), 'str');
 		$params[] = array(':active', $_POST['active'], 'str');
 		$db->query($query, $params);
-		$ERR = $MSG['_0005'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['_0005']));
 	}
 	$system->SETTINGS['superuser'] = $_POST['superuser'];
 	$system->SETTINGS['maintainancetext'] = $_POST['maintainancetext'];
@@ -75,8 +72,6 @@ $CKEditor->config['height'] = 400;
 loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', $system->SETTINGS['maintainancetext']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5436'],
 		'PAGENAME' => $MSG['_0001']

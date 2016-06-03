@@ -19,8 +19,6 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include INCLUDE_PATH . 'functions_rebuild.php';
 
-unset($ERR);
-
 if (isset($_POST['act']))
 {
 	// remove any countries that need to be
@@ -68,7 +66,8 @@ if (isset($_POST['act']))
 		$db->query($query, $params);
 	}
 	rebuild_html_file('countries');
-	$ERR = $MSG['1028'];
+
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1028']));
 }
 
 include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
@@ -86,10 +85,6 @@ foreach($countries as $country) {
 			'SELECTBOX' => ($USEDINUSERS == 0) ? '<input type="checkbox" name="delete[]" value="' . $country . '">' : '<img src="../images/nodelete.gif" alt="You cannot delete this">'
 			));
 }
-
-$template->assign_vars(array(
-		'ERROR' => isset($ERR) ? $ERR : ''
-		));
 
 include 'header.php';
 $template->set_filenames(array(

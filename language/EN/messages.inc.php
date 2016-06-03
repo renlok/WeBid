@@ -602,6 +602,7 @@ $MSG['594'] = "Acceptance text";
 $MSG['597'] = "Activate banners support?";
 $MSG['600'] = "Banners settings updated";
 $MSG['602'] = "Upload a new logo";
+$MSG['logo_upload_success'] = 'Logo uploaded successfully';
 $MSG['603'] = "Receive Newsletter?";
 $MSG['604'] = "If you activate this option, users will be able to subscribe to your newsletter from the registration page.<br>The \"Newsletter management\" will let you send e-mail messages to the subscribed users";
 $MSG['605'] = "Message Body";

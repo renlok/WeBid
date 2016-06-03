@@ -19,14 +19,12 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
 	$system->writesetting("errortext", $system->cleanvars($_POST['errortext'], true), "str");
-	$INFO = $MSG['413'];
+	
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['413']));
 }
 
 $CKEditor = new CKEditor();
@@ -38,8 +36,6 @@ $CKEditor->config['height'] = 400;
 loadblock($MSG['411'], $MSG['410'], $CKEditor->editor('errortext', $system->SETTINGS['errortext']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['409']

@@ -18,23 +18,18 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-unset($INFO);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
 	$system->writesetting("invoice_yellow_line", $system->cleanvars($_POST['invoice_yellow_line']), "str");
 	$system->writesetting("invoice_thankyou", $system->cleanvars($_POST['invoice_thankyou']), "str");
-	$INFO = $MSG['1095'];
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1095']));
 }
 
 loadblock($MSG['1096'], $MSG['1097'], 'textarea', 'invoice_yellow_line', $system->SETTINGS['invoice_yellow_line']);
 loadblock($MSG['1098'], $MSG['1099'], 'textarea', 'invoice_thankyou', $system->SETTINGS['invoice_thankyou']);
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'INFO' => (isset($INFO)) ? $INFO : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0012'],
 		'PAGENAME' => $MSG['1094']

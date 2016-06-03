@@ -18,7 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
 $edit = false;
 $can_delete = false;
 
@@ -75,7 +74,7 @@ if (isset($_POST['action']))
 		}
 		if (!$auto_join)
 		{
-			$ERR = $ERR_050;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_050));
 		}
 	}
 	if (($_GET['action'] == 'edit' || (isset($_GET['id']) && is_numeric($_GET['id']))) && !isset($ERR))
@@ -85,7 +84,7 @@ if (isset($_POST['action']))
 			// prevent removal of webid default Group 1 or Group 2
 			if(intval($_POST['id']) == 1 || intval($_POST['id']) == 2)
 			{
-				$ERR = $MSG['cannot_delete_default_user_groups'];
+				$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['cannot_delete_default_user_groups']));
 			}
 			else
 			{
@@ -93,14 +92,14 @@ if (isset($_POST['action']))
 				$params = array();
 				$params[] = array(':group_id', $_POST['id'], 'int');
 				$db->query($query, $params);
-				$ERR = $MSG['user_group_deleted'];
+				$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['user_group_deleted']));
 			}
 		}
 		else
 		{
 			if (empty($_POST['group_name']))
 			{
-				$ERR = $MSG['user_group_name_empty_update'];
+				$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['user_group_name_empty_update']));
 			}
 			else
 			{
@@ -126,7 +125,7 @@ if (isset($_POST['action']))
 	{
 		if (empty($_POST['group_name']))
 		{
-			$ERR = $MSG['user_group_name_empty_new'];
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['user_group_name_empty_new']));
 		}
 		else
 		{
@@ -236,7 +235,6 @@ if (!empty($groups_array))
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'GROUPS_UNKNOWN' => (count($groups_unknown) > 0),
 		'B_EDIT' => $edit,
 		'NOT_DEFAULT_GROUP' => $can_delete

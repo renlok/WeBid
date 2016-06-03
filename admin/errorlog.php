@@ -18,15 +18,14 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 $type = (isset($_GET['type'])) ? $_GET['type'] : 'distinct';
 
 if (isset($_POST['action']) && $_POST['action'] == 'clearlog')
 {
 	$query = "DELETE FROM " . $DBPrefix . "logs WHERE type = 'error'";
 	$db->direct_query($query);
-	$ERR = $MSG['889'];
+	
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['889']));
 }
 
 $data = '';
@@ -55,7 +54,6 @@ if ($data == '')
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPE' => $type,
 		'ERRORLOG' => $data

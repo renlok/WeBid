@@ -6,11 +6,6 @@
 		<div style="width:75%; float:right;">
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_1083}</h4>
-				<form name="errorlog" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
-				</form>
 				<form name="tax_edit" action="" method="post">
 					<table width="98%" cellpadding="0" cellspacing="0">
 						<tr>

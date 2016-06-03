@@ -18,16 +18,13 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-// Default for error message (blank)
-unset($ERR);
-
 // Update message
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (empty($_POST['question'][$system->SETTINGS['defaultlanguage']])
 		|| empty($_POST['answer'][$system->SETTINGS['defaultlanguage']]))
 	{
-		$ERR = $ERR_067;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_067));
 		$faq = $_POST;
 	}
 	else
@@ -117,7 +114,6 @@ $db->query($query, $params);
 $faq = $db->result();
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $faq['id'],
 		'FAQ_NAME' => $faq['question'],
 		'FAQ_CAT' => $faq['category']

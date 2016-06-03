@@ -7,9 +7,6 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L__0008}&nbsp;&gt;&gt;&nbsp;{L__0024}</h4>
 				<form name="upldbanner" action="" method="post" enctype="multipart/form-data">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 					<table width="98%" cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="10%">{L_5180}</td>

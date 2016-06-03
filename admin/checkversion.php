@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 
 if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt')))
 {
-	$ERR = $ERR_25_0002;
+	$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_25_0002));
 	$realversion = 'Unknown';
 }
 
@@ -36,7 +36,6 @@ else
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TEXT' => $text,
 		'MYVERSION' => $myversion,

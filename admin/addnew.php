@@ -18,14 +18,12 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Data check
 	if (!isset($_POST['title']) || !isset($_POST['content']))
 	{
-		$ERR = $ERR_112;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
 	}
 	else
 	{
@@ -71,7 +69,6 @@ foreach ($LANGUAGES as $k => $language)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TITLE' => $MSG['518'],
 		'BUTTON' => $MSG['518'],
 		'ID' => '', // inserting new user so needs to be blank

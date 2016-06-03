@@ -92,7 +92,6 @@ while ($row = $db->fetch())
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl']
 		));
 

@@ -181,6 +181,7 @@ $countries = array(
 'Sao Tome and Principe' => 'Sao Tome and Principe',
 'Saudi Arabia' => 'Saudi Arabia',
 'Senegal' => 'Senegal',
+'Serbia' => 'Serbia',
 'Seychelles' => 'Seychelles',
 'Sierra Leone' => 'Sierra Leone',
 'Singapore' => 'Singapore',
@@ -228,5 +229,6 @@ $countries = array(
 'Western Sahara' => 'Western Sahara',
 'Yemen' => 'Yemen',
 'Zambia' => 'Zambia',
-'Zimbabwe' => 'Zimbabwe'
+'Zimbabwe' => 'Zimbabwe',
 );
+?>

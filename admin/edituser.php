@@ -68,7 +68,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		elseif (strlen($_POST['email']) < 5) //Primitive mail check
 		{
-			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_110));
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5033));
 		}
 		elseif (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $_POST['email']))
 		{

@@ -18,7 +18,7 @@ class global_class
 {
 	var $SETTINGS, $ctime, $tdiff;
 
-	function global_class()
+	function __construct()
 	{
 		global $DBPrefix, $db;
 

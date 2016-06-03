@@ -20,7 +20,7 @@ class fees
 	var $data;
 	var $fee_types;
 
-	function fees()
+	function __construct()
 	{
 		$this->ASCII_RANGE = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$this->fee_types = $this->get_fee_types();

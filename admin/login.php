@@ -65,7 +65,7 @@ if (isset($_POST['action']))
 			{
 				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
-				$query = "SELECT id, hash, password FROM " . $DBPrefix . "adminusers WHERE username = :username";
+				$query = "SELECT id, hash, password FROM " . $DBPrefix . "adminusers WHERE username = :username AND status = 1";
 				$params = array();
 				$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
 				$db->query($query, $params);
@@ -91,7 +91,7 @@ if (isset($_POST['action']))
 					$params[] = array(':admin_id', $admin['id'], 'int');
 					$db->query($query, $params);
 					// Redirect
-					print '<script type="text/javascript">parent.location.href = \'index.php\';</script>';
+					header('location: index.php');
 					exit;
 				}
 			}

@@ -106,7 +106,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_044));
 		}
-		elseif (empty($_POST['balance']))
+		elseif (empty($_POST['balance']) && $system->SETTINGS['moneydecimals'] != 0)
 		{
 			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
 		}

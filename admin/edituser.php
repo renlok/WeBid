@@ -28,6 +28,33 @@ if (empty($userid) || $userid <= 0)
 	exit;
 }
 
+// load the user data
+$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
+$params = array();
+$params[] = array(':user_id', $userid, 'int');
+$db->query($query, $params);
+$user_data = $db->result();
+
+if ($user_data['birthdate'] != 0)
+{
+	$birth_day = substr($user_data['birthdate'], 6, 2);
+	$birth_month = substr($user_data['birthdate'], 4, 2);
+	$birth_year = substr($user_data['birthdate'], 0, 4);
+
+	if ($system->SETTINGS['datesformat'] == 'USA')
+	{
+		$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
+	}
+	else
+	{
+		$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
+	}
+}
+else
+{
+	$birthdate = '';
+}
+
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 
@@ -156,15 +183,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$query .=  ", password = :password";
 				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 			}
-			// process balance positive and negative allowed and compare to max allowed credit before it is marked/unmarked as suspendeds
-			if ($_POST['balance'] >= -$system->SETTINGS['fee_max_debt'])
 			{
-				$query .=  ", suspended = 0";
+				// process balance positive and negative allowed and compare to max allowed credit before it is marked/unmarked as suspendeds
+				if ($_POST['balance'] >= -$system->SETTINGS['fee_max_debt'])
+				{
+					$query .=  ", suspended = 0";
+				}
+				elseif ($_POST['balance'] < -$system->SETTINGS['fee_max_debt'])
+				{
+					$query .=  ", suspended = 7";
+				}
 			}
-			elseif ($_POST['balance'] < -$system->SETTINGS['fee_max_debt'])
-			{
-				$query .=  ", suspended = 7";
-			}
+			
 			$query .=  " WHERE id = :user_id";
 			$params[] = array(':user_id', $userid, 'int');
 			$db->query($query, $params);
@@ -177,33 +207,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
 	}
-}
-
-// load the user data
-$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
-$params = array();
-$params[] = array(':user_id', $userid, 'int');
-$db->query($query, $params);
-$user_data = $db->result();
-
-if ($user_data['birthdate'] != 0)
-{
-	$birth_day = substr($user_data['birthdate'], 6, 2);
-	$birth_month = substr($user_data['birthdate'], 4, 2);
-	$birth_year = substr($user_data['birthdate'], 0, 4);
-
-	if ($system->SETTINGS['datesformat'] == 'USA')
-	{
-		$birthdate = $birth_month . '/' . $birth_day . '/' . $birth_year;
-	}
-	else
-	{
-		$birthdate = $birth_day . '/' . $birth_month . '/' . $birth_year;
-	}
-}
-else
-{
-	$birthdate = '';
 }
 
 $country_list = '';

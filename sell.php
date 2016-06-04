@@ -92,7 +92,7 @@ switch ($_SESSION['action'])
 			$phpass = new PasswordHash(8, false);
 			if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password'])))
 			{
-				$ERR = 'ERR_026';
+				$ERR = $ERR_006;
 			}
 		}
 		if ($ERR != 'ERR_')
@@ -334,6 +334,8 @@ switch ($_SESSION['action'])
 				exit;
 			}
 			$template->assign_vars(array(
+					'ATYPE_PLAIN' => null,
+					'ERROR' => null,
 					'TITLE' => $MSG['028'],
 					'PAGE' => 3,
 					'AUCTION_ID' => $auction_id,
@@ -437,7 +439,7 @@ switch ($_SESSION['action'])
 			$template->assign_vars(array(
 					'TITLE' => htmlspecialchars($title),
 					'SUBTITLE' => htmlspecialchars($subtitle),
-					'ERROR' => ($ERR == 'ERR_') ? '' : $$ERR,
+					'ERROR' => ($ERR == 'ERR_') ? '' : $ERR,
 					'PAGE' => 2,
 					'MINTEXT' => ($atype == 2) ? $MSG['038'] : $MSG['020'],
 

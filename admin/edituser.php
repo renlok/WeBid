@@ -183,6 +183,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				$query .=  ", password = :password";
 				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 			}
+			if ($system->SETTINGS['fee_disable_acc'] == 'y' && $user_data['suspended'] != 8 && $user_data['suspended'] != 1)
 			{
 				// process balance positive and negative allowed and compare to max allowed credit before it is marked/unmarked as suspendeds
 				if ($_POST['balance'] >= -$system->SETTINGS['fee_max_debt'])

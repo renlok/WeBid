@@ -30,7 +30,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$query = "INSERT INTO " . $DBPrefix . "faqs values (NULL, :question, :answer, :category)";
 		$params = array();
 		$params[] = array(':question', $system->cleanvars($_POST['question'][$system->SETTINGS['defaultlanguage']]), 'str');
-		$params[] = array(':answer', $system->cleanvars($_POST['answer'][$system->SETTINGS['defaultlanguage']], array('safe' => 1,'elements'=>'a ol ul li u strong em br', 'deny_attribute'=>'*')), 'str');
+		$params[] = array(':answer', $system->cleanvars($_POST['answer'][$system->SETTINGS['defaultlanguage']], true), 'str');
 		$params[] = array(':category', $_POST['category'], 'int');
 		$db->query($query, $params);
 		$id = $db->lastInsertId();
@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':id', $id, 'int');
 			$params[] = array(':lang', $k, 'str');
 			$params[] = array(':question', $system->cleanvars($_POST['question'][$k]), 'str');
-			$params[] = array(':answer', $system->cleanvars($_POST['answer'][$k], array('safe' => 1,'elements'=>'a ol ul li u strong em br', 'deny_attribute'=>'*')), 'str');
+			$params[] = array(':answer', $system->cleanvars($_POST['answer'][$k], true), 'str');
 			$db->query($query, $params);
 		}
 		header('location: faqs.php');

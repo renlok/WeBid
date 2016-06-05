@@ -1668,3 +1668,8 @@ $MSG['delete'] = 'delete';
 
 $MSG['all_error_messages'] = 'All errors';
 $MSG['unique_error_messages'] = 'Unique errors';
+
+$MSG['google_analytics'] = "Google Analytics";
+$MSG['google_analytics_updated'] = "Google Analytics Settings updated";
+$MSG['google_analytics_tracking_code'] = "Google Analytics Tracking Code";
+$MSG['google_analytics_tracking_code_hint'] = "Copy and paste your Google Analytics tracking code here. You must include the opening and closing &lt;script&gt;&lt;/script&gt; tags.";

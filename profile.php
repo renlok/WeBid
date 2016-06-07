@@ -34,11 +34,11 @@ else
 	$user_id = $_GET['user_id'];
 }
 
-if (is_string($user_id))
+if (!is_numeric($user_id))
 {
 	$query = "SELECT * FROM " . $DBPrefix . "users WHERE nick = :user";
 	$params = array();
-	$params[] = array(':user', $system->cleanvars($user_id), 'str');
+	$params[] = array(':user', $user_id, 'str');
 	$db->query($query, $params);
 }
 else

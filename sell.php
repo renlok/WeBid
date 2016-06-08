@@ -102,7 +102,7 @@ switch ($_SESSION['action'])
 		else
 		{
 			// clean up sell description
-			$_SESSION['SELL_description'] = $system->cleanvars($_SESSION['SELL_description'], array('safe' => 1,'elements'=>'a ol ul li u strong em br', 'deny_attribute'=>'*'));
+			$_SESSION['SELL_description'] = $system->cleanvars($_SESSION['SELL_description'], true);
 
 			$payment_text = implode(', ', $payment);
 			// set time back to GMT

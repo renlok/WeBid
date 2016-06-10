@@ -77,5 +77,15 @@
 		</td>
 	</tr>
 </table>
+<table width="100%" border="0" elpadding="0" celspacing="0">
+	<tr>
+	<br>
+	<td align="center">
+	<form method="post" action="{SITE_URL}user_menu.php?cptab=account">
+	<input type="submit" value="<< {L_25_0081}">
+	</form>
+	</td>
+	</tr>
+</table>
 
 <!-- INCLUDE user_menu_footer.tpl -->

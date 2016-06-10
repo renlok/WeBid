@@ -46,5 +46,16 @@ $(document).ready(function() {
 		<input type="submit" name="submit" value="{L_008}"  OnClick="if ( !confirm('{L_2__0031}') ) { return false; }">
 	</div>
 </form>
-
+<div align="center">
+<table width="90%" border="0" elpadding="0" celspacing="0">
+	<tr>
+	<td align="center">
+	<br>
+	<form method="post" action="{SITE_URL}user_menu.php?cptab=account">
+	<input type="submit" value="<< {L_25_0081}">
+	</form>
+	</td>
+	</tr>
+</table>
+</div>
 <!-- INCLUDE user_menu_footer.tpl -->

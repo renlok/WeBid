@@ -159,5 +159,15 @@ $(document).ready(function() {
 		</td>
 	</tr>
 </table>
+<table width="100%" border="0" elpadding="0" celspacing="0">
+	<tr>
+	<td align="center">
+	<br>
+	<form method="post" action="{SITE_URL}user_menu.php?cptab=selling">
+	<input type="submit" value="<< {L_25_0082}">
+	</form>
+	</td>
+	</tr>
+</table>
 
 <!-- INCLUDE user_menu_footer.tpl -->

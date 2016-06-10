@@ -330,7 +330,7 @@ $template->assign_vars(array(
 		'CURRENCY' => $system->SETTINGS['currency'],
 		'PAYMENTS_LIST' => $payment_methods,
 		'COUNTRY_LIST' => $TPL_countries_list,
-		'USER_GROUP_LIST' => $TPL_user_group_list,
+		'USER_GROUP_LIST' => $TPL_user_group_list
 		));
 
 include 'header.php';

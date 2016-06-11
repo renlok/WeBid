@@ -47,6 +47,7 @@ $ERR_022 = "The reserve price you inserted is not correct";
 $ERR_023 = "Choose a category for your item";
 $ERR_024 = "Choose a payment method";
 $ERR_025 = "Invalid user";
+$ERR_026 = "Invalid password";
 $ERR_030 = "Fields must be numeric and in nnnn.nn format";
 $ERR_031 = "The form you are submitting is not complete";
 $ERR_032 = "One or both the e-mail addresses are not correct";

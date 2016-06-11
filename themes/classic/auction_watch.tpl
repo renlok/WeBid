@@ -28,5 +28,15 @@
 	</tr>
 </table>
 <div align="center">{L_30_0210}</div>
+<table width="100%" border="0" elpadding="0" celspacing="0">
+	<tr>
+	<td align="center">
+	<br>
+	<form method="post" action="{SITEURL}user_menu.php?cptab=buying">
+	<input type="submit" value="<< {L_25_0083}">
+	</form>
+	</td>
+	</tr>
+</table>
 
 <!-- INCLUDE user_menu_footer.tpl -->

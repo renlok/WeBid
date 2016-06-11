@@ -41,11 +41,15 @@
 		</td>
 	</tr>
 <!-- END bids -->
-<!-- IF NUM_BIDS eq 0 -->
-	<tr align="center">
-		<td colspan="5">&nbsp;</td>
-	</tr>
-<!-- ENDIF -->
 </table>
-
+<table width="100%" border="0" elpadding="0" celspacing="0">
+	<tr>
+	<td align="center">
+	<br>
+	<form method="post" action="{SITEURL}user_menu.php?cptab=buying">
+	<input type="submit" value="<< {L_25_0083}">
+	</form>
+	</td>
+	</tr>
+</table>
 <!-- INCLUDE user_menu_footer.tpl -->

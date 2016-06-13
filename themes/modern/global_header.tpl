@@ -67,43 +67,50 @@ $(document).ready(function() {
 		<div class="col-md-6 text-right text-muted"><small>{HEADERCOUNTER}</small></div>
 	</div>
 	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><a href="{SITEURL}index.php?"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="{SITEURL}index.php?"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
 <!-- IF B_CAN_SELL -->
-					<li><a href="{SITEURL}select_category.php">{L_028}</a></li>
+				<li><a href="{SITEURL}select_category.php">{L_028}</a></li>
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
-					<li><a href="{SITEURL}user_menu.php">{L_622}</a></li>
-					<li><a href="{SITEURL}logout.php">{L_245}</a></li>
+				<li><a href="{SITEURL}user_menu.php">{L_622}</a></li>
+				<li><a href="{SITEURL}logout.php">{L_245}</a></li>
 <!-- ELSE -->
-					<li><a href="{SITEURL}register.php">{L_235}</a></li>
-					<li><a href="{SITEURL}user_login.php">{L_052}</a></li>
+				<li><a href="{SITEURL}register.php">{L_235}</a></li>
+				<li><a href="{SITEURL}user_login.php">{L_052}</a></li>
 <!-- ENDIF -->
 <!-- IF B_BOARDS -->
-					<li><a href="{SITEURL}boards.php">{L_5030}</a></li>
+				<li><a href="{SITEURL}boards.php">{L_5030}</a></li>
 <!-- ENDIF -->
-					<li><a href="{SITEURL}help.php" alt="faqs" class="new-window">{L_148}</a></li>
-					<li><a href="{SITEURL}adsearch.php">{L_464}</a></li>
-				</ul>
-				<form class="navbar-form navbar-right" role="search" action="{SITEURL}search.php" method="get">
+				<li><a href="{SITEURL}help.php" alt="faqs" class="new-window">{L_148}</a></li>
+				<li><a href="{SITEURL}adsearch.php">{L_464}</a></li>
+			</ul>
+			<form class="navbar-form navbar-right" role="search" action="{SITEURL}search.php" method="get">
+				<div class="form-group">
+					<select class="form-control" name="id">
+						{SELECTION_BOX}
+					</select>
+				</div>
+				<div class="form-group">
 					<div class="input-group">
 						<input type="text" class="form-control" name="q" value="{Q}" placeholder="{L_861}">
 						<span class="input-group-btn">
 							<button type="submit" class="btn btn-primary" name="sub" value="{L_399}">{L_399}</button>
 						</span>
 					</div>
-				</form>
-			</div><!-- /.navbar-collapse -->
-		</div><!-- /.container-fluid -->
+				</div>
+				
+				
+			</form>
+		</div><!-- /.navbar-collapse -->
 	</nav>

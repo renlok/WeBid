@@ -91,6 +91,10 @@ else
 	browseItems($query, $params, $query_feat, $params_feat, $total, 'search.php', 'q=' . $term . '&id=' . $cat_id);
 }
 
+$template->assign_vars(array(
+			'ERROR' => null
+			));
+
 include 'header.php';
 $template->set_filenames(array(
 		'body' => 'search.tpl'

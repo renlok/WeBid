@@ -347,7 +347,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':suspended', $SUSPENDED, 'int'),
 					array(':language', $language, 'str'),
 					array(':groups', implode(',', $groups), 'str'),
-					array(':balance', $balance, 'bool'),
+					array(':balance', $balance, 'float'),
 					array(':timezone', $_POST['TPL_timezone'], 'str'),
 				);
 				$db->query($query, $params);

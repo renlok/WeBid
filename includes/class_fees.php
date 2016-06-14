@@ -59,7 +59,7 @@ class fees
 		$query = "INSERT INTO " . $this->DBPrefix . "accounts VALUES (NULL, :user_nick, :user_name, :user_text, :user_type, :user_time, :user_amount, " . $date_values[0] . ", " . $date_values[1] . ", " . $date_values[2] . ", " . $date_values[3] . ")";
 		$params = array(
 			array(':user_nick', $this->user->user_data['nick'], 'str'),
-			array(':user_name', $this->user->user_data['name'], 'str')
+			array(':user_name', $this->user->user_data['name'], 'str'),
 			array(':user_text', $text, 'str'),
 			array(':user_type', $type, 'str'),
 			array(':user_time', time(), 'int'),

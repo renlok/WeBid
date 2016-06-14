@@ -26,8 +26,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		// Update database
 		$system->writesetting("theme", $_POST['dtheme'], 'str');
 		$system->writesetting("admin_theme", $_POST['admin_theme'], 'str');
-		$system->SETTINGS['theme'] = $_POST['dtheme'];
-		$system->SETTINGS['admin_theme'] = $_POST['admin_theme'];
+
+		$template->set_template();
+
 		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['26_0005']));
 	}
 	else

@@ -308,6 +308,7 @@ $cattree = array();
 $TPL_countries_list = '<select name="country">' . "\n";
 reset($countries);
 $country = (isset($_SESSION['advs']['country'])) ? $_SESSION['advs']['country'] : '';
+$TPL_countries_list .= "\t" . '<option value="">' . $MSG['any_country'] . '</option>' . "\n";
 foreach ($countries as $key => $val)
 {
 	$TPL_countries_list .= "\t" . '<option value="' . $val . '"' . (($val == $country) ? ' selected="true"' : '') . '>' . $val . '</option>' . "\n";

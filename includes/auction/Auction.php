@@ -42,7 +42,7 @@ class Auction
         }
     }
 
-	public function setData($data)
+	protected function setData($data)
 	{
 		foreach ($data as $k => $v)
 		{
@@ -50,13 +50,44 @@ class Auction
 		}
 	}
 
-	public function updateAuction()
+	public function buildData()
+	{
+		// TODO: this is the old setvars() function end up with a $data array and push it into setData()
+	}
+
+	public function setSessionData()
+	{
+		foreach ($auction_data as $key => $value)
+		{
+			$_SESSION['SELL_' . $key] = $value;
+		}
+	}
+
+	public function clearSessionData()
+	{
+		foreach ($auction_data as $key => $value)
+		{
+			if (isset($_SESSION['SELL_' . $key]))
+			{
+				unset($_SESSION['SELL_' . $key]);
+			}
+		}
+	}
+
+	public function removeAuction()
 	{
 
+	}
+
+	public function updateAuction()
+	{
+		// updateauction()
 	}
 
 	public function saveAuction()
 	{
-		
+		// addauction()
 	}
+
+	public function addBid(); // no contained in base class will be in Auction_BIN or Auction_Dutch or Auction_Bid ...
 }

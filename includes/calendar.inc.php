@@ -30,9 +30,11 @@ $cal_months = json_encode(array(
 	));
 $cal_imgpath = $system->SETTINGS['siteurl'] . "includes/img/";
 
+$cal_invalid_date = "'Invalid date: \"' + s_date[0] + '\".\\nAccepted format is dd-mm-yyyy.'";
 
 if ($system->SETTINGS['datesformat'] == 'USA')
 {
+	$cal_invalid_date = "'Invalid date: \"' + s_date[0] + '\".\\nAccepted format is mm-dd-yyyy.'";
 }
 
 $cal_gener_date = "(d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"-\"
@@ -60,6 +62,7 @@ $cal_conf = "var A_TCALDEF = {
 	'weekstart': 1, // first day of week: 0-Su or 1-Mo
 	'centyear'  : 70, // 2 digit years less than 'centyear' are in 20xx, othewise in 19xx.
 	'imgpath' : '$cal_imgpath',
+	'invaliddate': function (s_date) { return $cal_invalid_date },
 	'generdate': function (d_date) { return $cal_gener_date },
 	'dateparts' : $cal_date_parts
 };";

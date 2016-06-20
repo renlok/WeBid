@@ -9,6 +9,7 @@ function f_tcalParseDate (s_date) {
 
 	var re_date = /^\s*(\d{1,2})\-(\d{1,2})\-(\d{2,4})\s*$/;
 	if (!re_date.exec(s_date[0]))
+		return alert (this.a_tpl.invaliddate(s_date))
 
 	var n_month = Number(RegExp[this.a_tpl.dateparts['month']]),
 	n_day = Number(RegExp[this.a_tpl.dateparts['day']]),

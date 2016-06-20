@@ -1556,6 +1556,7 @@ $MSG['30_0031a'] = "Clear Image Cache";
 $MSG['30_0032'] = "Delete all the template cache files, you will need to do this each time you edit a template file";
 $MSG['30_0032a'] = "Delete all the Image cache files, This can help if there are some images not showing on the site";
 $MSG['30_0033'] = "Cache cleared";
+$MSG['30_0033a'] = "Image cache cleared";
 $MSG['30_0049'] = "Newsletter Settings Updated";
 $MSG['30_0053'] = "<p>Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:</p>";
 $MSG['30_0063'] = "Buy it now only?";

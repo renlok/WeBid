@@ -4,6 +4,7 @@
 						<ul class="menu">
 							<li><a href="{SITEURL}admin/theme.php">{L_26_0002}</a></li>
 							<li><a href="{SITEURL}admin/clearcache.php">{L_30_0031}</a></li>
+							<li><a href="{SITEURL}admin/clear_image_cache.php">{L_30_0031a}</a></li>
                         	<li><a href="{SITEURL}admin/logo_upload.php">{L_30_0215}</a></li>
 						</ul>
 					</div>

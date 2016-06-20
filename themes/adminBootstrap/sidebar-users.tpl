@@ -1,6 +1,7 @@
 				<ul class="list-group">
 					<li class="list-group-item active">{L_25_0010}</li>
 					<li class="list-group-item"><a href="{SITEURL}admin/listusers.php">{L_045}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/newuser.php">{L__0026}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/usergroups.php">{L_448}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/profile.php">{L_048}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/activatenewsletter.php">{L_25_0079}</a></li>

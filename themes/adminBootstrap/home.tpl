@@ -124,6 +124,16 @@
 						</div>
 						<br>
 						<div class="row">
+							<div class="col-md-9">{L_30_0032a}</div>
+							<div class="col-md-3">
+								<form action="?action=clear_image_cache" method="post">
+									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+									<button class="btn btn-primary" type="submit" name="submit">{L_30_0031a}</button>
+								</form>
+							</div>
+						</div>
+						<br>
+						<div class="row">
 							<div class="col-md-9">{L_1030}</div>
 							<div class="col-md-3">
 								<form action="?action=updatecounters" method="post">

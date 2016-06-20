@@ -123,7 +123,16 @@
 							</form>
 						</td>
 					</tr>
-					<tr class="bg">
+										<tr class="bg">
+						<td width="70%">{L_30_0032a}</td>
+						<td>
+							<form action="?action=clear_image_cache" method="post">
+								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+								<input type="submit" name="submit" value="{L_30_0031a}">
+							</form>
+						</td>
+					</tr>
+					<tr>
 						<td>{L_1030}</td>
 						<td>
 							<form action="?action=updatecounters" method="post">

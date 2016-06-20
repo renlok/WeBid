@@ -23,7 +23,6 @@
 <script src="{SITEURL}js/jquery.js"></script>
 <script>{CAL_CONF}</script>
 <script src="{SITEURL}js/calendar.js"></script>
-<script src="{SITEURL}js/jquery.lightbox.js"></script>
 
 <!-- IF GOOGLEANALYTICS ne '' -->
 {GOOGLEANALYTICS}

@@ -27,7 +27,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{SITEURL}themes/{THEME}/js/bootstrap.min.js"></script>
-
+<script>{CAL_CONF}</script>
 <script src="{SITEURL}js/calendar.js"></script>
 
 <!-- IF GOOGLEANALYTICS ne '' -->

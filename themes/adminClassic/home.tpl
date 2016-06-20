@@ -119,7 +119,7 @@
 						<td>
 							<form action="?action=clearcache" method="post">
 								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-								<input type="submit" name="submit1" value="{L_30_0031}">
+								<input type="submit" name="submit" value="{L_30_0031}">
 							</form>
 						</td>
 					</tr>

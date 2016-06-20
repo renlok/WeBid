@@ -59,7 +59,6 @@ else
 			'THEME' => $system->SETTINGS['theme'],
 			'SITEURL' => $system->SETTINGS['siteurl'],
 			'CHARSET' => $CHARSET,
-			'EXTRAJS' => (isset($extraJs)) ? $extraJs : '',
 			'ADMIN_USER' => $_SESSION['WEBID_ADMIN_USER'],
 			'ADMIN_ID' => $_SESSION['WEBID_ADMIN_IN'],
 			'CURRENT_PAGE' => $current_page,

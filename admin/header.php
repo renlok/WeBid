@@ -14,6 +14,8 @@
 
 if (!defined('InAdmin')) exit();
 
+include INCLUDE_PATH . 'calendar.inc.php';
+
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'THEME' => $system->SETTINGS['admin_theme'],

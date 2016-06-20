@@ -20,29 +20,10 @@
 <link rel="alternate" type="application/rss+xml" title="{L_930}" href="{SITEURL}rss.php?feed=7">
 <link rel="alternate" type="application/rss+xml" title="{L_931}" href="{SITEURL}rss.php?feed=8">
 
-<script type="text/javascript" src="{SITEURL}loader.php?js={JSFILES}"></script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('a.new-window').click(function(){
-			var posY = ($(window).height()-550)/2;
-			var posX = ($(window).width())/2;
-			window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX="+posX+",screenY="+posY+",status=0,menubar=0,width=550,height=550");
-			return false;
-		});
-		var currenttime = '{ACTUALDATE}';
-		var serverdate = new Date(currenttime);
-		function padlength(what){
-			return (what.toString().length==1)? "0"+what : what;
-		}
-		function displaytime(){
-			serverdate.setSeconds(serverdate.getSeconds()+1)
-			var timestring=padlength(serverdate.getHours())+":"+padlength(serverdate.getMinutes())+":"+padlength(serverdate.getSeconds());
-			$("#servertime").html(timestring);
-		}
-		setInterval(displaytime, 1000);
-	});
-</script>
+<script src="{SITEURL}js/jquery.js"></script>
+<script>{CAL_CONF}</script>
+<script src="{SITEURL}js/calendar.js"></script>
+<script src="{SITEURL}js/jquery.lightbox.js"></script>
 
 <!-- IF GOOGLEANALYTICS ne '' -->
 {GOOGLEANALYTICS}

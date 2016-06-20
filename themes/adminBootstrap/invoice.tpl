@@ -1,4 +1,3 @@
-		<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 		<div style="width:25%; float:left;">
 			<div style="margin-left:auto; margin-right:auto;">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->

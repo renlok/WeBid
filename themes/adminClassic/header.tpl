@@ -3,6 +3,9 @@
 <head>
 	<title>WeBid Administration back-end</title>
 	<meta http-equiv="content-type" content="text/html; charset={CHARSET}" />
+
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/style.css" />
 
 	<!--[if IE]>
@@ -14,7 +17,12 @@
 	</style>
 	<![endif]-->
 
-	<script type="text/javascript" src="{SITEURL}loader.php?js=js/jquery.js{EXTRAJS}"></script>
+	<script src="{SITEURL}js/jquery.js"></script>
+	<script src="{SITEURL}js/jquery-migrate.js"></script>
+	<script src="{SITEURL}js/jquery-ui.js"></script>
+	<script>{CAL_CONF}</script>
+	<script src="{SITEURL}js/calendar.js"></script>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('a.new-window').click(function(){

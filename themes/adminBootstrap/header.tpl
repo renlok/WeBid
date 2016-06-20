@@ -7,16 +7,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="generator" content="WeBid">
 
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/style.css">
-	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/jquery.lightbox.css" media="screen">
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="{SITEURL}js/jquery.js"></script>
+	<script src="{SITEURL}js/jquery-ui.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="{SITEURL}themes/{THEME}/js/bootstrap.min.js"></script>
 
-	<script type="text/javascript" src="{SITEURL}loader.php?js=js/jquery.js{EXTRAJS}"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('a.new-window').click(function(){

@@ -28,29 +28,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{SITEURL}themes/{THEME}/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="{SITEURL}loader.php?js={JSFILES}"></script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	$('a.new-window').click(function(){
-		var posY = ($(window).height()-550)/2;
-		var posX = ($(window).width())/2;
-		window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX="+posX+",screenY="+posY+",status=0,menubar=0,width=550,height=550");
-		return false;
-	});
-	var currenttime = '{ACTUALDATE}';
-	var serverdate = new Date(currenttime);
-	function padlength(what){
-		return (what.toString().length==1)? "0"+what : what;
-	}
-	function displaytime(){
-		serverdate.setSeconds(serverdate.getSeconds()+1)
-		var timestring=padlength(serverdate.getHours())+":"+padlength(serverdate.getMinutes())+":"+padlength(serverdate.getSeconds());
-		$("#servertime").html(timestring);
-	}
-	setInterval(displaytime, 1000);
-});
-</script>
+<script src="{SITEURL}js/calendar.js"></script>
 
 <!-- IF GOOGLEANALYTICS ne '' -->
 {GOOGLEANALYTICS}

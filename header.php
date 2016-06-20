@@ -14,13 +14,11 @@
 
 if (!defined('InWeBid')) exit();
 
+include INCLUDE_PATH . 'calendar.inc.php';
 include INCLUDE_PATH . 'maintainance.php';
 include INCLUDE_PATH . 'functions_banners.php';
 if (basename($_SERVER['PHP_SELF']) != 'error.php')
 	include INCLUDE_PATH . 'stats.inc.php';
-
-$jsfiles = 'js/jquery.js;js/jquery.lightbox.js;';
-$jsfiles .= (basename($_SERVER['PHP_SELF']) == 'sell.php') ? ';js/calendar.php' : '';
 
 // Get users and auctions counters
 $counters = load_counters();
@@ -41,7 +39,6 @@ $template->assign_vars(array(
 		'CHARSET' => $CHARSET,
 		'DESCRIPTION' => $system->SETTINGS['descriptiontag'],
 		'KEYWORDS' => $system->SETTINGS['keywordstag'],
-		'JSFILES' => $jsfiles,
 		'ACTUALDATE' => ActualDate(),
 		'LOGO' => $system->SETTINGS['logo'],
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',

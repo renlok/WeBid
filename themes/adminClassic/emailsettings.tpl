@@ -1,4 +1,3 @@
-		<link rel="stylesheet" media="screen,projection" type="text/css" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 		<div style="width:25%; float:left;">
 			<div style="margin-left:auto; margin-right:auto;">
 					<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->

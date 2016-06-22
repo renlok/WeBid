@@ -17,7 +17,6 @@ $current_page = 'users';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
 // Retrieve users signup settings
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
@@ -163,15 +162,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
+$query = "SELECT country_id, country FROM " . $DBPrefix . "countries";
+$db->direct_query($query);
+$countries = $db->fetchall();
 $country_list = '';
-foreach ($countries as $code => $descr)
+
+foreach($countries as $country)
 {
-	$country_list .= '<option value="' . $descr . '"';
-	if (isset($_POST['country']) && $descr == $_POST['country'])
+	$country_list .= '<option value="' . $country['country'] . '"';
+	if (isset($_POST['country']) && $country['country'] == $_POST['country'])
 	{
 		$country_list .= ' selected';
 	}
-	$country_list .= '>' . $descr . '</option>' . "\n";
+	$country_list .= '>' . $country['country'] . '</option>' . "\n";
 }
 
 $query = "SELECT id, group_name FROM ". $DBPrefix . "groups";

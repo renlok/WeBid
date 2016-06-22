@@ -17,7 +17,6 @@ $current_page = 'users';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
 $id = intval($_REQUEST['id']);
 

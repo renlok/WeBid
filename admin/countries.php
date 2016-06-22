@@ -17,7 +17,6 @@ $current_page = 'settings';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include INCLUDE_PATH . 'functions_rebuild.php';
 
 if (isset($_POST['act']))
 {
@@ -78,9 +77,14 @@ $countries = $db->fetchall();
 
 foreach($countries as $country)
 {
+	$can_delete = true;
+	if ($country['user_count'] != 0 || $country['country'] == $system->SETTINGS['defaultcountry']) {
+		$can_delete = false;
+	}
+
 	$template->assign_block_vars('countries', array(
 			'COUNTRY' => $country['country'],
-			'SELECTBOX' => ($country['user_count'] == 0) ? '<input type="checkbox" name="delete[]" value="' . $country['country'] . '">' : '<img src="../images/nodelete.gif" alt="You cannot delete this">'
+			'SELECTBOX' => ($can_delete) ? '<input type="checkbox" name="delete[]" value="' . $country['country'] . '">' : '<img src="../images/nodelete.gif" alt="You cannot delete this">'
 			));
 }
 

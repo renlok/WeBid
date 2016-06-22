@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 include INCLUDE_PATH . 'config/timezones.php';
 include INCLUDE_PATH . 'config/gateways.php';
 
@@ -422,19 +421,25 @@ $signup_fee = $db->result();
 $country = '';
 
 $selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
-foreach ($countries as $key => $name)
+
+$query = "SELECT country_id, country FROM " . $DBPrefix . "countries";
+$db->direct_query($query);
+$countries = $db->fetchall();
+
+foreach($countries as $country)
 {
-	$country .= '<option value="' . $name . '"';
-	if ($name == $selcountry)
+	$country .= '<option value="' . $country['country'] . '"';
+	if ($country['country'] == $selcountry)
 	{
 		$country .= ' selected';
 	}
-	elseif ($system->SETTINGS['defaultcountry'] == $name)
+	elseif ($system->SETTINGS['defaultcountry'] == $country['country'])
 	{
 		$country .= ' selected';
 	}
-	$country .= '>' . $name . '</option>' . "\n";
+	$country .= '>' . $country['country'] . '</option>' . "\n";
 }
+
 $dobclass = ($missing['birthday']) ? ' class="missing"' : '';
 $dobmonth = '<select name="TPL_month"' . $dobclass . '>
 		<option value="00"></option>

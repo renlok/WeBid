@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 include INCLUDE_PATH . 'config/timezones.php';
 include INCLUDE_PATH . 'config/gateways.php';
 
@@ -198,16 +197,21 @@ else
 	$TPL_year = '';
 }
 
-$country = '';
-foreach ($countries as $code => $name)
+$query = "SELECT country_id, country FROM " . $DBPrefix . "countries";
+$db->direct_query($query);
+$countries = $db->fetchall();
+$country_list = '';
+
+foreach($countries as $country)
 {
-	$country .= '<option value="' . $name . '"';
-	if ($name == $USER['country'])
+	$country_list .= '<option value="' . $country['country'] . '"';
+	if ($country['country'] == $USER['country'])
 	{
-		$country .= ' selected';
+		$country_list .= ' selected';
 	}
-	$country .= '>' . $name . '</option>' . "\n";
+	$country_list .= '>' . $country['country'] . '</option>' . "\n";
 }
+
 $dobmonth = '<select name="TPL_month">
 		<option value=""></option>
 		<option value="01"' . (($TPL_month == '01') ? ' selected' : '') . '>' . $MSG['MON_001E'] . '</option>
@@ -255,7 +259,7 @@ foreach ($gateway_data as $gateway)
 }
 
 $template->assign_vars(array(
-		'COUNTRYLIST' => $country,
+		'COUNTRYLIST' => $country_list,
 		'NAME' => $USER['name'],
 		'NICK' => $USER['nick'],
 		'EMAIL' => $USER['email'],

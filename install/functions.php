@@ -320,7 +320,6 @@ function show_config_table($fresh = true)
 
 		$directories = array(
 			'includes/membertypes.inc.php',
-			'language/EN/countries.inc.php',
 			'language/EN/categories.inc.php',
 			'language/EN/categories_select_box.inc.php'
 			);

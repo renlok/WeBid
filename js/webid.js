@@ -7,13 +7,12 @@
                 window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX="+posX+",screenY="+posY+",status=0,menubar=0,width=550,height=550");
                 return false;
             });
-            var currenttime = '{ACTUALDATE}';
-            var serverdate = new Date(currenttime);
+            var serverdate = new Date();
             function padlength(what){
                 return (what.toString().length==1)? "0"+what : what;
             }
             function displaytime(){
-                serverdate.setSeconds(serverdate.getSeconds()+1)
+                serverdate.setSeconds(serverdate.getSeconds()+1);
                 var timestring=padlength(serverdate.getHours())+":"+padlength(serverdate.getMinutes())+":"+padlength(serverdate.getSeconds());
                 $("#servertime").html(timestring);
             }

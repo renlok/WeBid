@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 unset($ERR);
@@ -306,12 +305,15 @@ $TPL_categories_list .= '</select>' . "\n";
 $cattree = array();
 // country
 $TPL_countries_list = '<select name="country">' . "\n";
-reset($countries);
+
+$query = "SELECT country_id, country FROM " . $DBPrefix . "countries";
+$db->direct_query($query);
+$countries = $db->fetchall();
 $country = (isset($_SESSION['advs']['country'])) ? $_SESSION['advs']['country'] : '';
 $TPL_countries_list .= "\t" . '<option value="">' . $MSG['any_country'] . '</option>' . "\n";
-foreach ($countries as $key => $val)
+foreach($countries as $country)
 {
-	$TPL_countries_list .= "\t" . '<option value="' . $val . '"' . (($val == $country) ? ' selected="true"' : '') . '>' . $val . '</option>' . "\n";
+	$TPL_countries_list .= "\t" . '<option value="' . $country['country'] . '"' . (($country['country'] == $country) ? ' selected="true"' : '') . '>' . $country['country'] . '</option>' . "\n";
 }
 $TPL_countries_list .= '</select>' . "\n";
 

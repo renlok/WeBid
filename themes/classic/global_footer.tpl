@@ -43,5 +43,6 @@
 	</div>
 </div>
 <script src="{SITEURL}js/jquery.lightbox.js"></script>
+<script src="{SITEURL}js/webid.js"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="{SITEURL}themes/{THEME}/js/bootstrap.min.js"></script>
 
-	<script type="text/javascript" src="{SITEURL}loader.php?js=js/jquery.js{EXTRAJS}"></script>
+	<script src="{SITEURL}js/jquery.js"></script>
 </head>
 <body id="{CURRENT_PAGE}">
 	<br>

@@ -62,34 +62,3 @@ function rebuild_table_file($table)
 	fputs($handle, $output);
 	fclose($handle);
 }
-
-function rebuild_html_file($table)
-{
-	global $DBPrefix, $language, $db;
-	switch($table)
-	{
-		case 'countries':
-			$output_filename = MAIN_PATH . 'language/' . $language . '/countries.inc.php';
-			$field_name = 'country';
-			$array_name = 'countries';
-		break;
-	}
-
-	$query = "SELECT " . $field_name . " FROM " . $DBPrefix . $table . " ORDER BY " . $field_name . ";";
-	$db->direct_query($query);
-	$num_rows = $db->numrows();
-
-	$output = '<?php' . "\n";
-	$output.= '$' . $array_name . ' = array(' . "\n";
-
-	while ($row = $db->fetch())
-	{
-		$output .= '\'' . $row[$field_name] . '\' => \'' . $row[$field_name] . '\',' . "\n";
-	}
-
-	$output .= ');' . "\n" . '?>';
-
-	$handle = fopen($output_filename, 'w');
-	fputs($handle, $output);
-	fclose($handle);
-}

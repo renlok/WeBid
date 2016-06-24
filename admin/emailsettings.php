@@ -16,7 +16,6 @@ define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
-$extraJs = ';js/jquery-ui.js;js/jquery-migrate.js';
 include 'loggedin.inc.php';
 
 $mail_protocol = array('0' => 'WEBID MAIL', '1' => 'MAIL', '2' => 'SMTP', '4' => 'SENDMAIL', '5'=> 'QMAIL', '3' => 'NEVER SEND EMAILS (may be useful for testing purposes)');

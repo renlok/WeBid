@@ -1,58 +1,20 @@
-<?php
-/***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
- *   site					: http://www.webidsupport.com/
- ***************************************************************************/
-
-/***************************************************************************
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version. Although none of the code may be
- *   sold. If you have been sold this script, get a refund.
- ***************************************************************************/
-
-include 'common.php';
-
-header("Content-type: text/javascript");
-?>
 // Tigra Calendar v4.0.2 (12-01-2009) European (dd-mm-yyyy)
 // http://www.softcomplex.com/products/tigra_calendar/
 // Public Domain Software... You're welcome.
 
-// default settins
-var A_TCALDEF = {
-	<?php echo "'months' : ['" . $MSG['MON_001E'] . "', '" . $MSG['MON_002E'] . "', '" . $MSG['MON_003E'] . "', '" . $MSG['MON_004E'] . "', '" . $MSG['MON_005E'] . "', '" . $MSG['MON_006E'] . "', '" . $MSG['MON_007E'] . "', '" . $MSG['MON_008E'] . "', '" . $MSG['MON_009E'] . "', '" . $MSG['MON_010E'] . "', '" . $MSG['MON_011E'] . "', '" . $MSG['MON_012E'] . "'],"; ?>
-	'weekdays' : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-	'yearscroll': true, // show year scroller
-	'weekstart': 1, // first day of week: 0-Su or 1-Mo
-	'centyear'  : 70, // 2 digit years less than 'centyear' are in 20xx, othewise in 19xx.
-	<?php echo "'imgpath' : '" . $system->SETTINGS['siteurl'] . "includes/img/'"; // directory with calendar images ?>
-}
 // date parsing function
 function f_tcalParseDate (s_date) {
-
 	s_date = s_date.split(' ');
 	this.s_time = s_date[1];
 
 	var re_date = /^\s*(\d{1,2})\-(\d{1,2})\-(\d{2,4})\s*$/;
 	if (!re_date.exec(s_date[0]))
-<?php
-if ($system->SETTINGS['datesformat'] == 'USA')
-{
-	echo 'return alert ("Invalid date: \'" + s_date[0] + "\'.\nAccepted format is mm-dd-yyyy.")
-		var n_month = Number(RegExp.$1),
-		n_day = Number(RegExp.$2),
-		n_year = Number(RegExp.$3);';
-}
-else
-{
-	echo 'return alert ("Invalid date: \'" + s_date[0] + "\'.\nAccepted format is dd-mm-yyyy.")
-		var n_day = Number(RegExp.$1),
-		n_month = Number(RegExp.$2),
-		n_year = Number(RegExp.$3);';
-}
-?>
+		return alert (this.a_tpl.invaliddate(s_date))
+
+	var n_month = Number(RegExp[this.a_tpl.dateparts['month']]),
+	n_day = Number(RegExp[this.a_tpl.dateparts['day']]),
+	n_year = Number(RegExp[this.a_tpl.dateparts['year']]);
+
 	if (n_year < 100)
 		n_year += (n_year < this.a_tpl.centyear ? 2000 : 1900);
 	if (n_month < 1 || n_month > 12)
@@ -65,22 +27,7 @@ else
 }
 // date generating function
 function f_tcalGenerDate (d_date) {
-	return (
-<?php
-if ($system->SETTINGS['datesformat'] == 'USA')
-{
-	echo "(d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"-\"
-		+ (d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"-\"
-		+ d_date.getFullYear()";
-}
-else
-{
-	echo "(d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"-\"
-		+ (d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"-\"
-		+ d_date.getFullYear()";
-}
-?>
-	);
+	return this.a_tpl.generdate(d_date);
 }
 
 // implementation

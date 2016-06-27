@@ -137,7 +137,7 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 
 		'FILENAME' => isset($filename) ? $filename : '',
-		'THEME' => isset($theme) ? $theme : '',
+		'EDIT_THEME' => isset($theme) ? $theme : '',
 		'FILECONTENTS' => isset($filecontents) ? $filecontents : '',
 
 		'B_EDIT_FILE' => $edit_file

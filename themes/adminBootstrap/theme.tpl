@@ -24,7 +24,7 @@
 								<div class="col-md-12">
 									<input type="hidden" name="action" value="<!-- IF FILENAME ne '' -->edit<!-- ELSE -->add<!-- ENDIF -->">
 									<input type="hidden" name="filename" value="{FILENAME}">
-									<input type="hidden" name="theme" value="{THEME}">
+									<input type="hidden" name="theme" value="{EDIT_THEME}">
 									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 									<button class="btn btn-primary" type="submit" name="act">{L_071}</button>
 								</div>

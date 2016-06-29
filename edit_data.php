@@ -146,7 +146,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 			foreach ($gateway_data as $gateway)
 			{
-				if (isset($_POST[$gateway['name']]['address']) && empty($_POST[$gateway['name']]['address']))
+				if (isset($_POST[$gateway['name']]['address']) && !empty($_POST[$gateway['name']]['address']))
 				{
 					$params = array();
 					$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "usergateways WHERE gateway_id = :gateway_id AND user_id = :user_id";

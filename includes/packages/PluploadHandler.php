@@ -163,12 +163,12 @@ class PluploadHandler {
 				}
 
 				$final_file_path = strtolower($file_path);
-				rename($tmp_path, $final_file_path);
+				rename($tmp_path, $file_path);
 
 				return array(
-					'name' => strtolower($file_name),
-					'path' => $final_file_path,
-					'size' => filesize($final_file_path)
+					'name' => $file_name,
+					'path' => $file_path,
+					'size' => filesize($file_path)
 				);
 			}
 

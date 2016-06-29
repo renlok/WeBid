@@ -38,6 +38,23 @@ if (isset($_GET['action']))
 			}
 			$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0033']));
 		break;
+		
+		case 'clear_image_cache':
+		if (is_dir(UPLOAD_PATH . '/cache'))
+		{
+				$dir = opendir(UPLOAD_PATH . '/cache');
+			while (($myfile = readdir($dir)) !== false)
+				{
+					if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php')
+					{
+						unlink(IMAGE_CACHE_PATH . $myfile);
+					}
+				}
+				closedir($dir);
+			}
+			$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0033a']));
+		break;
+
 
 		case 'updatecounters':
 			//update users counter

@@ -142,7 +142,17 @@ if ($system->SETTINGS['activationtype'] == 0)
 }
 
 // version check
-if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt')))
+switch ($system->SETTINGS['version_check'])
+{
+	case 'unstable':
+		$url = 'http://www.webidsupport.com/version_unstable.txt';
+		break;
+	default:
+		$url = 'http://www.webidsupport.com/version.txt';
+		break;
+}
+
+if (!($realversion = load_file_from_url($url)))
 {
 	$ERR = $ERR_25_0002;
 	$realversion = 'Unknown';

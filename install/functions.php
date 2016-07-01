@@ -362,6 +362,10 @@ function show_config_table($fresh = true)
 		$data .= (extension_loaded('pdo')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 
+		$data .= '<tr><td colspan="2">File Info:</td><td>';
+		$data .= (function_exists('finfo_open')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+		$data .= '</tr>';
+
 		$data .= '<tr><td>PHP Version: (' . phpversion() . ')</td><td colspan="2">';
 		$data .= ((version_compare(phpversion(), '5.4', '>'))) ? '<strong style="color:green">OK</strong>' : '<strong style="color:red">Too low</strong>';
 		$data .= '</tr>';

@@ -246,7 +246,7 @@ foreach ($gateway_data as $gateway)
 				'GATEWAY_ID' => $gateway['id'],
 				'NAME' => $gateway['displayname'],
 				'PLAIN_NAME' => $gateway['name'],
-				'REQUIRED' => $gateway['gateway_required'],
+				'REQUIRED' => ($gateway['gateway_required'] == 1) ? '*' : '',
 				'ADDRESS' => isset($_POST[$gateway['name']]['address']) ? $_POST[$gateway['name']]['address'] : '',
 				'PASSWORD' => isset($_POST[$gateway['name']]['password']) ? $_POST[$gateway['name']]['password'] : '',
 				'ADDRESS_NAME' => isset($address_string[$gateway['name']]) ? $address_string[$gateway['name']] : $gateway['name'],

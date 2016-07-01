@@ -26,17 +26,9 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 	}
 	else
 	{
-		$delete = '';
-		$i = 0;
-		foreach ($_POST['delete'] as $id)
-		{
-			if ($i != 0) $delete .= ', ';
-			$delete .= $id;
-			$i++;
-		}
 		$query = "DELETE FROM " . $DBPrefix . "adminusers WHERE id IN (:delete)";
 		$params = array();
-		$params[] = array(':delete', $delete, 'str');
+		$params[] = array(':delete', implode(',', $_POST['delete']), 'str');
 		$db->query($query, $params);
 	}
 }

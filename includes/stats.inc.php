@@ -124,19 +124,35 @@ if ($STATSSETTINGS['activate'] == 'y')
 		}
 		elseif ($browser_info[6] == 5.1)
 		{
-			$os .= '5.1 (Windows XP)';
+			$os .= '5.1 (Windows XP or Windows Server 2003)';
 		}
 		elseif ($browser_info[6] == 5.2)
 		{
-			$os .= '5.2 (Windows XP x64 Edition or Windows Server 2003)';
+			$os .= '5.2 (Windows XP Professional x64 or Windows Server 2003 R2)';
 		}
 		elseif ($browser_info[6] == 6.0)
 		{
-			$os .= '6.0 (Windows Vista)';
+			$os .= '6.0 (Windows Vista or Windows Server 2008 R2)';
 		}
 		elseif ($browser_info[6] == 6.1)
 		{
-			$os .= '6.1 (Windows 7)';
+			$os .= '6.1 (Windows 7 or Windows Server 2008 R2)';
+		}
+		elseif ($browser_info[6] == 6.2)
+		{
+			$os .= '6.2 (Windows 8 or Windows Server 2012)';
+		}
+		elseif ($browser_info[6] == 6.3)
+		{
+			$os .= '6.3 (Windows 8.1 or Windows Server 2012 R2)';
+		}
+		elseif ($browser_info[6] == 10.0)
+		{
+			$os .= '10.0 (Windows 10)';
+		}
+		elseif ($browser_info[6] == '')
+		{
+			$os .= ' (Unknown Windows)';
 		}
 	}
 	elseif (($browser_info[5] == 'mac') && ($browser_info[6] >= 10))

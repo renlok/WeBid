@@ -1557,6 +1557,7 @@ $MSG['30_0031a'] = "Clear Image Cache";
 $MSG['30_0032'] = "Delete all the template cache files, you will need to do this each time you edit a template file";
 $MSG['30_0032a'] = "Delete all the Image cache files, This can help if there are some images not showing on the site";
 $MSG['30_0033'] = "Cache cleared";
+$MSG['30_0033a'] = "Image cache cleared";
 $MSG['30_0049'] = "Newsletter Settings Updated";
 $MSG['30_0053'] = "<p>Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:</p>";
 $MSG['30_0063'] = "Buy it now only?";
@@ -1649,7 +1650,7 @@ $MSG['user_request_seller_permission'] = 'Users can request to become sellers';
 $MSG['user_request_seller_permission_explain'] = 'Users who do not have permission to sell items can request to gain permission';
 $MSG['spam_blocked_email_enabled'] = 'Enable block email domains';
 $MSG['spam_blocked_email_domains'] = 'Deny registration from disposable emails';
-$MSG['spam_blocked_email_domains_explain'] = 'Put a each domain on a new line';
+$MSG['spam_blocked_email_domains_explain'] = 'Put each domain on a new line';
 $MSG['spam_blocked_email_domains_register_error'] = 'The E-Mail address you have entered has been black-listed';
 
 $MSG['wordfilter_banned_username'] = 'Please select a different user name as our word filter will not allow this name to be used';

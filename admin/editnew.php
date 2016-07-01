@@ -17,6 +17,7 @@ $current_page = 'contents';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 if (!isset($_POST['id']) && (!isset($_GET['id']) || empty($_GET['id'])))
 {
@@ -92,6 +93,12 @@ $params = array();
 $params[] = array(':id', $_GET['id'], 'int');
 $db->query($query, $params);
 
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
+
 $CONT_tr = array();
 $TIT_tr = array();
 while ($arr = $db->fetch())
@@ -99,8 +106,8 @@ while ($arr = $db->fetch())
 	$suspended = $arr['suspended'];
 	$template->assign_block_vars('lang', array(
 			'LANG' => $arr['lang'],
-			'TITLE' => htmlspecialchars($arr['title']),
-			'CONTENT' => htmlspecialchars($arr['content'])
+			'TITLE' => $arr['title'],
+			'CONTENT' => $CKEditor->editor('content[' . $arr['lang'] . ']', $arr['content'])
 			));
 }
 

@@ -17,6 +17,7 @@ $current_page = 'contents';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 // Update message
 if (isset($_POST['action']) && $_POST['action'] == 'update')
@@ -93,6 +94,12 @@ while ($row = $db->fetch())
 	$ANSWER_tr[$row['lang']] = $row['answer'];
 }
 
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
+
 reset($LANGUAGES);
 foreach ($LANGUAGES as $k => $v)
 {
@@ -100,9 +107,10 @@ foreach ($LANGUAGES as $k => $v)
 			'LANG' => $k,
 			'QUESTION' => (isset($_POST['question'][$k])) ? $_POST['question'][$k] : (isset($QUESTION_tr[$k])? $QUESTION_tr[$k] : '')
 			));
+	$answer = (isset($_POST['answer'][$k])) ? $_POST['answer'][$k] : (isset($ANSWER_tr[$k]) ? $ANSWER_tr[$k] : '');
 	$template->assign_block_vars('as', array(
 			'LANG' => $k,
-			'ANSWER' => (isset($_POST['answer'][$k])) ? $_POST['answer'][$k] : (isset($ANSWER_tr[$k])? $ANSWER_tr[$k] : '')
+			'ANSWER' => $CKEditor->editor('answer[' . $k . ']', $answer)
 			));
 }
 

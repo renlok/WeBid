@@ -1526,6 +1526,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (52, 'Croatia', 'Croatia
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (53, 'East Caribe', 'East Caribbean Dollar', 'XCD');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (54, 'CFA Franc (African Financial Community)', 'African Financial Community Franc', 'CFA');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (55, 'Canadian', 'Canadian Dollar', 'CAD');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (56, 'Romanian', 'Romanian Leu', 'RON');";
 
 # ############################
 

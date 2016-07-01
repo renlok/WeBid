@@ -59,6 +59,10 @@
 							<td><strong>{L_363}</strong></td>
 							<td>{DATEFORMAT} <small>({DATEEXAMPLE})</small></td>
 						</tr>
+						<tr>
+							<td><strong>{L_1131}</strong></td>
+							<td>{EMAIL_HANDLER}</td>
+						</tr>
 						<tr class="bg">
 							<td><strong>{L_5322}</strong></td>
 							<td>{DEFULTCONTRY}</td>

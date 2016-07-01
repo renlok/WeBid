@@ -53,7 +53,7 @@ else
 	$searchid = '';
 }
 
-$query = "SELECT a.title, a.ends, w.id, w.auction, w.bid, w.qty, w.winner, w.seller, w.paid, w.shipped, w.feedback_sel, u.nick
+$query = "SELECT COUNT(a.id) as COUNT
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
@@ -61,6 +61,32 @@ $query = "SELECT a.title, a.ends, w.id, w.auction, w.bid, w.qty, w.winner, w.sel
 		" . $searchid . "
 		ORDER BY w.closingdate DESC";
 $params[] = array(':seller_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$TOTALAUCTIONS = $db->result('COUNT');
+
+if (!isset($_GET['PAGE']) || intval($_GET['PAGE']) <= 1 || empty($_GET['PAGE']))
+{
+	$OFFSET = 0;
+	$PAGE = 1;
+}
+else
+{
+	$PAGE = intval($_GET['PAGE']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+}
+$PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+
+$query = "SELECT a.title, a.ends, w.id, w.auction, w.bid, w.qty, w.winner, w.seller, w.paid, w.shipped, w.feedback_sel, u.nick
+		FROM " . $DBPrefix . "auctions a
+		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
+		WHERE (a.closed = 1 OR a.bn_only = 1) AND a.suspended = 0 AND a.user = :seller_id
+		" . $searchid . "
+		ORDER BY w.closingdate DESC
+		LIMIT :offset, :perpage";
+$params[] = array(':seller_id', $user->user_data['id'], 'int');
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
 
 $i = 0;
@@ -88,10 +114,32 @@ foreach ($winner_data as $row)
 	$i++;
 }
 
+// get pagenation
+$PREV = intval($PAGE - 1);
+$NEXT = intval($PAGE + 1);
+if ($PAGES > 1)
+{
+	$LOW = $PAGE - 5;
+	if ($LOW <= 0) $LOW = 1;
+	$COUNTER = $LOW;
+	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
+	{
+		$template->assign_block_vars('pages', array(
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'selling.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+				));
+		$COUNTER++;
+	}
+}
+
 $template->assign_vars(array(
 		'NUM_WINNERS' => $i,
 		'AUCID' => ($auc_id > 0) ? '&id=' . $auc_id : '',
-		'SELLER_ID' => $user->user_data['id']
+		'SELLER_ID' => $user->user_data['id'],
+
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'selling.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'selling.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+		'PAGE' => $PAGE,
+		'PAGES' => $PAGES,
 		));
 
 include 'header.php';

@@ -175,17 +175,17 @@ else
 	$TOTALAUCTIONS = $db->result('COUNT');
 
 	// Handle pagination
-	if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)
+	if (!isset($_GET['PAGE']) || intval($_GET['PAGE']) <= 1 || empty($_GET['PAGE']))
 	{
 		$OFFSET = 0;
 		$PAGE = 1;
 	}
 	else
 	{
-		$PAGE = intval($_REQUEST['PAGE']);
+		$PAGE = intval($_GET['PAGE']);
 		$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 	}
-	$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+	$PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 	$query = "SELECT * FROM " . $DBPrefix . "auctions
 			WHERE " . $insql . " starts <= :time

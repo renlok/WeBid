@@ -44,14 +44,6 @@
 			<b>{L_30_0213}</b>
 		</td>
 	</tr>
-		<tr>
-	<td colspan="5" align="center">
-	<br>
-	<form method="post" action="{SITE_URL}user_menu.php?cptab=account">
-	<input type="submit" value="<< {L_25_0081}">
-	</form>
-	</td>
-	</tr>
 <!-- ENDIF -->
 </table>
 

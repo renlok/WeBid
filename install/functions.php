@@ -256,8 +256,8 @@ function show_config_table($fresh = true)
 			// Try to create the directory if it does not exist
 			if (!file_exists(MAIN_PATH . $dir))
 			{
-				@mkdir(MAIN_PATH . $dir, 0777);
-				@chmod(MAIN_PATH . $dir, 0777);
+				@mkdir(MAIN_PATH . $dir, 0755);
+				@chmod(MAIN_PATH . $dir, 0755);
 			}
 
 			// Now really check
@@ -382,7 +382,7 @@ function show_config_table($fresh = true)
 function search_cats($parent_id, $level)
 {
 	global $catscontrol;
-	
+
 	$catstr = '';
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');

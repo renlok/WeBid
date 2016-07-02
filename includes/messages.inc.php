@@ -17,7 +17,7 @@ if (!defined('InWeBid')) exit();
 // Language management
 if (isset($_GET['lan']) && !empty($_GET['lan']))
 {
-	$language = preg_replace("/[^a-zA-Z\s]/", '', $_GET['lan']);
+	$language = preg_replace("/[^a-zA-Z_]/", '', $_GET['lan']);
 	if ($user->logged_in)
 	{
 		$query = "UPDATE " . $DBPrefix . "users SET language = :language WHERE id = :user_id";
@@ -40,12 +40,11 @@ elseif (isset($_COOKIE['USERLANGUAGE']))
 {
 	$language = preg_replace("/[^a-zA-Z_]/", '', $_COOKIE['USERLANGUAGE']);
 }
-else
+
+if (!isset($language) || empty($language))
 {
 	$language = $system->SETTINGS['defaultlanguage'];
 }
-
-if (!isset($language) || empty($language)) $language = $system->SETTINGS['defaultlanguage'];
 
 include MAIN_PATH . 'language/' . $language . '/messages.inc.php';
 

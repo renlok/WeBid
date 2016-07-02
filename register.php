@@ -355,7 +355,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 							(NULL, :id_hidden, :remote_addr, 'first', 'accept')";
 				$params = array();
 				$params[] = array(':id_hidden', $TPL_id_hidden, 'int');
-				$params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'int');
+				$params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'str');
 				$db->query($query, $params);
 				foreach ($gateway_data as $gateway)
 				{

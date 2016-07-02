@@ -90,7 +90,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 			// Update "last login" fields in users table
 			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = :lastlogin WHERE id = :user_id";
 			$params = array();
-			$params[] = array(':lastlogin', date("Y-m-d H:i:s"), 'int');
+			$params[] = array(':lastlogin', date("Y-m-d H:i:s"), 'str');
 			$params[] = array(':user_id', $_SESSION['WEBID_LOGGED_IN'], 'int');
 			$db->query($query, $params);
 
@@ -105,7 +105,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 						(NULL, :user_id, :ip, 'after', 'accept')";
 				$params = array();
 				$params[] = array(':user_id', $_SESSION['WEBID_LOGGED_IN'], 'int');
-				$params[] = array(':ip', $_SERVER['REMOTE_ADDR'], 'int');
+				$params[] = array(':ip', $_SERVER['REMOTE_ADDR'], 'str');
 				$db->query($query, $params);
 			}
 		}

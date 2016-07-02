@@ -230,7 +230,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					// add balance & invoice
 					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :user_id";
 					$params = array();
-					$params[] = array(':fee_value', $fee_value, 'int');
+					$params[] = array(':fee_value', $fee_value, 'float');
 					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$db->query($query, $params);
 					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
@@ -274,7 +274,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					// add user balance & invoice
 					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :user_id";
 					$params = array();
-					$params[] = array(':fee_value', $fee_value, 'int');
+					$params[] = array(':fee_value', $fee_value, 'float');
 					$params[] = array(':user_id', $Auction['user'], 'int');
 					$db->query($query, $params);
 					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, finalval, total, paid) VALUES
@@ -283,8 +283,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					$params[] = array(':user_id', $Auction['user'], 'int');
 					$params[] = array(':auc_id', $id, 'int');
 					$params[] = array(':time', $NOW, 'int');
-					$params[] = array(':finalval', $fee_value, 'int');
-					$params[] = array(':total', $fee_value, 'int');
+					$params[] = array(':finalval', $fee_value, 'float');
+					$params[] = array(':total', $fee_value, 'float');
 					$db->query($query, $params);
 				}
 				else

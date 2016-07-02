@@ -53,7 +53,7 @@ if ($cat > 0)
 			WHERE f.category = :cat AND t.lang = :languages";
 	$params = array();
 	$params[] = array(':cat', $cat, 'int');
-	$params[] = array(':languages', $language, 'int');
+	$params[] = array(':languages', $language, 'str');
 	$db->query($query, $params);
 
 	while ($row = $db->fetch())

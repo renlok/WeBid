@@ -53,7 +53,7 @@ $vat = 20; // set default
 if ($auction)
 {
 	// get auction data
-	$query = "SELECT w.id, w.winner, w.closingdate As date, w.auc_title, w.auc_shipping_cost, w.auction AS auc_id, a.title, a.shipping_cost, a.additional_shipping_cost, a.shipping, a.shipping_terms, w.bid, w.qty, w.seller As seller_id, a.tax, a.taxinc
+	$query = "SELECT a.id, w.winner, w.closingdate As date, w.auc_title, w.auc_shipping_cost, w.auction AS auc_id, a.title, a.shipping_cost, a.additional_shipping_cost, a.shipping, a.shipping_terms, w.bid, w.qty, w.seller As seller_id, a.tax, a.taxinc
 			FROM " . $DBPrefix . "winners w
 			LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
 			WHERE a.id = :auc_id AND w.id = :winner_id";

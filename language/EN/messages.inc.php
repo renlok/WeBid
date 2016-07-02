@@ -1679,3 +1679,10 @@ $MSG['google_analytics_tracking_code'] = "Google Analytics Tracking Code";
 $MSG['google_analytics_tracking_code_hint'] = "Copy and paste your Google Analytics tracking code here. You must include the opening and closing &lt;script&gt;&lt;/script&gt; tags.";
 
 $MSG['any_country'] = 'Any Country';
+
+$MSG['new_currency'] = 'Add New Currency';
+$MSG['currency_name'] = "Currency Name";
+$MSG['curreny_symbol'] = "Currency Symbol";
+$MSG['curreny_country_explain'] = "Example: <b>United States</b><br>Must fill in all 3 textboxs to add a new Currency.";
+$MSG['curreny_name_explain'] = "Example: <b>U.S. Dollar</b>";
+$MSG['curreny_symbol_explain'] = "Example: <b>USD</b>";

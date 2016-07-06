@@ -217,7 +217,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 
 		if ($system->SETTINGS['spam_register'] == 2)
 		{
-			$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_POST['g-recaptcha-response']);
+			$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], isset($_POST['g-recaptcha-response']));
 		}
 
 		if ($system->SETTINGS['spam_register'] == 2 && !$resp)

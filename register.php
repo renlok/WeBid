@@ -426,18 +426,18 @@ $query = "SELECT country_id, country FROM " . $DBPrefix . "countries";
 $db->direct_query($query);
 $countries = $db->fetchall();
 
-foreach($countries as $country)
+foreach($countries as $key => $name)
 {
-	$country .= '<option value="' . $country['country'] . '"';
-	if ($country['country'] == $selcountry)
+	$country .= '<option value="' . $name['country'] . '"';
+	if ($name['country'] == $selcountry)
 	{
 		$country .= ' selected';
 	}
-	elseif ($system->SETTINGS['defaultcountry'] == $country['country'])
+	elseif ($system->SETTINGS['defaultcountry'] == $name['country'])
 	{
 		$country .= ' selected';
 	}
-	$country .= '>' . $country['country'] . '</option>' . "\n";
+	$country .= '>' . $name['country'] . '</option>' . "\n";
 }
 
 $dobclass = ($missing['birthday']) ? ' class="missing"' : '';

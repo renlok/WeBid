@@ -23,7 +23,7 @@ $db = new DatabasePDO();
 include 'functions.php';
 define('MAIN_PATH',  getmainpath());
 $step = (isset($_GET['step'])) ? $_GET['step'] : 0;
-$settings_version = 'Unknown';
+$new_version = 'Unknown';
 /*
 how new updater will work
 in package config.inc.php will be named config.inc.php.new so it cannot be overwritten
@@ -72,6 +72,7 @@ if ($step == 1)
 		exit;
 	}
 	include 'sql/updatedump.inc.php';
+	echo '<p>Upgrading to v' . $new_version . ' from ' . $installed_version . '</p>';
 	$queries = count($query);
 	$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
 	if ($queries > 0 && $from < $queries)
@@ -92,8 +93,9 @@ if ($step == 1)
 		include 'scripts/' . $new_version . '.php';
 		echo '<b>Update script complete</b><br>';
 	}
-	$installed_version = $new_version;
-	if ($installed_version == $package_version)
+	// update database version
+	$db->direct_query("UPDATE `" . $DBPrefix . "settings` SET `value` = '" . $new_version . "' WHERE fieldname = 'version';");
+	if ($new_version == $package_version)
 	{
 		echo '<p>Update almost complete, remove the install folder from your server to complete the upgrade</p>';
 	}

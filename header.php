@@ -28,7 +28,7 @@ $page_title = (isset($page_title)) ? ' ' . $page_title : '';
 // check we are using ssl
 if($system->SETTINGS['https'] == 'y' && $_SERVER["HTTPS"] != "on")
 {
-    header("Location: https://" . $system->SETTINGS['siteurl'] . $_SERVER["REQUEST_URI"]);
+    header("Location: https://" . $_SERVER["REQUEST_URI"]);
     exit();
 }
 

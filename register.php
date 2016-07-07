@@ -418,7 +418,7 @@ $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
 $db->direct_query($query);
 $signup_fee = $db->result();
 
-$country = '';
+$country_dropdown = '';
 
 $selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
 
@@ -428,16 +428,16 @@ $countries = $db->fetchall();
 
 foreach($countries as $country)
 {
-	$country .= '<option value="' . $country['country'] . '"';
+	$country_dropdown .= '<option value="' . $country['country'] . '"';
 	if ($country['country'] == $selcountry)
 	{
-		$country .= ' selected';
+		$country_dropdown .= ' selected';
 	}
 	elseif ($system->SETTINGS['defaultcountry'] == $country['country'])
 	{
-		$country .= ' selected';
+		$country_dropdown .= ' selected';
 	}
-	$country .= '>' . $country['country'] . '</option>' . "\n";
+	$country_dropdown .= '>' . $country['country'] . '</option>' . "\n";
 }
 
 $dobclass = ($missing['birthday']) ? ' class="missing"' : '';
@@ -491,7 +491,7 @@ foreach ($gateway_data as $gateway)
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'L_COUNTRIES' => $country,
+		'L_COUNTRIES' => $country_dropdown,
 		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'TIMEZONE' => $time_correction,
 		'TERMSTEXT' => $system->SETTINGS['termstext'],

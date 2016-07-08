@@ -83,12 +83,6 @@ while ($row = $db->fetch())
 		$row['pict_url'] = get_lang_img('nopicture.gif');
 	}
 
-	// number of bids for this auction
-	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :id";
-	$params[] = array(':id', $row['id'], 'int');
-	$db->query($query, $params);
-	$num_bids = $row['num_bids'];
-
 	$difference = $row['ends'] - $NOW;
 
 	$template->assign_block_vars('auctions', array(
@@ -101,7 +95,7 @@ while ($row = $db->fetch())
 			'BNFORMAT' => $system->print_money($row['buy_now']),
 			'BIDVALUE' => $row['current_bid'],
 			'BIDFORMAT' => $system->print_money($row['current_bid']),
-			'NUM_BIDS' => $num_bids,
+			'NUM_BIDS' => $row['num_bids'],
 			'TIMELEFT' => FormatTimeLeft($difference),
 
 			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] || $row['bn_only'] == 0 && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),

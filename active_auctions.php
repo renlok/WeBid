@@ -87,7 +87,7 @@ while ($row = $db->fetch())
 	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :id";
 	$params[] = array(':id', $row['id'], 'int');
 	$db->query($query, $params);
-	$num_bids = $db->numrows();
+	$num_bids = $row['num_bids'];
 
 	$difference = $row['ends'] - $NOW;
 

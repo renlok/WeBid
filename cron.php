@@ -514,6 +514,30 @@ if (count($categories) > 0)
 	}
 }
 
+if ($system->SETTINGS['prune_unactivated_users'] == 1)
+{
+	// prune unactivated user accounts
+	printLog("\n");
+	printLog("++++++ Prune unactivated user accounts");
+
+	$pruneAccountTime = time() - (60 * 60 * 24 * $system->SETTINGS['prune_unactivated_users_days']);
+
+	$query = "SELECT id FROM " . $DBPrefix . "users WHERE reg_date <= :pruneAccountTime AND suspended = 8";
+	$params = array();
+	$params[] = array(':pruneAccountTime', $pruneAccountTime, 'int');
+	$db->query($query, $params);
+
+	$pruneCount = $db->numrows();
+	printLog($pruneCount . " accounts to prune");
+	if ($pruneCount > 0)
+	{
+		$query = "DELETE FROM " . $DBPrefix . "users WHERE reg_date <= :pruneAccountTime AND suspended = 8";
+		$params = array();
+		$params[] = array(':pruneAccountTime', $pruneAccountTime, 'int');
+		$db->query($query, $params);
+	}
+}
+
 // "remove" old auctions (archive them)
 printLog("\n");
 printLog("++++++ Archiving old auctions");

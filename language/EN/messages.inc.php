@@ -1686,3 +1686,9 @@ $MSG['curreny_symbol'] = "Currency Symbol";
 $MSG['curreny_country_explain'] = "Example: <b>United States</b><br>Must fill in all 3 textboxs to add a new Currency.";
 $MSG['curreny_name_explain'] = "Example: <b>U.S. Dollar</b>";
 $MSG['curreny_symbol_explain'] = "Example: <b>USD</b>";
+
+$MSG['prune_unactivated_users'] = "Prune unactivated users";
+$MSG['prune_unactivated_users_explain'] = "Automatically delete unactivated user accounts.";
+
+$MSG['prune_unactivated_users_days'] = "Numbers of days before deleting unactivated accounts";
+$MSG['prune_unactivated_users_days_explain'] = "Numbers of days before deleting unactivated accounts.";

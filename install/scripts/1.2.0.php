@@ -91,17 +91,20 @@ $query = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY
         `tax` `tax` tinyint(1) default 0,
         `taxinc` `taxinc` tinyint(1) default 0;";
 $db->direct_query($query);
-foreach ($auctions_data as $auction)
+if (count($auctions_data) > 0)
 {
-    $query = "UPDATE `" . $DBPrefix . "auctions`
-            SET bn_only = " . intval($auction['bn_only'] == 'y') . ",
-            bold = " . intval($auction['bold'] == 'y') . ",
-            highlighted = " . intval($auction['highlighted'] == 'y') . ",
-            featured = " . intval($auction['featured'] == 'y') . ",
-            tax = " . intval($auction['tax'] == 'y') . ",
-            taxinc = " . intval($auction['taxinc'] == 'y') . ",
-            WHERE id = " . $auction['id'];
-    $db->direct_query($query);
+    foreach ($auctions_data as $auction)
+    {
+        $query = "UPDATE `" . $DBPrefix . "auctions`
+                SET bn_only = " . intval($auction['bn_only'] == 'y') . ",
+                bold = " . intval($auction['bold'] == 'y') . ",
+                highlighted = " . intval($auction['highlighted'] == 'y') . ",
+                featured = " . intval($auction['featured'] == 'y') . ",
+                tax = " . intval($auction['tax'] == 'y') . ",
+                taxinc = " . intval($auction['taxinc'] == 'y') . ",
+                WHERE id = " . $auction['id'];
+        $db->direct_query($query);
+    }
 }
 
 // fix payments options

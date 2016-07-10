@@ -38,7 +38,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert')
 		$query = "INSERT INTO " . $DBPrefix . "community VALUES (NULL, :name, 0, 0, :msgstoshow, :active)";
 		$params = array();
 		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
-		$params[] = array(':msgstoshow', intval($_POST['msgstoshow']), 'int');
+		$params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');
 		$params[] = array(':active', $_POST['active'], 'bool');
 		$db->query($query, $params);
 		header('location: boards.php');

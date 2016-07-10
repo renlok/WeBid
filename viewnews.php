@@ -39,7 +39,7 @@ if ($id > 0)
 		$content = $new['c'];
 	}
 	$template->assign_block_vars('news', array(
-			'CONT' => nl2br($content)
+			'CONT' => $content
 			));
 }
 else

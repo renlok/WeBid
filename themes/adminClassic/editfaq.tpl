@@ -38,7 +38,7 @@
 						<td>&nbsp;</td>
 	<!-- ENDIF -->
 						<td align="right" valign="top"><img src="../images/flags/{as.LANG}.gif"></td>
-						<td><textarea name="answer[{as.LANG}]" cols="40" rows="15">{as.ANSWER}</textarea></td>
+						<td>{as.ANSWER}</td>
 					</tr>
 <!-- END as -->
 					</table>

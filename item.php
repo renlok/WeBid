@@ -28,7 +28,7 @@ $_SESSION['CURRENT_ITEM'] = $id;
 $_SESSION['REDIRECT_AFTER_LOGIN'] = $system->SETTINGS['siteurl'] . 'item.php?id=' . $id;
 
 // get auction all needed data
-$query = "SELECT a.*, ac.counter, u.nick, u.reg_date, u.country, u.zip FROM " . $DBPrefix . "auctions a
+$query = "SELECT a.*, ac.counter, u.nick, u.reg_date, u.city, u.country, u.zip FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "auccounter ac ON (ac.auction_id = a.id)
 		WHERE a.id = :auction_id LIMIT 1";
@@ -515,6 +515,7 @@ $template->assign_vars(array(
 		'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $MSG['1152'],
 		'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['additional_shipping_cost']),
 		'COUNTRY' => $auction_data['country'],
+		'CITY' => $auction_data['city'],
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
 		'ENDS' => $ending_time,

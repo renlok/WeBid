@@ -115,7 +115,7 @@ if (@$db->numrows() == 1)
 		'RATE_VAL' => $TPL_rate_ratio_value,
 		'NUM_FB' => $user_data['rate_num'],
 		'SUM_FB' => $user_data['rate_sum'],
-		'FB_POS' => (isset($fb[1])) ? $MSG['500'] . $fb[1] . ' (' . ceil($fb[1] * 100 / $total_fb) . '%)<br>' : '',
+		'FB_POS' => (isset($fb[1])) ? '<span style="color:green">' .$MSG['500'] . $fb[1] . ' (' . ceil($fb[1] * 100 / $total_fb) . '%)</span><br>' : '',
 		'FB_NEUT' => (isset($fb[0])) ? $MSG['499'] . $fb[0] . ' (' . ceil($fb[0] * 100 / $total_fb) . '%)<br>' : '',
 		'FB_NEG' => (isset($fb[ - 1])) ? '<span style="color:red">' . $MSG['501'] . $fb[ - 1] . ' (' . ceil($fb[ - 1] * 100 / $total_fb) . '%)</span>' : '',
 		'FB_SELLER_POS' => $fb_as_seller[1],

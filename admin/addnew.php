@@ -17,6 +17,7 @@ $current_page = 'contents';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
@@ -59,12 +60,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
+
 foreach ($LANGUAGES as $k => $language)
 {
 	$template->assign_block_vars('lang', array(
 			'LANG' => $language,
 			'TITLE' => (isset($_POST['title'][$k])) ? $_POST['title'][$k] : '',
-			'CONTENT' => (isset($_POST['content'][$k])) ? $_POST['content'][$k] : ''
+			'CONTENT' => $CKEditor->editor('content[' . $k . ']', (isset($_POST['content'][$k]) ? $_POST['content'][$k] : ''))
 			));
 }
 

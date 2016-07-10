@@ -27,7 +27,7 @@
 							<td>&nbsp;</td>
 	<!-- ENDIF -->
 							<td align="right" valign="top"><img src="../images/flags/{lang.LANG}.gif"></td>
-							<td><textarea name="content[{lang.LANG}]" cols="45" rows="20">{lang.CONTENT}</textarea></td>
+							<td>{lang.CONTENT}</td>
 						</tr>
 <!-- END lang -->
 						</tr>

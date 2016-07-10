@@ -17,7 +17,7 @@ if (!defined('InWeBid')) exit();
 // Language management
 if (isset($_GET['lan']) && !empty($_GET['lan']))
 {
-	$language = preg_replace("/[^a-zA-Z\s]/", '', $_GET['lan']);
+	$language = preg_replace("/[^a-zA-Z_]/", '', $_GET['lan']);
 	if ($user->logged_in)
 	{
 		$query = "UPDATE " . $DBPrefix . "users SET language = :language WHERE id = :user_id";
@@ -38,14 +38,13 @@ elseif ($user->logged_in)
 }
 elseif (isset($_COOKIE['USERLANGUAGE']))
 {
-	$language = preg_replace("/[^a-zA-Z\s]/", '', $_COOKIE['USERLANGUAGE']);
+	$language = preg_replace("/[^a-zA-Z_]/", '', $_COOKIE['USERLANGUAGE']);
 }
-else
+
+if (!isset($language) || empty($language))
 {
 	$language = $system->SETTINGS['defaultlanguage'];
 }
-
-if (!isset($language) || empty($language)) $language = $system->SETTINGS['defaultlanguage'];
 
 include MAIN_PATH . 'language/' . $language . '/messages.inc.php';
 
@@ -55,9 +54,12 @@ if ($handle = opendir(MAIN_PATH . 'language'))
 {
 	while (false !== ($file = readdir($handle)))
 	{
-		if (preg_match('/^([A-Z]{2})$/i', $file, $regs))
+		if ('.' != $file && '..' != $file)
 		{
-			$LANGUAGES[$regs[1]] = $regs[1];
+			if (preg_match('/^([a-zA-Z_]{2,})$/i', $file))
+			{
+				$LANGUAGES[$file] = $file;
+			}
 		}
 	}
 }

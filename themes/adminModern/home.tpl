@@ -14,7 +14,7 @@
 			</div>
 			<div class="col-md-9">
 <!-- IF UPDATE_AVAILABLE -->
-				<div class="alert alert-danger" role="alert">{L_30_0211}</div>	
+				<div class="alert alert-danger" role="alert">{L_30_0211}</div>
 <!-- ELSE -->
 				<div class="alert alert-info" role="alert">{L_30_0212}</div>
 <!-- ENDIF -->
@@ -56,6 +56,10 @@
 						<div class="row">
 							<div class="col-md-3"><strong>{L_363}</strong></div>
 							<div class="col-md-9">{DATEFORMAT} <small>({DATEEXAMPLE})</small></div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_1131}</strong></div>
+							<div class="col-md-9">{EMAIL_HANDLER}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3"><strong>{L_5322}</strong></div>

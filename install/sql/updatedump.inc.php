@@ -420,5 +420,7 @@ if ($installed_version == '1.2.0')
 	  PRIMARY KEY(`id`)
 	) ;";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_reportitem', 'int', '1', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (NULL, 'Romanian', 'Romanian Leu', 'RON');";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('version_check', 'str', 'stable', UNIX_TIMESTAMP(), 1);";
 	$new_version = '1.2.1';
 }

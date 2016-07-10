@@ -86,3 +86,12 @@ foreach ($int_timezones as $time_ajustment => $timezone)
 	$query = "UPDATE " . $DBPrefix . "users SET timezone = '" . $timezone . "' WHERE timezone = '" . $time_ajustment . "';";
 	$db->direct_query($query);
 }
+
+$query = "SELECT value FROM settings WHERE fieldname = 'theme'";
+$db->direct_query($query);
+$old_theme = $db->result('value');
+if ($old_theme == 'default')
+{
+	$query = "UPDATE settings set value = 'classic' WHERE fieldname = 'theme'";
+	$db->direct_query($query);
+}

@@ -73,7 +73,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reportitem')
 	}
 
 	$auction_id = intval($_POST['id']);
-	
+
 	if ($system->SETTINGS['spam_reportitem'] == 2)
 	{
 		$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_POST['g-recaptcha-response']);
@@ -96,7 +96,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reportitem')
 			(:auction_id, :reason, :user_id);";
 	$params = array();
 		$params[] = array(':auction_id', $auction_id, 'int');
-		$params[] = array(':reason', $_POST['reason'], 'int');
+		$params[] = array(':reason', $_POST['reason'], 'str');
 		$params[] = array(':user_id', $user->user_data['id'], 'int');
 		$db->query($query, $params);
 	if (!empty($TPL_error_text))

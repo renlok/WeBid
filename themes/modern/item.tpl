@@ -286,8 +286,8 @@ $(document).ready(function() {
 								<td>
 									<div class="tableContent2">
 										<div class="table2">
-<!-- IF COUNTRY ne '' or ZIP ne '' -->
-											<b>{L_014}:</b> {COUNTRY} ({ZIP})<br>
+<!-- IF CITY ne '' or COUNTRY ne '' or ZIP ne '' -->
+											<b>{L_014}:</b> <!-- IF CITY ne '' -->{CITY}<!-- ENDIF --> <!-- IF COUNTRY ne '' -->{COUNTRY}<!-- ENDIF --> <!-- IF ZIP ne '' -->({ZIP})<!-- ENDIF --><br>
 <!-- ENDIF -->
 <!-- IF B_SHIPPING -->
 											<b>{L_025}:</b> {SHIPPING}, {INTERNATIONAL}<br>

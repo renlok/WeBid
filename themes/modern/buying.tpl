@@ -33,5 +33,22 @@
 	</div>
 </div>
 <!-- END items -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td align="center">
+			<small><span class="text-muted">{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}</span></small>
+			<nav>
+				<ul class="pagination">
+					<br>
+					<li>{PREV}</li>
+<!-- BEGIN pages -->
+					<li>{pages.PAGE}</li>
+<!-- END pages -->
+					<li>{NEXT}</li>
+				</ul>
+			</nav>
+		</td>
+	</tr>
+</table>
 
 <!-- INCLUDE user_menu_footer.tpl -->

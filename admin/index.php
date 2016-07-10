@@ -39,6 +39,22 @@ if (isset($_GET['action']))
 			$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0033']));
 		break;
 
+		case 'clear_image_cache':
+		if (is_dir(UPLOAD_PATH . '/cache'))
+		{
+				$dir = opendir(UPLOAD_PATH . '/cache');
+			while (($myfile = readdir($dir)) !== false)
+				{
+					if ($myfile != '.' && $myfile != '..' && $myfile != 'index.php')
+					{
+						unlink(IMAGE_CACHE_PATH . $myfile);
+					}
+				}
+				closedir($dir);
+			}
+			$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0033a']));
+		break;
+
 		case 'updatecounters':
 			//update users counter
 			$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "users WHERE suspended = 0";
@@ -126,7 +142,17 @@ if ($system->SETTINGS['activationtype'] == 0)
 }
 
 // version check
-if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt')))
+switch ($system->SETTINGS['version_check'])
+{
+	case 'unstable':
+		$url = 'http://www.webidsupport.com/version_unstable.txt';
+		break;
+	default:
+		$url = 'http://www.webidsupport.com/version.txt';
+		break;
+}
+
+if (!($realversion = load_file_from_url($url)))
 {
 	$ERR = $ERR_25_0002;
 	$realversion = 'Unknown';
@@ -134,10 +160,13 @@ if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt
 
 $update_available = false;
 if (version_compare($system->SETTINGS['version'], $realversion, "<"))
-{ 
+{
 	$update_available = true;
 	$text = $MSG['30_0211'];
 }
+
+//getting the correct email settings
+$mail_protocol = array('0' => 'WEBID MAIL', '1' => 'MAIL', '2' => 'SMTP', '4' => 'SENDMAIL', '5'=> 'QMAIL', '3' => 'NEVER SEND EMAILS (may be useful for testing purposes)');
 
 $template->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
@@ -151,6 +180,7 @@ $template->assign_vars(array(
 		'DATEEXAMPLE' => ($system->SETTINGS['datesformat'] == 'USA') ? $MSG['382'] : $MSG['383'],
 		'DEFULTCONTRY' => $system->SETTINGS['defaultcountry'],
 		'USERCONF' => $system->SETTINGS['activationtype'],
+		'EMAIL_HANDLER' => $mail_protocol[$system->SETTINGS['mail_protocol']],
 
 		'C_USERS' => $COUNTERS['users'],
 		'C_IUSERS' => $COUNTERS['inactiveusers'],

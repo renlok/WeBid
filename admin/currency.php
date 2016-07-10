@@ -85,9 +85,9 @@ loadblock($MSG['544'], '', 'batchstacked', 'moneyformat', $system->SETTINGS['mon
 loadblock($MSG['548'], $MSG['547'], 'decimals', 'moneydecimals', $system->SETTINGS['moneydecimals']);
 loadblock($MSG['549'], '', 'batchstacked', 'moneysymbol', $system->SETTINGS['moneysymbol'], array($MSG['550'], $MSG['551']));
 loadblock($MSG['new_currency'], '', '', '', '', array(), true);
-loadblock($MSG['014'], $MSG['curreny_country_explain'], 'text', 'country', $_POST['country']);
-loadblock($MSG['currency_name'], $MSG['curreny_name_explain'], 'text', 'currency_type', $_POST['currency_type']);
-loadblock($MSG['curreny_symbol'], $MSG['curreny_symbol_explain'], 'text', 'currency_abbreviation', $_POST['currency_abbreviation']);
+loadblock($MSG['014'], $MSG['curreny_country_explain'], 'text', 'country', (isset($_POST['country'])) ? $_POST['country'] : '');
+loadblock($MSG['currency_name'], $MSG['curreny_name_explain'], 'text', 'currency_type', (isset($_POST['currency_type'])) ? $_POST['currency_type'] : '');
+loadblock($MSG['curreny_symbol'], $MSG['curreny_symbol_explain'], 'text', 'currency_abbreviation', (isset($_POST['currency_abbreviation'])) ? $_POST['currency_abbreviation'] : '');
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],

@@ -45,7 +45,6 @@ switch($_GET['a'])
 		$params[] = array(':pfval', $_POST['pfval'], 'int');
 		$params[] = array(':user_id', $user->user_data['id'], 'int');
 		$db->query($query, $params);
-
 		// check its real
 		if ($db->numrows() < 1)
 		{

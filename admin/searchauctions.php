@@ -43,16 +43,16 @@ if (isset($_POST['auctiontype']))
 }
 $auction_sql=$usernick_sql=$user_sql=$titlekeywords_sql = '';
 if (isset($_SESSION['searchauctionsauctionid']) && $_SESSION['searchauctionsauctionid'] > 0) {
-$auction_sql = " AND a.id = " . intval($_SESSION['searchauctionsauctionid']);
+	$auction_sql = " AND a.id = " . intval($_SESSION['searchauctionsauctionid']);
 }
 if (isset($_SESSION['usernick']) && $_SESSION['usernick'] != '') {
-$usernick_sql = " AND u.nick = '" . $_SESSION['usernick'] . "'" ;
+	$usernick_sql = " AND u.nick = '" . $_SESSION['usernick'] . "'" ;
 }
 if (isset($_SESSION['searchauctionsuid']) && $_SESSION['searchauctionsuid'] > 0) {
-$user_sql = " AND a.user = " . intval($_SESSION['searchauctionsuid']);
+	$user_sql = " AND a.user = " . intval($_SESSION['searchauctionsuid']);
 }
 if (isset($_SESSION['searchauctionstitlekeywords']) && $_SESSION['searchauctionstitlekeywords'] != '') {
-$titlekeywords_sql = " AND INSTR(LCASE(a.title), '" . strtolower($_SESSION['searchauctionstitlekeywords']) . "') > 0";
+	$titlekeywords_sql = " AND INSTR(LCASE(a.title), '" . strtolower($_SESSION['searchauctionstitlekeywords']) . "') > 0";
 }
 $auctiontype_sql = "a.closed = 1";
 if (!empty($_SESSION['searchauctionsauctiontype']))

@@ -303,7 +303,6 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "UPDATE `" . $DBPrefix . "adminusers` SET status = 0 WHERE status = 2;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "community` MODIFY `active` tinyint(1) NOT NULL default '1';";
 	$query[] = "UPDATE `" . $DBPrefix . "community` SET active = 0 WHERE active = 2;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "maintainance` MODIFY `active` tinyint(1) NOT NULL default '0';";
 	$query[] = "UPDATE `" . $DBPrefix . "auctions` SET theme = IF (theme = 'default', 'classic', theme);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auction_types`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
@@ -422,7 +421,10 @@ if ($installed_version == '1.2.0')
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_reportitem', 'int', '1', UNIX_TIMESTAMP(), 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (NULL, 'Romanian', 'Romanian Leu', 'RON');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('version_check', 'str', 'stable', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('maintainance_mode_active', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('maintainance_text', 'string', '<p><strong>Under maintenance!!!!!!!</strong></p>', UNIX_TIMESTAMP(), 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('prune_unactivated_users', 'bool', '1', UNIX_TIMESTAMP(), 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('prune_unactivated_users_days', 'int', '30', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('superuser', 'string', 'renlok', UNIX_TIMESTAMP(), 1);";
 	$new_version = '1.2.1';
 }

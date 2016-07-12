@@ -33,14 +33,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("spam_register", $_POST['spam_register'], 'int');
 		$system->writesetting("spam_blocked_email_enabled", $_POST['spam_blocked_email_enabled'], 'bool');
 		$system->writesetting("spam_blocked_email_domains", $_POST['spam_blocked_email_domains'], 'str');
-
-		$system->SETTINGS['recaptcha_public'] = $_POST['recaptcha_public'];
-		$system->SETTINGS['recaptcha_private'] = $_POST['recaptcha_private'];
-		$system->SETTINGS['spam_sendtofriend'] = $_POST['spam_sendtofriend'];
-		$system->SETTINGS['spam_reportitem'] = $_POST['spam_reportitem'];
-		$system->SETTINGS['spam_register'] = $_POST['spam_register'];
-		$system->SETTINGS['spam_blocked_email_enabled'] = $_POST['spam_blocked_email_enabled'];
-		$system->SETTINGS['spam_blocked_email_domains'] = $_POST['spam_blocked_email_domains'];
 		
 		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['750']));
 	}

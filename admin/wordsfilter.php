@@ -43,7 +43,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 	}
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5073']));
-	$system->SETTINGS['wordsfilter'] = $_POST['wordsfilter'];
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "filterwords";

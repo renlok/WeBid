@@ -46,19 +46,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		
 		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['542']));
 	}
-
-	$system->SETTINGS['sitename'] = $_POST['sitename'];
-	$system->SETTINGS['adminmail'] = $_POST['adminmail'];
-	$system->SETTINGS['siteurl'] = $_POST['siteurl'];
-	$system->SETTINGS['copyright'] = $_POST['copyright'];
-
-	$system->SETTINGS['cron'] = $_POST['cron'];
-	$system->SETTINGS['archiveafter'] = $_POST['archiveafter'];
-
-	$system->SETTINGS['cache_theme'] = $_POST['cache_theme'];
-
-	$system->SETTINGS['https'] = $_POST['https'];
-	$system->SETTINGS['https_url'] = $_POST['https_url'];
 }
 
 // general settings

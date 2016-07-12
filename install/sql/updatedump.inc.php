@@ -410,6 +410,7 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 if ($installed_version == '1.2.0')
 {
 	//1.2.0 to 1.2.1
+	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "maintainance`;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "reportedauctions`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "reportedauctions` (
 	  `id` int(11) NOT NULL,

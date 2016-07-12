@@ -188,26 +188,11 @@ class global_class
 
 	function check_maintainance_mode()
 	{
-		global $DBPrefix, $user, $db;
+		global $user;
 
-		if (!isset($this->SETTINGS['MAINTAINANCE']))
+		if ($this->SETTINGS['maintainance_mode_active'])
 		{
-			$query = "SELECT * FROM " . $DBPrefix . "maintainance";
-			$db->direct_query($query);
-
-			if ($db->numrows() > 0)
-			{
-				$this->SETTINGS['MAINTAINANCE'] = $db->result();
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		if ($this->SETTINGS['MAINTAINANCE']['active'])
-		{
-			if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['MAINTAINANCE']['superuser'] || $user->user_data['id'] == $this->SETTINGS['MAINTAINANCE']['superuser']))
+			if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['superuser'] || $user->user_data['id'] == $this->SETTINGS['superuser']))
 			{
 				return false;
 			}

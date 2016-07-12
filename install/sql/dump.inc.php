@@ -1282,27 +1282,6 @@ $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
 # ############################
 
 #
-# Table structure for table `" . $DBPrefix . "maintainance`
-#
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "maintainance`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "maintainance` (
-  `id` int(11) NOT NULL auto_increment,
-  `active` tinyint(1) NOT NULL default '0',
-  `superuser` varchar(32) default NULL,
-  `maintainancetext` text,
-  KEY `id` (`id`)
-) ;";
-
-#
-# Dumping data for table `" . $DBPrefix . "maintainance`
-#
-
-$query[] = "INSERT INTO `" . $DBPrefix . "maintainance` VALUES (1, 0, 'renlok', '<br>\r\n<center>\r\n<b>Under maintenance!!!!!!!</b>\r\n</center>');";
-
-# ############################
-
-#
 # Table structure for table `" . $DBPrefix . "membertypes`
 #
 
@@ -1642,6 +1621,8 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('loginbox', 'int', '
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('logo', 'str', 'logo.png', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('mail_parameter', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('mail_protocol', 'int', '0', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('maintainance_mode_active', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('maintainance_text', 'string', '<p><strong>Under maintenance!!!!!!!</strong></p>', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('mandatory_fields', 'str', 'a:7:{s:9:\"birthdate\";s:1:\"n\";s:7:\"address\";s:1:\"y\";s:4:\"city\";s:1:\"y\";s:4:\"prov\";s:1:\"y\";s:7:\"country\";s:1:\"y\";s:3:\"zip\";s:1:\"y\";s:3:\"tel\";s:1:\"n\";}', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('maxpictures', 'int', '5', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('maxuploadsize', 'int', '51200', UNIX_TIMESTAMP(), 1);";
@@ -1674,6 +1655,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_register', 'in
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_sendtofriend', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_reportitem', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('subtitle', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('superuser', 'string', 'renlok', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('tax', 'bool', 'n', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('taxuser', 'bool', 'n', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('terms', 'bool', 'y', UNIX_TIMESTAMP(), 1);";

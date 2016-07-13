@@ -87,11 +87,11 @@ foreach ($int_timezones as $time_ajustment => $timezone)
 	$db->direct_query($query);
 }
 
-$query = "SELECT value FROM settings WHERE fieldname = 'theme'";
+$query = "SELECT value FROM " . $DBPrefix . "settings WHERE fieldname = 'theme'";
 $db->direct_query($query);
 $old_theme = $db->result('value');
 if ($old_theme == 'default')
 {
-	$query = "UPDATE settings set value = 'classic' WHERE fieldname = 'theme'";
+	$query = "UPDATE " . $DBPrefix . "settings set value = 'classic' WHERE fieldname = 'theme'";
 	$db->direct_query($query);
 }

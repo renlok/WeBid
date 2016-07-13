@@ -261,8 +261,12 @@ if ($installed_version == '1.0.6')
 if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2')))
 {
 	//1.1.0 to 1.2.0
-	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `password` varchar(60) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD PRIMARY KEY (`id`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` DROP INDEX `id`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password` varchar(60) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD `password_type` INT(1) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `password` varchar(60) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `password_type` INT(1) NOT NULL DEFAULT '0';";
 	$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Serbia');";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "closedrelisted`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_terms` tinytext;";
@@ -280,7 +284,8 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `alert_emails`  VARCHAR(128) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` CHANGE `timecorrection` `timezone` varchar(50) NOT NULL default 'Europe/London';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` CHANGE `timecorrection` `timezone` varchar(50) NOT NULL default 'Europe/London';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "countries` ADD `country_id` int(4) NOT NULL auto_increment;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "countries` DROP PRIMARY KEY;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "countries` ADD `country_id` int(4) PRIMARY KEY AUTO_INCREMENT;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `paypal_sandbox` INT(1) default 0;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `authnet_sandbox` INT(1) default 0;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `worldpay_sandbox` INT(1) default 0;";
@@ -410,6 +415,8 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 if ($installed_version == '1.2.0')
 {
 	//1.2.0 to 1.2.1
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `password_type` INT(1) NOT NULL DEFAULT '1';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password_type` INT(1) NOT NULL DEFAULT '1';";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "maintainance`;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "reportedauctions`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "reportedauctions` (
@@ -419,6 +426,7 @@ if ($installed_version == '1.2.0')
 	  `user_id` int(11) NOT NULL DEFAULT '0',
 	  PRIMARY KEY(`id`)
 	) ;";
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `value` = 'logo.png' WHERE `fieldname` = 'logo';";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_reportitem', 'int', '1', UNIX_TIMESTAMP(), 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (NULL, 'Romanian', 'Romanian Leu', 'RON');";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('version_check', 'str', 'stable', UNIX_TIMESTAMP(), 1);";
@@ -427,6 +435,7 @@ if ($installed_version == '1.2.0')
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('prune_unactivated_users', 'bool', '1', UNIX_TIMESTAMP(), 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('prune_unactivated_users_days', 'int', '30', UNIX_TIMESTAMP(), 1);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('superuser', 'string', 'renlok', UNIX_TIMESTAMP(), 1);";
+	$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('googleanalytics', 'string', '', UNIX_TIMESTAMP(), 1);";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `value` = \"0-mail.com\n027168.com\n0815.ru\n0815.ry\n0815.su\n0845.ru\n0clickemail.com\n0wnd.net\n0wnd.org\n
 0x207.info\n1-8.biz\n100likers.com\n10mail.com\n10mail.org\n10minut.com.pl\n10minutemail.cf\n10minutemail.co.uk\n10minutemail.co.za\n10minutemail.com\n10minutemail.de\n
 10minutemail.ga\n10minutemail.gq\n10minutemail.ml\n10minutemail.net\n10minutesmail.com\n10x9.com\n123-m.com\n12houremail.com\n12minutemail.com\n12minutemail.net\n

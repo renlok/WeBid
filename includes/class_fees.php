@@ -36,7 +36,7 @@ class fees
 		$this->DBPrefix = $DBPrefix;
 		$this->user = $user;
 		$this->httpsConnection = $this->system->SETTINGS['https'] == 'y' ? true : false;
-		$this->paypalAddress = $this->system->SETTINGS['paypal_sandbox'] == 'y' ? 'www.sandbox.paypal.com' : 'www.paypal.com';
+		$this->paypalAddress = $this->system->SETTINGS['payment_gateway_sandbox'] == 1 ? 'www.sandbox.paypal.com' : 'www.paypal.com';
 		$this->fee_types = $this->get_fee_types();
 	}
 

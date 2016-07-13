@@ -65,7 +65,6 @@ $template->assign_vars(array(
 		'SHIPPING_METHOD' => "N/A", // TODO: NEEDS FIXING
 		'PAYMENT_METHOD' => "N/A", // TODO: NEEDS FIXING
 		'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate'] + $system->tdiff),
-		'PAYMENT' => $data['payment'],
 		'ITEM_QUANTITY' => $data['qty'],
 		'B_INVOICE' => true
 		));

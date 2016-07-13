@@ -238,6 +238,10 @@ $dobday .= '</select>';
 
 $time_correction = generateSelect('TPL_timezone', $timezones, $USER['timezone']);
 
+$query = "SELECT * FROM " . $DBPrefix . "payment_options po LEFT JOIN " . $DBPrefix . "usergateways ug ON (po.id = ug.gateway_id AND ug.user_id = " . $user->user_data['id'] . ") WHERE po.is_gateway = 1";
+$db->direct_query($query);
+$gateway_data = $db->fetchAll();
+
 foreach ($gateway_data as $gateway)
 {
 	if ($gateway['gateway_active'] == 1)
@@ -247,8 +251,8 @@ foreach ($gateway_data as $gateway)
 				'NAME' => $gateway['displayname'],
 				'PLAIN_NAME' => $gateway['name'],
 				'REQUIRED' => ($gateway['gateway_required'] == 1) ? '*' : '',
-				'ADDRESS' => isset($_POST[$gateway['name']]['address']) ? $_POST[$gateway['name']]['address'] : '',
-				'PASSWORD' => isset($_POST[$gateway['name']]['password']) ? $_POST[$gateway['name']]['password'] : '',
+				'ADDRESS' => (!is_null($gateway['address'])) ? $gateway['address'] : '',
+				'PASSWORD' => (!is_null($gateway['password'])) ? $gateway['password'] : '',
 				'ADDRESS_NAME' => isset($address_string[$gateway['name']]) ? $address_string[$gateway['name']] : $gateway['name'],
 				'PASSWORD_NAME' => isset($password_string[$gateway['name']]) ? $password_string[$gateway['name']] : '',
 				'ERROR_STRING' => $error_string[$gateway['name']],

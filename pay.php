@@ -35,7 +35,7 @@ switch($_GET['a'])
 		$fees->add_to_account($MSG['935'], 'balance', $payvalue);
 		break;
 	case 2: // pay for an item
-		$query = "SELECT w.id, a.title, a.shipping_cost, a.additional_shipping_cost, a.shipping, w.bid,
+		$query = "SELECT w.id, w.seller, a.title, a.shipping_cost, a.additional_shipping_cost, a.shipping, w.bid,
 				u.id As uid, u.nick, a.payment, w.qty
 				FROM " . $DBPrefix . "winners w
 				LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = w.auction)
@@ -55,11 +55,9 @@ switch($_GET['a'])
 		$data = $db->result();
 
 		$payment = explode(', ', $data['payment']);
-		$query = "SELECT u.address, u.password, p.name FROM " . $DBPrefix . "usergateways u
-				JOIN " . $DBPrefix . "payment_options p ON (u.gateway_id = p.id)
-				WHERE u.user_id = :user_id";
+		$query = "SELECT * FROM " . $DBPrefix . "payment_options po LEFT JOIN " . $DBPrefix . "usergateways ug ON (po.id = ug.gateway_id AND ug.user_id = :user_id) WHERE po.is_gateway = 1";
 		$params = array();
-		$params[] = array(':user_id', $user->user_data['id'], 'int');
+		$params[] = array(':user_id', $data['seller'], 'int');
 		$db->query($query, $params);
 		$user_gateways = array();
 		while ($gateway = $db->fetch())
@@ -210,10 +208,12 @@ $db->direct_query($query);
 $sequence = rand(1, 1000);
 $timestamp = time();
 $pay_val = $system->input_money($system->print_money_nosymbol($payvalue));
+
 while ($gateway = $db->fetch())
 {
 	$address = ($paying_fee) ? $gateway['gateway_admin_address'] : $user_gateways[$gateway['name']]['address'];
 	$password = ($paying_fee) ? $gateway['gateway_admin_password'] : $user_gateways[$gateway['name']]['password'];
+
 	$template->assign_block_vars('gateways', array(
 		'B_ACTIVE' => ($paying_fee) ? $gateway['gateway_active'] : (in_array($gateway['name'], $payment) && isset($user_gateways[$gateway['name']])),
 		'NAME' => $gateway['name'],
@@ -237,7 +237,7 @@ $template->assign_vars(array(
 		'TITLE' => $title,
 		'CUSTOM_CODE' => $custoncode,
 		'TIMESTAMP' => $timestamp,
-
+		'NO_ONLINE_GATEWAYS' => ($db->numrows() < 1),
 		'TOUSER_STRING' => (isset($extrastring)) ? $extrastring : '',
 		'B_TOUSER' => ($_GET['a'] == 2)
 		));

@@ -101,7 +101,7 @@
 <!-- END gateways -->
 </table>
 
-<!-- IF B_ENPAYPAL eq false && B_ENAUTHNET eq false && B_ENWORLDPAY eq false && B_ENTOOCHECK eq false && B_ENMONEYBOOKERS eq false -->
+<!-- IF NO_ONLINE_GATEWAYS -->
 <div class="error-box">
 	{L_778a}
 </div>

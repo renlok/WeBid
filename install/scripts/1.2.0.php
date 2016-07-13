@@ -79,7 +79,7 @@ $query = "RENAME TABLE `" . $DBPrefix . "settingsv2` TO `" . $DBPrefix . "settin
 $db->direct_query($query);
 
 // convert database values to bools
-$query = "SELECT id, bn_only, bold, highlighted, featured, tax, taxinc FROM auctions;";
+$query = "SELECT id, bn_only, bold, highlighted, featured, tax, taxinc FROM " . $DBPrefix . "auctions;";
 $db->direct_query($query);
 $auctions_data = $db->fetchall();
 // convert

@@ -107,7 +107,7 @@
 				<input type="text" name="{gateways.PLAIN_NAME}[address]" class="form-control" value="{gateways.ADDRESS}">
 			<!-- IF gateways.B_PASSWORD -->
 				<label for="{gateways.PLAIN_NAME}[password]">{gateways.PASSWORD_NAME}{gateways.REQUIRED}</label>
-				<input type="text" name="{gateways.PLAIN_NAME}[password]" class="form-control" value="{gateways.PASS}">
+				<input type="text" name="{gateways.PLAIN_NAME}[password]" class="form-control" value="{gateways.PASSWORD}">
 			<!-- ELSE -->
 				<input type="hidden" name="{gateways.PLAIN_NAME}[password]" value="">
 			<!-- ENDIF -->

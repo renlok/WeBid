@@ -100,13 +100,24 @@ function checkEmail($email)
 	{
 		$exploded_email = explode('@', $email);
     	$email_domain = trim(array_pop($exploded_email));
-		$emails = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
-		if ( in_array($email_domain, $emails))
-		{
-			return false;
-		}
+		$blocked_emails = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
+
+		return !contains($email_domain, $blocked_emails);
 	}
 	return true;
+}
+
+function contains($str, array $arr)
+{
+    foreach($arr as $a)
+    {
+        if (stripos($str, $a) !== false)
+    	{
+    		return true;
+    	}
+    }
+    
+    return false;
 }
 
 $first = true;

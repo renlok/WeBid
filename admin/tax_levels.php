@@ -24,10 +24,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'add')
 	$seller_countries = '';
 	$buyer_countries = '';
 	if (!empty($_POST['seller_countries']) && is_array($_POST['seller_countries'])) {
-	$seller_countries = implode(' ', $_POST['seller_countries']);
+		$seller_countries = implode(' ', $_POST['seller_countries']);
 	}
 	if (!empty($_POST['buyer_countries']) && is_array($_POST['buyer_countries'])) {
-	$buyer_countries = implode(' ', $_POST['buyer_countries']);
+		$buyer_countries = implode(' ', $_POST['buyer_countries']);
 	}
 
 	if (!empty($_POST['tax_name']))

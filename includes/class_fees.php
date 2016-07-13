@@ -29,15 +29,15 @@ class fees
 	function __construct()
 	{
 		global $DBPrefix, $db, $system, $user;
-		
+
 		$this->ASCII_RANGE = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$this->fee_types = $this->get_fee_types();
 		$this->system = $system;
 		$this->database = $db;
 		$this->DBPrefix = $DBPrefix;
 		$this->user = $user;
 		$this->httpsConnection = $this->system->SETTINGS['https'] == 'y' ? true : false;
-		$this->paypalAddress = $this->system->SETTINGS['paypal_sandbox'] == 'y' ? 'www.sandbox.paypal.com' : 'www.paypal.com';
+		$this->paypalAddress = $this->system->SETTINGS['payment_gateway_sandbox'] == 1 ? 'www.sandbox.paypal.com' : 'www.paypal.com';
+		$this->fee_types = $this->get_fee_types();
 	}
 
 	public function get_fee_types()

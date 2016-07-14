@@ -128,15 +128,18 @@ class PluploadHandler {
 				if (!in_array(strtolower($file_path_info['extension']), $conf['allow_extensions'])) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-				$allowed_mime_types = $conf['allow_extensions'];
+
+				/*$allowed_mime_types = $conf['allow_extensions'];
 				array_walk($allowed_mime_types, function(&$value, $key) { $value = 'image/' . $value; });
 				// check mime type
 				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+
 				$mime_type = finfo_file($finfo, $file_path_info['dirname'] . '/' . $file_path_info['basename']);
 				if (!in_array($mime_type, $allowed_mime_types)) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-				finfo_close($finfo);
+
+				finfo_close($finfo);*/
 			}
 
 			$file_path = rtrim($conf['target_dir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file_name;

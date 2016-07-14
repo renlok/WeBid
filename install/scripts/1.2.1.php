@@ -99,6 +99,18 @@ if ($old_theme == 'default')
 // remove unused files and folders from previous versions
 rmf('../admin/bar.php');
 rmf('../inc/calendar.css');
+rmf('../inc/img/cal.gif');
+rmf('../inc/img/next_mon.gif');
+rmf('../inc/img/next_year.gif');
+rmf('../inc/img/no_cal.gif');
+rmf('../inc/img/pixel.gif');
+rmf('../inc/img/prev_mon.gif');
+rmf('../inc/img/prev_year.gif');
+rmf('../inc/img/shade_bl.png');
+rmf('../inc/img/shade_bm.png');
+rmf('../inc/img/shade_br.png');
+rmf('../inc/img/shade_mr.png');
+rmf('../inc/img/shade_tr.png');
 rmf('../includes/class_db_handle.php');
 rmf('../includes/class_template_compile.php');
 rmf('../includes/class_user.php');

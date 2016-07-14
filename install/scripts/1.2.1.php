@@ -128,6 +128,7 @@ rmf('../loader.php');
 rrmdir('../ckeditor');
 rrmdir('../inc/captcha');
 rrmdir('../inc/checks');
+rrmdir('../inc/flags');
 rrmdir('../inc/plupload');
 rrmdir('../themes/admin');
 rrmdir('../themes/default');

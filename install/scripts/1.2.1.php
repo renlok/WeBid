@@ -95,3 +95,36 @@ if ($old_theme == 'default')
 	$query = "UPDATE " . $DBPrefix . "settings set value = 'classic' WHERE fieldname = 'theme'";
 	$db->direct_query($query);
 }
+
+// remove unused files and folders from previous versions
+rmf('../admin/bar.php');
+rmf('../includes/class_db_handle.php');
+rmf('../includes/class_template_compile.php');
+rmf('../includes/class_user.php');
+rmf('../includes/converter.inc.php');
+rmf('../includes/countries.inc.php');
+rmf('../includes/currencies.php');
+rmf('../includes/email_auction_confirmation.php');
+rmf('../includes/email_endauction_cumulative.php');
+rmf('../includes/email_endauction_nowinner.php');
+rmf('../includes/email_endauction_winner.php');
+rmf('../includes/email_endauction_youwin.php');
+rmf('../includes/email_endauction_youwin_nodutch.php');
+rmf('../includes/email_outbid.php');
+rmf('../includes/email_user_approved.php');
+rmf('../includes/email_user_confirmation.php');
+rmf('../includes/email_user_needapproval.php');
+rmf('../includes/htmLawed.php');
+rmf('../includes/template.php');
+rmf('../includes/useragent.inc.php');
+rmf('../js/calendar.php');
+rmf('../js/google_converter.js');
+rmf('../captcha.php');
+rmf('../captcha_play.php');
+rmf('../converter.php');
+rmf('../loader.php');
+
+rrmdir('../ckeditor');
+rrmdir('../inc/plupload');
+rrmdir('../themes/admin');
+rrmdir('../themes/default');

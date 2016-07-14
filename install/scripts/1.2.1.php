@@ -98,6 +98,7 @@ if ($old_theme == 'default')
 
 // remove unused files and folders from previous versions
 rmf('../admin/bar.php');
+rmf('../inc/calendar.css');
 rmf('../includes/class_db_handle.php');
 rmf('../includes/class_template_compile.php');
 rmf('../includes/class_user.php');
@@ -125,6 +126,8 @@ rmf('../converter.php');
 rmf('../loader.php');
 
 rrmdir('../ckeditor');
+rrmdir('../inc/captcha');
+rrmdir('../inc/checks');
 rrmdir('../inc/plupload');
 rrmdir('../themes/admin');
 rrmdir('../themes/default');

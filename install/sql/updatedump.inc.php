@@ -261,15 +261,77 @@ if ($installed_version == '1.0.6')
 if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.1.2P2')))
 {
 	//1.1.0 to 1.2.0
+	$query[] = "ALTER TABLE `" . $DBPrefix . "accesseshistoric` CHANGE `uniquevisitiors` `uniquevisitors` int(11) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD PRIMARY KEY (`id`);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` DROP INDEX `id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` DROP INDEX `id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `user` int(11) DEFAULT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `auction_type` int(1) DEFAULT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `duration` double(8,2) DEFAULT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping` int(1) DEFAULT '1';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_terms` tinytext;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `closed` tinyint(1) DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `photo_uploaded` tinyint(1) DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `quantity` int(11) DEFAULT '1';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `international` tinyint(1) DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `initial_quantity` int(11) default 1;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `bn_sale` tinyint(1) DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `current_bid_id` int(11) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password` varchar(60) NOT NULL;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD `password_type` INT(1) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `status` tinyint(1) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "banners` ADD PRIMARY KEY (`id`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "banners` DROP INDEX `id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "bannersstats` DROP INDEX `id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "bannersusers` ADD PRIMARY KEY (`id`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "bannersusers` DROP INDEX `id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "bids` MODIFY `auction` int(11) DEFAULT NULL;";
+ 	$query[] = "ALTER TABLE `" . $DBPrefix . "bids` MODIFY `bidder` int(11) DEFAULT NULL;";
+ 	$query[] = "ALTER TABLE `" . $DBPrefix . "comm_messages` ADD PRIMARY KEY (`id`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "comm_messages` DROP INDEX `msg_id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "community` ADD PRIMARY KEY (`id`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "community` DROP INDEX `msg_id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "durations` MODIFY `days` double(8,2) NOT NULL DEFAULT '0.00';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "faqs` ADD PRIMARY KEY (`id`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "faqs` DROP INDEX `id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "faqs_translated` MODIFY `id` int(11) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "faqs_translated` DROP INDEX `id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "faqscategories` ADD PRIMARY KEY (`id`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "faqscategories` DROP INDEX `id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "feedbacks` MODIFY `rated_user_id` int(11) DEFAULT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "feedbacks` MODIFY `auction_id` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "groups` MODIFY `can_sell` tinyint(1) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "groups` MODIFY `can_buy` tinyint(1) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "groups` MODIFY `count` tinyint(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "groups` MODIFY `auto_join` tinyint(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `sentto` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `sentfrom` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `fromemail` varchar(255) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `isread` tinyint(1) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `replied` tinyint(1) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `reply_of` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `question` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `public` tinyint(1) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "news` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "news` MODIFY `suspended` tinyint(1) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "proxybid` MODIFY `itemid` int(11) DEFAULT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "proxybid` MODIFY `userid` int(11) DEFAULT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "useraccounts` MODIFY `auc_id` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "useraccounts` MODIFY `user_id` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "useraccounts` MODIFY `date` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `reg_date` int(11) DEFAULT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "usersips` MODIFY `user` int(11) DEFAULT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `auction` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `seller` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `winner` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `closingdate` int(11) NOT NULL DEFAULT '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD PRIMARY KEY (`id`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` DROP INDEX `id`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `password` varchar(60) NOT NULL;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `password_type` INT(1) NOT NULL DEFAULT '0';";
 	$query[] = "INSERT INTO `" . $DBPrefix . "countries` VALUES ('Serbia');";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "closedrelisted`;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_terms` tinytext;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `shipped` INT(1) NOT NULL DEFAULT '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `cookiespolicy` enum('y','n') NOT NULL default 'y';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `cookiespolicytext` text NOT NULL;";
@@ -291,20 +353,14 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `worldpay_sandbox` INT(1) default 0;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `checkout_sandbox` INT(1) default 0;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `moneybookers_sandbox` INT(1) default 0;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `initial_quantity` int(11) default 1;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `bn_sale` int(1) default 0;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "currentbrowsers` MODIFY `browser` varchar(255) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "gateways` CHANGE `worldpay_address` `worldpay_id` varchar(50) NOT NULL default '';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "gateways` CHANGE `toocheckout_address` `toocheckout_id` varchar(50) NOT NULL default '';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `current_bid_id` int(11) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_title` varchar(70);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_shipping_cost` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` ADD `auc_payment` tinytext;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `auction_type` int(2);";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `international` tinyint(1);";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY  `closed` tinyint(1);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `gateways` INT(1) default 'a:5:{s:6:\"paypal\";s:6:\"PayPal\";s:7:\"authnet\";s:13:\"Authorize.net\";s:8:\"worldpay\";s:8:\"WorldPay\";s:12:\"moneybookers\";s:12:\"Moneybookers\";s:11:\"toocheckout\";s:9:\"2Checkout\";}';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `status` tinyint(1) NOT NULL default '1';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `status` tinyint(1) NOT NULL default '0';";
 	$query[] = "UPDATE `" . $DBPrefix . "adminusers` SET status = 0 WHERE status = 2;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "community` MODIFY `active` tinyint(1) NOT NULL default '1';";
 	$query[] = "UPDATE `" . $DBPrefix . "community` SET active = 0 WHERE active = 2;";
@@ -314,8 +370,7 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	  `id` int(2) NOT NULL auto_increment,
 	  `key` varchar(32),
 	  `language_string` varchar(32),
-	  PRIMARY KEY  (`id`),
-	  KEY `id` (`id`)
+	  PRIMARY KEY  (`id`)
 	);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(1, 'standard', 1021);";
 	$query[] = "INSERT INTO `" . $DBPrefix . "auction_types` VALUES(2, 'dutch', 1020);";
@@ -340,7 +395,7 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	);";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "durations_translated`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "durations_translated` (
-		`country_id` int(4) NOT NULL,
+		`days` double(8,2) NOT NULL,
 		`lang` char(2) NOT NULL default '',
 		`description` varchar(255) NOT NULL default ''
 	);";
@@ -415,8 +470,10 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 if ($installed_version == '1.2.0')
 {
 	//1.2.0 to 1.2.1
-	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `password_type` INT(1) NOT NULL DEFAULT '1';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD `password_type` INT(1) NOT NULL DEFAULT '0' AFTER `password`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password_type` INT(1) NOT NULL DEFAULT '1';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `password_type` INT(1) NOT NULL DEFAULT '0' AFTER `password`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `password_type` INT(1) NOT NULL DEFAULT '1';";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "maintainance`;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "reportedauctions`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "reportedauctions` (

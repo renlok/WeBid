@@ -83,13 +83,7 @@ $query = "SELECT id, bn_only, bold, highlighted, featured, tax, taxinc FROM " . 
 $db->direct_query($query);
 $auctions_data = $db->fetchall();
 // convert
-$query = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY
-        `bn_only` `bn_only` tinyint(1) default 0,
-        `bold` `bold` tinyint(1) default 0,
-        `highlighted` `highlighted` tinyint(1) default 0,
-        `featured` `featured` tinyint(1) default 0,
-        `tax` `tax` tinyint(1) default 0,
-        `taxinc` `taxinc` tinyint(1) default 0;";
+$query = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `bn_only` tinyint(1) DEFAULT 0, MODIFY `bold` tinyint(1) DEFAULT 0, MODIFY `highlighted` tinyint(1) DEFAULT 0, MODIFY `featured` tinyint(1) DEFAULT 0, MODIFY `tax` tinyint(1) DEFAULT 0, MODIFY `taxinc` tinyint(1) DEFAULT 0;";
 $db->direct_query($query);
 if (count($auctions_data) > 0)
 {

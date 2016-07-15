@@ -11,6 +11,14 @@
 					</div>
 				</div>
 				<div class="box">
+					<h4 class="rounded-top">{L_moderation}</h4>
+					<div class="rounded-bottom">
+						<ul class="menu">
+							<li><a href="{SITEURL}admin/moderateauctions.php">{L_moderation_queue}</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="box">
 					<h4 class="rounded-top">{L_1061}</h4>
 					<div class="rounded-bottom">
 						<form name="anotes" action="" method="post">

@@ -16,6 +16,7 @@ define('InAdmin', 1);
 $current_page = 'auctions';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
+include INCLUDE_PATH . 'functions_sell.php';
 include 'loggedin.inc.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
@@ -33,7 +34,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 	$id = intval($_POST['id']);
 
 	// get auction data
-	$query = "SELECT category, closed, suspended FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+	$query = "SELECT title, description, category, closed, suspended FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
 	$params = array();
 	$params[] = array(':auc_id', $id, 'int');
 	$db->query($query, $params);
@@ -41,6 +42,18 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 
 	if ($auc_data['suspended'] > 0)
 	{
+		if ($auc_data['suspended'] == 2)
+		{
+			alert_auction_watchers($id, $auc_data['title'], $auc_data['description']);
+
+			$query = "UPDATE `" . $DBPrefix . "auction_moderation` SET `status` = 2, modifieddate = :modifieddate, modifiedby = :modifiedby WHERE auction_id = :auction_id";
+			$params = array();
+			$params[] = array(':modifieddate', time(), 'int');
+			$params[] = array(':modifiedby', $_SESSION['WEBID_ADMIN_IN'], 'int');
+			$params[] = array(':auction_id', $auction_id, 'int');
+			$db->query($query, $params);
+		}
+
 		// update auction table
 		$query = "UPDATE " . $DBPrefix . "auctions SET suspended = 0 WHERE id = :auc_id";
 		$params = array();

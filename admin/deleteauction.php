@@ -40,6 +40,19 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 	$db->query($query, $params);
 	$auc_data = $db->result();
 
+	if ($auc_data['suspended'] == 2)
+	{
+		$query = "UPDATE `" . $DBPrefix . "auction_moderation` SET `status` = 1, modifieddate = :modifieddate, modifiedby = :modifiedby WHERE auction_id = :auction_id";
+		$params = array();
+		$params[] = array(':modifieddate', time(), 'int');
+		$params[] = array(':modifiedby', $_SESSION['WEBID_ADMIN_IN'], 'int');
+		$params[] = array(':auction_id', $auc_id, 'int');
+		$db->query($query, $params);
+	}
+
+	$params = array();
+	$params[] = array(':auc_id', $auc_id, 'int');
+
 	// Delete related values
 	$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
 	$db->query($query, $params);

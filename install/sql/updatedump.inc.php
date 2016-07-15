@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if ($installed_version == '0.8.0')
+if ($installed_version == '0.8')
 {
 	//0.8.0 to 0.8.1
 	$query[] = "ALTER TABLE `" . $DBPrefix . "gateways` ADD `authnet_address` varchar(50) NOT NULL default '';";
@@ -59,7 +59,7 @@ if ($installed_version == '0.8.4')
 	$new_version = '0.8.5';
 }
 
-if ($installed_version == '0.8.5' || $installed_version == '0.8.5 P1')
+if ($installed_version == '0.8.5' || $installed_version == '0.8.5P1')
 {
 	//0.8.5 to 1.0.0
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` DROP uniqueseller;";

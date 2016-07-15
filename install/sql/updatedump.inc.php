@@ -502,9 +502,6 @@ if ($installed_version == '1.2.0')
 	  `id` int(11) NOT NULL auto_increment,
 	  `auction_id` int(11) NOT NULL DEFAULT '0',
 	  `reason` int(11) NOT NULL DEFAULT '0',
-	  `status` tinyint(1) NOT NULL default '0',
-	  `modifieddate` INT(11) NOT NULL,
-	  `modifiedby` INT(32) NOT NULL,
 	  PRIMARY KEY(`id`)
 	);";
 	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `value` = 'logo.png' WHERE `fieldname` = 'logo';";

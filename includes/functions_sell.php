@@ -588,7 +588,7 @@ function check_gateway($gateway)
 
 function alert_auction_watchers($id, $title, $description)
 {
-	global $db;
+	global $user, $DBPrefix, $db;
 	
 	// Send notification if users keyword matches (Auction Watch)
 	$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != '' AND id != :user_id";

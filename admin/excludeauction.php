@@ -46,11 +46,9 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 		{
 			alert_auction_watchers($id, $auc_data['title'], $auc_data['description']);
 
-			$query = "UPDATE `" . $DBPrefix . "auction_moderation` SET `status` = 2, modifieddate = :modifieddate, modifiedby = :modifiedby WHERE auction_id = :auction_id";
+			$query = "DELETE FROM `" . $DBPrefix . "auction_moderation` WHERE auction_id = :auc_id";
 			$params = array();
-			$params[] = array(':modifieddate', time(), 'int');
-			$params[] = array(':modifiedby', $_SESSION['WEBID_ADMIN_IN'], 'int');
-			$params[] = array(':auction_id', $auction_id, 'int');
+			$params[] = array(':auc_id', $id, 'int');
 			$db->query($query, $params);
 		}
 

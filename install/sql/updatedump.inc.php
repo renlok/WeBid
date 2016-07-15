@@ -243,6 +243,10 @@ if ($installed_version == '1.0.6')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `buy_now` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `increment` double(8,2) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `current_fee` double(16,2) default '0';";
+
+
+
+
 	$query[] = "ALTER TABLE `" . $DBPrefix . "bids` MODIFY `bid` double(16,2) default NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "fees` MODIFY `fee_from` double(16,2) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "fees` MODIFY `fee_to` double(16,2) NOT NULL default '0';";
@@ -264,22 +268,23 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "ALTER TABLE `" . $DBPrefix . "accesseshistoric` CHANGE `uniquevisitiors` `uniquevisitors` int(11) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD PRIMARY KEY (`id`);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` DROP INDEX `id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` CHANGE `username` `username` VARCHAR(32);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password` varchar(60) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `status` tinyint(1) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` DROP INDEX `id`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `user` int(11) DEFAULT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `auction_type` int(1) DEFAULT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `duration` double(8,2) DEFAULT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping` int(1) DEFAULT '1';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_terms` tinytext;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_terms` tinytext DEFAULT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `closed` tinyint(1) DEFAULT '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `photo_uploaded` tinyint(1) DEFAULT '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `quantity` int(11) DEFAULT '1';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `international` tinyint(1) DEFAULT '0';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `initial_quantity` int(11) default 1;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `initial_quantity` int(11) DEFAULT 1;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `bn_sale` tinyint(1) DEFAULT '0';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `current_bid_id` int(11) default '0';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password` varchar(60) NOT NULL;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `status` tinyint(1) NOT NULL default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `current_bid_id` int(11) DEFAULT '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "banners` ADD PRIMARY KEY (`id`);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "banners` DROP INDEX `id`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "bannersstats` DROP INDEX `id`;";
@@ -307,7 +312,7 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `sentto` int(11) NOT NULL DEFAULT '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `sentfrom` int(11) NOT NULL DEFAULT '0';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `fromemail` varchar(255) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `fromemail` varchar(255) NOT NULL DEFAULT '';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `isread` tinyint(1) NOT NULL DEFAULT '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `replied` tinyint(1) NOT NULL DEFAULT '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `reply_of` int(11) NOT NULL DEFAULT '0';";

@@ -77,15 +77,18 @@ if ($step == 1)
 	$from = (isset($_GET['from'])) ? $_GET['from'] : 0;
 	if ($queries > 0 && $from < $queries)
 	{
-		$fourth = floor($queries/4);
-		$to = (($queries - $from) > 25) ? $from + 25 : $queries;
+		$next = $from + 25;
+		$to = ($next > $queries) ? $queries : $next;
 		echo 'Writing to database: ' . floor($to / $queries * 100) . '% Complete<br>';
 		for ($i = $from; $i < $to; $i++)
 		{
 			$db->direct_query($query[$i]);
 		}
-		echo '<script type="text/javascript">window.location = "update.php?step=1&from=' . $i . '";</script>';
-		exit;
+		if ($next < $queries) 
+		{
+			echo '<script type="text/javascript">window.location = "update.php?step=1&from=' . $next . '";</script>';
+			exit;
+		}
 	}
 	if (file_exists('scripts/' . $new_version . '.php'))
 	{

@@ -174,24 +174,23 @@ if ($installed_version == '1.0.5')
 if ($installed_version == '1.0.6')
 {
 	//1.0.6 to 1.1.0
-	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.1.0';";
-	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `tax` enum('y','n') NOT NULL default 'n' AFTER `current_fee`;";
-	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `taxinc` enum('y','n') NOT NULL default 'y' AFTER `tax`;";
-	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `shipping_cost_additional` double(16,2) default '0' AFTER `shipping_cost`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `tax` enum('y','n') NOT NULL default 'n' AFTER `current_fee`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `taxinc` enum('y','n') NOT NULL default 'y' AFTER `tax`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` ADD `shipping_cost_additional` double(16,2) default '0' AFTER `shipping_cost`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `current_bid` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `closed` int(1) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `ae_status` enum('y','n') NOT NULL default 'n';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `tax` enum('y','n') NOT NULL default 'n' AFTER `fee_disable_acc`;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `taxuser` enum('y','n') NOT NULL default 'n' AFTER `tax`;"; // can the user tax his buyers
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `taxuser` enum('y','n') NOT NULL default 'n' AFTER `tax`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `invoice_yellow_line` varchar(255) NOT NULL default '';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `invoice_thankyou` varchar(255) NOT NULL default 'Thank you for shopping with us and we hope to see you return soon!';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` ADD `invoice_thankyou` varchar(255) NOT NULL DEFAULT '';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD `notes` text;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "userfees`;";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
 		`useracc_id` int(11) NOT NULL AUTO_INCREMENT,
-		`auc_id` int(11) NOT NULL default '0',
-		`user_id` int(11) NOT NULL default '0',
-		`date` int(11) NOT NULL default '0',
+		`auc_id` int(15) NOT NULL default '0',
+		`user_id` int(15) NOT NULL default '0',
+		`date` int(15) NOT NULL default '0',
 		`setup` double(8,2) NOT NULL default '0',
 		`featured` double(8,2) NOT NULL default '0',
 		`bold` double(8,2) NOT NULL default '0',
@@ -233,20 +232,14 @@ if ($installed_version == '1.0.6')
 		`ip` VARCHAR( 45 ) NOT NULL,
 		`timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
 	);";
-
-
 	$query[] = "ALTER TABLE `" . $DBPrefix . "accounts` MODIFY `amount` DOUBLE(6,2) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `minimum_bid` double(16,2) default '0';";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_cost` double(16,2) default NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_cost` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping_cost_additional` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `reserve_price` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `buy_now` double(16,2) default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `increment` double(8,2) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `current_fee` double(16,2) default '0';";
-
-
-
-
 	$query[] = "ALTER TABLE `" . $DBPrefix . "bids` MODIFY `bid` double(16,2) default NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "fees` MODIFY `fee_from` double(16,2) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "fees` MODIFY `fee_to` double(16,2) NOT NULL default '0';";
@@ -259,6 +252,7 @@ if ($installed_version == '1.0.6')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "settings` MODIFY `fee_signup_bonus` double(16,2) NOT NULL default '0.00';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `balance` double(16,2) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `bid` double(16,2) NOT NULL default '0';";
+	$query[] = "UPDATE `" . $DBPrefix . "settings` SET `version` = '1.1.0';";
 	$new_version = '1.1.0';
 }
 
@@ -268,7 +262,7 @@ if (in_array($installed_version, array('1.1.0', '1.1.1', '1.1.2', '1.1.2P1', '1.
 	$query[] = "ALTER TABLE `" . $DBPrefix . "accesseshistoric` CHANGE `uniquevisitiors` `uniquevisitors` int(11) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` ADD PRIMARY KEY (`id`);";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` DROP INDEX `id`;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` CHANGE `username` `username` VARCHAR(32);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` CHANGE `username` `username` VARCHAR(32) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `password` varchar(60) NOT NULL;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `status` tinyint(1) NOT NULL default '0';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` DROP INDEX `id`;";

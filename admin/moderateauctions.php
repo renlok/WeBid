@@ -65,6 +65,7 @@ while ($row = $db->fetch())
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],
 			'TIMESREPORTED' => $row['times_reported'],
+			'IN_MODERATION_QUEUE' => true,
 			'ID' => $row['id'],
 			'TITLE' => htmlspecialchars($row['title']),
 			'START_TIME' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),

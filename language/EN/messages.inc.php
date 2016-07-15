@@ -1708,5 +1708,7 @@ $MSG['moderate_auctions'] = 'Moderate Auctions';
 $MSG['moderation_queue'] = 'Moderation Queue';
 
 $MSG['moderator_approve'] = 'Approve';
+$MSG['approve_auction'] = "Approve Auction";
+$MSG['approve_auction_confirmation'] = "Are you sure you want to approve this auction?";
 
 $MSG['auction_awaiting_approval'] = "Your Auction is Awaiting Approval";

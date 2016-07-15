@@ -43,10 +43,13 @@
 						<a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">{L_300}
 					<!-- ELSEIF auctions.SUSPENDED eq 1 -->
 						<a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">{L_310}
-					<!-- ELSE -->
+					<!-- ELSEIF auctions.SUSPENDED eq 2 -->
 						<a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">{L_moderator_approve}
 					<!-- ENDIF -->
 						</a>
+						<!-- IF auctions.IN_MODERATION_QUEUE -->
+							<br><a href="approveauction.php?id={auctions.ID}&offset={PAGE}">{L_moderator_approve}</a>
+						<!-- ENDIF -->
 					<!-- IF auctions.B_HASWINNERS -->
 						<br><a href="viewwinners.php?id={auctions.ID}&offset={PAGE}">{L__0163}</a>
 					<!-- ENDIF -->

@@ -12,7 +12,7 @@
 						<div class="img-grid">
 							<div class="item-meta">
 								<a href="{SITEURL}item.php?id={featured.ID}"><img class="img-center" style="height: 175px;" src="{featured.IMAGE}"></a>
-								<div class="feat-title"><h4><a href="{SITEURL}item.php?id={featured.ID}">{featured.TITLE}</a><h4></div>
+								<div class="feat-title"><h4><a href="{SITEURL}item.php?id={featured.ID}">{featured.TITLE}</a></h4></div>
 								<div class="grid-margin-btm-lg">
 									<small><span class="text-muted"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>{featured.ENDS}</span></small>
 								</div>

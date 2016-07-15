@@ -89,7 +89,7 @@ if ($installed_version == '0.8.5' || $installed_version == '0.8.5P1')
 	$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'subtitle_fee');";
 	$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'excat_fee');";
 	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `secondcat` int(11) default NULL AFTER `category`;";
-	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `subtitle` VARCHAR(70) NOT NULL AFTER `title`;";
+	$query[] = "ALTER TABLE " . $DBPrefix . "auctions ADD `subtitle` VARCHAR(70) AFTER `title`;";
 	$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "payments`;";
 	$query[] = "UPDATE `" . $DBPrefix . "gateways` SET gateways = CONCAT(gateways, ',worldpay,moneybookers,toocheckout');";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "gateways` ADD `worldpay_address` varchar(50) NOT NULL default '';";
@@ -105,8 +105,21 @@ if ($installed_version == '0.8.5' || $installed_version == '0.8.5P1')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `moneybookers_email` varchar(50) default '';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` ADD `toocheckout_id` varchar(50) default '';";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` CHANGE `auc_watch` `auc_watch` text;";
-	$query[] = "ALTER TABLE `" . $DBPrefix . "increments` ADD PRIMARY KEY (`id`) ;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `nick` varchar(20) NOT NULL;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `hash` varchar(5) default '';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `city` varchar(25) default '';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `prov` varchar(20) default '';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `country` varchar(30) default '';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `zip` varchar(10) default '';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `phone` varchar(40) default '';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `email` varchar(50) default '';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `birthdate` int(8) default '0';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `paypal_email` varchar(50) default '';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "increments` ADD PRIMARY KEY (`id`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "increments` MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "categories` ADD INDEX (`left_id`, `right_id`, `level`);";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "categories` MODIFY `cat_colour` varchar(15) default '';";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "categories` MODIFY `cat_image` varchar(150) default '';";
 	$query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 		`id` INT(7) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		`nick` VARCHAR(20) NOT NULL,

@@ -36,7 +36,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 	// get auction data
 	$query = "SELECT a.title, a.description, a.category, a.closed, a.suspended, m.reason FROM " . $DBPrefix . "auctions a
 	LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
-	WHERE id = :auc_id";
+	WHERE a.id = :auc_id";
 	$params = array();
 	$params[] = array(':auc_id', $id, 'int');
 	$db->query($query, $params);
@@ -44,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes")
 
 	if ($auc_data['suspended'] > 0)
 	{
-		if ($auc_data['reason'] == 1)
+		if (!is_null($auc_data['reason']) && $auc_data['reason'] == 1)
 		{
 			alert_auction_watchers($id, $auc_data['title'], $auc_data['description']);
 

@@ -16,10 +16,8 @@
 				<!-- BEGIN auctions -->
 				<tr {auctions.BG}>
 					<td>
-						<!-- IF auctions.SUSPENDED eq 1 -->
+						<!-- IF auctions.SUSPENDED > 0 -->
 						<span style="color:#FF0000">{auctions.TITLE}</span>
-						<!-- ELSEIF auctions.SUSPENDED eq 2 -->
-						<span style="color:#B000F0">{auctions.TITLE}</span>
 						<!-- ELSE -->
 							<!-- IF auctions.TIMESREPORTED > 0 -->
 							<span style="color:#FFA500">{auctions.TITLE}</span>
@@ -38,10 +36,11 @@
 					<td align="left">
 						<a href="editauction.php?id={auctions.ID}&offset={PAGE}">{L_298}</a><br>
 						<a href="deleteauction.php?id={auctions.ID}&offset={PAGE}">{L_008}</a><br>
+						<a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">
 					<!-- IF auctions.SUSPENDED eq 0 -->
-						<a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">{L_300}
+						{L_300}
 					<!-- ELSE -->
-						<a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">{L_310}
+						{L_310}
 					<!-- ENDIF -->
 						</a>
 					<!-- IF auctions.IN_MODERATION_QUEUE -->

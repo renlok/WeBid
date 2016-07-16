@@ -39,6 +39,9 @@
 						{L_310}
 					<!-- ENDIF -->
 						</a>
+					<!-- IF auctions.IN_MODERATION_QUEUE -->
+						<br><a href="removefrommoderation.php?id={auctions.ID}&offset={PAGE}">{L_moderator_dismiss}</a>
+					<!-- ENDIF -->
 					<!-- IF auctions.B_HASWINNERS -->
 						<br><a href="viewwinners.php?id={auctions.ID}&offset={PAGE}">{L__0163}</a>
 					<!-- ENDIF -->

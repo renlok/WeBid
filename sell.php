@@ -113,6 +113,8 @@ switch ($_SESSION['action'])
 			$fee = $fee_data[0];
 			$fee_data = $fee_data[1];
 
+			$requires_premoderation = false;
+
 			if ($_SESSION['SELL_action'] == 'edit')
 			{
 				updateauction();
@@ -125,6 +127,25 @@ switch ($_SESSION['action'])
 				$auction_id = $db->lastInsertId();
 				//print_r($db);
 				$_SESSION['SELL_auction_id'] = $auction_id;
+
+				if ($system->SETTINGS['use_moderation'] && $system->SETTINGS['auction_moderation'])
+				{
+					switch ($system->SETTINGS['new_auction_moderation']) {
+						case 1:
+							$requires_premoderation = true;
+
+							$query = "UPDATE `" . $DBPrefix . "auctions` SET `suspended` = 1 WHERE id = :auction_id";
+							$params = array();
+							$params[] = array(':auction_id', $auction_id, 'int');
+							$db->query($query, $params);
+						case 2:
+							$query = "INSERT INTO `" . $DBPrefix . "auction_moderation` (`auction_id`, `reason`) VALUES (:auction_id, '1')";
+							$params = array();
+							$params[] = array(':auction_id', $auction_id, 'int');
+							$db->query($query, $params);
+							break;
+					}
+				}
 			}
 
 			$addcounter = true;
@@ -155,39 +176,42 @@ switch ($_SESSION['action'])
 				}
 			}
 
-			if ($addcounter && $_SESSION['SELL_action'] != 'edit')
+			if (!$requires_premoderation)
 			{
-				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
-				$db->direct_query($query);
-			}
-			elseif (!$addcounter && $_SESSION['SELL_action'] == 'edit')
-			{
-				$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions - 1";
-				$db->direct_query($query);
-			}
-
-			// no fees are due and your not editing the auction so add to the auction count
-			if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit')
-			{
-				// update recursive categories
-				update_cat_counters(true, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
-			}
-
-			// fees are due and you are editing the auction so remove the auction count
-			if (!$addcounter && $_SESSION['SELL_action'] == 'edit')
-			{
-				// update recursive categories
-				update_cat_counters(false, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
-			}
-
-			// if editing the auction and the categories have been changed
-			if ($_SESSION['SELL_action'] == 'edit' && ($_SESSION['SELL_sellcat1'] != $_SESSION['SELL_original_sellcat1'] || $_SESSION['SELL_sellcat2'] != $_SESSION['SELL_original_sellcat2']))
-			{
-				if ($_SESSION['SELL_sellcat1'] != $_SESSION['SELL_original_sellcat1'] || $_SESSION['SELL_sellcat2'] != $_SESSION['SELL_original_sellcat2'])
+				if ($addcounter && $_SESSION['SELL_action'] != 'edit')
 				{
-					// remove the old category count and add to the new one
+					$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions + 1";
+					$db->direct_query($query);
+				}
+				elseif (!$addcounter && $_SESSION['SELL_action'] == 'edit')
+				{
+					$query = "UPDATE " . $DBPrefix . "counters SET auctions = auctions - 1";
+					$db->direct_query($query);
+				}
+
+				// no fees are due and your not editing the auction so add to the auction count
+				if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit')
+				{
+					// update recursive categories
+					update_cat_counters(true, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
+				}
+
+				// fees are due and you are editing the auction so remove the auction count
+				if (!$addcounter && $_SESSION['SELL_action'] == 'edit')
+				{
+					// update recursive categories
 					update_cat_counters(false, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
-					update_cat_counters(true, $_SESSION['SELL_original_sellcat1'], $_SESSION['SELL_original_sellcat2']);
+				}
+
+				// if editing the auction and the categories have been changed
+				if ($_SESSION['SELL_action'] == 'edit' && ($_SESSION['SELL_sellcat1'] != $_SESSION['SELL_original_sellcat1'] || $_SESSION['SELL_sellcat2'] != $_SESSION['SELL_original_sellcat2']))
+				{
+					if ($_SESSION['SELL_sellcat1'] != $_SESSION['SELL_original_sellcat1'] || $_SESSION['SELL_sellcat2'] != $_SESSION['SELL_original_sellcat2'])
+					{
+						// remove the old category count and add to the new one
+						update_cat_counters(false, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
+						update_cat_counters(true, $_SESSION['SELL_original_sellcat1'], $_SESSION['SELL_original_sellcat2']);
+					}
 				}
 			}
 
@@ -205,6 +229,7 @@ switch ($_SESSION['action'])
 					closedir($dir);
 				}
 			}
+
 			// Create pictures gallery if any
 			if ($system->SETTINGS['picturesgallery'] == 1 && count($UPLOADED_PICTURES) > 0)
 			{
@@ -240,53 +265,32 @@ switch ($_SESSION['action'])
 					rmdir(UPLOAD_PATH . session_id());
 				}
 			}
+
 			if (!isset($_SESSION['SELL_action']) || empty($_SESSION['SELL_action']))
 			{
-				// Send notification if users keyword matches (Auction Watch)
-				$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != '' AND id != :user_id";
-				$params = array();
-				$params[] = array(':user_id', $user->user_data['id'], 'int');
-				$db->query($query, $params);
-				$sent_to = array();
-				while ($row = $db->fetch())
+				if (!$requires_premoderation)
 				{
-					if (isset($match)) unset($match);
-					$w_title = explode(' ', strtolower($_SESSION['SELL_title']));
-					$w_descr = explode(' ', strtolower(str_replace(array('<br>', "\n"), '', strip_tags($_SESSION['SELL_description']))));
-					$w_nick = strtolower($user->user_data['nick']);
-					$key = explode(' ', $row['auc_watch']);
-					if (is_array($key) && count($key) > 0)
-					{
-						foreach ($key as $k => $v)
-						{
-							$v = trim(strtolower($v));
-							if ((in_array($v, $w_title) || in_array($v, $w_descr) || $v == $w_nick) && !in_array($row['id'], $sent_to))
-							{
-								$emailer = new email_handler();
-								$emailer->assign_vars(array(
-										'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $_SESSION['SELL_auction_id'],
-										'SITENAME' =>  $system->SETTINGS['sitename'],
-										'TITLE' => $_SESSION['SELL_title'],
-										'REALNAME' => $row['name'],
-										'KWORD' => $row['auc_watch']
-										));
-								$emailer->email_uid = $row['id'];
-								$emailer->email_sender($row['email'], 'auction_watchmail.inc.php', $system->SETTINGS['sitename'] . '  ' . $MSG['471']);
-								$sent_to[] = $row['id'];
-							}
-						}
-					}
+					alert_auction_watchers($auction_id, $_SESSION['SELL_title'], $_SESSION['SELL_description']);
 				}
-
+				
 				if ($user->user_data['startemailmode'] == 'yes' && $addcounter)
 				{
-					include INCLUDE_PATH . 'email/auction_confirmation.php';
+					if (!$requires_premoderation)
+					{
+						include INCLUDE_PATH . 'email/auction_confirmation.php';
+					}
+					else
+					{
+						include INCLUDE_PATH . 'email/auction_pending_moderation.php';	
+					}
+					
 				}
 				elseif ($user->user_data['startemailmode'] == 'yes')
 				{
 					// awaiting payment
 					include INCLUDE_PATH . 'auction_pending.php';
 				}
+
 				if ($system->SETTINGS['bn_only'] && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100)
 				{
 					$query = "SELECT COUNT(*) as count FROM " . $DBPrefix . "auctions
@@ -321,18 +325,21 @@ switch ($_SESSION['action'])
 					}
 				}
 			}
+			
 			unsetsessions();
 			if (defined('TrackUserIPs'))
 			{
 				// log auction setup IP
 				$system->log('user', 'List Item', $user->user_data['id'], $auction_id);
 			}
+
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{
 				$_SESSION['auction_id'] = $auction_id;
 				header('location: pay.php?a=4');
 				exit;
 			}
+
 			$template->assign_vars(array(
 					'ATYPE_PLAIN' => null,
 					'ERROR' => null,

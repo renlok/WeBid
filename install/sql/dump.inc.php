@@ -145,6 +145,25 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
 # ############################
 
 #
+# Table structure for table `" . $DBPrefix . "auction_moderation`
+#
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auction_moderation`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "auction_moderation` (
+  `id` int(11) NOT NULL auto_increment,
+  `auction_id` int(11) NOT NULL DEFAULT '0',
+  `reason` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY(`id`)
+);";
+
+#
+# Dumping data for table `" . $DBPrefix . "auction_moderation`
+#
+
+
+# ############################
+
+#
 # Table structure for table `" . $DBPrefix . "auction_types`
 #
 
@@ -1565,6 +1584,8 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('ao_bi_enabled', 'bo
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('ao_hi_enabled', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('ao_hpf_enabled', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('archiveafter', 'int', 30, UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('auction_moderation', 'int', '0', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('new_auction_moderation', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('autorelist', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('autorelist_max', 'int', '10', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('banemail', 'str', '', UNIX_TIMESTAMP(), 1);";
@@ -1666,6 +1687,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('admin_theme', 'str'
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('thumb_list', 'int', '120', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('thumb_show', 'int', '120', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('timezone', 'str', 'Europe/London', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('use_moderation', 'bool', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('users_email', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('usersauth', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('version', 'str', '". package_version() ."', UNIX_TIMESTAMP(), 1);";

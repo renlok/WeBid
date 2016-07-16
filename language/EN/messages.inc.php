@@ -1692,3 +1692,23 @@ $MSG['prune_unactivated_users_explain'] = "Automatically delete unactivated user
 
 $MSG['prune_unactivated_users_days'] = "Numbers of days before deleting unactivated accounts";
 $MSG['prune_unactivated_users_days_explain'] = "Numbers of days before deleting unactivated accounts.";
+
+$MSG['moderation_settings'] = 'Moderation Settings';
+$MSG['moderation_disabled'] = 'Disabled';
+$MSG['moderation_pre_moderation'] = 'Pre-moderation';
+$MSG['moderation_post_moderation'] = 'Post-moderation';
+
+$MSG['auction_moderation'] = 'Auction Moderation';
+$MSG['new_auction_moderation'] = 'New auction moderation';
+
+$MSG['moderation_settings_updated'] = "Moderation Settings updated";
+
+$MSG['moderation'] = 'Moderation';
+$MSG['moderate_auctions'] = 'Moderate Auctions';
+$MSG['moderation_queue'] = 'Moderation Queue';
+
+$MSG['moderator_dismiss'] = 'Dismiss';
+$MSG['remove_auction_from_moderation'] = "Remove Auction From Moderation";
+$MSG['remove_auction_from_moderation_explain'] = "Are you sure you want to remove this auction from the moderation queue?<br>This action will not reactivate the auction.";
+
+$MSG['auction_awaiting_approval'] = "Your Auction is Awaiting Approval";

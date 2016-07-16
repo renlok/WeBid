@@ -6,6 +6,10 @@
 					<li class="list-group-item"><a href="{SITEURL}admin/listsuspendedauctions.php">{L_5227}</a></li>
 					<li class="list-group-item"><a href="searchauctions.php">{L_067a}</a></li>
 				</ul>
+				<ul class="list-group">
+					<li class="list-group-item active">{L_moderation}</li>
+					<li class="list-group-item"><a href="{SITEURL}admin/moderateauctions.php">{L_moderation_queue}</a></li>
+				</ul>
 				<div class="panel panel-default">
 					<div class="panel-heading">{L_1061}</div>
 					<div class="panel-body">

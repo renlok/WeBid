@@ -535,6 +535,9 @@ if ($system->SETTINGS['prune_unactivated_users'] == 1)
 		$params = array();
 		$params[] = array(':pruneAccountTime', $pruneAccountTime, 'int');
 		$db->query($query, $params);
+
+		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - " . $pruneCount;
+		$db->direct_query($query);
 	}
 }
 

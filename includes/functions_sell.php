@@ -585,3 +585,44 @@ function check_gateway($gateway)
 		return true;
 	return false;
 }
+
+function alert_auction_watchers($id, $title, $description)
+{
+	global $user, $DBPrefix, $db;
+	
+	// Send notification if users keyword matches (Auction Watch)
+	$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != '' AND id != :user_id";
+	$params = array();
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$db->query($query, $params);
+	$sent_to = array();
+	while ($row = $db->fetch())
+	{
+		$w_title = explode(' ', strtolower($title));
+		$w_descr = explode(' ', strtolower(str_replace(array('<br>', "\n"), '', strip_tags($description))));
+		$w_nick = strtolower($user->user_data['nick']);
+		$key = explode(' ', $row['auc_watch']);
+		if (is_array($key) && count($key) > 0)
+		{
+			foreach ($key as $k => $v)
+			{
+				$v = trim(strtolower($v));
+				if ((in_array($v, $w_title) || in_array($v, $w_descr) || $v == $w_nick) && !in_array($row['id'], $sent_to))
+				{
+					$emailer = new email_handler();
+					$emailer->assign_vars(array(
+							'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $id,
+							'SITENAME' =>  $system->SETTINGS['sitename'],
+							'TITLE' => $title,
+							'REALNAME' => $row['name'],
+							'KWORD' => $row['auc_watch']
+							));
+					$emailer->email_uid = $row['id'];
+					$emailer->email_sender($row['email'], 'auction_watchmail.inc.php', $system->SETTINGS['sitename'] . '  ' . $MSG['471']);
+					$sent_to[] = $row['id'];
+				}
+			}
+		}
+	}
+}
+

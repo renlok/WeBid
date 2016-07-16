@@ -1707,8 +1707,8 @@ $MSG['moderation'] = 'Moderation';
 $MSG['moderate_auctions'] = 'Moderate Auctions';
 $MSG['moderation_queue'] = 'Moderation Queue';
 
-$MSG['moderator_approve'] = 'Approve';
-$MSG['approve_auction'] = "Approve Auction";
-$MSG['approve_auction_confirmation'] = "Are you sure you want to approve this auction?";
+$MSG['moderator_dismiss'] = 'Dismiss';
+$MSG['remove_auction_from_moderation'] = "Remove Auction From Moderation";
+$MSG['remove_auction_from_moderation_explain'] = "Are you sure you want to remove this auction from the moderation queue?<br>This action will not reactivate the auction.";
 
 $MSG['auction_awaiting_approval'] = "Your Auction is Awaiting Approval";

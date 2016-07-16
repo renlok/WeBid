@@ -38,18 +38,15 @@
 					<td align="left">
 						<a href="editauction.php?id={auctions.ID}&offset={PAGE}">{L_298}</a><br>
 						<a href="deleteauction.php?id={auctions.ID}&offset={PAGE}">{L_008}</a><br>
-						
 					<!-- IF auctions.SUSPENDED eq 0 -->
 						<a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">{L_300}
-					<!-- ELSEIF auctions.SUSPENDED eq 1 -->
+					<!-- ELSE -->
 						<a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">{L_310}
-					<!-- ELSEIF auctions.SUSPENDED eq 2 -->
-						<a href="excludeauction.php?id={auctions.ID}&offset={PAGE}">{L_moderator_approve}
 					<!-- ENDIF -->
 						</a>
-						<!-- IF auctions.IN_MODERATION_QUEUE -->
-							<br><a href="approveauction.php?id={auctions.ID}&offset={PAGE}">{L_moderator_approve}</a>
-						<!-- ENDIF -->
+					<!-- IF auctions.IN_MODERATION_QUEUE -->
+						<br><a href="removefrommoderation.php?id={auctions.ID}&offset={PAGE}">{L_moderator_dismiss}</a>
+					<!-- ENDIF -->
 					<!-- IF auctions.B_HASWINNERS -->
 						<br><a href="viewwinners.php?id={auctions.ID}&offset={PAGE}">{L__0163}</a>
 					<!-- ENDIF -->

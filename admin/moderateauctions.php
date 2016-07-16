@@ -50,7 +50,7 @@ $db->direct_query($query);
 $num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
-$query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(r.auction_id) as times_reported FROM " . $DBPrefix . "auctions a
+$query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(r.auction_id) as times_reported, m.reason FROM " . $DBPrefix . "auctions a
 		INNER JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
@@ -66,7 +66,7 @@ while ($row = $db->fetch())
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],
 			'TIMESREPORTED' => $row['times_reported'],
-			'IN_MODERATION_QUEUE' => true,
+			'IN_MODERATION_QUEUE' => !is_null($row['reason']),
 			'ID' => $row['id'],
 			'TITLE' => htmlspecialchars($row['title']),
 			'START_TIME' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),

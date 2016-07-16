@@ -72,7 +72,7 @@ else
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'PAGE_TITLE' => $MSG['approve_auction'],
+		'PAGE_TITLE' => $MSG['remove_auction_from_moderation'],
 		'ID' => $_GET['id'],
 		'TITLE' => htmlspecialchars($auc_data['title']),
 		'NICK' => $auc_data['nick'],
@@ -89,7 +89,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'approveauction.tpl'
+		'body' => 'removefrommoderation.tpl'
 		));
 $template->display('body');
 include 'footer.php';

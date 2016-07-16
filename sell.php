@@ -113,6 +113,8 @@ switch ($_SESSION['action'])
 			$fee = $fee_data[0];
 			$fee_data = $fee_data[1];
 
+			$requires_premoderation = false;
+
 			if ($_SESSION['SELL_action'] == 'edit')
 			{
 				updateauction();
@@ -125,26 +127,24 @@ switch ($_SESSION['action'])
 				$auction_id = $db->lastInsertId();
 				//print_r($db);
 				$_SESSION['SELL_auction_id'] = $auction_id;
-			}
 
-			$requires_premoderation = false;
+				if ($system->SETTINGS['use_moderation'] && $system->SETTINGS['auction_moderation'])
+				{
+					switch ($system->SETTINGS['new_auction_moderation']) {
+						case 1:
+							$requires_premoderation = true;
 
-			if ($system->SETTINGS['use_moderation'] && $system->SETTINGS['auction_moderation'])
-			{
-				switch ($system->SETTINGS['new_auction_moderation']) {
-					case 1:
-						$requires_premoderation = true;
-
-						$query = "UPDATE `" . $DBPrefix . "auctions` SET `suspended` = 2 WHERE id = :auction_id";
-						$params = array();
-						$params[] = array(':auction_id', $auction_id, 'int');
-						$db->query($query, $params);
-					case 2:
-						$query = "INSERT INTO `" . $DBPrefix . "auction_moderation` (`auction_id`, `reason`) VALUES (:auction_id, '0')";
-						$params = array();
-						$params[] = array(':auction_id', $auction_id, 'int');
-						$db->query($query, $params);
-						break;
+							$query = "UPDATE `" . $DBPrefix . "auctions` SET `suspended` = 1 WHERE id = :auction_id";
+							$params = array();
+							$params[] = array(':auction_id', $auction_id, 'int');
+							$db->query($query, $params);
+						case 2:
+							$query = "INSERT INTO `" . $DBPrefix . "auction_moderation` (`auction_id`, `reason`) VALUES (:auction_id, '0')";
+							$params = array();
+							$params[] = array(':auction_id', $auction_id, 'int');
+							$db->query($query, $params);
+							break;
+					}
 				}
 			}
 

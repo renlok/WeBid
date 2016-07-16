@@ -139,7 +139,7 @@ switch ($_SESSION['action'])
 							$params[] = array(':auction_id', $auction_id, 'int');
 							$db->query($query, $params);
 						case 2:
-							$query = "INSERT INTO `" . $DBPrefix . "auction_moderation` (`auction_id`, `reason`) VALUES (:auction_id, '0')";
+							$query = "INSERT INTO `" . $DBPrefix . "auction_moderation` (`auction_id`, `reason`) VALUES (:auction_id, '1')";
 							$params = array();
 							$params[] = array(':auction_id', $auction_id, 'int');
 							$db->query($query, $params);

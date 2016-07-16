@@ -37,6 +37,7 @@
 <body>
 <div class="container">
 	<div class="row header">
+		<a class="" href="{SITEURL}index.php">
 		<div class="col-md-6"><img src="{SITEURL}uploaded/logo/{LOGO}" border="0" alt="{SITENAME}"></div>
 		<div class="col-md-6 hidden-xs text-right">{BANNER}</div>
 	</div>

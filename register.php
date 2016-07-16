@@ -428,7 +428,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
 $db->direct_query($query);
-$signup_fee = $db->result();
+$signup_fee = $db->result('value');
 
 $country_dropdown = '';
 
@@ -511,7 +511,7 @@ $template->assign_vars(array(
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_FIRST' => $first,
-		'B_FEES' => ($signup_fee['value'] > 0),
+		'B_FEES' => ($signup_fee > 0),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
 		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
@@ -543,7 +543,7 @@ $template->assign_vars(array(
 		'MISSING9' => ($missing['country']) ? 1 : 0,
 		'MISSING10' => ($missing['zip']) ? 1 : 0,
 		'MISSING11' => ($missing['tel']) ? 1 : 0,
-		'FEES'=> $system->print_money($signup_fee['value']),
+		'FEES'=> $system->print_money($signup_fee),
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
 		'V_NNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 2) ? 'checked=true' : '',

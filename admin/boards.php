@@ -37,7 +37,7 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 // get list of boards
 $query = "SELECT * FROM " . $DBPrefix . "community ORDER BY name";
 $db->direct_query($query);
-while ($row = $db->result())
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('boards', array(
 			'ID' => $row['id'],

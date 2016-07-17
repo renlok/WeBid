@@ -186,7 +186,7 @@ $bg = '';
 
 $db->query($query, $params);
 
-while ($row = $db->result())
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('users', array(
 			'ID' => $row['id'],

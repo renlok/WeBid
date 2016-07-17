@@ -159,7 +159,7 @@ $params = array();
 $params[] = array(':banner_id', $banner, 'int');
 $db->query($query, $params);
 $bg = '';
-while ($row = $db->result())
+while ($row = $db->fetch())
 {
 	$BANNER = $row;
 	$template->assign_block_vars('banners', array(
@@ -211,7 +211,7 @@ $params[] = array(':banner_id', $banner, 'int');
 $db->query($query, $params);
 if ($db->numrows() > 0)
 {
-	while ($row = $db->result())
+	while ($row = $db->fetch())
 	{
 		$KEYWORDS .= $row['keyword'] . "\n";
 	}

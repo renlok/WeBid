@@ -70,7 +70,7 @@ function getTax($is_auction, $buyer_from, $seller_from = '')
 	}
 	else
 	{
-		$tax_rate = $db->result();
+		$tax_rate = $db->result('tax_rate');
 	}
 
 	return $tax_rate;

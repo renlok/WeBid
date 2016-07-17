@@ -25,7 +25,7 @@ $query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY im
 $db->direct_query($query);
 if ($db->numrows() > 0)
 {
-	while ($row = $db->result())
+	while ($row = $db->fetch())
 	{
 		$CURRENCIES[$row['id']] = $row['symbol'] . '&nbsp;' . $row['ime'] . '&nbsp;(' . $row['valuta'] . ')';
 		$CURRENCIES_SYMBOLS[$row['id']] = $row['symbol'];

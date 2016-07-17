@@ -35,7 +35,7 @@ function rebuild_cat_file()
 	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
 	$db->direct_query($query);
 	$cats = array();
-	while ($catarr = $db->result())
+	while ($catarr = $db->fetch())
 	{
 		$cats[$catarr['cat_id']] = $catarr['cat_name'];
 		$allcats[] = $catarr;

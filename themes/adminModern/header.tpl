@@ -7,7 +7,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="generator" content="WeBid">
 
-	<link rel="stylesheet" media="screen,projection" type="text/css" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/style.css">

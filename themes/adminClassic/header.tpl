@@ -4,6 +4,7 @@
 	<title>WeBid Administration back-end</title>
 	<meta http-equiv="content-type" content="text/html; charset={CHARSET}" />
 
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/style.css" />
 

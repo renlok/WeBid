@@ -3,8 +3,8 @@
 <title>{SITENAME}</title>
 <link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/style.css">
 <link type="text/css" rel="stylesheet" href="{SITEURL}js/pluploadjs/jquery.plupload.queue/css/jquery.plupload.queue.css" media="screen">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 
+<script type="text/javascript" src="{SITEURL}js/jquery.js"></script>
 <script type="text/javascript" src="{SITEURL}js/pluploadjs/plupload.full.min.js"></script>
 <script type="text/javascript" src="{SITEURL}js/pluploadjs/jquery.plupload.queue/jquery.plupload.queue.min.js"></script>
 

@@ -1,6 +1,6 @@
 Order Allow,Deny
 Deny from all
-<FilesMatch "\.(jpe?g|gif|png)$">
+<FilesMatch "(?i)\.(jpe?g|gif|png)$">
 Order Deny,Allow
 Allow from all
 </FilesMatch>

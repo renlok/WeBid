@@ -47,7 +47,7 @@ function setvars()
 	$imgtype = (isset($_POST['imgtype'])) ? $_POST['imgtype'] : $_SESSION['SELL_file_uploaded'];
 	$title = (isset($_POST['title'])) ? $system->cleanvars($_POST['title']) : $_SESSION['SELL_title'];
 	$subtitle = (isset($_POST['subtitle'])) ? $system->cleanvars($_POST['subtitle']) : $_SESSION['SELL_subtitle'];
-	$sdescription = (isset($_POST['sdescription'])) ? $system->cleanvars($_POST['sdescription'], true) : $_SESSION['SELL_description'];
+	$sdescription = $_SESSION['SELL_description'];
 	$pict_url = (isset($_POST['pict_url'])) ? $_POST['pict_url'] : $_SESSION['SELL_pict_url'];
 	$atype = (isset($_POST['atype'])) ? $_POST['atype'] : $_SESSION['SELL_atype'];
 	$iquantity = (int)(isset($_POST['iquantity'])) ? $_POST['iquantity'] : $_SESSION['SELL_iquantity'];

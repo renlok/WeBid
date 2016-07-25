@@ -183,8 +183,8 @@ $(document).ready(function() {
 					<div class="panel-heading"><b>{L_30_0209}</b></div>
 					<div class="panel-body">
 						<div>
-							<a href='{SITEURL}profile.php?user_id={SELLER_ID}&auction_id={ID}'><b>{SELLER_NICK}</b></a>
-							(<a href='{SITEURL}feedback.php?id={SELLER_ID}&faction=show'>{SELLER_TOTALFB}</A>)
+							<a href='{SITEURL}profile.php?user_id={SELLER_ID}&amp;auction_id={ID}'><b>{SELLER_NICK}</b></a>
+							(<a href='{SITEURL}feedback.php?id={SELLER_ID}&amp;faction=show'>{SELLER_TOTALFB}</A>)
 							{SELLER_FBICON}
 						</div>
 						<div>

@@ -10,9 +10,13 @@
 		</div>
 	<!-- ENDIF -->
 		<div class="table2">
-			<form name="registration" action="{SSLURL}register.php" method="post">
+			<form name="registration" action="{SITEURL}register.php" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="90%" border="0" cellpadding="4" cellspacing="0">
+					<tr>
+						<td width="40%" valign="top" align="right"></td>
+						<td width="60%" ><h2>{L_894}</h2></td>
+					</tr>
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_002}</b> *</td>
 						<td width="60%">
@@ -55,6 +59,12 @@
 							{L_DATEFORMAT} <input type="text" name="TPL_year" size="4" maxlength="4" value="{V_YEAR}" <!-- IF MISSING5 eq 1 -->class="missing"<!-- ENDIF -->>
 							<!-- IF MISSING5 eq 1 --><div class="error-box missing">{L_948}</div><!-- ENDIF -->
 						</td>
+					</tr>
+		<!-- ENDIF -->
+		<!-- IF ADDRESS or CITY or PROV or COUNTRY -->
+					<tr>
+						<td width="40%" valign="top" align="right"></td>
+						<td width="60%" ><h2>{L_009}</h2></td>
 					</tr>
 		<!-- ENDIF -->
 		<!-- IF ADDRESS -->
@@ -115,9 +125,13 @@
 					</tr>
 		<!-- ENDIF -->
 					<tr>
+						<td width="40%" valign="top" align="right"></td>
+						<td width="60%" ><h2>{L_5233}</h2></td>
+					</tr>
+					<tr>
 						<td valign="top" align="right">{L_346}</td>
 						<td>
-							{!TIMEZONE!}
+							{TIMEZONE}
 						</td>
 					</tr>
 		<!-- IF B_NLETTER -->
@@ -131,65 +145,34 @@
 						</td>
 					</tr>
 		<!-- ENDIF -->
-				</table>
-				<table width="90%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
 						<td width="40%" valign="top" align="right"></td>
 						<td width="60%" ><h2>{L_719}</h2></td>
 					</tr>
-				<!-- IF B_PAYPAL -->
+				<!-- BEGIN gateways -->
 					<tr>
-						<td align="right" width="30%">{L_720}{REQUIRED(7)}</td>
+						<td align="right" width="30%">{gateways.ADDRESS_NAME}{gateways.REQUIRED}</td>
 						<td>
-							<input type="text" name="TPL_pp_email" size=40 value="{PP_EMAIL}" <!-- IF MISSING12 eq 1 -->class="missing"<!-- ENDIF -->>
-							<!-- IF MISSING12 eq 1 --><div class="error-box missing">{L_810}</div><!-- ENDIF -->
+							<input type="hidden" name="{gateways.PLAIN_NAME}[id]" value="{gateways.GATEWAY_ID}">
+							<input type="text" name="{gateways.PLAIN_NAME}[address]" size=40 value="{gateways.ADDRESS}" <!-- IF gateways.MISSING eq 1 -->class="missing"<!-- ENDIF -->>
+							<!-- IF gateways.MISSING eq 1 --><div class="error-box missing">{gateways.ERROR_STRING}</div><!-- ENDIF -->
 						</td>
 					</tr>
-				<!-- ENDIF -->
-				<!-- IF B_AUTHNET -->
-					<tr>
-						<td align="right" width="30%">{L_773}{REQUIRED(8)}</td>
-						<td>
-							<input type="text" name="TPL_authnet_id" size=40 value="{AN_ID}" <!-- IF MISSING13 eq 1 -->class="missing"<!-- ENDIF -->>
-							<!-- IF MISSING13 eq 1 --><div class="error-box missing">{L_811}</div><!-- ENDIF -->
-						</td>
-					</tr>
-					<tr>
-						<td align="right" width="30%">{L_774}{REQUIRED(8)}</td>
-						<td>
-							<input type="text" name="TPL_authnet_pass" size=40 value="{AN_PASS}" <!-- IF MISSING13 eq 1 -->class="missing"<!-- ENDIF -->>
-						</td>
-					</tr>
-				<!-- ENDIF -->
-				<!-- IF B_WORLDPAY -->
-					<tr>
-						<td align="right" width="30%">{L_824}{REQUIRED(9)}</td>
-						<td>
-							<input type="text" name="TPL_worldpay_id" size=40 value="{WP_ID}" <!-- IF MISSING14 eq 1 -->class="missing"<!-- ENDIF -->>
-							<!-- IF MISSING14 eq 1 --><div class="error-box missing">{L_823}</div><!-- ENDIF -->
-						</td>
-					</tr>
-				<!-- ENDIF -->
-				<!-- IF B_TOOCHECKOUT -->
-					<tr>
-						<td align="right" width="30%">{L_826}{REQUIRED(10)}</td>
-						<td>
-							<input type="text" name="TPL_toocheckout_id" size=40 value="{TC_ID}" <!-- IF MISSING15 eq 1 -->class="missing"<!-- ENDIF -->>
-							<!-- IF MISSING15 eq 1 --><div class="error-box missing">{L_821}</div><!-- ENDIF -->
-						</td>
-					</tr>
-				<!-- ENDIF -->
-				<!-- IF B_MONEYBOOKERS -->
-					<tr>
-						<td align="right" width="30%">{L_825}{REQUIRED(11)}</td>
-						<td>
-							<input type="text" name="TPL_moneybookers_email" size=40 value="{MB_EMAIL}" <!-- IF MISSING16 eq 1 -->class="missing"<!-- ENDIF -->>
-							<!-- IF MISSING16 eq 1 --><div class="error-box missing">{L_822}</div><!-- ENDIF -->
-						</td>
-					</tr>
-				<!-- ENDIF -->
+					<!-- IF gateways.B_PASSWORD -->
 						<tr>
-						<td colspan="2">{!CAPCHA!}</td>
+							<td align="right" width="30%">{gateways.PASSWORD_NAME}{gateways.REQUIRED}</td>
+							<td>
+								<input type="text" name="{gateways.PLAIN_NAME}[password]" size=40 value="{gateways.PASS}" <!-- IF gateways.MISSING eq 1 -->class="missing"<!-- ENDIF -->>
+							</td>
+						</tr>
+					<!-- ELSE -->
+						<input type="hidden" name="{gateways.PLAIN_NAME}[password]" value="">
+					<!-- ENDIF -->
+				<!-- END gateways -->
+						<tr>
+						<td colspan="2">
+							{CAPCHA}
+						</td>
 					</tr>
 				</table>
 				<!-- IF B_FEES -->

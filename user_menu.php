@@ -18,6 +18,7 @@ include 'common.php';
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	header('location: user_login.php');
 	exit;
 }
@@ -59,7 +60,7 @@ function get_reminders($secid)
 	$query = "SELECT COUNT(DISTINCT b.auction) AS total FROM " . $DBPrefix . "bids b
 			LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
 			WHERE b.bidder = :bidder AND a.ends <= :timer
-			AND a.closed = 0 GROUP BY b.auction";
+			AND a.closed = 0 AND a.bn_only = 0 GROUP BY b.auction";
 	$params = array();
 	$params[] = array(':bidder', $secid, 'int');
 	$params[] = array(':timer', (time() + (3600 * 24)), 'int');
@@ -100,7 +101,7 @@ function get_reminders($secid)
 }
 
 // Send buyer's request to the administrator
-if (isset($_POST['requesttoadmin']))
+if (isset($_POST['requesttoadmin']) && $system->SETTINGS['user_request_seller_permission'])
 {
 	$emailer = new email_handler();
 	$emailer->assign_vars(array(
@@ -163,6 +164,7 @@ switch ($_SESSION['cptab'])
 
 $template->assign_vars(array(
 		'B_CANSELL' => ($user->can_sell),
+		'B_CANREQUESTSELL' => ($system->SETTINGS['user_request_seller_permission']),
 
 		'TMPMSG' => (isset($_SESSION['TMP_MSG'])) ? $_SESSION['TMP_MSG'] : '',
 		'THISPAGE' => $_SESSION['cptab']

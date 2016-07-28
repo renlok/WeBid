@@ -36,7 +36,7 @@
 					<div class="col-sm-9"><input type="text" name="sender_email" class="form-control" value="{YOUR_EMAIL}"></div>
 				</div>
 				<div class="form-group">
-					<div class="capchabox2">{!CAPCHA!}</div>
+					<div class="capchabox2">{CAPCHA}</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{L_144}</label>

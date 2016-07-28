@@ -166,7 +166,6 @@ foreach ($auction_data as $Auction) // loop auctions
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$db->query($query, $params);
 
-			$decrem = $decrem + $db->numrows();
 			$WINNERS_ID = array();
 			$winner_array = array();
 			$bid_data = $db->fetchall();
@@ -222,6 +221,7 @@ foreach ($auction_data as $Auction) // loop auctions
 		{
 			if (!in_array($row['bidder'], $WINNERS_ID))
 			{
+				$winner_present = true;
 				$items_wanted = $row['quantity'];
 				$items_got = 0;
 				if ($items_wanted <= $items_count)
@@ -382,21 +382,11 @@ foreach ($auction_data as $Auction) // loop auctions
 
 	if ($winner_present)
 	{
-		if ($Auction['bn_only'] == 0)
+		if ($Auction['bn_only'] == 0 && $atype != 2)
 		{
 			// Send mail to the seller
 			$added_winner_names = array();
-			if (isset($winner_array) && is_array($winner_array) && count($winner_array) > 0)
-			{
-				for ($i = 0, $count = count($winner_array); $i < $count; $i++)
-				{
-					// Send mail to the buyer
-					$Winner = $winner_array[$i];
-					include INCLUDE_PATH . 'email/endauction_youwin.php';
-					$added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
-				}
-			}
-			elseif (is_array($Winner))
+			if (is_array($Winner))
 			{
 				// Send mail to the buyer
 				$added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
@@ -428,43 +418,42 @@ foreach ($auction_data as $Auction) // loop auctions
 			// emails for buyers already sent in buy_now.php
 			// email to seller for partial items already sent in buy_now.php
 			// prepare to send auction closed to seller
-
-			//if buy_now there is not maxbid
-			if ($Winner['maxbid'] == 0 && $Auction['buy_now'])
-			{
-				// TODO: This could have errors with reserved price
-				$Winner['maxbid'] = $Auction['buy_now'];
-			}
-
 			// retreive buyers
 			if (isset($winner_array) && is_array($winner_array) && count($winner_array) > 0)
 			{
 				$added_winner_names = array();
 				foreach ($winner_array as $key => $value)
 				{
+					if ($atype == 2)
+					{
+						// Send mail to the buyer
+						$Winner = $value;
+						include INCLUDE_PATH . 'email/endauction_youwin.php';
+					}
 					$added_winner_names[] = $value['nick'] . ' (<a href="mailto:' . $value['email'] . '">' . $value['email'] . '</a>)';
 				}
 				$added_winner_names_cs = implode(",<br>", $added_winner_names);
-			}
-			// Send mail to the seller
-			if ($Seller['endemailmode'] != 'cum')
-			{
-				$report_text = $added_winner_names_cs;
-				include INCLUDE_PATH . 'email/seller_end_buynowonly.php';
-			}
-			else
-			{
-				// Add in the database to send later as cumulitave email to seller
-				$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
-						(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
-				$params = array();
-				$params[] = array(':auc_id', $Auction['id'], 'int');
-				$params[] = array(':seller_id', $Seller['id'], 'int');
-				$params[] = array(':winner_names', $added_winner_names_cs, 'str');
-				$params[] = array(':auc_data', serialize($Auction), 'str');
-				$params[] = array(':seller_data', serialize($Seller), 'str');
-				$params[] = array(':date', gmdate('Ymd'), 'str');
-				$db->query($query, $params);
+
+				// Send mail to the seller
+				if ($Seller['endemailmode'] != 'cum')
+				{
+					$report_text = $added_winner_names_cs;
+					include INCLUDE_PATH . 'email/seller_end_buynowonly.php';
+				}
+				else
+				{
+					// Add in the database to send later as cumulitave email to seller
+					$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
+							(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
+					$params = array();
+					$params[] = array(':auc_id', $Auction['id'], 'int');
+					$params[] = array(':seller_id', $Seller['id'], 'int');
+					$params[] = array(':winner_names', $added_winner_names_cs, 'str');
+					$params[] = array(':auc_data', serialize($Auction), 'str');
+					$params[] = array(':seller_data', serialize($Seller), 'str');
+					$params[] = array(':date', gmdate('Ymd'), 'str');
+					$db->query($query, $params);
+				}
 			}
 		}
 	}
@@ -571,9 +560,9 @@ if ($num > 0)
 		$db->query($query, $params);
 
 		// Delete all images
-		if (file_exists(UPLOAD_PATH . $AuctionInfo['id']))
+		if (is_dir(UPLOAD_PATH . $AuctionInfo['id']))
 		{
-			if ($dir = @opendir(UPLOAD_PATH . $AuctionInfo['id']))
+			if ($dir = opendir(UPLOAD_PATH . $AuctionInfo['id']))
 			{
 				while ($file = readdir($dir))
 				{
@@ -583,7 +572,7 @@ if ($num > 0)
 					}
 				}
 				closedir($dir);
-				@rmdir(UPLOAD_PATH . $AuctionInfo['id']);
+				rmdir(UPLOAD_PATH . $AuctionInfo['id']);
 			}
 		}
 	}

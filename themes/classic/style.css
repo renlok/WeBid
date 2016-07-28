@@ -1,7 +1,6 @@
 .board	{ width: inherit; padding: 5px; clear: both; text-align: center; }
 .border	{ border: 1px solid #D6D6D6; }
 .catsearch	{ background-color: #FFFF99; color: #333333; }
-.container	{ background-color: #ffffff; }
 .errfont	{ background-color: #FFFF00; font-weight: bold; font-family: Verdana, Arial, Sans; color: #FF0000; text-align: center; }
 .footer	{ clear: both; padding: 5px; text-align: center; font-size: x-small; }
 .hg	{ background-color: #FFFF99; }
@@ -19,7 +18,6 @@ dl.tabs	{ margin: 0 0 0 5px; padding: 0; width: 100%; font-size: 13px; }
 dl.tabs dd	{ margin: 1px; padding: 5px; float: left; background: transparent url(img/bot_deg.gif) repeat; border-top: 1px solid #AEACAC; border-right: 1px solid #AEACAC; border-bottom: 0px; border-left: 1px solid #AEACAC; }
 dl.tabs dd.active { background: transparent url(img/bot_rev.gif) repeat !important; }
 li	{ padding-bottom: 5px; }
-table.container	{ float: none; }
 th	{ color: #787878; font-size: 12px; background-color: #c2e5ff; font-weight: bold; text-transform: capitalize; padding: 0.3ex; }
 ul	{ padding-left: 20px; list-style: url(img/bullet.gif) none; line-height: 1em; }
 .footer a:hover , .footer a:active	{ color: #6DC0FC; }
@@ -46,6 +44,10 @@ body {
 	border:#C9C9C9 1px solid;
 	padding-top:10px;
 	min-width: 900px;
+}
+
+.container {
+	padding: 10px;
 }
 
 h1 { font-size: 1.9em; line-height: 1; margin-bottom: 0.5em; padding:0.1em 0; font-weight:200; }
@@ -92,7 +94,7 @@ td {
 	width:100%;
 }
 
-.smallspan {
+.smallspan, .small {
 	font-size:10px;
 }
 
@@ -286,9 +288,10 @@ a:hover {
 }
 
 .info-box, .error-box, .warning-box, .success-box {
-	padding: 4px 0 4px 22px;
-	margin: 3px 0;
+	padding: 15px 20px !important;
+	margin: 10px;
 	font-size: 1.1em;
+	text-align: center;
 }
 
 .missing {

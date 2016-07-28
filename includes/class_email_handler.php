@@ -20,7 +20,7 @@ class email_handler
 
 	public function __construct()
 	{
-		include PACKAGE_PATH . 'PHPMailer/PHPMailerAutoload.php';
+		include_once PACKAGE_PATH . 'PHPMailer/PHPMailerAutoload.php';
 	}
 
 	function build_header()

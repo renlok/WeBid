@@ -21,14 +21,6 @@ if ($system->SETTINGS['cron'] == 2)
 	include_once 'cron.php';
 }
 
-if ($system->SETTINGS['loginbox'] == 1 && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('Location: ' . $sslurl . 'index.php');
-	exit;
-}
-
 $NOW = time();
 
 function ShowFlags()
@@ -73,8 +65,21 @@ $params[] = array(':parent_id', $parent_id, 'int');
 $params[] = array(':limit', $system->SETTINGS['catstoshow'], 'int');
 $db->query($query, $params);
 
+$cat_strings = [];
+$categories = [];
 while ($row = $db->fetch())
 {
+	$cat_strings[$row['cat_id']] = $category_names[$row['cat_id']];
+	$categories[$row['cat_id']] = $row;
+}
+// sort the categories
+if ($system->SETTINGS['catsorting'] == 'alpha')
+{
+	asort($cat_strings);
+}
+foreach ($cat_strings as $cat_id => $category_name)
+{
+	$row = $categories[$cat_id];
 	$template->assign_block_vars('cat_list', array(
 			'CATAUCNUM' => ($row['sub_counter'] != 0) ? $row['sub_counter'] : '',
 			'ID' => $row['cat_id'],
@@ -89,9 +94,10 @@ $query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, 
 		FROM " . $DBPrefix . "auctions
 		WHERE closed = 0 AND suspended = 0 AND starts <= :time
 		AND featured = 1
-		ORDER BY RAND() DESC LIMIT 12";
+		ORDER BY RAND() DESC LIMIT :limit";
 $params = array();
 $params[] = array(':time', $NOW, 'int');
+$params[] = array(':limit', $system->SETTINGS['homefeaturednumber'], 'int');
 $db->query($query, $params);
 
 $i = 0;

@@ -20,6 +20,7 @@ $id = intval($_GET['id']);
 // Is the seller logged in?
 if (!$user->logged_in)
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');
 	exit;
@@ -112,7 +113,7 @@ if (!isset($_POST['action'])) // already closed auctions
 			$_SESSION['SELL_customincrement']	= 0;
 		}
 		$_SESSION['SELL_shipping_cost']	 = $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost']);
-		$_SESSION['SELL_additional_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['shipping_cost_additional']);
+		$_SESSION['SELL_additional_shipping_cost']	= $system->print_money_nosymbol($RELISTEDAUCTION['additional_shipping_cost']);
 		$_SESSION['SELL_shipping']		 = $RELISTEDAUCTION['shipping'];
 		$_SESSION['SELL_shipping_terms'] = $system->uncleanvars($RELISTEDAUCTION['shipping_terms']);
 		$_SESSION['SELL_payment']		 = explode(', ', $RELISTEDAUCTION['payment']);
@@ -124,9 +125,9 @@ if (!isset($_POST['action'])) // already closed auctions
 		// get gallery images
 		$UPLOADED_PICTURES = array();
 		$file_types = array('gif', 'jpg', 'jpeg', 'png');
-		if (is_dir(UPLOAD_PATH . intval($_GET['id'])))
+		if (is_dir(UPLOAD_PATH . $id))
 		{
-			$dir = opendir(UPLOAD_PATH . intval($_GET['id']));
+			$dir = opendir(UPLOAD_PATH . $id);
 			while (($myfile = readdir($dir)) !== false)
 			{
 				if ($myfile != '.' && $myfile != '..' && !is_file($myfile))
@@ -160,13 +161,13 @@ if (!isset($_POST['action'])) // already closed auctions
 		}
 
 		$_SESSION['SELL_action'] = 'edit';
-		if ($_SESSION['SELL_starts'] > $NOW)
+		if ($RELISTEDAUCTION['starts'] > $NOW)
 		{
-			$_SESSION['editstartdate'] = true;
+			$_SESSION['SELL_caneditstartdate'] = true;
 		}
 		else
 		{
-			$_SESSION['editstartdate'] = false;
+			$_SESSION['SELL_caneditstartdate'] = false;
 		}
 		header('location: sell.php?mode=recall');
 	}

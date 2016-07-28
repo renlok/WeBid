@@ -17,6 +17,7 @@ include INCLUDE_PATH . 'membertypes.inc.php';
 
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourfeedback.php';
 	header('location: user_login.php');
 	exit;

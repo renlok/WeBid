@@ -25,7 +25,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accesseshistoric` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "accounts`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
-	`id` INT(7) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`id` INT(7) NOT NULL AUTO_INCREMENT,
 	`nick` VARCHAR(20) NOT NULL,
 	`name` TINYTEXT NOT NULL,
 	`text` TEXT NOT NULL,
@@ -35,7 +35,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 	`day` INT(3) NOT NULL,
 	`week` INT(2) NOT NULL,
 	`month` INT(2) NOT NULL,
-	`year` INT(4) NOT NULL
+	`year` INT(4) NOT NULL,
+    PRIMARY KEY  (`id`)
 )";
 
 #
@@ -58,7 +59,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `lastlogin` varchar(14) NOT NULL default '',
   `status` tinyint(1) NOT NULL default '0',
   `notes` text,
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -91,8 +92,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auccounter` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "auctions`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
-  `id` int(32) NOT NULL auto_increment,
-  `user` int(32) default NULL,
+  `id` int(11) NOT NULL auto_increment,
+  `user` int(11) default NULL,
   `title` varchar(70),
   `subtitle` varchar(70),
   `starts` varchar(14) default NULL,
@@ -102,7 +103,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `secondcat` int(11) default NULL,
   `minimum_bid` double(16,2) default '0',
   `shipping_cost` double(16,2) default '0',
-  `shipping_cost_additional` double(16,2) default '0',
+  `additional_shipping_cost` double(16,2) default '0',
   `reserve_price` double(16,2) default '0',
   `buy_now` double(16,2) default '0',
   `auction_type` int(1),
@@ -132,8 +133,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `tax` tinyint(1) default 0,
   `taxinc` tinyint(1) default 0,
   `bn_sale` tinyint(1) default 0,
-  PRIMARY KEY  (`id`),
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -152,8 +152,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auction_types` (
   `id` int(2) NOT NULL auto_increment,
   `key` varchar(32),
   `language_string` varchar(32),
-  PRIMARY KEY  (`id`),
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -184,7 +183,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "banners` (
   `width` int(11) NOT NULL default '0',
   `height` int(11) NOT NULL default '0',
   `user` int(11) NOT NULL default '0',
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -237,8 +236,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannersstats` (
   `banner` int(11) default NULL,
   `purchased` int(11) default NULL,
   `views` int(11) default NULL,
-  `clicks` int(11) default NULL,
-  KEY `id` (`banner`)
+  `clicks` int(11) default NULL
 ) ;";
 
 #
@@ -258,7 +256,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannersusers` (
   `name` varchar(255) default NULL,
   `company` varchar(255) default NULL,
   `email` varchar(255) default NULL,
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -275,8 +273,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bannersusers` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "bids`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "bids` (
   `id` int(11) NOT NULL auto_increment,
-  `auction` int(32) default NULL,
-  `bidder` int(32) default NULL,
+  `auction` int(11) default NULL,
+  `bidder` int(11) default NULL,
   `bid` double(16,2) default NULL,
   `bidwhen` varchar(14) default NULL,
   `quantity` int(11) default '0',
@@ -552,7 +550,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "comm_messages` (
   `user` int(11) NOT NULL default '0',
   `username` varchar(255) NOT NULL default '',
   `message` text NOT NULL,
-  KEY `msg_id` (`id`)
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -573,7 +571,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
   `lastmessage` varchar(14) NOT NULL default '0',
   `msgstoshow` int(11) NOT NULL default '0',
   `active` tinyint(1) NOT NULL default '1',
-  KEY `msg_id` (`id`)
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -1004,7 +1002,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqs` (
   `question` varchar(200) NOT NULL default '',
   `answer` text NOT NULL,
   `category` int(11) NOT NULL default '0',
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -1073,7 +1071,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "faqscategories`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "faqscategories` (
   `id` int(11) NOT NULL auto_increment,
   `category` varchar(200) NOT NULL default '',
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 #
@@ -1093,12 +1091,12 @@ $query[] = "INSERT INTO `" . $DBPrefix . "faqscategories` VALUES (3, 'Buying');"
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "feedbacks`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
   `id` int(11) NOT NULL auto_increment,
-  `rated_user_id` int(32) default NULL,
+  `rated_user_id` int(11) default NULL,
   `rater_user_nick` varchar(20) default NULL,
   `feedback` mediumtext,
   `rate` int(2) default NULL,
   `feedbackdate` INT(15) NOT NULL,
-  `auction_id` int(32) NOT NULL default '0',
+  `auction_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1129,16 +1127,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "fees` (
 
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'signup_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyer_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'setup');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hpfeat_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'bolditem_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'hlitem_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'rp_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'setup_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'featured_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'bold_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'highlighted_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'reserve_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'picture_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'subtitle_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'excat_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'extracat_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'relist_fee');";
-$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buyout_fee');";
+$query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'buynow_fee');";
 $query[] = "INSERT INTO " . $DBPrefix . "fees (value, type) VALUES (0, 'endauc_fee');";
 
 # ############################
@@ -1161,39 +1159,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "filterwords` VALUES ('');";
 # ############################
 
 #
-# Table structure for table `" . $DBPrefix . "gateways`
-#
-
-$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "gateways`;";
-$query[] = "CREATE TABLE `" . $DBPrefix . "gateways` (
-  `gateways` text,
-  `paypal_address` varchar(50) NOT NULL default '',
-  `paypal_required` tinyint(1) NOT NULL default '0',
-  `paypal_active` tinyint(1) NOT NULL default '0',
-  `authnet_address` varchar(50) NOT NULL default '',
-  `authnet_password` varchar(50) NOT NULL default '',
-  `authnet_required` tinyint(1) NOT NULL default '0',
-  `authnet_active` tinyint(1) NOT NULL default '0',
-  `worldpay_id` varchar(50) NOT NULL default '',
-  `worldpay_required` tinyint(1) NOT NULL default '0',
-  `worldpay_active` tinyint(1) NOT NULL default '0',
-  `moneybookers_address` varchar(50) NOT NULL default '',
-  `moneybookers_required` tinyint(1) NOT NULL default '0',
-  `moneybookers_active` tinyint(1) NOT NULL default '0',
-  `toocheckout_id` varchar(50) NOT NULL default '',
-  `toocheckout_required` tinyint(1) NOT NULL default '0',
-  `toocheckout_active` tinyint(1) NOT NULL default '0'
-) ;";
-
-#
-# Dumping data for table `" . $DBPrefix . "gateways`
-#
-
-$query[] = "INSERT INTO `" . $DBPrefix . "gateways` VALUES ('paypal,authnet,worldpay,moneybookers,toocheckout', '', 0, 0, '', '', 0, 0, '', 0, 0, '', 0, 0, '', 0, 0);";
-
-# ############################
-
-#
 # Table structure for table `" . $DBPrefix . "payment_options`
 #
 
@@ -1207,6 +1172,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "payment_options` (
   `gateway_admin_password` varchar(50) NOT NULL default '',
   `gateway_required` tinyint(1) NOT NULL default '0',
   `gateway_active` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY(`id`)
 ) ;";
 
 #
@@ -1233,8 +1199,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
   `group_name` varchar(50) NOT NULL default '',
   `can_sell` tinyint(1) NOT NULL default '0',
   `can_buy` tinyint(1) NOT NULL default '0',
-  `count` tinyint(15) NOT NULL default '0',
-  `auto_join` tinyint(15) NOT NULL default '0',
+  `count` tinyint(11) NOT NULL default '0',
+  `auto_join` tinyint(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1298,13 +1264,14 @@ $query[] = "INSERT INTO `" . $DBPrefix . "increments` VALUES (NULL, 500.0000, 99
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "logs`;";
 $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
-  `id` INT( 25 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `id` INT( 25 ) NOT NULL AUTO_INCREMENT ,
   `type` VARCHAR( 5 ) NOT NULL ,
   `message` TEXT NOT NULL ,
   `action_id` INT( 11 ) NOT NULL DEFAULT  '0',
   `user_id` INT( 32 ) NOT NULL DEFAULT  '0',
   `ip` VARCHAR( 45 ) NOT NULL,
-  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0'
+  `timestamp` INT( 11 ) NOT NULL DEFAULT  '0',
+  PRIMARY KEY  (`id`)
 );";
 
 #
@@ -1370,17 +1337,17 @@ $query[] = "INSERT INTO `" . $DBPrefix . "membertypes` VALUES (14, 49, 'starY.gi
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
-  `id` int(50) NOT NULL AUTO_INCREMENT ,
-  `sentto` int(25) NOT NULL default '0',
-  `sentfrom` int(25) NOT NULL default '0',
-  `fromemail` varchar(50) NOT NULL default '',
+  `id` int(11) NOT NULL AUTO_INCREMENT ,
+  `sentto` int(11) NOT NULL default '0',
+  `sentfrom` int(11) NOT NULL default '0',
+  `fromemail` varchar(255) NOT NULL default '',
   `sentat` varchar(20) NOT NULL default '',
   `message` text NOT NULL ,
   `isread` tinyint(1) NOT NULL default '0',
-  `subject` varchar(50) NOT NULL default '',
+  `subject` varchar(255) NOT NULL default '',
   `replied` tinyint(1) NOT NULL default '0',
-  `reply_of` int(50) NOT NULL default '0',
-  `question` int(15) NOT NULL default '0',
+  `reply_of` int(11) NOT NULL default '0',
+  `question` int(11) NOT NULL default '0',
   `public` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`id`)
 ) ;";
@@ -1393,7 +1360,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "news`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "news` (
-  `id` int(32) NOT NULL auto_increment,
+  `id` int(11) NOT NULL auto_increment,
   `title` varchar(200) NOT NULL default '',
   `content` longtext NOT NULL,
   `new_date` int(8) NOT NULL default '0',
@@ -1475,8 +1442,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "pendingnotif` (
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "proxybid`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "proxybid` (
-  `itemid` int(32) default NULL,
-  `userid` int(32) default NULL,
+  `itemid` int(11) default NULL,
+  `userid` int(11) default NULL,
   `bid` double(16,2) default '0'
 ) ;";
 
@@ -1581,7 +1548,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "settings`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `fieldname` VARCHAR(30) NOT NULL,
   `fieldtype` VARCHAR(10) NOT NULL,
-  `value` VARCHAR(255) NOT NULL,
+  `value` text NOT NULL,
   `modifieddate` INT(11) NOT NULL,
   `modifiedby` INT(32) NOT NULL,
   PRIMARY KEY(`fieldname`)
@@ -1602,7 +1569,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('ao_bi_enabled', 'bo
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('ao_hi_enabled', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('ao_hpf_enabled', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('archiveafter', 'int', 30, UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('authnet_sandbox', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('autorelist', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('autorelist_max', 'int', '10', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('banemail', 'str', '', UNIX_TIMESTAMP(), 1);";
@@ -1619,7 +1585,6 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('buyerprivacy', 'boo
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('cache_theme', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('catsorting', 'str', 'alpha', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('catstoshow', 'int', '20', UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('checkout_sandbox', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('contactseller', 'str', 'always', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('cookiespolicy', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('cookiespolicytext', 'str', '', UNIX_TIMESTAMP(), 1);";
@@ -1636,6 +1601,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('defaultlanguage', '
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('descriptiontag', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('displayed_feilds', 'str', 'a:7:{s:17:\"birthdate_regshow\";s:1:\"y\";s:15:\"address_regshow\";s:1:\"y\";s:12:\"city_regshow\";s:1:\"y\";s:12:\"prov_regshow\";s:1:\"y\";s:15:\"country_regshow\";s:1:\"y\";s:11:\"zip_regshow\";s:1:\"y\";s:11:\"tel_regshow\";s:1:\"y\";}', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('edit_starttime', 'int', '1', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('edit_endtime', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('endingsoonnumber', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('errortext', 'str', '<p>An unexpected error occurred. The error has been forwarded to our technical team and will be fixed shortly</p>', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('extra_cat', 'bool', 'n', UNIX_TIMESTAMP(), 1);";
@@ -1655,6 +1621,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('invoice_thankyou', 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('invoice_yellow_line', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('keywordstag', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('lastitemsnumber', 'int', '8', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('homefeaturednumber', 'int', '12', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('loginbox', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('logo', 'str', 'logo.png', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('mail_parameter', 'str', '', UNIX_TIMESTAMP(), 1);";
@@ -1663,15 +1630,12 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('mandatory_fields', 
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('maxpictures', 'int', '5', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('maxuploadsize', 'int', '51200', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('mod_queue', 'bool, 'n', UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('moneybookers_sandbox', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('moneydecimals', 'int', '2', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('moneyformat', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('moneysymbol', 'int', '2', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('newsletter', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('newsbox', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('newstoshow', 'int', '5', UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('payment_options', 'str', 'a:2:{i:0;s:13:\"Wire Transfer\";i:1;s:6:\"Cheque\";}', UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('paypal_sandbox', 'int', '0', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('perpage', 'int', '15', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('picturesgallery', 'int', '1', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('privacypolicy', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
@@ -1696,6 +1660,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('taxuser', 'bool', '
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('terms', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('termstext', 'str', '', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('theme', 'str', 'modern', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('admin_theme', 'str', 'adminClassic', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('thumb_list', 'int', '120', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('thumb_show', 'int', '120', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('timezone', 'str', 'Europe/London', UNIX_TIMESTAMP(), 1);";
@@ -1703,7 +1668,13 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('users_email', 'bool
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('usersauth', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('version', 'str', '". package_version() ."', UNIX_TIMESTAMP(), 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('wordsfilter', 'bool', 'y', UNIX_TIMESTAMP(), 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('worldpay_sandbox', 'int', '0', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('bidding_visable_to_guest', 'bool', '1', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('email_admin_on_signup', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('user_request_seller_permission', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_blocked_email_enabled', 'bool', '1', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('spam_blocked_email_domains', 'str', \"0-mail.com\n0815.ru\n0clickemail.com\n0wnd.net\n0wnd.org\n10minutemail.com\n20minutemail.com\n2prong.com\n30minutemail.com\n3d-painting.com\n4warding.com\n4warding.net\n4warding.org\n60minutemail.com\n675hosting.com\n675hosting.net\n675hosting.org\n6url.com\n75hosting.com\n75hosting.net\n75hosting.org\n7tags.com\n9ox.net\na-bc.net\nafrobacon.com\najaxapp.net\namilegit.com\namiri.net\namiriindustries.com\nanonbox.net\nanonymbox.com\nantichef.com\nantichef.net\nantispam.de\nbaxomale.ht.cx\nbeefmilk.com\nbinkmail.com\nbio-muesli.net\nbobmail.info\nbodhi.lawlita.com\nbofthew.com\nbrefmail.com\nbroadbandninja.com\nbsnow.net\nbugmenot.com\nbumpymail.com\ncasualdx.com\ncentermail.com\ncentermail.net\nchogmail.com\nchoicemail1.com\ncool.fr.nf\ncorreo.blogos.net\ncosmorph.com\ncourriel.fr.nf\ncourrieltemporaire.com\ncubiclink.com\ncurryworld.de\ncust.in\ndacoolest.com\ndandikmail.com\ndayrep.com\ndeadaddress.com\ndeadspam.com\ndespam.it\ndespammed.com\ndevnullmail.com\ndfgh.net\ndigitalsanctuary.com\ndiscardmail.com\ndiscardmail.de\nDisposableemailaddresses:emailmiser.com\ndisposableaddress.com\ndisposeamail.com\ndisposemail.com\ndispostable.com\ndm.w3internet.co.ukexample.com\ndodgeit.com\ndodgit.com\ndodgit.org\ndonemail.ru\ndontreg.com\ndontsendmespam.de\ndump-email.info\ndumpandjunk.com\ndumpmail.de\ndumpyemail.com\ne4ward.com\nemail60.com\nemaildienst.de\nemailias.com\nemailigo.de\nemailinfive.com\nemailmiser.com\nemailsensei.com\nemailtemporario.com.br\nemailto.de\nemailwarden.com\nemailx.at.hm\nemailxfer.com\nemz.net\nenterto.com\nephemail.net\netranquil.com\netranquil.net\netranquil.org\nexplodemail.com\nfakeinbox.com\nfakeinformation.com\nfastacura.com\nfastchevy.com\nfastchrysler.com\nfastkawasaki.com\nfastmazda.com\nfastmitsubishi.com\nfastnissan.com\nfastsubaru.com\nfastsuzuki.com\nfasttoyota.com\nfastyamaha.com\nfilzmail.com\nfizmail.com\nfr33mail.info\nfrapmail.com\nfront14.org\nfux0ringduh.com\ngarliclife.com\nget1mail.com\nget2mail.fr\ngetonemail.com\ngetonemail.net\nghosttexter.de\ngirlsundertheinfluence.com\ngishpuppy.com\ngowikibooks.com\ngowikicampus.com\ngowikicars.com\ngowikifilms.com\ngowikigames.com\ngowikimusic.com\ngowikinetwork.com\ngowikitravel.com\ngowikitv.com\ngreat-host.in\ngreensloth.com\ngsrv.co.uk\nguerillamail.biz\nguerillamail.com\nguerillamail.net\nguerillamail.org\nguerrillamail.biz\nguerrillamail.com\nguerrillamail.de\nguerrillamail.net\nguerrillamail.org\nguerrillamailblock.com\nh.mintemail.com\nh8s.org\nhaltospam.com\nhatespam.org\nhidemail.de\nhochsitze.com\nhotpop.com\nhulapla.de\nieatspam.eu\nieatspam.info\nihateyoualot.info\niheartspam.org\nimails.info\ninboxclean.com\ninboxclean.org\nincognitomail.com\nincognitomail.net\nincognitomail.org\ninsorg-mail.info\nipoo.org\nirish2me.com\niwi.net\njetable.com\njetable.fr.nf\njetable.net\njetable.org\njnxjn.com\njunk1e.com\nkasmail.com\nkaspop.com\nkeepmymail.com\nkillmail.com\nkillmail.net\nkir.ch.tc\nklassmaster.com\nklassmaster.net\nklzlk.com\nkulturbetrieb.info\nkurzepost.de\nletthemeatspam.com\nlhsdv.com\nlifebyfood.com\nlink2mail.net\nlitedrop.com\nlol.ovpn.to\nlookugly.com\nlopl.co.cc\nlortemail.dk\nlr78.com\nm4ilweb.info\nmaboard.com\nmail-temporaire.fr\nmail.by\nmail.mezimages.net\nmail2rss.org\nmail333.com\nmail4trash.com\nmailbidon.com\nmailblocks.com\nmailcatch.com\nmaileater.com\nmailexpire.com\nmailfreeonline.com\nmailin8r.com\nmailinater.com\nmailinator.com\nmailinator.net\nmailinator2.com\nmailincubator.com\nmailme.ir\nmailme.lv\nmailmetrash.com\nmailmoat.com\nmailnator.com\nmailnesia.com\nmailnull.com\nmailshell.com\nmailsiphon.com\nmailslite.com\nmailzilla.com\nmailzilla.org\nmbx.cc\nmega.zik.dj\nmeinspamschutz.de\nmeltmail.com\nmessagebeamer.de\nmierdamail.com\nmintemail.com\nmoburl.com\nmoncourrier.fr.nf\nmonemail.fr.nf\nmonmail.fr.nf\nmsa.minsmail.com\nmt2009.com\nmx0.wwwnew.eu\nmycleaninbox.net\nmypartyclip.de\nmyphantomemail.com\nmyspaceinc.com\nmyspaceinc.net\nmyspaceinc.org\nmyspacepimpedup.com\nmyspamless.com\nmytrashmail.com\nneomailbox.com\nnepwk.com\nnervmich.net\nnervtmich.net\nnetmails.com\nnetmails.net\nnetzidiot.de\nneverbox.com\nno-spam.ws\nnobulk.com\nnoclickemail.com\nnogmailspam.info\nnomail.xl.cx\nnomail2me.com\nnomorespamemails.com\nnospam.ze.tc\nnospam4.us\nnospamfor.us\nnospamthanks.info\nnotmailinator.com\nnowmymail.com\nnurfuerspam.de\nnus.edu.sg\nnwldx.com\nobjectmail.com\nobobbo.com\noneoffemail.com\nonewaymail.com\nonline.ms\noopi.org\nordinaryamerican.net\notherinbox.com\nourklips.com\noutlawspam.com\novpn.to\nowlpic.com\npancakemail.com\npimpedupmyspace.com\npjjkp.com\npolitikerclub.de\npoofy.org\npookmail.com\nprivacy.net\nproxymail.eu\nprtnx.com\npunkass.com\nPutThisInYourSpamDatabase.com\nqq.com\nquickinbox.com\nrcpt.at\nrecode.me\nrecursor.net\nregbypass.com\nregbypass.comsafe-mail.net\nrejectmail.com\nrklips.com\nrmqkr.net\nrppkn.com\nrtrtr.com\ns0ny.net\nsafe-mail.net\nsafersignup.de\nsafetymail.info\nsafetypost.de\nsandelf.de\nsaynotospams.com\nselfdestructingmail.com\nSendSpamHere.com\nsharklasers.com\nshiftmail.com\nshitmail.me\nshortmail.net\nsibmail.com\nskeefmail.com\nslaskpost.se\nslopsbox.com\nsmellfear.com\nsnakemail.com\nsneakemail.com\nsofimail.com\nsofort-mail.de\nsogetthis.com\nsoodonims.com\nspam.la\nspam.su\nspamavert.com\nspambob.com\nspambob.net\nspambob.org\nspambog.com\nspambog.de\nspambog.ru\nspambox.info\nspambox.irishspringrealty.com\nspambox.us\nspamcannon.com\nspamcannon.net\nspamcero.com\nspamcon.org\nspamcorptastic.com\nspamcowboy.com\nspamcowboy.net\nspamcowboy.org\nspamday.com\nspamex.com\nspamfree24.com\nspamfree24.de\nspamfree24.eu\nspamfree24.info\nspamfree24.net\nspamfree24.org\nspamgourmet.com\nspamgourmet.net\nspamgourmet.org\nSpamHereLots.com\nSpamHerePlease.com\nspamhole.com\nspamify.com\nspaminator.de\nspamkill.info\nspaml.com\nspaml.de\nspammotel.com\nspamobox.com\nspamoff.de\nspamslicer.com\nspamspot.com\nspamthis.co.uk\nspamthisplease.com\nspamtrail.com\nspeed.1s.fr\nsupergreatmail.com\nsupermailer.jp\nsuremail.info\nteewars.org\nteleworm.com\ntempalias.com\ntempe-mail.com\ntempemail.biz\ntempemail.com\nTempEMail.net\ntempinbox.co.uk\ntempinbox.com\ntempmail.it\ntempmail2.com\ntempomail.fr\ntemporarily.de\ntemporarioemail.com.br\ntemporaryemail.net\ntemporaryforwarding.com\ntemporaryinbox.com\nthanksnospam.info\nthankyou2010.com\nthisisnotmyrealemail.com\nthrowawayemailaddress.com\ntilien.com\ntmailinator.com\ntradermail.info\ntrash-amil.com\ntrash-mail.at\ntrash-mail.com\ntrash-mail.de\ntrash2009.com\ntrashemail.de\ntrashmail.at\ntrashmail.com\ntrashmail.de\ntrashmail.me\ntrashmail.net\ntrashmail.org\ntrashmail.ws\ntrashmailer.com\ntrashymail.com\ntrashymail.net\ntrillianpro.com\nturual.com\ntwinmail.de\ntyldd.com\nuggsrock.com\nupliftnow.com\nuplipht.com\nvenompen.com\nveryrealemail.com\nviditag.com\nviewcastmedia.com\nviewcastmedia.net\nviewcastmedia.org\nwebm4il.info\nwegwerfadresse.de\nwegwerfemail.de\nwegwerfmail.de\nwegwerfmail.net\nwegwerfmail.org\nwetrainbayarea.com\nwetrainbayarea.org\nwh4f.org\nwhyspam.me\nwillselfdestruct.com\nwinemaven.info\nwronghead.com\nwuzup.net\nwuzupmail.net\nwww.e4ward.com\nwww.gishpuppy.com\nwww.mailinator.com\nwwwnew.eu\nxagloo.com\nxemaps.com\nxents.com\nxmaily.com\nxoxy.net\nyep.it\nyogamaven.com\nyopmail.com\nyopmail.fr\nyopmail.net\nypmail.webarnak.fr.eu.org\nyuurok.com\nzehnminutenmail.de\nzippymail.info\nzoaxe.com\nzoemail.org\", UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('payment_gateway_sandbox', 'bool', '0', UNIX_TIMESTAMP(), 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES ('gallery_max_width_height', 'int', '1500', UNIX_TIMESTAMP(), 1);";
 
 
 # ############################
@@ -1742,7 +1713,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "tax` (
   `countries_buyer` TEXT NOT NULL ,
   `fee_tax` INT(1) NOT NULL DEFAULT  '0',
   PRIMARY KEY (`id`)
-	);";
+);";
 
 #
 # Dumping data for table `" . $DBPrefix . "tax`
@@ -1758,7 +1729,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "tax` VALUES (NULL, 'Site Fees', '0', '
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "users`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
-  `id` int(32) NOT NULL auto_increment,
+  `id` int(11) NOT NULL auto_increment,
   `nick` varchar(20) NOT NULL,
   `password` varchar(60) NOT NULL,
   `hash` varchar(5) default '',
@@ -1770,7 +1741,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `zip` varchar(10) default '',
   `phone` varchar(40) default '',
   `email` varchar(50) default '',
-  `reg_date` int(15) default NULL,
+  `reg_date` int(11) default NULL,
   `rate_sum` int(11) NOT NULL default '0',
   `rate_num` int(11) NOT NULL default '0',
   `birthdate` int(8) default '0',
@@ -1810,9 +1781,9 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "useraccounts`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   `useracc_id` int(11) NOT NULL AUTO_INCREMENT,
-  `auc_id` int(15) NOT NULL default '0',
-  `user_id` int(15) NOT NULL default '0',
-  `date` int(15) NOT NULL default '0',
+  `auc_id` int(11) NOT NULL default '0',
+  `user_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
   `setup` double(8,2) NOT NULL default '0',
   `featured` double(8,2) NOT NULL default '0',
   `bold` double(8,2) NOT NULL default '0',
@@ -1821,8 +1792,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   `relist` double(8,2) NOT NULL default '0',
   `reserve` double(8,2) NOT NULL default '0',
   `buynow` double(8,2) NOT NULL default '0',
-  `image` double(8,2) NOT NULL default '0',
-  `extcat` double(8,2) NOT NULL default '0',
+  `picture` double(8,2) NOT NULL default '0',
+  `extracat` double(8,2) NOT NULL default '0',
   `signup` double(8,2) NOT NULL default '0',
   `buyer` double(8,2) NOT NULL default '0',
   `finalval` double(8,2) NOT NULL default '0',
@@ -1845,7 +1816,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "usersips`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "usersips` (
   `id` int(11) NOT NULL auto_increment,
-  `user` int(32) default NULL,
+  `user` int(11) default NULL,
   `ip` varchar(15) default NULL,
   `type` enum('first','after') NOT NULL default 'first',
   `action` enum('accept','deny') NOT NULL default 'accept',
@@ -1859,20 +1830,40 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "usersips` (
 # ############################
 
 #
+# Table structure for table `" . $DBPrefix . "usergateways`
+#
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "usergateways`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "usergateways` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `gateway_id` int(5) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `address` varchar(50) NOT NULL default '',
+  `password` varchar(50) NOT NULL default '',
+  PRIMARY KEY(`id`)
+) ;";
+
+#
+# Dumping data for table `" . $DBPrefix . "usergateways`
+#
+
+# ############################
+
+#
 # Table structure for table `" . $DBPrefix . "winners`
 #
 
 $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "winners`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `id` int(11) NOT NULL auto_increment,
-  `auction` int(32) NOT NULL default '0',
-  `seller` int(32) NOT NULL default '0',
-  `winner` int(32) NOT NULL default '0',
+  `auction` int(11) NOT NULL default '0',
+  `seller` int(11) NOT NULL default '0',
+  `winner` int(11) NOT NULL default '0',
   `bid` double(16,2) NOT NULL default '0',
   `auc_title` varchar(70),
   `auc_shipping_cost` double(16,2) default '0',
   `auc_payment` tinytext,
-  `closingdate` int(15) NOT NULL default '0',
+  `closingdate` int(11) NOT NULL default '0',
   `feedback_win` tinyint(1) NOT NULL default '0',
   `feedback_sel` tinyint(1) NOT NULL default '0',
   `qty` int(11) NOT NULL default '1',
@@ -1880,7 +1871,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `bf_paid` INT(1) NOT NULL DEFAULT  '0',
   `ff_paid` INT(1) NOT NULL DEFAULT '1',
   `shipped` INT(1) NOT NULL DEFAULT '0',
-  KEY `id` (`id`)
+  PRIMARY KEY  (`id`)
 ) ;";
 
 ?>

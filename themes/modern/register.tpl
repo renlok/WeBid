@@ -6,7 +6,7 @@
 			{ERROR}
 		</div>
 	<!-- ENDIF -->
-		<form name="registration" action="{SSLURL}register.php" method="post">
+		<form name="registration" action="{SITEURL}register.php" method="post">
 			<div class="col-md-7 well">
 				<legend>{L_001}</legend>
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
@@ -99,7 +99,7 @@
 				<div class="form-group col-lg-12">
 					<label>{L_346}</label>
 					<div class="timezone">
-						{!TIMEZONE!}
+						{TIMEZONE}
 					</div>
 				</div>
 	<!-- IF B_NLETTER -->
@@ -114,45 +114,23 @@
 			</div>
 			<div class="col-md-4 col-md-offset-1 well">
 				<legend>{L_719}</legend>
-	<!-- IF B_PAYPAL -->
-				<div class="form-group <!-- IF MISSING12 eq 1 -->has-error<!-- ENDIF --> col-lg-12">
-					<label for="TPL_pp_email">{L_720}{REQUIRED(7)}</label>
-					<input type="text" name="TPL_pp_email" class="form-control" value="{PP_EMAIL}" <!-- IF MISSING12 eq 1 -->id="inputError1"<!-- ENDIF -->>
-					<!-- IF MISSING12 eq 1 --><div class="error-box missing">{L_810}</div><!-- ENDIF -->
-				</div>
-	<!-- ENDIF -->
-	<!-- IF B_AUTHNET -->
-				<div class="form-group <!-- IF MISSING13 eq 1 -->has-error<!-- ENDIF --> col-lg-12">
-					<label for="TPL_authnet_id">{L_773}{REQUIRED(8)}</label>
-					<input type="text" name="TPL_authnet_id" class="form-control" value="{AN_ID}" <!-- IF MISSING13 eq 1 -->id="inputError1"<!-- ENDIF -->>
-					<!-- IF MISSING13 eq 1 --><div class="error-box missing">{L_811}</div><!-- ENDIF -->
-					<label for="TPL_authnet_pass">{L_774}{REQUIRED(8)}</label>
-					<input type="text" name="TPL_authnet_pass" class="form-control" value="{AN_PASS}" <!-- IF MISSING13 eq 1 -->id="inputError1"<!-- ENDIF -->>
-				</div>
-	<!-- ENDIF -->
-	<!-- IF B_WORLDPAY -->
-				<div class="form-group <!-- IF MISSING14 eq 1 -->has-error<!-- ENDIF --> col-lg-12">
-					<label for="TPL_worldpay_id">{L_824}{REQUIRED(9)}</label>
-					<input type="text" name="TPL_worldpay_id" class="form-control" value="{WP_ID}" <!-- IF MISSING14 eq 1 -->id="inputError1"<!-- ENDIF -->>
-					<!-- IF MISSING14 eq 1 --><div class="error-box missing">{L_823}</div><!-- ENDIF -->
-				</div>
-	<!-- ENDIF -->
-	<!-- IF B_TOOCHECKOUT -->
-				<div class="form-group <!-- IF MISSING15 eq 1 -->has-error<!-- ENDIF --> col-lg-12">
-					<label for="TPL_toocheckout_id">{L_826}{REQUIRED(10)}</label>
-					<input type="text" name="TPL_toocheckout_id" class="form-control" value="{TC_ID}" <!-- IF MISSING15 eq 1 -->class="missing"<!-- ENDIF -->>
-					<!-- IF MISSING15 eq 1 --><div class="error-box missing">{L_821}</div><!-- ENDIF -->
-				</div>
-	<!-- ENDIF -->
-	<!-- IF B_MONEYBOOKERS -->
-				<div class="form-group <!-- IF MISSING16 eq 1 -->has-error<!-- ENDIF --> col-lg-12">
-					<label for="TPL_moneybookers_email">{L_825}{REQUIRED(11)}</label>
-					<input type="text" name="TPL_moneybookers_email" class="form-control" value="{MB_EMAIL}" <!-- IF MISSING16 eq 1 -->class="missing"<!-- ENDIF -->>
-					<!-- IF MISSING16 eq 1 --><div class="error-box missing">{L_822}</div><!-- ENDIF -->
-				</div>
-	<!-- ENDIF -->
+
+	<!-- BEGIN gateways -->
+		<div class="form-group <!-- IF gateways.MISSING eq 1 -->has-error<!-- ENDIF --> col-lg-12">
+			<label for="TPL_pp_email">{gateways.ADDRESS_NAME}{gateways.REQUIRED}</label>
+			<input type="hidden" name="{gateways.PLAIN_NAME}[id]" value="{gateways.GATEWAY_ID}">
+			<input type="text" name="{gateways.PLAIN_NAME}[address]" class="form-control" value="{gateways.ADDRESS}" <!-- IF gateways.MISSING eq 1 -->id="inputError1"<!-- ENDIF -->>
+			<!-- IF gateways.MISSING eq 1 --><div class="error-box missing">{gateways.ERROR_STRING}</div><!-- ENDIF -->
+		<!-- IF gateways.B_PASSWORD -->
+			<label for="TPL_authnet_pass">{gateways.PASSWORD_NAME}{gateways.REQUIRED}</label>
+			<input type="text" name="{gateways.PLAIN_NAME}[password]" class="form-control" value="{gateways.PASS}" <!-- IF gateways.MISSING eq 1 -->id="inputError1"<!-- ENDIF -->>
+		<!-- ELSE -->
+			<input type="hidden" name="{gateways.PLAIN_NAME}[password]" value="">
+		<!-- ENDIF -->
+		</div>
+	<!-- END gateways -->
 				<div class="form-group col-lg-12">
-					<div class="capchabox">{!CAPCHA!}</div>
+					<div class="capchabox">{CAPCHA}</div>
 				</div>
 				<div class="form-group col-lg-12">
 					<div class="checkbox">

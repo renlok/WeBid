@@ -42,6 +42,13 @@ if ($db->numrows() > 0)
 {
 	$TPL_item_title = $db->result('title');
 }
+else
+{
+	$_SESSION['msg_title'] = $ERR_622;
+	$_SESSION['msg_body'] = $ERR_623;
+	header('location: message.php');
+	exit;
+}
 
 $spam_html = '';
 if ($system->SETTINGS['spam_sendtofriend'] == 1)

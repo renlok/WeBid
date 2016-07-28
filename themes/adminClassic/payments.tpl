@@ -14,28 +14,37 @@
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>
 							<th>&nbsp;</th>
-							<th><b>{L_087}</b></th>
+							<th><b>{L_payment_name}</b></th>
+							<th><b>{L_clean_payment_name}</b></th>
 							<th><b>{L_008}</b></th>
 						</tr>
 <!-- BEGIN payments -->
 						<tr>
-							<td>&nbsp;</td>
 							<td>
-								<input type="text" name="new_payments[]" value="{payments.PAYMENT}" size="25">
+								<input type="hidden" name="payment[{payments.ID}][id]" value="{payments.ID}" size="25">
+							</td>
+							<td>
+								<input type="text" name="payment[{payments.ID}][name]" value="{payments.NAME}" size="25">
+							</td>
+							<td>
+								<input type="text" name="payment[{payments.ID}][clean]" value="{payments.CLEAN}" size="25">
 							</td>
 							<td align="center">
-								<input type="checkbox" name="delete[]" value="{payments.S_ROW_COUNT}">
+								<input type="checkbox" name="payment[{payments.ID}][delete]" value="{payments.ID}">
 							</td>
 						</tr>
 <!-- END payments -->
 						<tr>
-							<td colspan="2" align="right">{L_30_0102}</td>
+							<td colspan="3" align="right">{L_30_0102}</td>
 							<td align="center"><input type="checkbox" class="selectall" value="delete"></td>
 						</tr>
 						<tr>
 							<td>{L_394}</td>
 							<td>
-								<input type="text" name="new_payments[]" size="25">
+								<input type="text" name="new_payments" size="25">
+							</td>
+							<td>
+								<input type="text" name="new_payments_clean" size="25">
 							</td>
 							<td>&nbsp;</td>
 						</tr>

@@ -19,6 +19,7 @@ $id = intval($_REQUEST['id']);
 
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5002'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'buy_now.php?id=' . $id;
 	header('location: user_login.php');
 	exit;
@@ -34,14 +35,6 @@ if (!$user->can_buy)
 {
 	$_SESSION['TMP_MSG'] = $MSG['819'];
 	header('location: user_menu.php');
-	exit;
-}
-
-if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('location: ' . $sslurl . 'buy_now.php?id=' . $id);
 	exit;
 }
 
@@ -312,30 +305,57 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					$ff_paid = 0;
 				}
 			}
+			// check if you have made a bin order already, see if we can merge the orders
+			$new_winner = true;
+			if ($Auction['bn_only'] == 1)
+			{
+				$query = "SELECT id, qty FROM " . $DBPrefix . "winners WHERE auction = :auc_id AND winner = :winner_id AND bid = :buy_now AND paid = 0 AND shipped = 0";
+				$params = array();
+				$params[] = array(':auc_id', $id, 'int');
+				$params[] = array(':winner_id', $Winner['id'], 'int');
+				$params[] = array(':buy_now', $Auction['buy_now'], 'float');
+				$db->query($query, $params);
+				if ($db->numrows() > 0)
+				{
+					$winner_data = $db->result();
+					$winner_id = $winner_data['id'];
+					$new_qty = $winner_data['qty'] + $qty;
+					$query = "UPDATE " . $DBPrefix . "winners SET qty = :quantity, auc_shipping_cost = :auc_shipping_cost WHERE id = :winner_id";
+					$params = array();
+					$params[] = array(':quantity', $new_qty, 'int');
+					$params[] = array(':auc_shipping_cost', calculate_shipping_data($Auction, $new_qty), 'float');
+					$params[] = array(':winner_id', $winner_id, 'str');
+					$db->query($query, $params);
+					$new_winner = false;
+				}
+			}
 			// work out shipping cost
-			$query = "INSERT INTO " . $DBPrefix . "winners
-					(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
-					(:auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
-			$params = array();
-			$params[] = array(':auc_id', $id, 'int');
-			$params[] = array(':seller_id', $Auction['user'], 'int');
-			$params[] = array(':winner_id', $Winner['id'], 'int');
-			$params[] = array(':buy_now', $Auction['buy_now'], 'float');
-			$params[] = array(':time', $NOW, 'int');
-			$params[] = array(':quantity', $qty, 'int');
-			$params[] = array(':bf_paid', $bf_paid, 'float');
-			$params[] = array(':ff_paid', $ff_paid, 'float');
-			$params[] = array(':auc_title', $Auction['title'], 'str');
-			$params[] = array(':auc_shipping_cost', calculate_shipping_data($Auction), 'float');
-			$params[] = array(':auc_payment', $Auction['payment'], 'str');
-			$db->query($query, $params);
-			$winner_id = $db->lastInsertId();
+			if ($new_winner)
+			{
+				$query = "INSERT INTO " . $DBPrefix . "winners
+						(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+						(:auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
+				$params = array();
+				$params[] = array(':auc_id', $id, 'int');
+				$params[] = array(':seller_id', $Auction['user'], 'int');
+				$params[] = array(':winner_id', $Winner['id'], 'int');
+				$params[] = array(':buy_now', $Auction['buy_now'], 'float');
+				$params[] = array(':time', $NOW, 'int');
+				$params[] = array(':quantity', $qty, 'int');
+				$params[] = array(':bf_paid', $bf_paid, 'float');
+				$params[] = array(':ff_paid', $ff_paid, 'float');
+				$params[] = array(':auc_title', $Auction['title'], 'str');
+				$params[] = array(':auc_shipping_cost', calculate_shipping_data($Auction, $qty), 'float');
+				$params[] = array(':auc_payment', $Auction['payment'], 'str');
+				$db->query($query, $params);
+				$winner_id = $db->lastInsertId();
+			}
 
 			// get end string
 			$month = date('m', $Auction['ends'] + $system->tdiff);
 			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
 			$Auction['current_bid'] = $Auction['buy_now'];
-			include INCLUDE_PATH . 'endauction_mutli_item_win.php';
+			include INCLUDE_PATH . 'email/endauction_multi_item_win.php';
 			include INCLUDE_PATH . 'email/seller_partial_winner.php';
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
@@ -358,14 +378,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	}
 }
 
-$additional_shipping = $Auction['shipping_cost_additional'] * ($qty - 1);
+$additional_shipping = $Auction['additional_shipping_cost'] * ($qty - 1);
 $shipping_cost = ($Auction['shipping'] == 1) ? ($Auction['shipping_cost'] + $additional_shipping) : 0;
 $BN_total = ($Auction['buy_now'] * $qty) + $shipping_cost;
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_REQUEST['id'],
-		'WINID' => $winner_id,
+		'WINID' => (isset($winner_id)) ? $winner_id : 0,
 		'TITLE' => $system->uncleanvars($Auction['title']),
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),
 		'SHIPPINGCOST' => ($shipping_cost >  0) ? $system->print_money($shipping_cost) : 0,

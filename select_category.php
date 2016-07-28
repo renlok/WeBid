@@ -18,6 +18,7 @@ include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 // Is the seller logged in?
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'select_category.php';
 	header('location: user_login.php');
 	exit;
@@ -130,6 +131,9 @@ elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 	$_SESSION['SELL_is_taxed'] = 0;
 	$_SESSION['SELL_tax_included'] = 0;
 	$_SESSION['SELL_start_now'] = '1';
+	$_SESSION['SELL_ends'] = '';
+	$_SESSION['SELL_custom_end'] = 0;
+	$_SESSION['SELL_caneditstartdate'] = true;
 }
 
 // Build the categories arrays

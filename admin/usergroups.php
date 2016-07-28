@@ -39,7 +39,8 @@ if (isset($_GET['action']) && !isset($_POST['action']))
 				'CAN_BUY_N' => ($group['can_buy'] == 0) ? 'selected="true"' : '',
 				'AUTO_JOIN_Y' => ($group['auto_join'] == 1) ? 'selected="true"' : '',
 				'AUTO_JOIN_N' => ($group['auto_join'] == 0) ? 'selected="true"' : '',
-				'USER_COUNT' => $group['count']
+				'USER_COUNT' => $group['count'],
+				'NOT_DEFAULT_GROUP' => ($group['auto_join'] == 0)
 				));
 		$edit = true;
 	}
@@ -58,7 +59,7 @@ if (isset($_POST['action']))
 	// check other groups are auto-join as every user needs a group
 	if ($_POST['auto_join'] == 0)
 	{
-		$query = "SELECT * FROM ". $DBPrefix . "groups WHERE auto_join = 1";
+		$query = "SELECT id FROM ". $DBPrefix . "groups WHERE auto_join = 1";
 		$db->direct_query($query);
 		$auto_join = false;
 		while ($row = $db->fetch())
@@ -68,11 +69,14 @@ if (isset($_POST['action']))
 				$auto_join = true;
 			}
 		}
-		$ERR = $ERR_050;
+		if (!$auto_join)
+		{
+			$ERR = $ERR_050;
+		}
 	}
-	if ($_GET['action'] == 'edit' || (isset($_GET['id']) && is_numeric($_GET['id'])))
+	if (($_GET['action'] == 'edit' || (isset($_GET['id']) && is_numeric($_GET['id']))) && !isset($ERR))
 	{
-		if ($_GET['action'] == 'edit' && isset($_POST['remove']) && $_POST['remove'] == 'y')
+		if ($_GET['action'] == 'edit' && isset($_POST['remove']))
 		{
 			// prevent removal of webid default Group 1 or Group 2
 			if(intval($_POST['id']) == 1 || intval($_POST['id']) == 2)
@@ -145,23 +149,24 @@ while ($row = $db->fetch())
 {
 	if (!empty($row['groups']))
 	{
-		if (!empty($groups_array))
+		$exploded_groups = explode(',', $row['groups']);
+		foreach ($exploded_groups as $group_id)
 		{
-			$groups_array = $groups_array .','. $row['groups'];
-		}
-		else
-		{
-			$groups_array = $row['groups'];
+			if (!isset($groups_array[$group_id]))
+			{
+				$groups_array[$group_id] = 1;
+			}
+			else
+			{
+				$groups_array[$group_id]++;
+			}
 		}
 	}
 	else
 	{
-		$groups_array = $groups_array . ',unknown';
 		$groups_unknown[] = $row;
 	}
 }
-$groups_array = explode(',', $groups_array);
-$groups_array = array_count_values($groups_array);
 
 $query = "SELECT * FROM ". $DBPrefix . "groups";
 $db->direct_query($query);
@@ -174,7 +179,7 @@ while ($row = $db->fetch())
 			'CAN_SELL' => ($row['can_sell'] == 1) ? $MSG['030'] : $MSG['029'],
 			'CAN_BUY' => ($row['can_buy'] == 1) ? $MSG['030'] : $MSG['029'],
 			'AUTO_JOIN' => ($row['auto_join'] == 1) ? $MSG['030'] : $MSG['029'],
-			'USER_COUNT' => !empty($groups_array[$row['id']])? $groups_array[$row['id']] : 0 // $row['count']
+			'USER_COUNT' => isset($groups_array[$row['id']]) ? $groups_array[$row['id']] : 0 // $row['count']
 			));
 	unset($groups_array[$row['id']]);
 	// TODO: automatically control user group count when users join/leave groups
@@ -188,7 +193,6 @@ if (!empty($groups_unknown))
 			'NAME' => $MSG['empty_line'],
 			'USER_COUNT' => !empty($groups_array['unknown']) ? $groups_array['unknown']  : 0
 			));
-	unset($groups_array['unknown']);
 
 	foreach ($groups_unknown as $k => $v)
 	{
@@ -229,6 +233,7 @@ if (!empty($groups_array))
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
+		'GROUPS_UNKNOWN' => (count($groups_unknown) > 0),
 		'B_EDIT' => $edit
 		));
 

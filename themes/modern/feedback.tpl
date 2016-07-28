@@ -9,7 +9,7 @@
 			<legend>
 				{L_207}
 			</legend>
-			<form class="form-horizontal" name="addfeedback" action="{SSLURL}feedback.php?wid={WID}&sid={SID}&ws={WS}" method="post">
+			<form class="form-horizontal" name="addfeedback" action="{SITEURL}feedback.php?wid={WID}&sid={SID}&ws={WS}" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{L_168}:</label>

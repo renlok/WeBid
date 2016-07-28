@@ -29,7 +29,7 @@
 			<li><a href="yourauctions_sold.php">{L_25_0119}</a></li>
 			<li><a href="selling.php">{L_453}</a><br></li>
 		</ul>
-	<!-- ELSE -->
+	<!-- ELSEIF B_CANREQUESTSELL -->
 		<form name="request" action="" method="post">
 			<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<p>{L_25_0140}</p>

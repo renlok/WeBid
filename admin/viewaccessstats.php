@@ -47,7 +47,7 @@ elseif ($listby == 'w')
 }
 else
 {
-	$month = date('n');
+	$month = date('m');
 	$year = date('Y');
 	$query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE month = :month AND year = :year ORDER BY LENGTH(day), day ASC";
 	$params[] = array(':month', $month, 'int');
@@ -113,6 +113,7 @@ while ($row = $db->fetch())
 	$TOTAL_USERSESSIONS += $row['usersessions'];
 }
 
+ksort($data_line);
 $MAX = (count($data_max) > 0) ? max($data_max) : 0;
 foreach ($data_line as $k => $v)
 {

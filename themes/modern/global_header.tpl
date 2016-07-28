@@ -9,10 +9,10 @@
 <meta name="keywords" content="{KEYWORDS}">
 <meta name="generator" content="WeBid">
 
-<link rel="stylesheet" type="text/css" href="{INCURL}themes/{THEME}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="{INCURL}themes/{THEME}/css/style.css">
-<link rel="stylesheet" type="text/css" href="{INCURL}themes/{THEME}/css/jquery.lightbox.css" media="screen">
-<link rel="stylesheet" type="text/css" href="{INCURL}includes/calendar.css">
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/style.css">
+<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/jquery.lightbox.css" media="screen">
+<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 
 <link rel="alternate" type="application/rss+xml" title="{L_924}" href="{SITEURL}rss.php?feed=1">
 <link rel="alternate" type="application/rss+xml" title="{L_925}" href="{SITEURL}rss.php?feed=2">
@@ -26,12 +26,9 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="{INCURL}themes/{THEME}/js/bootstrap.min.js"></script>
+<script src="{SITEURL}themes/{THEME}/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="{INCURL}loader.php?js={JSFILES}"></script>
-<!-- IF LOADCKEDITOR -->
-<script type="text/javascript" src="{INCURL}ckeditor/ckeditor.js"></script>
-<!-- ENDIF -->
+<script type="text/javascript" src="{SITEURL}loader.php?js={JSFILES}"></script>
 
 <!-- IF GOOGLEANALYTICS ne '' -->
 <script>
@@ -75,8 +72,8 @@ $(document).ready(function() {
 		<div class="col-md-6 hidden-xs text-right">{BANNER}</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6 text-muted"><small><!-- IF B_LOGGED_IN -->{L_200} {YOURUSERNAME}. <a href="{SSLURL}logout.php?">{L_245}</a><!-- ENDIF --></small></div>
-		<div class="col-md-6 text-right text-muted"><small>{!HEADERCOUNTER!}</small></div>
+		<div class="col-md-6 text-muted"><small><!-- IF B_LOGGED_IN -->{L_200} {YOURUSERNAME}. <a href="{SITEURL}logout.php?">{L_245}</a><!-- ENDIF --></small></div>
+		<div class="col-md-6 text-right text-muted"><small>{HEADERCOUNTER}</small></div>
 	</div>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -97,10 +94,10 @@ $(document).ready(function() {
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
 					<li><a href="{SITEURL}user_menu.php?">{L_622}</a></li>
-					<li><a href="{SSLURL}logout.php?">{L_245}</a></li>
+					<li><a href="{SITEURL}logout.php?">{L_245}</a></li>
 <!-- ELSE -->
-					<li><a href="{SSLURL}register.php?">{L_235}</a></li>
-					<li><a href="{SSLURL}user_login.php?">{L_052}</a></li>
+					<li><a href="{SITEURL}register.php?">{L_235}</a></li>
+					<li><a href="{SITEURL}user_login.php?">{L_052}</a></li>
 <!-- ENDIF -->
 <!-- IF B_BOARDS -->
 					<li><a href="{SITEURL}boards.php">{L_5030}</a></li>

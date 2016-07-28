@@ -30,7 +30,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 <div class="row">
 	<div class="col-md-12">
-		<ul class="breadcrumb"><b>{L_041}:</b> {!TOPCATSPATH!}</ul>
+		<ul class="breadcrumb"><b>{L_041}:</b> {TOPCATSPATH}</ul>
 		<div class="panel panel-default sm-padding" style="text-align: right;">
 			{VIEW_HISTORY1}
 			<a href="{SITEURL}friend.php?id={ID}">{L_106}</a> |
@@ -148,24 +148,24 @@ $(document).ready(function() {
 							<td width="30%" align="left">
 								{L_038}:
 							</td>
-							<td align="left">{!MINBID!}</td>
+							<td align="left">{MINBID}</td>
 						</tr>
 	<!-- ENDIF -->
 						<tr>
 							<td width="30%" align="left">{L_116}: </td>
-							<td align="left" valign="middle">{!MAXBID!}<!-- IF B_HASRESERVE -->&nbsp;<span class="text-muted"><small>{L_514}<small></span><!-- ENDIF --></td>
+							<td align="left" valign="middle">{MAXBID}<!-- IF B_HASRESERVE -->&nbsp;<span class="text-muted"><small>{L_514}<small></span><!-- ENDIF --></td>
 						</tr>
 <!-- ENDIF -->
 <!-- IF B_SHIPPING -->
 						<tr>
 							<td width="30%" align="left">{L_023}: </td>
-							<td align="left">{!SHIPPING_COST!}</td>
+							<td align="left">{SHIPPING_COST}</td>
 						</tr>
 <!-- ENDIF -->
 <!-- IF (B_ADDITIONAL_SHIPPING_COST or B_BUY_NOW_ONLY) and B_SHOW_ADDITIONAL_SHIPPING_COST -->
 						<tr>
 							<td width="30%" align="left">{L_350_1008}: </td>
-							<td align="left">{!ADDITIONAL_SHIPPING_COST!}</td>
+							<td align="left">{ADDITIONAL_SHIPPING_COST}</td>
 						</tr>
 <!-- ENDIF -->
 <!-- IF B_BUY_NOW -->
@@ -209,7 +209,7 @@ $(document).ready(function() {
 						<div class="well well-sm">
 							<div class="row">
 	<!-- IF B_NOTBNONLY -->
-								<form name="bid" action="{BIDURL}bid.php" method="post">
+								<form name="bid" action="{SITEURL}bid.php" method="post">
 									<div class="form-group">
 										<div class="col-md-3 col-md-offset-2">
 		<!-- IF QTY gt 1 -->
@@ -220,7 +220,7 @@ $(document).ready(function() {
 									</div>
 									<div class="col-md-5">
 		<!-- IF ATYPE eq 1 -->
-										<div class="bg-warning md-padding">{L_124}: {!NEXTBID!}</div><br>
+										<div class="bg-warning md-padding">{L_124}: {NEXTBID}</div><br>
 		<!-- ENDIF -->
 									</div>
 									<div class="col-md-8 col-md-offset-2">
@@ -234,7 +234,7 @@ $(document).ready(function() {
 								</form>
 	<!-- ELSE -->
 								<div class="col-md-8 col-md-offset-2">
-									{BUYNOW} <a class="btn btn-success btn-block" href="{BIDURL}buy_now.php?id={ID}">{L_496}</a>
+									{BUYNOW} <a class="btn btn-success btn-block" href="{SITEURL}buy_now.php?id={ID}">{L_496}</a>
 								</div>
 	<!-- ENDIF -->
 							</div>
@@ -261,7 +261,7 @@ $(document).ready(function() {
 						<h3 class="panel-title"><a name="description"></a>{L_018}</h3>
 					</div>
 					<div class="panel-body">
-						{!AUCTION_DESCRIPTION!}
+						{AUCTION_DESCRIPTION}
 					</div>
 				</div>
 <!-- IF B_HAS_QUESTIONS -->
@@ -271,7 +271,7 @@ $(document).ready(function() {
 					</div>
 					<div class="panel-body">
 	<!-- BEGIN questions -->
-						<span class="glyphicon glyphicon-comment" aria-hidden="true" style="padding-right: 10px;"></span>{L_5239}
+						<span class="glyphicon glyphicon-comment" aria-hidden="true" style="padding-right: 10px;"></span>
 						<div class="well well-sm">
 		<!-- BEGIN conv -->
 							<p><span class="text-muted"><small>{questions.conv.BY_WHO}:</small></span> {questions.conv.MESSAGE}</p>
@@ -308,15 +308,15 @@ $(document).ready(function() {
 											<br>
 											<b>{L_026}:</b> {PAYMENTS}<br>
 <!-- IF ! B_BUY_NOW_ONLY -->
-											<b><!-- IF ATYPE eq 1 -->{L_127}<!-- ELSE -->{L_038}<!-- ENDIF -->:</b> {!MINBID!}<br>
+											<b><!-- IF ATYPE eq 1 -->{L_127}<!-- ELSE -->{L_038}<!-- ENDIF -->:</b> {MINBID}<br>
 <!-- ENDIF -->
 											<br>
 											<b>{L_111}:</b> {STARTTIME}<br>
 											<b>{L_112}:</b> {ENDTIME}<br>
 											<b>{L_113}:</b> {ID}<br>
 											<br>
-											<b>{L_041}:</b> {!CATSPATH!}<br>
-											<!-- IF SECCATSPATH ne '' --><b>{L_814}:</b> {!SECCATSPATH!}<!-- ENDIF -->
+											<b>{L_041}:</b> {CATSPATH}<br>
+											<!-- IF SECCATSPATH ne '' --><b>{L_814}:</b> {SECCATSPATH}<!-- ENDIF -->
 										</div>
 									</div>
 								</td>

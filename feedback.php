@@ -29,6 +29,7 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 {
 	if (!$user->checkAuth())
 	{
+		$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 		header('location: user_login.php');
 		exit;
 	}
@@ -152,13 +153,6 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 		$them = $_REQUEST['sid'];
 		$sbmsg = $MSG['125'];
 	}
-	if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-	{
-		$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-		$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-		header('Location: ' . $sslurl . 'feedback.php?auction_id=' . $auction_id . '&sid=' . $_REQUEST['sid'] . '&wid=' . $_REQUEST['wid'] . '&ws=' . $_REQUEST['ws']);
-		exit;
-	}
 
 	$query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = :auc_id LIMIT 1";
 	$params = array();
@@ -204,10 +198,12 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	}
 	else
 	{
+		// set page values
 		$secid = intval($_GET['id']);
 		$thispage = (isset($_GET['pg'])) ? $_GET['pg'] : 1;
 		if ($thispage == 0) $thispage = 1;
 		$left_limit = ($thispage - 1) * $system->SETTINGS['perpage'];
+		$pages = 1;
 
 		$query = "SELECT rate_sum, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
 		$params = array();
@@ -299,8 +295,8 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 {
 	$template->assign_vars(array(
 			'ERROR' => (isset($TPL_errmsg)) ? $TPL_errmsg : '',
-			'USERNICK' => $TPL_nick,
-			'USERFB' => $TPL_feedbacks_sum,
+			'USERNICK' => (isset($TPL_nick)) ? $TPL_nick : '',
+			'USERFB' => (isset($TPL_feedbacks_sum)) ? $TPL_feedbacks_sum : '',
 			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
 			'AUCT_ID' => $auction_id,
 			'AUCT_TITLE' => $item_title,
@@ -343,8 +339,8 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 		}
 	}
 	$template->assign_vars(array(
-			'USERNICK' => $TPL_nick,
-			'USERFB' => $TPL_feedbacks_num,
+			'USERNICK' => (isset($TPL_nick)) ? $TPL_nick : '',
+			'USERFB' => (isset($TPL_feedbacks_num)) ? $TPL_feedbacks_num : '',
 			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
 			'PAGENATION' => $echofeed,
 			'AUCT_ID' => $auction_id,

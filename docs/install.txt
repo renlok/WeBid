@@ -41,7 +41,7 @@ Minimum Web Server requirements for proper operation of the WeBid Auction Script
 
 - Apache web server
 
-- PHP 5.2 or higher having the following configuration:
+- PHP 5.4 or higher having the following configuration:
 
 	> no open_basedir restriction
 

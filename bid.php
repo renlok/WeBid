@@ -17,19 +17,19 @@ include INCLUDE_PATH . 'datacheck.inc.php';
 
 $NOW = time();
 $id = intval($_REQUEST['id']);
-// reformat bid to valid number
-$bid = round($system->input_money($_POST['bid']), 2);
+$bid = (isset($_POST['bid'])) ? $_POST['bid'] : 0;
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
-$bidder_id = $user->user_data['id'];
 $bidding_ended = false;
 
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5002'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'bid.php?id=' . $id;
 	header('location: user_login.php');
 	exit;
 }
 
+$bidder_id = $user->user_data['id'];
 if (in_array($user->user_data['suspended'], array(5, 6, 7)))
 {
 	header('location: message.php');
@@ -40,14 +40,6 @@ if (!$user->can_buy)
 {
 	$_SESSION['TMP_MSG'] = $MSG['819'];
 	header('location: user_menu.php');
-	exit;
-}
-
-if ($system->SETTINGS['usersauth'] == 'y' && $system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != 'on')
-{
-	$sslurl = str_replace('http://', 'https://', $system->SETTINGS['siteurl']);
-	$sslurl = (!empty($system->SETTINGS['https_url'])) ? $system->SETTINGS['https_url'] : $sslurl;
-	header('location: ' . $sslurl . 'bid.php?id=' . $id . '&bid=' . $bid . '&qty=' . $qty);
 	exit;
 }
 
@@ -116,6 +108,11 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 {
 	$errmsg = $ERR_058;
 }
+else
+{
+	// reformat bid to valid number
+	$bid = round($system->input_money($bid, 2), 2);
+}
 
 $Data = $db->result();
 $item_title = $system->uncleanvars($Data['title']);
@@ -160,6 +157,7 @@ if ($db->numrows() > 0)
 else
 {
 	$high_bid = $current_bid;
+	$WINNING_BIDDER = 0;
 }
 
 if ($customincrement > 0)
@@ -575,17 +573,19 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$OldWinner_email = $OldWinner['email'];
 	}
 	// Update counters table with the new bid
-	// Send notification if users keyword matches (Item Watch)
-	$query = "SELECT id, email, name, item_watch FROM " . $DBPrefix . "users WHERE item_watch != '' AND item_watch IS NOT NULL AND id != :user_id";
+	// Send notification if auction id matches (Item Watch)
+	$query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE :auc_id AND id != :user_id";
 	$params = array();
 	$params[] = array(':user_id', $bidder_id, 'int');
+	$params[] = array(':auc_id', '%' . $id . '%', 'str');
 	$db->query($query, $params);
 
 	$fetch = $db->fetchall();
 	foreach ($fetch as $row)
 	{
-		// If keyword matches with opened auction title or/and desc send user a mail
-		if (strstr($row['item_watch'], strval($id)) !== false)
+		// double check there is a match
+		$watch_values = explode(' ', $row['item_watch']);
+		if (in_array(strval($id), $watch_values))
 		{
 			// Get data about the auction
 			$query = "SELECT title, current_bid FROM " . $DBPrefix . "auctions WHERE id = :auc_id";

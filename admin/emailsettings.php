@@ -54,7 +54,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$system->writesetting("smtp_host", (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
 			$system->writesetting("smtp_emails", $_POST['alert_emails'], 'str');
 		}
-		$ERR = $MSG['895'];
+		$ERR = $MSG['email_settings_updated'];
 	}
 }
 

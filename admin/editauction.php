@@ -41,10 +41,9 @@ if (!isset($_REQUEST['id']))
 function load_gallery($auc_id)
 {
 	$UPLOADED_PICTURES = array();
-	if (file_exists('../' . UPLOAD_FOLDER . $auc_id))
+	if (is_dir(UPLOAD_PATH . $auc_id))
 	{
-		$dir = @opendir('../' . UPLOAD_FOLDER . $auc_id);
-		if ($dir)
+		if ($dir = opendir(UPLOAD_PATH . $auc_id))
 		{
 			while ($file = @readdir($dir))
 			{
@@ -54,7 +53,7 @@ function load_gallery($auc_id)
 
 				}
 			}
-			@closedir($dir);
+			closedir($dir);
 		}
 	}
 	return $UPLOADED_PICTURES;
@@ -331,7 +330,7 @@ $categories_list2 .= '</select>' . "\n";
 // Pictures Gellery
 $K = 0;
 $UPLOADED_PICTURES = array();
-if (file_exists('../' . UPLOAD_FOLDER . $auc_id))
+if (file_exists(UPLOAD_PATH . $auc_id))
 {
 	// load dem pictures
 	$UPLOADED_PICTURES = load_gallery(UPLOAD_FOLDER, $auc_id);
@@ -361,7 +360,7 @@ while ($payment_method = $db->fetch())
 	if ($payment_method['gateway_active'] == 1 || $payment_method['is_gateway'] == 0)
 	{
 		$checked = (in_array($payment_method['name'], $payment)) ? 'checked' : '';
-		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $v . '" ' . $checked . '> ' . $payment_method['displayname'] . '</p>';
+		$payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $payment_method['name'] . '" ' . $checked . '> ' . $payment_method['displayname'] . '</p>';
 	}
 }
 

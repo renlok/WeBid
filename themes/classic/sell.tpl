@@ -130,9 +130,9 @@ $(document).ready(function(){
 		if (bn != parseInt($("#bn").val()))
 		{
 			if (parseInt($("#bn").val()) > 0)
-				updatefee(buyout_fee);
+				updatefee(buynow_fee);
 			else
-				updatefee(buyout_fee * -1);
+				updatefee(buynow_fee * -1);
 			bn = parseInt($("#bn").val());
 		}
 	}
@@ -150,29 +150,29 @@ $(document).ready(function(){
 		if (rp != parseInt($("#reserve_price").val()))
 		{
 			if (parseInt($("#reserve_price").val()) > 0)
-				updatefee(rp_fee);
+				updatefee(reserve_fee);
 			else
-				updatefee(rp_fee * -1);
+				updatefee(reserve_fee * -1);
 			rp = parseInt($("#reserve_price").val());
 		}
 	}
 	$("#is_featured").click(function() {
 		if ($('#is_featured').is(':checked'))
-			updatefee(hpfeat_fee);
+			updatefee(featured_fee);
 		else
-			updatefee(hpfeat_fee * -1);
+			updatefee(featured_fee * -1);
 	});
 	$("#is_bold").click(function() {
 		if ($('#is_bold').is(':checked'))
-			updatefee(bolditem_fee);
+			updatefee(bold_fee);
 		else
-			updatefee(bolditem_fee * -1);
+			updatefee(bold_fee * -1);
 	});
 	$("#is_highlighted").click(function() {
 		if ($('#is_highlighted').is(':checked'))
-			updatefee(hlitem_fee);
+			updatefee(highlighted_fee);
 		else
-			updatefee(hlitem_fee * -1);
+			updatefee(highlighted_fee * -1);
 	});
 		<!-- IF B_SUBTITLE -->
 	$("#subtitle").blur(function() {
@@ -230,7 +230,7 @@ $(document).ready(function(){
 			</div>
 <!-- ENDIF -->
 <!-- IF PAGE eq 0 -->
-			<form name="sell" action="{ASSLURL}sell.php" method="post">
+			<form name="sell" action="{SITEURL}sell.php" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
@@ -275,7 +275,7 @@ $(document).ready(function(){
 					</tr>
 					<tr>
 						<td class="rightpan" colspan="2">
-							{!AUC_DESCRIPTION!}
+							{AUC_DESCRIPTION}
 						</td>
 					</tr>
 	<!-- IF B_GALLERY -->
@@ -298,7 +298,7 @@ $(document).ready(function(){
 						<td align="right" width="25%" valign="middle">
 							<b>{L_257}</b>
 						</td>
-						<td class="rightpan">{!ATYPE!}</td>
+						<td class="rightpan">{ATYPE}</td>
 					</tr>
 					<tr>
 						<td align="right" width="25%" valign="middle">
@@ -382,7 +382,7 @@ $(document).ready(function(){
 							<b>{L_2__0016}</b>
 						</td>
 						<td class="rightpan">
-		<!-- IF B_EDITING -->
+		<!-- IF B_EDITING && !B_CANEDITSTARTDATE -->
 							{START_TIME}
 							<input type="hidden" name="a_starts" value="{START_TIME}">
 		<!-- ELSE -->
@@ -400,12 +400,31 @@ $(document).ready(function(){
 	<!-- ELSE -->
 					<input type="hidden" name="start_now" value="1">
 	<!-- ENDIF -->
+	<!-- IF B_EDIT_ENDTIME -->
 					<tr>
-						<td align="right" width="25%" valign="middle">
-							<b>{L_022}</b>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L_custom_end_time}</b>
 						</td>
 						<td class="rightpan">
-							{!DURATIONS!}
+							<input type="checkbox" id="custom_end" name="custom_end" {CUSTOM_END}>
+						</td>
+					</tr>
+	<!-- ENDIF -->
+					<tr>
+						<td align="right" width="25%" valign="top" class="leftpan">
+							<b>{L_ending_date}</b>
+						</td>
+						<td class="rightpan">
+        					{L_022}: {DURATIONS}<br>
+			<!-- IF B_EDIT_ENDTIME -->
+							{L_or_custom_end_time}: <input type="text" name="a_ends" id="a_ends" value="{END_TIME}" size="20" maxlength="19">
+							<script type="text/javascript">
+								new tcal ({'id': 'a_ends','controlname': 'a_ends', 'formname': 'sell'});
+								$('#a_ends').change(function () {
+									$('#custom_end').attr('checked', true);
+								});
+							</script>
+			<!-- ENDIF -->
 						</td>
 					</tr>
 	<!-- IF B_AUTORELIST -->
@@ -415,7 +434,7 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan">
 							<p>{L__0162}</p>
-							{!RELIST!}
+							{RELIST}
 						</td>
 					</tr>
 	<!-- ENDIF -->
@@ -477,7 +496,7 @@ $(document).ready(function(){
 							<b>{L_026}</b>
 						</td>
 						<td class="rightpan">
-							{!PAYMENTS!}
+							{PAYMENTS}
 						</td>
 					</tr>
 					<tr>
@@ -539,7 +558,7 @@ $(document).ready(function(){
 				</div>
 			</form>
 <!-- ELSEIF PAGE eq 2 -->
-			<form name="preview" action="{ASSLURL}sell.php" method="post">
+			<form name="preview" action="{SITEURL}sell.php" method="post">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="100%" border="0" cellpadding="4" align="center" cellspacing=0>
 					<tr>
@@ -557,7 +576,7 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 					<tr>
 						<td  valign="top" align="right"><b>{L_018}</b></td>
-						<td>{!AUC_DESCRIPTION!}</td>
+						<td>{AUC_DESCRIPTION}</td>
 					</tr>
 					<tr>
 						<td  valign="top" align="right"><b>{L_019}</b></td>
@@ -577,41 +596,48 @@ $(document).ready(function(){
 	<!-- IF B_BN_ONLY -->
 					<tr>
 						<td valign="top" align="right"><b>{MINTEXT}</b></td>
-						<td>{!MIN_BID!}</td>
+						<td>{MIN_BID}</td>
 					</tr>
 	<!-- ENDIF -->
 	<!-- IF ATYPE_PLAIN eq 1 -->
 		<!-- IF B_BN_ONLY -->
 					<tr>
 						<td valign="top" align="right"><b>{L_021}</b></td>
-						<td>{!RESERVE!}</td>
+						<td>{RESERVE}</td>
 					</tr>
 		<!-- ENDIF -->
 		<!-- IF B_BN -->
 					<tr>
 						<td valign="top" align="right"><b>{L_496}</b></td>
-						<td>{!BN_PRICE!}</td>
+						<td>{BN_PRICE}</td>
 					</tr>
 		<!-- ENDIF -->
 	<!-- ENDIF -->
 	<!-- IF B_SHIPPING -->
 					<tr>
 						<td valign="top" align="right"><b>{L_023}</b></td>
-						<td>{!SHIPPING_COST!}</td>
+						<td>{SHIPPING_COST}</td>
 					</tr>
 					<tr>
 						<td valign="top" align="right"><b>{L_350_1008}</b></td>
-						<td>{!ADDITIONAL_SHIPPING_COST!}</td>
+						<td>{ADDITIONAL_SHIPPING_COST}</td>
 					</tr>
 	<!-- ENDIF -->
 					<tr>
 						<td valign="top" align="right"><b>{L_2__0016}</b></td>
 						<td>{STARTDATE}</td>
 					</tr>
+	<!-- IF CUSTOM_END -->
+					<tr>
+						<td valign="top" align="right"><b>{L_end_date}</b></td>
+						<td>{END_TIME}</td>
+					</tr>
+	<!-- ELSE -->
 					<tr>
 						<td valign="top" align="right"><b>{L_022}</b></td>
 						<td>{DURATION}</td>
 					</tr>
+	<!-- ENDIF -->
 	<!-- IF B_CUSINC -->
 					<tr>
 						<td valign="top" align="right"><b>{L_120}</b> </td>
@@ -634,14 +660,14 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 					<tr>
 						<td valign="top" align="right"><b>{L_026}</b> </td>
-						<td>{!PAYMENTS_METHODS!}</td>
+						<td>{PAYMENTS_METHODS}</td>
 					</tr>
 					<tr>
 						<td  valign="top" align="right"><b>{L_027}</b></td>
 						<td>
-							{!CAT_LIST1!}
+							{CAT_LIST1}
 	<!-- IF CAT_LIST2 ne '' -->
-							<br>{!CAT_LIST2!}
+							<br>{CAT_LIST2}
 	<!-- ENDIF -->
 						</td>
 					</tr>

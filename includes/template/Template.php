@@ -52,7 +52,7 @@ class Template
 	{
 		global $system;
 
-		$theme = (!defined('InAdmin')) ? $system->SETTINGS['theme'] : 'adminClassic';
+		$theme = (!defined('InAdmin')) ? $system->SETTINGS['theme'] : $system->SETTINGS['admin_theme'];
 
 		if (file_exists(MAIN_PATH . 'themes/' . $theme))
 		{

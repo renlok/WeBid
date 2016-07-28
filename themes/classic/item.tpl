@@ -30,7 +30,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 <div class="content">
 	<div class="tableContent2">
-		<div class="padding"><b>{L_041}:</b> {!TOPCATSPATH!}</div>
+		<div class="padding"><b>{L_041}:</b> {TOPCATSPATH}</div>
 		<div class="titTable2 rounded-top rounded-bottom">
 			<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<tr>
@@ -154,24 +154,24 @@ $(document).ready(function() {
 														<td width="50%" align="left">
 															{L_038}:
 														</td>
-														<td align="left">{!MINBID!}</td>
+														<td align="left">{MINBID}</td>
 													</tr>
 	<!-- ENDIF -->
 													<tr>
 														<td width="50%" align="left">{L_116}: </td>
-														<td align="left" valign="middle">{!MAXBID!}<!-- IF B_HASRESERVE -->&nbsp;<span class="smallspan">{L_514}</span><!-- ENDIF --></td>
+														<td align="left" valign="middle">{MAXBID}<!-- IF B_HASRESERVE -->&nbsp;<span class="smallspan">{L_514}</span><!-- ENDIF --></td>
 													</tr>
 <!-- ENDIF -->
 <!-- IF B_SHIPPING -->
 													<tr>
 														<td width="50%" align="left">{L_023}: </td>
-														<td align="left">{!SHIPPING_COST!}</td>
+														<td align="left">{SHIPPING_COST}</td>
 													</tr>
 <!-- ENDIF -->
 <!-- IF (B_ADDITIONAL_SHIPPING_COST or B_BUY_NOW_ONLY) and B_SHOW_ADDITIONAL_SHIPPING_COST -->
 													<tr>
 														<td width="50%" align="left">{L_350_1008}: </td>
-														<td align="left">{!ADDITIONAL_SHIPPING_COST!}</td>
+														<td align="left">{ADDITIONAL_SHIPPING_COST}</td>
 													</tr>
 <!-- ENDIF -->
 <!-- IF B_BUY_NOW -->
@@ -230,7 +230,7 @@ $(document).ready(function() {
 <!-- IF B_HASENDED eq false and B_CAN_BUY -->
 	<!-- IF B_NOTBNONLY -->
 							<table width="100%" border=0 cellpadding=2 cellspacing=0 border=1>
-								<form name="bid" action="{BIDURL}bid.php" method="post">
+								<form name="bid" action="{SITEURL}bid.php" method="post">
 									<tr>
 										<td width="65%">
 											<table width=100% border=0 cellpadding=2 cellspacing=0>
@@ -242,7 +242,7 @@ $(document).ready(function() {
 		<!-- ENDIF -->
 														{L_121} <input type="text" name="bid" size="15">
 		<!-- IF ATYPE eq 1 -->
-														{L_124}: {!NEXTBID!}
+														{L_124}: {NEXTBID}
 														<br>
 		<!-- ENDIF -->
 													</td>
@@ -261,7 +261,7 @@ $(document).ready(function() {
 								</form>
 							</table>
 	<!-- ELSE -->
-							{BUYNOW} <a href="{BIDURL}buy_now.php?id={ID}"><img border="0" align="absbottom" alt="{L_496}" src="{BNIMG}"></a>
+							{BUYNOW} <a href="{SITEURL}buy_now.php?id={ID}"><img border="0" align="absbottom" alt="{L_496}" src="{BNIMG}"></a>
 	<!-- ENDIF -->
 <!-- ENDIF -->
 <!-- IF B_CAN_BUY eq false -->
@@ -277,7 +277,7 @@ $(document).ready(function() {
 				<div class="titTable4">
 					<a name="description"></a>{L_018}
 				</div>
-				<div class="table2">{!AUCTION_DESCRIPTION!}</div>
+				<div class="table2">{AUCTION_DESCRIPTION}</div>
 			</div>
 <!-- IF B_HAS_QUESTIONS -->
 			<div class="tableContent2">
@@ -286,7 +286,6 @@ $(document).ready(function() {
 				</div>
 				<div class="table2">
 	<!-- BEGIN questions -->
-					<b>{L_5239}</b>
 					<div class="smallspan padding">
 		<!-- BEGIN conv -->
 					<p><b>{questions.conv.BY_WHO}</b>: {questions.conv.MESSAGE}</p>
@@ -307,7 +306,7 @@ $(document).ready(function() {
 	<!-- BEGIN gallery -->
 							<td>
 								<a href="{SITEURL}{UPLOADEDPATH}{ID}/{gallery.V}" title="" data-lightbox="gallery">
-									<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}" border="0" width="{THUMBWIDTH}" hspace="10">
+									<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}" border="0" hspace="10">
 								</a>
 							</td>
 	<!-- END gallery -->
@@ -347,7 +346,7 @@ $(document).ready(function() {
 		<!-- ENDIF -->
 							</td>
 							<td align="center">
-								{!bidhistory.BID!}
+								{bidhistory.BID}
 							</td>
 							<td align="center">
 								{bidhistory.WHEN}
@@ -387,16 +386,16 @@ $(document).ready(function() {
 								<br>
 								<b>{L_026}:</b> {PAYMENTS}<br>
 <!-- IF ! B_BUY_NOW_ONLY -->
-								<b><!-- IF ATYPE eq 1 -->{L_127}<!-- ELSE -->{L_038}<!-- ENDIF -->:</b> {!MINBID!}<br>
+								<b><!-- IF ATYPE eq 1 -->{L_127}<!-- ELSE -->{L_038}<!-- ENDIF -->:</b> {MINBID}<br>
 <!-- ENDIF -->
 								<br>
 								<b>{L_111}:</b> {STARTTIME}<br>
 								<b>{L_112}:</b> {ENDTIME}<br>
 								<b>{L_113}:</b> {ID}<br>
 								<br>
-								<b>{L_041}:</b> {!CATSPATH!}<br>
+								<b>{L_041}:</b> {CATSPATH}<br>
 <!-- IF SECCATSPATH ne '' -->
-								<b>{L_814}:</b> {!SECCATSPATH!}
+								<b>{L_814}:</b> {SECCATSPATH}
 <!-- ENDIF -->
 							</div>
 						</div>

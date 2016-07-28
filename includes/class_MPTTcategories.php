@@ -14,6 +14,7 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
+// TODO: need to deal with counters correctly when moving categories
 class MPTTcategories
 {
 	// Add an element to the tree as a child of $parent and as $child_num'th child. If $data is not supplied the insert id will be returned.

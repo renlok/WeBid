@@ -16,7 +16,7 @@ include 'common.php';
 
 if (isset($_GET['id']) && isset($_GET['hash']) && !isset($_POST['action']))
 {
-	$query = "SELECT suspended, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT suspended, hash FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $_GET['id'], 'int');
 	$db->query($query, $params);
@@ -26,7 +26,7 @@ if (isset($_GET['id']) && isset($_GET['hash']) && !isset($_POST['action']))
 	{
 		$errmsg = $ERR_025;
 	}
-	elseif (!isset($_GET['hash']) || md5($MD5_PREFIX . $system->uncleanvars($user_data['nick'])) != $_GET['hash'])
+	elseif (!isset($_GET['hash']) || md5($MD5_PREFIX . $user_data['hash']) != $_GET['hash'])
 	{
 		$errmsg = $ERR_033;
 	}
@@ -57,13 +57,13 @@ if (!isset($_GET['id']) && !isset($_POST['action']))
 
 if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 {
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT hash FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $_POST['id'], 'int');
 	$db->query($query, $params);
 	$user_data = $db->result();
 
-	if (md5($MD5_PREFIX . $user_data['nick']) == $_POST['hash'])
+	if (md5($MD5_PREFIX . $user_data['hash']) == $_POST['hash'])
 	{
 		// User wants to confirm his/her registration
 		$query = "UPDATE " . $DBPrefix . "users SET suspended = 0 WHERE id = :user_id AND suspended = 8";
@@ -121,11 +121,11 @@ if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 
 if (isset($_POST['action']) && $_POST['action'] == "Refuse")
 {
-	$query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT hash FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $_POST['id'], 'int');
 	$db->query($query, $params);
-	if (md5($MD5_PREFIX . $db->result('nick')) == $_POST['hash'])
+	if (md5($MD5_PREFIX . $db->result('hash')) == $_POST['hash'])
 	{
 		// User doesn't want to confirm the registration
 		$query = "DELETE FROM " . $DBPrefix . "users WHERE id = :user_id AND suspended = 8";

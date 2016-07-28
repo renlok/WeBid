@@ -40,7 +40,7 @@
 <!-- END cats -->
 					</table>
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<button type="submit" name="action" value="Delete">{L_008}</button>
+					<button type="submit" name="action" value="Delete" class="button">{L_008}</button>
 				</form>
 			</div>
 		</div>

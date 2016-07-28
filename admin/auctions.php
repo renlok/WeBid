@@ -42,6 +42,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		$system->writesetting("proxy_bidding",ynbool($_POST['proxy_bidding']), 'str');
 		$system->writesetting("edit_starttime", $_POST['edit_starttime'], 'int');
+		$system->writesetting("edit_endtime", $_POST['edit_endtime'], 'int');
 		$system->writesetting("cust_increment", $_POST['cust_increment'], 'int');
 		$system->writesetting("hours_countdown", $_POST['hours_countdown'], 'int');
 		$system->writesetting("ao_hpf_enabled", ynbool($_POST['ao_hpf_enabled']), 'str');
@@ -58,12 +59,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("maxpictures", $_POST['maxpictures'], 'int');
 		$system->writesetting("maxuploadsize", ($_POST['maxpicturesize'] * 1024), 'int');
 		$system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
+		$system->writesetting("gallery_max_width_height", $_POST['gallery_max_width_height'], 'int');
 		$ERR = $MSG['5088'];
 	}
 }
 
 loadblock($MSG['427'], $MSG['428'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['5090'], $MSG['5089'], 'batch', 'edit_starttime', $system->SETTINGS['edit_starttime'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['allow_custom_end_date'], $MSG['allow_custom_end_date_explain'], 'batch', 'edit_endtime', $system->SETTINGS['edit_endtime'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['068'], $MSG['070'], 'batch', 'cust_increment', $system->SETTINGS['cust_increment'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['5091'], $MSG['5095'], 'days', 'hours_countdown', $system->SETTINGS['hours_countdown'], array($MSG['25_0037']));
 
@@ -88,6 +91,7 @@ loadblock($MSG['665'], $MSG['664'], 'batch', 'picturesgallery', $system->SETTING
 loadblock($MSG['666'], '', 'days', 'maxpictures', $system->SETTINGS['maxpictures']);
 loadblock($MSG['671'], $MSG['25_0187'], 'decimals', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), array($MSG['672']));
 loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], array($MSG['2__0045']));
+loadblock($MSG['gallery_image_max_size'], $MSG['gallery_image_max_size_explain'], 'decimals', 'gallery_max_width_height', $system->SETTINGS['gallery_max_width_height'], array($MSG['2__0045']));
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',

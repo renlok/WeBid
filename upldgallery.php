@@ -245,6 +245,7 @@ $template->assign_vars(array(
 		'MAXPICS' => $system->SETTINGS['maxpictures'],
 		'MAXPICSIZE' => $system->SETTINGS['maxuploadsize']/1024,
 		'MAXPICSIZE_MB' => $system->SETTINGS['maxuploadsize']/(1024*1024),  //kb to mb convertion
+		'MAXWIDTHHEIGHT' => $system->SETTINGS['gallery_max_width_height'],
 		'SESSION_ID' => session_id(),
 		'UPLOADED' => intval(count($_SESSION['UPLOADED_PICTURES']))
 		));

@@ -354,8 +354,11 @@ function f_tcalRelDate (d_date, d_diff, s_units) {
 }
 
 function f_tcalHideAll () {
-	for (var i = 0; i < window.A_TCALSIDX.length; i++)
-		window.A_TCALSIDX[i].f_hide();
+	if (typeof window.A_TCALSIDX != 'undefined')
+	{
+		for (var i = 0; i < window.A_TCALSIDX.length; i++)
+			window.A_TCALSIDX[i].f_hide();
+	}
 }
 
 function f_tcalResetTime (d_date) {

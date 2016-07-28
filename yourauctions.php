@@ -17,6 +17,7 @@ include 'common.php';
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
 	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourauctions.php';
 	header('location: user_login.php');
 	exit;
@@ -38,17 +39,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 		{
 			$v = intval($v);
 			// Pictures Gallery
-			if ($dir = @opendir(UPLOAD_PATH . $v))
+			if (is_dir(UPLOAD_PATH . $v))
 			{
-				while ($file = readdir($dir))
+				if ($dir = opendir(UPLOAD_PATH . $v))
 				{
-					if ($file != '.' && $file != '..')
+					while ($file = readdir($dir))
 					{
-						@unlink(UPLOAD_PATH . $v . '/' . $file);
+						if ($file != '.' && $file != '..')
+						{
+							@unlink(UPLOAD_PATH . $v . '/' . $file);
+						}
 					}
+					closedir($dir);
+					rmdir(UPLOAD_PATH . $v);
 				}
-				closedir($dir);
-				@rmdir(UPLOAD_PATH . $v);
 			}
 
 			// Delete auction views
@@ -106,6 +110,7 @@ else
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+
 // Handle columns sorting variables
 if (!isset($_SESSION['oa_ord']) && empty($_GET['oa_ord']))
 {
@@ -140,7 +145,7 @@ else
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 	WHERE user = :user_id AND closed = 0
 	AND starts <= :time AND suspended = 0
-	ORDER BY " . $_SESSION['ca_ord'] . " " . $_SESSION['ca_type'] . " LIMIT :offset, :perpage";
+	ORDER BY " . $_SESSION['oa_ord'] . " " . $_SESSION['oa_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $params[] = array(':time', $NOW, 'int');

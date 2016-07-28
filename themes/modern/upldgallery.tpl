@@ -36,8 +36,8 @@ $(function() {
 
 		// Resize images on clientside if we can
 		resize: {
-			width : 600,
-			height : 600,
+			width : {MAXWIDTHHEIGHT},
+			height : {MAXWIDTHHEIGHT},
 			quality : 90,
 			crop: false // crop to exact dimensions
 		},

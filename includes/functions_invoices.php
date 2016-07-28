@@ -88,9 +88,9 @@ function setfeetemplate($data)
 		'bold' => $MSG['439'],
 		'highlighted' => $MSG['434'],
 		'subtitle' => $MSG['803'],
-		'extcat' => $MSG['804'],
+		'extracat' => $MSG['804'],
 		'reserve' => $MSG['440'],
-		'image' => $MSG['435'],
+		'picture' => $MSG['435'],
 		'relist' => $MSG['437'],
 		'buynow' => $MSG['436'],
 		'finalval' => $MSG['791'],
@@ -143,7 +143,7 @@ function invalidinvoice($packingslip = false)
 	global $template, $system;
 
 	$template->assign_vars(array(
-			'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo']
+			'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'],
 			'LANGUAGE' => $language,
 			'SALE_ID' => 0,
 			'B_INVOICE' => false

@@ -199,7 +199,15 @@ if ($system->SETTINGS['extra_cat'] == 'y' && intval($auction_data['secondcat']) 
 // history
 $query = "SELECT b.*, u.nick, u.rate_sum FROM " . $DBPrefix . "bids b
 LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-WHERE b.auction = :auc_id ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
+WHERE b.auction = :auc_id";
+if ($auction_data['bn_only'] || $auction_type == 2)
+{
+	$query .= " ORDER BY b.bidwhen DESC";
+}
+else
+{
+	$query .= " ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
+}
 $params = array();
 $params[] = array(':auc_id', $id, 'int');
 $db->query($query, $params);

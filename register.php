@@ -389,7 +389,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				if (defined('TrackUserIPs'))
 				{
 					// log registration IP
-					$system->log('user', 'Regestered User', $TPL_id_hidden);
+					$system->log('user', 'Registered User', $TPL_id_hidden);
 				}
 
 				// send emails

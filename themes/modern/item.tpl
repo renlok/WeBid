@@ -104,8 +104,8 @@ $(document).ready(function() {
 		<!-- IF B_BIDDERPRIV -->
 								<b>{high_bidders.BUYER_NAME}</b>
 		<!-- ELSE -->
-								<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
-								<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b>
+								<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&amp;auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
+								<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&amp;faction=show">{high_bidders.BUYER_FB}</a>)</b>
 		<!-- ENDIF -->
 								{high_bidders.BUYER_FB_ICON}
 	<!-- END high_bidders -->
@@ -183,8 +183,8 @@ $(document).ready(function() {
 					<div class="panel-heading"><b>{L_30_0209}</b></div>
 					<div class="panel-body">
 						<div>
-							<a href='{SITEURL}profile.php?user_id={SELLER_ID}&auction_id={ID}'><b>{SELLER_NICK}</b></a>
-							(<a href='{SITEURL}feedback.php?id={SELLER_ID}&faction=show'>{SELLER_TOTALFB}</A>)
+							<a href='{SITEURL}profile.php?user_id={SELLER_ID}&amp;auction_id={ID}'><b>{SELLER_NICK}</b></a>
+							(<a href='{SITEURL}feedback.php?id={SELLER_ID}&amp;faction=show'>{SELLER_TOTALFB}</A>)
 							{SELLER_FBICON}
 						</div>
 						<div>

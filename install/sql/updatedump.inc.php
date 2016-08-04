@@ -524,5 +524,11 @@ if ($installed_version == '1.2.0')
 
 if ($installed_version == '1.2.1')
 {
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `paypal_email`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `authnet_id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `authnet_pass`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `worldpay_id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `moneybookers_email`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `toocheckout_id`;";
 	$new_version = '1.2.2';
 }

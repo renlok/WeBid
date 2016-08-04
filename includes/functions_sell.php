@@ -572,16 +572,15 @@ function get_category_string($sellcat)
 
 function check_gateway($gateway)
 {
-	global $user;
-	if ($gateway == 'paypal' && !empty($user->user_data['paypal_email']))
-		return true;
-	if ($gateway == 'authnet' && !empty($user->user_data['authnet_id']) && !empty($user->user_data['authnet_pass']))
-		return true;
-	if ($gateway == 'worldpay' && !empty($user->user_data['worldpay_id']))
-		return true;
-	if ($gateway == 'moneybookers' && !empty($user->user_data['moneybookers_email']))
-		return true;
-	if ($gateway == 'toocheckout' && !empty($user->user_data['toocheckout_id']))
+	global $user, $db;
+	$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "usergateways
+			WHERE user_id = :user_id
+			AND gateway_id = (SELECT id FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1 && name = :gateway_name)";
+	$params = array();
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$params[] = array(':gateway_name', $gateway, 'str');
+	$db->query($query, $params);
+	if ($db->result('COUNT') > 0)
 		return true;
 	return false;
 }
@@ -589,7 +588,7 @@ function check_gateway($gateway)
 function alert_auction_watchers($id, $title, $description)
 {
 	global $user, $DBPrefix, $db;
-	
+
 	// Send notification if users keyword matches (Auction Watch)
 	$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != '' AND id != :user_id";
 	$params = array();
@@ -625,4 +624,3 @@ function alert_auction_watchers($id, $title, $description)
 		}
 	}
 }
-

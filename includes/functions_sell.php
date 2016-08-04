@@ -570,6 +570,7 @@ function get_category_string($sellcat)
 	return $TPL_categories_list;
 }
 
+// TODO: this should be used when a user lists an item and selects gateways
 function check_gateway($gateway)
 {
 	global $user, $db;

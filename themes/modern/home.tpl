@@ -115,8 +115,8 @@
 			<div class="panel-heading"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true" style="padding-right: 10px;"></span>{L_276}</div>
 			<div class="list-group">
 <!-- BEGIN cat_list -->
-				<a class="list-group-item" href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}<span class="pull-right">
-				<!-- IF cat_list.CATAUCNUM neq '' --> ({cat_list.CATAUCNUM})<!-- ENDIF --></span></a>
+				<a class="list-group-item" href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}
+				<!-- IF cat_list.CATAUCNUM neq '' --><span class="pull-right badge"> {cat_list.CATAUCNUM}<!-- ENDIF --></span></a>
 <!-- END cat_list -->
 				<a class="list-group-item" href="{SITEURL}browse.php?id=0"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>  {L_277}</a>
 			</div>

@@ -102,7 +102,7 @@
 				</button>
 				<ul class="dropdown-menu drop-width" role="menu" aria-labelledby="dropdownMenu1">
 <!-- BEGIN cat_list -->
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}<span><!-- IF cat_list.CATAUCNUM neq '' --> ({cat_list.CATAUCNUM})<!-- ENDIF --></span></a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="browse.php?id={cat_list.ID}">{cat_list.IMAGE}{cat_list.NAME}<span class="badge"><!-- IF cat_list.CATAUCNUM neq '' -->{cat_list.CATAUCNUM}<!-- ENDIF --></span></a></li>
 <!-- END cat_list -->
 					<li role="presentation" class="divider"></li>
 					<li role="presentation"><a role="menuitem" tabindex="-1" href="{SITEURL}browse.php?id=0"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>  {L_277}</a></li>

@@ -530,5 +530,8 @@ if ($installed_version == '1.2.1')
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `worldpay_id`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `moneybookers_email`;";
 	$query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `toocheckout_id`;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `reg_date` int(11) default CURRENT_TIMESTAMP;";
+	$query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `lastlogin` timestamp default NULL;";
+	$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (57, 'Serbia', 'Serbia Dinars', 'RSD');";
 	$new_version = '1.2.2';
 }

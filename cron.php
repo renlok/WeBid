@@ -520,21 +520,15 @@ if ($system->SETTINGS['prune_unactivated_users'] == 1)
 	printLog("\n");
 	printLog("++++++ Prune unactivated user accounts");
 
-	$pruneAccountTime = time() - (60 * 60 * 24 * $system->SETTINGS['prune_unactivated_users_days']);
+	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE reg_date <= ADD_DATE(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['prune_unactivated_users_days'] . " DAY) AND suspended = 8";
+	$db->direct_query($query);
 
-	$query = "SELECT id FROM " . $DBPrefix . "users WHERE reg_date <= :pruneAccountTime AND suspended = 8";
-	$params = array();
-	$params[] = array(':pruneAccountTime', $pruneAccountTime, 'int');
-	$db->query($query, $params);
-
-	$pruneCount = $db->numrows();
+	$pruneCount = $db->result('COUNT');
 	printLog($pruneCount . " accounts to prune");
 	if ($pruneCount > 0)
 	{
-		$query = "DELETE FROM " . $DBPrefix . "users WHERE reg_date <= :pruneAccountTime AND suspended = 8";
-		$params = array();
-		$params[] = array(':pruneAccountTime', $pruneAccountTime, 'int');
-		$db->query($query, $params);
+		$query = "DELETE FROM " . $DBPrefix . "users WHERE reg_date <= ADD_DATE(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['prune_unactivated_users_days'] . " DAY) AND suspended = 8";
+		$db->direct_query($query);
 
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - " . $pruneCount;
 		$db->direct_query($query);

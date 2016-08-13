@@ -20,7 +20,6 @@
 					<input type="text" class="form-control" name="TPL_surname" <!-- IF MISSING0 eq 1 -->id="inputError1"<!-- ENDIF --> value="{V_YNAME}" autofocus>
 					<!-- IF MISSING0 eq 1 --><div class="error-box missing">{L_937}</div><!-- ENDIF -->
 				</div>
-
 				<div class="form-group col-lg-6 <!-- IF MISSING1 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_nick">{L_003} *</label>
 					<input type="text" name="TPL_nick" class="form-control"  value="{V_UNAME}" <!-- IF MISSING1 eq 1 -->id="inputError1"<!-- ENDIF --> placeholder="{L_050}">

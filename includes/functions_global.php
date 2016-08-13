@@ -68,8 +68,13 @@ class global_class
 		// check if url needs https
 		if ($this->SETTINGS['https'] == 'y')
 		{
-			$this->SETTINGS['siteurl'] = (!empty($this->SETTINGS['https_url'])) ? $this->SETTINGS['https_url'] : str_replace('http://', 'https://', $this->SETTINGS['siteurl']);
+			$this->SETTINGS['siteurl'] = (!empty($this->SETTINGS['https_url'])) ? $this->SETTINGS['https_url'] : 'https://' . $this->cleanSiteUrl());
 		}
+	}
+
+	function cleanSiteUrl()
+	{
+		return str_replace(['http://', 'https://'], '', $this->SETTINGS['siteurl']);
 	}
 
 	public function loadAuctionTypes()

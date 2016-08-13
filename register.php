@@ -302,7 +302,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$TPL_nick_hidden = $_POST['TPL_nick'];
 				$TPL_password_hidden = $_POST['TPL_password'];
 				$TPL_name_hidden = $_POST['TPL_name'];
-				$TPL_name_hidden = $_POST['TPL_surname'];
+				$TPL_surname_hidden = $_POST['TPL_surname'];
 				$TPL_email_hidden = $_POST['TPL_email'];
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 2) ? 0 : 8;
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 0) ? 10 : $SUSPENDED;
@@ -350,7 +350,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':password', $phpass->HashPassword($TPL_password_hidden), 'str'),
 					array(':hash', $hash, 'str'),
 					array(':name', $system->cleanvars($TPL_name_hidden), 'str'),
-					array(':surname', $system->cleanvars($TPL_name_hidden), 'str'),
+					array(':surname', $system->cleanvars($TPL_surname_hidden), 'str'),
 					array(':address', $system->cleanvars((isset($_POST['TPL_address'])) ? $_POST['TPL_address'] : ''), 'str'),
 					array(':city', $system->cleanvars((isset($_POST['TPL_city'])) ? $_POST['TPL_city'] : ''), 'str'),
 					array(':prov', $system->cleanvars((isset($_POST['TPL_prov'])) ? $_POST['TPL_prov'] : ''), 'str'),

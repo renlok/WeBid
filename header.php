@@ -26,7 +26,6 @@ $counters = load_counters();
 $page_title = (isset($page_title)) ? ' ' . $page_title : '';
 
 // check we are using ssl
-if($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != "on")
 {
 	$cleaned_url = str_replace(['http://', 'https://'], '', $system->SETTINGS['siteurl']);
     header("Location: https://" . $cleaned_url . $_SERVER["REQUEST_URI"]);

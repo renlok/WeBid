@@ -222,7 +222,7 @@ class global_class
 		$result = $txt;
 		while ($word = $db->fetch())
 		{
-			$result = preg_replace('(' . $word['word'] . ')', '', $txt); //best to use str_ireplace but not avalible for PHP4
+			$result = preg_replace('(' . $word['word'] . ')', '', $result); //best to use str_ireplace but not avalible for PHP4
 		}
 		return $result;
 	}

@@ -219,11 +219,12 @@ class global_class
 		global $DBPrefix, $db;
 		$query = "SELECT * FROM " . $DBPrefix . "filterwords";
 		$db->direct_query($query);
+		$result = $txt;
 		while ($word = $db->fetch())
 		{
-			$txt = preg_replace('(' . $word['word'] . ')', '', $txt); //best to use str_ireplace but not avalible for PHP4
+			$result = preg_replace('(' . $word['word'] . ')', '', $txt); //best to use str_ireplace but not avalible for PHP4
 		}
-		return $txt;
+		return $result;
 	}
 
 	function move_file($from, $to, $removeorg = true)

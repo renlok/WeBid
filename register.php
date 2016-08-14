@@ -214,7 +214,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 	}
 	if ($system->SETTINGS['wordsfilter'] == 'y')
 	{
-		if (empty($system->filter($_POST['TPL_nick'])))
+		if ($_POST['TPL_nick'] != $system->filter($_POST['TPL_nick']))
 		{
 			$ERR = $MSG['wordfilter_banned_username']; // User name altered by word filter
 		}

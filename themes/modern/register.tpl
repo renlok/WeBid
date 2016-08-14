@@ -7,7 +7,7 @@
 		</div>
 	<!-- ENDIF -->
 		<form name="registration" action="{SITEURL}register.php" method="post">
-			<div class="col-md-7 well">
+			<div class="col-md-12 well">
 				<legend>{L_001}</legend>
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<div class="form-group col-lg-6 <!-- IF MISSING0 eq 1 -->has-error<!-- ENDIF -->">
@@ -111,12 +111,12 @@
 					</div>
 				</div>
 	<!-- ENDIF -->
-			</div>
-			<div class="col-md-4 col-md-offset-1 well">
+
 				<legend>{L_719}</legend>
 
 	<!-- BEGIN gateways -->
-		<div class="form-group <!-- IF gateways.MISSING eq 1 -->has-error<!-- ENDIF --> col-lg-12">
+		<div class="form-group col-lg-12"> 
+		<!-- IF gateways.MISSING eq 1 -->has-error<!-- ENDIF --> 
 			<label for="TPL_pp_email">{gateways.ADDRESS_NAME}{gateways.REQUIRED}</label>
 			<input type="hidden" name="{gateways.PLAIN_NAME}[id]" value="{gateways.GATEWAY_ID}">
 			<input type="text" name="{gateways.PLAIN_NAME}[address]" class="form-control" value="{gateways.ADDRESS}" <!-- IF gateways.MISSING eq 1 -->id="inputError1"<!-- ENDIF -->>
@@ -134,9 +134,9 @@
 				</div>
 				<div class="form-group col-lg-12">
 					<div class="checkbox">
-						<label>
+						<center>
 							<input type="checkbox" name="terms_check" id="terms_check"> {L_858}
-						</label>
+						</center>
 					</div>
 					<br><br>
 					<div class="text-center">

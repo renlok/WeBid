@@ -1784,12 +1784,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `groups` text,
   `bn_only` enum('y','n') NOT NULL default 'y',
   `timezone` varchar(50) NOT NULL default 'Europe/London',
-  `paypal_email` varchar(50) default '',
-  `authnet_id` varchar(50) default '',
-  `authnet_pass` varchar(50) default '',
-  `worldpay_id` varchar(50) default '',
-  `moneybookers_email` varchar(50) default '',
-  `toocheckout_id` varchar(50) default '',
   `language` char(2) NOT NULL default '',
   PRIMARY KEY  (`id`)
 );";

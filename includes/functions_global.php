@@ -68,7 +68,7 @@ class global_class
 		// check if url needs https
 		if ($this->SETTINGS['https'] == 'y')
 		{
-			$this->SETTINGS['siteurl'] = (!empty($this->SETTINGS['https_url'])) ? $this->SETTINGS['https_url'] : 'https://' . $this->cleanSiteUrl());
+			$this->SETTINGS['siteurl'] = (!empty($this->SETTINGS['https_url'])) ? $this->SETTINGS['https_url'] : 'https://' . $this->cleanSiteUrl();
 		}
 	}
 

@@ -116,7 +116,7 @@ function contains($str, array $arr)
     		return true;
     	}
     }
-    
+
     return false;
 }
 
@@ -335,10 +335,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate,
+						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, birthdate,
 						suspended, language, groups, balance, timezone)
 						VALUES
-						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :reg_date, :birthdate,
+						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :birthdate,
 						:suspended, :language, :groups, :balance, :timezone)";
 				$params = array(
 					array(':nick', $system->cleanvars($TPL_nick_hidden), 'str'),
@@ -353,7 +353,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':phone', $system->cleanvars((isset($_POST['TPL_phone'])) ? $_POST['TPL_phone'] : ''), 'str'),
 					array(':nletter', $_POST['TPL_nletter'], 'int'),
 					array(':email', $system->cleanvars($_POST['TPL_email']), 'str'),
-					array(':reg_date', time(), 'int'),
 					array(':birthdate', ((!empty($DATE)) ? $DATE : 0), 'str'),
 					array(':suspended', $SUSPENDED, 'int'),
 					array(':language', $language, 'str'),

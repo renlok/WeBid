@@ -105,7 +105,7 @@ if (@$db->numrows() == 1)
 		}
 	}
 
-	$DATE = $user_data['reg_date'] + $system->tdiff;
+	$DATE = strtotime($user_data['reg_date']);
 	$mth = 'MON_0'.date('m', $DATE);
 
 	$feedback_rate = ($user_data['rate_sum'] == 0) ? 1 : $user_data['rate_sum'];

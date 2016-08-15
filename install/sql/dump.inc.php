@@ -1526,6 +1526,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (53, 'East Caribe', 'Eas
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (54, 'CFA Franc (African Financial Community)', 'African Financial Community Franc', 'CFA');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (55, 'Canadian', 'Canadian Dollar', 'CAD');";
 $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (56, 'Romanian', 'Romanian Leu', 'RON');";
+$query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (57, 'Serbia', 'Serbia Dinars', 'RSD');";
 
 # ############################
 
@@ -1767,7 +1768,6 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `zip` varchar(10) default '',
   `phone` varchar(40) default '',
   `email` varchar(50) default '',
-  `reg_date` int(11) default NULL,
   `rate_sum` int(11) NOT NULL default '0',
   `rate_num` int(11) NOT NULL default '0',
   `birthdate` int(8) default '0',
@@ -1779,7 +1779,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `endemailmode` enum('one','cum','none') NOT NULL default 'one',
   `startemailmode` enum('yes','no') NOT NULL default 'yes',
   `emailtype` enum('html','text') NOT NULL default 'html',
-  `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
+  `reg_date` int(11) default CURRENT_TIMESTAMP,
+  `lastlogin` timestamp default NULL,
   `payment_details` text,
   `groups` text,
   `bn_only` enum('y','n') NOT NULL default 'y',

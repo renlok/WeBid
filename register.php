@@ -93,31 +93,21 @@ function checkMissing ($missing)
 	return false;
 }
 
-function checkEmail($email)
+function emailDomainIsBlacklisted($email)
 {
 	global $system;
-	if ($system->SETTINGS['spam_blocked_email_enabled'])
-	{
-		$exploded_email = explode('@', $email);
-    	$email_domain = trim(array_pop($exploded_email));
-		$blocked_emails = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
+	$exploded_email = explode('@', trim($email));
+	$email_domain = array_pop($exploded_email);
+	$blocked_domains = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
 
-		return !contains($email_domain, $blocked_emails);
-	}
-	return true;
-}
-
-function contains($str, array $arr)
-{
-    foreach($arr as $a)
+	foreach($blocked_domains as $domain)
     {
-        if (stripos($str, $a) !== false)
+        if (stripos($email_domain, rtrim($domain)) !== false)
     	{
     		return true;
     	}
     }
-    
-    return false;
+	return false;
 }
 
 $first = true;
@@ -244,7 +234,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		{
 			$ERR = $ERR_107;
 		}
-		elseif (strlen ($_POST['TPL_password']) < 6)
+		elseif (strlen($_POST['TPL_password']) < 6)
 		{
 			$ERR = $ERR_108;
 		}
@@ -260,7 +250,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		{
 			$ERR = $ERR_008;
 		}
-		elseif (!checkEmail($_POST['TPL_email']))
+		elseif ($system->SETTINGS['spam_blocked_email_enabled'] && emailDomainIsBlacklisted($_POST['TPL_email']))
 		{
 			$ERR = $MSG['spam_blocked_email_domains_register_error'];
 		}

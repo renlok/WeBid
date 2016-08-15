@@ -40,7 +40,8 @@ class Date
 
 	public function printDateTz($datetime)
 	{
-		return new DateTime($datetime, $this->timezone)->format('Y-m-d H:i');
+		$tmp = new DateTime($datetime, $this->timezone);
+		return $tmp->format('Y-m-d H:i');
 	}
 
 	public function convertToDatetime($rawdate, $format = false)

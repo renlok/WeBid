@@ -400,15 +400,14 @@ foreach ($auction_data as $Auction) // loop auctions
 			{
 				// Add in the database to send later as cumulitave email to seller
 				$added_winner_names_cs = implode(",<br>", $added_winner_names);
-				$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
-						(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
+				$query = "INSERT INTO " . $DBPrefix . "pendingnotif (auction_id, seller_id, winners, auction, seller)
+						VALUES (:auc_id, :seller_id, :winner_names, :auc_data, :seller_data)";
 				$params = array();
 				$params[] = array(':auc_id', $Auction['id'], 'int');
 				$params[] = array(':seller_id', $Seller['id'], 'int');
 				$params[] = array(':winner_names', $added_winner_names_cs, 'str');
 				$params[] = array(':auc_data', serialize($Auction), 'str');
 				$params[] = array(':seller_data', serialize($Seller), 'str');
-				$params[] = array(':date', gmdate('Ymd'), 'str');
 				$db->query($query, $params);
 			}
 		}
@@ -443,15 +442,14 @@ foreach ($auction_data as $Auction) // loop auctions
 				else
 				{
 					// Add in the database to send later as cumulitave email to seller
-					$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
-							(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
+					$query = "INSERT INTO " . $DBPrefix . "pendingnotif (auction_id, seller_id, winners, auction, seller)
+							VALUES (:auc_id, :seller_id, :winner_names, :auc_data, :seller_data)";
 					$params = array();
 					$params[] = array(':auc_id', $Auction['id'], 'int');
 					$params[] = array(':seller_id', $Seller['id'], 'int');
 					$params[] = array(':winner_names', $added_winner_names_cs, 'str');
 					$params[] = array(':auc_data', serialize($Auction), 'str');
 					$params[] = array(':seller_data', serialize($Seller), 'str');
-					$params[] = array(':date', gmdate('Ymd'), 'str');
 					$db->query($query, $params);
 				}
 			}
@@ -467,14 +465,13 @@ foreach ($auction_data as $Auction) // loop auctions
 		else
 		{
 			// Save in the database to send later
-			$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
-			(NULL, :auc_id, :seller_id, '', :auction_data, :seller_data, :date)";
+			$query = "INSERT INTO " . $DBPrefix . "pendingnotif (auction_id, seller_id, winners, auction, seller)
+					VALUES (:auc_id, :seller_id, '', :auction_data, :seller_data)";
 			$params = array();
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$params[] = array(':seller_id', $Auction['id'], 'int');
 			$params[] = array(':auction_data', serialize($Auction), 'str');
 			$params[] = array(':seller_data', serialize($Seller), 'str');
-			$params[] = array(':date', date('Ymd'), 'int');
 			$db->query($query, $params);
 		}
 	}
@@ -520,14 +517,14 @@ if ($system->SETTINGS['prune_unactivated_users'] == 1)
 	printLog("\n");
 	printLog("++++++ Prune unactivated user accounts");
 
-	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE reg_date <= ADD_DATE(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['prune_unactivated_users_days'] . " DAY) AND suspended = 8";
+	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE reg_date <= SUB_DATE(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['prune_unactivated_users_days'] . " DAY) AND suspended = 8";
 	$db->direct_query($query);
 
 	$pruneCount = $db->result('COUNT');
 	printLog($pruneCount . " accounts to prune");
 	if ($pruneCount > 0)
 	{
-		$query = "DELETE FROM " . $DBPrefix . "users WHERE reg_date <= ADD_DATE(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['prune_unactivated_users_days'] . " DAY) AND suspended = 8";
+		$query = "DELETE FROM " . $DBPrefix . "users WHERE reg_date <= SUB_DATE(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['prune_unactivated_users_days'] . " DAY) AND suspended = 8";
 		$db->direct_query($query);
 
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - " . $pruneCount;
@@ -606,10 +603,9 @@ $db->direct_query($query);
 $user_data = $db->fetchall();
 foreach ($auction_data as $row)
 {
-	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < :date AND seller_id = :seller_id";
+	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < CURRENT_TIMESTAMP AND seller_id = :seller_id";
 	$params = array();
 	$params[] = array(':seller_id', $row['id'], 'int');
-	$params[] = array(':date', date('Ymd'), 'int');
 	$db->query($query, $params);
 
 	if ($db->numrows() > 0)

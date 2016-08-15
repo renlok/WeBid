@@ -95,13 +95,12 @@ function sortFees()
 		$params[] = array(':buyer_fee', $fee_value, 'float');
 		$params[] = array(':winner_id', $Winner['id'], 'int');
 		$db->query($query, $params);
-		$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
-				(:winner_id, :auc_id, :time, :buyer_fee, :buyer_fee, 1)";
+		$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, buyer, total, paid)
+				VALUES (:winner_id, :auc_id, :buyer_fee, :buyer_fee, 1)";
 		$params = array();
 		$params[] = array(':buyer_fee', $fee_value, 'float');
 		$params[] = array(':winner_id', $Winner['id'], 'int');
 		$params[] = array(':auc_id', $user_id, 'int');
-		$params[] = array(':time', $NOW, 'int');
 		$db->query($query, $params);
 	}
 	elseif ($system->SETTINGS['fee_type'] == 2)
@@ -145,13 +144,12 @@ function sortFees()
 		$params[] = array(':fee_value', $fee_value, 'float');
 		$params[] = array(':seller_id', $Seller['id'], 'int');
 		$db->query($query, $params);
-		$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, finalval, total, paid) VALUES
-				(:seller_id, :auc_id, :time, :fee_value, :fee_value, 1)";
+		$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, finalval, total, paid)
+				VALUES (:seller_id, :auc_id, :fee_value, :fee_value, 1)";
 		$params = array();
 		$params[] = array(':fee_value', $fee_value, 'float');
 		$params[] = array(':seller_id', $Seller['id'], 'int');
 		$params[] = array(':auc_id', $Auction['id'], 'int');
-		$params[] = array(':time', $NOW, 'int');
 		$db->query($query, $params);
 	}
 	elseif ($system->SETTINGS['fee_type'] == 2)

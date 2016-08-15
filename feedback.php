@@ -80,14 +80,13 @@ if (isset($_POST['addfeedback'])) // submit the feedback
 						{
 							$secTPL_feedback = $system->filter($secTPL_feedback);
 						}
-						$query = "INSERT INTO " . $DBPrefix . "feedbacks (rated_user_id, rater_user_nick, feedback, rate, feedbackdate, auction_id) VALUES
-							(:user_id, :user_nick, :feedback, :rate, :time, :auc_id)";
+						$query = "INSERT INTO " . $DBPrefix . "feedbacks (rated_user_id, rater_user_nick, feedback, rate, auction_id) VALUES
+							(:user_id, :user_nick, :feedback, :rate, :auc_id)";
 						$params = array();
 						$params[] = array(':user_id', $uid, 'int');
 						$params[] = array(':user_nick', $user->user_data['nick'], 'str');
 						$params[] = array(':feedback', $secTPL_feedback, 'str');
 						$params[] = array(':rate', $_POST['TPL_rate'], 'int');
-						$params[] = array(':time', $system->ctime, 'int');
 						$params[] = array(':auc_id', $auction_id, 'int');
 						$db->query($query, $params);
 						if ($ws == 's')
@@ -264,7 +263,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 						'USERNAME' => $arrfeed['rater_user_nick'],
 						'USFEED' => $arrfeed['rate_sum'],
 						'USICON' => (isset($usicon)) ? $usicon : '',
-						'FBDATE' => FormatDate($arrfeed['feedbackdate']),
+						'FBDATE' => $dt->formatDate($arrfeed['feedbackdate']),
 						'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . htmlspecialchars($arrfeed['title']) . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
 						'FEEDBACK' => nl2br($arrfeed['feedback'])
 						));

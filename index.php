@@ -250,7 +250,7 @@ if ($system->SETTINGS['newsbox'] == 1)
 	{
 		$template->assign_block_vars('newsbox', array(
 				'ID' => $new['id'],
-				'DATE' => FormatDate($new['new_date']),
+				'DATE' => $dt->formatDate($new['new_date']),
 				'TITLE' => (!empty($new['title'])) ? htmlspecialchars($new['title']) : htmlspecialchars($new['t'])
 				));
 	}

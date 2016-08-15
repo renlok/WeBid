@@ -69,6 +69,7 @@ if (@$db->numrows() == 1)
 	$params[] = array(':user_id', $TPL_user_id, 'int');
 	$db->query($query, $params);
 
+	// TODO: clean this up should be able to do this with just mysql
 	$total_fb = 0;
 	$fb = array(-1 => 0, 0 => 0, 1 => 0);
 	$fb_as_seller = array(-1 => 0, 0 => 0, 1 => 0);
@@ -90,15 +91,17 @@ if (@$db->numrows() == 1)
 			{
 				$fb_as_buyer[$ratesum['rate']]++;
 			}
-			if ($ratesum['feedbackdate'] > time() - (3600 * 24 * 365))
+			$feedbackdate = new DateTime($ratesum['feedbackdate']);
+			$time = new DateTime('now');
+			if ($feedbackdate > $time->sub(new DateInterval('P1Y')))
 			{
 				$fb_last_year[$ratesum['rate']]++;
 			}
-			if ($ratesum['feedbackdate'] > time() - (3600 * 24 * 90))
+			if ($feedbackdate > $time->sub(new DateInterval('P3M')))
 			{
 				$fb_last_3month[$ratesum['rate']]++;
 			}
-			if ($ratesum['feedbackdate'] > time() - (3600 * 24 * 30))
+			if ($feedbackdate > $time->sub(new DateInterval('P1M')))
 			{
 				$fb_last_month[$ratesum['rate']]++;
 			}

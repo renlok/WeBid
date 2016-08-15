@@ -314,11 +314,10 @@ function addoutstanding()
 {
 	global $DBPrefix, $fee_data, $user, $system, $fee, $_SESSION, $db;
 
-	$query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,date,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,picture,extracat,total,paid) VALUES
-	(:auction_id, :user_id, :time, :setup_fee, :featured_fee, :bold_fee, :highlighted_fee, :subtitle_fee, :relist_fee, :reserve_fee, :buynow_fee, :picture_fee, :extracat_fee, :fee, 0)";
+	$query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,picture,extracat,total,paid) VALUES
+	(:auction_id, :user_id, :setup_fee, :featured_fee, :bold_fee, :highlighted_fee, :subtitle_fee, :relist_fee, :reserve_fee, :buynow_fee, :picture_fee, :extracat_fee, :fee, 0)";
 
 	$params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
-	$params[] = array(':time', time(), 'int');
 	$params[] = array(':setup_fee', $fee_data['setup_fee'], 'float');
 	$params[] = array(':featured_fee', $fee_data['featured_fee'], 'float');
 	$params[] = array(':bold_fee', $fee_data['bold_fee'], 'float');

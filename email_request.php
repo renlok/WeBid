@@ -74,12 +74,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'proceed')
 			$emailer->email_basic($subject, $email, nl2br($message), $user->user_data['name'] . '<' . $from_email . '>');
 			// send a copy to their mesasge box
 			$message = nl2br($system->cleanvars($message));
-			$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, sentat, message, subject)
-					VALUES (:id, :user_id, :times, :message, :subject)";
+			$query = "INSERT INTO " . $DBPrefix . "messages (sentto, sentfrom, message, subject)
+					VALUES (:id, :user_id, :message, :subject)";
 			$params = array();
 			$params[] = array(':id', $user_id, 'int');
 			$params[] = array(':user_id', $user->user_data['id'], 'int');
-			$params[] = array(':times', time(), 'int');
 			$params[] = array(':message', $message, 'str');
 			$subject = $system->cleanvars(sprintf($MSG['651'], $item_title));
 			if (strlen($subject) > 255)

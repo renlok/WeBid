@@ -56,22 +56,15 @@ $params[] = array(':admin_id', $id, 'int');
 $db->query($query, $params);
 $user_data = $db->result();
 
-if ($system->SETTINGS['datesformat'] == 'USA')
-{
-	$CREATED = substr($user_data['created'], 4, 2) . '/' . substr($user_data['created'], 6, 2) . '/' . substr($user_data['created'], 0, 4);
-}
-else
-{
-	$CREATED = substr($user_data['created'], 6, 2) . '/' . substr($user_data['created'], 4, 2) . '/' . substr($user_data['created'], 0, 4);
-}
+$CREATED = $dt->printDateTz($user_data['created']);
 
-if ($user_data['lastlogin'] == 0)
+if ($user_data['lastlogin'] == $user_data['created'])
 {
 	$LASTLOGIN = $MSG['570'];
 }
 else
 {
-	$LASTLOGIN = FormatDate($user_data['lastlogin']);
+	$LASTLOGIN = $dt->printDateTz($user_data['lastlogin']);
 }
 
 $template->assign_vars(array(

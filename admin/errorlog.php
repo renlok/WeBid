@@ -24,7 +24,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'clearlog')
 {
 	$query = "DELETE FROM " . $DBPrefix . "logs WHERE type = 'error'";
 	$db->direct_query($query);
-	
+
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['889']));
 }
 
@@ -44,7 +44,7 @@ else
 	$db->direct_query($query);
 	while ($row = $db->fetch())
 	{
-		$data .= '<strong>' . date('d-m-Y, H:i:s', $row['timestamp'] + $system->tdiff) . '</strong>: ' . $row['message'] . '<br>';
+		$data .= '<strong>' . $dt->printDateTz($row['timestamp']) . '</strong>: ' . $row['message'] . '<br>';
 	}
 }
 

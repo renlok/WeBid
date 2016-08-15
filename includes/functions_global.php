@@ -179,15 +179,14 @@ class global_class
 	function log($type, $message, $user = 0, $action_id = 0)
 	{
 		global $DBPrefix, $db;
-		$query = "INSERT INTO " . $DBPrefix . "logs (type, message, ip, action_id, user_id, timestamp) VALUES
-				(:type, :message, :user_ip, :action_id, :user_id, :time)";
+		$query = "INSERT INTO " . $DBPrefix . "logs (type, message, ip, action_id, user_id) VALUES
+				(:type, :message, :user_ip, :action_id, :user_id)";
 		$params = array();
 		$params[] = array(':type', $type, 'str');
 		$params[] = array(':message', $message, 'str');
 		$params[] = array(':user_ip', $_SERVER['REMOTE_ADDR'], 'str');
 		$params[] = array(':action_id', $action_id, 'int');
 		$params[] = array(':user_id', $user, 'int');
-		$params[] = array(':time', time(), 'int');
 		$db->query($query, $params);
 	}
 
@@ -412,7 +411,6 @@ function load_counters()
 		{
 			$s = 'uId-' . $user->user_data['id'];
 		}
-		$uxtime = time();
 		$query = "SELECT ID FROM " . $DBPrefix . "online WHERE SESSION = :user";
 		$params = array();
 		$params[] = array(':user', $s, 'str');
@@ -420,26 +418,21 @@ function load_counters()
 
 		if ($db->numrows() == 0)
 		{
-			$query = "INSERT INTO " . $DBPrefix . "online (SESSION, time) VALUES (:user, :timer)";
+			$query = "INSERT INTO " . $DBPrefix . "online (SESSION) VALUES (:user)";
 			$params = array();
 			$params[] = array(':user', $s, 'str');
-			$params[] = array(':timer', $uxtime, 'int');
 			$db->query($query, $params);
 		}
 		else
 		{
 			$oID = $db->result('ID');
-			$query = "UPDATE " . $DBPrefix . "online SET time = :timer WHERE ID = :online_id";
+			$query = "UPDATE " . $DBPrefix . "online SET time = CURRENT_TIMESTAMP WHERE ID = :online_id";
 			$params = array();
-			$params[] = array(':timer', $uxtime, 'int');
 			$params[] = array(':online_id', $oID, 'int');
 			$db->query($query, $params);
 		}
-		$deltime = $uxtime - 900;
-		$query = "DELETE from " . $DBPrefix . "online WHERE time <= :timer";
-		$params = array();
-		$params[] = array(':timer', $deltime, 'int');
-		$db->query($query, $params);
+		$query = "DELETE from " . $DBPrefix . "online WHERE time <= SUB_DATE(CURRENT_TIMESTAMP, INTERVAL 15 MINUTE)";
+		$db->direct_query($query, $params);
 
 		$query = "SELECT id FROM " . $DBPrefix . "online";
 		$db->direct_query($query);

@@ -233,12 +233,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					$params[] = array(':fee_value', $fee_value, 'float');
 					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$db->query($query, $params);
-					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
-							(:user_id, :auc_id, :time, :buyer, :total, 1)";
+					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, buyer, total, paid) VALUES
+							(:user_id, :auc_id, :buyer, :total, 1)";
 					$params = array();
 					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$params[] = array(':auc_id', $id, 'int');
-					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':buyer', $fee_value, 'int');
 					$params[] = array(':total', $fee_value, 'int');
 					$db->query($query, $params);
@@ -277,12 +276,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					$params[] = array(':fee_value', $fee_value, 'float');
 					$params[] = array(':user_id', $Auction['user'], 'int');
 					$db->query($query, $params);
-					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, finalval, total, paid) VALUES
-							(:user_id, :auc_id, :time, :finalval, :total, 1)";
+					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, finalval, total, paid)
+							VALUES (:user_id, :auc_id, :finalval, :total, 1)";
 					$params = array();
 					$params[] = array(':user_id', $Auction['user'], 'int');
 					$params[] = array(':auc_id', $id, 'int');
-					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':finalval', $fee_value, 'float');
 					$params[] = array(':total', $fee_value, 'float');
 					$db->query($query, $params);

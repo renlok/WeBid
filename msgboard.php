@@ -70,11 +70,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_P
 	{
 		$message = strip_tags($_POST['newmessage']);
 	}
-	$query = "INSERT INTO " . $DBPrefix . "comm_messages VALUES
-			(NULL, :board_id, :now, :user_id, :user_nick, :message)";
+	$query = "INSERT INTO " . $DBPrefix . "comm_messages (boardid, user, username, message) VALUES
+			(:board_id, :now, :user_id, :user_nick, :message)";
 	$params = array();
 	$params[] = array(':board_id', $_POST['board_id'], 'int');
-	$params[] = array(':now', $NOW, 'int');
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$params[] = array(':user_nick', $user->user_data['nick'], 'str');
 	$params[] = array(':message', $system->cleanvars($message), 'str');
@@ -87,9 +86,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_P
 	}
 	// Update messages counter and lastmessage date
 	$query = "UPDATE " . $DBPrefix . "community
-			SET messages = messages + 1, lastmessage = :lastmessage WHERE id = :board_id";
+			SET messages = messages + 1, lastmessage = CURRENT_TIMESTAMP WHERE id = :board_id";
 	$params = array();
-	$params[] = array(':lastmessage', $NOW, 'int');
 	$params[] = array(':board_id', $board_id, 'int');
 	$db->query($query, $params);
 	header('location: ' . $_SERVER['HTTP_REFERER']);
@@ -147,7 +145,7 @@ if ($db->numrows() > 0)
 		$template->assign_block_vars('msgs', array(
 				'MSG' => nl2br($messages['message']),
 				'USERNAME' => $messages['username'],
-				'POSTED' => FormatDate($messages['msgdate']),
+				'POSTED' => $dt->formatDate($messages['msgdate']),
 				'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',
 				));
 		$k++;

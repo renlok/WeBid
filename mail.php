@@ -86,12 +86,11 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 
 	// send message
 	$id_type = ($email) ? 'fromemail' : 'sentto';
-	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, sentat, message, subject, reply_of, question)
-			VALUES (:to_ids, :sender_id, :times, :nowmessages, :subjects, :reply_of_hash, :question_hash)";
+	$query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, message, subject, reply_of, question)
+			VALUES (:to_ids, :sender_id, :nowmessages, :subjects, :reply_of_hash, :question_hash)";
 	$params = array();
 	$params[] = array(':to_ids', ($email) ? $sendto : $userarray['id'], 'bool');
 	$params[] = array(':sender_id', $user->user_data['id'], 'int');
-	$params[] = array(':times', time(), 'int');
 	$params[] = array(':nowmessages', $nowmessage, 'str');
 	$params[] = array(':subjects', $subject, 'str');
 	$params[] = array(':reply_of_hash', $_SESSION['reply_of' . $_POST['hash']], 'int');
@@ -264,7 +263,7 @@ while ($array = $db->fetch())
 	$sender = ($array['sentfrom'] == 0) ? 'Admin' : '<a href="profile.php?user_id=' . $array['sentfrom'] . '">' . $array['nick'] . '</a>';
 	$sender = (!empty($array['fromemail'])) ? $array['fromemail'] : $sender;
 	$template->assign_block_vars('msgs', array(
-			'SENT' => date('M d, Y H:ia', $array['sentat'] + $system->tdiff),
+			'SENT' => $dt->formatDate($array['sentat'], 'M d, Y H:ia'),
 			'ID' => $array['id'],
 			'SENDER' => $sender,
 			'SUBJECT' => ($array['isread'] == 0) ? '<b>' . $array['subject'] . '</b>' : $array['subject']

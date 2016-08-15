@@ -80,9 +80,8 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 			$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($user_data['password'], $user_data['hash']);
 			$_SESSION['WEBID_LOGGED_PASS'] 		= $user_data['password'];
 			// Update "last login" fields in users table
-			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = :date WHERE id = :user_id";
+			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = CURRENT_TIMESTAMP WHERE id = :user_id";
 			$params = array();
-			$params[] = array(':date', date("Y-m-d H:i:s"), 'str');
 			$params[] = array(':user_id', $user_data['id'], 'int');
 			$db->query($query, $params);
 			// Remember me option

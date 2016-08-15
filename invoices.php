@@ -58,8 +58,6 @@ $db->query($query, $params);
 
 while ($row = $db->fetch())
 {
-	$DATE = $row['date'] + $system->tdiff;
-
 	// build invoice info
 	$info = '';
 	$auc_id = false;
@@ -147,7 +145,7 @@ while ($row = $db->fetch())
 	$template->assign_block_vars('topay', array(
 			'INVOICE' => $row['useracc_id'],
 			'AUC_ID' => $row['auc_id'],
-			'DATE' => ArrangeDateNoCorrection($DATE),
+			'DATE' => $dt->formatDate($row['date']),
 			'INFO' => $info,
 			'TOTAL' => $system->print_money($row['total']),
 			'PAID' => ($row['paid'] == 1), // true if paid

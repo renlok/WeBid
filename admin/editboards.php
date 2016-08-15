@@ -63,7 +63,7 @@ $board_data = $db->result();
 $template->assign_vars(array(
 		'NAME' => $board_data['name'],
 		'MESSAGES' => $board_data['messages'],
-		'LAST_POST' => ($board_data['lastmessage'] > 0) ? FormatDate($board_data['lastmessage']) : '--',
+		'LAST_POST' => ($board_data['messages'] > 0) ? $dt->formatDate($board_data['lastmessage']) : '--',
 		'MSGTOSHOW' => $board_data['msgstoshow'],
 
 		'B_ACTIVE' => ($board_data['active'] == 1),

@@ -44,6 +44,7 @@ include INCLUDE_PATH . 'dates.inc.php';
 // classes
 include INCLUDE_PATH . 'database/Database.php';
 include INCLUDE_PATH . 'database/DatabasePDO.php';
+include INCLUDE_PATH . 'Date.php';
 include INCLUDE_PATH . 'functions_global.php';
 include INCLUDE_PATH . 'class_email_handler.php';
 include INCLUDE_PATH . 'class_MPTTcategories.php';
@@ -74,6 +75,7 @@ if($user->logged_in)
 	$system->tdiff = $system->getUserOffset(time(), $user->user_data['timezone']);
 	$system->ctime = $system->getUserTimestamp(time(), $user->user_data['timezone']) + $system->tdiff;
 }
+$dt = new Date($system, $user);
 
 // delete REDIRECT_AFTER_LOGIN value automatically so you are never forwarded to an old page
 if(isset($_SESSION['REDIRECT_AFTER_LOGIN']) && !defined('AtLogin'))

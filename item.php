@@ -274,7 +274,7 @@ foreach ($db->fetchall() as $bidrec)
 			'ID' => $bidrec['bidder'],
 			'NAME' => $bidderarray[$bidrec['nick']],
 			'BID' => $system->print_money($bidrec['bid']),
-			'WHEN' => ArrangeDateNoCorrection($bidrec['bidwhen'] + $system->tdiff) . ':' . date('s', $bidrec['bidwhen']),
+			'WHEN' => $dt->formatDate($bidrec['bidwhen'], 'd F Y - H:i:s'),
 			'QTY' => $bidrec['quantity']
 			));
 	$left -= $bidrec['quantity'];

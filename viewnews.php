@@ -65,14 +65,14 @@ else
 		}
 		$template->assign_block_vars('list', array(
 				'TITLE' => $title,
-				'DATE' => FormatDate($row['new_date']),
+				'DATE' => $dt->formatDate($row['new_date']),
 				'ID' => $row['id']
 				));
 	}
 }
 
 $template->assign_vars(array(
-		'TITLE' => ($id > 0) ? $title . ' ' . FormatDate($new['new_date']) : $MSG['282']
+		'TITLE' => ($id > 0) ? $title . ' ' . $dt->formatDate($new['new_date']) : $MSG['282']
 		));
 
 include 'header.php';

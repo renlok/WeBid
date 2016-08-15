@@ -70,7 +70,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</div>
-					<div class="panel-footer">{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>
+					<div class="panel-footer">{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}</div>
 				</div>
 	<!-- ENDIF -->
 <!-- ELSE -->
@@ -79,7 +79,7 @@ $(document).ready(function() {
 					<div class="panel-body">
 						<img class="thumbnail img-responsive center-block" src="{SITEURL}/themes/{THEME}/img/no-picture-gallery.png" alt="no picture" width="430px" />
 					</div>
-					<div class="panel-footer">{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>
+					<div class="panel-footer">{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}</div>
 				</div>
 <!-- ENDIF -->
 			</div>

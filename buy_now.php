@@ -331,14 +331,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			if ($new_winner)
 			{
 				$query = "INSERT INTO " . $DBPrefix . "winners
-						(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
-						(:auc_id, :seller_id, :winner_id, :buy_now, :time, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
+						(auction, seller, winner, bid, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+						(:auc_id, :seller_id, :winner_id, :buy_now, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
 				$params = array();
 				$params[] = array(':auc_id', $id, 'int');
 				$params[] = array(':seller_id', $Auction['user'], 'int');
 				$params[] = array(':winner_id', $Winner['id'], 'int');
 				$params[] = array(':buy_now', $Auction['buy_now'], 'float');
-				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':quantity', $qty, 'int');
 				$params[] = array(':bf_paid', $bf_paid, 'float');
 				$params[] = array(':ff_paid', $ff_paid, 'float');

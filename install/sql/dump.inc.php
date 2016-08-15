@@ -1884,7 +1884,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `auc_title` varchar(70),
   `auc_shipping_cost` double(16,2) default '0',
   `auc_payment` tinytext,
-  `closingdate` int(11) NOT NULL default '0',
+  `closingdate` datetime default CURRENT_TIMESTAMP,
   `feedback_win` tinyint(1) NOT NULL default '0',
   `feedback_sel` tinyint(1) NOT NULL default '0',
   `qty` int(11) NOT NULL default '1',

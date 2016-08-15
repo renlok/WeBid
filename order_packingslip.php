@@ -64,7 +64,7 @@ $template->assign_vars(array(
 		'AUCTION_ID' => $data['auc_id'],
 		'SHIPPING_METHOD' => "N/A", // TODO: NEEDS FIXING
 		'PAYMENT_METHOD' => "N/A", // TODO: NEEDS FIXING
-		'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate'] + $system->tdiff),
+		'CLOSING_DATE' => $dt->formatDate($data['closingdate'], 'd F Y - H:i'),
 		'ITEM_QUANTITY' => $data['qty'],
 		'B_INVOICE' => true
 		));

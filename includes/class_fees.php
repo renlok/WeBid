@@ -56,13 +56,13 @@ class fees
 	{
 		$date_values = date('z|W|m|Y');
 		$date_values = explode('|', $date_values);
-		$query = "INSERT INTO " . $this->DBPrefix . "accounts VALUES (NULL, :user_nick, :user_name, :user_text, :user_type, :user_time, :user_amount, " . $date_values[0] . ", " . $date_values[1] . ", " . $date_values[2] . ", " . $date_values[3] . ")";
+		$query = "INSERT INTO " . $this->DBPrefix . "accounts (nick, name, text, type, amount, day, week, month, year)
+		VALUES (:user_nick, :user_name, :user_text, :user_type, :user_amount, " . $date_values[0] . ", " . $date_values[1] . ", " . $date_values[2] . ", " . $date_values[3] . ")";
 		$params = array(
 			array(':user_nick', $this->user->user_data['nick'], 'str'),
 			array(':user_name', $this->user->user_data['name'], 'str'),
 			array(':user_text', $text, 'str'),
 			array(':user_type', $type, 'str'),
-			array(':user_time', time(), 'int'),
 			array(':user_amount', $amount, 'int')
 		);
 		$this->database->query($query, $params);
@@ -271,11 +271,10 @@ class fees
 				$params[] = array(':user_id', $custom_id, 'int');
 				$this->database->query($query, $params);
 				// add invoice
-				$query = "INSERT INTO " . $this->DBPrefix . "useraccounts (user_id, date, balance, total, paid) VALUES
-						(:user_id, :time_stamp, :payment, :extra_payment, 1)";
+				$query = "INSERT INTO " . $this->DBPrefix . "useraccounts (user_id, balance, total, paid) VALUES
+						(:user_id, :payment, :extra_payment, 1)";
 				$params = array(
 					array(':user_id', $custom_id, 'int'),
-					array(':time_stamp', time(), 'int'),
 					array(':payment', $payment_amount, 'float'),
 					array(':extra_payment', $payment_amount, 'float')
 				);
@@ -295,11 +294,10 @@ class fees
 				);
 				$this->database->query($query, $params);
 				// add invoice
-				$query = "INSERT INTO " . $this->DBPrefix . "useraccounts (user_id, date, signup, total, paid) VALUES
-						(:get_id, :time_stamp, :payment, :extra_payment, 1)";
+				$query = "INSERT INTO " . $this->DBPrefix . "useraccounts (user_id, signup, total, paid) VALUES
+						(:get_id, :payment, :extra_payment, 1)";
 				$params = array(
 					array(':get_id', $custom_id, 'int'),
-					array(':time_stamp', time(), 'int'),
 					array(':payment', $payment_amount, 'float'),
 					array(':extra_payment', $payment_amount, 'float')
 				);
@@ -384,12 +382,11 @@ class fees
 				);
 				$this->database->query($query, $params);
 				// add invoice
-				$query = "INSERT INTO " . $this->DBPrefix . "useraccounts (user_id, auc_id, date, relist, total, paid) VALUES
-						(:user_id, :auc_id, :date, :relist, :total, 1)";
+				$query = "INSERT INTO " . $this->DBPrefix . "useraccounts (user_id, auc_id, relist, total, paid) VALUES
+						(:user_id, :auc_id, :relist, :total, 1)";
 				$params = array(
 					array(':user_id', $custom_id, 'int'),
 					array(':auc_id', $custom_id, 'int'),
-					array(':date', time(), 'int'),
 					array(':relist', $payment_amount, 'float'),
 					array(':total', $payment_amount, 'float')
 				);
@@ -410,12 +407,11 @@ class fees
 				$this->database->query($query, $params);
 
 				// add invoice
-				$query = "INSERT INTO " . $this->DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
-						(:user_id, :auc_id, :time_stamp, :buyer, :total, 1)";
+				$query = "INSERT INTO " . $this->DBPrefix . "useraccounts (user_id, auc_id, buyer, total, paid) VALUES
+						(:user_id, :auc_id, :buyer, :total, 1)";
 				$params = array(
 					array(':user_id', $this->user->user_data['id'], 'int'),
 					array(':auc_id', $custom_id, 'int'),
-					array(':time_stamp', time(), 'int'),
 					array(':buyer', $payment_amount, 'float'),
 					array(':total', $payment_amount, 'float')
 				);

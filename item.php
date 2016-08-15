@@ -51,7 +51,7 @@ $user_id = $auction_data['user'];
 $minimum_bid = $auction_data['minimum_bid'];
 $high_bid = $auction_data['current_bid'];
 $customincrement = $auction_data['increment'];
-$seller_reg = FormatDate(strtotime($auction_data['reg_date']), '/', false);
+$seller_reg = $dt->formatDate($auction_data['reg_date']);
 
 // sort out counter
 if (empty($auction_data['counter']))

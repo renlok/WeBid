@@ -136,7 +136,7 @@ if (@$db->numrows() == 1)
 		'FB_LASTYEAR_NEG' => $fb_last_year[-1],
 		'FB_LAST3MONTH_NEG' => $fb_last_3month[-1],
 		'FB_LASTMONTH_NEG' => $fb_last_month[-1],
-		'REGSINCE' => $MSG[$mth].' '.date('d, Y', $DATE),
+		'REGSINCE' => $MSG[$mth] . ' ' . date('d, Y', $DATE),
 		'COUNTRY' => $user_data['country'],
 		'AUCTION_ID' => (isset($_GET['auction_id'])) ? $_GET['auction_id'] : '',
 		'USER' => $user_data['nick'],

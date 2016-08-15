@@ -140,13 +140,12 @@ foreach ($auction_data as $Auction) // loop auctions
 
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners
-				(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
-				(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, 1, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
+				(auction, seller, winner, bid, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+				(:auc_id, :seller_id, :winner_id, :current_bid, 0, 0, 1, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
 			$params = array();
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$params[] = array(':seller_id', $Seller['id'], 'int');
 			$params[] = array(':winner_id', $Winner['id'], 'int');
-			$params[] = array(':time', $NOW, 'int');
 			$params[] = array(':current_bid', $Auction['current_bid'], 'float');
 			$params[] = array(':bf_paid', $bf_paid, 'int');
 			$params[] = array(':ff_paid', $ff_paid, 'int');
@@ -266,13 +265,12 @@ foreach ($auction_data as $Auction) // loop auctions
 
 				// Add winner's data to "winners" table
 				$query = "INSERT INTO " . $DBPrefix . "winners
-						(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
-						(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, :items_got, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
+						(auction, seller, winner, bid, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+						(:auc_id, :seller_id, :winner_id, :current_bid, 0, 0, :items_got, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
 				$params = array();
 				$params[] = array(':auc_id', $Auction['id'], 'int');
 				$params[] = array(':seller_id', $Seller['id'], 'int');
 				$params[] = array(':winner_id', $row['bidder'], 'int');
-				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':items_got', $items_got, 'int');
 				$params[] = array(':current_bid', $row['maxbid'], 'float');
 				$params[] = array(':bf_paid', $bf_paid, 'int');

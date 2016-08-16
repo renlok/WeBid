@@ -226,7 +226,7 @@ class global_class
 		$result = $txt;
 		while ($word = $db->fetch())
 		{
-			$result = preg_replace('(/' . $word['word'] . '/i)', '', $result);
+			$result = preg_replace('/(' . $word['word'] . ')/i', '', $result);
 		}
 		return $result;
 	}

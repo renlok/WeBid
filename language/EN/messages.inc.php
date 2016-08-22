@@ -608,7 +608,6 @@ $MSG['594'] = "Acceptance text";
 $MSG['597'] = "Activate banners support?";
 $MSG['600'] = "Banners settings updated";
 $MSG['602'] = "Upload a new logo";
-$MSG['logo_upload_success'] = 'Logo uploaded successfully';
 $MSG['603'] = "Receive Newsletter?";
 $MSG['604'] = "If you activate this option, users will be able to subscribe to your newsletter from the registration page.<br>The \"Newsletter management\" will let you send e-mail messages to the subscribed users";
 $MSG['605'] = "Message Body";
@@ -1712,3 +1711,5 @@ $MSG['remove_auction_from_moderation'] = "Remove Auction From Moderation";
 $MSG['remove_auction_from_moderation_explain'] = "Are you sure you want to remove this auction from the moderation queue?<br>This action will not reactivate the auction.";
 
 $MSG['auction_awaiting_approval'] = "Your Auction is Awaiting Approval";
+
+$MSG['logo_upload_success'] = 'Logo uploaded successfully';

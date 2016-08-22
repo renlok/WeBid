@@ -746,7 +746,6 @@ $MSG['787'] = 'Telephone Field Required?';
 $MSG['788'] = 'Display Settings';
 $MSG['789'] = 'Results shown per page';
 $MSG['790'] = 'The maximum number of items before a page break';
-$MSG['max_featured_items'] = 'The maximum number of featured items shown';
 $MSG['791'] = 'Final Price Fee';
 $MSG['792'] = 'You need to pay for %s item(s)';
 $MSG['793'] = ' items you\'re bidding on are ending soon';
@@ -1422,8 +1421,6 @@ $MSG['25_0086'] = "By clicking the button below, you commit to pay the full <b i
 $MSG['25_0087'] = "You have been outbid";
 $MSG['25_0088'] = "You are the current highest bidder";
 $MSG['25_0089'] = "Congratulations, the item is yours. Please pay now";
-$MSG['gallery_image_max_size'] = "Gallery photo max size";
-$MSG['gallery_image_max_size_explain'] = "Set the maximum width or height a photo can be if it is over this size it will be resized";
 $MSG['25_0107'] = "Thumbnails Size";
 $MSG['25_0110'] = "Acceptance Text";
 $MSG['25_0115'] = "Pending auctions";
@@ -1590,14 +1587,12 @@ $MSG['30_0212'] = "You are running the latest version";
 $MSG['30_0213'] = "No feedback needs leaving";
 $MSG['30_0214'] = "WeBid Version";
 $MSG['30_0215'] = "Upload Logo";
-$MSG['upload_failed'] = 'Upload failed';
 $MSG['30_0110'] = "Shipping";
 $MSG['350_1004'] = "Quantity";
 $MSG['350_1008'] = "Additional Shipping";
 $MSG['350_1009'] = "Additional Shipping Cost";
 $MSG['RPT_22'] = 'User ID';
 $MSG['RPT_23'] = '(leave blank for all)';
-$MSG['email_settings_updated'] = 'Email settings updated';
 
 $MSG['NAY_01'] = 'Featured Items';
 $MSG['NAY_02'] = 'All Items';
@@ -1712,3 +1707,10 @@ $MSG['remove_auction_from_moderation'] = "Remove Auction From Moderation";
 $MSG['remove_auction_from_moderation_explain'] = "Are you sure you want to remove this auction from the moderation queue?<br>This action will not reactivate the auction.";
 
 $MSG['auction_awaiting_approval'] = "Your Auction is Awaiting Approval";
+$MSG['email_settings_updated'] = 'Email settings updated';
+$MSG['gallery_image_max_size'] = "Gallery photo max size";
+$MSG['gallery_image_max_size_explain'] = "Set the maximum width or height a photo can be if it is over this size it will be resized";
+$MSG['max_featured_items'] = 'The maximum number of featured items shown';
+$MSG['upload_failed'] = 'Upload failed';
+
+

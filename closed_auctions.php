@@ -81,17 +81,15 @@ foreach ($auction_data as $row)
 	}
 
 	// number of bids for this auction
-	$query_ = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :user_id";
+	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $row['id'], 'int');
 	$db->query($query, $params);
 	$num_bids = $db->numrows();
 
-	$difference = time() - $row['ends'];
-	$days_difference = intval($difference / 86400);
-	$difference = $difference - ($days_difference * 86400);
-
-	if (intval($difference / 3600) > 12) $days_difference++;
+	$current_time = new DateTime();
+	$end_time = new DateTime($row['ends']);
+	$difference = $current_time->diff($end_time);
 
 	$template->assign_block_vars('auctions', array(
 			'BGCOLOUR' => (!($TOTALAUCTIONS % 2)) ? '' : 'class="alt-row"',
@@ -104,7 +102,7 @@ foreach ($auction_data as $row)
 			'BIDVALUE' => $row['minimum_bid'],
 			'BIDFORMAT' => $system->print_money($row['minimum_bid']),
 			'NUM_BIDS' => $num_bids,
-			'TIMELEFT' => $days_difference . ' ' . $MSG['126a'],
+			'TIMELEFT' => $difference->format('%a') . ' ' . $MSG['126a'],
 
 			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] || $row['bn_only'] == 0 && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),
 			'B_BNONLY' => ($row['bn_only'])

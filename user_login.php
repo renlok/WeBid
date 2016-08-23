@@ -15,8 +15,6 @@
 define('AtLogin', 1);
 include 'common.php';
 
-$NOW = time();
-
 if (isset($_SESSION['LOGIN_MESSAGE']))
 {
 	$ERR = $_SESSION['LOGIN_MESSAGE'];

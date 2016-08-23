@@ -15,8 +15,6 @@
 include 'common.php';
 include INCLUDE_PATH . 'membertypes.inc.php';
 
-$NOW = time();
-
 if (isset($_REQUEST['auction_id']))
 {
 	$_SESSION['CURRENT_ITEM'] = intval($_REQUEST['auction_id']);

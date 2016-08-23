@@ -15,7 +15,6 @@
 include 'common.php';
 include INCLUDE_PATH . 'datacheck.inc.php';
 
-$NOW = time();
 $id = intval($_REQUEST['id']);
 $bid = (isset($_POST['bid'])) ? $_POST['bid'] : 0;
 $qty = (isset($_POST['qty'])) ? intval($_POST['qty']) : 1;
@@ -217,12 +216,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$send_email = true;
 				}
 				// Also update bids table
-				$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
+				$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+						VALUES (:auc_id, :bidder_id, :bid, :qty)";
 				$params = array();
 				$params[] = array(':bid', $bid, 'float');
 				$params[] = array(':auc_id', $id, 'int');
 				$params[] = array(':bidder_id', $bidder_id, 'int');
-				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':qty', $qty, 'int');
 				$db->query($query, $params);
 				$current_bid_id = $db->lastInsertId();
@@ -268,12 +267,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 					if ($reserve > 0 && $reserve > $current_bid && $bid >= $reserve)
 					{
 						// Also update bids table
-						$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :reserve, :time, :qty)";
+						$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+								VALUES (:auc_id, :bidder_id, :reserve, :qty)";
 						$params = array();
 						$params[] = array(':reserve', $reserve, 'float');
 						$params[] = array(':auc_id', $id, 'int');
 						$params[] = array(':bidder_id', $bidder_id, 'int');
-						$params[] = array(':time', $NOW, 'int');
 						$params[] = array(':qty', $qty, 'int');
 						$db->query($query, $params);
 						$current_bid_id = $db->lastInsertId();
@@ -309,12 +308,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$next_bid = $reserve;
 				}
 				// Also update bids table
-				$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
+				$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+						VALUES (:auc_id, :bidder_id, :bid, :qty)";
 				$params = array();
 				$params[] = array(':auc_id', $id, 'int');
 				$params[] = array(':bidder_id', $bidder_id, 'int');
 				$params[] = array(':bid', $next_bid, 'float');
-				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':qty', $qty, 'int');
 				$db->query($query, $params);
 				$current_bid_id = $db->lastInsertId();
@@ -377,12 +376,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 					// Fake bid to maintain a coherent history
 					if ($current_bid < $proxy_max_bid)
 					{
-						$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
+						$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+								VALUES (:auc_id, :bidder_id, :bid, :qty)";
 						$params = array();
 						$params[] = array(':auc_id', $id, 'int');
 						$params[] = array(':bidder_id', $proxy_bidder_id, 'int');
 						$params[] = array(':bid', $proxy_max_bid, 'float');
-						$params[] = array(':time', $NOW, 'int');
 						$params[] = array(':qty', $qty, 'int');
 						$db->query($query, $params);
 						$fakebids = 1;
@@ -392,12 +391,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 						$fakebids = 0;
 					}
 					// Update bids table
-					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
+					$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+							VALUES (:auc_id, :bidder_id, :bid, :qty)";
 					$params = array();
 					$params[] = array(':auc_id', $id, 'int');
 					$params[] = array(':bidder_id', $bidder_id, 'int');
 					$params[] = array(':bid', $next_bid, 'float');
-					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
 					$current_bid_id = $db->lastInsertId();
@@ -419,20 +418,20 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$cbid = $proxy_max_bid;
 					$errmsg = $MSG['701'];
 					// Update bids table
-					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
+					$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+							VALUES (:auc_id, :bidder_id, :bid, :qty)";
 					$params = array();
 					$params[] = array(':auc_id', $id, 'int');
 					$params[] = array(':bidder_id', $bidder_id, 'int');
 					$params[] = array(':bid', $bid, 'float');
-					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
-					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
+					$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+							VALUES (:auc_id, :bidder_id, :bid, :qty)";
 					$params = array();
 					$params[] = array(':auc_id', $id, 'int');
 					$params[] = array(':bidder_id', $proxy_bidder_id, 'int');
 					$params[] = array(':bid', $cbid, 'float');
-					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
 					$current_bid_id = $db->lastInsertId();
@@ -458,12 +457,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 				elseif ($proxy_max_bid > $bid)
 				{
 					// Update bids table
-					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
+					$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+							VALUES (:auc_id, :bidder_id, :bid, :qty)";
 					$params = array();
 					$params[] = array(':auc_id', $id, 'int');
 					$params[] = array(':bidder_id', $bidder_id, 'int');
 					$params[] = array(':bid', $bid, 'float');
-					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
 					if ($customincrement == 0)
@@ -485,12 +484,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 					}
 					$errmsg = $MSG['701'];
 					// Update bids table
-					$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
+					$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+							VALUES (:auc_id, :bidder_id, :bid, :qty)";
 					$params = array();
 					$params[] = array(':auc_id', $id, 'int');
 					$params[] = array(':bidder_id', $proxy_bidder_id, 'int');
 					$params[] = array(':bid', $cbid, 'float');
-					$params[] = array(':time', $NOW, 'int');
 					$params[] = array(':qty', $qty, 'int');
 					$db->query($query, $params);
 					$current_bid_id = $db->lastInsertId();
@@ -535,12 +534,12 @@ if (isset($_POST['action']) && !isset($errmsg))
 		}
 		if (!isset($errmsg))
 		{
-			$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :bidder_id, :bid, :time, :qty)";
+			$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+					VALUES (:auc_id, :bidder_id, :bid, :qty)";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
 			$params[] = array(':bidder_id', $bidder_id, 'int');
 			$params[] = array(':bid', $bid, 'float');
-			$params[] = array(':time', $NOW, 'int');
 			$params[] = array(':qty', $qty, 'int');
 			$db->query($query, $params);
 			$current_bid_id = $db->lastInsertId();

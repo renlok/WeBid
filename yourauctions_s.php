@@ -14,8 +14,6 @@
 
 include 'common.php';
 
-$NOW = time();
-$NOWB = date('Ymd');
 $user_message = '';
 
 // If user is not logged in redirect to login page

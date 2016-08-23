@@ -26,8 +26,6 @@ if (!$user->logged_in)
 $user->checkSuspended();
 
 // DELETE OPEN AUCTIONS
-$NOW = time();
-$NOWB = date('Ymd');
 $catscontrol = new MPTTcategories();
 $user_message = '';
 

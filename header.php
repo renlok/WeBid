@@ -39,7 +39,7 @@ $template->assign_vars(array(
 		'CHARSET' => $CHARSET,
 		'DESCRIPTION' => $system->SETTINGS['descriptiontag'],
 		'KEYWORDS' => $system->SETTINGS['keywordstag'],
-		'ACTUALDATE' => ActualDate(),
+		'ACTUALDATE' => $dt->formatDate(time(), 'M d, Y H:i:s'),
 		'LOGO' => $system->SETTINGS['logo'],
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',
 		'HEADERCOUNTER' => $counters,

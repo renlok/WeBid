@@ -50,8 +50,6 @@ if ($parent_node['left_id'] != 1)
 	$all_items = false;
 }
 
-$NOW = time();
-
 /*
 specified category number
 look into table - and if we don't have such category - redirect to full list

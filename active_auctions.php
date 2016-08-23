@@ -79,9 +79,9 @@ while ($row = $db->fetch())
 		$row['pict_url'] = get_lang_img('nopicture.gif');
 	}
 
-	$start_time = new DateTime($row['starts']);
+	$current_time = new DateTime();
 	$end_time = new DateTime($row['ends']);
-	$difference = $start_time->diff($end_time);
+	$difference = $current_time->diff($end_time);
 
 	$template->assign_block_vars('auctions', array(
 			'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',

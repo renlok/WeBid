@@ -46,8 +46,6 @@ if (!isset($board_id) || is_array($board_id) || empty($board_id) || $board_id ==
 	exit;
 }
 
-$NOW = time();
-
 $query = "SELECT id FROM " . $DBPrefix . "comm_messages WHERE boardid = :board_id";
 $params = array();
 $params[] = array(':board_id', $board_id, 'int');

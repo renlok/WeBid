@@ -39,7 +39,6 @@ define('UPLOAD_PATH', MAIN_PATH . UPLOAD_FOLDER);
 define('IMAGE_CACHE_PATH', UPLOAD_PATH . 'cache/');
 
 include INCLUDE_PATH . 'errors.inc.php'; //error handler functions
-include INCLUDE_PATH . 'dates.inc.php';
 
 // classes
 include INCLUDE_PATH . 'database/Database.php';

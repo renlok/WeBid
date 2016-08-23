@@ -25,8 +25,6 @@ if (!$user->checkAuth())
 // check if the user can access this page
 $user->checkSuspended();
 
-$NOW = time();
-$NOWB = date('Ymd');
 $user_message = '';
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";

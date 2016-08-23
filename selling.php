@@ -97,7 +97,7 @@ foreach ($winner_data as $row)
 	$template->assign_block_vars('a', array(
 		'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 		'TITLE' => htmlspecialchars($row['title']),
-		'ENDS' => FormatDate($row['ends']),
+		'ENDS' => $dt->formatDate($row['ends']),
 		'AUCTIONID' => $row['auction'],
 
 		'ID' => $row['id'],

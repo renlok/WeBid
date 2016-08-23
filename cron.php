@@ -35,8 +35,6 @@ $categories = constructCategories();
  * c) send email to seller (reporting if there was a winner)
  */
 printLog('++++++ Closing expired auctions');
-$NOW = time();
-$NOWB = date('Ymd');
 $buyer_emails = array();
 $seller_emails = array();
 

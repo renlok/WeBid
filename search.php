@@ -15,8 +15,6 @@
 include 'common.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
-$NOW = time();
-
 $term = trim($_GET['q']);
 $cat_id = intval($_GET['id']);
 

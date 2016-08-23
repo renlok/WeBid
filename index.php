@@ -21,8 +21,6 @@ if ($system->SETTINGS['cron'] == 2)
 	include_once 'cron.php';
 }
 
-$NOW = time();
-
 function ShowFlags()
 {
 	global $system, $LANGUAGES;
@@ -104,10 +102,10 @@ while ($row = $db->fetch())
 {
 	if (strtotime($row['ends']) - time() > 0)
 	{
-		$start_time = new DateTime($row['starts']);
+		$current_time = new DateTime();
 		$end_time = new DateTime($row['ends']);
-		$difference = $start_time->diff($end_time);
-		$ends_string = FormatTimeLeft($difference);
+		$difference = $current_time->diff($end_time);
+		$ends_string = $dt->formatTimeLeft($difference);
 	}
 	else
 	{
@@ -163,10 +161,10 @@ while ($row = $db->fetch())
 {
 	if (strtotime($row['ends']) - time() > 0)
 	{
-		$start_time = new DateTime($row['starts']);
+		$current_time = new DateTime();
 		$end_time = new DateTime($row['ends']);
-		$difference = $start_time->diff($end_time);
-		$ends_string = FormatTimeLeft($difference);
+		$difference = $current_time->diff($end_time);
+		$ends_string = $dt->formatTimeLeft($difference);
 	}
 	else
 	{
@@ -198,10 +196,10 @@ while ($row = $db->fetch())
 	$i++;
 	if (strtotime($row['ends']) - time() > 0)
 	{
-		$start_time = new DateTime($row['starts']);
+		$current_time = new DateTime();
 		$end_time = new DateTime($row['ends']);
-		$difference = $start_time->diff($end_time);
-		$ends_string = FormatTimeLeft($difference);
+		$difference = $current_time->diff($end_time);
+		$ends_string = $dt->formatTimeLeft($difference);
 	}
 	else
 	{

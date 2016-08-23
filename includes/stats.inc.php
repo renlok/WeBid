@@ -16,6 +16,28 @@ if (!defined('InWeBid')) exit();
 
 include PACKAGE_PATH . 'useragent.inc.php';
 
+function GetLeftSeconds()
+{
+	$today = explode('|', date('j|n|Y|G|i|s'));
+	$month = $today[1];
+	$mday = $today[0];
+	$year = $today[2];
+	$lday = 31;
+	// Calculate last day
+	while (!checkdate($month, $lday, $year))
+	{
+		$lday--;
+	}
+	// Days left t the end of the month
+	$daysleft = intval($lday - date('d'));
+	$hoursleft = 24 - $today[3];
+	$minsleft = 60 - $today[4];
+	$secsleft = 60 - $today[5];
+	$left = $secsleft + ($minsleft * 60) + ($hoursleft * 3600) + ($daysleft * 86400);
+
+	return $left;
+}
+
 // Retrieve stats settings
 $query = "SELECT * FROM " . $DBPrefix . "statssettings";
 $db->direct_query($query);

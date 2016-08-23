@@ -39,7 +39,6 @@ if (!$user->can_buy)
 }
 
 unset($ERR);
-$NOW = time();
 
 $query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
 $params = array();
@@ -152,12 +151,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 	// perform final actions
 	if (!isset($ERR))
 	{
-		$query = "INSERT INTO " . $DBPrefix . "bids VALUES (NULL, :auc_id, :user_id, :buy_now, :time, :qty)";
+		$query = "INSERT INTO " . $DBPrefix . "bids (auction, bidder, bid, quantity)
+		VALUES (:auc_id, :user_id, :buy_now, :qty)";
 		$params = array();
 		$params[] = array(':auc_id', $id, 'int');
 		$params[] = array(':user_id', $user->user_data['id'], 'int');
 		$params[] = array(':buy_now', $Auction['buy_now'], 'float');
-		$params[] = array(':time', $NOW, 'int');
 		$params[] = array(':qty', $qty, 'int');
 		$db->query($query, $params);
 		$current_bid_id = $db->lastInsertId();

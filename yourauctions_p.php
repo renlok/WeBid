@@ -14,9 +14,6 @@
 
 include 'common.php';
 
-$NOW = time();
-$NOWB = date('Ymd');
-
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {

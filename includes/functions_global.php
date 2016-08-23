@@ -431,7 +431,7 @@ function load_counters()
 			$params[] = array(':online_id', $oID, 'int');
 			$db->query($query, $params);
 		}
-		$query = "DELETE from " . $DBPrefix . "online WHERE time <= SUB_DATE(CURRENT_TIMESTAMP, INTERVAL 15 MINUTE)";
+		$query = "DELETE from " . $DBPrefix . "online WHERE time <= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 15 MINUTE)";
 		$db->direct_query($query, $params);
 
 		$query = "SELECT id FROM " . $DBPrefix . "online";

@@ -105,9 +105,14 @@ switch ($_SESSION['action'])
 			$_SESSION['SELL_description'] = $system->cleanvars($_SESSION['SELL_description'], true);
 
 			$payment_text = implode(', ', $payment);
-			// set time back to GMT
-			$a_starts = (empty($start_now) || !$caneditstartdate) ? ($a_starts - $system->tdiff) : time();
-			$a_ends = ($custom_end == 1) ? ($a_ends - $system->tdiff) : ($a_starts + ($duration * 24 * 60 * 60));
+			// finalise start and end times
+			$a_starts = (empty($start_now) || !$caneditstartdate) ? $a_starts : $dt->currentDatetime();
+			if ($custom_end == 1)
+			{
+				$start_datetime = new DateTime($a_starts);
+				$start_datetime->add(new DateInterval('P' . $duration . 'D'));
+				$a_ends = $start_datetime->format('Y-m-d H:i:s');
+			}
 			// get fee
 			$fee_data = get_fee($minimum_bid, false);
 			$fee = $fee_data[0];
@@ -272,7 +277,7 @@ switch ($_SESSION['action'])
 				{
 					alert_auction_watchers($auction_id, $_SESSION['SELL_title'], $_SESSION['SELL_description']);
 				}
-				
+
 				if ($user->user_data['startemailmode'] == 'yes' && $addcounter)
 				{
 					if (!$requires_premoderation)
@@ -281,9 +286,9 @@ switch ($_SESSION['action'])
 					}
 					else
 					{
-						include INCLUDE_PATH . 'email/auction_pending_moderation.php';	
+						include INCLUDE_PATH . 'email/auction_pending_moderation.php';
 					}
-					
+
 				}
 				elseif ($user->user_data['startemailmode'] == 'yes')
 				{
@@ -325,7 +330,7 @@ switch ($_SESSION['action'])
 					}
 				}
 			}
-			
+
 			unsetsessions();
 			if (defined('TrackUserIPs'))
 			{
@@ -346,7 +351,7 @@ switch ($_SESSION['action'])
 					'TITLE' => $MSG['028'],
 					'PAGE' => 3,
 					'AUCTION_ID' => $auction_id,
-					'MESSAGE' => sprintf($MSG['102'], $auction_id, date('D j M \a\t g:ia', $a_ends + $system->tdiff))
+					'MESSAGE' => sprintf($MSG['102'], $auction_id, $dt->formatDate($a_ends, 'D j M \a\t g:ia'))
 					));
 			break;
 		}
@@ -415,26 +420,6 @@ switch ($_SESSION['action'])
 
 			$iquantity = ($atype == 2 || $buy_now_only) ? $iquantity : 1;
 
-			if (!(strpos($a_starts, '-') === false))
-			{
-				$a_starts = _mktime(substr($a_starts, 11, 2),
-					substr($a_starts, 14, 2),
-					substr($a_starts, 17, 2),
-					substr($a_starts, 0, 2),
-					substr($a_starts, 3, 2),
-					substr($a_starts, 6, 4));
-			}
-
-			if (!(strpos($a_ends, '-') === false))
-			{
-				$a_ends = _mktime(substr($a_ends, 11, 2),
-					substr($a_ends, 14, 2),
-					substr($a_ends, 17, 2),
-					substr($a_ends, 0, 2),
-					substr($a_ends, 3, 2),
-					substr($a_ends, 6, 4));
-			}
-
 			$shippingtext = '';
 			if ($shipping == 1)
 				$shippingtext = $MSG['033'];
@@ -457,8 +442,8 @@ switch ($_SESSION['action'])
 					'BN_PRICE' => $system->print_money($buy_now_price, false),
 					'SHIPPING_COST' => $system->print_money($shipping_cost, false),
 					'ADDITIONAL_SHIPPING_COST' => $system->print_money($additional_shipping_cost, false),
-					'STARTDATE' => (empty($start_now)) ? FormatDate($a_starts) : FormatDate($system->ctime),
-					'END_TIME' => FormatDate($a_ends),
+					'STARTDATE' => (empty($start_now)) ? $dt->formatDate($a_starts) : $dt->formatDate(time()),
+					'END_TIME' => $dt->formatDate($a_ends),
 					'CUSTOM_END' => $custom_end,
 					'DURATION' => $duration_desc,
 					'INCREMENTS' => ($increments == 1) ? $MSG['614'] : $system->print_money($customincrement, false),
@@ -484,25 +469,6 @@ switch ($_SESSION['action'])
 			break;
 		}
 	case 1:  // enter auction details
-		// check time format is timestamp. If not change to timestamp
-		if (!(strpos($a_starts, '-') === false))
-		{
-			$a_starts = _mktime(substr($a_starts, 11, 2),
-				substr($a_starts, 14, 2),
-				substr($a_starts, 17, 2),
-				substr($a_starts, 0, 2),
-				substr($a_starts, 3, 2),
-				substr($a_starts, 6, 4));
-		}
-		if (!(strpos($a_ends, '-') === false))
-        {
-            $a_ends = _mktime(substr($a_ends, 11, 2),
-                substr($a_ends, 14, 2),
-                substr($a_ends, 17, 2),
-                substr($a_ends, 0, 2),
-                substr($a_ends, 3, 2),
-                substr($a_ends, 6, 4));
-        }
 		$category_string1 = get_category_string($sellcat1);
 		$category_string2 = get_category_string($sellcat2);
 
@@ -514,11 +480,22 @@ switch ($_SESSION['action'])
 		}
 		$TPL_auction_type .= '</select>' . "\n";
 
-		// duration
-		$time_passed = ($_SESSION['SELL_action'] != 'edit') ? 0 : (time() - $a_starts) / (3600 * 24); // get time passed in days
+		// get time passed in days
+		if ($_SESSION['SELL_action'] != 'edit')
+		{
+			$days_passed = 0;
+		}
+		else
+		{
+			$current_time = new DateTime();
+			$start_time = new DateTime($a_starts);
+			$difference = $start_time->diff($current_time);
+			$days_passed = $difference['d'];
+		}
+		// get valid durations
 		$query = "SELECT * FROM " . $DBPrefix . "durations WHERE days > :days ORDER BY days";
 		$params = array();
-		$params[] = array(':days', floor($time_passed), 'int');
+		$params[] = array(':days', floor($days_passed), 'int');
 		$db->query($query, $params);
 		$TPL_durations_list = '<select name="duration">' . "\n";
 		while ($row = $db->fetch())
@@ -556,43 +533,16 @@ switch ($_SESSION['action'])
 		}
 
 		// make hour
-		if ($system->SETTINGS['datesformat'] == 'USA')
-		{
-			$gmdate_string = 'm-d-Y H:i:s';
-		}
-		else
-		{
-			$gmdate_string = 'd-m-Y H:i:s';
-		}
+		$TPL_start_date = $a_starts;
+		$TPL_end_date = $a_ends;
 		if ($_SESSION['SELL_action'] != 'edit')
 		{
 			if (empty($a_starts))
 			{
-				$TPL_start_date = date($gmdate_string, $system->ctime);
-				$TPL_end_date = date($gmdate_string, $system->ctime + (3600 * 24));
+				$TPL_start_date = $dt->currentDatetime();
+				$end_date = new DateTime('+1 day');
+				$TPL_end_date = $end_date->format('Y-m-d H:i:s');
 			}
-			else
-			{
-				if (strpos($a_starts, '-') === false)
-				{
-					$a_starts = date($gmdate_string, $a_starts);
-				}
-				if (empty($a_ends))
-				{
-					$TPL_end_date = date($gmdate_string, $system->ctime + (3600 * 24));
-				}
-				elseif (strpos($a_ends, '-') === false)
-				{
-					$a_ends = date($gmdate_string, $a_ends);
-				}
-				$TPL_start_date = $a_starts;
-				$TPL_end_date = $a_ends;
-			}
-		}
-		else
-		{
-			$TPL_start_date = date($gmdate_string, $a_starts);
-			$TPL_end_date = date($gmdate_string, $a_ends);
 		}
 
 		$CKEditor = new CKEditor();

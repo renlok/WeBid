@@ -64,11 +64,10 @@ function extend_auction($id, $ends)
 {
 	global $system, $db, $DBPrefix;
 
-	if ($system->SETTINGS['ae_status'] == 'y' && ($ends - $system->SETTINGS['ae_timebefore']) < time())
+	if ($system->SETTINGS['ae_status'] == 'y' && (strtotime($ends) - $system->SETTINGS['ae_timebefore']) < time())
 	{
-		$query = "UPDATE " . $DBPrefix . "auctions SET ends = ends + :ae_extend WHERE id = :auc_id";
+		$query = "UPDATE " . $DBPrefix . "auctions SET ends = DATE_ADD(ends, INTERVAL " . $system->SETTINGS['ae_extend'] . " SECOND) WHERE id = :auc_id";
 		$params = array();
-		$params[] = array(':ae_extend', $system->SETTINGS['ae_extend'], 'int');
 		$params[] = array(':auc_id', $id, 'int');
 		$db->query($query, $params);
 	}
@@ -126,14 +125,13 @@ $customincrement = $Data['increment'];
 $current_bid = $Data['current_bid'];
 $pict_url_plain = $Data['pict_url'];
 $reserve = $Data['reserve_price'];
-$c = $Data['ends'];
 $cbid = ($current_bid == 0) ? $minimum_bid : $current_bid;
 
-if (($Data['ends'] <= time() || $Data['closed']) && !isset($errmsg))
+if ((strtotime($Data['ends']) <= time() || $Data['closed']) && !isset($errmsg))
 {
 	$errmsg = $ERR_614;
 }
-if (($Data['starts'] > time()) && !isset($errmsg))
+if ((strtotime($Data['starts']) > time()) && !isset($errmsg))
 {
 	$errmsg = $ERR_073;
 }
@@ -234,7 +232,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 				$params[] = array(':current_bid_id', $current_bid_id, 'int');
 				$params[] = array(':auc_id', $id, 'int');
 				$db->query($query, $params);
-				extend_auction($item_id, $c);
+				extend_auction($item_id, $Data['ends']);
 				$bidding_ended = true;
 			}
 		}
@@ -286,7 +284,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 						$params[] = array(':auc_id', $id, 'int');
 						$db->query($query, $params);
 					}
-					extend_auction($item_id, $c);
+					extend_auction($item_id, $Data['ends']);
 					$bidding_ended = true;
 				}
 			}
@@ -516,7 +514,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 					$next_bid = $cbid + $increment;
 				}
 			}
-			extend_auction($item_id, $c);
+			extend_auction($item_id, $Data['ends']);
 		}
 	}
 	elseif ($atype == 2 && !isset($errmsg)) // dutch auction
@@ -607,8 +605,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 	// End of Item watch
 	if ($send_email)
 	{
-		$month = date('m', $c + $system->tdiff);
-		$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $c + $system->tdiff);
+		$ends_string = $dt->printDateTz($Data['ends']);
 		$new_bid = $system->print_money($next_bid);
 		// Send e-mail message
 		include INCLUDE_PATH . 'email/outbid.php';

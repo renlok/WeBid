@@ -58,11 +58,10 @@ else
 	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE
 			(title LIKE :title OR id = :auc_id)
 			" . $catSQL . "
-			AND closed = 0 AND suspended = 0 AND starts <= :time AND ends > :time";
+			AND closed = 0 AND suspended = 0 AND starts <= CURRENT_TIMESTAMP AND ends > CURRENT_TIMESTAMP";
 	$params = array();
 	$params[] = array(':title', '%' . $system->cleanvars($term) . '%', 'str');
 	$params[] = array(':auc_id', $term, 'int');
-	$params[] = array(':time', $NOW, 'int');
 	$db->query($query, $params);
 
 	// get total number of records

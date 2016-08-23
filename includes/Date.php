@@ -44,6 +44,12 @@ class Date
 		return $tmp->format('Y-m-d H:i');
 	}
 
+	public function currentDatetime()
+	{
+		$datetime = new DateTime();
+		return $datetime->format('Y-m-d H:i:s');
+	}
+
 	public function convertToDatetime($rawdate, $format = false)
 	{
 		if (!$format)
@@ -76,5 +82,53 @@ class Date
 		{
 			return $datetime->format($format);
 		}
+	}
+
+	public function formatTimeLeft($diff)
+	{
+		global $MSG;
+
+		$timeleft = '';
+		if ($diff['y'] > 0)
+		{
+			$timeleft = $diff['y'] . $MSG['year_s'];
+		}
+		elseif ($diff['m'] > 0)
+		{
+			$timeleft = $diff['m'] . $MSG['month_s'];
+		}
+		elseif ($diff['d'] > 0)
+		{
+			$timeleft = $diff['d'] . $MSG['day_short'] . ' ';
+			if ($diff['h'] > 0)
+			{
+				$timeleft .= $diff['h'] . $MSG['hour_short'] . ' ';
+			}
+		}
+		else
+		{
+			if ($diff['h'] > 0)
+			{
+				$timeleft .= $diff['h'] . $MSG['hour_short'] . ' ';
+			}
+			if ($diff['m'] > 0)
+			{
+				$timeleft .= $diff['m'] . $MSG['minute_short'] . ' ';
+			}
+			elseif ($diff['h'] == 0 && $diff['m'] == 0 && $diff['s'] > 0)
+			{
+				$timeleft = '<1' . $MSG['minute_short'];
+			}
+			if ($diff['invert'])
+			{
+				$timeleft = $MSG['911'];
+			}
+		}
+		if ($diff['y'] == 0 && $diff['m'] == 0 && $diff['d'] == 0 && $diff['h'] == 0 && $diff['m'] < 15)
+		{
+			$timeleft = '<span style="color:#FF0000;">' . $timeleft . '</span>';
+		}
+
+		return $timeleft;
 	}
 }

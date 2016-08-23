@@ -40,6 +40,8 @@ online.time
 pendingnotif.thisdate
 useraccounts.date
 winners.closingdate
+auctions.starts
+auctions.ends
 */
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `reg_date` datetime default CURRENT_TIMESTAMP;";
 $query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `lastlogin` datetime default CURRENT_TIMESTAMP;";
@@ -56,5 +58,7 @@ $query[] = "ALTER TABLE `" . $DBPrefix . "online` MODIFY `time` datetime default
 $query[] = "ALTER TABLE `" . $DBPrefix . "pendingnotif` MODIFY `thisdate` datetime default CURRENT_TIMESTAMP;";
 $query[] = "ALTER TABLE `" . $DBPrefix . "useraccounts` MODIFY `date` datetime default CURRENT_TIMESTAMP;";
 $query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `closingdate` datetime default CURRENT_TIMESTAMP;";
+$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `starts` datetime default CURRENT_TIMESTAMP;";
+$query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `ends` datetime default CURRENT_TIMESTAMP;";
 
 // TODO: convert dates to new format and insert them into temp_install before changing dateformat

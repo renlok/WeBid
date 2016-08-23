@@ -43,7 +43,7 @@ else
 $_SESSION['RETURN_LIST'] = 'listauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
-$query = "SELECT COUNT(a.id) as auctions FROM " . $DBPrefix . "auctions a 
+$query = "SELECT COUNT(a.id) as auctions FROM " . $DBPrefix . "auctions a
 	LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
 	WHERE m.reason IS NULL AND a.closed = 0 " . $user_sql;
 $db->direct_query($query);
@@ -69,8 +69,8 @@ while ($row = $db->fetch())
 			'IN_MODERATION_QUEUE' => !is_null($row['reason']),
 			'ID' => $row['id'],
 			'TITLE' => htmlspecialchars($row['title']),
-			'START_TIME' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
-			'END_TIME' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
+			'START_TIME' => $dt->printDateTz($row['starts']),
+			'END_TIME' => $dt->printDateTz($row['ends']),
 			'USERNAME' => $row['nick'],
 			'CATEGORY' => $row['cat_name'],
 			'B_HASWINNERS' => false,

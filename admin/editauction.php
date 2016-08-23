@@ -85,9 +85,6 @@ if (isset($_POST['action']))
 			$db->query($query, $params);
 			$AUCTION = $db->result();
 
-			$a_start = $AUCTION['starts'];
-			$a_ends = $a_start + ($_POST['duration'] * 24 * 60 * 60);
-
 			if ($AUCTION['category'] != $_POST['category'])
 			{
 				// and increase new category counters
@@ -206,6 +203,10 @@ if (isset($_POST['action']))
 				}
 			}
 
+			$start_date = new DateTime($AUCTION['starts']);
+			$start_date->add(new DateInterval('P' . $_POST['duration'] . 'D'));
+			$auction_ends = $start_date->format('Y-m-d H:i:s');
+
 			$query = "UPDATE " . $DBPrefix . "auctions SET
 					title = :title,
 					subtitle = :subtitle,
@@ -232,8 +233,8 @@ if (isset($_POST['action']))
 			$params = array();
 			$params[] = array(':title', $system->cleanvars($_POST['title']), 'str');
 			$params[] = array(':subtitle', $system->cleanvars($_POST['subtitle']), 'str');
-			$params[] = array(':ends', $a_ends, 'int');
-			$params[] = array(':duration', $system->cleanvars($_POST['duration']), 'str');
+			$params[] = array(':ends', $auction_ends, 'str');
+			$params[] = array(':duration', $_POST['duration'], 'int');
 			$params[] = array(':category', $_POST['category'], 'int');
 			$params[] = array(':secondcat', $_POST['secondcat'], 'int');
 			$params[] = array(':description', $_POST['description'], 'str');
@@ -246,7 +247,7 @@ if (isset($_POST['action']))
 			$params[] = array(':increment', $system->input_money($_POST['customincrement']), 'float');
 			$params[] = array(':shipping', $_POST['shipping'], 'str');
 			$params[] = array(':payment', implode(', ', $_POST['payment']), 'str');
-			$params[] = array(':international', ((isset($_POST['international'])) ? 1 : 0), 'int');
+			$params[] = array(':international', (isset($_POST['international'])), 'bool');
 			$params[] = array(':shipping_terms', $system->cleanvars($_POST['shipping_terms']), 'str');
 			$params[] = array(':bold', (isset($_POST['is_bold'])), 'bool');
 			$params[] = array(':highlighted', (isset($_POST['is_highlighted'])), 'bool');

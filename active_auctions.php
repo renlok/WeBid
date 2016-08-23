@@ -32,16 +32,13 @@ else
 	exit;
 }
 
-$NOW = time();
-
 // get number of active auctions for this user
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
 		WHERE user = :user_id
 		AND closed = 0
-		AND starts <= :time";
+		AND starts <= CURRENT_TIMESTAMP";
 $params = array();
 $params[] = array(':user_id', $user_id, 'int');
-$params[] = array(':time', $NOW, 'int');
 $db->query($query, $params);
 $num_auctions = $db->result('auctions');
 
@@ -62,11 +59,10 @@ if (!isset($PAGES) || $PAGES < 1) $PAGES = 1;
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 		WHERE user = :user_id
 		AND closed = 0
-		AND starts <= :time
+		AND starts <= CURRENT_TIMESTAMP
 		ORDER BY ends ASC LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user_id, 'int');
-$params[] = array(':time', $NOW, 'int');
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
@@ -83,7 +79,9 @@ while ($row = $db->fetch())
 		$row['pict_url'] = get_lang_img('nopicture.gif');
 	}
 
-	$difference = $row['ends'] - $NOW;
+	$start_time = new DateTime($row['starts']);
+	$end_time = new DateTime($row['ends']);
+	$difference = $start_time->diff($end_time);
 
 	$template->assign_block_vars('auctions', array(
 			'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',
@@ -96,7 +94,7 @@ while ($row = $db->fetch())
 			'BIDVALUE' => $row['current_bid'],
 			'BIDFORMAT' => $system->print_money($row['current_bid']),
 			'NUM_BIDS' => $row['num_bids'],
-			'TIMELEFT' => FormatTimeLeft($difference),
+			'TIMELEFT' => $dt->formatTimeLeft($difference),
 
 			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] || $row['bn_only'] == 0 && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),
 			'B_BNONLY' => ($row['bn_only'])

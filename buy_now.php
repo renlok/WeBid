@@ -69,7 +69,7 @@ if ($Auction['closed'])
 	header('location: item.php?id=' . $_REQUEST['id']);
 	exit;
 }
-if ($Auction['starts'] > time())
+if (strtotime($Auction['starts']) > time())
 {
 	$ERR = $ERR_073;
 }
@@ -168,12 +168,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 		}
 		if ($Auction['bn_only'] == 0)
 		{
-			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, bn_sale = 1, num_bids = num_bids + 1, current_bid = :buy_now, current_bid_id = :current_bid_id WHERE id = :auc_id";
+			$query = "UPDATE " . $DBPrefix . "auctions SET ends = CURRENT_TIMESTAMP, bn_sale = 1, num_bids = num_bids + 1, current_bid = :buy_now, current_bid_id = :current_bid_id WHERE id = :auc_id";
 			$params = array();
 			$params[] = array(':auc_id', $id, 'int');
 			$params[] = array(':buy_now', $Auction['buy_now'], 'float');
 			$params[] = array(':current_bid_id', $current_bid_id, 'int');
-			$params[] = array(':time', $NOW, 'int');
 			$db->query($query, $params);
 			$query = "UPDATE " . $DBPrefix . "counters SET bids = bids + 1";
 			$db->direct_query($query);
@@ -193,9 +192,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			// force close if all items sold
 			if (($Auction['quantity'] - $qty) == 0)
 			{
-				$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, bn_sale = 1, current_bid = :current_bid, current_bid_id = :current_bid_id, sold = 'y', num_bids = num_bids + 1, closed = 1 WHERE id = :auc_id";
+				$query = "UPDATE " . $DBPrefix . "auctions SET ends = CURRENT_TIMESTAMP, bn_sale = 1, current_bid = :current_bid, current_bid_id = :current_bid_id, sold = 'y', num_bids = num_bids + 1, closed = 1 WHERE id = :auc_id";
 				$params = array();
-				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':auc_id', $id, 'int');
 				$params[] = array(':current_bid', $Auction['buy_now'], 'int');
 				$params[] = array(':current_bid_id', $current_bid_id, 'int');
@@ -349,8 +347,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 			}
 
 			// get end string
-			$month = date('m', $Auction['ends'] + $system->tdiff);
-			$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
+			$ends_string = $dt->printDateTz($Auction['ends']);
 			$Auction['current_bid'] = $Auction['buy_now'];
 			include INCLUDE_PATH . 'email/endauction_multi_item_win.php';
 			include INCLUDE_PATH . 'email/seller_partial_winner.php';

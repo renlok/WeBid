@@ -154,10 +154,8 @@ if (!defined('AdminFuncCall'))
 		$db->direct_query($query);
 
 		$query = "SELECT COUNT(*) AS COUNT, category FROM " . $DBPrefix . "auctions
-				WHERE closed = 0 AND starts <= :time AND suspended = 0 GROUP BY category";
-		$params = array();
-		$params[] = array(':time', time(), 'int');
-		$db->query($query, $params);
+				WHERE closed = 0 AND starts <= CURRENT_TIMESTAMP AND suspended = 0 GROUP BY category";
+		$db->direct_query($query);
 
 		$cat_data = $db->fetchall();
 		foreach ($cat_data as $row)
@@ -191,10 +189,8 @@ if (!defined('AdminFuncCall'))
 		if ($system->SETTINGS['extra_cat'] == 'y')
 		{
 			$query = "SELECT COUNT(*) AS COUNT, secondcat FROM " . $DBPrefix . "auctions
-					WHERE closed = 0 AND starts <= :time AND suspended = 0 AND secondcat != 0 GROUP BY secondcat";
-			$params = array();
-			$params[] = array(':time', time(), 'int');
-			$db->query($query, $params);
+					WHERE closed = 0 AND starts <= CURRENT_TIMESTAMP AND suspended = 0 AND secondcat != 0 GROUP BY secondcat";
+			$db->direct_query($query);
 
 			$cat_data = $db->fetchall();
 			foreach ($cat_data as $row)

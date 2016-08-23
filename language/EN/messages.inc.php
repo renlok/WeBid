@@ -1712,3 +1712,10 @@ $MSG['remove_auction_from_moderation'] = "Remove Auction From Moderation";
 $MSG['remove_auction_from_moderation_explain'] = "Are you sure you want to remove this auction from the moderation queue?<br>This action will not reactivate the auction.";
 
 $MSG['auction_awaiting_approval'] = "Your Auction is Awaiting Approval";
+
+// dates
+$MSG['year_s'] = 'year(s)';
+$MSG['month_s'] = 'month(s)';
+$MSG['day_short'] = 'd';
+$MSG['hour_short'] = 'h';
+$MSG['minute_short'] = 'm';

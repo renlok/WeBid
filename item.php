@@ -107,42 +107,38 @@ else
 }
 
 // get ending time
-$difference = $ends - time();
 $showendtime = false;
 $has_ended = false;
-if ($start > time())
+if (strtotime($start) > time())
 {
 	$ending_time = '<span class="errfont">' . $MSG['668'] . '</span>';
 }
-elseif ($difference > 0)
+elseif (strtotime($ends) - time() > 0)
 {
+	$start_time = new DateTime($start);
+	$end_time = new DateTime($ends);
+	$difference = $start_time->diff($end_time);
 	$ending_time = '';
-	$d = 0;
-	$days_difference = floor($difference / 86400);
-	if ($days_difference > 0)
+	$date_elements = 0;
+	if ($difference['d'] > 0)
 	{
-		$daymsg = ($days_difference == 1) ? $MSG['126b'] : $MSG['126'];
-		$ending_time .= $days_difference . ' ' . $daymsg . ' ';
-		$d++;
+		$daymsg = ($difference['d'] == 1) ? $MSG['126b'] : $MSG['126'];
+		$ending_time .= $difference['d'] . ' ' . $daymsg . ' ';
+		$date_elements++;
 	}
-	$difference = $difference % 86400;
-	$hours_difference = floor($difference / 3600);
-	if ($hours_difference > 0)
+	if ($difference['h'] > 0)
 	{
-		$ending_time .= $hours_difference . $MSG['25_0037'] . ' ';
-		$d++;
+		$ending_time .= $difference['h'] . $MSG['25_0037'] . ' ';
+		$date_elements++;
 	}
-	$difference = $difference % 3600;
-	$minutes_difference = floor($difference / 60);
-	$seconds_difference = $difference % 60;
-	if ($minutes_difference > 0 && $d < 2)
+	if ($difference['m'] > 0 && $date_elements < 2)
 	{
-		$ending_time .= $minutes_difference . $MSG['25_0032'] . ' ';
-		$d++;
+		$ending_time .= $difference['m'] . $MSG['25_0032'] . ' ';
+		$date_elements++;
 	}
-	if ($seconds_difference > 0 && $d < 2)
+	if ($difference['s'] > 0 && $date_elements < 2)
 	{
-		$ending_time .= $seconds_difference . $MSG['25_0033'];
+		$ending_time .= $difference['s'] . $MSG['25_0033'];
 	}
 	$showendtime = true;
 }
@@ -527,9 +523,9 @@ $template->assign_vars(array(
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
 		'ENDS' => $ending_time,
-		'ENDS_IN' => ($ends - time()),
-		'STARTTIME' => ArrangeDateNoCorrection($start + $system->tdiff),
-		'ENDTIME' => ArrangeDateNoCorrection($ends + $system->tdiff),
+		'ENDS_IN' => (strtotime($ends) - time()),
+		'STARTTIME' => $dt->printDateTz($start),
+		'ENDTIME' => $dt->printDateTz($ends),
 		'BUYNOW1' => $auction_data['buy_now'],
 		'BUYNOW2' => ($auction_data['buy_now'] > 0) ? $system->print_money($auction_data['buy_now']) . $bn_link : $system->print_money($auction_data['buy_now']),
 		'NUMBIDS' => $num_bids,
@@ -583,9 +579,9 @@ $template->assign_vars(array(
 		'B_USERBID' => $userbid,
 		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && (!$user->logged_in || ($user->logged_in && $user->user_data['id'] != $auction_data['user']))),
 		'B_HASBUYER' => (count($hbidder_data) > 0),
-		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
+		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > ((strtotime($ends) - time()) / 3600)),
 		'B_HAS_QUESTIONS' => ($num_questions > 0),
-		'B_CAN_BUY' => ($user->can_buy || (!$user->logged_in && $system->SETTINGS['bidding_visable_to_guest'])) && !($start > time()),
+		'B_CAN_BUY' => ($user->can_buy || (!$user->logged_in && $system->SETTINGS['bidding_visable_to_guest'])) && !(strtotime($start) > time()),
 		'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
 		'B_SHOWENDTIME' => $showendtime,
 		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['additional_shipping_cost'] > 0)

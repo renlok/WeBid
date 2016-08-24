@@ -8,7 +8,7 @@
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{L_222}</h4>
 				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 					<tr>
-						<td align="right" colspan="2"><b>{NICK} ({FB_NUM}) {FB_IMG}</b></td>
+						<td align="right" colspan="2"><b>{NICK} ({FB_NUM}) <img src="{SITEURL}/images/icons/{FB_ICON}" class="fbstar"></b></td>
 					</tr>
 <!-- BEGIN feedback -->
 					<tr {feedback.BG}>

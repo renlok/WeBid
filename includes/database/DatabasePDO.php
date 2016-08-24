@@ -145,7 +145,14 @@ class DatabasePDO extends Database
 		}
 		else
 		{
-			return $data[$column];
+			if (isset($data[$column]))
+			{
+				return $data[$column];
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 

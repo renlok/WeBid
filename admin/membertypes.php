@@ -16,8 +16,6 @@ define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
-include INCLUDE_PATH . 'functions_rebuild.php';
-include INCLUDE_PATH . 'membertypes.inc.php';
 include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] = 'update')
@@ -65,16 +63,17 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 		$params[] = array(':icon', $new_membertype['icon'], 'str');
 		$db->query($query, $params);
 	}
-	rebuild_table_file('membertypes');
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['836']));
 }
 
-foreach ($membertypes as $id => $quest)
+$query = "SELECT id, feedbacks, icon FROM " . $DBPrefix . "membertypes ORDER BY feedbacks DESC;";
+$db->direct_query($query);
+while ($membertype = $db->fetch())
 {
 	$template->assign_block_vars('mtype', array(
-			'ID' => $quest['id'],
-			'FEEDBACK' => $quest['feedbacks'],
-			'ICON' => $quest['icon']
+			'ID' => $membertype['id'],
+			'FEEDBACK' => $membertype['feedbacks'],
+			'ICON' => $membertype['icon']
 			));
 }
 

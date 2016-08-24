@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include INCLUDE_PATH . 'membertypes.inc.php';
 
 if (isset($_REQUEST['auction_id']))
 {
@@ -164,19 +163,16 @@ if ((isset($_GET['wid']) && isset($_GET['sid'])) || isset($TPL_err)) // gets use
 
 	if ($db->numrows() > 0)
 	{
-		$arr = $db->result();
-		$TPL_nick = $arr['nick'];
-		$i = 0;
-		foreach ($membertypes as $k => $l)
-		{
-			if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes) - 1))
-			{
-				$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
-				break;
-			}
-		}
-		$TPL_feedbacks_num = $arr['rate_num'];
-		$TPL_feedbacks_sum = $arr['rate_sum'];
+		$user_data = $db->result();
+		$TPL_nick = $user_data['nick'];
+		$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+		$params = array();
+		$params[] = array(':feedback', $user_data['rate_sum'], 'int');
+		$db->query($query, $params);
+		$feedback_icon = $db->result('icon');
+
+		$TPL_feedbacks_num = $user_data['rate_num'];
+		$TPL_feedbacks_sum = $user_data['rate_sum'];
 	}
 	else
 	{
@@ -220,6 +216,10 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			}
 			$PAGES = ($total == 0) ? 1 : ceil($total / $system->SETTINGS['perpage']);
 
+			$query = "SELECT feedbacks, icon FROM " . $DBPrefix . "membertypes ORDER BY feedbacks DESC;";
+			$db->direct_query($query);
+			$membertypes = $db->fetchAll();
+
 			$query = "SELECT f.*, a.title, u.id As uId, u.rate_num, u.rate_sum
 				FROM " . $DBPrefix . "feedbacks f
 				LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
@@ -235,12 +235,11 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			$feed_disp = array();
 			while ($arrfeed = $db->fetch())
 			{
-				$j = 0;
-				foreach ($membertypes as $k => $l)
+				foreach ($membertypes as $membertype)
 				{
-					if ($k >= $arrfeed['rate_sum'] || $j++ == (count($membertypes) - 1))
+					if ($membertype['feedbacks'] >= $arrfeed['rate_sum'])
 					{
-						$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
+						$feedback_icon = $membertype['icon'];
 						break;
 					}
 				}
@@ -260,7 +259,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 						'USERID' => $arrfeed['uId'],
 						'USERNAME' => $arrfeed['rater_user_nick'],
 						'USFEED' => $arrfeed['rate_sum'],
-						'USICON' => (isset($usicon)) ? $usicon : '',
+						'FB_ICON' => $feedback_icon,
 						'FBDATE' => $dt->formatDate($arrfeed['feedbackdate']),
 						'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . htmlspecialchars($arrfeed['title']) . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
 						'FEEDBACK' => nl2br($arrfeed['feedback'])
@@ -295,7 +294,7 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 			'ERROR' => (isset($TPL_errmsg)) ? $TPL_errmsg : '',
 			'USERNICK' => (isset($TPL_nick)) ? $TPL_nick : '',
 			'USERFB' => (isset($TPL_feedbacks_sum)) ? $TPL_feedbacks_sum : '',
-			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
+			'USER_FB_ICON' => $feedback_icon,
 			'AUCT_ID' => $auction_id,
 			'AUCT_TITLE' => $item_title,
 			'WID' => $_GET['wid'],
@@ -320,26 +319,27 @@ if ((isset($TPL_err) && !empty($TPL_err)) || !isset($_GET['faction']))
 
 if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 {
-	$query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
+	$query = "SELECT nick, rate_sum FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $_REQUEST['id'], 'int');
 	$db->query($query, $params);
-	if ($arr = $db->fetch())
+	if (($user_data = $db->result()) == null)
 	{
-		$TPL_rate_ratio_value = '';
-		foreach ($membertypes as $k => $l)
-		{
-			if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes) - 1))
-			{
-				$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
-				break;
-			}
-		}
+		header('location: profile?id=' . $_REQUEST['id']);
+		exit;
 	}
+	$username = $user_data['nick'];
+	$rate_sum = $user_data['rate_sum'];
+	$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+	$params = array();
+	$params[] = array(':feedback', $rate_sum, 'int');
+	$db->query($query, $params);
+	$feedback_icon = $db->result('icon');
+
 	$template->assign_vars(array(
-			'USERNICK' => (isset($TPL_nick)) ? $TPL_nick : '',
-			'USERFB' => (isset($TPL_feedbacks_num)) ? $TPL_feedbacks_num : '',
-			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
+			'USERNICK' => $username,
+			'USERFB' => $rate_sum,
+			'USER_FB_ICON' => $feedback_icon,
 			'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?id=' . $_GET['id'] . '&PAGE=' . $PREV . '&faction=show"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 			'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?id=' . $_GET['id'] . '&PAGE=' . $NEXT . '&faction=show"><u>' . $MSG['5120'] . '</u></a>' : '',
 			'PAGE' => $PAGE,

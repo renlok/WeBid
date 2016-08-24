@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include INCLUDE_PATH . 'membertypes.inc.php';
 
 if (!$user->checkAuth())
 {
@@ -23,15 +22,11 @@ if (!$user->checkAuth())
 	exit;
 }
 
-$i = 0;
-foreach ($membertypes as $k => $l)
-{
-	if ($k >= $user->user_data['rate_sum'] || $i++ == (count($membertypes) - 1))
-	{
-		$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
-		break;
-	}
-}
+$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+$params = array();
+$params[] = array(':feedback', $user->user_data['rate_sum'], 'int');
+$db->query($query, $params);
+$feedback_icon = $db->result('icon');
 
 $page = (isset($_GET['pg']) && intval($_GET['pg']) > 0) ? $_GET['pg'] : 1;
 $left_limit = ($page - 1) * $system->SETTINGS['perpage'];
@@ -45,6 +40,10 @@ $total = $db->result('COUNT');
 $pages = ceil($total / $system->SETTINGS['perpage']);
 
 $left_limit = ($left_limit < 0) ? 0 : $left_limit;
+
+$query = "SELECT feedbacks, icon FROM " . $DBPrefix . "membertypes ORDER BY feedbacks DESC;";
+$db->direct_query($query);
+$membertypes = $db->fetchAll();
 
 $query = "SELECT f.*, a.title, u.rate_sum, w.winner FROM " . $DBPrefix . "feedbacks f
 	LEFT OUTER JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
@@ -63,12 +62,11 @@ $i = 0;
 $feed_disp = array();
 while ($arrfeed = $db->fetch())
 {
-	$j = 0;
-	foreach ($membertypes as $k => $l)
+	foreach ($membertypes as $membertype)
 	{
-		if ($k >= $arrfeed['rate_sum'] || $j++ == (count($membertypes) - 1))
+		if ($membertype['feedbacks'] >= $arrfeed['rate_sum'])
 		{
-			$usicon = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
+			$user_feedback_icon = $membertype['icon'];
 			break;
 		}
 	}
@@ -87,7 +85,7 @@ while ($arrfeed = $db->fetch())
 			'USFLINK' => 'profile.php?user_id=' . $arrfeed['winner'] . '&auction_id=' . $arrfeed['auction_id'],
 			'USERNAME' => $arrfeed['rater_user_nick'],
 			'USFEED' => $arrfeed['rate_sum'],
-			'USICON' => (isset($usicon)) ? $usicon : '',
+			'FB_ICON' => $user_feedback_icon,
 			'FBDATE' => $dt->formatDate($arrfeed['feedbackdate']),
 			'AUCTION_TITLE' => htmlspecialchars($arrfeed['title']),
 			'AUCTION_ID' => $arrfeed['auction_id'],
@@ -122,7 +120,7 @@ $echofeed .= ($page == $pages || $pages == 0) ? '' : ' <a href="yourfeedback.php
 $template->assign_vars(array(
 		'USERNICK' => $user->user_data['nick'],
 		'USERFB' => $user->user_data['rate_sum'],
-		'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
+		'USER_FB_ICON' => $feedback_icon,
 		'PAGENATION' => $echofeed,
 		'BGCOLOUR' => (!(($i + 1) % 2)) ? '' : 'class="alt-row"'
 		));

@@ -20,7 +20,7 @@
 							</tr>
 							<tr>
 								<td width="30%"><b>{L_125} :</b></td>
-								<td>{SELLER} {SELLERNUMFBS} {FBICON}</td>
+								<td>{SELLER} {SELLERNUMFBS} <img src="{SITEURL}images/icons/{FB_ICON}" alt="{FB_ICON}" class="fbstar"></td>
 							</tr>
 							<tr>
 								<td width="30%"><b>{L_497}:</b></td>

@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include INCLUDE_PATH . 'membertypes.inc.php';
 
 $id = intval($_REQUEST['id']);
 
@@ -102,17 +101,11 @@ $db->query($query, $params);
 $Seller = $db->result();
 
 // Get current total rate value for user
-$total_rate = $Seller['rate_sum'];
-
-$i = 0;
-foreach ($membertypes as $k => $l)
-{
-	if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
-	{
-		$TPL_rate_radio = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
-		break;
-	}
-}
+$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+$params = array();
+$params[] = array(':feedback', $Seller['rate_sum'], 'int');
+$db->query($query, $params);
+$feedback_icon = $db->result('icon');
 
 $qty = (isset($_REQUEST['qty'])) ? intval($_REQUEST['qty']) : 1;
 
@@ -385,7 +378,7 @@ $template->assign_vars(array(
 		'BN_TOTAL' => $system->print_money($BN_total),
 		'SELLER' => ' <a href="profile.php?user_id=' . $Auction['user'] . '"><b>' . $Seller['nick'] . '</b></a>',
 		'SELLERNUMFBS' => '<b>(' . $total_rate . ')</b>',
-		'FBICON' => $TPL_rate_radio,
+		'FB_ICON' => $feedback_icon,
 		'LEFT' => $Auction['quantity'],
 
 		'B_QTY' => ($Auction['quantity'] > 1),

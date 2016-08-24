@@ -249,20 +249,16 @@ foreach ($db->fetchall() as $bidrec)
 		}
 
 		$total_rate = $fb_pos - $fb_neg;
-
-		foreach ($membertypes as $k => $l)
-		{
-			if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
-			{
-				$buyer_rate_icon = $l['icon'];
-				break;
-			}
-		}
+		$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+		$params = array();
+		$params[] = array(':feedback', $bidrec['rate_sum'], 'int');
+		$db->query($query, $params);
+		$feedback_icon = $db->result('icon');
 		$template->assign_block_vars('high_bidders', array(
 				'BUYER_ID' => $bidrec['bidder'],
 				'BUYER_NAME' => $bidderarray[$bidrec['nick']],
 				'BUYER_FB' => $bidrec['rate_sum'],
-				'BUYER_FB_ICON' => (!empty($buyer_rate_icon) && $buyer_rate_icon != 'transparent.gif') ? '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $buyer_rate_icon . '" alt="' . $buyer_rate_icon . '" class="fbstar">' : ''
+				'BUYER_FB_ICON' => $feedback_icon
 				));
 	}
 	$template->assign_block_vars('bidhistory', array(
@@ -425,18 +421,11 @@ while ($fb_arr = $db->fetch())
 
 $total_rate = $fb_pos - $fb_neg;
 
-if ($total_rate > 0)
-{
-	$i = 0;
-	foreach ($membertypes as $k => $l)
-	{
-		if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
-		{
-			$seller_rate_icon = $l['icon'];
-			break;
-		}
-	}
-}
+$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+$params = array();
+$params[] = array(':feedback', $total_rate, 'int');
+$db->query($query, $params);
+$seller_feedback_icon = $db->result('icon');
 
 // Pictures Gellery
 $K = 0;
@@ -553,7 +542,7 @@ $template->assign_vars(array(
 		'SELLER_ID' => $auction_data['user'],
 		'SELLER_NICK' => $auction_data['nick'],
 		'SELLER_TOTALFB' => $total_rate,
-		'SELLER_FBICON' => (!empty($seller_rate_icon) && $seller_rate_icon != 'transparent.gif') ? '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $seller_rate_icon . '" alt="' . $seller_rate_icon . '" class="fbstar">' : '',
+		'SELLER_FB_ICON' => $seller_feedback_icon,
 		'SELLER_NUMFB' => $num_feedbacks,
 		'SELLER_FBPOS' => ($num_feedbacks > 0) ? '(' . ceil($fb_pos * 100 / $num_feedbacks) . '%)' : $MSG['000'],
 		'SELLER_FBNEG' => ($fb_neg > 0) ? $MSG['5507'] . ' (' . ceil($fb_neg * 100 / $total_rate) . '%)' : '0',

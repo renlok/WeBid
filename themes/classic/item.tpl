@@ -117,7 +117,7 @@ $(document).ready(function() {
 																<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
 																<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b>
 		<!-- ENDIF -->
-																{high_bidders.BUYER_FB_ICON}
+																<img src="{SITEURL}images/icons/{high_bidders.BUYER_FB_ICON}" alt="{high_bidders.BUYER_FB_ICON}" class="fbstar">
 															</p>
 	<!-- END high_bidders -->
 														</td>
@@ -203,7 +203,7 @@ $(document).ready(function() {
 								<td class="table2" style="padding:10px;">
 									<a href='{SITEURL}profile.php?user_id={SELLER_ID}&auction_id={ID}'><b>{SELLER_NICK}</b></a>
 									(<a href='{SITEURL}feedback.php?id={SELLER_ID}&faction=show'>{SELLER_TOTALFB}</a>)
-									{SELLER_FBICON}
+									<img src="{SITEURL}images/icons/{high_bidders.SELLER_FB_ICON}" alt="{SELLER_FB_ICON}" class="fbstar">
 								</td>
 							</tr>
 							<tr>

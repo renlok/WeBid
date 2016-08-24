@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include INCLUDE_PATH . 'membertypes.inc.php';
 
 if(!isset($_GET['user_id']))
 {
@@ -53,15 +52,12 @@ if (@$db->numrows() == 1)
 {
 	$user_data = $db->result();
 	$TPL_user_id = $user_data['id'];
-	$TPL_rate_ratio_value = '';
-	foreach ($membertypes as $k => $l)
-	{
-		if ($k >= $user_data['rate_sum'] || $i++ == (count($membertypes) - 1))
-		{
-			$TPL_rate_ratio_value = '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $l['icon'] . '" alt="' . $l['icon'] . '" class="fbstar">';
-			break;
-		}
-	}
+	$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+	$params = array();
+	$params[] = array(':feedback', $user_data['rate_sum'], 'int');
+	$db->query($query, $params);
+	$feedback_icon = $db->result('icon');
+
 	$query = "SELECT f.*, a.user FROM " . $DBPrefix . "feedbacks f
 		LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
 		WHERE f.rated_user_id = :user_id";
@@ -115,7 +111,7 @@ if (@$db->numrows() == 1)
 	$feedback_rate = ($feedback_rate < 0) ? $feedback_rate * - 1 : $feedback_rate;
 	$total_fb = ($total_fb < 1) ? 1 : $total_fb;
 	$variables = array(
-		'RATE_VAL' => $TPL_rate_ratio_value,
+		'FB_ICON' => $feedback_icon,
 		'NUM_FB' => $user_data['rate_num'],
 		'SUM_FB' => $user_data['rate_sum'],
 		'FB_POS' => (isset($fb[1])) ? '<span style="color:green">' .$MSG['500'] . $fb[1] . ' (' . ceil($fb[1] * 100 / $total_fb) . '%)</span><br>' : '',

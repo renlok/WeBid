@@ -173,3 +173,7 @@ $db->direct_query($query);
 
 $query = "DROP TABLE IF EXISTS `" . $DBPrefix . "temp_install`;";
 $db->direct_query($query);
+
+// remove unused files and folders from previous versions
+rmf('../includes/functions_rebuild.php');
+rmf('../includes/membertypes.inc.php');

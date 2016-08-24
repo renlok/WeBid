@@ -436,23 +436,29 @@ function rebuild_cat_file()
 	fputs($handle, $output);
 }
 
-function rrmdir($dir) {
-   if (is_dir($dir)) {
-     $objects = scandir($dir);
-     foreach ($objects as $object) {
-       if ($object != "." && $object != "..") {
-         if (is_dir($dir."/".$object))
-           rrmdir($dir."/".$object);
-         else
-           unlink($dir."/".$object);
-       }
-     }
-     rmdir($dir);
-   }
- }
+function rrmdir($dir)
+{
+	if (is_dir($dir))
+	{
+		$objects = scandir($dir);
+		foreach ($objects as $object)
+		{
+			if ($object != "." && $object != "..")
+			{
+				if (is_dir($dir."/".$object))
+					rrmdir($dir."/".$object);
+				else
+					unlink($dir."/".$object);
+			}
+		}
+		rmdir($dir);
+	}
+}
 
- function rmf($f) {
-   if(file_exists($f)) {
-   	unlink($f);
-   }
- }
+function rmf($f)
+{
+	if(file_exists($f))
+	{
+		unlink($f);
+	}
+}

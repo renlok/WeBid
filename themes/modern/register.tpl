@@ -12,12 +12,12 @@
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<div class="form-group col-lg-6 <!-- IF MISSING0 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_name">{L_002} *</label>
-					<input type="text" class="form-control" name="TPL_name" <!-- IF MISSING0 eq 1 -->id="inputError1"<!-- ENDIF --> value="{V_YNAME}" autofocus>
+					<input type="text" class="form-control" name="TPL_name" <!-- IF MISSING0 eq 1 -->id="inputError1"<!-- ENDIF --> size=40 maxlength=40 value="{V_YNAME}" autofocus>
 					<!-- IF MISSING0 eq 1 --><div class="error-box missing">{L_937}</div><!-- ENDIF -->
 				</div>
 				<div class="form-group col-lg-6 <!-- IF MISSING1 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_nick">{L_003} *</label>
-					<input type="text" name="TPL_nick" class="form-control"  value="{V_UNAME}" <!-- IF MISSING1 eq 1 -->id="inputError1"<!-- ENDIF --> placeholder="{L_050}">
+					<input type="text" name="TPL_nick" size=20 maxlength=20 class="form-control"  value="{V_UNAME}" <!-- IF MISSING1 eq 1 -->id="inputError1"<!-- ENDIF --> placeholder="{L_050}">
 					<!-- IF MISSING1 eq 1 --><div class="error-box missing">{L_938}</div><!-- ENDIF -->
 				</div>
 				<div class="col-lg-12"></div>
@@ -34,14 +34,14 @@
 				<div class="col-lg-12"></div>
 				<div class="form-group col-lg-12 <!-- IF MISSING4 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_email">{L_006} *</label>
-					<input type="email" name="TPL_email" class="form-control" value="{V_EMAIL}" <!-- IF MISSING4 eq 1 -->id="inputError1"<!-- ENDIF -->>
+					<input type="email" name="TPL_email" size="20" maxlength="50" class="form-control" value="{V_EMAIL}" <!-- IF MISSING4 eq 1 -->id="inputError1"<!-- ENDIF -->>
 					<!-- IF MISSING4 eq 1 --><div class="error-box missing">{L_941}</div><!-- ENDIF -->
 				</div>
 	<!-- IF BIRTHDATE -->
 				<div class="form-group col-lg-12 <!-- IF MISSING5 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_year">{L_252}{REQUIRED(0)}</label>
 					<fieldset class="row">
-						<div class="register-date col-md-8">{L_DATEFORMAT}</div> <div class="register-date col-md-4"><input type="text" name="TPL_year" class="form-control" value="{V_YEAR}" <!-- IF MISSING5 eq 1 -->id="inputError1"<!-- ENDIF -->></div>
+						<div class="register-date col-md-8">{L_DATEFORMAT}</div> <div class="register-date col-md-4"><input type="text" name="TPL_year" size="4" maxlength="4" class="form-control" value="{V_YEAR}" <!-- IF MISSING5 eq 1 -->id="inputError1"<!-- ENDIF -->></div>
 					</fieldset>
 					<!-- IF MISSING5 eq 1 --><div class="error-box missing">{L_948}</div><!-- ENDIF -->
 				</div>
@@ -50,14 +50,14 @@
 	<!-- IF ADDRESS -->
 				<div class="form-group col-lg-6 <!-- IF MISSING6 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_address">{L_009}{REQUIRED(1)}</label>
-					<input type="text" name="TPL_address" class="form-control" value="{V_ADDRE}" <!-- IF MISSING6 eq 1 -->id="inputError1"<!-- ENDIF -->>
+					<input type="text" name="TPL_address" size="40" maxlength="255" class="form-control" value="{V_ADDRE}" <!-- IF MISSING6 eq 1 -->id="inputError1"<!-- ENDIF -->>
 					<!-- IF MISSING6 eq 1 --><div class="error-box missing">{L_942}</div><!-- ENDIF -->
 				</div>
 	<!-- ENDIF -->
 	<!-- IF CITY -->
 				<div class="form-group col-lg-6 <!-- IF MISSING7 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_city">{L_010}{REQUIRED(2)}</label>
-					<input type="text" name="TPL_city" class="form-control" value="{V_CITY}" <!-- IF MISSING7 eq 1 -->id="inputError1"<!-- ENDIF -->>
+					<input type="text" name="TPL_city" size="25" maxlength="25" class="form-control" value="{V_CITY}" <!-- IF MISSING7 eq 1 -->id="inputError1"<!-- ENDIF -->>
 					<!-- IF MISSING7 eq 1 --><div class="error-box missing">{L_943}</div><!-- ENDIF -->
 				</div>
 	<!-- ENDIF -->
@@ -66,7 +66,7 @@
 	<!-- IF PROV -->
 				<div class="form-group col-lg-6 <!-- IF MISSING8 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_prov">{L_011}{REQUIRED(3)}</label>
-					<input type="text" name="TPL_prov" class="form-control" value="{V_PROV}" <!-- IF MISSING8 eq 1 -->id="inputError1"<!-- ENDIF -->>
+					<input type="text" name="TPL_prov" size="20" maxlength="20" class="form-control" value="{V_PROV}" <!-- IF MISSING8 eq 1 -->id="inputError1"<!-- ENDIF -->>
 					<!-- IF MISSING8 eq 1 --><div class="error-box missing">{L_944}</div><!-- ENDIF -->
 				</div>
 	<!-- ENDIF -->
@@ -91,7 +91,7 @@
 	<!-- IF TEL -->
 				<div class="form-group col-lg-6 <!-- IF MISSING11 eq 1 -->has-error<!-- ENDIF -->">
 					<label for="TPL_phone">{L_013}{REQUIRED(6)}</label>
-					<input type="text" name="TPL_phone" class="form-control" value="{V_PHONE}" <!-- IF MISSING11 eq 1 -->id="inputError1"<!-- ENDIF -->>
+					<input type="text" name="TPL_phone" size=20 maxlength=20 class="form-control" value="{V_PHONE}" <!-- IF MISSING11 eq 1 -->id="inputError1"<!-- ENDIF -->>
 					<!-- IF MISSING11 eq 1 --><div class="error-box missing">{L_947}</div><!-- ENDIF -->
 				</div>
 	<!-- ENDIF -->

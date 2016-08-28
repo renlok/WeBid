@@ -15,8 +15,8 @@
 include 'common.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
-$yesterday = new DateTime('- 1 day');
-$tomorrow = new DateTime('+ 1 day');
+$yesterday = new DateTime('- 1 day', $dt->UTCtimezone);
+$tomorrow = new DateTime('+ 1 day', $dt->UTCtimezone);
 $catscontrol = new MPTTcategories();
 
 $user_id = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['user_id']) : 0;

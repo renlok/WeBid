@@ -203,7 +203,7 @@ if (isset($_POST['action']))
 				}
 			}
 
-			$start_date = new DateTime($AUCTION['starts']);
+			$start_date = new DateTime($AUCTION['starts'], $dt->UTCtimezone);
 			$start_date->add(new DateInterval('P' . $_POST['duration'] . 'D'));
 			$auction_ends = $start_date->format('Y-m-d H:i:s');
 
@@ -233,7 +233,7 @@ if (isset($_POST['action']))
 			$params = array();
 			$params[] = array(':title', $system->cleanvars($_POST['title']), 'str');
 			$params[] = array(':subtitle', $system->cleanvars($_POST['subtitle']), 'str');
-			$params[] = array(':ends', $dt->convertToUTC($auction_ends), 'str');
+			$params[] = array(':ends', $auction_ends, 'str');
 			$params[] = array(':duration', $_POST['duration'], 'int');
 			$params[] = array(':category', $_POST['category'], 'int');
 			$params[] = array(':secondcat', $_POST['secondcat'], 'int');

@@ -87,8 +87,8 @@ foreach ($auction_data as $row)
 	$db->query($query, $params);
 	$num_bids = $db->numrows();
 
-	$current_time = new DateTime();
-	$end_time = new DateTime($row['ends']);
+	$current_time = new DateTime('now', $dt->UTCtimezone);
+	$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
 	$difference = $current_time->diff($end_time);
 
 	$template->assign_block_vars('auctions', array(

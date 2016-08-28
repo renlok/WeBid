@@ -127,7 +127,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 
 			// auction ends
-			$start_date = new DateTime();
+			$start_date = new DateTime('now', $dt->UTCtimezone);
 			$start_date->add(new DateInterval('P' . $AUCTION['duration'] . 'D'));
 			$auction_ends = $start_date->format('Y-m-d H:i:s');
 

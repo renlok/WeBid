@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 function browseItems($query, $params, $query_feat, $params_feat, $total, $current_page, $extravar = '')
 {
-	global $system, $MSG, $ERR_114, $db;
+	global $system, $MSG, $ERR_114, $db, $dt;
 	global $template, $PAGES, $PAGE;
 
 	$feat_items = false;
@@ -30,8 +30,8 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 			$row = build_items($row);
 
 			// time left till the end of this auction
-			$current_time = new DateTime();
-			$end_time = new DateTime($row['ends']);
+			$current_time = new DateTime('now', $dt->UTCtimezone);
+			$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
 			$difference = $current_time->diff($end_time);
 			$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
@@ -62,8 +62,8 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 		$row = build_items($row);
 
 		// time left till the end of this auction
-		$current_time = new DateTime();
-		$end_time = new DateTime($row['ends']);
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
 		$difference = $current_time->diff($end_time);
 		$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 

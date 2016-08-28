@@ -16,7 +16,8 @@ if (!defined('InWeBid')) exit('Access denied');
 
 class Date
 {
-	private $timezone;
+	public $timezone;
+	public $UTCtimezone;
 	private $defaultformat;
 
 	public function __construct($system, $user)
@@ -27,6 +28,7 @@ class Date
 			$timezone = $user->user_data['timezone'];
 		}
 		$this->timezone = new DateTimeZone($timezone);
+		$this->UTCtimezone = new DateTimeZone('UTC');
 
 		if ($system->SETTINGS['datesformat'] == 'USA')
 		{
@@ -43,8 +45,8 @@ class Date
 	{
 		if ($UTC_input)
 		{
-			$UTC_time = new DateTime ($datetime, new DateTimeZone('UTC'));
-			$UTC_time->setTimezone(new DateTimeZone($this->timezone));
+			$UTC_time = new DateTime($datetime, $this->UTCtimezone);
+			$UTC_time->setTimezone($this->timezone);
 			return $UTC_time->format('Y-m-d H:i');
 		}
 		else
@@ -58,11 +60,11 @@ class Date
 	{
 		if ($UTC)
 		{
-			$datetime = new DateTime(time(), new DateTimeZone('UTC'));
+			$datetime = new DateTime('now', $this->UTCtimezone);
 		}
 		else
 		{
-			$datetime = new DateTime(time(), $this->timezone);
+			$datetime = new DateTime('now', $this->timezone);
 		}
 		return $datetime->format('Y-m-d H:i:s');
 	}
@@ -72,20 +74,20 @@ class Date
 	{
 		if (!$format)
 		{
-			$datetime = DateTime::createFromFormat($this->defaultformat, $raw_date, new DateTimeZone($this->timezone));
+			$datetime = DateTime::createFromFormat($this->defaultformat, $raw_date, $this->timezone);
 		}
 		else
 		{
-			$datetime = new DateTime(strtotime($raw_date), new DateTimeZone($this->timezone));
+			$datetime = new DateTime(strtotime($raw_date), $this->timezone);
 		}
-		$datetime->setTimezone(new DateTimeZone('UTC'));
+		$datetime->setTimezone($this->UTCtimezone);
 		return $datetime->format('Y-m-d H:i:s');
 	}
 
 	public function convertToUTC($raw_date)
 	{
-		$UTC_time = new DateTime ($raw_date, new DateTimeZone($this->timezone));
-		$UTC_time->setTimezone(new DateTimeZone('UTC'));
+		$UTC_time = new DateTime ($raw_date, $this->timezone);
+		$UTC_time->setTimezone($this->UTCtimezone);
 		return $UTC_time->format('Y-m-d H:i:s');
 	}
 
@@ -93,8 +95,8 @@ class Date
 	{
 		if ($UTC)
 		{
-			$datetime = new DateTime ($raw_date, new DateTimeZone('UTC'));
-			$datetime->setTimezone(new DateTimeZone($this->timezone));
+			$datetime = new DateTime ($raw_date, $this->UTCtimezone);
+			$datetime->setTimezone($this->timezone);
 		}
 		else
 		{

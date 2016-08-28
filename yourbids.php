@@ -48,8 +48,8 @@ while ($row = $db->fetch())
 		$auctions_count++;
 		$idcheck[] = $row['id'];
 
-		$current_time = new DateTime();
-		$end_time = new DateTime($row['ends']);
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
 		$difference = $current_time->diff($end_time);
 
 		$template->assign_block_vars('bids', array(

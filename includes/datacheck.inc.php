@@ -103,7 +103,7 @@ function CheckSellData()
 	*/
 
 	global $title, $sdescription, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
-	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
+	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION, $dt;
 	global $payments, $num, $nnum, $a_starts, $a_ends, $start_now, $custom_end, $relist;
 	global $additional_shipping_cost, $shipping_cost;
 
@@ -240,8 +240,8 @@ function CheckSellData()
 
 	if ($start_now == 0 && $_SESSION['SELL_action'] != 'edit')
 	{
-		$current_time = new DateTime();
-		$start_time = new DateTime($a_starts);
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$start_time = new DateTime($a_starts, $dt->UTCtimezone);
 		$difference = $current_time->diff($start_time);
 
 		if ($difference['invert'] == 1)
@@ -252,8 +252,8 @@ function CheckSellData()
 
 	if ($custom_end == 1)
 	{
-		$start_time = new DateTime($a_starts);
-		$end_time = new DateTime($a_ends);
+		$start_time = new DateTime($a_starts, $dt->UTCtimezone);
+		$end_time = new DateTime($a_ends, $dt->UTCtimezone);
 		$difference = $start_time->diff($end_time);
 		if ($difference['invert'] == 1)
 		{

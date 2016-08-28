@@ -87,17 +87,16 @@ if (@$db->numrows() == 1)
 			{
 				$fb_as_buyer[$ratesum['rate']]++;
 			}
-			$feedbackdate = new DateTime($ratesum['feedbackdate']);
-			$time = new DateTime('now');
-			if ($feedbackdate > $time->sub(new DateInterval('P1Y')))
+			$feedbackdate = new DateTime($ratesum['feedbackdate'], $dt->UTCtimezone);
+			if ($feedbackdate > new DateTime('- 1 year', $dt->UTCtimezone))
 			{
 				$fb_last_year[$ratesum['rate']]++;
 			}
-			if ($feedbackdate > $time->sub(new DateInterval('P3M')))
+			if ($feedbackdate > new DateTime('- 3 month', $dt->UTCtimezone))
 			{
 				$fb_last_3month[$ratesum['rate']]++;
 			}
-			if ($feedbackdate > $time->sub(new DateInterval('P1M')))
+			if ($feedbackdate > new DateTime('- 1 month', $dt->UTCtimezone))
 			{
 				$fb_last_month[$ratesum['rate']]++;
 			}

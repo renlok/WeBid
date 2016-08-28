@@ -109,7 +109,7 @@ switch ($_SESSION['action'])
 			$a_starts = (empty($start_now) || !$caneditstartdate) ? $a_starts : $dt->currentDatetime();
 			if ($custom_end == 1)
 			{
-				$start_datetime = new DateTime($a_starts);
+				$start_datetime = new DateTime($a_starts, $dt->timezone);
 				$start_datetime->add(new DateInterval('P' . $duration . 'D'));
 				$a_ends = $start_datetime->format('Y-m-d H:i:s');
 			}
@@ -487,8 +487,8 @@ switch ($_SESSION['action'])
 		}
 		else
 		{
-			$current_time = new DateTime();
-			$start_time = new DateTime($a_starts);
+			$current_time = new DateTime('now', $dt->timezone);
+			$start_time = new DateTime($a_starts, $dt->timezone);
 			$difference = $start_time->diff($current_time);
 			$days_passed = $difference['d'];
 		}
@@ -540,7 +540,7 @@ switch ($_SESSION['action'])
 			if (empty($a_starts))
 			{
 				$TPL_start_date = $dt->currentDatetime();
-				$end_date = new DateTime('+1 day');
+				$end_date = new DateTime('+1 day', $dt->timezone);
 				$TPL_end_date = $end_date->format('Y-m-d H:i:s');
 			}
 		}

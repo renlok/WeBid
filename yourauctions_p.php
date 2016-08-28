@@ -84,7 +84,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 			$aucdata = $db->result();
 
 			// auction ends
-			$start_date = new DateTime();
+			$start_date = new DateTime('now', $dt->UTCtimezone);
 			$start_date->add(new DateInterval('P' . $aucdata['duration'] . 'D'));
 			$auction_ends = $start_date->format('Y-m-d H:i:s');
 

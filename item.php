@@ -115,8 +115,8 @@ if (strtotime($start) > time())
 }
 elseif (strtotime($ends) - time() > 0)
 {
-	$start_time = new DateTime($start);
-	$end_time = new DateTime($ends);
+	$start_time = new DateTime($start, $dt->UTCtimezone);
+	$end_time = new DateTime($ends, $dt->UTCtimezone);
 	$difference = $start_time->diff($end_time);
 	$ending_time = '';
 	$date_elements = 0;

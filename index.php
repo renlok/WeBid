@@ -102,8 +102,8 @@ while ($row = $db->fetch())
 {
 	if (strtotime($row['ends']) - time() > 0)
 	{
-		$current_time = new DateTime();
-		$end_time = new DateTime($row['ends']);
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
 		$difference = $current_time->diff($end_time);
 		$ends_string = $dt->formatTimeLeft($difference);
 	}
@@ -161,8 +161,8 @@ while ($row = $db->fetch())
 {
 	if (strtotime($row['ends']) - time() > 0)
 	{
-		$current_time = new DateTime();
-		$end_time = new DateTime($row['ends']);
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
 		$difference = $current_time->diff($end_time);
 		$ends_string = $dt->formatTimeLeft($difference);
 	}
@@ -196,8 +196,8 @@ while ($row = $db->fetch())
 	$i++;
 	if (strtotime($row['ends']) - time() > 0)
 	{
-		$current_time = new DateTime();
-		$end_time = new DateTime($row['ends']);
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
 		$difference = $current_time->diff($end_time);
 		$ends_string = $dt->formatTimeLeft($difference);
 	}

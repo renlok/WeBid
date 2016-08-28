@@ -19,7 +19,7 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="1" class="blank">
 				<tr>
 					<td align="right" stype="width:170px;">
-						{L_003}
+						{L_username}
 					</td>
 					<td style="padding:10px;">
 						<input type="text" name="username" size="20" autofocus>
@@ -27,7 +27,7 @@
 				</tr>
 				<tr>
 					<td align="right">
-						{L_004}
+						{L_password}
 					</td>
 					<td style="padding:10px;">
 						<input type="password" name="password" size="20">

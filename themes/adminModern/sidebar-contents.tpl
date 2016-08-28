@@ -1,7 +1,7 @@
 				<ul class="list-group">
 					<li class="list-group-item active">{L_25_0018}</li>
 					<li class="list-group-item"><a href="{SITEURL}admin/news.php">{L_516}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/aboutus.php">{L_5074}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/aboutus.php">{L_about_us_page}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/terms.php">{L_5075}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/privacypolicy.php">{L_402}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/cookiespolicy.php">{L_1110}</a></li>
@@ -21,7 +21,7 @@
 							<textarea rows="15" name="anotes" class="form-control">{ADMIN_NOTES}</textarea>
 							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 							<br>
-							<button class="btn btn-primary" type="submit" name="act">{L_007}</button>
+							<button class="btn btn-primary" type="submit" name="act">{L_submit}</button>
 						</form>
 					</div>
 				</div>

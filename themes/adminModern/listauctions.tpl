@@ -24,7 +24,7 @@
 						<p>[ <a href="{SITEURL}item.php?id={auctions.ID}" target="_blank">{L_5295}</a> ]</p>
 					</td>
 					<td>
-						<b>{L_003}:</b> {auctions.USERNAME}<br>
+						<b>{L_username}:</b> {auctions.USERNAME}<br>
 						<b>{L_625}:</b> {auctions.START_TIME}<br>
 						<b>{L_626}:</b> {auctions.END_TIME}<br>
 						<b>{L_041}:</b> {auctions.CATEGORY}

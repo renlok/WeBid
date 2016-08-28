@@ -63,30 +63,30 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
-loadblock($MSG['427'], $MSG['428'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['5090'], $MSG['5089'], 'batch', 'edit_starttime', $system->SETTINGS['edit_starttime'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['allow_custom_end_date'], $MSG['allow_custom_end_date_explain'], 'batch', 'edit_endtime', $system->SETTINGS['edit_endtime'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['068'], $MSG['070'], 'batch', 'cust_increment', $system->SETTINGS['cust_increment'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['427'], $MSG['428'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['5090'], $MSG['5089'], 'batch', 'edit_starttime', $system->SETTINGS['edit_starttime'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['allow_custom_end_date'], $MSG['allow_custom_end_date_explain'], 'batch', 'edit_endtime', $system->SETTINGS['edit_endtime'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['068'], $MSG['070'], 'batch', 'cust_increment', $system->SETTINGS['cust_increment'], array($MSG['yes'], $MSG['no']));
 loadblock($MSG['5091'], $MSG['5095'], 'days', 'hours_countdown', $system->SETTINGS['hours_countdown'], array($MSG['25_0037']));
 
 loadblock($MSG['897'], '', '', '', '', array(), true);
-loadblock($MSG['142'], $MSG['157'], 'yesno', 'ao_hpf_enabled', $system->SETTINGS['ao_hpf_enabled'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['162'], $MSG['164'], 'yesno', 'ao_hi_enabled', $system->SETTINGS['ao_hi_enabled'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['174'], $MSG['194'], 'yesno', 'ao_bi_enabled', $system->SETTINGS['ao_bi_enabled'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['797'], $MSG['798'], 'yesno', 'subtitle', $system->SETTINGS['subtitle'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['799'], $MSG['800'], 'yesno', 'extra_cat', $system->SETTINGS['extra_cat'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['849'], $MSG['850'], 'yesno', 'autorelist', $system->SETTINGS['autorelist'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['142'], $MSG['157'], 'yesno', 'ao_hpf_enabled', $system->SETTINGS['ao_hpf_enabled'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['162'], $MSG['164'], 'yesno', 'ao_hi_enabled', $system->SETTINGS['ao_hi_enabled'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['174'], $MSG['194'], 'yesno', 'ao_bi_enabled', $system->SETTINGS['ao_bi_enabled'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['797'], $MSG['798'], 'yesno', 'subtitle', $system->SETTINGS['subtitle'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['799'], $MSG['800'], 'yesno', 'extra_cat', $system->SETTINGS['extra_cat'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['849'], $MSG['850'], 'yesno', 'autorelist', $system->SETTINGS['autorelist'], array($MSG['yes'], $MSG['no']));
 loadblock($MSG['851'], $MSG['852'], 'days', 'autorelist_max', $system->SETTINGS['autorelist_max']);
 
 // auction extension options
 loadblock($MSG['2_0032'], '', '', '', '', array(), true); // :O
-loadblock($MSG['2_0034'], $MSG['2_0039'], 'yesno', 'status', $system->SETTINGS['ae_status'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['2_0034'], $MSG['2_0039'], 'yesno', 'status', $system->SETTINGS['ae_status'], array($MSG['yes'], $MSG['no']));
 $string = $MSG['2_0035'] . '<input type="text" name="extend" value="' . $system->SETTINGS['ae_extend'] . '" size="5">' . $MSG['2_0036'] . '<input type="text" name="timebefore" value="' . $system->SETTINGS['ae_timebefore'] . '" size="5">' . $MSG['2_0037'];
 loadblock('', $string, '');
 
 // picture gallery options
 loadblock($MSG['663'], '', '', '', '', array(), true);
-loadblock($MSG['665'], $MSG['664'], 'batch', 'picturesgallery', $system->SETTINGS['picturesgallery'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['665'], $MSG['664'], 'batch', 'picturesgallery', $system->SETTINGS['picturesgallery'], array($MSG['yes'], $MSG['no']));
 loadblock($MSG['666'], '', 'days', 'maxpictures', $system->SETTINGS['maxpictures']);
 loadblock($MSG['671'], $MSG['25_0187'], 'decimals', 'maxpicturesize', ($system->SETTINGS['maxuploadsize'] / 1024), array($MSG['672']));
 loadblock($MSG['25_0107'], $MSG['896'], 'decimals', 'thumb_show', $system->SETTINGS['thumb_show'], array($MSG['2__0045']));

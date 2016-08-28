@@ -28,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 
 loadblock($MSG['25_0216'], $MSG['25_0217'], 'select3contact', 'contactseller', $system->SETTINGS['contactseller'], array($MSG['25_0218'], $MSG['25_0219'], $MSG['25_0220']));
-loadblock($MSG['30_0085'], $MSG['30_0084'], 'yesno', 'users_email', $system->SETTINGS['users_email'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['30_0085'], $MSG['30_0084'], 'yesno', 'users_email', $system->SETTINGS['users_email'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],

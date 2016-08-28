@@ -10,7 +10,7 @@
 					<div class="plain-box"><a href="newadminuser.php">{L_367}</a></div>
 					<table width="98%" cellpadding="0" cellspacing="0" align="center">
 						<tr>
-							<th width="30%">{L_003}</th>
+							<th width="30%">{L_username}</th>
 							<th width="16%">{L_558}</th>
 							<th width="19%">{L_559}</th>
 							<th width="12%">{L_560}</th>

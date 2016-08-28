@@ -16,13 +16,13 @@
 					<!-- IF MISSING0 eq 1 --><div class="error-box missing">{L_937}</div><!-- ENDIF -->
 				</div>
 				<div class="form-group col-lg-6 <!-- IF MISSING1 eq 1 -->has-error<!-- ENDIF -->">
-					<label for="TPL_nick">{L_003} *</label>
+					<label for="TPL_nick">{L_username} *</label>
 					<input type="text" name="TPL_nick" class="form-control"  value="{V_UNAME}" <!-- IF MISSING1 eq 1 -->id="inputError1"<!-- ENDIF --> placeholder="{L_050}">
 					<!-- IF MISSING1 eq 1 --><div class="error-box missing">{L_938}</div><!-- ENDIF -->
 				</div>
 				<div class="col-lg-12"></div>
 				<div class="form-group col-lg-6 <!-- IF MISSING2 eq 1 -->has-error<!-- ENDIF -->">
-					<label for="TPL_password">{L_004} *</label>
+					<label for="TPL_password">{L_password} *</label>
 					<input type="password" name="TPL_password" class="form-control" <!-- IF MISSING2 eq 1 -->id="inputError1"<!-- ENDIF --> placeholder="{L_050}">
 					<!-- IF MISSING2 eq 1 --><div class="error-box missing">{L_939}</div><!-- ENDIF -->
 				</div>
@@ -106,8 +106,8 @@
 				<div class="form-group col-lg-12">
 					<div class="alert alert-info" role="alert">
 						<label>{L_608}</label>
-						<label class="checkbox-inline"><input type="radio" name="TPL_nletter" value="1" {V_YNEWSL}>{L_030}</label>
-						<label class="checkbox-inline"><input type="radio" name="TPL_nletter" value="2" {V_NNEWSL}>{L_029}</label>
+						<label class="checkbox-inline"><input type="radio" name="TPL_nletter" value="1" {V_YNEWSL}>{L_yes}</label>
+						<label class="checkbox-inline"><input type="radio" name="TPL_nletter" value="2" {V_NNEWSL}>{L_no}</label>
 					</div>
 				</div>
 	<!-- ENDIF -->

@@ -19,7 +19,7 @@
 							<input type="text" autofocus name="username" size="20" maxlength="20" value="{USER}">
 						</p>
 						<p class="smallpadding">
-							{L_004}<br>
+							{L_password}<br>
 							<input type="password" name="password" size="20" maxlength="20" value="">
 						</p>
 						<p>

@@ -41,14 +41,14 @@
 						</td>
 					</tr>
 					<tr>
-						<td align="right">{L_003}</td>
+						<td align="right">{L_username}</td>
 						<td>
 							<b>{YOURUSERNAME}</b>
 						</td>
 					</tr>
 	<!-- IF B_USERAUTH -->
 					<tr>
-						<td align="right">{L_004}</td>
+						<td align="right">{L_password}</td>
 						<td>
 							<input type="password" name="password" size="15" maxlength="15">
 						</td>

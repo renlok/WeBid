@@ -320,11 +320,11 @@ $(document).ready(function(){
 						<div class="radio">
 							<label class="radio-inline">
 								<input type="radio" name="with_reserve" id="with_reserve_no" value="no" {RESERVE_N}>
-								{L_029}
+								{L_no}
 							</label>
 							<label class="radio-inline">
 								<input type="radio" name="with_reserve" id="with_reserve_yes" value="yes" {RESERVE_Y}>
-								{L_030}
+								{L_yes}
 							</label>
 						</div>
 						<input type="text" name="reserve_price" id="reserve_price" class="form-control" value="{RESERVE}" {BN_ONLY}>
@@ -336,11 +336,11 @@ $(document).ready(function(){
 						<div class="radio">
 							<label class="radio-inline">
 								<input type="radio" name="buy_now_only" value="0" {BN_ONLY_N} id="bn_only_no">
-								{L_029}
+								{L_no}
 							</label>
 							<label class="radio-inline">
 								<input type="radio" name="buy_now_only" value="1" {BN_ONLY_Y} id="bn_only_yes">
-								{L_030}
+								{L_yes}
 							</label>
 						</div>
 					</div>
@@ -351,11 +351,11 @@ $(document).ready(function(){
 						<div class="radio">
 							<label class="radio-inline">
 								<input type="radio" name="buy_now" id="bn_no" value="no" {BN_N}>
-								{L_029}
+								{L_no}
 							</label>
 							<label class="radio-inline">
 								<input type="radio" name="buy_now" id="bn_yes" value="yes" {BN_Y}>
-								{L_030}
+								{L_yes}
 							</label>
 						</div>
 						<input type="text" name="buy_now_price" id="bn" class="form-control" value="{BN_PRICE}">
@@ -500,10 +500,10 @@ $(document).ready(function(){
 						<label>{L_1102}</label>
 						<div class="radio">
 							<label class="radio-inline">
-								<input type="radio" name="is_taxed" value="1" {TAX_Y}>	{L_030}
+								<input type="radio" name="is_taxed" value="1" {TAX_Y}>	{L_yes}
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="is_taxed" value="0" {TAX_N}> {L_029}
+								<input type="radio" name="is_taxed" value="0" {TAX_N}> {L_no}
 							</label>
 						</div>
 					</div>
@@ -511,10 +511,10 @@ $(document).ready(function(){
 						<label>{L_1103}</label>
 						<div class="radio">
 							<label class="radio-inline">
-								<input type="radio" name="tax_included" value="1" {TAXINC_Y}>	{L_030}
+								<input type="radio" name="tax_included" value="1" {TAXINC_Y}>	{L_yes}
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="tax_included" value="0" {TAXINC_N}> {L_029}
+								<input type="radio" name="tax_included" value="0" {TAXINC_N}> {L_no}
 							</label>
 						</div>
 					</div>
@@ -659,11 +659,11 @@ $(document).ready(function(){
 						</tr>
 	<!-- IF B_USERAUTH -->
 						<tr>
-							<td align="right">{L_003}</td>
+							<td align="right">{L_username}</td>
 							<td><b>{YOURUSERNAME}</b><input type="hidden" name="nick" value="{YOURUSERNAME}">
 						</tr>
 						<tr>
-							<td align="right">{L_004}</td>
+							<td align="right">{L_password}</td>
 							<td><input type="password" name="password" class="form-control" value=""></td>
 						</tr>
 	<!-- ENDIF -->

@@ -26,7 +26,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5051']));
 }
 
-loadblock($MSG['5048'], '', 'yesno', 'boards', $system->SETTINGS['boards'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['5048'], '', 'yesno', 'boards', $system->SETTINGS['boards'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],

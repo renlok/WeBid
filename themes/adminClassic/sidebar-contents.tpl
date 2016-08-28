@@ -3,7 +3,7 @@
 					<div class="rounded-bottom">
 						<ul class="menu">
 							<li><a href="{SITEURL}admin/news.php">{L_516}</a></li>
-							<li><a href="{SITEURL}admin/aboutus.php">{L_5074}</a></li>
+							<li><a href="{SITEURL}admin/aboutus.php">{L_about_us_page}</a></li>
 							<li><a href="{SITEURL}admin/terms.php">{L_5075}</a></li>
 							<li><a href="{SITEURL}admin/privacypolicy.php">{L_402}</a></li>
 							<li><a href="{SITEURL}admin/cookiespolicy.php">{L_1110}</a></li>
@@ -36,7 +36,7 @@
 						<form name="anotes" action="" method="post">
 							<textarea rows="15" name="anotes" class="anotes">{ADMIN_NOTES}</textarea>
 							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-							<input type="submit" name="act" value="{L_007}">
+							<input type="submit" name="act" value="{L_submit}">
 						</form>
 					</div>
 				</div>

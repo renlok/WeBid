@@ -25,8 +25,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1089']));
 }
 
-loadblock($MSG['1090'], $MSG['1091'], 'yesno', 'tax', $system->SETTINGS['tax'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['1092'], $MSG['1093'], 'yesno', 'taxuser', $system->SETTINGS['taxuser'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['1090'], $MSG['1091'], 'yesno', 'tax', $system->SETTINGS['tax'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['1092'], $MSG['1093'], 'yesno', 'taxuser', $system->SETTINGS['taxuser'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],

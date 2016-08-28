@@ -28,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5084']));
 }
 
-loadblock($MSG['5082'], $MSG['5081'], 'yesno', 'terms', $system->SETTINGS['terms'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['5082'], $MSG['5081'], 'yesno', 'terms', $system->SETTINGS['terms'], array($MSG['yes'], $MSG['no']));
 
 $CKEditor = new CKEditor();
 $CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';

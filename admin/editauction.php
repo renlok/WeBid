@@ -399,7 +399,7 @@ $template->assign_vars(array(
 		'IS_BOLD' => ($auction_data['bold']) ? 'checked' : '',
 		'IS_HIGHLIGHTED' => ($auction_data['highlighted']) ? 'checked' : '',
 		'IS_FEATURED' => ($auction_data['featured']) ? 'checked' : '',
-		'SUSPENDED' => ($auction_data['suspended'] == 0) ? $MSG['029'] : $MSG['030'],
+		'SUSPENDED' => ($auction_data['suspended'] == 0) ? $MSG['no'] : $MSG['yes'],
 
 		'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
 		'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),

@@ -61,11 +61,11 @@ loadblock($MSG['376'], $MSG['375'], 'days', 'archiveafter', $system->SETTINGS['a
 
 // optimisation settings
 loadblock($MSG['725'], '', '', '', '', array(), true);
-loadblock($MSG['726'], $MSG['727'], 'yesno', 'cache_theme', $system->SETTINGS['cache_theme'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['726'], $MSG['727'], 'yesno', 'cache_theme', $system->SETTINGS['cache_theme'], array($MSG['yes'], $MSG['no']));
 
 // SLL settings
 loadblock($MSG['1022'], '', '', '', '', array(), true);
-loadblock($MSG['1023'], $MSG['1024'], 'yesno', 'https', $system->SETTINGS['https'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['1023'], $MSG['1024'], 'yesno', 'https', $system->SETTINGS['https'], array($MSG['yes'], $MSG['no']));
 loadblock($MSG['801'], $MSG['802'], 'text', 'https_url', $system->SETTINGS['https_url']);
 
 $template->assign_vars(array(

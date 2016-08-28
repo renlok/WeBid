@@ -61,8 +61,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
-loadblock($MSG['003'], '', 'text', 'username', '');
-loadblock($MSG['004'], '', 'password', 'password', '');
+loadblock($MSG['username'], '', 'text', 'username', '');
+loadblock($MSG['password'], '', 'password', 'password', '');
 loadblock($MSG['564'], '', 'password', 'repeatpassword', '');
 loadblock('', '', 'bool', 'status', '1', array($MSG['566'], $MSG['567']));
 

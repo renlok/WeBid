@@ -22,6 +22,11 @@ $MSG['about_us_content'] = "About us page content";
 $MSG['about_us_content_explain'] = "Note: each new line character will be converted to <b>&lt;br&gt;</b> HTML tag.";
 $MSG['about_us_updated'] = "About us Updated";
 
+// activatenewsletter.php
+$MSG['newsletter_settings_updated'] = "Newsletter Settings Updated";
+$MSG['activate_newsletter'] = 'Enable newsletter';
+$MSG['activate_newsletter_explain'] = "If you activate this option, users will be given the option to subscribe to your newsletter.<br>The \"Newsletter management\" will let you send e-mail messages to the subscribed users";
+
 // banners.php
 $MSG['activate_banner_support'] = "Activate banners support?";
 $MSG['activate_banner_support_explain'] = "WeBid banners system retrieves banners on a random basis from the database, after applying the filters you set when you inserted the banner.";

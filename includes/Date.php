@@ -38,41 +38,67 @@ class Date
 		}
 	}
 
-	public function printDateTz($datetime)
+	// convert datetime from UTC to users timezone
+	public function printDateTz($datetime, $UTC_input = true)
 	{
-		$tmp = new DateTime($datetime, $this->timezone);
-		return $tmp->format('Y-m-d H:i');
+		if ($UTC_input)
+		{
+			$UTC_time = new DateTime ($datetime, new DateTimeZone('UTC'));
+			$UTC_time->setTimezone(new DateTimeZone($this->timezone));
+			return $UTC_time->format('Y-m-d H:i');
+		}
+		else
+		{
+			$tmp = new DateTime($datetime, $this->timezone);
+			return $tmp->format('Y-m-d H:i');
+		}
 	}
 
-	public function currentDatetime()
+	public function currentDatetime($UTC = false)
 	{
-		$datetime = new DateTime();
+		if ($UTC)
+		{
+			$datetime = new DateTime(time(), new DateTimeZone('UTC'));
+		}
+		else
+		{
+			$datetime = new DateTime(time(), $this->timezone);
+		}
 		return $datetime->format('Y-m-d H:i:s');
 	}
 
-	public function convertToDatetime($rawdate, $format = false)
+	// convert raw date string into datetime UTC timezone
+	public function convertToDatetime($raw_date, $format = false)
 	{
 		if (!$format)
 		{
-			$datetime = DateTime::createFromFormat($this->defaultformat, $rawdate);
+			$datetime = DateTime::createFromFormat($this->defaultformat, $raw_date, new DateTimeZone($this->timezone));
 		}
 		else
 		{
-			$datetime = new DateTime(strtotime($rawdate));
+			$datetime = new DateTime(strtotime($raw_date), new DateTimeZone($this->timezone));
 		}
+		$datetime->setTimezone(new DateTimeZone('UTC'));
 		return $datetime->format('Y-m-d H:i:s');
 	}
 
-	public function formatDate($rawdate, $format = false, $GMT = false)
+	public function convertToUTC($raw_date)
 	{
-		if ($GMT)
+		$UTC_time = new DateTime ($raw_date, new DateTimeZone($this->timezone));
+		$UTC_time->setTimezone(new DateTimeZone('UTC'));
+		return $UTC_time->format('Y-m-d H:i:s');
+	}
+
+	public function formatDate($raw_date, $format = false, $UTC_input = true)
+	{
+		if ($UTC)
 		{
-			$GMTtimezone = new DateTimeZone('GMT');
-			$datetime = new DateTime($rawdate, $GMTtimezone);
+			$datetime = new DateTime ($raw_date, new DateTimeZone('UTC'));
+			$datetime->setTimezone(new DateTimeZone($this->timezone));
 		}
 		else
 		{
-			$datetime = new DateTime($rawdate, $this->timezone);
+			$datetime = new DateTime($raw_date, $this->timezone);
 		}
 		if (!$format)
 		{

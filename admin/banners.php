@@ -23,10 +23,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// clean submission and update database
 	$system->writesetting("banners", intval($_POST['banners']), "int");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['600']));
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['banner_settings_updated']));
 }
 
-loadblock($MSG['597'], $MSG['_0014'], 'batch', 'banners', $system->SETTINGS['banners'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['activate_banner_support'], $MSG['activate_banner_support_explain'], 'batch', 'banners', $system->SETTINGS['banners'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
 		'TYPENAME' => $MSG['25_0011'],

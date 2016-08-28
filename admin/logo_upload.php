@@ -18,7 +18,7 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == "update")
+if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (isset($_FILES['logo']['tmp_name']) && !empty($_FILES['logo']['tmp_name']))
 	{
@@ -44,8 +44,8 @@ if (isset($_POST['action']) && $_POST['action'] == "update")
 }
 
 $logoURL = $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'];
-loadblock($MSG['531'], $MSG['556'], 'image', 'logo', $system->SETTINGS['logo']);
-loadblock('', $MSG['602'], 'upload', 'logo', $system->SETTINGS['logo']);
+loadblock($MSG['your_logo'], $MSG['current_logo'], 'image', 'logo', $system->SETTINGS['logo']);
+loadblock('', $MSG['upload_new_logo'], 'upload', 'logo', $system->SETTINGS['logo']);
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],

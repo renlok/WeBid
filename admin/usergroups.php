@@ -214,7 +214,7 @@ if (!empty($groups_array))
 	{
 		$template->assign_block_vars('groups_unknown', array(
 				'ID' => $k,
-				'NAME' => $MSG['text_unknown'],
+				'NAME' => $MSG['unknown'],
 				'USER_COUNT' => $v
 				));
 		$query = "SELECT groups, id, nick FROM ". $DBPrefix . "users WHERE groups LIKE :group_name";

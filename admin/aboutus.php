@@ -25,10 +25,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("aboutus", ynbool($_POST['aboutus']), "str");
 	$system->writesetting("aboutustext", $system->cleanvars($_POST['aboutustext'], true), "str");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5079']));
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['about_us_updated']));
 }
 
-loadblock($MSG['5077'], $MSG['5076'], 'yesno', 'aboutus', $system->SETTINGS['aboutus'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['active_about_us'], $MSG['active_about_us_explain'], 'yesno', 'aboutus', $system->SETTINGS['aboutus'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
 $CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
@@ -36,12 +36,12 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['5078'], $MSG['5080'], $CKEditor->editor('aboutustext', $system->SETTINGS['aboutustext']));
+loadblock($MSG['about_us_content'], $MSG['about_us_content_explain'], $CKEditor->editor('aboutustext', $system->SETTINGS['aboutustext']));
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0018'],
-		'PAGENAME' => $MSG['5074']
+		'PAGENAME' => $MSG['about_us_page']
 		));
 
 include 'header.php';

@@ -71,6 +71,10 @@ if (!isset($language) || empty($language))
 }
 
 include MAIN_PATH . 'language/' . $language . '/messages.inc.php';
+if (defined('InAdmin'))
+{
+	include MAIN_PATH . 'language/' . $language . '/admin.inc.php';
+}
 
 function isValidLanguage(&$language)
 {

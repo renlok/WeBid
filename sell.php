@@ -120,37 +120,42 @@ switch ($_SESSION['action'])
 
 			$requires_premoderation = false;
 
-			if ($_SESSION['SELL_action'] == 'edit')
+			// check the auction has not been submitted already
+			if (!isset($_SESSION['SELL_submitted'][$_SESSION['SELL_hash']]) || !$_SESSION['SELL_submitted'][$_SESSION['SELL_hash']])
 			{
-				updateauction();
-				$auction_id = $_SESSION['SELL_auction_id'];
-			}
-			else
-			{
-				// insert auction
-				addauction();
-				$auction_id = $db->lastInsertId();
-				//print_r($db);
-				$_SESSION['SELL_auction_id'] = $auction_id;
-
-				if ($system->SETTINGS['use_moderation'] && $system->SETTINGS['auction_moderation'])
+				if ($_SESSION['SELL_action'] == 'edit')
 				{
-					switch ($system->SETTINGS['new_auction_moderation']) {
-						case 1:
-							$requires_premoderation = true;
+					updateauction();
+					$auction_id = $_SESSION['SELL_auction_id'];
+				}
+				else
+				{
+					// insert auction
+					addauction();
+					$auction_id = $db->lastInsertId();
+					//print_r($db);
+					$_SESSION['SELL_auction_id'] = $auction_id;
 
-							$query = "UPDATE `" . $DBPrefix . "auctions` SET `suspended` = 1 WHERE id = :auction_id";
-							$params = array();
-							$params[] = array(':auction_id', $auction_id, 'int');
-							$db->query($query, $params);
-						case 2:
-							$query = "INSERT INTO `" . $DBPrefix . "auction_moderation` (`auction_id`, `reason`) VALUES (:auction_id, '1')";
-							$params = array();
-							$params[] = array(':auction_id', $auction_id, 'int');
-							$db->query($query, $params);
-							break;
+					if ($system->SETTINGS['use_moderation'] && $system->SETTINGS['auction_moderation'])
+					{
+						switch ($system->SETTINGS['new_auction_moderation']) {
+							case 1:
+								$requires_premoderation = true;
+
+								$query = "UPDATE `" . $DBPrefix . "auctions` SET `suspended` = 1 WHERE id = :auction_id";
+								$params = array();
+								$params[] = array(':auction_id', $auction_id, 'int');
+								$db->query($query, $params);
+							case 2:
+								$query = "INSERT INTO `" . $DBPrefix . "auction_moderation` (`auction_id`, `reason`) VALUES (:auction_id, '1')";
+								$params = array();
+								$params[] = array(':auction_id', $auction_id, 'int');
+								$db->query($query, $params);
+								break;
+						}
 					}
 				}
+				$_SESSION['SELL_submitted'][$_SESSION['SELL_hash']] = true;
 			}
 
 			$addcounter = true;

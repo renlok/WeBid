@@ -168,6 +168,8 @@ if (!isset($_POST['action'])) // already closed auctions
 		{
 			$_SESSION['SELL_caneditstartdate'] = false;
 		}
+		$_SESSION['SELL_hash'] = md5(microtime() . rand(0,50));
+		$_SESSION['SELL_submitted'][$_SESSION['SELL_hash']] = false;
 		header('location: sell.php?mode=recall');
 	}
 	else

@@ -93,7 +93,7 @@ class Date
 
 	public function formatDate($raw_date, $format = false, $UTC_input = true)
 	{
-		if ($UTC)
+		if ($UTC_input)
 		{
 			$datetime = new DateTime ($raw_date, $this->UTCtimezone);
 			$datetime->setTimezone($this->timezone);
@@ -117,42 +117,42 @@ class Date
 		global $MSG;
 
 		$timeleft = '';
-		if ($diff['y'] > 0)
+		if ($diff->y > 0)
 		{
-			$timeleft = $diff['y'] . $MSG['year_s'];
+			$timeleft = $diff->y . $MSG['year_s'];
 		}
-		elseif ($diff['m'] > 0)
+		elseif ($diff->m > 0)
 		{
-			$timeleft = $diff['m'] . $MSG['month_s'];
+			$timeleft = $diff->m . $MSG['month_s'];
 		}
-		elseif ($diff['d'] > 0)
+		elseif ($diff->d > 0)
 		{
-			$timeleft = $diff['d'] . $MSG['day_short'] . ' ';
-			if ($diff['h'] > 0)
+			$timeleft = $diff->d . $MSG['day_short'] . ' ';
+			if ($diff->h > 0)
 			{
-				$timeleft .= $diff['h'] . $MSG['hour_short'] . ' ';
+				$timeleft .= $diff->h . $MSG['hour_short'] . ' ';
 			}
 		}
 		else
 		{
-			if ($diff['h'] > 0)
+			if ($diff->h > 0)
 			{
-				$timeleft .= $diff['h'] . $MSG['hour_short'] . ' ';
+				$timeleft .= $diff->h . $MSG['hour_short'] . ' ';
 			}
-			if ($diff['m'] > 0)
+			if ($diff->m > 0)
 			{
-				$timeleft .= $diff['m'] . $MSG['minute_short'] . ' ';
+				$timeleft .= $diff->m . $MSG['minute_short'] . ' ';
 			}
-			elseif ($diff['h'] == 0 && $diff['m'] == 0 && $diff['s'] > 0)
+			elseif ($diff->h == 0 && $diff->m == 0 && $diff->s > 0)
 			{
 				$timeleft = '<1' . $MSG['minute_short'];
 			}
-			if ($diff['invert'])
+			if ($diff->invert)
 			{
 				$timeleft = $MSG['911'];
 			}
 		}
-		if ($diff['y'] == 0 && $diff['m'] == 0 && $diff['d'] == 0 && $diff['h'] == 0 && $diff['m'] < 15)
+		if ($diff->y == 0 && $diff->m == 0 && $diff->d == 0 && $diff->h == 0 && $diff->m < 15)
 		{
 			$timeleft = '<span style="color:#FF0000;">' . $timeleft . '</span>';
 		}

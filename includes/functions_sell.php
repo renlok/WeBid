@@ -33,7 +33,7 @@ function setvars()
 {
 	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $sdescription, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sellcat1, $sellcat2, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now;
-	global $_POST, $_SESSION, $system, $custom_end, $a_ends, $custom_end, $caneditstartdate;
+	global $_POST, $_SESSION, $system, $custom_end, $a_ends, $custom_end, $caneditstartdate, $dt;
 
 	$with_reserve = (isset($_POST['with_reserve'])) ? $_POST['with_reserve'] : $_SESSION['SELL_with_reserve'];
 	$reserve_price = (isset($_POST['reserve_price'])) ? $_POST['reserve_price'] : $_SESSION['SELL_reserve_price'];
@@ -68,9 +68,9 @@ function setvars()
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
 	$buy_now_only = (empty($buy_now_only)) ? 0 : $buy_now_only;
 
-	$a_starts = (isset($_POST['a_starts'])) ? $_POST['a_starts'] : $_SESSION['SELL_starts'];
+	$a_starts = (isset($_POST['a_starts'])) ? $dt->convertToDatetime($_POST['a_starts']) : $_SESSION['SELL_starts'];
 	$duration = (isset($_POST['duration'])) ? $_POST['duration'] : $_SESSION['SELL_duration'];
-	$a_ends = (isset($_POST['a_ends'])) ? $_POST['a_ends'] : $_SESSION['SELL_ends'];
+	$a_ends = (isset($_POST['a_ends'])) ? $dt->convertToDatetime($_POST['a_ends']) : $_SESSION['SELL_ends'];
 
 	// deal with checkboxes
 	if (isset($_POST['action']) && $_POST['action'] == 3)
@@ -269,7 +269,7 @@ function updateauction()
 
 function addauction()
 {
-	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee, $db;
+	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee, $db, $dt;
 
 	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,additional_shipping_cost,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,initial_quantity,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
 	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :additional_shipping_cost, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :initial_quantity, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";

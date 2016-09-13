@@ -162,7 +162,7 @@ $ERR_INVALID_REPORT_REASON = "Please select a reason for report";
 // UI Messages =============================================================
 $MSG['000'] = "n/a";
 $MSG['001'] = "New user registration";
-$MSG['002'] = "Your name";
+$MSG['002'] = "Full name";
 $MSG['username'] = "Username";
 $MSG['password'] = "Password";
 $MSG['005'] = "Confirm password";

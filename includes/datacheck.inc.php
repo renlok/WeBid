@@ -244,7 +244,7 @@ function CheckSellData()
 		$start_time = new DateTime($a_starts, $dt->UTCtimezone);
 		$difference = $current_time->diff($start_time);
 
-		if ($difference['invert'] == 1)
+		if ($difference->invert == 1)
 		{
 			return '060';
 		}
@@ -255,7 +255,7 @@ function CheckSellData()
 		$start_time = new DateTime($a_starts, $dt->UTCtimezone);
 		$end_time = new DateTime($a_ends, $dt->UTCtimezone);
 		$difference = $start_time->diff($end_time);
-		if ($difference['invert'] == 1)
+		if ($difference->invert == 1)
 		{
 			return '082';
 		}

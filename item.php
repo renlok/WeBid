@@ -120,25 +120,25 @@ elseif (strtotime($ends) - time() > 0)
 	$difference = $start_time->diff($end_time);
 	$ending_time = '';
 	$date_elements = 0;
-	if ($difference['d'] > 0)
+	if ($difference->d > 0)
 	{
-		$daymsg = ($difference['d'] == 1) ? $MSG['126b'] : $MSG['126'];
-		$ending_time .= $difference['d'] . ' ' . $daymsg . ' ';
+		$daymsg = ($difference->d == 1) ? $MSG['126b'] : $MSG['126'];
+		$ending_time .= $difference->d . ' ' . $daymsg . ' ';
 		$date_elements++;
 	}
-	if ($difference['h'] > 0)
+	if ($difference->h > 0)
 	{
-		$ending_time .= $difference['h'] . $MSG['25_0037'] . ' ';
+		$ending_time .= $difference->h . $MSG['25_0037'] . ' ';
 		$date_elements++;
 	}
-	if ($difference['m'] > 0 && $date_elements < 2)
+	if ($difference->m > 0 && $date_elements < 2)
 	{
-		$ending_time .= $difference['m'] . $MSG['25_0032'] . ' ';
+		$ending_time .= $difference->m . $MSG['25_0032'] . ' ';
 		$date_elements++;
 	}
-	if ($difference['s'] > 0 && $date_elements < 2)
+	if ($difference->s > 0 && $date_elements < 2)
 	{
-		$ending_time .= $difference['s'] . $MSG['25_0033'];
+		$ending_time .= $difference->s . $MSG['25_0033'];
 	}
 	$showendtime = true;
 }

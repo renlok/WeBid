@@ -107,7 +107,7 @@ switch ($_SESSION['action'])
 			$payment_text = implode(', ', $payment);
 			// finalise start and end times
 			$a_starts = (empty($start_now) || !$caneditstartdate) ? $a_starts : $dt->currentDatetime();
-			if ($custom_end == 1)
+			if ($custom_end == 0)
 			{
 				$start_datetime = new DateTime($a_starts, $dt->timezone);
 				$start_datetime->add(new DateInterval('P' . $duration . 'D'));
@@ -156,6 +156,10 @@ switch ($_SESSION['action'])
 					}
 				}
 				$_SESSION['SELL_submitted'][$_SESSION['SELL_hash']] = true;
+			}
+			else
+			{
+				$auction_id = $_SESSION['SELL_auction_id'];
 			}
 
 			$addcounter = true;
@@ -495,7 +499,7 @@ switch ($_SESSION['action'])
 			$current_time = new DateTime('now', $dt->timezone);
 			$start_time = new DateTime($a_starts, $dt->timezone);
 			$difference = $start_time->diff($current_time);
-			$days_passed = $difference['d'];
+			$days_passed = $difference->d;
 		}
 		// get valid durations
 		$query = "SELECT * FROM " . $DBPrefix . "durations WHERE days > :days ORDER BY days";

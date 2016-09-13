@@ -265,20 +265,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		else
 		{
 			// check username is unique
-			$query = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = :name";
+			$query = "SELECT COUNT(nick) as COUNT FROM " . $DBPrefix . "users WHERE nick = :name";
 			$params = array();
 			$params[] = array(':name', $system->cleanvars($_POST['TPL_nick']), 'str');
 			$db->query($query, $params);
-			if ($db->numrows() > 0)
+			if ($db->result('COUNT') > 0)
 			{
 				$ERR = $ERR_111; // Selected user already exists
 			}
 			// check email is unique
-			$query = "SELECT email FROM " . $DBPrefix . "users WHERE email = :email";
+			$query = "SELECT COUNT(email) as COUNT FROM " . $DBPrefix . "users WHERE email = :email";
 			$params = array();
 			$params[] = array(':email', $system->cleanvars($_POST['TPL_email']), 'str');
 			$db->query($query, $params);
-			if ($db->numrows() > 0)
+			if ($db->result('COUNT') > 0)
 			{
 				$ERR = $ERR_115; // E-mail already used
 			}

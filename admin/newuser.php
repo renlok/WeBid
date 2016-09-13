@@ -130,30 +130,52 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			{
 				$birthdate = 0;
 			}
-
-			$query = "INSERT INTO " . $DBPrefix . "users (name, nick, email, address, city, prov, country, zip, phone, birthdate, groups, balance, password)
-					VALUES (:name, :nick, :email, :address, :city, :prov, :country, :zip, :phone, :birthdate, :groups, :balance, :password)";
+			// check username is unique
+			$query = "SELECT COUNT(nick) as COUNT FROM " . $DBPrefix . "users WHERE nick = :name";
 			$params = array();
-			$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
-			$params[] = array(':nick', $system->cleanvars($_POST['username']), 'str');
-			$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');
-			$params[] = array(':birthdate', $birthdate, 'int');
-			$params[] = array(':address', $system->cleanvars($_POST['address']), 'str');
-			$params[] = array(':city', $system->cleanvars($_POST['city']), 'str');
-			$params[] = array(':prov', $system->cleanvars($_POST['prov']), 'str');
-			$params[] = array(':country', $system->cleanvars($_POST['country']), 'str');
-			$params[] = array(':zip', $system->cleanvars($_POST['zip']), 'str');
-			$params[] = array(':phone', $system->cleanvars($_POST['phone']), 'str');
-			$params[] = array(':groups', implode(',', $_POST['group']), 'str');
-			$params[] = array(':balance', $system->input_money($_POST['balance']), 'float');
-			// generate password hash
-			include PACKAGE_PATH . 'PasswordHash.php';
-			$phpass = new PasswordHash(8, false);
-			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
+			$params[] = array(':name', $system->cleanvars($_POST['username']), 'str');
 			$db->query($query, $params);
+			$username_duplicate = $db->result('COUNT');
+			// check email is unique
+			$query = "SELECT COUNT(email) as COUNT FROM " . $DBPrefix . "users WHERE email = :email";
+			$params = array();
+			$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');
+			$db->query($query, $params);
+			$email_duplicate = $db->result('COUNT');
+			if ($username_duplicate > 0)
+			{
+				$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_111));
+			}
+			elseif ($email_duplicate > 0)
+			{
+				$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_115));
+			}
+			else
+			{
+				$query = "INSERT INTO " . $DBPrefix . "users (name, nick, email, address, city, prov, country, zip, phone, birthdate, groups, balance, password)
+						VALUES (:name, :nick, :email, :address, :city, :prov, :country, :zip, :phone, :birthdate, :groups, :balance, :password)";
+				$params = array();
+				$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
+				$params[] = array(':nick', $system->cleanvars($_POST['username']), 'str');
+				$params[] = array(':email', $system->cleanvars($_POST['email']), 'str');
+				$params[] = array(':birthdate', $birthdate, 'int');
+				$params[] = array(':address', $system->cleanvars($_POST['address']), 'str');
+				$params[] = array(':city', $system->cleanvars($_POST['city']), 'str');
+				$params[] = array(':prov', $system->cleanvars($_POST['prov']), 'str');
+				$params[] = array(':country', $system->cleanvars($_POST['country']), 'str');
+				$params[] = array(':zip', $system->cleanvars($_POST['zip']), 'str');
+				$params[] = array(':phone', $system->cleanvars($_POST['phone']), 'str');
+				$params[] = array(':groups', implode(',', $_POST['group']), 'str');
+				$params[] = array(':balance', $system->input_money($_POST['balance']), 'float');
+				// generate password hash
+				include PACKAGE_PATH . 'PasswordHash.php';
+				$phpass = new PasswordHash(8, false);
+				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
+				$db->query($query, $params);
 
-			header('location: listusers.php');
-			exit;
+				header('location: listusers.php');
+				exit;
+			}
 		}
 	}
 	else

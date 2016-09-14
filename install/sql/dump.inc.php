@@ -588,7 +588,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '0',
   `messages` int(11) NOT NULL default '0',
-  `lastmessage` `lastmessage` datetime default CURRENT_TIMESTAMP,
+  `lastmessage` datetime default CURRENT_TIMESTAMP,
   `msgstoshow` int(11) NOT NULL default '0',
   `active` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)

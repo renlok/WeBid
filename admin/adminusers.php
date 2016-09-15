@@ -30,6 +30,7 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 		$params = array();
 		$params[] = array(':delete', implode(',', $_POST['delete']), 'str');
 		$db->query($query, $params);
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1101']));
 	}
 }
 

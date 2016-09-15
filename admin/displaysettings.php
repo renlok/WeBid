@@ -37,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 loadblock($MSG['789'], $MSG['790'], 'days', 'perpage', $system->SETTINGS['perpage']);
 loadblock('', $MSG['max_featured_items'], 'days', 'featuredperpage', $system->SETTINGS['featuredperpage']);
-loadblock($MSG['25_0107'], $MSG['808'], 'decimals', 'thumb_list', $system->SETTINGS['thumb_list'], array($MSG['2__0045']));
+loadblock($MSG['thumbnail_size'], $MSG['808'], 'decimals', 'thumb_list', $system->SETTINGS['thumb_list'], array($MSG['pixels']));
 
 loadblock($MSG['807'], '', '', '', '', array(), true);
 loadblock($MSG['5011'], $MSG['5012'], 'days', 'homefeaturednumber', $system->SETTINGS['homefeaturednumber']);

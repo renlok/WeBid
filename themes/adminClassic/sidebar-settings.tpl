@@ -3,7 +3,7 @@
 					<div class="rounded-bottom">
 						<ul class="menu">
 							<li><a href="{SITEURL}admin/settings.php">{L_526}</a></li>
-							<li><a href="{SITEURL}admin/auctions.php">{L_5087}</a></li>
+							<li><a href="{SITEURL}admin/auctions.php">{L_auction_settings}</a></li>
 							<li><a href="{SITEURL}admin/displaysettings.php">{L_788}</a></li>
 							<li><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
 							<li><a href="{SITEURL}admin/emailsettings.php">{L_1118}</a></li>

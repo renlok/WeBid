@@ -1,7 +1,7 @@
 				<ul class="list-group">
 					<li class="list-group-item active">{L_5142}</li>
 					<li class="list-group-item"><a href="{SITEURL}admin/settings.php">{L_526}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/auctions.php">{L_5087}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/auctions.php">{L_auction_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/displaysettings.php">{L_788}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/emailsettings.php">{L_1118}</a></li>

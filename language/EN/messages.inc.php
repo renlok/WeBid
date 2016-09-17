@@ -1241,7 +1241,6 @@ $MSG['_0162'] = "You can choose to automatically relist your auction, if no bids
 $MSG['_0163'] = "View Winners";
 
 $MSG['2_0004'] = "View User's IPs";
-$MSG['2_0025'] = "Manually entered";
 $MSG['2_0026'] = "We're sorry but, for one or more reasons, you have been denied access to
 				this site.<br>
 				If you had any active auctions listed, we have cancelled all bids and

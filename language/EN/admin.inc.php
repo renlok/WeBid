@@ -97,12 +97,17 @@ $MSG['ip_ban_management'] = "IP Ban Management";
 $MSG['ban_this_ip'] = "Ban this IP address: ";
 $MSG['ip_example'] = "(Complete IP address - example: 185.39.51.63)";
 $MSG['no_ips_banned'] = 'No IP addresses have been banned as of yet.';
+$MSG['manually_entered'] = "Manually entered";
 $MSG['ip_address'] = "IP Address"; // Also viewuserips.tpl
 $MSG['ban'] = "Ban"; // Also viewuserips.tpl
 $MSG['accept'] = "Accept"; // Also viewuserips.tpl
 $MSG['accepted'] = 'Accepted'; // Also viewuserips.tpl
 $MSG['banned'] = 'Banned'; // Also viewuserips.tpl
 $MSG['process_selection'] = "Process Selection"; // Also viewuserips.tpl
+$MSG['ip_banned'] = "IP address banned.";
+$MSG['ip_bans_removed'] = "%d IP addresses have been removed from the ban list.";
+$MSG['ip_bans_added'] = "%d IP addresses have been added to the ban list.";
+$MSG['error_cannot_ban_self'] = "You cannot ban your own IP address";
 
 // banners.php
 $MSG['activate_banner_support'] = "Activate banners support?";

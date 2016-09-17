@@ -25,7 +25,7 @@
 						</tr>
 <!-- BEGIN ips -->
 						<tr {ips.BG}>
-							<td>{L_2_0025}</td>
+							<td>{L_manually_entered}</td>
 							<td align="center">{ips.IP}</td>
 							<td align="center">
 	<!-- IF ips.ACTION eq 'accept' -->

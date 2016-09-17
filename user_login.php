@@ -100,8 +100,8 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 			$db->query($query, $params);
 			if ($db->numrows() == 0)
 			{
-				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-						(NULL, :user_id, :user_ip, 'after','accept')";
+				$query = "INSERT INTO " . $DBPrefix . "usersips (user, ip, type, action)
+						VALUES (:user_id, :user_ip, 'login', 'accept')";
 				$params = array();
 				$params[] = array(':user_ip', $_SERVER['REMOTE_ADDR'], 'str');
 				$params[] = array(':user_id', $user_data['id'], 'int');

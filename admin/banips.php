@@ -22,8 +22,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (isset($_POST['ip']) && !empty($_POST['ip']))
 	{
-		$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-				(NULL, 'NOUSER',  :user_ip, 'next',  'deny')";
+		$query = "INSERT INTO " . $DBPrefix . "usersips (user, ip, type, action)
+				VALUES ('NOUSER',  :user_ip, 'ban',  'deny')";
 		$params = array();
 		$params[] = array(':user_ip', $system->cleanvars($_POST['ip']), 'str');
 		$db->query($query, $params);

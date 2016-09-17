@@ -91,6 +91,19 @@ $MSG['pixels'] = " pixels "; // Also displaysettings.php
 $MSG['gallery_image_max_size'] = "Gallery photo max size";
 $MSG['gallery_image_max_size_explain'] = "Set the maximum width or height a photo can be if it is over this size it will be resized";
 
+// banips.php/tpl
+$MSG['ip_addresses'] = "IP Addresses"; // Also user-sidebar.tpl
+$MSG['ip_ban_management'] = "IP Ban Management";
+$MSG['ban_this_ip'] = "Ban this IP address: ";
+$MSG['ip_example'] = "(Complete IP address - example: 185.39.51.63)";
+$MSG['no_ips_banned'] = 'No IP addresses have been banned as of yet.';
+$MSG['ip_address'] = "IP Address"; // Also viewuserips.tpl
+$MSG['ban'] = "Ban"; // Also viewuserips.tpl
+$MSG['accept'] = "Accept"; // Also viewuserips.tpl
+$MSG['accepted'] = 'Accepted'; // Also viewuserips.tpl
+$MSG['banned'] = 'Banned'; // Also viewuserips.tpl
+$MSG['process_selection'] = "Process Selection"; // Also viewuserips.tpl
+
 // banners.php
 $MSG['activate_banner_support'] = "Activate banners support?";
 $MSG['activate_banner_support_explain'] = "WeBid banners system retrieves banners on a random basis from the database, after applying the filters you set when you inserted the banner.";
@@ -107,3 +120,6 @@ $MSG['cannot_delete_default_user_groups'] = 'Default User Groups (Sellers & Buye
 $MSG['user_group_deleted'] = 'User Group Deleted';
 $MSG['user_group_name_empty_update'] = 'Group name cannot be empty. User Group was not updated';
 $MSG['user_group_name_empty_new'] = 'Group name cannot be empty. The new User Group was not created';
+
+// viewuserips.php
+$MSG['registration_ip'] = "Registration IP";

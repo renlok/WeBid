@@ -1839,8 +1839,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "usersips` (
   `id` int(11) NOT NULL auto_increment,
   `user` int(11) default NULL,
   `ip` varchar(15) default NULL,
-  `type` enum('first','after') NOT NULL default 'first',
-  `action` enum('accept','deny') NOT NULL default 'accept',
+  `type` varchar(255) default 'register',
+  `action` enum('accept', 'deny') NOT NULL default 'accept',
   PRIMARY KEY  (`id`)
 ) ;";
 

@@ -5,22 +5,22 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_2_0017}&nbsp;&gt;&gt;&nbsp;{L_2_0020}</h4>
+				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_ip_addresses}&nbsp;&gt;&gt;&nbsp;{L_ip_ban_management}</h4>
 				<form name="errorlog" action="" method="post">
 					<table width="98%" cellpadding="0" cellspacing="0">
 						<tr>
 							<td bgcolor="#FFFF66" colspan="5">
-								{L_2_0021}
+								{L_ban_this_ip}
 								<input type="text" name="ip">
 								<input type="submit" name="Submit2" value="&gt;&gt;">
-								{L_2_0024}
+								{L_ip_example}
 							</td>
 						</tr>
 						<tr>
 							<th width="29%"><b>{L_087}</b></td>
-							<th width="25%"><b>{L_2_0009}</b></td>
+							<th width="25%"><b>{L_ip_address}</b></td>
 							<th width="19%"><b>{L_560}</b></td>
-							<th width="18%"><b>{L_5028}</b></td>
+							<th width="18%"><b>{L_297}</b></td>
 							<th width="9%"><b>{L_008}</b></td>
 						</tr>
 <!-- BEGIN ips -->
@@ -29,29 +29,29 @@
 							<td align="center">{ips.IP}</td>
 							<td align="center">
 	<!-- IF ips.ACTION eq 'accept' -->
-								{L_2_0012}
+								<span style="color:#A2CD5A;"><b>{L_accepted}</b></span>
 	<!-- ELSE -->
-								{L_2_0013}
+								<span style="color:#CD0000;"><b>{L_banned}</b></span>
 	<!-- ENDIF -->
 							</td>
 							<td>
 	<!-- IF ips.ACTION eq 'accept' -->
 								<input type="checkbox" name="deny[]" value="{ips.ID}">
-								&nbsp;{L_2_0006}
+								&nbsp;{L_ban}
 	<!-- ELSE -->
 								<input type="checkbox" name="accept[]" value="{ips.ID}">
-								&nbsp;{L_2_0007}
+								&nbsp;{L_accept}
 	<!-- ENDIF -->
 							</td>
 							<td align="center"><input type="checkbox" name="delete[]" value="{ips.ID}"></td>
 <!-- BEGINELSE -->
-							<td colspan="5">{L_831}</td>
+							<td colspan="5">{L_no_ips_banned}</td>
 <!-- END ips -->
 						</tr>
 					</table>
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_2_0015}">
+					<input type="submit" name="act" class="centre" value="{L_process_selection}">
 				</form>
 			</div>
 		</div>

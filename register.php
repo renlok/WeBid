@@ -352,8 +352,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				);
 				$db->query($query, $params);
 				$TPL_id_hidden = $db->lastInsertId();
-				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-							(NULL, :id_hidden, :remote_addr, 'first', 'accept')";
+				$query = "INSERT INTO " . $DBPrefix . "usersips (user, ip, type, action)
+						VALUES (:id_hidden, :remote_addr, 'register', 'accept')";
 				$params = array();
 				$params[] = array(':id_hidden', $TPL_id_hidden, 'int');
 				$params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'str');

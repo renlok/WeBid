@@ -100,8 +100,8 @@ if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 			$db->query($query, $params);
 			if ($db->numrows() == 0)
 			{
-				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-						(NULL, :user_id, :ip, 'after', 'accept')";
+				$query = "INSERT INTO " . $DBPrefix . "usersips (user, ip, type, action)
+						VALUES (:user_id, :ip, 'confirm', 'accept')";
 				$params = array();
 				$params[] = array(':user_id', $_SESSION['WEBID_LOGGED_IN'], 'int');
 				$params[] = array(':ip', $_SERVER['REMOTE_ADDR'], 'str');

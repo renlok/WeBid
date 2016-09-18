@@ -23,7 +23,7 @@ $catscontrol = new MPTTcategories();
 function search_cats($parent_id, $level)
 {
 	global $catscontrol;
-	
+
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
 	return $tree;
@@ -44,7 +44,6 @@ function rebuild_cat_file()
 	$output = "<?php\n";
 	$output .= "$" . "category_names = " . var_export($cats, true) . ";\n\n";
 	$output .= "$" . "category_plain = " . var_export(search_cats(0, 0), true) . ";\n";
-	$output .= "?>";
 
 	$handle = fopen (MAIN_PATH . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
@@ -257,4 +256,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

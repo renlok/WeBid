@@ -110,9 +110,23 @@ $MSG['ip_bans_added'] = "%d IP addresses have been added to the ban list.";
 $MSG['error_cannot_ban_self'] = "You cannot ban your own IP address";
 
 // banners.php
+$MSG['banner_admin'] = "Banner Administration";
 $MSG['activate_banner_support'] = "Activate banners support?";
 $MSG['activate_banner_support_explain'] = "WeBid banners system retrieves banners on a random basis from the database, after applying the filters you set when you inserted the banner.";
 $MSG['banner_settings_updated'] = "Banners settings updated";
+
+// boards.php/tpl
+$MSG['board_management'] = "Message Board Management"; // Also editboard, newboard, editmessage
+$MSG['boards_removed'] = "Selected boards removed";
+$MSG['num_messages'] = "# MSGS"; // Also editboards.tpl
+$MSG['show'] = "SHOW";
+$MSG['delete_board_warning'] = "NOTE: deleting a message board will delete all the associated messages.";
+
+// boardsettings.php
+$MSG['msg_board_settings'] = "Message Boards Settings";
+$MSG['msg_board_settings_updated'] = "Message Board Settings Updated";
+$MSG['enable_message_boards'] = "Enable Message Boards?";
+$MSG['enable_message_boards_explain'] = "The message boards are a place where users can post public messages and questions to each other";
 
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";

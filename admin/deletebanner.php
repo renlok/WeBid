@@ -45,4 +45,3 @@ $db->query($query, $params);
 
 // Redirect
 header('location: userbanners.php?id=' . $banneruser);
-?>

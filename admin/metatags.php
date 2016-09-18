@@ -23,7 +23,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// clean submission and update database
 	$system->writesetting("descriptiontag", $system->cleanvars($_POST['descriptiontag']),"str");
 	$system->writesetting("keywordstag", $system->cleanvars($_POST['keywordstag']),"str");
-	
+
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['25_0185']));
 }
 
@@ -42,4 +42,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

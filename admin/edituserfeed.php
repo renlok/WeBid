@@ -48,7 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$params[] = array(':NUM', $NUM, 'int');
 	$params[] = array(':user_id', $user, 'int');
 	$db->query($query, $params);
-	
+
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['183']));
 }
 
@@ -76,4 +76,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

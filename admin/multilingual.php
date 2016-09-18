@@ -22,7 +22,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['def
 {
 	// clean submission and update database
 	$system->writesetting("defaultlanguage", $system->cleanvars($_POST['defaultlanguage']),"str");
-	
+
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['multilingual_support_settings_updated']));
 }
 
@@ -52,4 +52,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

@@ -33,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$system->writesetting("spam_register", $_POST['spam_register'], 'int');
 		$system->writesetting("spam_blocked_email_enabled", $_POST['spam_blocked_email_enabled'], 'bool');
 		$system->writesetting("spam_blocked_email_domains", $_POST['spam_blocked_email_domains'], 'str');
-		
+
 		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['750']));
 	}
 }
@@ -58,4 +58,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

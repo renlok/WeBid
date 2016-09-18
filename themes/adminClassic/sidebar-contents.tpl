@@ -24,9 +24,9 @@
 					<h4 class="rounded-top">{L_5030}</h4>
 					<div class="rounded-bottom">
 						<ul class="menu">
-							<li><a href="{SITEURL}admin/boardsettings.php">{L_5047}</a></li>
+							<li><a href="{SITEURL}admin/boardsettings.php">{L_msg_board_settings}</a></li>
 							<li><a href="{SITEURL}admin/newboard.php">{L_5031}</a></li>
-							<li><a href="{SITEURL}admin/boards.php">{L_5032}</a></li>
+							<li><a href="{SITEURL}admin/boards.php">{L_board_management}</a></li>
 						</ul>
 					</div>
 				</div>

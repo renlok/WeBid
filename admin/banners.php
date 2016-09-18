@@ -30,7 +30,7 @@ loadblock($MSG['activate_banner_support'], $MSG['activate_banner_support_explain
 
 $template->assign_vars(array(
 		'TYPENAME' => $MSG['25_0011'],
-		'PAGENAME' => $MSG['_0008'] . ' : ' . $MSG['5205']
+		'PAGENAME' => $MSG['banner_admin'] . ' : ' . $MSG['5205']
 		));
 
 include 'header.php';

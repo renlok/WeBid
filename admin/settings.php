@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			array("https", $_POST['https'], 'str'),
 			array("https_url", $_POST['https_url'], 'str'),
 		));
-		
+
 		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['542']));
 	}
 }
@@ -80,4 +80,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

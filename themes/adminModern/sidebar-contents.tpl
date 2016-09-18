@@ -10,9 +10,9 @@
 					<li class="list-group-item"><a href="{SITEURL}admin/newfaq.php">{L_5231}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/faqs.php">{L_5232}</a></li>
 					<li class="list-group-item active">{L_5030}</li>
-					<li class="list-group-item"><a href="{SITEURL}admin/boardsettings.php">{L_5047}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/boardsettings.php">{L_msg_board_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/newboard.php">{L_5031}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/boards.php">{L_5032}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/boards.php">{L_board_management}</a></li>
 				</ul>
 				<div class="panel panel-default">
 					<div class="panel-heading">{L_1061}</div>

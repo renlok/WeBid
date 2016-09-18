@@ -24,7 +24,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// clean submission and update database
 	$system->writesetting("terms", ynbool($_POST['terms']), "str");
 	$system->writesetting("termstext", $system->cleanvars($_POST['termstext'], true), "str");
-	
+
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5084']));
 }
 
@@ -51,4 +51,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

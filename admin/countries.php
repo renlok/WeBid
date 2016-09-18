@@ -68,7 +68,7 @@ if (isset($_POST['act']))
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1028']));
 }
 
-$query = "SELECT country_id, c.country, count(u.id) AS user_count 
+$query = "SELECT country_id, c.country, count(u.id) AS user_count
 		FROM " . $DBPrefix . "countries c
 		LEFT JOIN " . $DBPrefix . "users u ON (c.country = u.country)
 		GROUP BY country_id, c.country";
@@ -95,4 +95,3 @@ $template->set_filenames(array(
 $template->display('body');
 
 include 'footer.php';
-?>

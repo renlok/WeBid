@@ -59,7 +59,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$sdata = serialize($DISPLAYED_FIELDS);
 		$system->writesetting("mandatory_fields", $mdata, "str");
 		$system->writesetting("displayed_feilds", $sdata, "str");
-		
+
 		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['779']));
 	}
 }
@@ -89,4 +89,3 @@ $template->set_filenames(array(
 $template->display('body');
 
 include 'footer.php';
-?>

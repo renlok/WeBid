@@ -194,7 +194,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					$query .=  ", suspended = 7";
 				}
 			}
-			
+
 			$query .=  " WHERE id = :user_id";
 			$params[] = array(':user_id', $userid, 'int');
 			$db->query($query, $params);
@@ -267,4 +267,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

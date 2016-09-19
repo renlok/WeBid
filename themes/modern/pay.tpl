@@ -102,6 +102,7 @@
 		<div class="col-md-2 text-right">
 			<form action="<!-- IF SANDBOX -->https://sandbox.2checkout.com/checkout/purchase<!-- ELSE -->https://www2.2checkout.com/2co/buyer/purchase<!-- ENDIF -->" method="post" id="form_toocheckout">
 				<input type="hidden" name="sid" value="{gateways.PAY_ADDRESS}">
+				<input type="hidden" name="currency_code" value="{CURRENCY}">
 				<input type="hidden" name="total" value="{PAY_VAL}">
 				<input type="hidden" name="cart_order_id" value="{CUSTOM_CODE}">
 				<input class="btn btn-primary" name="submit" type="submit" value="{L_756}" border="0">

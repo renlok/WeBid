@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // check if looking for users auctions
 $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
 $user_sql = isset($_GET['uid']) ? " AND a.user = " . $uid : '';
@@ -30,7 +28,8 @@ if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
 	$PAGE = intval($_GET['PAGE']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 }
-elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listauctions.php')
+elseif (isset($_SESSION['RETURN_LIST_OFFSET']) &&
+	(isset($_SESSION['RETURN_LIST']) && $_SESSION['RETURN_LIST'] == 'listauctions.php'))
 {
 	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
 	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
@@ -44,15 +43,19 @@ else
 $_SESSION['RETURN_LIST'] = 'listauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
-$query = "SELECT COUNT(a.id) As auctions FROM " . $DBPrefix . "auctions a WHERE a.closed = 0 " . $user_sql;
+$query = "SELECT COUNT(a.id) as auctions FROM " . $DBPrefix . "auctions a 
+	LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
+	WHERE m.reason IS NULL AND a.closed = 0 " . $user_sql;
 $db->direct_query($query);
 $num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
-$query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name FROM " . $DBPrefix . "auctions a
+$query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(r.id) as times_reported, m.reason FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
 		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
-		WHERE a.closed = 0 " . $user_sql . " ORDER BY nick LIMIT :offset, :perpage";
+		LEFT JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
+		LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
+		WHERE m.reason IS NULL AND a.closed = 0 " . $user_sql . "  GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
@@ -62,8 +65,10 @@ while ($row = $db->fetch())
 {
 	$template->assign_block_vars('auctions', array(
 			'SUSPENDED' => $row['suspended'],
+			'TIMESREPORTED' => $row['times_reported'],
+			'IN_MODERATION_QUEUE' => !is_null($row['reason']),
 			'ID' => $row['id'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => htmlspecialchars($row['title']),
 			'START_TIME' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
 			'END_TIME' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
 			'USERNAME' => $row['nick'],

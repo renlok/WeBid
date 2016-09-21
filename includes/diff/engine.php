@@ -514,5 +514,3 @@ class diff_engine
 		}
 	}
 }
-
-?>

@@ -3,7 +3,10 @@
 <head>
 	<title>WeBid Administration back-end</title>
 	<meta http-equiv="content-type" content="text/html; charset={CHARSET}" />
-	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/admin/style.css" />
+
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/style.css" />
 
 	<!--[if IE]>
 	<style type="text/css">
@@ -14,7 +17,12 @@
 	</style>
 	<![endif]-->
 
-	<script type="text/javascript" src="{SITEURL}loader.php?js=js/jquery.js{EXTRAJS}"></script>
+	<script src="{SITEURL}js/jquery.js"></script>
+	<script src="{SITEURL}js/jquery-migrate.js"></script>
+	<script src="{SITEURL}js/jquery-ui.js"></script>
+	<script>{CAL_CONF}</script>
+	<script src="{SITEURL}js/calendar.js"></script>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('a.new-window').click(function(){
@@ -29,8 +37,6 @@
 				});
 			});
 		});
-	</script>
-	<script type="text/javascript">
 		function window_open(url,title,width,height,x,y)
 		{
 			var window_= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+width+',height='+height;
@@ -68,3 +74,8 @@
 		<li class="help"><a href="help.php" alt="{L_148}">{L_148}</a></li>
 	</ul>
 	<div id="wrapper" class="clearfix">
+	<!-- BEGIN alerts -->
+		<div id="alerts">
+			<div class="alert alert-{alerts.TYPE}">{alerts.MESSAGE}</div>
+		</div>
+	<!-- END alerts -->

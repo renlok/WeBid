@@ -18,18 +18,16 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Data check
 	if (empty($_POST['sitename']) || empty($_POST['siteurl']) || empty($_POST['adminmail']))
 	{
-		$ERR = $ERR_047;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
 	}
 	elseif (!is_numeric($_POST['archiveafter']))
 	{
-		$ERR = $ERR_043;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_043));
 	}
 	else
 	{
@@ -45,21 +43,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			array("https", $_POST['https'], 'str'),
 			array("https_url", $_POST['https_url'], 'str'),
 		));
-		$ERR = $MSG['542'];
+		
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['542']));
 	}
-
-	$system->SETTINGS['sitename'] = $_POST['sitename'];
-	$system->SETTINGS['adminmail'] = $_POST['adminmail'];
-	$system->SETTINGS['siteurl'] = $_POST['siteurl'];
-	$system->SETTINGS['copyright'] = $_POST['copyright'];
-
-	$system->SETTINGS['cron'] = $_POST['cron'];
-	$system->SETTINGS['archiveafter'] = $_POST['archiveafter'];
-
-	$system->SETTINGS['cache_theme'] = $_POST['cache_theme'];
-
-	$system->SETTINGS['https'] = $_POST['https'];
-	$system->SETTINGS['https_url'] = $_POST['https_url'];
 }
 
 // general settings
@@ -83,7 +69,6 @@ loadblock($MSG['1023'], $MSG['1024'], 'yesno', 'https', $system->SETTINGS['https
 loadblock($MSG['801'], $MSG['802'], 'text', 'https_url', $system->SETTINGS['https_url']);
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5142'],
 		'PAGENAME' => $MSG['526'],

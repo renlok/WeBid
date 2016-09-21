@@ -120,7 +120,6 @@ if (!function_exists('view'))
 			$query = "SELECT * FROM " . $DBPrefix . "banners WHERE id = :banner_id";
 			$params = array();
 			$params[] = array(':banner_id', $BANNERTOSHOW, 'int');
-			$params[] = array(':time', $NOW, 'int');
 			$db->query($query, $params);
 			$THISBANNER = $db->result();
 			if ($THISBANNER['type'] == 'swf')

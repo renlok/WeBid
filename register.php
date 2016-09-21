@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 include INCLUDE_PATH . 'config/timezones.php';
 include INCLUDE_PATH . 'config/gateways.php';
 
@@ -101,13 +100,24 @@ function checkEmail($email)
 	{
 		$exploded_email = explode('@', $email);
     	$email_domain = trim(array_pop($exploded_email));
-		$emails = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
-		if ( in_array($email_domain, $emails))
-		{
-			return false;
-		}
+		$blocked_emails = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
+
+		return !contains($email_domain, $blocked_emails);
 	}
 	return true;
+}
+
+function contains($str, array $arr)
+{
+    foreach($arr as $a)
+    {
+        if (stripos($str, $a) !== false)
+    	{
+    		return true;
+    	}
+    }
+    
+    return false;
 }
 
 $first = true;
@@ -218,7 +228,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 
 		if ($system->SETTINGS['spam_register'] == 2)
 		{
-			$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $_POST['g-recaptcha-response']);
+			$recaptcha_response = (isset($_POST['g-recaptcha-response'])) ? $_POST['g-recaptcha-response'] : '';
+			$resp = recaptcha_check_answer($system->SETTINGS['recaptcha_private'], $recaptcha_response);
 		}
 
 		if ($system->SETTINGS['spam_register'] == 2 && !$resp)
@@ -347,7 +358,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':suspended', $SUSPENDED, 'int'),
 					array(':language', $language, 'str'),
 					array(':groups', implode(',', $groups), 'str'),
-					array(':balance', $balance, 'bool'),
+					array(':balance', $balance, 'float'),
 					array(':timezone', $_POST['TPL_timezone'], 'str'),
 				);
 				$db->query($query, $params);
@@ -356,7 +367,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 							(NULL, :id_hidden, :remote_addr, 'first', 'accept')";
 				$params = array();
 				$params[] = array(':id_hidden', $TPL_id_hidden, 'int');
-				$params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'int');
+				$params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'str');
 				$db->query($query, $params);
 				foreach ($gateway_data as $gateway)
 				{
@@ -378,7 +389,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				if (defined('TrackUserIPs'))
 				{
 					// log registration IP
-					$system->log('user', 'Regestered User', $TPL_id_hidden);
+					$system->log('user', 'Registered User', $TPL_id_hidden);
 				}
 
 				// send emails
@@ -417,24 +428,30 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'signup_fee'";
 $db->direct_query($query);
-$signup_fee = $db->result();
+$signup_fee = $db->result('value');
 
-$country = '';
+$country_dropdown = '';
 
 $selcountry = isset($_POST['TPL_country']) ? $_POST['TPL_country'] : '';
-foreach ($countries as $key => $name)
+
+$query = "SELECT country_id, country FROM " . $DBPrefix . "countries";
+$db->direct_query($query);
+$countries = $db->fetchall();
+
+foreach($countries as $country)
 {
-	$country .= '<option value="' . $name . '"';
-	if ($name == $selcountry)
+	$country_dropdown .= '<option value="' . $country['country'] . '"';
+	if ($country['country'] == $selcountry)
 	{
-		$country .= ' selected';
+		$country_dropdown .= ' selected';
 	}
-	elseif ($system->SETTINGS['defaultcountry'] == $name)
+	elseif ($system->SETTINGS['defaultcountry'] == $country['country'])
 	{
-		$country .= ' selected';
+		$country_dropdown .= ' selected';
 	}
-	$country .= '>' . $name . '</option>' . "\n";
+	$country_dropdown .= '>' . $country['country'] . '</option>' . "\n";
 }
+
 $dobclass = ($missing['birthday']) ? ' class="missing"' : '';
 $dobmonth = '<select name="TPL_month"' . $dobclass . '>
 		<option value="00"></option>
@@ -486,7 +503,7 @@ foreach ($gateway_data as $gateway)
 
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
-		'L_COUNTRIES' => $country,
+		'L_COUNTRIES' => $country_dropdown,
 		'L_DATEFORMAT' => ($system->SETTINGS['datesformat'] == 'USA') ? $dobmonth . ' ' . $dobday : $dobday . ' ' . $dobmonth,
 		'TIMEZONE' => $time_correction,
 		'TERMSTEXT' => $system->SETTINGS['termstext'],
@@ -494,7 +511,7 @@ $template->assign_vars(array(
 		'B_ADMINAPROVE' => ($system->SETTINGS['activationtype'] == 0),
 		'B_NLETTER' => ($system->SETTINGS['newsletter'] == 1),
 		'B_FIRST' => $first,
-		'B_FEES' => ($signup_fee['value'] > 0),
+		'B_FEES' => ($signup_fee > 0),
 
 		'CAPTCHATYPE' => $system->SETTINGS['spam_register'],
 		'CAPCHA' => ($system->SETTINGS['spam_register'] == 2) ? recaptcha_get_html($system->SETTINGS['recaptcha_public']) : $spam_html,
@@ -526,7 +543,7 @@ $template->assign_vars(array(
 		'MISSING9' => ($missing['country']) ? 1 : 0,
 		'MISSING10' => ($missing['zip']) ? 1 : 0,
 		'MISSING11' => ($missing['tel']) ? 1 : 0,
-		'FEES'=> $system->print_money($signup_fee['value']),
+		'FEES'=> $system->print_money($signup_fee),
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
 		'V_NNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 2) ? 'checked=true' : '',

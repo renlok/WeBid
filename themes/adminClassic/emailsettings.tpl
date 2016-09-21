@@ -1,4 +1,3 @@
-		<link rel="stylesheet" media="screen,projection" type="text/css" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 		<div style="width:25%; float:left;">
 			<div style="margin-left:auto; margin-right:auto;">
 					<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
@@ -7,9 +6,6 @@
 		<div style="width:75%; float:right;">
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</h4>
-<!-- IF ERROR ne '' -->
-				<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 					<form name="conf" action="" method="post" enctype="multipart/form-data">
 						<table width="98%" cellpadding="2" align="center" class="blank">
 <!-- BEGIN block -->

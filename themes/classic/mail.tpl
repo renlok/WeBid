@@ -46,5 +46,4 @@ $(document).ready(function() {
 		<input type="submit" name="submit" value="{L_008}"  OnClick="if ( !confirm('{L_2__0031}') ) { return false; }">
 	</div>
 </form>
-
 <!-- INCLUDE user_menu_footer.tpl -->

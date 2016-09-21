@@ -119,8 +119,8 @@ while ($row = $db->fetch())
 			'ENDS' => $ends_string,
 			'ID' => $row['id'],
 			'BID' => $system->print_money($high_bid),
-			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
-			'TITLE' => $system->uncleanvars($row['title'])
+			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&amp;fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'TITLE' => htmlspecialchars($row['title'])
 			));
 	$i++;
 }
@@ -145,7 +145,7 @@ while ($row = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'DATE' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
 			'ID' => $row['id'],
-			'TITLE' => $system->uncleanvars($row['title'])
+			'TITLE' => htmlspecialchars($row['title'])
 			));
 	$i++;
 }
@@ -176,7 +176,7 @@ while ($row = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'DATE' => $ends_string,
 			'ID' => $row['id'],
-			'TITLE' => $system->uncleanvars($row['title'])
+			'TITLE' => htmlspecialchars($row['title'])
 			));
 	$i++;
 }
@@ -212,8 +212,8 @@ while ($row = $db->fetch())
 			'ENDS' => $ends_string,
 			'ID' => $row['id'],
 			'BID' => $system->print_money($high_bid),
-			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
-			'TITLE' => $system->uncleanvars($row['title'])
+			'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&amp;fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'TITLE' => htmlspecialchars($row['title'])
 			));
 }
 $hot_items = ($i > 0) ? true : false;
@@ -251,7 +251,7 @@ if ($system->SETTINGS['newsbox'] == 1)
 		$template->assign_block_vars('newsbox', array(
 				'ID' => $new['id'],
 				'DATE' => FormatDate($new['new_date']),
-				'TITLE' => (!empty($new['title'])) ? $system->uncleanvars($new['title']) : $system->uncleanvars($new['t'])
+				'TITLE' => (!empty($new['title'])) ? htmlspecialchars($new['title']) : htmlspecialchars($new['t'])
 				));
 	}
 }

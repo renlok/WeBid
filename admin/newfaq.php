@@ -18,21 +18,19 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // Insert new message
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (empty($_POST['question'][$system->SETTINGS['defaultlanguage']]) || empty($_POST['answer'][$system->SETTINGS['defaultlanguage']]))
 	{
-		$ERR = $ERR_067;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_067));
 	}
 	else
 	{
 		$query = "INSERT INTO " . $DBPrefix . "faqs values (NULL, :question, :answer, :category)";
 		$params = array();
-		$params[] = array(':question', $_POST['question'][$system->SETTINGS['defaultlanguage']], 'str');
-		$params[] = array(':answer', $_POST['answer'][$system->SETTINGS['defaultlanguage']], 'str');
+		$params[] = array(':question', $system->cleanvars($_POST['question'][$system->SETTINGS['defaultlanguage']]), 'str');
+		$params[] = array(':answer', $system->cleanvars($_POST['answer'][$system->SETTINGS['defaultlanguage']], true), 'str');
 		$params[] = array(':category', $_POST['category'], 'int');
 		$db->query($query, $params);
 		$id = $db->lastInsertId();
@@ -44,8 +42,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params = array();
 			$params[] = array(':id', $id, 'int');
 			$params[] = array(':lang', $k, 'str');
-			$params[] = array(':question', $_POST['question'][$k], 'str');
-			$params[] = array(':answer', $_POST['answer'][$k], 'str');
+			$params[] = array(':question', $system->cleanvars($_POST['question'][$k]), 'str');
+			$params[] = array(':answer', $system->cleanvars($_POST['answer'][$k], true), 'str');
 			$db->query($query, $params);
 		}
 		header('location: faqs.php');
@@ -73,10 +71,6 @@ foreach ($LANGUAGES as $k => $language)
 			'CONTENT' => (isset($_POST['content'][$k])) ? $_POST['content'][$k] : ''
 			));
 }
-
-$template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : ''
-		));
 
 include 'header.php';
 $template->set_filenames(array(

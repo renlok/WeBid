@@ -6,16 +6,13 @@
 		<div style="width:75%; float:right;">
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</h4>
-<!-- IF ERROR ne '' -->
-				<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 				<form name="conf" action="" method="post" enctype="multipart/form-data">
 					<table width="98%" cellpadding="2" align="center" class="blank">
 <!-- BEGIN block -->
 						<tr valign="top">
 <!-- IF block.B_HEADER -->
 							<td colspan="2" style="padding:3px; border-top:#0083D7 1px solid; background:#ECECEC;">
-										<b>{block.TITLE}</b>
+								<b>{block.TITLE}</b>
 							</td>
 <!-- ELSE -->
 							<td width="175">{block.TITLE}</td>

@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 define('InAdmin', 1);
+$current_page = 'contents';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -42,7 +43,6 @@ elseif (isset($_POST['action']) && $_POST['action'] == "No")
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $msg_id,
 		'MESSAGE' => sprintf($MSG['834'], $msg_id),
 		'TYPE' => 1

@@ -23,7 +23,7 @@ $catscontrol = new MPTTcategories();
 
 function search_cats($parent_id, $level)
 {
-	global $DBPrefix, $catscontrol;
+	global $catscontrol;
 	$catstr = '';
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
@@ -84,7 +84,7 @@ while ($row = $db->fetch())
 	// set category data
 	$template->assign_block_vars('cats', array(
 			'CAT_ID' => $row['cat_id'],
-			'CAT_NAME' => $system->uncleanvars($row['cat_name']),
+			'CAT_NAME' => htmlspecialchars($row['cat_name']),
 			'TRAN_CAT' => isset($category_names[$row['cat_id']])? $category_names[$row['cat_id']] : '',
 			'BG' => $bg
 			));
@@ -92,7 +92,6 @@ while ($row = $db->fetch())
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl']
 		));
 

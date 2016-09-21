@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	$system->writesetting("wordsfilter", ynbool($_POST['wordsfilter']), 'str');
@@ -44,8 +42,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			}
 		}
 	}
-	$ERR = $MSG['5073'];
-	$system->SETTINGS['wordsfilter'] = $_POST['wordsfilter'];
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5073']));
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "filterwords";
@@ -58,7 +55,6 @@ while ($word = $db->fetch())
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'WORDLIST' => $WORDSLIST,
 		'WFYES' => ($system->SETTINGS['wordsfilter'] == 'y') ? ' checked="checked"' : '',

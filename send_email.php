@@ -54,7 +54,7 @@ else
 {
 	$auction_data = $db->result();
 	$seller_id = $auction_data['user'];
-	$item_title = $system->uncleanvars($auction_data['title']);
+	$item_title = htmlspecialchars($auction_data['title']);
 	$seller_nick = $auction_data['nick'];
 	$seller_email = $auction_data['email'];
 }
@@ -96,7 +96,7 @@ if (isset($_POST['action']) || !empty($_POST['action']))
 				'TITLE' => $item_title,
 				'SELLER_NICK' => $seller_nick
 				));
-		$item_title = $system->uncleanvars($item_title);
+		$item_title = htmlspecialchars($item_title);
 		$subject = $MSG['335'] . ' ' . $system->SETTINGS['sitename'] . ' ' . $MSG['336'] . ' ' . $item_title;
 		$from_id = (!$user->logged_in) ? $_POST['sender_email'] : $user->user_data['id'];
 		$id_type = (!$user->logged_in) ? 'fromemail' : 'sentfrom';

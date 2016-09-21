@@ -53,15 +53,15 @@
 				<div class="alert alert-danger text-center" role="alert">{L_189}: {to_pay.TOTAL}</div>
 			</div>
 			<div class="col-md-2 col-sm-2 col-sx-5 text-right">
-				<form name="" method="post" action="{SITEURL}order_print.php" id="fees" title="{L_1153}" target="_blank">
+				<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees" title="{L_1153}" target="_blank">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="hidden" name="pfval" value="{to_pay.AUC_ID}">
+					<input type="hidden" name="pfval" value="{to_pay.ID}">
 					<input type="submit" name="Pay" value="{L_756}" class="btn btn-primary btn-xs">
 				</form>
 				<p>
 					<form name="" method="post" action="{SITEURL}order_print.php" id="fees" title="Print Invoice" target="_blank">
 						<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-						<input type="hidden" name="pfval" value="{to_pay.ID}">
+						<input type="hidden" name="pfval" value="{to_pay.AUC_ID}">
 						<input type="hidden" name="pfwon" value="{to_pay.WINID}">
 						<input type="submit" type="button" value="{L_1058}" class="btn btn-default btn-xs">
 					</form>

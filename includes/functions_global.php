@@ -14,11 +14,13 @@
 
 if (!defined('InWeBid')) exit('Access denied');
 
+include PACKAGE_PATH . 'htmLawed.php';
+
 class global_class
 {
 	var $SETTINGS, $ctime, $tdiff;
 
-	function global_class()
+	function __construct()
 	{
 		global $DBPrefix, $db;
 
@@ -63,7 +65,6 @@ class global_class
 		{
 			$this->SETTINGS[$settingv2['fieldname']] = $settingv2['value'];
 		}
-		$this->SETTINGS['gateways'] = unserialize($this->SETTINGS['gateways']);
 		// check if url needs https
 		if ($this->SETTINGS['https'] == 'y')
 		{
@@ -187,26 +188,11 @@ class global_class
 
 	function check_maintainance_mode()
 	{
-		global $DBPrefix, $user, $db;
+		global $user;
 
-		if (!isset($this->SETTINGS['MAINTAINANCE']))
+		if ($this->SETTINGS['maintainance_mode_active'])
 		{
-			$query = "SELECT * FROM " . $DBPrefix . "maintainance";
-			$db->direct_query($query);
-
-			if ($db->numrows() > 0)
-			{
-				$this->SETTINGS['MAINTAINANCE'] = $db->result();
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		if ($this->SETTINGS['MAINTAINANCE']['active'])
-		{
-			if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['MAINTAINANCE']['superuser'] || $user->user_data['id'] == $this->SETTINGS['MAINTAINANCE']['superuser']))
+			if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['superuser'] || $user->user_data['id'] == $this->SETTINGS['superuser']))
 			{
 				return false;
 			}
@@ -216,25 +202,16 @@ class global_class
 		return false;
 	}
 
-	function cleanvars($i, $trim = false)
+	function cleanvars($input, $allow_html = false)
 	{
-		if ($trim)
-			$i = trim($i);
-		if (!get_magic_quotes_gpc())
-			$i = addslashes($i);
-		$i = rtrim($i);
-		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
-		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;');
-		$i = str_replace($look, $safe, $i);
-		return $i;
-	}
+		$config = array('elements' => '-*');
 
-	function uncleanvars($i)
-	{
-		$look = array('&', '#', '<', '>', '"', '\'', '(', ')', '%');
-		$safe = array('&amp;', '&#35;', '&lt;', '&gt;', '&quot;', '&#39;', '&#40;', '&#41;', '&#37;');
-		$i = str_replace($safe, $look, $i);
-		return $i;
+		if ($allow_html)
+		{
+			$config = array('safe' => 1, 'elements' => 'a, ol, ul, li, u, strong, em, br, p', 'deny_attribute' => '* -href');
+		}
+
+		return str_replace(array('&lt;', '&gt;', '&amp;'), array('<', '>', '&'), htmLawed($input, $config));
 	}
 
 	function filter($txt)
@@ -377,7 +354,7 @@ class global_class
 		$b = ($this->SETTINGS['moneyformat'] == 1) ? ',' : '.';
 		if (!$from_database)
 		{
-			$str = $this->input_money($str, $from_database);
+			$str = $this->input_money($str);
 		}
 
 		return number_format(floatval($str), $this->SETTINGS['moneydecimals'], $a, $b);

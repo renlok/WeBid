@@ -51,7 +51,7 @@ foreach ($feedback_data as $row)
 	$template->assign_block_vars('fbs', array(
 			'ID' => $row['id'],
 			'ROWCOLOUR' => ($k % 2) ? 'bgcolor="#FFFEEE"' : '',
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => htmlspecialchars($row['title']),
 			'WINORSELLNICK' => $info['nick'],
 			'WINORSELL' => ($row['winner'] == $user->user_data['id']) ? $MSG['25_0002'] : $MSG['25_0001'],
 			'WINORSELLEMAIL' => $info['email'],

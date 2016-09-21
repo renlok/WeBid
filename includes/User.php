@@ -23,8 +23,6 @@ class User
 
 	function __construct()
 	{
-		global $_SESSION, $system, $DBPrefix, $db;
-		
 		if (!$this->checkLoginSession())
 		{
 			$this->rememberMeLogin();

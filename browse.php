@@ -175,17 +175,17 @@ else
 	$TOTALAUCTIONS = $db->result('COUNT');
 
 	// Handle pagination
-	if (!isset($_GET['PAGE']) || $_GET['PAGE'] == 1)
+	if (!isset($_GET['PAGE']) || intval($_GET['PAGE']) <= 1 || empty($_GET['PAGE']))
 	{
 		$OFFSET = 0;
 		$PAGE = 1;
 	}
 	else
 	{
-		$PAGE = intval($_REQUEST['PAGE']);
+		$PAGE = intval($_GET['PAGE']);
 		$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
 	}
-	$PAGES = ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+	$PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 	$query = "SELECT * FROM " . $DBPrefix . "auctions
 			WHERE " . $insql . " starts <= :time
@@ -215,8 +215,8 @@ else
 		$query_feat .= " AND title LIKE :title";
 		$params_feat[] = array(':title', '%' . $system->cleanvars($_POST['catkeyword']) . '%', 'str');
 	}
-	$query_feat .= " ORDER BY ends ASC LIMIT :offset, 5";
-	$params_feat[] = array(':offset', (($PAGE - 1) * 5), 'int');
+	$query_feat .= " ORDER BY ends ASC LIMIT :offset, " . $system->SETTINGS['featuredperpage'];
+	$params_feat[] = array(':offset', (($PAGE - 1) * $system->SETTINGS['featuredperpage']), 'int');
 
 	include INCLUDE_PATH . 'browseitems.inc.php';
 	browseItems($query, $params, $query_feat, $params_feat, $TOTALAUCTIONS, 'browse.php', 'id=' . $id);

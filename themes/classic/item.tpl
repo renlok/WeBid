@@ -4,8 +4,7 @@ $(document).ready(function() {
 	var currenttime = '{ENDS_IN}';
 	function padlength(what)
 	{
-		var output=(what.toString().length == 1)? '0' + what : what;
-		return output;
+		return (what.toString().length == 1)? '0' + what : what;
 	}
 	function displaytime()
 	{
@@ -269,6 +268,7 @@ $(document).ready(function() {
 							<p><a href="{SITEURL}user_login.php?">{L_221}</a></p>
 <!-- ENDIF -->
 						</div>
+						<a class="report-item rightside" href='{SITEURL}item_report.php?id={ID}'>{L_report_this_item}</a>
 					</td>
 				</tr>
 			</table>
@@ -312,11 +312,6 @@ $(document).ready(function() {
 	<!-- END gallery -->
 						</tr>
 					</table>
-					<script type="text/javascript">
-						$(function() {
-							$('#gallery a').lightBox();
-						});
-					</script>
 				</div>
 			</div>
 <!-- ENDIF -->
@@ -369,8 +364,8 @@ $(document).ready(function() {
 					<td>
 						<div class="tableContent2">
 							<div class="table2">
-<!-- IF COUNTRY ne '' or ZIP ne '' -->
-								<b>{L_014}:</b> {COUNTRY} ({ZIP})<br>
+<!-- IF CITY ne '' or COUNTRY ne '' or ZIP ne '' -->
+								<b>{L_014}:</b> <!-- IF CITY ne '' -->{CITY}<!-- ENDIF --> <!-- IF COUNTRY ne '' -->{COUNTRY}<!-- ENDIF --> <!-- IF ZIP ne '' -->({ZIP})<!-- ENDIF --><br>
 <!-- ENDIF -->
 <!-- IF B_SHIPPING -->
 								<b>{L_025}:</b> {SHIPPING}, {INTERNATIONAL}<br>

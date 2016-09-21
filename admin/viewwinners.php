@@ -87,7 +87,7 @@ while ($row = $db->fetch())
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ID' => $id,
-		'TITLE' => $system->uncleanvars($AUCTION['title']),
+		'TITLE' => htmlspecialchars($AUCTION['title']),
 		'S_NICK' => $AUCTION['nick'],
 		'S_NAME' => $AUCTION['name'],
 		'MIN_BID' => $system->print_money($AUCTION['minimum_bid']),

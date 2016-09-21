@@ -25,7 +25,7 @@
 				<!-- ENDIF -->
 					Below are the details.
 			<!-- ELSE -->
-				We are sorry but your itmes were not sold.
+				We are sorry but your items were not sold.
 			<!-- ENDIF -->
 	</td>
 	</tr>

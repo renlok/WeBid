@@ -256,8 +256,8 @@ function show_config_table($fresh = true)
 			// Try to create the directory if it does not exist
 			if (!file_exists(MAIN_PATH . $dir))
 			{
-				@mkdir(MAIN_PATH . $dir, 0777);
-				@chmod(MAIN_PATH . $dir, 0777);
+				@mkdir(MAIN_PATH . $dir, 0755);
+				@chmod(MAIN_PATH . $dir, 0755);
 			}
 
 			// Now really check
@@ -320,7 +320,6 @@ function show_config_table($fresh = true)
 
 		$directories = array(
 			'includes/membertypes.inc.php',
-			'language/EN/countries.inc.php',
 			'language/EN/categories.inc.php',
 			'language/EN/categories_select_box.inc.php'
 			);
@@ -363,6 +362,10 @@ function show_config_table($fresh = true)
 		$data .= (extension_loaded('pdo')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 
+		$data .= '<tr><td colspan="2">File Info:</td><td>';
+		$data .= (function_exists('finfo_open')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+		$data .= '</tr>';
+
 		$data .= '<tr><td>PHP Version: (' . phpversion() . ')</td><td colspan="2">';
 		$data .= ((version_compare(phpversion(), '5.4', '>'))) ? '<strong style="color:green">OK</strong>' : '<strong style="color:red">Too low</strong>';
 		$data .= '</tr>';
@@ -382,7 +385,9 @@ function show_config_table($fresh = true)
 
 function search_cats($parent_id, $level)
 {
-	global $DBPrefix, $catscontrol;
+	global $catscontrol;
+
+	$catstr = '';
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
 	foreach ($tree as $k => $v)
@@ -431,4 +436,24 @@ function rebuild_cat_file()
 	$handle = fopen (MAIN_PATH . 'language/' . $system->SETTINGS['defaultlanguage'] . '/categories.inc.php', 'w');
 	fputs($handle, $output);
 }
-?>
+
+function rrmdir($dir) { 
+   if (is_dir($dir)) { 
+     $objects = scandir($dir); 
+     foreach ($objects as $object) { 
+       if ($object != "." && $object != "..") { 
+         if (is_dir($dir."/".$object))
+           rrmdir($dir."/".$object);
+         else
+           unlink($dir."/".$object); 
+       } 
+     }
+     rmdir($dir); 
+   } 
+ }
+
+ function rmf($f) { 
+   if(file_exists($f)) {
+   	unlink($f);
+   }
+ }

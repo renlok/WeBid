@@ -37,4 +37,3 @@ function recaptcha_check_answer($privkey, $challenge)
 	$response = $recaptcha->verify($challenge);
 	return $response->isSuccess();
 }
-?>

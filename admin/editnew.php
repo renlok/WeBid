@@ -16,8 +16,8 @@ define('InAdmin', 1);
 $current_page = 'contents';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
-include PACKAGE_PATH . 'htmLawed.php';
 include 'loggedin.inc.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 if (!isset($_POST['id']) && (!isset($_GET['id']) || empty($_GET['id'])))
 {
@@ -30,17 +30,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Data check
 	if (empty($_POST['title']) || empty($_POST['content']))
 	{
-		$ERR = $ERR_112;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
 	}
 	else
 	{
 		// clean up everything
-		$conf = array();
-		$conf['safe'] = 1;
 		foreach ($_POST['title'] as $k => $v)
 		{
-			$_POST['title'][$k] = htmLawed($v, $conf);
-			$_POST['content'][$k] = htmLawed($_POST['content'][$k], $conf);
+			$_POST['title'][$k] = $system->cleanvars($v);
+			$_POST['content'][$k] = $system->cleanvars($_POST['content'][$k], true);
 		}
 
 		$news_id = intval($_POST['id']);
@@ -95,6 +93,12 @@ $params = array();
 $params[] = array(':id', $_GET['id'], 'int');
 $db->query($query, $params);
 
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
+
 $CONT_tr = array();
 $TIT_tr = array();
 while ($arr = $db->fetch())
@@ -102,14 +106,13 @@ while ($arr = $db->fetch())
 	$suspended = $arr['suspended'];
 	$template->assign_block_vars('lang', array(
 			'LANG' => $arr['lang'],
-			'TITLE' => $system->uncleanvars($arr['title']),
-			'CONTENT' => $system->uncleanvars($arr['content'])
+			'TITLE' => $arr['title'],
+			'CONTENT' => $CKEditor->editor('content[' . $arr['lang'] . ']', $arr['content'])
 			));
 }
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TITLE' => $MSG['343'],
 		'BUTTON' => $MSG['530'],
 		'ID' => intval($_GET['id']),

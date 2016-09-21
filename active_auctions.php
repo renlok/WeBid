@@ -17,6 +17,8 @@ include 'common.php';
 if (isset($_GET['user_id']) && !empty($_GET['user_id']))
 {
 	$user_id = intval($_GET['user_id']);
+	// check trying to access valid user id
+	$user->checkUserValid($user_id);
 }
 elseif ($user->logged_in)
 {
@@ -29,9 +31,6 @@ else
 	header('location: user_login.php');
 	exit;
 }
-
-// check trying to access valid user id
-$user->is_valid_user($user_id);
 
 $NOW = time();
 
@@ -84,25 +83,19 @@ while ($row = $db->fetch())
 		$row['pict_url'] = get_lang_img('nopicture.gif');
 	}
 
-	// number of bids for this auction
-	$query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :id";
-	$params[] = array(':id', $row['id'], 'int');
-	$db->query($query, $params);
-	$num_bids = $db->numrows();
-
 	$difference = $row['ends'] - $NOW;
 
 	$template->assign_block_vars('auctions', array(
 			'BGCOLOUR' => (!($k % 2)) ? '' : 'class="alt-row"',
 			'ID' => $row['id'],
 			'PIC_URL' => $row['pict_url'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => htmlspecialchars($row['title']),
 			'BNIMG' => get_lang_img(($row['bn_only'] == 0) ? 'buy_it_now.gif' : 'bn_only.png'),
 			'BNVALUE' => $row['buy_now'],
 			'BNFORMAT' => $system->print_money($row['buy_now']),
 			'BIDVALUE' => $row['current_bid'],
 			'BIDFORMAT' => $system->print_money($row['current_bid']),
-			'NUM_BIDS' => $num_bids,
+			'NUM_BIDS' => $row['num_bids'],
 			'TIMELEFT' => FormatTimeLeft($difference),
 
 			'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] || $row['bn_only'] == 0 && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),

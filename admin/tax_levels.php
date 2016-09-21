@@ -18,21 +18,19 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 // add or edit a value
 if (isset($_POST['action']) && $_POST['action'] == 'add')
 {
 	$seller_countries = '';
 	$buyer_countries = '';
 	if (!empty($_POST['seller_countries']) && is_array($_POST['seller_countries'])) {
-	$seller_countries = implode(' ', $_POST['seller_countries']);
+		$seller_countries = implode(' ', $_POST['seller_countries']);
 	}
 	if (!empty($_POST['buyer_countries']) && is_array($_POST['buyer_countries'])) {
-	$buyer_countries = implode(' ', $_POST['buyer_countries']);
+		$buyer_countries = implode(' ', $_POST['buyer_countries']);
 	}
 
-	if (!empty($system->cleanvars($_POST['tax_name'])))
+	if (!empty($_POST['tax_name']))
 	{
 		if ($_POST['tax_id'] != '')
 		{
@@ -64,7 +62,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'add')
 	}
 	else
 	{
-		$errmsg = $ERR_002;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_002));
 	}
 }
 
@@ -136,7 +134,6 @@ while($row = $db->fetch())
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($errmsg)) ? $errmsg : '',
 		'TAX_ID' => (isset($data['id'])) ? $data['id'] : '',
 		'TAX_NAME' => (isset($data['tax_name'])) ? $data['tax_name'] : '',
 		'TAX_RATE' => (isset($data['tax_rate'])) ? $data['tax_rate'] : '',

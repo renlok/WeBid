@@ -20,23 +20,22 @@ include 'loggedin.inc.php';
 
 if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt')))
 {
-	$ERR = $ERR_25_0002;
+	$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_25_0002));
 	$realversion = 'Unknown';
 }
 
-if ($realversion != $system->SETTINGS['version'])
-{
+if (version_compare($system->SETTINGS['version'], $realversion, "<"))
+{ 
 	$myversion = '<span style="color:#ff0000;">' . $system->SETTINGS['version'] . '</span>';
 	$text = $MSG['30_0211'];
 }
 else
-{
+{ 
 	$myversion = '<span style="color:#00ae00;">' . $system->SETTINGS['version'] . '</span>';
-	$text = $MSG['30_0212'];
+	$text = $MSG['30_0212']; 
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TEXT' => $text,
 		'MYVERSION' => $myversion,

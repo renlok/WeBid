@@ -47,7 +47,7 @@ else
 	{
 		$query = "UPDATE " . $DBPrefix . "adminusers SET notes = :admin_note WHERE id = :admin_id";
 		$params = array();
-		$params[] = array(':admin_note', $system->cleanvars($_POST['anotes']), 'str');
+		$params[] = array(':admin_note', $_POST['anotes'], 'str');
 		$params[] = array(':admin_id', $_SESSION['WEBID_ADMIN_IN'], 'int');
 		$db->query($query, $params);
 	}
@@ -59,7 +59,6 @@ else
 			'THEME' => $system->SETTINGS['theme'],
 			'SITEURL' => $system->SETTINGS['siteurl'],
 			'CHARSET' => $CHARSET,
-			'EXTRAJS' => (isset($extraJs)) ? $extraJs : '',
 			'ADMIN_USER' => $_SESSION['WEBID_ADMIN_USER'],
 			'ADMIN_ID' => $_SESSION['WEBID_ADMIN_IN'],
 			'CURRENT_PAGE' => $current_page,

@@ -814,5 +814,3 @@ class diff3_block_builder
 		array_splice($array, sizeof($array), 0, $lines);
 	}
 }
-
-?>

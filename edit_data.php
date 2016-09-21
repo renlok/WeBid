@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 include INCLUDE_PATH . 'config/timezones.php';
 include INCLUDE_PATH . 'config/gateways.php';
 
@@ -147,7 +146,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 			foreach ($gateway_data as $gateway)
 			{
-				if (isset($_POST[$gateway['name']]['address']) && empty($_POST[$gateway['name']]['address']))
+				if (isset($_POST[$gateway['name']]['address']) && !empty($_POST[$gateway['name']]['address']))
 				{
 					$params = array();
 					$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "usergateways WHERE gateway_id = :gateway_id AND user_id = :user_id";
@@ -198,16 +197,21 @@ else
 	$TPL_year = '';
 }
 
-$country = '';
-foreach ($countries as $code => $name)
+$query = "SELECT country_id, country FROM " . $DBPrefix . "countries";
+$db->direct_query($query);
+$countries = $db->fetchall();
+$country_list = '';
+
+foreach($countries as $country)
 {
-	$country .= '<option value="' . $name . '"';
-	if ($name == $USER['country'])
+	$country_list .= '<option value="' . $country['country'] . '"';
+	if ($country['country'] == $USER['country'])
 	{
-		$country .= ' selected';
+		$country_list .= ' selected';
 	}
-	$country .= '>' . $name . '</option>' . "\n";
+	$country_list .= '>' . $country['country'] . '</option>' . "\n";
 }
+
 $dobmonth = '<select name="TPL_month">
 		<option value=""></option>
 		<option value="01"' . (($TPL_month == '01') ? ' selected' : '') . '>' . $MSG['MON_001E'] . '</option>
@@ -234,6 +238,10 @@ $dobday .= '</select>';
 
 $time_correction = generateSelect('TPL_timezone', $timezones, $USER['timezone']);
 
+$query = "SELECT * FROM " . $DBPrefix . "payment_options po LEFT JOIN " . $DBPrefix . "usergateways ug ON (po.id = ug.gateway_id AND ug.user_id = " . $user->user_data['id'] . ") WHERE po.is_gateway = 1";
+$db->direct_query($query);
+$gateway_data = $db->fetchAll();
+
 foreach ($gateway_data as $gateway)
 {
 	if ($gateway['gateway_active'] == 1)
@@ -242,9 +250,9 @@ foreach ($gateway_data as $gateway)
 				'GATEWAY_ID' => $gateway['id'],
 				'NAME' => $gateway['displayname'],
 				'PLAIN_NAME' => $gateway['name'],
-				'REQUIRED' => $gateway['gateway_required'],
-				'ADDRESS' => isset($_POST[$gateway['name']]['address']) ? $_POST[$gateway['name']]['address'] : '',
-				'PASSWORD' => isset($_POST[$gateway['name']]['password']) ? $_POST[$gateway['name']]['password'] : '',
+				'REQUIRED' => ($gateway['gateway_required'] == 1) ? '*' : '',
+				'ADDRESS' => (!is_null($gateway['address'])) ? $gateway['address'] : '',
+				'PASSWORD' => (!is_null($gateway['password'])) ? $gateway['password'] : '',
 				'ADDRESS_NAME' => isset($address_string[$gateway['name']]) ? $address_string[$gateway['name']] : $gateway['name'],
 				'PASSWORD_NAME' => isset($password_string[$gateway['name']]) ? $password_string[$gateway['name']] : '',
 				'ERROR_STRING' => $error_string[$gateway['name']],
@@ -255,7 +263,7 @@ foreach ($gateway_data as $gateway)
 }
 
 $template->assign_vars(array(
-		'COUNTRYLIST' => $country,
+		'COUNTRYLIST' => $country_list,
 		'NAME' => $USER['name'],
 		'NICK' => $USER['nick'],
 		'EMAIL' => $USER['email'],

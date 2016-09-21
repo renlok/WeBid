@@ -46,27 +46,25 @@ if (isset($_GET['add']) && !empty($_GET['add']))
 // Delete item form item watch
 if (isset($_GET['delete']) && !empty($_GET['delete']))
 {
-	$items = trim($user->user_data['item_watch']);
-	$auc_id = explode(' ', $items);
-	for ($j = 0; $j < count($auc_id); $j++)
+	$item_to_delete = $_GET['delete'];
+	$currently_watched_items = explode(' ', trim($user->user_data['item_watch']));
+	
+	$items_to_watch = array();
+
+	for ($j = 0; $j < count($currently_watched_items); $j++)
 	{
-		$match = strstr($auc_id[$j], strval($_GET['delete']));
-		if ($match)
+		if ($currently_watched_items[$j] != $item_to_delete)
 		{
-			$item_watch = $item_watch;
-		}
-		else
-		{
-			$item_watch = $auc_id[$j] . ' ' . $item_watch;
+			array_push($items_to_watch, $currently_watched_items[$j]);
 		}
 	}
-	$item_watch_new = trim($item_watch);
-	$query = "UPDATE " . $DBPrefix . "users SET item_watch = :item_watch_new WHERE id = :user_id";
+
+	$query = "UPDATE " . $DBPrefix . "users SET item_watch = :item_watch WHERE id = :user_id";
 	$params = array();
-	$params[] = array(':item_watch_new', $system->cleanvars($item_watch_new), 'str');
+	$params[] = array(':item_watch', implode(' ', $items_to_watch), 'str');
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
-	$user->user_data['item_watch'] = $item_watch_new;
+	$user->user_data['item_watch'] = implode(' ', $items_to_watch);
 }
 
 // Show results
@@ -74,17 +72,11 @@ $items = trim($user->user_data['item_watch']);
 
 if ($items != '' && $items != null)
 {
-	$item = explode(' ', $items);
-	$itemids = '0';
-	$total = count($item);
-	for ($j = 0; $j < $total; $j++)
-	{
-		$itemids .= ',' . $item[$j];
-	}
+	$itemids = str_replace(' ', ',', $items);
 	$query = "SELECT * FROM " . $DBPrefix . "auctions WHERE id IN (" . $itemids . ")";
 	$db->direct_query($query);
 	$total = $db->numrows();
-	browseItems($query, $params, '', '', $total, 'item_watch.php');
+	browseItems($query, null, '', '', $total, 'item_watch.php');
 }
 
 include 'header.php';

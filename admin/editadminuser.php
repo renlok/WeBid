@@ -18,18 +18,16 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 $id = intval($_REQUEST['id']);
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if ((!empty($_POST['password']) && empty($_POST['repeatpassword'])) || (empty($_POST['password']) && !empty($_POST['repeatpassword'])))
 	{
-		$ERR = $ERR_054;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_054));
 	}
 	elseif ($_POST['password'] != $_POST['repeatpassword'])
 	{
-		$ERR = $ERR_006;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_006));
 	}
 	else
 	{
@@ -77,7 +75,6 @@ else
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $id,
 		'USERNAME' => $user_data['username'],
 		'CREATED' => $CREATED,

@@ -46,9 +46,10 @@ $pages = ceil($total / $system->SETTINGS['perpage']);
 
 $left_limit = ($left_limit < 0) ? 0 : $left_limit;
 
-$query = "SELECT f.*, a.title, u.rate_sum FROM " . $DBPrefix . "feedbacks f
+$query = "SELECT f.*, a.title, u.rate_sum, w.winner FROM " . $DBPrefix . "feedbacks f
 	LEFT OUTER JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
 	LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id)
+	LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
 	WHERE rated_user_id = :user_id
 	ORDER by feedbackdate DESC
 	LIMIT :left_limit, :perpage";
@@ -83,12 +84,12 @@ while ($arrfeed = $db->fetch())
 	$template->assign_block_vars('fbs', array(
 			'BGCOLOUR' => (!(($i + 1) % 2)) ? '' : 'class="alt-row"',
 			'IMG' => $uimg,
-			'USFLINK' => 'profile.php?user_id=' . $arrfeed['rated_user_id'] . '&auction_id=' . $arrfeed['auction_id'],
+			'USFLINK' => 'profile.php?user_id=' . $arrfeed['winner'] . '&auction_id=' . $arrfeed['auction_id'],
 			'USERNAME' => $arrfeed['rater_user_nick'],
 			'USFEED' => $arrfeed['rate_sum'],
 			'USICON' => (isset($usicon)) ? $usicon : '',
 			'FBDATE' => FormatDate($arrfeed['feedbackdate']),
-			'AUCTION_TITLE' => $system->uncleanvars($arrfeed['title']),
+			'AUCTION_TITLE' => htmlspecialchars($arrfeed['title']),
 			'AUCTION_ID' => $arrfeed['auction_id'],
 			'FEEDBACK' => nl2br($arrfeed['feedback'])
 			));

@@ -32,15 +32,42 @@ if (isset($_GET['shipped']))
 	$db->query($query, $params);
 }
 
+
+$query = "SELECT count(DISTINCT a.id) As COUNT
+		FROM " . $DBPrefix . "winners a
+		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
+		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.seller)
+		WHERE (b.closed = 1 OR b.bn_only = 1) AND b.suspended = 0
+		AND a.winner = :user_id";
+$params = array();
+$params[] = array(':user_id', $user->user_data['id'], 'int');
+$db->query($query, $params);
+$TOTALAUCTIONS = $db->result('COUNT');
+
+if (!isset($_GET['PAGE']) || intval($_GET['PAGE']) <= 1 || empty($_GET['PAGE']))
+{
+	$OFFSET = 0;
+	$PAGE = 1;
+}
+else
+{
+	$PAGE = intval($_GET['PAGE']);
+	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+}
+$PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
+
 // Get closed auctions with winners
 $query = "SELECT DISTINCT a.id, a.qty, a.seller, a.paid, a.feedback_win, a.bid, a.auction, a.shipped, b.title, b.ends, b.shipping_cost, b.additional_shipping_cost, b.shipping, u.nick, u.email
 		FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.seller)
 		WHERE (b.closed = 1 OR b.bn_only = 1) AND b.suspended = 0
-		AND a.winner = :user_id ORDER BY a.closingdate DESC";
+		AND a.winner = :user_id ORDER BY a.closingdate DESC
+		LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
+$params[] = array(':offset', $OFFSET, 'int');
+$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
 
 while ($row = $db->fetch())
@@ -51,7 +78,7 @@ while ($row = $db->fetch())
 
 	$template->assign_block_vars('items', array(
 			'AUC_ID' => $row['auction'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => htmlspecialchars($row['title']),
 			'ID' => $row['id'],
 			'ENDS' => FormatDate($row['ends']),
 			'BID' => $row['bid'],
@@ -66,6 +93,30 @@ while ($row = $db->fetch())
 			'FB_LINK' => ($row['feedback_win'] == 0) ? '<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?auction_id=' . $row['auction'] . '&wid=' . $user->user_data['id'] . '&sid=' . $row['seller'] . '&ws=w">' . $MSG['207'] . '</a>' : ''
 			));
 }
+
+// get pagenation
+$PREV = intval($PAGE - 1);
+$NEXT = intval($PAGE + 1);
+if ($PAGES > 1)
+{
+	$LOW = $PAGE - 5;
+	if ($LOW <= 0) $LOW = 1;
+	$COUNTER = $LOW;
+	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
+	{
+		$template->assign_block_vars('pages', array(
+				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'buying.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+				));
+		$COUNTER++;
+	}
+}
+
+$template->assign_vars(array(
+		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'buying.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'buying.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+		'PAGE' => $PAGE,
+		'PAGES' => $PAGES,
+));
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['454'];

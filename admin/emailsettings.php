@@ -16,10 +16,7 @@ define('InAdmin', 1);
 $current_page = 'settings';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
-$extraJs = ';js/jquery-ui.js;js/jquery-migrate.js';
 include 'loggedin.inc.php';
-
-unset($ERR);
 
 $mail_protocol = array('0' => 'WEBID MAIL', '1' => 'MAIL', '2' => 'SMTP', '4' => 'SENDMAIL', '5'=> 'QMAIL', '3' => 'NEVER SEND EMAILS (may be useful for testing purposes)');
 $smtp_secure_options =array('none' => 'None', 'tls' => 'TLS', 'ssl' => 'SSL');
@@ -31,7 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		if (empty($_POST['smtp_host']) || empty($_POST['smtp_username']) || empty($_POST['smtp_password']) || empty($_POST['smtp_port']) || intval($_POST['smtp_port']) <= 0 )
 		{
-			$ERR = $MSG['1132'];
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['1132']));
 		}
 	}
 
@@ -54,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$system->writesetting("smtp_host", (!empty($_POST['smtp_host'])? $_POST['smtp_host'] : ''), 'str');
 			$system->writesetting("smtp_emails", $_POST['alert_emails'], 'str');
 		}
-		$ERR = $MSG['email_settings_updated'];
+		$INFO = $MSG['email_settings_updated'];
 	}
 }
 
@@ -83,21 +80,11 @@ if (isset($_GET['test_email']))
 	$message        = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
 
 	$emailer = new email_handler();
-	$send_mail = $emailer->email_basic($subject, $to_email, $message);
-	if($send_mail)
-	{
-		$output = json_encode(array('type'=>'error', 'text' => 'Could not send mail! Please check your PHP mail configuration.Response:<br>' . $send_mail));
-		die($output);
-	}
-	else
-	{
-		$output = json_encode(array('type'=>'message', 'text' => 'Hi '.$user_name .' Your email(s) has been processed and sent. No error(s) to report.'));
-		die($output);
-	}
+	$emailer->email_basic($subject, $to_email, $message);
+	die();
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['524'],
 		'PAGENAME' => $MSG['1131'],

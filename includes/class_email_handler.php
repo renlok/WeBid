@@ -440,7 +440,6 @@ class email_handler
 					else
 						$sent = mail($this->to, $this->subject, $this->message, $this->headers);
 				}
-
 				if ($sent)
 					return false;
 				else
@@ -448,7 +447,8 @@ class email_handler
 			break;
 		}
 
-		if (is_array($this->to)) {
+		if (is_array($this->to))
+		{
 			for ($i = 0; $i < count($this->to); $i++)
 			{
 				try {
@@ -506,7 +506,7 @@ class email_handler
 				$this->add_error($e->getMessage());
 			}
 		}
-		return implode('<br/>',$this->errors);
+		return implode('<br/>', $this->errors);
 	}
 
 	function email_basic($subject, $to, $message, $from = '')

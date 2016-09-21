@@ -29,8 +29,6 @@ function ToBeDeleted($index)
 	return false;
 }
 
-unset($ERR);
-
 if (isset($_POST['action']) && $_POST['action'] = 'update')
 {
 	$ids = $_POST['id'];
@@ -38,6 +36,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 	$lows = $_POST['lows'];
 	$highs = $_POST['highs'];
 	$delete = (isset($_POST['delete'])) ? $_POST['delete'] : array();
+	$errors = false;
 
 	for ($i = 0; $i < count($increments); $i++)
 	{
@@ -45,16 +44,18 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 		{
 			if (!$system->CheckMoney($lows[$i]) || !$system->CheckMoney($highs[$i]) || !$system->CheckMoney($increments[$i]))
 			{
-				$ERR = $ERR_030;
+				$errors = true;
+				$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_030));
 			}
 			if ($lows[$i] > $highs[$i])
 			{
-				$ERR = $ERR_713;
+				$errors = true;
+				$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_713));
 			}
 		}
 	}
 
-	if (!isset($ERR))
+	if (!$errors)
 	{
 		for ($i = 0; $i < count($increments); $i++)
 		{
@@ -97,7 +98,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update')
 			}
 
 		}
-		$ERR = $MSG['160'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['160']));
 	}
 }
 
@@ -115,8 +116,7 @@ while ($row = $db->fetch())
 }
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($ERR)) ? $ERR : ''
+		'SITEURL' => $system->SETTINGS['siteurl']
 		));
 
 include 'header.php';

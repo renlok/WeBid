@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 function rebuild_table_file($table)
 {
-	global $DBPrefix, $system, $db;
+	global $DBPrefix, $db;
 	switch($table)
 	{
 		case 'membertypes':
@@ -54,37 +54,6 @@ function rebuild_table_file($table)
 			$output .= ',' . "\n";
 		else
 			$output .= "\n";
-	}
-
-	$output .= ');' . "\n" . '?>';
-
-	$handle = fopen($output_filename, 'w');
-	fputs($handle, $output);
-	fclose($handle);
-}
-
-function rebuild_html_file($table)
-{
-	global $DBPrefix, $system, $language, $db;
-	switch($table)
-	{
-		case 'countries':
-			$output_filename = MAIN_PATH . 'language/' . $language . '/countries.inc.php';
-			$field_name = 'country';
-			$array_name = 'countries';
-		break;
-	}
-
-	$query = "SELECT " . $field_name . " FROM " . $DBPrefix . $table . " ORDER BY " . $field_name . ";";
-	$db->direct_query($query);
-	$num_rows = $db->numrows();
-
-	$output = '<?php' . "\n";
-	$output.= '$' . $array_name . ' = array(' . "\n";
-
-	while ($row = $db->fetch())
-	{
-		$output .= '\'' . $row[$field_name] . '\' => \'' . $row[$field_name] . '\',' . "\n";
 	}
 
 	$output .= ');' . "\n" . '?>';

@@ -19,8 +19,6 @@ include INCLUDE_PATH . 'functions_admin.php';
 include INCLUDE_PATH . 'config/gateways.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 $query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1";
 $db->direct_query($query);
 $gateway_data = $db->fetchAll();
@@ -51,7 +49,7 @@ if (isset($_POST['action']))
 			$gateway_data[$k]['gateway_active'] = (isset($_POST[$gateway['name']]['active']) ? 1 : 0);
 		}
 	}
-	$ERR = $MSG['762'];
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['762']));
 }
 
 foreach ($gateway_data as $gateway)
@@ -73,8 +71,7 @@ foreach ($gateway_data as $gateway)
 }
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ERROR' => (isset($ERR)) ? $ERR : ''
+		'SITEURL' => $system->SETTINGS['siteurl']
 		));
 
 include 'header.php';

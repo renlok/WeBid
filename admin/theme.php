@@ -26,13 +26,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		// Update database
 		$system->writesetting("theme", $_POST['dtheme'], 'str');
 		$system->writesetting("admin_theme", $_POST['admin_theme'], 'str');
-		$system->SETTINGS['theme'] = $_POST['dtheme'];
-		$system->SETTINGS['admin_theme'] = $_POST['admin_theme'];
-		$ERR = $MSG['26_0005'];
+
+		$template->set_template();
+
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['26_0005']));
 	}
 	else
 	{
-		$ERR = $ERR_068;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_068));
 	}
 }
 elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'] == 'edit'))
@@ -133,11 +134,10 @@ elseif (isset($_GET['do']) && $_GET['do'] == 'addfile')
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 
 		'FILENAME' => isset($filename) ? $filename : '',
-		'THEME' => isset($theme) ? $theme : '',
+		'EDIT_THEME' => isset($theme) ? $theme : '',
 		'FILECONTENTS' => isset($filecontents) ? $filecontents : '',
 
 		'B_EDIT_FILE' => $edit_file

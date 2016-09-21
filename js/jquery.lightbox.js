@@ -323,7 +323,7 @@
     var alwaysShowNav = false;
     try {
       document.createEvent('TouchEvent');
-      alwaysShowNav = (this.options.alwaysShowNavOnTouchDevices) ? true : false;
+      alwaysShowNav = (this.options.alwaysShowNavOnTouchDevices);
     } catch (e) {}
 
     this.$lightbox.find('.lb-nav').show();

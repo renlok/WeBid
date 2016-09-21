@@ -18,8 +18,8 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-unset($ERR);
 $catscontrol = new MPTTcategories();
 
 // Data check
@@ -70,11 +70,11 @@ if (isset($_POST['action']))
 		// Check the input values for validity.
 		if ($_POST['quantity'] < 1) // 1 or more items being sold
 		{
-			$ERR = $ERR_701;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_701));
 		}
 		elseif (isset($_POST['current_bid']) && $_POST['current_bid'] < $_POST['min_bid'] && $_POST['current_bid'] != 0) // bid > min_bid
 		{
-			$ERR = $ERR_702;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_702));
 		}
 		else
 		{
@@ -196,7 +196,7 @@ if (isset($_POST['action']))
 			// clean unwanted images
 			if (isset($_POST['gallery']) && is_array($_POST['gallery']))
 			{
-				$uploaded = load_gallery(UPLOAD_FOLDER, $_POST['id']);
+				$uploaded = load_gallery($_POST['id']);
 				foreach ($uploaded as $img)
 				{
 					if (in_array($img, $_POST['gallery']))
@@ -262,7 +262,7 @@ if (isset($_POST['action']))
 	}
 	else
 	{
-		$ERR = $ERR_112;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
 	}
 }
 
@@ -333,7 +333,7 @@ $UPLOADED_PICTURES = array();
 if (file_exists(UPLOAD_PATH . $auc_id))
 {
 	// load dem pictures
-	$UPLOADED_PICTURES = load_gallery(UPLOAD_FOLDER, $auc_id);
+	$UPLOADED_PICTURES = load_gallery($auc_id);
 
 	if (is_array($UPLOADED_PICTURES))
 	{
@@ -364,16 +364,21 @@ while ($payment_method = $db->fetch())
 	}
 }
 
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
+
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => intval($_REQUEST['id']),
 		'USER' => $auction_data['nick'],
-		'TITLE' => $system->uncleanvars($auction_data['title']),
-		'SUBTITLE' => $system->uncleanvars($auction_data['subtitle']),
+		'TITLE' => $auction_data['title'],
+		'SUBTITLE' => $auction_data['subtitle'],
 		'DURLIST' => $dur_list,
 		'CATLIST1' => $categories_list1,
 		'CATLIST2' => $categories_list2,
-		'DESC' => $auction_data['description'],
+		'EDITOR' => $CKEditor->editor('description', $auction_data['description']),
 		'CURRENT_BID' => $system->print_money_nosymbol($auction_data['current_bid']),
 		'MIN_BID' => $system->print_money_nosymbol($auction_data['minimum_bid']),
 		'QTY' => $auction_data['quantity'],
@@ -389,7 +394,7 @@ $template->assign_vars(array(
 		'SHIPPING1' => ($auction_data['shipping'] == 1 || empty($auction_data['shipping'])) ? 'checked' : '',
 		'SHIPPING2' => ($auction_data['shipping'] == 2) ? 'checked' : '',
 		'INTERNATIONAL' => (!empty($auction_data['international'])) ? 'checked' : '',
-		'SHIPPING_TERMS' => $system->uncleanvars($auction_data['shipping_terms']),
+		'SHIPPING_TERMS' => $auction_data['shipping_terms'],
 		'IS_BOLD' => ($auction_data['bold']) ? 'checked' : '',
 		'IS_HIGHLIGHTED' => ($auction_data['highlighted']) ? 'checked' : '',
 		'IS_FEATURED' => ($auction_data['featured']) ? 'checked' : '',

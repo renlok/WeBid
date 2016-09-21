@@ -1,18 +1,18 @@
 <html>
 <head>
 	<title>WeBid Administration back-end</title>
-	<link rel="stylesheet" type="text/css" href="{SITEURL}/themes/admin/style.css" />
+	<link rel="stylesheet" type="text/css" href="{SITEURL}/themes/{THEME}/style.css" />
 </head>
 <body style="margin:0;">
 <div style="width:400px; padding:40px;" class="centre">
 	<div class="plain-box">
 <!-- IF PAGE eq 1 -->
-		<div class="info-box"><b>{L_441}</b></div>
+		<div class="alert alert-info"><b>{L_441}</b></div>
 <!-- ELSE -->
-		<div class="success-box"><b>{L_442}</b></div>
+		<div class="alert alert-success"><b>{L_442}</b></div>
 <!-- ENDIF -->
 <!-- IF ERROR ne '' -->
-		<div class="error-box"><b>{ERROR}</b></div>
+		<div class="alert alert-error"><b>{ERROR}</b></div>
 <!-- ENDIF -->
 		<form action="login.php" method="post">
 			<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

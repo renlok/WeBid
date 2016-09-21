@@ -514,6 +514,33 @@ if (count($categories) > 0)
 	}
 }
 
+if ($system->SETTINGS['prune_unactivated_users'] == 1)
+{
+	// prune unactivated user accounts
+	printLog("\n");
+	printLog("++++++ Prune unactivated user accounts");
+
+	$pruneAccountTime = time() - (60 * 60 * 24 * $system->SETTINGS['prune_unactivated_users_days']);
+
+	$query = "SELECT id FROM " . $DBPrefix . "users WHERE reg_date <= :pruneAccountTime AND suspended = 8";
+	$params = array();
+	$params[] = array(':pruneAccountTime', $pruneAccountTime, 'int');
+	$db->query($query, $params);
+
+	$pruneCount = $db->numrows();
+	printLog($pruneCount . " accounts to prune");
+	if ($pruneCount > 0)
+	{
+		$query = "DELETE FROM " . $DBPrefix . "users WHERE reg_date <= :pruneAccountTime AND suspended = 8";
+		$params = array();
+		$params[] = array(':pruneAccountTime', $pruneAccountTime, 'int');
+		$db->query($query, $params);
+
+		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - " . $pruneCount;
+		$db->direct_query($query);
+	}
+}
+
 // "remove" old auctions (archive them)
 printLog("\n");
 printLog("++++++ Archiving old auctions");
@@ -630,7 +657,7 @@ if ($buyer_fee > 0)
 		$emailer = new email_handler();
 		$emailer->assign_vars(array(
 				'ID' => $buyer_emails[$i]['id'],
-				'TITLE' => $system->uncleanvars($buyer_emails[$i]['title']),
+				'TITLE' => htmlspecialchars($buyer_emails[$i]['title']),
 				'NAME' => $buyer_emails[$i]['name'],
 				'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=6&auction_id=' . $Auction['id']
 				));
@@ -643,7 +670,7 @@ for ($i = 0; $i < count($seller_emails); $i++)
 	$emailer = new email_handler();
 	$emailer->assign_vars(array(
 			'ID' => $seller_emails[$i]['id'],
-			'TITLE' => $system->uncleanvars($seller_emails[$i]['title']),
+			'TITLE' => htmlspecialchars($seller_emails[$i]['title']),
 			'NAME' => $seller_emails[$i]['name'],
 			'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $Auction['id']
 			));

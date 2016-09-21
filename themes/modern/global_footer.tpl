@@ -44,5 +44,7 @@
 		Powered by <a href="http://www.webidsupport.com/">WeBid</a> &copy; 2008 - {L_COPY_YEAR} <a href="http://www.webidsupport.com/">WeBid</a>
 	</div>
 </div>
+<script src="{SITEURL}js/jquery.lightbox.js"></script>
+<script src="{SITEURL}js/webid.js"></script>
 </body>
 </html>

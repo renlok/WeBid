@@ -17,9 +17,7 @@ $current_page = 'contents';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-
-// Default for error message (blank)
-unset($ERR);
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 // Update message
 if (isset($_POST['action']) && $_POST['action'] == 'update')
@@ -27,7 +25,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	if (empty($_POST['question'][$system->SETTINGS['defaultlanguage']])
 		|| empty($_POST['answer'][$system->SETTINGS['defaultlanguage']]))
 	{
-		$ERR = $ERR_067;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_067));
 		$faq = $_POST;
 	}
 	else
@@ -39,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		$params = array();
 		$params[] = array(':category', $_POST['category'], 'int');
 		$params[] = array(':question', $_POST['question'][$system->SETTINGS['defaultlanguage']], 'str');
-		$params[] = array(':answer', $_POST['answer'][$system->SETTINGS['defaultlanguage']], 'str');
+		$params[] = array(':answer', $system->cleanvars($_POST['answer'][$system->SETTINGS['defaultlanguage']]), 'str');
 		$params[] = array(':faq_id', $_POST['id'], 'int');
 		$db->query($query, $params);
 		reset($LANGUAGES);
@@ -53,14 +51,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params = array();
 			$params[] = array(':lang', $k, 'str');
 			$params[] = array(':question', $_POST['question'][$k], 'str');
-			$params[] = array(':answer', $_POST['answer'][$k], 'str');
+			$params[] = array(':answer', $system->cleanvars($_POST['answer'][$k]), 'str');
 			if ($db->numrows() > 0)
 			{
 				$query = "UPDATE " . $DBPrefix . "faqs_translated SET
 					question = :question,
 					answer = :answer
 					WHERE id = :faq_id AND lang = :lang";
-
 			}
 			else
 			{
@@ -97,6 +94,12 @@ while ($row = $db->fetch())
 	$ANSWER_tr[$row['lang']] = $row['answer'];
 }
 
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
+
 reset($LANGUAGES);
 foreach ($LANGUAGES as $k => $v)
 {
@@ -104,9 +107,10 @@ foreach ($LANGUAGES as $k => $v)
 			'LANG' => $k,
 			'QUESTION' => (isset($_POST['question'][$k])) ? $_POST['question'][$k] : (isset($QUESTION_tr[$k])? $QUESTION_tr[$k] : '')
 			));
+	$answer = (isset($_POST['answer'][$k])) ? $_POST['answer'][$k] : (isset($ANSWER_tr[$k]) ? $ANSWER_tr[$k] : '');
 	$template->assign_block_vars('as', array(
 			'LANG' => $k,
-			'ANSWER' => (isset($_POST['answer'][$k])) ? $_POST['answer'][$k] : (isset($ANSWER_tr[$k])? $ANSWER_tr[$k] : '')
+			'ANSWER' => $CKEditor->editor('answer[' . $k . ']', $answer)
 			));
 }
 
@@ -118,7 +122,6 @@ $db->query($query, $params);
 $faq = $db->result();
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $faq['id'],
 		'FAQ_NAME' => $faq['question'],
 		'FAQ_CAT' => $faq['category']

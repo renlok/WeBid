@@ -28,9 +28,9 @@ $DOCDIR = "ltr";
 // The PHP and HTML tags unchanged.
 // Error messages =============================================================
 $ERR_001 = "Database access error. Please contact the site administrator.";
-$ERR_002 = "Name missing";
-$ERR_003 = "Username missing";
-$ERR_004 = "Password missing";
+$ERR_002 = "Name is missing";
+$ERR_003 = "Username is missing";
+$ERR_004 = "Password is missing";
 $ERR_005 = "Please, repeat your password";
 $ERR_006 = "Passwords do not match";
 $ERR_007 = "E-mail address missing";
@@ -38,15 +38,16 @@ $ERR_008 = "Please, insert a valid e-mail address";
 $ERR_009 = "The username already exists in the database";
 $ERR_010 = "Username too short (min 6 chars)";
 $ERR_011 = "Password too short (min 6 chars)";
-$ERR_017 = "Item's title missing";
-$ERR_018 = "Item's description missing";
-$ERR_019 = "Starting bid missing";
+$ERR_017 = "Item's title is missing";
+$ERR_018 = "Item's description is missing";
+$ERR_019 = "Starting bid is missing";
 $ERR_020 = "Minimum quantity field is not correct";
-$ERR_021 = "Reserve price missing";
+$ERR_021 = "Reserve price is missing";
 $ERR_022 = "The reserve price you inserted is not correct";
 $ERR_023 = "Choose a category for your item";
 $ERR_024 = "Choose a payment method";
 $ERR_025 = "Invalid user";
+$ERR_026 = "Invalid password";
 $ERR_030 = "Fields must be numeric and in nnnn.nn format";
 $ERR_031 = "The form you are submitting is not complete";
 $ERR_032 = "One or both the e-mail addresses are not correct";
@@ -56,8 +57,8 @@ $ERR_038 = "Login incorrect";
 $ERR_039 = "You have already confirmed your registration.";
 $ERR_040 = "You are the winning bidder and cannot place a bid lower than your previous maximum bid.";
 $ERR_043 = "Invalid field format: must be numeric";
-$ERR_044 = "A user must be a member of atleast one group";
-$ERR_047 = "Required fields missing";
+$ERR_044 = "A user must be a member of at least one group";
+$ERR_047 = "Required fields are missing";
 $ERR_048 = "Incorrect login";
 $ERR_049 = "The category's name cannot be empty";
 $ERR_050 = "At least one group must have Auto Join enabled";
@@ -87,7 +88,7 @@ $ERR_078 = 'You must agree to the Terms and Conditions';
 $ERR_079 = 'The Shipping fee price you inserted is not correct';
 $ERR_080 = 'Additional Shipping price you inserted is not correct';
 $ERR_081 = "The balance you entered is not valid";
-$ERR_082 = "Your auctions end date must be after its start date";
+$ERR_082 = "Your auctions end date must be after it's start date";
 
 $ERR_100 = "User does not exist";
 $ERR_101 = "Password incorrect";
@@ -115,7 +116,7 @@ $ERR_608 = "The specified quantity is not valid, you cannot bid for more items t
 $ERR_608a = "The specified quantity is not valid, please enter a valid amount";
 $ERR_609 = "User does not exist";
 $ERR_610 = "Fill in your username and password";
-$ERR_611 = "Password incorrect";
+$ERR_611 = "Password is incorrect";
 $ERR_612 = "You cannot bid on your own auction";
 $ERR_614 = "This auction is closed";
 $ERR_616 = "Zip/Post code too short";
@@ -136,7 +137,7 @@ $ERR_706 = "<i>Max. number of pictures</i> must be numeric.";
 $ERR_707 = "<i>Max picture size</i> cannot be zero.";
 $ERR_708 = "<i>Max picture size</i> must be numeric.";
 $ERR_709 = "The picture you uploaded is too big. It cannot exceed ";
-$ERR_710 = "Incorrect file type. Allowed types are: GIF, PNG and JPEG";
+$ERR_710 = "Incorrect file type. Allowed file types are: GIF, PNG and JPEG";
 $ERR_711 = "You cannot buy, you are the seller!";
 $ERR_712 = "<b>Buy It Now</b> is not available for this auction";
 $ERR_713 = 'The value from must be less than the value to';
@@ -146,11 +147,17 @@ $ERR_716 = 'Image not found';
 $ERR_5000 = "Messages to show must be numeric";
 $ERR_5001 = "Messages to show cannot be zero";
 $ERR_5002 = "You must select at least one statistic type (accesses, browsers &amp; platforms, by country)";
-$ERR_5014 = "Subject or message missing";
+$ERR_5014 = "The Subject or message is missing";
+$ERR_5033 = "E-mail address missing";
+$ERR_5034 = "Address is missing";
+$ERR_5035 = "City is missing";
+$ERR_5036 = "Province is missing";
+$ERR_5037 = "Country is missing";
 $ERR_5045 = "The reserve price cannot be less than the minimum bid";
 $ERR_5046 = "The buy now price must be greater than the minimum bid and/or the reserve price";
 $ERR_25_0001 = "Please choose a sub-category";
 $ERR_25_0002 = "<p>URL file-access is disabled on your server so WeBid is unable to run the version check</p>";
+$ERR_INVALID_REPORT_REASON = "Please select a reason for report";
 
 // UI Messages =============================================================
 $MSG['000'] = "n/a";
@@ -313,7 +320,7 @@ $MSG['209'] = "Registered user since: ";
 $MSG['210'] = "Contact ";
 $MSG['211'] = "Start auction now";
 $MSG['213'] = "View active auctions";
-$MSG['214'] = "View closed auctions";
+$MSG['214'] = "View Closed Auctions";
 $MSG['215'] = "Forgot your password?";
 $MSG['217'] = "A new password has been sent to your e-mail address.";
 $MSG['219'] = "Active auctions: ";
@@ -601,6 +608,7 @@ $MSG['594'] = "Acceptance text";
 $MSG['597'] = "Activate banners support?";
 $MSG['600'] = "Banners settings updated";
 $MSG['602'] = "Upload a new logo";
+$MSG['logo_upload_success'] = 'Logo uploaded successfully';
 $MSG['603'] = "Receive Newsletter?";
 $MSG['604'] = "If you activate this option, users will be able to subscribe to your newsletter from the registration page.<br>The \"Newsletter management\" will let you send e-mail messages to the subscribed users";
 $MSG['605'] = "Message Body";
@@ -738,6 +746,7 @@ $MSG['787'] = 'Telephone Field Required?';
 $MSG['788'] = 'Display Settings';
 $MSG['789'] = 'Results shown per page';
 $MSG['790'] = 'The maximum number of items before a page break';
+$MSG['max_featured_items'] = 'The maximum number of featured items shown';
 $MSG['791'] = 'Final Price Fee';
 $MSG['792'] = 'You need to pay for %s item(s)';
 $MSG['793'] = ' items you\'re bidding on are ending soon';
@@ -792,7 +801,7 @@ $MSG['841'] = 'Admin Template';
 $MSG['842'] = 'Set Fees';
 $MSG['843'] = 'What do you want to do with the auctions & subcategories in the following categories<br><small>(If you want to move them you must enter the category id of where you want them moved)</small>';
 $MSG['844'] = 'Some categories selected to move could not be processed as no valid category ID was given to where they would be moved to';
-$MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_blue.png"> Shows a category that contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/admin/images/bullet_red.png"> Shows a category that contains auctions</p>';
+$MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['admin_theme'] . '/images/bullet_blue.png"> Shows a category that contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['admin_theme'] . '/images/bullet_red.png"> Shows a category that contains auctions</p>';
 $MSG['846'] = 'Account Balance';
 $MSG['847'] = 'Price';
 $MSG['848'] = 'Are you sure you want to delete this user feedback (ID: %s)';
@@ -1244,7 +1253,7 @@ $MSG['_0014'] = "WeBid banners system retrieves banners on a random basis from t
 $MSG['_0022'] = "Company";
 $MSG['_0024'] = "Manage Banners";
 $MSG['_0025'] = "Banners";
-$MSG['_0026'] = "Add user";
+$MSG['_0026'] = "Add User";
 $MSG['_0028'] = "Delete selected users (banners will be deleted)";
 $MSG['_0029'] = "Select banner";
 $MSG['_0030'] = "URL";
@@ -1544,8 +1553,11 @@ $MSG['26_0005'] = "Default Theme Updated";
 $MSG['30_0029'] = "You can set below the number of categories you want to be shown in the left column of the home page";
 $MSG['30_0030'] = "Categories to show: ";
 $MSG['30_0031'] = "Clear Cache";
+$MSG['30_0031a'] = "Clear Image Cache";
 $MSG['30_0032'] = "Delete all the template cache files, you will need to do this each time you edit a template file";
+$MSG['30_0032a'] = "Delete all the Image cache files, This can help if there are some images not showing on the site";
 $MSG['30_0033'] = "Cache cleared";
+$MSG['30_0033a'] = "Image cache cleared";
 $MSG['30_0049'] = "Newsletter Settings Updated";
 $MSG['30_0053'] = "<p>Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:</p>";
 $MSG['30_0063'] = "Buy it now only?";
@@ -1589,6 +1601,8 @@ $MSG['email_settings_updated'] = 'Email settings updated';
 
 $MSG['NAY_01'] = 'Featured Items';
 $MSG['NAY_02'] = 'All Items';
+$MSG['NAY_03'] = "Site Theme";
+$MSG['NAY_04'] = "Admin Theme";
 
 $MSG['AUCTIONS_401'] = "Bid";
 $MSG['AUCTIONS_402'] = "Bids";
@@ -1597,6 +1611,21 @@ $MSG['AUCTIONS_405'] = "Winning Bid";
 $MSG['AUCTIONS_406'] = "Winners";
 
 $MSG['BUY_NOW_ONLY_TPL_0100'] = "Recently Closed Auction Report";
+
+$MSG['auction_has_been_reported'] = "This auction has been reported";
+$MSG['item_report_captcha_type'] = "Captcha type on item report page";
+$MSG['report_this_item'] = "Report this item";
+$MSG['view_reported_auctions'] = "View Reported Auctions";
+$MSG['report_item'] = "Report item";
+$MSG['reason_for_report'] = "Reason for Report";
+$MSG['report_reason_select'] = "Select a reason";
+$MSG['report_reason_copy'] = "Copying of your listing";
+$MSG['report_reason_counterfeit'] = "Counterfeits and copyright violations";
+$MSG['report_reason_prohibited'] = "Prohibited (banned items)";
+$MSG['report_reason_terms_and_conditions'] = "Listing policy violations";
+$MSG['report_reason_stolen'] = "Stolen property";
+
+$MSG['multilingual_support_settings_updated'] = 'Multilingual Support Settings updated';
 
 $MSG['communative_report_winner_yes'] = 'An email has been sent to the any winner(s) with your email address.';
 $MSG['communative_report_winner_no'] = 'Sorry, no auction winner(s) this time.';
@@ -1621,7 +1650,7 @@ $MSG['user_request_seller_permission'] = 'Users can request to become sellers';
 $MSG['user_request_seller_permission_explain'] = 'Users who do not have permission to sell items can request to gain permission';
 $MSG['spam_blocked_email_enabled'] = 'Enable block email domains';
 $MSG['spam_blocked_email_domains'] = 'Deny registration from disposable emails';
-$MSG['spam_blocked_email_domains_explain'] = 'Put a each domain on a new line';
+$MSG['spam_blocked_email_domains_explain'] = 'Put each domain on a new line';
 $MSG['spam_blocked_email_domains_register_error'] = 'The E-Mail address you have entered has been black-listed';
 
 $MSG['wordfilter_banned_username'] = 'Please select a different user name as our word filter will not allow this name to be used';
@@ -1643,4 +1672,43 @@ $MSG['delete'] = 'delete';
 
 $MSG['all_error_messages'] = 'All errors';
 $MSG['unique_error_messages'] = 'Unique errors';
-?>
+
+$MSG['google_analytics'] = "Google Analytics";
+$MSG['google_analytics_updated'] = "Google Analytics Settings updated";
+$MSG['google_analytics_tracking_code'] = "Google Analytics Tracking Code";
+$MSG['google_analytics_tracking_code_hint'] = "Copy and paste your Google Analytics tracking code here. You must include the opening and closing &lt;script&gt;&lt;/script&gt; tags.";
+
+$MSG['any_country'] = 'Any Country';
+
+$MSG['new_currency'] = 'Add New Currency';
+$MSG['currency_name'] = "Currency Name";
+$MSG['curreny_symbol'] = "Currency Symbol";
+$MSG['curreny_country_explain'] = "Example: <b>United States</b><br>Must fill in all 3 textboxs to add a new Currency.";
+$MSG['curreny_name_explain'] = "Example: <b>U.S. Dollar</b>";
+$MSG['curreny_symbol_explain'] = "Example: <b>USD</b>";
+
+$MSG['prune_unactivated_users'] = "Prune unactivated users";
+$MSG['prune_unactivated_users_explain'] = "Automatically delete unactivated user accounts.";
+
+$MSG['prune_unactivated_users_days'] = "Numbers of days before deleting unactivated accounts";
+$MSG['prune_unactivated_users_days_explain'] = "Numbers of days before deleting unactivated accounts.";
+
+$MSG['moderation_settings'] = 'Moderation Settings';
+$MSG['moderation_disabled'] = 'Disabled';
+$MSG['moderation_pre_moderation'] = 'Pre-moderation';
+$MSG['moderation_post_moderation'] = 'Post-moderation';
+
+$MSG['auction_moderation'] = 'Auction Moderation';
+$MSG['new_auction_moderation'] = 'New auction moderation';
+
+$MSG['moderation_settings_updated'] = "Moderation Settings updated";
+
+$MSG['moderation'] = 'Moderation';
+$MSG['moderate_auctions'] = 'Moderate Auctions';
+$MSG['moderation_queue'] = 'Moderation Queue';
+
+$MSG['moderator_dismiss'] = 'Dismiss';
+$MSG['remove_auction_from_moderation'] = "Remove Auction From Moderation";
+$MSG['remove_auction_from_moderation_explain'] = "Are you sure you want to remove this auction from the moderation queue?<br>This action will not reactivate the auction.";
+
+$MSG['auction_awaiting_approval'] = "Your Auction is Awaiting Approval";

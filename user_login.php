@@ -27,12 +27,29 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 {
 	include PACKAGE_PATH . 'PasswordHash.php';
 	$phpass = new PasswordHash(8, false);
-	$query = "SELECT id, hash, suspended, password FROM " . $DBPrefix . "users WHERE nick = :nick OR email = :email";
+	$query = "SELECT id, hash, suspended, password, password_type FROM " . $DBPrefix . "users WHERE nick = :nick OR email = :email";
 	$params = array();
 	$params[] = array(':nick', $system->cleanvars($_POST['username']), 'str');
 	$params[] = array(':email', $system->cleanvars($_POST['username']), 'str');
 	$db->query($query, $params);
 	$user_data = $db->result();
+
+	if ($user_data['password_type'] == 0 && $user_data['password'] == md5($MD5_PREFIX . $_POST['password']))
+	{
+		$query = "UPDATE " . $DBPrefix . "users SET password = :password, password_type = 1 WHERE id = :user_id";
+		$params = array();
+		$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'int');
+		$params[] = array(':user_id', $user_data['id'], 'int');
+		$db->query($query, $params);
+
+		$query = "SELECT id, hash, suspended, password, password_type FROM " . $DBPrefix . "users WHERE nick = :nick OR email = :email";
+		$params = array();
+		$params[] = array(':nick', $system->cleanvars($_POST['username']), 'str');
+		$params[] = array(':email', $system->cleanvars($_POST['username']), 'str');
+		$db->query($query, $params);
+		$user_data = $db->result();
+	}
+
 	if ($phpass->CheckPassword($_POST['password'], $user_data['password']))
 	{
 		// generate a random unguessable token

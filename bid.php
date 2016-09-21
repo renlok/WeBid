@@ -111,11 +111,11 @@ if (!$system->CheckMoney($bid) && !isset($errmsg))
 else
 {
 	// reformat bid to valid number
-	$bid = round($system->input_money($bid, 2), 2);
+	$bid = round($system->input_money($bid), 2);
 }
 
 $Data = $db->result();
-$item_title = $system->uncleanvars($Data['title']);
+$item_title = htmlspecialchars($Data['title']);
 $item_id = $Data['id'];
 $seller_name = $Data['nick'];
 $seller_email = $Data['email'];
@@ -529,7 +529,7 @@ if (isset($_POST['action']) && !isset($errmsg))
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
-			$PREVIOUSBID = result();
+			$PREVIOUSBID = $db->result();
 			if (($bid * $qty) <= ($PREVIOUSBID['bid'] * $PREVIOUSBID['quantity']))
 			{
 				$errmsg = $ERR_059;

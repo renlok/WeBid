@@ -85,7 +85,7 @@ if ($db->numrows() > 0)
 }
 else
 {
-	$ERR = $ERR_105;
+	$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_105));
 }
 
 $PREV = intval($PAGE - 1);
@@ -105,7 +105,6 @@ if ($PAGES > 1)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $secid,
 		'NICK' => $arr['nick'],
 		'FB_NUM' => $arr['rate_num'],

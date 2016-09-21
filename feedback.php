@@ -199,15 +199,10 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 	else
 	{
 		// set page values
-		$secid = intval($_GET['id']);
-		$thispage = (isset($_GET['pg'])) ? $_GET['pg'] : 1;
-		if ($thispage == 0) $thispage = 1;
-		$left_limit = ($thispage - 1) * $system->SETTINGS['perpage'];
-		$pages = 1;
-
+		$user_id = intval($_GET['id']);
 		$query = "SELECT rate_sum, nick FROM " . $DBPrefix . "users WHERE id = :user_id";
 		$params = array();
-		$params[] = array(':user_id', $secid, 'int');
+		$params[] = array(':user_id', $user_id, 'int');
 		$db->query($query, $params);
 		if ($db->numrows() > 0)
 		{
@@ -216,17 +211,27 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			$TPL_nick = $user_data['nick'];
 			$TPL_feedbacks_num = $total;
 			// get number of pages
-			$pages = ceil($total / $system->SETTINGS['perpage']);
+			if (!isset($_GET['PAGE']) || intval($_GET['PAGE']) <= 1 || empty($_GET['PAGE']))
+			{
+				$OFFSET = 0;
+				$PAGE = 1;
+			}
+			else
+			{
+				$PAGE = intval($_GET['PAGE']);
+				$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+			}
+			$PAGES = ($total == 0) ? 1 : ceil($total / $system->SETTINGS['perpage']);
 
 			$query = "SELECT f.*, a.title, u.id As uId, u.rate_num, u.rate_sum
 				FROM " . $DBPrefix . "feedbacks f
 				LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
 				LEFT JOIN " . $DBPrefix . "users u ON (u.nick = f.rater_user_nick)
 				WHERE rated_user_id = :user_id
-				ORDER by feedbackdate DESC LIMIT :left_limit, :perpage";
+				ORDER by feedbackdate DESC LIMIT :OFFSET, :perpage";
 			$params = array();
-			$params[] = array(':user_id', $secid, 'int');
-			$params[] = array(':left_limit', $left_limit, 'int');
+			$params[] = array(':user_id', $user_id, 'int');
+			$params[] = array(':OFFSET', $OFFSET, 'int');
 			$params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 			$db->query($query, $params);
 			$i = 0;
@@ -260,34 +265,30 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 						'USFEED' => $arrfeed['rate_sum'],
 						'USICON' => (isset($usicon)) ? $usicon : '',
 						'FBDATE' => FormatDate($arrfeed['feedbackdate']),
-						'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . $system->uncleanvars($arrfeed['title']) . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
+						'AUCTIONURL' => ($arrfeed['title']) ? '<a href="item.php?id=' . $arrfeed['auction_id'] . '">' . htmlspecialchars($arrfeed['title']) . '</a>' : $MSG['113'] . $arrfeed['auction_id'],
 						'FEEDBACK' => nl2br($arrfeed['feedback'])
 						));
 				$i++;
 			}
 		}
 	}
-	$firstpage = (($thispage - 5) <= 0) ? 1 : ($thispage - 5);
-	$lastpage = (($thispage + 5) > $pages) ? $pages : ($thispage + 5);
-	$backpage = (($thispage - 1) <= 0) ? 1 : ($thispage - 1);
-	$nextpage = (($thispage + 1) > $pages) ? $pages : ($thispage + 1);
-	$echofeed = ($thispage == 1) ? '' : '<a href="feedback.php?id=' . $_GET['id'] . '&faction=show">&laquo;</a> <a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $backpage . '&faction=show"><</a> ';
-	for ($ind2 = $firstpage; $ind2 <= $lastpage; $ind2++)
+
+	// get pagenation
+	$PREV = intval($PAGE - 1);
+	$NEXT = intval($PAGE + 1);
+	if ($PAGES > 1)
 	{
-		if ($thispage != $ind2)
+		$LOW = $PAGE - 5;
+		if ($LOW <= 0) $LOW = 1;
+		$COUNTER = $LOW;
+		while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
 		{
-			$echofeed .= '<a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $ind2 . '&faction=show">' . $ind2 . '</a>';
-		}
-		else
-		{
-			$echofeed .= $ind2;
-		}
-		if ($ind2 != $lastpage)
-		{
-			$echofeed .= ' | ';
+			$template->assign_block_vars('pages', array(
+					'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?id=' . $_GET['id'] . '&PAGE=' . $COUNTER . '&faction=show"><u>' . $COUNTER . '</u></a>'
+					));
+			$COUNTER++;
 		}
 	}
-	$echofeed .= ($thispage == $pages || $pages == 0) ? '' : ' <a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $nextpage . '&faction=show">></a> <a href="feedback.php?id=' . $_GET['id'] . '&pg=' . $pages . '&faction=show">&raquo;</a>';
 }
 
 // Calls the appropriate templates/templates
@@ -342,7 +343,10 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show')
 			'USERNICK' => (isset($TPL_nick)) ? $TPL_nick : '',
 			'USERFB' => (isset($TPL_feedbacks_num)) ? $TPL_feedbacks_num : '',
 			'USERFBIMG' => (isset($TPL_rate_ratio_value)) ? $TPL_rate_ratio_value : '',
-			'PAGENATION' => $echofeed,
+			'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?id=' . $_GET['id'] . '&PAGE=' . $PREV . '&faction=show"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+			'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'feedback.php?id=' . $_GET['id'] . '&PAGE=' . $NEXT . '&faction=show"><u>' . $MSG['5120'] . '</u></a>' : '',
+			'PAGE' => $PAGE,
+			'PAGES' => $PAGES,
 			'AUCT_ID' => $auction_id,
 			'ID' => $_REQUEST['id']
 			));

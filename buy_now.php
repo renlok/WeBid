@@ -230,7 +230,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					// add balance & invoice
 					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :user_id";
 					$params = array();
-					$params[] = array(':fee_value', $fee_value, 'int');
+					$params[] = array(':fee_value', $fee_value, 'float');
 					$params[] = array(':user_id', $user->user_data['id'], 'int');
 					$db->query($query, $params);
 					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, buyer, total, paid) VALUES
@@ -274,7 +274,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					// add user balance & invoice
 					$query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :user_id";
 					$params = array();
-					$params[] = array(':fee_value', $fee_value, 'int');
+					$params[] = array(':fee_value', $fee_value, 'float');
 					$params[] = array(':user_id', $Auction['user'], 'int');
 					$db->query($query, $params);
 					$query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, date, finalval, total, paid) VALUES
@@ -283,8 +283,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					$params[] = array(':user_id', $Auction['user'], 'int');
 					$params[] = array(':auc_id', $id, 'int');
 					$params[] = array(':time', $NOW, 'int');
-					$params[] = array(':finalval', $fee_value, 'int');
-					$params[] = array(':total', $fee_value, 'int');
+					$params[] = array(':finalval', $fee_value, 'float');
+					$params[] = array(':total', $fee_value, 'float');
 					$db->query($query, $params);
 				}
 				else
@@ -296,7 +296,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 					$emailer = new email_handler();
 					$emailer->assign_vars(array(
 							'ID' => $Auction['id'],
-							'TITLE' => $system->uncleanvars($Auction['title']),
+							'TITLE' => htmlspecialchars($Auction['title']),
 							'NAME' => $Seller['name'],
 							'LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=7&auction_id=' . $Auction['id']
 							));
@@ -360,7 +360,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy')
 
 			if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0)
 			{
-				$_SESSION['auction_id'] = $auction_id;
+				$_SESSION['auction_id'] = $id;
 				header('location: pay.php?a=6');
 				exit;
 			}
@@ -386,7 +386,7 @@ $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $_REQUEST['id'],
 		'WINID' => (isset($winner_id)) ? $winner_id : 0,
-		'TITLE' => $system->uncleanvars($Auction['title']),
+		'TITLE' => htmlspecialchars($Auction['title']),
 		'BN_PRICE' => $system->print_money($Auction['buy_now']),
 		'SHIPPINGCOST' => ($shipping_cost >  0) ? $system->print_money($shipping_cost) : 0,
 		'BN_TOTAL' => $system->print_money($BN_total),

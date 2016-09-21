@@ -18,38 +18,29 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['action']) && $_POST['action'] == "update")
 {
 	if (isset($_FILES['logo']['tmp_name']) && !empty($_FILES['logo']['tmp_name']))
 	{
 		// Handle logo upload
-		$inf = GetImageSize ($_FILES['logo']['tmp_name']);
+		$inf = GetImageSize($_FILES['logo']['tmp_name']);
 		if ($inf[2] < 1 || $inf[2] > 3)
 		{
-			$ERR = $ERR_602;
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_602));
 		}
 		else if (!empty($_FILES['logo']['tmp_name']) && $_FILES['logo']['tmp_name'] != "none")
 		{
-			if ($system->move_file($_FILES['logo']['tmp_name'], UPLOAD_PATH . 'logo/'  . $_FILES['logo']['name']))
+			if (move_uploaded_file($_FILES['logo']['tmp_name'], UPLOAD_PATH . 'logo/' . $_FILES['logo']['name']))
 			{
-				$logo_file_name = $_FILES['logo']['name'];
-				$params = array();
-				$params[] = array(':logo', $logo_file_name , 'str');
-
-				$query = " UPDATE " . $DBPrefix . "settings SET logo = :logo";
-				$db->query($query,$params);
-
-				$system->SETTINGS['logo'] = $_FILES['logo']['name'];
+				$system->writesetting("logo", $_FILES['logo']['name'], "str");
 			}
 			else
 			{
-				$ERR = $MSG['upload_failed'];
+				$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['upload_failed']));
 			}
 		}
 	}
-
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['logo_upload_success']));
 }
 
 $logoURL = $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'];
@@ -57,11 +48,13 @@ loadblock($MSG['531'], $MSG['556'], 'image', 'logo', $system->SETTINGS['logo']);
 loadblock('', $MSG['602'], 'upload', 'logo', $system->SETTINGS['logo']);
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'IMAGEURL' => $logoURL,
 		));
+include 'header.php';
 $template->set_filenames(array(
 		'body' => 'logo_upload.tpl'
 		));
 $template->display('body');
+include 'footer.php';
+?>

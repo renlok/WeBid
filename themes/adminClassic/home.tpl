@@ -14,13 +14,10 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-<!-- IF THIS_VERSION eq CUR_VERSION -->
-				<div class="info-box">{L_30_0212}</div>
+<!-- IF UPDATE_AVAILABLE -->
+				<div class="alert alert-error">{L_30_0211}</div>
 <!-- ELSE -->
-				<div class="error-box">{L_30_0211}</div>
-<!-- ENDIF -->
-<!-- IF ERROR ne '' -->
-				<div class="error-box"><b>{ERROR}</b></div>
+				<div class="alert alert-info">{L_30_0212}</div>
 <!-- ENDIF -->
 					<table width="98%" cellpadding="1" cellspacing="0">
 						<tr>
@@ -61,6 +58,10 @@
 						<tr>
 							<td><strong>{L_363}</strong></td>
 							<td>{DATEFORMAT} <small>({DATEEXAMPLE})</small></td>
+						</tr>
+						<tr>
+							<td><strong>{L_1131}</strong></td>
+							<td>{EMAIL_HANDLER}</td>
 						</tr>
 						<tr class="bg">
 							<td><strong>{L_5322}</strong></td>
@@ -126,7 +127,16 @@
 							</form>
 						</td>
 					</tr>
-					<tr class="bg">
+										<tr class="bg">
+						<td width="70%">{L_30_0032a}</td>
+						<td>
+							<form action="?action=clear_image_cache" method="post">
+								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+								<input type="submit" name="submit" value="{L_30_0031a}">
+							</form>
+						</td>
+					</tr>
+					<tr>
 						<td>{L_1030}</td>
 						<td>
 							<form action="?action=updatecounters" method="post">

@@ -124,25 +124,29 @@ class PluploadHandler {
 					$conf['allow_extensions'] = preg_split('{\s*,\s*}', $conf['allow_extensions']);
 				}
 
-				if (!in_array(strtolower(pathinfo($file_name, PATHINFO_EXTENSION)), $conf['allow_extensions'])) {
+				$file_path_info = pathinfo($file_name);
+				if (!in_array(strtolower($file_path_info['extension']), $conf['allow_extensions'])) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-				$allowed_mime_types = $conf['allow_extensions'];
+
+				/*$allowed_mime_types = $conf['allow_extensions'];
 				array_walk($allowed_mime_types, function(&$value, $key) { $value = 'image/' . $value; });
 				// check mime type
 				$finfo = finfo_open(FILEINFO_MIME_TYPE);
-				$mime_type = finfo_file($finfo, $_FILES[$conf['file_data_name']]['tmp_name']);
+
+				$mime_type = finfo_file($finfo, $file_path_info['dirname'] . '/' . $file_path_info['basename']);
 				if (!in_array($mime_type, $allowed_mime_types)) {
 					throw new Exception('', PLUPLOAD_TYPE_ERR);
 				}
-				finfo_close($finfo);
+
+				finfo_close($finfo);*/
 			}
 
 			$file_path = rtrim($conf['target_dir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file_name;
-			$tmp_path = $file_path . ".part";
 
 			// Write file or chunk to appropriate temp location
 			if ($conf['chunks']) {
+				$tmp_path = $file_path . ".part";
 				self::write_file_to("$file_path.dir.part" . DIRECTORY_SEPARATOR . $conf['chunk']);
 
 				// Check if all chunks already uploaded
@@ -150,6 +154,7 @@ class PluploadHandler {
 					self::write_chunks_to_file("$file_path.dir.part", $tmp_path);
 				}
 			} else {
+				$tmp_path = $file_path;
 				self::write_file_to($tmp_path);
 			}
 
@@ -161,12 +166,12 @@ class PluploadHandler {
 				}
 
 				$final_file_path = strtolower($file_path);
-				rename($tmp_path, strtolower($final_file_path));
+				rename($tmp_path, $file_path);
 
 				return array(
-					'name' => strtolower($file_name),
-					'path' => $final_file_path,
-					'size' => filesize($final_file_path)
+					'name' => $file_name,
+					'path' => $file_path,
+					'size' => filesize($file_path)
 				);
 			}
 

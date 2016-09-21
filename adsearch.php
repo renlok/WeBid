@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 unset($ERR);
@@ -56,7 +55,8 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 		$wher .= '(';
 		if (isset($_SESSION['advs']['desc']))
 		{
-			$wher .= "(au.description LIKE :liketitle) OR ";
+			$wher .= "(au.description LIKE :likedescription) OR ";
+			$asparams[] = array(':likedescription', '%' . $system->cleanvars($_SESSION['advs']['title']) . '%', 'str');
 		}
 		$wher .= "(au.title like :liketitle OR au.id = :idtitle)) AND ";
 		$asparams[] = array(':idtitle', intval($_SESSION['advs']['title']), 'int');
@@ -155,7 +155,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 	if (!empty($_SESSION['advs']['ending']) && ($_SESSION['advs']['ending'] == '1' || $_SESSION['advs']['ending'] == '2' || $_SESSION['advs']['ending'] == '4' || $_SESSION['advs']['ending'] == '6'))
 	{
 		$wher .= "(au.ends <= :auc_ending) AND ";
-		$asparams[] = array(':auc_ending', time() + ($ending * 86400), 'int');
+		$asparams[] = array(':auc_ending', time() + ($_SESSION['advs']['ending'] * 86400), 'int');
 	}
 
 	if (!empty($_SESSION['advs']['country']))
@@ -175,13 +175,13 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 			{
 				if (!$pri)
 				{
-					$ora = "((au.payment LIKE :payment" . get_param_number($i) . ")";
-					$asparams[] = array(":payment" . get_param_number($i), '%' . $system->cleanvars($val) . '%', 'str');
+					$ora = "((au.payment LIKE :payment" . ($i) . ")";
+					$asparams[] = array(":payment" . ($i), '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				else
 				{
-					$ora .= " OR (au.payment LIKE :payment" . get_param_number($i) . ") AND ";
-					$asparams[] = array(":payment" . get_param_number($i), '%' . $system->cleanvars($val) . '%', 'str');
+					$ora .= " OR (au.payment LIKE :payment" . ($i) . ") AND ";
+					$asparams[] = array(":payment" . ($i), '%' . $system->cleanvars($val) . '%', 'str');
 				}
 				$pri = true;
 				$i++;
@@ -306,11 +306,15 @@ $TPL_categories_list .= '</select>' . "\n";
 $cattree = array();
 // country
 $TPL_countries_list = '<select name="country">' . "\n";
-reset($countries);
+
+$query = "SELECT country_id, country FROM " . $DBPrefix . "countries";
+$db->direct_query($query);
+$countries = $db->fetchall();
 $country = (isset($_SESSION['advs']['country'])) ? $_SESSION['advs']['country'] : '';
-foreach ($countries as $key => $val)
+$TPL_countries_list .= "\t" . '<option value="">' . $MSG['any_country'] . '</option>' . "\n";
+foreach($countries as $country)
 {
-	$TPL_countries_list .= "\t" . '<option value="' . $val . '"' . (($val == $country) ? ' selected="true"' : '') . '>' . $val . '</option>' . "\n";
+	$TPL_countries_list .= "\t" . '<option value="' . $country['country'] . '"' . (($country['country'] == $country) ? ' selected="true"' : '') . '>' . $country['country'] . '</option>' . "\n";
 }
 $TPL_countries_list .= '</select>' . "\n";
 
@@ -330,7 +334,7 @@ $template->assign_vars(array(
 		'CURRENCY' => $system->SETTINGS['currency'],
 		'PAYMENTS_LIST' => $payment_methods,
 		'COUNTRY_LIST' => $TPL_countries_list,
-		'USER_GROUP_LIST' => $TPL_user_group_list,
+		'USER_GROUP_LIST' => $TPL_user_group_list
 		));
 
 include 'header.php';

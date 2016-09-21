@@ -7,15 +7,12 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L__0008}&nbsp;&gt;&gt;&nbsp;{L__0024}</h4>
 				<form name="upldbanner" action="" method="post" enctype="multipart/form-data">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 					<table width="98%" cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="10%">{L_5180}</td>
 							<td width="80%">{NAME}</td>
 							<td rowspan="3" align="center" valign="middle">
-								<a href="editbannersuser.php?id={ID}"><img src="{SITEURL}themes/admin/images/bullet_wrench.png"></a>
+								<a href="editbannersuser.php?id={ID}"><img src="{SITEURL}themes/{THEME}/images/bullet_wrench.png"></a>
 							</td>
 						</tr>
 						<tr>
@@ -52,10 +49,10 @@
 							<td>{L__0051} <strong>{banners.CLICKS}</strong></td>
 							<td>{L__0045}: <strong>{banners.PURCHASED}</strong></td>
 							<td align="center">
-								<a href="viewfilters.php?banner={banners.ID}&amp;id={ID}" class="new-window" alt="{L__0052}"><img src="{SITEURL}themes/admin/images/cog.png" alt="{L__0052}"	></a>
+								<a href="viewfilters.php?banner={banners.ID}&amp;id={ID}" class="new-window" alt="{L__0052}"><img src="{SITEURL}themes/{THEME}/images/cog.png" alt="{L__0052}"	></a>
 	<!-- IF NOTEDIT -->
-								<a href="editbanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/admin/images/application_form_edit.png" alt="{L__0055}"></a>
-								<a href="deletebanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/admin/images/bin.png" alt="{L_008}"></a>
+								<a href="editbanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/{THEME}/images/application_form_edit.png" alt="{L__0055}"></a>
+								<a href="deletebanner.php?banner={banners.ID}&amp;id={ID}"><img src="{SITEURL}themes/{THEME}/images/bin.png" alt="{L_008}"></a>
 	<!-- ENDIF -->
 							</td>
 						</tr>

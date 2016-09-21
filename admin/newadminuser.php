@@ -18,21 +18,19 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['repeatpassword']))
 	{
-		$ERR = $ERR_047;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
 	}
 	elseif ((!empty($_POST['password']) && empty($_POST['repeatpassword'])) || empty($_POST['password']) && !empty($_POST['repeatpassword']))
 	{
-		$ERR = $ERR_054;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_054));
 	}
 	elseif ($_POST['password'] != $_POST['repeatpassword'])
 	{
-		$ERR = $ERR_006;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_006));
 	}
 	else
 	{
@@ -67,10 +65,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 loadblock($MSG['003'], '', 'text', 'username', '');
 loadblock($MSG['004'], '', 'password', 'password', '');
 loadblock($MSG['564'], '', 'password', 'repeatpassword', '');
-loadblock('', '', 'bool', 'status', '1', array($MSG['567'], $MSG['566']));
+loadblock('', '', 'bool', 'status', '1', array($MSG['566'], $MSG['567']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0010'],
 		'PAGENAME' => $MSG['367']

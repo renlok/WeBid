@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
 	foreach ($_POST['delete'] as $val)
@@ -55,10 +53,6 @@ foreach ($faq_cats as $row)
 				));
 	}
 }
-
-$template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : ''
-		));
 
 include 'header.php';
 $template->set_filenames(array(

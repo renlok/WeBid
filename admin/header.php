@@ -14,8 +14,11 @@
 
 if (!defined('InAdmin')) exit();
 
+include INCLUDE_PATH . 'calendar.inc.php';
+
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
+		'THEME' => $system->SETTINGS['admin_theme'],
 		'LOGO' => ($system->SETTINGS['logo']) ? '<img src="' . $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'] . '" border="0" alt="' . $system->SETTINGS['sitename'] . '">' : '&nbsp;'
 		));
 

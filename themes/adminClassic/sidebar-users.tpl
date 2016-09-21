@@ -3,6 +3,7 @@
 					<div class="rounded-bottom">
 						<ul class="menu">
 							<li><a href="{SITEURL}admin/listusers.php">{L_045}</a></li>
+							<li><a href="{SITEURL}admin/newuser.php">{L__0026}</a></li>
 							<li><a href="{SITEURL}admin/usergroups.php">{L_448}</a></li>
 							<li><a href="{SITEURL}admin/profile.php">{L_048}</a></li>
 							<li><a href="{SITEURL}admin/activatenewsletter.php">{L_25_0079}</a></li>

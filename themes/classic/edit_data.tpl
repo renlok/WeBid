@@ -118,7 +118,7 @@
 		<tr>
 			<td align="right" width="30%">{gateways.PASSWORD_NAME}{gateways.REQUIRED}</td>
 			<td>
-				<input type="text" name="{gateways.PLAIN_NAME}[password]" size=40 value="{gateways.PASS}">
+				<input type="text" name="{gateways.PLAIN_NAME}[password]" size=40 value="{gateways.PASSWORD}">
 			</td>
 		</tr>
 	<!-- ELSE -->
@@ -137,5 +137,4 @@
 </table>
 <input type="hidden" name="action" value="update">
 </form>
-
 <!-- INCLUDE user_menu_footer.tpl -->

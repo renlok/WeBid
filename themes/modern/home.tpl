@@ -11,8 +11,8 @@
 					<div class="item-ads-grid">
 						<div class="img-grid">
 							<div class="item-meta">
-								<a href="{SITEURL}item.php?id={featured.ID}"><img class="img-center" style="height: 175px;" src="{featured.IMAGE}"></a>
-								<div class="feat-title"><h4><a href="{SITEURL}item.php?id={featured.ID}">{featured.TITLE}</a><h4></div>
+								<a href="{SITEURL}item.php?id={featured.ID}"><img class="img-center" src="{featured.IMAGE}"></a>
+								<div class="feat-title"><h4><a href="{SITEURL}item.php?id={featured.ID}">{featured.TITLE}</a></h4></div>
 								<div class="grid-margin-btm-lg">
 									<small><span class="text-muted"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>{featured.ENDS}</span></small>
 								</div>
@@ -39,7 +39,7 @@
 					<div class="item-ads-grid">
 						<div class="img-grid">
 							<div class="item-meta">
-								<a href="{SITEURL}item.php?id={hotitems.ID}"><img class="img-center" style="height: 175px;" src="{hotitems.IMAGE}"></a>
+								<a href="{SITEURL}item.php?id={hotitems.ID}"><img class="img-center" src="{hotitems.IMAGE}"></a>
 								<div class="feat-title"><h4><a href="{SITEURL}item.php?id={hotitems.ID}">{hotitems.TITLE}</a></h4></div>
 								<div class="grid-margin-btm-lg">
 									<small><span class="text-muted"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>  {hotitems.ENDS}</span></small>

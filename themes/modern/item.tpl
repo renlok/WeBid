@@ -4,8 +4,7 @@ $(document).ready(function() {
 	var currenttime = '{ENDS_IN}';
 	function padlength(what)
 	{
-		var output=(what.toString().length == 1)? '0' + what : what;
-		return output;
+		return (what.toString().length == 1)? '0' + what : what;
 	}
 	function displaytime()
 	{
@@ -69,11 +68,6 @@ $(document).ready(function() {
 								</div>
 		<!-- END gallery -->
 							</div>
-							<script type="text/javascript">
-								$(function() {
-									$('#gallery a').lightBox();
-								});
-							</script>
 						</div>
 					</div>
 					<div class="panel-footer">{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>
@@ -110,8 +104,8 @@ $(document).ready(function() {
 		<!-- IF B_BIDDERPRIV -->
 								<b>{high_bidders.BUYER_NAME}</b>
 		<!-- ELSE -->
-								<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
-								<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b>
+								<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&amp;auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
+								<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&amp;faction=show">{high_bidders.BUYER_FB}</a>)</b>
 		<!-- ENDIF -->
 								{high_bidders.BUYER_FB_ICON}
 	<!-- END high_bidders -->
@@ -189,8 +183,8 @@ $(document).ready(function() {
 					<div class="panel-heading"><b>{L_30_0209}</b></div>
 					<div class="panel-body">
 						<div>
-							<a href='{SITEURL}profile.php?user_id={SELLER_ID}&auction_id={ID}'><b>{SELLER_NICK}</b></a>
-							(<a href='{SITEURL}feedback.php?id={SELLER_ID}&faction=show'>{SELLER_TOTALFB}</A>)
+							<a href='{SITEURL}profile.php?user_id={SELLER_ID}&amp;auction_id={ID}'><b>{SELLER_NICK}</b></a>
+							(<a href='{SITEURL}feedback.php?id={SELLER_ID}&amp;faction=show'>{SELLER_TOTALFB}</A>)
 							{SELLER_FBICON}
 						</div>
 						<div>
@@ -252,6 +246,7 @@ $(document).ready(function() {
 <!-- ENDIF -->
 					</div>
 				</div>
+				<a class="report-item pull-right" href='{SITEURL}item_report.php?id={ID}'>{L_report_this_item}</a>
 			</div>
 		</div>
 		<div class="row">
@@ -291,8 +286,8 @@ $(document).ready(function() {
 								<td>
 									<div class="tableContent2">
 										<div class="table2">
-<!-- IF COUNTRY ne '' or ZIP ne '' -->
-											<b>{L_014}:</b> {COUNTRY} ({ZIP})<br>
+<!-- IF CITY ne '' or COUNTRY ne '' or ZIP ne '' -->
+											<b>{L_014}:</b> <!-- IF CITY ne '' -->{CITY}<!-- ENDIF --> <!-- IF COUNTRY ne '' -->{COUNTRY}<!-- ENDIF --> <!-- IF ZIP ne '' -->({ZIP})<!-- ENDIF --><br>
 <!-- ENDIF -->
 <!-- IF B_SHIPPING -->
 											<b>{L_025}:</b> {SHIPPING}, {INTERNATIONAL}<br>

@@ -20,41 +20,13 @@
 <link rel="alternate" type="application/rss+xml" title="{L_930}" href="{SITEURL}rss.php?feed=7">
 <link rel="alternate" type="application/rss+xml" title="{L_931}" href="{SITEURL}rss.php?feed=8">
 
-<script type="text/javascript" src="{SITEURL}loader.php?js={JSFILES}"></script>
+<script src="{SITEURL}js/jquery.js"></script>
+<script>{CAL_CONF}</script>
+<script src="{SITEURL}js/calendar.js"></script>
 
 <!-- IF GOOGLEANALYTICS ne '' -->
-<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	ga('create', '{GOOGLEANALYTICS}', 'auto');
-	ga('send', 'pageview');
-</script>
+{GOOGLEANALYTICS}
 <!-- ENDIF -->
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('a.new-window').click(function(){
-			var posY = ($(window).height()-550)/2;
-			var posX = ($(window).width())/2;
-			window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX="+posX+",screenY="+posY+",status=0,menubar=0,width=550,height=550");
-			return false;
-		});
-		var currenttime = '{ACTUALDATE}';
-		var serverdate = new Date(currenttime);
-		function padlength(what){
-			var output=(what.toString().length==1)? "0"+what : what;
-			return output;
-		}
-		function displaytime(){
-			serverdate.setSeconds(serverdate.getSeconds()+1)
-			var timestring=padlength(serverdate.getHours())+":"+padlength(serverdate.getMinutes())+":"+padlength(serverdate.getSeconds());
-			$("#servertime").html(timestring);
-		}
-		setInterval(displaytime, 1000);
-	});
-</script>
 </head>
 <body>
 <div class="wrapper rounded-top rounded-bottom">
@@ -74,16 +46,16 @@
 	</div>
 	<div class="navbar">
 		<ul>
-			<li><a href="{SITEURL}index.php?">{L_166}</a></li>
+			<li><a href="{SITEURL}index.php">{L_166}</a></li>
 <!-- IF B_CAN_SELL -->
-			<li><a href="{SITEURL}select_category.php?">{L_028}</a></li>
+			<li><a href="{SITEURL}select_category.php">{L_028}</a></li>
 <!-- ENDIF -->
 <!-- IF B_LOGGED_IN -->
-			<li><a href="{SITEURL}user_menu.php?">{L_622}</a></li>
-			<li><a href="{SITEURL}logout.php?">{L_245}</a></li>
+			<li><a href="{SITEURL}user_menu.php">{L_622}</a></li>
+			<li><a href="{SITEURL}logout.php">{L_245}</a></li>
 <!-- ELSE -->
-			<li><a href="{SITEURL}register.php?">{L_235}</a></li>
-			<li><a href="{SITEURL}user_login.php?">{L_052}</a></li>
+			<li><a href="{SITEURL}register.php">{L_235}</a></li>
+			<li><a href="{SITEURL}user_login.php">{L_052}</a></li>
 <!-- ENDIF -->
 <!-- IF B_BOARDS -->
 			<li><a href="{SITEURL}boards.php">{L_5030}</a></li>

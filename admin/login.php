@@ -65,11 +65,27 @@ if (isset($_POST['action']))
 			{
 				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
-				$query = "SELECT id, hash, password FROM " . $DBPrefix . "adminusers WHERE username = :username";
+				$query = "SELECT id, hash, password, password_type FROM " . $DBPrefix . "adminusers WHERE username = :username AND status = 1";
 				$params = array();
 				$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
 				$db->query($query, $params);
 				$admin = $db->result();
+
+				if ($admin['password_type'] == 0 && $admin['password'] == md5($MD5_PREFIX . $_POST['password']))
+				{
+					$query = "UPDATE " . $DBPrefix . "adminusers SET password = :password, password_type = 1 WHERE id = :admin_id";
+					$params = array();
+					$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'int');
+					$params[] = array(':admin_id', $admin['id'], 'int');
+					$db->query($query, $params);
+
+					$query = "SELECT id, hash, password, password_type FROM " . $DBPrefix . "adminusers WHERE username = :username AND status = 1";
+					$params = array();
+					$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
+					$db->query($query, $params);
+					$admin = $db->result();
+				}
+				
 				if ($db->numrows() == 0 || !($phpass->CheckPassword($_POST['password'], $admin['password'])))
 				{
 					$ERR = $ERR_048;
@@ -91,7 +107,7 @@ if (isset($_POST['action']))
 					$params[] = array(':admin_id', $admin['id'], 'int');
 					$db->query($query, $params);
 					// Redirect
-					print '<script type="text/javascript">parent.location.href = \'index.php\';</script>';
+					header('location: index.php');
 					exit;
 				}
 			}
@@ -105,7 +121,7 @@ $db->direct_query($query);
 $template->assign_vars(array(
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
-		'THEME' => $system->SETTINGS['theme'],
+		'THEME' => $system->SETTINGS['admin_theme'],
 		'L_COPY_YEAR' => date("Y"),
 		'PAGE' => ($db->numrows() == 0) ? 1 : 2
 		));

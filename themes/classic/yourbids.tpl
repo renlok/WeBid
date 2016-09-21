@@ -41,11 +41,5 @@
 		</td>
 	</tr>
 <!-- END bids -->
-<!-- IF NUM_BIDS eq 0 -->
-	<tr align="center">
-		<td colspan="5">&nbsp;</td>
-	</tr>
-<!-- ENDIF -->
 </table>
-
 <!-- INCLUDE user_menu_footer.tpl -->

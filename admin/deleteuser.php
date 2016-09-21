@@ -17,9 +17,7 @@ $current_page = 'users';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include MAIN_PATH . 'language/' . $language . '/countries.inc.php';
 
-unset($ERR);
 $id = intval($_REQUEST['id']);
 
 // Data check
@@ -171,20 +169,22 @@ $num_auctions = $db->result('COUNT');
 
 if ($num_auctions > 0)
 {
-	$ERR = $MSG['420'];
+	$error_message = $MSG['420'];
 	$i = 0;
 	while ($row = $db->fetch())
 	{
 		if ($i >= 10)
 			break;
 		$has_auctions = true;
-		$ERR .= $row['id'] . ' - <a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '" target="_blank">' . $row['title'] . '</a><br>';
+		$error_message .= $row['id'] . ' - <a href="' . $system->SETTINGS['siteurl'] . 'item.php?id=' . $row['id'] . '" target="_blank">' . $row['title'] . '</a><br>';
 		$i++;
 	}
 	if ($num_auctions != $i)
 	{
-		$ERR .= '<p>' . sprintf($MSG['568'], $num_auctions - $i) . '</p>';
+		$error_message .= '<p>' . sprintf($MSG['568'], $num_auctions - $i) . '</p>';
 	}
+
+	$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $error_message));
 }
 
 // Check if the user is BIDDER in some auction
@@ -197,7 +197,8 @@ $num_bids = $db->result('COUNT');
 if ($num_bids > 0)
 {
 	$has_bids = true;
-	$ERR .= sprintf($MSG['421'], $num_bids);
+
+	$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => sprintf($MSG['421'], $num_bids)));
 }
 
 $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
@@ -207,7 +208,6 @@ $db->query($query, $params);
 $username = $db->result('nick');
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $id,
 		'MESSAGE' => sprintf($MSG['835'], $username),
 		'TYPE' => 1

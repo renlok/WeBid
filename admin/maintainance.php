@@ -18,64 +18,42 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
-include PACKAGE_PATH . 'htmLawed.php';
-
-unset($ERR);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// Check if the specified user exists
-	$superuser = $system->cleanvars($_POST['superuser']);
+	$superuser = $_POST['superuser'];
 	$query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = :nick";
 	$params = array();
 	$params[] = array(':nick', $superuser, 'str');
 	$db->query($query, $params);
-	if ($db->numrows() == 0 && $_POST['active'] == 1)
+	if ($db->numrows() == 0 && $_POST['maintainancemodeactive'] == 1)
 	{
-		$ERR = $ERR_025;
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_025));
 	}
 	else
 	{
-		// Update database
-		$query = "UPDATE " . $DBPrefix . "maintainance SET
-				superuser = :superuser,
-				maintainancetext = :maintainancetext,
-				active = :active";
-		$params = array();
-		$params[] = array(':superuser', $superuser, 'str');
-		$params[] = array(':maintainancetext', htmLawed($_POST['maintainancetext'], array('safe' => 1)), 'str');
-		$params[] = array(':active', $_POST['active'], 'str');
-		$db->query($query, $params);
-		$ERR = $MSG['_0005'];
+		$system->writesetting("superuser", $superuser, 'string');
+		$system->writesetting("maintainance_text", $system->cleanvars($_POST['maintainancetext'], true), 'string');
+		$system->writesetting("maintainance_mode_active", $_POST['maintainancemodeactive'], 'bool');
+
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['_0005']));
 	}
-	$system->SETTINGS['superuser'] = $_POST['superuser'];
-	$system->SETTINGS['maintainancetext'] = $_POST['maintainancetext'];
-	$system->SETTINGS['active'] = $_POST['active'];
-}
-else
-{
-	$query = "SELECT * FROM " . $DBPrefix . "maintainance LIMIT 1";
-	$db->direct_query($query);
-	$data = $db->result();
-	$system->SETTINGS['superuser'] = $data['superuser'];
-	$system->SETTINGS['maintainancetext'] = $data['maintainancetext'];
-	$system->SETTINGS['active'] = $data['active'];
 }
 
 loadblock('', $MSG['_0002']);
-loadblock($MSG['_0006'], '', 'bool', 'active', $system->SETTINGS['active'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['_0006'], '', 'bool', 'maintainancemodeactive', $system->SETTINGS['maintainance_mode_active'], array($MSG['030'], $MSG['029']));
 loadblock($MSG['003'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
-$CKEditor->basePath = 'js/ckeditor/';
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
 $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', $system->SETTINGS['maintainancetext']));
+loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', $system->SETTINGS['maintainance_text']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['5436'],
 		'PAGENAME' => $MSG['_0001']

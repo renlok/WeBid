@@ -111,7 +111,7 @@
 <!-- END gateways -->
 	</div>
 </div>
-<!-- IF B_ENPAYPAL eq false && B_ENAUTHNET eq false && B_ENWORLDPAY eq false && B_ENTOOCHECK eq false && B_ENMONEYBOOKERS eq false -->
+<!-- IF NO_ONLINE_GATEWAYS -->
 <div class="alert alert-danger text-center" role="alert">
 		{L_778a}
 </div>

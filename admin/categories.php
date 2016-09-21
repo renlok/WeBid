@@ -22,8 +22,8 @@ $catscontrol = new MPTTcategories();
 
 function search_cats($parent_id, $level)
 {
-	global $DBPrefix, $catscontrol;
-	$catstr = '';
+	global $catscontrol;
+	
 	$root = $catscontrol->get_virtual_root();
 	$tree = $catscontrol->display_tree($root['left_id'], $root['right_id'], '|___');
 	return $tree;
@@ -35,7 +35,7 @@ function rebuild_cat_file()
 	$query = "SELECT cat_id, cat_name, parent_id FROM " . $DBPrefix . "categories ORDER BY cat_name";
 	$db->direct_query($query);
 	$cats = array();
-	while ($catarr = $db->result())
+	while ($catarr = $db->fetch())
 	{
 		$cats[$catarr['cat_id']] = $catarr['cat_name'];
 		$allcats[] = $catarr;
@@ -236,7 +236,7 @@ for ($i = 0; $i < count($children); $i++)
 	$child = $children[$i];
 	$template->assign_block_vars('cats', array(
 			'CAT_ID' => $child['cat_id'],
-			'CAT_NAME' => $system->uncleanvars($child['cat_name']),
+			'CAT_NAME' => htmlspecialchars($child['cat_name']),
 			'CAT_COLOUR' => $child['cat_colour'],
 			'CAT_IMAGE' => $child['cat_image'],
 
@@ -246,7 +246,6 @@ for ($i = 0; $i < count($children); $i++)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'CRUMBS' => $crumb_string,
 		'PARENT' => $parent

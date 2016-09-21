@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// update users
@@ -33,12 +31,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Update database
 	$system->writesetting("fees", $_POST['fees'], "str");
 	$system->writesetting("fee_type", $_POST['fee_type'], "int");
-	$system->writesetting("fee_max_debt", $system->input_money($_POST['fee_max_debt']), "int");
-	$system->writesetting("fee_signup_bonus", $system->input_money($_POST['fee_signup_bonus']), "int");
+	$system->writesetting("fee_max_debt", $system->input_money($_POST['fee_max_debt']), "float");
+	$system->writesetting("fee_signup_bonus", $system->input_money($_POST['fee_signup_bonus']), "float");
 	$system->writesetting("fee_disable_acc", $_POST['fee_disable_acc'], "str");
 	$system->writesetting("payment_gateway_sandbox", $_POST['payment_gateway_sandbox'], "str");
 
-	$ERR = $MSG['761'];
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['761']));
 }
 
 loadblock($MSG['395'], $MSG['397'], 'yesno', 'fees', $system->SETTINGS['fees'], array($MSG['759'], $MSG['760']));
@@ -52,7 +50,6 @@ loadblock($MSG['736'], $MSG['737'], 'days', 'fee_signup_bonus', $system->SETTING
 loadblock($MSG['738'], $MSG['739'], 'yesno', 'fee_disable_acc', $system->SETTINGS['fee_disable_acc'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0012'],
 		'PAGENAME' => $MSG['395'],

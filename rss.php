@@ -140,8 +140,8 @@ foreach ($aution_data_all as $auction_data)
 	}
 
 	$template->assign_block_vars('rss', array(
-			'PRICE' => str_replace(array('<b>', '</b>'), '', $system->print_money(($auction_data['num_bids'] == 0) ? $auction_data['minimum_bid'] : $auction_data['current_bid'], true, false, false)),
-			'TITLE' => $system->uncleanvars($auction_data['title']),
+			'PRICE' => str_replace(array('<b>', '</b>'), '', $system->print_money(($auction_data['num_bids'] == 0) ? $auction_data['minimum_bid'] : $auction_data['current_bid'], true, false)),
+			'TITLE' => htmlspecialchars($auction_data['title']),
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $auction_data['id'],
 			'DESC' => $auction_data['description'],
 			'USER' => $auction_data['nick'],

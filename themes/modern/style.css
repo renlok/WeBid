@@ -51,7 +51,7 @@ h1 { font-size: 1.9em; line-height: 1; margin-bottom: 0.5em; padding:0.1em 0; fo
 h2 { font-size: 1.7em; margin-bottom: 0.75em; }
 h3 { font-size: 1.5em; line-height: 1; margin-bottom: 1em; }
 h4 { font-size: 1.4em; line-height: 1; margin-bottom: 1em;  font-weight:700; }
-h5 { font-size: 1.2em; font-weight: bold; margin-bottom:1em; font-weight:200 }
+h5 { font-size: 1.2em; margin-bottom:1em; font-weight:200; }
 h6 { font-size: 1.1em; font-weight: bold; margin:0 0 1em 0;}
 
 input {

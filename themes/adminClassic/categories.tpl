@@ -7,9 +7,6 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_5142}&nbsp;&gt;&gt;&nbsp;{L_276}&nbsp;&gt;&gt;&nbsp;{L_078}</h4>
 				<form name="newcat" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
 					<div class="plain-box">{L_845}</div>
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>
@@ -34,10 +31,10 @@
 							<td valign="middle">
 								<input type="checkbox" name="delete[]" value="{cats.CAT_ID}">
 	<!-- IF cats.B_SUBCATS -->
-								<img src="{SITEURL}themes/admin/images/bullet_blue.png">
+								<img src="{SITEURL}themes/{THEME}/images/bullet_blue.png">
 	<!-- ENDIF -->
 	<!-- IF cats.B_AUCTIONS -->
-								<img src="{SITEURL}themes/admin/images/bullet_red.png">
+								<img src="{SITEURL}themes/{THEME}/images/bullet_red.png">
 	<!-- ENDIF -->
 							</td>
 						</tr>

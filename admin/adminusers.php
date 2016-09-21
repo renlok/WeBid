@@ -18,35 +18,24 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_POST['delete']) && is_array($_POST['delete']))
 {
 	if (in_array($_SESSION['WEBID_ADMIN_IN'], $_POST['delete']))
 	{
-		$ERR = $MSG['1100'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['1100']));
 	}
 	else
 	{
-		$delete = '';
-		$i = 0;
-		foreach ($_POST['delete'] as $id)
-		{
-			if ($i != 0) $delete .= ', ';
-			$delete .= $id;
-			$i++;
-		}
 		$query = "DELETE FROM " . $DBPrefix . "adminusers WHERE id IN (:delete)";
 		$params = array();
-		$params[] = array(':delete', $delete, 'str');
+		$params[] = array(':delete', implode(',', $_POST['delete']), 'str');
 		$db->query($query, $params);
-		$ERR = $MSG['1100'];
 	}
 }
 
 $STATUS = array(
-	1 => '<span style="color:#00AF33"><b>' . $MSG['566'] . '</b></span>',
-	2 => '<span style="color:#FF0000"><b>' . $MSG['567'] . '</b></span>'
+	0 => '<span style="color:#FF0000"><b>' . $MSG['567'] . '</b></span>',
+	1 => '<span style="color:#00AF33"><b>' . $MSG['566'] . '</b></span>'
 );
 
 $query = "SELECT * FROM " . $DBPrefix . "adminusers ORDER BY username";
@@ -74,10 +63,6 @@ while ($User = $db->fetch())
 			));
 	$bg = ($bg == '') ? 'class="bg"' : '';
 }
-
-$template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : ''
-		));
 
 include 'header.php';
 $template->set_filenames(array(

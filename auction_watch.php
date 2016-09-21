@@ -59,29 +59,26 @@ if (isset($_GET['insert']) && $_GET['insert'] == 'true' && !empty($_REQUEST['add
 // Delete auction from auction watch
 if (isset($_GET['delete']))
 {
-	$auctions = trim($user->user_data['auc_watch']);
-	$auc_id = explode(' ', $auctions);
-	$auction_watch = '';
-	for ($j = 0; $j < count($auc_id); $j++)
+	$item_to_delete = $_GET['delete'];
+	$currently_watched_auctions = explode(' ', trim($user->user_data['auc_watch']));
+	
+	$auctions_to_watch = array();
+
+	for ($j = 0; $j < count($currently_watched_auctions); $j++)
 	{
-		$match = strstr($auc_id[$j], strval($_GET['delete']));
-		if ($match)
+		if ($currently_watched_auctions[$j] != $item_to_delete)
 		{
-			$auction_watch = $auction_watch;
-		}
-		else
-		{
-			$auction_watch = $auc_id[$j] . ' ' . $auction_watch;
+			array_push($auctions_to_watch, $currently_watched_auctions[$j]);
 		}
 	}
-	$auction_watch = trim($auction_watch);
-		$query = "UPDATE " . $DBPrefix . "users SET auc_watch = :auc_watch WHERE id = :id";
-		$params = array(
-			array(':auc_watch', $system->cleanvars($auction_watch), 'str'),
-			array(':id', $user->user_data['id'], 'int'),
-		);
-		$db->query($query, $params);
-	$user->user_data['auc_watch'] = $auction_watch;
+
+	$query = "UPDATE " . $DBPrefix . "users SET auc_watch = :auc_watch WHERE id = :id";
+	$params = array(
+		array(':auc_watch', implode(' ', $auctions_to_watch), 'str'),
+		array(':id', $user->user_data['id'], 'int'),
+	);
+	$db->query($query, $params);
+	$user->user_data['auc_watch'] = implode(' ', $auctions_to_watch);
 }
 
 $auctions = trim($user->user_data['auc_watch']);

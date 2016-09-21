@@ -142,7 +142,7 @@ $db->query($query, $params);
 if ($db->numrows() > 0)
 {
 	$k = 0;
-	while ($messages = $db->result())
+	while ($messages = $db->fetch())
 	{
 		$template->assign_block_vars('msgs', array(
 				'MSG' => nl2br($messages['message']),

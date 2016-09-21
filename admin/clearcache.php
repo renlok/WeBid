@@ -32,11 +32,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 		closedir($dir);
 	}
-	$ERR = $MSG['30_0033'];
+
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0033']));
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'SITEURL' => $system->SETTINGS['siteurl']
 		));
 

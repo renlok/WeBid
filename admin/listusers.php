@@ -18,12 +18,8 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-unset($ERR);
-
 if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
-
 {
-
 	$query = "SELECT id, nick, name, email, hash FROM " . $DBPrefix . "users WHERE id = :user_id";
 	$params = array();
 	$params[] = array(':user_id', $_GET['id'], 'int');
@@ -42,7 +38,7 @@ if (isset($_GET['resend']) && isset($_GET['id']) && is_numeric($_GET['id']))
 				));
 		$emailer->email_uid = $USER['id'];
 		$emailer->email_sender($USER['email'], 'usermail.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['098']);
-		$ERR = $MSG['059'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['059']));
 	}
 }
 
@@ -65,13 +61,12 @@ if (isset($_GET['payreminder']) && isset($_GET['id']) && is_numeric($_GET['id'])
 				));
 		$emailer->email_uid = $USER['id'];
 		$emailer->email_sender($USER['email'], 'payment_reminder.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['766']);
-		$ERR = $MSG['765'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['765']));
 	}
 }
 
 if (isset($_GET['usersfilter']))
 {
-
 	$_SESSION['usersfilter'] = $_GET['usersfilter'];
 	switch($_GET['usersfilter'])
 	{
@@ -191,7 +186,7 @@ $bg = '';
 
 $db->query($query, $params);
 
-while ($row = $db->result())
+while ($row = $db->fetch())
 {
 	$template->assign_block_vars('users', array(
 			'ID' => $row['id'],
@@ -226,7 +221,6 @@ if ($PAGES > 1)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'TOTALUSERS' => $TOTALUSERS,
 		'USERFILTER' => (isset($_SESSION['usersfilter'])) ? $_SESSION['usersfilter'] : '',
 

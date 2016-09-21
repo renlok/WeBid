@@ -52,7 +52,7 @@ while ($row = $db->fetch())
 {
 	$template->assign_block_vars('news', array(
 			'ID' => $row['id'],
-			'TITLE' => $system->uncleanvars($row['title']),
+			'TITLE' => htmlspecialchars($row['title']),
 			'DATE' => FormatDate($row['new_date']),
 			'SUSPENDED' => $row['suspended'],
 			'BG' => (!($k % 2)) ? '' : 'class="bg"'
@@ -78,7 +78,6 @@ if ($PAGES > 1)
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'NEWS_COUNT' => $new_count,
 
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/news.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',

@@ -12,8 +12,8 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-
 define('InAdmin', 1);
+$current_page = 'users';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
@@ -51,7 +51,6 @@ elseif (isset($_POST['action']) && $_POST['action'] == "No")
 }
 
 $template->assign_vars(array(
-		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'ID' => $id,
 		'USERID' => $user_id,
 		'MESSAGE' => sprintf($MSG['848'], $id),

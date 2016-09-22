@@ -210,3 +210,4 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
+?>

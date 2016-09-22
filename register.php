@@ -136,7 +136,7 @@ if ($system->SETTINGS['spam_register'] == 1)
 
 // missing check bools
 $missing = array();
-$missing['birthday'] = $missing['address'] = $missing['city'] = $missing['prov'] = $missing['country'] = $missing['zip'] = $missing['tel'] = $missing['paypal'] = $missing['authnet'] = $missing['worldpay'] = $missing['toocheckout'] = $missing['moneybookers'] = $missing['name'] = $missing['nick'] = $missing['password'] = $missing['repeat_password'] = $missing['email'] = false;
+$missing['birthday'] = $missing['address'] = $missing['city'] = $missing['prov'] = $missing['country'] = $missing['zip'] = $missing['tel'] = $missing['paypal'] = $missing['authnet'] = $missing['worldpay'] = $missing['toocheckout'] = $missing['moneybookers'] = $missing['name'] = $missing['surname'] = $missing['nick'] = $missing['password'] = $missing['repeat_password'] = $missing['email'] = false;
 if (isset($_POST['action']) && $_POST['action'] == 'first')
 {
 	if (!isset($_POST['terms_check']))
@@ -146,6 +146,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 	if (empty($_POST['TPL_name']))
 	{
 		$missing['name'] = true;
+	}
+	if (empty($_POST['TPL_surname']))
+	{
+		$missing['surname'] = true;
 	}
 	if (empty($_POST['TPL_nick']))
 	{
@@ -288,6 +292,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				$TPL_nick_hidden = $_POST['TPL_nick'];
 				$TPL_password_hidden = $_POST['TPL_password'];
 				$TPL_name_hidden = $_POST['TPL_name'];
+				$TPL_surname_hidden = $_POST['TPL_surname'];
 				$TPL_email_hidden = $_POST['TPL_email'];
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 2) ? 0 : 8;
 				$SUSPENDED = ($system->SETTINGS['activationtype'] == 0) ? 10 : $SUSPENDED;
@@ -325,16 +330,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, birthdate,
+						(nick, password, hash, name, surname, address, city, prov, country, zip, phone, nletter, email, birthdate,
 						suspended, language, groups, balance, timezone)
 						VALUES
-						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :birthdate,
+						(:nick, :password, :hash, :name, :surname, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :birthdate,
 						:suspended, :language, :groups, :balance, :timezone)";
 				$params = array(
 					array(':nick', $system->cleanvars($TPL_nick_hidden), 'str'),
 					array(':password', $phpass->HashPassword($TPL_password_hidden), 'str'),
 					array(':hash', $hash, 'str'),
 					array(':name', $system->cleanvars($TPL_name_hidden), 'str'),
+					array(':surname', $system->cleanvars($TPL_surname_hidden), 'str'),
 					array(':address', $system->cleanvars((isset($_POST['TPL_address'])) ? $_POST['TPL_address'] : ''), 'str'),
 					array(':city', $system->cleanvars((isset($_POST['TPL_city'])) ? $_POST['TPL_city'] : ''), 'str'),
 					array(':prov', $system->cleanvars((isset($_POST['TPL_prov'])) ? $_POST['TPL_prov'] : ''), 'str'),
@@ -521,6 +527,7 @@ $template->assign_vars(array(
 					($MANDATORY_FIELDS['tel'] == 'y') ? ' *' : ''
 					),
 		'MISSING0' => ($missing['name']) ? 1 : 0,
+		'MISSING0' => ($missing['surname']) ? 1 : 0,
 		'MISSING1' => ($missing['nick']) ? 1 : 0,
 		'MISSING2' => ($missing['password']) ? 1 : 0,
 		'MISSING3' => ($missing['repeat_password']) ? 1 : 0,
@@ -537,6 +544,7 @@ $template->assign_vars(array(
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
 		'V_NNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 2) ? 'checked=true' : '',
 		'V_YNAME' => (isset($_POST['TPL_name'])) ? $_POST['TPL_name'] : '',
+		'V_YNAME' => (isset($_POST['TPL_surname'])) ? $_POST['TPL_surname'] : '',
 		'V_UNAME' => (isset($_POST['TPL_nick'])) ? $_POST['TPL_nick'] : '',
 		'V_EMAIL' => (isset($_POST['TPL_email'])) ? $_POST['TPL_email'] : '',
 		'V_YEAR' => (isset($_POST['TPL_year'])) ? $_POST['TPL_year'] : '',

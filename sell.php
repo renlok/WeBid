@@ -111,7 +111,7 @@ switch ($_SESSION['action'])
 			{
 				$start_datetime = new DateTime($a_starts, $dt->timezone);
 				$start_datetime->add(new DateInterval('P' . $duration . 'D'));
-				$a_ends = $start_datetime->format('Y-m-d H:i:s');
+				$a_ends = $start_datetime->format('d-m-Y H:i:s');
 			}
 			// get fee
 			$fee_data = get_fee($minimum_bid, false);
@@ -550,7 +550,7 @@ switch ($_SESSION['action'])
 			{
 				$TPL_start_date = $dt->currentDatetime();
 				$end_date = new DateTime('+1 day', $dt->timezone);
-				$TPL_end_date = $end_date->format('Y-m-d H:i:s');
+				$TPL_end_date = $end_date->format('d-m-Y H:i:s');
 			}
 		}
 

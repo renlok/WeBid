@@ -47,12 +47,12 @@ class Date
 		{
 			$UTC_time = new DateTime($datetime, $this->UTCtimezone);
 			$UTC_time->setTimezone($this->timezone);
-			return $UTC_time->format('Y-m-d H:i');
+			return $UTC_time->format('d-m-Y H:i');
 		}
 		else
 		{
 			$tmp = new DateTime($datetime, $this->timezone);
-			return $tmp->format('Y-m-d H:i');
+			return $tmp->format('d-m-Y H:i');
 		}
 	}
 
@@ -66,7 +66,7 @@ class Date
 		{
 			$datetime = new DateTime('now', $this->timezone);
 		}
-		return $datetime->format('Y-m-d H:i:s');
+		return $datetime->format('d-m-Y H:i:s');
 	}
 
 	// convert raw date string into datetime UTC timezone
@@ -81,14 +81,14 @@ class Date
 			$datetime = new DateTime(strtotime($raw_date), $this->timezone);
 		}
 		$datetime->setTimezone($this->UTCtimezone);
-		return $datetime->format('Y-m-d H:i:s');
+		return $datetime->format('d-m-Y H:i:s');
 	}
 
 	public function convertToUTC($raw_date)
 	{
 		$UTC_time = new DateTime ($raw_date, $this->timezone);
 		$UTC_time->setTimezone($this->UTCtimezone);
-		return $UTC_time->format('Y-m-d H:i:s');
+		return $UTC_time->format('d-m-Y H:i:s');
 	}
 
 	public function formatDate($raw_date, $format = false, $UTC_input = true)

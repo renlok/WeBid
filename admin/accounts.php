@@ -48,8 +48,8 @@ $where_sql = '';
 $params = array();
 if ($from_date != 0)
 {
-	$where_sql = 'paid_date > \'' . FormatTimeStamp($from_date) . '\'';
-	$params[] = array(':from_date', FormatTimeStamp($from_date) , 'str');
+	$where_sql = 'paid_date > \'' . $dt->convertToDatetime($from_date) . '\'';
+	$params[] = array(':from_date', $dt->convertToDatetime($from_date) , 'str');
 }
 if ($to_date != 0)
 {
@@ -57,8 +57,8 @@ if ($to_date != 0)
 	{
 		$where_sql .= ' AND ';
 	}
-	$where_sql .= 'paid_date < \'' . FormatTimeStamp($to_date) . '\'';
-	$params[] = array(':to_date', FormatTimeStamp($to_date) , 'str');
+	$where_sql .= 'paid_date < \'' . $dt->convertToDatetime($to_date) . '\'';
+	$params[] = array(':to_date', $dt->convertToDatetime($to_date) , 'str');
 }
 
 if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
@@ -100,7 +100,7 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd')
 		}
 		else
 		{
-			$date = FormatDate($row['paid_date']);
+			$date = $dt->formatDate($row['paid_date']);
 		}
 		$template->assign_block_vars('accounts', array(
 				'DATE' => $date,
@@ -132,7 +132,7 @@ else
 				'ID' => $row['id'],
 				'NICK' => $row['nick'],
 				'RNAME' => $row['name'],
-				'DATE' => ArrangeDateNoCorrection($row['paid_date']),
+				'DATE' => $dt->formatDate($row['paid_date'], 'd F Y - H:i'),
 				'AMOUNT' => $system->print_money($row['amount']),
 				'TEXT' => $row['text'],
 				'BG' => $bg
@@ -175,4 +175,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

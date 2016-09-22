@@ -31,7 +31,7 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 		$db->query($query, $params);
 	}
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5044']));
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['boards_removed']));
 }
 
 // get list of boards
@@ -55,4 +55,3 @@ $template->set_filenames(array(
 $template->display('body');
 
 include 'footer.php';
-?>

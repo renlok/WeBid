@@ -26,10 +26,9 @@ $counters = load_counters();
 $page_title = (isset($page_title)) ? ' ' . $page_title : '';
 
 // check we are using ssl
-if($system->SETTINGS['https'] == 'y' && $_SERVER['HTTPS'] != "on")
+if($system->SETTINGS['https'] == 'y' && (!isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'off')))
 {
-	$cleaned_url = str_replace(['http://', 'https://'], '', $system->SETTINGS['siteurl']);
-    header("Location: https://" . $cleaned_url . $_SERVER["REQUEST_URI"]);
+    header("Location: https://" . $system->SETTINGS['siteurl'] . $_SERVER["REQUEST_URI"]);
     exit();
 }
 
@@ -40,7 +39,7 @@ $template->assign_vars(array(
 		'CHARSET' => $CHARSET,
 		'DESCRIPTION' => $system->SETTINGS['descriptiontag'],
 		'KEYWORDS' => $system->SETTINGS['keywordstag'],
-		'ACTUALDATE' => ActualDate(),
+		'ACTUALDATE' => $dt->formatDate($dt->currentDatetime(), 'M d, Y H:i:s', false),
 		'LOGO' => $system->SETTINGS['logo'],
 		'BANNER' => ($system->SETTINGS['banners'] == 1) ? view() : '',
 		'HEADERCOUNTER' => $counters,

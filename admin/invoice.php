@@ -102,8 +102,6 @@ $total_all = 0;
 
 while ($row = $db->fetch())
 {
-	$DATE = $row['date'] + $system->tdiff;
-
 	// build invoice info
 	$info = '';
 	$auc_id = false;
@@ -185,14 +183,13 @@ while ($row = $db->fetch())
 			'INVOICE' => $row['useracc_id'],
 			'AUC_ID' => $row['auc_id'],
 			'USER' => (!$searchuser) ? $row['nick'] : '',
-			'DATE' => ArrangeDateNoCorrection($DATE),
+			'DATE' => $dt->printDateTz($row['date']),
 			'INFO' => $info,
 			'TOTAL' => $system->print_money($row['total']),
 			'PAID' => ($row['paid'] == 1), // true if paid
 			'PDF' => $system->SETTINGS['siteurl'] . 'item_invoice.php?id=' . $row['auc_id'],
 			));
 	$total_all = $row['total'] + $total_all;
-	$in_date[] = $DATE;
 }
 
 // get pagenation
@@ -234,4 +231,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

@@ -122,7 +122,7 @@ $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'ID' => $id,
 		'NICK' => $USER['nick'],
-		'LASTLOGIN' => date('Y-m-d H:i:s', strtotime($USER['lastlogin']) + $system->tdiff),
+		'LASTLOGIN' => $dt->printDateTz($USER['lastlogin']),
 		'OFFSET' => $uloffset,
 		'ERROR' => (isset($ERR)) ? $ERR : '',
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/viewuserips.php?' . $url_id . '&PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
@@ -137,4 +137,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

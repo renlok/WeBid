@@ -27,20 +27,20 @@
 							<td><input type="text" name="user_count" value="{USER_COUNT}"></td>
 							<td>
 								<select name="can_sell">
-									<option value="1" {CAN_SELL_Y}>{L_030}</option>
-									<option value="0" {CAN_SELL_N}>{L_029}</option>
+									<option value="1" {CAN_SELL_Y}>{L_yes}</option>
+									<option value="0" {CAN_SELL_N}>{L_no}</option>
 								</select>
 							</td>
 							<td>
 								<select name="can_buy">
-									<option value="1" {CAN_BUY_Y}>{L_030}</option>
-									<option value="0" {CAN_BUY_N}>{L_029}</option>
+									<option value="1" {CAN_BUY_Y}>{L_yes}</option>
+									<option value="0" {CAN_BUY_N}>{L_no}</option>
 								</select>
 							</td>
 							<td>
 								<select name="auto_join">
-									<option value="1" {AUTO_JOIN_Y}>{L_030}</option>
-									<option value="0" {AUTO_JOIN_N}>{L_029}</option>
+									<option value="1" {AUTO_JOIN_Y}>{L_yes}</option>
+									<option value="0" {AUTO_JOIN_N}>{L_no}</option>
 								</select>
 							</td>
 							<td>

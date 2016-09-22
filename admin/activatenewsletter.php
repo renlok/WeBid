@@ -21,12 +21,12 @@ include 'loggedin.inc.php';
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
 	// clean submission and update database
-	$system->writesetting("newsletter", intval($_POST['newsletter']),"int");
-	
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0049']));
+	$system->writesetting('newsletter', intval($_POST['newsletter']), 'int');
+
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['newsletter_settings_updated']));
 }
 
-loadblock($MSG['603'], $MSG['604'], 'batch', 'newsletter', $system->SETTINGS['newsletter'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['activate_newsletter'], $MSG['activate_newsletter_explain'], 'batch', 'newsletter', $system->SETTINGS['newsletter'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],

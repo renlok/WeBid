@@ -15,8 +15,8 @@
 						<tr valign="top">
 							<td>{L_5070}</td>
 							<td>
-								<input type="radio" name="wordsfilter" value="y"{WFYES}> {L_030}
-								<input type="radio" name="wordsfilter" value="n"{WFNO}> {L_029}
+								<input type="radio" name="wordsfilter" value="y"{WFYES}> {L_yes}
+								<input type="radio" name="wordsfilter" value="n"{WFNO}> {L_no}
 							</td>
 						</tr>
 						<tr valign="top">

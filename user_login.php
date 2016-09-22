@@ -15,8 +15,6 @@
 define('AtLogin', 1);
 include 'common.php';
 
-$NOW = time();
-
 if (isset($_SESSION['LOGIN_MESSAGE']))
 {
 	$ERR = $_SESSION['LOGIN_MESSAGE'];
@@ -80,9 +78,8 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 			$_SESSION['WEBID_LOGGED_NUMBER'] 	= strspn($user_data['password'], $user_data['hash']);
 			$_SESSION['WEBID_LOGGED_PASS'] 		= $user_data['password'];
 			// Update "last login" fields in users table
-			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = :date WHERE id = :user_id";
+			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = CURRENT_TIMESTAMP WHERE id = :user_id";
 			$params = array();
-			$params[] = array(':date', date("Y-m-d H:i:s"), 'str');
 			$params[] = array(':user_id', $user_data['id'], 'int');
 			$db->query($query, $params);
 			// Remember me option
@@ -103,8 +100,8 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 			$db->query($query, $params);
 			if ($db->numrows() == 0)
 			{
-				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-						(NULL, :user_id, :user_ip, 'after','accept')";
+				$query = "INSERT INTO " . $DBPrefix . "usersips (user, ip, type, action)
+						VALUES (:user_id, :user_ip, 'login', 'accept')";
 				$params = array();
 				$params[] = array(':user_ip', $_SERVER['REMOTE_ADDR'], 'str');
 				$params[] = array(':user_id', $user_data['id'], 'int');

@@ -47,13 +47,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		{
 			include PACKAGE_PATH . 'PasswordHash.php';
 			$phpass = new PasswordHash(8, false);
-			$query = "INSERT INTO " . $DBPrefix . "adminusers VALUES
-					(NULL, :username, :password, :hash, :created, '0', :status, '')";
+			$query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, status)
+					VALUES (:username, :password, :hash, :status)";
 			$params = array();
 			$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
 			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 			$params[] = array(':hash', get_hash(), 'str');
-			$params[] = array(':created', date('Ymd'), 'str');
 			$params[] = array(':status', $_POST['status'], 'bool');
 			$db->query($query, $params);
 			header('location: adminusers.php');
@@ -62,8 +61,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	}
 }
 
-loadblock($MSG['003'], '', 'text', 'username', '');
-loadblock($MSG['004'], '', 'password', 'password', '');
+loadblock($MSG['username'], '', 'text', 'username', '');
+loadblock($MSG['password'], '', 'password', 'password', '');
 loadblock($MSG['564'], '', 'password', 'repeatpassword', '');
 loadblock('', '', 'bool', 'status', '1', array($MSG['566'], $MSG['567']));
 
@@ -79,4 +78,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

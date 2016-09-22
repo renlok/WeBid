@@ -70,7 +70,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</div>
-					<div class="panel-footer">{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>
+					<div class="panel-footer">{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}</div>
 				</div>
 	<!-- ENDIF -->
 <!-- ELSE -->
@@ -79,7 +79,7 @@ $(document).ready(function() {
 					<div class="panel-body">
 						<img class="thumbnail img-responsive center-block" src="{SITEURL}/themes/{THEME}/img/no-picture-gallery.png" alt="no picture" width="430px" />
 					</div>
-					<div class="panel-footer">{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>
+					<div class="panel-footer">{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}</div>
 				</div>
 <!-- ENDIF -->
 			</div>
@@ -107,7 +107,7 @@ $(document).ready(function() {
 								<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&amp;auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
 								<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&amp;faction=show">{high_bidders.BUYER_FB}</a>)</b>
 		<!-- ENDIF -->
-								{high_bidders.BUYER_FB_ICON}
+								<img src="{SITEURL}images/icons/{high_bidders.BUYER_FB_ICON}" alt="{high_bidders.BUYER_FB_ICON}" class="fbstar">
 	<!-- END high_bidders -->
 							</td>
 						</tr>
@@ -185,7 +185,7 @@ $(document).ready(function() {
 						<div>
 							<a href='{SITEURL}profile.php?user_id={SELLER_ID}&amp;auction_id={ID}'><b>{SELLER_NICK}</b></a>
 							(<a href='{SITEURL}feedback.php?id={SELLER_ID}&amp;faction=show'>{SELLER_TOTALFB}</A>)
-							{SELLER_FBICON}
+							<img src="{SITEURL}images/icons/{high_bidders.SELLER_FB_ICON}" alt="{SELLER_FB_ICON}" class="fbstar">
 						</div>
 						<div>
 							<ul class="list-unstyled">

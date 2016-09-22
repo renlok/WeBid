@@ -25,8 +25,6 @@ if (!$user->checkAuth())
 // check if the user can access this page
 $user->checkSuspended();
 
-$NOW = time();
-$NOWB = date('Ymd');
 $user_message = '';
 
 $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'relist_fee'";
@@ -47,9 +45,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':auc_id', $k, 'int');
 			$db->query($query, $params);
 			$AUCTION = $db->result();
-
-			// auction ends
-			$WILLEND = time() + ($AUCTION['duration'] * 24 * 60 * 60);
 			$suspend = 0;
 
 			if ($system->SETTINGS['fees'] == 'y' && $relist_fee > 0)
@@ -69,8 +64,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 				}
 			}
 
+			// auction ends
+			$start_date = new DateTime('now', $dt->UTCtimezone);
+			$start_date->add(new DateInterval('P' . $AUCTION['duration'] . 'D'));
+			$auction_ends = $start_date->format('Y-m-d H:i:s');
+
 			$query = "UPDATE " . $DBPrefix . "auctions
-					SET starts = :starts,
+					SET starts = CURRENT_TIMESTAMP,
 					ends = :ends,
 					closed = 0,
 					num_bids = 0,
@@ -80,8 +80,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 					suspended = :suspended
 					WHERE id = :auc_id";
 			$params = array();
-			$params[] = array(':starts', $NOW, 'int');
-			$params[] = array(':ends', $WILLEND, 'int');
+			$params[] = array(':ends', $auction_ends, 'str');
 			$params[] = array(':suspended', $suspend, 'int');
 			$params[] = array(':auc_id', $k, 'int');
 			$db->query($query, $params);
@@ -213,8 +212,8 @@ while ($item = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => htmlspecialchars($item['title']),
-			'STARTS' => FormatDate($item['starts'], '/', false),
-			'ENDS' => FormatDate($item['ends'], '/', false),
+			'STARTS' => $dt->formatDate($item['starts']),
+			'ENDS' => $dt->formatDate($item['ends']),
 			'BID' => ($item['current_bid'] == 0) ? '-' : $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 

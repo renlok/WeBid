@@ -91,8 +91,8 @@ $template->assign_vars(array(
 		'S_NICK' => $AUCTION['nick'],
 		'S_NAME' => $AUCTION['name'],
 		'MIN_BID' => $system->print_money($AUCTION['minimum_bid']),
-		'STARTS' => FormatDate($AUCTION['starts']),
-		'ENDS' => FormatDate($AUCTION['ends']),
+		'STARTS' => $dt->formatDate($AUCTION['starts']),
+		'ENDS' => $dt->formatDate($AUCTION['ends']),
 		'AUCTION_TYPE' => $system->SETTINGS['auction_types'][$AUCTION['auction_type']],
 
 		'B_WINNERS' => $winners,
@@ -106,4 +106,3 @@ $template->set_filenames(array(
 $template->display('body');
 
 include 'footer.php';
-?>

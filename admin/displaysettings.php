@@ -37,15 +37,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 loadblock($MSG['789'], $MSG['790'], 'days', 'perpage', $system->SETTINGS['perpage']);
 loadblock('', $MSG['max_featured_items'], 'days', 'featuredperpage', $system->SETTINGS['featuredperpage']);
-loadblock($MSG['25_0107'], $MSG['808'], 'decimals', 'thumb_list', $system->SETTINGS['thumb_list'], array($MSG['2__0045']));
+loadblock($MSG['thumbnail_size'], $MSG['808'], 'decimals', 'thumb_list', $system->SETTINGS['thumb_list'], array($MSG['pixels']));
 
 loadblock($MSG['807'], '', '', '', '', array(), true);
 loadblock($MSG['5011'], $MSG['5012'], 'days', 'homefeaturednumber', $system->SETTINGS['homefeaturednumber']);
 loadblock($MSG['5013'], $MSG['5014'], 'days', 'lastitemsnumber', $system->SETTINGS['lastitemsnumber']);
 loadblock($MSG['5015'], $MSG['5016'], 'days', 'hotitemsnumber', $system->SETTINGS['hotitemsnumber']);
 loadblock($MSG['5017'], $MSG['5018'], 'days', 'endingsoonnumber', $system->SETTINGS['endingsoonnumber']);
-loadblock($MSG['532'], $MSG['537'], 'batch', 'loginbox', $system->SETTINGS['loginbox'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['533'], $MSG['538'], 'batch', 'newsbox', $system->SETTINGS['newsbox'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['532'], $MSG['537'], 'batch', 'loginbox', $system->SETTINGS['loginbox'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['533'], $MSG['538'], 'batch', 'newsbox', $system->SETTINGS['newsbox'], array($MSG['yes'], $MSG['no']));
 loadblock('', $MSG['554'], 'days', 'newstoshow', $system->SETTINGS['newstoshow']);
 
 $template->assign_vars(array(
@@ -60,4 +60,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

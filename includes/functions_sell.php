@@ -33,7 +33,7 @@ function setvars()
 {
 	global $with_reserve, $reserve_price, $minimum_bid, $pict_url, $imgtype, $title, $subtitle, $sdescription, $atype, $iquantity, $buy_now, $buy_now_price, $is_taxed, $tax_included, $additional_shipping_cost;
 	global $duration, $relist, $increments, $customincrement, $shipping, $shipping_terms, $payment, $international, $sellcat1, $sellcat2, $buy_now_only, $a_starts, $shipping_cost, $is_bold, $is_highlighted, $is_featured, $start_now;
-	global $_POST, $_SESSION, $system, $custom_end, $a_ends, $custom_end, $caneditstartdate;
+	global $_POST, $_SESSION, $system, $custom_end, $a_ends, $custom_end, $caneditstartdate, $dt;
 
 	$with_reserve = (isset($_POST['with_reserve'])) ? $_POST['with_reserve'] : $_SESSION['SELL_with_reserve'];
 	$reserve_price = (isset($_POST['reserve_price'])) ? $_POST['reserve_price'] : $_SESSION['SELL_reserve_price'];
@@ -68,9 +68,9 @@ function setvars()
 	$buy_now_only = (isset($_POST['buy_now_only'])) ? $_POST['buy_now_only'] : $_SESSION['SELL_buy_now_only'];
 	$buy_now_only = (empty($buy_now_only)) ? 0 : $buy_now_only;
 
-	$a_starts = (isset($_POST['a_starts'])) ? $_POST['a_starts'] : $_SESSION['SELL_starts'];
+	$a_starts = (isset($_POST['a_starts'])) ? $dt->convertToDatetime($_POST['a_starts']) : $_SESSION['SELL_starts'];
 	$duration = (isset($_POST['duration'])) ? $_POST['duration'] : $_SESSION['SELL_duration'];
-	$a_ends = (isset($_POST['a_ends'])) ? $_POST['a_ends'] : $_SESSION['SELL_ends'];
+	$a_ends = (isset($_POST['a_ends'])) ? $dt->convertToDatetime($_POST['a_ends']) : $_SESSION['SELL_ends'];
 
 	// deal with checkboxes
 	if (isset($_POST['action']) && $_POST['action'] == 3)
@@ -191,7 +191,7 @@ function unsetsessions()
 
 function updateauction()
 {
-	global $_SESSION, $DBPrefix, $a_starts, $a_ends, $payment_text, $system, $fee, $db, $caneditstartdate;
+	global $_SESSION, $DBPrefix, $dt, $a_starts, $a_ends, $payment_text, $system, $fee, $db, $caneditstartdate;
 
 	$query =
 		"UPDATE " . $DBPrefix . "auctions SET
@@ -246,7 +246,7 @@ function updateauction()
 	$params[] = array(':shipping', $_SESSION['SELL_shipping'], 'int');
 	$params[] = array(':payment', $payment_text, 'str');
 	$params[] = array(':international', $_SESSION['SELL_international'], 'bool');
-	$params[] = array(':ends', $a_ends, 'int');
+	$params[] = array(':ends', $dt->convertToUTC($a_ends), 'str');
 	$params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
 	$params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
@@ -262,14 +262,14 @@ function updateauction()
 	if ($caneditstartdate)
 	{
 		$query .= ", starts = :starts";
-		$params[] = array(':starts', $a_starts, 'int');
+		$params[] = array(':starts', $dt->convertToUTC($a_starts), 'str');
 	}
 	$db->query($query, $params);
 }
 
 function addauction()
 {
-	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee, $db;
+	global $DBPrefix, $_SESSION, $user, $a_starts, $a_ends, $payment_text, $system, $fee, $db, $dt;
 
 	$query = "INSERT INTO " . $DBPrefix . "auctions (user,title,subtitle,starts,description,pict_url,category,secondcat,minimum_bid,shipping_cost,additional_shipping_cost,reserve_price,buy_now,auction_type,duration,increment,shipping,payment,international,ends,photo_uploaded,initial_quantity,quantity,relist,shipping_terms,bn_only,bold,highlighted,featured,current_fee,tax,taxinc) VALUES
 	(:user_id, :title, :subtitle, :starts, :description, :pict_url, :catone, :cattwo, :min_bid, :shipping_cost, :additional_shipping_cost, :reserve_price, :buy_now, :auction_type, :duration, :increment, :shipping, :payment, :international, :ends, :photo_uploaded, :initial_quantity, :quantity, :relist, :shipping_terms, :bn_only, :bold, :highlighted, :featured, :fee, :tax, :taxinc)";
@@ -278,7 +278,7 @@ function addauction()
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$params[] = array(':title', $_SESSION['SELL_title'], 'str');
 	$params[] = array(':subtitle', $_SESSION['SELL_subtitle'], 'str');
-	$params[] = array(':starts', $a_starts, 'int');
+	$params[] = array(':starts', $dt->convertToUTC($a_starts), 'str');
 	$params[] = array(':description', $_SESSION['SELL_description'], 'str');
 	$params[] = array(':pict_url', $_SESSION['SELL_pict_url'], 'str');
 	$params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
@@ -294,7 +294,7 @@ function addauction()
 	$params[] = array(':shipping', $_SESSION['SELL_shipping'], 'int');
 	$params[] = array(':payment', $payment_text, 'str');
 	$params[] = array(':international', $_SESSION['SELL_international'], 'bool');
-	$params[] = array(':ends', $a_ends, 'int');
+	$params[] = array(':ends', $dt->convertToUTC($a_ends), 'str');
 	$params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
 	$params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
 	$params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
@@ -314,11 +314,10 @@ function addoutstanding()
 {
 	global $DBPrefix, $fee_data, $user, $system, $fee, $_SESSION, $db;
 
-	$query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,date,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,picture,extracat,total,paid) VALUES
-	(:auction_id, :user_id, :time, :setup_fee, :featured_fee, :bold_fee, :highlighted_fee, :subtitle_fee, :relist_fee, :reserve_fee, :buynow_fee, :picture_fee, :extracat_fee, :fee, 0)";
+	$query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,picture,extracat,total,paid) VALUES
+	(:auction_id, :user_id, :setup_fee, :featured_fee, :bold_fee, :highlighted_fee, :subtitle_fee, :relist_fee, :reserve_fee, :buynow_fee, :picture_fee, :extracat_fee, :fee, 0)";
 
 	$params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
-	$params[] = array(':time', time(), 'int');
 	$params[] = array(':setup_fee', $fee_data['setup_fee'], 'float');
 	$params[] = array(':featured_fee', $fee_data['featured_fee'], 'float');
 	$params[] = array(':bold_fee', $fee_data['bold_fee'], 'float');
@@ -570,18 +569,18 @@ function get_category_string($sellcat)
 	return $TPL_categories_list;
 }
 
+// TODO: this should be used when a user lists an item and selects gateways
 function check_gateway($gateway)
 {
-	global $user;
-	if ($gateway == 'paypal' && !empty($user->user_data['paypal_email']))
-		return true;
-	if ($gateway == 'authnet' && !empty($user->user_data['authnet_id']) && !empty($user->user_data['authnet_pass']))
-		return true;
-	if ($gateway == 'worldpay' && !empty($user->user_data['worldpay_id']))
-		return true;
-	if ($gateway == 'moneybookers' && !empty($user->user_data['moneybookers_email']))
-		return true;
-	if ($gateway == 'toocheckout' && !empty($user->user_data['toocheckout_id']))
+	global $user, $db;
+	$query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "usergateways
+			WHERE user_id = :user_id
+			AND gateway_id = (SELECT id FROM " . $DBPrefix . "payment_options WHERE is_gateway = 1 && name = :gateway_name)";
+	$params = array();
+	$params[] = array(':user_id', $user->user_data['id'], 'int');
+	$params[] = array(':gateway_name', $gateway, 'str');
+	$db->query($query, $params);
+	if ($db->result('COUNT') > 0)
 		return true;
 	return false;
 }
@@ -589,7 +588,7 @@ function check_gateway($gateway)
 function alert_auction_watchers($id, $title, $description)
 {
 	global $user, $DBPrefix, $db;
-	
+
 	// Send notification if users keyword matches (Auction Watch)
 	$query = "SELECT auc_watch, email, nick, name, id FROM " . $DBPrefix . "users WHERE auc_watch != '' AND id != :user_id";
 	$params = array();
@@ -625,4 +624,3 @@ function alert_auction_watchers($id, $title, $description)
 		}
 	}
 }
-

@@ -30,6 +30,7 @@ if (isset($_POST['delete']) && is_array($_POST['delete']))
 		$params = array();
 		$params[] = array(':delete', implode(',', $_POST['delete']), 'str');
 		$db->query($query, $params);
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1101']));
 	}
 }
 
@@ -44,14 +45,14 @@ $db->direct_query($query);
 $bg = '';
 while ($User = $db->fetch())
 {
-	$created = substr($User['created'], 4, 2) . '/' . substr($User['created'], 6, 2) . '/' . substr($User['created'], 0, 4);
-	if ($User['lastlogin'] == 0)
+	$created = $dt->printDateTz($User['created']);
+	if ($User['lastlogin'] == $User['created'])
 	{
 		$lastlogin = $MSG['570'];
 	}
 	else
 	{
-		$lastlogin = date('d/m/Y H:i:s', $User['lastlogin'] + $system->tdiff);
+		$lastlogin = $dt->printDateTz($User['lastlogin']);
 	}
 	$template->assign_block_vars('users', array(
 			'ID' => $User['id'],
@@ -71,4 +72,3 @@ $template->set_filenames(array(
 $template->display('body');
 
 include 'footer.php';
-?>

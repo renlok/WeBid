@@ -149,22 +149,13 @@ $params[] = array(':auc_id', $_GET['id'], 'int');
 $db->query($query, $params);
 $auc_data = $db->result();
 
-if ($system->SETTINGS['datesformat'] == 'USA')
-{
-	$date = date('m/d/Y', $auc_data['starts'] + $system->tdiff);
-}
-else
-{
-	$date = date('d/m/Y', $auc_data['starts'] + $system->tdiff);
-}
-
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'PAGE_TITLE' => ($auc_data['suspended'] > 0) ? $MSG['322'] : $MSG['321'],
 		'ID' => $_GET['id'],
 		'TITLE' => htmlspecialchars($auc_data['title']),
 		'NICK' => $auc_data['nick'],
-		'STARTS' => $date,
+		'STARTS' => $dt->formatDate($auc_data['starts']),
 		'DURATION' => $auc_data['duration'],
 		'CATEGORY' => $category_names[$auc_data['category']],
 		'DESCRIPTION' => $auc_data['description'],
@@ -181,4 +172,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

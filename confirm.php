@@ -88,9 +88,8 @@ if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 			$_SESSION['WEBID_LOGGED_PASS'] 		= $password;
 
 			// Update "last login" fields in users table
-			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = :lastlogin WHERE id = :user_id";
+			$query = "UPDATE " . $DBPrefix . "users SET lastlogin = CURRENT_TIMESTAMP WHERE id = :user_id";
 			$params = array();
-			$params[] = array(':lastlogin', date("Y-m-d H:i:s"), 'str');
 			$params[] = array(':user_id', $_SESSION['WEBID_LOGGED_IN'], 'int');
 			$db->query($query, $params);
 
@@ -101,8 +100,8 @@ if (isset($_POST['action']) && $_POST['action'] == "Confirm")
 			$db->query($query, $params);
 			if ($db->numrows() == 0)
 			{
-				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-						(NULL, :user_id, :ip, 'after', 'accept')";
+				$query = "INSERT INTO " . $DBPrefix . "usersips (user, ip, type, action)
+						VALUES (:user_id, :ip, 'confirm', 'accept')";
 				$params = array();
 				$params[] = array(':user_id', $_SESSION['WEBID_LOGGED_IN'], 'int');
 				$params[] = array(':ip', $_SERVER['REMOTE_ADDR'], 'str');

@@ -42,8 +42,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 }
 
 loadblock('', $MSG['_0002']);
-loadblock($MSG['_0006'], '', 'bool', 'maintainancemodeactive', $system->SETTINGS['maintainance_mode_active'], array($MSG['030'], $MSG['029']));
-loadblock($MSG['003'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['_0006'], '', 'bool', 'maintainancemodeactive', $system->SETTINGS['maintainance_mode_active'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['username'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['yes'], $MSG['no']));
 
 $CKEditor = new CKEditor();
 $CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
@@ -65,4 +65,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

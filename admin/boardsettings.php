@@ -23,15 +23,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// clean submission and update database
 	$system->writesetting("boards", ynbool($_POST['boards']), "str");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5051']));
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['msg_board_settings_updated']));
 }
 
-loadblock($MSG['5048'], '', 'yesno', 'boards', $system->SETTINGS['boards'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['enable_message_boards'], $MSG['enable_message_boards_explain'], 'yesno', 'boards', $system->SETTINGS['boards'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0018'],
-		'PAGENAME' => $MSG['5047']
+		'PAGENAME' => $MSG['msg_board_settings']
 		));
 
 include 'header.php';

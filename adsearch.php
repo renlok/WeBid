@@ -20,7 +20,6 @@ unset($ERR);
 // set default variables
 $page_title = $MSG['464'];
 $catscontrol = new MPTTcategories();
-$NOW = time();
 $searching = false;
 $userjoin = '';
 $ora = '';
@@ -154,8 +153,7 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs']))
 
 	if (!empty($_SESSION['advs']['ending']) && ($_SESSION['advs']['ending'] == '1' || $_SESSION['advs']['ending'] == '2' || $_SESSION['advs']['ending'] == '4' || $_SESSION['advs']['ending'] == '6'))
 	{
-		$wher .= "(au.ends <= :auc_ending) AND ";
-		$asparams[] = array(':auc_ending', time() + ($_SESSION['advs']['ending'] * 86400), 'int');
+		$wher .= "(au.ends <=  DATE_ADD(CURRENT_TIMESTAMP, INTERVAL " . $_SESSION['advs']['ending'] . " DAY)) AND ";
 	}
 
 	if (!empty($_SESSION['advs']['country']))
@@ -220,14 +218,13 @@ if ($searching && !isset($ERR))
 
 	// determine limits for SQL query
 	$left_limit = ($PAGE - 1) * $system->SETTINGS['perpage'];
-	$asparams[] = array(':time', $NOW, 'int');
 
 	// get total number of records
 	$query = "SELECT count(*) AS total FROM " . $DBPrefix . "auctions au
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			au.starts <= :time
+			au.starts <= CURRENT_TIMESTAMP
 			ORDER BY ". $by;
 	$db->query($query, $asparams);
 	$total = $db->result('total');
@@ -242,7 +239,7 @@ if ($searching && !isset($ERR))
 			" . $userjoin . "
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
-			au.starts <= :time
+			au.starts <= CURRENT_TIMESTAMP
 			ORDER BY " . $by . " LIMIT :offset, :perpage";
 	$params = $asparams;
 	$params[] = array(':offset', $left_limit, 'int');
@@ -254,7 +251,7 @@ if ($searching && !isset($ERR))
 			WHERE au.suspended = 0
 			AND " . $wher . $ora . "
 			featured = 1
-			AND	au.starts <= :time
+			AND	au.starts <= CURRENT_TIMESTAMP
 			ORDER BY " . $by . " LIMIT :offset, 5";
 	$params_feat = $asparams;
 	$params_feat[] = array(':offset',(($PAGE - 1) * 5), 'int');

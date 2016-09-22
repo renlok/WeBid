@@ -179,9 +179,9 @@ while ($row = $db->fetch())
 	$template->assign_block_vars('groups', array(
 			'ID' => $row['id'],
 			'NAME' => $row['group_name'],
-			'CAN_SELL' => ($row['can_sell'] == 1) ? $MSG['030'] : $MSG['029'],
-			'CAN_BUY' => ($row['can_buy'] == 1) ? $MSG['030'] : $MSG['029'],
-			'AUTO_JOIN' => ($row['auto_join'] == 1) ? $MSG['030'] : $MSG['029'],
+			'CAN_SELL' => ($row['can_sell'] == 1) ? $MSG['yes'] : $MSG['no'],
+			'CAN_BUY' => ($row['can_buy'] == 1) ? $MSG['yes'] : $MSG['no'],
+			'AUTO_JOIN' => ($row['auto_join'] == 1) ? $MSG['yes'] : $MSG['no'],
 			'USER_COUNT' => isset($groups_array[$row['id']]) ? $groups_array[$row['id']] : 0 // $row['count']
 			));
 	unset($groups_array[$row['id']]);
@@ -214,7 +214,7 @@ if (!empty($groups_array))
 	{
 		$template->assign_block_vars('groups_unknown', array(
 				'ID' => $k,
-				'NAME' => $MSG['text_unknown'],
+				'NAME' => $MSG['unknown'],
 				'USER_COUNT' => $v
 				));
 		$query = "SELECT groups, id, nick FROM ". $DBPrefix . "users WHERE groups LIKE :group_name";
@@ -246,4 +246,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

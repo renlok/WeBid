@@ -59,7 +59,7 @@ $selectsetting = isset($system->SETTINGS['mail_protocol'])? $system->SETTINGS['m
 loadblock($MSG['1119'], '', generateSelect('mail_protocol', $mail_protocol));
 loadblock($MSG['1120'] , '<span class="non_smtp para">' . $MSG['1121'], 'text', 'mail_parameter', $system->SETTINGS['mail_parameter']);
 loadblock($MSG['1133'] .'<span class="smtp"></span>' . $MSG['1141'], '', '', '', '', array(), true);
-loadblock($MSG['1128'], '<span class="smtp"></span>', 'yesno', 'smtp_authentication', $system->SETTINGS['smtp_authentication'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['1128'], '<span class="smtp"></span>', 'yesno', 'smtp_authentication', $system->SETTINGS['smtp_authentication'], array($MSG['yes'], $MSG['no']));
 
 $selectsetting = isset($system->SETTINGS['smtp_security'])? $system->SETTINGS['smtp_security'] : 'none';
 loadblock($MSG['1127'] , '<span class="smtp"></span>', generateSelect('smtp_security', $smtp_secure_options));
@@ -106,4 +106,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

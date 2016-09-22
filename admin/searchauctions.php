@@ -121,8 +121,8 @@ while ($row = $db->fetch())
 			'SUSPENDED' => $row['suspended'],
 			'ID' => $row['id'],
 			'TITLE' => htmlspecialchars($row['title']),
-			'START_TIME' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
-			'END_TIME' => ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
+			'START_TIME' => $dt->printDateTz($row['starts']),
+			'END_TIME' => $dt->printDateTz($row['ends']),
 			'USERNAME' => $row['nick'],
 			'CATEGORY' => $row['cat_name'],
 			'B_HASWINNERS' => false,
@@ -191,4 +191,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

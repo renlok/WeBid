@@ -20,13 +20,22 @@ include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
+	$admin_ip = $_SERVER['REMOTE_ADDR'];
 	if (isset($_POST['ip']) && !empty($_POST['ip']))
 	{
-		$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-				(NULL, 'NOUSER',  :user_ip, 'next',  'deny')";
-		$params = array();
-		$params[] = array(':user_ip', $system->cleanvars($_POST['ip']), 'str');
-		$db->query($query, $params);
+		if ($_POST['ip'] != $admin_ip)
+		{
+			$query = "INSERT INTO " . $DBPrefix . "usersips (user, ip, type, action)
+					VALUES ('NOUSER',  :user_ip, 'ban',  'deny')";
+			$params = array();
+			$params[] = array(':user_ip', $system->cleanvars($_POST['ip']), 'str');
+			$db->query($query, $params);
+			$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['ip_banned']));
+		}
+		else
+		{
+			$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_cannot_ban_self']));
+		}
 	}
 	if (isset($_POST['delete']) && is_array($_POST['delete']))
 	{
@@ -37,6 +46,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':ip_id', $v, 'int');
 			$db->query($query, $params);
 		}
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => sprintf($MSG['ip_bans_removed'], count($_POST['delete']))));
 	}
 	if (isset($_POST['accept']) && is_array($_POST['accept']))
 	{
@@ -47,16 +57,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$params[] = array(':ip_id', $v, 'int');
 			$db->query($query, $params);
 		}
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => sprintf($MSG['ip_bans_removed'], count($_POST['accept']))));
 	}
 	if (isset($_POST['deny']) && is_array($_POST['deny']))
 	{
 		foreach ($_POST['deny'] as $k => $v)
 		{
-			$query = "UPDATE " . $DBPrefix . "usersips SET action = 'deny' WHERE id = :ip_id";
-			$params = array();
-			$params[] = array(':ip_id', $v, 'int');
-			$db->query($query, $params);
+			if ($_POST['ip'] != $admin_ip)
+			{
+				$query = "UPDATE " . $DBPrefix . "usersips SET action = 'deny' WHERE id = :ip_id";
+				$params = array();
+				$params[] = array(':ip_id', $v, 'int');
+				$db->query($query, $params);
+			}
+			else
+			{
+				$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_cannot_ban_self']));
+			}
 		}
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => sprintf($MSG['ip_bans_added'], count($_POST['deny']))));
 	}
 }
 
@@ -81,4 +100,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

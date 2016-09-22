@@ -50,8 +50,6 @@ if ($parent_node['left_id'] != 1)
 	$all_items = false;
 }
 
-$NOW = time();
-
 /*
 specified category number
 look into table - and if we don't have such category - redirect to full list
@@ -161,11 +159,10 @@ else
 
 	// get total number of records
 	$query = "SELECT count(*) as COUNT FROM " . $DBPrefix . "auctions
-			WHERE " . $insql . " starts <= :time
+			WHERE " . $insql . " starts <= CURRENT_TIMESTAMP
 			AND closed = 0
 			AND suspended = 0";
 	$params = array();
-	$params[] = array(':time', $NOW, 'int');
 	if (!empty($_POST['catkeyword']))
 	{
 		$query .= " AND title LIKE :title";
@@ -188,11 +185,10 @@ else
 	$PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 	$query = "SELECT * FROM " . $DBPrefix . "auctions
-			WHERE " . $insql . " starts <= :time
+			WHERE " . $insql . " starts <= CURRENT_TIMESTAMP
 			AND closed = 0
 			AND suspended = 0";
 	$params = array();
-	$params[] = array(':time', $NOW, 'int');
 	if (!empty($_POST['catkeyword']))
 	{
 		$query .= " AND title LIKE :title";
@@ -204,12 +200,11 @@ else
 
 	// get featured items
 	$query_feat = "SELECT * FROM " . $DBPrefix . "auctions
-			WHERE " . $insql . " starts <= :time
+			WHERE " . $insql . " starts <= CURRENT_TIMESTAMP
 			AND closed = 0
 			AND suspended = 0
 			AND featured = 1";
 	$params_feat = array();
-	$params_feat[] = array(':time', $NOW, 'int');
 	if (!empty($_POST['catkeyword']))
 	{
 		$query_feat .= " AND title LIKE :title";

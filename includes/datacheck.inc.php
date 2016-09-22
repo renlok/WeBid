@@ -103,7 +103,7 @@ function CheckSellData()
 	*/
 
 	global $title, $sdescription, $minimum_bid, $with_reserve, $reserve_price, $buy_now, $buy_now_only, $buy_now_price, $payment, $category;
-	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION;
+	global $atype, $iquantity, $increments, $customincrement, $system, $_SESSION, $dt;
 	global $payments, $num, $nnum, $a_starts, $a_ends, $start_now, $custom_end, $relist;
 	global $additional_shipping_cost, $shipping_cost;
 
@@ -160,16 +160,15 @@ function CheckSellData()
 	{
 		return '061';
 	}
-	if (isset($shipping_cost) && !$system->CheckMoney($shipping_cost)) {
 
-	return '079';
-
+	if (isset($shipping_cost) && !$system->CheckMoney($shipping_cost))
+	{
+		return '079';
 	}
-	if (isset($additional_shipping_cost) && !$system->CheckMoney($additional_shipping_cost)) {
 
-
-	return '080';
-
+	if (isset($additional_shipping_cost) && !$system->CheckMoney($additional_shipping_cost))
+	{
+		return '080';
 	}
 
 	$numpay = count($payment);
@@ -239,30 +238,24 @@ function CheckSellData()
 		}
 	}
 
-	if (!(strpos($a_starts, '-') === false) && empty($start_now) && $_SESSION['SELL_action'] != 'edit')
+	if ($start_now == 0 && $_SESSION['SELL_action'] != 'edit')
 	{
-		$a_starts = _mktime(substr($a_starts, 11, 2),
-			substr($a_starts, 14, 2),
-			substr($a_starts, 17, 2),
-			substr($a_starts, 0, 2),
-			substr($a_starts, 3, 2),
-			substr($a_starts, 6, 4));
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$start_time = new DateTime($a_starts, $dt->UTCtimezone);
+		$difference = $current_time->diff($start_time);
 
-		if ($a_starts < $system->ctime)
+		if ($difference->invert == 1)
 		{
 			return '060';
 		}
 	}
 
-	if (!(strpos($a_ends, '-') === false) && $custom_end == 1)
+	if ($custom_end == 1)
 	{
-		$a_ends = _mktime(substr($a_ends, 11, 2),
-			substr($a_ends, 14, 2),
-			substr($a_ends, 17, 2),
-			substr($a_ends, 0, 2),
-			substr($a_ends, 3, 2),
-			substr($a_ends, 6, 4));
-		if ($a_ends < $a_starts)
+		$start_time = new DateTime($a_starts, $dt->UTCtimezone);
+		$end_time = new DateTime($a_ends, $dt->UTCtimezone);
+		$difference = $start_time->diff($end_time);
+		if ($difference->invert == 1)
 		{
 			return '082';
 		}

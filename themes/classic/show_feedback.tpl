@@ -11,7 +11,7 @@
 			<table border="0" width="100%" cellspacing="0" cellpadding="4">
 				<tr>
 					<td colspan=5>
-						{L_185}{USERNICK} ({USERFB}) {USERFBIMG}
+						{L_185}{USERNICK} ({USERFB}) <img src="{SITEURL}images/icons/{USER_FB_ICON}" alt="{USER_FB_ICON}" class="fbstar">
 						<br>
 						<br>
 					</td>
@@ -32,7 +32,7 @@
 						{fbs.FEEDBACK}
 					</td>
 					<td>
-						<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) {fbs.USICON}
+						<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) <img src="{SITEURL}images/icons/{fbs.FB_ICON}" alt="{fbs.FB_ICON}" class="fbstar">
 					</td>
 					<td>
 						{fbs.AUCTIONURL}

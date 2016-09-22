@@ -51,7 +51,7 @@ $user_id = $auction_data['user'];
 $minimum_bid = $auction_data['minimum_bid'];
 $high_bid = $auction_data['current_bid'];
 $customincrement = $auction_data['increment'];
-$seller_reg = FormatDate($auction_data['reg_date'], '/', false);
+$seller_reg = $dt->formatDate($auction_data['reg_date']);
 
 // sort out counter
 if (empty($auction_data['counter']))
@@ -107,42 +107,38 @@ else
 }
 
 // get ending time
-$difference = $ends - time();
 $showendtime = false;
 $has_ended = false;
-if ($start > time())
+if (strtotime($start) > time())
 {
 	$ending_time = '<span class="errfont">' . $MSG['668'] . '</span>';
 }
-elseif ($difference > 0)
+elseif (strtotime($ends) - time() > 0)
 {
+	$start_time = new DateTime($start, $dt->UTCtimezone);
+	$end_time = new DateTime($ends, $dt->UTCtimezone);
+	$difference = $start_time->diff($end_time);
 	$ending_time = '';
-	$d = 0;
-	$days_difference = floor($difference / 86400);
-	if ($days_difference > 0)
+	$date_elements = 0;
+	if ($difference->d > 0)
 	{
-		$daymsg = ($days_difference == 1) ? $MSG['126b'] : $MSG['126'];
-		$ending_time .= $days_difference . ' ' . $daymsg . ' ';
-		$d++;
+		$daymsg = ($difference->d == 1) ? $MSG['126b'] : $MSG['126'];
+		$ending_time .= $difference->d . ' ' . $daymsg . ' ';
+		$date_elements++;
 	}
-	$difference = $difference % 86400;
-	$hours_difference = floor($difference / 3600);
-	if ($hours_difference > 0)
+	if ($difference->h > 0)
 	{
-		$ending_time .= $hours_difference . $MSG['25_0037'] . ' ';
-		$d++;
+		$ending_time .= $difference->h . $MSG['25_0037'] . ' ';
+		$date_elements++;
 	}
-	$difference = $difference % 3600;
-	$minutes_difference = floor($difference / 60);
-	$seconds_difference = $difference % 60;
-	if ($minutes_difference > 0 && $d < 2)
+	if ($difference->m > 0 && $date_elements < 2)
 	{
-		$ending_time .= $minutes_difference . $MSG['25_0032'] . ' ';
-		$d++;
+		$ending_time .= $difference->m . $MSG['25_0032'] . ' ';
+		$date_elements++;
 	}
-	if ($seconds_difference > 0 && $d < 2)
+	if ($difference->s > 0 && $date_elements < 2)
 	{
-		$ending_time .= $seconds_difference . $MSG['25_0033'];
+		$ending_time .= $difference->s . $MSG['25_0033'];
 	}
 	$showendtime = true;
 }
@@ -199,7 +195,15 @@ if ($system->SETTINGS['extra_cat'] == 'y' && intval($auction_data['secondcat']) 
 // history
 $query = "SELECT b.*, u.nick, u.rate_sum FROM " . $DBPrefix . "bids b
 LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-WHERE b.auction = :auc_id ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
+WHERE b.auction = :auc_id";
+if ($auction_data['bn_only'] || $auction_type == 2)
+{
+	$query .= " ORDER BY b.bidwhen DESC";
+}
+else
+{
+	$query .= " ORDER BY b.bid DESC, b.quantity DESC, b.id DESC";
+}
 $params = array();
 $params[] = array(':auc_id', $id, 'int');
 $db->query($query, $params);
@@ -245,20 +249,16 @@ foreach ($db->fetchall() as $bidrec)
 		}
 
 		$total_rate = $fb_pos - $fb_neg;
-
-		foreach ($membertypes as $k => $l)
-		{
-			if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
-			{
-				$buyer_rate_icon = $l['icon'];
-				break;
-			}
-		}
+		$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+		$params = array();
+		$params[] = array(':feedback', $bidrec['rate_sum'], 'int');
+		$db->query($query, $params);
+		$feedback_icon = $db->result('icon');
 		$template->assign_block_vars('high_bidders', array(
 				'BUYER_ID' => $bidrec['bidder'],
 				'BUYER_NAME' => $bidderarray[$bidrec['nick']],
 				'BUYER_FB' => $bidrec['rate_sum'],
-				'BUYER_FB_ICON' => (!empty($buyer_rate_icon) && $buyer_rate_icon != 'transparent.gif') ? '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $buyer_rate_icon . '" alt="' . $buyer_rate_icon . '" class="fbstar">' : ''
+				'BUYER_FB_ICON' => $feedback_icon
 				));
 	}
 	$template->assign_block_vars('bidhistory', array(
@@ -266,7 +266,7 @@ foreach ($db->fetchall() as $bidrec)
 			'ID' => $bidrec['bidder'],
 			'NAME' => $bidderarray[$bidrec['nick']],
 			'BID' => $system->print_money($bidrec['bid']),
-			'WHEN' => ArrangeDateNoCorrection($bidrec['bidwhen'] + $system->tdiff) . ':' . date('s', $bidrec['bidwhen']),
+			'WHEN' => $dt->formatDate($bidrec['bidwhen'], 'd F Y - H:i:s'),
 			'QTY' => $bidrec['quantity']
 			));
 	$left -= $bidrec['quantity'];
@@ -421,18 +421,11 @@ while ($fb_arr = $db->fetch())
 
 $total_rate = $fb_pos - $fb_neg;
 
-if ($total_rate > 0)
-{
-	$i = 0;
-	foreach ($membertypes as $k => $l)
-	{
-		if ($k >= $total_rate || $i++ == (count($membertypes) - 1))
-		{
-			$seller_rate_icon = $l['icon'];
-			break;
-		}
-	}
-}
+$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+$params = array();
+$params[] = array(':feedback', $total_rate, 'int');
+$db->query($query, $params);
+$seller_feedback_icon = $db->result('icon');
 
 // Pictures Gellery
 $K = 0;
@@ -519,9 +512,9 @@ $template->assign_vars(array(
 		'ZIP' => $auction_data['zip'],
 		'QTY' => $auction_data['quantity'],
 		'ENDS' => $ending_time,
-		'ENDS_IN' => ($ends - time()),
-		'STARTTIME' => ArrangeDateNoCorrection($start + $system->tdiff),
-		'ENDTIME' => ArrangeDateNoCorrection($ends + $system->tdiff),
+		'ENDS_IN' => (strtotime($ends) - time()),
+		'STARTTIME' => $dt->printDateTz($start),
+		'ENDTIME' => $dt->printDateTz($ends),
 		'BUYNOW1' => $auction_data['buy_now'],
 		'BUYNOW2' => ($auction_data['buy_now'] > 0) ? $system->print_money($auction_data['buy_now']) . $bn_link : $system->print_money($auction_data['buy_now']),
 		'NUMBIDS' => $num_bids,
@@ -549,7 +542,7 @@ $template->assign_vars(array(
 		'SELLER_ID' => $auction_data['user'],
 		'SELLER_NICK' => $auction_data['nick'],
 		'SELLER_TOTALFB' => $total_rate,
-		'SELLER_FBICON' => (!empty($seller_rate_icon) && $seller_rate_icon != 'transparent.gif') ? '<img src="' . $system->SETTINGS['siteurl'] . 'images/icons/' . $seller_rate_icon . '" alt="' . $seller_rate_icon . '" class="fbstar">' : '',
+		'SELLER_FB_ICON' => $seller_feedback_icon,
 		'SELLER_NUMFB' => $num_feedbacks,
 		'SELLER_FBPOS' => ($num_feedbacks > 0) ? '(' . ceil($fb_pos * 100 / $num_feedbacks) . '%)' : $MSG['000'],
 		'SELLER_FBNEG' => ($fb_neg > 0) ? $MSG['5507'] . ' (' . ceil($fb_neg * 100 / $total_rate) . '%)' : '0',
@@ -575,9 +568,9 @@ $template->assign_vars(array(
 		'B_USERBID' => $userbid,
 		'B_BIDDERPRIV' => ($system->SETTINGS['buyerprivacy'] == 'y' && (!$user->logged_in || ($user->logged_in && $user->user_data['id'] != $auction_data['user']))),
 		'B_HASBUYER' => (count($hbidder_data) > 0),
-		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > (($ends - time()) / 3600)),
+		'B_COUNTDOWN' => ($system->SETTINGS['hours_countdown'] > ((strtotime($ends) - time()) / 3600)),
 		'B_HAS_QUESTIONS' => ($num_questions > 0),
-		'B_CAN_BUY' => ($user->can_buy || (!$user->logged_in && $system->SETTINGS['bidding_visable_to_guest'])) && !($start > time()),
+		'B_CAN_BUY' => ($user->can_buy || (!$user->logged_in && $system->SETTINGS['bidding_visable_to_guest'])) && !(strtotime($start) > time()),
 		'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
 		'B_SHOWENDTIME' => $showendtime,
 		'B_SHOW_ADDITIONAL_SHIPPING_COST' => ($auction_data['additional_shipping_cost'] > 0)

@@ -14,9 +14,6 @@
 
 include 'common.php';
 
-$NOW = time();
-$NOWB = date('Ymd');
-
 // If user is not logged in redirect to login page
 if (!$user->checkAuth())
 {
@@ -86,13 +83,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 
 			$aucdata = $db->result();
 
-			$ends = $NOW + ($aucdata['duration'] * 24 * 60 * 60);
+			// auction ends
+			$start_date = new DateTime('now', $dt->UTCtimezone);
+			$start_date->add(new DateInterval('P' . $aucdata['duration'] . 'D'));
+			$auction_ends = $start_date->format('Y-m-d H:i:s');
 
 			// Update end time to "now"
-			$query = "UPDATE " . $DBPrefix . "auctions SET starts = :time, ends = :ends WHERE id = :auc_id";
+			$query = "UPDATE " . $DBPrefix . "auctions SET starts = CURRENT_TIMESTAMP, ends = :ends WHERE id = :auc_id";
 			$params = array();
-			$params[] = array(':time', $NOW, 'int');
-			$params[] = array(':ends', $ends, 'int');
+			$params[] = array(':ends', $auction_ends, 'str');
 			$params[] = array(':auc_id', $v, 'int');
 			$db->query($query, $params);
 		}
@@ -100,10 +99,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 	}
 }
 // Retrieve active auctions from the database
-$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = :user_id and starts > :time AND suspended = 0";
+$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = :user_id and starts > CURRENT_TIMESTAMP AND suspended = 0";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
-$params[] = array(':time', $NOW, 'int');
 $db->query($query, $params);
 $TOTALAUCTIONS = $db->result('COUNT');
 
@@ -153,11 +151,10 @@ else
 	$_SESSION['pa_type_img'] = '<img src="images/arrow_down.gif" align="center" hspace="2" border="0" />';
 }
 $query = "SELECT * FROM " . $DBPrefix . "auctions au
-	WHERE user = :user_id AND starts > :time AND suspended = 0
+	WHERE user = :user_id AND starts > CURRENT_TIMESTAMP AND suspended = 0
 	ORDER BY " . $_SESSION['pa_ord'] . " " . $_SESSION['pa_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
-$params[] = array(':time', $NOW, 'int');
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
@@ -169,8 +166,8 @@ while ($item = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => htmlspecialchars($item['title']),
-			'STARTS' => FormatDate($item['starts'], '/', false),
-			'ENDS' => FormatDate($item['ends'], '/', false),
+			'STARTS' => $dt->formatDate($item['starts']),
+			'ENDS' => $dt->formatDate($item['ends']),
 
 			'B_HASNOBIDS' => ($item['current_bid'] == 0)
 			));

@@ -26,7 +26,7 @@ $emailer->assign_vars(array(
 		'A_MINBID' => $system->print_money($minimum_bid, false),
 		'A_RESERVE' => $system->print_money($reserve_price, false),
 		'A_BNPRICE' => $system->print_money($buy_now_price, false),
-		'A_ENDS' => ArrangeDateNoCorrection($a_ends + $system->tdiff),
+		'A_ENDS' => $dt->printDateTz($a_ends),
 		'PAY_LINK' => $system->SETTINGS['siteurl'] . 'pay.php?a=4&auction_id=' . $Auction['id'],
 
 		'C_NAME' => $user->user_data['name']

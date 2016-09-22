@@ -194,7 +194,7 @@ while ($row = $db->fetch())
 			'NAME' => $row['name'],
 			'COUNTRY' => $row['country'],
 			'EMAIL' => $row['email'],
-			'NEWSLETTER' => ($row['nletter'] == 1) ? $MSG['030'] : $MSG['029'],
+			'NEWSLETTER' => ($row['nletter'] == 1) ? $MSG['yes'] : $MSG['no'],
 			'SUSPENDED' => $row['suspended'],
 			'BALANCE' => $system->print_money($row['balance']),
 			'BALANCE_CLEAN' => $row['balance'],
@@ -236,4 +236,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

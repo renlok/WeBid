@@ -42,12 +42,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 loadblock($MSG['395'], $MSG['397'], 'yesno', 'fees', $system->SETTINGS['fees'], array($MSG['759'], $MSG['760']));
 loadblock($MSG['729'], $MSG['730'], 'batchstacked', 'fee_type', $system->SETTINGS['fee_type'], array($MSG['731'], $MSG['732']));
 
-loadblock($MSG['1155'], $MSG['1154'], 'bool', 'payment_gateway_sandbox', $system->SETTINGS['payment_gateway_sandbox'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['1155'], $MSG['1154'], 'bool', 'payment_gateway_sandbox', $system->SETTINGS['payment_gateway_sandbox'], array($MSG['yes'], $MSG['no']));
 
 loadblock($MSG['733'], '', '', '', '', array(), true);
 loadblock($MSG['734'], $MSG['735'], 'days', 'fee_max_debt', $system->SETTINGS['fee_max_debt']);
 loadblock($MSG['736'], $MSG['737'], 'days', 'fee_signup_bonus', $system->SETTINGS['fee_signup_bonus']);
-loadblock($MSG['738'], $MSG['739'], 'yesno', 'fee_disable_acc', $system->SETTINGS['fee_disable_acc'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['738'], $MSG['739'], 'yesno', 'fee_disable_acc', $system->SETTINGS['fee_disable_acc'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
@@ -62,4 +62,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

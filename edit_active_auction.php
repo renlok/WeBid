@@ -14,7 +14,6 @@
 
 include 'common.php';
 
-$NOW = time();
 $id = intval($_GET['id']);
 
 // Is the seller logged in?
@@ -47,12 +46,12 @@ if (!isset($_POST['action'])) // already closed auctions
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
 	$RELISTEDAUCTION = $db->result();
-	$difference = $RELISTEDAUCTION['ends'] - time();
+	$difference = strtotime($RELISTEDAUCTION['ends']) - time();
 
 	if ($user->user_data['id'] == $RELISTEDAUCTION['user'] && $difference > 0)
 	{
 		$_SESSION['SELL_auction_id']	= $RELISTEDAUCTION['id'];
-		$_SESSION['SELL_starts']		= $RELISTEDAUCTION['starts'] + $system->tdiff;
+		$_SESSION['SELL_starts']		= $RELISTEDAUCTION['starts'];
 		$_SESSION['SELL_ends']			= $RELISTEDAUCTION['ends'];
 		$_SESSION['SELL_title']			= htmlspecialchars($RELISTEDAUCTION['title']);
 		$_SESSION['SELL_subtitle']		= htmlspecialchars($RELISTEDAUCTION['subtitle']);
@@ -161,7 +160,7 @@ if (!isset($_POST['action'])) // already closed auctions
 		}
 
 		$_SESSION['SELL_action'] = 'edit';
-		if ($RELISTEDAUCTION['starts'] > $NOW)
+		if (strtotime($RELISTEDAUCTION['starts']) > time())
 		{
 			$_SESSION['SELL_caneditstartdate'] = true;
 		}
@@ -169,6 +168,8 @@ if (!isset($_POST['action'])) // already closed auctions
 		{
 			$_SESSION['SELL_caneditstartdate'] = false;
 		}
+		$_SESSION['SELL_hash'] = md5(microtime() . rand(0,50));
+		$_SESSION['SELL_submitted'][$_SESSION['SELL_hash']] = false;
 		header('location: sell.php?mode=recall');
 	}
 	else

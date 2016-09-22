@@ -20,7 +20,7 @@
 							</tr>
 							<tr>
 								<td width="30%"><b>{L_125} :</b></td>
-								<td>{SELLER} {SELLERNUMFBS} {FBICON}</td>
+								<td>{SELLER} {SELLERNUMFBS} <img src="{SITEURL}images/icons/{FB_ICON}" alt="{FB_ICON}" class="fbstar"></td>
 							</tr>
 							<tr>
 								<td width="30%"><b>{L_497}:</b></td>
@@ -41,14 +41,14 @@
 								</td>
 							</tr>
 							<tr>
-								<td>{L_003}</td>
+								<td>{L_username}</td>
 								<td>
 									<b>{YOURUSERNAME}</b>
 								</td>
 							</tr>
 	<!-- IF B_USERAUTH -->
 							<tr>
-								<td>{L_004}</td>
+								<td>{L_password}</td>
 								<td>
 									<input type="password" name="password" class="form-control">
 								</td>

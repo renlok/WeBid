@@ -35,8 +35,6 @@ $categories = constructCategories();
  * c) send email to seller (reporting if there was a winner)
  */
 printLog('++++++ Closing expired auctions');
-$NOW = time();
-$NOWB = date('Ymd');
 $buyer_emails = array();
 $seller_emails = array();
 
@@ -60,16 +58,14 @@ while($row = $db->fetch())
 $query = "SELECT a.*, u.email, u.endemailmode, u.nick, u.payment_details, u.name
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (a.user = u.id)
-		WHERE a.ends <= :time
+		WHERE a.ends <= CURRENT_TIMESTAMP
 		AND ((a.closed = 0)
 		OR (a.closed = 1
 		AND a.reserve_price > 0
 		AND a.num_bids > 0
 		AND a.current_bid < a.reserve_price
 		AND a.sold = 's'))";
-$params = array();
-$params[] = array(':time', $NOW, 'int');
-$db->query($query, $params);
+$db->direct_query($query);
 
 $count_auctions = $num = $db->numrows();
 printLog($num . ' auctions to close');
@@ -140,13 +136,12 @@ foreach ($auction_data as $Auction) // loop auctions
 
 			// Add winner's data to "winners" table
 			$query = "INSERT INTO " . $DBPrefix . "winners
-				(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
-				(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, 1, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
+				(auction, seller, winner, bid, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+				(:auc_id, :seller_id, :winner_id, :current_bid, 0, 0, 1, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
 			$params = array();
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$params[] = array(':seller_id', $Seller['id'], 'int');
 			$params[] = array(':winner_id', $Winner['id'], 'int');
-			$params[] = array(':time', $NOW, 'int');
 			$params[] = array(':current_bid', $Auction['current_bid'], 'float');
 			$params[] = array(':bf_paid', $bf_paid, 'int');
 			$params[] = array(':ff_paid', $ff_paid, 'int');
@@ -266,13 +261,12 @@ foreach ($auction_data as $Auction) // loop auctions
 
 				// Add winner's data to "winners" table
 				$query = "INSERT INTO " . $DBPrefix . "winners
-						(auction, seller, winner, bid, closingdate, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
-						(:auc_id, :seller_id, :winner_id, :current_bid, :time, 0, 0, :items_got, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
+						(auction, seller, winner, bid, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+						(:auc_id, :seller_id, :winner_id, :current_bid, 0, 0, :items_got, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
 				$params = array();
 				$params[] = array(':auc_id', $Auction['id'], 'int');
 				$params[] = array(':seller_id', $Seller['id'], 'int');
 				$params[] = array(':winner_id', $row['bidder'], 'int');
-				$params[] = array(':time', $NOW, 'int');
 				$params[] = array(':items_got', $items_got, 'int');
 				$params[] = array(':current_bid', $row['maxbid'], 'float');
 				$params[] = array(':bf_paid', $bf_paid, 'int');
@@ -290,8 +284,7 @@ foreach ($auction_data as $Auction) // loop auctions
 	} // end auction ends
 	printLogL ('mail to seller: ' . $Seller['email'], 1);
 
-	$month = date('m', $Auction['ends'] + $system->tdiff);
-	$ends_string = $MSG['MON_0' . $month] . ' ' . date('d, Y H:i', $Auction['ends'] + $system->tdiff);
+	$ends_string = $dt->printDateTz($Auction['ends']);
 
 	$close_auction = true;
 	// deal with the automatic relists find which auctions are to be relisted
@@ -307,7 +300,9 @@ foreach ($auction_data as $Auction) // loop auctions
 		if ($_BIDSNUM == 0 || ($_BIDSNUM > 0 && $Auction['reserve_price'] > 0 && !$winner_present))
 		{
 			// Calculate end time
-			$_ENDS = $NOW + ($Auction['duration'] * 24 * 60 * 60);
+			$start_date = new DateTime('now', $dt->UTCtimezone);
+			$start_date->add(new DateInterval('P' . $Auction['duration'] . 'D'));
+			$auction_ends = $start_date->format('Y-m-d H:i:s');
 
 			$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
 			$params = array();
@@ -317,11 +312,10 @@ foreach ($auction_data as $Auction) // loop auctions
 			$params = array();
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$db->query($query, $params);
-			$query = "UPDATE " . $DBPrefix . "auctions SET starts = :time, ends = :ends,
+			$query = "UPDATE " . $DBPrefix . "auctions SET starts = CURRENT_TIMESTAMP, ends = :ends,
 					current_bid = 0, num_bids = 0, relisted = relisted + 1 WHERE id = :auc_id";
 			$params = array();
-			$params[] = array(':time', $NOW, 'int');
-			$params[] = array(':ends', $_ENDS, 'int');
+			$params[] = array(':ends', $auction_ends, 'str');
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$db->query($query, $params);
 			$close_auction = false;
@@ -400,15 +394,14 @@ foreach ($auction_data as $Auction) // loop auctions
 			{
 				// Add in the database to send later as cumulitave email to seller
 				$added_winner_names_cs = implode(",<br>", $added_winner_names);
-				$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
-						(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
+				$query = "INSERT INTO " . $DBPrefix . "pendingnotif (auction_id, seller_id, winners, auction, seller)
+						VALUES (:auc_id, :seller_id, :winner_names, :auc_data, :seller_data)";
 				$params = array();
 				$params[] = array(':auc_id', $Auction['id'], 'int');
 				$params[] = array(':seller_id', $Seller['id'], 'int');
 				$params[] = array(':winner_names', $added_winner_names_cs, 'str');
 				$params[] = array(':auc_data', serialize($Auction), 'str');
 				$params[] = array(':seller_data', serialize($Seller), 'str');
-				$params[] = array(':date', gmdate('Ymd'), 'str');
 				$db->query($query, $params);
 			}
 		}
@@ -443,15 +436,14 @@ foreach ($auction_data as $Auction) // loop auctions
 				else
 				{
 					// Add in the database to send later as cumulitave email to seller
-					$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
-							(NULL, :auc_id, :seller_id, :winner_names, :auc_data, :seller_data, :date)";
+					$query = "INSERT INTO " . $DBPrefix . "pendingnotif (auction_id, seller_id, winners, auction, seller)
+							VALUES (:auc_id, :seller_id, :winner_names, :auc_data, :seller_data)";
 					$params = array();
 					$params[] = array(':auc_id', $Auction['id'], 'int');
 					$params[] = array(':seller_id', $Seller['id'], 'int');
 					$params[] = array(':winner_names', $added_winner_names_cs, 'str');
 					$params[] = array(':auc_data', serialize($Auction), 'str');
 					$params[] = array(':seller_data', serialize($Seller), 'str');
-					$params[] = array(':date', gmdate('Ymd'), 'str');
 					$db->query($query, $params);
 				}
 			}
@@ -467,14 +459,13 @@ foreach ($auction_data as $Auction) // loop auctions
 		else
 		{
 			// Save in the database to send later
-			$query = "INSERT INTO " . $DBPrefix . "pendingnotif VALUES
-			(NULL, :auc_id, :seller_id, '', :auction_data, :seller_data, :date)";
+			$query = "INSERT INTO " . $DBPrefix . "pendingnotif (auction_id, seller_id, winners, auction, seller)
+					VALUES (:auc_id, :seller_id, '', :auction_data, :seller_data)";
 			$params = array();
 			$params[] = array(':auc_id', $Auction['id'], 'int');
 			$params[] = array(':seller_id', $Auction['id'], 'int');
 			$params[] = array(':auction_data', serialize($Auction), 'str');
 			$params[] = array(':seller_data', serialize($Seller), 'str');
-			$params[] = array(':date', date('Ymd'), 'int');
 			$db->query($query, $params);
 		}
 	}
@@ -520,21 +511,15 @@ if ($system->SETTINGS['prune_unactivated_users'] == 1)
 	printLog("\n");
 	printLog("++++++ Prune unactivated user accounts");
 
-	$pruneAccountTime = time() - (60 * 60 * 24 * $system->SETTINGS['prune_unactivated_users_days']);
+	$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE reg_date <= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['prune_unactivated_users_days'] . " DAY) AND suspended = 8";
+	$db->direct_query($query);
 
-	$query = "SELECT id FROM " . $DBPrefix . "users WHERE reg_date <= :pruneAccountTime AND suspended = 8";
-	$params = array();
-	$params[] = array(':pruneAccountTime', $pruneAccountTime, 'int');
-	$db->query($query, $params);
-
-	$pruneCount = $db->numrows();
+	$pruneCount = $db->result('COUNT');
 	printLog($pruneCount . " accounts to prune");
 	if ($pruneCount > 0)
 	{
-		$query = "DELETE FROM " . $DBPrefix . "users WHERE reg_date <= :pruneAccountTime AND suspended = 8";
-		$params = array();
-		$params[] = array(':pruneAccountTime', $pruneAccountTime, 'int');
-		$db->query($query, $params);
+		$query = "DELETE FROM " . $DBPrefix . "users WHERE reg_date <= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['prune_unactivated_users_days'] . " DAY) AND suspended = 8";
+		$db->direct_query($query);
 
 		$query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = inactiveusers - " . $pruneCount;
 		$db->direct_query($query);
@@ -545,13 +530,8 @@ if ($system->SETTINGS['prune_unactivated_users'] == 1)
 printLog("\n");
 printLog("++++++ Archiving old auctions");
 
-$expireAuction = 60 * 60 * 24 * $system->SETTINGS['archiveafter']; // time of auction expiration (in seconds)
-$expiredTime = time() - $expireAuction;
-
-$query = "SELECT id FROM " . $DBPrefix . "auctions WHERE ends <= :expiredTime";
-$params = array();
-$params[] = array(':expiredTime', $expiredTime, 'int');
-$db->query($query, $params);
+$query = "SELECT id FROM " . $DBPrefix . "auctions WHERE ends <= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['archiveafter'] . " DAY)";
+$db->direct_query($query);
 
 $num = $db->numrows();
 printLog($num . " auctions to archive");
@@ -612,10 +592,9 @@ $db->direct_query($query);
 $user_data = $db->fetchall();
 foreach ($auction_data as $row)
 {
-	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < :date AND seller_id = :seller_id";
+	$query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < CURRENT_TIMESTAMP AND seller_id = :seller_id";
 	$params = array();
 	$params[] = array(':seller_id', $row['id'], 'int');
-	$params[] = array(':date', date('Ymd'), 'int');
 	$db->query($query, $params);
 
 	if ($db->numrows() > 0)

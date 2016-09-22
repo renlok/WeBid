@@ -53,4 +53,3 @@ foreach ($LANGUAGES as $k => $v)
 }
 
 $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['086']));
-?>

@@ -15,16 +15,14 @@
 include 'common.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
-$NOW = time();
-$p24h = time() + (24 * 60 * 60);
-$m24h = time() - (24 * 60 * 60);
+$yesterday = new DateTime('- 1 day', $dt->UTCtimezone);
+$tomorrow = new DateTime('+ 1 day', $dt->UTCtimezone);
 $catscontrol = new MPTTcategories();
 
 $user_id = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['user_id']) : 0;
 
 $feed = (isset($_GET['feed'])) ? intval($_GET['feed']) : '';
 $params = array();
-$params[] = array(':NOW', $NOW, 'int');
 
 switch ($feed)
 {
@@ -32,58 +30,58 @@ switch ($feed)
 		$RSStitle = $MSG['924']; // items listed in the last 24 hours
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= :NOW AND a.starts > :starts';
-		$params[] = array(':starts', $m24h, 'int');
+		$subquery = 'a.starts <= CURRENT_TIMESTAMP AND a.starts > :starts';
+		$params[] = array(':starts', $yesterday, 'str');
 		break;
 
 	case 2:
 		$RSStitle = $MSG['925']; // items closing in 24 hours or less
 		$postdate = 'ends';
 		$sort = 'ASC';
-		$subquery = 'a.starts <= :NOW AND a.ends <= :ends';
-		$params[] = array(':ends', $p24h, 'int');
+		$subquery = 'a.starts <= CURRENT_TIMESTAMP AND a.ends <= :ends';
+		$params[] = array(':ends', $tomorrow, 'str');
 		break;
 
 	case 3:
 		$RSStitle = $MSG['926']; // items over 300.00
 		$postdate = 'ends';
 		$sort = 'ASC';
-		$subquery = 'a.starts <= :NOW AND (a.current_bid >= 300 OR a.minimum_bid >= 300 OR a.buy_now >= 300)';
+		$subquery = 'a.starts <= CURRENT_TIMESTAMP AND (a.current_bid >= 300 OR a.minimum_bid >= 300 OR a.buy_now >= 300)';
 		break;
 
 	case 4:
 		$RSStitle = $MSG['927']; // items over 1000.00
 		$postdate = 'ends';
 		$sort = 'ASC';
-		$subquery = 'a.starts <= :NOW AND (a.current_bid >= 1000 OR a.minimum_bid >= 1000 OR a.buy_now >= 1000)';
+		$subquery = 'a.starts <= CURRENT_TIMESTAMP AND (a.current_bid >= 1000 OR a.minimum_bid >= 1000 OR a.buy_now >= 1000)';
 		break;
 
 	case 5:
 		$RSStitle = $MSG['928'];
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= :NOW AND (a.current_bid <= 10 OR a.buy_now <= 10)';
+		$subquery = 'a.starts <= CURRENT_TIMESTAMP AND (a.current_bid <= 10 OR a.buy_now <= 10)';
 		break;
 
 	case 6:
 		$RSStitle = $MSG['929']; // items with 10 or more bids
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= :NOW AND a.num_bids >= 10';
+		$subquery = 'a.starts <= CURRENT_TIMESTAMP AND a.num_bids >= 10';
 		break;
 
 	case 7:
 		$RSStitle = $MSG['930']; // items with 25 or more bids
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= :NOW AND a.num_bids >= 25';
+		$subquery = 'a.starts <= CURRENT_TIMESTAMP AND a.num_bids >= 25';
 		break;
 
 	case 8:
 		$RSStitle = $MSG['931']; // item with a Buy Now
 		$postdate = 'starts';
 		$sort = 'DESC';
-		$subquery = 'a.starts <= :NOW AND a.buy_now > 0';
+		$subquery = 'a.starts <= CURRENT_TIMESTAMP AND a.buy_now > 0';
 		break;
 
 	default:
@@ -94,7 +92,7 @@ switch ($feed)
 			$db->query($query, array(array(':user_id', $user_id, 'int')));
 			$username = $db->result('nick');
 			$sort = 'DESC';
-			$subquery = 'a.starts <= :NOW AND a.ends > :NOW AND a.user = :user_id';
+			$subquery = 'a.starts <= CURRENT_TIMESTAMP AND a.ends > CURRENT_TIMESTAMP AND a.user = :user_id';
 			$params[] = array(':user_id', $user_id, 'int');
 			$RSStitle = sprintf($MSG['932'], $username);
 		}
@@ -102,8 +100,8 @@ switch ($feed)
 		{
 			$RSStitle = $MSG['924'];
 			$sort = 'DESC';
-			$subquery = 'a.starts <= :NOW AND a.starts > :starts';
-			$params[] = array(':starts', $m24h, 'int');
+			$subquery = 'a.starts <= CURRENT_TIMESTAMP AND a.starts > :starts';
+			$params[] = array(':starts', $yesterday, 'str');
 		}
 		break;
 }
@@ -145,7 +143,7 @@ foreach ($aution_data_all as $auction_data)
 			'URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $auction_data['id'],
 			'DESC' => $auction_data['description'],
 			'USER' => $auction_data['nick'],
-			'POSTED' => date('Y-m-d\TH:i:s-00:00', $auction_data['starts'] + $system->tdiff),
+			'POSTED' => $dt->formatDate($auction_data['starts'], 'Y-m-d\TH:i:s-00:00'),
 			//'POSTED' => date('D, j M Y H:i:s \G\M\T', $auction_data['starts']),
 			'CAT' => $cat_value
 			));

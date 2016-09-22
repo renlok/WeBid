@@ -25,8 +25,6 @@ if (!$user->checkAuth())
 // check if the user can access this page
 $user->checkSuspended();
 
-$NOW = time();
-$NOWB = date('Ymd');
 $user_message = '';
 
 // DELETE OR CLOSE OPEN AUCTIONS
@@ -81,9 +79,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 		foreach ($_POST['closenow'] as $k => $v)
 		{
 			// Update end time to the current time
-			$query = "UPDATE " . $DBPrefix . "auctions SET ends = :time, relist = relisted WHERE id = :auc_id";
+			$query = "UPDATE " . $DBPrefix . "auctions SET ends = CURRENT_TIMESTAMP, relist = relisted WHERE id = :auc_id";
 			$params = array();
-			$params[] = array(':time', $NOW, 'int');
 			$params[] = array(':auc_id', $v, 'int');
 			$db->query($query, $params);
 		}
@@ -92,9 +89,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'delopenauctions')
 	}
 }
 // Retrieve active auctions from the database
-$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = :user_id AND closed = 0 AND starts <= :time AND suspended = 0";
+$query = "SELECT count(id) AS COUNT FROM " . $DBPrefix . "auctions WHERE user = :user_id AND closed = 0 AND starts <= CURRENT_TIMESTAMP AND suspended = 0";
 $params = array();
-$params[] = array(':time', $NOW, 'int');
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
 $TOTALAUCTIONS = $db->result('COUNT');
@@ -144,11 +140,10 @@ else
 
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 	WHERE user = :user_id AND closed = 0
-	AND starts <= :time AND suspended = 0
+	AND starts <= CURRENT_TIMESTAMP AND suspended = 0
 	ORDER BY " . $_SESSION['oa_ord'] . " " . $_SESSION['oa_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
-$params[] = array(':time', $NOW, 'int');
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
@@ -185,8 +180,8 @@ while ($item = $db->fetch())
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
 			'ID' => $item['id'],
 			'TITLE' => htmlspecialchars($item['title']),
-			'STARTS' => FormatDate($item['starts'], '/', false),
-			'ENDS' => FormatDate($item['ends'], '/', false),
+			'STARTS' => $dt->formatDate($item['starts']),
+			'ENDS' => $dt->formatDate($item['ends']),
 			'BID' => $system->print_money($item['current_bid']),
 			'BIDS' => $item['num_bids'],
 			'RELIST' => $item['relist'],

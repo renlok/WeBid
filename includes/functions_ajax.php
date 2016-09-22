@@ -82,9 +82,9 @@ function upload_images()
 			$fileName = $conf['file_name'];
 			// resize picture
 			$uploader->resizeThumbnailImage($targetDir . '/' . $fileName, $system->SETTINGS['gallery_max_width_height']);
-			if (!in_array($fileName, $_SESSION['UPLOADED_PICTURES']))
+			$final_file_name = strtolower($fileName);
+			if (!in_array($final_file_name, $_SESSION['UPLOADED_PICTURES']))
 			{
-				$final_file_name = strtolower($fileName);
 				array_push($_SESSION['UPLOADED_PICTURES'], $final_file_name);
 				if (count($_SESSION['UPLOADED_PICTURES']) == 1)
 				{

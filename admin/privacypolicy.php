@@ -27,7 +27,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 
 	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['406']));
 }
-loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['yes'], $MSG['no']));
 
 $CKEditor = new CKEditor();
 $CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
@@ -49,4 +49,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

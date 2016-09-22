@@ -40,7 +40,7 @@ if ($db->numrows() == 0)
 }
 
 $array = $db->result();
-$sent = date('M d, Y H:ia', $array['sentat'] + $system->tdiff);
+$sent = $dt->formatDate($array['sentat'], 'M d, Y H:ia');
 $subject = $array['subject'];
 $message = $array['message'];
 $hash = md5(rand(1, 9999));

@@ -164,7 +164,7 @@ function show_config_table($fresh = true)
 	$data .= '<tr>';
 	$data .= '	<td width="140">URL</td>';
 	$data .= '	<td width="108">';
-	$data .= '	  <input type="text" name="URL" id="textfield" value="' . getdomainpath() . '">';
+	$data .= '	  <input type="text" name="URL" class="textfield" value="' . getdomainpath() . '">';
 	$data .= '	</td>';
 	$data .= '	<td rowspan="2">';
 	$data .= '	  The url &amp; location of the webid installation on your server. It\'s usually best to leave these as they are.<br>';
@@ -174,7 +174,7 @@ function show_config_table($fresh = true)
 	$data .= '  <tr>';
 	$data .= '	<td>Doument Root</td>';
 	$data .= '	<td>';
-	$data .= '	  <input type="text" name="mainpath" id="textfield" value="' . MAIN_PATH . '">';
+	$data .= '	  <input type="text" name="mainpath" class="textfield" value="' . MAIN_PATH . '">';
 	$data .= '	</td>';
 	$data .= '</tr>';
 	if ($fresh)
@@ -182,7 +182,7 @@ function show_config_table($fresh = true)
 		$data .= '<tr>';
 		$data .= '	<td>Email Address</td>';
 		$data .= '	<td>';
-		$data .= '	  <input type="text" name="EMail" id="textfield">';
+		$data .= '	  <input type="text" name="EMail" class="textfield">';
 		$data .= '	</td>';
 		$data .= '	<td>The admin email address</td>';
 		$data .= '</tr>';
@@ -190,33 +190,33 @@ function show_config_table($fresh = true)
 	$data .= '<tr>';
 	$data .= '	<td>Database Host</td>';
 	$data .= '	<td>';
-	$data .= '	  <input type="text" name="DBHost" id="textfield" value="localhost">';
+	$data .= '	  <input type="text" name="DBHost" class="textfield" value="localhost">';
 	$data .= '	</td>';
 	$data .= '	<td>The location of your MySQL database in most cases its just localhost</td>';
 	$data .= '  </tr>';
 	$data .= '  <tr>';
 	$data .= '	<td>Database Username</td>';
 	$data .= '	<td>';
-	$data .= '	  <input type="text" name="DBUser" id="textfield">';
+	$data .= '	  <input type="text" name="DBUser" class="textfield">';
 	$data .= '	</td>';
 	$data .= '	<td rowspan="3">The username, password and database name of the database your installing webid on</td>';
 	$data .= '  </tr>';
 	$data .= '  <tr>';
 	$data .= '	<td>Database Password</td>';
 	$data .= '	<td>';
-	$data .= '	  <input type="text" name="DBPass" id="textfield">';
+	$data .= '	  <input type="password" name="DBPass" class="textfield">';
 	$data .= '	</td>';
 	$data .= '  </tr>';
 	$data .= '  <tr>';
 	$data .= '	<td>Database Name</td>';
 	$data .= '	<td>';
-	$data .= '	  <input type="text" name="DBName" id="textfield">';
+	$data .= '	  <input type="text" name="DBName" class="textfield">';
 	$data .= '	</td>';
 	$data .= '  </tr>';
 	$data .= '  <tr>';
 	$data .= '	<td>Database Prefix</td>';
 	$data .= '	<td>';
-	$data .= '	  <input type="text" name="DBPrefix" id="textfield" value="webid_">';
+	$data .= '	  <input type="text" name="DBPrefix" class="textfield" value="webid_">';
 	$data .= '	</td>';
 	$data .= '	<td>the prefix of the webid tables in the database, used so you can install multiple scripts in the same database without issues.</td>';
 	$data .= '</tr>';
@@ -319,7 +319,6 @@ function show_config_table($fresh = true)
 		$data .= '</tr>';
 
 		$directories = array(
-			'includes/membertypes.inc.php',
 			'language/EN/categories.inc.php',
 			'language/EN/categories_select_box.inc.php'
 			);
@@ -358,15 +357,15 @@ function show_config_table($fresh = true)
 		$data .= (extension_loaded('bcmath')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 
-		$data .= '<tr><td>PHP Data Objects Support:</td><td colspan="2">';
+		$data .= '<tr><td>PHP Data Objects Support:</td><td>';
 		$data .= (extension_loaded('pdo')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 
-		$data .= '<tr><td colspan="2">File Info:</td><td>';
+		$data .= '<tr><td>File Info:</td><td>';
 		$data .= (function_exists('finfo_open')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
 		$data .= '</tr>';
 
-		$data .= '<tr><td>PHP Version: (' . phpversion() . ')</td><td colspan="2">';
+		$data .= '<tr><td>PHP Version: (' . phpversion() . ')</td><td>';
 		$data .= ((version_compare(phpversion(), '5.4', '>'))) ? '<strong style="color:green">OK</strong>' : '<strong style="color:red">Too low</strong>';
 		$data .= '</tr>';
 
@@ -437,23 +436,29 @@ function rebuild_cat_file()
 	fputs($handle, $output);
 }
 
-function rrmdir($dir) { 
-   if (is_dir($dir)) { 
-     $objects = scandir($dir); 
-     foreach ($objects as $object) { 
-       if ($object != "." && $object != "..") { 
-         if (is_dir($dir."/".$object))
-           rrmdir($dir."/".$object);
-         else
-           unlink($dir."/".$object); 
-       } 
-     }
-     rmdir($dir); 
-   } 
- }
+function rrmdir($dir)
+{
+	if (is_dir($dir))
+	{
+		$objects = scandir($dir);
+		foreach ($objects as $object)
+		{
+			if ($object != "." && $object != "..")
+			{
+				if (is_dir($dir."/".$object))
+					rrmdir($dir."/".$object);
+				else
+					unlink($dir."/".$object);
+			}
+		}
+		rmdir($dir);
+	}
+}
 
- function rmf($f) { 
-   if(file_exists($f)) {
-   	unlink($f);
-   }
- }
+function rmf($f)
+{
+	if(file_exists($f))
+	{
+		unlink($f);
+	}
+}

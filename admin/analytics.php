@@ -18,7 +18,8 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
     $trackingcode = $_POST['trackingcode'];
 
     $system->writesetting("googleanalytics", $trackingcode, 'str');
@@ -39,4 +40,8 @@ $template->set_filenames(array(
         'body' => 'adminpages.tpl'
         ));
 $template->display('body');
+<<<<<<< HEAD
 include 'footer.php';
+=======
+include 'footer.php';
+>>>>>>> refs/remotes/renlok/master

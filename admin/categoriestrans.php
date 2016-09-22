@@ -61,7 +61,7 @@ function rebuild_cat_file($cats)
 
 	$output .= search_cats(0, 0);
 
-	$output .= ");\n?>";
+	$output .= ");";
 
 	$handle = fopen (MAIN_PATH . 'language/' . $lang . '/categories.inc.php', 'w');
 	fputs($handle, $output);
@@ -101,4 +101,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

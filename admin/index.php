@@ -172,7 +172,7 @@ $template->assign_vars(array(
 		'SITENAME' => $system->SETTINGS['sitename'],
 		'ADMINMAIL' => $system->SETTINGS['adminmail'],
 		'CRON' => ($system->SETTINGS['cron'] == 1) ? '<b>' . $MSG['373'] . '</b><br>' . $MSG['25_0027'] : '<b>' . $MSG['374'] . '</b>',
-		'GALLERY' => ($system->SETTINGS['picturesgallery'] == 1) ? '<b>' . $MSG['2__0066'] . '</b><br>' . $MSG['666'] . ': ' . $system->SETTINGS['maxpictures'] . '<br>' . $MSG['671'] . ': ' . $system->SETTINGS['maxuploadsize']/1024 . ' KB' : '<b>' . $MSG['2__0067'] . '</b>',
+		'GALLERY' => ($system->SETTINGS['picturesgallery'] == 1) ? '<b>' . $MSG['2__0066'] . '</b><br>' . $MSG['gallery_images_allowance'] . ': ' . $system->SETTINGS['maxpictures'] . '<br>' . $MSG['gallery_image_max_kb'] . ': ' . $system->SETTINGS['maxuploadsize']/1024 . ' KB' : '<b>' . $MSG['2__0067'] . '</b>',
 		'BUY_NOW' => ($system->SETTINGS['buy_now'] == 1) ? '<b>' . $MSG['2__0067'] . '</b>' : '<b>' . $MSG['2__0066'] . '</b>',
 		'CURRENCY' => $system->SETTINGS['currency'],
 		'TIMEZONE' => $timezones[$system->SETTINGS['timezone']],
@@ -204,4 +204,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

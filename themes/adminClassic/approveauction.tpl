@@ -47,9 +47,9 @@
 						<td>{L_300}</td>
 						<td>
 <!-- IF SUSPENDED eq 0 -->
-							{L_029}
+							{L_no}
 <!-- ELSE -->
-							{L_030}
+							{L_yes}
 <!-- ENDIF -->
 						</td>
 					</tr>
@@ -65,8 +65,8 @@
 								<input type="hidden" name="id" value="{ID}">
 								<input type="hidden" name="offset" value="{OFFSET}">
 								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-								<button type="submit" name="action" value="Yes">{L_030}</button>
-								<button type="submit" name="action" value="No">{L_029}</button>
+								<button type="submit" name="action" value="Yes">{L_yes}</button>
+								<button type="submit" name="action" value="No">{L_no}</button>
 							</form>
 						</td>
 					</tr>

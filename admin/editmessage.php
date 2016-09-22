@@ -58,7 +58,7 @@ $template->assign_vars(array(
 		'BOARD_NAME' => $board_name,
 		'MESSAGE' => nl2br((isset($_POST['message'])) ? $_POST['message'] : $data['message']),
 		'USER' => ($data['user'] > 0) ? $data['username'] : $MSG['5061'],
-		'POSTED' => FormatDate($data['msgdate']),
+		'POSTED' => $dt->formatDate($data['msgdate']),
 		'BOARD_ID' => $board_id,
 		'MSG_ID' => $msg
 		));
@@ -69,4 +69,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

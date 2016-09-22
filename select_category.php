@@ -134,6 +134,8 @@ elseif (count($_POST) == 0 && !isset($_GET['cat_no']))
 	$_SESSION['SELL_ends'] = '';
 	$_SESSION['SELL_custom_end'] = 0;
 	$_SESSION['SELL_caneditstartdate'] = true;
+	$_SESSION['SELL_hash'] = md5(microtime() . rand(0,50));
+	$_SESSION['SELL_submitted'][$_SESSION['SELL_hash']] = false;
 }
 
 // Build the categories arrays

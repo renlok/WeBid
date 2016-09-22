@@ -37,14 +37,12 @@ if (isset($_POST['action']))
 			{
 				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
-				$query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, created, lastlogin, status) VALUES
-						(:username, :password, :hash, :created, :lastlogin, 1)";
+				$query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, status) VALUES
+						(:username, :password, :hash, 1)";
 				$params = array();
 				$params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
 				$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
 				$params[] = array(':hash', get_hash(), 'str');
-				$params[] = array(':created', date('Ymd'), 'str');
-				$params[] = array(':lastlogin', time(), 'int');
 				$db->query($query, $params);
 				// Redirect
 				header('location: login.php');
@@ -85,7 +83,7 @@ if (isset($_POST['action']))
 					$db->query($query, $params);
 					$admin = $db->result();
 				}
-				
+
 				if ($db->numrows() == 0 || !($phpass->CheckPassword($_POST['password'], $admin['password'])))
 				{
 					$ERR = $ERR_048;
@@ -101,9 +99,8 @@ if (isset($_POST['action']))
 					$_SESSION['WEBID_ADMIN_USER'] = $_POST['username'];
 					$_SESSION['WEBID_ADMIN_TIME'] = $system->ctime;
 					// Update last login information for this user
-					$query = "UPDATE " . $DBPrefix . "adminusers SET lastlogin = :lastlogin WHERE id = :admin_id";
+					$query = "UPDATE " . $DBPrefix . "adminusers SET lastlogin = CURRENT_TIMESTAMP WHERE id = :admin_id";
 					$params = array();
-					$params[] = array(':lastlogin', time(), 'int');
 					$params[] = array(':admin_id', $admin['id'], 'int');
 					$db->query($query, $params);
 					// Redirect
@@ -131,4 +128,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

@@ -93,31 +93,21 @@ function checkMissing ($missing)
 	return false;
 }
 
-function checkEmail($email)
+function emailDomainIsBlacklisted($email)
 {
 	global $system;
-	if ($system->SETTINGS['spam_blocked_email_enabled'])
-	{
-		$exploded_email = explode('@', $email);
-    	$email_domain = trim(array_pop($exploded_email));
-		$blocked_emails = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
+	$exploded_email = explode('@', trim($email));
+	$email_domain = array_pop($exploded_email);
+	$blocked_domains = explode("\n", $system->SETTINGS['spam_blocked_email_domains']);
 
-		return !contains($email_domain, $blocked_emails);
-	}
-	return true;
-}
-
-function contains($str, array $arr)
-{
-    foreach($arr as $a)
+	foreach($blocked_domains as $domain)
     {
-        if (stripos($str, $a) !== false)
+        if (stripos($email_domain, rtrim($domain)) !== false)
     	{
     		return true;
     	}
     }
-    
-    return false;
+	return false;
 }
 
 $first = true;
@@ -214,7 +204,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 	}
 	if ($system->SETTINGS['wordsfilter'] == 'y')
 	{
-		if (empty($system->filter($_POST['TPL_nick'])))
+		if ($_POST['TPL_nick'] != $system->filter($_POST['TPL_nick']))
 		{
 			$ERR = $MSG['wordfilter_banned_username']; // User name altered by word filter
 		}
@@ -260,7 +250,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		{
 			$ERR = $ERR_008;
 		}
-		elseif (!checkEmail($_POST['TPL_email']))
+		elseif ($system->SETTINGS['spam_blocked_email_enabled'] && emailDomainIsBlacklisted($_POST['TPL_email']))
 		{
 			$ERR = $MSG['spam_blocked_email_domains_register_error'];
 		}
@@ -275,20 +265,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 		else
 		{
 			// check username is unique
-			$query = "SELECT nick FROM " . $DBPrefix . "users WHERE nick = :name";
+			$query = "SELECT COUNT(nick) as COUNT FROM " . $DBPrefix . "users WHERE nick = :name";
 			$params = array();
 			$params[] = array(':name', $system->cleanvars($_POST['TPL_nick']), 'str');
 			$db->query($query, $params);
-			if ($db->numrows() > 0)
+			if ($db->result('COUNT') > 0)
 			{
 				$ERR = $ERR_111; // Selected user already exists
 			}
 			// check email is unique
-			$query = "SELECT email FROM " . $DBPrefix . "users WHERE email = :email";
+			$query = "SELECT COUNT(email) as COUNT FROM " . $DBPrefix . "users WHERE email = :email";
 			$params = array();
 			$params[] = array(':email', $system->cleanvars($_POST['TPL_email']), 'str');
 			$db->query($query, $params);
-			if ($db->numrows() > 0)
+			if ($db->result('COUNT') > 0)
 			{
 				$ERR = $ERR_115; // E-mail already used
 			}
@@ -335,10 +325,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				include PACKAGE_PATH . 'PasswordHash.php';
 				$phpass = new PasswordHash(8, false);
 				$query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, birthdate,
+						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, birthdate,
 						suspended, language, groups, balance, timezone)
 						VALUES
-						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :reg_date, :birthdate,
+						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :birthdate,
 						:suspended, :language, :groups, :balance, :timezone)";
 				$params = array(
 					array(':nick', $system->cleanvars($TPL_nick_hidden), 'str'),
@@ -353,7 +343,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					array(':phone', $system->cleanvars((isset($_POST['TPL_phone'])) ? $_POST['TPL_phone'] : ''), 'str'),
 					array(':nletter', $_POST['TPL_nletter'], 'int'),
 					array(':email', $system->cleanvars($_POST['TPL_email']), 'str'),
-					array(':reg_date', time(), 'int'),
 					array(':birthdate', ((!empty($DATE)) ? $DATE : 0), 'str'),
 					array(':suspended', $SUSPENDED, 'int'),
 					array(':language', $language, 'str'),
@@ -363,8 +352,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				);
 				$db->query($query, $params);
 				$TPL_id_hidden = $db->lastInsertId();
-				$query = "INSERT INTO " . $DBPrefix . "usersips VALUES
-							(NULL, :id_hidden, :remote_addr, 'first', 'accept')";
+				$query = "INSERT INTO " . $DBPrefix . "usersips (user, ip, type, action)
+						VALUES (:id_hidden, :remote_addr, 'register', 'accept')";
 				$params = array();
 				$params[] = array(':id_hidden', $TPL_id_hidden, 'int');
 				$params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'str');

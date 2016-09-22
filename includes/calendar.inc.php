@@ -37,14 +37,14 @@ if ($system->SETTINGS['datesformat'] == 'USA')
 	$cal_invalid_date = "'Invalid date: \"' + s_date[0] + '\".\\nAccepted format is mm-dd-yyyy.'";
 }
 
-$cal_gener_date = "(d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"-\"
-		+ (d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"-\"
+$cal_gener_date = "(d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"/\"
+		+ (d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"/\"
 		+ d_date.getFullYear()";
 
 if ($system->SETTINGS['datesformat'] == 'USA')
 {
-	$cal_gener_date = "(d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"-\"
-		+ (d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"-\"
+	$cal_gener_date = "(d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"/\"
+		+ (d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"/\"
 		+ d_date.getFullYear()";
 }
 

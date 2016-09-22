@@ -21,8 +21,6 @@ if ($system->SETTINGS['cron'] == 2)
 	include_once 'cron.php';
 }
 
-$NOW = time();
-
 function ShowFlags()
 {
 	global $system, $LANGUAGES;
@@ -92,22 +90,22 @@ foreach ($cat_strings as $cat_id => $category_name)
 // get featured items
 $query = "SELECT id, title, current_bid, pict_url, ends, num_bids, minimum_bid, bn_only, buy_now
 		FROM " . $DBPrefix . "auctions
-		WHERE closed = 0 AND suspended = 0 AND starts <= :time
+		WHERE closed = 0 AND suspended = 0 AND starts <= CURRENT_TIMESTAMP
 		AND featured = 1
 		ORDER BY RAND() DESC LIMIT :limit";
 $params = array();
-$params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['homefeaturednumber'], 'int');
 $db->query($query, $params);
 
 $i = 0;
 while ($row = $db->fetch())
 {
-	$ends = $row['ends'];
-	$difference = $ends - time();
-	if ($difference > 0)
+	if (strtotime($row['ends']) - time() > 0)
 	{
-		$ends_string = FormatTimeLeft($difference);
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
+		$difference = $current_time->diff($end_time);
+		$ends_string = $dt->formatTimeLeft($difference);
 	}
 	else
 	{
@@ -130,11 +128,10 @@ $featured_items = ($i > 0) ? true : false;
 // get last created auctions
 $query = "SELECT id, title, starts from " . $DBPrefix . "auctions
 			WHERE closed = 0 AND suspended = 0
-			AND starts <= :time
+			AND starts <= CURRENT_TIMESTAMP
 			ORDER BY starts DESC
 			LIMIT :limit";
 $params = array();
-$params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['lastitemsnumber'], 'int');
 $db->query($query, $params);
 
@@ -143,7 +140,7 @@ while ($row = $db->fetch())
 {
 	$template->assign_block_vars('auc_last', array(
 			'BGCOLOUR' => (!($i % 2)) ? '' : 'class="alt-row"',
-			'DATE' => ArrangeDateNoCorrection($row['starts'] + $system->tdiff),
+			'DATE' => $dt->printDateTz($row['starts']),
 			'ID' => $row['id'],
 			'TITLE' => htmlspecialchars($row['title'])
 			));
@@ -153,20 +150,21 @@ while ($row = $db->fetch())
 $auc_last = ($i > 0) ? true : false;
 // get ending soon auctions
 $query = "SELECT ends, id, title FROM " . $DBPrefix . "auctions
-			WHERE closed = 0 AND suspended = 0 AND starts <= :time
+			WHERE closed = 0 AND suspended = 0 AND starts <= CURRENT_TIMESTAMP
 			ORDER BY ends LIMIT :limit";
 $params = array();
-$params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['endingsoonnumber'], 'int');
 $db->query($query, $params);
 
 $i = 0;
 while ($row = $db->fetch())
 {
-	$difference = $row['ends'] - time();
-	if ($difference > 0)
+	if (strtotime($row['ends']) - time() > 0)
 	{
-		$ends_string = FormatTimeLeft($difference);
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
+		$difference = $current_time->diff($end_time);
+		$ends_string = $dt->formatTimeLeft($difference);
 	}
 	else
 	{
@@ -186,10 +184,9 @@ $end_soon = ($i > 0) ? true : false;
 $query = "SELECT a.id, a.title, a.current_bid, a.pict_url, a.ends, a.num_bids, a.minimum_bid
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "auccounter c ON (a.id = c.auction_id)
-		WHERE closed = 0 AND suspended = 0 AND starts <= :time
+		WHERE closed = 0 AND suspended = 0 AND starts <= CURRENT_TIMESTAMP
 		ORDER BY c.counter DESC LIMIT :limit";
 $params = array();
-$params[] = array(':time', $NOW, 'int');
 $params[] = array(':limit', $system->SETTINGS['hotitemsnumber'], 'int');
 $db->query($query, $params);
 
@@ -197,11 +194,12 @@ $i = 0;
 while ($row = $db->fetch())
 {
 	$i++;
-	$ends = $row['ends'];
-	$difference = $ends - time();
-	if ($difference > 0)
+	if (strtotime($row['ends']) - time() > 0)
 	{
-		$ends_string = FormatTimeLeft($difference);
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
+		$difference = $current_time->diff($end_time);
+		$ends_string = $dt->formatTimeLeft($difference);
 	}
 	else
 	{
@@ -250,7 +248,7 @@ if ($system->SETTINGS['newsbox'] == 1)
 	{
 		$template->assign_block_vars('newsbox', array(
 				'ID' => $new['id'],
-				'DATE' => FormatDate($new['new_date']),
+				'DATE' => $dt->formatDate($new['new_date']),
 				'TITLE' => (!empty($new['title'])) ? htmlspecialchars($new['title']) : htmlspecialchars($new['t'])
 				));
 	}

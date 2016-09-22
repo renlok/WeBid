@@ -16,7 +16,7 @@ if (!defined('InWeBid')) exit();
 
 function browseItems($query, $params, $query_feat, $params_feat, $total, $current_page, $extravar = '')
 {
-	global $system, $MSG, $ERR_114, $db;
+	global $system, $MSG, $ERR_114, $db, $dt;
 	global $template, $PAGES, $PAGE;
 
 	$feat_items = false;
@@ -30,7 +30,9 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 			$row = build_items($row);
 
 			// time left till the end of this auction
-			$difference = $row['ends'] - time();
+			$current_time = new DateTime('now', $dt->UTCtimezone);
+			$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
+			$difference = $current_time->diff($end_time);
 			$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
 			$template->assign_block_vars('featured_items', array(
@@ -39,10 +41,10 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 				'IMAGE' => $row['pict_url'],
 				'TITLE' => htmlspecialchars($row['title']),
 				'SUBTITLE' => htmlspecialchars($row['subtitle']),
-				'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
+				'BUY_NOW' => ($difference->invert == 1) ? '' : $row['buy_now'],
 				'BID' => $row['current_bid'],
 				'BIDFORM' => $system->print_money($row['current_bid']),
-				'CLOSES' => ($difference < 1728000) ? FormatTimeLeft($difference) : ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
+				'CLOSES' => ($difference->format('%d') < 20) ? $dt->formatTimeLeft($difference) : $dt->printDateTz($row['ends']),
 				'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
 				'B_BOLD' => ($row['bold'])
@@ -60,7 +62,9 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 		$row = build_items($row);
 
 		// time left till the end of this auction
-		$difference = $row['ends'] - time();
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
+		$difference = $current_time->diff($end_time);
 		$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
 		$template->assign_block_vars('items', array(
@@ -69,10 +73,10 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 			'IMAGE' => $row['pict_url'],
 			'TITLE' => htmlspecialchars($row['title']),
 			'SUBTITLE' => htmlspecialchars($row['subtitle']),
-			'BUY_NOW' => ($difference < 0) ? '' : $row['buy_now'],
+			'BUY_NOW' => ($difference->invert == 1) ? '' : $row['buy_now'],
 			'BID' => $row['current_bid'],
 			'BIDFORM' => $system->print_money($row['current_bid']),
-			'CLOSES' => ($difference < 1728000) ? FormatTimeLeft($difference) : ArrangeDateNoCorrection($row['ends'] + $system->tdiff),
+			'CLOSES' => ($difference->format('%d') < 20) ? $dt->formatTimeLeft($difference) : $dt->printDateTz($row['ends']),
 			'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
 			'B_BOLD' => ($row['bold'])

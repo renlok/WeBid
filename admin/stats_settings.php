@@ -54,7 +54,7 @@ else
 }
 
 loadblock('', $MSG['5144']);
-loadblock($MSG['5149'], '', 'yesno', 'activate', $statssettings['activate'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['5149'], '', 'yesno', 'activate', $statssettings['activate'], array($MSG['yes'], $MSG['no']));
 loadblock('', $MSG['5150']);
 loadblock('' , '', 'checkbox', 'accesses', $statssettings['accesses'], array($MSG['5145']));
 loadblock('' , '', 'checkbox', 'browsers', $statssettings['browsers'], array($MSG['5146']));
@@ -71,4 +71,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

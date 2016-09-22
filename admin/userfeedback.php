@@ -17,7 +17,6 @@ $current_page = 'users';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
-include INCLUDE_PATH . 'membertypes.inc.php';
 
 $secid = intval($_GET['id']);
 $query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id = :user_id";
@@ -43,15 +42,11 @@ if ($db->numrows() > 0)
 	}
 	$PAGES = ($num_fbs == 0) ? 1 : ceil($num_fbs / $system->SETTINGS['perpage']);
 
-	$i = 0;
-	foreach ($membertypes as $k => $l)
-	{
-		if ($k >= $arr['rate_sum'] || $i++ == (count($membertypes)-1))
-		{
-			$feedback_image = '<img src="' . $system->SETTINGS['siteurl'] . '/images/icons/' . $l['icon'] . '" class="fbstar">';
-			break;
-		}
-	}
+	$query = "SELECT icon FROM " . $DBPrefix . "membertypes WHERE feedbacks <= :feedback ORDER BY feedbacks DESC LIMIT 1;";
+	$params = array();
+	$params[] = array(':feedback', $arr['rate_sum'], 'int');
+	$db->query($query, $params);
+	$feedback_icon = $db->result('icon');
 
 	$query = "SELECT * FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = " . $secid . " ORDER by feedbackdate DESC";
 	$params = array();
@@ -75,7 +70,7 @@ if ($db->numrows() > 0)
 		$template->assign_block_vars('feedback', array(
 				'FB_TYPE' => $fb_type,
 				'FB_FROM' => $arrfeed['rater_user_nick'],
-				'FB_TIME' => FormatDate($arrfeed['feedbackdate'], '/', false),
+				'FB_TIME' => $dt->formatDate($arrfeed['feedbackdate']),
 				'FB_MSG' => nl2br($arrfeed['feedback']),
 				'FB_ID' => $arrfeed['id'],
 				'BG' => $bg
@@ -108,7 +103,7 @@ $template->assign_vars(array(
 		'ID' => $secid,
 		'NICK' => $arr['nick'],
 		'FB_NUM' => $arr['rate_num'],
-		'FB_IMG' => $feedback_image,
+		'FB_ICON' => $feedback_icon,
 
 		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/userfeedback.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
 		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/userfeedback.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
@@ -122,4 +117,3 @@ $template->set_filenames(array(
 		));
 $template->display('body');
 include 'footer.php';
-?>

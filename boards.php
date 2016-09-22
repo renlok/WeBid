@@ -36,7 +36,7 @@ while ($row = $db->fetch())
 			'NAME' => $row['name'],
 			'ID' => $row['id'],
 			'NUMMSG' => $row['messages'],
-			'LASTMSG' => (!empty($row['lastmessage'])) ? FormatDate($row['lastmessage']) : '--'
+			'LASTMSG' => ($row['messages'] > 0) ? $dt->formatDate($row['lastmessage']) : '--'
 			));
 }
 

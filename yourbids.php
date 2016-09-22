@@ -48,6 +48,10 @@ while ($row = $db->fetch())
 		$auctions_count++;
 		$idcheck[] = $row['id'];
 
+		$current_time = new DateTime('now', $dt->UTCtimezone);
+		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
+		$difference = $current_time->diff($end_time);
+
 		$template->assign_block_vars('bids', array(
 				'BGCOLOUR' => $bgColor,
 				'ID' => $row['id'],
@@ -55,7 +59,7 @@ while ($row = $db->fetch())
 				'BID' => $system->print_money($row['bid']),
 				'PROXYBID' => (intval($row['proxybid']) > 0) ? $system->print_money($row['proxybid']) : '',
 				'QTY' => $row['quantity'],
-				'TIMELEFT' => FormatTimeLeft($row['ends'] - time()),
+				'TIMELEFT' => $dt->formatTimeLeft($difference),
 				'CBID' => $system->print_money($row['current_bid'])
 				));
 	}

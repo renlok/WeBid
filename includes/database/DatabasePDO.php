@@ -145,7 +145,14 @@ class DatabasePDO extends Database
 		}
 		else
 		{
-			return $data[$column];
+			if (isset($data[$column]))
+			{
+				return $data[$column];
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 
@@ -227,9 +234,9 @@ class DatabasePDO extends Database
 	{
 		if (!$this->error_supress)
 		{
-			// TODO: DO SOMETHING
+			// TODO: make this better
 			$this->error = debug_backtrace();
-			//print_r($this->error);
+			trigger_error($this->error, E_USER_ERROR);
 		}
 	}
 

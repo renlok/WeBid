@@ -103,12 +103,11 @@ if (isset($_POST['action']) || !empty($_POST['action']))
 		$emailer->email_uid = $seller_id;
 		$emailer->email_sender($seller_email, 'send_email.inc.php', $subject);
 
-		$query = "INSERT INTO " . $DBPrefix . "messages (sentto, " . $id_type . ", sentat, message, subject, question)
-			VALUES (:seller_id, :from_id, :timer, :question, :title, :auc_id)";
+		$query = "INSERT INTO " . $DBPrefix . "messages (sentto, " . $id_type . ", message, subject, question)
+			VALUES (:seller_id, :from_id, :question, :title, :auc_id)";
 		$params = array();
 		$params[] = array(':seller_id', $seller_id, 'int');
 		$params[] = array(':from_id', $from_id, 'int');
-		$params[] = array(':timer', time(), 'int');
 		$params[] = array(':question', $cleaned_question, 'str');
 		$params[] = array(':title', $system->cleanvars(sprintf($MSG['651'], $item_title)), 'str');
 		$params[] = array(':auc_id', $auction_id, 'int');

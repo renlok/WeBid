@@ -8,7 +8,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-12"><a href="newbannersuser.php">{L__0026}</a></div>
+								<div class="col-md-12"><a class="btn-primary btn" href="newbannersuser.php">{L__0026}</a></div>
 							</div>
 							<br>
 							<div class="row">

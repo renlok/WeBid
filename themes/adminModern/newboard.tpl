@@ -31,7 +31,7 @@
 					</table>
 					<input type="hidden" name="action" value="insert">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_530}">
+					<input class="btn-primary btn" type="submit" name="act" class="centre" value="{L_530}">
 				</form>
 			</div>
 		</div>

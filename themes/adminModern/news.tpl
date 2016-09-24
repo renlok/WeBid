@@ -18,8 +18,8 @@
 						<td>{news.DATE}</td>
 						<td <!-- IF news.SUSPENDED eq 1 -->style="background: #FAD0D0; color: #B01717; font-weight: bold;"<!-- ENDIF -->>{news.TITLE}</td>
 						<td>
-							<a href="editnew.php?id={news.ID}&PAGE={PAGE}">{L_298}</a><br>
-							<a href="deletenew.php?id={news.ID}&PAGE={PAGE}">{L_008}</a>
+							<a class="btn-primary btn" href="editnew.php?id={news.ID}&PAGE={PAGE}">{L_298}</a><br>
+							<a class="btn-primary btn" href="deletenew.php?id={news.ID}&PAGE={PAGE}">{L_008}</a>
 						</td>
 					</tr>
 <!-- END news -->

@@ -6,7 +6,7 @@
 							<li><a href="{SITEURL}admin/viewaccessstats.php">{L_5143}</a></li>
 							<li><a href="{SITEURL}admin/viewbrowserstats.php">{L_5165}</a></li>
 							<li><a href="{SITEURL}admin/viewplatformstats.php">{L_5318}</a></li>
-							<li><a href="{SITEURL}admin/analytics.php">{L_google_analytics}</a></li>
+							<li><a href="{SITEURL}admin/analytics.php">{L_analytics}</a></li>
 						</ul>
 					</div>
 				</div>

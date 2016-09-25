@@ -24,7 +24,7 @@
 								<div class="col-md-5">
 									<input type="text" name="payment[{payments.ID}][clean]" value="{payments.CLEAN}" size="25">
 								</div>
-								<div class="col-md-2"><input type="checkbox" name="payment[{payments.ID}][delete]" value="{payments.ID}"></div>
+								<div class="col-md-2"><input type="checkbox" name="delete[]" value="{payments.ID}"></div>
 							</div>
 <!-- END payments -->
 							<div class="row">

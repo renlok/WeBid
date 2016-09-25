@@ -128,6 +128,26 @@ $MSG['msg_board_settings_updated'] = "Message Board Settings Updated";
 $MSG['enable_message_boards'] = "Enable Message Boards?";
 $MSG['enable_message_boards_explain'] = "The message boards are a place where users can post public messages and questions to each other";
 
+// buyerprivacy.php
+$MSG['bidder_privacy'] = "Bidder Privacy";
+$MSG['bidder_privacy_updated'] = "Bidder Privacy Settings Updated";
+$MSG['enable_bidder_privacy'] = "Enable Bidder Privacy?";
+$MSG['enable_bidder_privacy_explain'] = "If enabled the bidders identity is hidden to everyone but the seller of the item";
+
+// buyitnow.php
+$MSG['buy_it_now_settings_updated'] = "Buy it now settings updates";
+$MSG['enable_buy_it_now'] = "Enable Buy it Now?";
+$MSG['enable_buy_it_now_explain'] = "Gives an option to sellers to set a buy it now price.";
+$MSG['enable_buy_it_now_only'] = "Enable Buy it now only auctions?";
+$MSG['enable_buy_it_now_only_explain'] = "Give your sellers the ability to set up auctions for which it will not be possible to place any bid, but only use the <b>Buy it now</b> feature (fixed price auctions).<br><b>Note:</b> the <b>Buy it now only</b> option will only take effect if <b>Buy it now</b> is enabled.";
+$MSG['enable_bin_only_auto_disable'] = "Enable Buy it now only auto disable";
+$MSG['enable_bin_only_auto_disable_explain'] = "The Buy it now auto disable feature will automatically disable the buy it now only option for users if the percentage of buy it now only auctions reach the set value, you may want to use this as a deterrent to stop people making lots of spam buy it now only auctions";
+$MSG['buy_it_now_only_limit'] = "Buy it now only limit";
+
+// categories.php
+$MSG['delete_category_move_auctions'] = 'What do you want to do with the auctions & subcategories in the following categories<br><small>(If you want to move them you must enter the category id of where you want them moved)</small>';
+$MSG['move_category_missing_id'] = 'Some categories selected to move could not be processed as no valid category ID was given to where they would be moved to';
+
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";
 $MSG['current_logo'] = "Current logo";

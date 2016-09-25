@@ -57,7 +57,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `password_type` INT(1) NOT NULL DEFAULT '1',
   `hash` varchar(5) NOT NULL default '',
   `created` timestamp default CURRENT_TIMESTAMP,
-  `lastlogin` datetime default,
+  `lastlogin` datetime,
   `status` tinyint(1) NOT NULL default '0',
   `notes` text,
   PRIMARY KEY  (`id`)

@@ -1571,6 +1571,11 @@ $MSG['remove_auction_from_moderation_explain'] = "Are you sure you want to remov
 
 $MSG['auction_awaiting_approval'] = "Your Auction is Awaiting Approval";
 
+// item_watch.php
+$MSG['item_watch_item_removed'] = 'Auction removed from watchlist';
+$MSG['item_watch_item_added'] = 'Auction added to watchlist';
+$MSG['item_watch_not_added'] = 'Auction already on watchlist';
+
 // dates
 $MSG['year_s'] = 'year(s)';
 $MSG['month_s'] = 'month(s)';

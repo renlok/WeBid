@@ -38,10 +38,10 @@ $MSG['1100'] = 'You cannot delete the account you are currently logged in from';
 $MSG['1101'] = 'Admin accounts deleted';
 
 // analytics.php
-$MSG['google_analytics'] = "Google Analytics";
-$MSG['google_analytics_updated'] = "Google Analytics Settings updated";
-$MSG['google_analytics_tracking_code'] = "Google Analytics Tracking Code";
-$MSG['google_analytics_tracking_code_hint'] = "Copy and paste your Google Analytics tracking code here. You must include the opening and closing &lt;script&gt;&lt;/script&gt; tags.";
+$MSG['analytics'] = "Analytics";
+$MSG['analytics_updated'] = "Analytics Settings updated";
+$MSG['analytics_tracking_code'] = "Analytics Tracking Code";
+$MSG['analytics_tracking_code_hint'] = "Copy and paste your analytics tracking code here (such as google analytics). You must include the opening and closing &lt;script&gt;&lt;/script&gt; tags.";
 
 // auctions.php
 $MSG['auction_settings'] = "Auction Settings";

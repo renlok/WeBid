@@ -158,7 +158,7 @@ img {
 	border:none;
 }
 
-input, textarea, select, .button {
+input, textarea, select, button, .button {
 	border: 2px solid #CCCCCC;
 	padding: 4px;
 	background: #F7F7F7;

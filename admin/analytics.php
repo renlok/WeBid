@@ -27,12 +27,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
     $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['google_analytics_updated']));
 }
 
-loadblock($MSG['google_analytics_tracking_code'], $MSG['google_analytics_tracking_code_hint'], 'textarea', 'trackingcode', $system->SETTINGS['googleanalytics']);
+loadblock($MSG['analytics_tracking_code'], $MSG['analytics_tracking_code_hint'], 'textarea', 'trackingcode', $system->SETTINGS['googleanalytics']);
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0023'],
-        'PAGENAME' => $MSG['google_analytics'],
+        'PAGENAME' => $MSG['analytics'],
         ));
 
 include 'header.php';

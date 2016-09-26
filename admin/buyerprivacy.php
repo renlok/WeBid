@@ -23,15 +23,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	// Update database
 	$system->writesetting("buyerprivacy", ynbool($_POST['buyerprivacy']), "str");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['247']));
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['bidder_privacy_updated']));
 }
 
-loadblock($MSG['237'], $MSG['238'], 'yesno', 'buyerprivacy', $system->SETTINGS['buyerprivacy'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['enable_bidder_privacy'], $MSG['enable_bidder_privacy_explain'], 'yesno', 'buyerprivacy', $system->SETTINGS['buyerprivacy'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],
 		'TYPENAME' => $MSG['25_0008'],
-		'PAGENAME' => $MSG['236'],
+		'PAGENAME' => $MSG['bidder_privacy'],
 		'B_TITLES' => true
 		));
 

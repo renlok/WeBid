@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 		</div>
-		<div style="width:75%; float:right;">
+			<div class="col-md-9">
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_516}</h4>
 				<div class="plain-box">{NEWS_COUNT}{L_517}</div>
@@ -18,8 +18,8 @@
 						<td>{news.DATE}</td>
 						<td <!-- IF news.SUSPENDED eq 1 -->style="background: #FAD0D0; color: #B01717; font-weight: bold;"<!-- ENDIF -->>{news.TITLE}</td>
 						<td>
-							<a href="editnew.php?id={news.ID}&PAGE={PAGE}">{L_298}</a><br>
-							<a href="deletenew.php?id={news.ID}&PAGE={PAGE}">{L_008}</a>
+							<a class="btn-primary btn" href="editnew.php?id={news.ID}&PAGE={PAGE}">{L_298}</a><br>
+							<a class="btn-primary btn" href="deletenew.php?id={news.ID}&PAGE={PAGE}">{L_008}</a>
 						</td>
 					</tr>
 <!-- END news -->

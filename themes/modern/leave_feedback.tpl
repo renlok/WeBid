@@ -2,7 +2,6 @@
 
 <div class="panel panel-default">
 	<table class="table table-bordered table-condensed table-striped">
-<!-- IF NUM_AUCTIONS gt 0 -->
 		<tr>
 			<th>
 				{L_458}
@@ -20,8 +19,8 @@
 				{L_284}
 			</th>
 		</tr>
-	<!-- BEGIN fbs -->
-		<tr {fbs.ROWCOLOUR}>
+<!-- BEGIN fbs -->
+		<tr <!-- IF (fbs.S_ROW_COUNT % 2) == 1 --> bgcolor="#FFFEEE"<!-- ENDIF -->>
 			<td>
 				<b><a href="item.php?id={fbs.ID}" target="_blank">{fbs.TITLE}</a></b><br />
 				<small><span class="text-muted"><b>{L_869}:</b> {fbs.CLOSINGDATE}</span></small>
@@ -39,14 +38,13 @@
 				{fbs.QTY}
 			</td>
 		</tr>
-	<!-- END fbs -->
-<!-- ELSE -->
+<!-- BEGINELSE -->
 		<tr>
 			<td>
 				<b>{L_30_0213}</b>
 			</td>
 		</tr>
-<!-- ENDIF -->
+<!-- END fbs -->
 	</table>
 </div>
 

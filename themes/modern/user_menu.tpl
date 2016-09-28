@@ -2,7 +2,7 @@
 <div class="list-group">
 <!-- IF THISPAGE eq 'account' -->
 	<a class="list-group-item" href="yourfeedback.php">{L_208}</a>
-	<a class="list-group-item" href="buysellnofeedback.php">{L_207}{FBTOLEAVE}</a>
+	<a class="list-group-item" href="leave_feedback.php">{L_207}{FBTOLEAVE}</a>
 	<a class="list-group-item" href="mail.php">{L_623}{NEWMESSAGES}</a>
 	<a class="list-group-item" href="outstanding.php">{L_422}</a>
 	<a class="list-group-item" href="invoices.php">{L_1057}</a>

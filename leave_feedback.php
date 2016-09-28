@@ -18,7 +18,7 @@ include 'common.php';
 if (!$user->checkAuth())
 {
 	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
-	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'buysellnofeedback.php';
+	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'leave_feedback.php';
 	header('location: user_login.php');
 	exit;
 }
@@ -34,7 +34,6 @@ $params[] = array(':user_ids', $user->user_data['id'], 'int');
 $params[] = array(':user_idw', $user->user_data['id'], 'int');
 $db->query($query, $params);
 
-$k = 0;
 $feedback_data = $db->fetchall();
 foreach ($feedback_data as $row)
 {
@@ -50,7 +49,6 @@ foreach ($feedback_data as $row)
 
 	$template->assign_block_vars('fbs', array(
 			'ID' => $row['id'],
-			'ROWCOLOUR' => ($k % 2) ? 'bgcolor="#FFFEEE"' : '',
 			'TITLE' => htmlspecialchars($row['title']),
 			'WINORSELLNICK' => $info['nick'],
 			'WINORSELL' => ($row['winner'] == $user->user_data['id']) ? $MSG['25_0002'] : $MSG['25_0001'],
@@ -63,19 +61,14 @@ foreach ($feedback_data as $row)
 			'CLOSINGDATE' => $dt->formatDate($row['closingdate']),
 			'WS' => ($row['winner'] == $user->user_data['id']) ? 'w' : 's'
 			));
-	$k++;
 }
-
-$template->assign_vars(array(
-		'NUM_AUCTIONS' => $k
-		));
 
 $TPL_rater_nick = $user->user_data['nick'];
 include 'header.php';
 $TMP_usmenutitle = $MSG['207'];
 include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
-		'body' => 'sellbuyfeedback.tpl'
+		'body' => 'leave_feedback.tpl'
 		));
 $template->display('body');
 include 'footer.php';

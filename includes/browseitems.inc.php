@@ -33,11 +33,9 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 			$current_time = new DateTime('now', $dt->UTCtimezone);
 			$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
 			$difference = $current_time->diff($end_time);
-			$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
 			$template->assign_block_vars('featured_items', array(
 				'ID' => $row['id'],
-				'ROWCOLOUR' => ($row['highlighted']) ? 'bgcolor="#fea100"' : $bgcolour,
 				'IMAGE' => $row['pict_url'],
 				'TITLE' => htmlspecialchars($row['title']),
 				'SUBTITLE' => htmlspecialchars($row['subtitle']),
@@ -47,7 +45,8 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 				'CLOSES' => ($difference->format('%d') < 20) ? $dt->formatTimeLeft($difference) : $dt->printDateTz($row['ends']),
 				'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
-				'B_BOLD' => ($row['bold'])
+				'B_BOLD' => ($row['bold']),
+				'B_HIGHLIGHTED' => ($row['highlighted'])
 			));
 			$k++;
 			$feat_items = true;
@@ -65,11 +64,9 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 		$current_time = new DateTime('now', $dt->UTCtimezone);
 		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
 		$difference = $current_time->diff($end_time);
-		$bgcolour = ($k % 2) ? 'bgcolor="#FFFEEE"' : '';
 
 		$template->assign_block_vars('items', array(
 			'ID' => $row['id'],
-			'ROWCOLOUR' => ($row['highlighted']) ? 'bgcolor="#fea100"' : $bgcolour,
 			'IMAGE' => $row['pict_url'],
 			'TITLE' => htmlspecialchars($row['title']),
 			'SUBTITLE' => htmlspecialchars($row['subtitle']),
@@ -79,7 +76,8 @@ function browseItems($query, $params, $query_feat, $params_feat, $total, $curren
 			'CLOSES' => ($difference->format('%d') < 20) ? $dt->formatTimeLeft($difference) : $dt->printDateTz($row['ends']),
 			'NUMBIDS' => sprintf($MSG['950'], $row['num_bids']),
 
-			'B_BOLD' => ($row['bold'])
+			'B_BOLD' => ($row['bold']),
+			'B_HIGHLIGHTED' => ($row['highlighted'])
 		));
 		$k++;
 	}

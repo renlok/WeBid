@@ -140,7 +140,7 @@ switch ($_SESSION['cptab'])
 		$reminders = get_reminders($user->user_data['id']);
 		$template->assign_vars(array(
 				'NEWMESSAGES' => ($reminders[0] > 0) ? $reminders[0] . ' ' . $MSG['508'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'mail.php">' . $MSG['5295'] . '</a>)<br>' : '',
-				'FBTOLEAVE' => ($reminders[1] > 0) ? $reminders[1] . $MSG['072'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'buysellnofeedback.php">' . $MSG['5295'] . '</a>)<br>' : '',
+				'FBTOLEAVE' => ($reminders[1] > 0) ? $reminders[1] . $MSG['072'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'leave_feedback.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'TO_PAY' => ($reminders[2] > 0) ? sprintf($MSG['792'], $reminders[2]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'outstanding.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'BENDING_SOON' => ($reminders[3] > 0) ? $reminders[3] . $MSG['793'] . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourbids.php">' . $MSG['5295'] . '</a>)<br>' : '',
 				'BOUTBID' => ($reminders[4] > 0) ? sprintf($MSG['794'], $reminders[4]) . ' (<a href="' . $system->SETTINGS['siteurl'] . 'yourbids.php">' . $MSG['5295'] . '</a>)<br>' : '',

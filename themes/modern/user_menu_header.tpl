@@ -9,7 +9,7 @@
 				<ul class="dropdown-menu" role="menu">
 					<li><a href="{SITEURL}user_menu.php?cptab=summary">{L_25_0080}</a></li>
 					<li><a href="yourfeedback.php">{L_208}</a></li>
-					<li><a href="buysellnofeedback.php">{L_207}</a></li>
+					<li><a href="leave_feedback.php">{L_207}</a></li>
 					<li><a href="mail.php">{L_623}</a></li>
 					<li><a href="outstanding.php">{L_422}</a></li>
 					<li><a href="invoices.php">{L_1057}</a></li>
@@ -52,7 +52,7 @@
 				<a class="list-group-item" href="{SITEURL}user_menu.php?cptab=summary">{L_25_0080}</a>
 				<a class="list-group-item disabled" href="{SITEURL}user_menu.php?cptab=account">{L_25_0081}</a>
 				<a class="list-group-item" href="yourfeedback.php">{L_208}</a>
-				<a class="list-group-item" href="buysellnofeedback.php">{L_207}</a>
+				<a class="list-group-item" href="leave_feedback.php">{L_207}</a>
 				<a class="list-group-item" href="mail.php">{L_623}</a>
 				<a class="list-group-item" href="outstanding.php">{L_422}</a>
 				<a class="list-group-item" href="invoices.php">{L_1057}</a>

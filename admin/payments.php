@@ -24,7 +24,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 		foreach ($_POST['payment'] as $payment_id => $payment)
 		{
-			if (isset($payment['delete']))
+			if (in_array($payment_id, $_POST['delete']))
 			{
 				$query = "DELETE FROM " . $DBPrefix . "payment_options WHERE id = :id";
 				$params = [[':id', $payment['id'], 'int']];
@@ -52,12 +52,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 		}
 	}
 
-	if ($_POST['new_payments'] != '' && $_POST['new_payments_clean'] != '')
+	if ($_POST['new_payments'] != '')
 	{
+		$display_name = $_POST['new_payments'];
+		$clean_name = $_POST['new_payments_clean'];
+		if ($clean_name == '')
+		{
+			$clean_name = $display_name;
+		}
+		$clean_name = preg_replace("/[^a-z]/", '', strtolower($clean_name));
 		$query = "INSERT INTO " . $DBPrefix . "payment_options (name, displayname, is_gateway) VALUES (:name, :displayname, 0)";
 		$params = [
-			[':name', $_POST['new_payments_clean'], 'str'],
-			[':displayname', $_POST['new_payments'], 'str'],
+			[':name', $clean_name, 'str'],
+			[':displayname', $display_name, 'str'],
 		];
 		$db->query($query, $params);
 	}

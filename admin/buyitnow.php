@@ -20,7 +20,9 @@ include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update')
 {
-	$bn_only_percent = ($_POST['bn_only_percent'] > 100) ? 100 : ($_POST['bn_only_percent'] < 0) ? 0 : intval($_POST['bn_only_percent']);
+	$bn_only_percent = intval($_POST['bn_only_percent']);
+	$bn_only_percent = ($bn_only_percent > 100) ? 100 : $bn_only_percent;
+	$bn_only_percent = ($bn_only_percent < 0) ? 0 : $bn_only_percent;
 	// reset the bn_only blockers
 	if ($bn_only_percent > $system->SETTINGS['bn_only_percent'])
 	{
@@ -33,13 +35,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 	$system->writesetting("bn_only_disable", $_POST['bn_only_disable'], "str");
 	$system->writesetting("bn_only_percent", $bn_only_percent, "int");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0066']));
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['buy_it_now_settings_updated']));
 }
 
-loadblock($MSG['920'], $MSG['921'], 'batch', 'buy_now', $system->SETTINGS['buy_now'], array($MSG['no'], $MSG['yes']));
-loadblock($MSG['30_0064'], $MSG['30_0065'], 'yesno', 'bn_only', $system->SETTINGS['bn_only'], array($MSG['yes'], $MSG['no']));
-loadblock($MSG['355'], $MSG['358'], 'yesno', 'bn_only_disable', $system->SETTINGS['bn_only_disable'], array($MSG['yes'], $MSG['no']));
-loadblock($MSG['356'], '', 'percent', 'bn_only_percent', $system->SETTINGS['bn_only_percent'], array($MSG['357']));
+loadblock($MSG['enable_buy_it_now'], $MSG['enable_buy_it_now_explain'], 'batch', 'buy_now', $system->SETTINGS['buy_now'], array($MSG['no'], $MSG['yes']));
+loadblock($MSG['enable_buy_it_now_only'], $MSG['enable_buy_it_now_only_explain'], 'yesno', 'bn_only', $system->SETTINGS['bn_only'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['enable_bin_only_auto_disable'], $MSG['enable_bin_only_auto_disable_explain'], 'yesno', 'bn_only_disable', $system->SETTINGS['bn_only_disable'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['buy_it_now_only_limit'], '', 'percent', 'bn_only_percent', $system->SETTINGS['bn_only_percent'], array($MSG['357']));
 
 $template->assign_vars(array(
 		'SITEURL' => $system->SETTINGS['siteurl'],

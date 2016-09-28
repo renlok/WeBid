@@ -27,7 +27,7 @@
 								<input type="text" name="payment[{payments.ID}][clean]" value="{payments.CLEAN}" size="25">
 							</td>
 							<td align="center">
-								<input type="checkbox" name="payment[{payments.ID}][delete]" value="{payments.ID}">
+								<input type="checkbox" name="delete[]" value="{payments.ID}">
 							</td>
 						</tr>
 <!-- END payments -->

@@ -22,15 +22,17 @@ if (!$user->checkAuth())
 	exit;
 }
 
+$user_message = '';
+
 // Auction id is present, now update table
 if (isset($_GET['add']) && !empty($_GET['add']))
 {
 	$add_id = intval($_GET['add']);
 	// Check if this item is not already added
 	$items = trim($user->user_data['item_watch']);
-	$match = strstr($items, strval($add_id));
+	$arr_items = explode(' ', $items);
 
-	if (!$match)
+	if (!in_array($add_id, $arr_items))
 	{
 		$item_watch = trim($items . ' ' . $add_id);
 		$item_watch_new = trim($item_watch);
@@ -40,6 +42,11 @@ if (isset($_GET['add']) && !empty($_GET['add']))
 		$params[] = array(':user_id', $user->user_data['id'], 'int');
 		$db->query($query, $params);
 		$user->user_data['item_watch'] = $item_watch_new;
+		$user_message .= $MSG['item_watch_item_added'];
+	}
+	else
+	{
+		$user_message .= $MSG['item_watch_not_added'];
 	}
 }
 
@@ -48,7 +55,7 @@ if (isset($_GET['delete']) && !empty($_GET['delete']))
 {
 	$item_to_delete = $_GET['delete'];
 	$currently_watched_items = explode(' ', trim($user->user_data['item_watch']));
-	
+
 	$items_to_watch = array();
 
 	for ($j = 0; $j < count($currently_watched_items); $j++)
@@ -65,6 +72,7 @@ if (isset($_GET['delete']) && !empty($_GET['delete']))
 	$params[] = array(':user_id', $user->user_data['id'], 'int');
 	$db->query($query, $params);
 	$user->user_data['item_watch'] = implode(' ', $items_to_watch);
+	$user_message .= $MSG['item_watch_item_removed'];
 }
 
 // Show results
@@ -78,6 +86,10 @@ if ($items != '' && $items != null)
 	$total = $db->numrows();
 	browseItems($query, null, '', '', $total, 'item_watch.php');
 }
+
+$template->assign_vars(array(
+		'USER_MESSAGE' => $user_message
+		));
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['472'];

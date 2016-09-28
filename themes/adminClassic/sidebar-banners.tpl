@@ -3,7 +3,7 @@
 					<div class="rounded-bottom">
 						<ul class="menu">
 							<li><a href="{SITEURL}admin/banners.php">{L_5205}</a></li>
-							<li><a href="{SITEURL}admin/managebanners.php">{L__0008}</a></li>
+							<li><a href="{SITEURL}admin/managebanners.php">{L_banner_admin}</a></li>
 						</ul>
 					</div>
 				</div>

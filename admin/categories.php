@@ -105,7 +105,7 @@ if (isset($_POST['action']))
 						GROUP BY c.cat_id ORDER BY cat_name";
 			$db->direct_query($query);
 
-			$message = $MSG['843'] . '<table cellpadding="0" cellspacing="0">';
+			$message = $MSG['delete_category_move_auctions'] . '<table cellpadding="0" cellspacing="0">';
 			$names = array();
 			$counter = 0;
 			while ($row = $db->fetch())
@@ -179,7 +179,7 @@ if (isset($_POST['action']))
 					}
 					else
 					{
-						$ERR = $MSG['844'];
+						$ERR = $MSG['move_category_missing_id'];
 					}
 				}
 			}
@@ -188,13 +188,13 @@ if (isset($_POST['action']))
 		resync_category_counters();
 		include 'util_cc1.php';
 	}
-	if (!isset($ERR))
+	if (isset($ERR))
 	{
-		$ERR = $MSG['086'];
+		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $ERR));
 	}
 }
 
-//show the page...
+//show the page
 if (!isset($_GET['parent']))
 {
 	$query = "SELECT left_id, right_id, level, cat_id FROM " . $DBPrefix . "categories WHERE parent_id = -1";
@@ -221,11 +221,10 @@ if ($parent != 0)
 	$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 	for ($i = 0; $i < count($crumbs); $i++)
 	{
-		if ($i > 0)
-		{
-			$crumb_string .= ' > ';
-		}
-		$crumb_string .= '<a href="categories.php?parent=' . $crumbs[$i]['cat_id'] . '">' . $crumbs[$i]['cat_name'] . '</a>';
+		$template->assign_block_vars('crumbs', array(
+			'CAT_ID' => $crumbs[$i]['cat_id'],
+			'CAT_NAME' => $crumbs[$i]['cat_name']
+		));
 	}
 }
 

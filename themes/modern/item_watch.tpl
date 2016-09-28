@@ -1,5 +1,8 @@
 <!-- INCLUDE user_menu_header.tpl -->
 
+<!-- IF USER_MESSAGE ne '' -->
+<div class="success-box">{USER_MESSAGE}</div>
+<!-- ENDIF -->
 <!-- BEGIN items -->
 <div class="row">
 	<div class="col-md-12">

@@ -30,7 +30,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 	`name` TINYTEXT NOT NULL,
 	`text` TEXT NOT NULL,
 	`type` VARCHAR(15) NOT NULL,
-	`paid_date` datetime default CURRENT_TIMESTAMP,
+	`paid_date` timestamp default CURRENT_TIMESTAMP,
 	`amount` DOUBLE(6,2) NOT NULL,
 	`day` INT(3) NOT NULL,
 	`week` INT(2) NOT NULL,
@@ -56,8 +56,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `password` varchar(60) NOT NULL,
   `password_type` INT(1) NOT NULL DEFAULT '1',
   `hash` varchar(5) NOT NULL default '',
-  `created` datetime default CURRENT_TIMESTAMP,
-  `lastlogin` datetime default CURRENT_TIMESTAMP,
+  `created` timestamp default CURRENT_TIMESTAMP,
+  `lastlogin` datetime,
   `status` tinyint(1) NOT NULL default '0',
   `notes` text,
   PRIMARY KEY  (`id`)
@@ -97,8 +97,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `user` int(11) default NULL,
   `title` varchar(70),
   `subtitle` varchar(70),
-  `starts` datetime default CURRENT_TIMESTAMP,
-  `ends` datetime default CURRENT_TIMESTAMP,
+  `starts` datetime ,
+  `ends` datetime,
   `description` text,
   `pict_url` tinytext,
   `category` int(11) default NULL,
@@ -296,7 +296,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bids` (
   `auction` int(11) default NULL,
   `bidder` int(11) default NULL,
   `bid` double(16,2) default NULL,
-  `bidwhen` datetime default CURRENT_TIMESTAMP,
+  `bidwhen` timestamp default CURRENT_TIMESTAMP,
   `quantity` int(11) default '0',
   PRIMARY KEY  (`id`)
 ) ;";
@@ -566,7 +566,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "comm_messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "comm_messages` (
   `id` int(11) NOT NULL auto_increment,
   `boardid` int(11) NOT NULL default '0',
-  `msgdate` datetime default CURRENT_TIMESTAMP,
+  `msgdate` timestamp default CURRENT_TIMESTAMP,
   `user` int(11) NOT NULL default '0',
   `username` varchar(255) NOT NULL default '',
   `message` text NOT NULL,
@@ -588,7 +588,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '0',
   `messages` int(11) NOT NULL default '0',
-  `lastmessage` datetime default CURRENT_TIMESTAMP,
+  `lastmessage` timestamp default CURRENT_TIMESTAMP,
   `msgstoshow` int(11) NOT NULL default '0',
   `active` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
@@ -1115,7 +1115,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
   `rater_user_nick` varchar(20) default NULL,
   `feedback` mediumtext,
   `rate` int(2) default NULL,
-  `feedbackdate` datetime default CURRENT_TIMESTAMP,
+  `feedbackdate` timestamp default CURRENT_TIMESTAMP,
   `auction_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
@@ -1290,7 +1290,7 @@ $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
   `action_id` INT( 11 ) NOT NULL DEFAULT  '0',
   `user_id` INT( 32 ) NOT NULL DEFAULT  '0',
   `ip` VARCHAR( 45 ) NOT NULL,
-  `timestamp` datetime default CURRENT_TIMESTAMP,
+  `timestamp` timestamp default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 );";
 
@@ -1340,7 +1340,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
   `sentto` int(11) NOT NULL default '0',
   `sentfrom` int(11) NOT NULL default '0',
   `fromemail` varchar(255) NOT NULL default '',
-  `sentat` datetime default CURRENT_TIMESTAMP,
+  `sentat` timestamp default CURRENT_TIMESTAMP,
   `message` text NOT NULL ,
   `isread` tinyint(1) NOT NULL default '0',
   `subject` varchar(255) NOT NULL default '',
@@ -1362,7 +1362,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "news` (
   `id` int(11) NOT NULL auto_increment,
   `title` varchar(200) NOT NULL default '',
   `content` longtext NOT NULL,
-  `new_date` datetime default CURRENT_TIMESTAMP,
+  `new_date` timestamp default CURRENT_TIMESTAMP,
   `suspended` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
@@ -1401,7 +1401,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "online`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "online` (
   `ID` bigint(21) NOT NULL auto_increment,
   `SESSION` varchar(32) NOT NULL default '',
-  `time` datetime default CURRENT_TIMESTAMP,
+  `time` timestamp default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`ID`)
 ) ;";
 
@@ -1424,7 +1424,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "pendingnotif` (
   `winners` text NOT NULL,
   `auction` text NOT NULL,
   `seller` text NOT NULL,
-  `thisdate` datetime default CURRENT_TIMESTAMP,
+  `thisdate` timestamp default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1779,8 +1779,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `endemailmode` enum('one','cum','none') NOT NULL default 'one',
   `startemailmode` enum('yes','no') NOT NULL default 'yes',
   `emailtype` enum('html','text') NOT NULL default 'html',
-  `reg_date` datetime default CURRENT_TIMESTAMP,
-  `lastlogin` datetime default CURRENT_TIMESTAMP,
+  `reg_date` timestamp default CURRENT_TIMESTAMP,
+  `lastlogin` datetime,
   `payment_details` text,
   `groups` text,
   `bn_only` enum('y','n') NOT NULL default 'y',
@@ -1804,7 +1804,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   `useracc_id` int(11) NOT NULL AUTO_INCREMENT,
   `auc_id` int(11) NOT NULL default '0',
   `user_id` int(11) NOT NULL default '0',
-  `date` datetime default CURRENT_TIMESTAMP,
+  `date` timestamp default CURRENT_TIMESTAMP,
   `setup` double(8,2) NOT NULL default '0',
   `featured` double(8,2) NOT NULL default '0',
   `bold` double(8,2) NOT NULL default '0',
@@ -1884,7 +1884,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `auc_title` varchar(70),
   `auc_shipping_cost` double(16,2) default '0',
   `auc_payment` tinytext,
-  `closingdate` datetime default CURRENT_TIMESTAMP,
+  `closingdate` timestamp default CURRENT_TIMESTAMP,
   `feedback_win` tinyint(1) NOT NULL default '0',
   `feedback_sel` tinyint(1) NOT NULL default '0',
   `qty` int(11) NOT NULL default '1',

@@ -60,7 +60,7 @@
 <!-- IF B_BOARDS -->
 			<li><a href="{SITEURL}boards.php">{L_5030}</a></li>
 <!-- ENDIF -->
-			<li><a href="{SITEURL}help.php" alt="faqs" class="new-window">{L_148}</a></li>
+			<li><a href="{SITEURL}help.php" class="new-window">{L_148}</a></li>
 		</ul>
 	</div>
 	<div class="navbar">

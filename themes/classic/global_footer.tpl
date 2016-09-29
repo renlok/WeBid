@@ -11,7 +11,7 @@
 		| <a href="{SITEURL}register.php?">{L_235}</a>
 		| <a href="{SITEURL}user_login.php?">{L_052}</a>
 <!-- ENDIF -->
-		| <a href="{SITEURL}help.php" alt="faqs" class="new-window">{L_148}</a>
+		| <a href="{SITEURL}help.php" class="new-window">{L_148}</a>
 <!-- IF B_FEES -->
 		| <a href="{SITEURL}fees.php">{L_25_0012}</a>
 <!-- ENDIF -->

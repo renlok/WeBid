@@ -18,24 +18,20 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	if (($_POST['spam_sendtofriend'] == 2 || $_POST['spam_register'] == 2 || $_POST['spam_reportitem'] == 2) && empty($_POST['recaptcha_public']) && empty($_POST['recaptcha_private']))
-	{
-		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['751']));
-	}
-	else
-	{
-		$system->writesetting("recaptcha_public", $_POST['recaptcha_public'], 'str');
-		$system->writesetting("recaptcha_private", $_POST['recaptcha_private'], 'str');
-		$system->writesetting("spam_sendtofriend", $_POST['spam_sendtofriend'], 'int');
-		$system->writesetting("spam_reportitem", $_POST['spam_reportitem'], 'int');
-		$system->writesetting("spam_register", $_POST['spam_register'], 'int');
-		$system->writesetting("spam_blocked_email_enabled", $_POST['spam_blocked_email_enabled'], 'bool');
-		$system->writesetting("spam_blocked_email_domains", $_POST['spam_blocked_email_domains'], 'str');
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
+    if (($_POST['spam_sendtofriend'] == 2 || $_POST['spam_register'] == 2 || $_POST['spam_reportitem'] == 2) && empty($_POST['recaptcha_public']) && empty($_POST['recaptcha_private'])) {
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['751']));
+    } else {
+        $system->writesetting("recaptcha_public", $_POST['recaptcha_public'], 'str');
+        $system->writesetting("recaptcha_private", $_POST['recaptcha_private'], 'str');
+        $system->writesetting("spam_sendtofriend", $_POST['spam_sendtofriend'], 'int');
+        $system->writesetting("spam_reportitem", $_POST['spam_reportitem'], 'int');
+        $system->writesetting("spam_register", $_POST['spam_register'], 'int');
+        $system->writesetting("spam_blocked_email_enabled", $_POST['spam_blocked_email_enabled'], 'bool');
+        $system->writesetting("spam_blocked_email_domains", $_POST['spam_blocked_email_domains'], 'str');
 
-		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['750']));
-	}
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['750']));
+    }
 }
 
 loadblock($MSG['746'], $MSG['748'], 'text', 'recaptcha_public', $system->SETTINGS['recaptcha_public']);
@@ -47,14 +43,14 @@ loadblock($MSG['spam_blocked_email_enabled'], '', 'bool', 'spam_blocked_email_en
 loadblock($MSG['spam_blocked_email_domains'], $MSG['spam_blocked_email_domains_explain'], 'textarea', 'spam_blocked_email_domains', $system->SETTINGS['spam_blocked_email_domains']);
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['5142'],
-		'PAGENAME' => $MSG['749']
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TYPENAME' => $MSG['5142'],
+        'PAGENAME' => $MSG['749']
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
-		));
+        'body' => 'adminpages.tpl'
+        ));
 $template->display('body');
 include 'footer.php';

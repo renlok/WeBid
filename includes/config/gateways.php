@@ -12,29 +12,31 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) exit('Access denied');
+if (!defined('InWeBid')) {
+    exit('Access denied');
+}
 
 $gateway_links = array(
-	'paypal' => 'http://paypal.com/',
-	'authnet' => 'http://authorize.net/',
-	'worldpay' => 'http://rbsworldpay.com/',
-	'moneybookers' => 'http://moneybookers.com/',
-	'toocheckout' => 'http://2checkout.com/'
-	);
+    'paypal' => 'http://paypal.com/',
+    'authnet' => 'http://authorize.net/',
+    'worldpay' => 'http://rbsworldpay.com/',
+    'moneybookers' => 'http://moneybookers.com/',
+    'toocheckout' => 'http://2checkout.com/'
+    );
 $address_string = array(
-	'paypal' => $MSG['720'],
-	'authnet' => $MSG['773'],
-	'worldpay' => $MSG['824'],
-	'moneybookers' => $MSG['825'],
-	'toocheckout' => $MSG['826']
-	);
+    'paypal' => $MSG['720'],
+    'authnet' => $MSG['773'],
+    'worldpay' => $MSG['824'],
+    'moneybookers' => $MSG['825'],
+    'toocheckout' => $MSG['826']
+    );
 $password_string = array(
-	'authnet' => $MSG['774']
-	);
+    'authnet' => $MSG['774']
+    );
 $error_string = array(
-	'paypal' => $MSG['810'],
-	'authnet' => $MSG['811'],
-	'worldpay' => $MSG['823'],
-	'moneybookers' => $MSG['822'],
-	'toocheckout' => $MSG['821']
+    'paypal' => $MSG['810'],
+    'authnet' => $MSG['811'],
+    'worldpay' => $MSG['823'],
+    'moneybookers' => $MSG['822'],
+    'toocheckout' => $MSG['821']
 );

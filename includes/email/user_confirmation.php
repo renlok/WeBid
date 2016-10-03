@@ -12,23 +12,22 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) exit();
+if (!defined('InWeBid')) {
+    exit();
+}
 
 $emailer = new email_handler();
 $emailer->assign_vars(array(
-		'SITENAME' => $system->SETTINGS['sitename'],
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'ADMINMAIL' => $system->SETTINGS['adminmail'],
-		'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($MD5_PREFIX . $hash),
-		'C_NAME' => $TPL_name_hidden
-		));
+        'SITENAME' => $system->SETTINGS['sitename'],
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'ADMINMAIL' => $system->SETTINGS['adminmail'],
+        'CONFIRMURL' => $system->SETTINGS['siteurl'] . 'confirm.php?id=' . $TPL_id_hidden . '&hash=' . md5($MD5_PREFIX . $hash),
+        'C_NAME' => $TPL_name_hidden
+        ));
 $emailer->email_uid = $TPL_id_hidden;
-if (!$system->SETTINGS['email_admin_on_signup'])
-{
-	$email_to = $TPL_email_hidden;
-}
-else
-{
-	$email_to = array($TPL_email_hidden, $system->SETTINGS['adminmail']);
+if (!$system->SETTINGS['email_admin_on_signup']) {
+    $email_to = $TPL_email_hidden;
+} else {
+    $email_to = array($TPL_email_hidden, $system->SETTINGS['adminmail']);
 }
 $emailer->email_sender($email_to, 'usermail.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['098']);

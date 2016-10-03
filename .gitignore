@@ -8,3 +8,4 @@ uploaded/**
 !uploaded/logo/logo.gif
 !uploaded/logo/logo.png
 .idea/
+includes/packages/captcha/securimage.php

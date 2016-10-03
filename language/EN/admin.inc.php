@@ -12,7 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) exit();
+if (!defined('InWeBid')) {
+    exit();
+}
 
 // aboutus.php
 $MSG['about_us_page'] = "About Us Page";

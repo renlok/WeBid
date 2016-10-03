@@ -19,13 +19,12 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	// Update database
-	$system->writesetting("aboutus", ynbool($_POST['aboutus']), "str");
-	$system->writesetting("aboutustext", $system->cleanvars($_POST['aboutustext'], true), "str");
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
+    // Update database
+    $system->writesetting("aboutus", ynbool($_POST['aboutus']), "str");
+    $system->writesetting("aboutustext", $system->cleanvars($_POST['aboutustext'], true), "str");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['about_us_updated']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['about_us_updated']));
 }
 
 loadblock($MSG['active_about_us'], $MSG['active_about_us_explain'], 'yesno', 'aboutus', $system->SETTINGS['aboutus'], array($MSG['yes'], $MSG['no']));
@@ -39,14 +38,14 @@ $CKEditor->config['height'] = 400;
 loadblock($MSG['about_us_content'], $MSG['about_us_content_explain'], $CKEditor->editor('aboutustext', $system->SETTINGS['aboutustext']));
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['25_0018'],
-		'PAGENAME' => $MSG['about_us_page']
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TYPENAME' => $MSG['25_0018'],
+        'PAGENAME' => $MSG['about_us_page']
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
-		));
+        'body' => 'adminpages.tpl'
+        ));
 $template->display('body');
 include 'footer.php';

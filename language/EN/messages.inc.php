@@ -12,7 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) exit();
+if (!defined('InWeBid')) {
+    exit();
+}
 
 // CHARSET ENCODING
 // Change the charset according to the language used in this file.

@@ -1,0 +1,255 @@
+.grid-padding {
+	margin-bottom: 15px;
+}
+.grid-margin-btm {
+	margin-bottom: 3px;
+}
+.grid-margin-btm-md {
+	margin-bottom: 5px;
+}
+.grid-margin-btm-lg {
+	margin-bottom: 10px;
+}
+.grid-margin-top-sm {
+	margin-top: 3px;
+}
+.grid-margin-top-md {
+	margin-top: 5px;
+}
+.grid-margin-top-lg {
+	margin-top: 10px;
+}
+.grid-margin-top-xs {
+	margin-top: 15px;
+}
+.sm-padding {
+	padding: 3px 5px;
+}
+.md-padding {
+	padding: 7px;
+}
+.lg-padding {
+	padding: 10px;
+}
+.row.header {
+	margin-top: 10px;
+}
+.nav-margin-top {
+	margin-top: 50px;
+}
+.brand-logo {
+	padding: 2px 0 0 15px;
+}
+.capchabox {
+	/* margin-left: -330px; */
+}
+.capchabox2 {
+	/* margin-left: -250px; */
+}
+.buy-now-feat {
+	color: #A94442;
+	background-color: #F2DEDE;
+	border-color: #EBCCD1;
+	border-radius:4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+	padding: 2px;
+}
+.no-buy-now-feat {
+	color: #31708F;
+	background-color: #D9EDF7;
+	border-color: #BCE8F1;
+	border-radius:4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+	padding: 2px;
+}
+.outbid {
+	background-color: #FFFF00;
+	border-color: #EBCCD1;
+	border-radius:4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+	padding: 10px;
+}
+.section-header{
+	color: #337AB7;
+	text-transform: uppercase;
+	border-bottom: 1px solid #DDD;
+	margin-bottom: 20px;
+}
+
+.section-header h2{
+	font-size: 20px;
+	font-weight: 700;
+}
+.browse-header{
+	color: #337AB7;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+		padding: 0 0 0 5px;
+}
+
+.browse-header h2{
+	font-size: 20px;
+	font-weight: 700;
+}
+
+/* adjust forms in register, front page login */
+.register-date select {
+	width: 49%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857;
+	color: #555;
+	background-color: #FFF;
+	background-image: none;
+	border: 1px solid #CCC;
+	border-radius: 4px;
+	display: inline-block;
+	margin-bottom: 2px;
+}
+.timezone select,
+.auctiontype select,
+.duration select,
+.catsearch select,
+.locationsearch select,
+.relist select {
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857;
+	color: #555;
+	background-color: #FFF;
+	background-image: none;
+	border: 1px solid #CCC;
+	border-radius: 4px;
+	display: inline-block;
+}
+.register-date select.missing {
+	border-color: #A94442;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+.or {
+	background: #FE980F none repeat scroll 0% 0%;
+	border-radius: 40px;
+	color: #FFF;
+	font-family: "Roboto",sans-serif;
+	font-size: 16px;
+	height: 50px;
+	line-height: 50px;
+	margin-top: 75px;
+	text-align: center;
+	width: 50px;
+}
+
+.item-ads-grid {
+	padding: 10px;
+	background-color: #FFF;
+	overflow: hidden !important;
+	position: relative;
+}
+.item-img-grid img {
+	height: 150px;
+	text-align: center;
+}
+.img-center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.block-title {
+	display: block;
+	padding: 3px 10px;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 20px;
+	color: #999;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
+	text-transform: uppercase;
+}
+.featured-item {
+	min-height: 230px;
+	border: 1px solid transparent;
+	border-color: #DDD;
+	margin-bottom: 10px;
+}
+.feat-title {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-top: 5px;
+}
+.item-meta {
+	border-bottom: 1px solid #DDD;
+	margin-bottom: 15px;
+}
+.bid-price {
+	color: #337AB7;
+}
+.item-title {
+	padding: 5px;
+	font-size: 24px;
+	font-weight: 500;
+}
+.drop-width {
+	width: 100%;
+}
+.main-gallery .img-responsive {
+	margin-bottom: 10px;
+}
+
+#gallery .img-responsive {
+	margin-bottom: 5px;
+}
+img.search-res {
+	width: 180px;
+}
+
+.copyright {
+	text-align: center;
+	margin: -15px 0 5px 0;
+}
+
+/* Media Queries */
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: 768px) {
+
+img.search-res {
+	width: 80px;
+	height: 70px;
+}
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+img.search-res {
+	width: 120px;
+	height: 108px;
+}
+}
+
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+img.search-res {
+	width: 160px;
+	height: 140px;
+}
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+
+@-moz-document url-prefix() {
+	fieldset {
+		display: table-cell;
+	}
+} 

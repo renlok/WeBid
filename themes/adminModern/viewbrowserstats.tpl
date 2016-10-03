@@ -1,36 +1,46 @@
-		<div style="width:25%; float:left;">
-			<div style="margin-left:auto; margin-right:auto;">
-				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
-			</div>
-		</div>
-		<div style="width:75%; float:right;">
-			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0023}&nbsp;&gt;&gt;&nbsp;{L_5165}</h4>
-				<div style="font-size: 16px; font-weight: bold; text-align: center;" class="centre">
-					{L_5167}<i>{SITENAME}</i><br>
-					{STATSMONTH}
-				</div>
-				<div style="text-align: center;" class="centre">
-					<a href="viewaccessstats.php">{L_5143}</a> | <a href="viewplatformstats.php">{L_5318}</a>
-				</div>
+<!-- INCLUDE header.tpl -->
 
-				<table width="98%" cellspacing="1" cellpadding="0" class="blank">
-					<tr>
-						<th align="center" width="80"><b>{L_5169}</b></td>
-						<th height="21" style="text-align:right;">&nbsp;</td>
-					</tr>
+
+        <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12"> 
+        <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>{L_5167}<i>{SITENAME}</i><br>{STATSMONTH}</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                                       <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+          <div class="col-md-12"> 
+     <div style="font-size: 16px; font-weight: bold; text-align: center;" >
+				</div>
+                <div style="text-align: center;" >
+                	<a class="centre" href="viewaccessstats.php">{L_5143}</a> | <a class="centre" href="viewplatformstats.php">{L_5318}</a>
+                </div>
+
+                <table class="table table-bordered table-striped">
+                <tr>
+                    <th align="center" width="80"><b>{L_5169}</b></td>
+                    <th height="21" style="text-align:right;">&nbsp;</td>
+                </tr>
 <!-- BEGIN sitestats -->
-					<tr class="bg">
-						<td align="center" height="45"><b>{sitestats.BROWSER}</b></td>
-						<td>
+                <tr class="bg">
+                    <td align="center" height="45"><b>{sitestats.BROWSER}</b></td>
+                    <td>
 	<!-- IF sitestats.NUM eq 0 -->
-							<div style="height:15px;"><b>0</b></div>
+						<div style="height:15px;"><b>0</b></div>
 	<!-- ELSE -->
-							<div style="height:15px; width:{sitestats.WIDTH}%; background-color:#006699; color:#FFFFFF;"><b>{sitestats.PERCENTAGE}%</b></div>
+						<div class="highbar" style="height:15px; width:{sitestats.WIDTH}%; color:#000;"><b>{sitestats.PERCENTAGE}%</b></div>
 	<!-- ENDIF -->
-						</td>
-					</tr>
+                    </td>
+                </tr>
 <!-- END sitestats -->
 				</table>
-			</div>
-		</div>
+            </div>
+        </div>
+</div>
+</div>
+
+<!-- INCLUDE footer.tpl -->

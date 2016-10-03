@@ -12,36 +12,35 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) exit();
-
-if(strlen(strip_tags($Auction['description'])) > 60)
-{
-	$description = substr(strip_tags($Auction['description']), 0, 50) . '...';
+if (!defined('InWeBid')) {
+    exit();
 }
-else
-{
-	$description = $Auction['description'];
+
+if (strlen(strip_tags($Auction['description'])) > 60) {
+    $description = substr(strip_tags($Auction['description']), 0, 50) . '...';
+} else {
+    $description = $Auction['description'];
 }
 
 $emailer = new email_handler();
 $emailer->assign_vars(array(
-		'W_NAME' => $Winner['name'],
-		'W_WANTED' => $Winner['wanted'],
-		'W_GOT' => $Winner['quantity'],
+        'W_NAME' => $Winner['name'],
+        'W_WANTED' => $Winner['wanted'],
+        'W_GOT' => $Winner['quantity'],
 
-		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
-		'A_TITLE' => htmlspecialchars($Auction['title']),
-		'A_DESCRIPTION' => $description,
-		'A_CURRENTBID' => $system->print_money($WINNERS_BID[$Winner['current_bid']]),
-		'A_ENDS' => $ends_string,
+        'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
+        'A_TITLE' => htmlspecialchars($Auction['title']),
+        'A_DESCRIPTION' => $description,
+        'A_CURRENTBID' => $system->print_money($WINNERS_BID[$Winner['current_bid']]),
+        'A_ENDS' => $ends_string,
 
-		'S_NICK' => $Seller['nick'],
-		'S_EMAIL' => $Seller['email'],
-		'S_PAYMENT' => $Seller['payment_details'],
+        'S_NICK' => $Seller['nick'],
+        'S_EMAIL' => $Seller['email'],
+        'S_PAYMENT' => $Seller['payment_details'],
 
-		'SITE_URL' => $system->SETTINGS['siteurl'],
-		'SITENAME' => $system->SETTINGS['sitename'],
-		'ADMINEMAIL' => $system->SETTINGS['adminmail']
-		));
+        'SITE_URL' => $system->SETTINGS['siteurl'],
+        'SITENAME' => $system->SETTINGS['sitename'],
+        'ADMINEMAIL' => $system->SETTINGS['adminmail']
+        ));
 $emailer->email_uid = $Winner['id'];
 $emailer->email_sender($Winner['email'], 'endauction_youwin.inc.php', $MSG['909']);

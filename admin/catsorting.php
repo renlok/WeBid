@@ -18,27 +18,26 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	// clean submission and update database
-	$system->writesetting("catsorting", $system->cleanvars($_POST['catsorting']), "str");
-	$system->writesetting("catstoshow", intval($_POST['catstoshow']),"int");
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
+    // clean submission and update database
+    $system->writesetting("catsorting", $system->cleanvars($_POST['catsorting']), "str");
+    $system->writesetting("catstoshow", intval($_POST['catstoshow']), "int");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['25_0150']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['25_0150']));
 }
 
 loadblock('', $MSG['25_0147'], 'sortstacked', 'catsorting', $system->SETTINGS['catsorting'], array($MSG['25_0148'], $MSG['25_0149']));
 loadblock($MSG['30_0030'], $MSG['30_0029'], 'percent', 'catstoshow', $system->SETTINGS['catstoshow']);
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['25_0008'],
-		'PAGENAME' => $MSG['25_0146']
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TYPENAME' => $MSG['25_0008'],
+        'PAGENAME' => $MSG['25_0146']
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
-		));
+        'body' => 'adminpages.tpl'
+        ));
 $template->display('body');
 include 'footer.php';

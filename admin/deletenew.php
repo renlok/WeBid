@@ -18,19 +18,16 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == "Yes")
-{
-	$query = "DELETE FROM " . $DBPrefix . "news WHERE id = :news_id";
-	$params = array();
-	$params[] = array(':news_id', $_POST['id'], 'int');
-	$db->query($query, $params);
-	header('location: news.php');
-	exit;
-}
-elseif (isset($_POST['action']) && $_POST['action'] == "No")
-{
-	header('location: news.php');
-	exit;
+if (isset($_POST['action']) && $_POST['action'] == "Yes") {
+    $query = "DELETE FROM " . $DBPrefix . "news WHERE id = :news_id";
+    $params = array();
+    $params[] = array(':news_id', $_POST['id'], 'int');
+    $db->query($query, $params);
+    header('location: news.php');
+    exit;
+} elseif (isset($_POST['action']) && $_POST['action'] == "No") {
+    header('location: news.php');
+    exit;
 }
 
 $query = "SELECT title FROM " . $DBPrefix . "news WHERE id = :news_id";
@@ -40,15 +37,15 @@ $db->query($query, $params);
 $title = $db->result('title');
 
 $template->assign_vars(array(
-		'ID' => $_GET['id'],
-		'MESSAGE' => sprintf($MSG['832'], $title),
-		'TYPE' => 1
-		));
+        'ID' => $_GET['id'],
+        'MESSAGE' => sprintf($MSG['832'], $title),
+        'TYPE' => 1
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'confirm.tpl'
-		));
+        'body' => 'confirm.tpl'
+        ));
 $template->display('body');
 
 include 'footer.php';

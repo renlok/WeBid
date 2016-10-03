@@ -19,13 +19,12 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	// clean submission and update database
-	$system->writesetting("terms", ynbool($_POST['terms']), "str");
-	$system->writesetting("termstext", $system->cleanvars($_POST['termstext'], true), "str");
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
+    // clean submission and update database
+    $system->writesetting("terms", ynbool($_POST['terms']), "str");
+    $system->writesetting("termstext", $system->cleanvars($_POST['termstext'], true), "str");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5084']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5084']));
 }
 
 loadblock($MSG['5082'], $MSG['5081'], 'yesno', 'terms', $system->SETTINGS['terms'], array($MSG['yes'], $MSG['no']));
@@ -39,15 +38,15 @@ $CKEditor->config['height'] = 400;
 loadblock($MSG['5083'], $MSG['5080'], $CKEditor->editor('termstext', $system->SETTINGS['termstext']));
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => 'con',
-		'TYPENAME' => $MSG['25_0018'],
-		'PAGENAME' => $MSG['5075']
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TYPE' => 'con',
+        'TYPENAME' => $MSG['25_0018'],
+        'PAGENAME' => $MSG['5075']
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
-		));
+        'body' => 'adminpages.tpl'
+        ));
 $template->display('body');
 include 'footer.php';

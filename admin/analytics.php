@@ -18,8 +18,7 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $trackingcode = $_POST['trackingcode'];
 
     $system->writesetting("googleanalytics", $trackingcode, 'str');

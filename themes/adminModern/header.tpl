@@ -82,7 +82,7 @@
               <li><a><i class="fa fa-edit"></i> {L_5142} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
                   <li> <a href="{SITEURL}admin/settings.php">{L_526}</a></li>
-                  <li><a href="{SITEURL}admin/auctions.php">{L_5087}</a></li>
+                  <li><a href="{SITEURL}admin/auctions.php">{L_auction_settings}</a></li>
                   <li><a href="{SITEURL}admin/displaysettings.php">{L_788}</a></li>
                   <li><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
                   <li><a href="{SITEURL}admin/usersettings.php">{L_894}</a></li>
@@ -103,7 +103,7 @@
                   <li><a href="{SITEURL}admin/catsorting.php">{L_25_0146}</a></li>
                   <li><a href="{SITEURL}admin/metatags.php">{L_25_0178}</a></li>
                   <li><a href="{SITEURL}admin/contactseller.php">{L_25_0216}</a></li>
-                  <li><a href="{SITEURL}admin/buyerprivacy.php">{L_236}</a></li>
+                  <li><a href="{SITEURL}admin/buyerprivacy.php">{L_bidder_privacy}</a></li>
                 </ul>
               </li>
               <li><a><i class="fa fa-desktop"></i> {L_25_0012} <span class="fa fa-chevron-down"></span></a>

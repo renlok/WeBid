@@ -36,7 +36,7 @@
               <!-- ELSE -->
               <td>&nbsp;</td>
               <!-- ENDIF -->
-              <td align="right" valign="top"><img src="../images/flags/flags/{lang.LANG}.gif"></td>
+              <td align="right" valign="top"><img src="../images/flags/{lang.LANG}.gif"></td>
               <td><textarea name="content[{lang.LANG}]" class="form-control">{lang.CONTENT}</textarea></td>
             </tr>
             <!-- END lang -->

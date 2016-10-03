@@ -1,7 +1,7 @@
                 <!-- footer content -->
                 <footer>
                     <div class="">
-                        <p class="pull-right">Administration Panel by         Powered by <a href="http://www.webidsupport.com/"></a> &copy; 2008 - 2013 <a href="http://www.webidsupport.com/"></a>
+                        <p class="pull-right">Administration Panel for <a href="http://www.webidsupport.com/">WeBid</a> &copy; 2008 - 2016 <a href="http://www.webidsupport.com/"></a>
 
                             <span class="lead"> <i class="fa fa-circle-o-notch"></i> WeBid!</span>
                         </p>

@@ -1,4 +1,4 @@
-<!-- INCLUDE header.tpl -->
+
 
 <!-- top tiles -->
 

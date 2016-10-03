@@ -1,6 +1,6 @@
 
             <div style="margin-left:auto; margin-right:auto;">
-<!-- INCLUDE header.tpl -->
+
 </div>
     	<!-- Right Side/Main Content Start -->
     <div id="rightside">

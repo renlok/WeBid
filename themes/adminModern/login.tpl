@@ -65,7 +65,7 @@
         <div class="clearfix"></div>
         <div class="separator">
               <div>
-            <h1><i class="fa fa-paw" style="font-size: 26px;"></i> Webid!</h1>
+            <h1><i class="fa fa-circle-o-notch" style="font-size: 26px;"></i> Webid!</h1>
             <p>&copy; 2008 - 2013 All Rights Reserved.</p>
           </div>
         </div>

@@ -1,4 +1,4 @@
-<!-- INCLUDE header.tpl -->
+
 
 <div class="col-md-12">
              	<h2>{L_25_0009}&nbsp;&gt;&gt;&nbsp;<!-- IF B_EDIT_FILE --><!-- IF FILENAME ne '' -->{L_298}: {FILENAME}<!-- ELSE -->{L_518}<!-- ENDIF --><!-- ELSE -->{L_26_0002}<!-- ENDIF --></h2>

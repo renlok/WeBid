@@ -1,4 +1,4 @@
-<!-- INCLUDE header.tpl -->
+
 
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
@@ -25,7 +25,7 @@
               <!-- ELSE -->
               <td>&nbsp;</td>
               <!-- ENDIF -->
-              <td width="35" align="right"><img src="../inc/flags/{lang.LANG}.gif"></td>
+              <td width="35" align="right"><img src="../images/flags/{lang.LANG}.gif"></td>
               <td><input type="text" name="title[{lang.LANG}]" class="form-control" maxlength="255" value="{lang.TITLE}"></td>
             </tr>
             <!-- END lang --> 
@@ -36,7 +36,7 @@
               <!-- ELSE -->
               <td>&nbsp;</td>
               <!-- ENDIF -->
-              <td align="right" valign="top"><img src="../inc/flags/{lang.LANG}.gif"></td>
+              <td align="right" valign="top"><img src="../images/flags/flags/{lang.LANG}.gif"></td>
               <td><textarea name="content[{lang.LANG}]" class="form-control">{lang.CONTENT}</textarea></td>
             </tr>
             <!-- END lang -->

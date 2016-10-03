@@ -1,4 +1,4 @@
-<?php
+sea<?php
 /***************************************************************************
  *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/

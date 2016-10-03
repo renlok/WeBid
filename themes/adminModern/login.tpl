@@ -1,84 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- Meta, title, CSS, favicons, etc. -->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Administration Interface! |</title>
+	<title>WeBid Administration back-end</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="generator" content="WeBid">
 
-<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/style.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/jquery.lightbox.css" media="screen">
 
-<link href="{SITEURL}themes/{THEME}/css/bootstrap.min.css" rel="stylesheet">
-<link href="{SITEURL}themes/{THEME}/fonts/css/font-awesome.min.css" rel="stylesheet">
-<link href="{SITEURL}themes/{THEME}/css/animate.min.css" rel="stylesheet">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="{SITEURL}themes/{THEME}/js/bootstrap.min.js"></script>
 
-<!-- Custom styling plus plugins -->
-<link href="{SITEURL}themes/{THEME}/css/custom.css" rel="stylesheet">
-<link href="{SITEURL}themes/{THEME}/css/icheck/flat/green.css" rel="stylesheet">
-<script src="{SITEURL}themes/{THEME}/js/jquery.min.js"></script>
-
-<!--[if lt IE 9]>
-        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
-        <![endif]-->
-
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
+	<script src="{SITEURL}js/jquery.js"></script>
+	<script type="text/javascript" src="{SITEURL}ckeditor/ckeditor.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('a.new-window').click(function(){
+				window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX=100,screenY=100,status=0,menubar=0,resizable=0,width=550,height=550");
+				return false;
+			});
+			$(".selectall").click(function() {
+				var checked_status = this.checked;
+				var checkbox_name = this.value;
+				$("input[name=\"" + checkbox_name + "[]\"]").each(function() {
+					this.checked = checked_status;
+				});
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		function window_open(url,title,width,height,x,y)
+		{
+			var window_= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+width+',height='+height;
+			open(url,title,window_);
+		}
+	</script>
 </head>
-
-<body>
-<div id="wrapper">
-  <div id="login" class="animate form">
-    <section class="login_content">
-      <form action="login.php" method="post" class="form-horizontal">
-           <h1>Administration Interface</h1>
-        <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-        <div class="form-group">
-        <label class="col-sm-3 control-label">{L_003}: </label>
-         <div class="col-sm-9">
-        <input type="text" name="username" class="form-control has-feedback-left" placeholder="UserName">
-        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-        </div>
-  </div>
-        <div class="form-group">
-        <label class="col-sm-3 control-label">{L_004}: </label>
-        <div class="col-sm-9">
-        <input type="password" name="password" class="form-control has-feedback-left" placeholder="Password">
-         <span class="fa fa-key form-control-feedback left" aria-hidden="true"></span>
-        </div></div>
-        <!-- IF PAGE eq 1 -->
-        
-        <input type="hidden" name="action" value="insert">
-        <input type="submit" name="submit" value="{L_5204}" class="btn btn-theme btn-block">
-        
-        <!-- ELSE -->
-        
-        <input type="hidden" name="action" value="login">
-        <input type="submit" name="submit" value="{L_052}" class="btn btn-theme btn-block">
-        
-        <!-- ENDIF -->
-        <div class="clearfix"></div>
-        <div class="separator">
-              <div>
-            <h1><i class="fa fa-circle-o-notch" style="font-size: 26px;"></i> Webid!</h1>
-            <p>&copy; 2008 - 2013 All Rights Reserved.</p>
-          </div>
-        </div>
-      </form>
-      <!-- form --> 
-      
-    </section>
-    <!-- content --> 
-  </div>
-</div>
-<script type="text/javascript" src="{SITEURL}themes/{THEME}/js/jquery.backstretch.min.js"></script> 
-<script>
-        $.backstretch("{SITEURL}themes/{THEME}/images/login-bg.jpg", {speed: 500});
-    </script>
-</body>
-</html>
+<body id="{CURRENT_PAGE}">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">&nbsp;</div>
+			<div class="col-md-4 well">
+<!-- IF PAGE eq 1 -->
+				<div class="alert alert-info" role="alert"><b>{L_441}</b></div>
+<!-- ELSE -->
+				<div class="alert alert-success" role="alert"><b>{L_442}</b></div>
+<!-- ENDIF -->
+<!-- IF ERROR ne '' -->
+				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
+<!-- ENDIF -->
+				<form action="login.php" method="post">
+					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+					<div class="form-group">
+						<label for="username">{L_username}</label>
+						<input type="text" name="username" size="20" class="form-control" autofocus>
+					</div>
+					<div class="form-group">
+						<label for="password">{L_password}</label>
+						<input type="password" name="password" class="form-control" size="20">
+					</div>
+<!-- IF PAGE eq 1 -->
+					<div class="form-group">
+						<label for="repeat_password">{L_005}</label>
+						<input type="password" name="repeat_password" class="form-control" size="20">
+					</div>
+					<div class="text-center">
+						<input type="hidden" name="action" value="insert">
+						<button class="btn btn-primary" type="submit" name="submit">{L_5204}</button>
+					</div>
+<!-- ELSE -->
+					<div class="text-center">
+						<input type="hidden" name="action" value="login">
+						<button class="btn btn-primary" type="submit" name="submit">{L_052}</button>
+					</div>
+<!-- ENDIF -->
+				</form>
+			</div>
+			<div class="col-md-4">&nbsp;</div>
+		</div>

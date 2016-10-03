@@ -1,57 +1,47 @@
-
-<div class="row">
-  <div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-      <h2>{L_5142} <i class="fa fa-angle-double-right"></i> {L_075}</h2>
-        <ul class="nav navbar-right panel_toolbox">
-          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-        </ul>
-        <div class="clearfix"></div>
-      </div>
-      <div class="col-md-12">
+		<div class="row">
+			<div class="col-md-3">
+				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
+			</div>
+			<div class="col-md-9">
+				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_075}</h2>
 				<form name="payments" action="" method="post">
-<!-- IF ERROR ne '' -->
-					 <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong>{ERROR}</div>
-<!-- ENDIF -->
-					<div class="plain-box">{L_092}</div>
-                    <table class="table table-bordered table-striped">
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th><b>{L_087}</b></th>
-                            <th><b>{L_008}</b></th>
-                        </tr>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">{L_092}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5"><strong>{L_payment_name}</strong></div>
+								<div class="col-md-5"><strong>{L_clean_payment_name}</strong></div>
+								<div class="col-md-2"><strong>{L_008}</strong></div>
+							</div>
 <!-- BEGIN payments -->
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>
-                                <input type="text" name="new_payments[]" value="{payments.PAYMENT}" class="form-control">
-                            </td>
-                            <td align="center">
-                                <input type="checkbox" name="delete[]" value="{payments.S_ROW_COUNT}">
-                            </td>
-                        </tr>
+							<div class="row">
+								<div class="col-md-5">
+									<input type="hidden" name="payment[{payments.ID}][id]" value="{payments.ID}" size="25">
+									<input type="text" name="payment[{payments.ID}][name]" value="{payments.NAME}" size="25">
+								</div>
+								<div class="col-md-5">
+									<input type="text" name="payment[{payments.ID}][clean]" value="{payments.CLEAN}" size="25">
+								</div>
+								<div class="col-md-2"><input type="checkbox" name="delete[]" value="{payments.ID}"></div>
+							</div>
 <!-- END payments -->
-                        <tr>
-                            <td colspan="2" align="right">{L_30_0102}</td>
-                            <td align="center"><input type="checkbox" class="selectall" value="delete" class="form-control"></td>
-                        </tr>
-                        <tr>
-                            <td>{L_394}</td>
-                            <td>
-                                <input type="text" name="new_payments[]" class="form-control">
-                            </td>
-                            <td>&nbsp;</td>
-                        </tr>
-                    </table>
-                    <input type="hidden" name="action" value="update">
-                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                    <input type="submit" name="act" class="btn btn-primary" value="{L_089}">
+							<div class="row">
+								<div class="col-md-10 text-right">{L_30_0102}</div>
+								<div class="col-md-2"><input type="checkbox" class="selectall" value="delete"></div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-md-5">{L_394}: <input type="text" name="new_payments" size="25"></div>
+								<div class="col-md-5"><input type="text" name="new_payments_clean" size="25"></div>
+								<div class="col-md-2">&nbsp;</div>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" name="action" value="update">
+					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+					<button class="btn btn-primary" type="submit" name="act" class="centre">{L_089}</button>
 				</form>
-            </div>
-        </div>
-        </div>
-        </div>
-<!-- INCLUDE footer.tpl -->
+			</div>
+		</div>

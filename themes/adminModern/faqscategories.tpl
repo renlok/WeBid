@@ -1,57 +1,43 @@
-
-    	   	<div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12"> 
-        <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>{L_25_0018} <i class="fa fa-angle-double-right"></i> {L_5236} <i class="fa fa-angle-double-right"></i> {L_5230}</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                                       <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-          <div class="col-md-12">
+		<div style="width:25%; float:left;">
+			<div style="margin-left:auto; margin-right:auto;">
+				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
+			</div>
+		</div>
+			<div class="col-md-9">
+			<div class="main-box">
+				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5236}&nbsp;&gt;&gt;&nbsp;{L_5230}</h4>
 				<form name="newfaqcat" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="alert alert-success">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>Success!</strong> {ERROR}</div>
-<!-- ENDIF -->
-                    <table class="table table-bordered table-striped">
+					<table width="98%" cellpadding="0" cellspacing="0">
 <!-- IF B_ADDCAT -->
-                        <tr bgcolor="#FFFF66">
-    						<td>{L_165}</td>
-                            <td colspan="2">
+						<tr bgcolor="#FFFF66">
+							<td>{L_165}</td>
+							<td colspan="2">
 	<!-- BEGIN lang -->
-                                <p>{lang.LANG}:&nbsp;<input type="text" name="cat_name[{lang.LANG}]" class="form-control" maxlength="200"></p>
+								<p>{lang.LANG}:&nbsp;<input type="text" name="cat_name[{lang.LANG}]" size="25" maxlength="200"></p>
 	<!-- END lang -->
-                                <input type="submit" name="action" value="{L_5204}">
-                            </td>
-                        </tr>
+								<button type="submit" name="action" value="Insert">{L_5204}</button>
+							</td>
+						</tr>
 <!-- ELSE -->
-                        <tr>
-                            <td colspan="3"><a href="faqscategories.php?do=add">{L_5234}</a></td>
-                        </tr>
+						<tr>
+							<td colspan="3"><a href="faqscategories.php?do=add">{L_5234}</a></td>
+						</tr>
 <!-- ENDIF -->
-                        <tr>
-                            <th width="14%"><b>{L_5237}</b></th>
-                            <th><b>{L_287}</b></th>
-                            <th width="14%"><b>{L_008}</b></th>
-                        </tr>
+						<tr>
+							<th width="14%"><b>{L_5237}</b></th>
+							<th><b>{L_287}</b></th>
+							<th width="14%"><b>{L_008}</b></th>
+						</tr>
 <!-- BEGIN cats -->
-                        <tr {cats.BG}>
-                            <td>{cats.ID}</td>
-                            <td><a href="editfaqscategory.php?id={cats.ID}">{cats.CATEGORY}</a> <!-- IF cats.FAQS gt 0 -->{cats.FAQSTXT}<!-- ENDIF --></td>
-                            <td align="center"><input type="checkbox" name="delete[]" value="{cats.ID}"></td>
-                        </tr>
+						<tr {cats.BG}>
+							<td>{cats.ID}</td>
+							<td><a href="editfaqscategory.php?id={cats.ID}">{cats.CATEGORY}</a> <!-- IF cats.FAQS gt 0 -->{cats.FAQSTXT}<!-- ENDIF --></td>
+							<td align="center"><input type="checkbox" name="delete[]" value="{cats.ID}"></td>
+						</tr>
 <!-- END cats -->
-                    </table>
-                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                    <input type="submit" name="action" class="btn btn-primary" value="{L_008}">
+					</table>
+					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+					<button class="btn-primary btn" type="submit" name="action" value="Delete">{L_008}</button>
 				</form>
-            </div>
-        </div>
-         </div>
-        </div>
-<!-- INCLUDE footer.tpl -->
+			</div>
+		</div>

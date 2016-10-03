@@ -1,191 +1,152 @@
+		<div class="row">
+			<div class="col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">{L_1061}</div>
+					<div class="panel-body">
+						<form name="anotes" action="" method="post">
+							<textarea rows="15" name="anotes" class="form-control">{ADMIN_NOTES}</textarea>
+							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+							<br>
+							<button class="btn btn-primary" type="submit" name="act">{L_submit}</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9">
+<!-- IF UPDATE_AVAILABLE -->
+				<div class="alert alert-danger" role="alert">{L_30_0211}</div>
+<!-- ELSE -->
+				<div class="alert alert-info" role="alert">{L_30_0212}</div>
+<!-- ENDIF -->
+				<div class="panel panel-default">
+					<div class="panel-heading"><strong>{L_25_0025}</strong></div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-3"><strong>{L_528}</strong></div>
+							<div class="col-md-9">{SITEURL}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_527}</strong></div>
+							<div class="col-md-9">{SITENAME}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_540}</strong></div>
+							<div class="col-md-9">{ADMINMAIL}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_25_0026}</strong></div>
+							<div class="col-md-9">{CRON}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_663}</strong></div>
+							<div class="col-md-9">{GALLERY}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_2__0025}</strong></div>
+							<div class="col-md-9">{BUY_NOW}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_5008}</strong></div>
+							<div class="col-md-9">{CURRENCY}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_25_0035}</strong></div>
+							<div class="col-md-9">{TIMEZONE}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_363}</strong></div>
+							<div class="col-md-9">{DATEFORMAT} <small>({DATEEXAMPLE})</small></div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_1131}</strong></div>
+							<div class="col-md-9">{EMAIL_HANDLER}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_5322}</strong></div>
+							<div class="col-md-9">{DEFULTCONTRY}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_2__0002}</strong></div>
+							<div class="col-md-9">
+<!-- BEGIN langs -->
+								<p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_2__0005})<!-- ENDIF --></p>
+<!-- END langs -->
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_30_0214}</strong></div>
+							<div class="col-md-9">{THIS_VERSION} ({CUR_VERSION})</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading"><strong>{L_25_0031}</strong></div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-3"><strong>{L_25_0055}</strong></div>
+							<div class="col-md-3">{C_USERS}</div>
+							<div class="col-md-3"><strong>{L_25_0056}</strong></div>
+							<div class="col-md-3">
+<!-- IF USERCONF eq 0 -->
+								<strong>{L_893}</strong>: {C_IUSERS}<br>
+								<strong>{L_892}</strong>: {C_UUSERS} (<a href="{SITEURL}admin/listusers.php?usersfilter=admin_approve">{L_5295}</a>)
+<!-- ELSE -->
+								{C_IUSERS}
+<!-- ENDIF -->
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_25_0057}</strong></div>
+							<div class="col-md-3">{C_AUCTIONS}</div>
+							<div class="col-md-3"><strong>{L_354}</strong></div>
+							<div class="col-md-3">{C_CLOSED}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3"><strong>{L_25_0059}</strong></div>
+							<div class="col-md-3">{C_BIDS}</div>
+							<div class="col-md-3"><strong>{L_25_0063}</strong></div>
+							<div class="col-md-3">
+								<strong>{L_5161}</strong>: {A_PAGEVIEWS}<br>
+								<strong>{L_5162}</strong>: {A_UVISITS}<br>
+								<strong>{L_5163}</strong>: {A_USESSIONS}<br>
+							</div>
+						</div>
+					</div>
+				</div>
 
-
-<!-- top tiles -->
-
-<div class="row tile_count">
-  <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
-    <div class="left"></div>
-    <div class="right"> <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
-      <div class="count">{C_UUSERS}</div>
-      <span class="count_bottom"><i class="green">4% </i> From last Week</span> </div>
-  </div>
-  <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
-    <div class="left"></div>
-    <div class="right"> <span class="count_top"><i class="fa fa-clock-o"></i> Total Bids</span>
-      <div class="count">{C_BIDS}</div>
-      <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> </div>
-  </div>
-  <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
-    <div class="left"></div>
-    <div class="right"> <span class="count_top"><i class="fa fa-user"></i> Total Visits</span>
-      <div class="count green">{A_UVISITS}</div>
-      <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> </div>
-  </div>
-  <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
-    <div class="left"></div>
-    <div class="right"> <span class="count_top"><i class="fa fa-user"></i> Page Views</span>
-      <div class="count">{A_PAGEVIEWS}</div>
-      <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span> </div>
-  </div>
-  <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
-    <div class="left"></div>
-    <div class="right"> <span class="count_top"><i class="fa fa-user"></i> Closed Bids</span>
-      <div class="count">{C_CLOSED}</div>
-      <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> </div>
-  </div>
-  <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
-    <div class="left"></div>
-    <div class="right"> <span class="count_top"><i class="fa fa-user"></i> Bids on Live Auctions</span>
-      <div class="count">{C_AUCTIONS}</div>
-      <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> </div>
-  </div>
-</div>
-<!-- /top tiles --> 
-
-<br />
-<div class="row">
-  <div class="col-md-12 col-sm-12 col-xs-12">
-          <div class="x_panel">
-  <div class="x_title">
-                                    <h2>{L_25_0010} <i class="fa fa-angle-double-right"></i> {L_525}</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                                       <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-    <div class="col-md-8"> 
-      
-      <!-- IF THIS_VERSION eq CUR_VERSION -->
-      <div class="info-box">{L_30_0212}</div>
-      <!-- ELSE -->
-      <div class="alert alert-info info-box fade in" role="alert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {L_30_0211}</div>
-      <!-- ENDIF --> 
-      <!-- IF ERROR ne '' -->
-      <div class="alert alert-info info-box fade in" role="alert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
-      <!-- ENDIF -->
-      <table class="table table-bordered table-striped" align="center">
-        <tr>
-          <th colspan="4">{L_25_0025}</th>
-        </tr>
-        <tr>
-          <td><strong>{L_528}</strong></td>
-          <td>{SITEURL}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_527}</strong></td>
-          <td>{SITENAME}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_540}</strong></td>
-          <td>{ADMINMAIL}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_25_0026}</strong></td>
-          <td>{CRON}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_663}</strong></td>
-          <td>{GALLERY}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_2__0025}</strong></td>
-          <td>{BUY_NOW}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_5008}</strong></td>
-          <td>{CURRENCY}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_25_0035}</strong></td>
-          <td>{TIMEZONE}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_363}</strong></td>
-          <td>{DATEFORMAT} <small>({DATEEXAMPLE})</small></td>
-        </tr>
-        <tr>
-          <td><strong>{L_5322}</strong></td>
-          <td>{DEFULTCONTRY}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_2__0002}</strong></td>
-          <td><!-- BEGIN langs -->
-            
-            <p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_2__0005})<!-- ENDIF --></p>
-            
-            <!-- END langs --></td>
-        </tr>
-        <tr>
-          <td><strong>{L_30_0214}</strong></td>
-          <td>{THIS_VERSION} ({CUR_VERSION})</td>
-        </tr>
-      </table>
-      <table width="98%" cellpadding="1" cellspacing="0">
-        <tr>
-          <th colspan="4">{L_25_0031}</th>
-        </tr>
-        <tr>
-          <td width="25%"><strong>{L_25_0055}</strong></td>
-          <td width="25%">{C_USERS}</td>
-          <td width="25%"><strong>{L_25_0055}</strong></td>
-          <td width="25%"><!-- IF USERCONF eq 0 --> 
-            <strong>{L_893}</strong>: {C_IUSERS}<br>
-            <strong>{L_892}</strong>: {C_UUSERS} (<a href="{SITEURL}admin/listusers.php?usersfilter=admin_approve">{L_5295}</a>) 
-            <!-- ELSE --> 
-            {C_IUSERS} 
-            <!-- ENDIF --></td>
-        </tr>
-        <tr class="bg">
-          <td><strong>{L_25_0057}</strong></td>
-          <td>{C_AUCTIONS}</td>
-          <td><strong>{L_354}</strong></td>
-          <td>{C_CLOSED}</td>
-        </tr>
-        <tr>
-          <td><strong>{L_25_0059}</strong></td>
-          <td>{C_BIDS}</td>
-          <td><strong>{L_25_0063}</strong></td>
-          <td><p><strong>{L_5161}</strong>: {A_PAGEVIEWS}</p>
-            <p><strong>{L_5162}</strong>: {A_UVISITS}</p>
-            <p><strong>{L_5163}</strong>: {A_USESSIONS}</p></td>
-        </tr>
-      </table>
-      <table width="98%" cellpadding="1" cellspacing="0">
-        <tr>
-          <th colspan="2">{L_080}</th>
-        </tr>
-        <tr>
-          <td width="70%">{L_30_0032}</td>
-          <td><form action="?action=clearcache" method="post">
-              <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-              <input type="submit" name="submit" value="{L_30_0031}" class="btn btn-danger">
-            </form></td>
-        </tr>
-        <tr class="bg">
-          <td>{L_1030}</td>
-          <td><form action="?action=updatecounters" method="post">
-              <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-              <input type="submit" name="submit" value="{L_1031}" class="btn btn-danger">
-            </form></td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group">
-        <h4>{L_1061}</h4>
-        <form name="anotes" method="post">
-          <textarea name="anotes" class="form-control">{ADMIN_NOTES}</textarea>
-          <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}" class="form-control">
-          <input type="submit" name="act" value="{L_007}" class="btn btn-default">
-        </form>
-      </div>
-    </div>
-  </div>
-  </div>
-  <!--col-md-12 col-sm-12 col-xs-12--> 
-</div>
-<!--./row--> 
-<!--right_col--> 
-<!-- INCLUDE footer.tpl -->
+				<div class="panel panel-default">
+					<div class="panel-heading"><strong>{L_080}</strong></div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-9">{L_30_0032}</div>
+							<div class="col-md-3">
+								<form action="?action=clearcache" method="post">
+									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+									<button class="btn btn-primary" type="submit" name="submit">{L_30_0031}</button>
+								</form>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-9">{L_30_0032a}</div>
+							<div class="col-md-3">
+								<form action="?action=clear_image_cache" method="post">
+									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+									<button class="btn btn-primary" type="submit" name="submit">{L_30_0031a}</button>
+								</form>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-9">{L_1030}</div>
+							<div class="col-md-3">
+								<form action="?action=updatecounters" method="post">
+									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+									<button class="btn btn-primary" type="submit" name="submit">{L_1031}</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

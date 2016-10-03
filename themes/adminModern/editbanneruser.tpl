@@ -1,64 +1,30 @@
-
-            <div style="margin-left:auto; margin-right:auto;">
-
-</div>
-<!-- Top Breadcrumb Start -->
-    <div id="breadcrumb">
-    	<ul>	
-        	<li><img src="{SITEURL}themes/{THEME}/img/icons/icon_breadcrumb.png" alt="Location" /></li>
-        	<li><strong>Location:</strong></li>
-            <li title="">{L_25_0011}</li>
-            <li>/</li>
-            <li title="">{L__0008}</li>
-			<li>/</li>
-            <li class="current">{L_511}</li>
-        </ul>
-    </div>
-    <!-- Top Breadcrumb End -->
-
-    	<!-- Right Side/Main Content Start -->
-    <div id="rightside">
-        <!-- IF WARNINGREPORT -->
-            <!-- Green Status Bar Start -->
-        <div class="status error">
-        	<p><img src="{SITEURL}themes/{THEME}/img/icons/icon_error.png"  alt="Error" /><span>Error!</span> {WARNINGMESSAGE}</p>
-        </div>
-        <!-- Green Status Bar End -->
-<!-- ENDIF -->
-<!-- IF ERROR ne '' -->
-        <!-- Blue Status Bar Start -->
-        <div class="status info">
-        	<p><img src="{SITEURL}themes/{THEME}/img/icons/icon_info.png" alt="Information" /><span>Information:</span>  {ERROR}</p>
-        </div>
-        <!-- Blue Status Bar End -->
-<!-- ENDIF -->
-
-        <!-- Content Box Start -->
-        <div class="contentcontainer">
-            <div class="contentbox">
-      <form name="editbanneruser" action="" method="post">
-                    <table width="98%" cellpadding="0" cellspacing="0" class="blank">
-                    <tr>
-                    	<td>{L_302}</td>
-                    	<td><input type="text" name="name" value="{NAME}"></td>
-                    </tr>
-                    <tr>
-                    	<td>{L__0022}</td>
-                    	<td><input type="text" name="company" value="{COMPANY}"></td>
-                    </tr>
-                    <tr>
-                    	<td>{L_107}</td>
-                    	<td><input type="text" name="email" value="{EMAIL}"></td>
-                    </tr>
-                    </table>
+		<div class="row">
+			<div class="col-md-3">
+				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
+			</div>
+			<div class="col-md-9">
+				<h2>{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L_banner_admin}&nbsp;&gt;&gt;&nbsp;{L_511}</h2>
+				<form name="editbanneruser" action="" method="post">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-6">{L_302}</div>
+								<div class="col-md-6"><input type="text" name="name" value="{NAME}"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">{L__0022}</div>
+								<div class="col-md-6"><input type="text" name="company" value="{COMPANY}"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">{L_107}</div>
+								<div class="col-md-6"><input type="text" name="email" value="{EMAIL}"></div>
+							</div>
+						</div>
+					</div>
 					<input type="hidden" name="id" value="{ID}">
-                    <input type="hidden" name="action" value="update">
-                    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                    <input type="submit" name="act" class="centre" value="{L_530}">
+					<input type="hidden" name="action" value="update">
+					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+					<button class="btn btn-primary" type="submit" name="act">{L_530}</button>
 				</form>
-
-            </div>
-        </div>
-
-    <!-- Right Side/Main Content End -->
-<!-- INCLUDE footer.tpl -->
+			</div>
+		</div>

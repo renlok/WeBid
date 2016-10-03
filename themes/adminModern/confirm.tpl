@@ -1,38 +1,53 @@
-<div class="row">
-  <div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>{L_25_0009} <i class="fa fa-angle-double-right"></i> {L_30_0031}</h2>
-        <ul class="nav navbar-right panel_toolbox">
-          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-        </ul>
-        <div class="clearfix"></div>
-      </div>
-      <div class="col-md-12">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>WeBid Administration back-end</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="generator" content="WeBid">
+
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/style.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/jquery.lightbox.css" media="screen">
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="{SITEURL}themes/{THEME}/js/bootstrap.min.js"></script>
+
+	<script src="{SITEURL}js/jquery.js"></script>
+</head>
+<body id="{CURRENT_PAGE}">
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">&nbsp;</div>
+			<div class="col-md-4 well">
 <!-- IF ERROR ne '' -->
-	<div class="alert alert-success">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>Success!</strong> {ERROR}</div>
+				<div class="alert alert-danger" role="alert"><b>{ERROR}</b></div>
 <!-- ENDIF -->
-	<form action="" method="post">
-    <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-		<p>{MESSAGE}</p>
-        <div class="break">&nbsp;</div>
+				<form action="" method="post">
+					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+					<div class="row">
+						<div class="col-md-12">{MESSAGE}</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-12 text-center">
 <!-- IF TYPE eq 1 -->
-        <input type="hidden" name="id" value="{ID}">
-        <input type="submit" name="action" value="{L_030}" class="btn bnt-primary">
-        <input type="submit" name="action" value="{L_029}" class="btn bnt-primary">
+							<input type="hidden" name="id" value="{ID}">
+							<button class="btn btn-primary" type="submit" name="action" value="Yes">{L_yes}</button>
+							<button class="btn btn-primary" type="submit" name="action" value="No">{L_no}</button>
 <!-- ELSEIF TYPE eq 2 -->
-        <input type="hidden" name="id" value="{ID}">
-        <input type="hidden" name="user" value="{USERID}">
-        <input type="submit" name="action" value="{L_030}" class="btn bnt-primary">
-        <input type="submit" name="action" value="{L_029}" class="btn bnt-primary">
+							<input type="hidden" name="id" value="{ID}">
+							<input type="hidden" name="user" value="{USERID}">
+							<button class="btn btn-primary" type="submit" name="action" value="Yes">{L_yes}</button>
+							<button class="btn btn-primary" type="submit" name="action" value="No">{L_no}</button>
 <!-- ENDIF -->
-	</form>
-    </div>
-</div>
-<div>
-</div>
-<!-- INCLUDE footer.tpl -->
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-4">&nbsp;</div>
+		</div>

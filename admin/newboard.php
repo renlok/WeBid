@@ -19,46 +19,38 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Insert new message board
-if (isset($_POST['action']) && $_POST['action'] == 'insert')
-{
-	if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active']))
-	{
-		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
-	}
-	elseif (!is_numeric($_POST['msgstoshow']))
-	{
-		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5000));
-	}
-	elseif (intval($_POST['msgstoshow'] == 0))
-	{
-		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5001));
-	}
-	else
-	{
-		$query = "INSERT INTO " . $DBPrefix . "community VALUES (NULL, :name, 0, 0, :msgstoshow, :active)";
-		$params = array();
-		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
-		$params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');
-		$params[] = array(':active', $_POST['active'], 'bool');
-		$db->query($query, $params);
-		header('location: boards.php');
-		exit;
-	}
+if (isset($_POST['action']) && $_POST['action'] == 'insert') {
+    if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active'])) {
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
+    } elseif (!is_numeric($_POST['msgstoshow'])) {
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5000));
+    } elseif (intval($_POST['msgstoshow'] == 0)) {
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5001));
+    } else {
+        $query = "INSERT INTO " . $DBPrefix . "community VALUES (NULL, :name, 0, 0, :msgstoshow, :active)";
+        $params = array();
+        $params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
+        $params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');
+        $params[] = array(':active', $_POST['active'], 'bool');
+        $db->query($query, $params);
+        header('location: boards.php');
+        exit;
+    }
 }
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
+        'SITEURL' => $system->SETTINGS['siteurl'],
 
-		'NAME' => (isset($_POST['name'])) ? $_POST['name'] : '',
-		'MSGTOSHOW' => (isset($_POST['msgstoshow'])) ? $_POST['msgstoshow'] : '',
-		'B_ACTIVE' => ((isset($_POST['active']) && $_POST['active'] == 1) || !isset($_POST['active'])),
-		'B_DEACTIVE' => (isset($_POST['active']) && $_POST['active'] == 0)
-		));
+        'NAME' => (isset($_POST['name'])) ? $_POST['name'] : '',
+        'MSGTOSHOW' => (isset($_POST['msgstoshow'])) ? $_POST['msgstoshow'] : '',
+        'B_ACTIVE' => ((isset($_POST['active']) && $_POST['active'] == 1) || !isset($_POST['active'])),
+        'B_DEACTIVE' => (isset($_POST['active']) && $_POST['active'] == 0)
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'newboard.tpl'
-		));
+        'body' => 'newboard.tpl'
+        ));
 $template->display('body');
 
 include 'footer.php';

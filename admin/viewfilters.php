@@ -18,8 +18,9 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (!isset($_GET['banner']))
-	exit();
+if (!isset($_GET['banner'])) {
+    exit();
+}
 
 $banner = $_GET['banner'];
 $CATEGORIES = $KEYWORDS = '';
@@ -32,12 +33,10 @@ $params = array();
 $params[] = array(':banner', $banner, 'int');
 $db->query($query, $params);
 
-if ($db->numrows() > 0)
-{
-	while ($row = $db->fetch())
-	{
-		$CATEGORIES .= '<p>' . $row['cat_name'] . '</p>';
-	}
+if ($db->numrows() > 0) {
+    while ($row = $db->fetch()) {
+        $CATEGORIES .= '<p>' . $row['cat_name'] . '</p>';
+    }
 }
 $query = "SELECT keyword FROM " . $DBPrefix . "bannerskeywords WHERE banner = :banner";
 $params = array();
@@ -45,12 +44,10 @@ $params[] = array(':banner', $banner, 'int');
 $db->query($query, $params);
 $count = $db->numrows();
 
-if ($count > 0)
-{
-	while ($row = $db->fetch())
-	{
-		$KEYWORDS .= '<p>' . $row['keyword'] . '</p>';
-	}
+if ($count > 0) {
+    while ($row = $db->fetch()) {
+        $KEYWORDS .= '<p>' . $row['keyword'] . '</p>';
+    }
 }
 ?>
 

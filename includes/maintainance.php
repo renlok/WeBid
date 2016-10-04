@@ -12,13 +12,11 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (basename($_SERVER['PHP_SELF']) != 'user_login.php')
-{
-	// Check if we are in Maintainance mode
-	// And if the logged in user is the superuser
-	if ($system->check_maintainance_mode())
-	{
-		echo $system->SETTINGS['maintainance_text'];
-		exit;
-	}
+if (basename($_SERVER['PHP_SELF']) != 'user_login.php') {
+    // Check if we are in Maintainance mode
+    // And if the logged in user is the superuser
+    if ($system->check_maintainance_mode()) {
+        echo $system->SETTINGS['maintainance_text'];
+        exit;
+    }
 }

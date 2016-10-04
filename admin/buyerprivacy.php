@@ -18,26 +18,25 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	// Update database
-	$system->writesetting("buyerprivacy", ynbool($_POST['buyerprivacy']), "str");
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
+    // Update database
+    $system->writesetting("buyerprivacy", ynbool($_POST['buyerprivacy']), "str");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['bidder_privacy_updated']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['bidder_privacy_updated']));
 }
 
 loadblock($MSG['enable_bidder_privacy'], $MSG['enable_bidder_privacy_explain'], 'yesno', 'buyerprivacy', $system->SETTINGS['buyerprivacy'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['25_0008'],
-		'PAGENAME' => $MSG['bidder_privacy'],
-		'B_TITLES' => true
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TYPENAME' => $MSG['25_0008'],
+        'PAGENAME' => $MSG['bidder_privacy'],
+        'B_TITLES' => true
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
-		));
+        'body' => 'adminpages.tpl'
+        ));
 $template->display('body');
 include 'footer.php';

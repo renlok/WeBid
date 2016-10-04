@@ -18,49 +18,39 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	if ($_POST['status'] == 'enabled' && (!is_numeric($_POST['timebefore']) || !is_numeric($_POST['extend'])))
-	{
-		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_numeric_values']));
-	}
-	elseif ($_POST['maxpicturesize'] == 0)
-	{
-		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_max_pic_size_zero']));
-	}
-	elseif (!empty($_POST['maxpicturesize']) && !intval($_POST['maxpicturesize']))
-	{
-		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_max_pic_size_numeric']));
-	}
-	elseif (!empty($_POST['maxpictures']) && !intval($_POST['maxpictures']))
-	{
-		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_max_num_pics_numeric']));
-	}
-	else
-	{
-		$system->writesetting("proxy_bidding",ynbool($_POST['proxy_bidding']), 'str');
-		$system->writesetting("edit_starttime", $_POST['edit_starttime'], 'int');
-		$system->writesetting("edit_endtime", $_POST['edit_endtime'], 'int');
-		$system->writesetting("cust_increment", $_POST['cust_increment'], 'int');
-		$system->writesetting("hours_countdown", $_POST['hours_countdown'], 'int');
-		$system->writesetting("ao_hpf_enabled", ynbool($_POST['ao_hpf_enabled']), 'str');
-		$system->writesetting("ao_hi_enabled", ynbool($_POST['ao_hi_enabled']), 'str');
-		$system->writesetting("ao_bi_enabled", ynbool($_POST['ao_bi_enabled']), 'str');
-		$system->writesetting("subtitle", ynbool($_POST['subtitle']), 'str');
-		$system->writesetting("extra_cat", ynbool($_POST['extra_cat']), 'str');
-		$system->writesetting("autorelist", ynbool($_POST['autorelist']), 'str');
-		$system->writesetting("autorelist_max", $_POST['autorelist_max'], 'int');
-		$system->writesetting("ae_status", ynbool($_POST['status']), 'str');
-		$system->writesetting("ae_timebefore", $_POST['timebefore'], 'int');
-		$system->writesetting("ae_extend", $_POST['extend'], 'int');
-		$system->writesetting("picturesgallery", $_POST['picturesgallery'], 'int');
-		$system->writesetting("maxpictures", $_POST['maxpictures'], 'int');
-		$system->writesetting("maxuploadsize", ($_POST['maxpicturesize'] * 1024), 'int');
-		$system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
-		$system->writesetting("gallery_max_width_height", $_POST['gallery_max_width_height'], 'int');
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
+    if ($_POST['status'] == 'enabled' && (!is_numeric($_POST['timebefore']) || !is_numeric($_POST['extend']))) {
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_numeric_values']));
+    } elseif ($_POST['maxpicturesize'] == 0) {
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_max_pic_size_zero']));
+    } elseif (!empty($_POST['maxpicturesize']) && !intval($_POST['maxpicturesize'])) {
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_max_pic_size_numeric']));
+    } elseif (!empty($_POST['maxpictures']) && !intval($_POST['maxpictures'])) {
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_max_num_pics_numeric']));
+    } else {
+        $system->writesetting("proxy_bidding", ynbool($_POST['proxy_bidding']), 'str');
+        $system->writesetting("edit_starttime", $_POST['edit_starttime'], 'int');
+        $system->writesetting("edit_endtime", $_POST['edit_endtime'], 'int');
+        $system->writesetting("cust_increment", $_POST['cust_increment'], 'int');
+        $system->writesetting("hours_countdown", $_POST['hours_countdown'], 'int');
+        $system->writesetting("ao_hpf_enabled", ynbool($_POST['ao_hpf_enabled']), 'str');
+        $system->writesetting("ao_hi_enabled", ynbool($_POST['ao_hi_enabled']), 'str');
+        $system->writesetting("ao_bi_enabled", ynbool($_POST['ao_bi_enabled']), 'str');
+        $system->writesetting("subtitle", ynbool($_POST['subtitle']), 'str');
+        $system->writesetting("extra_cat", ynbool($_POST['extra_cat']), 'str');
+        $system->writesetting("autorelist", ynbool($_POST['autorelist']), 'str');
+        $system->writesetting("autorelist_max", $_POST['autorelist_max'], 'int');
+        $system->writesetting("ae_status", ynbool($_POST['status']), 'str');
+        $system->writesetting("ae_timebefore", $_POST['timebefore'], 'int');
+        $system->writesetting("ae_extend", $_POST['extend'], 'int');
+        $system->writesetting("picturesgallery", $_POST['picturesgallery'], 'int');
+        $system->writesetting("maxpictures", $_POST['maxpictures'], 'int');
+        $system->writesetting("maxuploadsize", ($_POST['maxpicturesize'] * 1024), 'int');
+        $system->writesetting("thumb_show", $_POST['thumb_show'], 'int');
+        $system->writesetting("gallery_max_width_height", $_POST['gallery_max_width_height'], 'int');
 
-		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['auction_settings_updated']));
-	}
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['auction_settings_updated']));
+    }
 }
 
 loadblock($MSG['enable_proxy_bidding'], $MSG['enable_proxy_bidding_explain'], 'yesno', 'proxy_bidding', $system->SETTINGS['proxy_bidding'], array($MSG['yes'], $MSG['no']));
@@ -93,14 +83,14 @@ loadblock($MSG['thumbnail_size'], $MSG['thumbnail_size_explain'], 'decimals', 't
 loadblock($MSG['gallery_image_max_size'], $MSG['gallery_image_max_size_explain'], 'decimals', 'gallery_max_width_height', $system->SETTINGS['gallery_max_width_height'], array($MSG['pixels']));
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['5142'],
-		'PAGENAME' => $MSG['auction_settings']
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TYPENAME' => $MSG['5142'],
+        'PAGENAME' => $MSG['auction_settings']
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
-		));
+        'body' => 'adminpages.tpl'
+        ));
 $template->display('body');
 include 'footer.php';

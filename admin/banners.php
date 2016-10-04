@@ -18,24 +18,23 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	// clean submission and update database
-	$system->writesetting("banners", intval($_POST['banners']), "int");
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
+    // clean submission and update database
+    $system->writesetting("banners", intval($_POST['banners']), "int");
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['banner_settings_updated']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['banner_settings_updated']));
 }
 
 loadblock($MSG['activate_banner_support'], $MSG['activate_banner_support_explain'], 'batch', 'banners', $system->SETTINGS['banners'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
-		'TYPENAME' => $MSG['25_0011'],
-		'PAGENAME' => $MSG['banner_admin'] . ' : ' . $MSG['5205']
-		));
+        'TYPENAME' => $MSG['25_0011'],
+        'PAGENAME' => $MSG['banner_admin'] . ' : ' . $MSG['5205']
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
-		));
+        'body' => 'adminpages.tpl'
+        ));
 $template->display('body');
 include 'footer.php';

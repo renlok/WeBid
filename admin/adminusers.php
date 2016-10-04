@@ -18,57 +18,49 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['delete']) && is_array($_POST['delete']))
-{
-	if (in_array($_SESSION['WEBID_ADMIN_IN'], $_POST['delete']))
-	{
-		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['1100']));
-	}
-	else
-	{
-		$query = "DELETE FROM " . $DBPrefix . "adminusers WHERE id IN (:delete)";
-		$params = array();
-		$params[] = array(':delete', implode(',', $_POST['delete']), 'str');
-		$db->query($query, $params);
-		$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1101']));
-	}
+if (isset($_POST['delete']) && is_array($_POST['delete'])) {
+    if (in_array($_SESSION['WEBID_ADMIN_IN'], $_POST['delete'])) {
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['1100']));
+    } else {
+        $query = "DELETE FROM " . $DBPrefix . "adminusers WHERE id IN (:delete)";
+        $params = array();
+        $params[] = array(':delete', implode(',', $_POST['delete']), 'str');
+        $db->query($query, $params);
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1101']));
+    }
 }
 
 $STATUS = array(
-	0 => '<span style="color:#FF0000"><b>' . $MSG['567'] . '</b></span>',
-	1 => '<span style="color:#00AF33"><b>' . $MSG['566'] . '</b></span>'
+    0 => '<span style="color:#FF0000"><b>' . $MSG['567'] . '</b></span>',
+    1 => '<span style="color:#00AF33"><b>' . $MSG['566'] . '</b></span>'
 );
 
 $query = "SELECT * FROM " . $DBPrefix . "adminusers ORDER BY username";
 $db->direct_query($query);
 
 $bg = '';
-while ($User = $db->fetch())
-{
-	$created = $dt->printDateTz($User['created']);
-	if ($User['lastlogin'] == $User['created'])
-	{
-		$lastlogin = $MSG['570'];
-	}
-	else
-	{
-		$lastlogin = $dt->printDateTz($User['lastlogin']);
-	}
-	$template->assign_block_vars('users', array(
-			'ID' => $User['id'],
-			'USERNAME' => $User['username'],
-			'STATUS' => $STATUS[$User['status']],
-			'CREATED' => $created,
-			'LASTLOGIN' => $lastlogin,
-			'BG' => $bg
-			));
-	$bg = ($bg == '') ? 'class="bg"' : '';
+while ($User = $db->fetch()) {
+    $created = $dt->printDateTz($User['created']);
+    if ($User['lastlogin'] == $User['created']) {
+        $lastlogin = $MSG['570'];
+    } else {
+        $lastlogin = $dt->printDateTz($User['lastlogin']);
+    }
+    $template->assign_block_vars('users', array(
+            'ID' => $User['id'],
+            'USERNAME' => $User['username'],
+            'STATUS' => $STATUS[$User['status']],
+            'CREATED' => $created,
+            'LASTLOGIN' => $lastlogin,
+            'BG' => $bg
+            ));
+    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminusers.tpl'
-		));
+        'body' => 'adminusers.tpl'
+        ));
 $template->display('body');
 
 include 'footer.php';

@@ -15,12 +15,11 @@
 include 'common.php';
 
 // If user is not logged in redirect to login page
-if (!$user->checkAuth())
-{
-	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
-	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'leave_feedback.php';
-	header('location: user_login.php');
-	exit;
+if (!$user->checkAuth()) {
+    $_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
+    $_SESSION['REDIRECT_AFTER_LOGIN'] = 'leave_feedback.php';
+    header('location: user_login.php');
+    exit;
 }
 
 $query = "SELECT DISTINCT a.auction, a.seller, a.winner, a.bid, b.id, b.current_bid, b.title, a.qty, a.closingdate
@@ -35,32 +34,31 @@ $params[] = array(':user_idw', $user->user_data['id'], 'int');
 $db->query($query, $params);
 
 $feedback_data = $db->fetchall();
-foreach ($feedback_data as $row)
-{
-	$them = ($row['winner'] == $user->user_data['id']) ? $row['seller'] : $row['winner'];
-	// Get details
-	$query = "SELECT u.nick, u.email
+foreach ($feedback_data as $row) {
+    $them = ($row['winner'] == $user->user_data['id']) ? $row['seller'] : $row['winner'];
+    // Get details
+    $query = "SELECT u.nick, u.email
 			FROM " . $DBPrefix . "users u
 			WHERE u.id = :them";
-	$params = array();
-	$params[] = array(':them', $them, 'int');
-	$db->query($query, $params);
-	$info = $db->result();
+    $params = array();
+    $params[] = array(':them', $them, 'int');
+    $db->query($query, $params);
+    $info = $db->result();
 
-	$template->assign_block_vars('fbs', array(
-			'ID' => $row['id'],
-			'TITLE' => htmlspecialchars($row['title']),
-			'WINORSELLNICK' => $info['nick'],
-			'WINORSELL' => ($row['winner'] == $user->user_data['id']) ? $MSG['25_0002'] : $MSG['25_0001'],
-			'WINORSELLEMAIL' => $info['email'],
-			'BID' => $row['bid'],
-			'BIDFORM' => $system->print_money($row['bid']),
-			'QTY' => ($row['qty'] == 0) ? 1 : $row['qty'],
-			'WINNER' => $row['winner'],
-			'SELLER' => $row['seller'],
-			'CLOSINGDATE' => $dt->formatDate($row['closingdate']),
-			'WS' => ($row['winner'] == $user->user_data['id']) ? 'w' : 's'
-			));
+    $template->assign_block_vars('fbs', array(
+            'ID' => $row['id'],
+            'TITLE' => htmlspecialchars($row['title']),
+            'WINORSELLNICK' => $info['nick'],
+            'WINORSELL' => ($row['winner'] == $user->user_data['id']) ? $MSG['25_0002'] : $MSG['25_0001'],
+            'WINORSELLEMAIL' => $info['email'],
+            'BID' => $row['bid'],
+            'BIDFORM' => $system->print_money($row['bid']),
+            'QTY' => ($row['qty'] == 0) ? 1 : $row['qty'],
+            'WINNER' => $row['winner'],
+            'SELLER' => $row['seller'],
+            'CLOSINGDATE' => $dt->formatDate($row['closingdate']),
+            'WS' => ($row['winner'] == $user->user_data['id']) ? 'w' : 's'
+            ));
 }
 
 $TPL_rater_nick = $user->user_data['nick'];
@@ -68,7 +66,7 @@ include 'header.php';
 $TMP_usmenutitle = $MSG['207'];
 include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
-		'body' => 'leave_feedback.tpl'
-		));
+        'body' => 'leave_feedback.tpl'
+        ));
 $template->display('body');
 include 'footer.php';

@@ -13,6 +13,10 @@ Options All -Indexes
  deny from all
 </files>
 
+# BLOCK BLANK USER AGENTS
+RewriteCond %{HTTP_USER_AGENT} ^-?$
+RewriteRule ^ - [F]
+
 # only images can be accessed in the uploaded folder
 RewriteEngine On
 RewriteCond %{REQUEST_URI} ^/uploaded [NC]

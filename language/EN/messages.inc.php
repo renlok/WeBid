@@ -1584,3 +1584,6 @@ $MSG['month_s'] = 'month(s)';
 $MSG['day_short'] = 'd';
 $MSG['hour_short'] = 'h';
 $MSG['minute_short'] = 'm';
+
+// yourmessages.tpl
+$MSG['delete_message_confirm'] = 'Are you sure you want to delete this message?';

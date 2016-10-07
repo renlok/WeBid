@@ -22,8 +22,9 @@ if (!$user->checkAuth()) {
     exit;
 }
 
+// TODO: make this an admin option
 $mailbox_space = 60; // how many messages you can have
-$x = (isset($_GET['x']))? $_GET['x'] : '';
+$replying = (isset($_GET['reply']))? $_GET['reply'] : 0;
 $user_id = (isset($_GET['u']))? intval($_GET['u']) : 0; // user_id
 $replymessage = (isset($_GET['message']))? $_GET['message'] : '';
 $order = (isset($_GET['order']))? $_GET['order'] : '';
@@ -39,14 +40,15 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
     $_SESSION['messagecont'] = $message = $system->cleanvars($_POST['message']);
 
     // check user exists
-    $query = "SELECT * FROM " . $DBPrefix . "users WHERE nick = :sendtouser";
+    $query = "SELECT id FROM " . $DBPrefix . "users WHERE nick = :sendtouser";
     $params = array();
-    $params[] = array(':sendtouser', $sendto, 'str');
+    $params[] = array(':sendtouser', $sendto, 'int');
     $db->query($query, $params);
-    if ($db->numrows() == 0) { // no such user
+    // no such user
+    if ($db->numrows() == 0) {
         if (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $sendto)) {
             $_SESSION['message'] = $ERR_609;
-            header('location: mail.php?x=1');
+            header('location: mail.php?reply=1');
             exit;
         } else {
             $email = true;
@@ -55,12 +57,12 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 
     $nowmessage = nl2br($message);
     if (!$email) {
-        $userarray = $db->result();
+        $sendto_user_id = $db->result('id');
 
         // check use mailbox insnt full
         $query = "SELECT * FROM " . $DBPrefix . "messages WHERE sentto = :user_id";
         $params = array();
-        $params[] = array(':user_id', $userarray['id'], 'int');
+        $params[] = array(':user_id', $sendto_user_id, 'int');
         $db->query($query, $params);
         if ($db->numrows() >= $mailbox_space) {
             $_SESSION['message'] = sprintf($MSG['443'], $sendto);
@@ -79,7 +81,7 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
     $query = "INSERT INTO " . $DBPrefix . "messages (" . $id_type . ", sentfrom, message, subject, reply_of, question)
 			VALUES (:to_ids, :sender_id, :nowmessages, :subjects, :reply_of_hash, :question_hash)";
     $params = array();
-    $params[] = array(':to_ids', ($email) ? $sendto : $userarray['id'], 'bool');
+    $params[] = array(':to_ids', ($email) ? $sendto : $sendto_user_id, 'str');
     $params[] = array(':sender_id', $user->user_data['id'], 'int');
     $params[] = array(':nowmessages', $nowmessage, 'str');
     $params[] = array(':subjects', $subject, 'str');
@@ -94,10 +96,10 @@ if (isset($_POST['sendto']) && isset($_POST['subject']) && isset($_POST['message
 
     if (isset($_POST['is_question']) && isset($_SESSION['reply_of' . $_POST['hash']]) && $_SESSION['reply_of' . $_POST['hash']] > 0) {
         $public = (isset($_POST['public'])) ? 1 : 0;
-        $query = "UPDATE " . $DBPrefix . "messages SET public = :public_mes WHERE id = :mes_id";
+        $query = "UPDATE " . $DBPrefix . "messages SET public = :public WHERE id = :msg_id";
         $params = array();
-        $params[] = array(':public_mes', $public, 'int');
-        $params[] = array(':mes_id', $_SESSION['reply_of' . $_POST['hash']], 'str');
+        $params[] = array(':public', $public, 'bool');
+        $params[] = array(':msg_id', $_SESSION['reply_of' . $_POST['hash']], 'int');
         $db->query($query, $params);
     }
 
@@ -128,7 +130,7 @@ if (isset($_REQUEST['deleteid']) && is_array($_REQUEST['deleteid'])) {
 }
 
 // if sending a message
-if ($x == 1) {
+if ($replying == 1) {
     $subject = $_SESSION['subject' . $replymessage];
     $sendto = $_SESSION['sendto' . $replymessage];
     $question = false;
@@ -228,7 +230,7 @@ $template->assign_vars(array(
         'SENTFROM' => $sentfrom,
         'MSGCOUNT' => $messages,
         'HASH' => $replymessage,
-        'REPLY_X' => $x,
+        'REPLY_X' => $replying,
         'REPLY_TO' => (isset($sendto)) ? $sendto : '',
         'REPLY_SUBJECT' => (isset($subject)) ? $subject : '',
         'REPLY_PUBLIC' => (isset($reply_public) && $reply_public == 1) ? ' checked="checked"' : '',

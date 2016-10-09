@@ -149,6 +149,7 @@ $MSG['buy_it_now_only_limit'] = "Buy it now only limit";
 // categories.php
 $MSG['delete_category_move_auctions'] = 'What do you want to do with the auctions & subcategories in the following categories<br><small>(If you want to move them you must enter the category id of where you want them moved)</small>';
 $MSG['move_category_missing_id'] = 'Some categories selected to move could not be processed as no valid category ID was given to where they would be moved to';
+$MSG['this_cannot_be_undone'] = 'This action cannot be undone.';
 
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";

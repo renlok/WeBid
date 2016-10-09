@@ -55,10 +55,10 @@ if (isset($_POST['action'])) {
             foreach ($_POST['categories'] as $k => $v) {
                 if (!isset($_POST['delete'][$k])) {
                     $query = "UPDATE " . $DBPrefix . "categories SET
-							cat_name = :name,
-							cat_colour = :colour,
-							cat_image = :image
-							WHERE cat_id = :cat_id";
+                            cat_name = :name,
+                            cat_colour = :colour,
+                            cat_image = :image
+                            WHERE cat_id = :cat_id";
                     $params = array();
                     $params[] = array(':name', $_POST['categories'][$k], 'str');
                     $params[] = array(':colour', $_POST['colour'][$k], 'str');
@@ -89,42 +89,25 @@ if (isset($_POST['action'])) {
         if (isset($_POST['delete']) && is_array($_POST['delete'])) {
             // Get data from the database
             $query = "SELECT COUNT(a.id) as COUNT, c.* FROM " . $DBPrefix . "categories c
-						LEFT JOIN " . $DBPrefix . "auctions a ON ( a.category = c.cat_id )
-						WHERE c.cat_id IN (" . implode(',', $_POST['delete']) . ")
-						GROUP BY c.cat_id ORDER BY cat_name";
+                    LEFT JOIN " . $DBPrefix . "auctions a ON ( a.category = c.cat_id )
+                    WHERE c.cat_id IN (" . implode(',', $_POST['delete']) . ")
+                    GROUP BY c.cat_id ORDER BY cat_name";
             $db->direct_query($query);
 
-            $message = $MSG['delete_category_move_auctions'] . '<table cellpadding="0" cellspacing="0">';
-            $names = array();
-            $counter = 0;
             while ($row = $db->fetch()) {
-                if ($row['COUNT'] > 0 || $row['left_id'] != ($row['right_id'] - 1)) {
-                    $names[] = $row['cat_name'];
-                    $message .= '<tr>';
-                    $message .= '<td>' . $row['cat_name'] . '</td><td>';
-                    $message .= '<select name="delete[' . $row['cat_id'] . ']">';
-                    $message .= '<option value="delete">' . $MSG['008'] . '</option>';
-                    $message .= '<option value="move">' . $MSG['840'] . ': </option>';
-                    $message .= '</select>';
-                    $message .= '</td>';
-                    $message .= '<td><input type="text" size="5" name="moveid[' . $row['cat_id'] . ']"></td>';
-                    $message .= '</tr>';
-                    $counter++;
-                } else {
-                    $names[] = $row['cat_name'] . '<input type="hidden" name="delete[' . $row['cat_id'] . ']" value="delete">';
-                }
+                $template->assign_block_vars('categories', array(
+                        'ID' => $row['cat_id'],
+                        'NAME' => $row['cat_name'],
+                        'HAS_CHILDREN' => ($row['COUNT'] > 0 || $row['left_id'] != ($row['right_id'] - 1))
+                        ));
             }
-            $message .= '</table>';
             // build message
             $template->assign_vars(array(
-                    'ERROR' => (isset($ERR)) ? $ERR : '',
-                    'ID' => '',
-                    'MESSAGE' => (($counter > 0) ? $message : '') . '<p>' . $MSG['838'] . implode(', ', $names) . '</p>',
-                    'TYPE' => 1
+                    'ERROR' => (isset($ERR)) ? $ERR : ''
                     ));
 
             $template->set_filenames(array(
-                    'body' => 'confirm.tpl'
+                    'body' => 'categoryconfirm.tpl'
                     ));
             $template->display('body');
             include 'footer.php';

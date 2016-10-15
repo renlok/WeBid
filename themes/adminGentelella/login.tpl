@@ -39,14 +39,14 @@
            <h1>Administration Interface</h1>
         <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
         <div class="form-group">
-        <label class="col-sm-3 control-label">{L_003}: </label>
+        <label class="col-sm-3 control-label">{L_username}: </label>
          <div class="col-sm-9">
         <input type="text" name="username" class="form-control has-feedback-left" placeholder="UserName">
         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
         </div>
   </div>
         <div class="form-group">
-        <label class="col-sm-3 control-label">{L_004}: </label>
+        <label class="col-sm-3 control-label">{L_password}: </label>
         <div class="col-sm-9">
         <input type="password" name="password" class="form-control has-feedback-left" placeholder="Password">
          <span class="fa fa-key form-control-feedback left" aria-hidden="true"></span>

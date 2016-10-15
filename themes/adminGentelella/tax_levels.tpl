@@ -1,15 +1,15 @@
-		<div style="width:25%; float:left;">
-			<div style="margin-left:auto; margin-right:auto;">
-				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
-			</div>
-		</div>
-		<div style="width:75%; float:right;">
-			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_1083}</h4>
+		<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+				<h2>{L_25_0012} <i class="fa fa-angle-double-right"></i> {L_1083}</h2>
+                                 <div class="clearfix"></div>
+      </div>
+      <div class="col-md-12">
 				<form name="errorlog" action="" method="post">
 				</form>
 				<form name="tax_edit" action="" method="post">
-					<table width="98%" cellpadding="0" cellspacing="0">
+					<table class="table table-bordered table-striped">
 						<tr>
 							<th><b>{L_1082}</b></th>
 							<th><b>{L_1083}</b></th>
@@ -34,10 +34,10 @@
 					<input type="hidden" name="tax_id" value="{TAX_ID}">
 					<input type="hidden" name="action" value="add">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_530}">
+					<input type="submit" name="act" class="btn btn-primary" value="{L_530}">
 				</form>
 				<form name="tax_update" action="" method="post">
-					<table width="98%" cellpadding="0" cellspacing="0">
+					<table class="table table-bordered table-striped">
 						<tr>
 							<th><b>{L_1082}</b></th>
 							<th><b>{L_1083}</b></th>
@@ -62,7 +62,7 @@
 					</table>
 					<input type="hidden" name="action" value="sitefee">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_530}">
+					<input type="submit" name="act" class="btn btn-primary" value="{L_530}">
 				</form>
 			</div>
 		</div>

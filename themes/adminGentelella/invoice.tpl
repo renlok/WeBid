@@ -1,21 +1,14 @@
-
     	<div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12"> 
         <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>{L_854} <i class="fa fa-angle-double-right"></i> {L_854}</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                                       <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-                                    </ul>
+                                    <h2>{L_25_0012} <i class="fa fa-angle-double-right"></i> {L_766}</h2>
                                     <div class="clearfix"></div>
                                 </div>
           <div class="col-md-12">
-				<div class="plain-box">
                 	<form action="" method="get" class="form-horizontal">
                     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-                	<table cellpadding="0" cellspacing="0" width="100%" class="blank">
+                	<table class="table table-bordered table-striped">
                     <tr>
                     	<td>{L_313}</td>
                     	<td>
@@ -73,7 +66,7 @@
 <!-- END invoices -->
                 </table>
 <!-- IF PAGNATION -->
-                <table width="98%" cellpadding="0" cellspacing="0" class="blank">
+                <table class="table table-bordered table-striped">
                     <tr>
                         <td align="center">
                             {L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}

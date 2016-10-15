@@ -4,11 +4,6 @@
     <div class="x_panel">
       <div class="x_title">
       <h2>{L_5142} <i class="fa fa-angle-double-right"></i> {L_128}</h2>
-        <ul class="nav navbar-right panel_toolbox">
-          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-        </ul>
         <div class="clearfix"></div>
       </div>
       <div class="col-md-12">
@@ -18,7 +13,6 @@
 <!-- ENDIF -->
 					<div class="plain-box">
                     	{L_135}
-                        <p>[&nbsp;<a href="javascript:window_open('{SITEURL}converter.php','incre',650,250,30,30);">{L_5010}</a>&nbsp;]</p>
                     </div>
                     <table class="table table-bordered table-striped">
                         <tr>

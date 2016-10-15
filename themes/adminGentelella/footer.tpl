@@ -1,7 +1,7 @@
                 <!-- footer content -->
                 <footer>
                     <div class="">
-                        <p class="pull-right">Administration Panel for <a href="http://www.webidsupport.com/">WeBid</a> &copy; 2008 - 2016
+                        <p class="pull-right">Administration Panel for <a href="http://www.webidsupport.com/">WeBid</a> &copy; 2008 - {L_COPY_YEAR}
 
                             <span class="lead"> <i class="fa fa-circle-o-notch"></i> WeBid!</span>
                         </p>

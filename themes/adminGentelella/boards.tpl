@@ -4,7 +4,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>{L_25_0018} <i class="fa fa-angle-double-right"></i> {L_5032}</h2>
+        <h2>{L_25_0018} <i class="fa fa-angle-double-right"></i> {L_board_management}</h2>
         <ul class="nav navbar-right panel_toolbox">
           <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
           <li><a class="close-link"><i class="fa fa-close"></i></a></li>

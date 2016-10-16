@@ -1,16 +1,8 @@
-
-
-
-        <div class="row">
+    <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12"> 
         <div class="x_panel">
                                 <div class="x_title">
                                     <h2>{L_5167}<i>{SITENAME}</i><br>{STATSMONTH}</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                                       <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-                                    </ul>
                                     <div class="clearfix"></div>
                                 </div>
           <div class="col-md-12"> 
@@ -26,17 +18,18 @@
                     <th height="21" style="text-align:right;">&nbsp;</td>
                 </tr>
 <!-- BEGIN sitestats -->
-                <tr class="bg">
-                    <td align="center" height="45"><b>{sitestats.BROWSER}</b></td>
-                    <td>
+					<tr class="bg">
+						<td align="center" height="45"><b>{sitestats.BROWSER}</b></td>
+						<td>
 	<!-- IF sitestats.NUM eq 0 -->
-						<div style="height:15px;"><b>0</b></div>
+							<div style="height:15px;"><b>0</b></div>
 	<!-- ELSE -->
-						<div class="highbar" style="height:15px; width:{sitestats.WIDTH}%; color:#000;"><b>{sitestats.PERCENTAGE}%</b></div>
+							<div style="height:15px; width:{sitestats.WIDTH}%; background-color:#006699; color:#FFFFFF;"><b>{sitestats.PERCENTAGE}%</b></div>
 	<!-- ENDIF -->
-                    </td>
-                </tr>
+						</td>
+					</tr>
 <!-- END sitestats -->
+				</table>
 				</table>
             </div>
         </div>

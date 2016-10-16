@@ -1,15 +1,8 @@
-
-    	
-         <div class="row">
+   <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12"> 
         <div class="x_panel">
                                 <div class="x_title">
                                     <h2>{L_25_0010} <i class="fa fa-angle-double-right"></i> {L_525}</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                                       <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-                                    </ul>
                                     <div class="clearfix"></div>
                                 </div>
           <div class="col-md-12">
@@ -22,7 +15,7 @@
 					<div class="plain-box"><a href="newadminuser.php">{L_367}</a></div>
                     <table class="table table-bordered table-striped">
                         <tr>
-                            <th width="30%">{L_003}</th>
+                            <th width="30%">{L_username}</th>
                             <th width="16%">{L_558}</th>
                             <th width="19%">{L_559}</th>
                             <th width="12%">{L_560}</th>

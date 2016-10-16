@@ -4,12 +4,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>{L_25_0018} <i class="fa fa-angle-double-right"></i> {L_5032}</h2>
-        <ul class="nav navbar-right panel_toolbox">
-          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-        </ul>
+        <h2>{L_25_0018} <i class="fa fa-angle-double-right"></i> {L_board_management}</h2>
         <div class="clearfix"></div>
       </div>
       <div class="col-md-12">
@@ -17,13 +12,13 @@
           <!-- IF ERROR ne '' -->
           <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong>{ERROR} </div>
           <!-- ENDIF -->
-          <div class="plain-box"><b>{L_5040}</b></div>
+          <div class="plain-box"><b>{L_delete_board_warning}</b></div>
           <table class="table table-bordered table-striped">
             <tr>
-              <th width="6%">{L_129}</th>
-              <th>{L_294}</th>
-              <th width="10%" align="center">{L_5046}</th>
-              <th width="12%" align="center">{L_5043}</th>
+              <<th width="6%">{L_129}</th>
+						<th>{L_294}</th>
+						<th width="10%" align="center">{L_show}</th>
+						<th width="12%" align="center">{L_num_messages}</th>
               <th width="16%">&nbsp;</th>
             </tr>
             <!-- BEGIN boards -->

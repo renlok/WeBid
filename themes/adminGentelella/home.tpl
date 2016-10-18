@@ -1,5 +1,3 @@
-
-
 <!-- top tiles -->
 
 <div class="row tile_count">
@@ -48,16 +46,11 @@
           <div class="x_panel">
   <div class="x_title">
                                     <h2>{L_25_0010} <i class="fa fa-angle-double-right"></i> {L_525}</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                                       <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-                                    </ul>
                                     <div class="clearfix"></div>
                                 </div>
     <div class="col-md-8"> 
       
-      <!-- IF THIS_VERSION eq CUR_VERSION -->
+      <!-- IF UPDATE_AVAILABLE -->
       <div class="info-box">{L_30_0212}</div>
       <!-- ELSE -->
       <div class="alert alert-info info-box fade in" role="alert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {L_30_0211}</div>
@@ -161,6 +154,12 @@
           <td><form action="?action=clearcache" method="post">
               <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
               <input type="submit" name="submit" value="{L_30_0031}" class="btn btn-danger">
+            </form></td>
+        </tr>
+        <td width="70%">{L_30_0032a}</td>
+          <td><form action="?action=clear_image_cache" method="post">
+              <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+              <input type="submit" name="submit" value="{L_30_0031a}" class="btn btn-danger">
             </form></td>
         </tr>
         <tr class="bg">

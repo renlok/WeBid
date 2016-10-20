@@ -4,11 +4,6 @@
         <div class="x_panel">
                                 <div class="x_title">
                                     <h2>{L_25_0018} <i class="fa fa-angle-double-right"></i> {L_5236} <i class="fa fa-angle-double-right"></i> {L_5231}</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                                       <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-                                    </ul>
                                     <div class="clearfix"></div>
                                 </div>
           <div class="col-md-12">
@@ -35,7 +30,7 @@
     <!-- ELSE -->
     						<td>&nbsp;</td>
     <!-- ENDIF -->
-                            <td width="35" align="right"><img src="../images/flags/flags/{lang.LANG}.gif"></td>
+                            <td width="35" align="right"><img src="../images/flags/{lang.LANG}.gif"></td>
                             <td><input type="text" name="question[{lang.LANG}]" class="form-control" maxlength="255" value="{lang.TITLE}"></td>
                         </tr>
 <!-- END lang -->
@@ -46,7 +41,7 @@
     <!-- ELSE -->
     						<td>&nbsp;</td>
     <!-- ENDIF -->
-                            <td align="right" valign="top"><img src="../images/flags/flags/{lang.LANG}.gif"></td>
+                            <td align="right" valign="top"><img src="../images/flags/{lang.LANG}.gif"></td>
                             <td><textarea name="answer[{lang.LANG}]" class="form-control">{lang.CONTENT}</textarea></td>
                         </tr>
 <!-- END lang -->

@@ -1,14 +1,8 @@
-
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
       <h2>{L_5142} <i class="fa fa-angle-double-right"></i> {L_075}</h2>
-        <ul class="nav navbar-right panel_toolbox">
-          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-        </ul>
         <div class="clearfix"></div>
       </div>
       <div class="col-md-12">
@@ -20,17 +14,22 @@
                     <table class="table table-bordered table-striped">
                         <tr>
                             <th>&nbsp;</th>
-                            <th><b>{L_087}</b></th>
-                            <th><b>{L_008}</b></th>
+                            <th><b><strong>{L_payment_name}</strong></b></th>
+                            <th><b><strong>{L_clean_payment_name}</strong></b></th>
+                            <th><b><strong>{L_008}</strong></b></th>
                         </tr>
 <!-- BEGIN payments -->
                         <tr>
                             <td>&nbsp;</td>
                             <td>
-                                <input type="text" name="new_payments[]" value="{payments.PAYMENT}" class="form-control">
+                                 <input type="hidden" name="payment[{payments.ID}][id]" value="{payments.ID}" class="form-control">
+									<input type="text" name="payment[{payments.ID}][name]" value="{payments.NAME}" class="form-control">
+                            </td>
+                              <td>
+                              <input type="text" name="payment[{payments.ID}][clean]" value="{payments.CLEAN}" class="form-control">
                             </td>
                             <td align="center">
-                                <input type="checkbox" name="delete[]" value="{payments.S_ROW_COUNT}">
+                                <input type="checkbox" name="delete[]" value="{payments.ID}">
                             </td>
                         </tr>
 <!-- END payments -->
@@ -41,8 +40,11 @@
                         <tr>
                             <td>{L_394}</td>
                             <td>
-                                <input type="text" name="new_payments[]" class="form-control">
+                                <input type="text" name="new_payments" class="form-control">
                             </td>
+                              <td>
+                             <input type="text" name="new_payments_clean" class="form-control">
+                             </td>
                             <td>&nbsp;</td>
                         </tr>
                     </table>

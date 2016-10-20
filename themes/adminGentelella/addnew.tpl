@@ -5,11 +5,6 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>{L_25_0018} <i class="fa fa-angle-double-right"></i> {L_516} <i class="fa fa-angle-double-right"></i> {TITLE}</h2>
-        <ul class="nav navbar-right panel_toolbox">
-          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-        </ul>
         <div class="clearfix"></div>
       </div>
       <div class="col-md-12">
@@ -46,7 +41,7 @@
             <tr>
               <td align="right">{L_521}</td>
               <td>&nbsp;</td>
-              <td><input type="radio" name="suspended" value="0"<!-- IF B_ACTIVE --> checked="checked"<!-- ENDIF -->> {L_030} <input type="radio" name="suspended" value="1"<!-- IF B_INACTIVE --> checked="checked"<!-- ENDIF -->> {L_029} </td>
+              <td><input type="radio" name="suspended" value="0"<!-- IF B_ACTIVE --> checked="checked"<!-- ENDIF -->> {L_yes} <input type="radio" name="suspended" value="1"<!-- IF B_INACTIVE --> checked="checked"<!-- ENDIF -->> {L_no} </td>
             </tr>
           </table>
           <!-- IF ID ne '' -->

@@ -85,8 +85,10 @@
                   <li><a href="{SITEURL}admin/auctions.php">{L_auction_settings}</a></li>
                   <li><a href="{SITEURL}admin/displaysettings.php">{L_788}</a></li>
                   <li><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
+                  <li><a href="{SITEURL}admin/emailsettings.php">{L_1118}</a></li>
                   <li><a href="{SITEURL}admin/usersettings.php">{L_894}</a></li>
                   <li><a href="{SITEURL}admin/errorhandling.php">{L_409}</a></li>
+                  <li><a href="{SITEURL}admin/moderation.php">{L_moderation_settings}</a></li>
                   <li><a href="{SITEURL}admin/countries.php">{L_081}</a></li>
                   <li><a href="{SITEURL}admin/payments.php">{L_075}</a></li>
                   <li><a href="{SITEURL}admin/durations.php">{L_069}</a></li>
@@ -108,10 +110,10 @@
               </li>
               <li><a><i class="fa fa-desktop"></i> {L_25_0012} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
-                          <li><a href="{SITEURL}admin/fees.php">{L_25_0012}</a></li>
-                          <li><a href="{SITEURL}admin/fee_gateways.php">{L_445}</a></li>
-                          <li><a href="{SITEURL}admin/enablefees.php">{L_395}</a></li>
-                          <li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
+              <li><a href="{SITEURL}admin/fees.php">{L_25_0012}</a></li>
+              <li><a href="{SITEURL}admin/fee_gateways.php">{L_445}</a></li>
+              <li><a href="{SITEURL}admin/enablefees.php">{L_395}</a></li>
+              <li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
               <li><a href="{SITEURL}admin/invoice_settings.php">{L_1094}</a></li>
               <li><a href="{SITEURL}admin/invoice.php">{L_766}</a></li>
               <li><a href="{SITEURL}admin/tax.php">{L_1088}</a></li>
@@ -122,6 +124,8 @@
                 <ul class="nav child_menu" style="display: none">
                   <li><a href="{SITEURL}admin/theme.php">{L_26_0002}</a></li>
                   <li><a href="{SITEURL}admin/clearcache.php">{L_30_0031}</a></li>
+                  <li><a href="{SITEURL}admin/clear_image_cache.php">{L_30_0031a}</a></li>
+                  <li><a href="{SITEURL}admin/logo_upload.php">{L_30_0215}</a></li>
                 </ul>
               </li>
               <li><a><i class="fa fa-bar-chart-o"></i> {L_25_0011} <span class="fa fa-chevron-down"></span></a>
@@ -137,11 +141,12 @@
               <li><a><i class="fa fa-users"></i> {L_25_0010} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
                   <li><a href="{SITEURL}admin/listusers.php">{L_045}</a></li>
+                  <li><a href="{SITEURL}admin/newuser.php">{L__0026}</a></li>
                   <li><a href="{SITEURL}admin/usergroups.php">{L_448}</a></li>
                   <li><a href="{SITEURL}admin/profile.php">{L_048}</a></li>
                   <li><a href="{SITEURL}admin/activatenewsletter.php">{L_25_0079}</a></li>
                   <li><a href="{SITEURL}admin/newsletter.php">{L_607}</a></li>
-                  <li><a href="{SITEURL}admin/banips.php">{L_2_0017}</a></li>
+                  <li><a href="{SITEURL}admin/banips.php">{L_ip_addresses}</a></li>
                   <li><a href="{SITEURL}admin/newadminuser.php">{L_367}</a></li>
                   <li><a href="{SITEURL}admin/adminusers.php">{L_525}</a></li>
                 </ul>
@@ -150,7 +155,10 @@
                 <ul class="nav child_menu" style="display: none">
                   <li><a href="{SITEURL}admin/listauctions.php">{L_067}</a></li>
                   <li><a href="{SITEURL}admin/listclosedauctions.php">{L_214}</a></li>
+                  <li><a href="{SITEURL}admin/listreportedauctions.php">{L_view_reported_auctions}</a></li>
                   <li><a href="{SITEURL}admin/listsuspendedauctions.php">{L_5227}</a></li>
+                  <li><a href="{SITEURL}admin/searchauctions.php">{L_067a}</a></li>
+                  <li> <a href="{SITEURL}admin/moderateauctions.php">{L_moderation_queue}</a></li>
                 </ul>
               </li>
               <li><a><i class="fa fa-bookmark"></i> {L_25_0018} <span class="fa fa-chevron-down"></span></a>
@@ -160,12 +168,13 @@
                   <li><a href="{SITEURL}admin/help.php">{L_148}</a></li>
                   <li><a href="{SITEURL}admin/terms.php">{L_5075}</a></li>
                   <li><a href="{SITEURL}admin/privacypolicy.php">{L_402}</a></li>
+                  <li><a href="{SITEURL}admin/cookiespolicy.php">{L_1110}</a></li>
                   <li><a href="{SITEURL}admin/faqscategories.php">{L_5230}</a></li>
                   <li><a href="{SITEURL}admin/newfaq.php">{L_5231}</a></li>
                   <li><a href="{SITEURL}admin/faqs.php">{L_5232}</a></li>
                   <li><a href="{SITEURL}admin/boardsettings.php">{L_msg_board_settings}</a></li>
                   <li><a href="{SITEURL}admin/newboard.php">{L_5031}</a></li>
-                  <li><a href="{SITEURL}admin/boards.php">{L_5032}</a></li>
+                  <li><a href="{SITEURL}admin/boards.php">{L_board_management}</a></li>
                 </ul>
               </li>
               <li><a><i class="fa fa-cogs"></i> {L_5436} <span class="fa fa-chevron-down"></span></a>
@@ -182,16 +191,13 @@
                   <li><a href="{SITEURL}admin/viewaccessstats.php">{L_5143}</a></li>
                   <li><a href="{SITEURL}admin/viewbrowserstats.php">{L_5165}</a></li>
                   <li><a href="{SITEURL}admin/viewplatformstats.php">{L_5318}</a></li>
+                  <li><a href="{SITEURL}admin/analytics.php">{L_analytics}</a></li>
                 </ul>
               </li>
             </ul>
           </div>
         </div>
-        <!-- /sidebar menu --> 
-        
-        <!-- /menu footer buttons --> 
-       <div class="sidebar-footer hidden-small"> <a data-toggle="tooltip" data-placement="top" title="Settings"> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a> <a data-toggle="tooltip" data-placement="top" title="FullScreen"> <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> </a> <a data-toggle="tooltip" data-placement="top" title="Lock"> <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> </a> <a data-toggle="tooltip" data-placement="top" title="Logout"> <span class="glyphicon glyphicon-off" aria-hidden="true"></span> </a> </div>
-<!-- /menu footer buttons --> 
+        <!-- /sidebar menu -->  
       </div>
     </div>
     

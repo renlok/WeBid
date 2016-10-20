@@ -1,19 +1,20 @@
 		<div class="row">
-			<div class="col-md-3">
-				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
-			</div>
-			<div class="col-md-9">
-				<h2>{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</h2>
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+				<h2>{TYPENAME} <i class="fa fa-angle-double-right"></i> {PAGENAME}</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="col-md-12"> 
 				<form name="conf" action="" method="post" enctype="multipart/form-data">
-					<div class="panel panel-default">
+					<table class="table table-bordered table-striped">
 <!-- BEGIN block -->
+<tr valign="top">
 	<!-- IF block.B_HEADER -->
-						<div class="panel-heading"><b>{block.TITLE}</b></div>
+						<td colspan="2" style="padding:3px; border-top:#0083D7 1px solid; background:#ECECEC;"><b>{block.TITLE}</b></td>
 	<!-- ELSE -->
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-3">{block.TITLE}</div>
-								<div class="col-md-9">
+								<td class="col-md-3">{block.TITLE}</td>
+								<td class="col-md-9">
 									{block.DESCRIPTION}
 		<!-- IF block.TYPE eq 'yesno' -->
 									<input type="radio" name="{block.NAME}" value="y"<!-- IF block.DEFAULT eq 'y' --> checked<!-- ENDIF -->> {block.TAGLINE1}
@@ -26,8 +27,9 @@
 								</div>
 							</div>
 						</div>
-	<!-- ENDIF -->
+	<!-- ENDIF --></td>
 <!-- END block -->
+</table>
 						<button type="button" class="btn btn-default" onclick="showDialog();return false;">{L_1137}</button>
 					</div>
 					<input type="hidden" name="action" value="update">
@@ -35,6 +37,7 @@
 					<button class="btn btn-primary" type="submit" name="act" class="centre">{L_530}</button>
 				</form>
 			</div>
+		</div>
 		</div>
 		<div id="dialog-modal" title="{L_1134}" style="display: none;">
 			<div class="rounded-top rounded-bottom">

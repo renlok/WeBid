@@ -1,15 +1,13 @@
-		<div style="width:25%; float:left;">
-			<div style="margin-left:auto; margin-right:auto;">
-				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
-			</div>
-		</div>
-		<div style="width:75%; float:right;">
-			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</h4>
+		<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+
+				<h2>{L_239} <i class="fa fa-angle-double-right"></i> {PAGE_TITLE}</h2>
 				<div>
 					<form name="searchauctionform" method="get" action="searchauctions.php">
 						<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-						<table class="centre blank">
+						<table class="table table-bordered table-striped">
 							<tr>
 								<td>{L_113}</td>
 								<td>
@@ -42,15 +40,15 @@
 							</tr>
 							<tr>
 								<td colspan="2" class="centered">
-									<input name="submit" type="submit" value="{L_199}">
-									<input name="reset" type="button" onclick="javascript: this.form.auctionid.value = ''; this.form.usernick.value = ''; this.form.userid.value = ''; this.form.titlekeywords.value = ''; this.form.auctiontype[0].checked = true;" value="{L_035}">
+									<input name="submit" type="submit" class="btn btn-primary" value="{L_199}">
+									<input name="reset" type="button" onclick="javascript: this.form.auctionid.value = ''; this.form.usernick.value = ''; this.form.userid.value = ''; this.form.titlekeywords.value = ''; this.form.auctiontype[0].checked = true;" class="btn btn-primary" value="{L_035}">
 								</td>
 							</tr>
 						</table>
 					</form>
 				</div>
 				<div class="plain-box">{NUM_AUCTIONS} {L_311}<!-- IF B_SEARCHUSER --> {L_934}{USERNICK}<!-- ENDIF --></div>
-				<table width="98%" cellpadding="0" cellspacing="0">
+				<table class="table table-bordered table-striped">
 					<tr>
 						<th align="center"><b>{L_017}</b></th>
 						<th align="center"><b>{L_557}</b></th>
@@ -89,7 +87,7 @@
 					</tr>
 <!-- END auctions -->
 				</table>
-				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+				<table class="table table-bordered table-striped">
 					<tr>
 						<td align="center">
 							{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}
@@ -103,4 +101,5 @@
 					</tr>
 				</table>
 			</div>
+		</div>
 		</div>

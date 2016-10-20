@@ -112,4 +112,3 @@ $template->set_filenames(array(
         'body' => 'login.tpl'
         ));
 $template->display('body');
-include 'footer.php';

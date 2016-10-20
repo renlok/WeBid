@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin panel! |</title>
+    <title>WeBid Administration back-end</title>
+		<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="WeBid">
 
     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" media="screen,projection" type="text/css" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
+		<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/style.css">
 
-    <link href="{SITEURL}themes/{THEME}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{SITEURL}themes/{THEME}/fonts/css/font-awesome.min.css" rel="stylesheet">
     <link href="{SITEURL}themes/{THEME}/css/animate.min.css" rel="stylesheet">
 
@@ -19,28 +21,34 @@
     <link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/maps/jquery-jvectormap-2.0.1.css" />
     <link href="{SITEURL}themes/{THEME}/css/icheck/flat/green.css" rel="stylesheet" />
     <link href="{SITEURL}themes/{THEME}/css/floatexamples.css" rel="stylesheet" type="text/css" />
-    <link href="{SITEURL}themes/{THEME}/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="{SITEURL}js/jquery.js"></script>
+		<script src="{SITEURL}js/jquery-ui.js"></script>
     <script src="{SITEURL}themes/{THEME}/js/jquery.min.js"></script>
     <script src="{SITEURL}themes/{THEME}/js/nprogress.js"></script>
-    <script>
-        NProgress.start();
-    </script>
     <script type="text/javascript">
-    $(document).ready(function() {
-      $('a.new-window').click(function(){
-        window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX=100,screenY=100,status=0,menubar=0,resizable=0,width=550,height=550");
-        return false;
-      });
-      $(".selectall").click(function() {
-        var checked_status = this.checked;
-        var checkbox_name = this.value;
-        $("input[name=\"" + checkbox_name + "[]\"]").each(function() {
-          this.checked = checked_status;
-        });
-      });
-    });
-  </script>
+			$(document).ready(function() {
+				$('a.new-window').click(function(){
+					window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX=100,screenY=100,status=0,menubar=0,resizable=0,width=550,height=550");
+					return false;
+				});
+				$(".selectall").click(function() {
+					var checked_status = this.checked;
+					var checkbox_name = this.value;
+					$("input[name=\"" + checkbox_name + "[]\"]").each(function() {
+						this.checked = checked_status;
+					});
+				});
+			});
+		</script>
+		<script type="text/javascript">
+			function window_open(url,title,width,height,x,y)
+			{
+				var window_= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+width+',height='+height;
+				open(url,title,window_);
+			}
+		</script>
 
     <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
@@ -60,6 +68,14 @@
     <div class="col-md-3 left_col">
       <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;"> <a href="index.php" class="site_title"><i class="fa fa-circle-o-notch"></i> <span>Admin Panel!</span></a> </div>
+        <div class="row">
+				<small>{L_559}: {LAST_LOGIN}</small></div>
+	<!-- BEGIN langs -->
+		<!-- IF ! langs.B_DEFAULT -->
+					<a href="index.php?lan={langs.LANG}"><img src="{SITEURL}images/flags/{langs.LANG}.gif"></a>
+		<!-- ENDIF -->
+	<!-- END langs -->
+    </div>
         <div class="clearfix"></div>
         
         <!-- menu prile quick info -->
@@ -197,6 +213,11 @@
             </ul>
           </div>
         </div>
+        <!-- BEGIN alerts -->
+			<div id="alerts">
+				<div class="alert alert-{alerts.TYPE}">{alerts.MESSAGE}</div>
+			</div>
+		<!-- END alerts -->
         <!-- /sidebar menu -->  
       </div>
     </div>
@@ -218,4 +239,4 @@
     </div>
     <!-- /top navigation --> 
       <!-- page content -->
-    <div class="right_col" role="main"> 
+    <div class="right_col" role="main">

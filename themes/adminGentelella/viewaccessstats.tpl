@@ -1,16 +1,8 @@
-
-
-
         <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12"> 
         <div class="x_panel">
                                 <div class="x_title">
                                     <h2>{L_5158}<i>{SITENAME}</i><br>{STATSMONTH}</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                                       <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-                                    </ul>
                                     <div class="clearfix"></div>
                                 </div>
           <div class="col-md-12"> 
@@ -44,26 +36,26 @@
                     <th height="21" style="text-align:right;">{L_829}<a href="viewaccessstats.php?type=d">{L_109}</a>/ <a href="viewaccessstats.php?type=w">{L_828}</a>/ <a href="viewaccessstats.php?type=m">{L_830}</a></td>
                 </tr>
 <!-- BEGIN sitestats -->
-                <tr class="bg">
-                    <td align="center" height="45"><b>{sitestats.DATE}</b></td>
-                    <td>
+					<tr class="bg">
+						<td align="center" height="45"><b>{sitestats.DATE}</b></td>
+						<td>
 	<!-- IF sitestats.PAGEVIEWS eq 0 -->
-						<div style="height:15px;"><b>0</b></div>
+							<div style="height:15px;"><b>0</b></div>
 	<!-- ELSE -->
-						<div class="highbar" style="height:15px; width:{sitestats.PAGEVIEWS_WIDTH}%; color:#000;"><b>{sitestats.PAGEVIEWS}</b></div>
+							<div style="height:15px; width:{sitestats.PAGEVIEWS_WIDTH}%; background-color:#006699; color:#FFFFFF;"><b>{sitestats.PAGEVIEWS}</b></div>
 	<!-- ENDIF -->
 	<!-- IF sitestats.UNIQUEVISITORS eq 0 -->
-						<div style="height:15px;"><b>0</b></div>
+							<div style="height:15px;"><b>0</b></div>
 	<!-- ELSE -->
-						<div class="midbar" style="height:15px; width:{sitestats.UNIQUEVISITORS_WIDTH}%; color:#000;"><b>{sitestats.UNIQUEVISITORS}</b></div>
+							<div style="height:15px; width:{sitestats.UNIQUEVISITORS_WIDTH}%; background-color:#66CC00; color:#FFFFFF;"><b>{sitestats.UNIQUEVISITORS}</b></div>
 	<!-- ENDIF -->
 	<!-- IF sitestats.USERSESSIONS eq 0 -->
-						<div style="height:15px;"><b>0</b></div>
+							<div style="height:15px;"><b>0</b></div>
 	<!-- ELSE -->
-						<div class="lowbar" style="height:15px; width:{sitestats.USERSESSIONS_WIDTH}%;"><b>{sitestats.USERSESSIONS}</b></div>
+							<div style="height:15px; width:{sitestats.USERSESSIONS_WIDTH}%; background-color:#FFFF00;"><b>{sitestats.USERSESSIONS}</b></div>
 	<!-- ENDIF -->
-                    </td>
-                </tr>
+						</td>
+					</tr>
 <!-- END sitestats -->
 				</table>
             </div>

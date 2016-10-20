@@ -1,15 +1,8 @@
-
-
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
         <h2>{L_25_0012} <i class="fa fa-angle-double-right"></i> {L_445}</h2>
-        <ul class="nav navbar-right panel_toolbox">
-          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-          <li><a class="close-link"><i class="fa fa-wrench"></i></a></li>
-        </ul>
         <div class="clearfix"></div>
       </div>
       <div class="col-md-12">
@@ -23,21 +16,22 @@
               <th colspan="2"><b>{gateways.NAME}</b></th>
             </tr>
             <tr>
-              <td width="50%"><a href="{gateways.WEBSITE}" target="_blank">{gateways.ADDRESS_NAME}</a>:<br>
-                <input type="text" name="{gateways.PLAIN_NAME}_address" value="{gateways.ADDRESS}" class="form-control">
+              <td width="50%"><input type="hidden" name="{gateways.PLAIN_NAME}[id]" value="{gateways.GATEWAY_ID}"></br>
+											<a href="{gateways.WEBSITE}" target="_blank">{gateways.ADDRESS_NAME}</a>:<br><input type="text" name="{gateways.PLAIN_NAME}[address]" value="{gateways.ADDRESS}" class="form-control">
                 
                 <!-- IF gateways.B_PASSWORD -->
                 
-                <p>{gateways.ADDRESS_PASS}:<br>
-                  <input type="text" name="{gateways.PLAIN_NAME}_password" value="{gateways.PASSWORD}" class="form-control">
+                <p>{gateways.PASSWORD_NAME}:<br>
+                  <input type="text" name="{gateways.PLAIN_NAME}[password]" value="{gateways.PASSWORD}" class="form-control">
                 </p>
-                
+                <!-- ELSE -->
+		<input type="hidden" name="{gateways.PLAIN_NAME}[password]" value="">
                 <!-- ENDIF --></td>
               <td><p>
-                  <input type="checkbox" name="{gateways.PLAIN_NAME}_required"{gateways.REQUIRED}>
+                  <input type="checkbox" name="{gateways.PLAIN_NAME}[required]"{gateways.REQUIRED}>
                   {L_446}</p>
                 <p>
-                  <input type="checkbox" name="{gateways.PLAIN_NAME}_active"{gateways.ENABLED}>
+                  <input type="checkbox" name="{gateways.PLAIN_NAME}[active]"{gateways.ENABLED}>
                   {L_447}</p></td>
             </tr>
             <!-- END gateways -->

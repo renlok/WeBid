@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin panel! |</title>
+    <title>WeBid Administration back-end</title>
+		<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="WeBid">
 
     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" media="screen,projection" type="text/css" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
+	<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/style.css">
 
     <link href="{SITEURL}themes/{THEME}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{SITEURL}themes/{THEME}/fonts/css/font-awesome.min.css" rel="stylesheet">
@@ -19,13 +21,14 @@
     <link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/maps/jquery-jvectormap-2.0.1.css" />
     <link href="{SITEURL}themes/{THEME}/css/icheck/flat/green.css" rel="stylesheet" />
     <link href="{SITEURL}themes/{THEME}/css/floatexamples.css" rel="stylesheet" type="text/css" />
-    <link href="{SITEURL}themes/{THEME}/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="{SITEURL}js/jquery.js"></script>
+	<script src="{SITEURL}js/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{SITEURL}themes/{THEME}/js/jquery.min.js"></script>
     <script src="{SITEURL}themes/{THEME}/js/nprogress.js"></script>
-    <script>
-        NProgress.start();
-    </script>
+    
     <script type="text/javascript">
     $(document).ready(function() {
       $('a.new-window').click(function(){
@@ -60,6 +63,13 @@
     <div class="col-md-3 left_col">
       <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;"> <a href="index.php" class="site_title"><i class="fa fa-circle-o-notch"></i> <span>Admin Panel!</span></a> </div>
+        <div class="row">
+				<small>{L_559}: {LAST_LOGIN}</small>
+	<!-- BEGIN langs -->
+		<!-- IF ! langs.B_DEFAULT -->
+					<a href="index.php?lan={langs.LANG}"><img src="{SITEURL}images/flags/{langs.LANG}.gif"></a>
+		<!-- ENDIF -->
+	<!-- END langs --></div>
         <div class="clearfix"></div>
         
         <!-- menu prile quick info -->
@@ -197,6 +207,11 @@
             </ul>
           </div>
         </div>
+        <!-- BEGIN alerts -->
+			<div id="alerts">
+				<div class="alert alert-{alerts.TYPE}">{alerts.MESSAGE}</div>
+			</div>
+		<!-- END alerts -->
         <!-- /sidebar menu -->  
       </div>
     </div>

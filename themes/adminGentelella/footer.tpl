@@ -33,17 +33,7 @@
     <!-- icheck -->
     <script src="{SITEURL}themes/{THEME}/js/icheck/icheck.min.js"></script>
 
-    <script src="{SITEURL}themes/{THEME}/js/custom.js"></script>
-    <script type="text/javascript" src="{SITEURL}themes/{THEME}/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript">
-$('#sandbox-container input').datepicker({
-    todayBtn: "linked",
-    clearBtn: true,
-    autoclose: true,
-    todayHighlight: true
-});
-</script>
-
+    <script src="{SITEURL}themes/{THEME}/js/custom.js"></script
 
 </body>
 </html>

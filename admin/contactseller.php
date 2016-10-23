@@ -26,13 +26,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['25_0155']));
 }
 
-loadblock($MSG['25_0216'], $MSG['25_0217'], 'select3contact', 'contactseller', $system->SETTINGS['contactseller'], array($MSG['25_0218'], $MSG['25_0219'], $MSG['25_0220']));
-loadblock($MSG['30_0085'], $MSG['30_0084'], 'yesno', 'users_email', $system->SETTINGS['users_email'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['contact_seller'], $MSG['contact_seller_explain'], 'select3contact', 'contactseller', $system->SETTINGS['contactseller'], array($MSG['contact_seller_anyone'], $MSG['contact_seller_users_only'], $MSG['contact_seller_disabled']));
+loadblock($MSG['hide_user_emails'], $MSG['hide_user_emails_explain'], 'yesno', 'users_email', $system->SETTINGS['users_email'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0008'],
-        'PAGENAME' => $MSG['25_0216']
+        'PAGENAME' => $MSG['contact_seller']
         ));
 
 include 'header.php';

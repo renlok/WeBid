@@ -31,7 +31,7 @@ if (isset($_GET['action'])) {
                 }
                 closedir($dir);
             }
-            $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0033']));
+            $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['cache_cleared']));
         break;
 
         case 'clear_image_cache':
@@ -44,7 +44,7 @@ if (isset($_GET['action'])) {
             }
             closedir($dir);
         }
-            $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['30_0033a']));
+            $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['image_cache_cleared']));
         break;
 
         case 'updatecounters':
@@ -143,14 +143,14 @@ switch ($system->SETTINGS['version_check']) {
 }
 
 if (!($realversion = load_file_from_url($url))) {
-    $ERR = $ERR_25_0002;
+    $ERR = $MSG['error_file_access_disabled'];
     $realversion = 'Unknown';
 }
 
 $update_available = false;
 if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
     $update_available = true;
-    $text = $MSG['30_0211'];
+    $text = $MSG['outdated_version'];
 }
 
 //getting the correct email settings

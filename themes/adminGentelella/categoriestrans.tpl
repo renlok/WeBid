@@ -12,9 +12,9 @@
           <!-- ENDIF -->
           <div class="plain-box">
             <p>{L_161}</p>
-            <!-- BEGIN langs --> 
-            <a href="categoriestrans.php?lang={langs.LANG}"><img align="middle" src="{SITEURL}images/flags/{langs.LANG}.gif" border="0"></a> 
-            <!-- END langs --> 
+            <!-- BEGIN langs -->
+            <a href="categoriestrans.php?lang={langs.LANG}"><img align="middle" src="{SITEURL}images/flags/{langs.LANG}.gif" border="0"></a>
+            <!-- END langs -->
           </div>
           <table class="table table-bordered table-striped">
             <tr>
@@ -22,7 +22,7 @@
               <th><b>{L_772}</b></th>
             </tr>
             <!-- BEGIN cats -->
-            <tr {cats.BG}>
+            <tr<!-- IF cats.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
               <td><input type="text" name="categories_o[]" value="{cats.CAT_NAME}" class="form-control" disabled></td>
               <td><input type="text" name="categories[{cats.CAT_ID}]" value="{cats.TRAN_CAT}" class="form-control"></td>
             </tr>

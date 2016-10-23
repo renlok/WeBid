@@ -41,8 +41,8 @@ if (isset($_POST['act'])) {
     for ($i = 0; $i < count($_POST['old_countries']); $i++) {
         if ($_POST['old_countries'][$i] != $_POST['new_countries'][$i]) {
             $query = "UPDATE " . $DBPrefix . "countries SET
-					country = :country_new
-					WHERE country = :country_old";
+                      country = :country_new
+                      WHERE country = :country_old";
             $params = array();
             $params[] = array(':country_new', $_POST['new_countries'][$i], 'str');
             $params[] = array(':country_old', $_POST['old_countries'][$i], 'str');
@@ -58,13 +58,13 @@ if (isset($_POST['act'])) {
         $db->query($query, $params);
     }
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1028']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['countries_updated']));
 }
 
 $query = "SELECT country_id, c.country, count(u.id) AS user_count
-		FROM " . $DBPrefix . "countries c
-		LEFT JOIN " . $DBPrefix . "users u ON (c.country = u.country)
-		GROUP BY country_id, c.country";
+          FROM " . $DBPrefix . "countries c
+          LEFT JOIN " . $DBPrefix . "users u ON (c.country = u.country)
+          GROUP BY country_id, c.country";
 $db->direct_query($query);
 $countries = $db->fetchall();
 
@@ -76,7 +76,7 @@ foreach ($countries as $country) {
 
     $template->assign_block_vars('countries', array(
             'COUNTRY' => $country['country'],
-            'SELECTBOX' => ($can_delete) ? '<input type="checkbox" name="delete[]" value="' . $country['country'] . '">' : '<img src="../images/nodelete.gif" alt="You cannot delete this">'
+            'B_CAN_DELETE' => $can_delete
             ));
 }
 

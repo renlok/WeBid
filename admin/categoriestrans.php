@@ -18,7 +18,7 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$lang = (isset($_GET['lang'])) ? $_GET['lang'] : 'EN';
+$lang = (isset($_GET['lang'])) ? $_GET['lang'] : $system->SETTINGS['defaultlanguage'];
 $catscontrol = new MPTTcategories();
 
 function search_cats($parent_id, $level)
@@ -76,16 +76,13 @@ include MAIN_PATH . 'language/' . $lang . '/categories.inc.php';
 
 $query = "SELECT cat_id, cat_name FROM " . $DBPrefix . "categories ORDER BY cat_name";
 $db->direct_query($query);
-$bg = '';
 while ($row = $db->fetch()) {
     // set category data
     $template->assign_block_vars('cats', array(
             'CAT_ID' => $row['cat_id'],
             'CAT_NAME' => htmlspecialchars($row['cat_name']),
-            'TRAN_CAT' => isset($category_names[$row['cat_id']])? $category_names[$row['cat_id']] : '',
-            'BG' => $bg
+            'TRAN_CAT' => isset($category_names[$row['cat_id']])? $category_names[$row['cat_id']] : ''
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 $template->assign_vars(array(

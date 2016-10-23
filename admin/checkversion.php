@@ -19,16 +19,16 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt'))) {
-    $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_25_0002));
-    $realversion = 'Unknown';
+    $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_file_access_disabled']));
+    $realversion = $MSG['unknown'];
 }
 
 if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
     $myversion = '<span style="color:#ff0000;">' . $system->SETTINGS['version'] . '</span>';
-    $text = $MSG['30_0211'];
+    $text = $MSG['outdated_version'];
 } else {
     $myversion = '<span style="color:#00ae00;">' . $system->SETTINGS['version'] . '</span>';
-    $text = $MSG['30_0212'];
+    $text = $MSG['current_version'];
 }
 
 $template->assign_vars(array(

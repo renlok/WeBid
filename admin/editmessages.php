@@ -39,6 +39,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'purge') {
     }
 }
 
+$_SESSION['RETURN_LIST'] = 'editmessages.php?id=' . $id;
+
 // Retrieve board name for breadcrumbs
 $query = "SELECT name FROM " . $DBPrefix . "community WHERE id = :id";
 $db->query($query, $gparams);

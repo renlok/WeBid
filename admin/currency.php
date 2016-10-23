@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$html = '';
-
 // Create currencies array
 $query = "SELECT id, valuta, symbol, ime FROM " . $DBPrefix . "rates ORDER BY ime";
 $db->direct_query($query);
@@ -56,7 +54,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $system->writesetting("moneydecimals", $_POST['moneydecimals'], 'int');
         $system->writesetting("moneysymbol", $_POST['moneysymbol'], 'int');
 
-        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['553']));
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['currency_settings_updated']));
     }
 }
 
@@ -66,11 +64,10 @@ foreach ($CURRENCIES_SYMBOLS as $k => $v) {
     }
 }
 
-loadblock($MSG['5008'], '', generateSelect('currency', $CURRENCIES));
-loadblock('', $MSG['5138']);
-loadblock($MSG['544'], '', 'batchstacked', 'moneyformat', $system->SETTINGS['moneyformat'], array($MSG['545'], $MSG['546']));
-loadblock($MSG['548'], $MSG['547'], 'decimals', 'moneydecimals', $system->SETTINGS['moneydecimals']);
-loadblock($MSG['549'], '', 'batchstacked', 'moneysymbol', $system->SETTINGS['moneysymbol'], array($MSG['550'], $MSG['551']));
+loadblock($MSG['default_currency'], $MSG['default_currency_explain'], generateSelect('currency', $CURRENCIES));
+loadblock($MSG['money_format'], '', 'batchstacked', 'moneyformat', $system->SETTINGS['moneyformat'], array($MSG['money_format_us'], $MSG['money_format_euro']));
+loadblock($MSG['money_decimals'], $MSG['money_decimals_explain'], 'decimals', 'moneydecimals', $system->SETTINGS['moneydecimals']);
+loadblock($MSG['money_symbol_position'], '', 'batchstacked', 'moneysymbol', $system->SETTINGS['moneysymbol'], array($MSG['money_symbol_position_before'], $MSG['money_symbol_position_after']));
 loadblock($MSG['new_currency'], '', '', '', '', array(), true);
 loadblock($MSG['014'], $MSG['curreny_country_explain'], 'text', 'country', (isset($_POST['country'])) ? $_POST['country'] : '');
 loadblock($MSG['currency_name'], $MSG['curreny_name_explain'], 'text', 'currency_type', (isset($_POST['currency_type'])) ? $_POST['currency_type'] : '');
@@ -78,9 +75,9 @@ loadblock($MSG['curreny_symbol'], $MSG['curreny_symbol_explain'], 'text', 'curre
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
-        'OPTIONHTML' => $html,
+        'OPTIONHTML' => '',
         'TYPENAME' => $MSG['25_0008'],
-        'PAGENAME' => $MSG['5004']
+        'PAGENAME' => $MSG['currency_settings']
         ));
 
 include 'header.php';

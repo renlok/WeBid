@@ -2,7 +2,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>{L_25_0009} <i class="fa fa-angle-double-right"></i> {L_30_0031}</h2>
+        <h2>{L_25_0009} <i class="fa fa-angle-double-right"></i> {L_clear_cache}</h2>
         <div class="clearfix"></div>
       </div>
       <div class="col-md-12">
@@ -10,10 +10,10 @@
           <!-- IF ERROR ne '' -->
           <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
           <!-- ENDIF -->
-          <p>{L_30_0032}</p>
+          <p>{L_clear_cache_explain}</p>
           <input type="hidden" name="action" value="update">
           <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-          <input type="submit" name="act" class="btn btn-danger" value="{L_30_0031}">
+          <input type="submit" name="act" class="btn btn-danger" value="{L_clear_cache}">
         </form>
       </div>
     </div>

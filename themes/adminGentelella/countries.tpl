@@ -32,7 +32,13 @@
               <td>&nbsp;</td>
               <td><input type="text" name="new_countries[]" size="45" value="{countries.COUNTRY}" class="form-control">
                 <input type="hidden" name="old_countries[]" value="{countries.COUNTRY}"></td>
-              <td align="center">{countries.SELECTBOX}</td>
+              <td align="center">
+                <!-- countries.B_CAN_DELETE -->
+                <input type="checkbox" name="delete[]" value="{countries.COUNTRY}">
+                <!-- ELSE -->
+                <img src="../images/nodelete.gif" alt="{L_cannot_delete}">
+                <!-- ENDIF -->
+              </td>
             </tr>
             <!-- END countries -->
             <tr>

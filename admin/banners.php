@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     // clean submission and update database
-    $system->writesetting("banners", intval($_POST['banners']), "int");
+    $system->writesetting("banners", $_POST['banners'], "int");
 
     $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['banner_settings_updated']));
 }

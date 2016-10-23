@@ -18,6 +18,13 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+if (!isset($_REQUEST['board_id']) || !isset($_REQUEST['id'])) {
+    $URL = $_SESSION['RETURN_LIST'];
+    //unset($_SESSION['RETURN_LIST']);
+    header('location: ' . $URL);
+    exit;
+}
+
 $msg_id = intval($_REQUEST['id']);
 $board_id = intval($_REQUEST['board_id']);
 
@@ -41,7 +48,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
 
 $template->assign_vars(array(
         'ID' => $msg_id,
-        'MESSAGE' => sprintf($MSG['834'], $msg_id),
+        'MESSAGE' => sprintf($MSG['confirm_msg_delete'], $msg_id),
         'TYPE' => 1
         ));
 

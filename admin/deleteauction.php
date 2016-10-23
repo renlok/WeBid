@@ -115,7 +115,7 @@ $title = $db->result('title');
 
 $template->assign_vars(array(
         'ID' => $_GET['id'],
-        'MESSAGE' => sprintf($MSG['833'], $title),
+        'MESSAGE' => sprintf($MSG['confirm_auction_delete'], $title),
         'TYPE' => 1
         ));
 

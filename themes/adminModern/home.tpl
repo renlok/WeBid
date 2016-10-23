@@ -14,9 +14,9 @@
 			</div>
 			<div class="col-md-9">
 <!-- IF UPDATE_AVAILABLE -->
-				<div class="alert alert-danger" role="alert">{L_30_0211}</div>
+				<div class="alert alert-danger" role="alert">{L_outdated_version}</div>
 <!-- ELSE -->
-				<div class="alert alert-info" role="alert">{L_30_0212}</div>
+				<div class="alert alert-info" role="alert">{L_current_version}</div>
 <!-- ENDIF -->
 				<div class="panel panel-default">
 					<div class="panel-heading"><strong>{L_25_0025}</strong></div>
@@ -46,7 +46,7 @@
 							<div class="col-md-9">{BUY_NOW}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_5008}</strong></div>
+							<div class="col-md-3"><strong>{L_default_currency}</strong></div>
 							<div class="col-md-9">{CURRENCY}</div>
 						</div>
 						<div class="row">
@@ -62,7 +62,7 @@
 							<div class="col-md-9">{EMAIL_HANDLER}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_5322}</strong></div>
+							<div class="col-md-3"><strong>{L_default_country}</strong></div>
 							<div class="col-md-9">{DEFULTCONTRY}</div>
 						</div>
 						<div class="row">
@@ -118,21 +118,21 @@
 					<div class="panel-heading"><strong>{L_080}</strong></div>
 					<div class="panel-body">
 						<div class="row">
-							<div class="col-md-9">{L_30_0032}</div>
+							<div class="col-md-9">{L_clear_cache_explain}</div>
 							<div class="col-md-3">
 								<form action="?action=clearcache" method="post">
 									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-									<button class="btn btn-primary" type="submit" name="submit">{L_30_0031}</button>
+									<button class="btn btn-primary" type="submit" name="submit">{L_clear_cache}</button>
 								</form>
 							</div>
 						</div>
 						<br>
 						<div class="row">
-							<div class="col-md-9">{L_30_0032a}</div>
+							<div class="col-md-9">{L_clear_image_cache_explain}</div>
 							<div class="col-md-3">
 								<form action="?action=clear_image_cache" method="post">
 									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-									<button class="btn btn-primary" type="submit" name="submit">{L_30_0031a}</button>
+									<button class="btn btn-primary" type="submit" name="submit">{L_clear_image_cache}</button>
 								</form>
 							</div>
 						</div>

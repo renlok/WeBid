@@ -28,7 +28,7 @@ switch ($_GET['show']) {
         $CONTENT = $system->SETTINGS['privacypolicytext'];
         break;
     case 'cookies':
-        $TITLE = $MSG['1110'];
+        $TITLE = $MSG['cookie_policy'];
         $CONTENT = $system->SETTINGS['cookiespolicytext'];
         break;
 }

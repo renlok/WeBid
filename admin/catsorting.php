@@ -21,18 +21,18 @@ include 'loggedin.inc.php';
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     // clean submission and update database
     $system->writesetting("catsorting", $system->cleanvars($_POST['catsorting']), "str");
-    $system->writesetting("catstoshow", intval($_POST['catstoshow']), "int");
+    $system->writesetting("catstoshow", $_POST['catstoshow'], "int");
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['25_0150']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['category_sorting_updated']));
 }
 
-loadblock('', $MSG['25_0147'], 'sortstacked', 'catsorting', $system->SETTINGS['catsorting'], array($MSG['25_0148'], $MSG['25_0149']));
-loadblock($MSG['30_0030'], $MSG['30_0029'], 'percent', 'catstoshow', $system->SETTINGS['catstoshow']);
+loadblock('', $MSG['category_sorting_explain'], 'sortstacked', 'catsorting', $system->SETTINGS['catsorting'], array($MSG['category_sorting_alpha'], $MSG['category_sorting_count']));
+loadblock($MSG['categories_to_show'], $MSG['categories_to_show_explain'], 'percent', 'catstoshow', $system->SETTINGS['catstoshow']);
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0008'],
-        'PAGENAME' => $MSG['25_0146']
+        'PAGENAME' => $MSG['category_sorting']
         ));
 
 include 'header.php';

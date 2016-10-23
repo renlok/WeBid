@@ -155,7 +155,6 @@ $ERR_5037 = "Country is missing";
 $ERR_5045 = "The reserve price cannot be less than the minimum bid";
 $ERR_5046 = "The buy now price must be greater than the minimum bid and/or the reserve price";
 $ERR_25_0001 = "Please choose a sub-category";
-$ERR_25_0002 = "<p>URL file-access is disabled on your server so WeBid is unable to run the version check</p>";
 $ERR_INVALID_REPORT_REASON = "Please select a reason for report";
 
 // UI Messages =============================================================
@@ -549,16 +548,7 @@ $MSG['540'] = "Admin e-mail";
 $MSG['541'] = "The admin e-mail address is used to send automatic e-mail messages";
 $MSG['542'] = "General settings updated";
 $MSG['543'] = "Make this question public";
-$MSG['544'] = "Money format";
-$MSG['545'] = "US style: 1,250.00";
-$MSG['546'] = "European style: 1.250,00";
-$MSG['547'] = "Set to zero or leave blank if you don't want decimal digits in your money representation";
-$MSG['548'] = "Decimal digits";
-$MSG['549'] = "Symbol position";
-$MSG['550'] = "Before the amount (i.e. USD 200)";
-$MSG['551'] = "After the amount (i.e. 200 USD)";
 $MSG['552'] = "Questions";
-$MSG['553'] = "Currency settings updated";
 $MSG['554'] = "Number of news you want to show";
 $MSG['555'] = "Asker";
 $MSG['557'] = "Item Details";
@@ -755,8 +745,6 @@ $MSG['828'] = 'Week';
 $MSG['829'] = 'View by ';
 $MSG['830'] = 'Month';
 $MSG['832'] = 'Are you sure you want to delete the news item \'%s\'';
-$MSG['833'] = 'Are you sure you want to delete the auction \'%s\'';
-$MSG['834'] = 'Are you sure you want to delete this message (ID: %s)';
 $MSG['835'] = 'Are you sure you want to delete the user \'%s\'';
 $MSG['836'] = 'Member types Updated';
 $MSG['837'] = '(contains %s FAQs)';
@@ -880,7 +868,6 @@ $MSG['1021'] = "Standard Auction";
 $MSG['1022'] = "SSL Support";
 $MSG['1023'] = "Activate SSL support?";
 $MSG['1024'] = "<p>If you have SSL support on the server where you are running WeBid, you may want to give your customers a safer environment to operate.</p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.";
-$MSG['1028'] = "Countries updated";
 $MSG['1029'] = "Counters updated";
 $MSG['1030'] = "Re-sync the user, auction and bid counters";
 $MSG['1031'] = "Re-sync Counters";
@@ -976,12 +963,6 @@ $MSG['1107'] = 'Item has not been shipped';
 $MSG['1108'] = 'Set as Received';
 $MSG['1109'] = 'Item Received';
 
-$MSG['1110'] = 'Cookies Policy';
-$MSG['1111'] = "Activate Cookies Policy Page?";
-$MSG['1112'] = "Activate this option if you want a Cookies Policy link to appear in the footer of your pages.";
-$MSG['1113'] = "Cookies Policy content<br>(HTML allowed)";
-$MSG['1114'] = "Cookies Policy Page";
-$MSG['1115'] = "Cookies Policy Settings Updated";
 $MSG['1116'] = 'Set as Shipped';
 $MSG['1117'] = 'Shipped';
 
@@ -1041,8 +1022,6 @@ $MSG['1155'] = "Payment gateway sandbox";
 $MSG['5000'] = 'You must be logged in to see this page';
 $MSG['5001'] = "View Site";
 $MSG['5002'] = "You must be logged in to bid";
-$MSG['5004'] = "Currencies Settings";
-$MSG['5008'] = "Site Currency";
 $MSG['5011'] = "Home Page Featured Items";
 $MSG['5012'] = "This is the number of featured items to show in the Home Page (NOTE: ONLY <b>featured</b> items will be displayed).<br>0 (zero) is permitted.";
 $MSG['5013'] = "Last Created Items";
@@ -1099,8 +1078,6 @@ $MSG['5117'] = "Page";
 $MSG['5118'] = "of";
 $MSG['5119'] = "&lt;&lt;Prev";
 $MSG['5120'] = "Next&gt;&gt;";
-$MSG['5138'] = "Note: you can use the currency of your choice throughout the site.<br>
-All the amounts users will have to pay at PayPal will be automatically converted to USD using today's rate of exchange before being sent to the PayPal server.";
 $MSG['5142'] = "Settings";
 $MSG['5143'] = "View Access Statistics";
 $MSG['5144'] = "Please, choose below if you want WeBid to generate access statistics for your site.";
@@ -1156,9 +1133,6 @@ $MSG['5297'] = "Balance over debt limit";
 $MSG['5299'] = "Limit submission to";
 $MSG['5300'] = " messages sent.";
 $MSG['5318'] = "View Platform Statistics";
-$MSG['5322'] = "Default country";
-$MSG['5321'] = "You can select a default country for your site.<br>It will automatically appear as the selected country in the countries select box throughout the site.";
-$MSG['5323'] = "Default country updated";
 $MSG['5408'] = "Max. ";
 $MSG['5431'] = "Send me a new password";
 $MSG['5436'] = "Tools";
@@ -1275,20 +1249,7 @@ $MSG['2__0050'] = "Sell similar";
 $MSG['2__0051'] = "Relist";
 $MSG['2__0054'] = '<span style="#CD0000;"><b>Already selected</b></span>';
 $MSG['2__0056'] = "Suspended auctions";
-$MSG['2__0057'] = "Show counters";
-$MSG['2__0058'] = "You can decide to show some counters in the header of your site's pages.<br>
-				There are three different counters available:
-				<ul>
-				<li>Active auctions</li>
-				<li>Registered users</li>
-				<li>Online users</li>
-				</ul>
-				You can enable/disable each counter below";
-$MSG['2__0059'] = "Online users";
-$MSG['2__0060'] = "Active auctions";
-$MSG['2__0061'] = "Registered users";
-$MSG['2__0062'] = "Counters you want to show";
-$MSG['2__0063'] = "Counters Settings Updated";
+
 $MSG['2__0064'] = "USERS ONLINE";
 $MSG['2__0066'] = "Enabled";
 $MSG['2__0067'] = "Disabled";
@@ -1342,12 +1303,6 @@ $MSG['25_0140'] = "Your account is a buyer account. No selling activity is allow
 $MSG['25_0141'] = "Send a request to the site administrator";
 $MSG['25_0142'] = "Request sent to the site's administrator.";
 $MSG['25_0143'] = "Your account is a buyer account. No selling activity is allowed.<br> You already sent a request to switch to a <b>seller account</b>: your request is being processed. ";
-$MSG['25_0146'] = "Categories Sorting";
-$MSG['25_0147'] = "The categories list in the left column of the home page, can be sorted <b>alphabetically</b> or on the number of auctions contained in each category (<b>categories counters</b>).<br>
-			Choose below the sorting method you want to have";
-$MSG['25_0148'] = "Alphabetically";
-$MSG['25_0149'] = "Categories counters";
-$MSG['25_0150']= "Categories Sorting Settings Updated";
 $MSG['25_0151'] = "Users Authentication";
 $MSG['25_0151_a'] = "Users Confirmation Method";
 $MSG['25_0152'] = "If this is enabled the users will be asked to enter their password before completing actions such as leaving feedback, submitting an auction or leaving a bid.";
@@ -1386,12 +1341,6 @@ $MSG['25_0199'] = "Closing auctions resume";
 $MSG['25_0209'] = "Sell under reserved price to highest bidder";
 $MSG['25_0214'] = "Search also closed auctions: ";
 $MSG['25_0215'] = "Shipping terms";
-$MSG['25_0216'] = "Contact the seller";
-$MSG['25_0217'] = "Giving anybody the option to contact sellers through your website is not recommended. For this reason WeBid
-				gives you the ability to decide if sellers can be contacted by users browsing your site or not.";
-$MSG['25_0218'] = "Any visitor can contact the seller (the ability to contact the seller will be ALWAYS shown)";
-$MSG['25_0219'] = "Only logged in users can contact the seller (the ability to contact the seller will be shown only to other users of your site if logged in)";
-$MSG['25_0220'] = "Nobody can contact the seller (the ability to contact the seller will NEVER be shown)";
 $MSG['25_0223'] = "Feedback you've received";
 $MSG['25_0224'] = "Preview";
 
@@ -1427,22 +1376,12 @@ $MSG['26_0002'] = "Manage Themes";
 $MSG['26_0003'] = "Edit Theme Files";
 $MSG['26_0004'] = "Add Theme File";
 $MSG['26_0005'] = "Default Theme Updated";
-$MSG['30_0029'] = "You can set below the number of categories you want to be shown in the left column of the home page";
-$MSG['30_0030'] = "Categories to show: ";
-$MSG['30_0031'] = "Clear Cache";
-$MSG['30_0031a'] = "Clear Image Cache";
-$MSG['30_0032'] = "Delete all the template cache files, you will need to do this each time you edit a template file";
-$MSG['30_0032a'] = "Delete all the Image cache files, This can help if there are some images not showing on the site";
-$MSG['30_0033'] = "Cache cleared";
-$MSG['30_0033a'] = "Image cache cleared";
 $MSG['30_0053'] = "<p>Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:</p>";
 $MSG['30_0063'] = "Buy it now only?";
 $MSG['30_0069'] = "Seller: edit this auction";
 $MSG['30_0070'] = "Search only in this category";
 $MSG['30_0080'] = "Payment Options";
 $MSG['30_0081'] = "Viewed ";
-$MSG['30_0084'] = "You can decide to allow users to see each others E-Mail addresses or to hide them and all communication must be done via PMs";
-$MSG['30_0085'] = "Hide user E-Mails";
 $MSG['30_0086'] = "Address: ";
 $MSG['30_0087'] = "Are you sure you want to process the selected auctions?";
 $MSG['30_0098'] = "&nbsp; = Outbid";
@@ -1458,8 +1397,6 @@ $MSG['30_0181'] = "Message Board";
 $MSG['30_0208'] = "Place bid >>";
 $MSG['30_0209'] = "Meet the seller";
 $MSG['30_0210'] = "*When items relating to these key words are listed you will be notified via email";
-$MSG['30_0211'] = "You are running an old version you can download the latest version from <a href='http://sourceforge.net/project/showfiles.php?group_id=181393'>here</a>";
-$MSG['30_0212'] = "You are running the latest version";
 $MSG['30_0213'] = "No feedback needs leaving";
 $MSG['30_0214'] = "WeBid Version";
 $MSG['30_0215'] = "Upload Logo";
@@ -1539,13 +1476,6 @@ $MSG['all_error_messages'] = 'All errors';
 $MSG['unique_error_messages'] = 'Unique errors';
 
 $MSG['any_country'] = 'Any Country';
-
-$MSG['new_currency'] = 'Add New Currency';
-$MSG['currency_name'] = "Currency Name";
-$MSG['curreny_symbol'] = "Currency Symbol";
-$MSG['curreny_country_explain'] = "Example: <b>United States</b><br>Must fill in all 3 textboxs to add a new Currency.";
-$MSG['curreny_name_explain'] = "Example: <b>U.S. Dollar</b>";
-$MSG['curreny_symbol_explain'] = "Example: <b>USD</b>";
 
 $MSG['prune_unactivated_users'] = "Prune unactivated users";
 $MSG['prune_unactivated_users_explain'] = "Automatically delete unactivated user accounts.";

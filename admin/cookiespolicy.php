@@ -24,9 +24,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $system->writesetting("cookiespolicy", ynbool($_POST['cookiespolicy']), "str");
     $system->writesetting("cookiespolicytext", $system->cleanvars($_POST['cookiespolicytext'], true), "str");
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1115']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['cookie_policy_updated']));
 }
-loadblock($MSG['1111'], $MSG['1112'], 'yesno', 'cookiespolicy', $system->SETTINGS['cookiespolicy'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['enable_cookie_policy'], $MSG['enable_cookie_policy_explain'], 'yesno', 'cookiespolicy', $system->SETTINGS['cookiespolicy'], array($MSG['yes'], $MSG['no']));
 
 $CKEditor = new CKEditor();
 $CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
@@ -34,12 +34,12 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['1113'], $MSG['5080'], $CKEditor->editor('cookiespolicytext', $system->SETTINGS['cookiespolicytext']));
+loadblock($MSG['cookie_policy_content'], $MSG['editor_help'], $CKEditor->editor('cookiespolicytext', $system->SETTINGS['cookiespolicytext']));
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0018'],
-        'PAGENAME' => $MSG['1114']
+        'PAGENAME' => $MSG['cookie_policy']
         ));
 
 include 'header.php';

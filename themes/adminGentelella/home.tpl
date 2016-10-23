@@ -51,9 +51,9 @@
     <div class="col-md-8"> 
       
       <!-- IF UPDATE_AVAILABLE -->
-      <div class="info-box">{L_30_0212}</div>
+      <div class="info-box">{L_current_version}</div>
       <!-- ELSE -->
-      <div class="alert alert-info info-box fade in" role="alert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {L_30_0211}</div>
+      <div class="alert alert-info info-box fade in" role="alert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {L_outdated_version}</div>
       <!-- ENDIF --> 
       <!-- IF ERROR ne '' -->
       <div class="alert alert-info info-box fade in" role="alert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
@@ -87,7 +87,7 @@
           <td>{BUY_NOW}</td>
         </tr>
         <tr>
-          <td><strong>{L_5008}</strong></td>
+          <td><strong>{L_default_currency}</strong></td>
           <td>{CURRENCY}</td>
         </tr>
         <tr>
@@ -99,7 +99,7 @@
           <td>{DATEFORMAT} <small>({DATEEXAMPLE})</small></td>
         </tr>
         <tr>
-          <td><strong>{L_5322}</strong></td>
+          <td><strong>{L_default_country}</strong></td>
           <td>{DEFULTCONTRY}</td>
         </tr>
         <tr>
@@ -150,16 +150,16 @@
           <th colspan="2">{L_080}</th>
         </tr>
         <tr>
-          <td width="70%">{L_30_0032}</td>
+          <td width="70%">{L_clear_cache_explain}</td>
           <td><form action="?action=clearcache" method="post">
               <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-              <input type="submit" name="submit" value="{L_30_0031}" class="btn btn-danger">
+              <input type="submit" name="submit" value="{L_clear_cache}" class="btn btn-danger">
             </form></td>
         </tr>
-        <td width="70%">{L_30_0032a}</td>
+        <td width="70%">{L_clear_image_cache_explain}</td>
           <td><form action="?action=clear_image_cache" method="post">
               <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-              <input type="submit" name="submit" value="{L_30_0031a}" class="btn btn-danger">
+              <input type="submit" name="submit" value="{L_clear_image_cache}" class="btn btn-danger">
             </form></td>
         </tr>
         <tr class="bg">

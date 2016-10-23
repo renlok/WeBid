@@ -23,9 +23,8 @@ if (!isset($_GET['banner']) || empty($_GET['banner'])) {
     exit;
 }
 
-$banner = $_GET['banner'];
 $params = array();
-$params[] = array(':banner_id', $banner, 'int');
+$params[] = array(':banner_id', $_GET['banner'], 'int');
 
 $query = "SELECT name, user FROM " . $DBPrefix . "banners WHERE id = :banner_id";
 $db->query($query, $params);

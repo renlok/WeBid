@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     // clean submission and update database
-    $system->writesetting('newsletter', intval($_POST['newsletter']), 'int');
+    $system->writesetting('newsletter', $_POST['newsletter'], 'int');
 
     $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['newsletter_settings_updated']));
 }

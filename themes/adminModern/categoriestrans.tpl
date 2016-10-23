@@ -22,7 +22,7 @@
 								<div class="col-md-6"><strong>{L_772}</strong></div>
 							</div>
 <!-- BEGIN cats -->
-							<div class="row">
+							<div class="row<!-- IF cats.S_ROW_COUNT % 2 == 1 --> bg<!-- ENDIF -->">
 								<div class="col-md-6"><input type="text" name="categories_o[]" value="{cats.CAT_NAME}" size="45" disabled></div>
 								<div class="col-md-6"><input type="text" name="categories[{cats.CAT_ID}]" value="{cats.TRAN_CAT}" size="45"></div>
 							</div>

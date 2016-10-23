@@ -18,7 +18,7 @@ if (!defined('InWeBid')) {
 
 // common strings
 $MSG['editor_help'] = "Note: each new line character will be converted to <b>&lt;br&gt;</b> HTML tag.";
-$MSG['cannot_delete'] = "Cannot be deleted"
+$MSG['cannot_delete'] = "Cannot be deleted";
 
 // aboutus.php
 $MSG['about_us_page'] = "About Us Page";

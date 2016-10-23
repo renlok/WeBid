@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <title>WeBid Administration back-end</title>
-		<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="WeBid">
+<head>
+	<title>Webid Administration back-end</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={CHARSET}">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="generator" content="WeBid">
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" media="screen,projection" type="text/css" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
-		<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
-		<link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/style.css">
+   <!-- Bootstrap core CSS -->
 
+    <link href="{SITEURL}themes/{THEME}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{SITEURL}themes/{THEME}/fonts/css/font-awesome.min.css" rel="stylesheet">
     <link href="{SITEURL}themes/{THEME}/css/animate.min.css" rel="stylesheet">
 
@@ -21,34 +18,25 @@
     <link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/maps/jquery-jvectormap-2.0.1.css" />
     <link href="{SITEURL}themes/{THEME}/css/icheck/flat/green.css" rel="stylesheet" />
     <link href="{SITEURL}themes/{THEME}/css/floatexamples.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="{SITEURL}js/jquery.js"></script>
-		<script src="{SITEURL}js/jquery-ui.js"></script>
     <script src="{SITEURL}themes/{THEME}/js/jquery.min.js"></script>
     <script src="{SITEURL}themes/{THEME}/js/nprogress.js"></script>
     <script type="text/javascript">
-			$(document).ready(function() {
-				$('a.new-window').click(function(){
-					window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX=100,screenY=100,status=0,menubar=0,resizable=0,width=550,height=550");
-					return false;
-				});
-				$(".selectall").click(function() {
-					var checked_status = this.checked;
-					var checkbox_name = this.value;
-					$("input[name=\"" + checkbox_name + "[]\"]").each(function() {
-						this.checked = checked_status;
-					});
+		$(document).ready(function() {
+			$('a.new-window').click(function(){
+				window.open(this.href, this.alt, "toolbar=0,location=0,directories=0,scrollbars=1,screenX=100,screenY=100,status=0,menubar=0,resizable=0,width=550,height=550");
+				return false;
+			});
+			$(".selectall").click(function() {
+				var checked_status = this.checked;
+				var checkbox_name = this.value;
+				$("input[name=\"" + checkbox_name + "[]\"]").each(function() {
+					this.checked = checked_status;
 				});
 			});
-		</script>
-		<script type="text/javascript">
-			function window_open(url,title,width,height,x,y)
-			{
-				var window_= 'toolbar=0,location=0,directories=0,scrollbars=1,screenX='+x+',screenY='+y+',status=0,menubar=0,resizable=0,width='+width+',height='+height;
-				open(url,title,window_);
-			}
-		</script>
+		});
+	</script>
 
     <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
@@ -61,23 +49,22 @@
         <![endif]-->
 
     </head>
-    
-<body class="nav-md">    
+<body id="{CURRENT_PAGE}">
+<body class="nav-md">
 <div class="container body">
   <div class="main_container">
     <div class="col-md-3 left_col">
       <div class="left_col scroll-view">
-        <div class="navbar nav_title" style="border: 0;"> <a href="index.php" class="site_title"><i class="fa fa-circle-o-notch"></i> <span>Admin Panel!</span></a> </div>
-        <div class="row">
-				<small>{L_559}: {LAST_LOGIN}</small></div>
-	<!-- BEGIN langs -->
-		<!-- IF ! langs.B_DEFAULT -->
-					<a href="index.php?lan={langs.LANG}"><img src="{SITEURL}images/flags/{langs.LANG}.gif"></a>
-		<!-- ENDIF -->
-	<!-- END langs -->
-    </div>
-        <div class="clearfix"></div>
-        
+        <div class="navbar nav_title" style="border: 0;"> <a href="index.php" class="site_title"> <i class="fa fa-paw"></i> <span>Admin Panel!</span></a> </div>
+       <center><small>{L_559}: {LAST_LOGIN}</small>
+<!-- BEGIN langs -->
+<!-- IF ! langs.B_DEFAULT -->
+<a href="index.php?lan={langs.LANG}"><img src="{SITEURL}images/flags/{langs.LANG}.gif"></a>
+<!-- ENDIF -->
+<!-- END langs -->
+</center>
+<div class="clearfix"></div>
+
         <!-- menu prile quick info -->
         <div class="profile">
           <div class="profile_pic"> <img src="{SITEURL}themes/{THEME}/images/user.png" class="img-circle profile_img"> </div>
@@ -85,10 +72,10 @@
             <h2>{ADMIN_USER}</h2>
           </div>
         </div>
-        <!-- /menu prile quick info --> 
-        
+        <!-- /menu prile quick info -->
+
         <br />
-        
+
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
           <div class="menu_section">
@@ -126,14 +113,14 @@
               </li>
               <li><a><i class="fa fa-desktop"></i> {L_25_0012} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
-              <li><a href="{SITEURL}admin/fees.php">{L_25_0012}</a></li>
-              <li><a href="{SITEURL}admin/fee_gateways.php">{L_445}</a></li>
-              <li><a href="{SITEURL}admin/enablefees.php">{L_395}</a></li>
-              <li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
-              <li><a href="{SITEURL}admin/invoice_settings.php">{L_1094}</a></li>
-              <li><a href="{SITEURL}admin/invoice.php">{L_766}</a></li>
-              <li><a href="{SITEURL}admin/tax.php">{L_1088}</a></li>
-              <li><a href="{SITEURL}admin/tax_levels.php">{L_1083}</a></li>
+                        	<li><a href="{SITEURL}admin/fees.php">{L_25_0012}</a></li>
+                        	<li><a href="{SITEURL}admin/fee_gateways.php">{L_445}</a></li>
+                        	<li><a href="{SITEURL}admin/enablefees.php">{L_395}</a></li>
+                        	<li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
+				<li><a href="{SITEURL}admin/invoice_settings.php">{L_1094}</a></li>
+				<li><a href="{SITEURL}admin/invoice.php">{L_766}</a></li>
+				<li><a href="{SITEURL}admin/tax.php">{L_1088}</a></li>
+				<li><a href="{SITEURL}admin/tax_levels.php">{L_1083}</a></li>
                 </ul>
               </li>
               <li><a><i class="fa fa-table"></i> {L_25_0009} <span class="fa fa-chevron-down"></span></a>
@@ -174,7 +161,7 @@
                   <li><a href="{SITEURL}admin/listreportedauctions.php">{L_view_reported_auctions}</a></li>
                   <li><a href="{SITEURL}admin/listsuspendedauctions.php">{L_5227}</a></li>
                   <li><a href="{SITEURL}admin/searchauctions.php">{L_067a}</a></li>
-                  <li> <a href="{SITEURL}admin/moderateauctions.php">{L_moderation_queue}</a></li>
+                  <li><a href="{SITEURL}admin/moderateauctions.php">{L_moderation_queue}</a></li>
                 </ul>
               </li>
               <li><a><i class="fa fa-bookmark"></i> {L_25_0018} <span class="fa fa-chevron-down"></span></a>
@@ -213,16 +200,16 @@
             </ul>
           </div>
         </div>
-        <!-- BEGIN alerts -->
-			<div id="alerts">
-				<div class="alert alert-{alerts.TYPE}">{alerts.MESSAGE}</div>
-			</div>
-		<!-- END alerts -->
-        <!-- /sidebar menu -->  
+<!-- BEGIN alerts -->
+	<div id="alerts">
+	<div class="alert alert-{alerts.TYPE}">{alerts.MESSAGE}</div>
+	</div>
+<!-- END alerts -->
+        <!-- /sidebar menu -->
       </div>
     </div>
-    
-    <!-- top navigation -->
+
+   <!-- top navigation -->
     <div class="top_nav">
       <div class="nav_menu">
         <nav class="" role="navigation">
@@ -237,6 +224,6 @@
         </nav>
       </div>
     </div>
-    <!-- /top navigation --> 
+    <!-- /top navigation -->
       <!-- page content -->
     <div class="right_col" role="main">

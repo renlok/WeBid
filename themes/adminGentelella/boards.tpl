@@ -1,5 +1,3 @@
-
-
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -15,7 +13,7 @@
           <div class="plain-box"><b>{L_delete_board_warning}</b></div>
           <table class="table table-bordered table-striped">
             <tr>
-              <<th width="6%">{L_129}</th>
+              <th width="6%">{L_129}</th>
 						<th>{L_294}</th>
 						<th width="10%" align="center">{L_show}</th>
 						<th width="12%" align="center">{L_num_messages}</th>

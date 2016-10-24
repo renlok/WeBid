@@ -177,7 +177,7 @@
         <form name="anotes" method="post">
           <textarea name="anotes" class="form-control">{ADMIN_NOTES}</textarea>
           <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}" class="form-control">
-          <input type="submit" name="act" value="{L_007}" class="btn btn-default">
+          <input type="submit" name="act" value="{L_submit}" class="btn btn-default">
         </form>
       </div>
     </div>

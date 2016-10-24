@@ -38,6 +38,79 @@ class Date
         }
     }
 
+<<<<<<< HEAD
+	// convert datetime from UTC to users timezone
+	public function printDateTz($datetime, $UTC_input = true)
+	{
+		if ($UTC_input)
+		{
+			$UTC_time = new DateTime($datetime, $this->UTCtimezone);
+			$UTC_time->setTimezone($this->timezone);
+			return $UTC_time->format('d-m-Y H:i');
+		}
+		else
+		{
+			$tmp = new DateTime($datetime, $this->timezone);
+			return $tmp->format('d-m-Y H:i');
+		}
+	}
+
+	public function currentDatetime($UTC = false)
+	{
+		if ($UTC)
+		{
+			$datetime = new DateTime('now', $this->UTCtimezone);
+		}
+		else
+		{
+			$datetime = new DateTime('now', $this->timezone);
+		}
+		return $datetime->format('d-m-Y H:i:s');
+	}
+
+	// convert raw date string into datetime UTC timezone
+	public function convertToDatetime($raw_date, $format = false)
+	{
+		if (!$format)
+		{
+			$datetime = DateTime::createFromFormat($this->defaultformat, $raw_date, $this->timezone);
+		}
+		else
+		{
+			$datetime = new DateTime(strtotime($raw_date), $this->timezone);
+		}
+		$datetime->setTimezone($this->UTCtimezone);
+		return $datetime->format('d-m-Y H:i:s');
+	}
+
+	public function convertToUTC($raw_date)
+	{
+		$UTC_time = new DateTime ($raw_date, $this->timezone);
+		$UTC_time->setTimezone($this->UTCtimezone);
+		return $UTC_time->format('d-m-Y H:i:s');
+	}
+
+	public function formatDate($raw_date, $format = false, $UTC_input = true)
+	{
+		if ($UTC_input)
+		{
+			$datetime = new DateTime ($raw_date, $this->UTCtimezone);
+			$datetime->setTimezone($this->timezone);
+		}
+		else
+		{
+			$datetime = new DateTime($raw_date, $this->timezone);
+		}
+		if (!$format)
+		{
+			return $datetime->format($this->defaultformat);
+		}
+		else
+		{
+			return $datetime->format($format);
+		}
+	}
+=======
     // convert datetime from UTC to users timezone
     public function printDateTz($datetime, $UTC_input = true)
     {
@@ -94,6 +167,7 @@ class Date
             return $datetime->format($format);
         }
     }
+>>>>>>> renlok/master
 
     public function formatTimeLeft($diff)
     {

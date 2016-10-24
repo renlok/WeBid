@@ -18,34 +18,29 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt')))
-{
-	$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_25_0002));
-	$realversion = 'Unknown';
+if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt'))) {
+    $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_file_access_disabled']));
+    $realversion = $MSG['unknown'];
 }
 
-if (version_compare($system->SETTINGS['version'], $realversion, "<"))
-{ 
-	$myversion = '<span style="color:#ff0000;">' . $system->SETTINGS['version'] . '</span>';
-	$text = $MSG['30_0211'];
-}
-else
-{ 
-	$myversion = '<span style="color:#00ae00;">' . $system->SETTINGS['version'] . '</span>';
-	$text = $MSG['30_0212']; 
+if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
+    $myversion = '<span style="color:#ff0000;">' . $system->SETTINGS['version'] . '</span>';
+    $text = $MSG['outdated_version'];
+} else {
+    $myversion = '<span style="color:#00ae00;">' . $system->SETTINGS['version'] . '</span>';
+    $text = $MSG['current_version'];
 }
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TEXT' => $text,
-		'MYVERSION' => $myversion,
-		'REALVERSION' => $realversion
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TEXT' => $text,
+        'MYVERSION' => $myversion,
+        'REALVERSION' => $realversion
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'checkversion.tpl'
-		));
+        'body' => 'checkversion.tpl'
+        ));
 $template->display('body');
 include 'footer.php';
-?>

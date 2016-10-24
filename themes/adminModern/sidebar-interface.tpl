@@ -1,8 +1,8 @@
 				<ul class="list-group">
 					<li class="list-group-item active">{L_25_0009}</li>
 					<li class="list-group-item"><a href="{SITEURL}admin/theme.php">{L_26_0002}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/clearcache.php">{L_30_0031}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/clear_image_cache.php">{L_30_0031a}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/clearcache.php">{L_clear_cache}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/clear_image_cache.php">{L_clear_image_cache}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/logo_upload.php">{L_30_0215}</a></li>
 				</ul>
 				<div class="panel panel-default">

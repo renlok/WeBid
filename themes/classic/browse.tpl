@@ -5,7 +5,7 @@
 			<td class="titTable4" colspan="4">{L_NAY_01}</td>
 		</tr>
 	<!-- BEGIN featured_items -->
-		<tr align="center">
+		<tr align="center"<!-- IF featured_items.B_HIGHLIGHTED --> bgcolor="#fea100"<!-- ELSEIF (featured_items.S_ROW_COUNT % 2) == 1 --> bgcolor="#FFFEEE"<!-- ENDIF -->>
 			<td align="center" width="15%">
 				<a href="{SITEURL}item.php?id={featured_items.ID}"><img src="{featured_items.IMAGE}" border="0"></a>
 			</td>
@@ -36,7 +36,7 @@
 			<td class="titTable4" colspan="4">{L_NAY_02}</td>
 		</tr>
 <!-- BEGIN items -->
-		<tr align="center" {items.ROWCOLOUR}>
+		<tr align="center"<!-- IF items.B_HIGHLIGHTED --> bgcolor="#fea100"<!-- ELSEIF (items.S_ROW_COUNT % 2) == 1 --> bgcolor="#FFFEEE"<!-- ENDIF -->>
 			<td align="center" width="15%">
 				<a href="{SITEURL}item.php?id={items.ID}"><img src="{items.IMAGE}" border="0"></a>
 			</td>

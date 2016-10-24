@@ -9,7 +9,7 @@
 <!-- IF THISPAGE eq 'account' -->
 		<ul class="padding">
 			<li><a href="yourfeedback.php">{L_208}</a></li>
-			<li><a href="buysellnofeedback.php">{L_207}</a> {FBTOLEAVE}</li>
+			<li><a href="leave_feedback.php">{L_207}</a> {FBTOLEAVE}</li>
 			<li><a href="mail.php">{L_623}</a> {NEWMESSAGES}</li>
 			<li><a href="outstanding.php">{L_422}</a></li>
 			<li><a href="invoices.php">{L_1057}</a></li>

@@ -1,7 +1,7 @@
 				<ul class="list-group">
 					<li class="list-group-item active">{L_25_0011}</li>
 					<li class="list-group-item"><a href="{SITEURL}admin/banners.php">{L_5205}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/managebanners.php">{L__0008}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/managebanners.php">{L_banner_admin}</a></li>
 				</ul>
 				<div class="panel panel-default">
 					<div class="panel-heading">{L_1061}</div>

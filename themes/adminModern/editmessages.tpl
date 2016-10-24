@@ -5,7 +5,7 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5032}&nbsp;&gt;&gt;&nbsp;{BOARD_NAME}&nbsp;&gt;&gt;&nbsp;{L_5063}</h4>
+				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_board_management}&nbsp;&gt;&gt;&nbsp;{BOARD_NAME}&nbsp;&gt;&gt;&nbsp;{L_5063}</h4>
 				<table width="98%" cellpadding="0" cellspacing="0">
 					<tr>
 						<td bgcolor="#FFFF66" colspan="4">

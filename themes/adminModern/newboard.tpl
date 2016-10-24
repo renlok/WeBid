@@ -3,9 +3,9 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 		</div>
-		<div style="width:75%; float:right;">
+			<div class="col-md-9">
 			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5032}&nbsp;&gt;&gt;&nbsp;{L_5031}</h4>
+				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_board_management}&nbsp;&gt;&gt;&nbsp;{L_5031}</h4>
 				<form name="errorlog" action="" method="post">
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>
@@ -31,7 +31,7 @@
 					</table>
 					<input type="hidden" name="action" value="insert">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_530}">
+					<input class="btn-primary btn" type="submit" name="act" class="centre" value="{L_530}">
 				</form>
 			</div>
 		</div>

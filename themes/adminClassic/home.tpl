@@ -15,9 +15,9 @@
 		<div style="width:75%; float:right;">
 			<div class="main-box">
 <!-- IF UPDATE_AVAILABLE -->
-				<div class="alert alert-error">{L_30_0211}</div>
+				<div class="alert alert-error">{L_outdated_version}</div>
 <!-- ELSE -->
-				<div class="alert alert-info">{L_30_0212}</div>
+				<div class="alert alert-info">{L_current_version}</div>
 <!-- ENDIF -->
 					<table width="98%" cellpadding="1" cellspacing="0">
 						<tr>
@@ -48,7 +48,7 @@
 							<td>{BUY_NOW}</td>
 						</tr>
 						<tr>
-							<td><strong>{L_5008}</strong></td>
+							<td><strong>{L_default_currency}</strong></td>
 							<td>{CURRENCY}</td>
 						</tr>
 						<tr class="bg">
@@ -64,7 +64,7 @@
 							<td>{EMAIL_HANDLER}</td>
 						</tr>
 						<tr class="bg">
-							<td><strong>{L_5322}</strong></td>
+							<td><strong>{L_default_country}</strong></td>
 							<td>{DEFULTCONTRY}</td>
 						</tr>
 						<tr>
@@ -119,20 +119,20 @@
 						<th colspan="2">{L_080}</th>
 					</tr>
 					<tr>
-						<td width="70%">{L_30_0032}</td>
+						<td width="70%">{L_clear_cache_explain}</td>
 						<td>
 							<form action="?action=clearcache" method="post">
 								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-								<input type="submit" name="submit" value="{L_30_0031}">
+								<input type="submit" name="submit" value="{L_clear_cache}">
 							</form>
 						</td>
 					</tr>
 										<tr class="bg">
-						<td width="70%">{L_30_0032a}</td>
+						<td width="70%">{L_clear_image_cache_explain}</td>
 						<td>
 							<form action="?action=clear_image_cache" method="post">
 								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-								<input type="submit" name="submit" value="{L_30_0031a}">
+								<input type="submit" name="submit" value="{L_clear_image_cache}">
 							</form>
 						</td>
 					</tr>

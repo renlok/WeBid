@@ -12,7 +12,9 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) exit();
+if (!defined('InWeBid')) {
+    exit();
+}
 
 // CHARSET ENCODING
 // Change the charset according to the language used in this file.
@@ -133,9 +135,6 @@ $ERR_701 = "Invalid quantity (must be >0).";
 $ERR_702 = "Current Bid must be greater than minimum bid.";
 $ERR_704 = "You may not leave feedback about this user! <br>This auction is not closed!";
 $ERR_705 = "You may only leave feedback, if you have a closed transaction with this user!";
-$ERR_706 = "<i>Max. number of pictures</i> must be numeric.";
-$ERR_707 = "<i>Max picture size</i> cannot be zero.";
-$ERR_708 = "<i>Max picture size</i> must be numeric.";
 $ERR_709 = "The picture you uploaded is too big. It cannot exceed ";
 $ERR_710 = "Incorrect file type. Allowed file types are: GIF, PNG and JPEG";
 $ERR_711 = "You cannot buy, you are the seller!";
@@ -156,13 +155,12 @@ $ERR_5037 = "Country is missing";
 $ERR_5045 = "The reserve price cannot be less than the minimum bid";
 $ERR_5046 = "The buy now price must be greater than the minimum bid and/or the reserve price";
 $ERR_25_0001 = "Please choose a sub-category";
-$ERR_25_0002 = "<p>URL file-access is disabled on your server so WeBid is unable to run the version check</p>";
 $ERR_INVALID_REPORT_REASON = "Please select a reason for report";
 
 // UI Messages =============================================================
 $MSG['000'] = "n/a";
 $MSG['001'] = "New user registration";
-$MSG['002'] = "Your name";
+$MSG['002'] = "Full name";
 $MSG['username'] = "Username";
 $MSG['password'] = "Password";
 $MSG['005'] = "Confirm password";
@@ -205,9 +203,7 @@ $MSG['052'] = "Login";
 $MSG['059'] = "Email Sent";
 $MSG['067'] = "View Open Auctions";
 $MSG['067a'] = "Search Auctions";
-$MSG['068'] = "Allow Custom Increments";
 $MSG['069'] = "Auctions Duration";
-$MSG['070'] = "User can set custom bid increments for their auctions (this is the minimum difference between two bids)";
 $MSG['071'] = "Update";
 $MSG['072'] = " users are awaiting feedback from you";
 $MSG['075'] = "Payment Methods";
@@ -270,7 +266,6 @@ $MSG['138'] = "Back to the auction";
 $MSG['139'] = "Send this auction to a friend";
 $MSG['140'] = "Your friend's name";
 $MSG['141'] = "Your friend's e-mail";
-$MSG['142'] = "Enable Featured Items";
 $MSG['143'] = "Your e-mail";
 $MSG['144'] = "Add a comment";
 $MSG['146'] = "This auction has been sent to ";
@@ -279,13 +274,10 @@ $MSG['149'] = "You can contact this user using the form below.";
 $MSG['152'] = "Confirm your bid";
 $MSG['154'] = "You Are Bidding on:";
 $MSG['156'] = "Your bid:";
-$MSG['157'] = "Allows sellers to make their auctions featured on the homepage and category pages";
 $MSG['159'] = "Bidder:";
 $MSG['160'] = "Increments table updated";
 $MSG['161'] = "Edit, delete or add categories using the form below.";
-$MSG['162'] = "Enable Highlighted Items";
 $MSG['163'] = "Register!";
-$MSG['164'] = "Allows sellers to make their auctions highlighted (displayed listing in a different colour in search results etc)";
 $MSG['165'] = "Category: ";
 $MSG['166'] = "Home";
 $MSG['167'] = "Picture";
@@ -294,7 +286,6 @@ $MSG['169'] = "Actual bid";
 $MSG['170'] = "Bids #";
 $MSG['171'] = "Ends in";
 $MSG['171a'] = "Ended";
-$MSG['174'] = "Enable Bold Items";
 $MSG['175'] = "Time";
 $MSG['176'] = "Bidder";
 $MSG['181'] = "User's login";
@@ -305,7 +296,6 @@ $MSG['188'] = "Your password";
 $MSG['189'] = "Total Due";
 $MSG['191'] = "Your copyright message";
 $MSG['192'] = "This is a message that is added to the bottom of every page";
-$MSG['194'] = "Allows sellers to make their auctions bold (displayed listing in bold in search results etc)";
 $MSG['197'] = "Auction's title";
 $MSG['198'] = "No items found";
 $MSG['199'] = "Search";
@@ -334,9 +324,6 @@ $MSG['231'] = "REGISTERED USERS";
 $MSG['232'] = "AUCTIONS ";
 $MSG['234'] = "&lt;&lt; Back";
 $MSG['235'] = "Register now";
-$MSG['236'] = "Bidder Privacy";
-$MSG['237'] = "Activate Bidder Privacy?";
-$MSG['238'] = "When you activate this option the bidders identity is hidden to everyone but the seller of the item";
 $MSG['239'] = "Auctions";
 $MSG['240'] = "From";
 $MSG['241'] = "To";
@@ -344,7 +331,6 @@ $MSG['242'] = "Sent";
 $MSG['243'] = "If you want to change your password, please fill in the two fields below. Otherwise leave them blank.";
 $MSG['244'] = "Edit Settings";
 $MSG['245'] = "Logout";
-$MSG['247'] = "Bidder Privacy Settings Updated";
 $MSG['248'] = "Confirm your registration";
 $MSG['249'] = "Confirm";
 $MSG['250'] = "Refuse";
@@ -382,11 +368,11 @@ $MSG['284'] = "Quantity";
 $MSG['287'] = "Category";
 $MSG['290'] = "Total items:";
 $MSG['292'] = "Make highlighted";
-$MSG['293'] = "NICK";
-$MSG['294'] = "NAME";
-$MSG['295'] = "COUNTRY";
-$MSG['296'] = "E-MAIL";
-$MSG['297'] = "ACTION";
+$MSG['293'] = "Nick";
+$MSG['294'] = "Name";
+$MSG['295'] = "Country";
+$MSG['296'] = "E-mail";
+$MSG['297'] = "Action";
 $MSG['298'] = "Edit";
 $MSG['299'] = "Activate User";
 $MSG['300'] = "Suspend";
@@ -430,10 +416,7 @@ $MSG['349'] = "Reply";
 $MSG['351'] = "Back to inbox";
 $MSG['352'] = "Email Format";
 $MSG['354'] = "Closed Auctions";
-$MSG['355'] = "Enable Buy it now only auto disable";
-$MSG['356'] = "Buy it now only limit";
 $MSG['357'] = "percent";
-$MSG['358'] = "The Buy it now auto disable feature will automatically disable the buy it now only option on the sell page when or if the percentage of buy it now only auctions reach the set value, you may want to use this as a deterrent to stop people making lots of spam buy it now only auctions";
 $MSG['359'] = " Updated";
 $MSG['363'] = "Dates Format";
 $MSG['364'] = "Date";
@@ -486,8 +469,6 @@ $MSG['423'] = "Payment Success";
 $MSG['424'] = "Your payment has been confirmed.<br><br>Thank you for your business.";
 $MSG['425'] = "Payment Failure";
 $MSG['426'] = "Your payment hasn't been registered, or was invalid.<br> <br> Sorry for the inconvenience.";
-$MSG['427'] = "Enable Proxy Bidding";
-$MSG['428'] = "Enable/ Disable the proxy bidding feature";
 $MSG['429'] = "There were no bids or reserve price was not met";
 $MSG['430'] = "User Signup Fee";
 $MSG['431'] = "Auction Fees";
@@ -567,16 +548,7 @@ $MSG['540'] = "Admin e-mail";
 $MSG['541'] = "The admin e-mail address is used to send automatic e-mail messages";
 $MSG['542'] = "General settings updated";
 $MSG['543'] = "Make this question public";
-$MSG['544'] = "Money format";
-$MSG['545'] = "US style: 1,250.00";
-$MSG['546'] = "European style: 1.250,00";
-$MSG['547'] = "Set to zero or leave blank if you don't want decimal digits in your money representation";
-$MSG['548'] = "Decimal digits";
-$MSG['549'] = "Symbol position";
-$MSG['550'] = "Before the amount (i.e. USD 200)";
-$MSG['551'] = "After the amount (i.e. 200 USD)";
 $MSG['552'] = "Questions";
-$MSG['553'] = "Currency settings updated";
 $MSG['554'] = "Number of news you want to show";
 $MSG['555'] = "Asker";
 $MSG['557'] = "Item Details";
@@ -642,12 +614,8 @@ $MSG['651'] = "Question about your auction: %s";
 $MSG['661'] = "Add Photo Gallery";
 $MSG['662'] = "<h2>Create thumbnail</h2>";
 $MSG['663'] = "Photo Gallery";
-$MSG['664'] = "If you activate this option, sellers will be able to upload additional pictures up to the maximum you specify (see below).";
-$MSG['665'] = "Activate Picture Gallery?";
-$MSG['666'] = "Max. Number of pictures";
 $MSG['667'] = "Viewing user: ";
 $MSG['668'] = "This auction has not yet started.";
-$MSG['671'] = "Max. pictures size";
 $MSG['672'] = "Kbytes";
 $MSG['673'] = "You can upload up to %s photos. Each photo must be smaller than %s KB.";
 $MSG['674'] = "You can only upload %s photos. Please remove some from the queue.";
@@ -693,9 +661,9 @@ $MSG['742'] = "reCaptcha";
 $MSG['743'] = "Captcha type on registration page";
 $MSG['744'] = "Captcha type on send auction to friend page";
 $MSG['745'] = "Captcha are used to prevent spam it is generally a good idea to enable some sort of captcha";
-$MSG['746'] = "Recaptcha public key";
-$MSG['747'] = "Recaptcha private key";
-$MSG['748'] = 'To use reCaptcha you must create an account at <a href="http://recaptcha.net/" class="new-window">http://recaptcha.net/</a> and request keys for the domain this site is sitting';
+$MSG['746'] = "Recaptcha site key";
+$MSG['747'] = "Recaptcha secret key";
+$MSG['748'] = 'To use reCaptcha you must create a free account at <a href="http://recaptcha.net/" class="new-window">http://recaptcha.net/</a> and add this domain to a key pair';
 $MSG['749'] = 'Spam settings';
 $MSG['750'] = 'Spam settings updated';
 $MSG['751'] = 'You cannot use reCaptcha without the two keys';
@@ -746,10 +714,6 @@ $MSG['793'] = ' items you\'re bidding on are ending soon';
 $MSG['794'] = 'You have been outbid on %s items';
 $MSG['795'] = 'Display Settings Updated';
 $MSG['796'] = 'You have an outstanding payment of the final value fee for the item %s; your account will be suspended until this is paid. You can pay for this now at <a href="%s">Here</a>';
-$MSG['797'] = 'Enable subtitles';
-$MSG['798'] = 'Allows sellers to add a subtitle to their auction which will appear on all auction lists';
-$MSG['799'] = 'Enable Secondary Category';
-$MSG['800'] = 'Allows sellers to add their auction to multiple categories';
 $MSG['801'] = 'Shared SSL URL';
 $MSG['802'] = 'If you\'re using shared SSL enter the URL here';
 $MSG['803'] = 'Subtitle Fee';
@@ -780,10 +744,7 @@ $MSG['827'] = 'Weekly Report';
 $MSG['828'] = 'Week';
 $MSG['829'] = 'View by ';
 $MSG['830'] = 'Month';
-$MSG['831'] = 'No IP addresses have been banned as of yet.';
 $MSG['832'] = 'Are you sure you want to delete the news item \'%s\'';
-$MSG['833'] = 'Are you sure you want to delete the auction \'%s\'';
-$MSG['834'] = 'Are you sure you want to delete this message (ID: %s)';
 $MSG['835'] = 'Are you sure you want to delete the user \'%s\'';
 $MSG['836'] = 'Member types Updated';
 $MSG['837'] = '(contains %s FAQs)';
@@ -792,16 +753,10 @@ $MSG['839'] = 'What do you want to do with the FAQs in the following categories'
 $MSG['840'] = 'Move to ';
 $MSG['841'] = 'Admin Template';
 $MSG['842'] = 'Set Fees';
-$MSG['843'] = 'What do you want to do with the auctions & subcategories in the following categories<br><small>(If you want to move them you must enter the category id of where you want them moved)</small>';
-$MSG['844'] = 'Some categories selected to move could not be processed as no valid category ID was given to where they would be moved to';
 $MSG['845'] = '<p><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['admin_theme'] . '/images/bullet_blue.png"> Shows a category that contains children categories</p><p><img src="' . $system->SETTINGS['siteurl'] . 'themes/' . $system->SETTINGS['admin_theme'] . '/images/bullet_red.png"> Shows a category that contains auctions</p>';
 $MSG['846'] = 'Account Balance';
 $MSG['847'] = 'Price';
 $MSG['848'] = 'Are you sure you want to delete this user feedback (ID: %s)';
-$MSG['849'] = 'Enable Auto-Relist';
-$MSG['850'] = 'Allow users to automatically relist auctions if they end without a winner';
-$MSG['851'] = 'Max Relists';
-$MSG['852'] = 'Set the maximum times an auction can be automatically relisted';
 $MSG['853'] = 'You are not currently watching any items';
 $MSG['854'] = 'Accounts';
 $MSG['855'] = 'Choose View';
@@ -845,8 +800,6 @@ $MSG['892'] = "To be activated";
 $MSG['893'] = "Total";
 $MSG['894'] = "User Settings";
 $MSG['895'] = "User Settings Updated";
-$MSG['896'] = "This is the size of the thumbnail that will appear on the auctions listing page";
-$MSG['897'] = "Additional auction options";
 $MSG['898'] = "Paid";
 $MSG['899'] = "Set as Paid";
 $MSG['900'] = "View Winners";
@@ -862,8 +815,6 @@ $MSG['909'] = " Auction Closed - You Have Won Item";
 $MSG['910'] = "No auctions exist for this user.";
 $MSG['911'] = "closed";
 $MSG['915'] = "Text";
-$MSG['920'] = "Activate Buy Now?";
-$MSG['921'] = "If you activate this option, users will be able to buy the item from the auction right away, if there are no bids placed for this item. This option must first be enabled by seller who opens the auction.";
 $MSG['922'] = "Send question to seller";
 $MSG['923'] = "Seller location";
 $MSG['924'] = "Just Listed";
@@ -917,7 +868,6 @@ $MSG['1021'] = "Standard Auction";
 $MSG['1022'] = "SSL Support";
 $MSG['1023'] = "Activate SSL support?";
 $MSG['1024'] = "<p>If you have SSL support on the server where you are running WeBid, you may want to give your customers a safer environment to operate.</p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.";
-$MSG['1028'] = "Countries updated";
 $MSG['1029'] = "Counters updated";
 $MSG['1030'] = "Re-sync the user, auction and bid counters";
 $MSG['1031'] = "Re-sync Counters";
@@ -1001,10 +951,6 @@ $MSG['1097'] = 'This will show in a yellow box above the end message on users in
 $MSG['1098'] = 'Invoice End Message';
 $MSG['1099'] = 'This will show at the end of every users invoice';
 
-// list admin users
-$MSG['1100'] = 'You cannot delete the account you are currently logged in from';
-$MSG['1101'] = 'Admin accounts deleted';
-
 // sell.php tax
 $MSG['1102'] = 'Charge Tax';
 $MSG['1103'] = 'Include tax in final sell price';
@@ -1017,12 +963,6 @@ $MSG['1107'] = 'Item has not been shipped';
 $MSG['1108'] = 'Set as Received';
 $MSG['1109'] = 'Item Received';
 
-$MSG['1110'] = 'Cookies Policy';
-$MSG['1111'] = "Activate Cookies Policy Page?";
-$MSG['1112'] = "Activate this option if you want a Cookies Policy link to appear in the footer of your pages.";
-$MSG['1113'] = "Cookies Policy content<br>(HTML allowed)";
-$MSG['1114'] = "Cookies Policy Page";
-$MSG['1115'] = "Cookies Policy Settings Updated";
 $MSG['1116'] = 'Set as Shipped';
 $MSG['1117'] = 'Shipped';
 
@@ -1082,8 +1022,6 @@ $MSG['1155'] = "Payment gateway sandbox";
 $MSG['5000'] = 'You must be logged in to see this page';
 $MSG['5001'] = "View Site";
 $MSG['5002'] = "You must be logged in to bid";
-$MSG['5004'] = "Currencies Settings";
-$MSG['5008'] = "Site Currency";
 $MSG['5011'] = "Home Page Featured Items";
 $MSG['5012'] = "This is the number of featured items to show in the Home Page (NOTE: ONLY <b>featured</b> items will be displayed).<br>0 (zero) is permitted.";
 $MSG['5013'] = "Last Created Items";
@@ -1095,23 +1033,14 @@ $MSG['5018'] = "This is the number of items to show in the Next Ending list in t
 $MSG['5022'] = "USERS SEARCH";
 $MSG['5023'] = "Search &gt;&gt;";
 $MSG['5024'] = "Name, username or e-mail";
-$MSG['5028'] = "Action";
 $MSG['5029'] = "GO >>";
 $MSG['5030'] = "Message Boards";
 $MSG['5031'] = "New Message Board";
-$MSG['5032'] = "Message Boards Management";
 $MSG['5034'] = "Board Title";
 $MSG['5035'] = "Messages to show";
 $MSG['5036'] = "This is the number of most recent messages to show for this message board.";
 $MSG['5038'] = "Active";
 $MSG['5039'] = "Inactive";
-$MSG['5040'] = "NOTE: deleting a message board will delete all the associated messages.";
-$MSG['5043'] = "# MSGS";
-$MSG['5044'] = "Selected boards removed";
-$MSG['5046'] = "SHOW";
-$MSG['5047'] = "Message Boards Settings";
-$MSG['5048'] = "Activate Message Boards Service?";
-$MSG['5051'] = "Message Boards Settings Updated";
 $MSG['5052'] = "Edit Message Board";
 $MSG['5053'] = "Last Message";
 $MSG['5056'] = "You are not logged in.<br>If you post a message it will appear as posted by <b><i>Unknown user</i></b>.";
@@ -1142,21 +1071,13 @@ $MSG['5083'] = "Terms &amp; Conditions page content<br>(HTML allowed)";
 $MSG['5084'] = "Terms &amp; Conditions Settings Updated";
 $MSG['5085'] = "About Us";
 $MSG['5086'] = "Terms &amp; Conditions";
-$MSG['5087'] = "Auction Settings";
-$MSG['5088'] = "Auction Settings Updated";
-$MSG['5089'] = "Users can set a custom start date for auctions";
-$MSG['5090'] = "Allow Custom Start Date?";
-$MSG['5091'] = "Hours until auction ends count-down";
 $MSG['5094'] = "View auctions";
-$MSG['5095'] = "Hours remaining on an auction until the time remaining becomes an automatic countdown timer";
 $MSG['5113'] = "Change";
 $MSG['5115'] = "days";
 $MSG['5117'] = "Page";
 $MSG['5118'] = "of";
 $MSG['5119'] = "&lt;&lt;Prev";
 $MSG['5120'] = "Next&gt;&gt;";
-$MSG['5138'] = "Note: you can use the currency of your choice throughout the site.<br>
-All the amounts users will have to pay at PayPal will be automatically converted to USD using today's rate of exchange before being sent to the PayPal server.";
 $MSG['5142'] = "Settings";
 $MSG['5143'] = "View Access Statistics";
 $MSG['5144'] = "Please, choose below if you want WeBid to generate access statistics for your site.";
@@ -1212,9 +1133,6 @@ $MSG['5297'] = "Balance over debt limit";
 $MSG['5299'] = "Limit submission to";
 $MSG['5300'] = " messages sent.";
 $MSG['5318'] = "View Platform Statistics";
-$MSG['5322'] = "Default country";
-$MSG['5321'] = "You can select a default country for your site.<br>It will automatically appear as the selected country in the countries select box throughout the site.";
-$MSG['5323'] = "Default country updated";
 $MSG['5408'] = "Max. ";
 $MSG['5431'] = "Send me a new password";
 $MSG['5436'] = "Tools";
@@ -1234,7 +1152,6 @@ $MSG['_0002'] = "You can temporary disable the access to your site if necessary.
 $MSG['_0004'] = "Under Maintenance HTML code";
 $MSG['_0005'] = "Under Maintenance settings updated";
 $MSG['_0006'] = "Switch site to \"Under Maintenance\" mode?";
-$MSG['_0008'] = "Banner Administration";
 $MSG['_0012'] = "User Management";
 $MSG['_0022'] = "Company";
 $MSG['_0024'] = "Manage Banners";
@@ -1280,18 +1197,6 @@ $MSG['_0162'] = "You can choose to automatically relist your auction, if no bids
 $MSG['_0163'] = "View Winners";
 
 $MSG['2_0004'] = "View User's IPs";
-$MSG['2_0005'] = "Sign up IP";
-$MSG['2_0006'] = "Ban";
-$MSG['2_0007'] = "Accept";
-$MSG['2_0009'] = "IP Address";
-$MSG['2_0012'] = '<span style="color:#A2CD5A;"><b>Accepted</b></span>';
-$MSG['2_0013'] = '<span style="color:#CD0000;"><b>Banned</b></span>';
-$MSG['2_0015'] = "Process Selection";
-$MSG['2_0017'] = "IP Addresses";
-$MSG['2_0020'] = "IP Ban Management";
-$MSG['2_0021'] = "Ban this IP address: ";
-$MSG['2_0024'] = "(Complete IP address - example: 185.39.51.63)";
-$MSG['2_0025'] = "Manually entered";
 $MSG['2_0026'] = "We're sorry but, for one or more reasons, you have been denied access to
 				this site.<br>
 				If you had any active auctions listed, we have cancelled all bids and
@@ -1299,14 +1204,6 @@ $MSG['2_0026'] = "We're sorry but, for one or more reasons, you have been denied
 				<br><br>
 				Thank you";
 $MSG['2_0027'] = "Your IP has been banned";
-$MSG['2_0032'] = "Auction Extension Settings";
-$MSG['2_0034'] = "Enable Auctions Auto extension?";
-$MSG['2_0035'] = "Extend auction by ";
-$MSG['2_0036'] = " seconds if someone bid during the last ";
-$MSG['2_0037'] = " seconds";
-$MSG['2_0038'] = "Please enter valid numeric values";
-$MSG['2_0039'] = "Auctions Auto extension gives you the ability to automatically extend by <b>X</b> seconds the auctions end time,
-				if someone bids in the last <b>Y</b> seconds of the auction lifetime.<br>";
 $MSG['2__0001'] = "Choose language";
 $MSG['2__0002'] = "Multilingual support";
 $MSG['2__0003'] = "<br>The default language is English.<br>
@@ -1346,27 +1243,13 @@ $MSG['2__0037'] = "Submit auction";
 $MSG['2__0038'] = "Select your category";
 $MSG['2__0039'] = "If you lost your password, please enter your username and e-mail address below.";
 $MSG['2__0041'] = "Select secondary category";
-$MSG['2__0045'] = " pixels ";
 $MSG['2__0047'] = "Select Category";
 $MSG['2__0048'] = "Close Now!";
 $MSG['2__0050'] = "Sell similar";
 $MSG['2__0051'] = "Relist";
 $MSG['2__0054'] = '<span style="#CD0000;"><b>Already selected</b></span>';
 $MSG['2__0056'] = "Suspended auctions";
-$MSG['2__0057'] = "Show counters";
-$MSG['2__0058'] = "You can decide to show some counters in the header of your site's pages.<br>
-				There are three different counters available:
-				<ul>
-				<li>Active auctions</li>
-				<li>Registered users</li>
-				<li>Online users</li>
-				</ul>
-				You can enable/disable each counter below";
-$MSG['2__0059'] = "Online users";
-$MSG['2__0060'] = "Active auctions";
-$MSG['2__0061'] = "Registered users";
-$MSG['2__0062'] = "Counters you want to show";
-$MSG['2__0063'] = "Counters Settings Updated";
+
 $MSG['2__0064'] = "USERS ONLINE";
 $MSG['2__0066'] = "Enabled";
 $MSG['2__0067'] = "Disabled";
@@ -1408,9 +1291,6 @@ $MSG['25_0086'] = "By clicking the button below, you commit to pay the full <b i
 $MSG['25_0087'] = "You have been outbid";
 $MSG['25_0088'] = "You are the current highest bidder";
 $MSG['25_0089'] = "Congratulations, the item is yours. Please pay now";
-$MSG['gallery_image_max_size'] = "Gallery photo max size";
-$MSG['gallery_image_max_size_explain'] = "Set the maximum width or height a photo can be if it is over this size it will be resized";
-$MSG['25_0107'] = "Thumbnails Size";
 $MSG['25_0110'] = "Acceptance Text";
 $MSG['25_0115'] = "Pending auctions";
 $MSG['25_0116'] = "Will start";
@@ -1423,12 +1303,6 @@ $MSG['25_0140'] = "Your account is a buyer account. No selling activity is allow
 $MSG['25_0141'] = "Send a request to the site administrator";
 $MSG['25_0142'] = "Request sent to the site's administrator.";
 $MSG['25_0143'] = "Your account is a buyer account. No selling activity is allowed.<br> You already sent a request to switch to a <b>seller account</b>: your request is being processed. ";
-$MSG['25_0146'] = "Categories Sorting";
-$MSG['25_0147'] = "The categories list in the left column of the home page, can be sorted <b>alphabetically</b> or on the number of auctions contained in each category (<b>categories counters</b>).<br>
-			Choose below the sorting method you want to have";
-$MSG['25_0148'] = "Alphabetically";
-$MSG['25_0149'] = "Categories counters";
-$MSG['25_0150']= "Categories Sorting Settings Updated";
 $MSG['25_0151'] = "Users Authentication";
 $MSG['25_0151_a'] = "Users Confirmation Method";
 $MSG['25_0152'] = "If this is enabled the users will be asked to enter their password before completing actions such as leaving feedback, submitting an auction or leaving a bid.";
@@ -1453,7 +1327,6 @@ $MSG['25_0182'] = "The Meta Description Tag is usually used to describe your pag
 $MSG['25_0184'] = "The Meta Keywords Tag gives some search engines additional information to use to index your site.<br>
 				Enter the your keywords below separated by comas (i.e. books, books auctions, book sales).";
 $MSG['25_0185'] = "Meta Tags Settings Updated";
-$MSG['25_0187'] = "Enter the maximum allowed size (in Kbytes) of the pictures sellers can upload for each auction.";
 $MSG['25_0188'] = "Auctions notification e-mails";
 $MSG['25_0189'] = "As a seller, you can choose to receive one notification e-mail for each auction which closes, or to receive an e-mail once a day reporting all the closed auctions on that day.<br>
 				The second option is usually necessary if you have a huge number of auctions.<br>Finally you can also choose not to receive any notification e-mail but this choice is not recommended.";
@@ -1468,12 +1341,6 @@ $MSG['25_0199'] = "Closing auctions resume";
 $MSG['25_0209'] = "Sell under reserved price to highest bidder";
 $MSG['25_0214'] = "Search also closed auctions: ";
 $MSG['25_0215'] = "Shipping terms";
-$MSG['25_0216'] = "Contact the seller";
-$MSG['25_0217'] = "Giving anybody the option to contact sellers through your website is not recommended. For this reason WeBid
-				gives you the ability to decide if sellers can be contacted by users browsing your site or not.";
-$MSG['25_0218'] = "Any visitor can contact the seller (the ability to contact the seller will be ALWAYS shown)";
-$MSG['25_0219'] = "Only logged in users can contact the seller (the ability to contact the seller will be shown only to other users of your site if logged in)";
-$MSG['25_0220'] = "Nobody can contact the seller (the ability to contact the seller will NEVER be shown)";
 $MSG['25_0223'] = "Feedback you've received";
 $MSG['25_0224'] = "Preview";
 
@@ -1509,25 +1376,12 @@ $MSG['26_0002'] = "Manage Themes";
 $MSG['26_0003'] = "Edit Theme Files";
 $MSG['26_0004'] = "Add Theme File";
 $MSG['26_0005'] = "Default Theme Updated";
-$MSG['30_0029'] = "You can set below the number of categories you want to be shown in the left column of the home page";
-$MSG['30_0030'] = "Categories to show: ";
-$MSG['30_0031'] = "Clear Cache";
-$MSG['30_0031a'] = "Clear Image Cache";
-$MSG['30_0032'] = "Delete all the template cache files, you will need to do this each time you edit a template file";
-$MSG['30_0032a'] = "Delete all the Image cache files, This can help if there are some images not showing on the site";
-$MSG['30_0033'] = "Cache cleared";
-$MSG['30_0033a'] = "Image cache cleared";
 $MSG['30_0053'] = "<p>Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:</p>";
 $MSG['30_0063'] = "Buy it now only?";
-$MSG['30_0064'] = "Activate <b>Buy it now only</b> auctions?";
-$MSG['30_0065'] = "Enabling the <b>Buy it now only</b> option you'll give your sellers the ability to set up auctions for which it will not be possible to place any bid, but only use the <b>Buy it now</b> feature (fixed price auctions).<br><b>Note:</b> the <b>Buy it now only</b> option will only take effect if <b>Buy it now</b> is enabled.";
-$MSG['30_0066'] = "Buy it now only settings updates";
 $MSG['30_0069'] = "Seller: edit this auction";
 $MSG['30_0070'] = "Search only in this category";
 $MSG['30_0080'] = "Payment Options";
 $MSG['30_0081'] = "Viewed ";
-$MSG['30_0084'] = "You can decide to allow users to see each others E-Mail addresses or to hide them and all communication must be done via PMs";
-$MSG['30_0085'] = "Hide user E-Mails";
 $MSG['30_0086'] = "Address: ";
 $MSG['30_0087'] = "Are you sure you want to process the selected auctions?";
 $MSG['30_0098'] = "&nbsp; = Outbid";
@@ -1543,8 +1397,6 @@ $MSG['30_0181'] = "Message Board";
 $MSG['30_0208'] = "Place bid >>";
 $MSG['30_0209'] = "Meet the seller";
 $MSG['30_0210'] = "*When items relating to these key words are listed you will be notified via email";
-$MSG['30_0211'] = "You are running an old version you can download the latest version from <a href='http://sourceforge.net/project/showfiles.php?group_id=181393'>here</a>";
-$MSG['30_0212'] = "You are running the latest version";
 $MSG['30_0213'] = "No feedback needs leaving";
 $MSG['30_0214'] = "WeBid Version";
 $MSG['30_0215'] = "Upload Logo";
@@ -1612,9 +1464,6 @@ $MSG['custom_end_time'] = 'Set custom end time';
 $MSG['or_custom_end_time'] = 'Or set a custom end time';
 $MSG['ending_date'] = 'Ending date';
 
-$MSG['allow_custom_end_date_explain'] = "Users can set a custom <b>end</b> date for auctions";
-$MSG['allow_custom_end_date'] = "Allow Custom End Date?";
-
 $MSG['payment_name'] = 'Name';
 $MSG['clean_payment_name'] = 'Clean Name <small>(all lower case no spaces or special characters)</small>';
 
@@ -1626,19 +1475,7 @@ $MSG['delete'] = 'delete';
 $MSG['all_error_messages'] = 'All errors';
 $MSG['unique_error_messages'] = 'Unique errors';
 
-$MSG['google_analytics'] = "Google Analytics";
-$MSG['google_analytics_updated'] = "Google Analytics Settings updated";
-$MSG['google_analytics_tracking_code'] = "Google Analytics Tracking Code";
-$MSG['google_analytics_tracking_code_hint'] = "Copy and paste your Google Analytics tracking code here. You must include the opening and closing &lt;script&gt;&lt;/script&gt; tags.";
-
 $MSG['any_country'] = 'Any Country';
-
-$MSG['new_currency'] = 'Add New Currency';
-$MSG['currency_name'] = "Currency Name";
-$MSG['curreny_symbol'] = "Currency Symbol";
-$MSG['curreny_country_explain'] = "Example: <b>United States</b><br>Must fill in all 3 textboxs to add a new Currency.";
-$MSG['curreny_name_explain'] = "Example: <b>U.S. Dollar</b>";
-$MSG['curreny_symbol_explain'] = "Example: <b>USD</b>";
 
 $MSG['prune_unactivated_users'] = "Prune unactivated users";
 $MSG['prune_unactivated_users_explain'] = "Automatically delete unactivated user accounts.";
@@ -1666,9 +1503,17 @@ $MSG['remove_auction_from_moderation_explain'] = "Are you sure you want to remov
 
 $MSG['auction_awaiting_approval'] = "Your Auction is Awaiting Approval";
 
+// item_watch.php
+$MSG['item_watch_item_removed'] = 'Auction removed from watchlist';
+$MSG['item_watch_item_added'] = 'Auction added to watchlist';
+$MSG['item_watch_not_added'] = 'Auction already on watchlist';
+
 // dates
 $MSG['year_s'] = 'year(s)';
 $MSG['month_s'] = 'month(s)';
 $MSG['day_short'] = 'd';
 $MSG['hour_short'] = 'h';
 $MSG['minute_short'] = 'm';
+
+// yourmessages.tpl
+$MSG['delete_message_confirm'] = 'Are you sure you want to delete this message?';

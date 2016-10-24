@@ -18,15 +18,13 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (!isset($_GET['banner']) || empty($_GET['banner']))
-{
-	header('location: managebanners.php');
-	exit;
+if (!isset($_GET['banner']) || empty($_GET['banner'])) {
+    header('location: managebanners.php');
+    exit;
 }
 
-$banner = $_GET['banner'];
 $params = array();
-$params[] = array(':banner_id', $banner, 'int');
+$params[] = array(':banner_id', $_GET['banner'], 'int');
 
 $query = "SELECT name, user FROM " . $DBPrefix . "banners WHERE id = :banner_id";
 $db->query($query, $params);
@@ -45,4 +43,3 @@ $db->query($query, $params);
 
 // Redirect
 header('location: userbanners.php?id=' . $banneruser);
-?>

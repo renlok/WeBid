@@ -23,7 +23,13 @@
 									<input type="text" name="new_countries[]" size="45" value="{countries.COUNTRY}">
 									<input type="hidden" name="old_countries[]" value="{countries.COUNTRY}">
 								</div>
-								<div class="col-md-3">{countries.SELECTBOX}</div>
+								<div class="col-md-3">
+	                <!-- countries.B_CAN_DELETE -->
+	                <input type="checkbox" name="delete[]" value="{countries.COUNTRY}">
+	                <!-- ELSE -->
+	                <img src="../images/nodelete.gif" alt="{L_cannot_delete}">
+	                <!-- ENDIF -->
+								</div>
 							</div>
 <!-- END countries -->
 							<div class="row">

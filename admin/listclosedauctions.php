@@ -19,20 +19,15 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Set offset and limit for pagination
-if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE']))
-{
-	$PAGE = intval($_GET['PAGE']);
-	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
-}
-elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listclosedauctions.php')
-{
-	$PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
-	$OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
-}
-else
-{
-	$OFFSET = 0;
-	$PAGE = 1;
+if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE'])) {
+    $PAGE = intval($_GET['PAGE']);
+    $OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+} elseif (isset($_SESSION['RETURN_LIST_OFFSET']) && $_SESSION['RETURN_LIST'] == 'listclosedauctions.php') {
+    $PAGE = intval($_SESSION['RETURN_LIST_OFFSET']);
+    $OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+} else {
+    $OFFSET = 0;
+    $PAGE = 1;
 }
 
 $_SESSION['RETURN_LIST'] = 'listclosedauctions.php';
@@ -57,55 +52,53 @@ $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
 $bg = '';
-while ($row = $db->fetch())
-{
-	$template->assign_block_vars('auctions', array(
-			'SUSPENDED' => $row['suspended'],
-			'TIMESREPORTED' => $row['times_reported'],
-			'IN_MODERATION_QUEUE' => !is_null($row['reason']),
-			'ID' => $row['id'],
-			'TITLE' => htmlspecialchars($row['title']),
-			'START_TIME' => $dt->printDateTz($row['starts']),
-			'END_TIME' => $dt->printDateTz($row['ends']),
-			'USERNAME' => $row['nick'],
-			'CATEGORY' => $row['cat_name'],
-			'B_HASWINNERS' => ($row['winners'] == 0) ? false : true,
-			'BG' => $bg
-			));
-	$bg = ($bg == '') ? 'class="bg"' : '';
+while ($row = $db->fetch()) {
+    $template->assign_block_vars('auctions', array(
+            'SUSPENDED' => $row['suspended'],
+            'TIMESREPORTED' => $row['times_reported'],
+            'IN_MODERATION_QUEUE' => !is_null($row['reason']),
+            'ID' => $row['id'],
+            'TITLE' => htmlspecialchars($row['title']),
+            'START_TIME' => $dt->printDateTz($row['starts']),
+            'END_TIME' => $dt->printDateTz($row['ends']),
+            'USERNAME' => $row['nick'],
+            'CATEGORY' => $row['cat_name'],
+            'B_HASWINNERS' => ($row['winners'] == 0) ? false : true,
+            'BG' => $bg
+            ));
+    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 // get pagenation
 $PREV = intval($PAGE - 1);
 $NEXT = intval($PAGE + 1);
-if ($PAGES > 1)
-{
-	$LOW = $PAGE - 5;
-	if ($LOW <= 0) $LOW = 1;
-	$COUNTER = $LOW;
-	while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6))
-	{
-		$template->assign_block_vars('pages', array(
-				'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
-				));
-		$COUNTER++;
-	}
+if ($PAGES > 1) {
+    $LOW = $PAGE - 5;
+    if ($LOW <= 0) {
+        $LOW = 1;
+    }
+    $COUNTER = $LOW;
+    while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6)) {
+        $template->assign_block_vars('pages', array(
+                'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+                ));
+        $COUNTER++;
+    }
 }
 
 $template->assign_vars(array(
-		'PAGE_TITLE' => $MSG['214'],
-		'NUM_AUCTIONS' => $num_auctions,
-		'B_SEARCHUSER' => false, // needs decaring as listauctions.tpl is shared and expects B_SEARCHUSER to be declared. Used in users->view actions link
-		'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
-		'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
-		'PAGE' => $PAGE,
-		'PAGES' => $PAGES
-		));
+        'PAGE_TITLE' => $MSG['214'],
+        'NUM_AUCTIONS' => $num_auctions,
+        'B_SEARCHUSER' => false, // needs decaring as listauctions.tpl is shared and expects B_SEARCHUSER to be declared. Used in users->view actions link
+        'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+        'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listclosedauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+        'PAGE' => $PAGE,
+        'PAGES' => $PAGES
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'listauctions.tpl'
-		));
+        'body' => 'listauctions.tpl'
+        ));
 $template->display('body');
 include 'footer.php';
-?>

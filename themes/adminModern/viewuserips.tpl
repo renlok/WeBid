@@ -14,34 +14,34 @@
 						</tr>
 						<tr>
 							<th width="35%"><b>{L_087}</b></th>
-							<th width="27%"><b>{L_2_0009}</b></th>
+							<th width="27%"><b>{L_ip_address}</b></th>
 							<th width="21%"><b>{L_560}</b></th>
-							<th width="17%"><b>{L_5028}</b></th>
+							<th width="17%"><b>{L_297}</b></th>
 						</tr>
 <!-- BEGIN ips -->
 						<tr {ips.BG}>
 							<td>
 	<!-- IF ips.TYPE eq 'first' -->
-								{L_2_0005}
+								{L_registration_ip}
 	<!-- ELSE -->
-								{L_221}
+								{ips.TYPE}
 	<!-- ENDIF -->
 							</td>
 							<td align="center">{ips.IP}</td>
 							<td align="center">
 	<!-- IF ips.ACTION eq 'accept' -->
-								{L_2_0012}
+								<span style="color:#A2CD5A;"><b>{L_accepted}</b></span>
 	<!-- ELSE -->
-								{L_2_0013}
+								<span style="color:#CD0000;"><b>{L_banned}</b></span>
 	<!-- ENDIF -->
 							</td>
 							<td>
 	<!-- IF ips.ACTION eq 'accept' -->
 								<input type="checkbox" name="deny[]" value="{ips.ID}">
-								&nbsp;{L_2_0006}
+								&nbsp;{L_ban}
 	<!-- ELSE -->
 								<input type="checkbox" name="accept[]" value="{ips.ID}">
-								&nbsp;{L_2_0007}
+								&nbsp;{L_accept}
 	<!-- ENDIF -->
 							</td>
 						</tr>
@@ -51,7 +51,7 @@
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="id" value="{ID}">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_2_0015}">
+					<input type="submit" name="act" class="centre" value="{L_process_selection}">
 				</form>
 				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 					<tr>

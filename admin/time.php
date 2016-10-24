@@ -19,12 +19,11 @@ include INCLUDE_PATH . 'functions_admin.php';
 include INCLUDE_PATH . 'config/timezones.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	// Update database
-	$system->writesetting("timezone", $_POST['timezone'], "str");
-	$system->writesetting("datesformat", $_POST['datesformat'], "str");
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['347']));
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
+    // Update database
+    $system->writesetting("timezone", $_POST['timezone'], "str");
+    $system->writesetting("datesformat", $_POST['datesformat'], "str");
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['347']));
 }
 
 $selectsetting = $system->SETTINGS['timezone'];
@@ -35,16 +34,15 @@ loadblock($MSG['363'], $MSG['379'], 'datestacked', 'datesformat', $system->SETTI
 loadblock($MSG['346'], $MSG['345'], 'dropdown', 'timezone', $system->SETTINGS['timezone']);
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['25_0008'],
-		'PAGENAME' => $MSG['344'],
-		'DROPDOWN' => $html
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TYPENAME' => $MSG['25_0008'],
+        'PAGENAME' => $MSG['344'],
+        'DROPDOWN' => $html
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
-		));
+        'body' => 'adminpages.tpl'
+        ));
 $template->display('body');
 include 'footer.php';
-?>

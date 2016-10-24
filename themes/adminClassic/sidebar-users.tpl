@@ -8,7 +8,7 @@
 							<li><a href="{SITEURL}admin/profile.php">{L_048}</a></li>
 							<li><a href="{SITEURL}admin/activatenewsletter.php">{L_25_0079}</a></li>
 							<li><a href="{SITEURL}admin/newsletter.php">{L_607}</a></li>
-							<li><a href="{SITEURL}admin/banips.php">{L_2_0017}</a></li>
+							<li><a href="{SITEURL}admin/banips.php">{L_ip_addresses}</a></li>
 						</ul>
 					</div>
 				</div>

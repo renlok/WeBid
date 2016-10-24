@@ -3,12 +3,12 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h2>{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L__0008}</h2>
+				<h2>{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L_banner_admin</h2>
 				<form name="deleteusers" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-12"><a href="newbannersuser.php">{L__0026}</a></div>
+								<div class="col-md-12"><a class="btn-primary btn" href="newbannersuser.php">{L__0026}</a></div>
 							</div>
 							<br>
 							<div class="row">

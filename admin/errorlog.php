@@ -20,49 +20,41 @@ include 'loggedin.inc.php';
 
 $type = (isset($_GET['type'])) ? $_GET['type'] : 'distinct';
 
-if (isset($_POST['action']) && $_POST['action'] == 'clearlog')
-{
-	$query = "DELETE FROM " . $DBPrefix . "logs WHERE type = 'error'";
-	$db->direct_query($query);
+if (isset($_POST['action']) && $_POST['action'] == 'clearlog') {
+    $query = "DELETE FROM " . $DBPrefix . "logs WHERE type = 'error'";
+    $db->direct_query($query);
 
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['889']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['889']));
 }
 
 $data = '';
-if ($type == 'distinct')
-{
-	$query = "SELECT DISTINCT(message) FROM " . $DBPrefix . "logs WHERE type = 'error'";
-	$db->direct_query($query);
-	while ($row = $db->fetch())
-	{
-		$data .= $row['message'] . '<br>';
-	}
-}
-else
-{
-	$query = "SELECT * FROM " . $DBPrefix . "logs WHERE type = 'error'";
-	$db->direct_query($query);
-	while ($row = $db->fetch())
-	{
-		$data .= '<strong>' . $dt->printDateTz($row['timestamp']) . '</strong>: ' . $row['message'] . '<br>';
-	}
+if ($type == 'distinct') {
+    $query = "SELECT DISTINCT(message) FROM " . $DBPrefix . "logs WHERE type = 'error'";
+    $db->direct_query($query);
+    while ($row = $db->fetch()) {
+        $data .= $row['message'] . '<br>';
+    }
+} else {
+    $query = "SELECT * FROM " . $DBPrefix . "logs WHERE type = 'error'";
+    $db->direct_query($query);
+    while ($row = $db->fetch()) {
+        $data .= '<strong>' . $dt->printDateTz($row['timestamp']) . '</strong>: ' . $row['message'] . '<br>';
+    }
 }
 
-if ($data == '')
-{
-	$data = $MSG['888'];
+if ($data == '') {
+    $data = $MSG['888'];
 }
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPE' => $type,
-		'ERRORLOG' => $data
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TYPE' => $type,
+        'ERRORLOG' => $data
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'errorlog.tpl'
-		));
+        'body' => 'errorlog.tpl'
+        ));
 $template->display('body');
 include 'footer.php';
-?>

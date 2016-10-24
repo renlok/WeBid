@@ -5,7 +5,7 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L__0008} : {L__0012}</h4>
+				<h4 class="rounded-top rounded-bottom">{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L_banner_admin} : {L__0012}</h4>
 				<form name="deleteusers" action="" method="post">
 					<div class="plain-box"><a href="newbannersuser.php" class="button">{L__0026}</a></div>
 					<table width="98%" cellpadding="0" cellspacing="0">

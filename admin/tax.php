@@ -18,26 +18,24 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update')
-{
-	$system->writesetting("taxuser", $_POST['taxuser'],"str");
-	$system->writesetting("tax", $_POST['tax'],"str");
-	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1089']));
+if (isset($_POST['action']) && $_POST['action'] == 'update') {
+    $system->writesetting("taxuser", $_POST['taxuser'], "str");
+    $system->writesetting("tax", $_POST['tax'], "str");
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1089']));
 }
 
 loadblock($MSG['1090'], $MSG['1091'], 'yesno', 'tax', $system->SETTINGS['tax'], array($MSG['yes'], $MSG['no']));
 loadblock($MSG['1092'], $MSG['1093'], 'yesno', 'taxuser', $system->SETTINGS['taxuser'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
-		'SITEURL' => $system->SETTINGS['siteurl'],
-		'TYPENAME' => $MSG['25_0012'],
-		'PAGENAME' => $MSG['1088']
-		));
+        'SITEURL' => $system->SETTINGS['siteurl'],
+        'TYPENAME' => $MSG['25_0012'],
+        'PAGENAME' => $MSG['1088']
+        ));
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'adminpages.tpl'
-		));
+        'body' => 'adminpages.tpl'
+        ));
 $template->display('body');
 include 'footer.php';
-?>

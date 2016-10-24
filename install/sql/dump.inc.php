@@ -30,7 +30,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "accounts` (
 	`name` TINYTEXT NOT NULL,
 	`text` TEXT NOT NULL,
 	`type` VARCHAR(15) NOT NULL,
-	`paid_date` datetime default CURRENT_TIMESTAMP,
+	`paid_date` timestamp default CURRENT_TIMESTAMP,
 	`amount` DOUBLE(6,2) NOT NULL,
 	`day` INT(3) NOT NULL,
 	`week` INT(2) NOT NULL,
@@ -56,8 +56,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "adminusers` (
   `password` varchar(60) NOT NULL,
   `password_type` INT(1) NOT NULL DEFAULT '1',
   `hash` varchar(5) NOT NULL default '',
-  `created` datetime default CURRENT_TIMESTAMP,
-  `lastlogin` datetime default CURRENT_TIMESTAMP,
+  `created` timestamp default CURRENT_TIMESTAMP,
+  `lastlogin` datetime,
   `status` tinyint(1) NOT NULL default '0',
   `notes` text,
   PRIMARY KEY  (`id`)
@@ -97,8 +97,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `user` int(11) default NULL,
   `title` varchar(70),
   `subtitle` varchar(70),
-  `starts` datetime default CURRENT_TIMESTAMP,
-  `ends` datetime default CURRENT_TIMESTAMP,
+  `starts` datetime ,
+  `ends` datetime,
   `description` text,
   `pict_url` tinytext,
   `category` int(11) default NULL,
@@ -108,10 +108,10 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `additional_shipping_cost` double(16,2) default '0',
   `reserve_price` double(16,2) default '0',
   `buy_now` double(16,2) default '0',
-  `auction_type` int(1),
+  `auction_type` tinyint(1),
   `duration` double(8,2),
   `increment` double(8,2) NOT NULL default '0',
-  `shipping` int(1) default 1,
+  `shipping` tinyint(1) default 1,
   `payment` tinytext,
   `international` tinyint(1) default 0,
   `current_bid` double(16,2) default '0',
@@ -120,7 +120,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `photo_uploaded` tinyint(1) default 0,
   `initial_quantity` int(11) default '1',
   `quantity` int(11) default '1',
-  `suspended` int(1) default '0',
+  `suspended` tinyint(1) default '0',
   `relist` int(11) NOT NULL default '0',
   `relisted` int(11) NOT NULL default '0',
   `num_bids` int(11) NOT NULL default '0',
@@ -296,7 +296,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "bids` (
   `auction` int(11) default NULL,
   `bidder` int(11) default NULL,
   `bid` double(16,2) default NULL,
-  `bidwhen` datetime default CURRENT_TIMESTAMP,
+  `bidwhen` timestamp default CURRENT_TIMESTAMP,
   `quantity` int(11) default '0',
   PRIMARY KEY  (`id`)
 ) ;";
@@ -332,209 +332,206 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "categories` (
 # Dumping data for table `" . $DBPrefix . "categories`
 #
 
-if ($_GET['cats'] == 1)
-{
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(1, -1, 1, 394, -1, 'All', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(2, 1, 340, 393, 0, 'Art & Antiques', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(3, 2, 391, 392, 1, 'Textiles & Linens', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(4, 2, 389, 390, 1, 'Amateur Art', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(5, 2, 387, 388, 1, 'Ancient World', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(6, 2, 385, 386, 1, 'Books & Manuscripts', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(7, 2, 383, 384, 1, 'Cameras', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(8, 2, 363, 382, 1, 'Ceramics & Glass', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(9, 8, 364, 381, 2, 'Glass', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(10, 9, 379, 380, 3, '40s, 50s & 60s', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(11, 9, 377, 378, 3, 'Art Glass', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(12, 9, 375, 376, 3, 'Carnival', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(13, 9, 373, 374, 3, 'Chalkware', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(14, 9, 371, 372, 3, 'Chintz & Shelley', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(15, 9, 369, 370, 3, 'Contemporary Glass', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(16, 9, 367, 368, 3, 'Decorative', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(17, 9, 365, 366, 3, 'Porcelain', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(18, 2, 361, 362, 1, 'Fine Art', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(19, 2, 359, 360, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(20, 2, 357, 358, 1, 'Musical Instruments', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(21, 2, 355, 356, 1, 'Orientalia', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(22, 2, 353, 354, 1, 'Painting', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(23, 2, 351, 352, 1, 'Photographic Images', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(24, 2, 349, 350, 1, 'Post-1900', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(25, 2, 347, 348, 1, 'Pre-1900', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(26, 2, 345, 346, 1, 'Prints', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(27, 2, 343, 344, 1, 'Scientific Instruments', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(28, 2, 341, 342, 1, 'Silver & Silver Plate', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(29, 1, 262, 339, 0, 'Books', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(30, 29, 337, 338, 1, 'Animals', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(31, 29, 335, 336, 1, 'Arts, Architecture & Photography', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(32, 29, 333, 334, 1, 'Audiobooks', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(33, 29, 331, 332, 1, 'Biographies & Memoirs', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(34, 29, 329, 330, 1, 'Business & Investing', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(35, 29, 327, 328, 1, 'Catalogs', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(36, 29, 325, 326, 1, 'Children', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(37, 29, 323, 324, 1, 'Computers & Internet', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(38, 29, 321, 322, 1, 'Contemporary', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(39, 29, 319, 320, 1, 'Cooking, Food & Wine', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(40, 29, 317, 318, 1, 'Entertainment', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(41, 29, 315, 316, 1, 'Foreign Language Instruction', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(42, 29, 313, 314, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(43, 29, 311, 312, 1, 'Health, Mind & Body', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(44, 29, 309, 310, 1, 'Historical', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(45, 29, 307, 308, 1, 'History', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(46, 29, 305, 306, 1, 'Home & Garden', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(47, 29, 303, 304, 1, 'Horror', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(48, 29, 301, 302, 1, 'Illustrated', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(49, 29, 299, 300, 1, 'Literature & Fiction', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(50, 29, 297, 298, 1, 'Men', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(51, 29, 295, 296, 1, 'Mystery & Thrillers', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(52, 29, 293, 294, 1, 'News', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(53, 29, 291, 292, 1, 'Nonfiction', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(54, 29, 289, 290, 1, 'Parenting & Families', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(55, 29, 287, 288, 1, 'Poetry', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(56, 29, 285, 286, 1, 'Rare', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(57, 29, 283, 284, 1, 'Reference', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(58, 29, 281, 282, 1, 'Regency', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(59, 29, 279, 280, 1, 'Religion & Spirituality', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(60, 29, 277, 278, 1, 'Science & Nature', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(61, 29, 275, 276, 1, 'Science Fiction & Fantasy', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(62, 29, 273, 274, 1, 'Sports', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(63, 29, 271, 272, 1, 'Sports & Outdoors', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(64, 29, 269, 270, 1, 'Teens', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(65, 29, 267, 268, 1, 'Textbooks', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(66, 29, 265, 266, 1, 'Travel', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(67, 29, 263, 264, 1, 'Women', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(68, 1, 254, 261, 0, 'Clothing & Accessories', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(69, 68, 259, 260, 1, 'Accessories', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(70, 68, 257, 258, 1, 'Clothing', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(71, 68, 255, 256, 1, 'Watches', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(72, 1, 248, 253, 0, 'Coins & Stamps', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(73, 72, 251, 252, 1, 'Coins', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(74, 72, 249, 250, 1, 'Philately', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(75, 1, 172, 247, 0, 'Collectibles', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(76, 75, 245, 246, 1, 'Advertising', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(77, 75, 243, 244, 1, 'Animals', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(78, 75, 241, 242, 1, 'Animation', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(79, 75, 239, 240, 1, 'Antique Reproductions', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(80, 75, 237, 238, 1, 'Autographs', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(81, 75, 235, 236, 1, 'Barber Shop', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(82, 75, 233, 234, 1, 'Bears', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(83, 75, 231, 232, 1, 'Bells', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(84, 75, 229, 230, 1, 'Bottles & Cans', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(85, 75, 227, 228, 1, 'Breweriana', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(86, 75, 225, 226, 1, 'Cars & Motorcycles', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(87, 75, 223, 224, 1, 'Cereal Boxes & Premiums', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(88, 75, 221, 222, 1, 'Character', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(89, 75, 219, 220, 1, 'Circus & Carnival', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(90, 75, 217, 218, 1, 'Collector Plates', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(91, 75, 215, 216, 1, 'Dolls', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(92, 75, 213, 214, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(93, 75, 211, 212, 1, 'Historical & Cultural', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(94, 75, 209, 210, 1, 'Holiday & Seasonal', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(95, 75, 207, 208, 1, 'Household Items', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(96, 75, 205, 206, 1, 'Kitsch', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(97, 75, 203, 204, 1, 'Knives & Swords', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(98, 75, 201, 202, 1, 'Lunchboxes', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(99, 75, 199, 200, 1, 'Magic & Novelty Items', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(100, 75, 197, 198, 1, 'Memorabilia', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(101, 75, 195, 196, 1, 'Militaria', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(102, 75, 193, 194, 1, 'Music Boxes', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(103, 75, 191, 192, 1, 'Oddities', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(104, 75, 189, 190, 1, 'Paper', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(105, 75, 187, 188, 1, 'Pinbacks', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(106, 75, 185, 186, 1, 'Porcelain Figurines', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(107, 75, 183, 184, 1, 'Railroadiana', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(108, 75, 181, 182, 1, 'Religious', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(109, 75, 179, 180, 1, 'Rocks, Minerals & Fossils', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(110, 75, 177, 178, 1, 'Scientific Instruments', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(111, 75, 175, 176, 1, 'Textiles', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(112, 75, 173, 174, 1, 'Tobacciana', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(113, 1, 154, 171, 0, 'Comics, Cards & Science Fiction', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(114, 113, 169, 170, 1, 'Anime & Manga', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(115, 113, 167, 168, 1, 'Comic Books', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(116, 113, 165, 166, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(117, 113, 163, 164, 1, 'Godzilla', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(118, 113, 161, 162, 1, 'Star Trek', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(119, 113, 159, 160, 1, 'The X-Files', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(120, 113, 157, 158, 1, 'Toys', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(121, 113, 155, 156, 1, 'Trading Cards', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(122, 1, 144, 153, 0, 'Computers & Software', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(123, 122, 151, 152, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(124, 122, 149, 150, 1, 'Hardware', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(125, 122, 147, 148, 1, 'Internet Services', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(126, 122, 145, 146, 1, 'Software', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(127, 1, 132, 143, 0, 'Electronics & Photography', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(128, 127, 141, 142, 1, 'Consumer Electronics', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(129, 127, 139, 140, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(130, 127, 137, 138, 1, 'Photo Equipment', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(131, 127, 135, 136, 1, 'Recording Equipment', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(132, 127, 133, 134, 1, 'Video Equipment', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(133, 1, 112, 131, 0, 'Home & Garden', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(134, 133, 129, 130, 1, 'Baby Items', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(135, 133, 127, 128, 1, 'Crafts', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(136, 133, 125, 126, 1, 'Furniture', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(137, 133, 123, 124, 1, 'Garden', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(138, 133, 121, 122, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(139, 133, 119, 120, 1, 'Household Items', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(140, 133, 117, 118, 1, 'Pet Supplies', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(141, 133, 115, 116, 1, 'Tools & Hardware', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(142, 133, 113, 114, 1, 'Weddings', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(143, 1, 98, 111, 0, 'Movies & Video', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(144, 143, 109, 110, 1, 'Blueray', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(145, 143, 107, 108, 1, 'DVD', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(146, 143, 105, 106, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(147, 143, 103, 104, 1, 'HD-DVD', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(148, 143, 101, 102, 1, 'Laser Discs', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(149, 143, 99, 100, 1, 'VHS', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(150, 1, 84, 97, 0, 'Music', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(151, 150, 95, 96, 1, 'CDs', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(152, 150, 93, 94, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(153, 150, 91, 92, 1, 'Instruments', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(154, 150, 89, 90, 1, 'Memorabilia', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(155, 150, 87, 88, 1, 'Records', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(156, 150, 85, 86, 1, 'Tapes', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(157, 1, 74, 83, 0, 'Office & Business', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(158, 157, 81, 82, 1, 'Briefcases', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(159, 157, 79, 80, 1, 'Fax Machines', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(160, 157, 77, 78, 1, 'General Equipment', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(161, 157, 75, 76, 1, 'Pagers', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(162, 1, 58, 73, 0, 'Other Goods & Services', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(163, 162, 71, 72, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(164, 162, 69, 70, 1, 'Metaphysical', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(165, 162, 67, 68, 1, 'Property', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(166, 162, 65, 66, 1, 'Services', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(167, 162, 63, 64, 1, 'Tickets & Events', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(168, 162, 61, 62, 1, 'Transportation', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(169, 162, 59, 60, 1, 'Travel', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(170, 1, 50, 57, 0, 'Sports & Recreation', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(171, 170, 55, 56, 1, 'Apparel & Equipment', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(172, 170, 53, 54, 1, 'Exercise Equipment', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(173, 170, 51, 52, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(174, 1, 2, 49, 0, 'Toys & Games', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(175, 174, 47, 48, 1, 'Action Figures', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(176, 174, 45, 46, 1, 'Beanie Babies & Beanbag Toys', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(177, 174, 43, 44, 1, 'Diecast', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(178, 174, 41, 42, 1, 'Fast Food', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(179, 174, 39, 40, 1, 'Fisher-Price', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(180, 174, 37, 38, 1, 'Furby', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(181, 174, 35, 36, 1, 'Games', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(182, 174, 33, 34, 1, 'General', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(183, 174, 31, 32, 1, 'Giga Pet & Tamagotchi', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(184, 174, 29, 30, 1, 'Hobbies', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(185, 174, 27, 28, 1, 'Marbles', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(186, 174, 25, 26, 1, 'My Little Pony', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(187, 174, 23, 24, 1, 'Peanuts Gang', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(188, 174, 21, 22, 1, 'Pez', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(189, 174, 19, 20, 1, 'Plastic Models', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(190, 174, 17, 18, 1, 'Plush Toys', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(191, 174, 15, 16, 1, 'Puzzles', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(192, 174, 13, 14, 1, 'lot Cars', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(193, 174, 11, 12, 1, 'Teletubbies', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(194, 174, 9, 10, 1, 'Toy Soldiers', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(195, 174, 7, 8, 1, 'Vintage', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(196, 174, 5, 6, 1, 'Vintage Tin', 0, 0, '', '');";
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(197, 174, 3, 4, 1, 'Vintage Vehicles', 0, 0, '', '');";
-}
-else
-{
-	$query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, -1, 1, 2, -1, 'All', 0, 0, '', '');";
+if ($_GET['cats'] == 1) {
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(1, -1, 1, 394, -1, 'All', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(2, 1, 340, 393, 0, 'Art & Antiques', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(3, 2, 391, 392, 1, 'Textiles & Linens', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(4, 2, 389, 390, 1, 'Amateur Art', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(5, 2, 387, 388, 1, 'Ancient World', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(6, 2, 385, 386, 1, 'Books & Manuscripts', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(7, 2, 383, 384, 1, 'Cameras', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(8, 2, 363, 382, 1, 'Ceramics & Glass', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(9, 8, 364, 381, 2, 'Glass', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(10, 9, 379, 380, 3, '40s, 50s & 60s', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(11, 9, 377, 378, 3, 'Art Glass', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(12, 9, 375, 376, 3, 'Carnival', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(13, 9, 373, 374, 3, 'Chalkware', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(14, 9, 371, 372, 3, 'Chintz & Shelley', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(15, 9, 369, 370, 3, 'Contemporary Glass', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(16, 9, 367, 368, 3, 'Decorative', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(17, 9, 365, 366, 3, 'Porcelain', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(18, 2, 361, 362, 1, 'Fine Art', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(19, 2, 359, 360, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(20, 2, 357, 358, 1, 'Musical Instruments', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(21, 2, 355, 356, 1, 'Orientalia', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(22, 2, 353, 354, 1, 'Painting', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(23, 2, 351, 352, 1, 'Photographic Images', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(24, 2, 349, 350, 1, 'Post-1900', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(25, 2, 347, 348, 1, 'Pre-1900', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(26, 2, 345, 346, 1, 'Prints', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(27, 2, 343, 344, 1, 'Scientific Instruments', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(28, 2, 341, 342, 1, 'Silver & Silver Plate', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(29, 1, 262, 339, 0, 'Books', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(30, 29, 337, 338, 1, 'Animals', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(31, 29, 335, 336, 1, 'Arts, Architecture & Photography', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(32, 29, 333, 334, 1, 'Audiobooks', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(33, 29, 331, 332, 1, 'Biographies & Memoirs', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(34, 29, 329, 330, 1, 'Business & Investing', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(35, 29, 327, 328, 1, 'Catalogs', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(36, 29, 325, 326, 1, 'Children', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(37, 29, 323, 324, 1, 'Computers & Internet', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(38, 29, 321, 322, 1, 'Contemporary', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(39, 29, 319, 320, 1, 'Cooking, Food & Wine', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(40, 29, 317, 318, 1, 'Entertainment', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(41, 29, 315, 316, 1, 'Foreign Language Instruction', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(42, 29, 313, 314, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(43, 29, 311, 312, 1, 'Health, Mind & Body', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(44, 29, 309, 310, 1, 'Historical', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(45, 29, 307, 308, 1, 'History', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(46, 29, 305, 306, 1, 'Home & Garden', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(47, 29, 303, 304, 1, 'Horror', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(48, 29, 301, 302, 1, 'Illustrated', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(49, 29, 299, 300, 1, 'Literature & Fiction', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(50, 29, 297, 298, 1, 'Men', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(51, 29, 295, 296, 1, 'Mystery & Thrillers', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(52, 29, 293, 294, 1, 'News', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(53, 29, 291, 292, 1, 'Nonfiction', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(54, 29, 289, 290, 1, 'Parenting & Families', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(55, 29, 287, 288, 1, 'Poetry', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(56, 29, 285, 286, 1, 'Rare', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(57, 29, 283, 284, 1, 'Reference', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(58, 29, 281, 282, 1, 'Regency', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(59, 29, 279, 280, 1, 'Religion & Spirituality', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(60, 29, 277, 278, 1, 'Science & Nature', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(61, 29, 275, 276, 1, 'Science Fiction & Fantasy', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(62, 29, 273, 274, 1, 'Sports', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(63, 29, 271, 272, 1, 'Sports & Outdoors', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(64, 29, 269, 270, 1, 'Teens', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(65, 29, 267, 268, 1, 'Textbooks', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(66, 29, 265, 266, 1, 'Travel', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(67, 29, 263, 264, 1, 'Women', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(68, 1, 254, 261, 0, 'Clothing & Accessories', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(69, 68, 259, 260, 1, 'Accessories', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(70, 68, 257, 258, 1, 'Clothing', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(71, 68, 255, 256, 1, 'Watches', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(72, 1, 248, 253, 0, 'Coins & Stamps', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(73, 72, 251, 252, 1, 'Coins', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(74, 72, 249, 250, 1, 'Philately', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(75, 1, 172, 247, 0, 'Collectibles', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(76, 75, 245, 246, 1, 'Advertising', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(77, 75, 243, 244, 1, 'Animals', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(78, 75, 241, 242, 1, 'Animation', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(79, 75, 239, 240, 1, 'Antique Reproductions', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(80, 75, 237, 238, 1, 'Autographs', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(81, 75, 235, 236, 1, 'Barber Shop', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(82, 75, 233, 234, 1, 'Bears', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(83, 75, 231, 232, 1, 'Bells', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(84, 75, 229, 230, 1, 'Bottles & Cans', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(85, 75, 227, 228, 1, 'Breweriana', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(86, 75, 225, 226, 1, 'Cars & Motorcycles', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(87, 75, 223, 224, 1, 'Cereal Boxes & Premiums', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(88, 75, 221, 222, 1, 'Character', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(89, 75, 219, 220, 1, 'Circus & Carnival', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(90, 75, 217, 218, 1, 'Collector Plates', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(91, 75, 215, 216, 1, 'Dolls', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(92, 75, 213, 214, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(93, 75, 211, 212, 1, 'Historical & Cultural', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(94, 75, 209, 210, 1, 'Holiday & Seasonal', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(95, 75, 207, 208, 1, 'Household Items', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(96, 75, 205, 206, 1, 'Kitsch', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(97, 75, 203, 204, 1, 'Knives & Swords', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(98, 75, 201, 202, 1, 'Lunchboxes', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(99, 75, 199, 200, 1, 'Magic & Novelty Items', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(100, 75, 197, 198, 1, 'Memorabilia', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(101, 75, 195, 196, 1, 'Militaria', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(102, 75, 193, 194, 1, 'Music Boxes', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(103, 75, 191, 192, 1, 'Oddities', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(104, 75, 189, 190, 1, 'Paper', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(105, 75, 187, 188, 1, 'Pinbacks', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(106, 75, 185, 186, 1, 'Porcelain Figurines', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(107, 75, 183, 184, 1, 'Railroadiana', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(108, 75, 181, 182, 1, 'Religious', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(109, 75, 179, 180, 1, 'Rocks, Minerals & Fossils', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(110, 75, 177, 178, 1, 'Scientific Instruments', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(111, 75, 175, 176, 1, 'Textiles', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(112, 75, 173, 174, 1, 'Tobacciana', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(113, 1, 154, 171, 0, 'Comics, Cards & Science Fiction', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(114, 113, 169, 170, 1, 'Anime & Manga', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(115, 113, 167, 168, 1, 'Comic Books', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(116, 113, 165, 166, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(117, 113, 163, 164, 1, 'Godzilla', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(118, 113, 161, 162, 1, 'Star Trek', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(119, 113, 159, 160, 1, 'The X-Files', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(120, 113, 157, 158, 1, 'Toys', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(121, 113, 155, 156, 1, 'Trading Cards', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(122, 1, 144, 153, 0, 'Computers & Software', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(123, 122, 151, 152, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(124, 122, 149, 150, 1, 'Hardware', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(125, 122, 147, 148, 1, 'Internet Services', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(126, 122, 145, 146, 1, 'Software', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(127, 1, 132, 143, 0, 'Electronics & Photography', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(128, 127, 141, 142, 1, 'Consumer Electronics', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(129, 127, 139, 140, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(130, 127, 137, 138, 1, 'Photo Equipment', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(131, 127, 135, 136, 1, 'Recording Equipment', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(132, 127, 133, 134, 1, 'Video Equipment', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(133, 1, 112, 131, 0, 'Home & Garden', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(134, 133, 129, 130, 1, 'Baby Items', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(135, 133, 127, 128, 1, 'Crafts', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(136, 133, 125, 126, 1, 'Furniture', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(137, 133, 123, 124, 1, 'Garden', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(138, 133, 121, 122, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(139, 133, 119, 120, 1, 'Household Items', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(140, 133, 117, 118, 1, 'Pet Supplies', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(141, 133, 115, 116, 1, 'Tools & Hardware', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(142, 133, 113, 114, 1, 'Weddings', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(143, 1, 98, 111, 0, 'Movies & Video', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(144, 143, 109, 110, 1, 'Blueray', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(145, 143, 107, 108, 1, 'DVD', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(146, 143, 105, 106, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(147, 143, 103, 104, 1, 'HD-DVD', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(148, 143, 101, 102, 1, 'Laser Discs', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(149, 143, 99, 100, 1, 'VHS', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(150, 1, 84, 97, 0, 'Music', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(151, 150, 95, 96, 1, 'CDs', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(152, 150, 93, 94, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(153, 150, 91, 92, 1, 'Instruments', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(154, 150, 89, 90, 1, 'Memorabilia', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(155, 150, 87, 88, 1, 'Records', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(156, 150, 85, 86, 1, 'Tapes', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(157, 1, 74, 83, 0, 'Office & Business', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(158, 157, 81, 82, 1, 'Briefcases', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(159, 157, 79, 80, 1, 'Fax Machines', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(160, 157, 77, 78, 1, 'General Equipment', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(161, 157, 75, 76, 1, 'Pagers', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(162, 1, 58, 73, 0, 'Other Goods & Services', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(163, 162, 71, 72, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(164, 162, 69, 70, 1, 'Metaphysical', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(165, 162, 67, 68, 1, 'Property', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(166, 162, 65, 66, 1, 'Services', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(167, 162, 63, 64, 1, 'Tickets & Events', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(168, 162, 61, 62, 1, 'Transportation', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(169, 162, 59, 60, 1, 'Travel', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(170, 1, 50, 57, 0, 'Sports & Recreation', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(171, 170, 55, 56, 1, 'Apparel & Equipment', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(172, 170, 53, 54, 1, 'Exercise Equipment', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(173, 170, 51, 52, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(174, 1, 2, 49, 0, 'Toys & Games', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(175, 174, 47, 48, 1, 'Action Figures', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(176, 174, 45, 46, 1, 'Beanie Babies & Beanbag Toys', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(177, 174, 43, 44, 1, 'Diecast', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(178, 174, 41, 42, 1, 'Fast Food', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(179, 174, 39, 40, 1, 'Fisher-Price', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(180, 174, 37, 38, 1, 'Furby', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(181, 174, 35, 36, 1, 'Games', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(182, 174, 33, 34, 1, 'General', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(183, 174, 31, 32, 1, 'Giga Pet & Tamagotchi', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(184, 174, 29, 30, 1, 'Hobbies', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(185, 174, 27, 28, 1, 'Marbles', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(186, 174, 25, 26, 1, 'My Little Pony', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(187, 174, 23, 24, 1, 'Peanuts Gang', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(188, 174, 21, 22, 1, 'Pez', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(189, 174, 19, 20, 1, 'Plastic Models', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(190, 174, 17, 18, 1, 'Plush Toys', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(191, 174, 15, 16, 1, 'Puzzles', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(192, 174, 13, 14, 1, 'lot Cars', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(193, 174, 11, 12, 1, 'Teletubbies', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(194, 174, 9, 10, 1, 'Toy Soldiers', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(195, 174, 7, 8, 1, 'Vintage', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(196, 174, 5, 6, 1, 'Vintage Tin', 0, 0, '', '');";
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(197, 174, 3, 4, 1, 'Vintage Vehicles', 0, 0, '', '');";
+} else {
+    $query[] = "INSERT INTO `" . $DBPrefix . "categories` VALUES(NULL, -1, 1, 2, -1, 'All', 0, 0, '', '');";
 }
 
 
@@ -566,7 +563,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "comm_messages`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "comm_messages` (
   `id` int(11) NOT NULL auto_increment,
   `boardid` int(11) NOT NULL default '0',
-  `msgdate` datetime default CURRENT_TIMESTAMP,
+  `msgdate` timestamp default CURRENT_TIMESTAMP,
   `user` int(11) NOT NULL default '0',
   `username` varchar(255) NOT NULL default '',
   `message` text NOT NULL,
@@ -588,7 +585,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "community` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '0',
   `messages` int(11) NOT NULL default '0',
-  `lastmessage` `lastmessage` datetime default CURRENT_TIMESTAMP,
+  `lastmessage` timestamp default CURRENT_TIMESTAMP,
   `msgstoshow` int(11) NOT NULL default '0',
   `active` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
@@ -1115,7 +1112,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "feedbacks` (
   `rater_user_nick` varchar(20) default NULL,
   `feedback` mediumtext,
   `rate` int(2) default NULL,
-  `feedbackdate` datetime default CURRENT_TIMESTAMP,
+  `feedbackdate` timestamp default CURRENT_TIMESTAMP,
   `auction_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
@@ -1290,7 +1287,7 @@ $query[] = "CREATE TABLE  `" . $DBPrefix . "logs` (
   `action_id` INT( 11 ) NOT NULL DEFAULT  '0',
   `user_id` INT( 32 ) NOT NULL DEFAULT  '0',
   `ip` VARCHAR( 45 ) NOT NULL,
-  `timestamp` datetime default CURRENT_TIMESTAMP,
+  `timestamp` timestamp default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 );";
 
@@ -1340,7 +1337,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "messages` (
   `sentto` int(11) NOT NULL default '0',
   `sentfrom` int(11) NOT NULL default '0',
   `fromemail` varchar(255) NOT NULL default '',
-  `sentat` datetime default CURRENT_TIMESTAMP,
+  `sentat` timestamp default CURRENT_TIMESTAMP,
   `message` text NOT NULL ,
   `isread` tinyint(1) NOT NULL default '0',
   `subject` varchar(255) NOT NULL default '',
@@ -1362,7 +1359,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "news` (
   `id` int(11) NOT NULL auto_increment,
   `title` varchar(200) NOT NULL default '',
   `content` longtext NOT NULL,
-  `new_date` datetime default CURRENT_TIMESTAMP,
+  `new_date` timestamp default CURRENT_TIMESTAMP,
   `suspended` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ;";
@@ -1401,7 +1398,7 @@ $query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "online`;";
 $query[] = "CREATE TABLE `" . $DBPrefix . "online` (
   `ID` bigint(21) NOT NULL auto_increment,
   `SESSION` varchar(32) NOT NULL default '',
-  `time` datetime default CURRENT_TIMESTAMP,
+  `time` timestamp default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`ID`)
 ) ;";
 
@@ -1424,7 +1421,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "pendingnotif` (
   `winners` text NOT NULL,
   `auction` text NOT NULL,
   `seller` text NOT NULL,
-  `thisdate` datetime default CURRENT_TIMESTAMP,
+  `thisdate` timestamp default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1771,16 +1768,16 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `rate_sum` int(11) NOT NULL default '0',
   `rate_num` int(11) NOT NULL default '0',
   `birthdate` int(8) default '0',
-  `suspended` int(1) default '0',
-  `nletter` int(1) NOT NULL default '0',
+  `suspended` tinyint(1) default '0',
+  `nletter` tinyint(1) NOT NULL default '0',
   `balance` double(16,2) NOT NULL default '0',
   `auc_watch` text,
   `item_watch` text,
   `endemailmode` enum('one','cum','none') NOT NULL default 'one',
   `startemailmode` enum('yes','no') NOT NULL default 'yes',
   `emailtype` enum('html','text') NOT NULL default 'html',
-  `reg_date` datetime default CURRENT_TIMESTAMP,
-  `lastlogin` datetime default CURRENT_TIMESTAMP,
+  `reg_date` timestamp default CURRENT_TIMESTAMP,
+  `lastlogin` datetime,
   `payment_details` text,
   `groups` text,
   `bn_only` enum('y','n') NOT NULL default 'y',
@@ -1804,7 +1801,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   `useracc_id` int(11) NOT NULL AUTO_INCREMENT,
   `auc_id` int(11) NOT NULL default '0',
   `user_id` int(11) NOT NULL default '0',
-  `date` datetime default CURRENT_TIMESTAMP,
+  `date` timestamp default CURRENT_TIMESTAMP,
   `setup` double(8,2) NOT NULL default '0',
   `featured` double(8,2) NOT NULL default '0',
   `bold` double(8,2) NOT NULL default '0',
@@ -1820,7 +1817,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "useraccounts` (
   `finalval` double(8,2) NOT NULL default '0',
   `balance` double(8,2) NOT NULL default '0',
   `total` double(8,2) NOT NULL,
-  `paid` int(1) NOT NULL default '0',
+  `paid` tinyint(1) NOT NULL default '0',
   PRIMARY KEY (`useracc_id`)
 );";
 
@@ -1839,8 +1836,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "usersips` (
   `id` int(11) NOT NULL auto_increment,
   `user` int(11) default NULL,
   `ip` varchar(15) default NULL,
-  `type` enum('first','after') NOT NULL default 'first',
-  `action` enum('accept','deny') NOT NULL default 'accept',
+  `type` varchar(255) default 'register',
+  `action` enum('accept', 'deny') NOT NULL default 'accept',
   PRIMARY KEY  (`id`)
 ) ;";
 
@@ -1884,13 +1881,13 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "winners` (
   `auc_title` varchar(70),
   `auc_shipping_cost` double(16,2) default '0',
   `auc_payment` tinytext,
-  `closingdate` datetime default CURRENT_TIMESTAMP,
+  `closingdate` timestamp default CURRENT_TIMESTAMP,
   `feedback_win` tinyint(1) NOT NULL default '0',
   `feedback_sel` tinyint(1) NOT NULL default '0',
   `qty` int(11) NOT NULL default '1',
-  `paid` int(1) NOT NULL default '0',
-  `bf_paid` INT(1) NOT NULL DEFAULT  '0',
-  `ff_paid` INT(1) NOT NULL DEFAULT '1',
-  `shipped` INT(1) NOT NULL DEFAULT '0',
+  `paid` tinyint(1) NOT NULL default '0',
+  `bf_paid` tinyint(1) NOT NULL DEFAULT  '0',
+  `ff_paid` tinyint(1) NOT NULL DEFAULT '1',
+  `shipped` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`id`)
 ) ;";

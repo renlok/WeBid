@@ -19,17 +19,15 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Delete users and banners if necessary
-if (isset($_POST['delete']) && is_array($_POST['delete']))
-{
-	foreach ($_POST['delete'] as $k => $v)
-	{
-		$params = array();
-		$params[] = array(':user_id', $v, 'int');
-		$query = "DELETE FROM " . $DBPrefix . "banners WHERE user = :user_id";
-		$db->query($query, $params);
-		$query = "DELETE FROM " . $DBPrefix . "bannersusers WHERE id = :user_id";
-		$db->query($query, $params);
-	}
+if (isset($_POST['delete']) && is_array($_POST['delete'])) {
+    foreach ($_POST['delete'] as $k => $v) {
+        $params = array();
+        $params[] = array(':user_id', $v, 'int');
+        $query = "DELETE FROM " . $DBPrefix . "banners WHERE user = :user_id";
+        $db->query($query, $params);
+        $query = "DELETE FROM " . $DBPrefix . "bannersusers WHERE id = :user_id";
+        $db->query($query, $params);
+    }
 }
 
 // Retrieve users from the database
@@ -38,23 +36,21 @@ $query = "SELECT u.*, COUNT(b.user) as count FROM " . $DBPrefix . "bannersusers 
 		GROUP BY u.id ORDER BY u.name";
 $db->direct_query($query);
 $bg = '';
-while ($row = $db->fetch())
-{
-	$template->assign_block_vars('busers', array(
-			'ID' => $row['id'],
-			'NAME' => $row['name'],
-			'COMPANY' => $row['company'],
-			'EMAIL' => $row['email'],
-			'NUM_BANNERS' => $row['count'],
-			'BG' => $bg
-			));
-	$bg = ($bg == '') ? 'class="bg"' : '';
+while ($row = $db->fetch()) {
+    $template->assign_block_vars('busers', array(
+            'ID' => $row['id'],
+            'NAME' => $row['name'],
+            'COMPANY' => $row['company'],
+            'EMAIL' => $row['email'],
+            'NUM_BANNERS' => $row['count'],
+            'BG' => $bg
+            ));
+    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 include 'header.php';
 $template->set_filenames(array(
-		'body' => 'managebanners.tpl'
-		));
+        'body' => 'managebanners.tpl'
+        ));
 $template->display('body');
 include 'footer.php';
-?>

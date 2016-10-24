@@ -15,12 +15,11 @@
 
 include 'common.php';
 
-if (!$user->checkAuth())
-{
-	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
-	$_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourbids.php';
-	header('location: user_login.php');
-	exit;
+if (!$user->checkAuth()) {
+    $_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
+    $_SESSION['REDIRECT_AFTER_LOGIN'] = 'yourbids.php';
+    header('location: user_login.php');
+    exit;
 }
 
 // get active bids for this user
@@ -35,45 +34,45 @@ $db->query($query, $params);
 
 $idcheck = array();
 $auctions_count = 0;
-while ($row = $db->fetch())
-{
-	if (!in_array($row['id'], $idcheck))
-	{
-		// prepare some data
-		$bgColor = (!($auctions_count % 2)) ? '' : 'class="alt-row"';
+while ($row = $db->fetch()) {
+    if (!in_array($row['id'], $idcheck)) {
+        // prepare some data
+        $bgColor = (!($auctions_count % 2)) ? '' : 'class="alt-row"';
 
-		// Outbidded or winning bid
-		if ($row['bid_id'] != $row['current_bid_id']) $bgColor = 'style="background-color:#FFFF00;"';
+        // Outbidded or winning bid
+        if ($row['bid_id'] != $row['current_bid_id']) {
+            $bgColor = 'style="background-color:#FFFF00;"';
+        }
 
-		$auctions_count++;
-		$idcheck[] = $row['id'];
+        $auctions_count++;
+        $idcheck[] = $row['id'];
 
-		$current_time = new DateTime('now', $dt->UTCtimezone);
-		$end_time = new DateTime($row['ends'], $dt->UTCtimezone);
-		$difference = $current_time->diff($end_time);
+        $current_time = new DateTime('now', $dt->UTCtimezone);
+        $end_time = new DateTime($row['ends'], $dt->UTCtimezone);
+        $difference = $current_time->diff($end_time);
 
-		$template->assign_block_vars('bids', array(
-				'BGCOLOUR' => $bgColor,
-				'ID' => $row['id'],
-				'TITLE' => htmlspecialchars($row['title']),
-				'BID' => $system->print_money($row['bid']),
-				'PROXYBID' => (intval($row['proxybid']) > 0) ? $system->print_money($row['proxybid']) : '',
-				'QTY' => $row['quantity'],
-				'TIMELEFT' => $dt->formatTimeLeft($difference),
-				'CBID' => $system->print_money($row['current_bid'])
-				));
-	}
+        $template->assign_block_vars('bids', array(
+                'BGCOLOUR' => $bgColor,
+                'ID' => $row['id'],
+                'TITLE' => htmlspecialchars($row['title']),
+                'BID' => $system->print_money($row['bid']),
+                'PROXYBID' => (intval($row['proxybid']) > 0) ? $system->print_money($row['proxybid']) : '',
+                'QTY' => $row['quantity'],
+                'TIMELEFT' => $dt->formatTimeLeft($difference),
+                'CBID' => $system->print_money($row['current_bid'])
+                ));
+    }
 }
 
 $template->assign_vars(array(
-		'NUM_BIDS' => $auctions_count
-		));
+        'NUM_BIDS' => $auctions_count
+        ));
 
 include 'header.php';
 $TMP_usmenutitle = $MSG['620'];
 include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
-		'body' => 'yourbids.tpl'
-		));
+        'body' => 'yourbids.tpl'
+        ));
 $template->display('body');
 include 'footer.php';

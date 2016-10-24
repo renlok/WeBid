@@ -20,11 +20,10 @@ define('InWeBid', true);
 define('TrackUserIPs', true);
 
 // file check &
-if(!@include('includes/config.inc.php'))
-{
-	$install_path = (!defined('InAdmin')) ? 'install/install.php' : '../install/install.php';
-	header('location: ' . $install_path);
-	exit;
+if (!@include('includes/config.inc.php')) {
+    $install_path = (!defined('InAdmin')) ? 'install/install.php' : '../install/install.php';
+    header('location: ' . $install_path);
+    exit;
 }
 
 $MD5_PREFIX = (!isset($MD5_PREFIX)) ? 'fhQYBpS5FNs4' : $MD5_PREFIX; // if the user didn't set a code
@@ -53,13 +52,10 @@ include INCLUDE_PATH . 'template/Template.php';
 
 // connect to the database
 $db = new DatabasePDO();
-if (isset($CHARSET))
-{
-	$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET);
-}
-else
-{
-	$db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
+if (isset($CHARSET)) {
+    $db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET);
+} else {
+    $db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
 }
 
 $system = new global_class();
@@ -69,17 +65,15 @@ include INCLUDE_PATH . 'messages.inc.php';
 $system->loadAuctionTypes();
 set_error_handler('WeBidErrorHandler', $error_reporting);
 
-if($user->logged_in)
-{
-	$system->tdiff = $system->getUserOffset(time(), $user->user_data['timezone']);
-	$system->ctime = $system->getUserTimestamp(time(), $user->user_data['timezone']) + $system->tdiff;
+if ($user->logged_in) {
+    $system->tdiff = $system->getUserOffset(time(), $user->user_data['timezone']);
+    $system->ctime = $system->getUserTimestamp(time(), $user->user_data['timezone']) + $system->tdiff;
 }
 $dt = new Date($system, $user);
 
 // delete REDIRECT_AFTER_LOGIN value automatically so you are never forwarded to an old page
-if(isset($_SESSION['REDIRECT_AFTER_LOGIN']) && !defined('AtLogin'))
-{
-	unset($_SESSION['REDIRECT_AFTER_LOGIN']);
+if (isset($_SESSION['REDIRECT_AFTER_LOGIN']) && !defined('AtLogin')) {
+    unset($_SESSION['REDIRECT_AFTER_LOGIN']);
 }
 
 $template->set_template();

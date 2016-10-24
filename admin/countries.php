@@ -76,7 +76,7 @@ foreach ($countries as $country) {
 
     $template->assign_block_vars('countries', array(
             'COUNTRY' => $country['country'],
-            'B_CAN_DELETE' => $can_delete
+            'SELECTBOX' => ($can_delete) ? '<input type="checkbox" name="delete[]" value="' . $country['country'] . '">' : '<img src="../images/nodelete.gif" alt="{L_cannot_delete}">'
             ));
 }
 

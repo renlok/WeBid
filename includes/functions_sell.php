@@ -220,8 +220,7 @@ function updateauction()
 		featured = :featured,
 		tax = :tax,
 		taxinc = :taxinc,
-		current_fee = current_fee + :fee
-		WHERE id = :auction_id";
+		current_fee = current_fee + :fee";
     $params = array();
     $params[] = array(':title', $_SESSION['SELL_title'], 'str');
     $params[] = array(':subtitle', $_SESSION['SELL_subtitle'], 'str');
@@ -258,6 +257,7 @@ function updateauction()
         $query .= ", starts = :starts";
         $params[] = array(':starts', $dt->convertToUTC($a_starts), 'str');
     }
+    $query .= ' WHERE id = :auction_id';
     $db->query($query, $params);
 }
 

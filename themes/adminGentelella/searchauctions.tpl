@@ -11,25 +11,25 @@
 							<tr>
 								<td>{L_113}</td>
 								<td>
-									<input type="text" size="11" maxlength="11" name="auctionid" value="{AUCTIONID}"> {L_RPT_23}
+									<input type="text" class="form-control" maxlength="11" name="auctionid" value="{AUCTIONID}"> {L_RPT_23}
 								</td>
 							</tr>
 							<tr>
 								<td>{L_25_0004}</td>
 								<td>
-									<input type="text" size="11" maxlength="32" name="usernick" value="{USERNICK}"> {L_RPT_23}
+									<input type="text" class="form-control" maxlength="32" name="usernick" value="{USERNICK}"> {L_RPT_23}
 								</td>
 							</tr>
 							<tr>
 								<td>{L_RPT_22}</td>
 								<td>
-									<input type="text" size="11" maxlength="11" name="userid" value="{USERID}"> {L_RPT_23}
+									<input type="text" class="form-control" maxlength="11" name="userid" value="{USERID}"> {L_RPT_23}
 								</td>
 							</tr>
 							<tr>
 								<td>{L_017}</td>
 								<td>
-									<input type="text" size="11" maxlength="20" name="titlekeywords" value="{TITLEKEYWORDS}"> {L_RPT_23}
+									<input type="text" class="form-control" maxlength="20" name="titlekeywords" value="{TITLEKEYWORDS}"> {L_RPT_23}
 								</td>
 							</tr>
 							<tr>
@@ -103,3 +103,4 @@
 			</div>
 		</div>
 		</div>
+</div>

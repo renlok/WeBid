@@ -19,7 +19,7 @@
                 	<th>{L_297}</th>
                 </tr>
 <!-- BEGIN news -->
-                <tr {news.BG}>
+                <tr<!-- IF news.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                 	<td>{news.DATE}</td>
                 	<td <!-- IF news.SUSPENDED eq 1 -->style="background: #FAD0D0; color: #B01717; font-weight: bold;"<!-- ENDIF -->>{news.TITLE}</td>
                 	<td>

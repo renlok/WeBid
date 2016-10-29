@@ -23,7 +23,7 @@
                 </div>
                 <script type="text/javascript">
 							new tcal ({'id': 'from_date','controlname': 'from_date'});
-						</script> 
+						</script>
                 -
                 <div id="sandbox-container">
                   <input type="text" name="to_date" id="to_date" value="{TO_DATE}" maxlength="19">
@@ -45,41 +45,41 @@
             <th><b>{L_766}</b></th>
             <th align="center"><b>{L_314}</b></th>
             <th align="center"><b>{L_391}</b></th>
-          <tr> 
+          <tr>
             <!-- ELSE -->
           <tr>
             <th><b>{L_314}</b></th>
             <th align="center"><b>{L_857}</b></th>
-          <tr> 
-            <!-- ENDIF --> 
-            <!-- BEGIN accounts --> 
+          <tr>
+            <!-- ENDIF -->
+            <!-- BEGIN accounts -->
             <!-- IF PAGNATION -->
-          <tr {accounts.BG}>
+          <tr<!-- IF accounts.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
             <td>{accounts.RNAME} ({accounts.NICK})</td>
             <td>{accounts.TEXT}</td>
             <td align="center">{accounts.DATE}</td>
             <td align="center">{accounts.AMOUNT}</td>
           </tr>
           <!-- ELSE -->
-          <tr {accounts.BG}>
+          <tr<!-- IF accounts.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
             <td>{accounts.DATE}</td>
             <td align="center">{accounts.AMOUNT}</td>
           </tr>
-          <!-- ENDIF --> 
+          <!-- ENDIF -->
           <!-- END accounts -->
         </table>
         <!-- IF PAGNATION -->
         <table>
           <tr>
             <td align="center"> {L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES} <br>
-              {PREV} 
-              <!-- BEGIN pages --> 
-              {pages.PAGE}&nbsp;&nbsp; 
-              <!-- END pages --> 
+              {PREV}
+              <!-- BEGIN pages -->
+              {pages.PAGE}&nbsp;&nbsp;
+              <!-- END pages -->
               {NEXT} </td>
           </tr>
         </table>
-        <!-- ENDIF --> 
+        <!-- ENDIF -->
       </div>
     </div>
   </div>

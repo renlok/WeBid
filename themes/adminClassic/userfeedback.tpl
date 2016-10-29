@@ -11,7 +11,7 @@
 						<td align="right" colspan="2"><b>{NICK} ({FB_NUM}) <img src="{SITEURL}/images/icons/{FB_ICON}" class="fbstar"></b></td>
 					</tr>
 <!-- BEGIN feedback -->
-					<tr {feedback.BG}>
+					<tr<!-- IF feedback.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
 						<td>
 							<img align="middle" src="{SITEURL}images/{feedback.FB_TYPE}.png">&nbsp;&nbsp;<b>{feedback.FB_FROM}</b>&nbsp;&nbsp;<span class="small">({L_506}{feedback.	FB_TIME})</span>
 							<p>{feedback.FB_MSG}</p>

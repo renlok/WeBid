@@ -38,7 +38,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     fclose($fh);
 }
 
-$abg = $bg = '';
 if (is_dir($theme_root)) {
     if ($dir = opendir($theme_root)) {
         while (($atheme = readdir($dir)) !== false) {
@@ -50,18 +49,14 @@ if (is_dir($theme_root)) {
                     $template->assign_block_vars('themes', array(
                             'NAME' => $atheme,
                             'B_CHECKED' => ($system->SETTINGS['theme'] == $atheme),
-                            'B_LISTFILES' => $list_files,
-                            'BG' => $bg
+                            'B_LISTFILES' => $list_files
                         ));
-                    $bg = ($bg == '') ? 'class="bg"' : '';
                 } else {
                     $template->assign_block_vars('admin_themes', array(
                             'NAME' => $atheme,
                             'B_CHECKED' => ($system->SETTINGS['admin_theme'] == $atheme),
-                            'B_LISTFILES' => $list_files,
-                            'BG' => $abg
+                            'B_LISTFILES' => $list_files
                         ));
-                    $abg = ($abg == '') ? 'class="bg"' : '';
                 }
 
                 if ($list_files) {

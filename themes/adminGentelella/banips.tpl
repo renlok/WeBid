@@ -35,27 +35,27 @@
                 </td>
             </tr>
             <!-- BEGIN ips -->
-            <tr {ips.BG}>
+            <tr<!-- IF ips.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
               <td>{L_manually_entered}</td>
               <td align="center">{ips.IP}</td>
-              <td align="center"><!-- IF ips.ACTION eq 'accept' --> 
-                {L_accepted} 
-                <!-- ELSE --> 
+              <td align="center"><!-- IF ips.ACTION eq 'accept' -->
+                {L_accepted}
+                <!-- ELSE -->
                 {L_banned}
                 <!-- ENDIF --></td>
               <td><!-- IF ips.ACTION eq 'accept' -->
-                
+
                 <input type="checkbox" name="deny[]" value="{ips.ID}" class="form-control">
-                &nbsp;{L_ban} 
+                &nbsp;{L_ban}
                 <!-- ELSE -->
-                
+
                 <input type="checkbox" name="accept[]" value="{ips.ID}" class="form-control">
-                &nbsp;{L_accept} 
+                &nbsp;{L_accept}
                 <!-- ENDIF --></td>
               <td align="center"><input type="checkbox" name="delete[]" value="{ips.ID}"></td>
               <!-- BEGINELSE -->
               <td colspan="5">{L_no_ips_banned}</td>
-              <!-- END ips --> 
+              <!-- END ips -->
             </tr>
           </table>
           <input type="hidden" name="action" value="update">

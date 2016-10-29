@@ -1,5 +1,5 @@
 	<div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12"> 
+        <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
                                 <div class="x_title">
                                     <h2>{L_239} <i class="fa fa-angle-double-right"></i> {PAGE_TITLE}</h2>
@@ -14,7 +14,7 @@
                     <th align="left"><b>{L_297}</b></th>
                 <tr>
                 <!-- BEGIN auctions -->
-                <tr {auctions.BG}>
+                <tr<!-- IF auctions.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                     <td>
                         <!-- IF auctions.SUSPENDED eq 1 -->
                         <span style="color:#FF0000">{auctions.TITLE}</span>

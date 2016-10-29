@@ -133,7 +133,7 @@ $query = "SELECT * FROM " . $DBPrefix . "banners WHERE user = :user_id";
 $params = array();
 $params[] = array(':user_id', $USER['id'], 'int');
 $db->query($query, $params);
-$bg = '';
+
 while ($row = $db->fetch()) {
     $template->assign_block_vars('banners', array(
             'ID' => $row['id'],
@@ -147,10 +147,8 @@ while ($row = $db->fetch()) {
             'SPONSERTEXT' => $row['sponsortext'],
             'VIEWS' => $row['views'],
             'CLICKS' => $row['clicks'],
-            'PURCHASED' => $row['purchased'],
-            'BG' => $bg
+            'PURCHASED' => $row['purchased']
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 // category

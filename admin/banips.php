@@ -68,15 +68,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 $query = "SELECT * FROM " . $DBPrefix . "usersips WHERE user = 'NOUSER'";
 $db->direct_query($query);
 
-$bg = '';
 while ($row = $db->fetch()) {
     $template->assign_block_vars('ips', array(
             'ID' => $row['id'],
             'IP' => $row['ip'],
-            'ACTION' => $row['action'],
-            'BG' => $bg
+            'ACTION' => $row['action']
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 include 'header.php';

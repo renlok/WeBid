@@ -59,7 +59,7 @@
                         <th width="15%">&nbsp;</th>
                     </tr>
 <!-- BEGIN msgs -->
-                    <tr {msgs.BG}>
+                    <tr<!-- IF msgs.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                         <td>{msgs.MESSAGE}</td>
                         <td>{msgs.POSTED_BY}</td>
                         <td>{msgs.POSTED_AT}</td>

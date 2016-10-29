@@ -42,14 +42,13 @@ $query = "SELECT * FROM " . $DBPrefix . "news ORDER BY new_date LIMIT :offset, :
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
-$k = 0;
+
 while ($row = $db->fetch()) {
     $template->assign_block_vars('news', array(
             'ID' => $row['id'],
             'TITLE' => htmlspecialchars($row['title']),
             'DATE' => $dt->formatDate($row['new_date']),
-            'SUSPENDED' => $row['suspended'],
-            'BG' => (!($k % 2)) ? '' : 'class="bg"'
+            'SUSPENDED' => $row['suspended']
             ));
     $k++;
 }

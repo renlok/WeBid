@@ -38,7 +38,6 @@ $STATUS = array(
 $query = "SELECT * FROM " . $DBPrefix . "adminusers ORDER BY username";
 $db->direct_query($query);
 
-$bg = '';
 while ($User = $db->fetch()) {
     $created = $dt->printDateTz($User['created']);
     if ($User['lastlogin'] == $User['created']) {
@@ -51,10 +50,8 @@ while ($User = $db->fetch()) {
             'USERNAME' => $User['username'],
             'STATUS' => $STATUS[$User['status']],
             'CREATED' => $created,
-            'LASTLOGIN' => $lastlogin,
-            'BG' => $bg
+            'LASTLOGIN' => $lastlogin
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 include 'header.php';

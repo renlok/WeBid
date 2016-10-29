@@ -1,11 +1,11 @@
         <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12"> 
+        <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
                                 <div class="x_title">
                                    <h2>{L_25_0010} <i class="fa fa-angle-double-right"></i> {L_045}</h2>
                                     <div class="clearfix"></div>
                                 </div>
-          <div class="col-md-12"> 
+          <div class="col-md-12">
 <!-- IF ERROR ne '' -->
 				<div class="alert alert-success">
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -20,7 +20,7 @@
                             	<p>{L_5024}</p>
                                 <div class="form-group">
     <label for="exampleInputName2">{L_5022} </label>
-                        <input type="text" name="keyword" class="form-control"> 
+                        <input type="text" name="keyword" class="form-control">
                         <input type="submit" name="submit" value="{L_5023}" class="btn btn-primary"></div>
                             </form>
                         </td>
@@ -50,7 +50,7 @@
                         <th width="10%"><b>{L_297}</b></th>
                     </tr>
 <!-- BEGIN users -->
-                    <tr {users.BG}>
+                    <tr<!-- IF users.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                         <td>
                         	<b>{users.NICK}</b><br>
                             &nbsp;<a href="listauctions.php?uid={users.ID}&offset={PAGE}" class="small">{L_5094}</a><br>

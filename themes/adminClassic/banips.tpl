@@ -24,7 +24,7 @@
 							<th width="9%"><b>{L_008}</b></td>
 						</tr>
 <!-- BEGIN ips -->
-						<tr {ips.BG}>
+						<tr<!-- IF ips.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
 							<td>{L_manually_entered}</td>
 							<td align="center">{ips.IP}</td>
 							<td align="center">

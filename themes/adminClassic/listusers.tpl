@@ -48,7 +48,7 @@
 						<th width="10%"><b>{L_297}</b></th>
 					</tr>
 <!-- BEGIN users -->
-					<tr {users.BG}>
+					<tr<!-- IF users.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
 						<td>
 							<b>{users.NICK}</b><br>
 							&nbsp;<a href="listauctions.php?uid={users.ID}&offset={PAGE}" class="small">{L_5094}</a><br>

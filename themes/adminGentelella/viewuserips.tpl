@@ -30,7 +30,7 @@
                         <th width="17%"><b>{L_5028}</b></th>
                     </tr>
 <!-- BEGIN ips -->
-                    <tr {users.BG}>
+                    <tr<!-- IF users.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                         <td>
 	<!-- IF ips.TYPE eq 'first' -->
     						{L_2_0005}

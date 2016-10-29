@@ -19,7 +19,7 @@
 							<th width="17%"><b>{L_297}</b></th>
 						</tr>
 <!-- BEGIN ips -->
-						<tr {ips.BG}>
+						<tr<!-- IF ips.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
 							<td>
 	<!-- IF ips.TYPE eq 'first' -->
 								{L_registration_ip}

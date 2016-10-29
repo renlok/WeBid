@@ -38,7 +38,7 @@
                     <table class="table table-bordered table-striped">
                     <th colspan="2">{L_NAY_03}</th>
     <!-- BEGIN themes -->
-                        <tr {themes.BG}>
+                        <tr<!-- IF themes.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                             <td style="padding-left:10px;" width="75%">
                                 <input type="radio" name="dtheme" value="{themes.NAME}" <!-- IF themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
                                 <b>{themes.NAME}</b>
@@ -49,7 +49,7 @@
                             </td>
                         </tr>
         <!-- IF themes.B_LISTFILES -->
-                        <tr {themes.BG}>
+                        <tr<!-- IF themes.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                             <td align="center" colspan="2">
                                 <select name="file" multiple size="24" style="font-weight:bold; width:350px"
                                 ondblclick="document.getElementById('action').value = ''; document.getElementById('theme').value = '{themes.NAME}'; this.form.submit();">
@@ -65,7 +65,7 @@
                     <table class="table table-bordered table-striped">
                         <th colspan="2">{L_NAY_04}</th>
     <!-- BEGIN admin_themes -->
-                        <tr {admin_themes.BG}>
+                        <tr<!-- IF admin_themes.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                             <td style="padding-left:10px;" width="75%">
                                 <input type="radio" name="admin_theme" value="{admin_themes.NAME}" <!-- IF admin_themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
                                 <b>{admin_themes.NAME}</b>
@@ -76,7 +76,7 @@
                             </td>
                         </tr>
         <!-- IF admin_themes.B_LISTFILES -->
-                        <tr {admin_themes.BG}>
+                        <tr<!-- IF admin_themes.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                             <td align="center" colspan="2">
                                 <select name="file" multiple size="24" style="font-weight:bold; width:350px"
                                 ondblclick="document.getElementById('action').value = ''; document.getElementById('theme').value = '{admin_themes.NAME}'; this.form.submit();">

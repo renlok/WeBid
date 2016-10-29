@@ -155,8 +155,6 @@ $query .= " ORDER BY nick"; // ordered by
 $query .= " LIMIT :offset, :perpage";
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
-$bg = '';
-
 
 $db->query($query, $params);
 
@@ -170,10 +168,8 @@ while ($row = $db->fetch()) {
             'NEWSLETTER' => ($row['nletter'] == 1) ? $MSG['yes'] : $MSG['no'],
             'SUSPENDED' => $row['suspended'],
             'BALANCE' => $system->print_money($row['balance']),
-            'BALANCE_CLEAN' => $row['balance'],
-            'BG' => $bg
+            'BALANCE_CLEAN' => $row['balance']
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 // get pagenation

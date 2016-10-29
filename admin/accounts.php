@@ -73,7 +73,6 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd') {
     }
     $db->query($query, $params);
 
-    $bg = '';
     while ($row = $db->fetch()) {
         if ($list_type == 'm') {
             $date = $MSG['MON_00' . $row['month'] . 'E'] . ', ' . $row['year'];
@@ -85,10 +84,8 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd') {
         $template->assign_block_vars('accounts', array(
                 'DATE' => $date,
                 'AMOUNT' => $system->print_money($row['amount']),
-                'BG' => $bg,
                 'TOTAL' => ((!empty($row['total'])) ? $row['total'] : '')
                 ));
-        $bg = ($bg == '') ? 'class="bg"' : '';
     }
 } else {
     $_SESSION['RETURN_LIST'] = 'accounts.php';
@@ -103,7 +100,6 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd') {
 			" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . " ORDER BY paid_date LIMIT " . $OFFSET . ", " . $system->SETTINGS['perpage'];
     $db->direct_query($query);
 
-    $bg = '';
     while ($row = $db->fetch()) {
         $template->assign_block_vars('accounts', array(
                 'ID' => $row['id'],
@@ -111,10 +107,8 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd') {
                 'RNAME' => $row['name'],
                 'DATE' => $dt->formatDate($row['paid_date'], 'd F Y - H:i'),
                 'AMOUNT' => $system->print_money($row['amount']),
-                'TEXT' => $row['text'],
-                'BG' => $bg
+                'TEXT' => $row['text']
                 ));
-        $bg = ($bg == '') ? 'class="bg"' : '';
     }
 }
 

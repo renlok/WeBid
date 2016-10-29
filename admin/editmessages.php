@@ -50,16 +50,13 @@ $board_name = $db->result('name');
 $query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE boardid = :id";
 $db->query($query, $gparams);
 
-$bg = '';
 while ($msg_data = $db->fetch()) {
     $template->assign_block_vars('msgs', array(
             'ID' => $msg_data['id'],
             'MESSAGE' => nl2br($msg_data['message']),
             'POSTED_BY' => $msg_data['username'],
-            'POSTED_AT' => $dt->formatDate($msg_data['msgdate']),
-            'BG' => $bg
+            'POSTED_AT' => $dt->formatDate($msg_data['msgdate'])
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 $template->assign_vars(array(

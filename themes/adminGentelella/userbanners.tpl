@@ -38,7 +38,7 @@
                     	<th colspan="5">{L__0043}</th>
                     </tr>
 <!-- BEGIN banners -->
-                    <tr {banners.BG}>
+                    <tr<!-- IF banners.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                     	<td colspan="5" align="center">
 	<!-- IF banners.TYPE eq 'swf' -->
                         	<object width="{banners.WIDTH}" height="{banners.HEIGHT}">

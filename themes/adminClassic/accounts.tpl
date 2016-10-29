@@ -59,14 +59,14 @@
 <!-- ENDIF -->
 <!-- BEGIN accounts -->
 	<!-- IF PAGNATION -->
-						<tr {accounts.BG}>
+						<tr<!-- IF accounts.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
 							<td>{accounts.RNAME} ({accounts.NICK})</td>
 							<td>{accounts.TEXT}</td>
 							<td align="center">{accounts.DATE}</td>
 							<td align="center">{accounts.AMOUNT}</td>
 						</tr>
 	<!-- ELSE -->
-						<tr {accounts.BG}>
+						<tr<!-- IF accounts.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
 							<td>{accounts.DATE}</td>
 							<td align="center">{accounts.TOTAL}</td>
 						</tr>

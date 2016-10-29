@@ -74,16 +74,13 @@ $params[] = array(':OFFSET', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
 if ($db->numrows() > 0) {
-    $bg = '';
     while ($row = $db->fetch()) {
         $template->assign_block_vars('ips', array(
                 'TYPE' => $row['type'],
                 'ID' => $row['id'],
                 'IP' => $row['ip'],
-                'ACTION' => $row['action'],
-                'BG' => $bg
+                'ACTION' => $row['action']
                 ));
-        $bg = ($bg == '') ? 'class="bg"' : '';
     }
 }
 

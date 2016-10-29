@@ -18,7 +18,7 @@
 						<th width="11%">{L_008}</th>
 					</tr>
 <!-- BEGIN busers -->
-					<tr {busers.BG}>
+					<tr<!-- IF busers.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
 						<td><a href="editbannersuser.php?id={busers.ID}">{busers.NAME}</a></td>
 						<td>{busers.COMPANY}</td>
 						<td><a href="mailto:{busers.EMAIL}">{busers.EMAIL}</a></td>

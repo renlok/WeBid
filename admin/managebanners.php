@@ -35,17 +35,15 @@ $query = "SELECT u.*, COUNT(b.user) as count FROM " . $DBPrefix . "bannersusers 
 		LEFT JOIN " . $DBPrefix . "banners b ON (b.user = u.id)
 		GROUP BY u.id ORDER BY u.name";
 $db->direct_query($query);
-$bg = '';
+
 while ($row = $db->fetch()) {
     $template->assign_block_vars('busers', array(
             'ID' => $row['id'],
             'NAME' => $row['name'],
             'COMPANY' => $row['company'],
             'EMAIL' => $row['email'],
-            'NUM_BANNERS' => $row['count'],
-            'BG' => $bg
+            'NUM_BANNERS' => $row['count']
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 include 'header.php';

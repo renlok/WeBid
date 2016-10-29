@@ -298,6 +298,9 @@ $MSG['duration_table_updated'] = "Durations table updated";
 // editauction.php
 $MSG['error_current_bid_too_low'] = "Current Bid must be greater than minimum bid.";
 
+// editbanner.php
+// TODO
+
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";
 $MSG['current_logo'] = "Current logo";

@@ -144,16 +144,14 @@ $query = "SELECT COUNT(f.id) as COUNT, c.category, c.id FROM " . $DBPrefix . "fa
 			LEFT JOIN " . $DBPrefix . "faqs f ON ( f.category = c.id )
 			GROUP BY c.id ORDER BY category";
 $db->direct_query($query);
-$bg = '';
+
 while ($row = $db->fetch()) {
     $template->assign_block_vars('cats', array(
             'ID' => $row['id'],
             'CATEGORY' => $row['category'],
             'FAQSTXT' => sprintf($MSG['837'], $row['COUNT']),
-            'FAQS' => $row['COUNT'],
-            'BG' => $bg
+            'FAQS' => $row['COUNT']
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 foreach ($LANGUAGES as $k => $v) {

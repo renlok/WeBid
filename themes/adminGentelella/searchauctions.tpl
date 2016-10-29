@@ -55,7 +55,7 @@
 						<th align="left"><b>{L_297}</b></th>
 					<tr>
 <!-- BEGIN auctions -->
-					<tr {auctions.BG}>
+					<tr<!-- IF auctions.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
 						<td>
 	<!-- IF auctions.SUSPENDED eq 1 -->
 							<span style="color:#FF0000">{auctions.TITLE}</span>

@@ -23,7 +23,6 @@ $query = "SELECT nick, rate_sum, rate_num FROM " . $DBPrefix . "users WHERE id =
 $params = array();
 $params[] = array(':user_id', $secid, 'int');
 $db->query($query, $params);
-$bg = '';
 
 if ($db->numrows() > 0) {
     $arr = $db->result();
@@ -66,10 +65,8 @@ if ($db->numrows() > 0) {
                 'FB_FROM' => $arrfeed['rater_user_nick'],
                 'FB_TIME' => $dt->formatDate($arrfeed['feedbackdate']),
                 'FB_MSG' => nl2br($arrfeed['feedback']),
-                'FB_ID' => $arrfeed['id'],
-                'BG' => $bg
+                'FB_ID' => $arrfeed['id']
                 ));
-        $bg = ($bg == '') ? 'class="bg"' : '';
     }
 } else {
     $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_105));

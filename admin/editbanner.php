@@ -77,9 +77,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert') {
         $params = array();
         if ($_FILES['bannerfile']['tmp_name'] != '' && $_FILES['bannerfile']['tmp_name'] != 'none') {
             $extrasql = "name = :bannerfile,
-					type = :type,
-					width = :imagewidth,
-					height = :imageheight,";
+                        type = :type,
+                        width = :imagewidth,
+                        height = :imageheight,";
             $params[] = array(':bannerfile', $_FILES['bannerfile']['name'], 'str');
             $params[] = array(':type', $FILETYPE, 'str');
             $params[] = array(':imagewidth', $imagewidth, 'int');
@@ -87,12 +87,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert') {
         }
 
         $query = "UPDATE " . $DBPrefix . "banners
-					SET " . $extrasql . "
-					url = :url,
-					sponsortext = :sponsortext,
-					alt = :alt,
-					purchased = :purchased
-					WHERE id = :id";
+                  SET " . $extrasql . "
+                  url = :url,
+                  sponsortext = :sponsortext,
+                  alt = :alt,
+                  purchased = :purchased
+                  WHERE id = :id";
         $params[] = array(':url', $_POST['url'], 'str');
         $params[] = array(':sponsortext', $_POST['sponsortext'], 'str');
         $params[] = array(':alt', $_POST['alt'], 'str');
@@ -135,12 +135,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert') {
     }
 }
 
-// Retrieve user's banners
+// Retrieve user's banner
 $query = "SELECT * FROM " . $DBPrefix . "banners WHERE id = :banner_id";
 $params = array();
 $params[] = array(':banner_id', $banner, 'int');
 $db->query($query, $params);
-$bg = '';
+
 while ($row = $db->fetch()) {
     $BANNER = $row;
     $template->assign_block_vars('banners', array(
@@ -155,10 +155,8 @@ while ($row = $db->fetch()) {
             'SPONSERTEXT' => $row['sponsortext'],
             'VIEWS' => $row['views'],
             'CLICKS' => $row['clicks'],
-            'PURCHASED' => $row['purchased'],
-            'BG' => $bg
+            'PURCHASED' => $row['purchased']
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 // Retrieve user's information

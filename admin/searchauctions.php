@@ -101,7 +101,6 @@ $params = array();
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
-$bg = '';
 while ($row = $db->fetch()) {
     $template->assign_block_vars('auctions', array(
             'SUSPENDED' => $row['suspended'],
@@ -111,10 +110,8 @@ while ($row = $db->fetch()) {
             'END_TIME' => $dt->printDateTz($row['ends']),
             'USERNAME' => $row['nick'],
             'CATEGORY' => $row['cat_name'],
-            'B_HASWINNERS' => false,
-            'BG' => $bg
+            'B_HASWINNERS' => false
             ));
-    $bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 // get pagenation

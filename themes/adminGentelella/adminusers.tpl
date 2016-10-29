@@ -1,5 +1,5 @@
    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12"> 
+        <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
                                 <div class="x_title">
                                     <h2>{L_25_0010} <i class="fa fa-angle-double-right"></i> {L_525}</h2>
@@ -22,7 +22,7 @@
                             <th width="23%">{L_561}</th>
                         </tr>
 <!-- BEGIN users -->
-                        <tr {users.BG}>
+                        <tr<!-- IF users.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
                             <td><a href="editadminuser.php?id={users.ID}">{users.USERNAME}</a></td>
                             <td align="center">{users.CREATED}</td>
                             <td align="center">{users.LASTLOGIN}</td>

@@ -18,6 +18,13 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+if (!isset($_REQUEST['id'])) {
+    $URL = $_SESSION['RETURN_LIST'];
+    //unset($_SESSION['RETURN_LIST']);
+    header('location: ' . $URL);
+    exit;
+}
+
 if (isset($_POST['action']) && $_POST['action'] == "Yes") {
     $query = "DELETE FROM " . $DBPrefix . "news WHERE id = :news_id";
     $params = array();
@@ -38,7 +45,7 @@ $title = $db->result('title');
 
 $template->assign_vars(array(
         'ID' => $_GET['id'],
-        'MESSAGE' => sprintf($MSG['832'], $title),
+        'MESSAGE' => sprintf($MSG['confirm_news_delete'], $title),
         'TYPE' => 1
         ));
 

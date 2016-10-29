@@ -18,13 +18,14 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$id = intval($_REQUEST['id']);
-
-// Data check
-if (empty($id) || $id <= 0) {
-    header('location: listusers.php?PAGE=' . intval($_REQUEST['offset']));
+if (!isset($_REQUEST['id'])) {
+    $URL = $_SESSION['RETURN_LIST'];
+    //unset($_SESSION['RETURN_LIST']);
+    header('location: ' . $URL);
     exit;
 }
+
+$id = intval($_REQUEST['id']);
 
 $has_auctions = false;
 $has_bids = false;
@@ -69,8 +70,8 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
     if ($has_auctions) {
         // update categories table
         $query = "SELECT c.level, c.left_id, c.right_id FROM " . $DBPrefix . "auctions a
-				LEFT JOIN " . $DBPrefix . "categories c ON (a.category = c.cat_id)
-				WHERE a.user = :user_id";
+                  LEFT JOIN " . $DBPrefix . "categories c ON (a.category = c.cat_id)
+                  WHERE a.user = :user_id";
         $params = array();
         $params[] = array(':user_id', $id, 'int');
         $db->query($query, $params);
@@ -95,8 +96,8 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
     if ($has_bids) {
         // update auctions table
         $query = "SELECT a.id, a.current_bid, b.bid FROM " . $DBPrefix . "bids b
-				LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
-				WHERE b.bidder = :user_id ORDER BY b.bid DESC";
+                  LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
+                  WHERE b.bidder = :user_id ORDER BY b.bid DESC";
         $params = array();
         $params[] = array(':user_id', $id, 'int');
         $db->query($query, $params);
@@ -153,7 +154,7 @@ $db->query($query, $params);
 $num_auctions = $db->result('COUNT');
 
 if ($num_auctions > 0) {
-    $error_message = $MSG['420'];
+    $error_message = $MSG['user_has_active_auctions'];
     $i = 0;
     while ($row = $db->fetch()) {
         if ($i >= 10) {
@@ -164,7 +165,7 @@ if ($num_auctions > 0) {
         $i++;
     }
     if ($num_auctions != $i) {
-        $error_message .= '<p>' . sprintf($MSG['568'], $num_auctions - $i) . '</p>';
+        $error_message .= '<p>' . sprintf($MSG['plus_x_more'], $num_auctions - $i) . '</p>';
     }
 
     $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $error_message));
@@ -180,7 +181,7 @@ $num_bids = $db->result('COUNT');
 if ($num_bids > 0) {
     $has_bids = true;
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => sprintf($MSG['421'], $num_bids)));
+    $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => sprintf($MSG['user_has_x_bids'], $num_bids)));
 }
 
 $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
@@ -191,7 +192,7 @@ $username = $db->result('nick');
 
 $template->assign_vars(array(
         'ID' => $id,
-        'MESSAGE' => sprintf($MSG['835'], $username),
+        'MESSAGE' => sprintf($MSG['confirm_user_delete'], $username),
         'TYPE' => 1
         ));
 

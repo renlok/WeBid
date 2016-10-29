@@ -12,7 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) {
+if (!defined('InWeBid') || !defined('InAdmin')) {
     exit();
 }
 
@@ -252,6 +252,42 @@ $MSG['confirm_auction_delete'] = 'Are you sure you want to delete the auction \'
 
 // deletemessage.php
 $MSG['confirm_msg_delete'] = 'Are you sure you want to delete this message (ID: %s)';
+
+// deletenews.php
+$MSG['confirm_news_delete'] = 'Are you sure you want to delete the news item \'%s\'';
+
+// deleteuser.php
+$MSG['confirm_user_delete'] = 'Are you sure you want to delete the user \'%s\'';
+$MSG['user_has_active_auctions'] = "The user has active auctions:<br>";
+$MSG['plus_x_more'] = "plus %d more";
+$MSG['user_has_x_bids'] = "The user has placed bids on %s auction(s).";
+
+// deleteuserfeed.php
+$MSG['confirm_feedback_delete'] = 'Are you sure you want to delete this user feedback (ID: %s)';
+
+// displaysettings.php
+$MSG['display_settings'] = 'Display Settings';
+$MSG['display_settings_updated'] = 'Display Settings Updated';
+$MSG['show_per_page'] = 'Results shown per page';
+$MSG['show_per_page_explain'] = 'The maximum number of items before a page break';
+$MSG['max_featured_items'] = 'Max number of featured items shown';
+$MSG['max_featured_items_explain'] = 'Featured items are shown above the normal items on searches, this is how may will be shown on each page.';
+$MSG['thumbnail_size'] = 'Thumbnail size';
+$MSG['thumbnail_size_explain'] = 'This is the size of the thumbnail that will appear on lists of auctions such as when a user does a search';
+$MSG['front_page_settings'] = 'Front Page Settings';
+$MSG['home_page_featured'] = "Home Page Featured Items";
+$MSG['home_page_featured_explain'] = "This is the number of featured items to show in the home page.<br>0 (zero) is permitted.";
+$MSG['home_page_recent'] = "Last Created Items";
+$MSG['home_page_recent_explain'] = "This is the number of most recent items to show in the home page.<br>0 (zero) is permitted.";
+$MSG['home_page_hot'] = "Hot Items";
+$MSG['home_page_hot_explain'] = "This is the number of items to show in the Hot Items list in the home page.<br>0 (zero) is permitted.";
+$MSG['home_page_ending_soon'] = "Next Ending";
+$MSG['home_page_ending_soon_explain'] = "This is the number of items to show in the Next Ending list in the home page.<br>0 (zero) is permitted.";
+$MSG['home_page_login'] = "Display login box?";
+$MSG['home_page_login_explain'] = "Will enable the quick login box on the home page.";
+$MSG['home_page_news'] = "Display news box?";
+$MSG['home_page_news_explain'] = "Will show news items on the home page.";
+$MSG['number_news_shown'] = "Number of news you want to show";
 
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";

@@ -91,6 +91,9 @@ if ($PAGES > 1) {
     }
 }
 
+$_SESSION['RETURN_LIST'] = 'userfeedback.php?id=' . $secid;
+$_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
+
 $template->assign_vars(array(
         'ID' => $secid,
         'NICK' => $arr['nick'],

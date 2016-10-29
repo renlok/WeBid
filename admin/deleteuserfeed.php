@@ -18,6 +18,13 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+if (!isset($_REQUEST['id'])) {
+    $URL = $_SESSION['RETURN_LIST'];
+    //unset($_SESSION['RETURN_LIST']);
+    header('location: ' . $URL);
+    exit;
+}
+
 $id = intval($_REQUEST['id']);
 $user_id = intval($_REQUEST['user']);
 
@@ -28,7 +35,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
     $params[] = array(':feedback_id', $id, 'int');
     $db->query($query, $params);
     // get the current feedback count
-    $query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
+    $query = "SELECT SUM(rate) as FSUM, COUNT(feedback) as FNUM FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
     $params = array();
     $params[] = array(':user_id', $user_id, 'int');
     $db->query($query, $params);
@@ -50,7 +57,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
 $template->assign_vars(array(
         'ID' => $id,
         'USERID' => $user_id,
-        'MESSAGE' => sprintf($MSG['848'], $id),
+        'MESSAGE' => sprintf($MSG['confirm_feedback_delete'], $id),
         'TYPE' => 2
         ));
 

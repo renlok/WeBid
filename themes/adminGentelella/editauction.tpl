@@ -32,13 +32,25 @@
                         <td><input type="text" name="subtitle" size="40" maxlength="255" value="{SUBTITLE}"></td>
                     </tr>
                     <tr>
-                        <td align="right">{L_287}</td>
-                        <td>{CATLIST1}</td>
-                    </tr>
-                    <tr>
-                        <td align="right">{L_814}</td>
-                        <td>{CATLIST2}</td>
-                    </tr>
+          						<td align="right">{L_287}</td>
+          						<td>
+          							<select name="category">
+          								<!-- BEGIN cats1 -->
+          									<option value="{cats1.CAT_ID}"<!-- IF cats1.SELECTED --> selected="true"<!-- ENDIF -->>{cats1.CAT_NAME}</option>
+          								<!-- END cats1 -->
+          							</select>
+          						</td>
+          					</tr>
+          					<tr>
+          						<td align="right">{L_814}</td>
+          						<td>
+          							<select name="secondcat">
+          								<!-- BEGIN cats2 -->
+          									<option value="{cats2.CAT_ID}"<!-- IF cats2.SELECTED --> selected="true"<!-- ENDIF -->>{cats2.CAT_NAME}</option>
+          								<!-- END cats1 -->
+          							</select>
+          						</td>
+          					</tr>
                     <tr>
                         <td align="right">{L_018}</td>
                         <td><textarea name="description" cols="40" rows="8">{DESC}</textarea></td>
@@ -52,7 +64,9 @@
                         <td>
                             <select name="duration">
                                 <option value=""> </option>
-                                {DURLIST}
+                                <!-- BEGIN dur -->
+                                <option value="{dur.DAYS}"<!-- IF dur.SELECTED --> selected<!-- ENDIF -->>{dur.DESC}</option>
+                                <!-- END dur -->
                             </select>
                         </td>
                     </tr>

@@ -21,7 +21,6 @@ include 'loggedin.inc.php';
 // Data check
 if (!isset($_REQUEST['id'])) {
     $URL = $_SESSION['RETURN_LIST'];
-    //unset($_SESSION['RETURN_LIST']);
     header('location: ' . $URL);
     exit;
 }

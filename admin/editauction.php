@@ -24,12 +24,7 @@ $catscontrol = new MPTTcategories();
 
 // Data check
 if (!isset($_REQUEST['id'])) {
-    if (!isset($_SESSION['RETURN_LIST'])) {
-        $URL = 'listauctions.php';
-    } else {
-        $URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
-    }
-    unset($_SESSION['RETURN_LIST'], $_SESSION['RETURN_LIST_OFFSET']);
+    $URL = $_SESSION['RETURN_LIST'];
     header('location: ' . $URL);
     exit;
 }
@@ -58,9 +53,9 @@ if (isset($_POST['action'])) {
         $_POST['customincrement'] = (empty($_POST['customincrement'])) ? 0 : $_POST['customincrement'];
         // Check the input values for validity.
         if ($_POST['quantity'] < 1) { // 1 or more items being sold
-            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_701));
+            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_601));
         } elseif (isset($_POST['current_bid']) && $_POST['current_bid'] < $_POST['min_bid'] && $_POST['current_bid'] != 0) { // bid > min_bid
-            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_702));
+            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_current_bid_too_low']));
         } else {
             // Retrieve auction data
             $query = "SELECT * from " . $DBPrefix . "auctions WHERE id = :auc_id";
@@ -171,28 +166,28 @@ if (isset($_POST['action'])) {
             $auction_ends = $start_date->format('Y-m-d H:i:s');
 
             $query = "UPDATE " . $DBPrefix . "auctions SET
-					title = :title,
-					subtitle = :subtitle,
-					ends = :ends,
-					duration = :duration,
-					category = :category,
-					secondcat = :secondcat,
-					description = :description,
-					quantity = :quantity,
-					minimum_bid = :minimum_bid,
-					shipping_cost = :shipping_cost,
-					buy_now = :buy_now,
-					bn_only = :bn_only,
-					reserve_price = :reserve_price,
-					increment = :increment,
-					shipping = :shipping,
-					payment = :payment,
-					international = :international,
-					shipping_terms = :shipping_terms,
-					bold = :bold,
-					highlighted = :highlighted,
-					featured = :featured
-					WHERE id = :auc_id";
+                      title = :title,
+                      subtitle = :subtitle,
+                      ends = :ends,
+                      duration = :duration,
+                      category = :category,
+                      secondcat = :secondcat,
+                      description = :description,
+                      quantity = :quantity,
+                      minimum_bid = :minimum_bid,
+                      shipping_cost = :shipping_cost,
+                      buy_now = :buy_now,
+                      bn_only = :bn_only,
+                      reserve_price = :reserve_price,
+                      increment = :increment,
+                      shipping = :shipping,
+                      payment = :payment,
+                      international = :international,
+                      shipping_terms = :shipping_terms,
+                      bold = :bold,
+                      highlighted = :highlighted,
+                      featured = :featured
+                      WHERE id = :auc_id";
             $params = array();
             $params[] = array(':title', $system->cleanvars($_POST['title']), 'str');
             $params[] = array(':subtitle', $system->cleanvars($_POST['subtitle']), 'str');
@@ -218,8 +213,7 @@ if (isset($_POST['action'])) {
             $params[] = array(':auc_id', $_POST['id'], 'int');
             $db->query($query, $params);
 
-            $URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
-            unset($_SESSION['RETURN_LIST'], $_SESSION['RETURN_LIST_OFFSET']);
+            $URL = $_SESSION['RETURN_LIST'];
             header('location: ' . $URL);
             exit;
         }
@@ -229,20 +223,15 @@ if (isset($_POST['action'])) {
 }
 
 $auc_id = intval($_REQUEST['id']);
-$query =   "SELECT u.nick, a.* FROM " . $DBPrefix . "auctions a
-			LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-			WHERE a.id = :auc_id";
+$query = "SELECT u.nick, a.* FROM " . $DBPrefix . "auctions a
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+          WHERE a.id = :auc_id";
 $params = array();
 $params[] = array(':auc_id', $auc_id, 'int');
 $db->query($query, $params);
 
 if ($db->numrows() == 0) {
-    if (!isset($_SESSION['RETURN_LIST'])) {
-        $URL = 'listauctions.php';
-    } else {
-        $URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
-    }
-    unset($_SESSION['RETURN_LIST'], $_SESSION['RETURN_LIST_OFFSET']);
+    $URL = $_SESSION['RETURN_LIST'];
     header('location: ' . $URL);
     exit;
 }
@@ -250,34 +239,32 @@ if ($db->numrows() == 0) {
 $auction_data = $db->result();
 
 // DURATIONS
-$dur_list = ''; // empty string to begin HTML list
 $query = "SELECT days, description FROM " . $DBPrefix . "durations";
 $db->direct_query($query);
 
 while ($row = $db->fetch()) {
-    $dur_list .= '<option value="' . $row['days'] . '"';
-    if ($row['days'] == $auction_data['duration']) {
-        $dur_list .= ' selected';
-    }
-    $dur_list .= '>' . $row['description'] . '</option>' . "\n";
+  $template->assign_block_vars('dur', array(
+      'DAYS' => $row['days'],
+      'SELECTED' => ($row['days'] == $auction_data['duration']),
+      'DESC' => $row['description']
+      ));
 }
 
 // CATEGORIES
-$categories_list1 = '<select name="category">' . "\n";
 if (isset($category_plain) && count($category_plain) > 0) {
-    foreach ($category_plain as $k => $v) {
-        $categories_list1 .= '	<option value="' . $k . '"' . (($k == $auction_data['category']) ? ' selected="true"' : '') . '>' . $v . '</option>' . "\n";
-    }
+  foreach ($category_plain as $cat_id => $cat_name) {
+    $template->assign_block_vars('cats1', array(
+        'CAT_ID' => $cat_id,
+        'CAT_NAME' => $cat_name,
+        'SELECTED' => ($cat_id == $auction_data['category'])
+        ));
+    $template->assign_block_vars('cats2', array(
+        'CAT_ID' => $cat_id,
+        'CAT_NAME' => $cat_name,$cat_name,
+        'SELECTED' => ($cat_id == $auction_data['secondcat'])
+        ));
+  }
 }
-$categories_list1 .= '</select>' . "\n";
-
-$categories_list2 = '<select name="secondcat">' . "\n";
-if (isset($category_plain) && count($category_plain) > 0) {
-    foreach ($category_plain as $k => $v) {
-        $categories_list2 .= '	<option value="' . $k . '"' . (($k == $auction_data['secondcat']) ? ' selected="true"' : '') . '>' . $v . '</option>' . "\n";
-    }
-}
-$categories_list2 .= '</select>' . "\n";
 
 // Pictures Gellery
 $K = 0;
@@ -291,8 +278,8 @@ if (file_exists(UPLOAD_PATH . $auc_id)) {
             $TMP = @getimagesize('../' . $v);
             if ($TMP[2] >= 1 && $TMP[2] <= 3) {
                 $template->assign_block_vars('gallery', array(
-                        'V' => $v
-                        ));
+                    'V' => $v
+                    ));
             }
         }
     }
@@ -321,9 +308,6 @@ $template->assign_vars(array(
         'USER' => $auction_data['nick'],
         'TITLE' => $auction_data['title'],
         'SUBTITLE' => $auction_data['subtitle'],
-        'DURLIST' => $dur_list,
-        'CATLIST1' => $categories_list1,
-        'CATLIST2' => $categories_list2,
         'EDITOR' => $CKEditor->editor('description', $auction_data['description']),
         'CURRENT_BID' => $system->print_money_nosymbol($auction_data['current_bid']),
         'MIN_BID' => $system->print_money_nosymbol($auction_data['minimum_bid']),

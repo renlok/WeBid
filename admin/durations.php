@@ -41,20 +41,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $db->query($query, $params);
     }
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['123']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['duration_table_updated']));
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "durations ORDER BY days";
 $db->direct_query($query);
 
-$i = 0;
 while ($row = $db->fetch()) {
     $template->assign_block_vars('dur', array(
-            'ID' => $i,
             'DAYS' => $row['days'],
             'DESC' => $row['description']
             ));
-    $i++;
 }
 
 $template->assign_vars(array(

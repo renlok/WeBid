@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-
+// 32
 if (!defined('InWeBid') || !defined('InAdmin')) {
     exit();
 }
@@ -288,6 +288,15 @@ $MSG['home_page_login_explain'] = "Will enable the quick login box on the home p
 $MSG['home_page_news'] = "Display news box?";
 $MSG['home_page_news_explain'] = "Will show news items on the home page.";
 $MSG['number_news_shown'] = "Number of news you want to show";
+
+// durations.php
+$MSG['duration_table_updated'] = "Durations table updated";
+
+// editadminuser.php
+// nothing
+
+// editauction.php
+$MSG['error_current_bid_too_low'] = "Current Bid must be greater than minimum bid.";
 
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";

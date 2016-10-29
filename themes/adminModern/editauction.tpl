@@ -22,11 +22,23 @@
 					</tr>
 					<tr>
 						<td align="right">{L_287}</td>
-						<td>{CATLIST1}</td>
+						<td>
+							<select name="category">
+								<!-- BEGIN cats1 -->
+									<option value="{cats1.CAT_ID}"<!-- IF cats1.SELECTED --> selected="true"<!-- ENDIF -->>{cats1.CAT_NAME}</option>
+								<!-- END cats1 -->
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td align="right">{L_814}</td>
-						<td>{CATLIST2}</td>
+						<td>
+							<select name="secondcat">
+								<!-- BEGIN cats2 -->
+									<option value="{cats2.CAT_ID}"<!-- IF cats2.SELECTED --> selected="true"<!-- ENDIF -->>{cats2.CAT_NAME}</option>
+								<!-- END cats1 -->
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td align="right">{L_018}</td>
@@ -41,7 +53,9 @@
 						<td>
 							<select name="duration">
 								<option value=""> </option>
-								{DURLIST}
+								<!-- BEGIN dur -->
+								<option value="{dur.DAYS}"<!-- IF dur.SELECTED --> selected<!-- ENDIF -->>{dur.DESC}</option>
+								<!-- END dur -->
 							</select>
 						</td>
 					</tr>

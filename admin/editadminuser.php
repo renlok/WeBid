@@ -18,6 +18,12 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+// Data check
+if (!isset($_REQUEST['id'])) {
+    header('location: adminusers.php');
+    exit;
+}
+
 $id = intval($_REQUEST['id']);
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     if ((!empty($_POST['password']) && empty($_POST['repeatpassword'])) || (empty($_POST['password']) && !empty($_POST['repeatpassword']))) {
@@ -49,7 +55,11 @@ $params[] = array(':admin_id', $id, 'int');
 $db->query($query, $params);
 $user_data = $db->result();
 
-$CREATED = $dt->printDateTz($user_data['created']);
+// Data check
+if (!$user_data) {
+    header('location: adminusers.php');
+    exit;
+}
 
 if ($user_data['lastlogin'] == $user_data['created']) {
     $LASTLOGIN = $MSG['570'];
@@ -60,7 +70,7 @@ if ($user_data['lastlogin'] == $user_data['created']) {
 $template->assign_vars(array(
         'ID' => $id,
         'USERNAME' => $user_data['username'],
-        'CREATED' => $CREATED,
+        'CREATED' => $dt->printDateTz($user_data['created']),
         'LASTLOGIN' => $LASTLOGIN,
 
         'B_ACTIVE' => ($user_data['status'] == 1),

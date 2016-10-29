@@ -15,9 +15,9 @@
 							</div>
 <!-- BEGIN dur -->
 							<div class="row">
-								<div class="col-md-3"><input type="text" name="new_days[{dur.ID}]" value="{dur.DAYS}" size="5"></div>
-								<div class="col-md-6"><input type="text" name="new_durations[{dur.ID}]" value="{dur.DESC}" size="25"></div>
-								<div class="col-md-3"><input type="checkbox" name="delete[]" value="{dur.ID}"></div>
+								<div class="col-md-3"><input type="text" name="new_days[{dur.S_ROW_COUNT}]" value="{dur.DAYS}" size="5"></div>
+								<div class="col-md-6"><input type="text" name="new_durations[{dur.S_ROW_COUNT}]" value="{dur.DESC}" size="25"></div>
+								<div class="col-md-3"><input type="checkbox" name="delete[]" value="{dur.S_ROW_COUNT}"></div>
 							</div>
 <!-- END dur -->
 							<div class="row">

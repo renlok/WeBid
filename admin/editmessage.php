@@ -18,6 +18,12 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+// Data check
+if (!isset($_REQUEST['id']) || !isset($_REQUEST['msg'])) {
+    header('location: boards.php');
+    exit;
+}
+
 $msg = intval($_REQUEST['msg']);
 $board_id = intval($_REQUEST['id']);
 

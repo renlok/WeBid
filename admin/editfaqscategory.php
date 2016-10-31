@@ -18,6 +18,12 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+// Data check
+if (!isset($_REQUEST['id'])) {
+    header('location: faqscategories.php');
+    exit;
+}
+
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     if (strlen($_POST['category'][$system->SETTINGS['defaultlanguage']]) == 0) {
         $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_049));
@@ -37,11 +43,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $db->query($query, $params);
         if ($db->numrows() > 0) {
             $query = "UPDATE " . $DBPrefix . "faqscat_translated SET
-					category = :category
-					WHERE lang = :lang AND id = :id";
+                      category = :category
+                      WHERE lang = :lang AND id = :id";
         } else {
             $query = "INSERT INTO " . $DBPrefix . "faqscat_translated
-					VALUES (:id, :lang, :category)";
+                      VALUES (:id, :lang, :category)";
         }
         $params = array();
         $params[] = array(':category', $system->cleanvars($_POST['category'][$k]), 'str');

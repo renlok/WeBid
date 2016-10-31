@@ -45,7 +45,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert') {
             $file_ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
             $file_types = array('gif', 'jpg', 'jpeg', 'png', 'swf');
             if (!in_array($file_ext, $file_types)) {
-                $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['_0048']));
+                $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_wrong_file_type']));
             } else {
                 $imageType = image_type_to_mime_type($imageType);
                 switch ($imageType) {
@@ -192,18 +192,15 @@ if ($db->numrows() > 0) {
 }
 
 // -------------------------------------- category
-$TPL_categories_list = '<select name="category[]" rows="12" multiple>' . "\n";
 if (isset($category_plain) && count($category_plain) > 0) {
-    foreach ($category_plain as $k => $v) {
-        if (is_array($CATEGORIES)) {
-            $select = (in_array($k, $CATEGORIES)) ? ' selected="true"' : '';
-        } else {
-            $select = '';
-        }
-        $TPL_categories_list .= '<option value="'.$k.'" ' . $select . '>' . $v . '</option>' . "\n";
+    foreach ($category_plain as $cat_id => $cat_name) {
+        $template->assign_block_vars('categories', array(
+            'CAT_ID' => $cat_id,
+            'CAT_NAME' => $cat_name,
+            'B_SELECTED' => (in_array($cat_id, $CATEGORIES))
+            ));
     }
 }
-$TPL_categories_list .= '</select>';
 
 $template->assign_vars(array(
         'ID' => $id,
@@ -217,7 +214,6 @@ $template->assign_vars(array(
         'ALT' => $BANNER['alt'],
         'PURCHASED' => $BANNER['purchased'],
         'KEYWORDS' => $KEYWORDS,
-        'CATEGORIES' => $TPL_categories_list,
         'NOTEDIT' => false
         ));
 

@@ -18,13 +18,13 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$userid = intval($_REQUEST['userid']);
-
 // Data check
-if (empty($userid) || $userid <= 0) {
+if (!isset($_REQUEST['userid'])) {
     header('location: listusers.php?PAGE=' . intval($_GET['offset']));
     exit;
 }
+
+$userid = intval($_REQUEST['userid']);
 
 // load the user data
 $query = "SELECT * FROM " . $DBPrefix . "users WHERE id = :user_id";
@@ -107,17 +107,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             }
 
             $query = "UPDATE " . $DBPrefix . "users SET
-					name = :name,
-					email = :email,
-					address = :address,
-					city = :city,
-					prov = :prov,
-					country = :country,
-					zip = :zip,
-					phone = :phone,
-					birthdate = :birthdate,
-					groups = :groups,
-					balance = :balance";
+                      name = :name,
+                      email = :email,
+                      address = :address,
+                      city = :city,
+                      prov = :prov,
+                      country = :country,
+                      zip = :zip,
+                      phone = :phone,
+                      birthdate = :birthdate,
+                      groups = :groups,
+                      balance = :balance";
             $params = array();
             $params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
             $params[] = array(':email', $system->cleanvars($_POST['email']), 'str');

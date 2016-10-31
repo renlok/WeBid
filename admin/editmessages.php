@@ -18,6 +18,12 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+// Data check
+if (!isset($_REQUEST['id'])) {
+    header('location: boards.php');
+    exit;
+}
+
 $id = intval($_GET['id']);
 $gparams = array();
 $gparams[] = array(':id', $id, 'int');

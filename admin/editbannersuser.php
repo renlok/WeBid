@@ -18,6 +18,12 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+// Data check
+if (!isset($_REQUEST['id'])) {
+    header('location: managebanners.php');
+    exit;
+}
+
 $id = $_REQUEST['id'];
 
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
@@ -30,10 +36,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     } else {
         // Update database
         $query = "UPDATE " . $DBPrefix . "bannersusers SET
-					name = :name,
-					company = :company,
-					email = :email
-					WHERE id = :id";
+                  name = :name,
+                  company = :company,
+                  email = :email
+                  WHERE id = :id";
         $params = array();
         $params[] = array(':name', $_POST['name'], 'str');
         $params[] = array(':company', $_POST['company'], 'str');

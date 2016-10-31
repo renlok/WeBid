@@ -90,7 +90,13 @@
 						</tr>
 						<tr>
 							<td>{L_276}</td>
-							<td>{CATEGORIES}</td>
+							<td>
+								<select name="category[]" rows="12" multiple>
+<!-- BEING categories -->
+									<option value="{categories.CAT_ID}"<!-- IF categories.B_SELECTED --> selected="true"<!-- ENDIF -->>{categories.CAT_NAME}</option>
+<!-- END categories -->
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td>{L__0035}</td>

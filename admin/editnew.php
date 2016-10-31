@@ -37,10 +37,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
         $news_id = intval($_POST['id']);
         $query = "UPDATE " . $DBPrefix . "news SET
-				title = :title,
-				content = :content,
-				suspended = :suspended
-				WHERE id = :id";
+                  title = :title,
+                  content = :content,
+                  suspended = :suspended
+                  WHERE id = :id";
         $params = array();
         $params[] = array(':title', $_POST['title'][$system->SETTINGS['defaultlanguage']], 'str');
         $params[] = array(':content', $_POST['content'][$system->SETTINGS['defaultlanguage']], 'str');
@@ -57,12 +57,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
             if ($db->numrows() > 0) {
                 $query = "UPDATE " . $DBPrefix . "news_translated SET
-						title = :title,
-						content = :content
-						WHERE  lang = :lang AND id = :news_id";
+                          title = :title,
+                          content = :content
+                          WHERE  lang = :lang AND id = :news_id";
             } else {
                 $query = "INSERT INTO " . $DBPrefix . "news_translated VALUES
-						(:news_id, :lang, :title, :content)";
+                          (:news_id, :lang, :title, :content)";
             }
             $params = array();
             $params[] = array(':title', $_POST['title'][$k], 'str');
@@ -78,7 +78,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
 // get news story
 $query = "SELECT t.*, n.suspended FROM " . $DBPrefix . "news_translated t
-		LEFT JOIN " . $DBPrefix . "news n ON (n.id = t.id) WHERE t.id = :id";
+          LEFT JOIN " . $DBPrefix . "news n ON (n.id = t.id) WHERE t.id = :id";
 $params = array();
 $params[] = array(':id', $_GET['id'], 'int');
 $db->query($query, $params);
@@ -102,7 +102,7 @@ while ($arr = $db->fetch()) {
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
-        'TITLE' => $MSG['343'],
+        'TITLE' => $MSG['edit_news'],
         'BUTTON' => $MSG['530'],
         'ID' => intval($_GET['id']),
 

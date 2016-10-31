@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-// 32
+// 40/110
 if (!defined('InWeBid') || !defined('InAdmin')) {
     exit();
 }
@@ -299,7 +299,29 @@ $MSG['duration_table_updated'] = "Durations table updated";
 $MSG['error_current_bid_too_low'] = "Current Bid must be greater than minimum bid.";
 
 // editbanner.php
-// TODO
+$MSG['error_wrong_file_type'] = "Wrong file type. Allowed formats: GIF, JPG, PNG, SWF"; // Also userbanners.php
+
+// editbanneruser.php
+// nothing
+
+// editboards.php
+$MSG['error_msg_numeric'] = "Messages to show must be numeric";
+$MSG['error_msg_not_zero'] = "Messages to show cannot be zero";
+
+//editfaq.php
+// nothing
+
+// editfaqcategory.php
+// nothing
+
+// editmessage.php
+// nothing
+
+// editmessages.php
+// nothing
+
+// editnew.php
+$MSG['edit_news'] = "Edit news";
 
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";

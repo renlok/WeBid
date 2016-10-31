@@ -19,6 +19,12 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
+// Data check
+if (!isset($_REQUEST['id'])) {
+    header('location: faqs.php');
+    exit;
+}
+
 // Update message
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     if (empty($_POST['question'][$system->SETTINGS['defaultlanguage']])
@@ -27,9 +33,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $faq = $_POST;
     } else {
         $query = "UPDATE " . $DBPrefix . "faqs SET category = :category,
-			question = :question,
-			answer = :answer
-			WHERE id = :faq_id";
+                  question = :question,
+                  answer = :answer
+                  WHERE id = :faq_id";
         $params = array();
         $params[] = array(':category', $_POST['category'], 'int');
         $params[] = array(':question', $_POST['question'][$system->SETTINGS['defaultlanguage']], 'str');
@@ -49,12 +55,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             $params[] = array(':answer', $system->cleanvars($_POST['answer'][$k]), 'str');
             if ($db->numrows() > 0) {
                 $query = "UPDATE " . $DBPrefix . "faqs_translated SET
-					question = :question,
-					answer = :answer
-					WHERE id = :faq_id AND lang = :lang";
+                          question = :question,
+                          answer = :answer
+                          WHERE id = :faq_id AND lang = :lang";
             } else {
                 $query = "INSERT INTO " . $DBPrefix . "faqs_translated VALUES
-					(:faq_id, :lang, :question, :answer)";
+                          (:faq_id, :lang, :question, :answer)";
                 $params[] = array(':faq_id', $_POST['id'], 'int');
             }
             $db->query($query, $params);

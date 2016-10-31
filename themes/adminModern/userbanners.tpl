@@ -88,7 +88,13 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6">{L_276}</div>
-								<div class="col-md-6">{CATEGORIES}</div>
+								<div class="col-md-6">
+									<select name="category[]" rows="12" multiple>
+									<!-- BEING categories -->
+										<option value="{categories.CAT_ID}"<!-- IF categories.B_SELECTED --> selected="true"<!-- ENDIF -->>{categories.CAT_NAME}</option>
+									<!-- END categories -->
+									</select>
+								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6">{L__0035}</div>

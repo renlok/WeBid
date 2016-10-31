@@ -18,20 +18,26 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+// Data check
+if (!isset($_REQUEST['id'])) {
+    header('location: boards.php');
+    exit;
+}
+
 // Insert new currency
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active'])) {
         $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
     } elseif (!is_numeric($_POST['msgstoshow'])) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5000));
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_msg_numeric']));
     } elseif (intval($_POST['msgstoshow'] == 0)) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5001));
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_msg_not_zero']));
     } else {
         $query = "UPDATE " . $DBPrefix . "community
-					SET name = :name,
-					msgstoshow = :msgstoshow,
-					active = :active
-					WHERE id = :id";
+                  SET name = :name,
+                  msgstoshow = :msgstoshow,
+                  active = :active
+                  WHERE id = :id";
         $params = array();
         $params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
         $params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');

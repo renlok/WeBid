@@ -467,7 +467,7 @@ switch ($_SESSION['action']) {
         while ($payment_method = $db->fetch()) {
             if ($payment_method['gateway_active'] == 1 || $payment_method['is_gateway'] == 0) {
                 $checked = (in_array($payment_method['name'], $payment)) ? 'checked' : '';
-                $payment_methods .= '<p><input type="checkbox" name="payment[]" value="' . $payment_method['name'] . '" ' . $checked . '> ' . $payment_method['displayname'] . '</p>';
+                $payment_methods .= '<p><label><input type="checkbox" name="payment[]" value="' . $payment_method['name'] . '" ' . $checked . '> ' . $payment_method['displayname'] . '</label></p>';
             }
         }
 

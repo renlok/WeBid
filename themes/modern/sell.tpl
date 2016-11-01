@@ -476,7 +476,7 @@ $(document).ready(function(){
 					<div class="form-group col-md-12">
 						<label>{L_026}</label>
 						<div class="checkbox">
-							<label>{PAYMENTS}</label>
+							{PAYMENTS}
 						</div>
 					</div>
 					<legend>{L_268}</legend>

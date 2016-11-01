@@ -16,6 +16,7 @@ session_start();
 date_default_timezone_set('UTC'); // to make times more consistent
 $error_reporting = E_ALL^E_NOTICE;
 $error_reporting = E_ALL; // use this for debugging
+define('WeBidDebug', false); // use this for debugging
 define('InWeBid', true);
 define('TrackUserIPs', true);
 

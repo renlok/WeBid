@@ -350,7 +350,7 @@ foreach ($countries as $country) {
     $country_dropdown .= '<option value="' . $country['country'] . '"';
     if ($country['country'] == $selcountry) {
         $country_dropdown .= ' selected';
-    } elseif ($system->SETTINGS['defaultcountry'] == $country['country']) {
+    } elseif (!$selcountry && $system->SETTINGS['defaultcountry'] == $country['country']) {
         $country_dropdown .= ' selected';
     }
     $country_dropdown .= '>' . $country['country'] . '</option>' . "\n";

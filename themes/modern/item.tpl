@@ -69,10 +69,10 @@ $(document).ready(function() {
 		<!-- END gallery -->
 							</div>
 						</div>
+	<!-- ENDIF -->
 					</div>
 					<div class="panel-footer">{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}</div>
 				</div>
-	<!-- ENDIF -->
 <!-- ELSE -->
 				<div class="panel panel-default">
 					<div class="panel-heading"><span class="label label-default">{L_113}: {ID}</span></div>

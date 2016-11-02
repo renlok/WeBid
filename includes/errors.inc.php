@@ -20,19 +20,46 @@ function WeBidErrorHandler($errno, $errstr, $errfile, $errline)
 {
     global $system, $_SESSION;
     switch ($errno) {
+        case E_ERROR:
+            $error = "<b>Fatal error</b> [$errno] $errstr\n";
+            $error .= "  Fatal error on line $errline in file $errfile";
+            $error .= ", PHP " . PHP_VERSION . " (" . PHP_OS . ")\n";
+            $error .= "Aborting...\n";
+            break;
+
+        case E_WARNING:
+            $error = "<b>Warning</b> [$errno] $errstr on $errfile line $errline\n";
+            break;
+
+        case E_NOTICE:
+            $error = "<b>Notice</b> [$errno] $errstr on $errfile line $errline\n";
+            break;
+
         case E_USER_ERROR:
-            $error = "<b>My ERROR</b> [$errno] $errstr\n";
+            $error = "<b>Fatal error trigger</b> [$errno] $errstr\n";
             $error .= "  Fatal error on line $errline in file $errfile";
             $error .= ", PHP " . PHP_VERSION . " (" . PHP_OS . ")\n";
             $error .= "Aborting...\n";
             break;
 
         case E_USER_WARNING:
-            $error = "<b>My WARNING</b> [$errno] $errstr on $errfile line $errline\n";
+            $error = "<b>Warning trigger</b> [$errno] $errstr on $errfile line $errline\n";
             break;
 
         case E_USER_NOTICE:
-            $error = "<b>My NOTICE</b> [$errno] $errstr on $errfile line $errline\n";
+            $error = "<b>Notice trigger</b> [$errno] $errstr on $errfile line $errline\n";
+            break;
+
+        case E_STRICT:
+            $error = "<b>Strict notice</b> [$errno] $errstr on $errfile line $errline\n";
+            break;
+
+        case E_DEPRECATED:
+            $error = "<b>Deprecated notice</b> [$errno] $errstr on $errfile line $errline\n";
+            break;
+
+        case E_USER_DEPRECATED:
+            $error = "<b>Deprecated notice trigger</b> [$errno] $errstr on $errfile line $errline\n";
             break;
 
         default:
@@ -45,7 +72,12 @@ function WeBidErrorHandler($errno, $errstr, $errfile, $errline)
     $_SESSION['SESSION_ERROR'][] = $error;
     // log the error
     $system->log('error', $error);
-    if ($errno == E_USER_ERROR) {
+
+    if (WeBidDebug) {
+        echo $error;
+    }
+
+    if ($errno | E_USER_ERROR || $errno | E_ERROR) {
         exit(1);
     }
     return true;

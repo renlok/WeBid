@@ -51,7 +51,7 @@ $query = "SELECT COUNT(a.id) as COUNT
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
-		WHERE (a.closed = 1 OR a.bn_only = 1) AND a.suspended = 0 AND a.user = :seller_id
+		WHERE (a.closed = 1 AND a.bn_only = 1) AND a.suspended = 0 AND a.user = :seller_id
 		" . $searchid . "
 		ORDER BY w.closingdate DESC";
 $params[] = array(':seller_id', $user->user_data['id'], 'int');
@@ -71,7 +71,7 @@ $query = "SELECT a.title, a.ends, w.id, w.auction, w.bid, w.qty, w.winner, w.sel
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
 		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
-		WHERE (a.closed = 1 OR a.bn_only = 1) AND a.suspended = 0 AND a.user = :seller_id
+		WHERE (a.closed = 1 AND a.bn_only = 1) AND a.suspended = 0 AND a.user = :seller_id
 		" . $searchid . "
 		ORDER BY w.closingdate DESC
 		LIMIT :offset, :perpage";

@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{SITEURL}themes/{THEME}/css/maps/jquery-jvectormap-2.0.1.css" />
     <link href="{SITEURL}themes/{THEME}/css/icheck/flat/green.css" rel="stylesheet" />
     <link href="{SITEURL}themes/{THEME}/css/floatexamples.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
+    <link rel="stylesheet" type="text/css" href="{SITEURL}includes/calendar.css">
 
     <script src="{SITEURL}themes/{THEME}/js/jquery.min.js"></script>
     <script src="{SITEURL}themes/{THEME}/js/nprogress.js"></script>
@@ -86,7 +86,7 @@
                 <ul class="nav child_menu" style="display: none">
                   <li> <a href="{SITEURL}admin/settings.php">{L_526}</a></li>
                   <li><a href="{SITEURL}admin/auctions.php">{L_auction_settings}</a></li>
-                  <li><a href="{SITEURL}admin/displaysettings.php">{L_788}</a></li>
+                  <li><a href="{SITEURL}admin/displaysettings.php">{L_display_settings}</a></li>
                   <li><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
                   <li><a href="{SITEURL}admin/emailsettings.php">{L_1118}</a></li>
                   <li><a href="{SITEURL}admin/usersettings.php">{L_894}</a></li>

@@ -4,7 +4,7 @@
 						<ul class="menu">
 							<li><a href="{SITEURL}admin/settings.php">{L_526}</a></li>
 							<li><a href="{SITEURL}admin/auctions.php">{L_auction_settings}</a></li>
-							<li><a href="{SITEURL}admin/displaysettings.php">{L_788}</a></li>
+							<li><a href="{SITEURL}admin/displaysettings.php">{L_display_settings}</a></li>
 							<li><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
 							<li><a href="{SITEURL}admin/emailsettings.php">{L_1118}</a></li>
 							<li><a href="{SITEURL}admin/usersettings.php">{L_894}</a></li>
@@ -37,10 +37,10 @@
 							<li><a href="{SITEURL}admin/defaultcountry.php">{L_default_country}</a></li>
 							<li><a href="{SITEURL}admin/counters.php">{L_counter_settings}</a></li>
 							<li><a href="{SITEURL}admin/multilingual.php">{L_2__0002}</a></li>
-							<li><a href="{SITEURL}admin/catsorting.php">{L_25_0146}</a></li>
+							<li><a href="{SITEURL}admin/catsorting.php">{L_category_sorting}</a></li>
 							<li><a href="{SITEURL}admin/metatags.php">{L_25_0178}</a></li>
 							<li><a href="{SITEURL}admin/contactseller.php">{L_contact_seller}</a></li>
-							<li><a href="{SITEURL}admin/buyerprivacy.php">{L_236}</a></li>
+							<li><a href="{SITEURL}admin/buyerprivacy.php">{L_bidder_privacy}</a></li>
 						</ul>
 					</div>
 				</div>

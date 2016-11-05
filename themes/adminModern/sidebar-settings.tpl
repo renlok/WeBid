@@ -4,7 +4,7 @@
 					<li class="list-group-item"><a href="{SITEURL}admin/auctions.php">{L_auction_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/displaysettings.php">{L_display_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/emailsettings.php">{L_1118}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/emailsettings.php">{L_email_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/usersettings.php">{L_894}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/errorhandling.php">{L_409}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/moderation.php">{L_moderation_settings}</a></li>

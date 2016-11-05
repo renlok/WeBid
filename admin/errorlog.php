@@ -24,7 +24,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'clearlog') {
     $query = "DELETE FROM " . $DBPrefix . "logs WHERE type = 'error'";
     $db->direct_query($query);
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['889']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['error_log_purged']));
 }
 
 $data = '';
@@ -43,7 +43,7 @@ if ($type == 'distinct') {
 }
 
 if ($data == '') {
-    $data = $MSG['888'];
+    $data = $MSG['error_log_empty'];
 }
 
 $template->assign_vars(array(

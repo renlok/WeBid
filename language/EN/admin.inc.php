@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-// 40/110
+// 49/110
 if (!defined('InWeBid') || !defined('InAdmin')) {
     exit();
 }
@@ -322,6 +322,58 @@ $MSG['error_msg_not_zero'] = "Messages to show cannot be zero";
 
 // editnew.php
 $MSG['edit_news'] = "Edit news";
+
+// edituser.php
+// nothing
+
+// edituserfeed.php
+// nothing
+
+// emailsettings.php
+$MSG['email_settings'] = 'Email Settings';
+$MSG['error_missing_SMTP_settings'] = 'Please enter missing or incorrect SMTP settings';
+$MSG['mail_protocol'] = 'Mail Protocol:';
+$MSG['mail_parameters'] = 'Webid Mail Parameters:';
+$MSG['mail_parameters_explain'] = '*When using \'Webid Mail\', additional mail parameters can be added here (e.g. "-femail@yourwebid.com").';
+$MSG['SMTP_settings'] = "SMTP Specific Options:";
+$MSG['SMTP_settings_explain'] = 'Used <b>only</b> for SMTP mail';
+$MSG['SMTP_authentication'] = 'SMTP Authentication';
+$MSG['SMTP_security'] = 'SMTP Security:';
+$MSG['SMTP_port'] = 'SMTP Port:';
+$MSG['SMTP_username'] = 'SMTP Username:';
+$MSG['SMTP_password'] = 'SMTP Password:';
+$MSG['SMTP_host'] = 'SMTP Host:';
+$MSG['SMTP_host_explain'] = '*For Gmail accounts. Set the encryption system using a prefix of [<b>ssl://</b>] or [<b>tls://</b>] Examples:<br>[ ssl://smtp.googlemail.com ], [ tls://smtp.googlemail.com ]';
+$MSG['other_admin_emails'] = 'Additional Admin E-Mails:';
+$MSG['other_admin_emails_explain'] = 'Additional email accounts you want to receive admin related email, in addition to the main site email address of %s. (comma separated)';
+
+// enablefees.php
+$MSG['enable_fees'] = "Enable/Disable Fees";
+$MSG['enable_fees_explain'] = "Do you want your auction site to be completely free or do you want to charge for it";
+$MSG['fee_settings_updated'] = 'Fee Settings Updated';
+$MSG['set_payment_type'] = "Set payment type";
+$MSG['set_payment_type_explain'] = "This is how users will pay the fees. Balance mode is where the users can choose when to pay and live payments is where the user must pay for every action that has a fee";
+$MSG['balance_mode'] = "Balance mode";
+$MSG['live_payments'] = "Live payments";
+$MSG['payment_sandbox'] = "Payment gateway sandbox";
+$MSG['payment_sandbox_explain'] = 'You can turn on the payment gateways sandbox to test the payment gateways but make sure disable the sandbox mode before making your site live';
+$MSG['balance_mode_settings'] = "The following settings are only used when in balance mode";
+$MSG['max_debt'] = "Maximum Debt";
+$MSG['max_debt_explain'] = "The maximum debt an account can have before they must pay it back";
+$MSG['signup_credit'] = "Signup Credit";
+$MSG['signup_credit_explain'] = "Free credit given to an account on its creation";
+$MSG['suspend_debt_accounts'] = "Suspend Accounts";
+$MSG['suspend_debt_accounts_explain'] = "Suspend Accounts that are over the Debit Limit";
+
+// errorhandling.php
+$MSG['error_handling'] = "Error Handling";
+$MSG['error_settings_updated'] = "Error Handling settings updated.";
+$MSG['error_text'] = "Error Text";
+$MSG['error_text_explain'] = "Fatal errors that occur during WeBid's execution (typically MySQL errors) will redirect users to an error page. You can customise the error message you want to appear in the error page below.";
+
+// errorlog.php
+$MSG['error_log_purged'] = "Error Log Purged";
+$MSG['error_log_empty'] = 'Error log is currently empty';
 
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";

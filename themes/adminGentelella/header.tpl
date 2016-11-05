@@ -88,7 +88,7 @@
                   <li><a href="{SITEURL}admin/auctions.php">{L_auction_settings}</a></li>
                   <li><a href="{SITEURL}admin/displaysettings.php">{L_display_settings}</a></li>
                   <li><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
-                  <li><a href="{SITEURL}admin/emailsettings.php">{L_1118}</a></li>
+                  <li><a href="{SITEURL}admin/emailsettings.php">{L_email_settings}</a></li>
                   <li><a href="{SITEURL}admin/usersettings.php">{L_894}</a></li>
                   <li><a href="{SITEURL}admin/errorhandling.php">{L_409}</a></li>
                   <li><a href="{SITEURL}admin/moderation.php">{L_moderation_settings}</a></li>
@@ -115,7 +115,7 @@
                 <ul class="nav child_menu" style="display: none">
                         	<li><a href="{SITEURL}admin/fees.php">{L_25_0012}</a></li>
                         	<li><a href="{SITEURL}admin/fee_gateways.php">{L_445}</a></li>
-                        	<li><a href="{SITEURL}admin/enablefees.php">{L_395}</a></li>
+                        	<li><a href="{SITEURL}admin/enablefees.php">{L_enable_fees}</a></li>
                         	<li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
 				<li><a href="{SITEURL}admin/invoice_settings.php">{L_1094}</a></li>
 				<li><a href="{SITEURL}admin/invoice.php">{L_766}</a></li>

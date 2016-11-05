@@ -4,7 +4,7 @@
 						<ul class="menu">
 							<li><a href="{SITEURL}admin/fees.php">{L_25_0012}</a></li>
 							<li><a href="{SITEURL}admin/fee_gateways.php">{L_445}</a></li>
-							<li><a href="{SITEURL}admin/enablefees.php">{L_395}</a></li>
+							<li><a href="{SITEURL}admin/enablefees.php">{L_enable_fees}</a></li>
 							<li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
 							<li><a href="{SITEURL}admin/invoice_settings.php">{L_1094}</a></li>
 							<li><a href="{SITEURL}admin/invoice.php">{L_766}</a></li>

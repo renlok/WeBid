@@ -25,7 +25,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     // checks
     if (intval($_POST['mail_protocol']) == 2) {
         if (empty($_POST['smtp_host']) || empty($_POST['smtp_username']) || empty($_POST['smtp_password']) || empty($_POST['smtp_port']) || intval($_POST['smtp_port']) <= 0) {
-            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['1132']));
+            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_missing_SMTP_settings']));
         }
     }
 
@@ -49,20 +49,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 }
 
 $selectsetting = isset($system->SETTINGS['mail_protocol'])? $system->SETTINGS['mail_protocol'] : '0';
-loadblock($MSG['1119'], '', generateSelect('mail_protocol', $mail_protocol));
-loadblock($MSG['1120'], '<span class="non_smtp para">' . $MSG['1121'], 'text', 'mail_parameter', $system->SETTINGS['mail_parameter']);
-loadblock($MSG['1133'] .'<span class="smtp"></span>' . $MSG['1141'], '', '', '', '', array(), true);
-loadblock($MSG['1128'], '<span class="smtp"></span>', 'yesno', 'smtp_authentication', $system->SETTINGS['smtp_authentication'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['mail_protocol'], '', generateSelect('mail_protocol', $mail_protocol));
+loadblock($MSG['mail_parameters'], '<span class="non_smtp para">' . $MSG['mail_parameters_explain'], 'text', 'mail_parameter', $system->SETTINGS['mail_parameter']);
+loadblock($MSG['SMTP_settings'] .'<span class="smtp"></span>' . $MSG['SMTP_settings_explain'], '', '', '', '', array(), true);
+loadblock($MSG['SMTP_authentication'], '<span class="smtp"></span>', 'yesno', 'smtp_authentication', $system->SETTINGS['smtp_authentication'], array($MSG['yes'], $MSG['no']));
 
 $selectsetting = isset($system->SETTINGS['smtp_security'])? $system->SETTINGS['smtp_security'] : 'none';
-loadblock($MSG['1127'], '<span class="smtp"></span>', generateSelect('smtp_security', $smtp_secure_options));
-loadblock($MSG['1126'], '<span class="smtp"></span>', 'text', 'smtp_port', $system->SETTINGS['smtp_port']);
-loadblock($MSG['1124'], '<span class="smtp"></span>', 'text', 'smtp_username', $system->SETTINGS['smtp_username']);
-loadblock($MSG['1125'], '<span class="smtp"></span>', 'text', 'smtp_password', $system->SETTINGS['smtp_password']);
-loadblock($MSG['1122'], '<span class="smtp"></span>', 'text', 'smtp_host', $system->SETTINGS['smtp_host']);
-loadblock($MSG['1129'], sprintf($MSG['1130'], $system->SETTINGS['adminmail']), 'text', 'alert_emails', $system->SETTINGS['alert_emails']);
-
-$mail_info2 = '';
+loadblock($MSG['SMTP_security'], '<span class="smtp"></span>', generateSelect('smtp_security', $smtp_secure_options));
+loadblock($MSG['SMTP_port'], '<span class="smtp"></span>', 'text', 'smtp_port', $system->SETTINGS['smtp_port']);
+loadblock($MSG['SMTP_username'], '<span class="smtp"></span>', 'text', 'smtp_username', $system->SETTINGS['smtp_username']);
+loadblock($MSG['SMTP_password'], '<span class="smtp"></span>', 'text', 'smtp_password', $system->SETTINGS['smtp_password']);
+loadblock($MSG['SMTP_host'], '<span class="smtp"></span>' . $MSG['SMTP_host_explain'], 'text', 'smtp_host', $system->SETTINGS['smtp_host']);
+loadblock($MSG['other_admin_emails'], sprintf($MSG['other_admin_emails_explain'], $system->SETTINGS['adminmail']), 'text', 'alert_emails', $system->SETTINGS['alert_emails']);
 
 // send test email
 if (isset($_GET['test_email'])) {
@@ -79,7 +77,7 @@ if (isset($_GET['test_email'])) {
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['524'],
-        'PAGENAME' => $MSG['1131'],
+        'PAGENAME' => $MSG['email_settings'],
 
         'MAIL_PROTOCOL' => $mail_protocol[$system->SETTINGS['mail_protocol']],
         'SMTP_AUTH' => $system->SETTINGS['smtp_authentication'],

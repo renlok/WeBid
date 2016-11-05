@@ -438,8 +438,6 @@ $MSG['391'] = "Amount";
 $MSG['392'] = "Fee Type";
 $MSG['393'] = "flat";
 $MSG['394'] = "Add";
-$MSG['395'] = "Enable/Disable Fees";
-$MSG['397'] = "Do you want your auction site to be completely free or do you want to charge for it";
 $MSG['398'] = "Send Newsletter";
 $MSG['399'] = "Search for it!";
 $MSG['401'] = "Privacy Policy";
@@ -448,11 +446,6 @@ $MSG['403'] = "Activate Privacy Policy Page?";
 $MSG['404'] = "Privacy Policy content<br>(HTML allowed)";
 $MSG['405'] = "Activate this option if you want a Privacy Policy link to appear in the footer of your pages.";
 $MSG['406'] = "Privacy Policy Settings Updated";
-$MSG['409'] = "Error Handling";
-$MSG['410'] = "Fatal errors that occur during WeBid's execution (typically MySQL errors) will redirect users to an error page.
-			You can customise the error message you want to appear in the error page below.";
-$MSG['411'] = "Error Text";
-$MSG['413'] = "Error Handling settings updated.";
 $MSG['415'] = "Error";
 $MSG['417'] = "General";
 $MSG['418'] = "Are you sure you want to activate this user?";
@@ -630,17 +623,6 @@ $MSG['724'] = "Additional Information";
 $MSG['725'] = "Optimisation";
 $MSG['726'] = "Enable the template cache?";
 $MSG['727'] = "This will massively increase the speed of your site. It is recommended this is only disabled when making updates to your template";
-$MSG['729'] = "Set payment type";
-$MSG['730'] = "This is how users will pay the fees. Balance mode is where the users can choose when to pay and live payments is where the user must pay for every action that has a fee";
-$MSG['731'] = "Balance mode";
-$MSG['732'] = "Live payments";
-$MSG['733'] = "The following settings are only used when in balance mode";
-$MSG['734'] = "Maximum Debt";
-$MSG['735'] = "The maximum debt an account can have before they must pay it back";
-$MSG['736'] = "Signup Credit";
-$MSG['737'] = "The credit given to an account on its creation";
-$MSG['738'] = "Suspend Accounts";
-$MSG['739'] = "Suspend Accounts that are over the Debit Limit";
 $MSG['740'] = "None";
 $MSG['741'] = "Image";
 $MSG['742'] = "reCaptcha";
@@ -662,7 +644,6 @@ $MSG['757'] = 'Security Code';
 $MSG['758'] = 'Verify Code';
 $MSG['759'] = 'Enable';
 $MSG['760'] = 'Disable';
-$MSG['761'] = 'Fee Settings Updated';
 $MSG['762'] = 'Fee Gateway Settings Updated';
 $MSG['763'] = 'Balance';
 $MSG['764'] = 'Send payment reminder';
@@ -768,8 +749,6 @@ $MSG['868'] = ' each';
 $MSG['869'] = 'Sale Date';
 $MSG['870'] = 'You have sold %s items';
 
-$MSG['888'] = 'Error log is currently empty';
-$MSG['889'] = "Error Log Purged";
 $MSG['890'] = "Purge Log";
 $MSG['891'] = "Error Log";
 $MSG['892'] = "To be activated";
@@ -943,22 +922,6 @@ $MSG['1116'] = 'Set as Shipped';
 $MSG['1117'] = 'Shipped';
 
 // email settings
-$MSG['1118'] = 'Email Settings';
-$MSG['1119'] = 'Mail Protocol:';
-$MSG['1120'] = 'Webid Mail Parameters:';
-$MSG['1121'] = '*When using \'Webid Mail\', additional mail parameters can be added here (e.g. "-femail@yourwebid.com").';
-$MSG['1122'] = 'SMTP Host:';
-$MSG['1123'] = '*For Gmail accounts. Set the encryption system using a prefix of [<b>ssl://</b>] or [<b>tls://</b>] Examples:<br>[ ssl://smtp.googlemail.com ], [ tls://smtp.googlemail.com ]';
-$MSG['1124'] = 'SMTP Username:';
-$MSG['1125'] = 'SMTP Password:';
-$MSG['1126'] = 'SMTP Port:';
-$MSG['1127'] = 'SMTP Security:';
-$MSG['1128'] = 'SMTP Authentication';
-$MSG['1129'] = 'Additional Admin E-Mails:';
-$MSG['1130'] = 'Additional email accounts you want to receive admin related email, in addition to the main site email address of %s. (comma separated)';
-$MSG['1131'] = 'Email Settings';
-$MSG['1132'] = 'Please enter missing or incorrect SMTP settings';
-$MSG['1133'] = "SMTP Specific Options:";
 // modal and js
 $MSG['1134'] = "Email Test and Response";
 $MSG['1135'] = "Enter a message for the test email.";
@@ -967,7 +930,6 @@ $MSG['1137'] = "Email Test";
 $MSG['1138'] = "Test email from Admin";
 $MSG['1139'] = "Admin";
 $MSG['1140'] = "I have finished testing";
-$MSG['1141'] = 'Used <b>only</b> for SMTP mail';
 // fee gateway
 $MSG['1142'] = "Before you can set up any fees you must set up at least one account where the fees can be paid to, to do so simply add your payment info into the corresponding boxes below";
 $MSG['1143'] = "Here you setup which payment gateways you want to allow users to use";
@@ -990,10 +952,6 @@ $MSG['1151'] = "Auction fee";
 $MSG['1152'] = "Free";
 
 $MSG['1153'] = 'Print Invoice';
-
-//Sandbox messages for the AdminCP
-$MSG['1154'] = 'You can turn on the payment gateways sandbox to test the payment gateways but make sure disable the sandbox mode before making your site live';
-$MSG['1155'] = "Payment gateway sandbox";
 
 $MSG['5000'] = 'You must be logged in to see this page';
 $MSG['5001'] = "View Site";

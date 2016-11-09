@@ -86,11 +86,11 @@
 							<a href="deleteuser.php?id={users.ID}&offset={PAGE}"><small>{L_008}</small></a><br>
 							<a href="excludeuser.php?id={users.ID}&offset={PAGE}"><small>
 	<!-- IF users.SUSPENDED eq 0 -->
-								{L_305}
+								{L_suspend_user}
 	<!-- ELSEIF users.SUSPENDED eq 8 -->
-								{L_515}
+								{L_activate_user}
 	<!-- ELSE -->
-								{L_299}
+								{L_activate_user}
 	<!-- ENDIF -->
 							</small></a>
 						</td>

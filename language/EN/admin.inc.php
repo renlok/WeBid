@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-// 49/110
+// 52/110
 if (!defined('InWeBid') || !defined('InAdmin')) {
     exit();
 }
@@ -374,6 +374,26 @@ $MSG['error_text_explain'] = "Fatal errors that occur during WeBid's execution (
 // errorlog.php
 $MSG['error_log_purged'] = "Error Log Purged";
 $MSG['error_log_empty'] = 'Error log is currently empty';
+
+// excludeauction.php
+$MSG['suspend_auction'] = "Suspend auction";
+$MSG['unsuspend_auction'] = "Reactivate auction";
+
+// excludeuser.php
+$MSG['suspend_user'] = "Suspend User";
+$MSG['suspend_user_confirm'] = "Are you sure you want to suspend this user?";
+$MSG['activate_user'] = 'Activate User';
+$MSG['activate_user_confirm'] = 'Are you sure you want to activate this user?';
+$MSG['reactivate_user'] = "Reactivate User";
+$MSG['reactivate_user_confirm'] = "Are you sure you want to reactivate this user?";
+
+// faqs.php
+$MSG['faqs_deleted'] = 'FAQs deleted';
+
+// faqscategories.php
+$MSG['faq_delete_action'] = 'What do you want to do with the FAQs in the following categories';
+$MSG['confirm_faq_action'] = 'Are you sure you want to process the following categories: ';
+$MSG['contains_x_faqs'] = '(contains %d FAQs)';
 
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";

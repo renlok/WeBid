@@ -62,7 +62,6 @@
             <td width="204">&nbsp;</td>
             <td><form name="details" action="" method="post">
                 <input type="hidden" name="id" value="{ID}">
-                <input type="hidden" name="offset" value="{OFFSET}">
                 <input type="hidden" name="mode" value="{MODE}">
                 <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
                 <input type="submit" name="action" value="{L_030}" class="btn btn-primary">

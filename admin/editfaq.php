@@ -42,17 +42,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $params[] = array(':answer', $system->cleanvars($_POST['answer'][$system->SETTINGS['defaultlanguage']]), 'str');
         $params[] = array(':faq_id', $_POST['id'], 'int');
         $db->query($query, $params);
-        reset($LANGUAGES);
-        foreach ($LANGUAGES as $k => $v) {
+        foreach ($LANGUAGES as $lang_code) {
             $query = "SELECT question FROM " . $DBPrefix . "faqs_translated WHERE lang = :lang AND id = :faq_id";
             $params = array();
-            $params[] = array(':lang', $k, 'str');
+            $params[] = array(':lang', $lang_code, 'str');
             $params[] = array(':faq_id', $_POST['id'], 'int');
             $db->query($query, $params);
             $params = array();
-            $params[] = array(':lang', $k, 'str');
-            $params[] = array(':question', $_POST['question'][$k], 'str');
-            $params[] = array(':answer', $system->cleanvars($_POST['answer'][$k]), 'str');
+            $params[] = array(':lang', $lang_code, 'str');
+            $params[] = array(':question', $_POST['question'][$lang_code], 'str');
+            $params[] = array(':answer', $system->cleanvars($_POST['answer'][$lang_code]), 'str');
             if ($db->numrows() > 0) {
                 $query = "UPDATE " . $DBPrefix . "faqs_translated SET
                           question = :question,
@@ -96,16 +95,15 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-reset($LANGUAGES);
-foreach ($LANGUAGES as $k => $v) {
+foreach ($LANGUAGES as $lang_code) {
     $template->assign_block_vars('qs', array(
-            'LANG' => $k,
-            'QUESTION' => (isset($_POST['question'][$k])) ? $_POST['question'][$k] : (isset($QUESTION_tr[$k])? $QUESTION_tr[$k] : '')
+            'LANG' => $lang_code,
+            'QUESTION' => (isset($_POST['question'][$lang_code])) ? $_POST['question'][$lang_code] : (isset($QUESTION_tr[$lang_code])? $QUESTION_tr[$lang_code] : '')
             ));
-    $answer = (isset($_POST['answer'][$k])) ? $_POST['answer'][$k] : (isset($ANSWER_tr[$k]) ? $ANSWER_tr[$k] : '');
+    $answer = (isset($_POST['answer'][$lang_code])) ? $_POST['answer'][$lang_code] : (isset($ANSWER_tr[$lang_code]) ? $ANSWER_tr[$lang_code] : '');
     $template->assign_block_vars('as', array(
-            'LANG' => $k,
-            'ANSWER' => $CKEditor->editor('answer[' . $k . ']', $answer)
+            'LANG' => $lang_code,
+            'ANSWER' => $CKEditor->editor('answer[' . $lang_code . ']', $answer)
             ));
 }
 

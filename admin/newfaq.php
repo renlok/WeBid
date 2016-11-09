@@ -30,15 +30,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $params[] = array(':category', $_POST['category'], 'int');
         $db->query($query, $params);
         $id = $db->lastInsertId();
-        // Insert into translation table.
-        reset($LANGUAGES);
-        foreach ($LANGUAGES as $k => $v) {
+        // Insert into translation table
+        foreach ($LANGUAGES as $lang_code) {
             $query = "INSERT INTO ".$DBPrefix."faqs_translated VALUES (:id, :lang, :question, :answer)";
             $params = array();
             $params[] = array(':id', $id, 'int');
-            $params[] = array(':lang', $k, 'str');
-            $params[] = array(':question', $system->cleanvars($_POST['question'][$k]), 'str');
-            $params[] = array(':answer', $system->cleanvars($_POST['answer'][$k], true), 'str');
+            $params[] = array(':lang', $lang_code, 'str');
+            $params[] = array(':question', $system->cleanvars($_POST['question'][$lang_code]), 'str');
+            $params[] = array(':answer', $system->cleanvars($_POST['answer'][$lang_code], true), 'str');
             $db->query($query, $params);
         }
         header('location: faqs.php');

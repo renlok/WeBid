@@ -3,7 +3,7 @@
 					<li class="list-group-item"><a href="{SITEURL}admin/news.php">{L_516}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/aboutus.php">{L_about_us_page}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/terms.php">{L_5075}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/privacypolicy.php">{L_402}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/privacypolicy.php">{L_privacy_policy}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/cookiespolicy.php">{L_cookie_policy}</a></li>
 					<li class="list-group-item active">{L_5236}</li>
 					<li class="list-group-item"><a href="{SITEURL}admin/faqscategories.php">{L_5230}</a></li>

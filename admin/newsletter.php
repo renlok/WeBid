@@ -25,7 +25,7 @@ $is_preview = false;
 
 if (isset($_POST['action']) && $_POST['action'] == 'submit') {
     if (empty($subject) || empty($content)) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5014));
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_subject_or_body_missing']));
     } else {
         $COUNTER = 0;
         $query = "SELECT email FROM " . $DBPrefix . "users WHERE nletter = 1";
@@ -50,17 +50,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'submit') {
                 $COUNTER++;
             }
         }
-        $ERR = $COUNTER . $MSG['5300'];
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => sprintf($MSG['5300'], $COUNTER)));
     }
 } elseif (isset($_POST['action']) && $_POST['action'] == 'preview') {
     $is_preview = true;
 }
 
-$USERSFILTER = array('all' => $MSG['5296'],
-    'active' => $MSG['5291'],
-    'admin' => $MSG['5294'],
-    'fee' => $MSG['5293'],
-    'confirmed' => $MSG['5292']);
+$USERSFILTER = array('all' => $MSG['all_users'],
+    'active' => $MSG['active_users'],
+    'admin' => $MSG['suspended_by_admin'],
+    'fee' => $MSG['signup_fee_unpaid'],
+    'confirmed' => $MSG['account_never_confirmed']);
 
 $selectsetting = (isset($_POST['usersfilter'])) ? $_POST['usersfilter'] : '';
 
@@ -71,7 +71,6 @@ $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
         'SELECTBOX' => generateSelect('usersfilter', $USERSFILTER),
         'SUBJECT' => $subject,
         'EDITOR' => $CKEditor->editor('content', $content),

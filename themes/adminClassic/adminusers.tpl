@@ -7,7 +7,7 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_525}</h4>
 				<form name="errorlog" action="" method="post">
-					<div class="plain-box"><a href="newadminuser.php">{L_367}</a></div>
+					<div class="plain-box"><a href="newadminuser.php">{L_new_admin_user}</a></div>
 					<table width="98%" cellpadding="0" cellspacing="0" align="center">
 						<tr>
 							<th width="30%">{L_username}</th>

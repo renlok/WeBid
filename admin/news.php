@@ -50,7 +50,6 @@ while ($row = $db->fetch()) {
             'DATE' => $dt->formatDate($row['new_date']),
             'SUSPENDED' => $row['suspended']
             ));
-    $k++;
 }
 
 // get pagenation

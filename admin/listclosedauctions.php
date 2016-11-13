@@ -34,19 +34,19 @@ $_SESSION['RETURN_LIST'] = 'listclosedauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(a.id) as auctions FROM " . $DBPrefix . "auctions a
-	LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
-	WHERE m.reason IS NULL AND a.closed = 1 AND a.suspended = 0";
+          LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
+          WHERE m.reason IS NULL AND a.closed = 1 AND a.suspended = 0";
 $db->direct_query($query);
 $num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(w.id) as winners, COUNT(r.id) as times_reported, m.reason  FROM " . $DBPrefix . "auctions a
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
-		LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
-		LEFT JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
-		LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
-		WHERE m.reason IS NULL AND a.closed = 1 AND a.suspended = 0 GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+          LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
+          LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
+          LEFT JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
+          LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
+          WHERE m.reason IS NULL AND a.closed = 1 AND a.suspended = 0 GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');

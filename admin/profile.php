@@ -47,7 +47,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $display = array_keys($DISPLAYED_FIELDS);
     for ($i = 0; $i < 7; $i++) {
         if ($MANDATORY_FIELDS[$required[$i]] == 'y' && $DISPLAYED_FIELDS[$display[$i]] == 'n') {
-            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['809']));
+            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_required_field_cannot_be_hidden']));
         }
     }
     if (!isset($ERR)) {
@@ -56,26 +56,25 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $system->writesetting("mandatory_fields", $mdata, "str");
         $system->writesetting("displayed_feilds", $sdata, "str");
 
-        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['779']));
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['registration_fields_updated']));
     }
 }
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
-        'REQUIRED_0' => ($MANDATORY_FIELDS['birthdate'] == 'y') ? true : false,
-        'REQUIRED_1' => ($MANDATORY_FIELDS['address'] == 'y') ? true : false,
-        'REQUIRED_2' => ($MANDATORY_FIELDS['city'] == 'y') ? true : false,
-        'REQUIRED_3' => ($MANDATORY_FIELDS['prov'] == 'y') ? true : false,
-        'REQUIRED_4' => ($MANDATORY_FIELDS['country'] == 'y') ? true : false,
-        'REQUIRED_5' => ($MANDATORY_FIELDS['zip'] == 'y') ? true : false,
-        'REQUIRED_6' => ($MANDATORY_FIELDS['tel'] == 'y') ? true : false,
-        'DISPLAYED_0' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 'y') ? true : false,
-        'DISPLAYED_1' => ($DISPLAYED_FIELDS['address_regshow'] == 'y') ? true : false,
-        'DISPLAYED_2' => ($DISPLAYED_FIELDS['city_regshow'] == 'y') ? true : false,
-        'DISPLAYED_3' => ($DISPLAYED_FIELDS['prov_regshow'] == 'y') ? true : false,
-        'DISPLAYED_4' => ($DISPLAYED_FIELDS['country_regshow'] == 'y') ? true : false,
-        'DISPLAYED_5' => ($DISPLAYED_FIELDS['zip_regshow'] == 'y') ? true : false,
-        'DISPLAYED_6' => ($DISPLAYED_FIELDS['tel_regshow'] == 'y') ? true : false
+        'REQUIRED_0' => ($MANDATORY_FIELDS['birthdate'] == 'y'),
+        'REQUIRED_1' => ($MANDATORY_FIELDS['address'] == 'y'),
+        'REQUIRED_2' => ($MANDATORY_FIELDS['city'] == 'y'),
+        'REQUIRED_3' => ($MANDATORY_FIELDS['prov'] == 'y'),
+        'REQUIRED_4' => ($MANDATORY_FIELDS['country'] == 'y'),
+        'REQUIRED_5' => ($MANDATORY_FIELDS['zip'] == 'y'),
+        'REQUIRED_6' => ($MANDATORY_FIELDS['tel'] == 'y'),
+        'DISPLAYED_0' => ($DISPLAYED_FIELDS['birthdate_regshow'] == 'y'),
+        'DISPLAYED_1' => ($DISPLAYED_FIELDS['address_regshow'] == 'y'),
+        'DISPLAYED_2' => ($DISPLAYED_FIELDS['city_regshow'] == 'y'),
+        'DISPLAYED_3' => ($DISPLAYED_FIELDS['prov_regshow'] == 'y'),
+        'DISPLAYED_4' => ($DISPLAYED_FIELDS['country_regshow'] == 'y'),
+        'DISPLAYED_5' => ($DISPLAYED_FIELDS['zip_regshow'] == 'y'),
+        'DISPLAYED_6' => ($DISPLAYED_FIELDS['tel_regshow'] == 'y')
         ));
 
 include 'header.php';
@@ -83,5 +82,4 @@ $template->set_filenames(array(
         'body' => 'profile.tpl'
         ));
 $template->display('body');
-
 include 'footer.php';

@@ -11,7 +11,7 @@
  *   (at your option) any later version. Although none of the code may be
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
-// 52/110
+// 90/110
 if (!defined('InWeBid') || !defined('InAdmin')) {
     exit();
 }
@@ -305,8 +305,8 @@ $MSG['error_wrong_file_type'] = "Wrong file type. Allowed formats: GIF, JPG, PNG
 // nothing
 
 // editboards.php
-$MSG['error_msg_numeric'] = "Messages to show must be numeric";
-$MSG['error_msg_not_zero'] = "Messages to show cannot be zero";
+$MSG['error_msg_numeric'] = "Messages to show must be numeric"; // Also newboard.php
+$MSG['error_msg_not_zero'] = "Messages to show cannot be zero"; // Also newboard.php
 
 //editfaq.php
 // nothing
@@ -399,7 +399,7 @@ $MSG['contains_x_faqs'] = '(contains %d FAQs)';
 $MSG['gateway_settings_update'] = 'Fee Gateway Settings Updated';
 
 // fees.php
-// nothing
+$MSG['error_from_must_be_less_than_to'] = 'The <i>from</i> value must be less than the <i>to</i> value'; // also increments.php
 
 // footer.php
 // nothing
@@ -407,11 +407,147 @@ $MSG['gateway_settings_update'] = 'Fee Gateway Settings Updated';
 // header.php
 // nothing
 
+// help.php
+// nothing
+
+// increments.php
+$MSG['increments_updated'] = "Increments table updated";
+
+// index.php
+$MSG['counters_updated'] = "Counters updated";
+
+// invoice_settings.php
+$MSG['invoice_settings'] = 'Invoice Settings';
+$MSG['invoice_settings_updated'] = 'Invoice settings updated';
+$MSG['invoice_notice'] = 'Invoice Notice';
+$MSG['invoice_notice_explain'] = 'This will show in a yellow box above the end message on users invoices';
+$MSG['invoice_end_msg'] = 'Invoice End Message';
+$MSG['invoice_end_msg_explain'] = 'This will show at the end of every users invoice';
+
+// invoice.php
+// nothing
+
+// listauctions.php
+$MSG['view_open_auctions'] = "View Open Auctions";
+
+// listclosedauctions.php
+// nothing
+
+// listreportedauctions.php
+$MSG['view_reported_auctions'] = "View Reported Auctions";
+
+// listsuspendedauctions.php
+$MSG['view_suspended_auctions'] = "View Suspended Auctions";
+
+// listusers.php
+// nothing
+
+// loggedin.inc.php
+// nothing
+
+// login.php
+// nothing
+
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";
 $MSG['current_logo'] = "Current logo";
 $MSG['upload_new_logo'] = "Upload a new logo";
 $MSG['logo_upload_success'] = 'Logo uploaded successfully';
+
+// logout.php
+// nothing
+
+// maintenance.php
+$MSG['maintenance_settings'] = "Under Maintenance Page";
+$MSG['maintenance_settings_updated'] = "Under Maintenance settings updated";
+$MSG['enable_maintenance_mode'] = "Enable \"Under Maintenance\" mode?";
+$MSG['enable_maintenance_mode_explain'] = "You can temporary disable the access to your site if necessary.<br>
+                In Maintenance mode only one user will have access to it. After you registered a user via <a target=\"_new\" href=\"../register.php\">the usual users registration page</a>
+                , insert below the username. After switching the site to Maintenance mode <a target=\"_new\" href=\"../user_login.php\">login here</a> to access the site.";
+$MSG['maintenance_mode_msg'] = "Under Maintenance HTML code";
+
+// managebanners.php
+// nothing
+
+// membertypes.php
+$MSG['member_types_updates'] = 'Member types Updated';
+
+// metatags.php
+$MSG['metatag_settings'] = "HTML meta Tags";
+$MSG['metatag_settings_updated'] = "Meta Tags Settings Updated";
+$MSG['metatag_desc'] = "Meta Description Tag";
+$MSG['metatag_desc_explain'] = "The Meta Description Tag is usually used to describe your pages in the search results pages search engines show.<br>
+				Enter the text which better describes your site below.";
+$MSG['metatag_keywords'] = "Meta Keywords Tag";
+$MSG['metatag_keywords_explain'] = "The Meta Keywords Tag gives some search engines additional information to use to index your site.<br>
+				Enter the your keywords below separated by comas (i.e. books, books auctions, book sales).";
+
+// moderateauctions.php
+// nothing
+
+// moderation.php
+$MSG['moderation_settings'] = 'Moderation Settings';
+$MSG['moderation_settings_updated'] = "Moderation Settings updated";
+$MSG['moderation'] = 'Moderation';
+$MSG['auction_moderation'] = 'Auction Moderation';
+$MSG['new_auction_moderation'] = 'New auction moderation';
+$MSG['moderation_disabled'] = 'Disabled';
+$MSG['moderation_pre_moderation'] = 'Pre-moderation';
+$MSG['moderation_post_moderation'] = 'Post-moderation';
+
+// multilingual.php
+$MSG['multilingual_support_settings_updated'] = 'Multilingual Support Settings updated';
+$MSG['multilingual_support'] = "Multilingual support";
+$MSG['default_language'] = "Default language";
+$MSG['default_language_explain'] = "This is the language that will show for guests and new users";
+$MSG['current_default_language'] = '<span style="color:#CD0000;"><b>Current default language</b></span>';
+
+// newadminuser.php
+$MSG['new_admin_user'] = "New admin user";
+
+// newbanneruser.php
+// nothing
+
+// newboard.php
+// nothing
+
+// newfaq.php
+// nothing
+
+// news.php
+// nothing
+
+// newsletter.php
+$MSG['error_subject_or_body_missing'] = "The newsletter subject or body is missing";
+$MSG['x_messages_sent'] = "%d messages sent.";
+$MSG['all_users'] = "All users"; // Also listusers.tpl
+$MSG['active_users'] = "Active users"; // Also listusers.tpl
+$MSG['suspended_by_admin'] = "Suspended by the admin"; // Also listusers.tpl
+$MSG['signup_fee_unpaid'] = "Sign up fee not paid"; // Also listusers.tpl
+$MSG['account_never_confirmed'] = "Account never confirmed"; // Also listusers.tpl
+
+// newuser.php
+// nothing
+
+// payments.php
+$MSG['payment_methods_updated'] = "Payment methods table updated";
+
+// privacypolicy.php
+$MSG['privacy_policy'] = "Privacy Policy Page";
+$MSG['privacy_policy_updated'] = "Privacy Policy Settings Updated";
+$MSG['enable_privacy_policy'] = "Enable Privacy Policy Page?";
+$MSG['enable_privacy_policy_explain'] = "Enable this option if you want a Privacy Policy link to appear in the footer of your pages.";
+$MSG['privacy_policy_content'] = "Privacy Policy content<br>(HTML allowed)";
+
+// profile.php
+$MSG['registration_fields_updated'] = 'User Registration Fields Updated';
+$MSG['error_required_field_cannot_be_hidden'] = 'A field must be shown if it\'s a required field';
+
+// removefrommoderation.php
+// nothing
+
+// searchauctions.php
+$MSG['search_auctions'] = "Search Auctions";
 
 // usergroups.php
 $MSG['cannot_delete_default_user_groups'] = 'Default User Groups (Sellers & Buyers) cannot be removed';

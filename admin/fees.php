@@ -122,7 +122,7 @@ if (isset($_GET['type']) && isset($fees[$_GET['type']])) {
                     $db->query($query, $params);
                     $level_added = true;
                 } else {
-                    $errmsg = $ERR_713;
+                    $errmsg = $MSG['error_from_must_be_less_than_to'];
                 }
             }
         }

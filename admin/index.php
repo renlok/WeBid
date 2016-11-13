@@ -95,8 +95,8 @@ if (isset($_GET['action'])) {
 
             //update bids
             $query = "SELECT COUNT(b.id) As COUNT FROM " . $DBPrefix . "bids b
-					LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
-					WHERE a.closed = 0 AND a.suspended = 0";
+                      LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
+                      WHERE a.closed = 0 AND a.suspended = 0";
             $db->direct_query($query);
             $BIDS = $db->result('COUNT');
             $query = "UPDATE " . $DBPrefix . "counters SET bids = :BIDS";
@@ -106,7 +106,7 @@ if (isset($_GET['action'])) {
 
             resync_category_counters();
 
-            $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1029']));
+            $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['counters_updated']));
         break;
     }
 }
@@ -144,7 +144,7 @@ switch ($system->SETTINGS['version_check']) {
 
 if (!($realversion = load_file_from_url($url))) {
     $ERR = $MSG['error_file_access_disabled'];
-    $realversion = 'Unknown';
+    $realversion = $MSG['unknown'];
 }
 
 $update_available = false;

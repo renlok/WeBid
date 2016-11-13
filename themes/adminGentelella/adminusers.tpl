@@ -12,7 +12,7 @@
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <strong>Success!</strong>{ERROR}</div>
 <!-- ENDIF -->
-					<div class="plain-box"><a href="newadminuser.php">{L_367}</a></div>
+					<div class="plain-box"><a href="newadminuser.php">{L_new_admin_user}</a></div>
                     <table class="table table-bordered table-striped">
                         <tr>
                             <th width="30%">{L_username}</th>

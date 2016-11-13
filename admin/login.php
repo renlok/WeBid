@@ -32,7 +32,7 @@ if (isset($_POST['action'])) {
                 include PACKAGE_PATH . 'PasswordHash.php';
                 $phpass = new PasswordHash(8, false);
                 $query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, status) VALUES
-						(:username, :password, :hash, 1)";
+                          (:username, :password, :hash, 1)";
                 $params = array();
                 $params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
                 $params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');

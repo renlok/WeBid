@@ -26,19 +26,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $params = array();
     $params[] = array(':nick', $superuser, 'str');
     $db->query($query, $params);
-    if ($db->numrows() == 0 && $_POST['maintainancemodeactive'] == 1) {
+    if ($db->numrows() == 0 && $_POST['maintenancemodeactive'] == 1) {
         $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_025));
     } else {
         $system->writesetting("superuser", $superuser, 'string');
-        $system->writesetting("maintainance_text", $system->cleanvars($_POST['maintainancetext'], true), 'string');
-        $system->writesetting("maintainance_mode_active", $_POST['maintainancemodeactive'], 'bool');
+        $system->writesetting("maintenance_text", $system->cleanvars($_POST['maintenancetext'], true), 'string');
+        $system->writesetting("maintenance_mode_active", $_POST['maintenancemodeactive'], 'bool');
 
-        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['_0005']));
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['maintenance_settings_updated']));
     }
 }
 
-loadblock('', $MSG['_0002']);
-loadblock($MSG['_0006'], '', 'bool', 'maintainancemodeactive', $system->SETTINGS['maintainance_mode_active'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['enable_maintenance_mode'], $MSG['enable_maintenance_mode_explain'], 'bool', 'maintenancemodeactive', $system->SETTINGS['maintenance_mode_active'], array($MSG['yes'], $MSG['no']));
 loadblock($MSG['username'], '', 'text', 'superuser', $system->SETTINGS['superuser'], array($MSG['yes'], $MSG['no']));
 
 $CKEditor = new CKEditor();
@@ -47,12 +46,12 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['_0004'], '', $CKEditor->editor('maintainancetext', $system->SETTINGS['maintainance_text']));
+loadblock($MSG['maintenance_mode_msg'], '', $CKEditor->editor('maintenancetext', $system->SETTINGS['maintenance_text']));
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['5436'],
-        'PAGENAME' => $MSG['_0001']
+        'PAGENAME' => $MSG['maintenance_settings']
         ));
 
 include 'header.php';

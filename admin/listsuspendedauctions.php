@@ -35,18 +35,18 @@ $_SESSION['RETURN_LIST'] = 'listsuspendedauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(a.id) as auctions FROM " . $DBPrefix . "auctions a
-	LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
-	WHERE m.reason IS NULL AND a.suspended != 0";
+          LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
+          WHERE m.reason IS NULL AND a.suspended != 0";
 $db->direct_query($query);
 $num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(r.id) as times_reported, m.reason  FROM " . $DBPrefix . "auctions a
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
-		LEFT JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
-		LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
-		WHERE m.reason IS NULL AND a.suspended != 0  GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+          LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
+          LEFT JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
+          LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
+          WHERE m.reason IS NULL AND a.suspended != 0  GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
@@ -85,7 +85,7 @@ if ($PAGES > 1) {
 }
 
 $template->assign_vars(array(
-        'PAGE_TITLE' => $MSG['5227'],
+        'PAGE_TITLE' => $MSG['view_suspended_auctions'],
         'NUM_AUCTIONS' => $num_auctions,
         'B_SEARCHUSER' => false, // needs decaring as listauctions.tpl is shared and expects B_SEARCHUSER to be declared. Used in users->view actions link
         'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listsuspendedauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',

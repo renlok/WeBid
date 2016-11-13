@@ -23,9 +23,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert') {
     if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active'])) {
         $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
     } elseif (!is_numeric($_POST['msgstoshow'])) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5000));
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_msg_numeric']));
     } elseif (intval($_POST['msgstoshow'] == 0)) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5001));
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_msg_not_zero']));
     } else {
         $query = "INSERT INTO " . $DBPrefix . "community VALUES (NULL, :name, 0, 0, :msgstoshow, :active)";
         $params = array();
@@ -39,8 +39,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert') {
 }
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
-
         'NAME' => (isset($_POST['name'])) ? $_POST['name'] : '',
         'MSGTOSHOW' => (isset($_POST['msgstoshow'])) ? $_POST['msgstoshow'] : '',
         'B_ACTIVE' => ((isset($_POST['active']) && $_POST['active'] == 1) || !isset($_POST['active'])),

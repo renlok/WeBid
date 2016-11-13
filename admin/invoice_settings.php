@@ -22,16 +22,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     // clean submission and update database
     $system->writesetting("invoice_yellow_line", $system->cleanvars($_POST['invoice_yellow_line']), "str");
     $system->writesetting("invoice_thankyou", $system->cleanvars($_POST['invoice_thankyou']), "str");
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1095']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['invoice_settings_updated']));
 }
 
-loadblock($MSG['1096'], $MSG['1097'], 'textarea', 'invoice_yellow_line', $system->SETTINGS['invoice_yellow_line']);
-loadblock($MSG['1098'], $MSG['1099'], 'textarea', 'invoice_thankyou', $system->SETTINGS['invoice_thankyou']);
+loadblock($MSG['invoice_notice'], $MSG['invoice_notice_explain'], 'textarea', 'invoice_yellow_line', $system->SETTINGS['invoice_yellow_line']);
+loadblock($MSG['invoice_end_msg'], $MSG['invoice_end_msg_explain'], 'textarea', 'invoice_thankyou', $system->SETTINGS['invoice_thankyou']);
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0012'],
-        'PAGENAME' => $MSG['1094']
+        'PAGENAME' => $MSG['invoice_settings']
         ));
 
 include 'header.php';

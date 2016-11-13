@@ -18,8 +18,6 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-$template->assign_vars(array());
-
 include 'header.php';
 $template->set_filenames(array(
         'body' => 'help.tpl'

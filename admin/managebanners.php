@@ -32,8 +32,8 @@ if (isset($_POST['delete']) && is_array($_POST['delete'])) {
 
 // Retrieve users from the database
 $query = "SELECT u.*, COUNT(b.user) as count FROM " . $DBPrefix . "bannersusers u
-		LEFT JOIN " . $DBPrefix . "banners b ON (b.user = u.id)
-		GROUP BY u.id ORDER BY u.name";
+          LEFT JOIN " . $DBPrefix . "banners b ON (b.user = u.id)
+          GROUP BY u.id ORDER BY u.name";
 $db->direct_query($query);
 
 while ($row = $db->fetch()) {

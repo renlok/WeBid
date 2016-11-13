@@ -32,7 +32,7 @@ class global_class
         $this->ctime = $this->getUserTimestamp(time(), $this->SETTINGS['timezone']) + $this->tdiff;
         // check install directory
         if (is_dir(MAIN_PATH . 'install')) {
-            if (!$this->check_maintainance_mode()) { // check maint mode
+            if (!$this->check_maintenance_mode()) { // check maint mode
                 echo 'please delete the install directory';
                 exit;
             }
@@ -178,11 +178,11 @@ class global_class
         $db->query($query, $params);
     }
 
-    public function check_maintainance_mode()
+    public function check_maintenance_mode()
     {
         global $user;
 
-        if ($this->SETTINGS['maintainance_mode_active']) {
+        if ($this->SETTINGS['maintenance_mode_active']) {
             if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['superuser'] || $user->user_data['id'] == $this->SETTINGS['superuser'])) {
                 return false;
             }

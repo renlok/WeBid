@@ -102,7 +102,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
                 $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_115));
             } else {
                 $query = "INSERT INTO " . $DBPrefix . "users (name, nick, email, address, city, prov, country, zip, phone, birthdate, groups, balance, password)
-						VALUES (:name, :nick, :email, :address, :city, :prov, :country, :zip, :phone, :birthdate, :groups, :balance, :password)";
+                          VALUES (:name, :nick, :email, :address, :city, :prov, :country, :zip, :phone, :birthdate, :groups, :balance, :password)";
                 $params = array();
                 $params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
                 $params[] = array(':nick', $system->cleanvars($_POST['username']), 'str');

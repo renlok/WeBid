@@ -30,16 +30,16 @@ if (is_array($LANGUAGES)) {
     foreach ($LANGUAGES as $lang_code) {
         $html .= '<input type="radio" name="defaultlanguage" value="' . $lang_code . '"' . (($system->SETTINGS['defaultlanguage'] == $lang_code) ? ' checked="checked"' : '') . '>
 		<img src="../images/flags/' . $lang_code . '.gif" hspace="2">
-		' . $lang_code . (($system->SETTINGS['defaultlanguage'] == $lang_code) ? '&nbsp;' . $MSG['2__0005'] : '') . '<br>';
+		' . $lang_code . (($system->SETTINGS['defaultlanguage'] == $lang_code) ? '&nbsp;' . $MSG['current_default_language'] : '') . '<br>';
     }
 }
 
-loadblock($MSG['2__0004'], $MSG['2__0003'], $html);
+loadblock($MSG['default_language'], $MSG['default_language_explain'], $html);
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0008'],
-        'PAGENAME' => $MSG['2__0002']
+        'PAGENAME' => $MSG['multilingual_support']
         ));
 
 include 'header.php';

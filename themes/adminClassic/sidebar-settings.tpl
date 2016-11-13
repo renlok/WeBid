@@ -36,7 +36,7 @@
 							<li><a href="{SITEURL}admin/buyitnow.php">{L_2__0025}</a></li>
 							<li><a href="{SITEURL}admin/defaultcountry.php">{L_default_country}</a></li>
 							<li><a href="{SITEURL}admin/counters.php">{L_counter_settings}</a></li>
-							<li><a href="{SITEURL}admin/multilingual.php">{L_2__0002}</a></li>
+							<li><a href="{SITEURL}admin/multilingual.php">{L_multilingual_support}</a></li>
 							<li><a href="{SITEURL}admin/catsorting.php">{L_category_sorting}</a></li>
 							<li><a href="{SITEURL}admin/metatags.php">{L_25_0178}</a></li>
 							<li><a href="{SITEURL}admin/contactseller.php">{L_contact_seller}</a></li>

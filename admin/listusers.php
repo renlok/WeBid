@@ -114,7 +114,7 @@ if (isset($Q)) {
 } elseif (isset($_POST['keyword'])) {
     $keyword = $system->cleanvars($_POST['keyword']);
     $query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users
-			WHERE name LIKE :name OR nick LIKE :nick OR email LIKE :email";
+              WHERE name LIKE :name OR nick LIKE :nick OR email LIKE :email";
     $params[] = array(':name', '%' . $keyword . '%', 'str');
     $params[] = array(':nick', '%' . $keyword . '%', 'str');
     $params[] = array(':email', '%' . $keyword . '%', 'str');
@@ -123,6 +123,7 @@ if (isset($Q)) {
 }
 $db->query($query, $params);
 $TOTALUSERS = $db->result('COUNT');
+
 // get page limits
 if (isset($_GET['PAGE']) && is_numeric($_GET['PAGE'])) {
     $PAGE = intval($_GET['PAGE']);
@@ -144,7 +145,7 @@ if (isset($Q)) {
     $query = "SELECT * FROM " . $DBPrefix . "users WHERE suspended = " . $Q;
 } elseif (isset($_POST['keyword'])) {
     $query = "SELECT * FROM " . $DBPrefix . "users
-			WHERE name LIKE :name OR nick LIKE :nick OR email LIKE :email";
+              WHERE name LIKE :name OR nick LIKE :nick OR email LIKE :email";
     $params[] = array(':name', '%' . $keyword . '%', 'str');
     $params[] = array(':nick', '%' . $keyword . '%', 'str');
     $params[] = array(':email', '%' . $keyword . '%', 'str');
@@ -155,7 +156,6 @@ $query .= " ORDER BY nick"; // ordered by
 $query .= " LIMIT :offset, :perpage";
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
-
 $db->query($query, $params);
 
 while ($row = $db->fetch()) {

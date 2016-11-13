@@ -104,7 +104,7 @@
                   <li><a href="{SITEURL}admin/buyitnow.php">{L_2__0025}</a></li>
                   <li><a href="{SITEURL}admin/defaultcountry.php">{L_default_country}</a></li>
                   <li><a href="{SITEURL}admin/counters.php">{L_counter_settings}</a></li>
-                  <li><a href="{SITEURL}admin/multilingual.php">{L_2__0002}</a></li>
+                  <li><a href="{SITEURL}admin/multilingual.php">{L_multilingual_support}</a></li>
                   <li><a href="{SITEURL}admin/catsorting.php">{L_category_sorting}</a></li>
                   <li><a href="{SITEURL}admin/metatags.php">{L_25_0178}</a></li>
                   <li><a href="{SITEURL}admin/contactseller.php">{L_contact_seller}</a></li>
@@ -150,17 +150,17 @@
                   <li><a href="{SITEURL}admin/activatenewsletter.php">{L_25_0079}</a></li>
                   <li><a href="{SITEURL}admin/newsletter.php">{L_607}</a></li>
                   <li><a href="{SITEURL}admin/banips.php">{L_ip_addresses}</a></li>
-                  <li><a href="{SITEURL}admin/newadminuser.php">{L_367}</a></li>
+                  <li><a href="{SITEURL}admin/newadminuser.php">{L_new_admin_user}</a></li>
                   <li><a href="{SITEURL}admin/adminusers.php">{L_525}</a></li>
                 </ul>
               </li>
               <li><a><i class="fa fa-gavel"></i> {L_239} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
-                  <li><a href="{SITEURL}admin/listauctions.php">{L_067}</a></li>
+                  <li><a href="{SITEURL}admin/listauctions.php">{L_view_open_auctions}</a></li>
                   <li><a href="{SITEURL}admin/listclosedauctions.php">{L_214}</a></li>
                   <li><a href="{SITEURL}admin/listreportedauctions.php">{L_view_reported_auctions}</a></li>
-                  <li><a href="{SITEURL}admin/listsuspendedauctions.php">{L_5227}</a></li>
-                  <li><a href="{SITEURL}admin/searchauctions.php">{L_067a}</a></li>
+                  <li><a href="{SITEURL}admin/listsuspendedauctions.php">{L_view_suspended_auctions}</a></li>
+                  <li><a href="{SITEURL}admin/searchauctions.php">{L_search_auctions}</a></li>
                   <li><a href="{SITEURL}admin/moderateauctions.php">{L_moderation_queue}</a></li>
                 </ul>
               </li>
@@ -170,7 +170,7 @@
                   <li><a href="{SITEURL}admin/aboutus.php">{L_about_us_page}</a></li>
                   <li><a href="{SITEURL}admin/help.php">{L_148}</a></li>
                   <li><a href="{SITEURL}admin/terms.php">{L_5075}</a></li>
-                  <li><a href="{SITEURL}admin/privacypolicy.php">{L_402}</a></li>
+                  <li><a href="{SITEURL}admin/privacypolicy.php">{L_privacy_policy}</a></li>
                   <li><a href="{SITEURL}admin/cookiespolicy.php">{L_cookie_policy}</a></li>
                   <li><a href="{SITEURL}admin/faqscategories.php">{L_5230}</a></li>
                   <li><a href="{SITEURL}admin/newfaq.php">{L_5231}</a></li>
@@ -183,7 +183,7 @@
               <li><a><i class="fa fa-cogs"></i> {L_5436} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
                   <li><a href="{SITEURL}admin/checkversion.php">{L_25_0169a}</a></li>
-                  <li><a href="{SITEURL}admin/maintainance.php">{L__0001}</a></li>
+                  <li><a href="{SITEURL}admin/maintenance.php">{L__0001}</a></li>
                   <li><a href="{SITEURL}admin/wordsfilter.php">{L_5068}</a></li>
                   <li><a href="{SITEURL}admin/errorlog.php">{L_891}</a></li>
                 </ul>

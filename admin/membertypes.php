@@ -37,9 +37,9 @@ if (isset($_POST['action']) && $_POST['action'] = 'update') {
         foreach ($old_membertypes as $id => $val) {
             if ($val != $new_membertypes[$id]) {
                 $query = "UPDATE " . $DBPrefix . "membertypes SET
-						feedbacks = :feedbacks,
-						icon = :icon
-						WHERE id = :id";
+                          feedbacks = :feedbacks,
+                          icon = :icon
+                          WHERE id = :id";
                 $params = array();
                 $params[] = array(':feedbacks', $new_membertypes[$id]['feedbacks'], 'int');
                 $params[] = array(':icon', $new_membertypes[$id]['icon'], 'str');
@@ -57,7 +57,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update') {
         $params[] = array(':icon', $new_membertype['icon'], 'str');
         $db->query($query, $params);
     }
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['836']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['member_types_updates']));
 }
 
 $query = "SELECT id, feedbacks, icon FROM " . $DBPrefix . "membertypes ORDER BY feedbacks DESC;";

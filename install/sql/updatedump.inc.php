@@ -516,5 +516,7 @@ if ($installed_version == '1.2.1') {
     $query[] = "ALTER TABLE `" . $DBPrefix . "users` DROP COLUMN `toocheckout_id`;";
     $query[] = "INSERT INTO `" . $DBPrefix . "rates` VALUES (57, 'Serbia', 'Serbia Dinars', 'RSD');";
     $query[] = "ALTER TABLE `" . $DBPrefix . "usersips` MODIFY `type` varchar(255) default 'register';";
+    $query[] = "UPDATE `" . $DBPrefix . "settings` SET fieldname = 'maintenance_mode_active' WHERE fieldname = 'maintainance_mode_active';";
+    $query[] = "UPDATE `" . $DBPrefix . "settings` SET fieldname = 'maintenance_text' WHERE fieldname = 'maintainance_text';";
     $new_version = '1.2.2';
 }

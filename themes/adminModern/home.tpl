@@ -66,10 +66,10 @@
 							<div class="col-md-9">{DEFULTCONTRY}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_2__0002}</strong></div>
+							<div class="col-md-3"><strong>{L_multilingual_support}</strong></div>
 							<div class="col-md-9">
 <!-- BEGIN langs -->
-								<p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_2__0005})<!-- ENDIF --></p>
+								<p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_current_default_language})<!-- ENDIF --></p>
 <!-- END langs -->
 							</div>
 						</div>

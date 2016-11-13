@@ -69,5 +69,4 @@ $template->set_filenames(array(
         'body' => 'newfaq.tpl'
         ));
 $template->display('body');
-
 include 'footer.php';

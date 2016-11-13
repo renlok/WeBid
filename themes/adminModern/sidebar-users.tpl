@@ -8,7 +8,7 @@
 					<li class="list-group-item"><a href="{SITEURL}admin/newsletter.php">{L_607}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/banips.php">{L_ip_addresses}</a></li>
 					<li class="list-group-item active">{L_365}</li>
-					<li class="list-group-item"><a href="{SITEURL}admin/newadminuser.php">{L_367}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/newadminuser.php">{L_new_admin_user}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/adminusers.php">{L_525}</a></li>
 				</ul>
 				<div class="panel panel-default">

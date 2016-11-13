@@ -635,7 +635,6 @@ $MSG['757'] = 'Security Code';
 $MSG['758'] = 'Verify Code';
 $MSG['759'] = 'Enable';
 $MSG['760'] = 'Disable';
-$MSG['762'] = 'Fee Gateway Settings Updated';
 $MSG['763'] = 'Balance';
 $MSG['764'] = 'Send payment reminder';
 $MSG['765'] = 'Payment reminder sent';

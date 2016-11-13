@@ -395,6 +395,18 @@ $MSG['faq_delete_action'] = 'What do you want to do with the FAQs in the followi
 $MSG['confirm_faq_action'] = 'Are you sure you want to process the following categories: ';
 $MSG['contains_x_faqs'] = '(contains %d FAQs)';
 
+// fee_gateways.php
+$MSG['gateway_settings_update'] = 'Fee Gateway Settings Updated';
+
+// fees.php
+// nothing
+
+// footer.php
+// nothing
+
+// header.php
+// nothing
+
 // logo_upload.php
 $MSG['your_logo'] = "Your logo";
 $MSG['current_logo'] = "Current logo";

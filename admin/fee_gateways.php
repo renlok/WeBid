@@ -28,11 +28,11 @@ if (isset($_POST['action'])) {
     foreach ($gateway_data as $k => $gateway) {
         if (isset($_POST[$gateway['name']])) {
             $query = "UPDATE " . $DBPrefix . "payment_options SET
-						gateway_admin_address = :gateway_admin_address,
-						gateway_admin_password = :gateway_admin_password,
-						gateway_required = :gateway_required,
-						gateway_active = :gateway_active
-						WHERE id = :id";
+                      gateway_admin_address = :gateway_admin_address,
+                      gateway_admin_password = :gateway_admin_password,
+                      gateway_required = :gateway_required,
+                      gateway_active = :gateway_active
+                      WHERE id = :id";
             $params = array();
             $params[] = array(':gateway_admin_address', $_POST[$gateway['name']]['address'], 'str');
             $params[] = array(':gateway_admin_password', $_POST[$gateway['name']]['password'], 'str');
@@ -46,7 +46,7 @@ if (isset($_POST['action'])) {
             $gateway_data[$k]['gateway_active'] = (isset($_POST[$gateway['name']]['active']) ? 1 : 0);
         }
     }
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['762']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['gateway_settings_update']));
 }
 
 foreach ($gateway_data as $gateway) {
@@ -65,10 +65,6 @@ foreach ($gateway_data as $gateway) {
             'B_PASSWORD' => isset($password_string[$gateway['name']])
             ));
 }
-
-$template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl']
-        ));
 
 include 'header.php';
 $template->set_filenames(array(

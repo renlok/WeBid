@@ -519,7 +519,7 @@ if (isset($_POST['action']) && !isset($errmsg)) {
             $emailer->assign_vars(array(
                     'REALNAME' => $row['name'],
                     'TITLE' => $auction_data['title'],
-                    'BID' => $system->print_money($auction_data['current_bid'], false),
+                    'BID' => $system->print_money($bid, false),
                     'AUCTION_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $id
                     ));
             $emailer->email_uid = $row['id'];

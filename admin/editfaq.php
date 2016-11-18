@@ -39,7 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $params = array();
         $params[] = array(':category', $_POST['category'], 'int');
         $params[] = array(':question', $_POST['question'][$system->SETTINGS['defaultlanguage']], 'str');
-        $params[] = array(':answer', $system->cleanvars($_POST['answer'][$system->SETTINGS['defaultlanguage']]), 'str');
+        $params[] = array(':answer', $system->cleanvars($_POST['answer'][$system->SETTINGS['defaultlanguage']], true), 'str');
         $params[] = array(':faq_id', $_POST['id'], 'int');
         $db->query($query, $params);
         foreach ($LANGUAGES as $lang_code) {

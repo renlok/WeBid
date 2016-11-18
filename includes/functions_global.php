@@ -143,14 +143,14 @@ class global_class
             if ($db->numrows() > 0) {
                 $type = $db->result('fieldtype');
                 $query = "UPDATE " . $DBPrefix . "settings SET
-						fieldtype = :fieldtype,
-						value = :value,
-						modifieddate = :modifieddate,
-						modifiedby = :modifiedby
-						WHERE fieldname = :fieldname";
+                          fieldtype = :fieldtype,
+                          value = :value,
+                          modifieddate = :modifieddate,
+                          modifiedby = :modifiedby
+                          WHERE fieldname = :fieldname";
             } else {
                 $query = "INSERT INTO " . $DBPrefix . "settings (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
-						(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
+                          (:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
             }
             $params = array();
             $params[] = array(':fieldname', $fieldname, 'str');
@@ -168,7 +168,7 @@ class global_class
     {
         global $DBPrefix, $db;
         $query = "INSERT INTO " . $DBPrefix . "logs (type, message, ip, action_id, user_id) VALUES
-				(:type, :message, :user_ip, :action_id, :user_id)";
+                  (:type, :message, :user_ip, :action_id, :user_id)";
         $params = array();
         $params[] = array(':type', $type, 'str');
         $params[] = array(':message', $message, 'str');

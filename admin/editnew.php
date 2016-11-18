@@ -30,11 +30,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
     } else {
         // clean up everything
-        foreach ($_POST['title'] as $k => $v) {
-            $_POST['title'][$k] = $system->cleanvars($v);
-            $_POST['content'][$k] = $system->cleanvars($_POST['content'][$k], true);
-        }
-
         $news_id = intval($_POST['id']);
         $query = "UPDATE " . $DBPrefix . "news SET
                   title = :title,
@@ -42,8 +37,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
                   suspended = :suspended
                   WHERE id = :id";
         $params = array();
-        $params[] = array(':title', $_POST['title'][$system->SETTINGS['defaultlanguage']], 'str');
-        $params[] = array(':content', $_POST['content'][$system->SETTINGS['defaultlanguage']], 'str');
+        $params[] = array(':title', $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]), 'str');
+        $params[] = array(':content', $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']], true), 'str');
         $params[] = array(':suspended', $_POST['suspended'], 'int');
         $params[] = array(':id', $news_id, 'int');
         $db->query($query, $params);
@@ -65,8 +60,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
                           (:news_id, :lang, :title, :content)";
             }
             $params = array();
-            $params[] = array(':title', $_POST['title'][$k], 'str');
-            $params[] = array(':content', $_POST['content'][$k], 'str');
+            $params[] = array(':title', $system->cleanvars($_POST['title'][$k]), 'str');
+            $params[] = array(':content', $system->cleanvars($_POST['content'][$k], true), 'str');
             $params[] = array(':lang', $k, 'str');
             $params[] = array(':news_id', $news_id, 'int');
             $db->query($query, $params);
@@ -89,8 +84,6 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-$CONT_tr = array();
-$TIT_tr = array();
 while ($arr = $db->fetch()) {
     $suspended = $arr['suspended'];
     $template->assign_block_vars('lang', array(

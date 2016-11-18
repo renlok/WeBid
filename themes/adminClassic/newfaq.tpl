@@ -19,28 +19,28 @@
 								</select>
 							</td>
 						</tr>
-<!-- BEGIN lang -->
-						<tr valign="top">
-	<!-- IF lang.S_ROW_COUNT eq 0 -->
-							<td align="right">{L_5239}:</td>
-	<!-- ELSE -->
-							<td>&nbsp;</td>
-	<!-- ENDIF -->
-							<td width="35" align="right"><img src="../images/flags/{lang.LANG}.gif"></td>
-							<td><input type="text" name="question[{lang.LANG}]" size="40" maxlength="255" value="{lang.TITLE}"></td>
-						</tr>
-<!-- END lang -->
-<!-- BEGIN lang -->
+<!-- BEGIN qs -->
 						<tr>
-	<!-- IF lang.S_ROW_COUNT eq 0 -->
-							<td valign="top" align="right">{L_5240}:</td>
-	<!-- ELSE -->
+		<!-- IF qs.S_ROW_COUNT eq 0 -->
+							<td>{L_5239}:</td>
+		<!-- ELSE -->
 							<td>&nbsp;</td>
-	<!-- ENDIF -->
-							<td align="right" valign="top"><img src="../images/flags/{lang.LANG}.gif"></td>
-							<td><textarea name="answer[{lang.LANG}]" cols="45" rows="20">{lang.CONTENT}</textarea></td>
+		<!-- ENDIF -->
+							<td align="right"><img src="../images/flags/{qs.LANG}.gif"></td>
+							<td><input type="text" name="question[{qs.LANG}]" maxlength="200" value="{qs.QUESTION}"></td>
 						</tr>
-<!-- END lang -->
+<!-- END qs -->
+<!-- BEGIN as -->
+						<tr>
+		<!-- IF as.S_ROW_COUNT eq 0 -->
+							<td valign="top">{L_5240}:</td>
+		<!-- ELSE -->
+							<td>&nbsp;</td>
+		<!-- ENDIF -->
+							<td align="right" valign="top"><img src="../images/flags/{as.LANG}.gif"></td>
+							<td>{as.ANSWER}</td>
+						</tr>
+<!-- END as -->
 						</tr>
 					</table>
 					<input type="hidden" name="action" value="update">

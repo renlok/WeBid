@@ -17,6 +17,7 @@ $current_page = 'contents';
 include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
+include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
 // Insert new message
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
@@ -32,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $id = $db->lastInsertId();
         // Insert into translation table
         foreach ($LANGUAGES as $lang_code) {
-            $query = "INSERT INTO ".$DBPrefix."faqs_translated VALUES (:id, :lang, :question, :answer)";
+            $query = "INSERT INTO " . $DBPrefix . "faqs_translated VALUES (:id, :lang, :question, :answer)";
             $params = array();
             $params[] = array(':id', $id, 'int');
             $params[] = array(':lang', $lang_code, 'str');
@@ -56,11 +57,20 @@ while ($row = $db->fetch()) {
             ));
 }
 
-foreach ($LANGUAGES as $k => $language) {
-    $template->assign_block_vars('lang', array(
-            'LANG' => $language,
-            'TITLE' => (isset($_POST['title'][$k])) ? $_POST['title'][$k] : '',
-            'CONTENT' => (isset($_POST['content'][$k])) ? $_POST['content'][$k] : ''
+$CKEditor = new CKEditor();
+$CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
+$CKEditor->returnOutput = true;
+$CKEditor->config['width'] = 550;
+$CKEditor->config['height'] = 400;
+
+foreach ($LANGUAGES as $lang_code) {
+    $template->assign_block_vars('qs', array(
+            'LANG' => $lang_code,
+            'QUESTION' => (isset($_POST['question'][$lang_code])) ? $_POST['question'][$lang_code] : ''
+            ));
+    $template->assign_block_vars('as', array(
+            'LANG' => $lang_code,
+            'ANSWER' => $CKEditor->editor('answer[' . $lang_code . ']', isset($_POST['answer'][$lang_code]) ? $_POST['answer'][$lang_code] : '')
             ));
 }
 

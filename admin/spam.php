@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     if (($_POST['spam_sendtofriend'] == 2 || $_POST['spam_register'] == 2 || $_POST['spam_reportitem'] == 2) && empty($_POST['recaptcha_public']) && empty($_POST['recaptcha_private'])) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['751']));
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_recaptcha_missing_keys']));
     } else {
         $system->writesetting("recaptcha_public", $_POST['recaptcha_public'], 'str');
         $system->writesetting("recaptcha_private", $_POST['recaptcha_private'], 'str');
@@ -30,14 +30,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $system->writesetting("spam_blocked_email_enabled", $_POST['spam_blocked_email_enabled'], 'bool');
         $system->writesetting("spam_blocked_email_domains", $_POST['spam_blocked_email_domains'], 'str');
 
-        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['750']));
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['spam_settings_updated']));
     }
 }
 
-loadblock($MSG['746'], $MSG['748'], 'text', 'recaptcha_public', $system->SETTINGS['recaptcha_public']);
-loadblock($MSG['747'], '', 'text', 'recaptcha_private', $system->SETTINGS['recaptcha_private']);
-loadblock($MSG['743'], $MSG['745'], 'select3num', 'spam_register', $system->SETTINGS['spam_register'], array($MSG['740'], $MSG['741'], $MSG['742']));
-loadblock($MSG['744'], '', 'select3num', 'spam_sendtofriend', $system->SETTINGS['spam_sendtofriend'], array($MSG['740'], $MSG['741'], $MSG['742']));
+loadblock($MSG['recaptcha_public_key'], $MSG['recaptcha_public_key_explain'], 'text', 'recaptcha_public', $system->SETTINGS['recaptcha_public']);
+loadblock($MSG['recaptcha_secret_key'], '', 'text', 'recaptcha_private', $system->SETTINGS['recaptcha_private']);
+loadblock($MSG['registration_captcha_type'], $MSG['registration_captcha_type_explain'], 'select3num', 'spam_register', $system->SETTINGS['spam_register'], array($MSG['740'], $MSG['741'], $MSG['742']));
+loadblock($MSG['friend_captcha_type'], '', 'select3num', 'spam_sendtofriend', $system->SETTINGS['spam_sendtofriend'], array($MSG['740'], $MSG['741'], $MSG['742']));
 loadblock($MSG['item_report_captcha_type'], '', 'select3num', 'spam_reportitem', $system->SETTINGS['spam_reportitem'], array($MSG['740'], $MSG['741'], $MSG['742']));
 loadblock($MSG['spam_blocked_email_enabled'], '', 'bool', 'spam_blocked_email_enabled', $system->SETTINGS['spam_blocked_email_enabled'], array($MSG['759'], $MSG['760']));
 loadblock($MSG['spam_blocked_email_domains'], $MSG['spam_blocked_email_domains_explain'], 'textarea', 'spam_blocked_email_domains', $system->SETTINGS['spam_blocked_email_domains']);
@@ -45,7 +45,7 @@ loadblock($MSG['spam_blocked_email_domains'], $MSG['spam_blocked_email_domains_e
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['5142'],
-        'PAGENAME' => $MSG['749']
+        'PAGENAME' => $MSG['spam_settings']
         ));
 
 include 'header.php';

@@ -480,53 +480,56 @@ if ($system->SETTINGS['prune_unactivated_users'] == 1) {
 }
 
 // "remove" old auctions (archive them)
-printLog("\n");
-printLog("++++++ Archiving old auctions");
+if ($system->SETTINGS['archiveafter'] > 0)
+{
+    printLog("\n");
+    printLog("++++++ Archiving old auctions");
 
-$query = "SELECT id FROM " . $DBPrefix . "auctions WHERE ends <= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['archiveafter'] . " DAY)";
-$db->direct_query($query);
+    $query = "SELECT id FROM " . $DBPrefix . "auctions WHERE ends <= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL " . $system->SETTINGS['archiveafter'] . " DAY)";
+    $db->direct_query($query);
 
-$num = $db->numrows();
-printLog($num . " auctions to archive");
-if ($num > 0) {
-    $auction_data = $db->fetchall();
-    foreach ($auction_data as $AuctionInfo) {
-        printLogL("Processing auction: " . $AuctionInfo['id'], 0);
+    $num = $db->numrows();
+    printLog($num . " auctions to archive");
+    if ($num > 0) {
+        $auction_data = $db->fetchall();
+        foreach ($auction_data as $AuctionInfo) {
+            printLogL("Processing auction: " . $AuctionInfo['id'], 0);
 
-        // delete auction
-        $query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
-        $params = array();
-        $params[] = array(':auc_id', $AuctionInfo['id'], 'int');
-        $db->query($query, $params);
+            // delete auction
+            $query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+            $params = array();
+            $params[] = array(':auc_id', $AuctionInfo['id'], 'int');
+            $db->query($query, $params);
 
-        // delete bids for this auction
-        $query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
-        $params = array();
-        $params[] = array(':auc_id', $AuctionInfo['id'], 'int');
-        $db->query($query, $params);
+            // delete bids for this auction
+            $query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
+            $params = array();
+            $params[] = array(':auc_id', $AuctionInfo['id'], 'int');
+            $db->query($query, $params);
 
-        // Delete proxybid entries
-        $query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = :auc_id";
-        $params = array();
-        $params[] = array(':auc_id', $AuctionInfo['id'], 'int');
-        $db->query($query, $params);
+            // Delete proxybid entries
+            $query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = :auc_id";
+            $params = array();
+            $params[] = array(':auc_id', $AuctionInfo['id'], 'int');
+            $db->query($query, $params);
 
-        // Delete counter entries
-        $query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
-        $params = array();
-        $params[] = array(':auc_id', $AuctionInfo['id'], 'int');
-        $db->query($query, $params);
+            // Delete counter entries
+            $query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
+            $params = array();
+            $params[] = array(':auc_id', $AuctionInfo['id'], 'int');
+            $db->query($query, $params);
 
-        // Delete all images
-        if (is_dir(UPLOAD_PATH . $AuctionInfo['id'])) {
-            if ($dir = opendir(UPLOAD_PATH . $AuctionInfo['id'])) {
-                while ($file = readdir($dir)) {
-                    if ($file != '.' && $file != '..') {
-                        @unlink(UPLOAD_PATH . $AuctionInfo['id'] . '/' . $file);
+            // Delete all images
+            if (is_dir(UPLOAD_PATH . $AuctionInfo['id'])) {
+                if ($dir = opendir(UPLOAD_PATH . $AuctionInfo['id'])) {
+                    while ($file = readdir($dir)) {
+                        if ($file != '.' && $file != '..') {
+                            @unlink(UPLOAD_PATH . $AuctionInfo['id'] . '/' . $file);
+                        }
                     }
+                    closedir($dir);
+                    rmdir(UPLOAD_PATH . $AuctionInfo['id']);
                 }
-                closedir($dir);
-                rmdir(UPLOAD_PATH . $AuctionInfo['id']);
             }
         }
     }

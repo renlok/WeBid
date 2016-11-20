@@ -24,7 +24,7 @@
 							<th colspan="2">{L_25_0025}</th>
 						</tr>
 						<tr>
-							<td width="172"><strong>{L_528}</strong></td>
+							<td width="172"><strong>{L_site_url}</strong></td>
 							<td>{SITEURL}</td>
 						</tr>
 						<tr class="bg">
@@ -32,7 +32,7 @@
 							<td>{SITENAME}</td>
 						</tr>
 						<tr>
-							<td><strong>{L_540}</strong></td>
+							<td><strong>{L_admin_email}</strong></td>
 							<td>{ADMINMAIL}</td>
 						</tr>
 						<tr class="bg">

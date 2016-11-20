@@ -6,7 +6,7 @@
 					<li class="list-group-item"><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/invoice_settings.php">{L_1094}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/invoice.php">{L_766}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/tax.php">{L_1088}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/tax.php">{L_tax_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/tax_levels.php">{L_1083}</a></li>
 				</ul>
 				<div class="panel panel-default">

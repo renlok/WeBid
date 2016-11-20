@@ -63,7 +63,7 @@
           <th colspan="4">{L_25_0025}</th>
         </tr>
         <tr>
-          <td><strong>{L_528}</strong></td>
+          <td><strong>{L_site_url}</strong></td>
           <td>{SITEURL}</td>
         </tr>
         <tr>
@@ -71,7 +71,7 @@
           <td>{SITENAME}</td>
         </tr>
         <tr>
-          <td><strong>{L_540}</strong></td>
+          <td><strong>{L_admin_email}</strong></td>
           <td>{ADMINMAIL}</td>
         </tr>
         <tr>

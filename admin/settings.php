@@ -38,34 +38,34 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             array("https_url", $_POST['https_url'], 'str'),
         ));
 
-        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['542']));
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['general_settings_updated']));
     }
 }
 
 // general settings
-loadblock($MSG['527'], $MSG['535'], 'text', 'sitename', $system->SETTINGS['sitename']);
-loadblock($MSG['528'], $MSG['536'], 'text', 'siteurl', $system->SETTINGS['siteurl']);
-loadblock($MSG['540'], $MSG['541'], 'text', 'adminmail', $system->SETTINGS['adminmail']);
-loadblock($MSG['191'], $MSG['192'], 'text', 'copyright', $system->SETTINGS['copyright']);
+loadblock($MSG['site_name'], $MSG['site_name_explain'], 'text', 'sitename', $system->SETTINGS['sitename']);
+loadblock($MSG['site_url'], $MSG['site_url_explain'], 'text', 'siteurl', $system->SETTINGS['siteurl']);
+loadblock($MSG['admin_email'], $MSG['admin_email_explain'], 'text', 'adminmail', $system->SETTINGS['adminmail']);
+loadblock($MSG['copyright_msg'], $MSG['copyright_msg_explain'], 'text', 'copyright', $system->SETTINGS['copyright']);
 
 // batch settings
-loadblock($MSG['348'], '', '', '', '', array(), true);
-loadblock($MSG['372'], $MSG['371'], 'batch', 'cron', $system->SETTINGS['cron'], array($MSG['373'], $MSG['374']));
-loadblock($MSG['376'], $MSG['375'], 'days', 'archiveafter', $system->SETTINGS['archiveafter'], array($MSG['377']));
+loadblock($MSG['batch_settings'], '', '', '', '', array(), true);
+loadblock($MSG['run_cron'], $MSG['run_cron_explain'], 'batch', 'cron', $system->SETTINGS['cron'], array($MSG['batch'], $MSG['non_batch']));
+loadblock($MSG['clear_closed_auctions'], $MSG['clear_closed_auctions_explain'], 'days', 'archiveafter', $system->SETTINGS['archiveafter'], array($MSG['5115']));
 
 // optimisation settings
-loadblock($MSG['725'], '', '', '', '', array(), true);
-loadblock($MSG['726'], $MSG['727'], 'yesno', 'cache_theme', $system->SETTINGS['cache_theme'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['optimisation'], '', '', '', '', array(), true);
+loadblock($MSG['enable_template_cache'], $MSG['enable_template_cache_explain'], 'yesno', 'cache_theme', $system->SETTINGS['cache_theme'], array($MSG['yes'], $MSG['no']));
 
-// SLL settings
-loadblock($MSG['1022'], '', '', '', '', array(), true);
-loadblock($MSG['1023'], $MSG['1024'], 'yesno', 'https', $system->SETTINGS['https'], array($MSG['yes'], $MSG['no']));
-loadblock($MSG['801'], $MSG['802'], 'text', 'https_url', $system->SETTINGS['https_url']);
+// SSL settings
+loadblock($MSG['ssl_support'], '', '', '', '', array(), true);
+loadblock($MSG['enable_ssl'], $MSG['enable_ssl_explain'], 'yesno', 'https', $system->SETTINGS['https'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['ssl_url'], $MSG['ssl_url_explain'], 'text', 'https_url', $system->SETTINGS['https_url']);
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['5142'],
-        'PAGENAME' => $MSG['526'],
+        'PAGENAME' => $MSG['general_settings'],
         ));
 
 include 'header.php';

@@ -159,7 +159,7 @@ $mail_protocol = array('0' => 'WEBID MAIL', '1' => 'MAIL', '2' => 'SMTP', '4' =>
 $template->assign_vars(array(
         'SITENAME' => $system->SETTINGS['sitename'],
         'ADMINMAIL' => $system->SETTINGS['adminmail'],
-        'CRON' => ($system->SETTINGS['cron'] == 1) ? '<b>' . $MSG['373'] . '</b><br>' . $MSG['25_0027'] : '<b>' . $MSG['374'] . '</b>',
+        'CRON' => ($system->SETTINGS['cron'] == 1) ? '<b>' . $MSG['batch'] . '</b><br>' . $MSG['25_0027'] : '<b>' . $MSG['non_batch'] . '</b>',
         'GALLERY' => ($system->SETTINGS['picturesgallery'] == 1) ? '<b>' . $MSG['2__0066'] . '</b><br>' . $MSG['gallery_images_allowance'] . ': ' . $system->SETTINGS['maxpictures'] . '<br>' . $MSG['gallery_image_max_kb'] . ': ' . $system->SETTINGS['maxuploadsize']/1024 . ' KB' : '<b>' . $MSG['2__0067'] . '</b>',
         'BUY_NOW' => ($system->SETTINGS['buy_now'] == 1) ? '<b>' . $MSG['2__0067'] . '</b>' : '<b>' . $MSG['2__0066'] . '</b>',
         'CURRENCY' => $system->SETTINGS['currency'],

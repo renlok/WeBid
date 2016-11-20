@@ -549,6 +549,79 @@ $MSG['error_required_field_cannot_be_hidden'] = 'A field must be shown if it\'s 
 // searchauctions.php
 $MSG['search_auctions'] = "Search Auctions";
 
+// settings.php
+$MSG['general_settings'] = "General Settings"; // Also sidebar-settings.tpl
+$MSG['general_settings_updated'] = "General settings updated";
+$MSG['site_name'] = "Site name";
+$MSG['site_name_explain'] = "Your site's name will appear in the e-mail messages WeBid sends to users";
+$MSG['site_url'] = "Site URL"; // Also home.tpl
+$MSG['site_url_explain'] = "This must be the complete URL (starting with <b>http://</b>) of your WeBid installation.<br>Be sure to include the ending slash.";
+$MSG['admin_email'] = "Admin e-mail"; // Also home.tpl
+$MSG['admin_email_explain'] = "The admin e-mail address is used to send automatic e-mail messages";
+$MSG['copyright_msg'] = "Your copyright message";
+$MSG['copyright_msg_explain'] = "This is a message that is added to the bottom of every page";
+$MSG['batch_settings'] = "Batch Procedures Settings";
+$MSG['run_cron'] = "Run cron";
+$MSG['run_cron_explain'] = "WeBid needs to periodically run <code>batch.php</code> to close expired auctions and send notification e-mails to the seller and/or the winner. The recommended way to run <code>batch.php</code> is to set up a <a href=\"http://www.webidsupport.com/forums/index.php?threads/setting-up-a-cronjob.10244/\" target=\"_blank\">cronjob</a> if you run a Unix/Linux server.<br>If for any reason you can't run a cronjob on your server, you can choose the <b>Non-batch</b> option below to have <code>batch.php</code> run by WeBid itself: in this case <code>cron.php</code> will be run each time someone access your home page.";
+$MSG['batch'] = "Batch"; // Also index.php
+$MSG['non_batch'] = "Non-batch"; // Also index.php
+$MSG['clear_closed_auctions'] = "Delete auctions older than";
+$MSG['clear_closed_auctions_explain'] = "After an auction is closed how many days will an auction be kept before it is deleted. Can be set to 0 to keep indefinatly.";
+$MSG['optimisation'] = "Optimisation";
+$MSG['enable_template_cache'] = "Enable the template cache?";
+$MSG['enable_template_cache_explain'] = "This will increase the speed of your site. It is recommended this is only disabled when making updates to your template";
+$MSG['ssl_support'] = "SSL Support";
+$MSG['enable_ssl'] = "Enable SSL support?";
+$MSG['enable_ssl_explain'] = "<p>If you have SSL support on the server where you are running WeBid, you may want to give your customers a safer environment to operate.</p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.";
+$MSG['ssl_url'] = 'Shared SSL URL';
+$MSG['ssl_url_explain'] = 'If you\'re using shared SSL enter the URL here';
+
+// spam.php
+$MSG['spam_settings'] = 'Spam settings'; // Also sidebar-settings.tpl
+$MSG['spam_settings_updated'] = 'Spam settings updated';
+$MSG['error_recaptcha_missing_keys'] = 'You cannot use reCaptcha without the two keys';
+$MSG['recaptcha_public_key'] = "reCaptcha public key";
+$MSG['recaptcha_public_key_explain'] = 'To use reCaptcha you must create a free account at <a href="http://recaptcha.net/" class="new-window">http://recaptcha.net/</a> and add this domain to a key pair';
+$MSG['recaptcha_secret_key'] = "Recaptcha secret key";
+$MSG['registration_captcha_type'] = "Captcha type on registration page";
+$MSG['registration_captcha_type_explain'] = "Captcha are used to prevent spam it is generally a good idea to enable some sort of captcha";
+$MSG['friend_captcha_type'] = "Captcha type on send auction to friend page";
+$MSG['item_report_captcha_type'] = "Captcha type on item report page";
+$MSG['spam_blocked_email_enabled'] = 'Enable block email domains';
+$MSG['spam_blocked_email_domains'] = 'Deny registration from disposable emails';
+$MSG['spam_blocked_email_domains_explain'] = 'Put each domain on a new line';
+
+// stat_settings.php
+$MSG['statistics_settings_updated'] = "Statistics Settings Updated.";
+$MSG['error_stat_type_missing'] = "You must select at least one statistic type (accesses, browsers &amp; platforms, by country)";
+$MSG['statistics_explain'] = "Please, choose below if you want WeBid to generate access statistics for your site.";
+$MSG['enable_statistics'] = "Enable Statistics?";
+$MSG['stat_types_explain'] = "Select which type of statistics you want to generate";
+$MSG['enable_user_access_stats'] = "Generate user access statistics";
+$MSG['enable_browser_stats'] = "Generate browser and platform statistics";
+
+// tax_levels.php
+// nothing
+
+// tax.php
+$MSG['tax_settings'] = 'Tax Settings';
+$MSG['tax_settings_updated'] = 'Tax settings updated';
+$MSG['enable_tax'] = 'Enable Tax';
+$MSG['enable_tax_explain'] = 'Global setting to enable or disable tax';
+$MSG['enable_user_tax'] = 'Users can charge tax';
+$MSG['enable_user_tax_explain'] = 'Enable to give users an option to tax their items';
+
+// terms.php
+$MSG['terms_conditions_page'] = "Terms &amp; Conditions Page"; // Also sidebar-content.tpl
+$MSG['terms_conditions_settings_updated'] = "Terms &amp; Conditions Settings Updated";
+$MSG['enable_terms_conditions'] = "Enable Terms &amp; Conditions page?";
+$MSG['enable_terms_conditions_explain'] = "Will display a <u>Terms &amp; Conditions</u> link in the footer of every page.";
+$MSG['terms_conditions_content'] = "Terms &amp; Conditions page content<br>(HTML allowed)";
+
+// theme.php
+$MSG['default_theme_updated'] = "Default Theme Updated";
+$MSG['error_theme_missing'] = "Chosen theme does not exist";
+
 // usergroups.php
 $MSG['cannot_delete_default_user_groups'] = 'Default User Groups (Sellers & Buyers) cannot be removed';
 $MSG['user_group_deleted'] = 'User Group Deleted';

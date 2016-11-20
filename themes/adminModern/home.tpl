@@ -22,7 +22,7 @@
 					<div class="panel-heading"><strong>{L_25_0025}</strong></div>
 					<div class="panel-body">
 						<div class="row">
-							<div class="col-md-3"><strong>{L_528}</strong></div>
+							<div class="col-md-3"><strong>{L_site_url}</strong></div>
 							<div class="col-md-9">{SITEURL}</div>
 						</div>
 						<div class="row">
@@ -30,7 +30,7 @@
 							<div class="col-md-9">{SITENAME}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_540}</strong></div>
+							<div class="col-md-3"><strong>{L_admin_email}</strong></div>
 							<div class="col-md-9">{ADMINMAIL}</div>
 						</div>
 						<div class="row">

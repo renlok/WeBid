@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     if (isset($_POST['activate']) && $_POST['activate'] == 'y' && (!isset($_POST['accesses']) && !isset($_POST['browsers']) && !isset($_POST['domains']))) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5002));
+        $template->assign_block_vars('alerts', array('TYPE' => 'warning', 'MESSAGE' => $MSG['error_stat_type_missing']));
         $statssettings['activate'] = 'n';
         $statssettings['accesses'] = 'n';
         $statssettings['browsers'] = 'n';
@@ -36,15 +36,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         }
         // Update database
         $query = "UPDATE " . $DBPrefix . "statssettings SET
-				activate = :activate,
-				accesses = :accesses,
-				browsers = :browsers";
+                  activate = :activate,
+                  accesses = :accesses,
+                  browsers = :browsers";
         $params = array();
         $params[] = array(':activate', $_POST['activate'], 'str');
         $params[] = array(':accesses', $_POST['accesses'], 'str');
         $params[] = array(':browsers', $_POST['browsers'], 'str');
         $db->query($query, $params);
-        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5148']));
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['statistics_settings_updated']));
         $statssettings = $_POST;
     }
 } else {
@@ -53,11 +53,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $statssettings = $db->result();
 }
 
-loadblock('', $MSG['5144']);
-loadblock($MSG['5149'], '', 'yesno', 'activate', $statssettings['activate'], array($MSG['yes'], $MSG['no']));
-loadblock('', $MSG['5150']);
-loadblock('', '', 'checkbox', 'accesses', $statssettings['accesses'], array($MSG['5145']));
-loadblock('', '', 'checkbox', 'browsers', $statssettings['browsers'], array($MSG['5146']));
+loadblock('', $MSG['statistics_explain']);
+loadblock($MSG['enable_statistics'], '', 'yesno', 'activate', $statssettings['activate'], array($MSG['yes'], $MSG['no']));
+loadblock('', $MSG['stat_types_explain']);
+loadblock('', '', 'checkbox', 'accesses', $statssettings['accesses'], array($MSG['enable_user_access_stats']));
+loadblock('', '', 'checkbox', 'browsers', $statssettings['browsers'], array($MSG['enable_browser_stats']));
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],

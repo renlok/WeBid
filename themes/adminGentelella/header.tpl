@@ -84,10 +84,10 @@
               <li> <a href="index.php"><i class="fa fa-home"></i> Dashboard </a> </li>
               <li><a><i class="fa fa-edit"></i> {L_5142} <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
-                  <li> <a href="{SITEURL}admin/settings.php">{L_526}</a></li>
+                  <li> <a href="{SITEURL}admin/settings.php">{L_general_settings}</a></li>
                   <li><a href="{SITEURL}admin/auctions.php">{L_auction_settings}</a></li>
                   <li><a href="{SITEURL}admin/displaysettings.php">{L_display_settings}</a></li>
-                  <li><a href="{SITEURL}admin/spam.php">{L_749}</a></li>
+                  <li><a href="{SITEURL}admin/spam.php">{L_spam_settings}</a></li>
                   <li><a href="{SITEURL}admin/emailsettings.php">{L_email_settings}</a></li>
                   <li><a href="{SITEURL}admin/usersettings.php">{L_894}</a></li>
                   <li><a href="{SITEURL}admin/errorhandling.php">{L_409}</a></li>
@@ -119,7 +119,7 @@
                         	<li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
 				<li><a href="{SITEURL}admin/invoice_settings.php">{L_1094}</a></li>
 				<li><a href="{SITEURL}admin/invoice.php">{L_766}</a></li>
-				<li><a href="{SITEURL}admin/tax.php">{L_1088}</a></li>
+				<li><a href="{SITEURL}admin/tax.php">{L_tax_settings}</a></li>
 				<li><a href="{SITEURL}admin/tax_levels.php">{L_1083}</a></li>
                 </ul>
               </li>
@@ -169,7 +169,7 @@
                   <li><a href="{SITEURL}admin/news.php">{L_516}</a></li>
                   <li><a href="{SITEURL}admin/aboutus.php">{L_about_us_page}</a></li>
                   <li><a href="{SITEURL}admin/help.php">{L_148}</a></li>
-                  <li><a href="{SITEURL}admin/terms.php">{L_5075}</a></li>
+                  <li><a href="{SITEURL}admin/terms.php">{L_terms_conditions_page}</a></li>
                   <li><a href="{SITEURL}admin/privacypolicy.php">{L_privacy_policy}</a></li>
                   <li><a href="{SITEURL}admin/cookiespolicy.php">{L_cookie_policy}</a></li>
                   <li><a href="{SITEURL}admin/faqscategories.php">{L_5230}</a></li>

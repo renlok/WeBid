@@ -54,7 +54,7 @@
 							<div class="col-md-9">{TIMEZONE}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_363}</strong></div>
+							<div class="col-md-3"><strong>{L_date_format}</strong></div>
 							<div class="col-md-9">{DATEFORMAT} <small>({DATEEXAMPLE})</small></div>
 						</div>
 						<div class="row">

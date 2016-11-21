@@ -15,7 +15,7 @@
 				<table width="90%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
 						<td width="40%" valign="top" align="right"></td>
-						<td width="60%" ><h2>{L_894}</h2></td>
+						<td width="60%" ><h2>{L_163}</h2></td>
 					</tr>
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_002}</b> *</td>

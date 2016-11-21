@@ -165,7 +165,7 @@ $template->assign_vars(array(
         'CURRENCY' => $system->SETTINGS['currency'],
         'TIMEZONE' => $timezones[$system->SETTINGS['timezone']],
         'DATEFORMAT' => $system->SETTINGS['datesformat'],
-        'DATEEXAMPLE' => ($system->SETTINGS['datesformat'] == 'USA') ? $MSG['382'] : $MSG['383'],
+        'DATEEXAMPLE' => ($system->SETTINGS['datesformat'] == 'USA') ? $MSG['american_dates'] : $MSG['european_dates'],
         'DEFULTCONTRY' => $system->SETTINGS['defaultcountry'],
         'USERCONF' => $system->SETTINGS['activationtype'],
         'EMAIL_HANDLER' => $mail_protocol[$system->SETTINGS['mail_protocol']],

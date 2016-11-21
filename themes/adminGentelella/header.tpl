@@ -89,7 +89,7 @@
                   <li><a href="{SITEURL}admin/displaysettings.php">{L_display_settings}</a></li>
                   <li><a href="{SITEURL}admin/spam.php">{L_spam_settings}</a></li>
                   <li><a href="{SITEURL}admin/emailsettings.php">{L_email_settings}</a></li>
-                  <li><a href="{SITEURL}admin/usersettings.php">{L_894}</a></li>
+                  <li><a href="{SITEURL}admin/usersettings.php">{L_user_settings}</a></li>
                   <li><a href="{SITEURL}admin/errorhandling.php">{L_409}</a></li>
                   <li><a href="{SITEURL}admin/moderation.php">{L_moderation_settings}</a></li>
                   <li><a href="{SITEURL}admin/countries.php">{L_081}</a></li>
@@ -100,7 +100,7 @@
                   <li><a href="{SITEURL}admin/categories.php">{L_078}</a></li>
                   <li><a href="{SITEURL}admin/categoriestrans.php">{L_132}</a></li>
                   <li><a href="{SITEURL}admin/currency.php">{L_currency_settings}</a></li>
-                  <li><a href="{SITEURL}admin/time.php">{L_344}</a></li>
+                  <li><a href="{SITEURL}admin/time.php">{L_time_settings}</a></li>
                   <li><a href="{SITEURL}admin/buyitnow.php">{L_2__0025}</a></li>
                   <li><a href="{SITEURL}admin/defaultcountry.php">{L_default_country}</a></li>
                   <li><a href="{SITEURL}admin/counters.php">{L_counter_settings}</a></li>

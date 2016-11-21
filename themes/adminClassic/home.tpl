@@ -56,7 +56,7 @@
 							<td>{TIMEZONE}</td>
 						</tr>
 						<tr>
-							<td><strong>{L_363}</strong></td>
+							<td><strong>{L_date_format}</strong></td>
 							<td>{DATEFORMAT} <small>({DATEEXAMPLE})</small></td>
 						</tr>
 						<tr>

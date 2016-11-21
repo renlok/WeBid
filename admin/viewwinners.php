@@ -18,10 +18,8 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-// If $id is not defined -> error
 if (!isset($_GET['id'])) {
     $URL = $_SESSION['RETURN_LIST'];
-    unset($_SESSION['RETURN_LIST']);
     header('location: ' . $URL);
     exit;
 }
@@ -30,14 +28,13 @@ $id = intval($_GET['id']);
 
 // Retrieve auction's data
 $query = "SELECT a.title, a.minimum_bid, a.starts, a.ends, a.auction_type, u.name, u.nick FROM " . $DBPrefix . "auctions a
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		WHERE a.id = :id";
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+          WHERE a.id = :id";
 $params = array();
 $params[] = array(':id', $id, 'int');
 $db->query($query, $params);
 if ($db->numrows() == 0) {
     $URL = $_SESSION['RETURN_LIST'];
-    unset($_SESSION['RETURN_LIST']);
     header('location: ' . $URL);
     exit;
 }
@@ -46,8 +43,8 @@ $AUCTION = $db->result();
 
 // Retrieve winners
 $query = "SELECT w.bid, w.qty, u.name, u.nick FROM " . $DBPrefix . "winners w
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
-		WHERE w.auction = :id";
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = w.winner)
+          WHERE w.auction = :id";
 $params = array();
 $params[] = array(':id', $id, 'int');
 $db->query($query, $params);
@@ -64,8 +61,8 @@ while ($row = $db->fetch()) {
 
 // Retrieve bids
 $query = "SELECT b.bid, b.quantity, u.name, u.nick FROM " . $DBPrefix . "bids b
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-		WHERE b.auction = :id";
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
+          WHERE b.auction = :id";
 $params = array();
 $params[] = array(':id', $id, 'int');
 $db->query($query, $params);
@@ -81,9 +78,8 @@ while ($row = $db->fetch()) {
 }
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
         'ID' => $id,
-        'TITLE' => htmlspecialchars($AUCTION['title']),
+        'TITLE' => $AUCTION['title'],
         'S_NICK' => $AUCTION['nick'],
         'S_NAME' => $AUCTION['name'],
         'MIN_BID' => $system->print_money($AUCTION['minimum_bid']),
@@ -100,5 +96,4 @@ $template->set_filenames(array(
         'body' => 'viewwinners.tpl'
         ));
 $template->display('body');
-
 include 'footer.php';

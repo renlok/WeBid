@@ -47,7 +47,6 @@
 						</tr>
 <!-- END ips -->
 					</table>
-					<input type="hidden" name="offset" value="{OFFSET}">
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="id" value="{ID}">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
@@ -66,6 +65,6 @@
 						</td>
 					</tr>
 				</table>
-				<div class="plain-box"><a href="listusers.php?offset={OFFSET}" class="small">{L_5279}</a></div>
+				<div class="plain-box"><a href="listusers.php" class="small">{L_5279}</a></div>
 			</div>
 		</div>

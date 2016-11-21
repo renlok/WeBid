@@ -622,11 +622,71 @@ $MSG['terms_conditions_content'] = "Terms &amp; Conditions page content<br>(HTML
 $MSG['default_theme_updated'] = "Default Theme Updated";
 $MSG['error_theme_missing'] = "Chosen theme does not exist";
 
+// time.php
+$MSG['time_settings'] = "Time Settings"; // also sidebar-settings.tpl
+$MSG['time_settings_updated'] = "Time settings updated";
+$MSG['date_format'] = "Dates Format"; // also home.tpl
+$MSG['date_format_explain'] = "Choose the format you want date to appear on your site.";
+$MSG['american_dates'] = "mm/dd/yyyy"; // also index.php
+$MSG['european_dates'] = "dd/mm/yyyy"; // also index.php
+$MSG['default_time_zone'] = "Default Time Zone";
+$MSG['default_time_zone_explain'] = "Choose the default time zone";
+
+// userbanners.php
+// nothing
+
+// userfeedback.php
+// nothing
+
 // usergroups.php
+$MSG['error_must_have_one_autojoin'] = "At least one group must have Auto Join enabled";
 $MSG['cannot_delete_default_user_groups'] = 'Default User Groups (Sellers & Buyers) cannot be removed';
 $MSG['user_group_deleted'] = 'User Group Deleted';
 $MSG['user_group_name_empty_update'] = 'Group name cannot be empty. User Group was not updated';
 $MSG['user_group_name_empty_new'] = 'Group name cannot be empty. The new User Group was not created';
 
+// usersettings.php
+$MSG['user_settings'] = "User Settings"; // Also sidebar-settings.tpl
+$MSG['user_settings_updated'] = "User Settings Updated";
+$MSG['enable_reauthentication'] = "Enable User Re-authentication";
+$MSG['enable_reauthentication_explain'] = "The users will be asked to enter their password before completing actions such as leaving feedback, submitting an auction or leaving a bid.";
+$MSG['user_confirm_method'] = "Users Confirmation Method";
+$MSG['user_confirm_method_explain'] = "On WeBid each users account must be activated before it can be used. Choose which method you want to use";
+$MSG['prune_unactivated_users'] = "Prune unactivated users";
+$MSG['prune_unactivated_users_explain'] = "Automatically delete unactivated user accounts.";
+$MSG['prune_unactivated_users_days'] = "Numbers of days before deleting unactivated accounts";
+$MSG['prune_unactivated_users_days_explain'] = "Numbers of days before deleting unactivated accounts.";
+$MSG['bidding_visable_to_guest'] = 'Buy now visible to guests';
+$MSG['bidding_visable_to_guest_explain'] = 'Guest can see the Bid now/Buy now option when viewing an auction, this should be disabled if you plan to run a single seller site';
+$MSG['email_admin_on_signup'] = 'Email admin on signup';
+$MSG['email_admin_on_signup_explain'] = 'Admin receives an email each time a new user registers';
+$MSG['user_request_seller_permission'] = 'Users can request to become sellers';
+$MSG['user_request_seller_permission_explain'] = 'Users who do not have permission to sell items can request to gain permission';
+
+// util_cc1.php
+$MSG['category_table_updated'] = "Categories table updated";
+
+// viewaccessstats.php
+$MSG['monthly_report'] = "Monthly Report"; // Also accounts.tpl
+$MSG['years_months'] = "Years/Months";
+$MSG['weekly_report'] = 'Weekly Report'; // Also accounts.tpl
+$MSG['week'] = 'Week'; // Also accounts.php
+$MSG['day'] = "Day";
+
+// viewbrowserstats.php
+// nothing
+
+// viewfilters.php
+$MSG['banner_filters'] = 'Banner filters';
+
+// viewplatformstats.php
+// nothing
+
 // viewuserips.php
 $MSG['registration_ip'] = "Registration IP";
+
+// viewwinners.php
+// nothing
+
+// wordsfilter.php
+$MSG['word_filter_updated'] = "Words Filter Updated";

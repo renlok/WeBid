@@ -23,20 +23,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     // Update database
     $system->writesetting("timezone", $_POST['timezone'], "str");
     $system->writesetting("datesformat", $_POST['datesformat'], "str");
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['347']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['time_settings_updated']));
 }
 
 $selectsetting = $system->SETTINGS['timezone'];
 $html = generateSelect('timezone', $timezones);
 
 //load the template
-loadblock($MSG['363'], $MSG['379'], 'datestacked', 'datesformat', $system->SETTINGS['datesformat'], array($MSG['382'], $MSG['383']));
-loadblock($MSG['346'], $MSG['345'], 'dropdown', 'timezone', $system->SETTINGS['timezone']);
+loadblock($MSG['date_format'], $MSG['date_format_explain'], 'datestacked', 'datesformat', $system->SETTINGS['datesformat'], array($MSG['american_dates'], $MSG['european_dates']));
+loadblock($MSG['default_time_zone'], $MSG['default_time_zone_explain'], 'dropdown', 'timezone', $system->SETTINGS['timezone']);
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0008'],
-        'PAGENAME' => $MSG['344'],
+        'PAGENAME' => $MSG['time_settings'],
         'DROPDOWN' => $html
         ));
 

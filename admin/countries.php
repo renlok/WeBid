@@ -85,5 +85,4 @@ $template->set_filenames(array(
         'body' => 'countries.tpl'
         ));
 $template->display('body');
-
 include 'footer.php';

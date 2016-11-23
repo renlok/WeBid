@@ -210,7 +210,7 @@ class global_class
         $db->direct_query($query);
         $result = $txt;
         while ($word = $db->fetch()) {
-            $result = preg_replace('/(' . $word['word'] . ')/i', '', $result);
+            $result = str_ireplace($word['word'], '', $result);
         }
         return $result;
     }

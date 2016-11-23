@@ -181,11 +181,11 @@ if ($searching && !isset($ERR)) {
 
     // get total number of records
     $query = "SELECT count(*) AS total FROM " . $DBPrefix . "auctions au
-			" . $userjoin . "
-			WHERE au.suspended = 0
-			AND " . $wher . $ora . "
-			au.starts <= CURRENT_TIMESTAMP
-			ORDER BY ". $by;
+             " . $userjoin . "
+              WHERE au.suspended = 0
+              AND " . $wher . $ora . "
+              au.starts <= CURRENT_TIMESTAMP
+              ORDER BY ". $by;
     $db->query($query, $asparams);
     $total = $db->result('total');
 
@@ -197,23 +197,23 @@ if ($searching && !isset($ERR)) {
 
     // get records corresponding to this page
     $query = "SELECT au.* FROM " . $DBPrefix . "auctions au
-			" . $userjoin . "
-			WHERE au.suspended = 0
-			AND " . $wher . $ora . "
-			au.starts <= CURRENT_TIMESTAMP
-			ORDER BY " . $by . " LIMIT :offset, :perpage";
+             " . $userjoin . "
+              WHERE au.suspended = 0
+              AND " . $wher . $ora . "
+              au.starts <= CURRENT_TIMESTAMP
+              ORDER BY " . $by . " LIMIT :offset, :perpage";
     $params = $asparams;
     $params[] = array(':offset', $left_limit, 'int');
     $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 
     // get featured items
     $query_feat = "SELECT au.* FROM " . $DBPrefix . "auctions au
-			" . $userjoin . "
-			WHERE au.suspended = 0
-			AND " . $wher . $ora . "
-			featured = 1
-			AND	au.starts <= CURRENT_TIMESTAMP
-			ORDER BY " . $by . " LIMIT :offset, 5";
+                  " . $userjoin . "
+                  WHERE au.suspended = 0
+                  AND " . $wher . $ora . "
+                  featured = 1
+                  AND	au.starts <= CURRENT_TIMESTAMP
+                  ORDER BY " . $by . " LIMIT :offset, 5";
     $params_feat = $asparams;
     $params_feat[] = array(':offset',(($PAGE - 1) * 5), 'int');
 

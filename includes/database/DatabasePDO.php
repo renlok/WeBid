@@ -23,9 +23,8 @@ class DatabasePDO extends Database
         'FETCH_BOTH' => PDO::FETCH_BOTH,
         'FETCH_NUM' => PDO::FETCH_NUM,
     ];
-    protected $error_supress = !WeBidDebug;
 
-    public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
+	public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
     {
         $this->DBPrefix = $DBPrefix;
         $this->CHARSET = $CHARSET;
@@ -43,7 +42,7 @@ class DatabasePDO extends Database
         }
     }
 
-    public function error_supress($state = true)
+	public function error_supress($state = true)
     {
         $this->error_supress = $state;
     }
@@ -58,7 +57,7 @@ class DatabasePDO extends Database
         }
     }
 
-    // put together the quert ready for running
+	// put together the quert ready for running
     /*
     $query must be given like SELECT * FROM table WHERE this = :that AND where = :here
     then $params would holds the values for :that and :here, $table would hold the vlue for :table
@@ -68,7 +67,7 @@ class DatabasePDO extends Database
     );
     last value can be left blank more info http://php.net/manual/en/pdostatement.bindparam.php
     */
-    public function query($query, $params = array())
+	public function query($query, $params = array())
     {
         try {
             //$query = $this->build_query($query, $table);
@@ -89,21 +88,21 @@ class DatabasePDO extends Database
         //$this->lastquery->rowCount(); // rows affected
     }
 
-    // put together the quert ready for running
-    public function fetch($result = null, $method = 'FETCH_ASSOC')
+	// put together the quert ready for running
+    public function fetch($result = Null, $method = 'FETCH_ASSOC')
     {
         try {
             // set fetchquery
-            if ($this->fetchquery == null) {
+            if ($this->fetchquery == Null) {
                 $this->fetchquery = $this->lastquery;
             }
-            if ($result == null) {
+            if ($result == Null) {
                 $result = $this->fetchquery;
             }
             $data = $result->fetch($this->fetch_methods[$method]);
             // clear fetch query
             if ($data == false) {
-                $this->fetchquery = null;
+                $this->fetchquery = Null;
             }
             return $data;
         } catch (PDOException $e) {
@@ -111,11 +110,11 @@ class DatabasePDO extends Database
         }
     }
 
-    // put together the quert ready for running + get all results
+	// put together the quert ready for running + get all results
     public function fetchall($result = null, $method = 'FETCH_ASSOC')
     {
         try {
-            if ($result == null) {
+            if ($result == Null) {
                 $result = $this->lastquery;
             }
             // set fetchquery
@@ -125,13 +124,13 @@ class DatabasePDO extends Database
         }
     }
 
-    public function result($column = null, $result = null, $method = 'FETCH_ASSOC')
+	public function result($column = Null, $result = Null, $method = 'FETCH_ASSOC')
     {
-        if ($result == null) {
+        if ($result == Null) {
             $result = $this->lastquery;
         }
         $data = $result->fetch($this->fetch_methods[$method]);
-        if (empty($column) || $column == null) {
+        if (empty($column) || $column == Null) {
             return $data;
         } else {
             if (isset($data[$column])) {
@@ -142,10 +141,10 @@ class DatabasePDO extends Database
         }
     }
 
-    public function numrows($result = null)
+	public function numrows($result = Null)
     {
         try {
-            if ($result == null) {
+            if ($result == Null) {
                 $result = $this->lastquery;
             }
             return $result->rowCount();
@@ -154,7 +153,7 @@ class DatabasePDO extends Database
         }
     }
 
-    public function lastInsertId()
+	public function lastInsertId()
     {
         try {
             return $this->conn->lastInsertId();
@@ -163,26 +162,25 @@ class DatabasePDO extends Database
         }
     }
 
-    protected function clean_params($query, $params)
-    {
-        // find the vars set in the query
-        preg_match_all("(:[a-zA-Z0-9_]+)", $query, $set_params);
-        $new_params = array();
-        foreach ($set_params[0] as $val) {
-            $key = $this->find_key($params, $val);
-            if (isset($key)) {
-                $new_params[] = $params[$key];
-            }
-        }
-        return $new_params;
-    }
+	protected function clean_params($query, $params)
+	{
+		// find the vars set in the query
+		preg_match_all("(:[a-zA-Z0-9_]+)", $query, $set_params);
+		$new_params = array();
+		foreach ($set_params[0] as $val)
+		{
+			$key = $this->find_key($params, $val);
+			if (isset($key))
+				$new_params[] = $params[$key];
+		}
+		return $new_params;
+	}
 
-    protected function find_key($params, $val)
+	protected function find_key($params, $val)
     {
         foreach ($params as $k => $v) {
-            if ($v[0] == $val) {
+            if ($v[0] == $val)
                 return $k;
-            }
         }
     }
 

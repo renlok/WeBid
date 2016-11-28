@@ -31,15 +31,15 @@ if (isset($_GET['type']) && in_array($_GET['type'], array('d', 'w', 'm'))) {
 // Retrieve data
 if ($listby == 'm') {
     $query = "SELECT SUM(pageviews) as pageviews, SUM(uniquevisitors) as uniquevisitors, SUM(usersessions) as usersessions, month, year
-			FROM " . $DBPrefix . "currentaccesses GROUP BY month ORDER BY LENGTH(month), month ASC";
-    $statsview = $MSG['5281'];
-    $statstext = $MSG['5280'];
+              FROM " . $DBPrefix . "currentaccesses GROUP BY month ORDER BY LENGTH(month), month ASC";
+    $statsview = $MSG['monthly_report'];
+    $statstext = $MSG['years_months'];
 } elseif ($listby == 'w') {
     $year = date('Y');
     $query = "SELECT * FROM " . $DBPrefix . "currentaccesses WHERE year = :year ORDER BY LENGTH(day), day ASC";
     $params[] = array(':year', $year, 'int');
-    $statsview = $MSG['827'];
-    $statstext = $MSG['828'];
+    $statsview = $MSG['weekly_report'];
+    $statstext = $MSG['week'];
 } else {
     $month = date('m');
     $year = date('Y');
@@ -47,7 +47,7 @@ if ($listby == 'm') {
     $params[] = array(':month', $month, 'int');
     $params[] = array(':year', $year, 'int');
     $statsview = date('F Y');
-    $statstext = $MSG['109'];
+    $statstext = $MSG['day'];
 }
 $db->query($query, $params);
 

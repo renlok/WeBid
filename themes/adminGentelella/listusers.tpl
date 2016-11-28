@@ -28,11 +28,11 @@
                             <form name="filter" id="filter" action="" method="get" class="form-inline">
                              <div class="form-group">
                                 <select name="usersfilter" id="userfilter" class="form-control">
-                                    <option value="all">{L_5296}</option>
-                                    <option value="active" <!-- IF USERFILTER eq 'active' -->selected<!-- ENDIF -->>{L_5291}</option>
-                                    <option value="admin" <!-- IF USERFILTER eq 'admin' -->selected<!-- ENDIF -->>{L_5294}</option>
-                                    <option value="fee" <!-- IF USERFILTER eq 'fee' -->selected<!-- ENDIF -->>{L_5293}</option>
-                                    <option value="confirmed" <!-- IF USERFILTER eq 'confirmed' -->selected<!-- ENDIF -->>{L_5292}</option>
+                                    <option value="all">{L_all_users}</option>
+                                    <option value="active" <!-- IF USERFILTER eq 'active' -->selected<!-- ENDIF -->>{L_active_users}</option>
+                                    <option value="admin" <!-- IF USERFILTER eq 'admin' -->selected<!-- ENDIF -->>{L_suspended_by_admin}</option>
+                                    <option value="fee" <!-- IF USERFILTER eq 'fee' -->selected<!-- ENDIF -->>{L_signup_fee_unpaid}</option>
+                                    <option value="confirmed" <!-- IF USERFILTER eq 'confirmed' -->selected<!-- ENDIF -->>{L_account_never_confirmed}</option>
                                     <option value="admin_approve" <!-- IF USERFILTER eq 'admin_approve' -->selected<!-- ENDIF -->>{L_25_0136}</option>
                                 </select>
                                 <input type="submit" value="{L_5029}" class="btn btn-primary" /></div>
@@ -69,16 +69,16 @@
                         </td>
                         <td>
     <!-- IF users.SUSPENDED eq 0 -->
-                            <b><span style="color:green;">{L_5291}</span></b>
+                            <b><span style="color:green;">{L_active_users}</span></b>
     <!-- ELSEIF users.SUSPENDED eq 1 -->
-                            <b><span style="color:violet;">{L_5294}</span></b>
+                            <b><span style="color:violet;">{L_suspended_by_admin}</span></b>
     <!-- ELSEIF users.SUSPENDED eq 7 -->
                             <b><span style="color:red;">{L_5297}</span></b>
     <!-- ELSEIF users.SUSPENDED eq 8 -->
-                            <b><span style="color:orange;">{L_5292}</span></b><br>
+                            <b><span style="color:orange;">{L_account_never_confirmed}</span></b><br>
                             <a href="listusers.php?resend=1&id={users.ID}&offset={PAGE}"><small>{L_25_0074}</small></a>
     <!-- ELSEIF users.SUSPENDED eq 9 -->
-                            <b><span style="color:red;">{L_5293}</span></b>
+                            <b><span style="color:red;">{L_signup_fee_unpaid}</span></b>
     <!-- ELSEIF users.SUSPENDED eq 10 -->
                             <b><small style="color:orange;"><a href="excludeuser.php?id={users.ID}&offset={PAGE}">{L_25_0136}</a></small></b>
     <!-- ENDIF -->
@@ -88,11 +88,11 @@
                             <a href="deleteuser.php?id={users.ID}&offset={PAGE}"><small>{L_008}</small></a><br>
                             <a href="excludeuser.php?id={users.ID}&offset={PAGE}"><small>
     <!-- IF users.SUSPENDED eq 0 -->
-                                {L_305}
+                                {L_suspend_user}
     <!-- ELSEIF users.SUSPENDED eq 8 -->
-                                {L_515}
+                                {L_activate_user}
     <!-- ELSE -->
-                                {L_299}
+                                {L_activate_user}
     <!-- ENDIF -->
                             </small></a>
                         </td>

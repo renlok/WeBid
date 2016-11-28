@@ -29,9 +29,9 @@ $_SESSION['REDIRECT_AFTER_LOGIN'] = $system->SETTINGS['siteurl'] . 'item.php?id=
 
 // get auction all needed data
 $query = "SELECT a.*, ac.counter, u.nick, u.reg_date, u.city, u.country, u.zip FROM " . $DBPrefix . "auctions a
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		LEFT JOIN " . $DBPrefix . "auccounter ac ON (ac.auction_id = a.id)
-		WHERE a.id = :auction_id LIMIT 1";
+	        LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+	        LEFT JOIN " . $DBPrefix . "auccounter ac ON (ac.auction_id = a.id)
+	        WHERE a.id = :auction_id LIMIT 1";
 $params = array();
 $params[] = array(':auction_id', $id, 'int');
 $db->query($query, $params);
@@ -166,8 +166,8 @@ if ($system->SETTINGS['extra_cat'] == 'y' && intval($auction_data['secondcat']) 
 
 // history
 $query = "SELECT b.*, u.nick, u.rate_sum FROM " . $DBPrefix . "bids b
-LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
-WHERE b.auction = :auc_id";
+	        LEFT JOIN " . $DBPrefix . "users u ON (u.id = b.bidder)
+	        WHERE b.auction = :auc_id";
 if ($auction_data['bn_only'] || $auction_type == 2) {
     $query .= " ORDER BY b.bidwhen DESC";
 } else {
@@ -288,8 +288,8 @@ $high_bid = ($num_bids == 0) ? $minimum_bid : $high_bid;
 if ($customincrement == 0) {
     // Get bid increment for current bid and calculate minimum bid
     $query = "SELECT increment FROM " . $DBPrefix . "increments WHERE
-			((low <= :val0 AND high >= :val1) OR
-			(low < :val2 AND high < :val3)) ORDER BY increment DESC";
+              ((low <= :val0 AND high >= :val1) OR
+              (low < :val2 AND high < :val3)) ORDER BY increment DESC";
     $params = array();
     $params[] = array(':val0', $high_bid, 'float');
     $params[] = array(':val1', $high_bid, 'float');
@@ -461,7 +461,7 @@ $template->assign_vars(array(
         'SELLER_FB_ICON' => $seller_feedback_icon,
         'SELLER_NUMFB' => $num_feedbacks,
         'SELLER_FBPOS' => ($num_feedbacks > 0) ? '(' . ceil($fb_pos * 100 / $num_feedbacks) . '%)' : $MSG['000'],
-        'SELLER_FBNEG' => ($fb_neg > 0) ? $MSG['5507'] . ' (' . ceil($fb_neg * 100 / $total_rate) . '%)' : '0',
+        'SELLER_FBNEG' => ($fb_neg > 0 && $total_rate != 0) ? $MSG['5507'] . ' (' . ceil($fb_neg * 100 / $total_rate) . '%)' : '0',
 
         'WATCH_VAR' => $watch_var,
         'WATCH_STRING' => $watch_string,

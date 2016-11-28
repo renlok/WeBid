@@ -77,7 +77,7 @@ if ($list_type == 'm' || $list_type == 'w' || $list_type == 'd') {
         if ($list_type == 'm') {
             $date = $MSG['MON_00' . $row['month'] . 'E'] . ', ' . $row['year'];
         } elseif ($list_type == 'w') {
-            $date = $MSG['828'] . ' ' . $row['week'] . ', ' . $row['year'];
+            $date = $MSG['week'] . ' ' . $row['week'] . ', ' . $row['year'];
         } else {
             $date = $dt->formatDate($row['paid_date']);
         }

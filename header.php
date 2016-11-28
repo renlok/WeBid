@@ -17,7 +17,7 @@ if (!defined('InWeBid')) {
 }
 
 include INCLUDE_PATH . 'calendar.inc.php';
-include INCLUDE_PATH . 'maintainance.php';
+include INCLUDE_PATH . 'maintenance.php';
 include INCLUDE_PATH . 'functions_banners.php';
 if (basename($_SERVER['PHP_SELF']) != 'error.php') {
     include INCLUDE_PATH . 'stats.inc.php';

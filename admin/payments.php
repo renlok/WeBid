@@ -32,9 +32,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
                 }
                 $payment['clean'] = preg_replace("/[^a-z]/", '', strtolower($payment['clean']));
                 $query = "UPDATE " . $DBPrefix . "payment_options
-						SET name = :name,
-						displayname = :displayname
-						WHERE id = :id";
+                          SET name = :name,
+                          displayname = :displayname
+                          WHERE id = :id";
                 $params = [
                     [':id', $payment['id'], 'int'],
                     [':name', $payment['clean'], 'str'],
@@ -60,7 +60,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         $db->query($query, $params);
     }
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['093']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['payment_methods_updated']));
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "payment_options WHERE is_gateway = 0";
@@ -73,15 +73,9 @@ while ($payment_type = $db->fetch()) {
             ));
 }
 
-
-$template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl']
-        ));
-
 include 'header.php';
 $template->set_filenames(array(
         'body' => 'payments.tpl'
         ));
 $template->display('body');
-
 include 'footer.php';

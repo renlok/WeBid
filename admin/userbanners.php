@@ -120,7 +120,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'insert') {
     }
 }
 
-$BANNERS = array();
 // Retrieve user's information
 $query = "SELECT id, name, company, email FROM " . $DBPrefix . "bannersusers WHERE id = :id";
 $params = array();

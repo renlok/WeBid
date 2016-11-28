@@ -32,11 +32,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
     if (!empty($_POST['tax_name'])) {
         if ($_POST['tax_id'] != '') {
             $query = "UPDATE " . $DBPrefix . "tax SET
-					tax_name = :tax_name,
-					tax_rate = :tax_rate,
-					countries_seller = :countries_seller,
-					countries_buyer = :countries_buyer
-					WHERE id = :tax_id";
+                      tax_name = :tax_name,
+                      tax_rate = :tax_rate,
+                      countries_seller = :countries_seller,
+                      countries_buyer = :countries_buyer
+                      WHERE id = :tax_id";
             $params = array();
             $params[] = array(':tax_name', $system->cleanvars($_POST['tax_name']), 'str');
             $params[] = array(':tax_rate', $system->cleanvars($_POST['tax_rate']), 'str');
@@ -46,7 +46,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
             $db->query($query, $params);
         } else {
             $query = "INSERT INTO " . $DBPrefix . "tax (tax_name, tax_rate, countries_seller, countries_buyer) VALUES
-					(:tax_name, :tax_rate, :countries_seller, :countries_buyer)";
+                      (:tax_name, :tax_rate, :countries_seller, :countries_buyer)";
             $params = array();
             $params[] = array(':tax_name', $system->cleanvars($_POST['tax_name']), 'str');
             $params[] = array(':tax_rate', $system->cleanvars($_POST['tax_rate']), 'str');

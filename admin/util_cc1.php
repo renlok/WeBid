@@ -49,4 +49,4 @@ foreach ($LANGUAGES as $k => $v) {
     fclose($handle);
 }
 
-$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['086']));
+$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['category_table_updated']));

@@ -83,9 +83,9 @@ $TOTAL_VALUE = $db->result('TOTAL_VAL');
 $PAGES = ($TOTALAUCTIONS == 0) ? 1 : ceil($TOTALAUCTIONS / $system->SETTINGS['perpage']);
 
 $query = "SELECT * " . $pull_sql . " FROM " . $DBPrefix . "useraccounts
-		" . ((!empty($join_sql)) ? $join_sql : '') . "
-		" . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . "
-		" . ((!empty($group_sql)) ? $group_sql : '') . " ORDER BY date LIMIT :OFFSET , :perpage";
+         " . ((!empty($join_sql)) ? $join_sql : '') . "
+         " . ((!empty($where_sql)) ? ' WHERE ' . $where_sql : '') . "
+         " . ((!empty($group_sql)) ? $group_sql : '') . " ORDER BY date LIMIT :OFFSET , :perpage";
 $params[] = array(':OFFSET', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);

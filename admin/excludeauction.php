@@ -22,19 +22,19 @@ include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 if (!isset($_REQUEST['id'])) {
     $URL = $_SESSION['RETURN_LIST'];
-    unset($_SESSION['RETURN_LIST']);
     header('location: ' . $URL);
     exit;
 }
 
+$id = intval($_REQUEST['id']);
+
 if (isset($_POST['action']) && $_POST['action'] == "Yes") {
     $catscontrol = new MPTTcategories();
-    $id = intval($_POST['id']);
 
     // get auction data
     $query = "SELECT a.title, a.description, a.category, a.closed, a.suspended, m.reason FROM " . $DBPrefix . "auctions a
-	LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
-	WHERE a.id = :auc_id";
+              LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
+              WHERE a.id = :auc_id";
     $params = array();
     $params[] = array(':auc_id', $id, 'int');
     $db->query($query, $params);
@@ -111,32 +111,30 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
         }
     }
 
-    $URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
-    unset($_SESSION['RETURN_LIST']);
+    $URL = $_SESSION['RETURN_LIST'];
     header('location: ' . $URL);
     exit;
 } elseif (isset($_POST['action']) && $_POST['action'] == "No") {
-    $URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
-    unset($_SESSION['RETURN_LIST']);
+    $URL = $_SESSION['RETURN_LIST'];
     header('location: ' . $URL);
     exit;
 }
 
 $query = "SELECT u.nick, a.title, a.starts, a.description, a.category, d.description as duration,
-		a.suspended, a.current_bid, a.quantity, a.reserve_price
-		FROM " . $DBPrefix . "auctions a
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		LEFT JOIN " . $DBPrefix . "durations d ON (d.days = a.duration)
-		WHERE a.id = :auc_id";
+          a.suspended, a.current_bid, a.quantity, a.reserve_price
+          FROM " . $DBPrefix . "auctions a
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+          LEFT JOIN " . $DBPrefix . "durations d ON (d.days = a.duration)
+          WHERE a.id = :auc_id";
 $params = array();
-$params[] = array(':auc_id', $_GET['id'], 'int');
+$params[] = array(':auc_id', $id, 'int');
 $db->query($query, $params);
 $auc_data = $db->result();
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
-        'PAGE_TITLE' => ($auc_data['suspended'] > 0) ? $MSG['322'] : $MSG['321'],
-        'ID' => $_GET['id'],
+        'PAGE_TITLE' => ($auc_data['suspended'] > 0) ? $MSG['unsuspend_auction'] : $MSG['suspend_auction'],
+        'ID' => $id,
         'TITLE' => htmlspecialchars($auc_data['title']),
         'NICK' => $auc_data['nick'],
         'STARTS' => $dt->formatDate($auc_data['starts']),
@@ -146,8 +144,7 @@ $template->assign_vars(array(
         'CURRENT_BID' => $system->print_money($auc_data['current_bid']),
         'QTY' => $auc_data['quantity'],
         'RESERVE_PRICE' => $system->print_money($auc_data['reserve_price']),
-        'SUSPENDED' => $auc_data['suspended'],
-        'OFFSET' => $_REQUEST['offset']
+        'SUSPENDED' => $auc_data['suspended']
         ));
 
 include 'header.php';

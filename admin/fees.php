@@ -83,11 +83,11 @@ if (isset($_GET['type']) && isset($fees[$_GET['type']])) {
                     $value = $system->input_money($value);
                 }
                 $query = "UPDATE " . $DBPrefix . "fees SET
-						fee_from = :fee_from,
-						fee_to = :fee_to,
-						value = :value,
-						fee_type = :fee_type
-						WHERE id = :fee_id";
+                          fee_from = :fee_from,
+                          fee_to = :fee_to,
+                          value = :value,
+                          fee_type = :fee_type
+                          WHERE id = :fee_id";
                 $params = array();
                 $params[] = array(':fee_from', $system->input_money($_POST['fee_from'][$i]), 'float');
                 $params[] = array(':fee_to', $system->input_money($_POST['fee_to'][$i]), 'float');
@@ -112,7 +112,7 @@ if (isset($_GET['type']) && isset($fees[$_GET['type']])) {
                         $value = $system->input_money($value);
                     }
                     $query = "INSERT INTO " . $DBPrefix . "fees VALUES
-							(NULL, :fee_from, :fee_to, :new_type, :value, :type)";
+                              (NULL, :fee_from, :fee_to, :new_type, :value, :type)";
                     $params = array();
                     $params[] = array(':fee_from', $system->input_money($_POST['new_fee_from']), 'float');
                     $params[] = array(':fee_to', $system->input_money($_POST['new_fee_to']), 'float');
@@ -122,7 +122,7 @@ if (isset($_GET['type']) && isset($fees[$_GET['type']])) {
                     $db->query($query, $params);
                     $level_added = true;
                 } else {
-                    $errmsg = $ERR_713;
+                    $errmsg = $MSG['error_from_must_be_less_than_to'];
                 }
             }
         }
@@ -156,9 +156,8 @@ $db->direct_query($query);
 $gateway_check = $db->result('count');
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
         'B_NOT_SETUP_CORRECTLY' => ($gateway_check == 0),
-        'B_SINGLE' => (isset($_GET['type']) && isset($fees[$_GET['type']]) && $fees[$_GET['type']] == 0) ? true : false,
+        'B_SINGLE' => (isset($_GET['type']) && isset($fees[$_GET['type']]) && $fees[$_GET['type']] == 0),
         'FEETYPE' => (isset($_GET['type']) && isset($feenames[$_GET['type']])) ? $feenames[$_GET['type']] : ''
         ));
 

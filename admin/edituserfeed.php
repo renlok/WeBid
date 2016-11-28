@@ -29,9 +29,9 @@ $id = intval($_GET['id']);
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $user = intval($_POST['user']);
     $query = "UPDATE " . $DBPrefix . "feedbacks SET
-			rate = :rate,
-			feedback = :feedback
-			WHERE id = :feedback_id";
+              rate = :rate,
+              feedback = :feedback
+              WHERE id = :feedback_id";
     $params = array();
     $params[] = array(':rate', $_POST['aTPL_rate'], 'int');
     $params[] = array(':feedback', $_POST['TPL_feedback'], 'str');
@@ -40,7 +40,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
     // Update user's record
     $query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks
-				WHERE rated_user_id = :user_id";
+              WHERE rated_user_id = :user_id";
     $params = array();
     $params[] = array(':user_id', $user, 'int');
     $db->query($query, $params);
@@ -58,7 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 }
 
 $query = "SELECT u.nick, u.id, f.rater_user_nick, f.feedback, f.rate FROM " . $DBPrefix . "feedbacks f
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id) WHERE f.id = :feedback_id";
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id) WHERE f.id = :feedback_id";
 $params = array();
 $params[] = array(':feedback_id', $id, 'int');
 $db->query($query, $params);

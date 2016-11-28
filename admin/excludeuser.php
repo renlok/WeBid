@@ -19,7 +19,7 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 if (!isset($_REQUEST['id'])) {
-    header('location: listusers.php?PAGE=' . intval($_REQUEST['offset']));
+    header('location: listusers.php');
     exit;
 }
 
@@ -56,10 +56,10 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
         include INCLUDE_PATH . 'email/user_suspended.php';
     }
 
-    header('location: listusers.php?PAGE=' . intval($_POST['offset']));
+    header('location: listusers.php');
     exit;
 } elseif (isset($_POST['action']) && $_POST['action'] == "No") {
-    header('location: listusers.php?PAGE=' . intval($_POST['offset']));
+    header('location: listusers.php');
     exit;
 }
 
@@ -88,21 +88,18 @@ if ($user_data['birthdate'] == 0) {
 $mode = 'activate';
 switch ($user_data['suspended']) {
     case 0:
-        $action = $MSG['305'];
-        $question = $MSG['308'];
+        $action = $MSG['suspend_user'];
+        $question = $MSG['suspend_user_confirm'];
         $mode = 'suspend';
         break;
-    case 8:
-        $action = $MSG['515'];
-        $question = $MSG['815'];
-        break;
     case 10:
-        $action = $MSG['299'];
-        $question = $MSG['418'];
+    case 8:
+        $action = $MSG['activate_user'];
+        $question = $MSG['activate_user_confirm'];
         break;
     default:
-        $action = $MSG['306'];
-        $question = $MSG['309'];
+        $action = $MSG['reactivate_user'];
+        $question = $MSG['reactivate_user_confirm'];
         break;
 }
 
@@ -119,8 +116,7 @@ $template->assign_vars(array(
         'DOB' => $birthdate,
         'QUESTION' => $question,
         'MODE' => $mode,
-        'ID' => $_GET['id'],
-        'OFFSET' => $_GET['offset']
+        'ID' => $_GET['id']
         ));
 
 include 'header.php';

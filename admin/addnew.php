@@ -24,14 +24,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     if (!isset($_POST['title']) || !isset($_POST['content'])) {
         $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
     } else {
-        // clean up everything
-        foreach ($_POST['title'] as $k => $v) {
-            $_POST['title'][$k] = $system->cleanvars($v);
-            $_POST['content'][$k] = $system->cleanvars($_POST['content'][$k], true);
-        }
-
         $query = "INSERT INTO " . $DBPrefix . "news (title, content, suspended)
-				VALUES (:title, :content, :suspended)";
+                  VALUES (:title, :content, :suspended)";
         $params = array();
         $params[] = array(':title', $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]), 'str');
         $params[] = array(':content', $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']], true), 'str');

@@ -27,6 +27,7 @@ if (isset($_POST['delete']) && is_array($_POST['delete'])) {
         $query = "DELETE FROM " . $DBPrefix . "faqs_translated WHERE id = :faq_id";
         $db->query($query, $params);
     }
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['faqs_deleted']));
 }
 
 // Get data from the database
@@ -55,5 +56,4 @@ $template->set_filenames(array(
         'body' => 'faqs.tpl'
         ));
 $template->display('body');
-
 include 'footer.php';

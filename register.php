@@ -253,11 +253,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'first') {
                 include PACKAGE_PATH . 'PasswordHash.php';
                 $phpass = new PasswordHash(8, false);
                 $query = "INSERT INTO " . $DBPrefix . "users
-						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, birthdate,
-						suspended, language, groups, balance, timezone)
-						VALUES
-						(:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :birthdate,
-						:suspended, :language, :groups, :balance, :timezone)";
+                          (nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, birthdate,
+                          suspended, language, groups, balance, timezone)
+                          VALUES
+                          (:nick, :password, :hash, :name, :address, :city, :prov, :country, :zip, :phone, :nletter, :email, :birthdate,
+                          :suspended, :language, :groups, :balance, :timezone)";
                 $params = array(
                     array(':nick', $system->cleanvars($TPL_nick_hidden), 'str'),
                     array(':password', $phpass->HashPassword($TPL_password_hidden), 'str'),
@@ -281,7 +281,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first') {
                 $db->query($query, $params);
                 $TPL_id_hidden = $db->lastInsertId();
                 $query = "INSERT INTO " . $DBPrefix . "usersips (user, ip, type, action)
-						VALUES (:id_hidden, :remote_addr, 'register', 'accept')";
+                          VALUES (:id_hidden, :remote_addr, 'register', 'accept')";
                 $params = array();
                 $params[] = array(':id_hidden', $TPL_id_hidden, 'int');
                 $params[] = array(':remote_addr', $_SERVER['REMOTE_ADDR'], 'str');

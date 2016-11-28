@@ -18,8 +18,14 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+if (!isset($_REQUEST['id']))
+{
+    header('location: listusers.php');
+    exit;
+}
+
 $id = intval($_REQUEST['id']);
-$uloffset = intval($_REQUEST['offset']);
+
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     if (isset($_POST['deny']) && is_array($_POST['accept'])) {
         foreach ($_POST['accept'] as $v) {
@@ -103,11 +109,9 @@ if ($PAGES > 1) {
 }
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
         'ID' => $id,
         'NICK' => $USER['nick'],
         'LASTLOGIN' => $dt->printDateTz($USER['lastlogin']),
-        'OFFSET' => $uloffset,
         'ERROR' => (isset($ERR)) ? $ERR : '',
         'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/viewuserips.php?' . $url_id . '&PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
         'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/viewuserips.php?' . $url_id . '&PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',

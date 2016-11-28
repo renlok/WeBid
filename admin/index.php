@@ -95,8 +95,8 @@ if (isset($_GET['action'])) {
 
             //update bids
             $query = "SELECT COUNT(b.id) As COUNT FROM " . $DBPrefix . "bids b
-					LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
-					WHERE a.closed = 0 AND a.suspended = 0";
+                      LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
+                      WHERE a.closed = 0 AND a.suspended = 0";
             $db->direct_query($query);
             $BIDS = $db->result('COUNT');
             $query = "UPDATE " . $DBPrefix . "counters SET bids = :BIDS";
@@ -106,7 +106,7 @@ if (isset($_GET['action'])) {
 
             resync_category_counters();
 
-            $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1029']));
+            $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['counters_updated']));
         break;
     }
 }
@@ -144,7 +144,7 @@ switch ($system->SETTINGS['version_check']) {
 
 if (!($realversion = load_file_from_url($url))) {
     $ERR = $MSG['error_file_access_disabled'];
-    $realversion = 'Unknown';
+    $realversion = $MSG['unknown'];
 }
 
 $update_available = false;
@@ -159,13 +159,13 @@ $mail_protocol = array('0' => 'WEBID MAIL', '1' => 'MAIL', '2' => 'SMTP', '4' =>
 $template->assign_vars(array(
         'SITENAME' => $system->SETTINGS['sitename'],
         'ADMINMAIL' => $system->SETTINGS['adminmail'],
-        'CRON' => ($system->SETTINGS['cron'] == 1) ? '<b>' . $MSG['373'] . '</b><br>' . $MSG['25_0027'] : '<b>' . $MSG['374'] . '</b>',
+        'CRON' => ($system->SETTINGS['cron'] == 1) ? '<b>' . $MSG['batch'] . '</b><br>' . $MSG['25_0027'] : '<b>' . $MSG['non_batch'] . '</b>',
         'GALLERY' => ($system->SETTINGS['picturesgallery'] == 1) ? '<b>' . $MSG['2__0066'] . '</b><br>' . $MSG['gallery_images_allowance'] . ': ' . $system->SETTINGS['maxpictures'] . '<br>' . $MSG['gallery_image_max_kb'] . ': ' . $system->SETTINGS['maxuploadsize']/1024 . ' KB' : '<b>' . $MSG['2__0067'] . '</b>',
         'BUY_NOW' => ($system->SETTINGS['buy_now'] == 1) ? '<b>' . $MSG['2__0067'] . '</b>' : '<b>' . $MSG['2__0066'] . '</b>',
         'CURRENCY' => $system->SETTINGS['currency'],
         'TIMEZONE' => $timezones[$system->SETTINGS['timezone']],
         'DATEFORMAT' => $system->SETTINGS['datesformat'],
-        'DATEEXAMPLE' => ($system->SETTINGS['datesformat'] == 'USA') ? $MSG['382'] : $MSG['383'],
+        'DATEEXAMPLE' => ($system->SETTINGS['datesformat'] == 'USA') ? $MSG['american_dates'] : $MSG['european_dates'],
         'DEFULTCONTRY' => $system->SETTINGS['defaultcountry'],
         'USERCONF' => $system->SETTINGS['activationtype'],
         'EMAIL_HANDLER' => $mail_protocol[$system->SETTINGS['mail_protocol']],

@@ -16,7 +16,7 @@
 					<h4 class="rounded-top">{L_365}</h4>
 					<div class="rounded-bottom">
 						<ul class="menu">
-							<li><a href="{SITEURL}admin/newadminuser.php">{L_367}</a></li>
+							<li><a href="{SITEURL}admin/newadminuser.php">{L_new_admin_user}</a></li>
 							<li><a href="{SITEURL}admin/adminusers.php">{L_525}</a></li>
 						</ul>
 					</div>

@@ -27,14 +27,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $system->writesetting("email_admin_on_signup", $_POST['email_admin_on_signup'], 'bool');
     $system->writesetting("user_request_seller_permission", $_POST['user_request_seller_permission'], 'bool');
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['895']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['user_settings_updated']));
 }
 
-loadblock($MSG['25_0151'], $MSG['25_0152'], 'yesnostacked', 'usersauth', $system->SETTINGS['usersauth'], array($MSG['2__0066'], $MSG['2__0067']));
-loadblock($MSG['25_0151_a'], $MSG['25_0152_a'], 'select3num', 'usersconf', $system->SETTINGS['activationtype'], array($MSG['25_0152_b'], $MSG['25_0152_c'], $MSG['25_0152_d']));
+loadblock($MSG['enable_reauthentication'], $MSG['enable_reauthentication_explain'], 'yesnostacked', 'usersauth', $system->SETTINGS['usersauth'], array($MSG['2__0066'], $MSG['2__0067']));
+loadblock($MSG['user_confirm_method'], $MSG['user_confirm_method_explain'], 'select3num', 'usersconf', $system->SETTINGS['activationtype'], array($MSG['25_0152_b'], $MSG['25_0152_c'], $MSG['25_0152_d']));
 
 loadblock($MSG['prune_unactivated_users'], $MSG['prune_unactivated_users_explain'], 'bool', 'prune_unactivated_users', $system->SETTINGS['prune_unactivated_users'], array($MSG['759'], $MSG['760']));
-loadblock($MSG['prune_unactivated_users_days'], $MSG['prune_unactivated_users_days_explain'], 'days', 'prune_unactivated_users_days', $system->SETTINGS['prune_unactivated_users_days'], array($MSG['377']));
+loadblock($MSG['prune_unactivated_users_days'], $MSG['prune_unactivated_users_days_explain'], 'days', 'prune_unactivated_users_days', $system->SETTINGS['prune_unactivated_users_days'], array($MSG['5115']));
 
 loadblock($MSG['bidding_visable_to_guest'], $MSG['bidding_visable_to_guest_explain'], 'bool', 'bidding_visable_to_guest', $system->SETTINGS['bidding_visable_to_guest'], array($MSG['759'], $MSG['760']));
 loadblock($MSG['email_admin_on_signup'], $MSG['email_admin_on_signup_explain'], 'bool', 'email_admin_on_signup', $system->SETTINGS['email_admin_on_signup'], array($MSG['759'], $MSG['760']));
@@ -43,7 +43,7 @@ loadblock($MSG['user_request_seller_permission'], $MSG['user_request_seller_perm
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0008'],
-        'PAGENAME' => $MSG['894']
+        'PAGENAME' => $MSG['user_settings']
         ));
 
 include 'header.php';

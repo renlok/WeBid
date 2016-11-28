@@ -63,7 +63,7 @@
           <th colspan="4">{L_25_0025}</th>
         </tr>
         <tr>
-          <td><strong>{L_528}</strong></td>
+          <td><strong>{L_site_url}</strong></td>
           <td>{SITEURL}</td>
         </tr>
         <tr>
@@ -71,7 +71,7 @@
           <td>{SITENAME}</td>
         </tr>
         <tr>
-          <td><strong>{L_540}</strong></td>
+          <td><strong>{L_admin_email}</strong></td>
           <td>{ADMINMAIL}</td>
         </tr>
         <tr>
@@ -95,7 +95,7 @@
           <td>{TIMEZONE}</td>
         </tr>
         <tr>
-          <td><strong>{L_363}</strong></td>
+          <td><strong>{L_date_format}</strong></td>
           <td>{DATEFORMAT} <small>({DATEEXAMPLE})</small></td>
         </tr>
         <tr>
@@ -103,10 +103,10 @@
           <td>{DEFULTCONTRY}</td>
         </tr>
         <tr>
-          <td><strong>{L_2__0002}</strong></td>
+          <td><strong>{L_multilingual_support}</strong></td>
           <td><!-- BEGIN langs -->
             
-            <p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_2__0005})<!-- ENDIF --></p>
+            <p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_current_default_language})<!-- ENDIF --></p>
             
             <!-- END langs --></td>
         </tr>

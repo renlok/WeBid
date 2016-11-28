@@ -63,7 +63,6 @@ $ERR_044 = "A user must be a member of at least one group";
 $ERR_047 = "Required fields are missing";
 $ERR_048 = "Incorrect login";
 $ERR_049 = "The category's name cannot be empty";
-$ERR_050 = "At least one group must have Auto Join enabled";
 $ERR_051 = "Please, insert a valid number of digits";
 $ERR_054 = "Please, fill in both the password fields";
 $ERR_055 = "User <i>%s</i> already exists in the database";
@@ -77,7 +76,6 @@ $ERR_062 = "You may not set a reserve price in a Dutch Auction";
 $ERR_063 = "You may not use custom increment in a Dutch Auction";
 $ERR_064 = "You may not use the Buy Now feature in a Dutch Auction";
 $ERR_067 = "Required fields missing (all fields are required).";
-$ERR_068 = "Chosen theme does not exist";
 $ERR_069 = "Currency conversion failed";
 $ERR_070 = "This message doesn't exist";
 $ERR_071 = "Username is invalid can only contain letters and numbers";
@@ -137,12 +135,9 @@ $ERR_709 = "The picture you uploaded is too big. It cannot exceed ";
 $ERR_710 = "Incorrect file type. Allowed file types are: GIF, PNG and JPEG";
 $ERR_711 = "You cannot buy, you are the seller!";
 $ERR_712 = "<b>Buy It Now</b> is not available for this auction";
-$ERR_713 = 'The value from must be less than the value to';
 $ERR_714 = 'The relist value must be numeric';
 $ERR_715 = 'You cannot choose to relist that many times';
 $ERR_716 = 'Image not found';
-$ERR_5002 = "You must select at least one statistic type (accesses, browsers &amp; platforms, by country)";
-$ERR_5014 = "The Subject or message is missing";
 $ERR_5033 = "E-mail address missing";
 $ERR_5034 = "Address is missing";
 $ERR_5035 = "City is missing";
@@ -197,8 +192,6 @@ $MSG['048'] = "User Registration Fields";
 $MSG['050'] = "(min 6 chars)";
 $MSG['052'] = "Login";
 $MSG['059'] = "Email Sent";
-$MSG['067'] = "View Open Auctions";
-$MSG['067a'] = "Search Auctions";
 $MSG['069'] = "Auctions Duration";
 $MSG['071'] = "Update";
 $MSG['072'] = " users are awaiting feedback from you";
@@ -208,12 +201,10 @@ $MSG['079'] = "Your Auction Has Closed";
 $MSG['080'] = "Resynchronise or Reset Caches";
 $MSG['081'] = "Countries Table";
 $MSG['084'] = "Message posted";
-$MSG['086'] = "Categories table updated";
 $MSG['087'] = "Description";
 $MSG['088'] = "into this currency";
 $MSG['089'] = "Process changes";
 $MSG['092'] = 'Edit, delete or add payment methods using the form below. These are alternative external payment options, to enable or disable the inbuilt payment gateways see the <a href="fee_gateways.php">payment gateway settings</a> page.';
-$MSG['093'] = "Payment methods table updated";
 $MSG['094'] = "Edit, delete or add countries using the form below.";
 $MSG['095'] = "Welcome, You're Now A Member!";
 $MSG['095a'] = "Your account has been suspended.";
@@ -229,7 +220,6 @@ $MSG['104'] = "Browse ";
 $MSG['105'] = "View history";
 $MSG['106'] = "Send to a friend";
 $MSG['107'] = "User's e-mail";
-$MSG['109'] = "Day";
 $MSG['110'] = "Admin";
 $MSG['111'] = "Auction started";
 $MSG['112'] = "Auction ends";
@@ -270,7 +260,6 @@ $MSG['152'] = "Confirm your bid";
 $MSG['154'] = "You Are Bidding on:";
 $MSG['156'] = "Your bid:";
 $MSG['159'] = "Bidder:";
-$MSG['160'] = "Increments table updated";
 $MSG['161'] = "Edit, delete or add categories using the form below.";
 $MSG['163'] = "Register!";
 $MSG['165'] = "Category: ";
@@ -289,8 +278,6 @@ $MSG['185'] = "Currently viewing feedback for ";
 $MSG['187'] = "Your username";
 $MSG['188'] = "Your password";
 $MSG['189'] = "Total Due";
-$MSG['191'] = "Your copyright message";
-$MSG['192'] = "This is a message that is added to the bottom of every page";
 $MSG['197'] = "Auction's title";
 $MSG['198'] = "No items found";
 $MSG['199'] = "Search";
@@ -369,23 +356,16 @@ $MSG['295'] = "Country";
 $MSG['296'] = "E-mail";
 $MSG['297'] = "Action";
 $MSG['298'] = "Edit";
-$MSG['299'] = "Activate User";
 $MSG['300'] = "Suspend";
 $MSG['301'] = "users found in the database";
 $MSG['302'] = "Name";
 $MSG['303'] = "E-mail";
-$MSG['305'] = "Suspend User";
-$MSG['306'] = "Reactivate User";
-$MSG['308'] = "Are you sure you want to suspend this user?";
-$MSG['309'] = "Are you sure you want to reactivate this user?";
 $MSG['310'] = "Reactivate";
 $MSG['311'] = "auctions found in the database";
 $MSG['312'] = "Title";
 $MSG['313'] = "User";
 $MSG['314'] = "Date";
 $MSG['319'] = "Shipping";
-$MSG['321'] = "Suspend auction";
-$MSG['322'] = "Reactivate auction";
 $MSG['323'] = "Are you sure you want to suspend this auction?";
 $MSG['324'] = "Are you sure you want to reactivate this auction?";
 $MSG['328'] = "Colour";
@@ -401,33 +381,16 @@ $MSG['337'] = "Your message has been sent to ";
 $MSG['340'] = "From";
 $MSG['341'] = "View all news";
 $MSG['342'] = " News";
-$MSG['344'] = "Time Settings";
-$MSG['345'] = "Choose the time zone you want all the times on your site to be in";
 $MSG['346'] = "Time Zone";
-$MSG['347'] = "Time settings updated";
-$MSG['348'] = "Batch Procedures Settings";
 $MSG['349'] = "Reply";
 $MSG['351'] = "Back to inbox";
 $MSG['352'] = "Email Format";
 $MSG['354'] = "Closed Auctions";
 $MSG['357'] = "percent";
 $MSG['359'] = " Updated";
-$MSG['363'] = "Dates Format";
 $MSG['364'] = "Date";
 $MSG['365'] = "Admin Users";
-$MSG['367'] = "New admin user";
 $MSG['368'] = "Mass category add<br><span class=\"smallspan\">Just enter category names and put each category on a new line</span>";
-$MSG['371'] = "WeBid needs to periodically run <code>batch.php</code> to close expired auctions and send notification e-mails to the seller and/or the winner. The recommended way to run <code>batch.php</code> is to set up a <a href=\"http://www.webidsupport.com/forums/index.php?threads/setting-up-a-cronjob.10244/\" target=\"_blank\">cronjob</a> if you run a Unix/Linux server.<br>If for any reason you can't run a cronjob on your server, you can choose the <b>Non-batch</b> option below to have <code>batch.php</code> run by WeBid itself: in this case <code>cron.php</code> will be run each time someone access your home page.";
-$MSG['372'] = "Run cron";
-$MSG['373'] = "Batch";
-$MSG['374'] = "Non-batch";
-$MSG['375'] = "According to the default in WeBid's Settings, <code>cron.php</code> automatically deletes auctions older than 30 days.
-			<br>You may change the time period below.";
-$MSG['376'] = "Delete auctions older than";
-$MSG['377'] = " days";
-$MSG['379'] = "Choose the format you want date to appear on your site.";
-$MSG['382'] = "mm/dd/yyyy";
-$MSG['383'] = "dd/mm/yyyy";
 $MSG['385'] = "Recent Feedback";
 $MSG['386'] = "Last Month";
 $MSG['387'] = "Last Six Months";
@@ -438,24 +401,11 @@ $MSG['391'] = "Amount";
 $MSG['392'] = "Fee Type";
 $MSG['393'] = "flat";
 $MSG['394'] = "Add";
-$MSG['395'] = "Enable/Disable Fees";
-$MSG['397'] = "Do you want your auction site to be completely free or do you want to charge for it";
 $MSG['398'] = "Send Newsletter";
 $MSG['399'] = "Search for it!";
 $MSG['401'] = "Privacy Policy";
-$MSG['402'] = "Privacy Policy Page";
-$MSG['403'] = "Activate Privacy Policy Page?";
-$MSG['404'] = "Privacy Policy content<br>(HTML allowed)";
-$MSG['405'] = "Activate this option if you want a Privacy Policy link to appear in the footer of your pages.";
-$MSG['406'] = "Privacy Policy Settings Updated";
-$MSG['409'] = "Error Handling";
-$MSG['410'] = "Fatal errors that occur during WeBid's execution (typically MySQL errors) will redirect users to an error page.
-			You can customise the error message you want to appear in the error page below.";
-$MSG['411'] = "Error Text";
-$MSG['413'] = "Error Handling settings updated.";
 $MSG['415'] = "Error";
 $MSG['417'] = "General";
-$MSG['418'] = "Are you sure you want to activate this user?";
 $MSG['422'] = "Outstanding payments";
 $MSG['423'] = "Payment Success";
 $MSG['424'] = "Your payment has been confirmed.<br><br>Thank you for your business.";
@@ -512,7 +462,6 @@ $MSG['510'] = "There are currently no Reminders to display.";
 $MSG['511'] = "Edit user";
 $MSG['512'] = "Edit auction";
 $MSG['514'] = "<b>Reserve not met</b>";
-$MSG['515'] = 'Activate User';
 $MSG['516'] = "News Management";
 $MSG['517'] = " news items found in the database.";
 $MSG['518'] = "Add new";
@@ -523,18 +472,10 @@ $MSG['522'] = "Buyer fees due";
 $MSG['523'] = "Final value fees due";
 $MSG['524'] = "SETTINGS";
 $MSG['525'] = "Admin users management";
-$MSG['526'] = "General Settings";
-$MSG['527'] = "Site name";
-$MSG['528'] = "Site URL";
 $MSG['530'] = "Save changes";
 $MSG['534'] = "Show acceptance text?";
-$MSG['535'] = "Your site's name will appear in the e-mail messages WeBid sends to users";
-$MSG['536'] = "This must be the complete URL (starting with <b>http://</b>) of your WeBid installation.<br>Be sure to include the ending slash.";
 $MSG['539'] = "Selecting the <b>Yes</b> option below will make WeBid display the text you fill in the text box below in the users registration page just before the submit button.<br>
 			This is typically used to display some legal notes users accept submitting the registration form.";
-$MSG['540'] = "Admin e-mail";
-$MSG['541'] = "The admin e-mail address is used to send automatic e-mail messages";
-$MSG['542'] = "General settings updated";
 $MSG['543'] = "Make this question public";
 $MSG['552'] = "Questions";
 $MSG['555'] = "Asker";
@@ -627,32 +568,9 @@ $MSG['718'] = "Auction Type";
 $MSG['719'] = "Payment Details";
 $MSG['720'] = "PayPal Email Address";
 $MSG['724'] = "Additional Information";
-$MSG['725'] = "Optimisation";
-$MSG['726'] = "Enable the template cache?";
-$MSG['727'] = "This will massively increase the speed of your site. It is recommended this is only disabled when making updates to your template";
-$MSG['729'] = "Set payment type";
-$MSG['730'] = "This is how users will pay the fees. Balance mode is where the users can choose when to pay and live payments is where the user must pay for every action that has a fee";
-$MSG['731'] = "Balance mode";
-$MSG['732'] = "Live payments";
-$MSG['733'] = "The following settings are only used when in balance mode";
-$MSG['734'] = "Maximum Debt";
-$MSG['735'] = "The maximum debt an account can have before they must pay it back";
-$MSG['736'] = "Signup Credit";
-$MSG['737'] = "The credit given to an account on its creation";
-$MSG['738'] = "Suspend Accounts";
-$MSG['739'] = "Suspend Accounts that are over the Debit Limit";
 $MSG['740'] = "None";
 $MSG['741'] = "Image";
 $MSG['742'] = "reCaptcha";
-$MSG['743'] = "Captcha type on registration page";
-$MSG['744'] = "Captcha type on send auction to friend page";
-$MSG['745'] = "Captcha are used to prevent spam it is generally a good idea to enable some sort of captcha";
-$MSG['746'] = "Recaptcha site key";
-$MSG['747'] = "Recaptcha secret key";
-$MSG['748'] = 'To use reCaptcha you must create a free account at <a href="http://recaptcha.net/" class="new-window">http://recaptcha.net/</a> and add this domain to a key pair';
-$MSG['749'] = 'Spam settings';
-$MSG['750'] = 'Spam settings updated';
-$MSG['751'] = 'You cannot use reCaptcha without the two keys';
 $MSG['752'] = 'The string you entered for the image verification did not match what was displayed.';
 $MSG['753'] = 'Account Suspended';
 $MSG['754'] = 'You have reached the debt limit allowed on your account; your account will be suspended until this is paid back.<br>You can this back <a href="outstanding.php">here</a>';
@@ -662,8 +580,6 @@ $MSG['757'] = 'Security Code';
 $MSG['758'] = 'Verify Code';
 $MSG['759'] = 'Enable';
 $MSG['760'] = 'Disable';
-$MSG['761'] = 'Fee Settings Updated';
-$MSG['762'] = 'Fee Gateway Settings Updated';
 $MSG['763'] = 'Balance';
 $MSG['764'] = 'Send payment reminder';
 $MSG['765'] = 'Payment reminder sent';
@@ -681,7 +597,6 @@ $MSG['776'] = "To finalise the sale please proceed to one of the payment gateway
 $MSG['777'] = 'You have an outstanding payment of the buyers fee for the item %s; your account will be suspended until this is paid. You can pay for this now at <a href="%s">Here</a>';
 $MSG['778'] = 'If you wish to pay via an alternative method contact <a href="profile.php?user_id=%s&amp;auction_id=%s">%s</a> to find out how.';
 $MSG['778a'] = 'The seller has not set up any online payment methods. Please contact them to find how they want to accept the payment';
-$MSG['779'] = 'User Registration Fields Updated';
 $MSG['780'] = 'Show On Registration Page';
 $MSG['781'] = 'Birthday Field Required?';
 $MSG['782'] = 'Address Field Required?';
@@ -695,19 +610,15 @@ $MSG['792'] = 'You need to pay for %s item(s)';
 $MSG['793'] = ' items you\'re bidding on are ending soon';
 $MSG['794'] = 'You have been outbid on %s items';
 $MSG['796'] = 'You have an outstanding payment of the final value fee for the item %s; your account will be suspended until this is paid. You can pay for this now at <a href="%s">Here</a>';
-$MSG['801'] = 'Shared SSL URL';
-$MSG['802'] = 'If you\'re using shared SSL enter the URL here';
 $MSG['803'] = 'Subtitle Fee';
 $MSG['804'] = 'Extra Category Fee';
 $MSG['805'] = 'Skip step';
 $MSG['806'] = 'Item subtitle';
-$MSG['809'] = 'A field must be shown if it\'s a required field';
 $MSG['810'] = 'A valid PayPal email address is required';
 $MSG['811'] = 'A valid AuthNet ID and password are required';
 $MSG['812'] = 'File Name:';
 $MSG['813'] = 'File Content:';
 $MSG['814'] = 'Second Category';
-$MSG['815'] = 'Are you sure you want to activate this user?';
 $MSG['816'] = 'Gallery';
 $MSG['817'] = 'Prices';
 $MSG['818'] = 'You do not have permission to list items';
@@ -719,14 +630,8 @@ $MSG['823'] = 'A valid Worldpay ID is required';
 $MSG['824'] = 'Worldpay ID';
 $MSG['825'] = 'Moneybookers Email Address';
 $MSG['826'] = '2Checkout ID';
-$MSG['827'] = 'Weekly Report';
-$MSG['828'] = 'Week';
 $MSG['829'] = 'View by ';
 $MSG['830'] = 'Month';
-$MSG['836'] = 'Member types Updated';
-$MSG['837'] = '(contains %s FAQs)';
-$MSG['838'] = 'Are you sure you want to process the following categories: ';
-$MSG['839'] = 'What do you want to do with the FAQs in the following categories';
 $MSG['840'] = 'Move to ';
 $MSG['841'] = 'Admin Template';
 $MSG['842'] = 'Set Fees';
@@ -768,14 +673,10 @@ $MSG['868'] = ' each';
 $MSG['869'] = 'Sale Date';
 $MSG['870'] = 'You have sold %s items';
 
-$MSG['888'] = 'Error log is currently empty';
-$MSG['889'] = "Error Log Purged";
 $MSG['890'] = "Purge Log";
 $MSG['891'] = "Error Log";
 $MSG['892'] = "To be activated";
 $MSG['893'] = "Total";
-$MSG['894'] = "User Settings";
-$MSG['895'] = "User Settings Updated";
 $MSG['898'] = "Paid";
 $MSG['899'] = "Set as Paid";
 $MSG['900'] = "View Winners";
@@ -841,10 +742,6 @@ $MSG['1017'] = "Lowest Prices First";
 $MSG['1018'] = "Highest Prices First";
 $MSG['1020'] = "Dutch Auction";
 $MSG['1021'] = "Standard Auction";
-$MSG['1022'] = "SSL Support";
-$MSG['1023'] = "Activate SSL support?";
-$MSG['1024'] = "<p>If you have SSL support on the server where you are running WeBid, you may want to give your customers a safer environment to operate.</p>Once The SSL Support is activated, your users will operate under secure HTTPS transactions when they log in or register.";
-$MSG['1029'] = "Counters updated";
 $MSG['1030'] = "Re-sync the user, auction and bid counters";
 $MSG['1031'] = "Re-sync Counters";
 $MSG['1032'] = "no winner";
@@ -912,20 +809,6 @@ $MSG['1084'] = 'Sellers from';
 $MSG['1085'] = 'Buyers from';
 $MSG['1086'] = 'Site Tax';
 $MSG['1087'] = 'Are you sure you want to delete this tax rate';
-$MSG['1088'] = 'Tax Settings';
-$MSG['1089'] = 'Tax settings updated';
-$MSG['1090'] = 'Tax Enabled';
-$MSG['1091'] = 'Global setting to enable or disable tax';
-$MSG['1092'] = 'Users can charge tax';
-$MSG['1093'] = 'Enable to give users an option to tax their items';
-
-// admin invoice settings
-$MSG['1094'] = 'Invoice Settings';
-$MSG['1095'] = 'Invoice settings updated';
-$MSG['1096'] = 'Invoice Notice';
-$MSG['1097'] = 'This will show in a yellow box above the end message on users invoices';
-$MSG['1098'] = 'Invoice End Message';
-$MSG['1099'] = 'This will show at the end of every users invoice';
 
 // sell.php tax
 $MSG['1102'] = 'Charge Tax';
@@ -943,22 +826,6 @@ $MSG['1116'] = 'Set as Shipped';
 $MSG['1117'] = 'Shipped';
 
 // email settings
-$MSG['1118'] = 'Email Settings';
-$MSG['1119'] = 'Mail Protocol:';
-$MSG['1120'] = 'Webid Mail Parameters:';
-$MSG['1121'] = '*When using \'Webid Mail\', additional mail parameters can be added here (e.g. "-femail@yourwebid.com").';
-$MSG['1122'] = 'SMTP Host:';
-$MSG['1123'] = '*For Gmail accounts. Set the encryption system using a prefix of [<b>ssl://</b>] or [<b>tls://</b>] Examples:<br>[ ssl://smtp.googlemail.com ], [ tls://smtp.googlemail.com ]';
-$MSG['1124'] = 'SMTP Username:';
-$MSG['1125'] = 'SMTP Password:';
-$MSG['1126'] = 'SMTP Port:';
-$MSG['1127'] = 'SMTP Security:';
-$MSG['1128'] = 'SMTP Authentication';
-$MSG['1129'] = 'Additional Admin E-Mails:';
-$MSG['1130'] = 'Additional email accounts you want to receive admin related email, in addition to the main site email address of %s. (comma separated)';
-$MSG['1131'] = 'Email Settings';
-$MSG['1132'] = 'Please enter missing or incorrect SMTP settings';
-$MSG['1133'] = "SMTP Specific Options:";
 // modal and js
 $MSG['1134'] = "Email Test and Response";
 $MSG['1135'] = "Enter a message for the test email.";
@@ -967,7 +834,6 @@ $MSG['1137'] = "Email Test";
 $MSG['1138'] = "Test email from Admin";
 $MSG['1139'] = "Admin";
 $MSG['1140'] = "I have finished testing";
-$MSG['1141'] = 'Used <b>only</b> for SMTP mail';
 // fee gateway
 $MSG['1142'] = "Before you can set up any fees you must set up at least one account where the fees can be paid to, to do so simply add your payment info into the corresponding boxes below";
 $MSG['1143'] = "Here you setup which payment gateways you want to allow users to use";
@@ -990,10 +856,6 @@ $MSG['1151'] = "Auction fee";
 $MSG['1152'] = "Free";
 
 $MSG['1153'] = 'Print Invoice';
-
-//Sandbox messages for the AdminCP
-$MSG['1154'] = 'You can turn on the payment gateways sandbox to test the payment gateways but make sure disable the sandbox mode before making your site live';
-$MSG['1155'] = "Payment gateway sandbox";
 
 $MSG['5000'] = 'You must be logged in to see this page';
 $MSG['5001'] = "View Site";
@@ -1031,12 +893,6 @@ $MSG['5070'] = "Enable Words Filter?";
 $MSG['5071'] = "Undesired words list";
 $MSG['5072'] = "Enter the undesired words one per line (max. 255 characters per line). Note that each line will be
 treated like \"one word\".";
-$MSG['5073'] = "Words Filter Settings Updated";
-$MSG['5075'] = "Terms &amp; Conditions Page";
-$MSG['5081'] = "Activate this option if you want a <u>Terms &amp; Conditions</u> link to appear in the footer of your pages.";
-$MSG['5082'] = "Activate Terms &amp; Conditions page?";
-$MSG['5083'] = "Terms &amp; Conditions page content<br>(HTML allowed)";
-$MSG['5084'] = "Terms &amp; Conditions Settings Updated";
 $MSG['5085'] = "About Us";
 $MSG['5086'] = "Terms &amp; Conditions";
 $MSG['5094'] = "View auctions";
@@ -1048,12 +904,6 @@ $MSG['5119'] = "&lt;&lt;Prev";
 $MSG['5120'] = "Next&gt;&gt;";
 $MSG['5142'] = "Settings";
 $MSG['5143'] = "View Access Statistics";
-$MSG['5144'] = "Please, choose below if you want WeBid to generate access statistics for your site.";
-$MSG['5145'] = "Generate user access statistics";
-$MSG['5146'] = "Generate browser and platform statistics";
-$MSG['5148'] = "Statistics Settings Updated.";
-$MSG['5149'] = "Activate Statistics?";
-$MSG['5150'] = "Select which type of statistics you want to generate";
 $MSG['5156'] = "Platforms";
 $MSG['5158'] = "Access Statistics for ";
 $MSG['5161'] = "Page views";
@@ -1072,7 +922,6 @@ $MSG['5202'] = "Add to your watch list";
 $MSG['5202_0'] = "Remove from your watch list";
 $MSG['5204'] = "Insert";
 $MSG['5205'] = "Enable/Disable";
-$MSG['5227'] = "View Suspended Auctions";
 $MSG['5230'] = "FAQs Categories";
 $MSG['5231'] = "New FAQ";
 $MSG['5232'] = "Manage FAQs";
@@ -1087,19 +936,11 @@ $MSG['5243'] = "Help Index";
 $MSG['5245'] = "Top";
 $MSG['5276'] = "Delete Message";
 $MSG['5279'] = "Back to the user list";
-$MSG['5280'] = "Years/Months";
-$MSG['5281'] = "Monthly Report";
 $MSG['5284'] = "Category Name";
 $MSG['5285'] = "Daily Report";
-$MSG['5291'] = "Active users";
-$MSG['5292'] = "Account never confirmed";
-$MSG['5293'] = "Sign up fee not paid";
-$MSG['5294'] = "Suspended by the admin";
 $MSG['5295'] = "View";
-$MSG['5296'] = "All users";
 $MSG['5297'] = "Balance over debt limit";
 $MSG['5299'] = "Limit submission to";
-$MSG['5300'] = " messages sent.";
 $MSG['5318'] = "View Platform Statistics";
 $MSG['5408'] = "Max. ";
 $MSG['5431'] = "Send me a new password";
@@ -1113,13 +954,6 @@ $MSG['5506'] = "Positive feedback: ";
 $MSG['5507'] = '<span style="color:#CD0000;">Negative feedback:</span> ';
 $MSG['5508'] = "Member since ";
 $MSG['5509'] = "Feedback received ";
-$MSG['_0001'] = "Under Maintenance Page";
-$MSG['_0002'] = "You can temporary disable the access to your site if necessary.<br>
-			In Maintenance mode only one user will have access to it. After you registered a user via <a target=\"_new\" href=\"../register.php\">the usual users registration page</a>
-			, insert below the username. After switching the site to Maintenance mode <a target=\"_new\" href=\"../user_login.php\">login here</a> to access the site.";
-$MSG['_0004'] = "Under Maintenance HTML code";
-$MSG['_0005'] = "Under Maintenance settings updated";
-$MSG['_0006'] = "Switch site to \"Under Maintenance\" mode?";
 $MSG['_0012'] = "User Management";
 $MSG['_0022'] = "Company";
 $MSG['_0024'] = "Manage Banners";
@@ -1154,8 +988,6 @@ $MSG['_0049'] = "Views:";
 $MSG['_0050'] = "URL:";
 $MSG['_0051'] = "Clicks:";
 $MSG['_0052'] = "View filters";
-$MSG['_0053'] = "<b>Categories</b>";
-$MSG['_0054'] = "<b>Keywords</b>";
 $MSG['_0055'] = "Edit Banner";
 $MSG['_0151'] = " times";
 $MSG['_0153'] = "Relists / <br>Relisted";
@@ -1172,33 +1004,6 @@ $MSG['2_0026'] = "We're sorry but, for one or more reasons, you have been denied
 				Thank you";
 $MSG['2_0027'] = "Your IP has been banned";
 $MSG['2__0001'] = "Choose language";
-$MSG['2__0002'] = "Multilingual support";
-$MSG['2__0003'] = "<br>The default language is English.<br>
-				If you want to enable multilingual support or change the default language you must follow the steps below:
-				<ul>
-				<li>If you want to add a new language make a duplicate of language/EN and name it with the
-				appropriate name: i.e. if you are translating to French you will need to name the directory FR
-				<br>
-				The first thing is to define the characters encoding your language requires at the top of the messages file.
-				The variable you must edit is <i>\$CHARSET</i>. UTF-8 encoding should work with almost all the languages.<br>
-				Next you'll have to define the document reading direction. The variable to modify is <i>\$DOCDIR</i>
-				and can have two possible values:
-				<ul>
-				<li><b>ltr</b> (left-to-right): this is the default and means the text must be read from left to right
-				<li><b>rtl</b> (right-to-left): means the text must be read from right to left (i.e. Arabian, Hebrew, etc)
-				</ul>
-				Once changed <i>\$CHARSET</i> and <i>\$DOCDIR</i> according to the language you are translating into,
-				you will have to translate all the error messages and user interface messages contained in the messages file.
-
-				<li>You will then need the flag(s) GIFs for the languages you are going to use, in the images/flags directory.
-				Get the flag(s) you need and change the file name(s) to be XX.gif, where XX is the language code for your country language.
-				<br>Copy the renamed flag file(s) in the images/flags/ directory.
-				<br><b>Note:</b> for each translation, you need the corresponding XX.gif file in images/flags/
-				<li>Select the default language below. All the other available languages will be available in the home page (the corresponding flags will be shown).
-				</ul>
-				";
-$MSG['2__0004'] = "Default language";
-$MSG['2__0005'] = '<span style="color:#CD0000;"><b>Current default language</b></span>';
 $MSG['2__0016'] = "Starting date";
 $MSG['2__0025'] = "Buy it now";
 $MSG['2__0027'] = "All";
@@ -1270,10 +1075,6 @@ $MSG['25_0140'] = "Your account is a buyer account. No selling activity is allow
 $MSG['25_0141'] = "Send a request to the site administrator";
 $MSG['25_0142'] = "Request sent to the site's administrator.";
 $MSG['25_0143'] = "Your account is a buyer account. No selling activity is allowed.<br> You already sent a request to switch to a <b>seller account</b>: your request is being processed. ";
-$MSG['25_0151'] = "Users Authentication";
-$MSG['25_0151_a'] = "Users Confirmation Method";
-$MSG['25_0152'] = "If this is enabled the users will be asked to enter their password before completing actions such as leaving feedback, submitting an auction or leaving a bid.";
-$MSG['25_0152_a'] = "On WeBid each users account must be activated before it can be used. Choose which method you want to use";
 $MSG['25_0152_b'] = "The admin must activate each account.";
 $MSG['25_0152_c'] = "User must activate their own account";
 $MSG['25_0152_d'] = "Users account is automatically activated on registration (not recommended)";
@@ -1286,14 +1087,6 @@ $MSG['25_0170'] = "Edit, delete or add membership levels using the form below. \
 $MSG['25_0171'] = "Feedback score";
 $MSG['25_0176'] = "Convert";
 $MSG['25_0177'] = "for";
-$MSG['25_0178'] = "HTML meta Tags";
-$MSG['25_0180'] = "Meta Description Tag";
-$MSG['25_0181'] = "Meta Keywords Tag";
-$MSG['25_0182'] = "The Meta Description Tag is usually used to describe your pages in the search results pages search engines show.<br>
-				Enter the text which better describes your site below.";
-$MSG['25_0184'] = "The Meta Keywords Tag gives some search engines additional information to use to index your site.<br>
-				Enter the your keywords below separated by comas (i.e. books, books auctions, book sales).";
-$MSG['25_0185'] = "Meta Tags Settings Updated";
 $MSG['25_0188'] = "Auctions notification e-mails";
 $MSG['25_0189'] = "As a seller, you can choose to receive one notification e-mail for each auction which closes, or to receive an e-mail once a day reporting all the closed auctions on that day.<br>
 				The second option is usually necessary if you have a huge number of auctions.<br>Finally you can also choose not to receive any notification e-mail but this choice is not recommended.";
@@ -1342,7 +1135,6 @@ $MSG['26_0001'] = "Bids history";
 $MSG['26_0002'] = "Manage Themes";
 $MSG['26_0003'] = "Edit Theme Files";
 $MSG['26_0004'] = "Add Theme File";
-$MSG['26_0005'] = "Default Theme Updated";
 $MSG['30_0053'] = "<p>Some free e-mail services have been banned from this website. Please do not enter e-mail addresses belonging to the following domains:</p>";
 $MSG['30_0063'] = "Buy it now only?";
 $MSG['30_0069'] = "Seller: edit this auction";
@@ -1390,9 +1182,7 @@ $MSG['AUCTIONS_406'] = "Winners";
 $MSG['BUY_NOW_ONLY_TPL_0100'] = "Recently Closed Auction Report";
 
 $MSG['auction_has_been_reported'] = "This auction has been reported";
-$MSG['item_report_captcha_type'] = "Captcha type on item report page";
 $MSG['report_this_item'] = "Report this item";
-$MSG['view_reported_auctions'] = "View Reported Auctions";
 $MSG['report_item'] = "Report item";
 $MSG['reason_for_report'] = "Reason for Report";
 $MSG['report_reason_select'] = "Select a reason";
@@ -1401,8 +1191,6 @@ $MSG['report_reason_counterfeit'] = "Counterfeits and copyright violations";
 $MSG['report_reason_prohibited'] = "Prohibited (banned items)";
 $MSG['report_reason_terms_and_conditions'] = "Listing policy violations";
 $MSG['report_reason_stolen'] = "Stolen property";
-
-$MSG['multilingual_support_settings_updated'] = 'Multilingual Support Settings updated';
 
 $MSG['communative_report_winner_yes'] = 'An email has been sent to the any winner(s) with your email address.';
 $MSG['communative_report_winner_no'] = 'Sorry, no auction winner(s) this time.';
@@ -1414,15 +1202,6 @@ $MSG['error_no_user_group_id'] = 'has been assigned to a Group ID which does not
 $MSG['text_update_users_group'] = '[Please View and Update each user\'s details]';
 $MSG['warning'] = 'Warning';
 
-$MSG['bidding_visable_to_guest'] = 'Buy now visible to guests';
-$MSG['bidding_visable_to_guest_explain'] = 'Guest can see the Bid now/Buy now option when viewing an auction, this should be disabled if you plan to run a single seller site';
-$MSG['email_admin_on_signup'] = 'Email admin on signup';
-$MSG['email_admin_on_signup_explain'] = 'Admin receives an email each time a new user registers';
-$MSG['user_request_seller_permission'] = 'Users can request to become sellers';
-$MSG['user_request_seller_permission_explain'] = 'Users who do not have permission to sell items can request to gain permission';
-$MSG['spam_blocked_email_enabled'] = 'Enable block email domains';
-$MSG['spam_blocked_email_domains'] = 'Deny registration from disposable emails';
-$MSG['spam_blocked_email_domains_explain'] = 'Put each domain on a new line';
 $MSG['spam_blocked_email_domains_register_error'] = 'The E-Mail address you have entered has been black-listed';
 
 $MSG['wordfilter_banned_username'] = 'Please select a different user name as our word filter will not allow this name to be used';
@@ -1444,23 +1223,6 @@ $MSG['unique_error_messages'] = 'Unique errors';
 
 $MSG['any_country'] = 'Any Country';
 
-$MSG['prune_unactivated_users'] = "Prune unactivated users";
-$MSG['prune_unactivated_users_explain'] = "Automatically delete unactivated user accounts.";
-
-$MSG['prune_unactivated_users_days'] = "Numbers of days before deleting unactivated accounts";
-$MSG['prune_unactivated_users_days_explain'] = "Numbers of days before deleting unactivated accounts.";
-
-$MSG['moderation_settings'] = 'Moderation Settings';
-$MSG['moderation_disabled'] = 'Disabled';
-$MSG['moderation_pre_moderation'] = 'Pre-moderation';
-$MSG['moderation_post_moderation'] = 'Post-moderation';
-
-$MSG['auction_moderation'] = 'Auction Moderation';
-$MSG['new_auction_moderation'] = 'New auction moderation';
-
-$MSG['moderation_settings_updated'] = "Moderation Settings updated";
-
-$MSG['moderation'] = 'Moderation';
 $MSG['moderate_auctions'] = 'Moderate Auctions';
 $MSG['moderation_queue'] = 'Moderation Queue';
 

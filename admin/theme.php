@@ -27,9 +27,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
         $template->set_template();
 
-        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['26_0005']));
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['default_theme_updated']));
     } else {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_068));
+        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_theme_missing']));
     }
 } elseif (isset($_POST['action']) && ($_POST['action'] == 'add' || $_POST['action'] == 'edit')) {
     $filename = ($_POST['action'] == 'add') ? $_POST['new_filename'] : $_POST['filename'];

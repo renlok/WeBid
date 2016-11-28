@@ -44,7 +44,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update') {
             }
             if ($lows[$i] > $highs[$i]) {
                 $errors = true;
-                $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_713));
+                $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_from_must_be_less_than_to']));
             }
         }
     }
@@ -55,7 +55,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update') {
                 if (!(intval($lows[$i]) == 0 && intval($highs[$i]) == 0 && intval($increments[$i]) == 0)) {
                     if (!isset($ids[$i]) || empty($ids[$i])) {
                         $query = "INSERT INTO " . $DBPrefix . "increments VALUES
-								(NULL, :low, :high, :inc)";
+                                  (NULL, :low, :high, :inc)";
                         $params = array();
                         $params[] = array(':low', $system->input_money($lows[$i]), 'float');
                         $params[] = array(':high', $system->input_money($highs[$i]), 'float');
@@ -63,10 +63,10 @@ if (isset($_POST['action']) && $_POST['action'] = 'update') {
                         $db->query($query, $params);
                     } else {
                         $query = "UPDATE " . $DBPrefix . "increments SET
-								low = :low,
-								high = :high,
-								increment = :inc
-								WHERE id = :inc_id";
+                                  low = :low,
+                                  high = :high,
+                                  increment = :inc
+                                  WHERE id = :inc_id";
                         $params = array();
                         $params[] = array(':low', $system->input_money($lows[$i]), 'float');
                         $params[] = array(':high', $system->input_money($highs[$i]), 'float');
@@ -82,7 +82,7 @@ if (isset($_POST['action']) && $_POST['action'] = 'update') {
                 $db->query($query, $params);
             }
         }
-        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['160']));
+        $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['increments_updated']));
     }
 }
 
@@ -97,10 +97,6 @@ while ($row = $db->fetch()) {
             'INCREMENT' => $system->print_money_nosymbol($row['increment'])
             ));
 }
-
-$template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl']
-        ));
 
 include 'header.php';
 $template->set_filenames(array(

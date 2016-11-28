@@ -20,7 +20,7 @@ include 'loggedin.inc.php';
 
 // Data check
 if (!isset($_REQUEST['userid'])) {
-    header('location: listusers.php?PAGE=' . intval($_GET['offset']));
+    header('location: listusers.php');
     exit;
 }
 
@@ -159,24 +159,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
 $query = "SELECT country_id, country FROM " . $DBPrefix . "countries";
 $db->direct_query($query);
-$countries = $db->fetchall();
-$country_list = '';
-
-foreach ($countries as $country) {
-    $country_list .= '<option value="' . $country['country'] . '"';
-    if ($country['country'] == $user_data['country']) {
-        $country_list .= ' selected';
-    }
-    $country_list .= '>' . $country['country'] . '</option>' . "\n";
+while ($country = $db->fetch()) {
+    $template->assign_block_vars('countries', array(
+      'COUNTRY' => $country['country'],
+      'B_SELECTED' => ($country['country'] == $user_data['country'])
+    ));
 }
 
 $query = "SELECT id, group_name FROM ". $DBPrefix . "groups";
 $db->direct_query($query);
-$usergroups = '';
 $groups = explode(',', $user_data['groups']);
 while ($row = $db->fetch()) {
-    $member = (in_array($row['id'], $groups)) ? ' checked' : '';
-    $usergroups .= '<p><input type="checkbox" name="group[]" value="' . $row['id'] . '"' . $member . '> ' . $row['group_name'] . '</p>';
+    $template->assign_block_vars('usergroups', array(
+      'ID' => $row['id'],
+      'NAME' => $row['group_name'],
+      'B_SELECTED' => (in_array($row['id'], $groups))
+    ));
 }
 
 $template->assign_vars(array(
@@ -191,10 +189,8 @@ $template->assign_vars(array(
         'PHONE' => $user_data['phone'],
         'BALANCE' => $system->print_money_nosymbol($user_data['balance']),
         'DOB' => $birthdate,
-        'COUNTRY_LIST' => $country_list,
         'ID' => $userid,
         'OFFSET' => $_GET['offset'],
-        'USERGROUPS' => $usergroups,
         'REQUIRED' => array(
                     ($MANDATORY_FIELDS['birthdate'] == 'y') ? ' *' : '',
                     ($MANDATORY_FIELDS['address'] == 'y') ? ' *' : '',

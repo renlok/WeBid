@@ -116,15 +116,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             $auction_ends = $start_date->format('Y-m-d H:i:s');
 
             $query = "UPDATE " . $DBPrefix . "auctions
-					SET starts = CURRENT_TIMESTAMP,
-					ends = :ends,
-					closed = 0,
-					num_bids = 0,
-					relisted = relisted + 1,
-					current_bid = 0,
-					sold = 'n',
-					suspended = :suspended
-					WHERE id = :auc_id";
+                      SET starts = CURRENT_TIMESTAMP,
+                      ends = :ends,
+                      closed = 0,
+                      num_bids = 0,
+                      relisted = relisted + 1,
+                      current_bid = 0,
+                      sold = 'n',
+                      suspended = :suspended
+                      WHERE id = :auc_id";
             $params = array();
             $params[] = array(':ends', $auction_ends, 'str');
             $params[] = array(':suspended', $suspend, 'int');
@@ -182,9 +182,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
 // Retrieve closed auction data from the database
 $query = "SELECT COUNT(id) AS COUNT FROM " . $DBPrefix . "auctions
-		WHERE user = :user_id
-		AND closed = 1 AND suspended = 0
-		AND (num_bids = 0 OR (num_bids > 0 AND current_bid < reserve_price AND sold = 'n'))";
+          WHERE user = :user_id
+          AND closed = 1 AND suspended = 0
+          AND (num_bids = 0 OR (num_bids > 0 AND current_bid < reserve_price AND sold = 'n'))";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);

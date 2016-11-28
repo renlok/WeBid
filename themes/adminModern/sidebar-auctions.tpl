@@ -1,10 +1,10 @@
 				<ul class="list-group">
 					<li class="list-group-item active">{L_239}</li>
-					<li class="list-group-item"><a href="{SITEURL}admin/listauctions.php">{L_067}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/listauctions.php">{L_view_open_auctions}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/listclosedauctions.php">{L_214}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/listreportedauctions.php">{L_view_reported_auctions}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/listsuspendedauctions.php">{L_5227}</a></li>
-					<li class="list-group-item"><a href="searchauctions.php">{L_067a}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/listsuspendedauctions.php">{L_view_suspended_auctions}</a></li>
+					<li class="list-group-item"><a href="searchauctions.php">{L_search_auctions}</a></li>
 				</ul>
 				<ul class="list-group">
 					<li class="list-group-item active">{L_moderation}</li>

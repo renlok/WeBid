@@ -58,7 +58,6 @@
 						<td>
 							<form name="details" action="" method="post">
 								<input type="hidden" name="id" value="{ID}">
-								<input type="hidden" name="offset" value="{OFFSET}">
 								<input type="hidden" name="mode" value="{MODE}">
 								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 								<button type="submit" name="action" value="Yes">{L_yes}</button>

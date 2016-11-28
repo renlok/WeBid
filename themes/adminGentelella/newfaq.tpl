@@ -1,6 +1,6 @@
 
     	<div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12"> 
+        <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
                                 <div class="x_title">
                                     <h2>{L_25_0018} <i class="fa fa-angle-double-right"></i> {L_5236} <i class="fa fa-angle-double-right"></i> {L_5231}</h2>
@@ -23,28 +23,28 @@
                                 </select>
                             </td>
                         </tr>
-<!-- BEGIN lang -->
-						<tr valign="top">
-	<!-- IF lang.S_FIRST_ROW -->
-    						<td align="right">{L_5239}:</td>
-    <!-- ELSE -->
-    						<td>&nbsp;</td>
-    <!-- ENDIF -->
-                            <td width="35" align="right"><img src="../images/flags/{lang.LANG}.gif"></td>
-                            <td><input type="text" name="question[{lang.LANG}]" class="form-control" maxlength="255" value="{lang.TITLE}"></td>
+    <!-- BEGIN qs -->
+                        <tr>
+    	<!-- IF qs.S_FIRST_ROW -->
+        					<td>{L_5239}:</td>
+        <!-- ELSE -->
+        					<td>&nbsp;</td>
+        <!-- ENDIF -->
+                            <td align="right"><img src="../includes/flags/{qs.LANG}.gif"></td>
+                            <td><input type="text" name="question[{qs.LANG}]" maxlength="200" value="{qs.QUESTION}"></td>
                         </tr>
-<!-- END lang -->
-<!-- BEGIN lang -->
-						<tr>
-	<!-- IF lang.S_FIRST_ROW -->
-    						<td valign="top" align="right">{L_5240}:</td>
-    <!-- ELSE -->
-    						<td>&nbsp;</td>
-    <!-- ENDIF -->
-                            <td align="right" valign="top"><img src="../images/flags/{lang.LANG}.gif"></td>
-                            <td><textarea name="answer[{lang.LANG}]" class="form-control">{lang.CONTENT}</textarea></td>
+    <!-- END qs -->
+    <!-- BEGIN as -->
+                        <tr>
+    	<!-- IF as.S_FIRST_ROW -->
+        					<td valign="top">{L_5240}:</td>
+        <!-- ELSE -->
+        					<td>&nbsp;</td>
+        <!-- ENDIF -->
+                            <td align="right" valign="top"><img src="../includes/flags/{as.LANG}.gif"></td>
+                            <td><textarea name="answer[{as.LANG}]" cols="40" rows="15">{as.ANSWER}</textarea></td>
                         </tr>
-<!-- END lang -->
+    <!-- END as -->
                         </tr>
                     </table>
                     <input type="hidden" name="action" value="update">

@@ -21,16 +21,16 @@ include 'loggedin.inc.php';
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $system->writesetting("taxuser", $_POST['taxuser'], "str");
     $system->writesetting("tax", $_POST['tax'], "str");
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1089']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['tax_settings_updated']));
 }
 
-loadblock($MSG['1090'], $MSG['1091'], 'yesno', 'tax', $system->SETTINGS['tax'], array($MSG['yes'], $MSG['no']));
-loadblock($MSG['1092'], $MSG['1093'], 'yesno', 'taxuser', $system->SETTINGS['taxuser'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['enable_tax'], $MSG['enable_tax_explain'], 'yesno', 'tax', $system->SETTINGS['tax'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['enable_user_tax'], $MSG['enable_user_tax_explain'], 'yesno', 'taxuser', $system->SETTINGS['taxuser'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0012'],
-        'PAGENAME' => $MSG['1088']
+        'PAGENAME' => $MSG['tax_settings']
         ));
 
 include 'header.php';

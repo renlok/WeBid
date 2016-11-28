@@ -38,7 +38,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             }
         }
     }
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['5073']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['word_filter_updated']));
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "filterwords";
@@ -50,7 +50,6 @@ while ($word = $db->fetch()) {
 }
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
         'WORDLIST' => $WORDSLIST,
         'WFYES' => ($system->SETTINGS['wordsfilter'] == 'y') ? ' checked="checked"' : '',
         'WFNO' => ($system->SETTINGS['wordsfilter'] == 'n') ? ' checked="checked"' : ''

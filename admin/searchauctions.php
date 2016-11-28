@@ -86,21 +86,21 @@ $_SESSION['RETURN_LIST'] = 'searchauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(a.id) As auctions FROM " . $DBPrefix . "auctions a INNER JOIN " . $DBPrefix . "users u
-	ON (u.id = a.user) WHERE " . $auctiontype_sql . $auction_sql . $usernick_sql . $user_sql . $titlekeywords_sql;
+          ON (u.id = a.user) WHERE " . $auctiontype_sql . $auction_sql . $usernick_sql . $user_sql . $titlekeywords_sql;
 $db->direct_query($query);
 $num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
 $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name FROM " . $DBPrefix . "auctions a
-		INNER JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
-		WHERE " . $auctiontype_sql . $auction_sql . $usernick_sql . $user_sql . $titlekeywords_sql .
-        " ORDER BY nick, starts, title LIMIT :offset, :perpage";
-//echo $query;
+          INNER JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+          LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
+          WHERE " . $auctiontype_sql . $auction_sql . $usernick_sql . $user_sql . $titlekeywords_sql . "
+          ORDER BY nick, starts, title LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
+
 while ($row = $db->fetch()) {
     $template->assign_block_vars('auctions', array(
             'SUSPENDED' => $row['suspended'],
@@ -139,7 +139,7 @@ if ($PAGES > 1) {
     2 = closed auctions (includes suspended)
     3 = suspended auctions
 */
-$types = array(0=>'619a', 1=>619, 2=>204, 3=>'2__0056');
+$types = array(0 => '619a', 1 => '619', 2 => '204', 3 => '2__0056');
 $auctiontypeshtml = '';
 foreach ($types as $key => $val) {
     if (isset($_SESSION['searchauctionsauctiontype']) && $key == $_SESSION['searchauctionsauctiontype']) {
@@ -150,7 +150,7 @@ foreach ($types as $key => $val) {
 }
 
 $template->assign_vars(array(
-        'PAGE_TITLE' => $MSG['067a'],
+        'PAGE_TITLE' => $MSG['search_auctions'],
         'NUM_AUCTIONS' => $num_auctions,
         'B_SEARCHUSER' => ((isset($_SESSION['searchauctionsuid']) && $_SESSION['searchauctionsuid'] > 0) || (isset($_SESSION['usernick']) && $_SESSION['usernick'] != '')) ? true : false,
         'USERNICK' => isset($_SESSION['usernick'])? $_SESSION['usernick'] : '',

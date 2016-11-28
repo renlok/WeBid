@@ -32,7 +32,7 @@ class global_class
         $this->ctime = $this->getUserTimestamp(time(), $this->SETTINGS['timezone']) + $this->tdiff;
         // check install directory
         if (is_dir(MAIN_PATH . 'install')) {
-            if (!$this->check_maintainance_mode()) { // check maint mode
+            if (!$this->check_maintenance_mode()) { // check maint mode
                 echo 'please delete the install directory';
                 exit;
             }
@@ -143,14 +143,14 @@ class global_class
             if ($db->numrows() > 0) {
                 $type = $db->result('fieldtype');
                 $query = "UPDATE " . $DBPrefix . "settings SET
-						fieldtype = :fieldtype,
-						value = :value,
-						modifieddate = :modifieddate,
-						modifiedby = :modifiedby
-						WHERE fieldname = :fieldname";
+                          fieldtype = :fieldtype,
+                          value = :value,
+                          modifieddate = :modifieddate,
+                          modifiedby = :modifiedby
+                          WHERE fieldname = :fieldname";
             } else {
                 $query = "INSERT INTO " . $DBPrefix . "settings (fieldname, fieldtype, value, modifieddate, modifiedby) VALUES
-						(:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
+                          (:fieldname, :fieldtype, :value, :modifieddate, :modifiedby)";
             }
             $params = array();
             $params[] = array(':fieldname', $fieldname, 'str');
@@ -168,7 +168,7 @@ class global_class
     {
         global $DBPrefix, $db;
         $query = "INSERT INTO " . $DBPrefix . "logs (type, message, ip, action_id, user_id) VALUES
-				(:type, :message, :user_ip, :action_id, :user_id)";
+                  (:type, :message, :user_ip, :action_id, :user_id)";
         $params = array();
         $params[] = array(':type', $type, 'str');
         $params[] = array(':message', $message, 'str');
@@ -178,11 +178,11 @@ class global_class
         $db->query($query, $params);
     }
 
-    public function check_maintainance_mode()
+    public function check_maintenance_mode()
     {
         global $user;
 
-        if ($this->SETTINGS['maintainance_mode_active']) {
+        if ($this->SETTINGS['maintenance_mode_active']) {
             if ($user->logged_in && ($user->user_data['nick'] == $this->SETTINGS['superuser'] || $user->user_data['id'] == $this->SETTINGS['superuser'])) {
                 return false;
             }
@@ -210,7 +210,7 @@ class global_class
         $db->direct_query($query);
         $result = $txt;
         while ($word = $db->fetch()) {
-            $result = preg_replace('/(' . $word['word'] . ')/i', '', $result);
+            $result = str_ireplace($word['word'], '', $result);
         }
         return $result;
     }

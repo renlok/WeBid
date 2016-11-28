@@ -66,7 +66,7 @@ if (isset($_POST['action'])) {
             }
         }
         if (!$auto_join) {
-            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_050));
+            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_must_have_one_autojoin']));
         }
     }
     if (($_GET['action'] == 'edit' || (isset($_GET['id']) && is_numeric($_GET['id']))) && !isset($ERR)) {
@@ -86,12 +86,12 @@ if (isset($_POST['action'])) {
                 $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['user_group_name_empty_update']));
             } else {
                 $query = "UPDATE ". $DBPrefix . "groups SET
-						group_name = :group_name,
-						count = :count,
-						can_sell = :can_sell,
-						can_buy = :can_buy,
-						auto_join = :auto_join
-						WHERE id = :group_id";
+                          group_name = :group_name,
+                          count = :count,
+                          can_sell = :can_sell,
+                          can_buy = :can_buy,
+                          auto_join = :auto_join
+                          WHERE id = :group_id";
                 $params = array();
                 $params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
                 $params[] = array(':count', $_POST['user_count'], 'int');
@@ -108,7 +108,7 @@ if (isset($_POST['action'])) {
             $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['user_group_name_empty_new']));
         } else {
             $query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy, auto_join) VALUES
-					(:group_name, :count, :can_sell, :can_buy, :auto_join)";
+                      (:group_name, :count, :can_sell, :can_buy, :auto_join)";
             $params = array();
             $params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
             $params[] = array(':count', $_POST['user_count'], 'int');

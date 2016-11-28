@@ -37,7 +37,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             include PACKAGE_PATH . 'PasswordHash.php';
             $phpass = new PasswordHash(8, false);
             $query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, status)
-					VALUES (:username, :password, :hash, :status)";
+                      VALUES (:username, :password, :hash, :status)";
             $params = array();
             $params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
             $params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
@@ -58,7 +58,7 @@ loadblock('', '', 'bool', 'status', '1', array($MSG['566'], $MSG['567']));
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0010'],
-        'PAGENAME' => $MSG['367']
+        'PAGENAME' => $MSG['new_admin_user']
         ));
 
 include 'header.php';

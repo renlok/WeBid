@@ -17,7 +17,9 @@
 						<td>{L_username}</td>
 						<td>{USERNAME}</td>
 						<td rowspan="15" width="33%" valign="top">
-							{USERGROUPS}
+						<!-- BEGIN usergroups -->
+							<p><input type="checkbox" name="group[]" value="{usergroups.ID}"<!-- IF usergroups.B_SELECTED --> checked="true"<!-- ENDIF -->> {usergroups.NAME}</p>
+						<!-- END usergroups -->
 						</td>
 					</tr>
 					<tr class="bg">
@@ -61,7 +63,9 @@
 						<td>
 							<select name="country">
 								<option value=""></option>
-								{COUNTRY_LIST}
+								<!-- BEGIN countries -->
+									<option value="{countries.COUNTRY}"<!-- IF countries.B_SELECTED --> selected="true"<!-- ENDIF -->>{countries.COUNTRY}</option>
+								<!-- END countries -->
 							</select>
 						</td>
 					</tr>

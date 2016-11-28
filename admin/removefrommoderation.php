@@ -22,7 +22,6 @@ include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 if (!isset($_REQUEST['id'])) {
     $URL = $_SESSION['RETURN_LIST'];
-    unset($_SESSION['RETURN_LIST']);
     header('location: ' . $URL);
     exit;
 }
@@ -35,30 +34,27 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
     $params[] = array(':auc_id', $id, 'int');
     $db->query($query, $params);
 
-    $URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
-    unset($_SESSION['RETURN_LIST']);
+    $URL = $_SESSION['RETURN_LIST'];
     header('location: ' . $URL);
     exit;
 } elseif (isset($_POST['action']) && $_POST['action'] == "No") {
-    $URL = $_SESSION['RETURN_LIST'] . '?offset=' . $_SESSION['RETURN_LIST_OFFSET'];
-    unset($_SESSION['RETURN_LIST']);
+    $URL = $_SESSION['RETURN_LIST'];
     header('location: ' . $URL);
     exit;
 }
 
 $query = "SELECT u.nick, a.title, a.starts, a.description, a.category, d.description as duration,
-		a.suspended, a.current_bid, a.quantity, a.reserve_price
-		FROM " . $DBPrefix . "auctions a
-		LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-		LEFT JOIN " . $DBPrefix . "durations d ON (d.days = a.duration)
-		WHERE a.id = :auc_id";
+          a.suspended, a.current_bid, a.quantity, a.reserve_price
+          FROM " . $DBPrefix . "auctions a
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
+          LEFT JOIN " . $DBPrefix . "durations d ON (d.days = a.duration)
+          WHERE a.id = :auc_id";
 $params = array();
 $params[] = array(':auc_id', $_GET['id'], 'int');
 $db->query($query, $params);
 $auc_data = $db->result();
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
         'PAGE_TITLE' => $MSG['remove_auction_from_moderation'],
         'ID' => $_GET['id'],
         'TITLE' => htmlspecialchars($auc_data['title']),

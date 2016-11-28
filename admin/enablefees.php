@@ -34,23 +34,23 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
     $system->writesetting("fee_disable_acc", $_POST['fee_disable_acc'], "str");
     $system->writesetting("payment_gateway_sandbox", $_POST['payment_gateway_sandbox'], "str");
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['761']));
+    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['fee_settings_updated']));
 }
 
-loadblock($MSG['395'], $MSG['397'], 'yesno', 'fees', $system->SETTINGS['fees'], array($MSG['759'], $MSG['760']));
-loadblock($MSG['729'], $MSG['730'], 'batchstacked', 'fee_type', $system->SETTINGS['fee_type'], array($MSG['731'], $MSG['732']));
+loadblock($MSG['enable_fees'], $MSG['enable_fees_explain'], 'yesno', 'fees', $system->SETTINGS['fees'], array($MSG['759'], $MSG['760']));
+loadblock($MSG['set_payment_type'], $MSG['set_payment_type_explain'], 'batchstacked', 'fee_type', $system->SETTINGS['fee_type'], array($MSG['balance_mode'], $MSG['live_payments']));
 
-loadblock($MSG['1155'], $MSG['1154'], 'bool', 'payment_gateway_sandbox', $system->SETTINGS['payment_gateway_sandbox'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['payment_sandbox'], $MSG['payment_sandbox_explain'], 'bool', 'payment_gateway_sandbox', $system->SETTINGS['payment_gateway_sandbox'], array($MSG['yes'], $MSG['no']));
 
-loadblock($MSG['733'], '', '', '', '', array(), true);
-loadblock($MSG['734'], $MSG['735'], 'days', 'fee_max_debt', $system->SETTINGS['fee_max_debt']);
-loadblock($MSG['736'], $MSG['737'], 'days', 'fee_signup_bonus', $system->SETTINGS['fee_signup_bonus']);
-loadblock($MSG['738'], $MSG['739'], 'yesno', 'fee_disable_acc', $system->SETTINGS['fee_disable_acc'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['balance_mode_settings'], '', '', '', '', array(), true);
+loadblock($MSG['max_debt'], $MSG['max_debt_explain'], 'days', 'fee_max_debt', $system->SETTINGS['fee_max_debt']);
+loadblock($MSG['signup_credit'], $MSG['signup_credit_explain'], 'days', 'fee_signup_bonus', $system->SETTINGS['fee_signup_bonus']);
+loadblock($MSG['suspend_debt_accounts'], $MSG['suspend_debt_accounts_explain'], 'yesno', 'fee_disable_acc', $system->SETTINGS['fee_disable_acc'], array($MSG['yes'], $MSG['no']));
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],
         'TYPENAME' => $MSG['25_0012'],
-        'PAGENAME' => $MSG['395'],
+        'PAGENAME' => $MSG['enable_fees'],
         'B_TITLES' => true
         ));
 

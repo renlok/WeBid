@@ -28,7 +28,7 @@
 							<td>{SITEURL}</td>
 						</tr>
 						<tr class="bg">
-							<td><strong>{L_527}</strong></td>
+							<td><strong>{L_site_name}</strong></td>
 							<td>{SITENAME}</td>
 						</tr>
 						<tr>
@@ -60,7 +60,7 @@
 							<td>{DATEFORMAT} <small>({DATEEXAMPLE})</small></td>
 						</tr>
 						<tr>
-							<td><strong>{L_1131}</strong></td>
+							<td><strong>{L_emai_settings}</strong></td>
 							<td>{EMAIL_HANDLER}</td>
 						</tr>
 						<tr class="bg">

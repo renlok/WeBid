@@ -6,7 +6,7 @@
 					<li class="list-group-item"><a href="{SITEURL}admin/spam.php">{L_spam_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/emailsettings.php">{L_email_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/usersettings.php">{L_user_settings}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/errorhandling.php">{L_409}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/errorhandling.php">{L_error_handling}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/moderation.php">{L_moderation_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/countries.php">{L_081}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/payments.php">{L_075}</a></li>
@@ -24,7 +24,7 @@
 					<li class="list-group-item"><a href="{SITEURL}admin/counters.php">{L_counter_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/multilingual.php">{L_multilingual_support}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/catsorting.php">{L_category_sorting}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/metatags.php">{L_25_0178}</a></li>
+					<li class="list-group-item"><a href="{SITEURL}admin/metatags.php">{L_metatag_settings}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/contactseller.php">{L_contact_seller}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/buyerprivacy.php">{L_bidder_privacy}</a></li>
 				</ul>

@@ -3,7 +3,7 @@
 					<div class="rounded-bottom">
 						<ul class="menu">
 							<li><a href="{SITEURL}admin/checkversion.php">{L_25_0169a}</a></li>
-							<li><a href="{SITEURL}admin/maintenance.php">{L__0001}</a></li>
+							<li><a href="{SITEURL}admin/maintenance.php">{L_maintenance_settings}</a></li>
 							<li><a href="{SITEURL}admin/wordsfilter.php">{L_5068}</a></li>
 							<li><a href="{SITEURL}admin/errorlog.php">{L_891}</a></li>
 						</ul>

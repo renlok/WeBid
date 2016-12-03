@@ -13,9 +13,7 @@
                                 </div>
           <div class="col-md-12"> </h4>
 				<form name="upldbanner" action="" method="post" enctype="multipart/form-data">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
+
                     <table class="table table-bordered table-striped">
                     <tr>
                     	<td width="10%">{L_5180}</td>

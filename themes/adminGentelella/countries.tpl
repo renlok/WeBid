@@ -7,9 +7,6 @@
       </div>
       <div class="col-md-12">
         <form name="payments" action="" method="post">
-          <!-- IF ERROR ne '' -->
-          <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
-          <!-- ENDIF -->
           <div class="plain-box">
             <p>{L_094}</p>
             <p><img src="../images/nodelete.gif" width="20" height="21" style="vertical-align:middle;"> {L_2__0030}</p>
@@ -26,7 +23,7 @@
               <td><input type="text" name="new_countries[]" size="45" value="{countries.COUNTRY}" class="form-control">
                 <input type="hidden" name="old_countries[]" value="{countries.COUNTRY}"></td>
               <td align="center">
-                <!-- countries.B_CAN_DELETE -->
+                <!-- IF countries.B_CAN_DELETE -->
                 <input type="checkbox" name="delete[]" value="{countries.COUNTRY}">
                 <!-- ELSE -->
                 <img src="../images/nodelete.gif" alt="{L_cannot_delete}">

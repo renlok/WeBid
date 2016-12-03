@@ -8,11 +8,7 @@
           <div class="col-md-12">
 				<form name="errorlog" action="" method="post">
                 <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-<!-- IF ERROR ne '' -->
-					<div class="alert alert-success">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>Success!</strong> {ERROR}</div>
-<!-- ENDIF -->
+
                     Your Version: <b>{MYVERSION}</b><br>
                     Current Version: {REALVERSION}<br>
                     {TEXT}

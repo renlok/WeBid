@@ -90,7 +90,7 @@
                   <li><a href="{SITEURL}admin/spam.php">{L_spam_settings}</a></li>
                   <li><a href="{SITEURL}admin/emailsettings.php">{L_email_settings}</a></li>
                   <li><a href="{SITEURL}admin/usersettings.php">{L_user_settings}</a></li>
-                  <li><a href="{SITEURL}admin/errorhandling.php">{L_409}</a></li>
+                  <li><a href="{SITEURL}admin/errorhandling.php">{L_error_handling}</a></li>
                   <li><a href="{SITEURL}admin/moderation.php">{L_moderation_settings}</a></li>
                   <li><a href="{SITEURL}admin/countries.php">{L_081}</a></li>
                   <li><a href="{SITEURL}admin/payments.php">{L_075}</a></li>
@@ -106,7 +106,7 @@
                   <li><a href="{SITEURL}admin/counters.php">{L_counter_settings}</a></li>
                   <li><a href="{SITEURL}admin/multilingual.php">{L_multilingual_support}</a></li>
                   <li><a href="{SITEURL}admin/catsorting.php">{L_category_sorting}</a></li>
-                  <li><a href="{SITEURL}admin/metatags.php">{L_25_0178}</a></li>
+                  <li><a href="{SITEURL}admin/metatags.php">{L_metatag_settings}</a></li>
                   <li><a href="{SITEURL}admin/contactseller.php">{L_contact_seller}</a></li>
                   <li><a href="{SITEURL}admin/buyerprivacy.php">{L_bidder_privacy}</a></li>
                 </ul>
@@ -117,7 +117,7 @@
                         	<li><a href="{SITEURL}admin/fee_gateways.php">{L_445}</a></li>
                         	<li><a href="{SITEURL}admin/enablefees.php">{L_enable_fees}</a></li>
                         	<li><a href="{SITEURL}admin/accounts.php">{L_854}</a></li>
-				<li><a href="{SITEURL}admin/invoice_settings.php">{L_1094}</a></li>
+				<li><a href="{SITEURL}admin/invoice_settings.php">{L_invoice_settings}</a></li>
 				<li><a href="{SITEURL}admin/invoice.php">{L_766}</a></li>
 				<li><a href="{SITEURL}admin/tax.php">{L_tax_settings}</a></li>
 				<li><a href="{SITEURL}admin/tax_levels.php">{L_1083}</a></li>

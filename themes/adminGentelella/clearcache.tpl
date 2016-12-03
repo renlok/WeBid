@@ -7,9 +7,6 @@
       </div>
       <div class="col-md-12">
         <form name="errorlog" action="" method="post">
-          <!-- IF ERROR ne '' -->
-          <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
-          <!-- ENDIF -->
           <p>{L_clear_cache_explain}</p>
           <input type="hidden" name="action" value="update">
           <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

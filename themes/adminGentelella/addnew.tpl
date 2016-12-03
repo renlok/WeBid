@@ -1,5 +1,3 @@
-
-
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -9,9 +7,7 @@
       </div>
       <div class="col-md-12">
         <form name="addnew" action="" method="post">
-          <!-- IF ERROR ne '' -->
-          <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
-          <!-- ENDIF -->
+          
           <table class="table table-bordered table-striped">
             <!-- BEGIN lang -->
             <tr valign="top"> 

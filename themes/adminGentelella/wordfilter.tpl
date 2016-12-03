@@ -7,9 +7,7 @@
       </div>
       <div class="col-md-12">
 				<form name="wordlist" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
-<!-- ENDIF -->
+
                     <table class="table table-bordered table-striped">
                     <tr valign="top">
                         <td width="109">&nbsp;</td>

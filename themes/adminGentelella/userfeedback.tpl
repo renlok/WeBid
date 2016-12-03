@@ -18,21 +18,6 @@
 
     	<!-- Right Side/Main Content Start -->
     <div id="rightside">
-<!-- IF WARNINGREPORT -->
-            <!-- Green Status Bar Start -->
-        <div class="status error">
-        	<p><img src="{SITEURL}themes/{THEME}/img/icons/icon_error.png"  alt="Error" /><span>Error!</span> {WARNINGMESSAGE}</p>
-        </div>
-        <!-- Green Status Bar End -->
-<!-- ENDIF -->
-<!-- IF ERROR ne '' -->
-        <!-- Blue Status Bar Start -->
-        <div class="status info">
-        	<p><img src="{SITEURL}themes/{THEME}/img/icons/icon_info.png" alt="Information" /><span>Information:</span>  {ERROR}</p>
-        </div>
-        <!-- Blue Status Bar End -->
-<!-- ENDIF -->
-
         <!-- Content Box Start -->
         <div class="contentcontainer">
             <div class="contentbox">

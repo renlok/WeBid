@@ -7,9 +7,7 @@
       </div>
       <div class="col-md-12">
         <form name="deleteusers" action="" method="post">
-          <!-- IF ERROR ne '' -->
-          <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
-          <!-- ENDIF -->
+          
           <div class="plain-box"><a href="newbannersuser.php"><i class="fa fa-plus"></i> {L__0026}</a></div>
           <table class="table table-bordered table-striped">
             <tr>

@@ -11,11 +11,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="col-md-12">
-<!-- IF ERROR ne '' -->
-	<div class="alert alert-success">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>Success!</strong> {ERROR}</div>
-<!-- ENDIF -->
+
 	<form action="" method="post">
     <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 		<p>{MESSAGE}</p>

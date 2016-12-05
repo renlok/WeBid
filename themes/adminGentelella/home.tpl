@@ -55,9 +55,6 @@
       <!-- ELSE -->
       <div class="alert alert-info info-box fade in" role="alert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {L_outdated_version}</div>
       <!-- ENDIF --> 
-      <!-- IF ERROR ne '' -->
-      <div class="alert alert-info info-box fade in" role="alert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
-      <!-- ENDIF -->
       <table class="table table-bordered table-striped" align="center">
         <tr>
           <th colspan="4">{L_25_0025}</th>
@@ -67,7 +64,7 @@
           <td>{SITEURL}</td>
         </tr>
         <tr>
-          <td><strong>{L_527}</strong></td>
+          <td><strong>{L_site_name}</strong></td>
           <td>{SITENAME}</td>
         </tr>
         <tr>

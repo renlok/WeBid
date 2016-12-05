@@ -26,7 +26,7 @@
 							<div class="col-md-9">{SITEURL}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_527}</strong></div>
+							<div class="col-md-3"><strong>{L_site_name}</strong></div>
 							<div class="col-md-9">{SITENAME}</div>
 						</div>
 						<div class="row">
@@ -58,7 +58,7 @@
 							<div class="col-md-9">{DATEFORMAT} <small>({DATEEXAMPLE})</small></div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_1131}</strong></div>
+							<div class="col-md-3"><strong>{L_email_settings}</strong></div>
 							<div class="col-md-9">{EMAIL_HANDLER}</div>
 						</div>
 						<div class="row">

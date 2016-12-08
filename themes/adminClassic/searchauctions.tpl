@@ -7,7 +7,7 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</h4>
 				<div>
-					<form name="searchauctionform" method="get" action="searchauctions.php">
+					<form name="searchauctionform" method="post" action="searchauctions.php">
 						<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 						<table class="centre blank">
 							<tr>

@@ -29,7 +29,7 @@ if (!isset($_REQUEST['id'])) {
 if (isset($_POST['action']) && $_POST['action'] == "Yes") {
     $id = intval($_POST['id']);
 
-    $query = "DELETE FROM `" . $DBPrefix . "auction_moderation` WHERE auction_id = :auc_id";
+    $query = "DELETE FROM `" . $DBPrefix . "reportedauctions` WHERE auction_id = :auc_id";
     $params = array();
     $params[] = array(':auc_id', $id, 'int');
     $db->query($query, $params);

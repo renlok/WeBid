@@ -136,7 +136,7 @@ if ($system->SETTINGS['activationtype'] == 0) {
 $realversion = '0.0';
 $update_available = false;
 
-if ($system->SETTINGS['version_check'] != '') {
+if ($system->SETTINGS['version_check'] !== "") {
   switch ($system->SETTINGS['version_check']) {
     default:
       $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';

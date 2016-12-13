@@ -134,11 +134,8 @@ if ($system->SETTINGS['activationtype'] == 0) {
 
 // version check
 switch ($system->SETTINGS['version_check']) {
-    case 'unstable':
-        $url = 'http://www.webidsupport.com/version_unstable.txt';
-        break;
     default:
-        $url = 'http://www.webidsupport.com/version.txt';
+        $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';
         break;
 }
 

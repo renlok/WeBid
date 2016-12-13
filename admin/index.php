@@ -133,21 +133,25 @@ if ($system->SETTINGS['activationtype'] == 0) {
 }
 
 // version check
-switch ($system->SETTINGS['version_check']) {
-    default:
-        $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';
-        break;
-}
+$realversion = '0.0';
+$update_available = false;
 
-if (!($realversion = load_file_from_url($url))) {
+if ($system->SETTINGS['version_check'] != '') {
+  switch ($system->SETTINGS['version_check']) {
+    default:
+      $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';
+        break;
+  }
+
+  if (!($realversion = load_file_from_url($url))) {
     $ERR = $MSG['error_file_access_disabled'];
     $realversion = $MSG['unknown'];
-}
+  }
 
-$update_available = false;
-if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
+  if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
     $update_available = true;
     $text = $MSG['outdated_version'];
+  }
 }
 
 //getting the correct email settings

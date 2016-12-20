@@ -90,7 +90,7 @@ function get_reminders($secid)
     // get auctions sold item
     $query = "SELECT COUNT(DISTINCT a.id) AS total FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
-		WHERE b.closed = 1 AND a.seller = :sellers AND a.is_read = 0";
+		WHERE b.closed = 1 AND a.seller = :sellers = 0";
     $params = array();
     $params[] = array(':sellers', $secid, 'int');
     $db->query($query, $params);

@@ -897,6 +897,8 @@ $MSG['5072'] = 'Enter the undesired words one per line (max. 255 characters per 
 treated like "one word".';
 $MSG['5085'] = 'About Us';
 $MSG['5086'] = 'Terms &amp; Conditions';
+// cookiespolicy.php
+$MSG['cookie_policy'] = "Cookie Policy";
 $MSG['5094'] = 'View auctions';
 $MSG['5113'] = 'Change';
 $MSG['5115'] = 'days';

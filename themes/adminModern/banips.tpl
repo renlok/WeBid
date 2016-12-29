@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_ip_addresses}&nbsp;&gt;&gt;&nbsp;{L_ip_ban_management}</h4>
 				<form name="errorlog" action="" method="post">
-					<table width="98%" cellpadding="0" cellspacing="0">
+					<table class="table table-striped table-bordered">
 						<tr>
 							<td bgcolor="#FFFF66" colspan="5">
 								{L_ban_this_ip}

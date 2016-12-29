@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5236}&nbsp;&gt;&gt;&nbsp;{L_5231}</h4>
 				<form name="newfaq" action="" method="post">
-					<table width="98%" cellpadding="2" class="blank">
+					<table class="table table-striped table-bordered">
 						<tr valign="top">
 							<td align="right">{L_5231}:</td>
 							<td>&nbsp;</td>

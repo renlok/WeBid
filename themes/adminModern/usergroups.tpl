@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_448}</h4>
 				<form name="errorlog" action="" method="post">
-					<table width="98%" cellpadding="0" cellspacing="0">
+					<table class="table table-striped table-bordered">
 						<tr>
 							<th><b>{L_449}</b></th>
 							<th><b>{L_450}</b></th>
@@ -72,7 +72,7 @@
 
 <!-- IF GROUPS_UNKNOWN -->
 					<p class="error"><h4><b>{L_warning}</b></h4></p>
-					<table width="98%" cellpadding="0" cellspacing="0">
+					<table class="table table-striped table-bordered">
 						<tr>
 							<th><b>{L_449}</b></th>
 							<th><b>{L_450}</b></th>

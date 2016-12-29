@@ -1,4 +1,3 @@
-
     	<div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -8,9 +7,6 @@
                                 </div>
           <div class="col-md-12">
 				<form name="newfaq" action="" method="post">
-<!-- IF ERROR ne '' -->
-					<div class="error-box"><b>{ERROR}</b></div>
-<!-- ENDIF -->
                     <table class="table table-bordered table-striped">
 						<tr valign="top">
     						<td align="right">{L_5231}:</td>

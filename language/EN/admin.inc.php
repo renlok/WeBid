@@ -194,7 +194,6 @@ $MSG['hide_user_emails'] = "Hide user E-Mails";
 $MSG['hide_user_emails_explain'] = "You can decide to allow users to see each others E-Mail addresses or to hide them and all communication must be done via PMs";
 
 // cookiespolicy.php
-$MSG['cookie_policy'] = "Cookie Policy";
 $MSG['cookie_policy_updated'] = "Cookie Policy Settings Updated";
 $MSG['enable_cookie_policy'] = "Enable Cookies Policy Page?";
 $MSG['enable_cookie_policy_explain'] = "Activate this option if you want a Cookies Policy link to appear in the footer of your pages.";

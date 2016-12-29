@@ -5,10 +5,7 @@
         <h2>{TYPENAME} <i class="fa fa-angle-double-right"></i> {PAGENAME}</h2>
         <div class="clearfix"></div>
       </div>
-      <div class="col-md-12"> 
-        <!-- IF ERROR ne '' -->
-        <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong> {ERROR}</div>
-        <!-- ENDIF -->
+      <div class="col-md-12">
         <form name="conf" action="" method="post" enctype="multipart/form-data">
           <table class="table table-bordered table-striped">
             <!-- BEGIN block -->

@@ -1,12 +1,12 @@
-		<div style="width:25%; float:left;">
-			<div style="margin-left:auto; margin-right:auto;">
-				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
-			</div>
-		</div>
-		<div style="width:75%; float:right;">
-			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</h4>
-				<table width="98%" celpadding="0" cellspacing="0" class="blank">
+		div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>{L_239} <i class="fa fa-angle-double-right"></i> {PAGE_TITLE}</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="col-md-12"> 
+				<table class="table table-bordered table-striped">
 					<tr>
 						<td width="20%">{L_312}</td>
 						<td>{TITLE}</td>
@@ -72,4 +72,5 @@
 					</tr>
 				</table>
 			</div>
+		</div>
 		</div>

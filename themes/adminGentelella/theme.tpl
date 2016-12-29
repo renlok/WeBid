@@ -6,11 +6,6 @@
 <div class="clearfix"></div>
       </div>
       <div class="col-md-12"> 
-<!-- IF ERROR ne '' -->
-				<div class="alert alert-success">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>Success!</strong> {ERROR}</div>
-<!-- ENDIF -->
 <!-- IF B_EDIT_FILE -->
                 <form name="editfile" action="" method="post">
                     <table class="table table-bordered table-striped">

@@ -7,9 +7,6 @@
       </div>
       <div class="col-md-12">
 				<form name="payments" action="" method="post">
-<!-- IF ERROR ne '' -->
-					 <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Success!</strong>{ERROR}</div>
-<!-- ENDIF -->
 					<div class="plain-box">{L_092}</div>
                     <table class="table table-bordered table-striped">
                         <tr>

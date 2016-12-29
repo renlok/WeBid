@@ -49,11 +49,11 @@ if (isset($_SESSION['searchauctionsuid']) && $_SESSION['searchauctionsuid'] > 0)
 if (isset($_SESSION['searchauctionstitlekeywords']) && $_SESSION['searchauctionstitlekeywords'] != '') {
     $titlekeywords_sql = " AND INSTR(LCASE(a.title), '" . strtolower($_SESSION['searchauctionstitlekeywords']) . "') > 0";
 }
-$auctiontype_sql = "a.closed = 1";
+$auctiontype_sql = "a.id > 0";
 if (!empty($_SESSION['searchauctionsauctiontype'])) {
     switch ($_SESSION['searchauctionsauctiontype']) {
         case 1:    // open auctions
-            $auctiontype_sql = "a.closed = 0";
+            $auctiontype_sql = "a.closed = 0 and a.suspended = 0";
         break;
         case 2: // closed auctions
             $auctiontype_sql = "a.closed = 1";

@@ -4,11 +4,11 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_525}</h4>
 				<form name="errorlog" action="" method="post">
 					<div class="plain-box"><a href="newadminuser.php">{L_new_admin_user}</a></div>
-					<table width="98%" cellpadding="0" cellspacing="0" align="center">
+					<table class="table table-striped table-bordered">
 						<tr>
 							<th width="30%">{L_username}</th>
 							<th width="16%">{L_558}</th>

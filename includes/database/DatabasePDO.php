@@ -23,7 +23,6 @@ class DatabasePDO extends Database
         'FETCH_BOTH' => PDO::FETCH_BOTH,
         'FETCH_NUM' => PDO::FETCH_NUM,
     ];
-    protected $error_supress = !WeBidDebug;
 
     public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
     {

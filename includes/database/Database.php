@@ -25,8 +25,13 @@ abstract class Database
     protected $lastquery;
     protected $fetchquery;
     protected $error;
-    protected $error_supress = false;
+    protected $error_supress;
     protected $fetch_methods = [];
+
+    public function __construct()
+    {
+        $this->error_supress = !WeBidDebug;
+    }
 
     abstract public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8');
     abstract public function error_supress($state = true);

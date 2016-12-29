@@ -4,10 +4,10 @@
 			</div>
 		</div>
 			<div class="col-md-9">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_516}</h4>
 				<div class="plain-box">{NEWS_COUNT}{L_517}</div>
-				<table width="98%" cellpadding="0" cellspacing="0">
+				<table class="table table-striped table-bordered">
 					<tr>
 						<th width="20%">{L_314}</th>
 						<th width="60%">{L_312}</th>
@@ -25,7 +25,7 @@
 <!-- END news -->
 				</table>
 				<div class="plain-box"><a href="addnew.php" class="button">{L_518}</a></div>
-				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+				<table class="table table-striped table-bordered">
 					<tr>
 						<td align="center">
 							{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}

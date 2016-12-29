@@ -4,13 +4,13 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{RATED_USER}&nbsp;&gt;&gt;&nbsp;{L_222}</h4>
 				<form name="editfeedback" action="" method="post">
 					<div class="plain-box">
 						{RATER_USER} {L_506}{RATED_USER}
 					</div>
-					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+					<table class="table table-striped table-bordered">
 					<tr>
 						<td>{L_503}</td>
 						<td>

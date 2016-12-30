@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h2>{L_25_0023}&nbsp;&gt;&gt;&nbsp;{L_5143}</h2>
+				<h4>{L_25_0023}&nbsp;&gt;&gt;&nbsp;{L_5143}</h4>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<strong>{L_5158}<i>{SITENAME}</i></strong>

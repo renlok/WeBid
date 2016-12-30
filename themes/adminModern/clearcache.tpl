@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h2>{L_25_0009}&nbsp;&gt;&gt;&nbsp;{L_clear_cache}</h2>
+				<h4>{L_25_0009}&nbsp;&gt;&gt;&nbsp;{L_clear_cache}</h4>
 				<form name="errorlog" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">

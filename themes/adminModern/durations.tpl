@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_069}</h2>
+				<h4>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_069}</h4>
 				{L_122}
 				<form name="durations" action="" method="post">
 					<div class="panel panel-default">

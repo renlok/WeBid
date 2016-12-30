@@ -4,7 +4,7 @@
                         </div>
 
                 <div class="col-md-9">
-                                <h2>{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_25_0005}</h2>
+                                <h4>{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_25_0005}</h4>
                                 <form name="profile_feilds" action="" method="post">
 
                                 <div class="panel panel-default">

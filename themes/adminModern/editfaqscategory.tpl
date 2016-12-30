@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5236}&nbsp;&gt;&gt;&nbsp;{L_5230}&nbsp;&gt;&gt;&nbsp;{FAQ_NAME}</h4>
 				<form name="errorlog" action="" method="post">
-					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+					<table class="table table-striped table-bordered">
 <!-- BEGIN flangs -->
 					<tr>
 	<!-- IF flangs.S_ROW_COUNT eq 0 -->

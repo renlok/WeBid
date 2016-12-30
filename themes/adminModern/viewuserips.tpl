@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{L_2_0004}</h4>
 				<form name="banips" action="" method="post">
-					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+					<table class="table table-striped table-bordered">
 						<tr>
 							<td colspan="3">{L_667} <b>{NICK}</b></td>
 							<td align="right">{L_559}: {LASTLOGIN}</td>
@@ -52,7 +52,7 @@
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					<input type="submit" name="act" class="centre" value="{L_process_selection}">
 				</form>
-				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+				<table class="table table-striped table-bordered">
 					<tr>
 						<td align="center">
 							{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}

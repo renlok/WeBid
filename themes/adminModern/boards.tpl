@@ -4,11 +4,11 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_board_management}</h4>
 				<form name="deletelogs" action="" method="post">
 					<div class="plain-box"><b>{L_delete_board_warning}</b></div>
-					<table width="98%" cellspacing="0">
+					<table class="table table-striped table-bordered">
 					<tr>
 						<th width="6%">{L_129}</th>
 						<th>{L_294}</th>

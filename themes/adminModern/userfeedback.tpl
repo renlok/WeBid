@@ -4,9 +4,9 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{L_222}</h4>
-				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+				<table class="table table-striped table-bordered">
 					<tr>
 						<td align="right" colspan="2"><b>{NICK} ({FB_NUM}) <img src="{SITEURL}/images/icons/{FB_ICON}" class="fbstar"></b></td>
 					</tr>
@@ -22,7 +22,7 @@
 					</tr>
 <!-- END feedback -->
 				</table>
-				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+				<table class="table table-striped table-bordered">
 					<tr>
 						<td align="center">
 							{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}

@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_516}&nbsp;&gt;&gt;&nbsp;{TITLE}</h4>
 				<form name="addnew" action="" method="post">
-					<table width="98%" cellpadding="2" class="blank">
+					<table class="table table-striped table-bordered">
 <!-- BEGIN lang -->
 						<tr valign="top">
 	<!-- IF lang.S_ROW_COUNT eq 0 -->

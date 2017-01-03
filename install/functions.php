@@ -142,11 +142,11 @@ function show_config_table($fresh = true)
     $data .= '	</td>';
     $data .= '	<td rowspan="2">';
     $data .= '	  The url &amp; location of the webid installation on your server. It\'s usually best to leave these as they are.<br>';
-    $data .= '	  Also if your running on windows at the end of the <b>Doument Root</b> there should be a \\\\ (double backslash)';
+    $data .= '	  Also if your running on windows at the end of the <b>Document Root</b> there should be a \\\\ (double backslash)';
     $data .= '	</td>';
     $data .= '  </tr>';
     $data .= '  <tr>';
-    $data .= '	<td>Doument Root</td>';
+    $data .= '	<td>Document Root</td>';
     $data .= '	<td>';
     $data .= '	  <input type="text" name="mainpath" class="textfield" value="' . MAIN_PATH . '">';
     $data .= '	</td>';

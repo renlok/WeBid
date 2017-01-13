@@ -14,8 +14,6 @@
 
 session_start();
 date_default_timezone_set('UTC'); // to make times more consistent
-$error_reporting = E_ALL^E_NOTICE;
-$error_reporting = E_ALL; // use this for debugging
 define('WeBidDebug', false); // use this for debugging
 define('InWeBid', true);
 define('TrackUserIPs', true);
@@ -64,6 +62,11 @@ $template = new Template();
 $user = new User();
 include INCLUDE_PATH . 'messages.inc.php';
 $system->loadAuctionTypes();
+if (!(defined('WeBidDebug') && WeBidDebug)) {
+    $error_reporting = E_ALL^E_NOTICE;
+} else {
+    $error_reporting = E_ALL;
+}
 set_error_handler('WeBidErrorHandler', $error_reporting);
 
 if ($user->logged_in) {

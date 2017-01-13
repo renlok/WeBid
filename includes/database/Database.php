@@ -30,7 +30,7 @@ abstract class Database
 
     public function __construct()
     {
-        $this->error_supress = !WeBidDebug;
+        $this->error_supress = !(defined('WeBidDebug') && WeBidDebug);
     }
 
     abstract public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8');

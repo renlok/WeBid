@@ -46,14 +46,19 @@ function get_increment($val, $input_check = true)
     if ($input_check) {
         $val = $system->input_money($val);
     }
-    // get the increment value for the current bid
-    $query = "SELECT increment FROM " . $DBPrefix . "increments
-              WHERE low <= :val AND high >= :val
-              ORDER BY increment DESC";
+    // Get bid increment for current bid and calculate minimum bid
+    $query = "SELECT increment FROM " . $DBPrefix . "increments WHERE
+              ((low <= :val0 AND high >= :val1) OR
+              (low < :val2 AND high < :val3)) ORDER BY increment DESC";
     $params = array();
-    $params[] = array(':val', $val, 'float');
+    $params[] = array(':val0', $val, 'float');
+    $params[] = array(':val1', $val, 'float');
+    $params[] = array(':val2', $val, 'float');
+    $params[] = array(':val3', $val, 'float');
     $db->query($query, $params);
-    $increment = $db->result('increment');
+    if ($db->numrows() != 0) {
+        $increment = $db->result('increment');
+    }
     return $increment;
 }
 

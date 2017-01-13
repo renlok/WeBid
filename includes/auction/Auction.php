@@ -104,55 +104,55 @@ class Auction
 		$params[] = array(':auc_id', $auction_id, 'int');
 
 		// get auction data
-		$query = "SELECT category, num_bids, suspended, closed FROM " . $db->DBPrefix . "auctions WHERE id = :auc_id";
-		$db->query($query, $params);
-		$auc_data = $db->result();
+		$query = "SELECT category, num_bids, suspended, closed FROM " . $this->db->DBPrefix . "auctions WHERE id = :auc_id";
+		$this->db->query($query, $params);
+		$auc_data = $this->db->result();
 
 		if ($auc_data['suspended'] == 2)
 		{
-			$query = "DELETE FROM `" . $db->DBPrefix . "auction_moderation` WHERE auction_id = :auc_id";
-			$db->query($query, $params);
+			$query = "DELETE FROM `" . $this->db->DBPrefix . "auction_moderation` WHERE auction_id = :auc_id";
+			$this->db->query($query, $params);
 		}
 
 		// Delete related values
-		$query = "DELETE FROM " . $db->DBPrefix . "auctions WHERE id = :auc_id";
-		$db->query($query, $params);
+		$query = "DELETE FROM " . $this->db->DBPrefix . "auctions WHERE id = :auc_id";
+		$this->db->query($query, $params);
 
 		// delete bids
-		$query = "DELETE FROM " . $db->DBPrefix . "bids WHERE auction = :auc_id";
-		$db->query($query, $params);
+		$query = "DELETE FROM " . $this->db->DBPrefix . "bids WHERE auction = :auc_id";
+		$this->db->query($query, $params);
 
 		// Delete proxybids
-		$query = "DELETE FROM " . $db->DBPrefix . "proxybid WHERE itemid = :auc_id";
-		$db->query($query, $params);
+		$query = "DELETE FROM " . $this->db->DBPrefix . "proxybid WHERE itemid = :auc_id";
+		$this->db->query($query, $params);
 
 		// Delete file in counters
-		$query = "DELETE FROM " . $db->DBPrefix . "auccounter WHERE auction_id = :auc_id";
-		$db->query($query, $params);
+		$query = "DELETE FROM " . $this->db->DBPrefix . "auccounter WHERE auction_id = :auc_id";
+		$this->db->query($query, $params);
 
 		if ($auc_data['suspended'] == 0 && $auc_data['closed'] == 0)
 		{
 			// update main counters
-			$query = "UPDATE " . $db->DBPrefix . "counters SET auctions = (auctions - 1), bids = (bids - :num_bids)";
+			$query = "UPDATE " . $this->db->DBPrefix . "counters SET auctions = (auctions - 1), bids = (bids - :num_bids)";
 			$params = array();
 			$params[] = array(':num_bids', $auc_data['num_bids'], 'int');
-			$db->query($query, $params);
+			$this->db->query($query, $params);
 
 			// update recursive categories
-			$query = "SELECT left_id, right_id, level FROM " . $db->DBPrefix . "categories WHERE cat_id = :cat_id";
+			$query = "SELECT left_id, right_id, level FROM " . $this->db->DBPrefix . "categories WHERE cat_id = :cat_id";
 			$params = array();
 			$params[] = array(':cat_id', $auc_data['category'], 'int');
-			$db->query($query, $params);
+			$this->db->query($query, $params);
 
-			$parent_node = $db->result();
+			$parent_node = $this->db->result();
 			$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
 			for ($i = 0; $i < count($crumbs); $i++)
 			{
-				$query = "UPDATE " . $db->DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = :cat_id";
+				$query = "UPDATE " . $this->db->DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = :cat_id";
 				$params = array();
 				$params[] = array(':cat_id', $crumbs[$i]['cat_id'], 'int');
-				$db->query($query, $params);
+				$this->db->query($query, $params);
 			}
 		}
 
@@ -186,13 +186,34 @@ class Auction
 
 	public function getAuction($auction_id, $select = '*')
 	{
-		$query = "SELECT " . $select . " FROM " . $db->DBPrefix . "auctions WHERE id = :auc_id";
+		$query = "SELECT " . $select . " FROM " . $this->db->DBPrefix . "auctions WHERE id = :auc_id";
 		$params = array();
 		$params[] = array(':auc_id', $auction_id, 'int');
-		$db->query($query, $params);
-		$auc_data = $db->result();
-		return $auc_data;
+        $this->db->query($query, $params);
+        return $this->db->result();
 	}
+
+	public function getNextValidBid($current_bid)
+    {
+        // Get bid increment for current bid and calculate minimum bid
+        $query = "SELECT increment FROM " . $this->db->DBPrefix . "increments WHERE
+              ((low <= :val0 AND high >= :val1) OR
+              (low < :val2 AND high < :val3)) ORDER BY increment DESC";
+        $params = array();
+        $params[] = array(':val0', $current_bid, 'float');
+        $params[] = array(':val1', $current_bid, 'float');
+        $params[] = array(':val2', $current_bid, 'float');
+        $params[] = array(':val3', $current_bid, 'float');
+        $this->db->query($query, $params);
+        if ($this->db->numrows() != 0)
+        {
+            return $this->db->result('increment');
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
 	public function addBid();
 	public function getBidHistory();

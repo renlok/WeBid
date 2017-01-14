@@ -20,7 +20,7 @@
 				<table width="100%" border="0" cellspacing="1" cellpadding="4">
 					<tr>
 						<td width="45%" valign="top">
-							<b>{USER} ({SUM_FB})</b> <img src="{SITEURL}images/icons/{FB_ICON}" alt="{FB_ICON}" class="fbstar"><br>
+							<b>{USER} ({SUM_FB})</b> <!-- IF FB_ICON ne '' --><img src="{SITEURL}images/icons/{FB_ICON}" alt="{FB_ICON}" class="fbstar"><!-- ENDIF --><br>
 							{L_209} <b>{REGSINCE}</b><br>
 							{L_240} <b>{COUNTRY}</b><br>
 							{L_502} <b>{NUM_FB}</b><br>

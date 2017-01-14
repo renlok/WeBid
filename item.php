@@ -99,9 +99,9 @@ $has_ended = false;
 if (strtotime($start) > time()) {
     $ending_time = '<span class="errfont">' . $MSG['668'] . '</span>';
 } elseif (strtotime($ends) - time() > 0) {
-    $start_time = new DateTime($start, $dt->UTCtimezone);
+    $current_time = new DateTime('now', $dt->UTCtimezone);
     $end_time = new DateTime($ends, $dt->UTCtimezone);
-    $difference = $start_time->diff($end_time);
+    $difference = $current_time->diff($end_time);
     $ending_time = '';
     $date_elements = 0;
     if ($difference->d > 0) {
@@ -243,10 +243,10 @@ if ($user->logged_in && $num_bids > 0) {
         if (in_array($user->user_data['id'], $hbidder_data)) {
             $yourbidmsg = $MSG['25_0088'];
             $yourbidclass = 'yourbidwin';
-            if ($difference <= 0 && $auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price']) {
+            if ($difference->invert && $auction_data['reserve_price'] > 0 && $auction_data['current_bid'] < $auction_data['reserve_price']) {
                 $yourbidmsg = $MSG['514'];
                 $yourbidclass = 'yourbidloss';
-            } elseif ($difference <= 0 || $auction_data['bn_only']) {
+            } elseif ($difference->invert || $auction_data['bn_only']) {
                 $yourbidmsg = $MSG['25_0089'];
             }
         } elseif ($auction_data['bn_only']) {
@@ -324,7 +324,7 @@ if ($num_bids > 0 && !isset($_GET['history'])) {
 }
 $min_bid = $system->print_money($minimum_bid);
 $high_bid = $system->print_money($high_bid);
-if ($difference > 0) {
+if (!$difference->invert) {
     $next_bid = $system->print_money($next_bidp);
 } else {
     $next_bid = '--';
@@ -469,7 +469,7 @@ $template->assign_vars(array(
         'YOURBIDCLASS' => (isset($yourbidclass)) ? $yourbidclass : '',
 
         'B_HASENDED' => $has_ended,
-        'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && $difference > 0),
+        'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && !$difference->invert),
         'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && (!$user->logged_in || $user->user_data['id'] != $auction_data['user'])),
         'B_HASIMAGE' => (!empty($auction_data['pict_url'])),
         'B_NOTBNONLY' => ($auction_data['bn_only'] == 0),

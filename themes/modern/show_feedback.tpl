@@ -7,7 +7,7 @@
 				<a class="btn btn-default btn-xs" href="{SITEURL}profile.php?user_id={ID}">{L_505}</a>
 			</div>
 			<div class="col-md-12">
-				<div class="alert alert-info" role="alert">{L_185}{USERNICK} ({USERFB}) <img src="{SITEURL}images/icons/{USER_FB_ICON}" alt="{USER_FB_ICON}" class="fbstar"></div>
+				<div class="alert alert-info" role="alert">{L_185}{USERNICK} ({USERFB}) <!-- IF USER_FB_ICON ne '' --><img src="{SITEURL}images/icons/{USER_FB_ICON}" alt="{USER_FB_ICON}" class="fbstar"><!-- ENDIF --></div>
 				<div class="panel panel-default visible-xs">
 					<div class="panel-body">
 						<legend>{L_503}</legend>
@@ -44,7 +44,7 @@
 							{fbs.FEEDBACK}
 						</td>
 						<td>
-							<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) <img src="{SITEURL}images/icons/{fbs.FB_ICON}" alt="{fbs.FB_ICON}" class="fbstar">
+							<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) <!-- IF fbs.FB_ICON ne '' --><img src="{SITEURL}images/icons/{fbs.FB_ICON}" alt="{fbs.FB_ICON}" class="fbstar"><!-- ENDIF -->
 						</td>
 						<td>
 							{fbs.AUCTIONURL}

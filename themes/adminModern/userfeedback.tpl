@@ -8,7 +8,7 @@
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{L_222}</h4>
 				<table class="table table-striped table-bordered">
 					<tr>
-						<td align="right" colspan="2"><b>{NICK} ({FB_NUM}) <img src="{SITEURL}/images/icons/{FB_ICON}" class="fbstar"></b></td>
+						<td align="right" colspan="2"><b>{NICK} ({FB_NUM}) <!-- IF FB_ICON ne '' --><img src="{SITEURL}images/icons/{FB_ICON}" alt="{FB_ICON}" class="fbstar"><!-- ENDIF --></b></td>
 					</tr>
 <!-- BEGIN feedback -->
 					<tr<!-- IF feedback.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>

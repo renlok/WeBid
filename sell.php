@@ -81,7 +81,7 @@ switch ($_SESSION['action']) {
             // hash and check the password
             include PACKAGE_PATH . 'PasswordHash.php';
             $phpass = new PasswordHash(8, false);
-            if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password']))) {
+            if (!isset($_POST['password']) || !($phpass->CheckPassword($_POST['password'], $user->user_data['password']))) {
                 $ERR = $ERR_006;
             }
         }
@@ -376,6 +376,12 @@ switch ($_SESSION['action']) {
                 $shippingtext = $MSG['867'];
             }
 
+            $current_fee = ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0');
+            $corrected_fee = bcsub(get_fee($minimum_bid), $current_fee, $system->SETTINGS['moneydecimals']);
+            if ($corrected_fee < 0) {
+                $corrected_fee = 0;
+            }
+
             $template->assign_vars(array(
                     'TITLE' => htmlspecialchars($title),
                     'SUBTITLE' => htmlspecialchars($subtitle),
@@ -403,7 +409,7 @@ switch ($_SESSION['action']) {
                     'PAYMENTS_METHODS' => $payment_methods,
                     'CAT_LIST1' => $category_string1,
                     'CAT_LIST2' => $category_string2,
-                    'FEE' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
+                    'FEE' => number_format($corrected_fee, $system->SETTINGS['moneydecimals']),
 
                     'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y'),
                     'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only)),
@@ -482,6 +488,15 @@ switch ($_SESSION['action']) {
             }
         }
 
+        // can edit start date check
+        $caneditstartdate = false;
+        $starting_date = new DateTime($a_starts);
+        $current_date = new DateTime();
+        if ($system->SETTINGS['edit_starttime'] && ($_SESSION['SELL_action'] != 'edit' ||
+            ($starting_date > $current_date && $_SESSION['SELL_action'] == 'edit'))) {
+            $caneditstartdate = true;
+        }
+
         $CKEditor = new CKEditor();
         $CKEditor->basePath = 'js/ckeditor/';
         $CKEditor->returnOutput = true;
@@ -539,13 +554,18 @@ switch ($_SESSION['action']) {
                 $relist_fee = $row['value'];
             }
         }
-        $fee_javascript .= 'var current_fee = ' . ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0') . ';';
+        $current_fee = ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0');
+        $fee_javascript .= 'var current_fee = ' . $current_fee . ';';
         $relist_options = '<select name="autorelist" id="autorelist">';
         for ($i = 0; $i <= $system->SETTINGS['autorelist_max']; $i++) {
             $relist_options .= '<option value="' . $i . '"' . (($relist == $i) ? ' selected="selected"' : '') . '>' . $i . '</option>';
         }
         $relist_options .= '</select>';
         $fee_value = get_fee($minimum_bid);
+        $corrected_fee = bcsub($fee_value, $current_fee, $system->SETTINGS['moneydecimals']);
+        if ($corrected_fee < 0) {
+            $corrected_fee = 0;
+        }
 
         $template->assign_vars(array(
                 'TITLE' => $MSG['028'],
@@ -603,7 +623,7 @@ switch ($_SESSION['action']) {
                 'MAXPICS' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']/1024),
 
                 'FEE_VALUE' => $fee_value,
-                'FEE_VALUE_F' => number_format($fee_value, $system->SETTINGS['moneydecimals']),
+                'FEE_VALUE_F' => number_format($corrected_fee, $system->SETTINGS['moneydecimals']),
                 'FEE_MIN_BID' => $fee_min_bid,
                 'FEE_BN' => $fee_bn,
                 'FEE_RP' => $fee_rp,

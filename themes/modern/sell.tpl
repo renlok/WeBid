@@ -92,18 +92,18 @@ $(document).ready(function(){
 		}
 		else
 		{
-			for (var i = 0; i < setup.length; i++)
+			for (var i = 0; i < setup_fee.length; i++)
 			{
-				if (setup[i][0] <= min_bid && setup[i][1] >= min_bid)
+				if (setup_fee[i][0] <= min_bid && setup_fee[i][1] >= min_bid)
 				{
-					if (setup[i][3] == 'flat')
+					if (setup_fee[i][3] == 'flat')
 					{
-						min_bid_fee = setup[i][2];
-						updatefee(setup[i][2]);
+						min_bid_fee = setup_fee[i][2];
+						updatefee(setup_fee[i][2]);
 					}
 					else
 					{
-						min_bid_fee = (setup[i][2] / 100) * min_bid;
+						min_bid_fee = (setup_fee[i][2] / 100) * min_bid;
 						updatefee(min_bid_fee);
 					}
 					break;
@@ -197,8 +197,9 @@ $(document).ready(function(){
 	});
 		<!-- ENDIF -->
 	function updatefee(newfee) {
-		var nowfee = parseFloat($("#fee_exact").val()) + newfee - current_fee;
+		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
 		$("#fee_exact").val(nowfee);
+		nowfee = nowfee - current_fee;
 		if (nowfee < 0)
 		{
 			nowfee = 0;
@@ -365,7 +366,7 @@ $(document).ready(function(){
 	<!-- IF B_EDIT_STARTTIME -->
 					<div class="form-group col-md-12">
 						<label for="a_starts">{L_2__0016}</label>
-		<!-- IF B_EDITING && !B_CANEDITSTARTDATE -->
+		<!-- IF B_EDITING && B_CANEDITSTARTDATE eq false -->
 						{START_TIME}
 						<input type="hidden" name="a_starts" value="{START_TIME}">
 		<!-- ELSE -->

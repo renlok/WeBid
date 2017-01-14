@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 include 'common.php';
-include INCLUDE_PATH . 'membertypes.inc.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
 // Get parameters from the URL

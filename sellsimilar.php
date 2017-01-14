@@ -69,6 +69,7 @@ if (!isset($_POST['action'])) {
         $_SESSION['SELL_is_featured']        = $RELISTEDAUCTION['featured'];
         $_SESSION['SELL_is_taxed']            = $RELISTEDAUCTION['tax'];
         $_SESSION['SELL_tax_included']        = $RELISTEDAUCTION['taxinc'];
+        $_SESSION['SELL_current_fee'] = 0;
         $_SESSION['SELL_hash'] = md5(microtime() . rand(0, 50));
         $_SESSION['SELL_submitted'][$_SESSION['SELL_hash']] = false;
 

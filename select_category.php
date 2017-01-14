@@ -118,6 +118,7 @@ if (isset($_GET['change']) && $_GET['change'] == 'yes') {
     $_SESSION['SELL_start_now'] = '1';
     $_SESSION['SELL_ends'] = '';
     $_SESSION['SELL_custom_end'] = 0;
+    $_SESSION['SELL_current_fee'] = 0;
     $_SESSION['SELL_caneditstartdate'] = true;
     $_SESSION['SELL_hash'] = md5(microtime() . rand(0, 50));
     $_SESSION['SELL_submitted'][$_SESSION['SELL_hash']] = false;

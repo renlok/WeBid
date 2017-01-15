@@ -51,7 +51,7 @@ if ($user_data['birthdate'] != 0) {
 $MANDATORY_FIELDS = unserialize($system->SETTINGS['mandatory_fields']);
 
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
-    if ($_POST['name'] && $_POST['email']) {
+    if (strlen($_POST['name']) > 0 && strlen($_POST['email']) > 0) {
         if (!empty($_POST['birthdate'])) {
             $DATE = explode('/', $_POST['birthdate']);
             if ($system->SETTINGS['datesformat'] == 'USA') {
@@ -95,8 +95,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5037));
         } elseif (empty($_POST['group'])) {
             $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_044));
-        } elseif (empty($_POST['balance']) && $system->SETTINGS['moneydecimals'] != 0) {
-            $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
         } elseif (!$system->CheckMoney($balance_clean)) {
             $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_081));
         } else {

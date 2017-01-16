@@ -58,7 +58,7 @@ while ($row = $db->fetch()) {
 }
 
 // get a list of all ended auctions
-$query = "SELECT a.*, u.email, u.endemailmode, u.nick, u.payment_details, u.name
+$query = "SELECT a.*, u.email, u.endemailmode, u.nick, u.payment_details, u.name, u.groups
 		FROM " . $DBPrefix . "auctions a
 		LEFT JOIN " . $DBPrefix . "users u ON (a.user = u.id)
 		WHERE a.ends <= CURRENT_TIMESTAMP
@@ -91,7 +91,9 @@ foreach ($auction_data as $Auction) { // loop auctions
         'endemailmode' => $Auction['endemailmode'],
         'nick' => $Auction['nick'],
         'payment_details' => $Auction['payment_details'],
-        'name' => $Auction['name']);
+        'name' => $Auction['name'],
+        'groups' => $Auction['groups']
+    );
 
     // get an order list of bids of the item (high to low)
     $winner_present = false;
@@ -105,9 +107,8 @@ foreach ($auction_data as $Auction) { // loop auctions
 
     // send email to seller - to notify him
     // create a "report" to seller depending of what kind auction is
-    $atype = intval($Auction['auction_type']);
     // Standard auction
-    if ($atype == 1) {
+    if ($Auction['auction_type'] == 1) {
         if ($num_bids > 0 && ($Auction['current_bid'] >= $Auction['reserve_price'] || $Auction['sold'] == 's')) {
             $Winner = $db->result();
             $Winner['quantity'] = $Auction['quantity'];
@@ -186,7 +187,7 @@ foreach ($auction_data as $Auction) { // loop auctions
         }
     }
     // Dutch Auction
-    elseif ($atype == 2) {
+    elseif ($Auction['auction_type'] == 2) {
         // find out winners sorted by bid
         $query = "SELECT *, MAX(bid) AS maxbid
 				FROM " . $DBPrefix . "bids WHERE auction = :auc_id GROUP BY bidder
@@ -351,7 +352,7 @@ foreach ($auction_data as $Auction) { // loop auctions
     }
 
     if ($winner_present) {
-        if ($Auction['bn_only'] == 0 && $atype != 2) {
+        if ($Auction['bn_only'] == 0 && $Auction['auction_type'] != 2) {
             // Send mail to the seller
             $added_winner_names = array();
             if (is_array($Winner)) {
@@ -384,7 +385,7 @@ foreach ($auction_data as $Auction) { // loop auctions
             if (isset($winner_array) && is_array($winner_array) && count($winner_array) > 0) {
                 $added_winner_names = array();
                 foreach ($winner_array as $key => $value) {
-                    if ($atype == 2) {
+                    if ($Auction['auction_type'] == 2) {
                         // Send mail to the buyer
                         $Winner = $value;
                         include INCLUDE_PATH . 'email/endauction_youwin.php';

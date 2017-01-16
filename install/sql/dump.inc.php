@@ -1216,6 +1216,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
   `group_name` varchar(50) NOT NULL default '',
   `can_sell` tinyint(1) NOT NULL default '0',
   `can_buy` tinyint(1) NOT NULL default '0',
+  `no_fees` tinyint(1) NOT NULL default '0',
   `count` tinyint(11) NOT NULL default '0',
   `auto_join` tinyint(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
@@ -1225,8 +1226,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
 # Dumping data for table `" . $DBPrefix . "groups`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0, 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0, 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0, 0, 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0, 0, 1);";
 
 # ############################
 

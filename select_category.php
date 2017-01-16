@@ -24,7 +24,7 @@ if (!$user->checkAuth()) {
 }
 $user->checkSuspended();
 
-if (!$user->can_sell) {
+if (!$user->permissions['can_sell']) {
     header('location: user_menu.php?cptab=selling');
     exit;
 }

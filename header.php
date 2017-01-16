@@ -52,7 +52,7 @@ $template->assign_vars(array(
         'YOURUSERNAME' => ($user->logged_in) ? $user->user_data['nick'] : '',
         'GOOGLEANALYTICS' => $system->SETTINGS['googleanalytics'],
 
-        'B_CAN_SELL' => ($user->can_sell || !$user->logged_in),
+        'B_CAN_SELL' => ($user->permissions['can_sell'] || !$user->logged_in),
         'B_LOGGED_IN' => $user->logged_in,
         'B_BOARDS' => ($system->SETTINGS['boards'] == 'y')
         ));

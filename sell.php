@@ -41,7 +41,7 @@ if (in_array($user->user_data['suspended'], array(5, 6, 7))) {
     exit;
 }
 
-if (!$user->can_sell) {
+if (!$user->permissions['can_sell']) {
     $_SESSION['TMP_MSG'] = $MSG['818'];
     header('location: user_menu.php?cptab=selling');
     exit;
@@ -144,7 +144,7 @@ switch ($_SESSION['action']) {
             $addcounter = true;
 
             // work out & add fee
-            if ($system->SETTINGS['fees'] == 'y') {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']) {
                 $feeupdate = false;
                 // attach the new invoice to users account
                 addoutstanding();
@@ -175,7 +175,7 @@ switch ($_SESSION['action']) {
                 }
 
                 // no fees are due and your not editing the auction so add to the auction count
-                if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit') {
+                if (!($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit') {
                     // update recursive categories
                     update_cat_counters(true, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
                 }
@@ -292,7 +292,7 @@ switch ($_SESSION['action']) {
                 $system->log('user', 'List Item', $user->user_data['id'], $auction_id);
             }
 
-            if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $system->SETTINGS['fee_type'] == 2 && $fee > 0) {
                 $_SESSION['auction_id'] = $auction_id;
                 header('location: pay.php?a=4');
                 exit;
@@ -416,7 +416,7 @@ switch ($_SESSION['action']) {
                     'B_BN' => ($system->SETTINGS['buy_now'] == 2),
                     'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
                     'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
-                    'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
+                    'B_FEES' => ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']),
                     'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
                     'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y')
                     ));
@@ -644,7 +644,7 @@ switch ($_SESSION['action']) {
                 'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
                 'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
                 'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),
-                'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
+                'B_FEES' => ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']),
                 'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
                 'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y'),
                 'B_AUTORELIST' => ($system->SETTINGS['autorelist'] == 'y')

@@ -33,7 +33,7 @@ if (in_array($user->user_data['suspended'], array(5, 6, 7))) {
     exit;
 }
 
-if (!$user->can_buy) {
+if (!$user->permissions['can_buy']) {
     $_SESSION['TMP_MSG'] = $MSG['819'];
     header('location: user_menu.php');
     exit;

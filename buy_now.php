@@ -28,7 +28,7 @@ if (in_array($user->user_data['suspended'], array(5, 6, 7))) {
     exit;
 }
 
-if (!$user->can_buy) {
+if (!$user->permissions['can_buy']) {
     $_SESSION['TMP_MSG'] = $MSG['819'];
     header('location: user_menu.php');
     exit;
@@ -176,7 +176,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy') {
             $ff_paid = 1;
 
             // work out & add fee
-            if ($system->SETTINGS['fees'] == 'y') {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']) {
                 $query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
                 $db->direct_query($query);
                 $row = $db->result();
@@ -301,7 +301,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy') {
             include INCLUDE_PATH . 'email/endauction_multi_item_win.php';
             include INCLUDE_PATH . 'email/seller_partial_winner.php';
 
-            if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $system->SETTINGS['fee_type'] == 2 && $fee > 0) {
                 $_SESSION['auction_id'] = $id;
                 header('location: pay.php?a=6');
                 exit;

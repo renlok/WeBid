@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             $AUCTION = $db->result();
             $suspend = 0;
 
-            if ($system->SETTINGS['fees'] == 'y' && $relist_fee > 0) {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $relist_fee > 0) {
                 if ($system->SETTINGS['fee_type'] == 1) {
                     // charge relist fee
                     $query = "UPDATE " . $DBPrefix . "users SET balance = balance - :relist_fee WHERE id = :user_id";

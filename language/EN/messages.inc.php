@@ -492,6 +492,7 @@ $MSG['566'] = 'active';
 $MSG['567'] = 'not active';
 $MSG['569'] = 'Insert user';
 $MSG['570'] = 'Never logged in';
+$MSG['group_no_fees'] = 'Fee Exempt';
 $MSG['578'] = 'Can Sell';
 $MSG['579'] = 'Can Buy';
 $MSG['580'] = 'Auto Join';

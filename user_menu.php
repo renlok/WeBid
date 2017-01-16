@@ -159,7 +159,7 @@ switch ($_SESSION['cptab']) {
 }
 
 $template->assign_vars(array(
-        'B_CANSELL' => ($user->can_sell),
+        'B_CANSELL' => ($user->permissions['can_sell']),
         'B_CANREQUESTSELL' => ($system->SETTINGS['user_request_seller_permission']),
 
         'TMPMSG' => (isset($_SESSION['TMP_MSG'])) ? $_SESSION['TMP_MSG'] : '',

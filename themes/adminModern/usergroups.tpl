@@ -14,6 +14,7 @@
 							<th><b>{L_451}</b></th>
 							<th><b>{L_578}</b></th>
 							<th><b>{L_579}</b></th>
+							<th><b>{L_group_no_fees}</b></th>
 							<th><b>{L_580}</b></th>
 							<th>&nbsp;</th>
 						</tr>
@@ -35,6 +36,12 @@
 								<select name="can_buy">
 									<option value="1" {CAN_BUY_Y}>{L_yes}</option>
 									<option value="0" {CAN_BUY_N}>{L_no}</option>
+								</select>
+							</td>
+							<td>
+								<select name="no_fees">
+									<option value="1" {NO_FEES_Y}>{L_yes}</option>
+									<option value="0" {NO_FEES_N}>{L_no}</option>
 								</select>
 							</td>
 							<td>
@@ -61,6 +68,7 @@
 							<td>{groups.USER_COUNT}</td>
 							<td>{groups.CAN_SELL}</td>
 							<td>{groups.CAN_BUY}</td>
+							<td>{groups.NO_FEES}</td>
 							<td>{groups.AUTO_JOIN}</td>
 							<td><a href="usergroups.php?id={groups.ID}&action=edit">{L_298}</a></td>
 						</tr>

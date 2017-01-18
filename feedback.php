@@ -210,6 +210,7 @@ if (isset($_GET['faction']) && $_GET['faction'] == 'show') {
                         break;
                     case - 1: $uimg = $system->SETTINGS['siteurl'] . 'images/negative.png';
                         break;
+                    default:
                     case 0: $uimg = $system->SETTINGS['siteurl'] . 'images/neutral.png';
                         break;
                 }

@@ -220,6 +220,7 @@ function CheckSellData()
             return '082';
         }
     }
+    return '';
 }//--CheckSellData
 
 function CheckBidData()

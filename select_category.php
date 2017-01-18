@@ -34,6 +34,7 @@ $box = (isset($_POST['box'])) ? $_POST['box'] + 1 : 0;
 $catscontrol = new MPTTcategories();
 $cat_no = (isset($_REQUEST['cat_no'])) ? $_REQUEST['cat_no'] : 1;
 $i = 0;
+$POST = [];
 while (true) {
     if (!isset($_POST['cat' . $i])) {
         break;

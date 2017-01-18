@@ -18,7 +18,14 @@ if (!defined('InWeBid')) {
 
 class email_handler
 {
-    public $from, $message, $subject, $headers, $email_uid, $userlang, $errors;
+    public $from;
+    public $to;
+    public $message;
+    public $subject;
+    public $headers;
+    public $email_uid;
+    public $userlang;
+    public $errors;
 
     public function __construct()
     {

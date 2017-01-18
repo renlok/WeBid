@@ -333,7 +333,7 @@ function show_config_table($fresh = true)
     return $data;
 }
 
-function search_cats($parent_id, $level)
+function search_cats()
 {
     global $catscontrol;
 
@@ -377,7 +377,7 @@ function rebuild_cat_file()
 
     $output .= "$" . "category_plain = array(\n0 => ''";
 
-    $output .= search_cats(0, 0);
+    $output .= search_cats();
 
     $output .= ");\n?>";
 

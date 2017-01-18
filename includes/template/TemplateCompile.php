@@ -54,7 +54,7 @@ class TemplateCompile
     * Load template source from file
     * @access private
     */
-    public function _tpl_load_file($handle, $store_in_db = false)
+    public function _tpl_load_file($handle)
     {
         global $_SESSION;
 

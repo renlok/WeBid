@@ -221,7 +221,7 @@ class fees
         exit;
     }
 
-    private function callback_process($custom_id, $fee_type, $payment_amount, $currency = null)
+    private function callback_process($custom_id, $fee_type, $payment_amount)
     {
         switch ($fee_type) {
             case 1: // add to account balance

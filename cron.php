@@ -360,7 +360,7 @@ foreach ($auction_data as $Auction) { // loop auctions
                 $added_winner_names[] = $Winner['nick'] . ' (<a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>)';
                 include INCLUDE_PATH . 'email/endauction_youwin_nodutch.php';
             }
-            if ($Seller['endemailmode'] !== 'cum') {
+            if ($Seller['endemailmode'] != 'cum') {
                 include INCLUDE_PATH . 'email/endauction_winner.php';
             } else {
                 // Add in the database to send later as cumulitave email to seller
@@ -422,7 +422,7 @@ foreach ($auction_data as $Auction) { // loop auctions
 					VALUES (:auc_id, :seller_id, '', :auction_data, :seller_data)";
             $params = array();
             $params[] = array(':auc_id', $Auction['id'], 'int');
-            $params[] = array(':seller_id', $Auction['id'], 'int');
+            $params[] = array(':seller_id', $Seller['id'], 'int');
             $params[] = array(':auction_data', serialize($Auction), 'str');
             $params[] = array(':seller_data', serialize($Seller), 'str');
             $db->query($query, $params);
@@ -542,7 +542,7 @@ $db->direct_query($query);
 
 $user_data = $db->fetchall();
 foreach ($auction_data as $row) {
-    $query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < CURRENT_TIMESTAMP AND seller_id = :seller_id";
+    $query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE date(thisdate) < CURDATE() AND seller_id = :seller_id";
     $params = array();
     $params[] = array(':seller_id', $row['id'], 'int');
     $db->query($query, $params);

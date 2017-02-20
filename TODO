@@ -1,0 +1,11 @@
+Current:
+Move _cron to cron classes
+Move all of Buy it now only code to buyitnow.php
+Fix CloseDutchAuction.php
+
+remove all globals
+
+
+test:
+resync counters - admin
+cron

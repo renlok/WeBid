@@ -580,7 +580,7 @@ $MSG['spam_settings'] = 'Spam settings'; // Also sidebar-settings.tpl
 $MSG['spam_settings_updated'] = 'Spam settings updated';
 $MSG['error_recaptcha_missing_keys'] = 'You cannot use reCaptcha without the two keys';
 $MSG['recaptcha_public_key'] = "reCaptcha public key";
-$MSG['recaptcha_public_key_explain'] = 'To use reCaptcha you must create a free account at <a href="http://recaptcha.net/" class="new-window">http://recaptcha.net/</a> and add this domain to a key pair';
+$MSG['recaptcha_public_key_explain'] = 'To use reCaptcha you must create a free account with <a href="https://www.google.com/recaptcha/intro/index.html" class="new-window">Google reCAPTCHA</a> and add this domain to a key pair';
 $MSG['recaptcha_secret_key'] = "Recaptcha secret key";
 $MSG['registration_captcha_type'] = "Captcha type on registration page";
 $MSG['registration_captcha_type_explain'] = "Captcha are used to prevent spam it is generally a good idea to enable some sort of captcha";

@@ -20,13 +20,14 @@ abstract class Database
 {
     // database
     protected $conn;
-    protected $DBPrefix;
     protected $CHARSET;
     protected $lastquery;
     protected $fetchquery;
     protected $error;
     protected $error_supress;
     protected $fetch_methods = [];
+    
+    public $DBPrefix;
 
     public function __construct()
     {

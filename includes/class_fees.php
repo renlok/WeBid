@@ -187,7 +187,7 @@ class fees
         exit;
     }
 
-    public function moneybookers_validate() // now called skrill
+    public function skrill_validate()
     {
         $payment_amount = floatval($this->data['amount']);
 

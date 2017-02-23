@@ -171,21 +171,3 @@ function sortFees()
         }
     }
 }
-
-function closedAuctionSQL ()
-{
-    return "SELECT a.*, u.email, u.endemailmode, u.nick, u.payment_details, u.name, u.groups
-            FROM " . $DBPrefix . "auctions a
-            LEFT JOIN " . $DBPrefix . "users u ON (a.user = u.id)
-            WHERE a.ends <= CURRENT_TIMESTAMP
-            AND a.suspended = 0
-            AND ((a.closed = 0) OR
-                (
-                    a.closed = 1
-                    AND a.reserve_price > 0
-                    AND a.num_bids > 0
-                    AND a.current_bid < a.reserve_price
-                    AND a.sold = 's'
-                )
-            )";
-}

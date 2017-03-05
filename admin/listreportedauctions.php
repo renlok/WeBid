@@ -114,4 +114,8 @@ $template->set_filenames(array(
         'body' => 'listauctions.tpl'
         ));
 $template->display('body');
+<<<<<<< HEAD
 include 'footer.php';
+=======
+include 'footer.php';
+>>>>>>> refs/remotes/renlok/master

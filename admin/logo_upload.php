@@ -48,4 +48,8 @@ $template->set_filenames(array(
         'body' => 'logo_upload.tpl'
         ));
 $template->display('body');
+<<<<<<< HEAD
 include 'footer.php';
+=======
+include 'footer.php';
+>>>>>>> refs/remotes/renlok/master

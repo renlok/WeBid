@@ -41,4 +41,8 @@ $template->set_filenames(array(
         'body' => 'clear_image_cache.tpl'
         ));
 $template->display('body');
+<<<<<<< HEAD
 include 'footer.php';
+=======
+include 'footer.php';
+>>>>>>> refs/remotes/renlok/master

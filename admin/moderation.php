@@ -43,4 +43,8 @@ $template->set_filenames(array(
         'body' => 'adminpages.tpl'
         ));
 $template->display('body');
+<<<<<<< HEAD
 include 'footer.php';
+=======
+include 'footer.php';
+>>>>>>> refs/remotes/renlok/master

@@ -183,4 +183,8 @@ $template->set_filenames(array(
         'body' => 'newuser.tpl'
         ));
 $template->display('body');
+<<<<<<< HEAD
 include 'footer.php';
+=======
+include 'footer.php';
+>>>>>>> refs/remotes/renlok/master

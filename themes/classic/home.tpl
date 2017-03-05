@@ -130,7 +130,7 @@
 			<div class="smallpadding">
 				<ul>
 	<!-- BEGIN helpbox -->
-					<li><a href="{SITEURL}viewhelp.php?cat={helpbox.ID}" alt="faqs"  class="new-window">{helpbox.TITLE}</a></li>
+					<li><a href="{SITEURL}viewhelp.php?cat={helpbox.ID}" class="new-window">{helpbox.TITLE}</a></li>
 	<!-- END helpbox -->
 				</ul>
 			</div>

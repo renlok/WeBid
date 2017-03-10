@@ -90,28 +90,33 @@ while ($arrfeed = $db->fetch()) {
     $i++;
 }
 
-$firstpage = (($page - 5) <= 0) ? 1 : ($page - 5);
-$lastpage = (($page + 5) > $pages) ? $pages : ($page + 5);
-$backpage = (($page - 1) <= 0) ? 1 : ($page - 1);
-$nextpage = (($page + 1) > $pages) ? $pages : ($page + 1);
-$echofeed = ($page == 1) ? '' : '<a href="yourfeedback.php">&laquo;</a> <a href="yourfeedback.php?pg=' . $backpage . '"><</a> ';
-for ($ind2 = $firstpage; $ind2 <= $lastpage; $ind2++) {
-    if ($page != $ind2) {
-        $echofeed .= '<a href="yourfeedback.php?pg=' . $ind2 . '">' . $ind2 . '</a>';
-    } else {
-        $echofeed .= $ind2;
+// get pagenation
+$PREV = intval($PAGE - 1);
+$NEXT = intval($PAGE + 1);
+if ($PAGES > 1) {
+    $LOW = $PAGE - 5;
+    if ($LOW <= 0) {
+        $LOW = 1;
     }
-    if ($ind2 != $lastpage) {
-        $echofeed .= ' | ';
+    $COUNTER = $LOW;
+    while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6)) {
+        $template->assign_block_vars('pages', array(
+                'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'yourfeedback.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+                ));
+        $COUNTER++;
     }
 }
-$echofeed .= ($page == $pages || $pages == 0) ? '' : ' <a href="yourfeedback.php?pg=' . $nextpage . '">></a> <a href="yourfeedback.php?pg=' . $pages . '">&raquo;</a>';
 
 $template->assign_vars(array(
         'USERNICK' => $user->user_data['nick'],
         'USERFB' => $user->user_data['rate_sum'],
         'USER_FB_ICON' => $feedback_icon,
-        'PAGENATION' => $echofeed,
+
+        'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourfeedback.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+        'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourfeedback.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+        'PAGE' => $PAGE,
+        'PAGES' => $PAGES,
+
         'BGCOLOUR' => (!(($i + 1) % 2)) ? '' : 'class="alt-row"'
         ));
 

@@ -541,7 +541,7 @@ $query = "SELECT id, name, email FROM " . $DBPrefix . "users WHERE endemailmode 
 $db->direct_query($query);
 
 $user_data = $db->fetchall();
-foreach ($auction_data as $row) {
+foreach ($user_data as $row) {
     $query = "SELECT * FROM " . $DBPrefix . "pendingnotif WHERE thisdate < CURRENT_TIMESTAMP AND seller_id = :seller_id";
     $params = array();
     $params[] = array(':seller_id', $row['id'], 'int');

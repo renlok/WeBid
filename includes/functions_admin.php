@@ -108,7 +108,7 @@ if (!defined('AdminFuncCall')) {
 
     function load_file_from_url($url)
     {
-        if (false !== ($str = file_get_contents($url))) {
+        if (false !== ($str = @file_get_contents($url))) {
             return $str;
         } elseif (($handle = @fopen($url, 'r')) !== false) {
             $str = fread($handle, 5);

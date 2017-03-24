@@ -421,7 +421,7 @@ class email_handler
         if (is_array($this->to)) {
             for ($i = 0; $i < count($this->to); $i++) {
                 try {
-                    $mail->setFrom($this->from, $system->SETTINGS['adminmail']);
+                    $mail->setFrom($this->from, $system->SETTINGS['sitename']);
                     $mail->addAddress($this->to[$i]);
                     $mail->addReplyTo($this->from, $system->SETTINGS['adminmail']);
                     $mail->Subject = $this->subject;
@@ -440,7 +440,7 @@ class email_handler
             }
         } else {
             try {
-                $mail->setFrom($this->from, $system->SETTINGS['adminmail']);
+                $mail->setFrom($this->from, $system->SETTINGS['sitename']);
                 if (is_array($this->to)) {
                     for ($i = 0; $i < count($this->to); $i++) {
                         $mail->addAddress($this->to[$i]);

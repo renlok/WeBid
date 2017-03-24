@@ -96,6 +96,7 @@ if ($user->logged_in) {
 // get ending time
 $showendtime = false;
 $has_ended = false;
+$difference = null;
 if (strtotime($start) > time()) {
     $ending_time = '<span class="errfont">' . $MSG['668'] . '</span>';
 } elseif (strtotime($ends) - time() > 0) {
@@ -324,7 +325,7 @@ if ($num_bids > 0 && !isset($_GET['history'])) {
 }
 $min_bid = $system->print_money($minimum_bid);
 $high_bid = $system->print_money($high_bid);
-if (!$difference->invert) {
+if ($difference != null && !$difference->invert) {
     $next_bid = $system->print_money($next_bidp);
 } else {
     $next_bid = '--';
@@ -469,7 +470,7 @@ $template->assign_vars(array(
         'YOURBIDCLASS' => (isset($yourbidclass)) ? $yourbidclass : '',
 
         'B_HASENDED' => $has_ended,
-        'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && !$difference->invert),
+        'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && !($difference == null || $difference->invert)),
         'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && (!$user->logged_in || $user->user_data['id'] != $auction_data['user'])),
         'B_HASIMAGE' => (!empty($auction_data['pict_url'])),
         'B_NOTBNONLY' => ($auction_data['bn_only'] == 0),

@@ -97,7 +97,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `user` int(11) default NULL,
   `title` varchar(70),
   `subtitle` varchar(70),
-  `starts` datetime ,
+  `starts` datetime,
   `ends` datetime,
   `description` text,
   `pict_url` tinytext,

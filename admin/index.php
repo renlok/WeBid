@@ -133,18 +133,21 @@ if ($system->SETTINGS['activationtype'] == 0) {
 }
 
 // version check
-switch ($system->SETTINGS['version_check']) {
-    case 'unstable':
-        $url = 'http://www.webidsupport.com/version_unstable.txt';
-        break;
-    default:
-        $url = 'http://www.webidsupport.com/version.txt';
-        break;
-}
-
-if (!($realversion = load_file_from_url($url))) {
-    $ERR = $MSG['error_file_access_disabled'];
-    $realversion = $MSG['unknown'];
+$realversion = '0.0';
+$update_available = false;
+if ($system->SETTINGS['version_check'] !== "") {
+    switch ($system->SETTINGS['version_check']) {
+        case 'unstable':
+            $url = 'http://raw.githubusercontent.com/renlok/WeBid/dev/install/thisversion.txt';
+            break;
+        default:
+          $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';
+            break;
+    }
+    if (!($realversion = load_file_from_url($url))) {
+        $ERR = $MSG['error_file_access_disabled'];
+        $realversion = $MSG['unknown'];
+    }
 }
 
 $update_available = false;

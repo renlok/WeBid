@@ -39,7 +39,7 @@ class email_handler
         $headers = array();
 
         if (!isset($this->from) || empty($this->from)) {
-            $this->from = $system->SETTINGS['adminmail'];
+            $this->from = $system->SETTINGS['sitename'];
         }
 
         $headers[] = 'From: ' . $this->from;

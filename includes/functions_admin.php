@@ -66,7 +66,7 @@ if (!defined('AdminFuncCall')) {
                 'DESCRIPTION' => (!empty($description)) ? $description . '<br>' : '',
                 'TYPE' => $type,
                 'NAME' => $name,
-                'DEFAULT' => $default,
+                'DEFAULT' => ($type == 'text') ? htmlspecialchars($default) : $default,
                 'TAGLINE1' => (isset($tagline[0])) ? $tagline[0] : '',
                 'TAGLINE2' => (isset($tagline[1])) ? $tagline[1] : '',
                 'TAGLINE3' => (isset($tagline[2])) ? $tagline[2] : '',

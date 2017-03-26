@@ -156,7 +156,7 @@ if (isset($category_plain) && count($category_plain) > 0) {
         $template->assign_block_vars('categories', array(
             'CAT_ID' => $cat_id,
             'CAT_NAME' => $cat_name,
-            'B_SELECTED' => (in_array($cat_id, $CATEGORIES))
+            'B_SELECTED' => false
             ));
     }
 }

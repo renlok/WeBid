@@ -522,3 +522,31 @@ if ($installed_version == '1.2.1') {
     $query[] = "UPDATE `" . $DBPrefix . "payment_options` SET name = 'skrill', displayname = 'Skrill' WHERE name = 'moneybookers'";
     $new_version = '1.2.2';
 }
+
+if ($installed_version == '1.2.2' | $installed_version == '1.2.2.1') {
+    $query[] = "ALTER TABLE `" . $DBPrefix . "accounts` MODIFY `paid_date` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `created` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "adminusers` MODIFY `lastlogin` datetime;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `starts` datetime;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `ends` datetime;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `auction_type` tinyint(1);";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `shipping` tinyint(1) default 1;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "auctions` MODIFY `suspended` tinyint(1) default '0';";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "bids` MODIFY `bidwhen` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "comm_messages` MODIFY `msgdate` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "community` MODIFY `lastmessage` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "feedbacks` MODIFY `feedbackdate` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "logs` MODIFY `timestamp` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "messages` MODIFY `sentat` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "news` MODIFY `new_date` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "online` MODIFY `time` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "pendingnotif` MODIFY `thisdate` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `suspended` tinyint(1) default '0';";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `nletter` tinyint(1) NOT NULL default '0';";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `reg_date` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "users` MODIFY `lastlogin` datetime;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "useraccounts` MODIFY `date` timestamp default CURRENT_TIMESTAMP;";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "useraccounts` MODIFY `paid` tinyint(1) NOT NULL default '0';";
+    $query[] = "ALTER TABLE `" . $DBPrefix . "winners` MODIFY `closingdate` timestamp default CURRENT_TIMESTAMP;";
+    $new_version = '1.2.2.2';
+}

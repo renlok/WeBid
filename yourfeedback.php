@@ -27,33 +27,35 @@ $params[] = array(':feedback', $user->user_data['rate_sum'], 'int');
 $db->query($query, $params);
 $feedback_icon = $db->result('icon');
 
-$page = (isset($_GET['pg']) && intval($_GET['pg']) > 0) ? $_GET['pg'] : 1;
-$left_limit = ($page - 1) * $system->SETTINGS['perpage'];
-
 $query = "SELECT count(*) As COUNT FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
 $total = $db->result('COUNT');
 // get number of pages
-$pages = ceil($total / $system->SETTINGS['perpage']);
-
-$left_limit = ($left_limit < 0) ? 0 : $left_limit;
+if (!isset($_GET['PAGE']) || $_GET['PAGE'] <= 1 || $_GET['PAGE'] == '') {
+    $OFFSET = 0;
+    $PAGE = 1;
+} else {
+    $PAGE = intval($_GET['PAGE']);
+    $OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+}
+$PAGES = ($total == 0) ? 1 : ceil($total / $system->SETTINGS['perpage']);
 
 $query = "SELECT feedbacks, icon FROM " . $DBPrefix . "membertypes ORDER BY feedbacks DESC;";
 $db->direct_query($query);
 $membertypes = $db->fetchAll();
 
 $query = "SELECT f.*, a.title, u.rate_sum, w.winner FROM " . $DBPrefix . "feedbacks f
-	LEFT OUTER JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
-	LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id)
-	LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
-	WHERE rated_user_id = :user_id
-	ORDER by feedbackdate DESC
-	LIMIT :left_limit, :perpage";
+          LEFT OUTER JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id)
+          LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
+          WHERE rated_user_id = :user_id
+          ORDER by feedbackdate DESC
+          LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
-$params[] = array(':left_limit', $left_limit, 'int');
+$params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
 

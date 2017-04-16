@@ -218,14 +218,15 @@ function show_config_table($fresh = true)
             );
 
         umask(0);
-
+        //Check wether the BC Math extension is installed
+        $bcinstalled = true;
+        if(!extension_loaded('bcmath')){
+            $bcinstalled = false;
+        }
         $passed = true;
         foreach ($directories as $dir) {
             $exists = $write = false;
-            //Check wether the BC Math extension is installed
-            if(!(extension_loaded('bcmath'))){
-                $bcinstalled = false;
-            }
+            
             // Try to create the directory if it does not exist
             if (!file_exists(MAIN_PATH . $dir)) {
                 @mkdir(MAIN_PATH . $dir, 0755);

@@ -218,11 +218,6 @@ function show_config_table($fresh = true)
             );
 
         umask(0);
-        //Check wether the BC Math extension is installed
-        $bcinstalled = true;
-        if(!extension_loaded('bcmath')){
-            $bcinstalled = false;
-        }
         $passed = true;
         foreach ($directories as $dir) {
             $exists = $write = false;
@@ -247,7 +242,7 @@ function show_config_table($fresh = true)
 
             @unlink(MAIN_PATH . $dir . 'test_lock');
 
-            if (!$exists || !$write || !$bcinstalled) {
+            if (!$exists || !$write || !extension_loaded('bcmath')) {
                 $passed = false;
             }
 

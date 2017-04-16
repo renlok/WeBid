@@ -222,7 +222,10 @@ function show_config_table($fresh = true)
         $passed = true;
         foreach ($directories as $dir) {
             $exists = $write = false;
-
+            //Check wether the BC Math extension is installed
+            if(!(extension_loaded('bcmath'))){
+                $bcinstalled = false;
+            }
             // Try to create the directory if it does not exist
             if (!file_exists(MAIN_PATH . $dir)) {
                 @mkdir(MAIN_PATH . $dir, 0755);
@@ -243,7 +246,7 @@ function show_config_table($fresh = true)
 
             @unlink(MAIN_PATH . $dir . 'test_lock');
 
-            if (!$exists || !$write) {
+            if (!$exists || !$write || !$bcinstalled) {
                 $passed = false;
             }
 

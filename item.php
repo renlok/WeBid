@@ -108,18 +108,14 @@ if (strtotime($start) > time()) {
     //Display Years
     if ($difference->y > 0){
         $timemsg = ($difference->y == 1) ? $MSG['count_year'] : $MSG['count_years'];
-        $ending_time .= $difference->y . $timemsg;
+        $ending_time = $difference->y . $timemsg;
         $date_elements++;
     }
     //Display Months
     if ($difference->m > 0) {
         $timemsg = ($difference->m == 1) ? $MSG['count_month'] : $MSG['count_months'];
         if ($difference->y > 0) {
-            if (!$difference->d > 0 || !$difference->h > 0 || !$difference->i > 0 || !$difference->s > 0){
-                $comma = "," . $MSG['1005'];
-            } else{
-                $comma = ", ";
-            }
+            $comma = ", ";
         } else {
             $comma = null;
         }
@@ -130,11 +126,7 @@ if (strtotime($start) > time()) {
     if ($difference->d > 0) {
         $timemsg = ($difference->d == 1) ? $MSG['count_day'] : $MSG['count_days'];
         if ($difference->y > 0 || $difference->m > 0) {
-            if (!$difference->h > 0 || !$difference->i > 0 || !$difference->s > 0){
-                $comma = "," . $MSG['1005'];
-            } else{
-                $comma = ", ";
-            }
+            $comma = ", ";
         } else {
             $comma = null;
         }
@@ -142,14 +134,11 @@ if (strtotime($start) > time()) {
         $date_elements++;
     }
     //Display Hours
-    if ($difference->h > 0 && $date_elements < 2) {
+    if ($difference->h > 0 && $date_elements < 3) {
         $timemsg = ($difference->h == 1) ? $MSG['count_hour'] : $MSG['count_hours'];
         if ($difference->y > 0 || $difference->m > 0 || $difference->d > 0) {
-            if (!$difference->i > 0 || !$difference->s > 0){
-                $comma = "," . $MSG['1005'];
-            } else{
-                $comma = ", ";
-            }
+            $comma = ", ";
+
         } else {
             $comma = null;
         }
@@ -157,14 +146,10 @@ if (strtotime($start) > time()) {
         $date_elements++;
     }
     //Display Minutes
-    if ($difference->i > 0 && $date_elements < 2) {
+    if ($difference->i > 0 && $date_elements < 3) {
         $timemsg = ($difference->i == 1) ? $MSG['count_minute'] : $MSG['count_minutes'];
         if ($difference->y > 0 || $difference->m > 0 || $difference->d > 0 || $difference->h > 0) {
-            if (!$difference->s > 0){
-                $comma = "," . $MSG['1005'];
-            } else{
-                $comma = ", ";
-            }
+            $comma = ", ";
         } else {
             $comma = null;
         }
@@ -175,7 +160,7 @@ if (strtotime($start) > time()) {
     if ($difference->s > 0 && $date_elements < 3) {
         $timemsg = ($difference->s == 1) ? $MSG['count_second'] : $MSG['count_seconds'];
         if ($difference->y > 0 || $difference->m > 0 || $difference->d > 0 || $difference->h > 0 || $difference->i > 0) {
-            $comma = ", and ";
+            $comma = ", ";
         } else {
             $comma = null;
         }

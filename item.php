@@ -108,7 +108,7 @@ if (strtotime($start) > time()) {
     //Display Years
     if ($difference->y > 0){
         $timemsg = ($difference->y == 1) ? $MSG['count_year'] : $MSG['count_years'];
-        $ending_time = $difference->y . $timemsg;
+        $ending_time .= $difference->y . $timemsg;
         $date_elements++;
     }
     //Display Months

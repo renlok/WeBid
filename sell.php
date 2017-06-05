@@ -96,7 +96,7 @@ switch ($_SESSION['action']) {
             $a_starts = (empty($start_now) || !$caneditstartdate) ? $a_starts : $dt->currentDatetime();
             if ($custom_end == 0) {
                 $start_datetime = new DateTime($a_starts, $dt->timezone);
-                $start_datetime->add(new DateInterval('P' . $duration . 'D'));
+                $start_datetime->add(new DateInterval('P' . intval($duration) . 'D'));
                 $a_ends = $start_datetime->format('Y-m-d H:i:s');
             }
             // get fee

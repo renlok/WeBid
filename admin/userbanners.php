@@ -150,6 +150,19 @@ while ($row = $db->fetch()) {
             ));
 }
 
+// Retrieve filters
+$CATEGORIES = array();
+$query = "SELECT * FROM " . $DBPrefix . "bannerscategories WHERE banner = :banner_id";
+$params = array();
+$params[] = array(':banner_id', $banner, 'int');
+$db->query($query, $params);
+
+if ($db->numrows() > 0) {
+    while ($row = $db->fetch()) {
+        $CATEGORIES[] = $row['category'];
+    }
+}
+
 // category
 if (isset($category_plain) && count($category_plain) > 0) {
     foreach ($category_plain as $cat_id => $cat_name) {

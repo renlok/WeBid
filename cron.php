@@ -281,7 +281,7 @@ foreach ($auction_data as $Auction) { // loop auctions
         if ($_BIDSNUM == 0 || ($_BIDSNUM > 0 && $Auction['reserve_price'] > 0 && !$winner_present)) {
             // Calculate end time
             $start_date = new DateTime('now', $dt->UTCtimezone);
-            $start_date->add(new DateInterval('P' . $Auction['duration'] . 'D'));
+            $start_date->add(new DateInterval('P' . intval($Auction['duration']) . 'D'));
             $auction_ends = $start_date->format('Y-m-d H:i:s');
 
             $query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";

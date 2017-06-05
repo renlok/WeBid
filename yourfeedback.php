@@ -27,33 +27,35 @@ $params[] = array(':feedback', $user->user_data['rate_sum'], 'int');
 $db->query($query, $params);
 $feedback_icon = $db->result('icon');
 
-$page = (isset($_GET['pg']) && intval($_GET['pg']) > 0) ? $_GET['pg'] : 1;
-$left_limit = ($page - 1) * $system->SETTINGS['perpage'];
-
 $query = "SELECT count(*) As COUNT FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);
 $total = $db->result('COUNT');
 // get number of pages
-$pages = ceil($total / $system->SETTINGS['perpage']);
-
-$left_limit = ($left_limit < 0) ? 0 : $left_limit;
+if (!isset($_GET['PAGE']) || $_GET['PAGE'] <= 1 || $_GET['PAGE'] == '') {
+    $OFFSET = 0;
+    $PAGE = 1;
+} else {
+    $PAGE = intval($_GET['PAGE']);
+    $OFFSET = ($PAGE - 1) * $system->SETTINGS['perpage'];
+}
+$PAGES = ($total == 0) ? 1 : ceil($total / $system->SETTINGS['perpage']);
 
 $query = "SELECT feedbacks, icon FROM " . $DBPrefix . "membertypes ORDER BY feedbacks DESC;";
 $db->direct_query($query);
 $membertypes = $db->fetchAll();
 
 $query = "SELECT f.*, a.title, u.rate_sum, w.winner FROM " . $DBPrefix . "feedbacks f
-	LEFT OUTER JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
-	LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id)
-	LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
-	WHERE rated_user_id = :user_id
-	ORDER by feedbackdate DESC
-	LIMIT :left_limit, :perpage";
+          LEFT OUTER JOIN " . $DBPrefix . "auctions a ON (a.id = f.auction_id)
+          LEFT JOIN " . $DBPrefix . "users u ON (u.id = f.rated_user_id)
+          LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
+          WHERE rated_user_id = :user_id
+          ORDER by feedbackdate DESC
+          LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
-$params[] = array(':left_limit', $left_limit, 'int');
+$params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
 
@@ -90,28 +92,33 @@ while ($arrfeed = $db->fetch()) {
     $i++;
 }
 
-$firstpage = (($page - 5) <= 0) ? 1 : ($page - 5);
-$lastpage = (($page + 5) > $pages) ? $pages : ($page + 5);
-$backpage = (($page - 1) <= 0) ? 1 : ($page - 1);
-$nextpage = (($page + 1) > $pages) ? $pages : ($page + 1);
-$echofeed = ($page == 1) ? '' : '<a href="yourfeedback.php">&laquo;</a> <a href="yourfeedback.php?pg=' . $backpage . '"><</a> ';
-for ($ind2 = $firstpage; $ind2 <= $lastpage; $ind2++) {
-    if ($page != $ind2) {
-        $echofeed .= '<a href="yourfeedback.php?pg=' . $ind2 . '">' . $ind2 . '</a>';
-    } else {
-        $echofeed .= $ind2;
+// get pagenation
+$PREV = intval($PAGE - 1);
+$NEXT = intval($PAGE + 1);
+if ($PAGES > 1) {
+    $LOW = $PAGE - 5;
+    if ($LOW <= 0) {
+        $LOW = 1;
     }
-    if ($ind2 != $lastpage) {
-        $echofeed .= ' | ';
+    $COUNTER = $LOW;
+    while ($COUNTER <= $PAGES && $COUNTER < ($PAGE + 6)) {
+        $template->assign_block_vars('pages', array(
+                'PAGE' => ($PAGE == $COUNTER) ? '<b>' . $COUNTER . '</b>' : '<a href="' . $system->SETTINGS['siteurl'] . 'yourfeedback.php?PAGE=' . $COUNTER . '"><u>' . $COUNTER . '</u></a>'
+                ));
+        $COUNTER++;
     }
 }
-$echofeed .= ($page == $pages || $pages == 0) ? '' : ' <a href="yourfeedback.php?pg=' . $nextpage . '">></a> <a href="yourfeedback.php?pg=' . $pages . '">&raquo;</a>';
 
 $template->assign_vars(array(
         'USERNICK' => $user->user_data['nick'],
         'USERFB' => $user->user_data['rate_sum'],
         'USER_FB_ICON' => $feedback_icon,
-        'PAGENATION' => $echofeed,
+
+        'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourfeedback.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
+        'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'yourfeedback.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
+        'PAGE' => $PAGE,
+        'PAGES' => $PAGES,
+
         'BGCOLOUR' => (!(($i + 1) % 2)) ? '' : 'class="alt-row"'
         ));
 

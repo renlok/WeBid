@@ -115,7 +115,7 @@ if ($system->SETTINGS['spam_register'] == 1) {
 
 // missing check bools
 $missing = array();
-$missing['birthday'] = $missing['address'] = $missing['city'] = $missing['prov'] = $missing['country'] = $missing['zip'] = $missing['tel'] = $missing['paypal'] = $missing['authnet'] = $missing['worldpay'] = $missing['toocheckout'] = $missing['moneybookers'] = $missing['name'] = $missing['nick'] = $missing['password'] = $missing['repeat_password'] = $missing['email'] = false;
+$missing['birthday'] = $missing['address'] = $missing['city'] = $missing['prov'] = $missing['country'] = $missing['zip'] = $missing['tel'] = $missing['paypal'] = $missing['authnet'] = $missing['worldpay'] = $missing['toocheckout'] = $missing['skrill'] = $missing['name'] = $missing['nick'] = $missing['password'] = $missing['repeat_password'] = $missing['email'] = false;
 if (isset($_POST['action']) && $_POST['action'] == 'first') {
     if (!isset($_POST['terms_check'])) {
         $ERR = $ERR_078;

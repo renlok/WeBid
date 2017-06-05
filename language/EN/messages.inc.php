@@ -235,9 +235,7 @@ $MSG['121'] = 'Place Your Bid Here:';
 $MSG['122'] = 'Edit, delete or add auction durations using the form below';
 $MSG['124'] = 'Minimum bid';
 $MSG['125'] = 'Seller';
-$MSG['126'] = ' days, ';
-$MSG['126b'] = ' day, ';
-$MSG['126a'] = 'days ago';
+$MSG['126'] = 'days ago';
 $MSG['127'] = 'Starting Bid';
 $MSG['128'] = 'Bid Increments';
 $MSG['129'] = 'ID';
@@ -627,10 +625,10 @@ $MSG['818'] = 'You do not have permission to list items';
 $MSG['819'] = 'You do not have permission to buy items';
 $MSG['820'] = 'Account selling permission request';
 $MSG['821'] = 'A valid 2Checkout ID is required';
-$MSG['822'] = 'A valid Moneybookers email address is required';
+$MSG['822'] = 'A valid Skrill email address is required';
 $MSG['823'] = 'A valid Worldpay ID is required';
 $MSG['824'] = 'Worldpay ID';
-$MSG['825'] = 'Moneybookers Email Address';
+$MSG['825'] = 'Skrill Email Address';
 $MSG['826'] = '2Checkout ID';
 $MSG['828'] = 'Week';
 $MSG['829'] = 'View by ';
@@ -1046,8 +1044,6 @@ $MSG['25_0025'] = 'Settings Overview';
 $MSG['25_0026'] = 'Batch Process (cron.php)';
 $MSG['25_0027'] = 'Be sure to set up a cronjob to run cron.php periodically (15 minutes is usually a good time interval).';
 $MSG['25_0031'] = 'Statistics';
-$MSG['25_0032'] = ' minutes';
-$MSG['25_0033'] = ' seconds';
 $MSG['25_0035'] = 'Time Correction';
 $MSG['25_0036'] = 'GMT';
 $MSG['25_0037'] = ' hours';
@@ -1251,3 +1247,18 @@ $MSG['minute_short'] = 'm';
 
 // yourmessages.tpl
 $MSG['delete_message_confirm'] = 'Are you sure you want to delete this message?';
+
+//Countdown Timer Messages
+$MSG['count_years'] = " years";
+$MSG['count_year'] = " year";
+$MSG['count_months'] = " months";
+$MSG['count_month'] = " month";
+$MSG['count_hours'] = " hours";
+$MSG['count_hour'] = " hour";
+$MSG['count_days'] = " days";
+$MSG['count_day'] = " day";
+$MSG['count_minutes'] = " minutes";
+$MSG['count_minute'] = " minute";
+$MSG['count_seconds'] = " seconds";
+$MSG['count_second'] = " second";
+

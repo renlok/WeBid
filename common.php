@@ -36,14 +36,6 @@ define('UPLOAD_FOLDER', 'uploaded/');
 define('UPLOAD_PATH', MAIN_PATH . UPLOAD_FOLDER);
 define('IMAGE_CACHE_PATH', UPLOAD_PATH . 'cache/');
 
-spl_autoload_register(function($className)
-{
-    $namespace = str_replace("\\", "/", __NAMESPACE__);
-    $className = str_replace("\\", "/", $className);
-    $class = MAIN_PATH . (empty($namespace) ? "" : $namespace . "/") . "{$className}.php";
-    include_once($class);
-});
-
 include INCLUDE_PATH . 'errors.inc.php'; //error handler functions
 
 // classes

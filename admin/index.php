@@ -48,7 +48,63 @@ if (isset($_GET['action'])) {
         break;
 
         case 'updatecounters':
-            \includes\cron\ResyncCounters->handle();
+            //update users counter
+            $query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "users WHERE suspended = 0";
+            $db->direct_query($query);
+            $USERS = $db->result('COUNT');
+            $query = "UPDATE " . $DBPrefix . "counters SET users = :USERS";
+            $params = array();
+            $params[] = array(':USERS', $USERS, 'int');
+            $db->query($query, $params);
+
+            //update suspended users counter
+            $query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "users WHERE suspended != 0";
+            $db->direct_query($query);
+            $USERS = $db->result('COUNT');
+            $query = "UPDATE " . $DBPrefix . "counters SET inactiveusers = :USERS";
+            $params = array();
+            $params[] = array(':USERS', $USERS, 'int');
+            $db->query($query, $params);
+
+            //update auction counter
+            $query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE closed = 0 AND suspended = 0";
+            $db->direct_query($query);
+            $AUCTIONS = $db->result('COUNT');
+            $query = "UPDATE " . $DBPrefix . "counters SET auctions = :AUCTIONS";
+            $params = array();
+            $params[] = array(':AUCTIONS', $AUCTIONS, 'int');
+            $db->query($query, $params);
+
+            //update closed auction counter
+            $query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE closed = 1";
+            $db->direct_query($query);
+            $AUCTIONS = $db->result('COUNT');
+            $query = "UPDATE " . $DBPrefix . "counters SET closedauctions = :AUCTIONS";
+            $params = array();
+            $params[] = array(':AUCTIONS', $AUCTIONS, 'int');
+            $db->query($query, $params);
+
+            //update suspended auctions counter
+            $query = "SELECT COUNT(id) As COUNT FROM " . $DBPrefix . "auctions WHERE closed = 0 and suspended != 0";
+            $db->direct_query($query);
+            $AUCTIONS = $db->result('COUNT');
+            $query = "UPDATE " . $DBPrefix . "counters SET suspendedauctions = :AUCTIONS";
+            $params = array();
+            $params[] = array(':AUCTIONS', $AUCTIONS, 'int');
+            $db->query($query, $params);
+
+            //update bids
+            $query = "SELECT COUNT(b.id) As COUNT FROM " . $DBPrefix . "bids b
+                      LEFT JOIN " . $DBPrefix . "auctions a ON (b.auction = a.id)
+                      WHERE a.closed = 0 AND a.suspended = 0";
+            $db->direct_query($query);
+            $BIDS = $db->result('COUNT');
+            $query = "UPDATE " . $DBPrefix . "counters SET bids = :BIDS";
+            $params = array();
+            $params[] = array(':BIDS', $BIDS, 'int');
+            $db->query($query, $params);
+
+            resync_category_counters();
 
             $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['counters_updated']));
         break;
@@ -79,13 +135,15 @@ if ($system->SETTINGS['activationtype'] == 0) {
 // version check
 $realversion = '0.0';
 $update_available = false;
-
 if ($system->SETTINGS['version_check'] !== "") {
-  switch ($system->SETTINGS['version_check']) {
-    default:
-      $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';
-        break;
-  }
+    switch ($system->SETTINGS['version_check']) {
+        case 'unstable':
+            $url = 'http://raw.githubusercontent.com/renlok/WeBid/dev/install/thisversion.txt';
+            break;
+        default:
+          $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';
+            break;
+    }
 
   if (!($realversion = load_file_from_url($url))) {
     $ERR = $MSG['error_file_access_disabled'];
@@ -94,7 +152,7 @@ if ($system->SETTINGS['version_check'] !== "") {
 
   if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
     $update_available = true;
-    $text = $MSG['outdated_version'];
+    $realversion = $MSG['outdated_version'];
   }
 }
 

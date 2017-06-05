@@ -96,6 +96,7 @@ if ($user->logged_in) {
 // get ending time
 $showendtime = false;
 $has_ended = false;
+$difference = null;
 if (strtotime($start) > time()) {
     $ending_time = '<span class="errfont">' . $MSG['668'] . '</span>';
 } elseif (strtotime($ends) - time() > 0) {
@@ -104,21 +105,66 @@ if (strtotime($start) > time()) {
     $difference = $current_time->diff($end_time);
     $ending_time = '';
     $date_elements = 0;
+    //Display Years
+    if ($difference->y > 0){
+        $timemsg = ($difference->y == 1) ? $MSG['count_year'] : $MSG['count_years'];
+        $ending_time .= $difference->y . $timemsg;
+        $date_elements++;
+    }
+    //Display Months
+    if ($difference->m > 0) {
+        $timemsg = ($difference->m == 1) ? $MSG['count_month'] : $MSG['count_months'];
+        if ($difference->y > 0) {
+            $comma = ", ";
+        } else {
+            $comma = null;
+        }
+        $ending_time .= $comma . $difference->m . $timemsg;
+        $date_elements++;
+    }
+    //Display Days
     if ($difference->d > 0) {
-        $daymsg = ($difference->d == 1) ? $MSG['126b'] : $MSG['126'];
-        $ending_time .= $difference->d . ' ' . $daymsg . ' ';
+        $timemsg = ($difference->d == 1) ? $MSG['count_day'] : $MSG['count_days'];
+        if ($difference->y > 0 || $difference->m > 0) {
+            $comma = ", ";
+        } else {
+            $comma = null;
+        }
+        $ending_time .= $comma . $difference->d . $timemsg;
         $date_elements++;
     }
-    if ($difference->h > 0) {
-        $ending_time .= $difference->h . $MSG['25_0037'] . ' ';
+    //Display Hours
+    if ($difference->h > 0 && $date_elements < 3) {
+        $timemsg = ($difference->h == 1) ? $MSG['count_hour'] : $MSG['count_hours'];
+        if ($difference->y > 0 || $difference->m > 0 || $difference->d > 0) {
+            $comma = ", ";
+
+        } else {
+            $comma = null;
+        }
+        $ending_time .= $comma .  $difference->h . $timemsg ;
         $date_elements++;
     }
-    if ($difference->m > 0 && $date_elements < 2) {
-        $ending_time .= $difference->m . $MSG['25_0032'] . ' ';
+    //Display Minutes
+    if ($difference->i > 0 && $date_elements < 3) {
+        $timemsg = ($difference->i == 1) ? $MSG['count_minute'] : $MSG['count_minutes'];
+        if ($difference->y > 0 || $difference->m > 0 || $difference->d > 0 || $difference->h > 0) {
+            $comma = ", ";
+        } else {
+            $comma = null;
+        }
+        $ending_time .= $comma . $difference->i . $timemsg;
         $date_elements++;
     }
-    if ($difference->s > 0 && $date_elements < 2) {
-        $ending_time .= $difference->s . $MSG['25_0033'];
+    //Display Seconds
+    if ($difference->s > 0 && $date_elements < 3) {
+        $timemsg = ($difference->s == 1) ? $MSG['count_second'] : $MSG['count_seconds'];
+        if ($difference->y > 0 || $difference->m > 0 || $difference->d > 0 || $difference->h > 0 || $difference->i > 0) {
+            $comma = ", ";
+        } else {
+            $comma = null;
+        }
+        $ending_time .= $comma . $difference->s . $timemsg;
     }
     $showendtime = true;
 } else {
@@ -324,7 +370,7 @@ if ($num_bids > 0 && !isset($_GET['history'])) {
 }
 $min_bid = $system->print_money($minimum_bid);
 $high_bid = $system->print_money($high_bid);
-if (!$difference->invert) {
+if ($difference != null && !$difference->invert) {
     $next_bid = $system->print_money($next_bidp);
 } else {
     $next_bid = '--';
@@ -469,7 +515,7 @@ $template->assign_vars(array(
         'YOURBIDCLASS' => (isset($yourbidclass)) ? $yourbidclass : '',
 
         'B_HASENDED' => $has_ended,
-        'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && !$difference->invert),
+        'B_CANEDIT' => ($user->logged_in && $user->user_data['id'] == $auction_data['user'] && $num_bids == 0 && !($difference == null || $difference->invert)),
         'B_CANCONTACTSELLER' => (($system->SETTINGS['contactseller'] == 'always' || ($system->SETTINGS['contactseller'] == 'logged' && $user->logged_in)) && (!$user->logged_in || $user->user_data['id'] != $auction_data['user'])),
         'B_HASIMAGE' => (!empty($auction_data['pict_url'])),
         'B_NOTBNONLY' => ($auction_data['bn_only'] == 0),

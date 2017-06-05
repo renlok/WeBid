@@ -225,6 +225,7 @@ $ERR = (isset($_SESSION['message'])) ? $_SESSION['message'] : '';
 unset($_SESSION['message']);
 
 $template->assign_vars(array(
+        'ERROR' => $ERR,
         'WHENSENT' => $whensent,
         'TITLE' => $title,
         'SENTFROM' => $sentfrom,

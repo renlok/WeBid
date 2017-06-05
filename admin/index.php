@@ -144,16 +144,16 @@ if ($system->SETTINGS['version_check'] !== "") {
           $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';
             break;
     }
-    if (!($realversion = load_file_from_url($url))) {
-        $ERR = $MSG['error_file_access_disabled'];
-        $realversion = $MSG['unknown'];
-    }
-}
 
-$update_available = false;
-if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
+  if (!($realversion = load_file_from_url($url))) {
+    $ERR = $MSG['error_file_access_disabled'];
+    $realversion = $MSG['unknown'];
+  }
+
+  if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
     $update_available = true;
-    $text = $MSG['outdated_version'];
+    $realversion = $MSG['outdated_version'];
+  }
 }
 
 //getting the correct email settings

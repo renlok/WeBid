@@ -240,7 +240,7 @@ function updateauction()
     $params[] = array(':shipping', $_SESSION['SELL_shipping'], 'int');
     $params[] = array(':payment', $payment_text, 'str');
     $params[] = array(':international', $_SESSION['SELL_international'], 'bool');
-    $params[] = array(':ends', $dt->convertToUTC($a_ends), 'str');
+    $params[] = array(':ends', ($a_ends), 'str');
     $params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
     $params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
     $params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');
@@ -255,7 +255,7 @@ function updateauction()
     $params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
     if ($caneditstartdate) {
         $query .= ", starts = :starts";
-        $params[] = array(':starts', $dt->convertToUTC($a_starts), 'str');
+        $params[] = array(':starts', ($a_starts), 'str');
     }
     $query .= ' WHERE id = :auction_id';
     $db->query($query, $params);
@@ -272,7 +272,7 @@ function addauction()
     $params[] = array(':user_id', $user->user_data['id'], 'int');
     $params[] = array(':title', $_SESSION['SELL_title'], 'str');
     $params[] = array(':subtitle', $_SESSION['SELL_subtitle'], 'str');
-    $params[] = array(':starts', $dt->convertToUTC($a_starts), 'str');
+    $params[] = array(':starts', ($a_starts), 'str');
     $params[] = array(':description', $_SESSION['SELL_description'], 'str');
     $params[] = array(':pict_url', $_SESSION['SELL_pict_url'], 'str');
     $params[] = array(':catone', $_SESSION['SELL_sellcat1'], 'int');
@@ -288,7 +288,7 @@ function addauction()
     $params[] = array(':shipping', $_SESSION['SELL_shipping'], 'int');
     $params[] = array(':payment', $payment_text, 'str');
     $params[] = array(':international', $_SESSION['SELL_international'], 'bool');
-    $params[] = array(':ends', $dt->convertToUTC($a_ends), 'str');
+    $params[] = array(':ends', ($a_ends), 'str');
     $params[] = array(':photo_uploaded', $_SESSION['SELL_file_uploaded'], 'bool');
     $params[] = array(':initial_quantity', $_SESSION['SELL_iquantity'], 'int');
     $params[] = array(':quantity', $_SESSION['SELL_iquantity'], 'int');

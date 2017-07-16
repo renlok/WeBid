@@ -302,23 +302,48 @@ function show_config_table($fresh = true)
         }
 
         $data .= '<tr><td>GD Support:</td><td>';
-        $data .= (extension_loaded('gd') && function_exists('gd_info')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+        if (extension_loaded('gd') && function_exists('gd_info')) {
+            $data .= '<strong style="color:green">Found</strong>';
+        } else {
+            $data .= '<strong style="color:red">Not Found</strong>';
+            $passed = false;
+        }
         $data .= '</tr>';
 
         $data .= '<tr><td>BC Math Support:</td><td>';
-        $data .= (extension_loaded('bcmath')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+        if (extension_loaded('bcmath')) {
+            $data .= '<strong style="color:green">Found</strong>';
+        } else {
+            $data .= '<strong style="color:red">Not Found</strong>';
+            $passed = false;
+        }
         $data .= '</tr>';
 
         $data .= '<tr><td>PHP Data Objects Support:</td><td>';
-        $data .= (extension_loaded('pdo')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+        if (extension_loaded('pdo')) {
+            $data .= '<strong style="color:green">Found</strong>';
+        } else {
+            $data .= '<strong style="color:red">Not Found</strong>';
+            $passed = false;
+        }
         $data .= '</tr>';
 
         $data .= '<tr><td>File Info:</td><td>';
-        $data .= (function_exists('finfo_open')) ? '<strong style="color:green">Found</strong>' : '<strong style="color:red">Not Found</strong>';
+        if (function_exists('finfo_open')) {
+            $data .= '<strong style="color:green">Found</strong>';
+        } else {
+            $data .= '<strong style="color:red">Not Found</strong>';
+            $passed = false;
+        }
         $data .= '</tr>';
 
         $data .= '<tr><td>PHP Version: (' . phpversion() . ')</td><td>';
-        $data .= ((version_compare(phpversion(), '5.4', '>'))) ? '<strong style="color:green">OK</strong>' : '<strong style="color:red">Too low</strong>';
+        if ((version_compare(phpversion(), '5.4', '>'))) {
+            $data .= '<strong style="color:green">Found</strong>';
+        } else {
+            $data .= '<strong style="color:red">Not Found</strong>';
+            $passed = false;
+        }
         $data .= '</tr>';
 
         $data .= '</table>';

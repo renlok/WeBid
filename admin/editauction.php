@@ -162,7 +162,7 @@ if (isset($_POST['action'])) {
             }
 
             $start_date = new DateTime($AUCTION['starts'], $dt->UTCtimezone);
-            $start_date->add(new DateInterval('P' . $_POST['duration'] . 'D'));
+            $start_date->add(new DateInterval('P' . intval($_POST['duration']) . 'D'));
             $auction_ends = $start_date->format('Y-m-d H:i:s');
 
             $query = "UPDATE " . $DBPrefix . "auctions SET

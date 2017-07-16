@@ -24,10 +24,10 @@ if (!$user->checkAuth()) {
 
 // get active bids for this user
 $query = "SELECT a.current_bid, a.current_bid_id, a.id, a.title, a.ends, b.bid, b.quantity, p.bid As proxybid, b.id As bid_id FROM " . $DBPrefix . "bids b
-	LEFT JOIN " . $DBPrefix . "proxybid p ON (p.itemid = b.auction AND p.userid = b.bidder)
-	LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
-	WHERE a.closed = 0 AND b.bidder = :user_id
-	AND a.bn_only = 0 ORDER BY a.ends ASC, b.bid DESC";
+          LEFT JOIN " . $DBPrefix . "proxybid p ON (p.itemid = b.auction AND p.userid = b.bidder)
+          LEFT JOIN " . $DBPrefix . "auctions a ON (a.id = b.auction)
+          WHERE a.closed = 0 AND b.bidder = :user_id
+          AND a.bn_only = 0 ORDER BY a.ends ASC, b.bid DESC";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');
 $db->query($query, $params);

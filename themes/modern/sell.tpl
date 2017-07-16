@@ -402,7 +402,7 @@ $(document).ready(function(){
 							<div class="duration col-md-4">
 	        					{L_022}: {DURATIONS}<br>
 				<!-- IF B_EDIT_ENDTIME -->
-								{L_or_custom_end_time}: <input type="text" name="a_ends" id="a_ends" value="{END_TIME}" size="20" maxlength="19">
+								{L_or_custom_end_time}: <input type="text" name="a_ends" id="a_ends" value="{END_TIME}" size="20" maxlength="19" class="form-control">
 								<script type="text/javascript">
 									new tcal ({'id': 'a_ends','controlname': 'a_ends', 'formname': 'sell'});
 									$('#a_ends').change(function () {

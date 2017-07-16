@@ -5,7 +5,7 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L__0008}&nbsp;&gt;&gt;&nbsp;{L__0024}</h4>
+				<h4 class="rounded-top rounded-bottom">{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L_banner_admin}&nbsp;&gt;&gt;&nbsp;{L__0024}</h4>
 				<form name="upldbanner" action="" method="post" enctype="multipart/form-data">
 					<table width="98%" cellpadding="0" cellspacing="0">
 						<tr>
@@ -92,7 +92,7 @@
 							<td>{L_276}</td>
 							<td>
 								<select name="category[]" rows="12" multiple>
-<!-- BEING categories -->
+<!-- BEGIN categories -->
 									<option value="{categories.CAT_ID}"<!-- IF categories.B_SELECTED --> selected="true"<!-- ENDIF -->>{categories.CAT_NAME}</option>
 <!-- END categories -->
 								</select>

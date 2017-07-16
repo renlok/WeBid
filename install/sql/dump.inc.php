@@ -97,7 +97,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `user` int(11) default NULL,
   `title` varchar(70),
   `subtitle` varchar(70),
-  `starts` datetime ,
+  `starts` datetime,
   `ends` datetime,
   `description` text,
   `pict_url` tinytext,
@@ -1201,7 +1201,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname
 $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('paypal', 'PayPal', 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('authnet', 'Authorize.net', 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('worldpay', 'WorldPay', 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('moneybookers', 'Moneybookers', 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('skrill', 'Skrill', 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('toocheckout', '2Checkout', 1);";
 
 # ############################

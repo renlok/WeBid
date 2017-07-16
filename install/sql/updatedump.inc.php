@@ -519,5 +519,6 @@ if ($installed_version == '1.2.1') {
     $query[] = "ALTER TABLE `" . $DBPrefix . "groups` ADD `no_fees` tinyint(1) NOT NULL default '0' AFTER `can_buy`;";
     $query[] = "UPDATE `" . $DBPrefix . "settings` SET fieldname = 'maintenance_mode_active' WHERE fieldname = 'maintainance_mode_active';";
     $query[] = "UPDATE `" . $DBPrefix . "settings` SET fieldname = 'maintenance_text' WHERE fieldname = 'maintainance_text';";
+    $query[] = "UPDATE `" . $DBPrefix . "payment_options` SET name = 'skrill', displayname = 'Skrill' WHERE name = 'moneybookers'";
     $new_version = '1.2.2';
 }

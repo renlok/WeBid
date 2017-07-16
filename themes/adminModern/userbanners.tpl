@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L__0008}&nbsp;&gt;&gt;&nbsp;{L__0024}</h4>
+				<h4>{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L_banner_admin}&nbsp;&gt;&gt;&nbsp;{L__0024}</h4>
 				<form name="upldbanner" action="" method="post" enctype="multipart/form-data">
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -90,7 +90,7 @@
 								<div class="col-md-6">{L_276}</div>
 								<div class="col-md-6">
 									<select name="category[]" rows="12" multiple>
-									<!-- BEING categories -->
+									<!-- BEGIN categories -->
 										<option value="{categories.CAT_ID}"<!-- IF categories.B_SELECTED --> selected="true"<!-- ENDIF -->>{categories.CAT_NAME}</option>
 									<!-- END categories -->
 									</select>

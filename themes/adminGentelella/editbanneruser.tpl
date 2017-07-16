@@ -7,7 +7,7 @@
         	<li><strong>Location:</strong></li>
             <li title="">{L_25_0011}</li>
             <li>/</li>
-            <li title="">{L__0008}</li>
+            <li title="">{L_banner_admin}</li>
 			<li>/</li>
             <li class="current">{L_511}</li>
         </ul>

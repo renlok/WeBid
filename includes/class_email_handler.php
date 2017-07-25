@@ -39,7 +39,7 @@ class email_handler
         $headers = array();
 
         if (!isset($this->from) || empty($this->from)) {
-            $this->from = $system->SETTINGS['sitename'];
+            $this->from = $system->SETTINGS['adminmail'];
         }
 
         $headers[] = 'From: ' . $this->from;
@@ -428,12 +428,12 @@ class email_handler
                     $mail->msgHTML($this->message);
                     //$mail->addAttachment('images/phpmailer_mini.png');
                     $mail->CharSet = $CHARSET;
-                    $mail->Send();
+                    $mail->send();
                 } catch (phpmailerException $e) {
-                    trigger_error('---->PHPMailer error: ' . $e->errorMessage());
+                    //trigger_error('---->PHPMailer error: ' . $e->errorMessage());
                     $this->add_error($e->errorMessage());
                 } catch (Exception $e) {
-                    trigger_error('---->PHPMailer error2: ' . $e->getMessage());
+                    //trigger_error('---->PHPMailer error2: ' . $e->getMessage());
                     $this->add_error($e->getMessage());
                 }
                 $mail->clearAddresses();
@@ -452,12 +452,12 @@ class email_handler
                 $mail->Subject = $this->subject;
                 $mail->msgHTML($this->message);
                 $mail->CharSet = $CHARSET;
-                $mail->Send();
+                $mail->send();
             } catch (phpmailerException $e) {
-                trigger_error('---->PHPMailer error: ' . $e->errorMessage());
+                //trigger_error('---->PHPMailer error: ' . $e->errorMessage());
                 $this->add_error($e->errorMessage());
             } catch (Exception $e) {
-                trigger_error('---->PHPMailer error: ' . $e->getMessage());
+                //trigger_error('---->PHPMailer error: ' . $e->getMessage());
                 $this->add_error($e->getMessage());
             }
         }
@@ -471,7 +471,7 @@ class email_handler
         $this->from = $from;
         $this->message = $message;
         $this->build_header();
-        $this->sendmail();
+        return $this->sendmail();
     }
 
     public function email_sender($to, $file, $subject)
@@ -480,6 +480,6 @@ class email_handler
         $this->subject = $subject;
         $this->build_header();
         $this->buildmessage($file);
-        $this->sendmail();
+        return $this->sendmail();
     }
 }

@@ -345,6 +345,8 @@ $MSG['SMTP_host'] = 'SMTP Host:';
 $MSG['SMTP_host_explain'] = '*For Gmail accounts. Set the encryption system using a prefix of [<b>ssl://</b>] or [<b>tls://</b>] Examples:<br>[ ssl://smtp.googlemail.com ], [ tls://smtp.googlemail.com ]';
 $MSG['other_admin_emails'] = 'Additional Admin E-Mails:';
 $MSG['other_admin_emails_explain'] = 'Additional email accounts you want to receive admin related email, in addition to the main site email address of %s. (comma separated)';
+$MSG['email_sending_success'] = 'Your email has been successfully sent.';
+$MSG['email_sending_failure'] = 'Email not sent! Please check your PHP mail configuration.Response:<br>%s';
 
 // enablefees.php
 $MSG['enable_fees'] = "Enable/Disable Fees";

@@ -301,7 +301,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy') {
             include INCLUDE_PATH . 'email/endauction_multi_item_win.php';
             include INCLUDE_PATH . 'email/seller_partial_winner.php';
 
-            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $system->SETTINGS['fee_type'] == 2 && $fee > 0) {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $system->SETTINGS['fee_type'] == 2 && $fee_value > 0) {
                 $_SESSION['auction_id'] = $id;
                 header('location: pay.php?a=6');
                 exit;

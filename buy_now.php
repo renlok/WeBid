@@ -332,7 +332,7 @@ $template->assign_vars(array(
         'SHIPPINGCOST' => ($shipping_cost >  0) ? $system->print_money($shipping_cost) : 0,
         'BN_TOTAL' => $system->print_money($BN_total),
         'SELLER' => ' <a href="profile.php?user_id=' . $Auction['user'] . '"><b>' . $Seller['nick'] . '</b></a>',
-        'SELLERNUMFBS' => '<b>(' . $total_rate . ')</b>',
+        'SELLERNUMFBS' => '<b>(' . $Seller['rate_sum'] . ')</b>',
         'FB_ICON' => $feedback_icon,
         'LEFT' => $Auction['quantity'],
 

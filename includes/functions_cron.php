@@ -50,7 +50,7 @@ function constructCategories()
 
 function sendWatchEmails($id, $title)
 {
-    global $DBPrefix, $system, $db $MSG;
+    global $DBPrefix, $system, $db, $MSG;
 
     $query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE :item_watch";
     $params = array();

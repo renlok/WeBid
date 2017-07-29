@@ -56,8 +56,14 @@ if (!function_exists('view')) {
             // check category search
             if (isset($_SESSION['advs']['category']) && !empty($_SESSION['advs']['category'])) {
                 $joinings .= ' LEFT JOIN ' . $DBPrefix . 'bannerscategories c ON (c.banner = b.id)';
-                $extra .=  " OR c.category = :cat_id";
-                $params[] = array(':cat_id', $_SESSION['advs']['category'], 'int');
+                
+				if (!empty($extra)){ 
+				$extra .=  " OR c.category = :cat_id";
+				}else {
+					$extra .=  " c.category = :cat_id";
+				}
+				
+				$params[] = array(':cat_id', $_SESSION['advs']['category'], 'int');
             }
             if ($extra != '') {
                 $extra = ' AND (' . $extra . ')';
@@ -71,7 +77,8 @@ if (!function_exists('view')) {
 
         $query = "SELECT b.id FROM " . $DBPrefix . "banners b " . $joinings . "
 				WHERE (b.views < b.purchased OR b.purchased = 0)" . $extra;
-        $db->query($query, $params);
+        echo $query;
+		$db->query($query, $params);
         $CKcount = false;
 
         if ($db->numrows() == 0) {

@@ -48,15 +48,13 @@ function constructCategories()
     return $categories;
 }
 
-function sendWatchEmails($id)
+function sendWatchEmails($id, $title)
 {
-    global $DBPrefix, $system, $db;
-
+    global $DBPrefix, $system, $db, $MSG;
     $query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE :item_watch";
     $params = array();
     $params[] = array(':item_watch', '% ' . $id . ' %', 'str');
     $db->query($query, $params);
-
     while ($watchusers = $db->fetch()) {
         $keys = explode(' ', $watchusers['item_watch']);
         // If keyword matches with opened auction title or/and desc send user a mail
@@ -64,7 +62,7 @@ function sendWatchEmails($id)
             $emailer = new email_handler();
             $emailer->assign_vars(array(
                     'URL' => $system->SETTINGS['siteurl'] . 'item.php?mode=1&id=' . $id,
-                    'TITLE' => htmlspecialchars($Auction['title']),
+                    'TITLE' => htmlspecialchars($title),
                     'NAME' => $watchusers['name']
                     ));
             $emailer->email_uid = $watchusers['id'];

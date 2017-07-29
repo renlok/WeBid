@@ -82,7 +82,7 @@ foreach ($auction_data as $Auction) { // loop auctions
     $Auction['description'] = strip_tags($Auction['description']);
 
     // Send notification to all users watching this auction
-    sendWatchEmails($Auction['id']);
+    sendWatchEmails($Auction['id'], $Auction['title']);
 
     // set seller array
     $Seller = array(

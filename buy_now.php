@@ -278,8 +278,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy') {
             // work out shipping cost
             if ($new_winner) {
                 $query = "INSERT INTO " . $DBPrefix . "winners
-						(auction, seller, winner, bid, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
-						(:auc_id, :seller_id, :winner_id, :buy_now, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
+                        (auction, seller, winner, bid, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+                        (:auc_id, :seller_id, :winner_id, :buy_now, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
                 $params = array();
                 $params[] = array(':auc_id', $id, 'int');
                 $params[] = array(':seller_id', $Auction['user'], 'int');
@@ -332,7 +332,7 @@ $template->assign_vars(array(
         'SHIPPINGCOST' => ($shipping_cost >  0) ? $system->print_money($shipping_cost) : 0,
         'BN_TOTAL' => $system->print_money($BN_total),
         'SELLER' => ' <a href="profile.php?user_id=' . $Auction['user'] . '"><b>' . $Seller['nick'] . '</b></a>',
-        'SELLERNUMFBS' => '<b>(' . $total_rate . ')</b>',
+        'SELLERNUMFBS' => '<b>(' . $Seller['rate_sum'] . ')</b>',
         'FB_ICON' => $feedback_icon,
         'LEFT' => $Auction['quantity'],
 

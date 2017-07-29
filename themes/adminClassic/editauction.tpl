@@ -69,10 +69,10 @@
 						<td>
 							<div>{L_1105}</div>
 <!-- BEGIN gallery -->
-							<div style="width:50px; float: left;">
+							<div class="button" style=" height:100px; float:left; margin:5px; padding:10px 5px 20px 10px;">
 								<a href="{SITEURL}/{gallery.V}" title="{gallery.V}" target="_blank">
-									<img src="{SITEURL}getthumb.php?fromfile={gallery.V}" border="0" hspace="10">
-								</a>
+									<img src="{SITEURL}getthumb.php?fromfile={gallery.V}" border="0" height="100px">
+								</a><br>
 								<input type="checkbox" name="gallery[]" value="{gallery.V}">
 							</div>
 <!-- END gallery -->

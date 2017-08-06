@@ -1161,7 +1161,6 @@ $MSG['30_0213'] = 'No feedback needs leaving';
 $MSG['30_0214'] = 'WeBid Version';
 $MSG['30_0215'] = 'Upload Logo';
 $MSG['upload_failed'] = 'Upload failed';
-$MSG['30_0110'] = 'Shipping';
 $MSG['350_1004'] = 'Quantity';
 $MSG['350_1008'] = 'Additional Shipping';
 $MSG['350_1009'] = 'Additional Shipping Cost';

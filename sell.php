@@ -75,8 +75,10 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'recall') {
 }
 
 switch ($_SESSION['action']) {
-    case 4: // finalise auction (submit to db)
-        // does the user need to login before they can submit the auction?
+  case 4: // finalise auction (submit to db)
+	  // does the user need to login before they can submit the auction?
+	  //Setting $_SESSION for No Back Button
+	  $_SESSION['previous'] = basename($_SERVER['PHP_SELF']);
         if ($system->SETTINGS['usersauth'] == 'y') {
             // hash and check the password
             include PACKAGE_PATH . 'PasswordHash.php';

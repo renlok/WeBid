@@ -14,7 +14,7 @@
 						<div class="row">
 <!-- BEGIN fbs -->
 							<div class="col-md-6 col-sm-6">
-								<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) {fbs.USICON}
+								<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) <!-- IF fbs.FB_ICON ne '' --><img src="{SITEURL}images/icons/{fbs.FB_ICON}" alt="{fbs.FB_ICON}" class="fbstar"><!-- ENDIF -->
 							</div>
 							<div class="col-md-6 col-sm-6">
 								<small>{fbs.FBDATE}</small>

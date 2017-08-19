@@ -77,7 +77,6 @@ if (!function_exists('view')) {
 
         $query = "SELECT b.id FROM " . $DBPrefix . "banners b " . $joinings . "
 				WHERE (b.views < b.purchased OR b.purchased = 0)" . $extra;
-        echo $query;
 		$db->query($query, $params);
         $CKcount = false;
 

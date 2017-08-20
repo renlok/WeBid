@@ -112,7 +112,7 @@ if (isset($_POST['action'])) {
             $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['user_group_name_empty_new']));
         } else {
             $query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy, no_fees, auto_join) VALUES
-                      (:group_name, :count, :can_sell, :can_buy, :auto_join)";
+                      (:group_name, :count, :can_sell, :can_buy, :no_fees, :auto_join)";
             $params = array();
             $params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
             $params[] = array(':count', $_POST['user_count'], 'int');

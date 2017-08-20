@@ -321,7 +321,7 @@ class global_class
 
         if ($this->SETTINGS['moneysymbol'] == 2) { // Symbol on the right
             return $str . ' ' . $currency;
-        } elseif ($this->SETTINGS['moneysymbol'] == 1) { // Symbol on the left
+        } else { // Symbol on the left
             return $currency . ' ' . $str;
         }
     }

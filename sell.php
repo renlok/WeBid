@@ -252,7 +252,7 @@ switch ($_SESSION['action']) {
                     }
                 } elseif ($user->user_data['startemailmode'] == 'yes') {
                     // awaiting payment
-                    include INCLUDE_PATH . 'auction_pending.php';
+                    include INCLUDE_PATH . 'email/auction_pending.php';
                 }
 
                 if ($system->SETTINGS['bn_only'] && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100) {

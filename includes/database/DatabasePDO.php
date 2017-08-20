@@ -108,6 +108,7 @@ class DatabasePDO extends Database
         } catch (PDOException $e) {
             $this->error_handler($e->getMessage());
         }
+        return null;
     }
 
     // put together the quert ready for running + get all results

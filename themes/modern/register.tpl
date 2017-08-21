@@ -134,7 +134,7 @@
 				<div class="form-group col-lg-12">
 					<div class="checkbox">
 						<center>
-							<input type="checkbox" name="terms_check" id="terms_check"> {L_858}
+							<input type="checkbox" name="terms_check" id="terms_check"> <label for="terms_check">{L_858}</label>
 						</center>
 					</div>
 					<br><br>

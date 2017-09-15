@@ -21,7 +21,7 @@ include 'loggedin.inc.php';
 if (isset($_POST['action']) && $_POST['action'] == 'update') {
     if (isset($_POST['payment'])) {
         foreach ($_POST['payment'] as $payment_id => $payment) {
-            if (in_array($payment_id, $_POST['delete'])) {
+            if (isset($_POST['delete']) && in_array($payment_id, $_POST['delete'])) {
                 $query = "DELETE FROM " . $DBPrefix . "payment_options WHERE id = :id";
                 $params = [[':id', $payment['id'], 'int']];
                 $db->query($query, $params);

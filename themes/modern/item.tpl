@@ -55,7 +55,7 @@ $(document).ready(function() {
 					<div class="panel-heading"><span class="label label-default">{L_113}: {ID}</span></div>
 					<div class="panel-body">
 						<div class="col-md-12">
-							<img class="img-rounded img-responsive center-block" src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={PIC_URL}" border="0" align="center" width="430px">
+							<img class="img-rounded img-responsive center-block" src="{SITEURL}getthumb.php?w=430&fromfile={PIC_URL}" border="0" align="center" width="430px">
 						</div>
 	<!-- IF B_HASGALELRY -->
 						<div>

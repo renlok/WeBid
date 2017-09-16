@@ -112,6 +112,9 @@ switch ($_SESSION['action']) {
                     updateauction();
                     $auction_id = $_SESSION['SELL_auction_id'];
                 } else {
+                    if (empty($_SESSION['SELL_relist'])) {
+                        $_SESSION['SELL_relist'] = 0;
+                    }
                     // insert auction
                     addauction();
                     $auction_id = $db->lastInsertId();

@@ -1,7 +1,7 @@
 <html>
 <head>
 	<title>WeBid Administration back-end</title>
-	<link rel="stylesheet" type="text/css" href="{SITEURL}/themes/{THEME}/style.css" />
+	<link rel="stylesheet" type="text/css" href="{SITEURL}/themes/{THEME}/style.css">
 </head>
 <body style="margin:0;">
 <div style="width:400px; padding:40px;" class="centre">
@@ -18,7 +18,7 @@
 			<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 			<table width="100%" border="0" cellspacing="0" cellpadding="1" class="blank">
 				<tr>
-					<td align="right" stype="width:170px;">
+					<td align="right" style="width:170px;">
 						{L_username}
 					</td>
 					<td style="padding:10px;">
@@ -58,5 +58,5 @@
 		</form>
 	</div>
 </div>
-<div>
-	<div>
+</body>
+</html>

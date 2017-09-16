@@ -52,7 +52,7 @@ $customincrement = $auction_data['increment'];
 $seller_reg = $dt->formatDate($auction_data['reg_date']);
 
 // sort out counter
-if (empty($auction_data['counter'])) {
+if (!isset($auction_data['counter'])) {
     $query = "INSERT INTO `" . $DBPrefix . "auccounter` (`auction_id`, `counter`) VALUES (:counter, 1)";
     $params = array();
     $params[] = array(':counter', $id, 'int');

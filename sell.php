@@ -307,7 +307,7 @@ switch ($_SESSION['action']) {
                     'TITLE' => $MSG['028'],
                     'PAGE' => 3,
                     'AUCTION_ID' => $auction_id,
-                    'MESSAGE' => sprintf($MSG['102'], $auction_id, $dt->formatDate($a_ends, 'D j M \a\t g:ia'))
+                    'REDIRECT' => header('location: sellsuccess.php?is=done&item='.$auction_id.'&time='.$a_ends.'&duration='.$duration.''),
                     ));
             break;
         }

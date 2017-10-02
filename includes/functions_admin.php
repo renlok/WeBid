@@ -108,16 +108,7 @@ if (!defined('AdminFuncCall')) {
 
     function load_file_from_url($url)
     {
-        if (false !== ($str = @file_get_contents($url))) {
-            return $str;
-        } elseif (($handle = @fopen($url, 'r')) !== false) {
-            $str = fread($handle, 5);
-            if (false !== $str) {
-                fclose($handle);
-                return $str;
-            }
-        } elseif (function_exists('curl_init') && function_exists('curl_setopt')
-        && function_exists('curl_exec') && function_exists('curl_close')) {
+        if (in_array  ('curl', get_loaded_extensions())) {
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -125,6 +116,14 @@ if (!defined('AdminFuncCall')) {
             $str = curl_exec($curl);
             curl_close($curl);
             return $str;
+        } elseif (false !== ($str = @file_get_contents($url))) {
+            return $str;
+        } elseif (($handle = @fopen($url, 'r')) !== false) {
+            $str = fread($handle, 5);
+            if (false !== $str) {
+                fclose($handle);
+                return $str;
+            }
         }
         return false;
     }

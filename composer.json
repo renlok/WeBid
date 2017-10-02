@@ -1,0 +1,37 @@
+{
+    "name": "renlok/webid",
+    "description": "auction script",
+    "type": "project",
+    "require": {
+        "nesbot/carbon": "^1.22",
+        "phpmailer/phpmailer": "^5.2",
+        "slim/slim": "^3.0",
+        "ezyang/htmlpurifier": "dev-master",
+        "league/flysystem": "^1.0",
+        "payum/offline": "^1.4",
+        "php-http/guzzle6-adapter": "^1.1",
+        "doctrine/orm": "2.4.*",
+        "doctrine/migrations": "^1.5",
+        "respect/validation": "^1.1",
+        "aura/intl": "^3.0",
+        "symfony/yaml": "^3.3",
+        "slim/twig-view": "^2.3"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.9",
+        "filp/whoops": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/",
+            "Src\\Controllers\\": "src/controllers/"
+        }
+    },
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Chris Dickenson",
+            "email": "hopher10@googlemail.com"
+        }
+    ]
+}

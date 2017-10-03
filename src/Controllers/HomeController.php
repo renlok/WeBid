@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Controllers;
+namespace WeBid\Controllers;
 
 class HomeController extends Controller
 {

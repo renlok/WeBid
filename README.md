@@ -15,7 +15,8 @@ DB Changes:
 
 
 TODO
-* everything
+* remove slim setup code from routes file
+* add relationship data to entities
 
 
 

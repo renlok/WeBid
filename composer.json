@@ -23,8 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "": "src/",
-            "Src\\Controllers\\": "src/controllers/"
+            "WeBid\\": "src/"
         }
     },
     "license": "GPLv3",

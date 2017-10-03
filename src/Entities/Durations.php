@@ -44,14 +44,6 @@ class Durations
     }
 
     /**
-     * @param int $durationId
-     */
-    public function setDurationId($durationId)
-    {
-        $this->durationId = $durationId;
-    }
-
-    /**
      * @return DateTime
      */
     public function getDurationLength()

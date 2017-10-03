@@ -25,15 +25,17 @@ class AuctionModeration
      * @var integer
      *
      * @ORM\Column(name="auction_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Auctions")
+     * @ORM\JoinColumn(name="auction_id", referencedColumnName="auction_id")
      */
-    private $auctionId = '0';
+    private $auctionId;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="reason", type="integer", nullable=false)
+     * @ORM\Column(name="reason", type="string", nullable=false)
      */
-    private $reason = '0';
+    private $reason;
 
     /**
      * @return int
@@ -41,14 +43,6 @@ class AuctionModeration
     public function getAuctionModerationId()
     {
         return $this->auctionModerationId;
-    }
-
-    /**
-     * @param int $auctionModerationId
-     */
-    public function setAuctionModerationId($auctionModerationId)
-    {
-        $this->auctionModerationId = $auctionModerationId;
     }
 
     /**

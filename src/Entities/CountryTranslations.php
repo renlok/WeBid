@@ -25,6 +25,8 @@ class CountryTranslations
      * @var integer
      *
      * @ORM\Column(name="country_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Countries")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="country_id")
      */
     private $countryId;
 
@@ -48,14 +50,6 @@ class CountryTranslations
     public function getCountryTranslationId()
     {
         return $this->countryTranslationId;
-    }
-
-    /**
-     * @param int $countryTranslationId
-     */
-    public function setCountryTranslationId($countryTranslationId)
-    {
-        $this->countryTranslationId = $countryTranslationId;
     }
 
     /**

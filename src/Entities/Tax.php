@@ -65,14 +65,6 @@ class Tax
     }
 
     /**
-     * @param int $taxId
-     */
-    public function setTaxId($taxId)
-    {
-        $this->taxId = $taxId;
-    }
-
-    /**
      * @return string
      */
     public function getTaxName()

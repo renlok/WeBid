@@ -25,6 +25,8 @@ class FaqTranslations
      * @var integer
      *
      * @ORM\Column(name="faq_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Faqs")
+     * @ORM\JoinColumn(name="faq_id", referencedColumnName="faq_id")
      */
     private $faqId;
 
@@ -33,14 +35,14 @@ class FaqTranslations
      *
      * @ORM\Column(name="language", type="string", length=10, nullable=false)
      */
-    private $language = '';
+    private $language;
 
     /**
      * @var string
      *
      * @ORM\Column(name="question", type="string", length=200, nullable=false)
      */
-    private $question = '';
+    private $question;
 
     /**
      * @var string
@@ -55,14 +57,6 @@ class FaqTranslations
     public function getFaqTranslationId()
     {
         return $this->faqTranslationId;
-    }
-
-    /**
-     * @param int $faqTranslationId
-     */
-    public function setFaqTranslationId($faqTranslationId)
-    {
-        $this->faqTranslationId = $faqTranslationId;
     }
 
     /**

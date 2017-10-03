@@ -24,16 +24,11 @@ class Accounts
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=20, nullable=false)
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      */
-    private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="real_name", type="text", length=255, nullable=false)
-     */
-    private $realName;
+    private $userId;
 
     /**
      * @var string
@@ -50,18 +45,18 @@ class Accounts
     private $type;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="paid_at", type="datetime", nullable=true)
-     */
-    private $paidAt;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="amount", type="float", precision=6, scale=2, nullable=false)
      */
     private $amount;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="paid_at", type="datetime", nullable=true)
+     */
+    private $paidAt;
 
     /**
      * @var \DateTime
@@ -79,35 +74,19 @@ class Accounts
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getUsername()
+    public function getUserId()
     {
-        return $this->username;
+        return $this->userId;
     }
 
     /**
-     * @param string $username
+     * @param int $userId
      */
-    public function setUsername($username)
+    public function setUserId($userId)
     {
-        $this->username = $username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRealName()
-    {
-        return $this->realName;
-    }
-
-    /**
-     * @param string $realName
-     */
-    public function setRealName($realName)
-    {
-        $this->realName = $realName;
+        $this->userId = $userId;
     }
 
     /**
@@ -143,22 +122,6 @@ class Accounts
     }
 
     /**
-     * @return DateTime
-     */
-    public function getPaidAt()
-    {
-        return $this->paidAt;
-    }
-
-    /**
-     * @param DateTime $paidAt
-     */
-    public function setPaidAt($paidAt)
-    {
-        $this->paidAt = $paidAt;
-    }
-
-    /**
      * @return float
      */
     public function getAmount()
@@ -172,6 +135,22 @@ class Accounts
     public function setAmount($amount)
     {
         $this->amount = $amount;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getPaidAt()
+    {
+        return $this->paidAt;
+    }
+
+    /**
+     * @param DateTime $paidAt
+     */
+    public function setPaidAt($paidAt)
+    {
+        $this->paidAt = $paidAt;
     }
 
     /**

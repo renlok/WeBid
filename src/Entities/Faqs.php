@@ -39,6 +39,8 @@ class Faqs
      * @var integer
      *
      * @ORM\Column(name="faq_category_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="FaqCategories")
+     * @ORM\JoinColumn(name="faq_category_id", referencedColumnName="faq_category_id")
      */
     private $faqCategoryId = '0';
 
@@ -48,14 +50,6 @@ class Faqs
     public function getFaqId()
     {
         return $this->faqId;
-    }
-
-    /**
-     * @param int $faqId
-     */
-    public function setFaqId($faqId)
-    {
-        $this->faqId = $faqId;
     }
 
     /**

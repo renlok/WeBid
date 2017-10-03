@@ -65,14 +65,6 @@ class Fees
     }
 
     /**
-     * @param int $feeId
-     */
-    public function setFeeId($feeId)
-    {
-        $this->feeId = $feeId;
-    }
-
-    /**
      * @return string
      */
     public function getFeeFrom()

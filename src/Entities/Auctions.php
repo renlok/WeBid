@@ -24,14 +24,16 @@ class Auctions
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=true)
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      */
     private $userId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=70, nullable=true)
+     * @ORM\Column(name="title", type="string", length=70, nullable=false)
      */
     private $title;
 
@@ -45,14 +47,14 @@ class Auctions
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="starts_at", type="datetime", nullable=true)
+     * @ORM\Column(name="starts_at", type="datetime", nullable=false)
      */
     private $startsAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="ends_at", type="datetime", nullable=true)
+     * @ORM\Column(name="ends_at", type="datetime", nullable=false)
      */
     private $endsAt;
 
@@ -73,7 +75,7 @@ class Auctions
     /**
      * @var integer
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=true)
+     * @ORM\Column(name="category_id", type="integer", nullable=false)
      */
     private $categoryId;
 
@@ -122,14 +124,18 @@ class Auctions
     /**
      * @var boolean
      *
-     * @ORM\Column(name="auction_type", type="boolean", nullable=false)
+     * @ORM\Column(name="auction_type_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AuctionTypes")
+     * @ORM\JoinColumn(name="auction_type_id", referencedColumnName="auction_type_id")
      */
-    private $auctionType;
+    private $auctionTypeId;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="duration_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Durations")
+     * @ORM\JoinColumn(name="duration_id", referencedColumnName="duration_id")
      */
     private $durationId;
 
@@ -172,6 +178,8 @@ class Auctions
      * @var integer
      *
      * @ORM\Column(name="current_bid_id", type="integer", nullable=false)
+     * @OneToOne(targetEntity="Bids")
+     * @JoinColumn(name="current_bid_id", referencedColumnName="bid_id")
      */
     private $currentBidId = '0';
 
@@ -248,56 +256,56 @@ class Auctions
     /**
      * @var boolean
      *
-     * @ORM\Column(name="buy_now_only", type="boolean", nullable=true)
+     * @ORM\Column(name="buy_now_only", type="boolean", nullable=false)
      */
     private $buyNowOnly = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_bold", type="boolean", nullable=true)
+     * @ORM\Column(name="is_bold", type="boolean", nullable=false)
      */
     private $isBold = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_highlighted", type="boolean", nullable=true)
+     * @ORM\Column(name="is_highlighted", type="boolean", nullable=false)
      */
     private $isHighlighted = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_featured", type="boolean", nullable=true)
+     * @ORM\Column(name="is_featured", type="boolean", nullable=false)
      */
     private $isFeatured = '0';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="current_fee", type="decimal", precision=15, scale=2, nullable=true)
+     * @ORM\Column(name="current_fee", type="decimal", precision=15, scale=2, nullable=false)
      */
     private $currentFee = '0.00';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="tax", type="boolean", nullable=true)
+     * @ORM\Column(name="tax", type="boolean", nullable=false)
      */
     private $tax = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="tax_included", type="boolean", nullable=true)
+     * @ORM\Column(name="tax_included", type="boolean", nullable=false)
      */
     private $taxIncluded = '0';
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="buy_now_sale", type="boolean", nullable=true)
+     * @ORM\Column(name="buy_now_sale", type="boolean", nullable=false)
      */
     private $buyNowSale = '0';
 
@@ -321,14 +329,6 @@ class Auctions
     public function getAuctionId()
     {
         return $this->auctionId;
-    }
-
-    /**
-     * @param int $auctionId
-     */
-    public function setAuctionId($auctionId)
-    {
-        $this->auctionId = $auctionId;
     }
 
     /**
@@ -556,19 +556,19 @@ class Auctions
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isAuctionType()
+    public function getAuctionTypeId()
     {
-        return $this->auctionType;
+        return $this->auctionTypeId;
     }
 
     /**
-     * @param bool $auctionType
+     * @param int $auctionTypeId
      */
-    public function setAuctionType($auctionType)
+    public function setAuctionType($auctionTypeId)
     {
-        $this->auctionType = $auctionType;
+        $this->auctionTypeId = $auctionTypeId;
     }
 
     /**

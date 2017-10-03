@@ -25,15 +25,19 @@ class NotificationQueue
      * @var integer
      *
      * @ORM\Column(name="auction_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Auctions")
+     * @ORM\JoinColumn(name="auction_id", referencedColumnName="auction_id")
      */
-    private $auctionId = '0';
+    private $auctionId;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="seller_id", type="integer", nullable=false)
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      */
-    private $sellerId = '0';
+    private $userId;
 
     /**
      * @var string
@@ -52,9 +56,11 @@ class NotificationQueue
     /**
      * @var integer
      *
-     * @ORM\Column(name="seller_user_id", type="integer", nullable=false)
+     * @ORM\Column(name="seller_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="seller_id", referencedColumnName="user_id")
      */
-    private $sellerUserId;
+    private $sellerId;
 
     /**
      * @var \DateTime
@@ -69,14 +75,6 @@ class NotificationQueue
     public function getNotificationQueueId()
     {
         return $this->notificationQueueId;
-    }
-
-    /**
-     * @param int $notificationQueueId
-     */
-    public function setNotificationQueueId($notificationQueueId)
-    {
-        $this->notificationQueueId = $notificationQueueId;
     }
 
     /**
@@ -98,17 +96,17 @@ class NotificationQueue
     /**
      * @return int
      */
-    public function getSellerId()
+    public function getUserId()
     {
-        return $this->sellerId;
+        return $this->userId;
     }
 
     /**
      * @param int $sellerId
      */
-    public function setSellerId($sellerId)
+    public function setUserId($userId)
     {
-        $this->sellerId = $sellerId;
+        $this->userId = $userId;
     }
 
     /**
@@ -146,17 +144,17 @@ class NotificationQueue
     /**
      * @return int
      */
-    public function getSellerUserId()
+    public function getSellerId()
     {
-        return $this->sellerUserId;
+        return $this->sellerId;
     }
 
     /**
-     * @param int $sellerUserId
+     * @param int $sellerId
      */
-    public function setSellerUserId($sellerUserId)
+    public function setSellerId($sellerId)
     {
-        $this->sellerUserId = $sellerUserId;
+        $this->sellerId = $sellerId;
     }
 
     /**

@@ -26,7 +26,7 @@ class FilterWords
      *
      * @ORM\Column(name="word", type="string", length=255, nullable=false)
      */
-    private $word = '';
+    private $word;
 
     /**
      * @return int
@@ -34,14 +34,6 @@ class FilterWords
     public function getFilterWordId()
     {
         return $this->filterWordId;
-    }
-
-    /**
-     * @param int $filterWordId
-     */
-    public function setFilterWordId($filterWordId)
-    {
-        $this->filterWordId = $filterWordId;
     }
 
     /**

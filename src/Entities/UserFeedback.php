@@ -25,6 +25,8 @@ class UserFeedback
      * @var integer
      *
      * @ORM\Column(name="rated_user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="rated_user_id", referencedColumnName="user_id")
      */
     private $ratedUserId;
 
@@ -39,6 +41,8 @@ class UserFeedback
      * @var integer
      *
      * @ORM\Column(name="rater_user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="rater_user_id", referencedColumnName="user_id")
      */
     private $raterUserId;
 
@@ -67,6 +71,8 @@ class UserFeedback
      * @var integer
      *
      * @ORM\Column(name="auction_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Auctions")
+     * @ORM\JoinColumn(name="auction_id", referencedColumnName="auction_id")
      */
     private $auctionId;
 
@@ -83,14 +89,6 @@ class UserFeedback
     public function getFeedbackId()
     {
         return $this->feedbackId;
-    }
-
-    /**
-     * @param int $feedbackId
-     */
-    public function setFeedbackId($feedbackId)
-    {
-        $this->feedbackId = $feedbackId;
     }
 
     /**

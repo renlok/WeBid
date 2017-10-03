@@ -72,14 +72,6 @@ class Logs
     }
 
     /**
-     * @param int $logId
-     */
-    public function setLogId($logId)
-    {
-        $this->logId = $logId;
-    }
-
-    /**
      * @return string
      */
     public function getType()

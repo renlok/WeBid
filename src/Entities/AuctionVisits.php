@@ -25,6 +25,8 @@ class AuctionVisits
      * @var integer
      *
      * @ORM\Column(name="auction_id", type="integer", nullable=false)
+     * @ORM\OneToOne(targetEntity="Auctions")
+     * @ORM\JoinColumn(name="auction_id", referencedColumnName="auction_id")
      */
     private $auctionId;
 

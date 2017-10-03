@@ -94,9 +94,9 @@ class Users
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=50, nullable=true)
+     * @ORM\Column(name="email", type="string", length=50, nullable=false)
      */
-    private $email = '';
+    private $email;
 
     /**
      * @var integer
@@ -122,7 +122,7 @@ class Users
     /**
      * @var boolean
      *
-     * @ORM\Column(name="suspended", type="boolean", nullable=true)
+     * @ORM\Column(name="suspended", type="boolean", nullable=false)
      */
     private $suspended = '0';
 
@@ -202,14 +202,6 @@ class Users
     public function getUserId()
     {
         return $this->userId;
-    }
-
-    /**
-     * @param int $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
     }
 
     /**

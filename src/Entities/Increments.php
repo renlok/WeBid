@@ -51,14 +51,6 @@ class Increments
     }
 
     /**
-     * @param int $incrementId
-     */
-    public function setIncrementId($incrementId)
-    {
-        $this->incrementId = $incrementId;
-    }
-
-    /**
      * @return string
      */
     public function getLow()

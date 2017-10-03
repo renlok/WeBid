@@ -25,8 +25,19 @@ class AuctionReports
      * @var integer
      *
      * @ORM\Column(name="auction_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Auctions")
+     * @ORM\JoinColumn(name="auction_id", referencedColumnName="auction_id")
      */
-    private $auctionId = '0';
+    private $auctionId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     */
+    private $userId;
 
     /**
      * @var string
@@ -34,13 +45,6 @@ class AuctionReports
      * @ORM\Column(name="reason", type="string", length=255, nullable=false)
      */
     private $reason = '0';
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
-     */
-    private $userId = '0';
 
     /**
      * @var \DateTime
@@ -55,14 +59,6 @@ class AuctionReports
     public function getReportId()
     {
         return $this->reportId;
-    }
-
-    /**
-     * @param int $reportId
-     */
-    public function setReportId($reportId)
-    {
-        $this->reportId = $reportId;
     }
 
     /**
@@ -82,22 +78,6 @@ class AuctionReports
     }
 
     /**
-     * @return string
-     */
-    public function getReason()
-    {
-        return $this->reason;
-    }
-
-    /**
-     * @param string $reason
-     */
-    public function setReason($reason)
-    {
-        $this->reason = $reason;
-    }
-
-    /**
      * @return int
      */
     public function getUserId()
@@ -111,6 +91,22 @@ class AuctionReports
     public function setUserId($userId)
     {
         $this->userId = $userId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReason()
+    {
+        return $this->reason;
+    }
+
+    /**
+     * @param string $reason
+     */
+    public function setReason($reason)
+    {
+        $this->reason = $reason;
     }
 
     /**

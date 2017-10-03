@@ -51,14 +51,6 @@ class Currencies
     }
 
     /**
-     * @param int $currencyId
-     */
-    public function setCurrencyId($currencyId)
-    {
-        $this->currencyId = $currencyId;
-    }
-
-    /**
      * @return string
      */
     public function getCountry()

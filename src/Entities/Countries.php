@@ -37,14 +37,6 @@ class Countries
     }
 
     /**
-     * @param int $countryId
-     */
-    public function setCountryId($countryId)
-    {
-        $this->countryId = $countryId;
-    }
-
-    /**
      * @return string
      */
     public function getCountry()

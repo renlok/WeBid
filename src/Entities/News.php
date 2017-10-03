@@ -26,7 +26,7 @@ class News
      *
      * @ORM\Column(name="title", type="string", length=200, nullable=false)
      */
-    private $title = '';
+    private $title;
 
     /**
      * @var string
@@ -55,14 +55,6 @@ class News
     public function getNewsId()
     {
         return $this->newsId;
-    }
-
-    /**
-     * @param int $newsId
-     */
-    public function setNewsId($newsId)
-    {
-        $this->newsId = $newsId;
     }
 
     /**

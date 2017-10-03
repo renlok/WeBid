@@ -25,6 +25,8 @@ class Bids
      * @var integer
      *
      * @ORM\Column(name="auction_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Auctions")
+     * @ORM\JoinColumn(name="auction_id", referencedColumnName="auction_id")
      */
     private $auctionId;
 
@@ -32,6 +34,8 @@ class Bids
      * @var integer
      *
      * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      */
     private $userId;
 
@@ -62,14 +66,6 @@ class Bids
     public function getBidId()
     {
         return $this->bidId;
-    }
-
-    /**
-     * @param int $bidId
-     */
-    public function setBidId($bidId)
-    {
-        $this->bidId = $bidId;
     }
 
     /**

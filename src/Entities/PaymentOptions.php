@@ -26,14 +26,14 @@ class PaymentOptions
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
-    private $name = '';
+    private $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="displayname", type="string", length=50, nullable=false)
      */
-    private $displayname = '';
+    private $displayname;
 
     /**
      * @var boolean
@@ -76,14 +76,6 @@ class PaymentOptions
     public function getPaymentOptionId()
     {
         return $this->paymentOptionId;
-    }
-
-    /**
-     * @param int $paymentOptionId
-     */
-    public function setPaymentOptionId($paymentOptionId)
-    {
-        $this->paymentOptionId = $paymentOptionId;
     }
 
     /**

@@ -25,6 +25,8 @@ class DurationTranslations
      * @var integer
      *
      * @ORM\Column(name="duration_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Durations")
+     * @ORM\JoinColumn(name="duration_id", referencedColumnName="duration_id")
      */
     private $durationId;
 
@@ -48,14 +50,6 @@ class DurationTranslations
     public function getDurationTranslationId()
     {
         return $this->durationTranslationId;
-    }
-
-    /**
-     * @param int $durationTranslationId
-     */
-    public function setDurationTranslationId($durationTranslationId)
-    {
-        $this->durationTranslationId = $durationTranslationId;
     }
 
     /**

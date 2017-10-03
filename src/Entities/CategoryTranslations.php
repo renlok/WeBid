@@ -25,6 +25,8 @@ class CategoryTranslations
      * @var integer
      *
      * @ORM\Column(name="category_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Categories")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="category_id")
      */
     private $categoryId;
 
@@ -48,14 +50,6 @@ class CategoryTranslations
     public function getCategoryTranslationId()
     {
         return $this->categoryTranslationId;
-    }
-
-    /**
-     * @param int $categoryTranslationId
-     */
-    public function setCategoryTranslationId($categoryTranslationId)
-    {
-        $this->categoryTranslationId = $categoryTranslationId;
     }
 
     /**

@@ -44,14 +44,6 @@ class AuctionTypes
     }
 
     /**
-     * @param int $auctionTypeId
-     */
-    public function setAuctionTypeId($auctionTypeId)
-    {
-        $this->auctionTypeId = $auctionTypeId;
-    }
-
-    /**
      * @return string
      */
     public function getKey()

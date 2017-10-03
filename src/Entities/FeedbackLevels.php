@@ -26,14 +26,14 @@ class FeedbackLevels
      *
      * @ORM\Column(name="feedback_level", type="integer", nullable=false)
      */
-    private $feedbackLevel = '0';
+    private $feedbackLevel;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="icon", type="string", length=30, nullable=false)
+     * @ORM\Column(name="icon", type="string", length=30, nullable=true)
      */
-    private $icon = '';
+    private $icon;
 
     /**
      * @return int
@@ -41,14 +41,6 @@ class FeedbackLevels
     public function getFeedbackLevelId()
     {
         return $this->feedbackLevelId;
-    }
-
-    /**
-     * @param int $feedbackLevelId
-     */
-    public function setFeedbackLevelId($feedbackLevelId)
-    {
-        $this->feedbackLevelId = $feedbackLevelId;
     }
 
     /**

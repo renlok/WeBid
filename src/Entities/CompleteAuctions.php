@@ -25,22 +25,28 @@ class CompleteAuctions
      * @var integer
      *
      * @ORM\Column(name="auction_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Auctions")
+     * @ORM\JoinColumn(name="auction_id", referencedColumnName="auction_id")
      */
-    private $auctionId = '0';
+    private $auctionId;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="seller_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="seller_id", referencedColumnName="user_id")
      */
-    private $sellerId = '0';
+    private $sellerId;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="winner_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="winner_id", referencedColumnName="user_id")
      */
-    private $winnerId = '0';
+    private $winnerId;
 
     /**
      * @var string

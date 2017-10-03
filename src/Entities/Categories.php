@@ -25,6 +25,8 @@ class Categories
      * @var integer
      *
      * @ORM\Column(name="parent_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Categories")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="category_id")
      */
     private $parentId;
 
@@ -32,6 +34,8 @@ class Categories
      * @var integer
      *
      * @ORM\Column(name="left_id", type="integer", nullable=false)
+     * @ORM\OneToOne(targetEntity="Categories")
+     * @ORM\JoinColumn(name="left_id", referencedColumnName="category_id")
      */
     private $leftId;
 
@@ -39,6 +43,8 @@ class Categories
      * @var integer
      *
      * @ORM\Column(name="right_id", type="integer", nullable=false)
+     * @ORM\OneToOne(targetEntity="Categories")
+     * @ORM\JoinColumn(name="right_id", referencedColumnName="category_id")
      */
     private $rightId;
 
@@ -76,14 +82,6 @@ class Categories
     public function getCategoryId()
     {
         return $this->categoryId;
-    }
-
-    /**
-     * @param int $categoryId
-     */
-    public function setCategoryId($categoryId)
-    {
-        $this->categoryId = $categoryId;
     }
 
     /**

@@ -26,7 +26,7 @@ class Groups
      *
      * @ORM\Column(name="group_name", type="string", length=50, nullable=false)
      */
-    private $groupName = '';
+    private $groupName;
 
     /**
      * @var boolean
@@ -69,14 +69,6 @@ class Groups
     public function getGroupId()
     {
         return $this->groupId;
-    }
-
-    /**
-     * @param int $groupId
-     */
-    public function setGroupId($groupId)
-    {
-        $this->groupId = $groupId;
     }
 
     /**

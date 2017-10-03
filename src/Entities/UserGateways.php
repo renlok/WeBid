@@ -32,6 +32,8 @@ class UserGateways
      * @var integer
      *
      * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      */
     private $userId;
 
@@ -55,14 +57,6 @@ class UserGateways
     public function getUserGatewayId()
     {
         return $this->userGatewayId;
-    }
-
-    /**
-     * @param int $userGatewayId
-     */
-    public function setUserGatewayId($userGatewayId)
-    {
-        $this->userGatewayId = $userGatewayId;
     }
 
     /**

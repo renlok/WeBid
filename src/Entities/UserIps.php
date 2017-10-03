@@ -25,6 +25,8 @@ class UserIps
      * @var integer
      *
      * @ORM\Column(name="user_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      */
     private $userId;
 
@@ -62,14 +64,6 @@ class UserIps
     public function getUserIpId()
     {
         return $this->userIpId;
-    }
-
-    /**
-     * @param int $userIpId
-     */
-    public function setUserIpId($userIpId)
-    {
-        $this->userIpId = $userIpId;
     }
 
     /**

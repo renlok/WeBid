@@ -24,23 +24,27 @@ class UserMessages
     /**
      * @var integer
      *
-     * @ORM\Column(name="sender_user_id", type="integer", nullable=false)
+     * @ORM\Column(name="sender_user_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="sender_user_id", referencedColumnName="user_id")
      */
-    private $senderUserId = '0';
+    private $senderUserId;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="receiver_user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumn(name="receiver_user_id", referencedColumnName="user_id")
      */
-    private $receiverUserId = '0';
+    private $receiverUserId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fromemail", type="string", length=255, nullable=false)
+     * @ORM\Column(name="fromemail", type="string", length=255, nullable=true)
      */
-    private $fromemail = '';
+    private $fromemail;
 
     /**
      * @var string
@@ -73,16 +77,18 @@ class UserMessages
     /**
      * @var integer
      *
-     * @ORM\Column(name="reply_of", type="integer", nullable=false)
+     * @ORM\Column(name="reply_of", type="integer", nullable=true)
      */
-    private $replyOf = '0';
+    private $replyOf;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="auction_id", type="integer", nullable=false)
+     * @ORM\Column(name="auction_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Auctions")
+     * @ORM\JoinColumn(name="auction_id", referencedColumnName="auction_id")
      */
-    private $auctionId = '0';
+    private $auctionId;
 
     /**
      * @var boolean
@@ -104,14 +110,6 @@ class UserMessages
     public function getUserMessageId()
     {
         return $this->userMessageId;
-    }
-
-    /**
-     * @param int $userMessageId
-     */
-    public function setUserMessageId($userMessageId)
-    {
-        $this->userMessageId = $userMessageId;
     }
 
     /**

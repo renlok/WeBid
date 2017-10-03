@@ -25,22 +25,24 @@ class NewsTranslations
      * @var integer
      *
      * @ORM\Column(name="news_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="News")
+     * @ORM\JoinColumn(name="news_id", referencedColumnName="news_id")
      */
-    private $newsId = '0';
+    private $newsId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="language", type="string", length=10, nullable=false)
      */
-    private $language = '';
+    private $language;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $title = '';
+    private $title;
 
     /**
      * @var string
@@ -55,14 +57,6 @@ class NewsTranslations
     public function getNewsTranslationId()
     {
         return $this->newsTranslationId;
-    }
-
-    /**
-     * @param int $newsTranslationId
-     */
-    public function setNewsTranslationId($newsTranslationId)
-    {
-        $this->newsTranslationId = $newsTranslationId;
     }
 
     /**

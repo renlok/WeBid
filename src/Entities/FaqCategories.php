@@ -37,14 +37,6 @@ class FaqCategories
     }
 
     /**
-     * @param int $faqCategoryId
-     */
-    public function setFaqCategoryId($faqCategoryId)
-    {
-        $this->faqCategoryId = $faqCategoryId;
-    }
-
-    /**
      * @return string
      */
     public function getCategoryName()

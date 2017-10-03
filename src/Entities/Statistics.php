@@ -58,14 +58,6 @@ class Statistics
     }
 
     /**
-     * @param int $statisticsId
-     */
-    public function setStatisticsId($statisticsId)
-    {
-        $this->statisticsId = $statisticsId;
-    }
-
-    /**
      * @return DateTime
      */
     public function getDate()

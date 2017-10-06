@@ -56,6 +56,7 @@ if (isset($CHARSET)) {
 } else {
     $db->connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix);
 }
+$db->direct_query("SET time_zone = '+0:00'");
 
 $system = new global_class();
 $template = new Template();

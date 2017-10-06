@@ -57,7 +57,7 @@ class DatabasePDO extends Database
         }
     }
 
-    // put together the quert ready for running
+    // put together the query ready for running
     /*
     $query must be given like SELECT * FROM table WHERE this = :that AND where = :here
     then $params would holds the values for :that and :here, $table would hold the vlue for :table
@@ -212,8 +212,8 @@ class DatabasePDO extends Database
 
     protected function error_handler($error)
     {
+        trigger_error($error, E_USER_WARNING);
         if (!$this->error_supress) {
-            trigger_error($error, E_USER_WARNING);
             debug_print_backtrace();
         }
     }

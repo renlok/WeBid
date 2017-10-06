@@ -101,7 +101,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             $params[] = array(':phone', $system->cleanvars($_POST['TPL_phone']), 'str');
             $params[] = array(':timezone', $_POST['TPL_timezone'], 'str');
             $params[] = array(':emailtype', $system->cleanvars($_POST['TPL_emailtype']), 'str');
-            $params[] = array(':nletter', $system->cleanvars($_POST['TPL_nletter']), 'str');
+            $params[] = array(':nletter', intval($_POST['TPL_nletter']), 'int');
 
             if (strlen($_POST['TPL_password']) > 0) {
                 // hash the password

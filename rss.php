@@ -15,8 +15,8 @@
 include 'common.php';
 include MAIN_PATH . 'language/' . $language . '/categories.inc.php';
 
-$yesterday = new DateTime('- 1 day', $dt->UTCtimezone);
-$tomorrow = new DateTime('+ 1 day', $dt->UTCtimezone);
+$yesterday = (new DateTime('- 1 day', $dt->UTCtimezone))->format('Y-m-d H:i:s');
+$tomorrow = (new DateTime('+ 1 day', $dt->UTCtimezone))->format('Y-m-d H:i:s');
 $catscontrol = new MPTTcategories();
 
 $user_id = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['user_id']) : 0;
@@ -89,10 +89,10 @@ switch ($feed) {
             $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
             $db->query($query, array(array(':user_id', $user_id, 'int')));
             $username = $db->result('nick');
+            $RSStitle = sprintf($MSG['932'], $username);
             $sort = 'DESC';
             $subquery = 'a.starts <= CURRENT_TIMESTAMP AND a.ends > CURRENT_TIMESTAMP AND a.user = :user_id';
             $params[] = array(':user_id', $user_id, 'int');
-            $RSStitle = sprintf($MSG['932'], $username);
         } else {
             $RSStitle = $MSG['924'];
             $sort = 'DESC';

@@ -156,6 +156,7 @@ if ($STATSSETTINGS['activate'] == 'y') {
     } else {
         $os .=  strtoupper($browser_info[6]);
     }
+    $os = substr($os, 0, 50);
 
     $browser = '';
     if ($browser_info[0] == 'moz') {

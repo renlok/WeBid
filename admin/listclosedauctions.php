@@ -46,7 +46,7 @@ $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_nam
           LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = a.id)
           LEFT JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
           LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
-          WHERE m.reason IS NULL AND a.closed = 1 AND a.suspended = 0 GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
+          WHERE m.reason IS NULL AND a.closed = 1 AND a.suspended = 0 GROUP BY a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, m.reason ORDER BY nick LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');

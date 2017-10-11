@@ -212,8 +212,8 @@ class DatabasePDO extends Database
 
     protected function error_handler($error)
     {
-        trigger_error($error, E_USER_WARNING);
         if (!$this->error_supress) {
+            trigger_error($error, E_USER_WARNING);
             debug_print_backtrace();
         }
     }

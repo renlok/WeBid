@@ -384,7 +384,6 @@ $MSG['346'] = 'Time Zone';
 $MSG['349'] = 'Reply';
 $MSG['351'] = 'Back to inbox';
 $MSG['352'] = 'Email Format';
-$MSG['354'] = 'Closed Auctions';
 $MSG['357'] = 'percent';
 $MSG['359'] = ' Updated';
 $MSG['364'] = 'Date';

@@ -303,7 +303,7 @@ $template->assign_vars(array(
         ));
 
 include 'header.php';
-$TMP_usmenutitle = $MSG['354'];
+$TMP_usmenutitle = $MSG['204'];
 include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
         'body' => 'yourauctions_c.tpl'

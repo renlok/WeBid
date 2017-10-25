@@ -172,7 +172,7 @@ $query = "SELECT a.* FROM " . $DBPrefix . "auctions a
 	WHERE a.user = :user_id
 	AND a.closed = 1
 	AND a.suspended = 0
-	GROUP BY w.auction
+	GROUP BY a.id
 	ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');

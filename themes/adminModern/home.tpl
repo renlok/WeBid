@@ -98,7 +98,7 @@
 						<div class="row">
 							<div class="col-md-3"><strong>{L_25_0057}</strong></div>
 							<div class="col-md-3">{C_AUCTIONS}</div>
-							<div class="col-md-3"><strong>{L_354}</strong></div>
+							<div class="col-md-3"><strong>{L_204}</strong></div>
 							<div class="col-md-3">{C_CLOSED}</div>
 						</div>
 						<div class="row">

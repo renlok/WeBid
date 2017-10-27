@@ -93,7 +93,7 @@ $(document).ready(function() {
 										<tr>
 											<td>&nbsp;</td>
 											<td align="left" valign="top">
-												{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}<br>
+												{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}<br>
 												<a href="#description"><img src="{SITEURL}images/info.gif" border='0'></a>
 												<a href="#description">{L_018}</a> &nbsp;&nbsp;&nbsp;
 												<table border='0' width="100%" cellspacing="0" cellpadding="1">

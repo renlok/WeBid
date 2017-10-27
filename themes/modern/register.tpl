@@ -132,10 +132,8 @@
 					<div class="capchabox">{CAPCHA}</div>
 				</div>
 				<div class="form-group col-lg-12">
-					<div class="checkbox">
-						<center>
-							<input type="checkbox" name="terms_check" id="terms_check"> <label for="terms_check">{L_858}</label>
-						</center>
+					<div class="checkbox text-center">
+						<input type="checkbox" name="terms_check" id="terms_check"> <label for="terms_check">{L_858}</label>
 					</div>
 					<br><br>
 					<div class="text-center">

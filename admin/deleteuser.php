@@ -104,6 +104,7 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
         $bid_data = $db->fetchall();
         foreach ($bid_data as $row) {
             $params = array();
+            $extra = '';
             // check if user is highest bidder
             if ($row['current_bid'] == $row['bid']) {
                 $query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :auc_id ORDER BY bid DESC LIMIT 1, 1";

@@ -88,7 +88,7 @@ class DatabasePDO extends Database
         //$this->lastquery->rowCount(); // rows affected
     }
 
-    // put together the quert ready for running
+    // put together the query ready for running
     public function fetch($result = null, $method = 'FETCH_ASSOC')
     {
         try {
@@ -111,7 +111,7 @@ class DatabasePDO extends Database
         return null;
     }
 
-    // put together the quert ready for running + get all results
+    // put together the query ready for running + get all results
     public function fetchall($result = null, $method = 'FETCH_ASSOC')
     {
         try {

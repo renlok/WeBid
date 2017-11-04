@@ -26,7 +26,7 @@
 			{L_189}
 		</th>
 		<th width="10%">
-			{L_755}
+			{L_898}
 		</th>
 	</tr>
 	<tr valign="top">

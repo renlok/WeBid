@@ -54,7 +54,7 @@
 		</td>
 		<td>
 	<!-- IF items.B_PAID -->
-			{L_755}
+			{L_898}
 	<!-- ELSE -->
 			<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

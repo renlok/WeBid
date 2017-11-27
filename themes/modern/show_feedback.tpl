@@ -33,7 +33,7 @@
 						<td width="40%">{L_503}</td>
 						<td width="15%">{L_240}</td>
 						<td width="15%">{L_259}</td>
-						<td width="15%">{L_364}</td>
+						<td width="15%">{L_314}</td>
 					</tr>
 <!-- BEGIN fbs -->
 					<tr {fbs.BGCOLOUR}>

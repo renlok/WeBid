@@ -386,7 +386,6 @@ $MSG['351'] = 'Back to inbox';
 $MSG['352'] = 'Email Format';
 $MSG['357'] = 'percent';
 $MSG['359'] = ' Updated';
-$MSG['364'] = 'Date';
 $MSG['365'] = 'Admin Users';
 $MSG['368'] = 'Mass category add<br><span class="smallspan">Just enter category names and put each category on a new line</span>';
 $MSG['385'] = 'Recent Feedback';

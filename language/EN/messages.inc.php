@@ -573,7 +573,6 @@ $MSG['742'] = 'reCaptcha';
 $MSG['752'] = 'The string you entered for the image verification did not match what was displayed.';
 $MSG['753'] = 'Account Suspended';
 $MSG['754'] = 'You have reached the debt limit allowed on your account; your account will be suspended until this is paid back.<br>You can this back <a href="outstanding.php">here</a>';
-$MSG['755'] = 'Paid';
 $MSG['756'] = 'Pay Now';
 $MSG['757'] = 'Security Code';
 $MSG['758'] = 'Verify Code';

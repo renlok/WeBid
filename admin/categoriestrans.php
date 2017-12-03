@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -21,7 +21,7 @@ include 'loggedin.inc.php';
 $lang = (isset($_GET['lang'])) ? $_GET['lang'] : $system->SETTINGS['defaultlanguage'];
 $catscontrol = new MPTTcategories();
 
-function search_cats($parent_id, $level)
+function search_cats()
 {
     global $catscontrol;
     $catstr = '';
@@ -58,7 +58,7 @@ function rebuild_cat_file($cats)
 
     $output .= "$" . "category_plain = array(\n0 => ''";
 
-    $output .= search_cats(0, 0);
+    $output .= search_cats();
 
     $output .= ");";
 

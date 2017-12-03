@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -113,9 +113,9 @@ class Date
             if ($diff->h > 0) {
                 $timeleft .= $diff->h . $MSG['hour_short'] . ' ';
             }
-            if ($diff->m > 0) {
-                $timeleft .= $diff->m . $MSG['minute_short'] . ' ';
-            } elseif ($diff->h == 0 && $diff->m == 0 && $diff->s > 0) {
+            if ($diff->i > 0) {
+                $timeleft .= $diff->i . $MSG['minute_short'] . ' ';
+            } elseif ($diff->h == 0 && $diff->i == 0 && $diff->s > 0) {
                 $timeleft = '<1' . $MSG['minute_short'];
             }
             if ($diff->invert) {

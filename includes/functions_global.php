@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -321,7 +321,7 @@ class global_class
 
         if ($this->SETTINGS['moneysymbol'] == 2) { // Symbol on the right
             return $str . ' ' . $currency;
-        } elseif ($this->SETTINGS['moneysymbol'] == 1) { // Symbol on the left
+        } else { // Symbol on the left
             return $currency . ' ' . $str;
         }
     }
@@ -395,7 +395,7 @@ function load_counters()
             $db->query($query, $params);
         }
         $query = "DELETE from " . $DBPrefix . "online WHERE time <= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 15 MINUTE)";
-        $db->direct_query($query, $params);
+        $db->direct_query($query);
 
         $query = "SELECT id FROM " . $DBPrefix . "online";
         $db->direct_query($query);

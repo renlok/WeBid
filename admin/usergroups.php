@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -38,6 +38,8 @@ if (isset($_GET['action']) && !isset($_POST['action'])) {
                 'CAN_SELL_N' => ($group['can_sell'] == 0) ? 'selected="true"' : '',
                 'CAN_BUY_Y' => ($group['can_buy'] == 1) ? 'selected="true"' : '',
                 'CAN_BUY_N' => ($group['can_buy'] == 0) ? 'selected="true"' : '',
+                'NO_FEES_Y' => ($group['no_fees'] == 1) ? 'selected="true"' : '',
+                'NO_FEES_N' => ($group['no_fees'] == 0) ? 'selected="true"' : '',
                 'AUTO_JOIN_Y' => ($group['auto_join'] == 1) ? 'selected="true"' : '',
                 'AUTO_JOIN_N' => ($group['auto_join'] == 0) ? 'selected="true"' : '',
                 'USER_COUNT' => $group['count'],
@@ -90,6 +92,7 @@ if (isset($_POST['action'])) {
                           count = :count,
                           can_sell = :can_sell,
                           can_buy = :can_buy,
+                          no_fees = :no_fees,
                           auto_join = :auto_join
                           WHERE id = :group_id";
                 $params = array();
@@ -97,6 +100,7 @@ if (isset($_POST['action'])) {
                 $params[] = array(':count', $_POST['user_count'], 'int');
                 $params[] = array(':can_sell', $_POST['can_sell'], 'int');
                 $params[] = array(':can_buy', $_POST['can_buy'], 'int');
+                $params[] = array(':no_fees', $_POST['no_fees'], 'int');
                 $params[] = array(':auto_join', (($auto_join) ? $_POST['auto_join'] : 1), 'int');
                 $params[] = array(':group_id', $_POST['id'], 'int');
                 $db->query($query, $params);
@@ -107,13 +111,14 @@ if (isset($_POST['action'])) {
         if (empty($_POST['group_name'])) {
             $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['user_group_name_empty_new']));
         } else {
-            $query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy, auto_join) VALUES
-                      (:group_name, :count, :can_sell, :can_buy, :auto_join)";
+            $query = "INSERT INTO ". $DBPrefix . "groups (group_name, count, can_sell, can_buy, no_fees, auto_join) VALUES
+                      (:group_name, :count, :can_sell, :can_buy, :no_fees, :auto_join)";
             $params = array();
             $params[] = array(':group_name', $system->cleanvars($_POST['group_name']), 'str');
             $params[] = array(':count', $_POST['user_count'], 'int');
             $params[] = array(':can_sell', $_POST['can_sell'], 'int');
             $params[] = array(':can_buy', $_POST['can_buy'], 'int');
+            $params[] = array(':no_fees', $_POST['no_fees'], 'int');
             $params[] = array(':auto_join', (($auto_join) ? $_POST['auto_join'] : 1), 'int');
             $db->query($query, $params);
         }
@@ -149,6 +154,7 @@ while ($row = $db->fetch()) {
             'NAME' => $row['group_name'],
             'CAN_SELL' => ($row['can_sell'] == 1) ? $MSG['yes'] : $MSG['no'],
             'CAN_BUY' => ($row['can_buy'] == 1) ? $MSG['yes'] : $MSG['no'],
+            'NO_FEES' => ($row['no_fees'] == 1) ? $MSG['yes'] : $MSG['no'],
             'AUTO_JOIN' => ($row['auto_join'] == 1) ? $MSG['yes'] : $MSG['no'],
             'USER_COUNT' => isset($groups_array[$row['id']]) ? $groups_array[$row['id']] : 0 // $row['count']
             ));

@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</h4>
 				<div class="plain-box">{NUM_AUCTIONS} {L_311}<!-- IF B_SEARCHUSER --> {L_934}{USERNAME}<!-- ENDIF --></div>
-				<table width="98%" cellpadding="0" cellspacing="0">
+				<table class="table table-striped table-bordered">
 				<tr>
 					<th align="center"><b>{L_017}</b></th>
 					<th align="center"><b>{L_557}</b></th>
@@ -49,7 +49,7 @@
 				</tr>
 				<!-- END auctions -->
 				</table>
-				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+				<table class="table table-striped table-bordered">
 					<tr>
 						<td align="center">
 							{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}

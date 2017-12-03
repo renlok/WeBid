@@ -97,7 +97,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "auctions` (
   `user` int(11) default NULL,
   `title` varchar(70),
   `subtitle` varchar(70),
-  `starts` datetime ,
+  `starts` datetime,
   `ends` datetime,
   `description` text,
   `pict_url` tinytext,
@@ -1201,7 +1201,7 @@ $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname
 $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('paypal', 'PayPal', 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('authnet', 'Authorize.net', 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('worldpay', 'WorldPay', 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('moneybookers', 'Moneybookers', 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('skrill', 'Skrill', 1);";
 $query[] = "INSERT INTO `" . $DBPrefix . "payment_options` (`name`, `displayname`, `is_gateway`) VALUES ('toocheckout', '2Checkout', 1);";
 
 # ############################
@@ -1216,6 +1216,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
   `group_name` varchar(50) NOT NULL default '',
   `can_sell` tinyint(1) NOT NULL default '0',
   `can_buy` tinyint(1) NOT NULL default '0',
+  `no_fees` tinyint(1) NOT NULL default '0',
   `count` tinyint(11) NOT NULL default '0',
   `auto_join` tinyint(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
@@ -1225,8 +1226,8 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "groups` (
 # Dumping data for table `" . $DBPrefix . "groups`
 #
 
-$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0, 1);";
-$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0, 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Sellers', 1, 0, 0, 0, 1);";
+$query[] = "INSERT INTO `" . $DBPrefix . "groups` VALUES (NULL, 'Buyers', 0, 1, 0, 0, 1);";
 
 # ############################
 

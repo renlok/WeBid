@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -41,7 +41,7 @@ if (in_array($user->user_data['suspended'], array(5, 6, 7))) {
     exit;
 }
 
-if (!$user->can_sell) {
+if (!$user->permissions['can_sell']) {
     $_SESSION['TMP_MSG'] = $MSG['818'];
     header('location: user_menu.php?cptab=selling');
     exit;
@@ -81,7 +81,7 @@ switch ($_SESSION['action']) {
             // hash and check the password
             include PACKAGE_PATH . 'PasswordHash.php';
             $phpass = new PasswordHash(8, false);
-            if (!($phpass->CheckPassword($_POST['password'], $user->user_data['password']))) {
+            if (!isset($_POST['password']) || !($phpass->CheckPassword($_POST['password'], $user->user_data['password']))) {
                 $ERR = $ERR_006;
             }
         }
@@ -96,7 +96,7 @@ switch ($_SESSION['action']) {
             $a_starts = (empty($start_now) || !$caneditstartdate) ? $a_starts : $dt->currentDatetime();
             if ($custom_end == 0) {
                 $start_datetime = new DateTime($a_starts, $dt->timezone);
-                $start_datetime->add(new DateInterval('P' . $duration . 'D'));
+                $start_datetime->add(new DateInterval('P' . intval($duration) . 'D'));
                 $a_ends = $start_datetime->format('Y-m-d H:i:s');
             }
             // get fee
@@ -112,6 +112,9 @@ switch ($_SESSION['action']) {
                     updateauction();
                     $auction_id = $_SESSION['SELL_auction_id'];
                 } else {
+                    if (empty($_SESSION['SELL_relist'])) {
+                        $_SESSION['SELL_relist'] = 0;
+                    }
                     // insert auction
                     addauction();
                     $auction_id = $db->lastInsertId();
@@ -144,7 +147,7 @@ switch ($_SESSION['action']) {
             $addcounter = true;
 
             // work out & add fee
-            if ($system->SETTINGS['fees'] == 'y') {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']) {
                 $feeupdate = false;
                 // attach the new invoice to users account
                 addoutstanding();
@@ -175,7 +178,7 @@ switch ($_SESSION['action']) {
                 }
 
                 // no fees are due and your not editing the auction so add to the auction count
-                if (!($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit') {
+                if (!($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $system->SETTINGS['fee_type'] == 2 && $fee > 0) && $_SESSION['SELL_action'] != 'edit') {
                     // update recursive categories
                     update_cat_counters(true, $_SESSION['SELL_sellcat1'], $_SESSION['SELL_sellcat2']);
                 }
@@ -252,7 +255,7 @@ switch ($_SESSION['action']) {
                     }
                 } elseif ($user->user_data['startemailmode'] == 'yes') {
                     // awaiting payment
-                    include INCLUDE_PATH . 'auction_pending.php';
+                    include INCLUDE_PATH . 'email/auction_pending.php';
                 }
 
                 if ($system->SETTINGS['bn_only'] && $system->SETTINGS['bn_only_disable'] == 'y' && $system->SETTINGS['bn_only_percent'] < 100) {
@@ -292,7 +295,7 @@ switch ($_SESSION['action']) {
                 $system->log('user', 'List Item', $user->user_data['id'], $auction_id);
             }
 
-            if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $system->SETTINGS['fee_type'] == 2 && $fee > 0) {
                 $_SESSION['auction_id'] = $auction_id;
                 header('location: pay.php?a=4');
                 exit;
@@ -376,6 +379,12 @@ switch ($_SESSION['action']) {
                 $shippingtext = $MSG['867'];
             }
 
+            $current_fee = ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0');
+            $corrected_fee = bcsub(get_fee($minimum_bid), $current_fee, $system->SETTINGS['moneydecimals']);
+            if ($corrected_fee < 0) {
+                $corrected_fee = 0;
+            }
+
             $template->assign_vars(array(
                     'TITLE' => htmlspecialchars($title),
                     'SUBTITLE' => htmlspecialchars($subtitle),
@@ -403,14 +412,14 @@ switch ($_SESSION['action']) {
                     'PAYMENTS_METHODS' => $payment_methods,
                     'CAT_LIST1' => $category_string1,
                     'CAT_LIST2' => $category_string2,
-                    'FEE' => number_format(get_fee($minimum_bid), $system->SETTINGS['moneydecimals']),
+                    'FEE' => number_format($corrected_fee, $system->SETTINGS['moneydecimals']),
 
                     'B_USERAUTH' => ($system->SETTINGS['usersauth'] == 'y'),
                     'B_BN_ONLY' => (!($system->SETTINGS['buy_now'] == 2 && $buy_now_only)),
                     'B_BN' => ($system->SETTINGS['buy_now'] == 2),
                     'B_GALLERY' => ($system->SETTINGS['picturesgallery'] == 1 && isset($_SESSION['UPLOADED_PICTURES']) && count($_SESSION['UPLOADED_PICTURES']) > 0),
                     'B_CUSINC' => ($system->SETTINGS['cust_increment'] == 1),
-                    'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
+                    'B_FEES' => ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']),
                     'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
                     'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y')
                     ));
@@ -482,6 +491,15 @@ switch ($_SESSION['action']) {
             }
         }
 
+        // can edit start date check
+        $caneditstartdate = false;
+        $starting_date = new DateTime($a_starts);
+        $current_date = new DateTime();
+        if ($system->SETTINGS['edit_starttime'] && ($_SESSION['SELL_action'] != 'edit' ||
+            ($starting_date > $current_date && $_SESSION['SELL_action'] == 'edit'))) {
+            $caneditstartdate = true;
+        }
+
         $CKEditor = new CKEditor();
         $CKEditor->basePath = 'js/ckeditor/';
         $CKEditor->returnOutput = true;
@@ -539,13 +557,18 @@ switch ($_SESSION['action']) {
                 $relist_fee = $row['value'];
             }
         }
-        $fee_javascript .= 'var current_fee = ' . ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0') . ';';
+        $current_fee = ((isset($_SESSION['SELL_current_fee'])) ? $_SESSION['SELL_current_fee'] : '0');
+        $fee_javascript .= 'var current_fee = ' . $current_fee . ';';
         $relist_options = '<select name="autorelist" id="autorelist">';
         for ($i = 0; $i <= $system->SETTINGS['autorelist_max']; $i++) {
             $relist_options .= '<option value="' . $i . '"' . (($relist == $i) ? ' selected="selected"' : '') . '>' . $i . '</option>';
         }
         $relist_options .= '</select>';
         $fee_value = get_fee($minimum_bid);
+        $corrected_fee = bcsub($fee_value, $current_fee, $system->SETTINGS['moneydecimals']);
+        if ($corrected_fee < 0) {
+            $corrected_fee = 0;
+        }
 
         $template->assign_vars(array(
                 'TITLE' => $MSG['028'],
@@ -603,7 +626,7 @@ switch ($_SESSION['action']) {
                 'MAXPICS' => sprintf($MSG['673'], $system->SETTINGS['maxpictures'], $system->SETTINGS['maxuploadsize']/1024),
 
                 'FEE_VALUE' => $fee_value,
-                'FEE_VALUE_F' => number_format($fee_value, $system->SETTINGS['moneydecimals']),
+                'FEE_VALUE_F' => number_format($corrected_fee, $system->SETTINGS['moneydecimals']),
                 'FEE_MIN_BID' => $fee_min_bid,
                 'FEE_BN' => $fee_bn,
                 'FEE_RP' => $fee_rp,
@@ -624,7 +647,7 @@ switch ($_SESSION['action']) {
                 'B_MKFEATURED' => ($system->SETTINGS['ao_hpf_enabled'] == 'y'),
                 'B_MKBOLD' => ($system->SETTINGS['ao_bi_enabled'] == 'y'),
                 'B_MKHIGHLIGHT' => ($system->SETTINGS['ao_hi_enabled'] == 'y'),
-                'B_FEES' => ($system->SETTINGS['fees'] == 'y'),
+                'B_FEES' => ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']),
                 'B_SHIPPING' => ($system->SETTINGS['shipping'] == 'y'),
                 'B_SUBTITLE' => ($system->SETTINGS['subtitle'] == 'y'),
                 'B_AUTORELIST' => ($system->SETTINGS['autorelist'] == 'y')

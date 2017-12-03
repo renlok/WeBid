@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -90,7 +90,7 @@ function get_reminders($secid)
     // get auctions sold item
     $query = "SELECT COUNT(DISTINCT a.id) AS total FROM " . $DBPrefix . "winners a
 		LEFT JOIN " . $DBPrefix . "auctions b ON (a.auction = b.id)
-		WHERE b.closed = 1 AND a.seller = :sellers AND a.is_read = 0";
+		WHERE b.closed = 1 AND a.seller = :sellers";
     $params = array();
     $params[] = array(':sellers', $secid, 'int');
     $db->query($query, $params);
@@ -159,7 +159,7 @@ switch ($_SESSION['cptab']) {
 }
 
 $template->assign_vars(array(
-        'B_CANSELL' => ($user->can_sell),
+        'B_CANSELL' => ($user->permissions['can_sell']),
         'B_CANREQUESTSELL' => ($system->SETTINGS['user_request_seller_permission']),
 
         'TMPMSG' => (isset($_SESSION['TMP_MSG'])) ? $_SESSION['TMP_MSG'] : '',

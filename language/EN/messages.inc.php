@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -235,9 +235,7 @@ $MSG['121'] = 'Place Your Bid Here:';
 $MSG['122'] = 'Edit, delete or add auction durations using the form below';
 $MSG['124'] = 'Minimum bid';
 $MSG['125'] = 'Seller';
-$MSG['126'] = ' days, ';
-$MSG['126b'] = ' day, ';
-$MSG['126a'] = 'days ago';
+$MSG['126'] = 'days ago';
 $MSG['127'] = 'Starting Bid';
 $MSG['128'] = 'Bid Increments';
 $MSG['129'] = 'ID';
@@ -386,10 +384,8 @@ $MSG['346'] = 'Time Zone';
 $MSG['349'] = 'Reply';
 $MSG['351'] = 'Back to inbox';
 $MSG['352'] = 'Email Format';
-$MSG['354'] = 'Closed Auctions';
 $MSG['357'] = 'percent';
 $MSG['359'] = ' Updated';
-$MSG['364'] = 'Date';
 $MSG['365'] = 'Admin Users';
 $MSG['368'] = 'Mass category add<br><span class="smallspan">Just enter category names and put each category on a new line</span>';
 $MSG['385'] = 'Recent Feedback';
@@ -492,6 +488,7 @@ $MSG['566'] = 'active';
 $MSG['567'] = 'not active';
 $MSG['569'] = 'Insert user';
 $MSG['570'] = 'Never logged in';
+$MSG['group_no_fees'] = 'Fee Exempt';
 $MSG['578'] = 'Can Sell';
 $MSG['579'] = 'Can Buy';
 $MSG['580'] = 'Auto Join';
@@ -575,7 +572,6 @@ $MSG['742'] = 'reCaptcha';
 $MSG['752'] = 'The string you entered for the image verification did not match what was displayed.';
 $MSG['753'] = 'Account Suspended';
 $MSG['754'] = 'You have reached the debt limit allowed on your account; your account will be suspended until this is paid back.<br>You can this back <a href="outstanding.php">here</a>';
-$MSG['755'] = 'Paid';
 $MSG['756'] = 'Pay Now';
 $MSG['757'] = 'Security Code';
 $MSG['758'] = 'Verify Code';
@@ -626,10 +622,10 @@ $MSG['818'] = 'You do not have permission to list items';
 $MSG['819'] = 'You do not have permission to buy items';
 $MSG['820'] = 'Account selling permission request';
 $MSG['821'] = 'A valid 2Checkout ID is required';
-$MSG['822'] = 'A valid Moneybookers email address is required';
+$MSG['822'] = 'A valid Skrill email address is required';
 $MSG['823'] = 'A valid Worldpay ID is required';
 $MSG['824'] = 'Worldpay ID';
-$MSG['825'] = 'Moneybookers Email Address';
+$MSG['825'] = 'Skrill Email Address';
 $MSG['826'] = '2Checkout ID';
 $MSG['828'] = 'Week';
 $MSG['829'] = 'View by ';
@@ -897,6 +893,8 @@ $MSG['5072'] = 'Enter the undesired words one per line (max. 255 characters per 
 treated like "one word".';
 $MSG['5085'] = 'About Us';
 $MSG['5086'] = 'Terms &amp; Conditions';
+// cookiespolicy.php
+$MSG['cookie_policy'] = "Cookie Policy";
 $MSG['5094'] = 'View auctions';
 $MSG['5113'] = 'Change';
 $MSG['5115'] = 'days';
@@ -1043,8 +1041,6 @@ $MSG['25_0025'] = 'Settings Overview';
 $MSG['25_0026'] = 'Batch Process (cron.php)';
 $MSG['25_0027'] = 'Be sure to set up a cronjob to run cron.php periodically (15 minutes is usually a good time interval).';
 $MSG['25_0031'] = 'Statistics';
-$MSG['25_0032'] = ' minutes';
-$MSG['25_0033'] = ' seconds';
 $MSG['25_0035'] = 'Time Correction';
 $MSG['25_0036'] = 'GMT';
 $MSG['25_0037'] = ' hours';
@@ -1162,7 +1158,6 @@ $MSG['30_0213'] = 'No feedback needs leaving';
 $MSG['30_0214'] = 'WeBid Version';
 $MSG['30_0215'] = 'Upload Logo';
 $MSG['upload_failed'] = 'Upload failed';
-$MSG['30_0110'] = 'Shipping';
 $MSG['350_1004'] = 'Quantity';
 $MSG['350_1008'] = 'Additional Shipping';
 $MSG['350_1009'] = 'Additional Shipping Cost';
@@ -1248,3 +1243,18 @@ $MSG['minute_short'] = 'm';
 
 // yourmessages.tpl
 $MSG['delete_message_confirm'] = 'Are you sure you want to delete this message?';
+
+//Countdown Timer Messages
+$MSG['count_years'] = " years";
+$MSG['count_year'] = " year";
+$MSG['count_months'] = " months";
+$MSG['count_month'] = " month";
+$MSG['count_hours'] = " hours";
+$MSG['count_hour'] = " hour";
+$MSG['count_days'] = " days";
+$MSG['count_day'] = " day";
+$MSG['count_minutes'] = " minutes";
+$MSG['count_minute'] = " minute";
+$MSG['count_seconds'] = " seconds";
+$MSG['count_second'] = " second";
+

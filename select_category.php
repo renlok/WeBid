@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -24,7 +24,7 @@ if (!$user->checkAuth()) {
 }
 $user->checkSuspended();
 
-if (!$user->can_sell) {
+if (!$user->permissions['can_sell']) {
     header('location: user_menu.php?cptab=selling');
     exit;
 }
@@ -34,6 +34,7 @@ $box = (isset($_POST['box'])) ? $_POST['box'] + 1 : 0;
 $catscontrol = new MPTTcategories();
 $cat_no = (isset($_REQUEST['cat_no'])) ? $_REQUEST['cat_no'] : 1;
 $i = 0;
+$POST = [];
 while (true) {
     if (!isset($_POST['cat' . $i])) {
         break;
@@ -118,6 +119,7 @@ if (isset($_GET['change']) && $_GET['change'] == 'yes') {
     $_SESSION['SELL_start_now'] = '1';
     $_SESSION['SELL_ends'] = '';
     $_SESSION['SELL_custom_end'] = 0;
+    $_SESSION['SELL_current_fee'] = 0;
     $_SESSION['SELL_caneditstartdate'] = true;
     $_SESSION['SELL_hash'] = md5(microtime() . rand(0, 50));
     $_SESSION['SELL_submitted'][$_SESSION['SELL_hash']] = false;

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             $AUCTION = $db->result();
             $suspend = 0;
 
-            if ($system->SETTINGS['fees'] == 'y' && $relist_fee > 0) {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $relist_fee > 0) {
                 if ($system->SETTINGS['fee_type'] == 1) {
                     // charge relist fee
                     $query = "UPDATE " . $DBPrefix . "users SET balance = balance - :relist_fee WHERE id = :user_id";
@@ -58,7 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
             // auction ends
             $start_date = new DateTime('now', $dt->UTCtimezone);
-            $start_date->add(new DateInterval('P' . $AUCTION['duration'] . 'D'));
+            $start_date->add(new DateInterval('P' . intval($AUCTION['duration']) . 'D'));
             $auction_ends = $start_date->format('Y-m-d H:i:s');
 
             $query = "UPDATE " . $DBPrefix . "auctions
@@ -172,7 +172,7 @@ $query = "SELECT a.* FROM " . $DBPrefix . "auctions a
 	WHERE a.user = :user_id
 	AND a.closed = 1
 	AND a.suspended = 0
-	GROUP BY w.auction
+	GROUP BY a.id
 	ORDER BY " . $_SESSION['solda_ord'] . " " . $_SESSION['solda_type'] . " LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':user_id', $user->user_data['id'], 'int');

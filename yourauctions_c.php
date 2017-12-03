@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -97,7 +97,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
             $AUCTION = $db->result();
             $suspend = 0;
 
-            if ($system->SETTINGS['fees'] == 'y' && $relist_fee > 0) {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $relist_fee > 0) {
                 if ($system->SETTINGS['fee_type'] == 1) {
                     // charge relist fee
                     $query = "UPDATE " . $DBPrefix . "users SET balance = balance - :relist_fee WHERE id = :user_id";
@@ -112,7 +112,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 
             // auction ends
             $start_date = new DateTime('now', $dt->UTCtimezone);
-            $start_date->add(new DateInterval('P' . $AUCTION['duration'] . 'D'));
+            $start_date->add(new DateInterval('P' . intval($AUCTION['duration']) . 'D'));
             $auction_ends = $start_date->format('Y-m-d H:i:s');
 
             $query = "UPDATE " . $DBPrefix . "auctions
@@ -298,12 +298,12 @@ $template->assign_vars(array(
         'PAGES' => $PAGES,
 
         'B_AREITEMS' => ($i > 0),
-        'B_RELIST_FEE' => ($relist_fee > 0 && $system->SETTINGS['fees'] == 'y'),
+        'B_RELIST_FEE' => ($relist_fee > 0 && $system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']),
         'B_AUTORELIST' => ($system->SETTINGS['autorelist'] == 'y')
         ));
 
 include 'header.php';
-$TMP_usmenutitle = $MSG['354'];
+$TMP_usmenutitle = $MSG['204'];
 include INCLUDE_PATH . 'user_cp.php';
 $template->set_filenames(array(
         'body' => 'yourauctions_c.tpl'

@@ -93,7 +93,7 @@ $(document).ready(function() {
 										<tr>
 											<td>&nbsp;</td>
 											<td align="left" valign="top">
-												{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}<br>
+												{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}<br>
 												<a href="#description"><img src="{SITEURL}images/info.gif" border='0'></a>
 												<a href="#description">{L_018}</a> &nbsp;&nbsp;&nbsp;
 												<table border='0' width="100%" cellspacing="0" cellpadding="1">
@@ -203,7 +203,7 @@ $(document).ready(function() {
 								<td class="table2" style="padding:10px;">
 									<a href='{SITEURL}profile.php?user_id={SELLER_ID}&auction_id={ID}'><b>{SELLER_NICK}</b></a>
 									(<a href='{SITEURL}feedback.php?id={SELLER_ID}&faction=show'>{SELLER_TOTALFB}</a>)
-									<img src="{SITEURL}images/icons/{high_bidders.SELLER_FB_ICON}" alt="{SELLER_FB_ICON}" class="fbstar">
+									<!-- IF SELLER_FB_ICON ne '' --><img src="{SITEURL}images/icons/{SELLER_FB_ICON}" alt="{SELLER_FB_ICON}" class="fbstar"><!-- ENDIF -->
 								</td>
 							</tr>
 							<tr>

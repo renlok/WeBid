@@ -100,7 +100,7 @@
 						<tr class="bg">
 							<td><strong>{L_25_0057}</strong></td>
 							<td>{C_AUCTIONS}</td>
-							<td><strong>{L_354}</strong></td>
+							<td><strong>{L_204}</strong></td>
 							<td>{C_CLOSED}</td>
 						</tr>
 						<tr>

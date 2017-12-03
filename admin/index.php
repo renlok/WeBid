@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -133,24 +133,27 @@ if ($system->SETTINGS['activationtype'] == 0) {
 }
 
 // version check
-switch ($system->SETTINGS['version_check']) {
-    case 'unstable':
-        $url = 'http://www.webidsupport.com/version_unstable.txt';
-        break;
-    default:
-        $url = 'http://www.webidsupport.com/version.txt';
-        break;
-}
+$realversion = '0.0';
+$update_available = false;
+if ($system->SETTINGS['version_check'] !== "") {
+    switch ($system->SETTINGS['version_check']) {
+        case 'unstable':
+            $url = 'http://raw.githubusercontent.com/renlok/WeBid/dev/install/thisversion.txt';
+            break;
+        default:
+          $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';
+            break;
+    }
 
-if (!($realversion = load_file_from_url($url))) {
+  if (!($realversion = load_file_from_url($url))) {
     $ERR = $MSG['error_file_access_disabled'];
     $realversion = $MSG['unknown'];
-}
+  }
 
-$update_available = false;
-if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
+  if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
     $update_available = true;
-    $text = $MSG['outdated_version'];
+    $realversion = $MSG['outdated_version'];
+  }
 }
 
 //getting the correct email settings

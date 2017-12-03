@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -92,7 +92,7 @@ foreach ($auction_data as $row) {
             'BIDVALUE' => $row['minimum_bid'],
             'BIDFORMAT' => $system->print_money($row['minimum_bid']),
             'NUM_BIDS' => $num_bids,
-            'TIMELEFT' => $difference->format('%a') . ' ' . $MSG['126a'],
+            'TIMELEFT' => $difference->format('%a') . ' ' . $MSG['126'],
 
             'B_BUY_NOW' => ($row['buy_now'] > 0 && ($row['bn_only'] || $row['bn_only'] == 0 && ($row['num_bids'] == 0 || ($row['reserve_price'] > 0 && $row['current_bid'] < $row['reserve_price'])))),
             'B_BNONLY' => ($row['bn_only'])

@@ -115,8 +115,7 @@
 				<legend>{L_719}</legend>
 
 	<!-- BEGIN gateways -->
-		<div class="form-group col-lg-12"> 
-		<!-- IF gateways.MISSING eq 1 -->has-error<!-- ENDIF --> 
+		<div class="form-group col-lg-12">
 			<label for="TPL_pp_email">{gateways.ADDRESS_NAME}{gateways.REQUIRED}</label>
 			<input type="hidden" name="{gateways.PLAIN_NAME}[id]" value="{gateways.GATEWAY_ID}">
 			<input type="text" name="{gateways.PLAIN_NAME}[address]" class="form-control" value="{gateways.ADDRESS}" <!-- IF gateways.MISSING eq 1 -->id="inputError1"<!-- ENDIF -->>
@@ -133,10 +132,8 @@
 					<div class="capchabox">{CAPCHA}</div>
 				</div>
 				<div class="form-group col-lg-12">
-					<div class="checkbox">
-						<center>
-							<input type="checkbox" name="terms_check" id="terms_check"> {L_858}
-						</center>
+					<div class="checkbox text-center">
+						<input type="checkbox" name="terms_check" id="terms_check"> <label for="terms_check">{L_858}</label>
 					</div>
 					<br><br>
 					<div class="text-center">

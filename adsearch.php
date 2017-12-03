@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -146,13 +146,13 @@ if (isset($_SESSION['advs']) && is_array($_SESSION['advs'])) {
                     $ora = "((au.payment LIKE :payment" . ($i) . ")";
                     $asparams[] = array(":payment" . ($i), '%' . $system->cleanvars($val) . '%', 'str');
                 } else {
-                    $ora .= " OR (au.payment LIKE :payment" . ($i) . ") AND ";
+                    $ora .= " OR (au.payment LIKE :payment" . ($i) . ")";
                     $asparams[] = array(":payment" . ($i), '%' . $system->cleanvars($val) . '%', 'str');
                 }
                 $pri = true;
                 $i++;
             }
-            $ora .= ") ";
+            $ora .= ")  AND";
         } else {
             $ora = "(au.payment LIKE :payment) AND ";
             $asparams[] = array(':payment', '%' . $system->cleanvars($_SESSION['advs']['payment'][0]) . '%', 'str');

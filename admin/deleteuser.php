@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -104,17 +104,18 @@ if (isset($_POST['action']) && $_POST['action'] == "Yes") {
         $bid_data = $db->fetchall();
         foreach ($bid_data as $row) {
             $params = array();
+            $extra = '';
             // check if user is highest bidder
             if ($row['current_bid'] == $row['bid']) {
-                $query = "SELECT bid FROM " . $DBPrefix . "bids WHERE auction = :auc_id ORDER BY bid DESC LIMIT 1, 1";
+                $query = "SELECT id, bid FROM " . $DBPrefix . "bids WHERE auction = :auc_id ORDER BY bid DESC LIMIT 1, 1";
                 $params[] = array(':auc_id', $row['id'], 'int');
                 $db->query($query, $params);
-                $next_bid = $db->result('bid');
+                $next_bid = $db->result();
                 // set new highest bid
                 $params = array();
-                $extra = ", current_bid = :next_bid, current_bid_id = :current_bid_id";
-                $params[] = array(':next_bid', $next_bid, 'float');
-                $params[] = array(':current_bid_id', $row['id'], 'int');
+                $extra = ", current_bid = :current_bid, current_bid_id = :current_bid_id";
+                $params[] = array(':current_bid', $next_bid['bid'], 'float');
+                $params[] = array(':current_bid_id', $next_bid['bid_id'], 'int');
             }
             $query = "UPDATE " . $DBPrefix . "auctions SET num_bids = num_bids - 1" . $extra . " WHERE id = :auc_id";
             $params[] = array(':auc_id', $row['id'], 'int');

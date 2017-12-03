@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -70,8 +70,15 @@ if (isset($_GET['test_email'])) {
     $message        = filter_var($_POST["message"], FILTER_SANITIZE_STRING);
 
     $emailer = new email_handler();
-    $emailer->email_basic($subject, $to_email, $message);
-    die();
+    $send_mail = $emailer->email_basic($subject, $to_email, $message);
+    // responce to jquery - $send_mail will have any errors found already imploded
+	if($send_mail) {
+        $output = json_encode(array('type'=>'error', 'text' => sprintf($MSG['email_sending_failure'], $send_mail)));
+		 die($output);
+     }else{
+        $output = json_encode(array('type'=>'message', 'text' => $MSG['email_sending_success']));
+		 die($output);
+     }
 }
 
 $template->assign_vars(array(

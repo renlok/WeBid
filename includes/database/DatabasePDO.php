@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -23,7 +23,6 @@ class DatabasePDO extends Database
         'FETCH_BOTH' => PDO::FETCH_BOTH,
         'FETCH_NUM' => PDO::FETCH_NUM,
     ];
-    protected $error_supress = !WeBidDebug;
 
     public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8')
     {
@@ -58,7 +57,7 @@ class DatabasePDO extends Database
         }
     }
 
-    // put together the quert ready for running
+    // put together the query ready for running
     /*
     $query must be given like SELECT * FROM table WHERE this = :that AND where = :here
     then $params would holds the values for :that and :here, $table would hold the vlue for :table
@@ -89,7 +88,7 @@ class DatabasePDO extends Database
         //$this->lastquery->rowCount(); // rows affected
     }
 
-    // put together the quert ready for running
+    // put together the query ready for running
     public function fetch($result = null, $method = 'FETCH_ASSOC')
     {
         try {
@@ -109,9 +108,10 @@ class DatabasePDO extends Database
         } catch (PDOException $e) {
             $this->error_handler($e->getMessage());
         }
+        return null;
     }
 
-    // put together the quert ready for running + get all results
+    // put together the query ready for running + get all results
     public function fetchall($result = null, $method = 'FETCH_ASSOC')
     {
         try {
@@ -212,8 +212,8 @@ class DatabasePDO extends Database
 
     protected function error_handler($error)
     {
+        trigger_error($error, E_USER_WARNING);
         if (!$this->error_supress) {
-            trigger_error($error, E_USER_WARNING);
             debug_print_backtrace();
         }
     }

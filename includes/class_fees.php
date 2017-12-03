@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -187,7 +187,7 @@ class fees
         exit;
     }
 
-    public function moneybookers_validate() // now called skrill
+    public function skrill_validate()
     {
         $payment_amount = floatval($this->data['amount']);
 
@@ -221,7 +221,7 @@ class fees
         exit;
     }
 
-    private function callback_process($custom_id, $fee_type, $payment_amount, $currency = null)
+    private function callback_process($custom_id, $fee_type, $payment_amount)
     {
         switch ($fee_type) {
             case 1: // add to account balance

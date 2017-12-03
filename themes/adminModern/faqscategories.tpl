@@ -4,10 +4,10 @@
 			</div>
 		</div>
 			<div class="col-md-9">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5236}&nbsp;&gt;&gt;&nbsp;{L_5230}</h4>
 				<form name="newfaqcat" action="" method="post">
-					<table width="98%" cellpadding="0" cellspacing="0">
+					<table class="table table-striped table-bordered">
 <!-- IF B_ADDCAT -->
 						<tr bgcolor="#FFFF66">
 							<td>{L_165}</td>

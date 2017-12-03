@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -15,10 +15,6 @@
 include 'common.php';
 
 switch ($_GET['show']) {
-    case 'aboutus':
-        $TITLE = $MSG['5085'];
-        $CONTENT = $system->SETTINGS['aboutustext'];
-        break;
     case 'terms':
         $TITLE = $MSG['5086'];
         $CONTENT = $system->SETTINGS['termstext'];
@@ -30,6 +26,11 @@ switch ($_GET['show']) {
     case 'cookies':
         $TITLE = $MSG['cookie_policy'];
         $CONTENT = $system->SETTINGS['cookiespolicytext'];
+        break;
+    default:
+    case 'aboutus':
+        $TITLE = $MSG['5085'];
+        $CONTENT = $system->SETTINGS['aboutustext'];
         break;
 }
 

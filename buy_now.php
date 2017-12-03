@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -28,7 +28,7 @@ if (in_array($user->user_data['suspended'], array(5, 6, 7))) {
     exit;
 }
 
-if (!$user->can_buy) {
+if (!$user->permissions['can_buy']) {
     $_SESSION['TMP_MSG'] = $MSG['819'];
     header('location: user_menu.php');
     exit;
@@ -176,7 +176,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy') {
             $ff_paid = 1;
 
             // work out & add fee
-            if ($system->SETTINGS['fees'] == 'y') {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']) {
                 $query = "SELECT value, fee_type FROM " . $DBPrefix . "fees WHERE type = 'buyer_fee'";
                 $db->direct_query($query);
                 $row = $db->result();
@@ -278,8 +278,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy') {
             // work out shipping cost
             if ($new_winner) {
                 $query = "INSERT INTO " . $DBPrefix . "winners
-						(auction, seller, winner, bid, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
-						(:auc_id, :seller_id, :winner_id, :buy_now, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
+                        (auction, seller, winner, bid, feedback_win, feedback_sel, qty, paid, bf_paid, ff_paid, shipped, auc_title, auc_shipping_cost, auc_payment) VALUES
+                        (:auc_id, :seller_id, :winner_id, :buy_now, 0, 0, :quantity, 0, :bf_paid, :ff_paid, 0, :auc_title, :auc_shipping_cost, :auc_payment)";
                 $params = array();
                 $params[] = array(':auc_id', $id, 'int');
                 $params[] = array(':seller_id', $Auction['user'], 'int');
@@ -301,7 +301,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'buy') {
             include INCLUDE_PATH . 'email/endauction_multi_item_win.php';
             include INCLUDE_PATH . 'email/seller_partial_winner.php';
 
-            if ($system->SETTINGS['fees'] == 'y' && $system->SETTINGS['fee_type'] == 2 && $fee > 0) {
+            if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees'] && $system->SETTINGS['fee_type'] == 2 && $fee_value > 0) {
                 $_SESSION['auction_id'] = $id;
                 header('location: pay.php?a=6');
                 exit;
@@ -332,7 +332,7 @@ $template->assign_vars(array(
         'SHIPPINGCOST' => ($shipping_cost >  0) ? $system->print_money($shipping_cost) : 0,
         'BN_TOTAL' => $system->print_money($BN_total),
         'SELLER' => ' <a href="profile.php?user_id=' . $Auction['user'] . '"><b>' . $Seller['nick'] . '</b></a>',
-        'SELLERNUMFBS' => '<b>(' . $total_rate . ')</b>',
+        'SELLERNUMFBS' => '<b>(' . $Seller['rate_sum'] . ')</b>',
         'FB_ICON' => $feedback_icon,
         'LEFT' => $Auction['quantity'],
 

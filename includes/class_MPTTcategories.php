@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -306,9 +306,6 @@ class MPTTcategories
 
         // Now we have to insert all the new elements.
         for ($i = 0, $n = count($data); $i< $n; $i++) {
-            // We need a new key.
-            unset($data[$i][FIELD_KEY]);
-
             // This fields need new values.
             $data[$i]['left_id'] += $dist;
             $data[$i]['right_id'] += $dist;

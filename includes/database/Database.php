@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -20,13 +20,19 @@ abstract class Database
 {
     // database
     protected $conn;
-    protected $DBPrefix;
     protected $CHARSET;
     protected $lastquery;
     protected $fetchquery;
     protected $error;
-    protected $error_supress = false;
+    protected $error_supress;
     protected $fetch_methods = [];
+    
+    public $DBPrefix;
+
+    public function __construct()
+    {
+        $this->error_supress = !(defined('WeBidDebug') && WeBidDebug);
+    }
 
     abstract public function connect($DbHost, $DbUser, $DbPassword, $DbDatabase, $DBPrefix, $CHARSET = 'UTF-8');
     abstract public function error_supress($state = true);

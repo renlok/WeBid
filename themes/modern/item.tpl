@@ -55,7 +55,7 @@ $(document).ready(function() {
 					<div class="panel-heading"><span class="label label-default">{L_113}: {ID}</span></div>
 					<div class="panel-body">
 						<div class="col-md-12">
-							<img class="img-rounded img-responsive center-block" src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={PIC_URL}" border="0" align="center" width="430px">
+							<img class="img-rounded img-responsive center-block" src="{SITEURL}getthumb.php?w=430&fromfile={PIC_URL}" border="0" align="center" width="430px">
 						</div>
 	<!-- IF B_HASGALELRY -->
 						<div>
@@ -185,7 +185,7 @@ $(document).ready(function() {
 						<div>
 							<a href='{SITEURL}profile.php?user_id={SELLER_ID}&amp;auction_id={ID}'><b>{SELLER_NICK}</b></a>
 							(<a href='{SITEURL}feedback.php?id={SELLER_ID}&amp;faction=show'>{SELLER_TOTALFB}</A>)
-							<img src="{SITEURL}images/icons/{high_bidders.SELLER_FB_ICON}" alt="{SELLER_FB_ICON}" class="fbstar">
+							<!-- IF SELLER_FB_ICON ne '' --><img src="{SITEURL}images/icons/{SELLER_FB_ICON}" alt="{SELLER_FB_ICON}" class="fbstar"><!-- ENDIF -->
 						</div>
 						<div>
 							<ul class="list-unstyled">

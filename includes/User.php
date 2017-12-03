@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -19,9 +19,12 @@ if (!defined('InWeBid')) {
 class User
 {
     public $user_data = [];
+    public $permissions = [
+        'can_sell' => false,
+        'can_buy' => false,
+        'no_fees' => false
+    ];
     public $logged_in = false;
-    public $can_sell = false;
-    public $can_buy = false;
 
     public function __construct()
     {
@@ -94,14 +97,17 @@ class User
             if ($this->user_data['suspended'] != 7) {
                 // check if user can sell or buy
                 if (strlen($this->user_data['groups']) > 0) {
-                    $query = "SELECT can_sell, can_buy FROM " . $DBPrefix . "groups WHERE id IN (" . $this->user_data['groups'] . ") AND (can_sell = 1 OR can_buy = 1)";
+                    $query = "SELECT can_sell, can_buy, no_fees FROM " . $DBPrefix . "groups WHERE id IN (" . $this->user_data['groups'] . ") AND (can_sell = 1 OR can_buy = 1 OR no_fees = 1)";
                     $db->direct_query($query);
                     while ($row = $db->fetch()) {
                         if ($row['can_sell'] == 1) {
-                            $this->can_sell = true;
+                            $this->permissions['can_sell'] = true;
                         }
                         if ($row['can_buy'] == 1) {
-                            $this->can_buy = true;
+                            $this->permissions['can_buy'] = true;
+                        }
+                        if ($row['no_fees'] == 1) {
+                            $this->permissions['no_fees'] = true;
                         }
                     }
                 }

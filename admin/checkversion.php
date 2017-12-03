@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,18 +18,29 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (!($realversion = load_file_from_url('http://www.webidsupport.com/version.txt'))) {
-    $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_file_access_disabled']));
+$realversion = '0.0';
+switch ($system->SETTINGS['version_check']) {
+    case 'unstable':
+        $url = 'http://raw.githubusercontent.com/renlok/WeBid/dev/install/thisversion.txt';
+        break;
+    default:
+      $url = 'http://raw.githubusercontent.com/renlok/WeBid/master/install/thisversion.txt';
+        break;
+}
+if (!($realversion = load_file_from_url($url))) {
+    $text = $MSG['error_file_access_disabled'];
     $realversion = $MSG['unknown'];
+    $myversion = $system->SETTINGS['version'];
+} else {
+    if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
+        $myversion = '<span style="color:#ff0000;">' . $system->SETTINGS['version'] . '</span>';
+        $text = $MSG['outdated_version'];
+    } else {
+        $myversion = '<span style="color:#00ae00;">' . $system->SETTINGS['version'] . '</span>';
+        $text = $MSG['current_version'];
+    }
 }
 
-if (version_compare($system->SETTINGS['version'], $realversion, "<")) {
-    $myversion = '<span style="color:#ff0000;">' . $system->SETTINGS['version'] . '</span>';
-    $text = $MSG['outdated_version'];
-} else {
-    $myversion = '<span style="color:#00ae00;">' . $system->SETTINGS['version'] . '</span>';
-    $text = $MSG['current_version'];
-}
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],

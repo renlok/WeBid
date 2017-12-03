@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="main-box">
+			<div class="container">
 				<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{L_512}</h4>
 				<form name="editauction" action="" method="post">
-					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
+					<table class="table table-striped table-bordered">
 					<tr>
 						<td width="25%" align="right">{L_313}</td>
 						<td>{USER}</td>

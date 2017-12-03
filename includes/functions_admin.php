@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -66,7 +66,7 @@ if (!defined('AdminFuncCall')) {
                 'DESCRIPTION' => (!empty($description)) ? $description . '<br>' : '',
                 'TYPE' => $type,
                 'NAME' => $name,
-                'DEFAULT' => $default,
+                'DEFAULT' => ($type == 'text') ? htmlspecialchars($default) : $default,
                 'TAGLINE1' => (isset($tagline[0])) ? $tagline[0] : '',
                 'TAGLINE2' => (isset($tagline[1])) ? $tagline[1] : '',
                 'TAGLINE3' => (isset($tagline[2])) ? $tagline[2] : '',
@@ -108,7 +108,14 @@ if (!defined('AdminFuncCall')) {
 
     function load_file_from_url($url)
     {
-        if (false !== ($str = file_get_contents($url))) {
+        if (in_array  ('curl', get_loaded_extensions())) {
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $str = curl_exec($curl);
+            curl_close($curl);
+            return $str;
+        } elseif (false !== ($str = @file_get_contents($url))) {
             return $str;
         } elseif (($handle = @fopen($url, 'r')) !== false) {
             $str = fread($handle, 5);
@@ -116,15 +123,6 @@ if (!defined('AdminFuncCall')) {
                 fclose($handle);
                 return $str;
             }
-        } elseif (function_exists('curl_init') && function_exists('curl_setopt')
-        && function_exists('curl_exec') && function_exists('curl_close')) {
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_REFERER, $system->SETTINGS['siteurl']);
-            $str = curl_exec($curl);
-            curl_close($curl);
-            return $str;
         }
         return false;
     }

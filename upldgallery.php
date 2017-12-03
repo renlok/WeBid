@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -191,7 +191,7 @@ foreach ($_SESSION['UPLOADED_PICTURES'] as $k => $v) {
             ));
 }
 
-if ($system->SETTINGS['fees'] == 'y') {
+if ($system->SETTINGS['fees'] == 'y' && !$user->permissions['no_fees']) {
     $query = "SELECT value FROM " . $DBPrefix . "fees WHERE type = 'picture_fee'";
     $db->direct_query($query);
     $image_fee = $db->result('value');

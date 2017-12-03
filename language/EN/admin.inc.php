@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -194,7 +194,6 @@ $MSG['hide_user_emails'] = "Hide user E-Mails";
 $MSG['hide_user_emails_explain'] = "You can decide to allow users to see each others E-Mail addresses or to hide them and all communication must be done via PMs";
 
 // cookiespolicy.php
-$MSG['cookie_policy'] = "Cookie Policy";
 $MSG['cookie_policy_updated'] = "Cookie Policy Settings Updated";
 $MSG['enable_cookie_policy'] = "Enable Cookies Policy Page?";
 $MSG['enable_cookie_policy_explain'] = "Activate this option if you want a Cookies Policy link to appear in the footer of your pages.";
@@ -346,6 +345,8 @@ $MSG['SMTP_host'] = 'SMTP Host:';
 $MSG['SMTP_host_explain'] = '*For Gmail accounts. Set the encryption system using a prefix of [<b>ssl://</b>] or [<b>tls://</b>] Examples:<br>[ ssl://smtp.googlemail.com ], [ tls://smtp.googlemail.com ]';
 $MSG['other_admin_emails'] = 'Additional Admin E-Mails:';
 $MSG['other_admin_emails_explain'] = 'Additional email accounts you want to receive admin related email, in addition to the main site email address of %s. (comma separated)';
+$MSG['email_sending_success'] = 'Your email has been successfully sent.';
+$MSG['email_sending_failure'] = 'Email not sent! Please check your PHP mail configuration.Response:<br>%s';
 
 // enablefees.php
 $MSG['enable_fees'] = "Enable/Disable Fees";
@@ -581,7 +582,7 @@ $MSG['spam_settings'] = 'Spam settings'; // Also sidebar-settings.tpl
 $MSG['spam_settings_updated'] = 'Spam settings updated';
 $MSG['error_recaptcha_missing_keys'] = 'You cannot use reCaptcha without the two keys';
 $MSG['recaptcha_public_key'] = "reCaptcha public key";
-$MSG['recaptcha_public_key_explain'] = 'To use reCaptcha you must create a free account at <a href="http://recaptcha.net/" class="new-window">http://recaptcha.net/</a> and add this domain to a key pair';
+$MSG['recaptcha_public_key_explain'] = 'To use reCaptcha you must create a free account with <a href="https://www.google.com/recaptcha/intro/index.html" class="new-window">Google reCAPTCHA</a> and add this domain to a key pair';
 $MSG['recaptcha_secret_key'] = "Recaptcha secret key";
 $MSG['registration_captcha_type'] = "Captcha type on registration page";
 $MSG['registration_captcha_type_explain'] = "Captcha are used to prevent spam it is generally a good idea to enable some sort of captcha";

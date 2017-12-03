@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -50,7 +50,7 @@ $query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_nam
           LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
           LEFT JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
           LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
-          WHERE m.reason IS NULL AND a.closed = 0 " . $user_sql . "  GROUP BY a.id ORDER BY nick LIMIT :offset, :perpage";
+          WHERE m.reason IS NULL AND a.closed = 0 " . $user_sql . " GROUP BY a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, m.reason ORDER BY nick LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');

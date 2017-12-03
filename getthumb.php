@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright              : (C) 2008 - 2016 WeBid
+ *   copyright              : (C) 2008 - 2017 WeBid
  *   site                   : http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -21,6 +21,7 @@ $nomanage = false;
 $accepted_widths = array(
     $system->SETTINGS['thumb_show'],
     $system->SETTINGS['thumb_list'],
+    430,
     '' // load default image
 );
 $w = (in_array($w, $accepted_widths)) ? $w : '';

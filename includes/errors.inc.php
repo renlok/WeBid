@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -77,7 +77,7 @@ function WeBidErrorHandler($errno, $errstr, $errfile, $errline)
         echo $error;
     }
 
-    if ($errno | E_USER_ERROR || $errno | E_ERROR) {
+    if ($errno & (E_ERROR|E_USER_ERROR)) {
         exit(1);
     }
     return true;

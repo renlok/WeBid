@@ -20,7 +20,7 @@
 					</tr>
 					<tr>
 						<td align=right width="50%"><b>{L_125} :</b></td>
-						<td>{SELLER} {SELLERNUMFBS} <img src="{SITEURL}images/icons/{FB_ICON}" alt="{FB_ICON}" class="fbstar"></td>
+						<td>{SELLER} {SELLERNUMFBS} <!-- IF FB_ICON ne '' --><img src="{SITEURL}images/icons/{FB_ICON}" alt="{FB_ICON}" class="fbstar"><!-- ENDIF --></td>
 					</tr>
 					<tr>
 						<td align="right" width="40%"><b>{L_497}:</b></td>

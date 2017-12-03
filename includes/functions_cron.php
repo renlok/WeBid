@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -48,9 +48,9 @@ function constructCategories()
     return $categories;
 }
 
-function sendWatchEmails($id)
+function sendWatchEmails($id, $title)
 {
-    global $DBPrefix, $system, $db;
+    global $DBPrefix, $system, $db, $MSG;
 
     $query = "SELECT name, email, item_watch, id FROM " . $DBPrefix . "users WHERE item_watch LIKE :item_watch";
     $params = array();
@@ -64,7 +64,7 @@ function sendWatchEmails($id)
             $emailer = new email_handler();
             $emailer->assign_vars(array(
                     'URL' => $system->SETTINGS['siteurl'] . 'item.php?mode=1&id=' . $id,
-                    'TITLE' => htmlspecialchars($Auction['title']),
+                    'TITLE' => htmlspecialchars($title),
                     'NAME' => $watchusers['name']
                     ));
             $emailer->email_uid = $watchusers['id'];
@@ -76,40 +76,49 @@ function sendWatchEmails($id)
 function sortFees()
 {
     global $DBPrefix, $system, $Winner, $Seller, $Auction, $buyer_emails;
-    global $endauc_fee, $buyer_fee, $buyer_fee_type, $bf_paid, $ff_paid, $NOW, $db;
+    global $endauc_fee, $buyer_fee, $buyer_fee_type, $bf_paid, $ff_paid, $db;
 
-    if ($system->SETTINGS['fee_type'] == 1 && $buyer_fee > 0) {
-        if ($buyer_fee_type == 'flat') {
-            $fee_value = $buyer_fee;
-        } else {
-            $fee_value = ($buyer_fee / 100) * floatval($Auction['current_bid']);
+    if ($buyer_fee > 0) {
+        // is the winner fee exempt
+        $query = "SELECT COUNT(no_fees) As no_fees FROM " . $DBPrefix . "groups WHERE id IN (" . $Winner['groups'] . ") AND no_fees = 1";
+        $db->direct_query($query);
+        $winner_no_fees = $db->result('no_fees');
+
+        if (!$winner_no_fees) {
+            if ($system->SETTINGS['fee_type'] == 1) {
+                if ($buyer_fee_type == 'flat') {
+                    $fee_value = $buyer_fee;
+                } else {
+                    $fee_value = ($buyer_fee / 100) * floatval($Auction['current_bid']);
+                }
+                // add balance & invoice
+                $query = "UPDATE " . $DBPrefix . "users SET balance = balance - :buyer_fee WHERE id = :winner_id";
+                $params = array();
+                $params[] = array(':buyer_fee', $fee_value, 'float');
+                $params[] = array(':winner_id', $Winner['id'], 'int');
+                $db->query($query, $params);
+                $query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, buyer, total, paid)
+                        VALUES (:winner_id, :auc_id, :buyer_fee, :buyer_fee, 1)";
+                $params = array();
+                $params[] = array(':buyer_fee', $fee_value, 'float');
+                $params[] = array(':winner_id', $Winner['id'], 'int');
+                $params[] = array(':auc_id', $Auction['id'], 'int');
+                $db->query($query, $params);
+            } elseif ($system->SETTINGS['fee_type'] == 2) {
+                $bf_paid = 0;
+                $query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = :winner_id";
+                $params = array();
+                $params[] = array(':winner_id', $Winner['id'], 'int');
+                $db->query($query, $params);
+                $buyer_emails[] = array(
+                    'name' => $Winner['name'],
+                    'email' => $Winner['email'],
+                    'uid' => $Winner['id'],
+                    'id' => $Auction['id'],
+                    'title' => htmlspecialchars($Auction['title'])
+                );
+            }
         }
-        // add balance & invoice
-        $query = "UPDATE " . $DBPrefix . "users SET balance = balance - :buyer_fee WHERE id = :winner_id";
-        $params = array();
-        $params[] = array(':buyer_fee', $fee_value, 'float');
-        $params[] = array(':winner_id', $Winner['id'], 'int');
-        $db->query($query, $params);
-        $query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, buyer, total, paid)
-				VALUES (:winner_id, :auc_id, :buyer_fee, :buyer_fee, 1)";
-        $params = array();
-        $params[] = array(':buyer_fee', $fee_value, 'float');
-        $params[] = array(':winner_id', $Winner['id'], 'int');
-        $params[] = array(':auc_id', $user_id, 'int');
-        $db->query($query, $params);
-    } elseif ($system->SETTINGS['fee_type'] == 2) {
-        $bf_paid = 0;
-        $query = "UPDATE " . $DBPrefix . "users SET suspended = 6 WHERE id = :winner_id";
-        $params = array();
-        $params[] = array(':winner_id', $Winner['id'], 'int');
-        $db->query($query, $params);
-        $buyer_emails[] = array(
-            'name' => $Winner['name'],
-            'email' => $Winner['email'],
-            'uid' => $Winner['id'],
-            'id' => $Auction['id'],
-            'title' => htmlspecialchars($Auction['title'])
-            );
     }
 
     $fee_value = 0;
@@ -123,33 +132,42 @@ function sortFees()
         }
     }
 
-    // insert final value fees
-    if ($system->SETTINGS['fee_type'] == 1 && $fee_value > 0) {
-        // add balance & invoice
-        $query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :seller_id";
-        $params = array();
-        $params[] = array(':fee_value', $fee_value, 'float');
-        $params[] = array(':seller_id', $Seller['id'], 'int');
-        $db->query($query, $params);
-        $query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, finalval, total, paid)
-				VALUES (:seller_id, :auc_id, :fee_value, :fee_value, 1)";
-        $params = array();
-        $params[] = array(':fee_value', $fee_value, 'float');
-        $params[] = array(':seller_id', $Seller['id'], 'int');
-        $params[] = array(':auc_id', $Auction['id'], 'int');
-        $db->query($query, $params);
-    } elseif ($system->SETTINGS['fee_type'] == 2) {
-        $ff_paid = 0;
-        $query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = :seller_id";
-        $params = array();
-        $params[] = array(':seller_id', $Seller['id'], 'int');
-        $db->query($query, $params);
-        $seller_emails[] = array(
-            'name' => $Seller['name'],
-            'email' => $Seller['email'],
-            'uid' => $Seller['id'],
-            'id' => $Auction['id'],
-            'title' => htmlspecialchars($Auction['title'])
-            );
+    if ($fee_value > 0) {
+        // is the seller fee exempt
+        $query = "SELECT COUNT(no_fees) As no_fees FROM " . $DBPrefix . "groups WHERE id IN (" . $Seller['groups'] . ") AND no_fees = 1";
+        $db->direct_query($query);
+        $seller_no_fees = $db->result('no_fees');
+
+        if (!$seller_no_fees) {
+            // insert final value fees
+            if ($system->SETTINGS['fee_type'] == 1) {
+                // add balance & invoice
+                $query = "UPDATE " . $DBPrefix . "users SET balance = balance - :fee_value WHERE id = :seller_id";
+                $params = array();
+                $params[] = array(':fee_value', $fee_value, 'float');
+                $params[] = array(':seller_id', $Seller['id'], 'int');
+                $db->query($query, $params);
+                $query = "INSERT INTO " . $DBPrefix . "useraccounts (user_id, auc_id, finalval, total, paid)
+                        VALUES (:seller_id, :auc_id, :fee_value, :fee_value, 1)";
+                $params = array();
+                $params[] = array(':fee_value', $fee_value, 'float');
+                $params[] = array(':seller_id', $Seller['id'], 'int');
+                $params[] = array(':auc_id', $Auction['id'], 'int');
+                $db->query($query, $params);
+            } elseif ($system->SETTINGS['fee_type'] == 2) {
+                $ff_paid = 0;
+                $query = "UPDATE " . $DBPrefix . "users SET suspended = 5 WHERE id = :seller_id";
+                $params = array();
+                $params[] = array(':seller_id', $Seller['id'], 'int');
+                $db->query($query, $params);
+                $seller_emails[] = array(
+                    'name' => $Seller['name'],
+                    'email' => $Seller['email'],
+                    'uid' => $Seller['id'],
+                    'id' => $Auction['id'],
+                    'title' => htmlspecialchars($Auction['title'])
+                );
+            }
+        }
     }
 }

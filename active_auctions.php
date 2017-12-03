@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -31,6 +31,7 @@ if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
 $query = "SELECT count(id) AS auctions FROM " . $DBPrefix . "auctions
 		WHERE user = :user_id
 		AND closed = 0
+		AND suspended = 0
 		AND starts <= CURRENT_TIMESTAMP";
 $params = array();
 $params[] = array(':user_id', $user_id, 'int');
@@ -53,6 +54,7 @@ if (!isset($PAGES) || $PAGES < 1) {
 $query = "SELECT * FROM " . $DBPrefix . "auctions
 		WHERE user = :user_id
 		AND closed = 0
+		AND suspended = 0
 		AND starts <= CURRENT_TIMESTAMP
 		ORDER BY ends ASC LIMIT :offset, :perpage";
 $params = array();

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -308,6 +308,43 @@ function addoutstanding()
 {
     global $DBPrefix, $fee_data, $user, $system, $fee, $_SESSION, $db;
 
+    $fee_data['total'] = $fee;
+
+    if ($_SESSION['SELL_action'] == 'edit') {
+        // set defaults
+        $fee_colomns = array(
+            'setup',
+            'featured',
+            'bold',
+            'highlighted',
+            'subtitle',
+            'relist',
+            'reserve',
+            'buynow',
+            'picture',
+            'extracat',
+            'total'
+        );
+
+        $query = "SELECT * FROM " . $DBPrefix . "useraccounts WHERE auc_id = :auction_id AND user_id = :user_id";
+        $params = array();
+        $params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
+        $params[] = array(':user_id', $user->user_data['id'], 'int');
+        $db->query($query, $params);
+        // build an array full of everything the user has been charged for the auction do far
+        while ($past_fee_data = $db->fetch()) {
+            foreach ($fee_colomns as $fee) {
+                $fee_string = ($fee == 'total') ? '' : '_fee';
+                $fee_data[$fee .  $fee_string] = bcsub($fee_data[$fee .  $fee_string],
+                    $past_fee_data[$fee], $system->SETTINGS['moneydecimals']);
+                if ($fee_data[$fee .  $fee_string] < 0) {
+                    $fee_data[$fee .  $fee_string] = 0;
+                }
+            }
+        }
+
+    }
+
     $query = "INSERT INTO " . $DBPrefix . "useraccounts (auc_id,user_id,setup,featured,bold,highlighted,subtitle,relist,reserve,buynow,picture,extracat,total,paid) VALUES
 	(:auction_id, :user_id, :setup_fee, :featured_fee, :bold_fee, :highlighted_fee, :subtitle_fee, :relist_fee, :reserve_fee, :buynow_fee, :picture_fee, :extracat_fee, :fee, 0)";
 
@@ -322,9 +359,12 @@ function addoutstanding()
     $params[] = array(':buynow_fee', $fee_data['buynow_fee'], 'float');
     $params[] = array(':picture_fee', $fee_data['picture_fee'], 'float');
     $params[] = array(':extracat_fee', $fee_data['extracat_fee'], 'float');
-    $params[] = array(':fee', $fee, 'float');
+    $params[] = array(':fee', $fee_data['total'], 'float');
     $params[] = array(':user_id', $user->user_data['id'], 'int');
     $db->query($query, $params);
+
+    // reset fee value
+    $fee = $fee_data['total'];
 }
 
 function remove_bids($auction_id)
@@ -405,49 +445,6 @@ function get_fee($minimum_bid, $just_fee = true)
         if ($row['type'] == 'relist_fee' && $relist > 0) {
             $fee_data['relist_fee'] = ($row['value'] * $relist);
             $fee_value = bcadd($fee_value, ($row['value'] * $relist), $system->SETTINGS['moneydecimals']);
-        }
-    }
-
-    if ($_SESSION['SELL_action'] == 'edit') {
-        global $user;
-
-        $query = "SELECT * FROM " . $DBPrefix . "useraccounts WHERE auc_id = :auction_id AND user_id = :user_id";
-        $params = array();
-        $params[] = array(':auction_id', $_SESSION['SELL_auction_id'], 'int');
-        $params[] = array(':user_id', $user->user_data['id'], 'int');
-        $db->query($query, $params);
-        // build an array full of everything the user has been charged for the auction do far
-        // set defaults
-        $past_fees = array(
-            'setup' => 0,
-            'bold' => 0,
-            'highlighted' => 0,
-            'subtitle' => 0,
-            'relist' => 0,
-            'reserve' => 0,
-            'buynow' => 0,
-            'picture' => 0,
-            'extracat' => 0
-            );
-        while ($row = $db->fetch()) {
-            foreach ($row as $fee => $value) {
-                if (isset($past_fees[$fee])) {
-                    $past_fees[$fee] += $value;
-                }
-            }
-        }
-
-        $diff = 0;
-        foreach ($past_fees as $fee => $value) {
-            if ($value > 0) {
-                $diff = bcadd($diff, $fee_data[$fee . '_fee'], $system->SETTINGS['moneydecimals']);
-                $fee_data[$fee . '_fee'] = 0;
-            }
-        }
-
-        $fee_value = bcsub($fee_value, $diff, $system->SETTINGS['moneydecimals']);
-        if ($fee_value < 0) {
-            $fee_value = 0;
         }
     }
 

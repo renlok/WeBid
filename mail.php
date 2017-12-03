@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -225,6 +225,7 @@ $ERR = (isset($_SESSION['message'])) ? $_SESSION['message'] : '';
 unset($_SESSION['message']);
 
 $template->assign_vars(array(
+        'ERROR' => $ERR,
         'WHENSENT' => $whensent,
         'TITLE' => $title,
         'SENTFROM' => $sentfrom,

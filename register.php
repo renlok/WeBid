@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -115,7 +115,7 @@ if ($system->SETTINGS['spam_register'] == 1) {
 
 // missing check bools
 $missing = array();
-$missing['birthday'] = $missing['address'] = $missing['city'] = $missing['prov'] = $missing['country'] = $missing['zip'] = $missing['tel'] = $missing['paypal'] = $missing['authnet'] = $missing['worldpay'] = $missing['toocheckout'] = $missing['moneybookers'] = $missing['name'] = $missing['nick'] = $missing['password'] = $missing['repeat_password'] = $missing['email'] = false;
+$missing['birthday'] = $missing['address'] = $missing['city'] = $missing['prov'] = $missing['country'] = $missing['zip'] = $missing['tel'] = $missing['paypal'] = $missing['authnet'] = $missing['worldpay'] = $missing['toocheckout'] = $missing['skrill'] = $missing['name'] = $missing['nick'] = $missing['password'] = $missing['repeat_password'] = $missing['email'] = false;
 if (isset($_POST['action']) && $_POST['action'] == 'first') {
     if (!isset($_POST['terms_check'])) {
         $ERR = $ERR_078;
@@ -269,7 +269,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first') {
                     array(':country', $system->cleanvars((isset($_POST['TPL_country'])) ? $_POST['TPL_country'] : ''), 'str'),
                     array(':zip', $system->cleanvars((isset($_POST['TPL_zip'])) ? $_POST['TPL_zip'] : ''), 'str'),
                     array(':phone', $system->cleanvars((isset($_POST['TPL_phone'])) ? $_POST['TPL_phone'] : ''), 'str'),
-                    array(':nletter', $_POST['TPL_nletter'], 'int'),
+                    array(':nletter', intval($_POST['TPL_nletter']), 'int'),
                     array(':email', $system->cleanvars($_POST['TPL_email']), 'str'),
                     array(':birthdate', ((!empty($DATE)) ? $DATE : 0), 'str'),
                     array(':suspended', $SUSPENDED, 'int'),

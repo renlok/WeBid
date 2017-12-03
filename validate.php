@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -40,8 +40,8 @@ if (isset($_GET['authnet'])) {
 if (isset($_GET['worldpay'])) {
     $fees->worldpay_validate();
 }
-if (isset($_GET['moneybookers'])) {
-    $fees->moneybookers_validate();
+if (isset($_GET['skrill'])) {
+    $fees->skrill_validate();
 }
 if (isset($_GET['toocheckout'])) {
     $fees->toocheckout_validate();

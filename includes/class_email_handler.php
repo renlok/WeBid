@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,7 +18,14 @@ if (!defined('InWeBid')) {
 
 class email_handler
 {
-    public $from, $message, $subject, $headers, $email_uid, $userlang, $errors;
+    public $from;
+    public $to;
+    public $message;
+    public $subject;
+    public $headers;
+    public $email_uid;
+    public $userlang;
+    public $errors;
 
     public function __construct()
     {
@@ -414,26 +421,26 @@ class email_handler
         if (is_array($this->to)) {
             for ($i = 0; $i < count($this->to); $i++) {
                 try {
-                    $mail->setFrom($this->from, $system->SETTINGS['adminmail']);
+                    $mail->setFrom($this->from, $system->SETTINGS['sitename']);
                     $mail->addAddress($this->to[$i]);
                     $mail->addReplyTo($this->from, $system->SETTINGS['adminmail']);
                     $mail->Subject = $this->subject;
                     $mail->msgHTML($this->message);
                     //$mail->addAttachment('images/phpmailer_mini.png');
                     $mail->CharSet = $CHARSET;
-                    $mail->Send();
+                    $mail->send();
                 } catch (phpmailerException $e) {
-                    trigger_error('---->PHPMailer error: ' . $e->errorMessage());
+                    //trigger_error('---->PHPMailer error: ' . $e->errorMessage());
                     $this->add_error($e->errorMessage());
                 } catch (Exception $e) {
-                    trigger_error('---->PHPMailer error2: ' . $e->getMessage());
+                    //trigger_error('---->PHPMailer error2: ' . $e->getMessage());
                     $this->add_error($e->getMessage());
                 }
                 $mail->clearAddresses();
             }
         } else {
             try {
-                $mail->setFrom($this->from, $system->SETTINGS['adminmail']);
+                $mail->setFrom($this->from, $system->SETTINGS['sitename']);
                 if (is_array($this->to)) {
                     for ($i = 0; $i < count($this->to); $i++) {
                         $mail->addAddress($this->to[$i]);
@@ -445,12 +452,12 @@ class email_handler
                 $mail->Subject = $this->subject;
                 $mail->msgHTML($this->message);
                 $mail->CharSet = $CHARSET;
-                $mail->Send();
+                $mail->send();
             } catch (phpmailerException $e) {
-                trigger_error('---->PHPMailer error: ' . $e->errorMessage());
+                //trigger_error('---->PHPMailer error: ' . $e->errorMessage());
                 $this->add_error($e->errorMessage());
             } catch (Exception $e) {
-                trigger_error('---->PHPMailer error: ' . $e->getMessage());
+                //trigger_error('---->PHPMailer error: ' . $e->getMessage());
                 $this->add_error($e->getMessage());
             }
         }
@@ -464,7 +471,7 @@ class email_handler
         $this->from = $from;
         $this->message = $message;
         $this->build_header();
-        $this->sendmail();
+        return $this->sendmail();
     }
 
     public function email_sender($to, $file, $subject)
@@ -473,6 +480,6 @@ class email_handler
         $this->subject = $subject;
         $this->build_header();
         $this->buildmessage($file);
-        $this->sendmail();
+        return $this->sendmail();
     }
 }

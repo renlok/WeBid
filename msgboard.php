@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2016 WeBid
+ *   copyright				: (C) 2008 - 2017 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -58,7 +58,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertmessage' && !empty($_P
         $message = strip_tags($_POST['newmessage']);
     }
     $query = "INSERT INTO " . $DBPrefix . "comm_messages (boardid, user, username, message) VALUES
-			(:board_id, :now, :user_id, :user_nick, :message)";
+			(:board_id, :user_id, :user_nick, :message)";
     $params = array();
     $params[] = array(':board_id', $_POST['board_id'], 'int');
     $params[] = array(':user_id', $user->user_data['id'], 'int');

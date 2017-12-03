@@ -1,29 +1,31 @@
 <!-- IF B_COUNTDOWN -->
 <script type="text/javascript">
 $(document).ready(function() {
-	var currenttime = '{ENDS_IN}';
-	function padlength(what)
+	var timeRemaining = {ENDS_IN};
+	var endDateTime = new Date();
+	endDateTime.setSeconds(endDateTime.getSeconds() + timeRemaining);
+	function padLength(what)
 	{
-		return (what.toString().length == 1)? '0' + what : what;
+		var output = (what.toString().length == 1) ? '0' + what : what;
+		return output;
 	}
-	function displaytime()
-	{
-		currenttime -= 1;
-		if (currenttime > 0)
-		{
-			var hours = Math.floor(currenttime / 3600);
-			var mins = Math.floor((currenttime - (hours * 3600)) / 60);
-			var secs = Math.floor(currenttime - (hours * 3600) - (mins * 60));
-			var timestring = padlength(hours) + ':' + padlength(mins) + ':' + padlength(secs);
-			$("#ending_counter").html(timestring);
-			setTimeout(displaytime, 1000);
-		}
-		else
-		{
+	function displayTime() {
+		var currentDateTime = new Date();
+
+		if (currentDateTime.getTime() < endDateTime.getTime()) {
+			var remainingTime = Math.floor((endDateTime.getTime() - currentDateTime.getTime()) / 1000);
+			var hours = Math.floor(remainingTime / 3600);
+			var mins = Math.floor((remainingTime - (hours * 3600)) / 60);
+			var secs = Math.floor(remainingTime - (hours * 3600) - (mins * 60));
+
+			var timeString = padLength(hours) + ':' + padLength(mins) + ':' + padLength(secs);
+			$('#ending_counter').html(timeString);
+			setTimeout(displayTime, 1000);
+		} else {
 			$("#ending_counter").html('<div class="error-box">{L_911}</div>');
 		}
 	}
-	setTimeout(displaytime, 1000);
+	setTimeout(displayTime, 1000);
 });
 </script>
 <!-- ENDIF -->

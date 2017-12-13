@@ -16,14 +16,11 @@ if (!defined('InWeBid')) {
     exit();
 }
 
-// timeout for the cron in seconds
-$cron_timeout = 5 * 60;
+$fp = fopen("/cache/lock.txt", "w+");
 
-// check if the cron is running or has it timed out
-if ($system->SETTINGS['cronRunning'] == 0 || ($system->SETTINGS['cronRunning'] + $cron_timeout) < time()) {
-    $system->writesetting("cronRunning", time(), "int");
-
-    include INCLUDE_PATH . 'functions_cron.php';
+// do an exclusive lock
+if (flock($fp, LOCK_EX | LOCK_NB)) {
+    include_once INCLUDE_PATH . 'functions_cron.php';
 
     // initialize cron script
     printLog('=============== STARTING CRON SCRIPT: ' . date('F d, Y H:i:s'));
@@ -624,5 +621,7 @@ if ($system->SETTINGS['cronRunning'] == 0 || ($system->SETTINGS['cronRunning'] +
 
 // finish cron script
     printLog("=========================== ENDING CRON: " . date('F d, Y H:i:s') . "\n");
-    $system->writesetting("cronRunning", 0, "int");
+    flock($fp, LOCK_UN); // release the lock
 }
+
+fclose($fp);

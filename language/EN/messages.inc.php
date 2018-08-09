@@ -675,6 +675,7 @@ $MSG['890'] = 'Purge Log';
 $MSG['891'] = 'Error Log';
 $MSG['892'] = 'To be activated';
 $MSG['893'] = 'Total';
+$MSG['894'] = 'By Admin';
 $MSG['898'] = 'Paid';
 $MSG['899'] = 'Set as Paid';
 $MSG['900'] = 'View Winners';

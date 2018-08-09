@@ -87,12 +87,8 @@
 							<div class="col-md-3">{C_USERS}</div>
 							<div class="col-md-3"><strong>{L_25_0056}</strong></div>
 							<div class="col-md-3">
-<!-- IF USERCONF eq 0 -->
-								<strong>{L_893}</strong>: {C_IUSERS}<br>
-								<strong>{L_892}</strong>: {C_UUSERS} (<a href="{SITEURL}admin/listusers.php?usersfilter=admin_approve">{L_5295}</a>)
-<!-- ELSE -->
-								{C_IUSERS}
-<!-- ENDIF -->
+								<strong>{L_894}</strong>: {C_SUSPUSERS}<br>
+								<strong>{L_892}</strong>: {C_TBAUSERS} (<a href="{SITEURL}admin/listusers.php?usersfilter=admin_approve">{L_5295}</a>)
 							</div>
 						</div>
 						<div class="row">

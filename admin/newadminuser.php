@@ -36,12 +36,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
         } else {
             include PACKAGE_PATH . 'PasswordHash.php';
             $phpass = new PasswordHash(8, false);
-            $query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, status)
-                      VALUES (:username, :password, :hash, :status)";
+            $query = "INSERT INTO " . $DBPrefix . "adminusers (username, password, hash, created, status)
+                      VALUES (:username, :password, :hash, :created, :status)";
             $params = array();
             $params[] = array(':username', $system->cleanvars($_POST['username']), 'str');
             $params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
             $params[] = array(':hash', get_hash(), 'str');
+            $params[] = array(':created', date('Ymd'), 'str');
             $params[] = array(':status', $_POST['status'], 'bool');
             $db->query($query, $params);
             header('location: adminusers.php');

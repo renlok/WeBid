@@ -51,6 +51,7 @@ $template->assign_vars(array(
         'SELECTION_BOX' => file_get_contents(MAIN_PATH . 'language/' . $language . '/categories_select_box.inc.php'),
         'YOURUSERNAME' => ($user->logged_in) ? $user->user_data['nick'] : '',
         'GOOGLEANALYTICS' => $system->SETTINGS['googleanalytics'],
+        'GOOGLETRANSLATE' => $system->SETTINGS['usegoogletranslate'],
 
         'B_CAN_SELL' => ($user->permissions['can_sell'] || !$user->logged_in),
         'B_LOGGED_IN' => $user->logged_in,

@@ -35,6 +35,17 @@
 <!-- ENDIF -->
 </head>
 <body>
+		<!-- IF GOOGLETRANSLATE -->
+		<div id="google_translate_element"></div>
+
+		<script type="text/javascript">
+			function googleTranslateElementInit() {
+				new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, 'google_translate_element');
+			}
+		</script>
+
+		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+	<!-- ENDIF -->
 <div class="container">
 	<div class="row header">
 		<div class="col-md-6"><img src="{SITEURL}uploaded/logo/{LOGO}" border="0" alt="{SITENAME}"></div>

@@ -18,10 +18,10 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['defaultlanguage'])) {
+if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['defaultlanguage']) && isset($_POST['usegoogletranslate'])) {
     // clean submission and update database
     $system->writesetting("defaultlanguage", $system->cleanvars($_POST['defaultlanguage']), "str");
-
+	$system->writesetting("usegoogletranslate", $_POST['usegoogletranslate']);
     $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['multilingual_support_settings_updated']));
 }
 
@@ -35,6 +35,7 @@ if (is_array($LANGUAGES)) {
 }
 
 loadblock($MSG['default_language'], $MSG['default_language_explain'], $html);
+loadblock($MSG['use_google_translate'], $MSG['google_translate_explain'], 'bool','usegoogletranslate', $system->SETTINGS['usegoogletranslate'], ['Yes','No']);
 
 $template->assign_vars(array(
         'SITEURL' => $system->SETTINGS['siteurl'],

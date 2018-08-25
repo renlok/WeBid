@@ -49,6 +49,20 @@ if ($db->numrows() > 0) {
     exit;
 }
 
+// Get Reasons
+$query = "SELECT * FROM " . $DBPrefix . "reporting_options WHERE removed = false";
+//$params = array();
+$db->direct_query($query);
+$reasons = $db->fetchall();
+foreach($reasons as $reason){
+	$template->assign_block_vars('excuses', array(
+		'REASON_NUM' => $reason['id'],
+		'REASON' => $reason['reason']
+));
+}
+
+
+
 $spam_html = '';
 if ($system->SETTINGS['spam_reportitem'] == 1) {
     $resp = new Securimage();
@@ -82,7 +96,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'reportitem') {
     $params[] = array(':auction_id', $auction_id, 'int');
     $params[] = array(':reason', $_POST['reason'], 'str');
     $params[] = array(':user_id', $user->user_data['id'], 'int');
-    $db->query($query, $params);
+    $result = $db->query($query, $params);
+	//print_r($result);
     if (!empty($TPL_error_text)) {
         $itemreported = 1;
     } else {
@@ -95,6 +110,8 @@ if ($system->SETTINGS['spam_reportitem'] == 2) {
 } elseif ($system->SETTINGS['spam_reportitem'] == 1) {
     $capcha_text = $spam_html;
 }
+
+
 
 $template->assign_vars(array(
         'ERROR' => $TPL_error_text,

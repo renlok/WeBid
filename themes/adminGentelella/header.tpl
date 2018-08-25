@@ -92,6 +92,7 @@
                   <li><a href="{SITEURL}admin/usersettings.php">{L_user_settings}</a></li>
                   <li><a href="{SITEURL}admin/errorhandling.php">{L_error_handling}</a></li>
                   <li><a href="{SITEURL}admin/moderation.php">{L_moderation_settings}</a></li>
+				  <li><a href="{SITEURL}admin/auctionreporting.php">{L_reporting_settings}</a></li>
                   <li><a href="{SITEURL}admin/countries.php">{L_081}</a></li>
                   <li><a href="{SITEURL}admin/payments.php">{L_075}</a></li>
                   <li><a href="{SITEURL}admin/durations.php">{L_069}</a></li>

@@ -38,46 +38,68 @@ $_SESSION['RETURN_LIST'] = 'listreportedauctions.php';
 $_SESSION['RETURN_LIST_OFFSET'] = $PAGE;
 
 $query = "SELECT COUNT(a.id) As auctions FROM " . $DBPrefix . "auctions a
-          INNER JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
-          WHERE a.closed = 0 AND a.suspended = 0 " . $user_sql;
+          INNER JOIN " . $DBPrefix . "reportedauctions r ON (r.auction_id = a.id)
+          WHERE a.closed = 0  AND r.dismiss = false " . $user_sql;
+          
 $db->direct_query($query);
+
 $num_auctions = $db->result('auctions');
 $PAGES = ($num_auctions == 0) ? 1 : ceil($num_auctions / $system->SETTINGS['perpage']);
 
-$query = "SELECT a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, COUNT(r.auction_id) as times_reported, m.reason FROM " . $DBPrefix . "auctions a
-          LEFT JOIN " . $DBPrefix . "users u ON (u.id = a.user)
-          LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = a.category)
-          INNER JOIN " . $DBPrefix . "reportedauctions r ON (a.id = r.auction_id)
-          LEFT JOIN " . $DBPrefix . "auction_moderation m ON (a.id = m.auction_id)
-          WHERE m.reason IS NULL AND a.closed = 0 AND a.suspended = 0 " . $user_sql . " GROUP BY a.id, u.nick, a.title, a.starts, a.ends, a.suspended, c.cat_name, m.reason ORDER BY nick LIMIT :offset, :perpage";
+
+    $query = "SELECT
+    reported.id,
+    reported.auction_id as reported_auction,
+    reported.dismiss as dismissed,
+    auction.id as auction_id,
+    auction.title,
+    auction.starts as start_date,
+    auction.ends as end_date,
+    auction.suspended,
+    categories.cat_name as category,
+    seller.nick as seller_name,
+    COUNT(w.id) as winners,
+    reporter.nick as reporter_name,
+    reason.reason as reason_given "
+        . "FROM " . $DBPrefix . "reportedauctions reported
+        RIGHT JOIN " . $DBPrefix . "auctions auction ON (reported.auction_id = auction.id)
+        LEFT JOIN " . $DBPrefix . "categories categories ON (categories.cat_id = auction.category)
+        INNER JOIN " . $DBPrefix . "users reporter ON (reporter.id = reported.user_id)
+        INNER JOIN " . $DBPrefix . "users seller ON (seller.id = auction.user)
+        INNER JOIN " . $DBPrefix . "reporting_options reason ON (reason.id = reported.reason)
+        LEFT JOIN " . $DBPrefix . "auction_moderation moderation ON (auction.id = moderation.auction_id)
+        LEFT JOIN " . $DBPrefix . "winners w ON (w.auction = auction.id)
+        WHERE moderation.reason IS NULL AND auction.closed = 0 " . $user_sql
+        . " GROUP BY reported.id, seller.nick, reporter.nick, auction.suspended, moderation.reason 
+        ORDER BY auction.id
+        LIMIT :offset, :perpage";
 $params = array();
 $params[] = array(':offset', $OFFSET, 'int');
 $params[] = array(':perpage', $system->SETTINGS['perpage'], 'int');
 $db->query($query, $params);
-$username = '';
-while ($row = $db->fetch()) {
+$report_counter = 0;
+while($row = $db->fetch()) {
+    //print("Auction Title: " . $row['title'] . " Auction Id: " . $row['auction_id'] . " Category: " . $row['category'] . " Sellers Name: " . $row['seller_name'] . " Reported by: " . $row['reporter_name'] . " For this reason: " . $row['reason_given'] . "<br>");
+    if (!$row['dismissed']) {
+        $report_counter +=1;
+    }
     $template->assign_block_vars('auctions', array(
-            'SUSPENDED' => $row['suspended'],
-            'TIMESREPORTED' => $row['times_reported'],
-            'IN_MODERATION_QUEUE' => !is_null($row['reason']),
-            'ID' => $row['id'],
-            'TITLE' => htmlspecialchars($row['title']),
-            'START_TIME' => $dt->printDateTz($row['starts']),
-            'END_TIME' => $dt->printDateTz($row['ends']),
-            'USERNAME' => $row['nick'],
-            'CATEGORY' => $row['cat_name'],
-            'B_HASWINNERS' => false
-            ));
-    $username = $row['nick'];
-}
-
-// this is used when viewing a users auctions
-if ((!isset($username) || empty($username)) && $uid > 0) {
-    $query = "SELECT nick FROM " . $DBPrefix . "users WHERE id = :user_id";
-    $params = array();
-    $params[] = array(':user_id', $uid, 'int');
-    $db->query($query, $params);
-    $username = $db->result('nick');
+        'ID' => $row['auction_id'],
+        'TITLE' => htmlspecialchars($row['title']),
+        'START_TIME' => $dt->printDateTz($row['start_date']),
+        'END_TIME' => $dt->printDateTz($row['end_date']),
+        'CATEGORY' => $row['category'],
+        'SELLERNAME' => $row['seller_name'],
+        'SUSPENDED' => $row['suspended'],
+        'REPORTERNAME' => $row['reporter_name'],
+        'REASONGIVEN' => trim($row['reason_given'],' '),
+        'DISMISSED' => $row['dismissed'],
+        'REPORTID' => $row['id'],
+        'REPORTCOUNTER' => $report_counter,
+        'B_HASWINNERS' => ($row['winners'] == 0) ? false : true,
+        'TIMESREPORTED' => 1
+        )
+    );
 }
 
 // get pagenation
@@ -101,7 +123,7 @@ $template->assign_vars(array(
         'PAGE_TITLE' => $MSG['view_reported_auctions'],
         'NUM_AUCTIONS' => $num_auctions,
         'B_SEARCHUSER' => ($uid > 0),
-        'USERNAME' => $username,
+        //'USERNAME' => $username,
 
         'PREV' => ($PAGES > 1 && $PAGE > 1) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listreportedauctions.php?PAGE=' . $PREV . '"><u>' . $MSG['5119'] . '</u></a>&nbsp;&nbsp;' : '',
         'NEXT' => ($PAGE < $PAGES) ? '<a href="' . $system->SETTINGS['siteurl'] . 'admin/listreportedauctions.php?PAGE=' . $NEXT . '"><u>' . $MSG['5120'] . '</u></a>' : '',
@@ -111,7 +133,7 @@ $template->assign_vars(array(
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'listauctions.tpl'
+        'body' => 'listreportedauctions.tpl'
         ));
 $template->display('body');
 include 'footer.php';

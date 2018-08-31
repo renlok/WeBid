@@ -16,7 +16,7 @@ if (!defined('InWeBid')) {
     exit();
 }
 
-$fp = fopen("/cache/lock.txt", "w+");
+$fp = fopen(CACHE_PATH . 'lock.txt', 'w+');
 
 // do an exclusive lock
 if (flock($fp, LOCK_EX | LOCK_NB)) {

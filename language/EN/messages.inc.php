@@ -364,6 +364,7 @@ $MSG['311'] = 'auctions found in the database';
 $MSG['312'] = 'Title';
 $MSG['313'] = 'User';
 $MSG['314'] = 'Date';
+$MSG['315'] = 'reports found in the database';
 $MSG['319'] = 'Shipping';
 $MSG['323'] = 'Are you sure you want to suspend this auction?';
 $MSG['324'] = 'Are you sure you want to reactivate this auction?';
@@ -675,6 +676,7 @@ $MSG['890'] = 'Purge Log';
 $MSG['891'] = 'Error Log';
 $MSG['892'] = 'To be activated';
 $MSG['893'] = 'Total';
+$MSG['894'] = 'By Admin';
 $MSG['898'] = 'Paid';
 $MSG['899'] = 'Set as Paid';
 $MSG['900'] = 'View Winners';
@@ -1177,17 +1179,6 @@ $MSG['AUCTIONS_405'] = 'Winning Bid';
 $MSG['AUCTIONS_406'] = 'Winners';
 
 $MSG['BUY_NOW_ONLY_TPL_0100'] = 'Recently Closed Auction Report';
-
-$MSG['auction_has_been_reported'] = 'This auction has been reported';
-$MSG['report_this_item'] = 'Report this item';
-$MSG['report_item'] = 'Report item';
-$MSG['reason_for_report'] = 'Reason for Report';
-$MSG['report_reason_select'] = 'Select a reason';
-$MSG['report_reason_copy'] = 'Copying of your listing';
-$MSG['report_reason_counterfeit'] = 'Counterfeits and copyright violations';
-$MSG['report_reason_prohibited'] = 'Prohibited (banned items)';
-$MSG['report_reason_terms_and_conditions'] = 'Listing policy violations';
-$MSG['report_reason_stolen'] = 'Stolen property';
 
 $MSG['communative_report_winner_yes'] = 'An email has been sent to the any winner(s) with your email address.';
 $MSG['communative_report_winner_no'] = 'Sorry, no auction winner(s) this time.';

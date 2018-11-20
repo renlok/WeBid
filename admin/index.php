@@ -126,11 +126,38 @@ $ACCESS['pageviews'] = (!isset($ACCESS['pageviews']) || empty($ACCESS['pageviews
 $ACCESS['uniquevisitors'] = (!isset($ACCESS['uniquevisitors']) || empty($ACCESS['uniquevisitors'])) ? 0 : $ACCESS['uniquevisitors'];
 $ACCESS['usersessions'] = (!isset($ACCESS['usersessions']) || empty($ACCESS['usersessions'])) ? 0 : $ACCESS['usersessions'];
 
+
+/*
+ * Activation Types
+ * 0 - Admin activates
+ * 1 - User Activates
+ * 2 - Automatic activates
+ * 3 -
+ *
+ * Suspended Types
+ * 0 - not suspended
+ * 1 - suspended by admin
+ * 8 - hasn't been activated by user
+ * 10 - hasn't been activated by admin
+*/
+
 if ($system->SETTINGS['activationtype'] == 0) {
     $query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE suspended = 10";
     $db->direct_query($query);
-    $uuser_count = $db->result('COUNT');
+    $usersTBActivated = $db->result('COUNT');
+} 
+
+if ($system->SETTINGS['activationtype'] == 1) {
+    $query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE suspended = 8";
+    $db->direct_query($query);
+    $newUsers = $db->result('COUNT');
 }
+
+// suspended users
+$query = "SELECT COUNT(id) as COUNT FROM " . $DBPrefix . "users WHERE suspended = 1";
+$db->direct_query($query);
+$usersSuspended = $db->result('COUNT');
+
 
 // version check
 $realversion = '0.0';
@@ -175,7 +202,10 @@ $template->assign_vars(array(
 
         'C_USERS' => $COUNTERS['users'],
         'C_IUSERS' => $COUNTERS['inactiveusers'],
-        'C_UUSERS' => (isset($uuser_count)) ? $uuser_count : '',
+        'C_UUSERS' => (isset($usersTBActivated)) ? $usersTBActivated : '',
+        'C_TBAUSERS' => (isset($usersTBActivated)) ? $usersTBActivated : $newUsers,
+        'C_NEWUSERS' => (isset($newUsers)) ? $newUsers : '',
+        'C_SUSPUSERS' => (isset($usersSuspended)) ? $usersSuspended : '',
         'C_AUCTIONS' => $COUNTERS['auctions'],
         'C_CLOSED' => $COUNTERS['closedauctions'],
         'C_BIDS' => $COUNTERS['bids'],

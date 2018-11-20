@@ -248,7 +248,9 @@ $(document).ready(function() {
 <!-- ENDIF -->
 					</div>
 				</div>
+<!-- IF REPORTING_ALLOWED -->
 				<a class="report-item pull-right" href='{SITEURL}item_report.php?id={ID}'>{L_report_this_item}</a>
+<!-- ENDIF -->
 			</div>
 		</div>
 		<div class="row">

@@ -496,12 +496,33 @@ $MSG['moderation_disabled'] = 'Disabled';
 $MSG['moderation_pre_moderation'] = 'Pre-moderation';
 $MSG['moderation_post_moderation'] = 'Post-moderation';
 
+// reporting auctions
+$MSG['reporting_settings'] = 'Report Auctions Settings';
+$MSG['reporting'] = 'Reporting Auctions';
+$MSG['allow_reporting'] = 'Allow Reporting of Auctions';
+$MSG['auction_reporting_reasons'] = 'Reasons to Report';
+$MSG['reporting_reasons_explain'] = 'Add/Delete Reasons Users Could Report an Auction.';
+$MSG['reasons_updated'] = "Auction Reporting Reasons table updated";
+$MSG['report_details'] = "Report Details";
+$MSG['confirm_report_dismiss'] = 'Are you sure you want to dismiss this report?';
+$MSG['dismiss_report'] = 'Dismiss';
+$MSG['auction_has_been_reported'] = 'This auction has been reported';
+$MSG['report_this_item'] = 'Report this item';
+$MSG['report_item'] = 'Report item';
+$MSG['reported_auction_details'] = 'Auction Details';
+$MSG['report_number'] = 'Report';
+$MSG['reported_item'] = 'Auction Reported';
+$MSG['reason_for_report'] = 'Reason for Report: ';
+$MSG['reported_by'] = 'Reported by: ';
+
 // multilingual.php
 $MSG['multilingual_support_settings_updated'] = 'Multilingual Support Settings updated';
 $MSG['multilingual_support'] = "Multilingual support";
 $MSG['default_language'] = "Default language";
 $MSG['default_language_explain'] = "This is the language that will show for guests and new users";
 $MSG['current_default_language'] = '<span style="color:#CD0000;"><b>Current default language</b></span>';
+$MSG['use_google_translate'] = "Use Google Translate";
+$MSG['google_translate_explain'] = "Allow users to select Google Translate on all pages to translate.";
 
 // newadminuser.php
 $MSG['new_admin_user'] = "New admin user";

@@ -23,12 +23,10 @@
 					<label class="col-sm-3 control-label" for="reason">{L_reason_for_report}</label>
 					<div class="col-sm-9">
 						<select class="form-control" id="reason" name="reason">
-							<option value="0">{L_report_reason_select}</option>
-							<option value="1">{L_report_reason_copy}</option>
-							<option value="2">{L_report_reason_counterfeit}</option>
-							<option value="3">{L_report_reason_prohibited}</option>
-							<option value="4">{L_report_reason_terms_and_conditions}</option>
-							<option value="5">{L_report_reason_stolen}</option>
+						<option value="">Select from the following</option>
+<!-- BEGIN excuses -->
+						<option value="{excuses.REASON_NUM}">{excuses.REASON}</option>
+<!-- END excuses -->
 						</select>
 					</div>
 				</div>

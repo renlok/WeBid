@@ -448,15 +448,15 @@ $template->assign_vars(array(
 
         'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
         'V_NNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 2) ? 'checked=true' : '',
-        'V_YNAME' => (isset($_POST['TPL_name'])) ? $_POST['TPL_name'] : '',
-        'V_UNAME' => (isset($_POST['TPL_nick'])) ? $_POST['TPL_nick'] : '',
-        'V_EMAIL' => (isset($_POST['TPL_email'])) ? $_POST['TPL_email'] : '',
-        'V_YEAR' => (isset($_POST['TPL_year'])) ? $_POST['TPL_year'] : '',
-        'V_ADDRE' => (isset($_POST['TPL_address'])) ? $_POST['TPL_address'] : '',
-        'V_CITY' => (isset($_POST['TPL_city'])) ? $_POST['TPL_city'] : '',
-        'V_PROV' => (isset($_POST['TPL_prov'])) ? $_POST['TPL_prov'] : '',
-        'V_POSTCODE' => (isset($_POST['TPL_zip'])) ? $_POST['TPL_zip'] : '',
-        'V_PHONE' => (isset($_POST['TPL_phone'])) ? $_POST['TPL_phone'] : ''
+        'V_YNAME' => (isset($_POST['TPL_name'])) ? $system->cleanvars($_POST['TPL_name']) : '',
+        'V_UNAME' => (isset($_POST['TPL_nick'])) ? $system->cleanvars($_POST['TPL_nick']) : '',
+        'V_EMAIL' => (isset($_POST['TPL_email'])) ? $system->cleanvars($_POST['TPL_email']) : '',
+        'V_YEAR' => (isset($_POST['TPL_year'])) ? $system->cleanvars($_POST['TPL_year']) : '',
+        'V_ADDRE' => (isset($_POST['TPL_address'])) ? $system->cleanvars($_POST['TPL_address']) : '',
+        'V_CITY' => (isset($_POST['TPL_city'])) ? $system->cleanvars($_POST['TPL_city']) : '',
+        'V_PROV' => (isset($_POST['TPL_prov'])) ? $system->cleanvars($_POST['TPL_prov']) : '',
+        'V_POSTCODE' => (isset($_POST['TPL_zip'])) ? $system->cleanvars($_POST['TPL_zip']) : '',
+        'V_PHONE' => (isset($_POST['TPL_phone'])) ? $system->cleanvars($_POST['TPL_phone']) : ''
         ));
 
 include 'header.php';

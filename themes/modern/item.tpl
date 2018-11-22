@@ -57,7 +57,7 @@ $(document).ready(function() {
 					<div class="panel-heading"><span class="label label-default">{L_113}: {ID}</span></div>
 					<div class="panel-body">
 						<div class="col-md-12">
-							<img class="img-rounded img-responsive center-block" src="{SITEURL}getthumb.php?w=430&fromfile={PIC_URL}" border="0" align="center" width="430px">
+							<img class="img-rounded img-responsive center-block" src="{SITEURL}getthumb.php?w=430&fromfile={PIC_URL}&auction_id={ID}" border="0" align="center" width="430px">
 						</div>
 	<!-- IF B_HASGALELRY -->
 						<div>
@@ -66,7 +66,7 @@ $(document).ready(function() {
 		<!-- BEGIN gallery -->
 								<div class="col-md-4 col-xs-4 col-sm-4">
 									<a href="{SITEURL}{UPLOADEDPATH}{ID}/{gallery.V}" title="" data-lightbox="gallery">
-									<img class="img-rounded img-responsive" src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}" border="0"></a>
+									<img class="img-rounded img-responsive" src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={gallery.V}&auction_id={ID}" border="0"></a>
 								</div>
 		<!-- END gallery -->
 							</div>

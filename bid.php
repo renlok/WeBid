@@ -561,7 +561,7 @@ if (!isset($_POST['action']) || isset($errmsg)) {
             'ERROR' => (isset($errmsg)) ? $errmsg : '',
             'BID_HISTORY' => (isset($ARETHEREBIDS)) ? $ARETHEREBIDS : '',
             'ID' => $id,
-            'IMAGE' => (!empty($pict_url_plain)) ? '<img src="getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $id . '/' . $pict_url_plain . '" border="0" align="center">' : '&nbsp;',
+            'IMAGE' => (!empty($pict_url_plain)) ? '<img src="getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&auction_id=' . $id . '&fromfile=' . $pict_url_plain . '" border="0" align="center">' : '',
             'TITLE' => $item_title,
             'CURRENT_BID' => $system->print_money($cbid),
             'ATYPE' => $atype,

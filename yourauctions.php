@@ -99,8 +99,9 @@ if (!isset($_SESSION['oa_ord']) && empty($_GET['oa_ord'])) {
     $_SESSION['oa_ord'] = 'title';
     $_SESSION['oa_type'] = 'asc';
 } elseif (!empty($_GET['oa_ord'])) {
-    $_SESSION['oa_ord'] = $_GET['oa_ord'];
-    $_SESSION['oa_type'] = $_GET['oa_type'];
+	// check oa_ord && oa_type are valid
+    $_SESSION['oa_ord'] = (in_array($_GET['oa_ord'], array('title', 'starts', 'ends', 'num_bids', 'current_bid'))) ? $_GET['oa_ord'] : 'title';
+    $_SESSION['oa_type'] = (in_array($_GET['oa_type'], array('asc', 'desc'))) ? $_GET['oa_type'] : 'asc';
 } elseif (isset($_SESSION['oa_ord']) && empty($_GET['oa_ord'])) {
     $_SESSION['oa_nexttype'] = $_SESSION['oa_type'];
 }

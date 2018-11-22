@@ -104,7 +104,7 @@ while ($row = $db->fetch()) {
             'ENDS' => $ends_string,
             'ID' => $row['id'],
             'BID' => $system->print_money($high_bid),
-            'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&amp;fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+            'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&auction_id=' . $row['id'] . '&fromfile=' . $row['pict_url'] : '',
             'TITLE' => htmlspecialchars($row['title'])
             ));
     $i++;
@@ -188,7 +188,7 @@ while ($row = $db->fetch()) {
             'ENDS' => $ends_string,
             'ID' => $row['id'],
             'BID' => $system->print_money($high_bid),
-            'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&amp;fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+            'IMAGE' => (!empty($row['pict_url'])) ? 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&auction_id=' . $row['id'] . '&amp;fromfile=' . $row['pict_url'] : '',
             'TITLE' => htmlspecialchars($row['title'])
             ));
 }

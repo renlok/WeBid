@@ -124,7 +124,7 @@ if (isset($_POST['action']) && isset($_POST['username']) && isset($_POST['passwo
 
 $template->assign_vars(array(
         'ERROR' => (isset($ERR)) ? $ERR : '',
-        'USER' => (isset($_POST['username'])) ? $_POST['username'] : ''
+        'USER' => (isset($_POST['username'])) ? $system->cleanvars($_POST['username']) : ''
         ));
 
 include 'header.php';

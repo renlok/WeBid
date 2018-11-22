@@ -109,8 +109,9 @@ if (!isset($_SESSION['pa_ord']) && empty($_GET['pa_ord'])) {
     $_SESSION['pa_ord'] = 'title';
     $_SESSION['pa_type'] = 'asc';
 } elseif (!empty($_GET['pa_ord'])) {
-    $_SESSION['pa_ord'] = $_GET['pa_ord'];
-    $_SESSION['pa_type'] = $_GET['pa_type'];
+	// check oa_ord && oa_type are valid
+    $_SESSION['pa_ord'] = (in_array($_GET['pa_ord'], array('title', 'starts', 'ends'))) ? $_GET['pa_ord'] : 'title';
+    $_SESSION['pa_type'] = (in_array($_GET['pa_type'], array('asc', 'desc'))) ? $_GET['pa_type'] : 'asc';
 } elseif (isset($_SESSION['pa_ord']) && empty($_GET['pa_ord'])) {
     $_SESSION['pa_nexttype'] = $_SESSION['pa_type'];
 }

@@ -204,8 +204,9 @@ if (!isset($_SESSION['ca_ord']) && empty($_GET['ca_ord'])) {
     $_SESSION['ca_ord'] = 'title';
     $_SESSION['ca_type'] = 'asc';
 } elseif (!empty($_GET['ca_ord'])) {
-    $_SESSION['ca_ord'] = $_GET['ca_ord'];
-    $_SESSION['ca_type'] = $_GET['ca_type'];
+	// check oa_ord && oa_type are valid
+    $_SESSION['ca_ord'] = (in_array($_GET['ca_ord'], array('title', 'starts', 'ends', 'num_bids', 'current_bid'))) ? $_GET['ca_ord'] : 'title';
+    $_SESSION['ca_type'] = (in_array($_GET['ca_type'], array('asc', 'desc'))) ? $_GET['ca_type'] : 'asc';
 } elseif (isset($_SESSION['ca_ord']) && empty($_GET['ca_ord'])) {
     $_SESSION['ca_nexttype'] = $_SESSION['ca_type'];
 }

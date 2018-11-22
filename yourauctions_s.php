@@ -81,8 +81,9 @@ if (!isset($_SESSION['sa_ord']) && empty($_GET['sa_ord'])) {
     $_SESSION['sa_ord'] = 'title';
     $_SESSION['sa_type'] = 'asc';
 } elseif (!empty($_GET['sa_ord'])) {
-    $_SESSION['sa_ord'] = $_GET['sa_ord'];
-    $_SESSION['sa_type'] = $_GET['sa_type'];
+	// check oa_ord && oa_type are valid
+    $_SESSION['sa_ord'] = (in_array($_GET['sa_ord'], array('title', 'num_bids', 'current_bid'))) ? $_GET['sa_ord'] : 'title';
+    $_SESSION['sa_type'] = (in_array($_GET['sa_type'], array('asc', 'desc'))) ? $_GET['sa_type'] : 'asc';
 } elseif (isset($_SESSION['sa_ord']) && empty($_GET['sa_ord'])) {
     $_SESSION['sa_nexttype'] = $_SESSION['sa_type'];
 }

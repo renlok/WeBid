@@ -398,7 +398,7 @@ function get_fee($minimum_bid, $just_fee = true)
         'extracat_fee' => 0
     );
     while ($row = $db->fetch()) {
-        if ($minimum_bid >= $row['fee_from'] && $minimum_bid <= $row['fee_to'] && $row['type'] == 'setup') {
+        if ($minimum_bid >= $row['fee_from'] && $minimum_bid <= $row['fee_to'] && $row['type'] == 'setup_fee') {
             if ($row['fee_type'] == 'flat') {
                 $fee_data['setup_fee'] = $row['value'];
                 $fee_value = bcadd($fee_value, $row['value'], $system->SETTINGS['moneydecimals']);

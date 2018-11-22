@@ -81,7 +81,7 @@ $(document).ready(function() {
 									<table bgcolor="#ffffff">
 										<tr>
 											<td align='center'>
-												<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={PIC_URL}" border="0" align="center"><br>
+												<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={PIC_URL}&auction_id={ID}" border="0" align="center"><br>
 	<!-- IF B_HASGALELRY -->
 												<a href="#gallery"><img src="{SITEURL}images/gallery.gif" border="0" alt="gallery"> {L_694}</a>
 	<!-- ENDIF -->
@@ -308,7 +308,7 @@ $(document).ready(function() {
 	<!-- BEGIN gallery -->
 							<td>
 								<a href="{SITEURL}{UPLOADEDPATH}{ID}/{gallery.V}" title="" data-lightbox="gallery">
-									<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}" border="0" hspace="10">
+									<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={gallery.V}&auction_id={ID}" border="0" hspace="10">
 								</a>
 							</td>
 	<!-- END gallery -->

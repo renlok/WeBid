@@ -116,7 +116,7 @@ function build_items($row)
 
     // image icon
     if (!empty($row['pict_url'])) {
-        $row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_list'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'];
+        $row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_list'] . '&auction_id=' . $row['id'] . '&fromfile=' . $row['pict_url'];
     } else {
         $row['pict_url'] = get_lang_img('nopicture.gif');
     }

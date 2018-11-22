@@ -149,8 +149,9 @@ if (!isset($_SESSION['solda_ord']) && empty($_GET['solda_ord'])) {
     $_SESSION['solda_ord'] = 'title';
     $_SESSION['solda_type'] = 'asc';
 } elseif (!empty($_GET['solda_ord'])) {
-    $_SESSION['solda_ord'] = $_GET['solda_ord'];
-    $_SESSION['solda_type'] = $_GET['solda_type'];
+	// check oa_ord && oa_type are valid
+    $_SESSION['solda_ord'] = (in_array($_GET['solda_ord'], array('title', 'starts', 'ends', 'num_bids', 'current_bid'))) ? $_GET['solda_ord'] : 'title';
+    $_SESSION['solda_type'] = (in_array($_GET['solda_type'], array('asc', 'desc'))) ? $_GET['solda_type'] : 'asc';
 } elseif (isset($_SESSION['solda_ord']) && empty($_GET['solda_ord'])) {
     $_SESSION['solda_nexttype'] = $_SESSION['solda_type'];
 }

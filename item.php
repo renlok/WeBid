@@ -466,7 +466,7 @@ $template->assign_vars(array(
         'TITLE' => htmlspecialchars($auction_data['title']),
         'SUBTITLE' => htmlspecialchars($auction_data['subtitle']),
         'AUCTION_DESCRIPTION' => $auction_data['description'],
-        'PIC_URL' => UPLOAD_FOLDER . $id . '/' . $auction_data['pict_url'],
+        'PIC_URL' => $auction_data['pict_url'],
         'SHIPPING_COST' => ($auction_data['shipping_cost'] > 0) ? $system->print_money($auction_data['shipping_cost']) : $MSG['1152'],
         'ADDITIONAL_SHIPPING_COST' => $system->print_money($auction_data['additional_shipping_cost']),
         'COUNTRY' => $auction_data['country'],

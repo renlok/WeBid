@@ -36,7 +36,7 @@ function load_gallery($auc_id)
         if ($dir = opendir(UPLOAD_PATH . $auc_id)) {
             while ($file = @readdir($dir)) {
                 if ($file != '.' && $file != '..' && strpos($file, 'thumb-') === false) {
-                    $UPLOADED_PICTURES[] = UPLOAD_FOLDER . $auc_id . '/' . $file;
+                    $UPLOADED_PICTURES[] = $file;
                 }
             }
             closedir($dir);

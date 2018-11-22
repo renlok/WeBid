@@ -65,7 +65,7 @@ foreach ($auction_data as $row) {
     $starting_price = $row['current_bid'];
 
     if (strlen($row['pict_url']) > 0) {
-        $row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&fromfile=' . UPLOAD_FOLDER . $row['id'] . '/' . $row['pict_url'];
+        $row['pict_url'] = $system->SETTINGS['siteurl'] . 'getthumb.php?w=' . $system->SETTINGS['thumb_show'] . '&auction_id=' . $row['id'] . '&fromfile=' . $row['pict_url'];
     } else {
         $row['pict_url'] = get_lang_img('nopicture.gif');
     }

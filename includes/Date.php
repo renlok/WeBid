@@ -83,7 +83,7 @@ class Date
     public function formatDate($raw_date, $format = false, $UTC_input = true)
     {
         if ($UTC_input) {
-            $datetime = new DateTime($raw_date, $this->UTCtimezone);
+            $datetime = new DateTime(strtotime($raw_date), $this->UTCtimezone);
             $datetime->setTimezone($this->timezone);
         } else {
             $datetime = new DateTime($raw_date, $this->timezone);

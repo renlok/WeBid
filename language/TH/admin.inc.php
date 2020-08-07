@@ -289,7 +289,7 @@ $MSG['home_page_news_explain'] = "Will show news items on the home page.";
 $MSG['number_news_shown'] = "Number of news you want to show";
 
 // durations.php
-$MSG['duration_table_updated'] = "Durations table updated";
+$MSG['duration_table_updated'] = "อัปเดตตารางระยะเวลาแล้ว";
 
 // editadminuser.php
 // nothing
@@ -320,7 +320,7 @@ $MSG['error_msg_not_zero'] = "Messages to show cannot be zero"; // Also newboard
 // nothing
 
 // editnew.php
-$MSG['edit_news'] = "Edit news";
+$MSG['edit_news'] = "แก้ไขข่าว";
 
 // edituser.php
 // nothing
@@ -329,7 +329,7 @@ $MSG['edit_news'] = "Edit news";
 // nothing
 
 // emailsettings.php
-$MSG['email_settings'] = 'Email Settings';
+$MSG['email_settings'] = 'การตั้งค่าอีเมล';
 $MSG['error_missing_SMTP_settings'] = 'Please enter missing or incorrect SMTP settings';
 $MSG['mail_protocol'] = 'Mail Protocol:';
 $MSG['mail_parameters'] = 'Webid Mail Parameters:';
@@ -381,11 +381,11 @@ $MSG['suspend_auction'] = "Suspend auction";
 $MSG['unsuspend_auction'] = "Reactivate auction";
 
 // excludeuser.php
-$MSG['suspend_user'] = "Suspend User";
+$MSG['suspend_user'] = "ระงับผู้ใช้";
 $MSG['suspend_user_confirm'] = "Are you sure you want to suspend this user?";
-$MSG['activate_user'] = 'Activate User';
+$MSG['activate_user'] = 'เปิดใช้งานผู้ใช้';
 $MSG['activate_user_confirm'] = 'Are you sure you want to activate this user?';
-$MSG['reactivate_user'] = "Reactivate User";
+$MSG['reactivate_user'] = "เปิดใช้งานผู้ใช้อีกครั้ง";
 $MSG['reactivate_user_confirm'] = "Are you sure you want to reactivate this user?";
 
 // faqs.php
@@ -415,7 +415,7 @@ $MSG['error_from_must_be_less_than_to'] = 'The <i>from</i> value must be less th
 $MSG['increments_updated'] = "Increments table updated";
 
 // index.php
-$MSG['counters_updated'] = "Counters updated";
+$MSG['counters_updated'] = "อัปเดตตัวนับแล้ว";
 
 // invoice_settings.php
 $MSG['invoice_settings'] = 'Invoice Settings';
@@ -429,16 +429,16 @@ $MSG['invoice_end_msg_explain'] = 'This will show at the end of every users invo
 // nothing
 
 // listauctions.php
-$MSG['view_open_auctions'] = "View Open Auctions";
+$MSG['view_open_auctions'] = "ดูการประมูลที่เปิดอยู่";
 
 // listclosedauctions.php
 // nothing
 
 // listreportedauctions.php
-$MSG['view_reported_auctions'] = "View Reported Auctions";
+$MSG['view_reported_auctions'] = "ดูการประมูลที่ได้รับรายงาน";
 
 // listsuspendedauctions.php
-$MSG['view_suspended_auctions'] = "View Suspended Auctions";
+$MSG['view_suspended_auctions'] = "ดูการประมูลที่ถูกระงับ";
 
 // listusers.php
 // nothing
@@ -450,10 +450,10 @@ $MSG['view_suspended_auctions'] = "View Suspended Auctions";
 // nothing
 
 // logo_upload.php
-$MSG['your_logo'] = "Your logo";
-$MSG['current_logo'] = "Current logo";
-$MSG['upload_new_logo'] = "Upload a new logo";
-$MSG['logo_upload_success'] = 'Logo uploaded successfully';
+$MSG['your_logo'] = "โลโก้ของคุณ";
+$MSG['current_logo'] = "โลโก้ปัจจุบัน";
+$MSG['upload_new_logo'] = "อัปโหลดโลโก้ใหม่";
+$MSG['logo_upload_success'] = 'อัปโหลดโลโก้เรียบร้อยแล้ว';
 
 // logout.php
 // nothing
@@ -471,11 +471,11 @@ $MSG['maintenance_mode_msg'] = "Under Maintenance HTML code";
 // nothing
 
 // membertypes.php
-$MSG['member_types_updates'] = 'Member types Updated';
+$MSG['member_types_updates'] = 'อัปเดตประเภทสมาชิกแล้ว';
 
 // metatags.php
 $MSG['metatag_settings'] = "HTML meta Tags";
-$MSG['metatag_settings_updated'] = "Meta Tags Settings Updated";
+$MSG['metatag_settings_updated'] = "อัปเดตการตั้งค่า Meta Tags แล้ว";
 $MSG['metatag_desc'] = "Meta Description Tag";
 $MSG['metatag_desc_explain'] = "The Meta Description Tag is usually used to describe your pages in the search results pages search engines show.<br>
 				Enter the text which better describes your site below.";
@@ -487,8 +487,8 @@ $MSG['metatag_keywords_explain'] = "The Meta Keywords Tag gives some search engi
 // nothing
 
 // moderation.php
-$MSG['moderation_settings'] = 'Moderation Settings';
-$MSG['moderation_settings_updated'] = "Moderation Settings updated";
+$MSG['moderation_settings'] = 'การตั้งค่าการกลั่นกรอง';
+$MSG['moderation_settings_updated'] = "อัปเดตการตั้งค่าการกลั่นกรองแล้ว";
 $MSG['moderation'] = 'Moderation';
 $MSG['auction_moderation'] = 'Auction Moderation';
 $MSG['new_auction_moderation'] = 'New auction moderation';
@@ -497,14 +497,14 @@ $MSG['moderation_pre_moderation'] = 'Pre-moderation';
 $MSG['moderation_post_moderation'] = 'Post-moderation';
 
 // multilingual.php
-$MSG['multilingual_support_settings_updated'] = 'Multilingual Support Settings updated';
-$MSG['multilingual_support'] = "Multilingual support";
-$MSG['default_language'] = "Default language";
-$MSG['default_language_explain'] = "This is the language that will show for guests and new users";
-$MSG['current_default_language'] = '<span style="color:#CD0000;"><b>Current default language</b></span>';
+$MSG['multilingual_support_settings_updated'] = 'อัปเดตการตั้งค่าการสนับสนุนหลายภาษา';
+$MSG['multilingual_support'] = "การสนับสนุนหลายภาษา";
+$MSG['default_language'] = "ภาษาเริ่มต้น";
+$MSG['default_language_explain'] = "นี่คือภาษาที่จะแสดงสำหรับแขกและผู้ใช้ใหม่";
+$MSG['current_default_language'] = '<span style="color:#CD0000;"><b>ภาษาเริ่มต้นปัจจุบัน</b></span>';
 
 // newadminuser.php
-$MSG['new_admin_user'] = "New admin user";
+$MSG['new_admin_user'] = "ผู้ดูแลระบบใหม่";
 
 // newbanneruser.php
 // nothing
@@ -519,26 +519,26 @@ $MSG['new_admin_user'] = "New admin user";
 // nothing
 
 // newsletter.php
-$MSG['error_subject_or_body_missing'] = "The newsletter subject or body is missing";
-$MSG['x_messages_sent'] = "%d messages sent.";
-$MSG['all_users'] = "All users"; // Also listusers.tpl
-$MSG['active_users'] = "Active users"; // Also listusers.tpl
-$MSG['suspended_by_admin'] = "Suspended by the admin"; // Also listusers.tpl
-$MSG['signup_fee_unpaid'] = "Sign up fee not paid"; // Also listusers.tpl
-$MSG['account_never_confirmed'] = "Account never confirmed"; // Also listusers.tpl
+$MSG['error_subject_or_body_missing'] = "หัวเรื่องหรือเนื้อหาของจดหมายข่าวหายไป";
+$MSG['x_messages_sent'] = "ส่งข้อความแล้ว %d";
+$MSG['all_users'] = "ผู้ใช้ทั้งหมด"; // Also listusers.tpl
+$MSG['active_users'] = "ผู้ใช้ที่ใช้งานอยู่"; // Also listusers.tpl
+$MSG['suspended_by_admin'] = "ถูกระงับโดยผู้ดูแลระบบ"; // Also listusers.tpl
+$MSG['signup_fee_unpaid'] = "ไม่ได้ชำระค่าธรรมเนียมการสมัคร"; // Also listusers.tpl
+$MSG['account_never_confirmed'] = "ไม่เคยยืนยันบัญชี"; // Also listusers.tpl
 
 // newuser.php
 // nothing
 
 // payments.php
-$MSG['payment_methods_updated'] = "Payment methods table updated";
+$MSG['payment_methods_updated'] = "อัปเดตตารางวิธีการชำระเงินแล้ว";
 
 // privacypolicy.php
-$MSG['privacy_policy'] = "Privacy Policy Page";
-$MSG['privacy_policy_updated'] = "Privacy Policy Settings Updated";
-$MSG['enable_privacy_policy'] = "Enable Privacy Policy Page?";
-$MSG['enable_privacy_policy_explain'] = "Enable this option if you want a Privacy Policy link to appear in the footer of your pages.";
-$MSG['privacy_policy_content'] = "Privacy Policy content<br>(HTML allowed)";
+$MSG['privacy_policy'] = "หน้านโยบายความเป็นส่วนตัว";
+$MSG['privacy_policy_updated'] = "อัปเดตการตั้งค่านโยบายความเป็นส่วนตัวแล้ว";
+$MSG['enable_privacy_policy'] = "เปิดใช้งานหน้านโยบายความเป็นส่วนตัวหรือไม่";
+$MSG['enable_privacy_policy_explain'] = "เปิดใช้ตัวเลือกนี้หากคุณต้องการให้ลิงก์นโยบายความเป็นส่วนตัวปรากฏที่ส่วนท้ายของหน้าของคุณ";
+$MSG['privacy_policy_content'] = "เนื้อหานโยบายความเป็นส่วนตัว<br>(อนุญาต HTML)";
 
 // profile.php
 $MSG['registration_fields_updated'] = 'User Registration Fields Updated';
@@ -548,28 +548,28 @@ $MSG['error_required_field_cannot_be_hidden'] = 'A field must be shown if it\'s 
 // nothing
 
 // searchauctions.php
-$MSG['search_auctions'] = "Search Auctions";
+$MSG['search_auctions'] = "ค้นหาการประมูล";
 
 // settings.php
-$MSG['general_settings'] = "General Settings"; // Also sidebar-settings.tpl
-$MSG['general_settings_updated'] = "General settings updated";
-$MSG['site_name'] = "Site name";
-$MSG['site_name_explain'] = "Your site's name will appear in the e-mail messages WeBid sends to users";
-$MSG['site_url'] = "Site URL"; // Also home.tpl
-$MSG['site_url_explain'] = "This must be the complete URL (starting with <b>http://</b>) of your WeBid installation.<br>Be sure to include the ending slash.";
-$MSG['admin_email'] = "Admin e-mail"; // Also home.tpl
-$MSG['admin_email_explain'] = "The admin e-mail address is used to send automatic e-mail messages";
-$MSG['copyright_msg'] = "Your copyright message";
-$MSG['copyright_msg_explain'] = "This is a message that is added to the bottom of every page";
+$MSG['general_settings'] = "การตั้งค่าทั่วไป"; // Also sidebar-settings.tpl
+$MSG['general_settings_updated'] = "อัปเดตการตั้งค่าทั่วไปแล้ว";
+$MSG['site_name'] = "ชื่อเว็บไซต์";
+$MSG['site_name_explain'] = "ชื่อไซต์ของคุณจะปรากฏในข้อความอีเมลที่ WeBid ส่งถึงผู้ใช้";
+$MSG['site_url'] = "URL เว็บไซต์"; // Also home.tpl
+$MSG['site_url_explain'] = "ต้องเป็น URL ที่สมบูรณ์ (ขึ้นต้นด้วย <b>http://</b>) ของการติดตั้ง WeBid ของคุณ<br>อย่าลืมใส่เครื่องหมายทับลงท้ายด้วย";
+$MSG['admin_email'] = "e-mail ผู้ดูแลระบบ"; // Also home.tpl
+$MSG['admin_email_explain'] = "ที่อยู่อีเมลของผู้ดูแลระบบใช้เพื่อส่งข้อความอีเมลอัตโนมัติ";
+$MSG['copyright_msg'] = "ข้อความลิขสิทธิ์ของคุณ";
+$MSG['copyright_msg_explain'] = "นี่คือข้อความที่ถูกเพิ่มที่ด้านล่างของทุกหน้า";
 $MSG['batch_settings'] = "Batch Procedures Settings";
 $MSG['run_cron'] = "Run cron";
 $MSG['run_cron_explain'] = "WeBid needs to periodically run <code>batch.php</code> to close expired auctions and send notification e-mails to the seller and/or the winner. The recommended way to run <code>batch.php</code> is to set up a <a href=\"http://www.webidsupport.com/forums/index.php?threads/setting-up-a-cronjob.10244/\" target=\"_blank\">cronjob</a> if you run a Unix/Linux server.<br>If for any reason you can't run a cronjob on your server, you can choose the <b>Non-batch</b> option below to have <code>batch.php</code> run by WeBid itself: in this case <code>cron.php</code> will be run each time someone access your home page.";
 $MSG['batch'] = "Batch"; // Also index.php
 $MSG['non_batch'] = "Non-batch"; // Also index.php
-$MSG['clear_closed_auctions'] = "Delete auctions older than";
+$MSG['clear_closed_auctions'] = "ลบการประมูลที่เก่ากว่า";
 $MSG['clear_closed_auctions_explain'] = "After an auction is closed how many days will an auction be kept before it is deleted. Can be set to 0 to keep indefinatly.";
-$MSG['optimisation'] = "Optimisation";
-$MSG['enable_template_cache'] = "Enable the template cache?";
+$MSG['optimisation'] = "การเพิ่มประสิทธิภาพ";
+$MSG['enable_template_cache'] = "เปิดใช้งานแคชเทมเพลตหรือไม่";
 $MSG['enable_template_cache_explain'] = "This will increase the speed of your site. It is recommended this is only disabled when making updates to your template";
 $MSG['ssl_support'] = "SSL Support";
 $MSG['enable_ssl'] = "Enable SSL support?";
@@ -579,38 +579,38 @@ $MSG['ssl_url_explain'] = 'If you\'re using shared SSL enter the URL here';
 
 // spam.php
 $MSG['spam_settings'] = 'การตั้งค่าสแปม'; // Also sidebar-settings.tpl
-$MSG['spam_settings_updated'] = 'Spam settings updated';
-$MSG['error_recaptcha_missing_keys'] = 'You cannot use reCaptcha without the two keys';
-$MSG['recaptcha_public_key'] = "reCaptcha public key";
-$MSG['recaptcha_public_key_explain'] = 'To use reCaptcha you must create a free account with <a href="https://www.google.com/recaptcha/intro/index.html" class="new-window">Google reCAPTCHA</a> and add this domain to a key pair';
-$MSG['recaptcha_secret_key'] = "Recaptcha secret key";
-$MSG['registration_captcha_type'] = "Captcha type on registration page";
-$MSG['registration_captcha_type_explain'] = "Captcha are used to prevent spam it is generally a good idea to enable some sort of captcha";
+$MSG['spam_settings_updated'] = 'อัปเดตการตั้งค่าสแปมแล้ว';
+$MSG['error_recaptcha_missing_keys'] = 'คุณไม่สามารถใช้ reCaptcha ได้หากไม่มีคีย์ทั้งสอง';
+$MSG['recaptcha_public_key'] = "reCaptcha คีย์สาธารณะ";
+$MSG['recaptcha_public_key_explain'] = 'ในการใช้ reCaptcha คุณต้องสร้างบัญชีฟรีด้วย <a href="https://www.google.com/recaptcha/intro/index.html" class="new-window">Google reCAPTCHA</a> และเพิ่มโดเมนนี้ในคู่คีย์';
+$MSG['recaptcha_secret_key'] = "คีย์ลับ Recaptcha";
+$MSG['registration_captcha_type'] = "ประเภท Captcha ในหน้าการลงทะเบียน";
+$MSG['registration_captcha_type_explain'] = "Captcha ใช้เพื่อป้องกันสแปมโดยทั่วไปควรเปิดใช้งาน captcha บางประเภท";
 $MSG['friend_captcha_type'] = "Captcha type on send auction to friend page";
-$MSG['item_report_captcha_type'] = "Captcha type on item report page";
-$MSG['spam_blocked_email_enabled'] = 'Enable block email domains';
-$MSG['spam_blocked_email_domains'] = 'Deny registration from disposable emails';
-$MSG['spam_blocked_email_domains_explain'] = 'Put each domain on a new line';
+$MSG['item_report_captcha_type'] = "ประเภท Captcha ในหน้ารายงานรายการ";
+$MSG['spam_blocked_email_enabled'] = 'เปิดใช้งานบล็อกโดเมนอีเมล';
+$MSG['spam_blocked_email_domains'] = 'ปฏิเสธการลงทะเบียนจากอีเมลที่ใช้แล้วทิ้ง';
+$MSG['spam_blocked_email_domains_explain'] = 'ใส่แต่ละโดเมนในบรรทัดใหม่';
 
 // stat_settings.php
 $MSG['statistics_settings_updated'] = "อัปเดตการตั้งค่าสถิติแล้ว";
-$MSG['error_stat_type_missing'] = "You must select at least one statistic type (accesses, browsers &amp; platforms, by country)";
-$MSG['statistics_explain'] = "Please, choose below if you want WeBid to generate access statistics for your site.";
-$MSG['enable_statistics'] = "Enable Statistics?";
-$MSG['stat_types_explain'] = "Select which type of statistics you want to generate";
-$MSG['enable_user_access_stats'] = "Generate user access statistics";
-$MSG['enable_browser_stats'] = "Generate browser and platform statistics";
+$MSG['error_stat_type_missing'] = "คุณต้องเลือกประเภทสถิติอย่างน้อยหนึ่งประเภท (การเข้าถึงเบราว์เซอร์และแพลตฟอร์มตามประเทศ)";
+$MSG['statistics_explain'] = "กรุณาเลือกด้านล่างหากคุณต้องการให้ WeBid สร้างสถิติการเข้าถึงเว็บไซต์ของคุณ";
+$MSG['enable_statistics'] = "เปิดใช้งานสถิติไหม";
+$MSG['stat_types_explain'] = "เลือกประเภทของสถิติที่คุณต้องการสร้าง";
+$MSG['enable_user_access_stats'] = "สร้างสถิติการเข้าถึงของผู้ใช้";
+$MSG['enable_browser_stats'] = "สร้างสถิติเบราว์เซอร์และแพลตฟอร์ม";
 
 // tax_levels.php
 // nothing
 
 // tax.php
 $MSG['tax_settings'] = 'การตั้งค่าภาษี';
-$MSG['tax_settings_updated'] = 'Tax settings updated';
-$MSG['enable_tax'] = 'Enable Tax';
-$MSG['enable_tax_explain'] = 'Global setting to enable or disable tax';
-$MSG['enable_user_tax'] = 'Users can charge tax';
-$MSG['enable_user_tax_explain'] = 'Enable to give users an option to tax their items';
+$MSG['tax_settings_updated'] = 'อัปเดตการตั้งค่าภาษีแล้ว';
+$MSG['enable_tax'] = 'เปิดใช้งานภาษี';
+$MSG['enable_tax_explain'] = 'การตั้งค่าส่วนกลางเพื่อเปิดหรือปิดภาษี';
+$MSG['enable_user_tax'] = 'ผู้ใช้สามารถเรียกเก็บภาษี';
+$MSG['enable_user_tax_explain'] = 'เปิดใช้งานเพื่อให้ผู้ใช้มีตัวเลือกในการเก็บภาษีสินค้าของตน';
 
 // terms.php
 $MSG['terms_conditions_page'] = "ข้อตกลง &amp; เงือนไข"; // Also sidebar-content.tpl
@@ -621,17 +621,17 @@ $MSG['terms_conditions_content'] = "Terms &amp; Conditions page content<br>(HTML
 
 // theme.php
 $MSG['default_theme_updated'] = "อัปเดตธีมเริ่มต้นแล้ว";
-$MSG['error_theme_missing'] = "Chosen theme does not exist";
+$MSG['error_theme_missing'] = "ไม่มีธีมที่เลือก";
 
 // time.php
 $MSG['time_settings'] = "การตั้งค่าเวลา"; // also sidebar-settings.tpl
 $MSG['time_settings_updated'] = "ตั้งค่าเวลาแล้ว";
-$MSG['date_format'] = "Dates Format"; // also home.tpl
-$MSG['date_format_explain'] = "Choose the format you want date to appear on your site.";
+$MSG['date_format'] = "รูปแบบวันที่"; // also home.tpl
+$MSG['date_format_explain'] = "เลือกรูปแบบที่คุณต้องการให้วันที่ปรากฏบนไซต์ของคุณ";
 $MSG['american_dates'] = "mm/dd/yyyy"; // also index.php
 $MSG['european_dates'] = "dd/mm/yyyy"; // also index.php
-$MSG['default_time_zone'] = "Default Time Zone";
-$MSG['default_time_zone_explain'] = "Choose the default time zone";
+$MSG['default_time_zone'] = "โซนเวลาเริ่มต้น";
+$MSG['default_time_zone_explain'] = "เลือกเขตเวลาเริ่มต้น";
 
 // userbanners.php
 // nothing
@@ -640,29 +640,29 @@ $MSG['default_time_zone_explain'] = "Choose the default time zone";
 // nothing
 
 // usergroups.php
-$MSG['error_must_have_one_autojoin'] = "At least one group must have Auto Join enabled";
-$MSG['cannot_delete_default_user_groups'] = 'Default User Groups (Sellers & Buyers) cannot be removed';
-$MSG['user_group_deleted'] = 'User Group Deleted';
-$MSG['user_group_name_empty_update'] = 'Group name cannot be empty. User Group was not updated';
-$MSG['user_group_name_empty_new'] = 'Group name cannot be empty. The new User Group was not created';
+$MSG['error_must_have_one_autojoin'] = "อย่างน้อยหนึ่งกลุ่มต้องเปิดใช้งานการเข้าร่วมอัตโนมัติ";
+$MSG['cannot_delete_default_user_groups'] = 'ไม่สามารถลบกลุ่มผู้ใช้เริ่มต้น (ผู้ขายและผู้ซื้อ) ได้';
+$MSG['user_group_deleted'] = 'ลบกลุ่มผู้ใช้แล้ว';
+$MSG['user_group_name_empty_update'] = 'ชื่อกลุ่มต้องไม่ว่างเปล่า ไม่ได้อัปเดตกลุ่มผู้ใช้';
+$MSG['user_group_name_empty_new'] = 'ชื่อกลุ่มต้องไม่ว่างเปล่า ไม่ได้สร้างกลุ่มผู้ใช้ใหม่';
 
 // usersettings.php
 $MSG['user_settings'] = "การตั้งค่าผู้ใช้"; // Also sidebar-settings.tpl
-$MSG['user_settings_updated'] = "User Settings Updated";
-$MSG['enable_reauthentication'] = "Enable User Re-authentication";
-$MSG['enable_reauthentication_explain'] = "The users will be asked to enter their password before completing actions such as leaving feedback, submitting an auction or leaving a bid.";
-$MSG['user_confirm_method'] = "Users Confirmation Method";
-$MSG['user_confirm_method_explain'] = "On WeBid each users account must be activated before it can be used. Choose which method you want to use";
+$MSG['user_settings_updated'] = "อัปเดตการตั้งค่าผู้ใช้แล้ว";
+$MSG['enable_reauthentication'] = "เปิดใช้งานการตรวจสอบสิทธิ์ผู้ใช้อีกครั้ง";
+$MSG['enable_reauthentication_explain'] = "ผู้ใช้จะถูกขอให้ป้อนรหัสผ่านก่อนดำเนินการเช่นออกความคิดเห็นส่งการประมูลหรือออกจากการเสนอราคา";
+$MSG['user_confirm_method'] = "วิธีการยืนยันของผู้ใช้";
+$MSG['user_confirm_method_explain'] = "ใน WeBid บัญชีผู้ใช้แต่ละบัญชีจะต้องเปิดใช้งานก่อนจึงจะสามารถใช้งานได้ เลือกวิธีที่คุณต้องการใช้";
 $MSG['prune_unactivated_users'] = "Prune unactivated users";
-$MSG['prune_unactivated_users_explain'] = "Automatically delete unactivated user accounts.";
-$MSG['prune_unactivated_users_days'] = "Numbers of days before deleting unactivated accounts";
-$MSG['prune_unactivated_users_days_explain'] = "Numbers of days before deleting unactivated accounts.";
-$MSG['bidding_visable_to_guest'] = 'Buy now visible to guests';
-$MSG['bidding_visable_to_guest_explain'] = 'Guest can see the Bid now/Buy now option when viewing an auction, this should be disabled if you plan to run a single seller site';
-$MSG['email_admin_on_signup'] = 'Email admin on signup';
-$MSG['email_admin_on_signup_explain'] = 'Admin receives an email each time a new user registers';
-$MSG['user_request_seller_permission'] = 'Users can request to become sellers';
-$MSG['user_request_seller_permission_explain'] = 'Users who do not have permission to sell items can request to gain permission';
+$MSG['prune_unactivated_users_explain'] = "ลบบัญชีผู้ใช้ที่ไม่ได้เปิดใช้งานโดยอัตโนมัติ";
+$MSG['prune_unactivated_users_days'] = "จำนวนวันก่อนลบบัญชีที่ไม่ได้เปิดใช้งาน";
+$MSG['prune_unactivated_users_days_explain'] = "จำนวนวันก่อนลบบัญชีที่ไม่ได้เปิดใช้งาน";
+$MSG['bidding_visable_to_guest'] = 'เปิดระบบ Buy Now ผู้เยี่ยมชม';
+$MSG['bidding_visable_to_guest_explain'] = 'ผู้เยี่ยมชมสามารถเห็นตัวเลือกเสนอราคาตอนนี้ / ซื้อทันทีเมื่อดูการประมูลซึ่งควรปิดการใช้งานหากคุณวางแผนที่จะเรียกใช้ไซต์ผู้ขายเดียว';
+$MSG['email_admin_on_signup'] = 'ส่งอีเมลถึงผู้ดูแลระบบเมื่อสมัคร';
+$MSG['email_admin_on_signup_explain'] = 'ผู้ดูแลระบบจะได้รับอีเมลทุกครั้งที่ผู้ใช้ใหม่ลงทะเบียน';
+$MSG['user_request_seller_permission'] = 'ผู้ใช้สามารถขอเป็นผู้ขายได้';
+$MSG['user_request_seller_permission_explain'] = 'ผู้ใช้ที่ไม่ได้รับอนุญาตให้ขายสินค้าสามารถขออนุญาตได้';
 
 // util_cc1.php
 $MSG['category_table_updated'] = "อัปเดตตารางหมวดหมู่แล้ว";

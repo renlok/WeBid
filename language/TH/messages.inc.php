@@ -1103,10 +1103,10 @@ $MSG['25_0223'] = 'Feedback you\'ve received';
 $MSG['25_0224'] = 'Preview';
 
 // multi-language months
-$MSG['MON_001'] = 'Jan';
-$MSG['MON_001E'] = 'January';
-$MSG['MON_002'] = 'Feb';
-$MSG['MON_002E'] = 'February';
+$MSG['MON_001'] = 'ม.ค.';
+$MSG['MON_001E'] = 'มกราคม';
+$MSG['MON_002'] = 'ก.พ.';
+$MSG['MON_002E'] = 'กุมภาพัน';
 $MSG['MON_003'] = 'Mar';
 $MSG['MON_003E'] = 'March';
 $MSG['MON_004'] = 'Apr';

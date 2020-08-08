@@ -17,16 +17,16 @@ if (!defined('InWeBid') || !defined('InAdmin')) {
 }
 
 // common strings
-$MSG['editor_help'] = "Note: each new line character will be converted to <b>&lt;br&gt;</b> HTML tag.";
+$MSG['editor_help'] = "หมายเหตุ: อักขระบรรทัดใหม่แต่ละตัวจะถูกแปลงเป็น <b>&lt;br&gt;</b> HTML tag.";
 $MSG['cannot_delete'] = "ไม่สามารถลบได้";
 
 // aboutus.php
 $MSG['about_us_page'] = "หน้าเกียวกับเรา";
-$MSG['active_about_us'] = "Activate About us page?";
+$MSG['active_about_us'] = "เปิดใช้งานหน้าเกี่ยวกับเราหรือไม่";
 $MSG['active_about_us_explain'] = "Activate this option if you want an <u>About  us</u> link to appear in the footer of your pages.";
-$MSG['about_us_content'] = "About us page content";
+$MSG['about_us_content'] = "เนื้อหาหน้าเกี่ยวกับเรา";
 $MSG['about_us_content_explain'] = "Note: each new line character will be converted to <b>&lt;br&gt;</b> HTML tag.";
-$MSG['about_us_updated'] = "About us Updated";
+$MSG['about_us_updated'] = "เกี่ยวกับเราอัปเดต";
 
 // accounts.php
 // nothing

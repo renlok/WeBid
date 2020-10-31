@@ -49,7 +49,6 @@ $user_id = $auction_data['user'];
 $minimum_bid = $auction_data['minimum_bid'];
 $high_bid = $auction_data['current_bid'];
 $customincrement = $auction_data['increment'];
-$seller_reg = $dt->formatDate($auction_data['reg_date']);
 
 // sort out counter
 if (!isset($auction_data['counter'])) {
@@ -461,6 +460,9 @@ if ($auction_data['shipping'] == 1) {
     $shipping = $MSG['867'];
 }
 
+$DATE = ($auction_data['reg_date']);
+$mth = 'MON_0'.date('m', $DATE);
+
 $template->assign_vars(array(
         'ID' => $auction_data['id'],
         'TITLE' => htmlspecialchars($auction_data['title']),
@@ -500,7 +502,7 @@ $template->assign_vars(array(
         'UPLOADEDPATH' => UPLOAD_FOLDER,
         'BNIMG' => get_lang_img('buy_it_now.gif'),
 
-        'SELLER_REG' => $seller_reg,
+        'SELLER_REG' => $MSG[$mth] . ' ' . date('d, Y', $DATE),
         'SELLER_ID' => $auction_data['user'],
         'SELLER_NICK' => $auction_data['nick'],
         'SELLER_TOTALFB' => $total_rate,

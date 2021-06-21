@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,28 +18,26 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-// Data check
-if (!isset($_REQUEST['id']) || !isset($_REQUEST['msg'])) {
-    header('location: boards.php');
-    exit;
-}
-
 $msg = intval($_REQUEST['msg']);
 $board_id = intval($_REQUEST['id']);
 
 // Insert new currency
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
-    if (!isset($_POST['message']) || empty($_POST['message'])) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
-    } else {
-        $query = "UPDATE " . $DBPrefix . "comm_messages SET message = :message WHERE id = :id";
-        $params = array();
-        $params[] = array(':message', $system->cleanvars($_POST['message']), 'str');
-        $params[] = array(':id', $_POST['msg'], 'int');
-        $db->query($query, $params);
-        header("Location: editmessages.php?id=" . $_POST['id']);
-        exit;
-    }
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	if (!isset($_POST['message']) || empty($_POST['message']))
+	{
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
+	}
+	else
+	{
+		$query = "UPDATE " . $DBPrefix . "comm_messages SET message = :message WHERE id = :id";
+		$params = array();
+		$params[] = array(':message', $system->cleanvars($_POST['message']), 'str');
+		$params[] = array(':id', $_POST['msg'], 'int');
+		$db->query($query, $params);
+		header("Location: editmessages.php?id=" . $_POST['id']);
+		exit;
+	}
 }
 
 // Retrieve board name for breadcrumbs
@@ -57,17 +55,18 @@ $db->query($query, $params);
 $data = $db->result();
 
 $template->assign_vars(array(
-        'BOARD_NAME' => $board_name,
-        'MESSAGE' => nl2br((isset($_POST['message'])) ? $_POST['message'] : $data['message']),
-        'USER' => ($data['user'] > 0) ? $data['username'] : $MSG['5061'],
-        'POSTED' => $dt->formatDate($data['msgdate']),
-        'BOARD_ID' => $board_id,
-        'MSG_ID' => $msg
-        ));
+		'BOARD_NAME' => $board_name,
+		'MESSAGE' => nl2br((isset($_POST['message'])) ? $_POST['message'] : $data['message']),
+		'USER' => ($data['user'] > 0) ? $data['username'] : $MSG['5061'],
+		'POSTED' => FormatDate($data['msgdate']),
+		'BOARD_ID' => $board_id,
+		'MSG_ID' => $msg
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'editmessage.tpl'
-        ));
+		'body' => 'editmessage.tpl'
+		));
 $template->display('body');
 include 'footer.php';
+?>

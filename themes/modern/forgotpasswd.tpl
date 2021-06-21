@@ -16,7 +16,7 @@
 				<div class="form-group col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-						<input type="text" NAME="TPL_username" class="form-control" placeholder="{L_username}" value="{USERNAME}">
+						<input type="text" NAME="TPL_username" class="form-control" placeholder="{L_003}" value="{USERNAME}">
 					</div>
 					<br>
 					<div class="input-group">

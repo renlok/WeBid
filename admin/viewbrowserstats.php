@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -28,32 +28,36 @@ $db->query($query, $params);
 $MAX = 0;
 $TOTAL = 0;
 $BROWSERS = array();
-while ($row = $db->fetch()) {
-    $BROWSERS[$row['browser']] = $row['counter'];
-    $TOTAL = $TOTAL + $row['counter'];
+while ($row = $db->fetch())
+{
+	$BROWSERS[$row['browser']] = $row['counter'];
+	$TOTAL = $TOTAL + $row['counter'];
 
-    if ($row['counter'] > $MAX) {
-        $MAX = $row['counter'];
-    }
+	if ($row['counter'] > $MAX)
+	{
+		$MAX = $row['counter'];
+	}
 }
 
-foreach ($BROWSERS as $k => $v) {
-    $template->assign_block_vars('sitestats', array(
-        'BROWSER' => $k,
-        'NUM' => $BROWSERS[$k],
-        'WIDTH' => ($BROWSERS[$k] * 100) / $MAX,
-        'PERCENTAGE' => ceil(intval($BROWSERS[$k] * 100 / $TOTAL))
-        ));
+foreach ($BROWSERS as $k => $v)
+{
+	$template->assign_block_vars('sitestats', array(
+		'BROWSER' => $k,
+		'NUM' => $BROWSERS[$k],
+		'WIDTH' => ($BROWSERS[$k] * 100) / $MAX,
+		'PERCENTAGE' => ceil(intval($BROWSERS[$k] * 100 / $TOTAL))
+		));
 }
 
 $template->assign_vars(array(
-        'SITENAME' => $system->SETTINGS['sitename'],
-        'STATSMONTH' => date('F Y', $system->ctime)
-        ));
+		'SITENAME' => $system->SETTINGS['sitename'],
+		'STATSMONTH' => date('F Y', $system->ctime)
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'viewbrowserstats.tpl'
-        ));
+		'body' => 'viewbrowserstats.tpl'
+		));
 $template->display('body');
 include 'footer.php';
+?>

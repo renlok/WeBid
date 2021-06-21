@@ -5,15 +5,15 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_board_management}</h4>
+				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5032}</h4>
 				<form name="deletelogs" action="" method="post">
-					<div class="plain-box"><b>{L_delete_board_warning}</b></div>
+					<div class="plain-box"><b>{L_5040}</b></div>
 					<table width="98%" cellspacing="0">
 					<tr>
 						<th width="6%">{L_129}</th>
 						<th>{L_294}</th>
-						<th width="10%" align="center">{L_show}</th>
-						<th width="12%" align="center">{L_num_messages}</th>
+						<th width="10%" align="center">{L_5046}</th>
+						<th width="12%" align="center">{L_5043}</th>
 						<th width="16%">&nbsp;</th>
 					</tr>
 <!-- BEGIN boards -->

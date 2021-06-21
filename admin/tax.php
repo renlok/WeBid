@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,24 +18,26 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
-    $system->writesetting("taxuser", $_POST['taxuser'], "str");
-    $system->writesetting("tax", $_POST['tax'], "str");
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['tax_settings_updated']));
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	$system->writesetting("taxuser", $_POST['taxuser'],"str");
+	$system->writesetting("tax", $_POST['tax'],"str");
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['1089']));
 }
 
-loadblock($MSG['enable_tax'], $MSG['enable_tax_explain'], 'yesno', 'tax', $system->SETTINGS['tax'], array($MSG['yes'], $MSG['no']));
-loadblock($MSG['enable_user_tax'], $MSG['enable_user_tax_explain'], 'yesno', 'taxuser', $system->SETTINGS['taxuser'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['1090'], $MSG['1091'], 'yesno', 'tax', $system->SETTINGS['tax'], array($MSG['030'], $MSG['029']));
+loadblock($MSG['1092'], $MSG['1093'], 'yesno', 'taxuser', $system->SETTINGS['taxuser'], array($MSG['030'], $MSG['029']));
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
-        'TYPENAME' => $MSG['25_0012'],
-        'PAGENAME' => $MSG['tax_settings']
-        ));
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'TYPENAME' => $MSG['25_0012'],
+		'PAGENAME' => $MSG['1088']
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'adminpages.tpl'
-        ));
+		'body' => 'adminpages.tpl'
+		));
 $template->display('body');
 include 'footer.php';
+?>

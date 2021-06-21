@@ -108,11 +108,11 @@
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					<table width="100%">
 					<tr>
-						<td width="25%"><label for="username" title="please enter your username">{L_username}</label></td>
+						<td width="25%"><label for="username" title="please enter your username">{L_003}</label></td>
 						<td width="75%"><input type="text" name="username" id="username" size="10" maxlength="20"></td>
 					</tr>
 					<tr>
-						<td width="25%"><label for="password" title="please enter your password">{L_password}&nbsp;</label></td>
+						<td width="25%"><label for="password" title="please enter your password">{L_004}&nbsp;</label></td>
 						<td width="75%"><input type="password" name="password" id="password" size="10" maxlength="20"></td>
 					</tr>
 					</table>

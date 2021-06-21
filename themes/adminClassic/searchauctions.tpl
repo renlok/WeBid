@@ -7,7 +7,7 @@
 			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</h4>
 				<div>
-					<form name="searchauctionform" method="post" action="searchauctions.php">
+					<form name="searchauctionform" method="get" action="searchauctions.php">
 						<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 						<table class="centre blank">
 							<tr>
@@ -57,7 +57,7 @@
 						<th align="left"><b>{L_297}</b></th>
 					<tr>
 <!-- BEGIN auctions -->
-					<tr<!-- IF auctions.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+					<tr {auctions.BG}>
 						<td>
 	<!-- IF auctions.SUSPENDED eq 1 -->
 							<span style="color:#FF0000">{auctions.TITLE}</span>
@@ -67,7 +67,7 @@
 							<p>[ <a href="/item.php?id={auctions.ID}" target="_blank">{L_5295}</a> ]</p>
 						</td>
 						<td>
-							<b>{L_username}:</b> {auctions.USERNAME}<br>
+							<b>{L_003}:</b> {auctions.USERNAME}<br>
 							<b>{L_625}:</b> {auctions.START_TIME}<br>
 							<b>{L_626}:</b> {auctions.END_TIME}<br>
 							<b>{L_041}:</b> {auctions.CATEGORY}

@@ -4,12 +4,12 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_525}&nbsp;&gt;&gt;&nbsp;{L_562}</h4>
 				<form name="editadmin" action="" method="post">
-					<table class="table table-striped table-bordered">
+					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>
-							<td>{L_username}</td>
+							<td>{L_003}</td>
 							<td>{USERNAME}</td>
 						</tr>
 						<tr>
@@ -24,7 +24,7 @@
 							<td colspan="2">{L_563}</td>
 						</tr>
 						<tr>
-							<td>{L_password}</td>
+							<td>{L_004}</td>
 							<td><input type="password" name="password" size="25"></td>
 						</tr>
 						<tr>

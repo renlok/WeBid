@@ -14,43 +14,44 @@
 						</tr>
 						<tr>
 							<th width="35%"><b>{L_087}</b></th>
-							<th width="27%"><b>{L_ip_address}</b></th>
+							<th width="27%"><b>{L_2_0009}</b></th>
 							<th width="21%"><b>{L_560}</b></th>
-							<th width="17%"><b>{L_297}</b></th>
+							<th width="17%"><b>{L_5028}</b></th>
 						</tr>
 <!-- BEGIN ips -->
-						<tr<!-- IF ips.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {ips.BG}>
 							<td>
-	<!-- IF ips.TYPE eq 'register' -->
-								{L_registration_ip}
+	<!-- IF ips.TYPE eq 'first' -->
+								{L_2_0005}
 	<!-- ELSE -->
-								{ips.TYPE}
+								{L_221}
 	<!-- ENDIF -->
 							</td>
 							<td align="center">{ips.IP}</td>
 							<td align="center">
 	<!-- IF ips.ACTION eq 'accept' -->
-								<span style="color:#A2CD5A;"><b>{L_accepted}</b></span>
+								{L_2_0012}
 	<!-- ELSE -->
-								<span style="color:#CD0000;"><b>{L_banned}</b></span>
+								{L_2_0013}
 	<!-- ENDIF -->
 							</td>
 							<td>
 	<!-- IF ips.ACTION eq 'accept' -->
 								<input type="checkbox" name="deny[]" value="{ips.ID}">
-								&nbsp;{L_ban}
+								&nbsp;{L_2_0006}
 	<!-- ELSE -->
 								<input type="checkbox" name="accept[]" value="{ips.ID}">
-								&nbsp;{L_accept}
+								&nbsp;{L_2_0007}
 	<!-- ENDIF -->
 							</td>
 						</tr>
 <!-- END ips -->
 					</table>
+					<input type="hidden" name="offset" value="{OFFSET}">
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="id" value="{ID}">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_process_selection}">
+					<input type="submit" name="act" class="centre" value="{L_2_0015}">
 				</form>
 				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 					<tr>
@@ -65,6 +66,6 @@
 						</td>
 					</tr>
 				</table>
-				<div class="plain-box"><a href="listusers.php" class="small">{L_5279}</a></div>
+				<div class="plain-box"><a href="listusers.php?offset={OFFSET}" class="small">{L_5279}</a></div>
 			</div>
 		</div>

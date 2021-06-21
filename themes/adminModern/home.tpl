@@ -7,30 +7,30 @@
 							<textarea rows="15" name="anotes" class="form-control">{ADMIN_NOTES}</textarea>
 							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 							<br>
-							<button class="btn btn-primary" type="submit" name="act">{L_submit}</button>
+							<button class="btn btn-primary" type="submit" name="act">{L_007}</button>
 						</form>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-9">
 <!-- IF UPDATE_AVAILABLE -->
-				<div class="alert alert-danger" role="alert">{L_outdated_version}</div>
+				<div class="alert alert-danger" role="alert">{L_30_0211}</div>
 <!-- ELSE -->
-				<div class="alert alert-info" role="alert">{L_current_version}</div>
+				<div class="alert alert-info" role="alert">{L_30_0212}</div>
 <!-- ENDIF -->
 				<div class="panel panel-default">
 					<div class="panel-heading"><strong>{L_25_0025}</strong></div>
 					<div class="panel-body">
 						<div class="row">
-							<div class="col-md-3"><strong>{L_site_url}</strong></div>
+							<div class="col-md-3"><strong>{L_528}</strong></div>
 							<div class="col-md-9">{SITEURL}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_site_name}</strong></div>
+							<div class="col-md-3"><strong>{L_527}</strong></div>
 							<div class="col-md-9">{SITENAME}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_admin_email}</strong></div>
+							<div class="col-md-3"><strong>{L_540}</strong></div>
 							<div class="col-md-9">{ADMINMAIL}</div>
 						</div>
 						<div class="row">
@@ -46,7 +46,7 @@
 							<div class="col-md-9">{BUY_NOW}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_default_currency}</strong></div>
+							<div class="col-md-3"><strong>{L_5008}</strong></div>
 							<div class="col-md-9">{CURRENCY}</div>
 						</div>
 						<div class="row">
@@ -54,22 +54,22 @@
 							<div class="col-md-9">{TIMEZONE}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_date_format}</strong></div>
+							<div class="col-md-3"><strong>{L_363}</strong></div>
 							<div class="col-md-9">{DATEFORMAT} <small>({DATEEXAMPLE})</small></div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_email_settings}</strong></div>
+							<div class="col-md-3"><strong>{L_1131}</strong></div>
 							<div class="col-md-9">{EMAIL_HANDLER}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_default_country}</strong></div>
+							<div class="col-md-3"><strong>{L_5322}</strong></div>
 							<div class="col-md-9">{DEFULTCONTRY}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3"><strong>{L_multilingual_support}</strong></div>
+							<div class="col-md-3"><strong>{L_2__0002}</strong></div>
 							<div class="col-md-9">
 <!-- BEGIN langs -->
-								<p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_current_default_language})<!-- ENDIF --></p>
+								<p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_2__0005})<!-- ENDIF --></p>
 <!-- END langs -->
 							</div>
 						</div>
@@ -98,7 +98,7 @@
 						<div class="row">
 							<div class="col-md-3"><strong>{L_25_0057}</strong></div>
 							<div class="col-md-3">{C_AUCTIONS}</div>
-							<div class="col-md-3"><strong>{L_204}</strong></div>
+							<div class="col-md-3"><strong>{L_354}</strong></div>
 							<div class="col-md-3">{C_CLOSED}</div>
 						</div>
 						<div class="row">
@@ -118,21 +118,21 @@
 					<div class="panel-heading"><strong>{L_080}</strong></div>
 					<div class="panel-body">
 						<div class="row">
-							<div class="col-md-9">{L_clear_cache_explain}</div>
+							<div class="col-md-9">{L_30_0032}</div>
 							<div class="col-md-3">
 								<form action="?action=clearcache" method="post">
 									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-									<button class="btn btn-primary" type="submit" name="submit">{L_clear_cache}</button>
+									<button class="btn btn-primary" type="submit" name="submit">{L_30_0031}</button>
 								</form>
 							</div>
 						</div>
 						<br>
 						<div class="row">
-							<div class="col-md-9">{L_clear_image_cache_explain}</div>
+							<div class="col-md-9">{L_30_0032a}</div>
 							<div class="col-md-3">
 								<form action="?action=clear_image_cache" method="post">
 									<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-									<button class="btn btn-primary" type="submit" name="submit">{L_clear_image_cache}</button>
+									<button class="btn btn-primary" type="submit" name="submit">{L_30_0031a}</button>
 								</form>
 							</div>
 						</div>

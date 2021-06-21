@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="ontainer">
-				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_board_management}&nbsp;&gt;&gt;&nbsp;{L_5052}</h4>
+			<div class="main-box">
+				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5032}&nbsp;&gt;&gt;&nbsp;{L_5052}</h4>
 				<form name="errorlog" action="" method="post">
-					<table class="table table-striped table-bordered">
+					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 					<tr>
 						<td width="24%">{L_5034}</td>
 						<td width="76%">
@@ -15,7 +15,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>{L_num_messages}</td>
+						<td>{L_5043}</td>
 						<td>{MESSAGES} (<a href="editmessages.php?id={ID}">{L_5063}</a>)</td>
 					</tr>
 					<tr>

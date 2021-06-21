@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,12 +18,13 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
-    $system->writesetting("use_moderation", $_POST['use_moderation'], 'bool');
-    $system->writesetting("auction_moderation", $_POST['auction_moderation'], 'int');
-    $system->writesetting("new_auction_moderation", $_POST['new_auction_moderation'], 'int');
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	$system->writesetting("use_moderation", $_POST['use_moderation'], 'bool');
+	$system->writesetting("auction_moderation", $_POST['auction_moderation'], 'int');
+	$system->writesetting("new_auction_moderation", $_POST['new_auction_moderation'], 'int');
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['moderation_settings_updated']));
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['moderation_settings_updated']));
 }
 
 loadblock($MSG['moderation'], '', 'bool', 'use_moderation', $system->SETTINGS['use_moderation'], array($MSG['759'], $MSG['760']));
@@ -33,14 +34,15 @@ loadblock($MSG['auction_moderation'], '', 'bool', 'auction_moderation', $system-
 loadblock($MSG['new_auction_moderation'], '', 'select3num', 'new_auction_moderation', $system->SETTINGS['new_auction_moderation'], array($MSG['moderation_disabled'], $MSG['moderation_pre_moderation'], $MSG['moderation_post_moderation']));
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
-        'TYPENAME' => $MSG['5142'],
-        'PAGENAME' => $MSG['moderation_settings'],
-        ));
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'TYPENAME' => $MSG['5142'],
+		'PAGENAME' => $MSG['moderation_settings'],
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'adminpages.tpl'
-        ));
+		'body' => 'adminpages.tpl'
+		));
 $template->display('body');
 include 'footer.php';
+?>

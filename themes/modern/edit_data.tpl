@@ -8,7 +8,7 @@
 		<div class="alert alert-info" role="alert">{L_617}</div>
 		<div class="row">
 			<div class="form-group col-lg-6">
-				<label for="TPL_password">{L_password}</label>
+				<label for="TPL_password">{L_004}</label>
 				<input type="password" name="TPL_password" class="form-control" placeholder="{L_050}">
 			</div>
 			<div class="form-group col-lg-6">
@@ -81,11 +81,11 @@
 				<div class="radio">
 					<label>
 						<input type="radio" name="TPL_nletter" value="1" {NLETTER1} />
-						{L_yes}
+						{L_030}
 					</label>
 					<label>
 						<input type="radio" name="TPL_nletter" value="2" {NLETTER2} />
-						{L_no}
+						{L_029}
 					</label>
 				</div>
 				<br>

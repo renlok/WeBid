@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5232}</h4>
 				<form name="deletefaqs" action="" method="post">
-					<table class="table table-striped table-bordered">
+					<table width="98%" cellspacing="0">
 					<tr>
 						<td colspan="3"><a href="newfaq.php">{L_5231}</a></td>
 					</tr>

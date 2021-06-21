@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,35 +18,37 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-// Data check
-if (!isset($_REQUEST['id'])) {
-    header('location: boards.php');
-    exit;
-}
-
 // Insert new currency
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
-    if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active'])) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
-    } elseif (!is_numeric($_POST['msgstoshow'])) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_msg_numeric']));
-    } elseif (intval($_POST['msgstoshow'] == 0)) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $MSG['error_msg_not_zero']));
-    } else {
-        $query = "UPDATE " . $DBPrefix . "community
-                  SET name = :name,
-                  msgstoshow = :msgstoshow,
-                  active = :active
-                  WHERE id = :id";
-        $params = array();
-        $params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
-        $params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');
-        $params[] = array(':active', $_POST['active'], 'bool');
-        $params[] = array(':id', $_POST['id'], 'int');
-        $db->query($query, $params);
-        header('location: boards.php');
-        exit;
-    }
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	if (empty($_POST['name']) || empty($_POST['msgstoshow']) || empty($_POST['active']))
+	{
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_047));
+	}
+	elseif (!is_numeric($_POST['msgstoshow']))
+	{
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5000));
+	}
+	elseif (intval($_POST['msgstoshow'] == 0))
+	{
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_5001));
+	}
+	else
+	{
+		$query = "UPDATE " . $DBPrefix . "community
+					SET name = :name,
+					msgstoshow = :msgstoshow,
+					active = :active
+					WHERE id = :id";
+		$params = array();
+		$params[] = array(':name', $system->cleanvars($_POST['name']), 'str');
+		$params[] = array(':msgstoshow', $_POST['msgstoshow'], 'int');
+		$params[] = array(':active', $_POST['active'], 'bool');
+		$params[] = array(':id', $_POST['id'], 'int');
+		$db->query($query, $params);
+		header('location: boards.php');
+		exit;
+	}
 }
 
 $id = intval($_GET['id']);
@@ -59,20 +61,21 @@ $db->query($query, $params);
 $board_data = $db->result();
 
 $template->assign_vars(array(
-        'NAME' => $board_data['name'],
-        'MESSAGES' => $board_data['messages'],
-        'LAST_POST' => ($board_data['messages'] > 0) ? $dt->formatDate($board_data['lastmessage']) : '--',
-        'MSGTOSHOW' => $board_data['msgstoshow'],
+		'NAME' => $board_data['name'],
+		'MESSAGES' => $board_data['messages'],
+		'LAST_POST' => ($board_data['lastmessage'] > 0) ? FormatDate($board_data['lastmessage']) : '--',
+		'MSGTOSHOW' => $board_data['msgstoshow'],
 
-        'B_ACTIVE' => ($board_data['active'] == 1),
-        'B_DEACTIVE' => ($board_data['active'] == 0),
-        'ID' => $id
-        ));
+		'B_ACTIVE' => ($board_data['active'] == 1),
+		'B_DEACTIVE' => ($board_data['active'] == 0),
+		'ID' => $id
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'editboards.tpl'
-        ));
+		'body' => 'editboards.tpl'
+		));
 $template->display('body');
 
 include 'footer.php';
+?>

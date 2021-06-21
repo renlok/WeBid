@@ -147,12 +147,12 @@
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-						<input type="text" name="username" id="username" class="form-control" placeholder="{L_username}">
+						<input type="text" name="username" id="username" class="form-control" placeholder="{L_003}">
 					</div>
 					<br>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-						<input type="password" name="password" id="password" class="form-control" placeholder="{L_password}">
+						<input type="password" name="password" id="password" class="form-control" placeholder="{L_004}">
 					</div>
 					<div class="form-group">
 						<div class="checkbox">

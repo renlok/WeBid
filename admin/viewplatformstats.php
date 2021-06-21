@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -27,34 +27,39 @@ $db->query($query, $params);
 
 $MAX = 0;
 $TOTAL = 0;
-while ($row = $db->fetch()) {
-    $PLATFORMS[$row['platform']] = $row['counter'];
-    $TOTAL = $TOTAL + $row['counter'];
+while ($row = $db->fetch())
+{
+	$PLATFORMS[$row['platform']] = $row['counter'];
+	$TOTAL = $TOTAL + $row['counter'];
 
-    if ($row['counter'] > $MAX) {
-        $MAX = $row['counter'];
-    }
+	if ($row['counter'] > $MAX)
+	{
+		$MAX = $row['counter'];
+	}
 }
 
-if (isset($PLATFORMS) && is_array($PLATFORMS)) {
-    foreach ($PLATFORMS as $k => $v) {
-        $template->assign_block_vars('sitestats', array(
-            'PLATFORM' => $k,
-            'NUM' => $PLATFORMS[$k],
-            'WIDTH' => ($PLATFORMS[$k] * 100) / $MAX,
-            'PERCENTAGE' => ceil(intval($PLATFORMS[$k] * 100 / $TOTAL))
-            ));
-    }
+if (isset($PLATFORMS) && is_array($PLATFORMS))
+{
+	foreach ($PLATFORMS as $k => $v)
+	{
+		$template->assign_block_vars('sitestats', array(
+			'PLATFORM' => $k,
+			'NUM' => $PLATFORMS[$k],
+			'WIDTH' => ($PLATFORMS[$k] * 100) / $MAX,
+			'PERCENTAGE' => ceil(intval($PLATFORMS[$k] * 100 / $TOTAL))
+			));
+	}
 }
 
 $template->assign_vars(array(
-        'SITENAME' => $system->SETTINGS['sitename'],
-        'STATSMONTH' => date('F Y', $system->ctime)
-        ));
+		'SITENAME' => $system->SETTINGS['sitename'],
+		'STATSMONTH' => date('F Y', $system->ctime)
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'viewplatformstats.tpl'
-        ));
+		'body' => 'viewplatformstats.tpl'
+		));
 $template->display('body');
 include 'footer.php';
+?>

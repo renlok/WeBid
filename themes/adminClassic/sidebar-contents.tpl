@@ -3,10 +3,10 @@
 					<div class="rounded-bottom">
 						<ul class="menu">
 							<li><a href="{SITEURL}admin/news.php">{L_516}</a></li>
-							<li><a href="{SITEURL}admin/aboutus.php">{L_about_us_page}</a></li>
-							<li><a href="{SITEURL}admin/terms.php">{L_terms_conditions_page}</a></li>
-							<li><a href="{SITEURL}admin/privacypolicy.php">{L_privacy_policy}</a></li>
-							<li><a href="{SITEURL}admin/cookiespolicy.php">{L_cookie_policy}</a></li>
+							<li><a href="{SITEURL}admin/aboutus.php">{L_5074}</a></li>
+							<li><a href="{SITEURL}admin/terms.php">{L_5075}</a></li>
+							<li><a href="{SITEURL}admin/privacypolicy.php">{L_402}</a></li>
+							<li><a href="{SITEURL}admin/cookiespolicy.php">{L_1110}</a></li>
 						</ul>
 					</div>
 				</div>
@@ -24,9 +24,9 @@
 					<h4 class="rounded-top">{L_5030}</h4>
 					<div class="rounded-bottom">
 						<ul class="menu">
-							<li><a href="{SITEURL}admin/boardsettings.php">{L_msg_board_settings}</a></li>
+							<li><a href="{SITEURL}admin/boardsettings.php">{L_5047}</a></li>
 							<li><a href="{SITEURL}admin/newboard.php">{L_5031}</a></li>
-							<li><a href="{SITEURL}admin/boards.php">{L_board_management}</a></li>
+							<li><a href="{SITEURL}admin/boards.php">{L_5032}</a></li>
 						</ul>
 					</div>
 				</div>
@@ -36,7 +36,7 @@
 						<form name="anotes" action="" method="post">
 							<textarea rows="15" name="anotes" class="anotes">{ADMIN_NOTES}</textarea>
 							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-							<input type="submit" name="act" value="{L_submit}">
+							<input type="submit" name="act" value="{L_007}">
 						</form>
 					</div>
 				</div>

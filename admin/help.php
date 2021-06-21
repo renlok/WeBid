@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,9 +18,11 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
+$template->assign_vars(array());
+
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'help.tpl'
-        ));
+		'body' => 'help.tpl'
+		));
 $template->display('body');
 include 'footer.php';

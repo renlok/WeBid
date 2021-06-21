@@ -20,7 +20,7 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{SBMSG}:</label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><a href="{SITEURL}profile.php?user_id={THEM}&auction_id={AUCT_ID}">{USERNICK}</a> (<a href="{SITEURL}feedback.php?id={THEM}&faction=show">{USERFB}</a>) <!-- IF USER_FB_ICON ne '' --><img src="{SITEURL}images/icons/{USER_FB_ICON}" alt="{USER_FB_ICON}" class="fbstar"><!-- ENDIF --></p>
+						<p class="form-control-static"><a href="{SITEURL}profile.php?user_id={THEM}&auction_id={AUCT_ID}">{USERNICK}</a> (<a href="{SITEURL}feedback.php?id={THEM}&faction=show">{USERFB}</a>) {USERFBIMG}</p>
 					</div>
 				</div>
 				<div class="form-group">

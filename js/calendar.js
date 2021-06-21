@@ -7,7 +7,7 @@ function f_tcalParseDate (s_date) {
 	s_date = s_date.split(' ');
 	this.s_time = s_date[1];
 
-	var re_date = /^\s*(\d{1,2})\/(\d{1,2})\/(\d{2,4})\s*$/;
+	var re_date = /^\s*(\d{1,2})\-(\d{1,2})\-(\d{2,4})\s*$/;
 	if (!re_date.exec(s_date[0]))
 		return alert (this.a_tpl.invaliddate(s_date))
 

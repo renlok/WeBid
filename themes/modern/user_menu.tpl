@@ -2,7 +2,7 @@
 <div class="list-group">
 <!-- IF THISPAGE eq 'account' -->
 	<a class="list-group-item" href="yourfeedback.php">{L_208}</a>
-	<a class="list-group-item" href="leave_feedback.php">{L_207}{FBTOLEAVE}</a>
+	<a class="list-group-item" href="buysellnofeedback.php">{L_207}{FBTOLEAVE}</a>
 	<a class="list-group-item" href="mail.php">{L_623}{NEWMESSAGES}</a>
 	<a class="list-group-item" href="outstanding.php">{L_422}</a>
 	<a class="list-group-item" href="invoices.php">{L_1057}</a>
@@ -36,12 +36,12 @@
 		{TMPMSG}
 	</div>
 	<!-- ENDIF -->
-	<!-- IF B_CANSELL -->
+	<!-- IF B_CAN_SELL -->
 	<div class="jumbotron text-center">
 		<span style="font-size:5.0em;" class="glyphicon glyphicon-tag grid-margin-btm-lg" aria-hidden="true"></span>
 		<a class="btn btn-primary btn-lg btn-block" href="{SITEURL}select_category.php?">{L_028}</a>
 	</div>
-	<!-- ELSEIF B_CANREQUESTSELL -->
+	<!-- ELSE -->
 	<form name="request" action="" method="post">
 		<div class="alert alert-info" role="alert">
 			<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

@@ -14,12 +14,12 @@
 						<th>{L_297}</th>
 					</tr>
 <!-- BEGIN news -->
-					<tr<!-- IF news.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+					<tr {news.BG}>
 						<td>{news.DATE}</td>
 						<td <!-- IF news.SUSPENDED eq 1 -->style="background: #FAD0D0; color: #B01717; font-weight: bold;"<!-- ENDIF -->>{news.TITLE}</td>
 						<td>
 							<a href="editnew.php?id={news.ID}&PAGE={PAGE}">{L_298}</a><br>
-							<a href="deletenews.php?id={news.ID}&PAGE={PAGE}">{L_008}</a>
+							<a href="deletenew.php?id={news.ID}&PAGE={PAGE}">{L_008}</a>
 						</td>
 					</tr>
 <!-- END news -->

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -19,14 +19,15 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
-    // clean submission
-    $system->writesetting("privacypolicy", ynbool($_POST['privacypolicy']), "str");
-    $system->writesetting("privacypolicytext", $system->cleanvars($_POST['privacypolicytext'], true), "str");
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	// clean submission
+	$system->writesetting("privacypolicy", ynbool($_POST['privacypolicy']), "str");
+	$system->writesetting("privacypolicytext", $system->cleanvars($_POST['privacypolicytext'], true), "str");
 
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['privacy_policy_updated']));
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['406']));
 }
-loadblock($MSG['enable_privacy_policy'], $MSG['enable_privacy_policy_explain'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['yes'], $MSG['no']));
+loadblock($MSG['403'], $MSG['405'], 'yesno', 'privacypolicy', $system->SETTINGS['privacypolicy'], array($MSG['030'], $MSG['029']));
 
 $CKEditor = new CKEditor();
 $CKEditor->basePath = $system->SETTINGS['siteurl'] . '/js/ckeditor/';
@@ -34,17 +35,18 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['privacy_policy_content'], $MSG['editor_help'], $CKEditor->editor('privacypolicytext', $system->SETTINGS['privacypolicytext']));
+loadblock($MSG['404'], $MSG['5080'], $CKEditor->editor('privacypolicytext', $system->SETTINGS['privacypolicytext']));
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
-        'TYPENAME' => $MSG['25_0018'],
-        'PAGENAME' => $MSG['privacy_policy']
-        ));
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'TYPENAME' => $MSG['25_0018'],
+		'PAGENAME' => $MSG['402']
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'adminpages.tpl'
-        ));
+		'body' => 'adminpages.tpl'
+		));
 $template->display('body');
 include 'footer.php';
+?>

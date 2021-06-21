@@ -11,12 +11,7 @@
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>
 							<td width="10" height="21">&nbsp;</td>
-							<td colspan="4" height="21">
-<!-- BEGIN crumbs -->
-								<!-- IF crumbs.S_ROW_COUNT gt 0 --> > <!-- ENDIF -->
-								<a href="categories.php?parent={crumbs.CAT_ID}">{crumbs.CAT_NAME}</a>
-<!-- END crumbs -->
-							</td>
+							<td colspan="4" height="21">{CRUMBS}</td>
 						</tr>
 						<tr>
 							<th width="10">&nbsp;</th>

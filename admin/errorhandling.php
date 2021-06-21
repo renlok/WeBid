@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -19,11 +19,12 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
-    // clean submission and update database
-    $system->writesetting("errortext", $system->cleanvars($_POST['errortext'], true), "str");
-
-    $template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['error_settings_updated']));
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	// clean submission and update database
+	$system->writesetting("errortext", $system->cleanvars($_POST['errortext'], true), "str");
+	
+	$template->assign_block_vars('alerts', array('TYPE' => 'success', 'MESSAGE' => $MSG['413']));
 }
 
 $CKEditor = new CKEditor();
@@ -32,17 +33,18 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-loadblock($MSG['error_text'], $MSG['error_text_explain'], $CKEditor->editor('errortext', $system->SETTINGS['errortext']));
+loadblock($MSG['411'], $MSG['410'], $CKEditor->editor('errortext', $system->SETTINGS['errortext']));
 
 $template->assign_vars(array(
-        'SITEURL' => $system->SETTINGS['siteurl'],
-        'TYPENAME' => $MSG['5142'],
-        'PAGENAME' => $MSG['error_handling']
-        ));
+		'SITEURL' => $system->SETTINGS['siteurl'],
+		'TYPENAME' => $MSG['5142'],
+		'PAGENAME' => $MSG['409']
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'adminpages.tpl'
-        ));
+		'body' => 'adminpages.tpl'
+		));
 $template->display('body');
 include 'footer.php';
+?>

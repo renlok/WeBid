@@ -3,11 +3,11 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 		</div>
-			<div class="col-md-9">
-			<div class="container">
+		<div style="width:75%; float:right;">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5236}&nbsp;&gt;&gt;&nbsp;{L_5230}</h4>
 				<form name="newfaqcat" action="" method="post">
-					<table class="table table-striped table-bordered">
+					<table width="98%" cellpadding="0" cellspacing="0">
 <!-- IF B_ADDCAT -->
 						<tr bgcolor="#FFFF66">
 							<td>{L_165}</td>
@@ -29,7 +29,7 @@
 							<th width="14%"><b>{L_008}</b></th>
 						</tr>
 <!-- BEGIN cats -->
-						<tr<!-- IF cats.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {cats.BG}>
 							<td>{cats.ID}</td>
 							<td><a href="editfaqscategory.php?id={cats.ID}">{cats.CATEGORY}</a> <!-- IF cats.FAQS gt 0 -->{cats.FAQSTXT}<!-- ENDIF --></td>
 							<td align="center"><input type="checkbox" name="delete[]" value="{cats.ID}"></td>
@@ -37,7 +37,7 @@
 <!-- END cats -->
 					</table>
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<button class="btn-primary btn" type="submit" name="action" value="Delete">{L_008}</button>
+					<button type="submit" name="action" value="Delete">{L_008}</button>
 				</form>
 			</div>
 		</div>

@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -27,9 +27,8 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// The default plugins included in the basic setup define some buttons that
 	// are not needed in a basic editor. They are removed here.
-	config.removeButtons = 'Cut,';
+	config.removeButtons = 'Cut,Anchor,Strike,Subscript,Superscript';
 	config.skin = 'office2013';
-
 	// Dialog windows are also simplified.
 	config.removeDialogTabs = 'link:advanced';
 };

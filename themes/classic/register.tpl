@@ -15,7 +15,7 @@
 				<table width="90%" border="0" cellpadding="4" cellspacing="0">
 					<tr>
 						<td width="40%" valign="top" align="right"></td>
-						<td width="60%" ><h2>{L_163}</h2></td>
+						<td width="60%" ><h2>{L_894}</h2></td>
 					</tr>
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_002}</b> *</td>
@@ -25,14 +25,14 @@
 						</td>
 					</tr>
 					<tr>
-						<td width="40%" valign="top" align="right"><b>{L_username}</b> *</td>
+						<td width="40%" valign="top" align="right"><b>{L_003}</b> *</td>
 						<td width="60%">
 							<input type="text" name="TPL_nick" size=20 maxlength=20  value="{V_UNAME}" <!-- IF MISSING1 eq 1 -->class="missing"<!-- ENDIF -->> {L_050}
 							<!-- IF MISSING1 eq 1 --><div class="error-box missing">{L_938}</div><!-- ENDIF -->
 						</td>
 					</tr>
 					<tr>
-						<td width="40%" valign="top" align="right"><b>{L_password}</b> *</td>
+						<td width="40%" valign="top" align="right"><b>{L_004}</b> *</td>
 						<td width="60%">
 							<input type="password" name="TPL_password" size="20" <!-- IF MISSING2 eq 1 -->class="missing"<!-- ENDIF -->> {L_050}
 							<!-- IF MISSING2 eq 1 --><div class="error-box missing">{L_939}</div><!-- ENDIF -->
@@ -139,9 +139,9 @@
 						<td width="40%" align="right"><b>{L_608}</b></td>
 						<td width="60%">
 							<input type="radio" name="TPL_nletter" value="1" {V_YNEWSL}>
-							{L_yes}
+							{L_030}
 							<input type="radio" name="TPL_nletter" value="2" {V_NNEWSL}>
-							{L_no}
+							{L_029}
 						</td>
 					</tr>
 		<!-- ENDIF -->

@@ -4,15 +4,15 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_854}</h4>
+				<h2>{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_854}</h2>
 				<form action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-3">{L_855}</div>
 								<div class="col-md-9">
-									{L_monthly_report} <input type="radio" name="type" value="m"<!-- IF TYPE eq 'm' --> checked="checked"<!-- ENDIF -->>
-									{L_weekly_report} <input type="radio" name="type" value="w"<!-- IF TYPE eq 'w' --> checked="checked"<!-- ENDIF -->>
+									{L_5281} <input type="radio" name="type" value="m"<!-- IF TYPE eq 'm' --> checked="checked"<!-- ENDIF -->>
+									{L_827} <input type="radio" name="type" value="w"<!-- IF TYPE eq 'w' --> checked="checked"<!-- ENDIF -->>
 									{L_5285} <input type="radio" name="type" value="d"<!-- IF TYPE eq 'd' --> checked="checked"<!-- ENDIF -->>
 									{L_2__0027} <input type="radio" name="type" value="a"<!-- IF TYPE eq 'a' --> checked="checked"<!-- ENDIF -->>
 								</div>

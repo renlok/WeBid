@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,14 +16,14 @@ $error = true;
 include 'common.php';
 
 $template->assign_vars(array(
-        'ERROR' => print_r($_SESSION['SESSION_ERROR'], true),
-        'DEBUGGING' => false, // set to true when trying to fix the script
-        'ERRORTXT' => $system->SETTINGS['errortext']
-        ));
+		'ERROR' => print_r($_SESSION['SESSION_ERROR'], true),
+		'DEBUGGING' => false, // set to true when trying to fix the script
+		'ERRORTXT' => $system->SETTINGS['errortext']
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'error.tpl'
-        ));
+		'body' => 'error.tpl'
+		));
 $template->display('body');
 include 'footer.php';

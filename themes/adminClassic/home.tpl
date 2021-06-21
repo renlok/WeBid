@@ -6,7 +6,7 @@
 							<form name="anotes" action="" method="post">
 							<textarea rows="15" name="anotes" class="anotes">{ADMIN_NOTES}</textarea>
 							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-							<input type="submit" name="act" value="{L_submit}">
+							<input type="submit" name="act" value="{L_007}">
 							</form>
 						</div>
 					</div>
@@ -15,24 +15,24 @@
 		<div style="width:75%; float:right;">
 			<div class="main-box">
 <!-- IF UPDATE_AVAILABLE -->
-				<div class="alert alert-error">{L_outdated_version}</div>
+				<div class="alert alert-error">{L_30_0211}</div>
 <!-- ELSE -->
-				<div class="alert alert-info">{L_current_version}</div>
+				<div class="alert alert-info">{L_30_0212}</div>
 <!-- ENDIF -->
 					<table width="98%" cellpadding="1" cellspacing="0">
 						<tr>
 							<th colspan="2">{L_25_0025}</th>
 						</tr>
 						<tr>
-							<td width="172"><strong>{L_site_url}</strong></td>
+							<td width="172"><strong>{L_528}</strong></td>
 							<td>{SITEURL}</td>
 						</tr>
 						<tr class="bg">
-							<td><strong>{L_site_name}</strong></td>
+							<td><strong>{L_527}</strong></td>
 							<td>{SITENAME}</td>
 						</tr>
 						<tr>
-							<td><strong>{L_admin_email}</strong></td>
+							<td><strong>{L_540}</strong></td>
 							<td>{ADMINMAIL}</td>
 						</tr>
 						<tr class="bg">
@@ -48,7 +48,7 @@
 							<td>{BUY_NOW}</td>
 						</tr>
 						<tr>
-							<td><strong>{L_default_currency}</strong></td>
+							<td><strong>{L_5008}</strong></td>
 							<td>{CURRENCY}</td>
 						</tr>
 						<tr class="bg">
@@ -56,22 +56,22 @@
 							<td>{TIMEZONE}</td>
 						</tr>
 						<tr>
-							<td><strong>{L_date_format}</strong></td>
+							<td><strong>{L_363}</strong></td>
 							<td>{DATEFORMAT} <small>({DATEEXAMPLE})</small></td>
 						</tr>
 						<tr>
-							<td><strong>{L_email_settings}</strong></td>
+							<td><strong>{L_1131}</strong></td>
 							<td>{EMAIL_HANDLER}</td>
 						</tr>
 						<tr class="bg">
-							<td><strong>{L_default_country}</strong></td>
+							<td><strong>{L_5322}</strong></td>
 							<td>{DEFULTCONTRY}</td>
 						</tr>
 						<tr>
-							<td><strong>{L_multilingual_support}</strong></td>
+							<td><strong>{L_2__0002}</strong></td>
 							<td>
 <!-- BEGIN langs -->
-								<p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_current_default_language})<!-- ENDIF --></p>
+								<p>{langs.LANG}<!-- IF langs.B_DEFAULT --> ({L_2__0005})<!-- ENDIF --></p>
 <!-- END langs -->
 							</td>
 						</tr>
@@ -100,7 +100,7 @@
 						<tr class="bg">
 							<td><strong>{L_25_0057}</strong></td>
 							<td>{C_AUCTIONS}</td>
-							<td><strong>{L_204}</strong></td>
+							<td><strong>{L_354}</strong></td>
 							<td>{C_CLOSED}</td>
 						</tr>
 						<tr>
@@ -119,20 +119,20 @@
 						<th colspan="2">{L_080}</th>
 					</tr>
 					<tr>
-						<td width="70%">{L_clear_cache_explain}</td>
+						<td width="70%">{L_30_0032}</td>
 						<td>
 							<form action="?action=clearcache" method="post">
 								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-								<input type="submit" name="submit" value="{L_clear_cache}">
+								<input type="submit" name="submit" value="{L_30_0031}">
 							</form>
 						</td>
 					</tr>
 										<tr class="bg">
-						<td width="70%">{L_clear_image_cache_explain}</td>
+						<td width="70%">{L_30_0032a}</td>
 						<td>
 							<form action="?action=clear_image_cache" method="post">
 								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-								<input type="submit" name="submit" value="{L_clear_image_cache}">
+								<input type="submit" name="submit" value="{L_30_0031a}">
 							</form>
 						</td>
 					</tr>

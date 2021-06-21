@@ -64,11 +64,11 @@ $(document).ready(function(){
 	<!-- ENDIF -->
 	<!-- IF B_USERAUTH -->
 					<div class="form-group">
-						<label class="col-sm-5 control-label">{L_username}</label>
+						<label class="col-sm-5 control-label">{L_003}</label>
 						<div class="col-sm-7"><p class="form-control-static">{YOURUSERNAME}</p></div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-5 control-label">{L_password}</label>
+						<label class="col-sm-5 control-label">{L_004}</label>
 						<div class="col-sm-7"><input type="password" name="password" class="form-control"  value="">
 						</div>
 					</div>

@@ -1,31 +1,29 @@
 <!-- IF B_COUNTDOWN -->
 <script type="text/javascript">
 $(document).ready(function() {
-	var timeRemaining = {ENDS_IN};
-	var endDateTime = new Date();
-	endDateTime.setSeconds(endDateTime.getSeconds() + timeRemaining);
-	function padLength(what)
+	var currenttime = '{ENDS_IN}';
+	function padlength(what)
 	{
-		var output = (what.toString().length == 1) ? '0' + what : what;
-		return output;
+		return (what.toString().length == 1)? '0' + what : what;
 	}
-	function displayTime() {
-		var currentDateTime = new Date();
-
-		if (currentDateTime.getTime() < endDateTime.getTime()) {
-			var remainingTime = Math.floor((endDateTime.getTime() - currentDateTime.getTime()) / 1000);
-			var hours = Math.floor(remainingTime / 3600);
-			var mins = Math.floor((remainingTime - (hours * 3600)) / 60);
-			var secs = Math.floor(remainingTime - (hours * 3600) - (mins * 60));
-
-			var timeString = padLength(hours) + ':' + padLength(mins) + ':' + padLength(secs);
-			$('#ending_counter').html(timeString);
-			setTimeout(displayTime, 1000);
-		} else {
+	function displaytime()
+	{
+		currenttime -= 1;
+		if (currenttime > 0)
+		{
+			var hours = Math.floor(currenttime / 3600);
+			var mins = Math.floor((currenttime - (hours * 3600)) / 60);
+			var secs = Math.floor(currenttime - (hours * 3600) - (mins * 60));
+			var timestring = padlength(hours) + ':' + padlength(mins) + ':' + padlength(secs);
+			$("#ending_counter").html(timestring);
+			setTimeout(displaytime, 1000);
+		}
+		else
+		{
 			$("#ending_counter").html('<div class="error-box">{L_911}</div>');
 		}
 	}
-	setTimeout(displayTime, 1000);
+	setTimeout(displaytime, 1000);
 });
 </script>
 <!-- ENDIF -->
@@ -81,7 +79,7 @@ $(document).ready(function() {
 									<table bgcolor="#ffffff">
 										<tr>
 											<td align='center'>
-												<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={PIC_URL}&auction_id={ID}" border="0" align="center"><br>
+												<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={PIC_URL}" border="0" align="center"><br>
 	<!-- IF B_HASGALELRY -->
 												<a href="#gallery"><img src="{SITEURL}images/gallery.gif" border="0" alt="gallery"> {L_694}</a>
 	<!-- ENDIF -->
@@ -95,7 +93,7 @@ $(document).ready(function() {
 										<tr>
 											<td>&nbsp;</td>
 											<td align="left" valign="top">
-												{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}<br>
+												{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}<br>
 												<a href="#description"><img src="{SITEURL}images/info.gif" border='0'></a>
 												<a href="#description">{L_018}</a> &nbsp;&nbsp;&nbsp;
 												<table border='0' width="100%" cellspacing="0" cellpadding="1">
@@ -119,7 +117,7 @@ $(document).ready(function() {
 																<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
 																<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&faction=show">{high_bidders.BUYER_FB}</a>)</b>
 		<!-- ENDIF -->
-																<img src="{SITEURL}images/icons/{high_bidders.BUYER_FB_ICON}" alt="{high_bidders.BUYER_FB_ICON}" class="fbstar">
+																{high_bidders.BUYER_FB_ICON}
 															</p>
 	<!-- END high_bidders -->
 														</td>
@@ -205,7 +203,7 @@ $(document).ready(function() {
 								<td class="table2" style="padding:10px;">
 									<a href='{SITEURL}profile.php?user_id={SELLER_ID}&auction_id={ID}'><b>{SELLER_NICK}</b></a>
 									(<a href='{SITEURL}feedback.php?id={SELLER_ID}&faction=show'>{SELLER_TOTALFB}</a>)
-									<!-- IF SELLER_FB_ICON ne '' --><img src="{SITEURL}images/icons/{SELLER_FB_ICON}" alt="{SELLER_FB_ICON}" class="fbstar"><!-- ENDIF -->
+									{SELLER_FBICON}
 								</td>
 							</tr>
 							<tr>
@@ -308,7 +306,7 @@ $(document).ready(function() {
 	<!-- BEGIN gallery -->
 							<td>
 								<a href="{SITEURL}{UPLOADEDPATH}{ID}/{gallery.V}" title="" data-lightbox="gallery">
-									<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={gallery.V}&auction_id={ID}" border="0" hspace="10">
+									<img src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}" border="0" hspace="10">
 								</a>
 							</td>
 	<!-- END gallery -->

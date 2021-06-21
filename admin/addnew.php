@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -19,33 +19,45 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 include PACKAGE_PATH . 'ckeditor/ckeditor.php';
 
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
-    // Data check
-    if (!isset($_POST['title']) || !isset($_POST['content'])) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
-    } else {
-        $query = "INSERT INTO " . $DBPrefix . "news (title, content, suspended)
-                  VALUES (:title, :content, :suspended)";
-        $params = array();
-        $params[] = array(':title', $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]), 'str');
-        $params[] = array(':content', $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']], true), 'str');
-        $params[] = array(':suspended', $_POST['suspended'], 'int');
-        $db->query($query, $params);
-        $news_id = $db->lastInsertId();
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	// Data check
+	if (!isset($_POST['title']) || !isset($_POST['content']))
+	{
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_112));
+	}
+	else
+	{
+		// clean up everything
+		foreach ($_POST['title'] as $k => $v)
+		{
+			$_POST['title'][$k] = $system->cleanvars($v);
+			$_POST['content'][$k] = $system->cleanvars($_POST['content'][$k], true);
+		}
 
-        // Insert into translation table
-        foreach ($LANGUAGES as $k => $v) {
-            $query = "INSERT INTO " . $DBPrefix . "news_translated VALUES (:news_id, :lang, :title, :content)";
-            $params = array();
-            $params[] = array(':title', $system->cleanvars($_POST['title'][$k]), 'str');
-            $params[] = array(':content', $system->cleanvars($_POST['content'][$k], true), 'str');
-            $params[] = array(':lang', $k, 'str');
-            $params[] = array(':news_id', $news_id, 'int');
-            $db->query($query, $params);
-        }
-        header('location: news.php');
-        exit;
-    }
+		$query = "INSERT INTO " . $DBPrefix . "news VALUES (NULL, :title, :content, :time, :suspended)";
+		$params = array();
+		$params[] = array(':title', $system->cleanvars($_POST['title'][$system->SETTINGS['defaultlanguage']]), 'str');
+		$params[] = array(':content', $system->cleanvars($_POST['content'][$system->SETTINGS['defaultlanguage']], true), 'str');
+		$params[] = array(':time', time(), 'int');
+		$params[] = array(':suspended', $_POST['suspended'], 'int');
+		$db->query($query, $params);
+		$news_id = $db->lastInsertId();
+
+		// Insert into translation table
+		foreach ($LANGUAGES as $k => $v)
+		{
+			$query = "INSERT INTO " . $DBPrefix . "news_translated VALUES (:news_id, :lang, :title, :content)";
+			$params = array();
+			$params[] = array(':title', $system->cleanvars($_POST['title'][$k]), 'str');
+			$params[] = array(':content', $system->cleanvars($_POST['content'][$k], true), 'str');
+			$params[] = array(':lang', $k, 'str');
+			$params[] = array(':news_id', $news_id, 'int');
+			$db->query($query, $params);
+		}
+		header('location: news.php');
+		exit;
+	}
 }
 
 $CKEditor = new CKEditor();
@@ -54,26 +66,28 @@ $CKEditor->returnOutput = true;
 $CKEditor->config['width'] = 550;
 $CKEditor->config['height'] = 400;
 
-foreach ($LANGUAGES as $k => $language) {
-    $template->assign_block_vars('lang', array(
-            'LANG' => $language,
-            'TITLE' => (isset($_POST['title'][$k])) ? $_POST['title'][$k] : '',
-            'CONTENT' => $CKEditor->editor('content[' . $k . ']', (isset($_POST['content'][$k]) ? $_POST['content'][$k] : ''))
-            ));
+foreach ($LANGUAGES as $k => $language)
+{
+	$template->assign_block_vars('lang', array(
+			'LANG' => $language,
+			'TITLE' => (isset($_POST['title'][$k])) ? $_POST['title'][$k] : '',
+			'CONTENT' => $CKEditor->editor('content[' . $k . ']', (isset($_POST['content'][$k]) ? $_POST['content'][$k] : ''))
+			));
 }
 
 $template->assign_vars(array(
-        'TITLE' => $MSG['518'],
-        'BUTTON' => $MSG['518'],
-        'ID' => '', // inserting new user so needs to be blank
+		'TITLE' => $MSG['518'],
+		'BUTTON' => $MSG['518'],
+		'ID' => '', // inserting new user so needs to be blank
 
-        'B_ACTIVE' => ((isset($_POST['suspended']) && $_POST['suspended'] == 0) || !isset($_POST['suspended'])),
-        'B_INACTIVE' => (isset($_POST['suspended']) && $_POST['suspended'] == 1)
-        ));
+		'B_ACTIVE' => ((isset($_POST['suspended']) && $_POST['suspended'] == 0) || !isset($_POST['suspended'])),
+		'B_INACTIVE' => (isset($_POST['suspended']) && $_POST['suspended'] == 1)
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'addnew.tpl'
-        ));
+		'body' => 'addnew.tpl'
+		));
 $template->display('body');
 include 'footer.php';
+?>

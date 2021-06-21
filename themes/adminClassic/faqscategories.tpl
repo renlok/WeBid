@@ -29,7 +29,7 @@
 							<th width="14%"><b>{L_008}</b></th>
 						</tr>
 <!-- BEGIN cats -->
-						<tr<!-- IF cats.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {cats.BG}>
 							<td>{cats.ID}</td>
 							<td><a href="editfaqscategory.php?id={cats.ID}">{cats.CATEGORY}</a> <!-- IF cats.FAQS gt 0 -->{cats.FAQSTXT}<!-- ENDIF --></td>
 							<td align="center"><input type="checkbox" name="delete[]" value="{cats.ID}"></td>

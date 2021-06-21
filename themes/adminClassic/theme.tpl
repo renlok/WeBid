@@ -33,7 +33,7 @@
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 					<th colspan="2">{L_NAY_03}</th>
 	<!-- BEGIN themes -->
-						<tr<!-- IF themes.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {themes.BG}>
 							<td style="padding-left:10px;" width="75%">
 								<input type="radio" name="dtheme" value="{themes.NAME}" <!-- IF themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
 								<b>{themes.NAME}</b>
@@ -44,7 +44,7 @@
 							</td>
 						</tr>
 		<!-- IF themes.B_LISTFILES -->
-						<tr<!-- IF themes.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {themes.BG}>
 							<td align="center" colspan="2">
 								<select name="file" multiple size="24" style="font-weight:bold; width:350px"
 								ondblclick="document.getElementById('action').value = ''; document.getElementById('theme').value = '{themes.NAME}'; this.form.submit();">
@@ -60,7 +60,7 @@
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<th colspan="2">{L_NAY_04}</th>
 	<!-- BEGIN admin_themes -->
-						<tr<!-- IF admin_themes.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {admin_themes.BG}>
 							<td style="padding-left:10px;" width="75%">
 								<input type="radio" name="admin_theme" value="{admin_themes.NAME}" <!-- IF admin_themes.B_CHECKED -->checked="checked" <!-- ENDIF -->/>
 								<b>{admin_themes.NAME}</b>
@@ -71,7 +71,7 @@
 							</td>
 						</tr>
 		<!-- IF admin_themes.B_LISTFILES -->
-						<tr<!-- IF admin_themes.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {admin_themes.BG}>
 							<td align="center" colspan="2">
 								<select name="file" multiple size="24" style="font-weight:bold; width:350px"
 								ondblclick="document.getElementById('action').value = ''; document.getElementById('theme').value = '{admin_themes.NAME}'; this.form.submit();">

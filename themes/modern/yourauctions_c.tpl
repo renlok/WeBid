@@ -139,7 +139,7 @@ $("#relistall").click(function() {
 	<!-- END items -->
 <!-- ENDIF -->
 		<tr class="hidden-xs" {BGCOLOUR}>
-			<td colspan="5" align="right">{L_30_0102}</td>
+			<td colspan="6" align="right">{L_30_0102}</td>
 			<td align="center"><input type="checkbox" id="relistall"></td>
 			<td align="center"><input type="checkbox" id="sellall"></td>
 			<td align="center"><input type="checkbox" id="deleteall"></td>

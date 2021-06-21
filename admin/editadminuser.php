@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,35 +18,36 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-// Data check
-if (!isset($_REQUEST['id'])) {
-    header('location: adminusers.php');
-    exit;
-}
-
 $id = intval($_REQUEST['id']);
-if (isset($_POST['action']) && $_POST['action'] == 'update') {
-    if ((!empty($_POST['password']) && empty($_POST['repeatpassword'])) || (empty($_POST['password']) && !empty($_POST['repeatpassword']))) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_054));
-    } elseif ($_POST['password'] != $_POST['repeatpassword']) {
-        $template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_006));
-    } else {
-        // Update
-        $query = "UPDATE " . $DBPrefix . "adminusers SET";
-        $params = array();
-        if (!empty($_POST['password'])) {
-            include PACKAGE_PATH . 'PasswordHash.php';
-            $phpass = new PasswordHash(8, false);
-            $query .= " password = :password, ";
-            $params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
-        }
-        $query .= " status = :status WHERE id = :admin_id";
-        $params[] = array(':status', $_POST['status'], 'bool');
-        $params[] = array(':admin_id', $id, 'int');
-        $db->query($query, $params);
-        header('location: adminusers.php');
-        exit;
-    }
+if (isset($_POST['action']) && $_POST['action'] == 'update')
+{
+	if ((!empty($_POST['password']) && empty($_POST['repeatpassword'])) || (empty($_POST['password']) && !empty($_POST['repeatpassword'])))
+	{
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_054));
+	}
+	elseif ($_POST['password'] != $_POST['repeatpassword'])
+	{
+		$template->assign_block_vars('alerts', array('TYPE' => 'error', 'MESSAGE' => $ERR_006));
+	}
+	else
+	{
+		// Update
+		$query = "UPDATE " . $DBPrefix . "adminusers SET";
+		$params = array();
+		if (!empty($_POST['password']))
+		{
+			include PACKAGE_PATH . 'PasswordHash.php';
+			$phpass = new PasswordHash(8, false);
+			$query .= " password = :password, ";
+			$params[] = array(':password', $phpass->HashPassword($_POST['password']), 'str');
+		}
+		$query .= " status = :status WHERE id = :admin_id";
+		$params[] = array(':status', $_POST['status'], 'bool');
+		$params[] = array(':admin_id', $id, 'int');
+		$db->query($query, $params);
+		header('location: adminusers.php');
+		exit;
+	}
 }
 
 $query = "SELECT * FROM " . $DBPrefix . "adminusers WHERE id = :admin_id";
@@ -55,32 +56,39 @@ $params[] = array(':admin_id', $id, 'int');
 $db->query($query, $params);
 $user_data = $db->result();
 
-// Data check
-if (!$user_data) {
-    header('location: adminusers.php');
-    exit;
+if ($system->SETTINGS['datesformat'] == 'USA')
+{
+	$CREATED = substr($user_data['created'], 4, 2) . '/' . substr($user_data['created'], 6, 2) . '/' . substr($user_data['created'], 0, 4);
+}
+else
+{
+	$CREATED = substr($user_data['created'], 6, 2) . '/' . substr($user_data['created'], 4, 2) . '/' . substr($user_data['created'], 0, 4);
 }
 
-if ($user_data['lastlogin'] == $user_data['created']) {
-    $LASTLOGIN = $MSG['570'];
-} else {
-    $LASTLOGIN = $dt->printDateTz($user_data['lastlogin']);
+if ($user_data['lastlogin'] == 0)
+{
+	$LASTLOGIN = $MSG['570'];
+}
+else
+{
+	$LASTLOGIN = FormatDate($user_data['lastlogin']);
 }
 
 $template->assign_vars(array(
-        'ID' => $id,
-        'USERNAME' => $user_data['username'],
-        'CREATED' => $dt->printDateTz($user_data['created']),
-        'LASTLOGIN' => $LASTLOGIN,
+		'ID' => $id,
+		'USERNAME' => $user_data['username'],
+		'CREATED' => $CREATED,
+		'LASTLOGIN' => $LASTLOGIN,
 
-        'B_ACTIVE' => ($user_data['status'] == 1),
-        'B_INACTIVE' => ($user_data['status'] == 0)
-        ));
+		'B_ACTIVE' => ($user_data['status'] == 1),
+		'B_INACTIVE' => ($user_data['status'] == 0)
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'editadminuser.tpl'
-        ));
+		'body' => 'editadminuser.tpl'
+		));
 $template->display('body');
 
 include 'footer.php';
+?>

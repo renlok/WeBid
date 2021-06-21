@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,39 +18,72 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (!isset($_GET['banner'])) {
-    header('location: managebanners.php');
-    exit;
-}
+if (!isset($_GET['banner']))
+	exit();
 
-$banner = intval($_GET['banner']);
+$banner = $_GET['banner'];
+$CATEGORIES = $KEYWORDS = '';
 
 // Retrieve filters
 $query = "SELECT c.cat_name FROM " . $DBPrefix . "bannerscategories b
-          LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = b.category)
-          WHERE banner = :banner";
+		LEFT JOIN " . $DBPrefix . "categories c ON (c.cat_id = b.category)
+		WHERE banner = :banner";
 $params = array();
 $params[] = array(':banner', $banner, 'int');
 $db->query($query, $params);
 
-while ($row = $db->fetch()) {
-    $template->assign_block_vars('cats', array(
-            'CATEGORY' => $row['cat_name']
-            ));
+if ($db->numrows() > 0)
+{
+	while ($row = $db->fetch())
+	{
+		$CATEGORIES .= '<p>' . $row['cat_name'] . '</p>';
+	}
 }
-
 $query = "SELECT keyword FROM " . $DBPrefix . "bannerskeywords WHERE banner = :banner";
 $params = array();
 $params[] = array(':banner', $banner, 'int');
 $db->query($query, $params);
+$count = $db->numrows();
 
-while ($row = $db->fetch()) {
-    $template->assign_block_vars('keywords', array(
-            'KEYWORD' => $row['keyword']
-            ));
+if ($count > 0)
+{
+	while ($row = $db->fetch())
+	{
+		$KEYWORDS .= '<p>' . $row['keyword'] . '</p>';
+	}
 }
+?>
 
-$template->set_filenames(array(
-        'body' => 'viewfilters.tpl'
-        ));
-$template->display('body');
+<html>
+<head>
+<title>Banner filters</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body bgcolor="#ffffff">
+<center>
+	<p><b>
+	Banner filter</b> </p>
+	<p align="center"><a href="javascript:window.close()" class="bluelink">Close</a></p>
+	<table width="352" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td bgcolor="#eeeeee"><?php echo $MSG['_0053']; ?></td>
+	</tr>
+	<tbody>
+	<tr>
+		<td><?php echo $CATEGORIES; ?></td>
+	</tr>
+	<tr>
+		<td bgcolor="#ffffff">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#eeeeee"><?php echo $MSG['_0054']; ?></td>
+	</tr>
+	<tr>
+		<td><?php echo $KEYWORDS; ?></td>
+	</tr>
+	</tbody>
+	</table>
+	</center>
+	<p align="center"><a href="javascript:window.close()" class="bluelink">Close</a></p>
+</body>
+</html>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -16,10 +16,11 @@ include 'common.php';
 include INCLUDE_PATH . 'functions_invoices.php';
 
 // If user is not logged in redirect to login page
-if (!$user->checkAuth()) {
-    $_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
-    header('location: user_login.php');
-    exit;
+if (!$user->checkAuth())
+{
+	$_SESSION['LOGIN_MESSAGE'] = $MSG['5000'];
+	header('location: user_login.php');
+	exit;
 }
 
 $sender = getSeller($user->user_data['id']);
@@ -33,8 +34,9 @@ $params[] = array(':winner_id', $_POST['pfwon'], 'int');
 $db->query($query, $params);
 
 // check its real
-if ($db->numrows() < 1) {
-    invalidinvoice(true);
+if ($db->numrows() < 1)
+{
+	invalidinvoice(true);
 }
 
 $data = $db->result();
@@ -51,23 +53,23 @@ $winner_address .= (!empty($winner['zip'])) ? '<br>' . $winner['zip'] : '';
 $title = $system->SETTINGS['sitename'] . ' - ' . htmlspecialchars($data['title']);
 
 $template->assign_vars(array(
-        'DOCDIR' => $DOCDIR,
-        'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'],
-        'CHARSET' => $CHARSET,
-        'LANGUAGE' => $language,
-        'SENDER' => $sender['nick'],
-        'WINNER_NICK' => $winner['nick'],
-        'WINNER_ADDRESS' => $winner_address,
-        'AUCTION_TITLE' => strtoupper($title),
-        'AUCTION_ID' => $data['auc_id'],
-        'SHIPPING_METHOD' => "N/A", // TODO: NEEDS FIXING
-        'PAYMENT_METHOD' => "N/A", // TODO: NEEDS FIXING
-        'CLOSING_DATE' => $dt->formatDate($data['closingdate'], 'd F Y - H:i'),
-        'ITEM_QUANTITY' => $data['qty'],
-        'B_INVOICE' => true
-        ));
+		'DOCDIR' => $DOCDIR,
+		'LOGO' => $system->SETTINGS['siteurl'] . 'uploaded/logo/' . $system->SETTINGS['logo'],
+		'CHARSET' => $CHARSET,
+		'LANGUAGE' => $language,
+		'SENDER' => $sender['nick'],
+		'WINNER_NICK' => $winner['nick'],
+		'WINNER_ADDRESS' => $winner_address,
+		'AUCTION_TITLE' => strtoupper($title),
+		'AUCTION_ID' => $data['auc_id'],
+		'SHIPPING_METHOD' => "N/A", // TODO: NEEDS FIXING
+		'PAYMENT_METHOD' => "N/A", // TODO: NEEDS FIXING
+		'CLOSING_DATE' => ArrangeDateNoCorrection($data['closingdate'] + $system->tdiff),
+		'ITEM_QUANTITY' => $data['qty'],
+		'B_INVOICE' => true
+		));
 
 $template->set_filenames(array(
-        'body' => 'order_packingslip.tpl'
-        ));
+		'body' => 'order_packingslip.tpl'
+		));
 $template->display('body');

@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_276}&nbsp;&gt;&gt;&nbsp;{L_078}</h4>
+				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_276}&nbsp;&gt;&gt;&nbsp;{L_078}</h2>
 				<form name="newcat" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -11,12 +11,7 @@
 								<div class="col-md-12">{L_845}</div>
 							</div>
 							<div class="row">
-								<div class="col-md-12">
-<!-- BEGIN crumbs -->
-									<!-- IF crumbs.S_ROW_COUNT gt 0 --> > <!-- ENDIF -->
-									<a href="categories.php?parent={crumbs.CAT_ID}">{crumbs.CAT_NAME}</a>
-<!-- END crumbs -->
-								</div>
+								<div class="col-md-12">{CRUMBS}</div>
 							</div>
 							<div class="row">
 								<div class="col-md-1"><strong>&nbsp;</strong></div>

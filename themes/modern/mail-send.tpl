@@ -44,7 +44,7 @@ $(".form1").submit(function(){
 			<input type="hidden" name="is_question" value="0">
 <!-- ENDIF -->
 			<input type="hidden" name="hash" value="{HASH}">
-			<input class="btn btn-primary" name="submit" type="submit" value="{L_submit}">
+			<input class="btn btn-primary" name="submit" type="submit" value="{L_007}">
 		</div>
 	</form>
 </div>

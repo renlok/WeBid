@@ -3,7 +3,7 @@
 <table width="90%" border="0" cellpadding="1" cellspacing="0" align="center">
 	<tr>
 		<td colspan="2" align="right">
-			<b>{USERNICK}</b> ({USERFB}) <!-- IF USER_FB_ICON ne '' --><img src="{SITEURL}images/icons/{USER_FB_ICON}" alt="{USER_FB_ICON}" class="fbstar"><!-- ENDIF -->
+			<b>{USERNICK}</b> ({USERFB}) {USERFBIMG}
 		</td>
 	</tr>
 <!-- BEGIN fbs -->
@@ -12,7 +12,7 @@
 			<img src="{fbs.IMG}" align="middle" alt="">
 		</td>
 		<td valign="top">
-			<b><a href="{fbs.USFLINK}">{fbs.USERNAME} ({fbs.USFEED})</a></b> <!-- IF fbs.FB_ICON ne '' --><img src="{SITEURL}images/icons/{fbs.FB_ICON}" alt="{fbs.FB_ICON}" class="fbstar"><!-- ENDIF -->
+			<b><a href="{fbs.USFLINK}">{fbs.USERNAME} ({fbs.USFEED})</a></b>&nbsp;{fbs.USICON}
 			({L_506}{fbs.FBDATE} {L_25_0177}
 	<!-- IF fbs.AUCTION_TITLE eq '' -->
 			{L_113}{fbs.AUCTION_ID}

@@ -14,7 +14,6 @@
 							<th><b>{L_451}</b></th>
 							<th><b>{L_578}</b></th>
 							<th><b>{L_579}</b></th>
-							<th><b>{L_group_no_fees}</b></th>
 							<th><b>{L_580}</b></th>
 							<th>&nbsp;</th>
 						</tr>
@@ -28,26 +27,20 @@
 							<td><input type="text" name="user_count" value="{USER_COUNT}"></td>
 							<td>
 								<select name="can_sell">
-									<option value="1" {CAN_SELL_Y}>{L_yes}</option>
-									<option value="0" {CAN_SELL_N}>{L_no}</option>
+									<option value="1" {CAN_SELL_Y}>{L_030}</option>
+									<option value="0" {CAN_SELL_N}>{L_029}</option>
 								</select>
 							</td>
 							<td>
 								<select name="can_buy">
-									<option value="1" {CAN_BUY_Y}>{L_yes}</option>
-									<option value="0" {CAN_BUY_N}>{L_no}</option>
-								</select>
-							</td>
-							<td>
-								<select name="no_fees">
-									<option value="1" {NO_FEES_Y}>{L_yes}</option>
-									<option value="0" {NO_FEES_N}>{L_no}</option>
+									<option value="1" {CAN_BUY_Y}>{L_030}</option>
+									<option value="0" {CAN_BUY_N}>{L_029}</option>
 								</select>
 							</td>
 							<td>
 								<select name="auto_join">
-									<option value="1" {AUTO_JOIN_Y}>{L_yes}</option>
-									<option value="0" {AUTO_JOIN_N}>{L_no}</option>
+									<option value="1" {AUTO_JOIN_Y}>{L_030}</option>
+									<option value="0" {AUTO_JOIN_N}>{L_029}</option>
 								</select>
 							</td>
 							<td>
@@ -68,7 +61,6 @@
 							<td>{groups.USER_COUNT}</td>
 							<td>{groups.CAN_SELL}</td>
 							<td>{groups.CAN_BUY}</td>
-							<td>{groups.NO_FEES}</td>
 							<td>{groups.AUTO_JOIN}</td>
 							<td><a href="usergroups.php?id={groups.ID}&action=edit">{L_298}</a></td>
 						</tr>

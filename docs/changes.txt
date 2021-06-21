@@ -1,1 +1,21 @@
-See: http://bugs.webidsupport.com/changelog_page.php
+1.2.0 - 10/10/13
+-----------------------------
+- Fixed DOB string when user does not have one entered when suspending/activating user account
+- Fix error in install SQL
+- Fixed proxy bidding (Bug #459) (Thanks Bushstar)
+- Fixed toocheckout code
+- Added Serbia to countries list closedrelisted table
+- Added relistall check box to close auctions page (Thanks david62311)
+- Fixed reserve not met Items being incorrectly marked as sold in the database (Bug #464) (Thanks pani100)
+- Fixed shipping fee not being added to cost of item (Bug #454)
+- Fixed link in pay.php to contact seller (Bug #445) (Thanks pani100)
+- Fixed admin invoices view
+- Fixed browse categories header name
+- Added admin warnings for if fees are not set up correctly
+- Added confirmation notices when you do an action in user control panel
+- Moved the add new news button in admin so its visable
+- Fixed buy it now not setting an auction to close if all item have been purchased
+- Cleaned up outstanding page
+- Added option to enable payment sandboxes to test the IPN
+
+for older changes check out http://www.webidsupport.com/wiki/Change_Log

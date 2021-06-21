@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,46 +12,47 @@
  *   sold. If you have been sold this script, get a refund.
  *************************************/
 
-if (!defined('InWeBid')) {
-    exit();
-}
+if (!defined('InWeBid')) exit();
 
 $cal_months = json_encode(array(
-        $MSG['MON_001E'],
-        $MSG['MON_002E'],
-        $MSG['MON_003E'],
-        $MSG['MON_004E'],
-        $MSG['MON_005E'],
-        $MSG['MON_006E'],
-        $MSG['MON_007E'],
-        $MSG['MON_008E'],
-        $MSG['MON_009E'],
-        $MSG['MON_010E'],
-        $MSG['MON_011E'],
-        $MSG['MON_012E'],
-    ));
+		$MSG['MON_001E'],
+		$MSG['MON_002E'],
+		$MSG['MON_003E'],
+		$MSG['MON_004E'],
+		$MSG['MON_005E'],
+		$MSG['MON_006E'],
+		$MSG['MON_007E'],
+		$MSG['MON_008E'],
+		$MSG['MON_009E'],
+		$MSG['MON_010E'],
+		$MSG['MON_011E'],
+		$MSG['MON_012E'],
+	));
 $cal_imgpath = $system->SETTINGS['siteurl'] . "includes/img/";
 
 $cal_invalid_date = "'Invalid date: \"' + s_date[0] + '\".\\nAccepted format is dd-mm-yyyy.'";
 
-if ($system->SETTINGS['datesformat'] == 'USA') {
-    $cal_invalid_date = "'Invalid date: \"' + s_date[0] + '\".\\nAccepted format is mm-dd-yyyy.'";
+if ($system->SETTINGS['datesformat'] == 'USA')
+{
+	$cal_invalid_date = "'Invalid date: \"' + s_date[0] + '\".\\nAccepted format is mm-dd-yyyy.'";
 }
 
-$cal_gener_date = "(d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"/\"
-		+ (d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"/\"
+$cal_gener_date = "(d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"-\"
+		+ (d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"-\"
 		+ d_date.getFullYear()";
 
-if ($system->SETTINGS['datesformat'] == 'USA') {
-    $cal_gener_date = "(d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"/\"
-		+ (d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"/\"
+if ($system->SETTINGS['datesformat'] == 'USA')
+{
+	$cal_gener_date = "(d_date.getMonth() < 9 ? '0' : '') + (d_date.getMonth() + 1) + \"-\"
+		+ (d_date.getDate() < 10 ? '0' : '') + d_date.getDate() + \"-\"
 		+ d_date.getFullYear()";
 }
 
 $cal_date_parts = json_encode(array('month' => '$2', 'day' => '$1', 'year' => '$3'));
 
-if ($system->SETTINGS['datesformat'] == 'USA') {
-    $cal_date_parts = json_encode(array('month' => '$1', 'day' => '$2', 'year' => '$3'));
+if ($system->SETTINGS['datesformat'] == 'USA')
+{
+	$cal_date_parts = json_encode(array('month' => '$1', 'day' => '$2', 'year' => '$3'));
 }
 
 $cal_conf = "var A_TCALDEF = {
@@ -67,5 +68,5 @@ $cal_conf = "var A_TCALDEF = {
 };";
 
 $template->assign_vars(array(
-        'CAL_CONF' => $cal_conf,
-        ));
+		'CAL_CONF' => $cal_conf,
+		));

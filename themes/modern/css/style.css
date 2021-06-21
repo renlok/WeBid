@@ -179,7 +179,7 @@
 	margin-bottom: 10px;
 }
 .feat-title {
-	white-space: normal;
+	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	margin-top: 5px;

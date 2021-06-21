@@ -8,14 +8,14 @@
 		<td><i>{NAME}</i></td>
 	</tr>
 	<tr>
-		<td align="right" valign="top">{L_username}</td>
+		<td align="right" valign="top">{L_003}</td>
 		<td valign="top"><i>{NICK}</i></td>
 	</tr>
 	<tr>
 		<th colspan="2" valign="top" align="center">{L_617}</th>
 	</tr>
 	<tr>
-		<td valign="top" class="errfont" style="text-align:right !important;">{L_password}</td>
+		<td valign="top" class="errfont" style="text-align:right !important;">{L_004}</td>
 		<td align="left"><input type="password" name="TPL_password" size="20"> {L_050}</td>
 	</tr>
 	<tr>
@@ -93,9 +93,9 @@
 <!-- IF B_NEWLETTER -->
 		<td align="right" height="2">{L_603}<td>
 			<input type="radio" name="TPL_nletter" value="1" {NLETTER1} />
-			{L_yes}
+			{L_030}
 			<input type="radio" name="TPL_nletter" value="2" {NLETTER2} />
-			{L_no}<br><span class="smallspan"><i>{L_609}</i></span>
+			{L_029}<br><span class="smallspan"><i>{L_609}</i></span>
 		</td>
 	</tr>
 <!-- ENDIF -->

@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_069}</h4>
+				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_069}</h2>
 				{L_122}
 				<form name="durations" action="" method="post">
 					<div class="panel panel-default">
@@ -15,9 +15,9 @@
 							</div>
 <!-- BEGIN dur -->
 							<div class="row">
-								<div class="col-md-3"><input type="text" name="new_days[{dur.S_ROW_COUNT}]" value="{dur.DAYS}" size="5"></div>
-								<div class="col-md-6"><input type="text" name="new_durations[{dur.S_ROW_COUNT}]" value="{dur.DESC}" size="25"></div>
-								<div class="col-md-3"><input type="checkbox" name="delete[]" value="{dur.S_ROW_COUNT}"></div>
+								<div class="col-md-3"><input type="text" name="new_days[{dur.ID}]" value="{dur.DAYS}" size="5"></div>
+								<div class="col-md-6"><input type="text" name="new_durations[{dur.ID}]" value="{dur.DESC}" size="25"></div>
+								<div class="col-md-3"><input type="checkbox" name="delete[]" value="{dur.ID}"></div>
 							</div>
 <!-- END dur -->
 							<div class="row">

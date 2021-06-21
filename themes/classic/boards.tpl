@@ -9,7 +9,7 @@
 					{L_5034}
 				</th>
 				<th width="25%" valign="top">
-					{L_num_messages}
+					{L_5043}
 				</th>
 				<th width="25%" valign="top">
 					{L_5053}

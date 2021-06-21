@@ -4,7 +4,7 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{L_30_0176}</h4>
 				<p><b>{L_113}: </b> {ID}</p>
 				<p><b>{L_197}: </b> {TITLE}</p>
@@ -15,7 +15,7 @@
 				<p><b>{L_257}: </b> {AUCTION_TYPE}</p>
 				<h4 class="rounded-top rounded-bottom" style="width: 98%;">{L_453}</h4>
 <!-- IF B_WINNERS -->
-				<table class="table table-striped table-bordered">
+				<table width="98%" align="center" cellpadding="0" cellspacing="0">
 					<tr>
 						<th><b>{L_176}</b></td>
 						<th><b>{L_30_0179}</b></td>
@@ -34,7 +34,7 @@
 <!-- ENDIF -->
 				<h4 class="rounded-top rounded-bottom" style="width: 98%;">{L_30_0180}</h4>
 <!-- IF B_BIDS -->
-				<table class="table table-striped table-bordered">
+				<table width="98%" cellpadding="0" cellspacing="0">
 					<tr>
 						<th><b>{L_176}</b></td>
 						<th><b>{L_30_0179}</b></td>

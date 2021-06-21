@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,34 +18,30 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-// Data check
-if (!isset($_REQUEST['id'])) {
-    header('location: boards.php');
-    exit;
-}
-
 $id = intval($_GET['id']);
 $gparams = array();
 $gparams[] = array(':id', $id, 'int');
 
-if (isset($_POST['action']) && $_POST['action'] == 'purge') {
-    if (is_numeric($_POST['days'])) {
-        // Build date
-        $query = "DELETE FROM " . $DBPrefix . "comm_messages WHERE msgdate <= SUB_DATE(CURRENT_TIMESTAMP, INTERVAL " . intval($_POST['days']) . " DAY) AND boardid = :id";
-        $params = $gparams;
-        $db->query($query, $params);
-        // Update counter
-        $query = "SELECT count(id) as COUNTER from " . $DBPrefix . "comm_messages WHERE boardid = :id";
-        $db->query($query, $gparams);
-        $message_count = $db->result('COUNTER');
-        $query = "UPDATE " . $DBPrefix . "community SET messages = :message_count WHERE id = :id";
-        $params = $gparams;
-        $params[] = array(':message_count', $message_count, 'int');
-        $db->query($query, $params);
-    }
+if (isset($_POST['action']) && $_POST['action'] == 'purge')
+{
+	if (is_numeric($_POST['days']))
+	{
+		// Build date
+		$DATE = time() - $_POST['days'] * 3600 * 24;
+		$query = "DELETE FROM " . $DBPrefix . "comm_messages WHERE msgdate <= :msgdate AND boardid = :id";
+		$params = $gparams;
+		$params[] = array(':msgdate', $DATE, 'int');
+		$db->query($query, $params);
+		// Update counter
+		$query = "SELECT count(id) as COUNTER from " . $DBPrefix . "comm_messages WHERE boardid = :id";
+		$db->query($query, $gparams);
+		$message_count = $db->result('COUNTER');
+		$query = "UPDATE " . $DBPrefix . "community SET messages = :message_count WHERE id = :id";
+		$params = $gparams;
+		$params[] = array(':message_count', $message_count, 'int');
+		$db->query($query, $params);
+	}
 }
-
-$_SESSION['RETURN_LIST'] = 'editmessages.php?id=' . $id;
 
 // Retrieve board name for breadcrumbs
 $query = "SELECT name FROM " . $DBPrefix . "community WHERE id = :id";
@@ -56,24 +52,29 @@ $board_name = $db->result('name');
 $query = "SELECT * FROM " . $DBPrefix . "comm_messages WHERE boardid = :id";
 $db->query($query, $gparams);
 
-while ($msg_data = $db->fetch()) {
-    $template->assign_block_vars('msgs', array(
-            'ID' => $msg_data['id'],
-            'MESSAGE' => nl2br($msg_data['message']),
-            'POSTED_BY' => $msg_data['username'],
-            'POSTED_AT' => $dt->formatDate($msg_data['msgdate'])
-            ));
+$bg = '';
+while ($msg_data = $db->fetch())
+{
+	$template->assign_block_vars('msgs', array(
+			'ID' => $msg_data['id'],
+			'MESSAGE' => nl2br($msg_data['message']),
+			'POSTED_BY' => $msg_data['username'],
+			'POSTED_AT' => FormatDate($msg_data['msgdate']),
+			'BG' => $bg
+			));
+	$bg = ($bg == '') ? 'class="bg"' : '';
 }
 
 $template->assign_vars(array(
-        'BOARD_NAME' => $board_name,
-        'ID' => $id
-        ));
+		'BOARD_NAME' => $board_name,
+		'ID' => $id
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'editmessages.tpl'
-        ));
+		'body' => 'editmessages.tpl'
+		));
 $template->display('body');
 
 include 'footer.php';
+?>

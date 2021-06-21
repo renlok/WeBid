@@ -1,18 +1,19 @@
+<!-- INCLUDE header.tpl -->
 		<div class="row">
 			<div class="col-md-3">
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{L_25_0009}&nbsp;&gt;&gt;&nbsp;{L_30_0215}</h4>
+				<h2>{L_25_0009}&nbsp;&gt;&gt;&nbsp;{L_30_0215}</h2>
 				<form name="logo" action="" method="post" enctype="multipart/form-data">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-3">{L_your_logo}</div>
+								<div class="col-md-3">{L_531}</div>
 								<div class="col-md-9"><img src="{IMAGEURL}"></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">{L_upload_new_logo}</div>
+								<div class="col-md-3">{L_602}</div>
 								<div class="col-md-9">
 									<label class="btn btn-primary" for="logo">
 										Browse <input id="logo" type="file" name="logo" style="display:none;">
@@ -27,3 +28,4 @@
 				</form>
 			</div>
 		</div>
+<!-- INCLUDE footer.tpl -->

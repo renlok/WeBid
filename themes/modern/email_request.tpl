@@ -29,7 +29,7 @@
 				<input type="hidden" name="username" value="{USERNAME}">
 				<input type="hidden" name="action" value="proceed">
 				<div class="form-group text-center">
-					<input type="submit" name="Submit" value="{L_submit}" class="btn btn-primary">
+					<input type="submit" name="Submit" value="{L_007}" class="btn btn-primary">
 				</div>
 			</form>
 <!-- ENDIF -->

@@ -75,7 +75,7 @@ $(document).ready(function(){
 	});
 	<!-- IF B_FEES -->
 	{FEE_JS}
-	// set fee values
+	// something
 	var min_bid_fee = {FEE_MIN_BID};
 	var bn = {FEE_BN};
 	var rp = {FEE_RP};
@@ -92,18 +92,18 @@ $(document).ready(function(){
 		}
 		else
 		{
-			for (var i = 0; i < setup_fee.length; i++)
+			for (var i = 0; i < setup.length; i++)
 			{
-				if (setup_fee[i][0] <= min_bid && setup_fee[i][1] >= min_bid)
+				if (setup[i][0] <= min_bid && setup[i][1] >= min_bid)
 				{
-					if (setup_fee[i][3] == 'flat')
+					if (setup[i][3] == 'flat')
 					{
-						min_bid_fee = setup_fee[i][2];
-						updatefee(setup_fee[i][2]);
+						min_bid_fee = setup[i][2];
+						updatefee(setup[i][2]);
 					}
 					else
 					{
-						min_bid_fee = (setup_fee[i][2] / 100) * min_bid;
+						min_bid_fee = (setup[i][2] / 100) * min_bid;
 						updatefee(min_bid_fee);
 					}
 					break;
@@ -197,9 +197,8 @@ $(document).ready(function(){
 	});
 		<!-- ENDIF -->
 	function updatefee(newfee) {
-        var nowfee = parseFloat($("#fee_exact").val()) + newfee;
-        $("#fee_exact").val(nowfee);
-        nowfee = nowfee - current_fee;
+		var nowfee = parseFloat($("#fee_exact").val()) + newfee;
+		$("#fee_exact").val(nowfee);
 		if (nowfee < 0)
 		{
 			nowfee = 0;
@@ -342,9 +341,9 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan">
 							<input type="radio" name="with_reserve" id="with_reserve_no" value="no" {RESERVE_N}>
-							{L_no}
+							{L_029}
 							<input type="radio" name="with_reserve" id="with_reserve_yes" value="yes" {RESERVE_Y}>
-							{L_yes}
+							{L_030}
 							<input type="text" name="reserve_price" id="reserve_price" size="10" value="{RESERVE}" {BN_ONLY}>
 							{CURRENCY}
 						</td>
@@ -356,9 +355,9 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan">
 							<input type="radio" name="buy_now_only" value="0" {BN_ONLY_N} id="bn_only_no">
-							{L_no}
+							{L_029}
 							<input type="radio" name="buy_now_only" value="1" {BN_ONLY_Y} id="bn_only_yes">
-							{L_yes}
+							{L_030}
 						</td>
 					</tr>
 	<!-- ENDIF -->
@@ -369,9 +368,9 @@ $(document).ready(function(){
 						</td>
 						<td class="rightpan">
 							<input type="radio" name="buy_now" id="bn_no" value="no" {BN_N}>
-							{L_no}
+							{L_029}
 							<input type="radio" name="buy_now" id="bn_yes" value="yes" {BN_Y}>
-							{L_yes}
+							{L_030}
 							<input type="text" name="buy_now_price" id="bn" size="10" value="{BN_PRICE}">
 							{CURRENCY}
 						</td>
@@ -383,7 +382,7 @@ $(document).ready(function(){
 							<b>{L_2__0016}</b>
 						</td>
 						<td class="rightpan">
-		<!-- IF B_EDITING && B_CANEDITSTARTDATE eq false -->
+		<!-- IF B_EDITING && !B_CANEDITSTARTDATE -->
 							{START_TIME}
 							<input type="hidden" name="a_starts" value="{START_TIME}">
 		<!-- ELSE -->
@@ -527,8 +526,8 @@ $(document).ready(function(){
 							<b>{L_1102}</b>
 						</td>
 						<td class="rightpan">
-							<input type="radio" name="is_taxed" value="1" {TAX_Y}>	{L_yes}<br>
-							<input type="radio" name="is_taxed" value="0" {TAX_N}> {L_no}
+							<input type="radio" name="is_taxed" value="1" {TAX_Y}>	{L_030}<br>
+							<input type="radio" name="is_taxed" value="0" {TAX_N}> {L_029}
 						</td>
 					</tr>
 					<tr>
@@ -536,8 +535,8 @@ $(document).ready(function(){
 							<b>{L_1103}</b>
 						</td>
 						<td class="rightpan">
-							<input type="radio" name="tax_included" value="1" {TAXINC_Y}>	{L_yes}<br>
-							<input type="radio" name="tax_included" value="0" {TAXINC_N}> {L_no}
+							<input type="radio" name="tax_included" value="1" {TAXINC_Y}>	{L_030}<br>
+							<input type="radio" name="tax_included" value="0" {TAXINC_N}> {L_029}
 						</td>
 					</tr>
 	<!-- ENDIF -->
@@ -684,11 +683,11 @@ $(document).ready(function(){
 					</tr>
 	<!-- IF B_USERAUTH -->
 					<tr>
-						<td align="right">{L_username}</td>
+						<td align="right">{L_003}</td>
 						<td><b>{YOURUSERNAME}</b><input type="hidden" name="nick" value="{YOURUSERNAME}">
 					</tr>
 					<tr>
-						<td align="right">{L_password}</td>
+						<td align="right">{L_004}</td>
 						<td><input type="password" name="password" size="20" maxlength="20" value=""></td>
 					</tr>
 	<!-- ENDIF -->

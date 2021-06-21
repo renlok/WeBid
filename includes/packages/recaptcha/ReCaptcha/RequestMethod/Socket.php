@@ -51,8 +51,9 @@ class Socket
 
         if ($this->handle != false && $errno === 0 && $errstr === '') {
             return $this->handle;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**

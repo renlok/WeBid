@@ -10,21 +10,19 @@ $(document).ready(function() {
 	});
 });
 </script>
-<!-- IF ERROR ne '' -->
-<div class="error-box">{ERROR}</div>
-<!-- ENDIF -->
+<div align="center">{ERROR}</div>
 <!-- IF REPLY_X eq 1 -->
 	<!-- INCLUDE mail-send.tpl -->
 <!-- ENDIF -->
 <form action="mail.php" method="post" name="deletemessages">
 	<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-	<table width="100%" border="0" cellspacing="1" cellpadding="4" align="center">
+	<table style="text-align: center; width: 90%; border-collapse: collapse; margin: 0 auto;" border="1" cellpadding="2" cellspacing="2">
 		<thead>
 			<tr>
-				<td class="titTable1" width="100">{WHENSENT}</td>
-				<td class="titTable1">{TITLE}</td>
-				<td class="titTable1" width="200">{SENTFROM}</td>
-				<td class="titTable1" nowrap="nowrap">{L_2__0028}<br><input type="checkbox" name="" id="checkboxall" value=""></td>
+				<td width="100">{WHENSENT}</td>
+				<td>{TITLE}</td>
+				<td width="200">{SENTFROM}</td>
+				<td nowrap="nowrap">{L_2__0028}<br><input type="checkbox" name="" id="checkboxall" value=""></td>
 			</tr>
 		</thead>
 		<tbody>

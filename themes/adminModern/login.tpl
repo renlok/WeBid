@@ -57,11 +57,11 @@
 				<form action="login.php" method="post">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 					<div class="form-group">
-						<label for="username">{L_username}</label>
+						<label for="username">{L_003}</label>
 						<input type="text" name="username" size="20" class="form-control" autofocus>
 					</div>
 					<div class="form-group">
-						<label for="password">{L_password}</label>
+						<label for="password">{L_004}</label>
 						<input type="password" name="password" class="form-control" size="20">
 					</div>
 <!-- IF PAGE eq 1 -->

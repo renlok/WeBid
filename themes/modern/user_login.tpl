@@ -18,7 +18,7 @@
 						<br>
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-							<input type="password" name="password" class="form-control" placeholder="{L_password}" value="">
+							<input type="password" name="password" class="form-control" placeholder="{L_004}" value="">
 						</div>
 					</div>
 					<div class="clearfix"></div>

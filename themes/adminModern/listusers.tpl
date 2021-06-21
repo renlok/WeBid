@@ -11,10 +11,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}</h4>
 				<div class="plain-box">{TOTALUSERS} {L_301}</div>
-				<table class="table table-striped table-bordered">
+				<table width="98%" cellpadding="0" cellspacing="0">
 					<tr bgcolor="#FFFF66">
 						<td colspan="4">
 							<form name="search" action="" method="post">
@@ -26,11 +26,11 @@
 						<td align="right" colspan="4">
 							<form name="filter" id="filter" action="" method="get">
 								<select name="usersfilter" id="userfilter">
-									<option value="all">{L_all_users}</option>
-									<option value="active" <!-- IF USERFILTER eq 'active' -->selected<!-- ENDIF -->>{L_active_users}</option>
-									<option value="admin" <!-- IF USERFILTER eq 'admin' -->selected<!-- ENDIF -->>{L_suspended_by_admin}</option>
-									<option value="fee" <!-- IF USERFILTER eq 'fee' -->selected<!-- ENDIF -->>{L_signup_fee_unpaid}</option>
-									<option value="confirmed" <!-- IF USERFILTER eq 'confirmed' -->selected<!-- ENDIF -->>{L_account_never_confirmed}</option>
+									<option value="all">{L_5296}</option>
+									<option value="active" <!-- IF USERFILTER eq 'active' -->selected<!-- ENDIF -->>{L_5291}</option>
+									<option value="admin" <!-- IF USERFILTER eq 'admin' -->selected<!-- ENDIF -->>{L_5294}</option>
+									<option value="fee" <!-- IF USERFILTER eq 'fee' -->selected<!-- ENDIF -->>{L_5293}</option>
+									<option value="confirmed" <!-- IF USERFILTER eq 'confirmed' -->selected<!-- ENDIF -->>{L_5292}</option>
 									<option value="admin_approve" <!-- IF USERFILTER eq 'admin_approve' -->selected<!-- ENDIF -->>{L_25_0136}</option>
 								</select>
 								<input type="submit" value="{L_5029}" />
@@ -48,7 +48,7 @@
 						<th width="10%"><b>{L_297}</b></th>
 					</tr>
 <!-- BEGIN users -->
-					<tr<!-- IF users.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+					<tr {users.BG}>
 						<td>
 							<b>{users.NICK}</b><br>
 							&nbsp;<a href="listauctions.php?uid={users.ID}&offset={PAGE}" class="small">{L_5094}</a><br>
@@ -67,16 +67,16 @@
 						</td>
 						<td>
 	<!-- IF users.SUSPENDED eq 0 -->
-							<b><span style="color:green;">{L_active_users}</span></b>
+							<b><span style="color:green;">{L_5291}</span></b>
 	<!-- ELSEIF users.SUSPENDED eq 1 -->
-							<b><span style="color:violet;">{L_suspended_by_admin}</span></b>
+							<b><span style="color:violet;">{L_5294}</span></b>
 	<!-- ELSEIF users.SUSPENDED eq 7 -->
 							<b><span style="color:red;">{L_5297}</span></b>
 	<!-- ELSEIF users.SUSPENDED eq 8 -->
-							<b><span style="color:orange;">{L_account_never_confirmed}</span></b><br>
+							<b><span style="color:orange;">{L_5292}</span></b><br>
 							<a href="listusers.php?resend=1&id={users.ID}&offset={PAGE}"><small>{L_25_0074}</small></a>
 	<!-- ELSEIF users.SUSPENDED eq 9 -->
-							<b><span style="color:red;">{L_signup_fee_unpaid}</span></b>
+							<b><span style="color:red;">{L_5293}</span></b>
 	<!-- ELSEIF users.SUSPENDED eq 10 -->
 							<b><small style="color:orange;"><a href="excludeuser.php?id={users.ID}&offset={PAGE}">{L_25_0136}</a></small></b>
 	<!-- ENDIF -->
@@ -86,18 +86,18 @@
 							<a href="deleteuser.php?id={users.ID}&offset={PAGE}"><small>{L_008}</small></a><br>
 							<a href="excludeuser.php?id={users.ID}&offset={PAGE}"><small>
 	<!-- IF users.SUSPENDED eq 0 -->
-								{L_suspend_user}
+								{L_305}
 	<!-- ELSEIF users.SUSPENDED eq 8 -->
-								{L_activate_user}
+								{L_515}
 	<!-- ELSE -->
-								{L_activate_user}
+								{L_299}
 	<!-- ENDIF -->
 							</small></a>
 						</td>
 					</tr>
 <!-- END users -->
 				</table>
-				<table class="table table-striped table-bordered">
+				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 					<tr>
 						<td align="center">
 							{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}

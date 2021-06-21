@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,20 +12,18 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) {
-    exit();
-}
+if (!defined('InWeBid')) exit();
 
 $emailer = new email_handler();
 $emailer->assign_vars(array(
-        'SITE_URL' => $system->SETTINGS['siteurl'],
-        'SITENAME' => $system->SETTINGS['sitename'],
-        'ADMINMAIL' => $system->SETTINGS['adminmail'],
+		'SITE_URL' => $system->SETTINGS['siteurl'],
+		'SITENAME' => $system->SETTINGS['sitename'],
+		'ADMINMAIL' => $system->SETTINGS['adminmail'],
 
-        'REPORT' => $report,
-        'REPORT_WINNER' => (isset($report_winner))?  $MSG['communative_report_winner_yes'] : $MSG['communative_report_winner_no'],
+		'REPORT' => $report,
+		'REPORT_WINNER' => (isset($report_winner))?  $MSG['communative_report_winner_yes'] : $MSG['communative_report_winner_no'],
 
-        'S_NAME' => $row['name']
-        ));
+		'S_NAME' => $row['name']
+		));
 $emailer->email_uid = $row['id'];
 $emailer->email_sender($row['email'], 'endauction_cumulative.inc.php', $MSG['25_0199']);

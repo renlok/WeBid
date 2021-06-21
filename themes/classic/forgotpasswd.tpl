@@ -15,7 +15,7 @@
 			<td colspan="2" align="center">{L_2__0039}</td>
 		</tr>
 		<tr>
-			<td width="40%" align="right"><b>{L_username}</b></td>
+			<td width="40%" align="right"><b>{L_003}</b></td>
 			<td width="60%">
 				<input type="text" NAME="TPL_username" size="25" value="{USERNAME}">
 			</td>

@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_842}</h4>
+				<h2>{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_842}</h2>
 <!-- IF B_NOT_SETUP_CORRECTLY -->
 				<div class="alert alert-danger" role="alert"><b>{L_1144}</b></div>
 <!-- ENDIF -->

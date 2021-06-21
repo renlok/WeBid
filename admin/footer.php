@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,16 +12,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InAdmin')) {
-    exit();
-}
+if (!defined('InAdmin')) exit();
 
 $template->assign_vars(array(
-        'L_COPY' => empty($system->SETTINGS['copyright']) ? '' : '<p>' . htmlspecialchars($system->SETTINGS['copyright']) . '</p>',
-        'L_COPY_YEAR' => date("Y"),
-        ));
+		'L_COPY' => empty($system->SETTINGS['copyright']) ? '' : '<p>' . htmlspecialchars($system->SETTINGS['copyright']) . '</p>',
+		'L_COPY_YEAR' => date("Y"),
+		));
 
 $template->set_filenames(array(
-        'footer' => 'footer.tpl'
-        ));
+		'footer' => 'footer.tpl'
+		));
 $template->display('footer');

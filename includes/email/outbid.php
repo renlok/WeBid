@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,25 +12,23 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) {
-    exit();
-}
+if (!defined('InWeBid')) exit();
 
 $item_title = htmlspecialchars($item_title);
 
 $emailer = new email_handler();
 $emailer->assign_vars(array(
-        'SITE_URL' => $system->SETTINGS['siteurl'],
-        'SITENAME' => $system->SETTINGS['sitename'],
+		'SITE_URL' => $system->SETTINGS['siteurl'],
+		'SITENAME' => $system->SETTINGS['sitename'],
 
-        'C_NAME' => $OldWinner_name,
+		'C_NAME' => $OldWinner_name,
 
-        'N_BID' => $new_bid,
+		'N_BID' => $new_bid,
 
-        'A_TITLE' => $item_title,
-        'A_ENDS' => $ends_string,
-        'A_PICURL' => ($pict_url_plain != '') ? UPLOAD_FOLDER . $item_id . '/' . $pict_url_plain : 'images/email_alerts/default_item_img.jpg',
-        'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $item_id
-        ));
+		'A_TITLE' => $item_title,
+		'A_ENDS' => $ends_string,
+		'A_PICURL' => ($pict_url_plain != '') ? UPLOAD_FOLDER . $item_id . '/' . $pict_url_plain : 'images/email_alerts/default_item_img.jpg',
+		'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $item_id
+		));
 $emailer->email_uid = $OldWinner_id;
 $emailer->email_sender($OldWinner_email, 'no_longer_winner.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['906'] . ': ' . $item_title);

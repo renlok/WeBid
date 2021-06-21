@@ -14,8 +14,8 @@
 						<tr>
 							<td>{L_855}</td>
 							<td>
-								{L_monthly_report} <input type="radio" name="type" value="m"<!-- IF TYPE eq 'm' --> checked="checked"<!-- ENDIF -->>
-								{L_weekly_report} <input type="radio" name="type" value="w"<!-- IF TYPE eq 'w' --> checked="checked"<!-- ENDIF -->>
+								{L_5281} <input type="radio" name="type" value="m"<!-- IF TYPE eq 'm' --> checked="checked"<!-- ENDIF -->>
+								{L_827} <input type="radio" name="type" value="w"<!-- IF TYPE eq 'w' --> checked="checked"<!-- ENDIF -->>
 								{L_5285} <input type="radio" name="type" value="d"<!-- IF TYPE eq 'd' --> checked="checked"<!-- ENDIF -->>
 								{L_2__0027} <input type="radio" name="type" value="a"<!-- IF TYPE eq 'a' --> checked="checked"<!-- ENDIF -->>
 							</td>
@@ -59,14 +59,14 @@
 <!-- ENDIF -->
 <!-- BEGIN accounts -->
 	<!-- IF PAGNATION -->
-						<tr<!-- IF accounts.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {accounts.BG}>
 							<td>{accounts.RNAME} ({accounts.NICK})</td>
 							<td>{accounts.TEXT}</td>
 							<td align="center">{accounts.DATE}</td>
 							<td align="center">{accounts.AMOUNT}</td>
 						</tr>
 	<!-- ELSE -->
-						<tr<!-- IF accounts.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {accounts.BG}>
 							<td>{accounts.DATE}</td>
 							<td align="center">{accounts.TOTAL}</td>
 						</tr>

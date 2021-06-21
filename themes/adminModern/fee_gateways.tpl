@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_445}</h4>
+				<h2>{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_445}</h2>
 				<form name="errorlog" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">

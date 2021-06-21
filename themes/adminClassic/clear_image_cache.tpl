@@ -5,12 +5,12 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_5436}&nbsp;&gt;&gt;&nbsp;{L_clear_image_cache}</h4>
+				<h4 class="rounded-top rounded-bottom">{L_5436}&nbsp;&gt;&gt;&nbsp;{L_30_0031a}</h4>
 				<form name="errorlog" action="" method="post">
-					{L_clear_image_cache_explain}
+					{L_30_0032a}
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L_clear_image_cache}">
+					<input type="submit" name="act" class="centre" value="{L_30_0031a}">
 				</form>
 			</div>
 		</div>

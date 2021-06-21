@@ -8,8 +8,8 @@
 		<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {MESSAGE}<br>
 	</div>
 	<div class="text-center">
-		<a class="btn btn-primary" href="{SITEURL}mail.php?reply=1&amp;message={HASH}">{L_349}</a>
-		<a class="btn btn-danger" href="{SITEURL}mail.php?deleteid[]={ID}" onClick="if ( !confirm('{L_delete_message_confirm}') ) { return false; }">{L_008}</a>
+		<a class="btn btn-primary" href="{SITEURL}mail.php?x=1&amp;message={HASH}">{L_349}</a>
+		<a class="btn btn-danger" href="{SITEURL}mail.php?deleteid[]={ID}" onClick="if ( !confirm('Are you sure you want to delete this message?') ) { return false; }">{L_008}</a>
 		<br>
 		<br>
 		<a class="btn btn-default btn-sm" href="{SITEURL}mail.php"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {L_351}</a>

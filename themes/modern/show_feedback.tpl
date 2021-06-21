@@ -7,14 +7,14 @@
 				<a class="btn btn-default btn-xs" href="{SITEURL}profile.php?user_id={ID}">{L_505}</a>
 			</div>
 			<div class="col-md-12">
-				<div class="alert alert-info" role="alert">{L_185}{USERNICK} ({USERFB}) <!-- IF USER_FB_ICON ne '' --><img src="{SITEURL}images/icons/{USER_FB_ICON}" alt="{USER_FB_ICON}" class="fbstar"><!-- ENDIF --></div>
+				<div class="alert alert-info" role="alert">{L_185}{USERNICK} ({USERFB}) {USERFBIMG}</div>
 				<div class="panel panel-default visible-xs">
 					<div class="panel-body">
 						<legend>{L_503}</legend>
 						<div class="row">
 <!-- BEGIN fbs -->
 							<div class="col-md-6 col-sm-6">
-								<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) <!-- IF fbs.FB_ICON ne '' --><img src="{SITEURL}images/icons/{fbs.FB_ICON}" alt="{fbs.FB_ICON}" class="fbstar"><!-- ENDIF -->
+								<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) {fbs.USICON}
 							</div>
 							<div class="col-md-6 col-sm-6">
 								<small>{fbs.FBDATE}</small>
@@ -33,7 +33,7 @@
 						<td width="40%">{L_503}</td>
 						<td width="15%">{L_240}</td>
 						<td width="15%">{L_259}</td>
-						<td width="15%">{L_314}</td>
+						<td width="15%">{L_364}</td>
 					</tr>
 <!-- BEGIN fbs -->
 					<tr {fbs.BGCOLOUR}>
@@ -44,7 +44,7 @@
 							{fbs.FEEDBACK}
 						</td>
 						<td>
-							<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) <!-- IF fbs.FB_ICON ne '' --><img src="{SITEURL}images/icons/{fbs.FB_ICON}" alt="{fbs.FB_ICON}" class="fbstar"><!-- ENDIF -->
+							<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) {fbs.USICON}
 						</td>
 						<td>
 							{fbs.AUCTIONURL}

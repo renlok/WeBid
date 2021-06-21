@@ -10,11 +10,11 @@
 					<div align="center">
 						<table border="0" width="98%" cellpadding="0" cellspacing="5" class="blank">
 							<tr>
-								<td width="6%" align="left" valign="top">{L_your_logo}</td>
+								<td width="6%" align="left" valign="top">{L_531}</td>
 								<td align="left" width="94%"><img src="{IMAGEURL}"></td>
 							</tr>
 							<tr>
-								<td width="119" align="left" valign="top" colspan="2">{L_upload_new_logo}<br><input type="file" name="logo" size="40"></td>
+								<td width="119" align="left" valign="top" colspan="2">{L_602}<br><input type="file" name="logo" size="40"></td>
 							</tr>
 							<tr>
 								<td width="12%" align="left" colspan="2">

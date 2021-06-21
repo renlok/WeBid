@@ -5,7 +5,7 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L_banner_admin} : {L__0012}</h4>
+				<h4 class="rounded-top rounded-bottom">{L_25_0011}&nbsp;&gt;&gt;&nbsp;{L__0008} : {L__0012}</h4>
 				<form name="deleteusers" action="" method="post">
 					<div class="plain-box"><a href="newbannersuser.php" class="button">{L__0026}</a></div>
 					<table width="98%" cellpadding="0" cellspacing="0">
@@ -18,7 +18,7 @@
 						<th width="11%">{L_008}</th>
 					</tr>
 <!-- BEGIN busers -->
-					<tr<!-- IF busers.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+					<tr {busers.BG}>
 						<td><a href="editbannersuser.php?id={busers.ID}">{busers.NAME}</a></td>
 						<td>{busers.COMPANY}</td>
 						<td><a href="mailto:{busers.EMAIL}">{busers.EMAIL}</a></td>

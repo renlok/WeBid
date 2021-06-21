@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,21 +12,22 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) {
-    exit();
-}
+if (!defined('InWeBid')) exit();
 
 $emailer = new email_handler();
 $emailer->assign_vars(array(
-        'SITE_URL' => $system->SETTINGS['siteurl'],
-        'SITENAME' => $system->SETTINGS['sitename'],
+		'SITE_URL' => $system->SETTINGS['siteurl'],
+		'SITENAME' => $system->SETTINGS['sitename'],
 
-        'C_NAME' => $USER['name']
-        ));
+		'C_NAME' => $USER['name']
+		));
 $emailer->userlang = $language;
-if (!$system->SETTINGS['email_admin_on_signup']) {
-    $email_to = $USER['email'];
-} else {
-    $email_to = array($USER['email'], $system->SETTINGS['adminmail']);
+if (!$system->SETTINGS['email_admin_on_signup'])
+{
+	$email_to = $USER['email'];
+}
+else
+{
+	$email_to = array($USER['email'], $system->SETTINGS['adminmail']);
 }
 $emailer->email_sender($email_to, 'user_approved.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['095']);

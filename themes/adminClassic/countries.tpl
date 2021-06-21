@@ -24,13 +24,7 @@
 								<input type="text" name="new_countries[]" size="45" value="{countries.COUNTRY}">
 								<input type="hidden" name="old_countries[]" value="{countries.COUNTRY}">
 							</td>
-							<td align="center">
-	<!-- IF countries.B_CAN_DELETE -->
-								<input type="checkbox" name="delete[]" value="{countries.COUNTRY}">
-	<!-- ELSE -->
-								<img src="../images/nodelete.gif" alt="{L_cannot_delete}">
-	<!-- ENDIF -->
-							</td>
+							<td align="center">{countries.SELECTBOX}</td>
 						</tr>
 <!-- END countries -->
 						<tr>

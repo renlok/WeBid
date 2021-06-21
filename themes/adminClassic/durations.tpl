@@ -18,9 +18,9 @@
 <!-- BEGIN dur -->
 						<tr>
 							<td>&nbsp;</td>
-							<td><input type="text" name="new_days[{dur.S_ROW_COUNT}]" value="{dur.DAYS}" size="5"></td>
-							<td><input type="text" name="new_durations[{dur.S_ROW_COUNT}]" value="{dur.DESC}" size="25"></td>
-							<td align="center"><input type="checkbox" name="delete[]" value="{dur.S_ROW_COUNT}"></td>
+							<td><input type="text" name="new_days[{dur.ID}]" value="{dur.DAYS}" size="5"></td>
+							<td><input type="text" name="new_durations[{dur.ID}]" value="{dur.DESC}" size="25"></td>
+							<td align="center"><input type="checkbox" name="delete[]" value="{dur.ID}"></td>
 						</tr>
 <!-- END dur -->
 						<tr>

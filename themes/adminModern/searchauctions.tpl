@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{PAGE_TITLE}</h4>
 				<div>
-					<form name="searchauctionform" method="post" action="searchauctions.php">
+					<form name="searchauctionform" method="get" action="searchauctions.php">
 						<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 						<table class="centre blank">
 							<tr>
@@ -50,14 +50,14 @@
 					</form>
 				</div>
 				<div class="plain-box">{NUM_AUCTIONS} {L_311}<!-- IF B_SEARCHUSER --> {L_934}{USERNICK}<!-- ENDIF --></div>
-				<table class="table table-striped table-bordered">
+				<table width="98%" cellpadding="0" cellspacing="0">
 					<tr>
 						<th align="center"><b>{L_017}</b></th>
 						<th align="center"><b>{L_557}</b></th>
 						<th align="left"><b>{L_297}</b></th>
 					<tr>
 <!-- BEGIN auctions -->
-					<tr<!-- IF auctions.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+					<tr {auctions.BG}>
 						<td>
 	<!-- IF auctions.SUSPENDED eq 1 -->
 							<span style="color:#FF0000">{auctions.TITLE}</span>
@@ -67,7 +67,7 @@
 							<p>[ <a href="/item.php?id={auctions.ID}" target="_blank">{L_5295}</a> ]</p>
 						</td>
 						<td>
-							<b>{L_username}:</b> {auctions.USERNAME}<br>
+							<b>{L_003}:</b> {auctions.USERNAME}<br>
 							<b>{L_625}:</b> {auctions.START_TIME}<br>
 							<b>{L_626}:</b> {auctions.END_TIME}<br>
 							<b>{L_041}:</b> {auctions.CATEGORY}
@@ -89,7 +89,7 @@
 					</tr>
 <!-- END auctions -->
 				</table>
-				<table class="table table-striped table-bordered">
+				<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 					<tr>
 						<td align="center">
 							{L_5117}&nbsp;{PAGE}&nbsp;{L_5118}&nbsp;{PAGES}

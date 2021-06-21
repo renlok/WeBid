@@ -12,7 +12,7 @@
 						<td>{REALNAME}</td>
 					</tr>
 					<tr>
-						<td>{L_username}</td>
+						<td>{L_003}</td>
 						<td>{USERNAME}</td>
 					</tr>
 					<tr>
@@ -58,10 +58,11 @@
 						<td>
 							<form name="details" action="" method="post">
 								<input type="hidden" name="id" value="{ID}">
+								<input type="hidden" name="offset" value="{OFFSET}">
 								<input type="hidden" name="mode" value="{MODE}">
 								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-								<button type="submit" name="action" value="Yes">{L_yes}</button>
-								<button type="submit" name="action" value="No">{L_no}</button>
+								<button type="submit" name="action" value="Yes">{L_030}</button>
+								<button type="submit" name="action" value="No">{L_029}</button>
 							</form>
 						</td>
 					</tr>

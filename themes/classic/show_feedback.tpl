@@ -11,7 +11,7 @@
 			<table border="0" width="100%" cellspacing="0" cellpadding="4">
 				<tr>
 					<td colspan=5>
-						{L_185}{USERNICK} ({USERFB}) <!-- IF USER_FB_ICON ne '' --><img src="{SITEURL}images/icons/{USER_FB_ICON}" alt="{USER_FB_ICON}" class="fbstar"><!-- ENDIF -->
+						{L_185}{USERNICK} ({USERFB}) {USERFBIMG}
 						<br>
 						<br>
 					</td>
@@ -21,7 +21,7 @@
 					<td width="40%">{L_503}</td>
 					<td width="15%">{L_240}</td>
 					<td width="15%">{L_259}</td>
-					<td width="15%">{L_314}</td>
+					<td width="15%">{L_364}</td>
 				</tr>
 <!-- BEGIN fbs -->
 				<tr {fbs.BGCOLOUR}>
@@ -32,7 +32,7 @@
 						{fbs.FEEDBACK}
 					</td>
 					<td>
-						<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) <!-- IF fbs.FB_ICON ne '' --><img src="{SITEURL}images/icons/{fbs.FB_ICON}" alt="{fbs.FB_ICON}" class="fbstar"><!-- ENDIF -->
+						<a href="{fbs.USFLINK}">{fbs.USERNAME}</a> (<a href="{SITEURL}feedback.php?id={fbs.USERID}&faction=show">{fbs.USFEED}</a>) {fbs.USICON}
 					</td>
 					<td>
 						{fbs.AUCTIONURL}

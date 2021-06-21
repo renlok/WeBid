@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_516}&nbsp;&gt;&gt;&nbsp;{TITLE}</h4>
 				<form name="addnew" action="" method="post">
-					<table class="table table-striped table-bordered">
+					<table width="98%" cellpadding="2" class="blank">
 <!-- BEGIN lang -->
 						<tr valign="top">
 	<!-- IF lang.S_ROW_COUNT eq 0 -->
@@ -35,8 +35,8 @@
 							<td align="right">{L_521}</td>
 							<td>&nbsp;</td>
 							<td>
-								<input type="radio" name="suspended" value="0"<!-- IF B_ACTIVE --> checked="checked"<!-- ENDIF -->> {L_yes}
-								<input type="radio" name="suspended" value="1"<!-- IF B_INACTIVE --> checked="checked"<!-- ENDIF -->> {L_no}
+								<input type="radio" name="suspended" value="0"<!-- IF B_ACTIVE --> checked="checked"<!-- ENDIF -->> {L_030}
+								<input type="radio" name="suspended" value="1"<!-- IF B_INACTIVE --> checked="checked"<!-- ENDIF -->> {L_029}
 							</td>
 						</tr>
 					</table>

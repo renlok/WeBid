@@ -37,7 +37,7 @@ $(".form1").submit(function() {
 		<input type="hidden" name="is_question" value="0">
 <!-- ENDIF -->
 		<input type="hidden" name="hash" value="{HASH}">
-		<input name="submit" type="submit" value="{L_submit}">
+		<input name="submit" type="submit" value="{L_007}">
 	</form>
 <!-- IF B_CONVO -->
 	<br class="spacer">

@@ -4,9 +4,9 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
-				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_board_management}&nbsp;&gt;&gt;&nbsp;{BOARD_NAME}&nbsp;&gt;&gt;&nbsp;{L_5063}</h4>
-				<table class="table table-striped table-bordered">
+			<div class="main-box">
+				<h4 class="rounded-top rounded-bottom">{L_25_0018}&nbsp;&gt;&gt;&nbsp;{L_5032}&nbsp;&gt;&gt;&nbsp;{BOARD_NAME}&nbsp;&gt;&gt;&nbsp;{L_5063}</h4>
+				<table width="98%" cellpadding="0" cellspacing="0">
 					<tr>
 						<td bgcolor="#FFFF66" colspan="4">
 							<form name="clearmessages" action="" method="post">
@@ -26,7 +26,7 @@
 						<th width="15%">&nbsp;</th>
 					</tr>
 <!-- BEGIN msgs -->
-					<tr<!-- IF msgs.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+					<tr {msgs.BG}>
 						<td>{msgs.MESSAGE}</td>
 						<td>{msgs.POSTED_BY}</td>
 						<td>{msgs.POSTED_AT}</td>

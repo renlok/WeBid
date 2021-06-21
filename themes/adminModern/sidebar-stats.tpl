@@ -4,7 +4,7 @@
 					<li class="list-group-item"><a href="{SITEURL}admin/viewaccessstats.php">{L_5143}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/viewbrowserstats.php">{L_5165}</a></li>
 					<li class="list-group-item"><a href="{SITEURL}admin/viewplatformstats.php">{L_5318}</a></li>
-					<li class="list-group-item"><a href="{SITEURL}admin/analytics.php">{L_analytics}</a></li>
+					<li><a href="{SITEURL}admin/analytics.php">{L_google_analytics}</a></li>
 				</ul>
 				<div class="panel panel-default">
 					<div class="panel-heading">{L_1061}</div>
@@ -13,7 +13,7 @@
 							<textarea rows="15" name="anotes" class="form-control">{ADMIN_NOTES}</textarea>
 							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 							<br>
-							<button class="btn btn-primary" type="submit" name="act">{L_submit}</button>
+							<button class="btn btn-primary" type="submit" name="act">{L_007}</button>
 						</form>
 					</div>
 				</div>

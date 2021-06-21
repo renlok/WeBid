@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,9 +12,7 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) {
-    exit();
-}
+if (!defined('InWeBid')) exit();
 
 // Check if the e-mail has to be sent or not
 $query = "SELECT endemailmode FROM " . $DBPrefix . "users WHERE id = :seller_id";
@@ -30,26 +28,27 @@ $qty_left = $Auction['quantity'];
 $report_text = $Winner['nick'] . ' - <a href="mailto:' . $Winner['email'] . '">' . $Winner['email'] . '</a>';
 $report_text .= '<br>' .$MSG['30_0086'] . $Winner['address'] . ', ' . $Winner['city'] . ', ' . $Winner['prov'] . ', ' . $Winner['zip'] . ', ' . $Winner['country'];
 
-if ($emailmode == 'one') {
-    $emailer = new email_handler();
-    $emailer->assign_vars(array(
-            'S_NAME' => $Seller['name'],
+if ($emailmode == 'one')
+{
+	$emailer = new email_handler();
+	$emailer->assign_vars(array(
+			'S_NAME' => $Seller['name'],
 
-            'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
-            'A_PICURL' => ($Auction['pict_url'] != '') ? UPLOAD_FOLDER . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
-            'A_TITLE' => $Auction['title'],
-            'A_CURRENTBID' => $system->print_money($Auction['buy_now']),
-            'A_QTY_SOLD' => $qty_sold,
-            'A_QTY_LEFT' => $qty_left,
-            'A_QTY_THIS_SALE' => $qty,
-            'A_ENDS' => $ends_string,
+			'A_URL' => $system->SETTINGS['siteurl'] . 'item.php?id=' . $Auction['id'],
+			'A_PICURL' => ($Auction['pict_url'] != '') ? UPLOAD_FOLDER . $Auction['id'] . '/' . $Auction['pict_url'] : 'images/email_alerts/default_item_img.jpg',
+			'A_TITLE' => $Auction['title'],
+			'A_CURRENTBID' => $system->print_money($Auction['buy_now']),
+			'A_QTY_SOLD' => $qty_sold,
+			'A_QTY_LEFT' => $qty_left,
+			'A_QTY_THIS_SALE' => $qty,
+			'A_ENDS' => $ends_string,
 
-            'B_REPORT' => $report_text,
+			'B_REPORT' => $report_text,
 
-            'SITE_URL' => $system->SETTINGS['siteurl'],
-            'SITENAME' => $system->SETTINGS['sitename']
-    ));
-    $emailer->email_uid = $Seller['id'];
-    $subject            = $system->SETTINGS['sitename'] . ' Some items have been sold in ' . $Auction['title'];
-    $emailer->email_sender($Seller['email'], 'email_seller_partial_winner.inc.php', $subject);
+			'SITE_URL' => $system->SETTINGS['siteurl'],
+			'SITENAME' => $system->SETTINGS['sitename']
+	));
+	$emailer->email_uid = $Seller['id'];
+	$subject            = $system->SETTINGS['sitename'] . ' Some items have been sold in ' . $Auction['title'];
+	$emailer->email_sender($Seller['email'], 'email_seller_partial_winner.inc.php', $subject);
 }

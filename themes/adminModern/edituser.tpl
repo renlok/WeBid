@@ -4,22 +4,20 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{L_511}</h4>
 				<form name="errorlog" action="" method="post">
-					<table class="table table-striped table-bordered">
+					<table width="98%" celpadding="0" cellspacing="0" class="blank">
 					<tr>
 						<td width="204">{L_302} *</td>
 						<td><input type="text" name="name" size="40" maxlength="255" value="{REALNAME}"></td>
 						<td><b>{L_448}</b></td>
 					</tr>
 					<tr>
-						<td>{L_username}</td>
+						<td>{L_003}</td>
 						<td>{USERNAME}</td>
 						<td rowspan="15" width="33%" valign="top">
-						<!-- BEGIN usergroups -->
-							<p><input type="checkbox" name="group[]" value="{usergroups.ID}"<!-- IF usergroups.B_SELECTED --> checked="true"<!-- ENDIF -->> {usergroups.NAME}</p>
-						<!-- END usergroups -->
+							{USERGROUPS}
 						</td>
 					</tr>
 					<tr class="bg">
@@ -27,11 +25,11 @@
 						<td><small>{L_243}</small></td>
 					</tr>
 					<tr class="bg">
-						<td>{L_password} *</td>
+						<td>{L_004} *</td>
 						<td><input type="password" name="password" size="20" maxlength="20"></td>
 					</tr>
 					<tr class="bg">
-						<td>{L_password} *</td>
+						<td>{L_004} *</td>
 						<td><input type="password" name="repeat_password" size="20" maxlength="20"></td>
 					</tr>
 					<tr>
@@ -63,9 +61,7 @@
 						<td>
 							<select name="country">
 								<option value=""></option>
-								<!-- BEGIN countries -->
-									<option value="{countries.COUNTRY}"<!-- IF countries.B_SELECTED --> selected="true"<!-- ENDIF -->>{countries.COUNTRY}</option>
-								<!-- END countries -->
+								{COUNTRY_LIST}
 							</select>
 						</td>
 					</tr>

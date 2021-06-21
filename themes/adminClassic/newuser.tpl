@@ -14,18 +14,18 @@
 						<td><b>{L_448}</b></td>
 					</tr>
 					<tr>
-						<td>{L_username}</td>
+						<td>{L_003}</td>
 						<td><input type="text" name="username" size="40" maxlength="255" value="{USERNAME}"></td>
 						<td rowspan="15" width="33%" valign="top">
 							{USERGROUPS}
 						</td>
 					</tr>
 					<tr class="bg">
-						<td>{L_password} *</td>
+						<td>{L_004} *</td>
 						<td><input type="password" name="password" size="20" maxlength="20"></td>
 					</tr>
 					<tr class="bg">
-						<td>{L_password} *</td>
+						<td>{L_004} *</td>
 						<td><input type="password" name="repeat_password" size="20" maxlength="20"></td>
 					</tr>
 					<tr>
@@ -72,7 +72,7 @@
 					</table>
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-					<input type="submit" name="act" class="centre" value="{L__0026}">
+					<input type="submit" name="act" class="centre" value="{L_071}">
 				</form>
 			</div>
 		</div>

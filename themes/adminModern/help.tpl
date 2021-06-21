@@ -7,7 +7,7 @@
 							<textarea rows="15" name="anotes" class="form-control">{ADMIN_NOTES}</textarea>
 							<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 							<br>
-							<button class="btn btn-primary" type="submit" name="act">{L_submit}</button>
+							<button class="btn btn-primary" type="submit" name="act">{L_007}</button>
 						</form>
 					</div>
 				</div>

@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -18,53 +18,50 @@ include '../common.php';
 include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
-if (!isset($_REQUEST['id'])) {
-    $URL = $_SESSION['RETURN_LIST'];
-    //unset($_SESSION['RETURN_LIST']);
-    header('location: ' . $URL);
-    exit;
-}
-
 $id = intval($_REQUEST['id']);
 $user_id = intval($_REQUEST['user']);
 
-if (isset($_POST['action']) && $_POST['action'] == "Yes") {
-    // delete the feedback entry
-    $query = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id = :feedback_id";
-    $params = array();
-    $params[] = array(':feedback_id', $id, 'int');
-    $db->query($query, $params);
-    // get the current feedback count
-    $query = "SELECT SUM(rate) as FSUM, COUNT(feedback) as FNUM FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
-    $params = array();
-    $params[] = array(':user_id', $user_id, 'int');
-    $db->query($query, $params);
-    $fb_data = $db->result();
-    // update feedback count
-    $query = "UPDATE " . $DBPrefix . "users SET rate_sum = :rate_sum, rate_num = :rate_num WHERE id = :user_id";
-    $params = array();
-    $params[] = array(':rate_sum', $fb_data['SUM'], 'int');
-    $params[] = array(':rate_num', $fb_data['NUM'], 'int');
-    $params[] = array(':user_id', $user_id, 'int');
-    $db->query($query, $params);
-    header('location: userfeedback.php?id=' . $user_id);
-    exit;
-} elseif (isset($_POST['action']) && $_POST['action'] == "No") {
-    header('location: userfeedback.php?id=' . $user_id);
-    exit;
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
+{
+	// delete the feedback entry
+	$query = "DELETE FROM " . $DBPrefix . "feedbacks WHERE id = :feedback_id";
+	$params = array();
+	$params[] = array(':feedback_id', $id, 'int');
+	$db->query($query, $params);
+	// get the current feedback count
+	$query = "SELECT SUM(rate) as FSUM, count(feedback) as FNUM FROM " . $DBPrefix . "feedbacks WHERE rated_user_id = :user_id";
+	$params = array();
+	$params[] = array(':user_id', $user_id, 'int');
+	$db->query($query, $params);
+	$fb_data = $db->result();
+	// update feedback count
+	$query = "UPDATE " . $DBPrefix . "users SET rate_sum = :rate_sum, rate_num = :rate_num WHERE id = :user_id";
+	$params = array();
+	$params[] = array(':rate_sum', $fb_data['SUM'], 'int');
+	$params[] = array(':rate_num', $fb_data['NUM'], 'int');
+	$params[] = array(':user_id', $user_id, 'int');
+	$db->query($query, $params);
+	header('location: userfeedback.php?id=' . $user_id);
+	exit;
+}
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
+{
+	header('location: userfeedback.php?id=' . $user_id);
+	exit;
 }
 
 $template->assign_vars(array(
-        'ID' => $id,
-        'USERID' => $user_id,
-        'MESSAGE' => sprintf($MSG['confirm_feedback_delete'], $id),
-        'TYPE' => 2
-        ));
+		'ID' => $id,
+		'USERID' => $user_id,
+		'MESSAGE' => sprintf($MSG['848'], $id),
+		'TYPE' => 2
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'confirm.tpl'
-        ));
+		'body' => 'confirm.tpl'
+		));
 $template->display('body');
 
 include 'footer.php';
+?>

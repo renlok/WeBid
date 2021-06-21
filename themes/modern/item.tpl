@@ -1,31 +1,29 @@
 <!-- IF B_COUNTDOWN -->
 <script type="text/javascript">
 $(document).ready(function() {
-	var timeRemaining = {ENDS_IN};
-	var endDateTime = new Date();
-	endDateTime.setSeconds(endDateTime.getSeconds() + timeRemaining);
-	function padLength(what)
+	var currenttime = '{ENDS_IN}';
+	function padlength(what)
 	{
-		var output = (what.toString().length == 1) ? '0' + what : what;
-		return output;
+		return (what.toString().length == 1)? '0' + what : what;
 	}
-	function displayTime() {
-		var currentDateTime = new Date();
-
-		if (currentDateTime.getTime() < endDateTime.getTime()) {
-			var remainingTime = Math.floor((endDateTime.getTime() - currentDateTime.getTime()) / 1000);
-			var hours = Math.floor(remainingTime / 3600);
-			var mins = Math.floor((remainingTime - (hours * 3600)) / 60);
-			var secs = Math.floor(remainingTime - (hours * 3600) - (mins * 60));
-
-			var timeString = padLength(hours) + ':' + padLength(mins) + ':' + padLength(secs);
-			$('#ending_counter').html(timeString);
-			setTimeout(displayTime, 1000);
-		} else {
+	function displaytime()
+	{
+		currenttime -= 1;
+		if (currenttime > 0)
+		{
+			var hours = Math.floor(currenttime / 3600);
+			var mins = Math.floor((currenttime - (hours * 3600)) / 60);
+			var secs = Math.floor(currenttime - (hours * 3600) - (mins * 60));
+			var timestring = padlength(hours) + ':' + padlength(mins) + ':' + padlength(secs);
+			$("#ending_counter").html(timestring);
+			setTimeout(displaytime, 1000);
+		}
+		else
+		{
 			$("#ending_counter").html('<div class="error-box">{L_911}</div>');
 		}
 	}
-	setTimeout(displayTime, 1000);
+	setTimeout(displaytime, 1000);
 });
 </script>
 <!-- ENDIF -->
@@ -57,7 +55,7 @@ $(document).ready(function() {
 					<div class="panel-heading"><span class="label label-default">{L_113}: {ID}</span></div>
 					<div class="panel-body">
 						<div class="col-md-12">
-							<img class="img-rounded img-responsive center-block" src="{SITEURL}getthumb.php?w=430&fromfile={PIC_URL}&auction_id={ID}" border="0" align="center" width="430px">
+							<img class="img-rounded img-responsive center-block" src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={PIC_URL}" border="0" align="center" width="430px">
 						</div>
 	<!-- IF B_HASGALELRY -->
 						<div>
@@ -66,22 +64,22 @@ $(document).ready(function() {
 		<!-- BEGIN gallery -->
 								<div class="col-md-4 col-xs-4 col-sm-4">
 									<a href="{SITEURL}{UPLOADEDPATH}{ID}/{gallery.V}" title="" data-lightbox="gallery">
-									<img class="img-rounded img-responsive" src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={gallery.V}&auction_id={ID}" border="0"></a>
+									<img class="img-rounded img-responsive" src="{SITEURL}getthumb.php?w={THUMBWIDTH}&fromfile={UPLOADEDPATH}{ID}/{gallery.V}" border="0"></a>
 								</div>
 		<!-- END gallery -->
 							</div>
 						</div>
-	<!-- ENDIF -->
 					</div>
-					<div class="panel-footer">{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}</div>
+					<div class="panel-footer">{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>
 				</div>
+	<!-- ENDIF -->
 <!-- ELSE -->
 				<div class="panel panel-default">
 					<div class="panel-heading"><span class="label label-default">{L_113}: {ID}</span></div>
 					<div class="panel-body">
 						<img class="thumbnail img-responsive center-block" src="{SITEURL}/themes/{THEME}/img/no-picture-gallery.png" alt="no picture" width="430px" />
 					</div>
-					<div class="panel-footer">{L_611} <span style="color:#ff3300"><b>{AUCTION_VIEWS}</b></span> {L_612}</div>
+					<div class="panel-footer">{L_611} <font color="#ff3300"><b>{AUCTION_VIEWS}</b></font> {L_612}</div>
 				</div>
 <!-- ENDIF -->
 			</div>
@@ -109,7 +107,7 @@ $(document).ready(function() {
 								<a href="{SITEURL}profile.php?user_id={high_bidders.BUYER_ID}&amp;auction_id={ID}"><b>{high_bidders.BUYER_NAME}</b></a>
 								<b>(<a href="{SITEURL}feedback.php?id={high_bidders.BUYER_ID}&amp;faction=show">{high_bidders.BUYER_FB}</a>)</b>
 		<!-- ENDIF -->
-								<img src="{SITEURL}images/icons/{high_bidders.BUYER_FB_ICON}" alt="{high_bidders.BUYER_FB_ICON}" class="fbstar">
+								{high_bidders.BUYER_FB_ICON}
 	<!-- END high_bidders -->
 							</td>
 						</tr>
@@ -187,7 +185,7 @@ $(document).ready(function() {
 						<div>
 							<a href='{SITEURL}profile.php?user_id={SELLER_ID}&amp;auction_id={ID}'><b>{SELLER_NICK}</b></a>
 							(<a href='{SITEURL}feedback.php?id={SELLER_ID}&amp;faction=show'>{SELLER_TOTALFB}</A>)
-							<!-- IF SELLER_FB_ICON ne '' --><img src="{SITEURL}images/icons/{SELLER_FB_ICON}" alt="{SELLER_FB_ICON}" class="fbstar"><!-- ENDIF -->
+							{SELLER_FBICON}
 						</div>
 						<div>
 							<ul class="list-unstyled">

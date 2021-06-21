@@ -64,12 +64,12 @@
 		</td>
 	</tr>
 <!-- ENDIF -->
-<!-- IF gateways.NAME eq 'skrill' and gateways.B_ACTIVE -->
+<!-- IF gateways.NAME eq 'moneybookers' and gateways.B_ACTIVE -->
 	<tr>
-		<td width="160" class="paytable1"><img src="images/skrill.png"></td>
-		<td class="paytable2">Skrill</td>
+		<td width="160" class="paytable1"><img src="images/moneybookers.gif"></td>
+		<td class="paytable2">Moneybookers</td>
 		<td class="paytable3">
-			<form action="<!-- IF SANDBOX -->http://www.skrill.com/app/test_payment.pl<!-- ELSE -->https://pay.skrill.com<!-- ENDIF -->" method="post" id="form_skrill">
+			<form action="<!-- IF SANDBOX -->http://www.moneybookers.com/app/test_payment.pl<!-- ELSE -->https://www.moneybookers.com/app/payment.pl<!-- ENDIF -->" method="post" id="form_moneybookers">
 				<input type="hidden" name="pay_to_email" value="{gateways.PAY_ADDRESS}">
 				<input type="hidden" name="amount" value="{PAY_VAL}">
 				<input type="hidden" name="language" value="EN">
@@ -77,7 +77,7 @@
 				<input type="hidden" name="currency" value="{CURRENCY}">
 				<input type="hidden" name="return_url" value="{SITEURL}validate.php?completed">
 				<input type="hidden" name="cancel_url" value="{SITEURL}validate.php?fail">
-				<input type="hidden" name="status_url" value="{SITEURL}validate.php?skrill">
+				<input type="hidden" name="status_url" value="{SITEURL}validate.php?moneybookers">
 				<input type="hidden" name="trans_id" value="{CUSTOM_CODE}">
 				<input name="submit" type="submit" value="{L_756}" border="0">
 			</form>
@@ -91,7 +91,6 @@
 		<td class="paytable3">
 			<form action="<!-- IF SANDBOX -->https://sandbox.2checkout.com/checkout/purchase<!-- ELSE -->https://www2.2checkout.com/2co/buyer/purchase<!-- ENDIF -->" method="post" id="form_toocheckout">
 				<input type="hidden" name="sid" value="{gateways.PAY_ADDRESS}">
-				<input type="hidden" name="currency_code" value="{CURRENCY}">
 				<input type="hidden" name="total" value="{PAY_VAL}">
 				<input type="hidden" name="cart_order_id" value="{CUSTOM_CODE}">
 				<input name="submit" type="submit" value="{L_756}" border="0">

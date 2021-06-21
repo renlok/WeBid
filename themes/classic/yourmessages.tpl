@@ -18,9 +18,9 @@
 		</tbody>
 	</table>
 	<p>
-	<a href="{SITEURL}mail.php?reply=1&amp;message={HASH}">{L_349}</a>
+	<a href="{SITEURL}mail.php?x=1&amp;message={HASH}">{L_349}</a>
 	&#32;&#32;|&#32;&#32;
-	<a href="{SITEURL}mail.php?deleteid[]={ID}" onClick="if ( !confirm('{L_delete_message_confirm}') ) { return false; }">{L_008}</a>
+	<a href="{SITEURL}mail.php?deleteid[]={ID}" onClick="if ( !confirm('Are you sure you want to delete this message?') ) { return false; }">{L_008}</a>
 	<br>
 	<br>
 	<a href="{SITEURL}mail.php">{L_351}</a>

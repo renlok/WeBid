@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -19,91 +19,108 @@ include INCLUDE_PATH . 'functions_admin.php';
 include 'loggedin.inc.php';
 
 // Data check
-if (!isset($_REQUEST['id'])) {
-    $URL = $_SESSION['RETURN_LIST'];
-    header('location: ' . $URL);
-    exit;
+if (!isset($_REQUEST['id']))
+{
+	$URL = $_SESSION['RETURN_LIST'];
+	//unset($_SESSION['RETURN_LIST']);
+	header('location: ' . $URL);
+	exit;
 }
 
-if (isset($_POST['action']) && $_POST['action'] == "Yes") {
-    $catscontrol = new MPTTcategories();
-    $auc_id = intval($_POST['id']);
-    // uses same parameters in every query
-    $params = array();
-    $params[] = array(':auc_id', $auc_id, 'int');
+if (isset($_POST['action']) && $_POST['action'] == "Yes")
+{
+	$catscontrol = new MPTTcategories();
+	$auc_id = intval($_POST['id']);
+	// uses same parameters in every query
+	$params = array();
+	$params[] = array(':auc_id', $auc_id, 'int');
 
-    // get auction data
-    $query = "SELECT category, num_bids, suspended, closed FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
-    $db->query($query, $params);
-    $auc_data = $db->result();
+	// get auction data
+	$query = "SELECT category, num_bids, suspended, closed FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+	$db->query($query, $params);
+	$auc_data = $db->result();
 
-    if ($auc_data['suspended'] == 2) {
-        $query = "DELETE FROM `" . $DBPrefix . "auction_moderation` WHERE auction_id = :auc_id";
-        $db->query($query, $params);
-    }
+	if ($auc_data['suspended'] == 2)
+	{
+		$query = "DELETE FROM `" . $DBPrefix . "auction_moderation` WHERE auction_id = :auc_id";
+		$params = array();
+		$params[] = array(':auc_id', $auc_id, 'int');
+		$db->query($query, $params);
+	}
 
-    // Delete related values
-    $query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
-    $db->query($query, $params);
+	$params = array();
+	$params[] = array(':auc_id', $auc_id, 'int');
 
-    // delete bids
-    $query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
-    $db->query($query, $params);
+	// Delete related values
+	$query = "DELETE FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
+	$db->query($query, $params);
 
-    // Delete proxybids
-    $query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = :auc_id";
-    $db->query($query, $params);
+	// delete bids
+	$query = "DELETE FROM " . $DBPrefix . "bids WHERE auction = :auc_id";
+	$db->query($query, $params);
 
-    // Delete file in counters
-    $query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
-    $db->query($query, $params);
+	// Delete proxybids
+	$query = "DELETE FROM " . $DBPrefix . "proxybid WHERE itemid = :auc_id";
+	$db->query($query, $params);
 
-    if ($auc_data['suspended'] == 0 && $auc_data['closed'] == 0) {
-        // update main counters
-        $query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - 1), bids = (bids - :num_bids)";
-        $params = array();
-        $params[] = array(':num_bids', $auc_data['num_bids'], 'int');
-        $db->query($query, $params);
+	// Delete file in counters
+	$query = "DELETE FROM " . $DBPrefix . "auccounter WHERE auction_id = :auc_id";
+	$db->query($query, $params);
 
-        // update recursive categories
-        $query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
-        $params = array();
-        $params[] = array(':cat_id', $auc_data['category'], 'int');
-        $db->query($query, $params);
+	if ($auc_data['suspended'] == 0 && $auc_data['closed'] == 0)
+	{
+		// update main counters
+		$query = "UPDATE " . $DBPrefix . "counters SET auctions = (auctions - 1), bids = (bids - :num_bids)";
+		$params = array();
+		$params[] = array(':num_bids', $auc_data['num_bids'], 'int');
+		$db->query($query, $params);
 
-        $parent_node = $db->result();
-        $crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
+		// update recursive categories
+		$query = "SELECT left_id, right_id, level FROM " . $DBPrefix . "categories WHERE cat_id = :cat_id";
+		$params = array();
+		$params[] = array(':cat_id', $auc_data['category'], 'int');
+		$db->query($query, $params);
 
-        for ($i = 0; $i < count($crumbs); $i++) {
-            $query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = :cat_id";
-            $params = array();
-            $params[] = array(':cat_id', $crumbs[$i]['cat_id'], 'int');
-            $db->query($query, $params);
-        }
-    }
+		$parent_node = $db->result();
+		$crumbs = $catscontrol->get_bread_crumbs($parent_node['left_id'], $parent_node['right_id']);
 
-    // Delete auctions images
-    if (is_dir(UPLOAD_PATH . $auc_id)) {
-        if ($dir = opendir(UPLOAD_PATH . $auc_id)) {
-            while ($file = readdir($dir)) {
-                if ($file != '.' && $file != '..') {
-                    @unlink(UPLOAD_PATH . $auc_id . '/' . $file);
-                }
-            }
-            closedir($dir);
-            rmdir(UPLOAD_PATH . $auc_id);
-        }
-    }
+		for ($i = 0; $i < count($crumbs); $i++)
+		{
+			$query = "UPDATE " . $DBPrefix . "categories SET sub_counter = sub_counter - 1 WHERE cat_id = :cat_id";
+			$params = array();
+			$params[] = array(':cat_id', $crumbs[$i]['cat_id'], 'int');
+			$db->query($query, $params);
+		}
+	}
 
-    $URL = $_SESSION['RETURN_LIST'];
-    //unset($_SESSION['RETURN_LIST']);
-    header('location: ' . $URL);
-    exit;
-} elseif (isset($_POST['action']) && $_POST['action'] == "No") {
-    $URL = $_SESSION['RETURN_LIST'];
-    //unset($_SESSION['RETURN_LIST']);
-    header('location: ' . $URL);
-    exit;
+	// Delete auctions images
+	if (is_dir(UPLOAD_PATH . $auc_id))
+	{
+		if ($dir = opendir(UPLOAD_PATH . $auc_id))
+		{
+			while ($file = readdir($dir))
+			{
+				if ($file != '.' && $file != '..')
+				{
+					@unlink(UPLOAD_PATH . $auc_id . '/' . $file);
+				}
+			}
+			closedir($dir);
+			rmdir(UPLOAD_PATH . $auc_id);
+		}
+	}
+
+	$URL = $_SESSION['RETURN_LIST'];
+	//unset($_SESSION['RETURN_LIST']);
+	header('location: ' . $URL);
+	exit;
+}
+elseif (isset($_POST['action']) && $_POST['action'] == "No")
+{
+	$URL = $_SESSION['RETURN_LIST'];
+	//unset($_SESSION['RETURN_LIST']);
+	header('location: ' . $URL);
+	exit;
 }
 
 $query = "SELECT title FROM " . $DBPrefix . "auctions WHERE id = :auc_id";
@@ -113,14 +130,15 @@ $db->query($query, $params);
 $title = $db->result('title');
 
 $template->assign_vars(array(
-        'ID' => $_GET['id'],
-        'MESSAGE' => sprintf($MSG['confirm_auction_delete'], $title),
-        'TYPE' => 1
-        ));
+		'ID' => $_GET['id'],
+		'MESSAGE' => sprintf($MSG['833'], $title),
+		'TYPE' => 1
+		));
 
 include 'header.php';
 $template->set_filenames(array(
-        'body' => 'confirm.tpl'
-        ));
+		'body' => 'confirm.tpl'
+		));
 $template->display('body');
 include 'footer.php';
+?>

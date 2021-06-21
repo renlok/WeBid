@@ -15,7 +15,7 @@
 				<a class="btn btn-warning btn-xs grid-margin-btm" href="{SITEURL}feedback.php?id={USER_ID}&amp;faction=show">{L_208}</a>
 			</div>
 			<div class="col-md-6">
-				<h4><span style="margin-right: 10px;" class="glyphicon glyphicon-user" aria-hidden="true"></span>{USER} ({SUM_FB}) <!-- IF FB_ICON ne '' --><img src="{SITEURL}images/icons/{FB_ICON}" alt="{FB_ICON}" class="fbstar"><!-- ENDIF --></h4><br>
+				<h4><span style="margin-right: 10px;" class="glyphicon glyphicon-user" aria-hidden="true"></span>{USER} ({SUM_FB}){RATE_VAL}</h4><br>
 				<ul class="list-unstyled">
 					<li>{L_209} <b>{REGSINCE}</b><br></li>
 					<li>{L_240} <b>{COUNTRY}</b><br></li>

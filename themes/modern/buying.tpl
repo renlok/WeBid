@@ -21,7 +21,7 @@
 	<!-- ENDIF -->
 		<div class="text-right">
 		<!-- IF items.B_PAID -->
-			<span class="label label-success">{L_898}</span>
+			<span class="label label-success">{L_755}</span>
 	<!-- ELSE -->
 			<form name="" method="post" action="{SITEURL}pay.php?a=2" id="fees">
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

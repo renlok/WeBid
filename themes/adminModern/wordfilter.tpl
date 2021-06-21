@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{L_5436}&nbsp;&gt;&gt;&nbsp;{L_5068}</h4>
+				<h2>{L_5436}&nbsp;&gt;&gt;&nbsp;{L_5068}</h2>
 				<form name="wordlist" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -14,8 +14,8 @@
 							<div class="row">
 								<div class="col-md-3">{L_5070}</div>
 								<div class="col-md-9">
-									<input type="radio" name="wordsfilter" value="y"{WFYES}> {L_yes}
-									<input type="radio" name="wordsfilter" value="n"{WFNO}> {L_no}
+									<input type="radio" name="wordsfilter" value="y"{WFYES}> {L_030}
+									<input type="radio" name="wordsfilter" value="n"{WFNO}> {L_029}
 								</div>
 							</div>
 							<div class="row">

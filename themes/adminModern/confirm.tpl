@@ -37,13 +37,13 @@
 						<div class="col-md-12 text-center">
 <!-- IF TYPE eq 1 -->
 							<input type="hidden" name="id" value="{ID}">
-							<button class="btn btn-primary" type="submit" name="action" value="Yes">{L_yes}</button>
-							<button class="btn btn-primary" type="submit" name="action" value="No">{L_no}</button>
+							<button class="btn btn-primary" type="submit" name="action" value="Yes">{L_030}</button>
+							<button class="btn btn-primary" type="submit" name="action" value="No">{L_029}</button>
 <!-- ELSEIF TYPE eq 2 -->
 							<input type="hidden" name="id" value="{ID}">
 							<input type="hidden" name="user" value="{USERID}">
-							<button class="btn btn-primary" type="submit" name="action" value="Yes">{L_yes}</button>
-							<button class="btn btn-primary" type="submit" name="action" value="No">{L_no}</button>
+							<button class="btn btn-primary" type="submit" name="action" value="Yes">{L_030}</button>
+							<button class="btn btn-primary" type="submit" name="action" value="No">{L_029}</button>
 <!-- ENDIF -->
 						</div>
 					</div>

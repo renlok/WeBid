@@ -14,7 +14,7 @@
 					<th align="left"><b>{L_297}</b></th>
 				<tr>
 				<!-- BEGIN auctions -->
-				<tr<!-- IF auctions.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+				<tr {auctions.BG}>
 					<td>
 						<!-- IF auctions.SUSPENDED > 0 -->
 						<span style="color:#FF0000">{auctions.TITLE}</span>
@@ -28,7 +28,7 @@
 						<p>[ <a href="{SITEURL}item.php?id={auctions.ID}" target="_blank">{L_5295}</a> ]</p>
 					</td>
 					<td>
-						<b>{L_username}:</b> {auctions.USERNAME}<br>
+						<b>{L_003}:</b> {auctions.USERNAME}<br>
 						<b>{L_625}:</b> {auctions.START_TIME}<br>
 						<b>{L_626}:</b> {auctions.END_TIME}<br>
 						<b>{L_041}:</b> {auctions.CATEGORY}

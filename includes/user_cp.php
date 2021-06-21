@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,13 +12,11 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) {
-    exit();
-}
+if (!defined('InWeBid')) exit();
 
 $template->assign_vars(array(
-    'B_ISERROR' => (!empty($ERR)),
-    'B_MENUTITLE' => (!empty($TMP_usmenutitle)),
-    'UCP_ERROR' => (isset($ERR)) ? $ERR : '',
-    'UCP_TITLE' => (isset($TMP_usmenutitle)) ? $TMP_usmenutitle : ''
+	'B_ISERROR' => (!empty($ERR)),
+	'B_MENUTITLE' => (!empty($TMP_usmenutitle)),
+	'UCP_ERROR' => (isset($ERR)) ? $ERR : '',
+	'UCP_TITLE' => (isset($TMP_usmenutitle)) ? $TMP_usmenutitle : ''
 ));

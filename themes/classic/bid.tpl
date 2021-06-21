@@ -53,12 +53,12 @@
 	<!-- ENDIF -->
 	<!-- IF B_USERAUTH -->
 					<tr>
-						<td><b>{L_username}</b></td>
+						<td><b>{L_003}</b></td>
 						<td><b>{YOURUSERNAME}</b>
 						</td>
 					</tr>
 					<tr bgcolor="#FFFEEE">
-						<td><b>{L_password}</b></td>
+						<td><b>{L_004}</b></td>
 						<td><input type="password" name="password" size="20"  value="">
 						</td>
 					</tr>

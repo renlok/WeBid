@@ -9,7 +9,7 @@
 				<form name="editadmin" action="" method="post">
 					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 						<tr>
-							<td>{L_username}</td>
+							<td>{L_003}</td>
 							<td>{USERNAME}</td>
 						</tr>
 						<tr>
@@ -24,7 +24,7 @@
 							<td colspan="2">{L_563}</td>
 						</tr>
 						<tr>
-							<td>{L_password}</td>
+							<td>{L_004}</td>
 							<td><input type="password" name="password" size="25"></td>
 						</tr>
 						<tr>

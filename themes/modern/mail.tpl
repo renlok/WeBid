@@ -10,9 +10,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-<!-- IF ERROR ne '' -->
-<div class="alert alert-danger">{ERROR}</div>
-<!-- ENDIF -->
+<div class="text-center">{ERROR}</div>
 <!-- IF REPLY_X eq 1 -->
 	<!-- INCLUDE mail-send.tpl -->
 <!-- ENDIF -->

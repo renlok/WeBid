@@ -7,7 +7,7 @@
 		</div>
 	<!-- ENDIF -->
 		<form name="registration" action="{SITEURL}register.php" method="post">
-			<div class="col-md-12 well">
+			<div class="col-md-7 well">
 				<legend>{L_001}</legend>
 				<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<div class="form-group col-lg-6 <!-- IF MISSING0 eq 1 -->has-error<!-- ENDIF -->">
@@ -16,13 +16,13 @@
 					<!-- IF MISSING0 eq 1 --><div class="error-box missing">{L_937}</div><!-- ENDIF -->
 				</div>
 				<div class="form-group col-lg-6 <!-- IF MISSING1 eq 1 -->has-error<!-- ENDIF -->">
-					<label for="TPL_nick">{L_username} *</label>
+					<label for="TPL_nick">{L_003} *</label>
 					<input type="text" name="TPL_nick" class="form-control"  value="{V_UNAME}" <!-- IF MISSING1 eq 1 -->id="inputError1"<!-- ENDIF --> placeholder="{L_050}">
 					<!-- IF MISSING1 eq 1 --><div class="error-box missing">{L_938}</div><!-- ENDIF -->
 				</div>
 				<div class="col-lg-12"></div>
 				<div class="form-group col-lg-6 <!-- IF MISSING2 eq 1 -->has-error<!-- ENDIF -->">
-					<label for="TPL_password">{L_password} *</label>
+					<label for="TPL_password">{L_004} *</label>
 					<input type="password" name="TPL_password" class="form-control" <!-- IF MISSING2 eq 1 -->id="inputError1"<!-- ENDIF --> placeholder="{L_050}">
 					<!-- IF MISSING2 eq 1 --><div class="error-box missing">{L_939}</div><!-- ENDIF -->
 				</div>
@@ -106,16 +106,17 @@
 				<div class="form-group col-lg-12">
 					<div class="alert alert-info" role="alert">
 						<label>{L_608}</label>
-						<label class="checkbox-inline"><input type="radio" name="TPL_nletter" value="1" {V_YNEWSL}>{L_yes}</label>
-						<label class="checkbox-inline"><input type="radio" name="TPL_nletter" value="2" {V_NNEWSL}>{L_no}</label>
+						<label class="checkbox-inline"><input type="radio" name="TPL_nletter" value="1" {V_YNEWSL}>{L_030}</label>
+						<label class="checkbox-inline"><input type="radio" name="TPL_nletter" value="2" {V_NNEWSL}>{L_029}</label>
 					</div>
 				</div>
 	<!-- ENDIF -->
-
+			</div>
+			<div class="col-md-4 col-md-offset-1 well">
 				<legend>{L_719}</legend>
 
 	<!-- BEGIN gateways -->
-		<div class="form-group col-lg-12">
+		<div class="form-group <!-- IF gateways.MISSING eq 1 -->has-error<!-- ENDIF --> col-lg-12">
 			<label for="TPL_pp_email">{gateways.ADDRESS_NAME}{gateways.REQUIRED}</label>
 			<input type="hidden" name="{gateways.PLAIN_NAME}[id]" value="{gateways.GATEWAY_ID}">
 			<input type="text" name="{gateways.PLAIN_NAME}[address]" class="form-control" value="{gateways.ADDRESS}" <!-- IF gateways.MISSING eq 1 -->id="inputError1"<!-- ENDIF -->>
@@ -132,10 +133,10 @@
 					<div class="capchabox">{CAPCHA}</div>
 				</div>
 				<div class="form-group col-lg-12">
-					<div class="text-center">
-						<div class="checkbox">
-							<label><input type="checkbox" name="terms_check" id="terms_check"> {L_858}</label>
-						</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="terms_check" id="terms_check"> {L_858}
+						</label>
 					</div>
 					<br><br>
 					<div class="text-center">

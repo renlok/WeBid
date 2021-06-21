@@ -330,7 +330,7 @@ class PluploadHandler {
 	 * operating systems and special characters requiring special escaping
 	 * to manipulate at the command line. Replaces spaces and consecutive
 	 * dashes with a single dash. Trim period, dash and underscore from beginning
-	 * and end of filename.  Converts upper case characters to lower case.
+	 * and end of filename.
 	 *
 	 * @author WordPress
 	 *
@@ -343,7 +343,6 @@ class PluploadHandler {
 	    $filename = str_replace($special_chars, '', $filename);
 	    $filename = preg_replace('/[\s-]+/', '-', $filename);
 	    $filename = trim($filename, '.-_');
-	    $filename = strtolower($filename);
 	    return $filename;
 	}
 

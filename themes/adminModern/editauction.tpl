@@ -4,10 +4,10 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_239}&nbsp;&gt;&gt;&nbsp;{L_512}</h4>
 				<form name="editauction" action="" method="post">
-					<table class="table table-striped table-bordered">
+					<table width="98%" cellpadding="0" cellspacing="0" class="blank">
 					<tr>
 						<td width="25%" align="right">{L_313}</td>
 						<td>{USER}</td>
@@ -22,23 +22,11 @@
 					</tr>
 					<tr>
 						<td align="right">{L_287}</td>
-						<td>
-							<select name="category">
-								<!-- BEGIN cats1 -->
-									<option value="{cats1.CAT_ID}"<!-- IF cats1.SELECTED --> selected="true"<!-- ENDIF -->>{cats1.CAT_NAME}</option>
-								<!-- END cats1 -->
-							</select>
-						</td>
+						<td>{CATLIST1}</td>
 					</tr>
 					<tr>
 						<td align="right">{L_814}</td>
-						<td>
-							<select name="secondcat">
-								<!-- BEGIN cats2 -->
-									<option value="{cats2.CAT_ID}"<!-- IF cats2.SELECTED --> selected="true"<!-- ENDIF -->>{cats2.CAT_NAME}</option>
-								<!-- END cats1 -->
-							</select>
-						</td>
+						<td>{CATLIST2}</td>
 					</tr>
 					<tr>
 						<td align="right">{L_018}</td>
@@ -53,9 +41,7 @@
 						<td>
 							<select name="duration">
 								<option value=""> </option>
-								<!-- BEGIN dur -->
-								<option value="{dur.DAYS}"<!-- IF dur.SELECTED --> selected<!-- ENDIF -->>{dur.DESC}</option>
-								<!-- END dur -->
+								{DURLIST}
 							</select>
 						</td>
 					</tr>
@@ -71,7 +57,7 @@
 <!-- BEGIN gallery -->
 							<div style="width:50px; float: left;">
 								<a href="{SITEURL}/{gallery.V}" title="{gallery.V}" target="_blank">
-									<img src="{SITEURL}getthumb.php?fromfile={gallery.V}&auction_id={ID}" border="0" hspace="10">
+									<img src="{SITEURL}getthumb.php?fromfile={gallery.V}" border="0" hspace="10">
 								</a>
 								<input type="checkbox" name="gallery[]" value="{gallery.V}">
 							</div>
@@ -106,8 +92,8 @@
 					<tr>
 						<td align="right">{L_30_0063}</td>
 						<td>
-							<input type="radio" name="buy_now_only" value="0" {BN_ONLY_N}> {L_no}
-							<input type="radio" name="buy_now_only" value="1" {BN_ONLY_Y}> {L_yes}
+							<input type="radio" name="buy_now_only" value="0" {BN_ONLY_N}> {L_029}
+							<input type="radio" name="buy_now_only" value="1" {BN_ONLY_Y}> {L_030}
 						</td>
 					</tr>
 					<tr>

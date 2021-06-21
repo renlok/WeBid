@@ -6,7 +6,7 @@
  * Project:  Securimage: A PHP class dealing with CAPTCHA images, audio, and validation
  * File:     securimage.php
  *
- * Copyright (c) 2016, Drew Phillips
+ * Copyright (c) 2015, Drew Phillips
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -39,9 +39,9 @@
  * @link http://www.phpcaptcha.org Securimage PHP CAPTCHA
  * @link http://www.phpcaptcha.org/latest.zip Download Latest Version
  * @link http://www.phpcaptcha.org/Securimage_Docs/ Online Documentation
- * @copyright 2016 Drew Phillips
+ * @copyright 2015 Drew Phillips
  * @author Drew Phillips <drew@drew-phillips.com>
- * @version 3.6.4 (Mar 3, 2016)
+ * @version 3.6.2 (Oct 13, 2015)
  * @package Securimage
  *
  */
@@ -49,15 +49,6 @@
 /**
 
  ChangeLog
- 3.6.4
- - Fix XSS vulnerability in example_form.ajax.php (Discovered by RedTeam. advisory rt-sa-2016-002)
- - Update example_form.ajax.php to use Securimage::getCaptchaHtml()
-
- 3.6.3
- - Add support for multibyte wordlist files
- - Fix code generation issues with UTF-8 charsets
- - Add parameter to getCaptchaHtml() method to control display components of captcha HTML
- - Fix database audio storage issue with multiple namespaces
 
  3.6.2
  - Support HTTP range requests with audio playback (iOS requirement)
@@ -277,48 +268,6 @@ class Securimage
      * @var string
      */
     const SI_DRIVER_SQLITE3 = 'sqlite';
-
-    /**
-     * getCaptchaHtml() display constant for HTML Captcha Image
-     *
-     * @var integer
-     */
-    const HTML_IMG   = 1;
-
-    /**
-     * getCaptchaHtml() display constant for HTML5 Audio code
-     *
-     * @var integer
-     */
-    const HTML_AUDIO = 2;
-
-    /**
-     * getCaptchaHtml() display constant for Captcha Input text box
-     *
-     * @var integer
-     */
-    const HTML_INPUT = 4;
-
-    /**
-     * getCaptchaHtml() display constant for Captcha Text HTML label
-     *
-     * @var integer
-     */
-    const HTML_INPUT_LABEL = 8;
-
-    /**
-     * getCaptchaHtml() display constant for HTML Refresh button
-     *
-     * @var integer
-     */
-    const HTML_ICON_REFRESH = 16;
-
-    /**
-     * getCaptchaHtml() display constant for all HTML elements (default)
-     *
-     * @var integer
-     */
-    const HTML_ALL = 0xffffffff;
 
     /*%*********************************************************************%*/
     // Properties
@@ -641,17 +590,6 @@ class Securimage
      * @var string
      */
     public $wordlist_file;
-
-    /**
-     * Character encoding of the wordlist file.
-     * Requires PHP Multibyte String (mbstring) support.
-     * Allows word list to contain characters other than US-ASCII (requires compatible TTF font).
-     *
-     * @var string The character encoding (e.g. UTF-8, UTF-7, EUC-JP, GB2312)
-     * @see http://php.net/manual/en/mbstring.supported-encodings.php
-     * @since 3.6.3
-     */
-    public $wordlist_file_encoding = null;
 
     /**
      * The directory to scan for background images, if set a random background
@@ -1246,11 +1184,10 @@ class Securimage
      *         The optional captcha namespace to use for showing the image and playing back the audio. Namespaces are for using multiple captchas on the same page.
      *
      * @param array $options Array of options for modifying the HTML code.
-     * @param int   $parts Securiage::HTML_* constant controlling what component of the captcha HTML to display
      *
      * @return string  The generated HTML code for displaying the captcha
      */
-    public static function getCaptchaHtml($options = array(), $parts = Securimage::HTML_ALL)
+    public static function getCaptchaHtml($options = array())
     {
         static $javascript_init = false;
 
@@ -1315,51 +1252,49 @@ class Securimage
             $image_attr .= sprintf('%s="%s" ', $name, htmlspecialchars($val));
         }
 
-        $swf_path  = $securimage_path . '/securimage_play.swf';
-        $play_path = $securimage_path . '/securimage_play.php?';
-        $icon_path = $securimage_path . '/images/audio_icon.png';
-        $load_path = $securimage_path . '/images/loading.png';
-        $js_path   = $securimage_path . '/securimage.js';
+        $audio_obj = null;
 
-        if (!empty($audio_icon_url)) {
-            $icon_path = $audio_icon_url;
-        }
+        $html = sprintf('<img %s/>', $image_attr);
 
-        if (!empty($loading_icon_url)) {
-            $load_path = $loading_icon_url;
-        }
+        if ($show_audio_btn) {
+            $swf_path  = $securimage_path . '/securimage_play.swf';
+            $play_path = $securimage_path . '/securimage_play.php?';
+            $icon_path = $securimage_path . '/images/audio_icon.png';
+            $load_path = $securimage_path . '/images/loading.png';
+            $js_path   = $securimage_path . '/securimage.js';
+            $audio_obj = $image_id . '_audioObj';
 
-        if (!empty($audio_play_url)) {
-            if (parse_url($audio_play_url, PHP_URL_QUERY)) {
-                $play_path = "{$audio_play_url}&";
-            } else {
-                $play_path = "{$audio_play_url}?";
+            if (!empty($audio_icon_url)) {
+                $icon_path = $audio_icon_url;
             }
-        }
 
-        if (!empty($namespace)) {
-            $play_path .= sprintf('namespace=%s&amp;', $namespace);
-        }
+            if (!empty($loading_icon_url)) {
+                $load_path = $loading_icon_url;
+            }
 
-        if (!empty($audio_swf_url)) {
-            $swf_path = $audio_swf_url;
-        }
+            if (!empty($audio_play_url)) {
+                if (parse_url($audio_play_url, PHP_URL_QUERY)) {
+                    $play_path = "{$audio_play_url}&";
+                } else {
+                    $play_path = "{$audio_play_url}?";
+                }
+            }
 
-        $audio_obj = $image_id . '_audioObj';
-        $html      = '';
+            if (!empty($namespace)) {
+                $play_path .= sprintf('namespace=%s&amp;', $namespace);
+            }
 
-        if ( ($parts & Securimage::HTML_IMG) > 0) {
-            $html .= sprintf('<img %s/>', $image_attr);
-        }
+            if (!empty($audio_swf_url)) {
+                $swf_path = $audio_swf_url;
+            }
 
-        if ( ($parts & Securimage::HTML_AUDIO) > 0 && $show_audio_btn) {
             // html5 audio
             $html .= sprintf('<div id="%s_audio_div">', $image_id) . "\n" .
                      sprintf('<audio id="%s_audio" preload="none" style="display: none">', $image_id) . "\n";
 
             // check for existence and executability of LAME binary
             // prefer mp3 over wav by sourcing it first, if available
-            if (is_executable(Securimage::$lame_binary_path)) {
+            if (@is_executable(Securimage::$lame_binary_path)) {
                 $html .= sprintf('<source id="%s_source_mp3" src="%sid=%s&amp;format=mp3" type="audio/mpeg">', $image_id, $play_path, uniqid()) . "\n";
             }
 
@@ -1398,7 +1333,26 @@ class Securimage
                      sprintf('<img class="captcha_loading_image rotating" height="%d" width="%d" src="%s" alt="Loading audio" style="display: none">', $icon_size, $icon_size, htmlspecialchars($load_path)) . "\n" .
                      "</a>\n<noscript>Enable Javascript for audio controls</noscript>\n" .
                      "</div>\n";
+        }
 
+        if ($show_refresh_btn) {
+            $icon_path = $securimage_path . '/images/refresh.png';
+            if ($refresh_icon_url) {
+                $icon_path = $refresh_icon_url;
+            }
+            $img_tag = sprintf('<img height="%d" width="%d" src="%s" alt="%s" onclick="this.blur()" style="border: 0px; vertical-align: bottom" />',
+                               $icon_size, $icon_size, htmlspecialchars($icon_path), htmlspecialchars($refresh_alt));
+
+            $html .= sprintf('<a tabindex="-1" style="border: 0" href="#" title="%s" onclick="%sdocument.getElementById(\'%s\').src = \'%s\' + Math.random(); this.blur(); return false">%s</a><br />',
+                    htmlspecialchars($refresh_title),
+                    ($audio_obj) ? "{$audio_obj}.refresh(); " : '',
+                    $image_id,
+                    $show_path,
+                    $img_tag
+            );
+        }
+
+        if ($show_audio_btn) {
             // html5 javascript
             if (!$javascript_init) {
                 $html .= sprintf('<script type="text/javascript" src="%s"></script>', $js_path) . "\n";
@@ -1409,50 +1363,29 @@ class Securimage
                      "</script>\n";
         }
 
-        if ( ($parts & Securimage::HTML_ICON_REFRESH) > 0 && $show_refresh_btn) {
-            $icon_path = $securimage_path . '/images/refresh.png';
-            if ($refresh_icon_url) {
-                $icon_path = $refresh_icon_url;
-            }
-            $img_tag = sprintf('<img height="%d" width="%d" src="%s" alt="%s" onclick="this.blur()" style="border: 0px; vertical-align: bottom" />',
-                               $icon_size, $icon_size, htmlspecialchars($icon_path), htmlspecialchars($refresh_alt));
+        $html .= '<div style="clear: both"></div>';
 
-            $html .= sprintf('<a tabindex="-1" style="border: 0" href="#" title="%s" onclick="%sdocument.getElementById(\'%s\').src = \'%s\' + Math.random(); this.blur(); return false">%s</a><br />',
-                    htmlspecialchars($refresh_title),
-                    ($audio_obj) ? "if (typeof window.{$audio_obj} !== 'undefined') {$audio_obj}.refresh(); " : '',
-                    $image_id,
-                    $show_path,
-                    $img_tag
-            );
+        $html .= sprintf('<label for="%s">%s</label> ',
+                htmlspecialchars($input_id),
+                htmlspecialchars($input_text));
+
+        if (!empty($error_html)) {
+            $html .= $error_html;
         }
 
-        if ($parts == Securimage::HTML_ALL) {
-            $html .= '<div style="clear: both"></div>';
+        $input_attr = '';
+        if (!is_array($input_attrs)) $input_attrs = array();
+        $input_attrs['type'] = 'text';
+        $input_attrs['name'] = $input_name;
+        $input_attrs['id']   = $input_id;
+
+        foreach($input_attrs as $name => $val) {
+            $input_attr .= sprintf('%s="%s" ', $name, htmlspecialchars($val));
         }
 
-        if ( ($parts & Securimage::HTML_INPUT_LABEL) > 0 && $show_input) {
-            $html .= sprintf('<label for="%s">%s</label> ',
-                    htmlspecialchars($input_id),
-                    htmlspecialchars($input_text));
+        $html .= sprintf('<input %s/>', $input_attr);
 
-            if (!empty($error_html)) {
-                $html .= $error_html;
-            }
-        }
-
-        if ( ($parts & Securimage::HTML_INPUT) > 0 && $show_input) {
-            $input_attr = '';
-            if (!is_array($input_attrs)) $input_attrs = array();
-            $input_attrs['type'] = 'text';
-            $input_attrs['name'] = $input_name;
-            $input_attrs['id']   = $input_id;
-
-            foreach($input_attrs as $name => $val) {
-                $input_attr .= sprintf('%s="%s" ', $name, htmlspecialchars($val));
-            }
-
-            $html .= sprintf('<input %s/>', $input_attr);
-        }
+        $html = '<div style="width:260px; margin: 0 auto;">' . $html . '</div>';
 
         return $html;
     }
@@ -2221,31 +2154,6 @@ class Securimage
      */
     protected function readCodeFromFile($numWords = 1)
     {
-        $strpos_func     = 'strpos';
-        $strlen_func     = 'strlen';
-        $substr_func     = 'substr';
-        $strtolower_func = 'strtolower';
-        $mb_support      = false;
-
-        if (!empty($this->wordlist_file_encoding)) {
-            if (!extension_loaded('mbstring')) {
-                trigger_error("wordlist_file_encoding option set, but PHP does not have mbstring support", E_USER_WARNING);
-                return false;
-            }
-
-            // emits PHP warning if not supported
-            $mb_support = mb_internal_encoding($this->wordlist_file_encoding);
-
-            if (!$mb_support) {
-                return false;
-            }
-
-            $strpos_func     = 'mb_strpos';
-            $strlen_func     = 'mb_strlen';
-            $substr_func     = 'mb_substr';
-            $strtolower_func = 'mb_strtolower';
-        }
-
         $fp = fopen($this->wordlist_file, 'rb');
         if (!$fp) return false;
 
@@ -2257,32 +2165,21 @@ class Securimage
         $words = array();
         $i = 0;
         do {
-            fseek($fp, mt_rand(0, $fsize - 128), SEEK_SET); // seek to a random position of file from 0 to filesize-128
-            $data = fread($fp, 128); // read a chunk from our random position
+            fseek($fp, mt_rand(0, $fsize - 64), SEEK_SET); // seek to a random position of file from 0 to filesize-64
+            $data = fread($fp, 64); // read a chunk from our random position
+            $data = preg_replace("/\r?\n/", "\n", $data);
 
-            if ($mb_support !== false) {
-                $data = mb_ereg_replace("\r?\n", "\n", $data);
-            } else {
-                $data = preg_replace("/\r?\n/", "\n", $data);
-            }
-
-            $start = @$strpos_func($data, "\n", mt_rand(0, 56)) + 1; // random start position
-            $end   = @$strpos_func($data, "\n", $start);          // find end of word
+            $start = @strpos($data, "\n", mt_rand(0, 56)) + 1; // random start position
+            $end   = @strpos($data, "\n", $start);          // find end of word
 
             if ($start === false) {
                 // picked start position at end of file
                 continue;
             } else if ($end === false) {
-                $end = $strlen_func($data);
+                $end = strlen($data);
             }
 
-            $word = $strtolower_func($substr_func($data, $start, $end - $start)); // return a line of the file
-
-            if ($mb_support) {
-                // convert to UTF-8 for imagettftext
-                $word = mb_convert_encoding($word, 'UTF-8', $this->wordlist_file_encoding);
-            }
-
+            $word = strtolower(substr($data, $start, $end - $start)); // return a line of the file
             $words[] = $word;
         } while (++$i < $numWords);
 
@@ -2306,7 +2203,7 @@ class Securimage
         $code = '';
 
         if (function_exists('mb_strlen')) {
-            for($i = 1, $cslen = mb_strlen($this->charset, 'UTF-8'); $i <= $this->code_length; ++$i) {
+            for($i = 1, $cslen = mb_strlen($this->charset); $i <= $this->code_length; ++$i) {
                 $code .= mb_substr($this->charset, mt_rand(0, $cslen - 1), 1, 'UTF-8');
             }
         } else {
@@ -2507,17 +2404,15 @@ class Securimage
         if ($this->use_database && $this->pdo_conn) {
             $id = $this->getCaptchaId(false);
             $ip = $_SERVER['REMOTE_ADDR'];
-            $ns = $this->namespace;
 
             if (empty($id)) {
                 $id = $ip;
             }
 
-            $query = "UPDATE {$this->database_table} SET audio_data = :audioData WHERE id = :id AND namespace = :namespace";
+            $query = "UPDATE {$this->database_table} SET audio_data = :audioData WHERE id = :id";
             $stmt  = $this->pdo_conn->prepare($query);
             $stmt->bindParam(':audioData', $data, PDO::PARAM_LOB);
             $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':namespace', $ns);
             $success = $stmt->execute();
         }
 

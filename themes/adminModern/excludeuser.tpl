@@ -4,15 +4,15 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_045}&nbsp;&gt;&gt;&nbsp;{ACTION}</h4>
-				<table class="table table-striped table-bordered">
+				<table width="98%" celpadding="0" cellspacing="0" class="blank">
 					<tr>
 						<td width="204">{L_302}</td>
 						<td>{REALNAME}</td>
 					</tr>
 					<tr>
-						<td>{L_username}</td>
+						<td>{L_003}</td>
 						<td>{USERNAME}</td>
 					</tr>
 					<tr>
@@ -58,10 +58,11 @@
 						<td>
 							<form name="details" action="" method="post">
 								<input type="hidden" name="id" value="{ID}">
+								<input type="hidden" name="offset" value="{OFFSET}">
 								<input type="hidden" name="mode" value="{MODE}">
 								<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
-								<button type="submit" name="action" value="Yes">{L_yes}</button>
-								<button type="submit" name="action" value="No">{L_no}</button>
+								<button type="submit" name="action" value="Yes">{L_030}</button>
+								<button type="submit" name="action" value="No">{L_029}</button>
 							</form>
 						</td>
 					</tr>

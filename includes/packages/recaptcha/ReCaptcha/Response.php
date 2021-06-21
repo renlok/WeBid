@@ -32,7 +32,7 @@ namespace ReCaptcha;
 class Response
 {
     /**
-     * Success or failure.
+     * Succes or failure.
      * @var boolean
      */
     private $success = false;

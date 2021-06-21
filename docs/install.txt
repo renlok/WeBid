@@ -128,6 +128,8 @@ The Install.php script included with WeBid will:
 
  	  NOTE: After install is complete, change config.inc.php to CHMOD 644 (the installer will rename the file).
 
+	> /includes/membertypes.inc.php 777
+
 	> /language/EN/categories.inc.php 777
 
 	> /language/EN/categories_select_box.inc.php 777

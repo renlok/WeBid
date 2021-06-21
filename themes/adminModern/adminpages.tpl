@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</h4>
+				<h2>{TYPENAME}&nbsp;&gt;&gt;&nbsp;{PAGENAME}</h2>
 				<form name="conf" action="" method="post" enctype="multipart/form-data">
 					<div class="panel panel-default">
 <!-- BEGIN block -->

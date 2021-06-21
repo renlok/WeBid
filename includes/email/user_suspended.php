@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   copyright				: (C) 2008 - 2017 WeBid
+ *   copyright				: (C) 2008 - 2016 WeBid
  *   site					: http://www.webidsupport.com/
  ***************************************************************************/
 
@@ -12,16 +12,14 @@
  *   sold. If you have been sold this script, get a refund.
  ***************************************************************************/
 
-if (!defined('InWeBid')) {
-    exit();
-}
+if (!defined('InWeBid')) exit();
 
 $emailer = new email_handler();
 $emailer->assign_vars(array(
-        'SITE_URL' => $system->SETTINGS['siteurl'],
-        'SITENAME' => $system->SETTINGS['sitename'],
+		'SITE_URL' => $system->SETTINGS['siteurl'],
+		'SITENAME' => $system->SETTINGS['sitename'],
 
-        'C_NAME' => $USER['name']
-        ));
+		'C_NAME' => $USER['name']
+		));
 $emailer->userlang = $language;
 $emailer->email_sender(array($USER['email'], $system->SETTINGS['adminmail']), 'user_suspended.inc.php', $system->SETTINGS['sitename'] . ' ' . $MSG['095a']);

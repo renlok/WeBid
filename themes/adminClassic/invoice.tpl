@@ -5,7 +5,7 @@
 		</div>
 		<div style="width:75%; float:right;">
 			<div class="main-box">
-				<h4 class="rounded-top rounded-bottom">{L_25_0012}&nbsp;&gt;&gt;&nbsp;{L_766}</h4>
+				<h4 class="rounded-top rounded-bottom">{L_854}&nbsp;&gt;&gt;&nbsp;{L_854}</h4>
 				<div class="plain-box">
 					<form action="" method="get">
 					<input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">

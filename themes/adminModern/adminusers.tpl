@@ -4,20 +4,20 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_525}</h4>
 				<form name="errorlog" action="" method="post">
-					<div class="plain-box"><a href="newadminuser.php">{L_new_admin_user}</a></div>
-					<table class="table table-striped table-bordered">
+					<div class="plain-box"><a href="newadminuser.php">{L_367}</a></div>
+					<table width="98%" cellpadding="0" cellspacing="0" align="center">
 						<tr>
-							<th width="30%">{L_username}</th>
+							<th width="30%">{L_003}</th>
 							<th width="16%">{L_558}</th>
 							<th width="19%">{L_559}</th>
 							<th width="12%">{L_560}</th>
 							<th width="23%">{L_561}</th>
 						</tr>
 <!-- BEGIN users -->
-						<tr<!-- IF users.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+						<tr {users.BG}>
 							<td><a href="editadminuser.php?id={users.ID}">{users.USERNAME}</a></td>
 							<td align="center">{users.CREATED}</td>
 							<td align="center">{users.LASTLOGIN}</td>

@@ -3,7 +3,7 @@
 				<!-- INCLUDE sidebar-{CURRENT_PAGE}.tpl -->
 			</div>
 			<div class="col-md-9">
-				<h4>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_081}</h4>
+				<h2>{L_5142}&nbsp;&gt;&gt;&nbsp;{L_081}</h2>
 				<form name="payments" action="" method="post">
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -23,13 +23,7 @@
 									<input type="text" name="new_countries[]" size="45" value="{countries.COUNTRY}">
 									<input type="hidden" name="old_countries[]" value="{countries.COUNTRY}">
 								</div>
-								<div class="col-md-3">
-	                <!-- IF countries.B_CAN_DELETE -->
-	                <input type="checkbox" name="delete[]" value="{countries.COUNTRY}">
-	                <!-- ELSE -->
-	                <img src="../images/nodelete.gif" alt="{L_cannot_delete}">
-	                <!-- ENDIF -->
-								</div>
+								<div class="col-md-3">{countries.SELECTBOX}</div>
 							</div>
 <!-- END countries -->
 							<div class="row">

@@ -19,7 +19,7 @@
 						<th><b>{L_772}</b></th>
 					</tr>
 <!-- BEGIN cats -->
-					<tr<!-- IF cats.S_ROW_COUNT % 2 == 1 --> class="bg"<!-- ENDIF -->>
+					<tr {cats.BG}>
 						<td><input type="text" name="categories_o[]" value="{cats.CAT_NAME}" size="45" disabled></td>
 						<td><input type="text" name="categories[{cats.CAT_ID}]" value="{cats.TRAN_CAT}" size="45"></td>
 					</tr>

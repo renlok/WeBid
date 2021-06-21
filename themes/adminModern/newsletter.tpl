@@ -4,7 +4,7 @@
 			</div>
 		</div>
 		<div style="width:75%; float:right;">
-			<div class="container">
+			<div class="main-box">
 				<h4 class="rounded-top rounded-bottom">{L_25_0010}&nbsp;&gt;&gt;&nbsp;{L_607}</h4>
 				<form name="conf" action="" method="post">
 <!-- IF B_PREVIEW -->
@@ -13,7 +13,7 @@
 						{PREVIEW}
 					</div>
 <!-- ENDIF -->
-					<table class="table table-striped table-bordered">
+					<table width="98%" cellpadding="2" align="center" class="blank">
 						<tr valign="top">
 							<td width="175">{L_5299}</td>
 							<td style="padding:3px;">

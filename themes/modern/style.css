@@ -5,8 +5,9 @@
 .errfont	{ background-color: #FFFF00; font-weight: bold; font-family: Verdana, Arial, Sans; color: #FF0000; text-align: center; }
 .footer	{ clear: both; padding: 5px; text-align: center; font-size: x-small; }
 .hg	{ background-color: #FFFF99; }
-.imgTitL	{ background: transparent url(images/tit_l.gif) no-repeat center; margin: 0px 5px 1px 0px; display: inline; height: 8px; width: 8px; }
-.imgTitR	{ background: transparent url(images/tit_r.gif) no-repeat center; margin: 0px 0px 1px 5px; display: inline; height: 8px; width: 8px; }
+.imgSep	{ background: transparent url(img/imgsep.gif) no-repeat center; margin: 0px 4px 1px 4px; display: inline; height: 8px; width: 8px; }
+.imgTitL	{ background: transparent url(img/tit_l.gif) no-repeat center; margin: 0px 5px 1px 0px; display: inline; height: 8px; width: 8px; }
+.imgTitR	{ background: transparent url(img/tit_r.gif) no-repeat center; margin: 0px 0px 1px 5px; display: inline; height: 8px; width: 8px; }
 .logo	{ width: auto; padding: 0; background-color: #ffffff; margin: 0; top: 10px; float: none; text-align: left; }
 .table1	{ clear: both; text-align: left; padding: 5px; }
 .table2	{ width: inherit; padding: 15px; clear: both; text-align: left; }
@@ -15,11 +16,11 @@
 .titTable4	{ background-color: #EEEEEE; text-align: left; padding: 5px; font-size: 10px; font-weight: bolder; color: #666666; border-top:  1px solid #C9C9C9; text-transform: uppercase; border-bottom: 1px solid #C9C9C9;}
 p	{ margin: 0px 0px 5px 0px; }
 dl.tabs	{ margin: 0 0 0 5px; padding: 0; width: 100%; font-size: 13px; }
-dl.tabs dd	{ margin: 1px; padding: 5px; float: left; background: transparent url(images/bot_deg.gif) repeat; border-top: 1px solid #AEACAC; border-right: 1px solid #AEACAC; border-bottom: 0px; border-left: 1px solid #AEACAC; }
+dl.tabs dd	{ margin: 1px; padding: 5px; float: left; background: transparent url(img/bot_deg.gif) repeat; border-top: 1px solid #AEACAC; border-right: 1px solid #AEACAC; border-bottom: 0px; border-left: 1px solid #AEACAC; }
 li	{ padding-bottom: 5px; }
 table.container	{ float: none; }
 th	{ color: #787878; font-size: 12px; background-color: #c2e5ff; font-weight: bold; text-transform: capitalize; padding: 0.3ex; }
-ul	{ padding-left: 20px; list-style: url(images/bullet.gif) none; line-height: 1em; }
+ul	{ padding-left: 20px; list-style: url(img/bullet.gif) none; line-height: 1em; }
 .footer a:hover , .footer a:active	{ color: #6DC0FC; }
 .table-bar a:active	{ color: #BA1D1D; }
 
